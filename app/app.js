@@ -1,5 +1,7 @@
 "use strict";
 
+const REPO = "Nickkoro21/phase2-remarks";
+
 const CAT_LABELS = {
   contact: { name: "Contact" },
   instrument: { name: "Instrument" },
@@ -21,6 +23,7 @@ const state = {
   row: null,       // selected mif_row name or null
   desired: null,
   achieved: null,
+  criteriaCache: {},  // category -> criteria json
 };
 
 const $ = (id) => document.getElementById(id);
@@ -62,6 +65,7 @@ function selectCategory(key, btn) {
   state.item = state.itemData = state.row = state.desired = state.achieved = null;
   $("item-search").disabled = false;
   $("item-search").value = "";
+  $("item-info-btn").classList.add("hidden");
   renderItems();
   renderCodes();
   renderResults();
@@ -95,6 +99,7 @@ async function selectItem(it, btn) {
   state.item = it;
   state.row = state.desired = state.achieved = null;
   state.itemData = null;
+  $("item-info-btn").classList.remove("hidden");
   renderCodes();
   renderResults();
   try {
@@ -178,6 +183,21 @@ function prefixFor(o) {
   return `#${sn}. (${o.desired}) → (${o.achieved}):`;
 }
 
+function feedbackUrl(o) {
+  const title = `Feedback: ${o.id}`;
+  const body = [
+    `**Observation id:** \`${o.id}\``,
+    `**Item:** ${state.itemData.item_name} (${state.category}${o.mif_row ? ` · ${o.mif_row}` : ""})`,
+    `**Codes:** desired (${o.desired}) → achieved (${o.achieved}) · variant: ${o.variant}`,
+    ``,
+    `> ${o.text}`,
+    ``,
+    `**What is wrong / suggested correction:**`,
+    ``,
+  ].join("\n");
+  return `https://github.com/${REPO}/issues/new?title=${encodeURIComponent(title)}&labels=feedback&body=${encodeURIComponent(body)}`;
+}
+
 function renderResults() {
   const box = $("results");
   $("result-count").textContent = "";
@@ -204,6 +224,7 @@ function renderResults() {
         <span class="obs-prefix">${prefix}</span>
         <span class="badge">${VARIANT_LABELS[o.variant] ?? o.variant}</span>
         ${o.hf_concept ? `<span class="badge hf">${o.hf_concept}</span>` : ""}
+        <a class="fb-btn" href="${feedbackUrl(o)}" target="_blank" rel="noopener" title="Report an error or suggest a correction for this remark">Feedback</a>
         <button class="copy-btn">Copy</button>
       </div>
       <p class="obs-text"></p>`;
@@ -222,6 +243,88 @@ function renderResults() {
     box.appendChild(card);
   }
 }
+
+/* ── Item info modal ─────────────────────────────────────── */
+
+async function loadCriteria(cat) {
+  if (state.criteriaCache[cat]) return state.criteriaCache[cat];
+  const res = await fetch(`../data/criteria/${cat}.json`, { cache: "no-store" });
+  const data = await res.json();
+  state.criteriaCache[cat] = data;
+  return data;
+}
+
+function esc(s) {
+  const d = document.createElement("div");
+  d.textContent = s ?? "";
+  return d.innerHTML;
+}
+
+function specTableHtml(params, sourceTag) {
+  if (!params || !params.length) return "";
+  const rows = params.map((p) => `
+    <tr>
+      <td>${esc(p.maneuver ? p.maneuver + " — " : "")}${esc(p.parameter)}</td>
+      <td class="num">${esc(p.code_1_raw ?? "")}</td>
+      <td class="num">${esc(p.code_3_raw ?? "")}</td>
+      <td class="prov">${esc(p.override_note ? "override" : (p.provenance && sourceTag ? `std: ${p.provenance}` : ""))}</td>
+    </tr>`).join("");
+  return `
+    <table class="spec-table">
+      <thead><tr><th>Parameter</th><th>Code 1</th><th>Code 3</th><th></th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <p class="spec-note">Code 2 = between 1 and 3 · Code 4 = better than 3 · Code 0 = beyond 1 or IP intervention.</p>`;
+}
+
+async function showInfo() {
+  if (!state.item || !state.category) return;
+  const modal = $("info-modal");
+  const body = $("info-body");
+  $("info-title").textContent = `${state.item.item_name}`;
+  body.innerHTML = `<p class="hint">Loading criteria…</p>`;
+  modal.classList.remove("hidden");
+  let criteria;
+  try {
+    criteria = await loadCriteria(state.category);
+  } catch (e) {
+    body.innerHTML = `<p class="hint">Failed to load criteria for ${state.category}.</p>`;
+    return;
+  }
+  const item = (criteria.items || []).find((i) => i.id === state.item.item_id);
+  if (!item) {
+    body.innerHTML = `<p class="hint">No criteria entry found for ${state.item.item_id}.</p>`;
+    return;
+  }
+  const ep = item.expected_performance || {};
+  const sc = ep.specific_criteria || {};
+  const resolved = ep.resolved || sc.resolved || item.resolved || null;
+
+  let html = "";
+  const listBlock = (title, arr) => {
+    if (!arr || !arr.length) return "";
+    return `<h4>${title}</h4><ul>${arr.map((x) => `<li>${esc(typeof x === "string" ? x : `${x.key ? x.key + "/ " : ""}${x.text}`)}</li>`).join("")}</ul>`;
+  };
+  html += listBlock("Execution", item.execution);
+  html += listBlock("Conditions", item.conditions);
+  html += listBlock("Expected performance — General criteria", ep.general_criteria);
+
+  // Specific criteria: always show the actual values (own table, or resolved values inline)
+  if (sc.kind === "table" && sc.parameters?.length) {
+    html += `<h4>Expected performance — Specific criteria</h4>` + specTableHtml(sc.parameters, false);
+  } else if (resolved && resolved.parameters?.length) {
+    html += `<h4>Expected performance — Specific criteria</h4>` + specTableHtml(resolved.parameters, true);
+  } else {
+    html += `<h4>Expected performance — Specific criteria</h4>
+      <p class="hint">Qualitative item — graded against the General criteria (no numeric standards).</p>`;
+  }
+  body.innerHTML = html;
+}
+
+$("item-info-btn").onclick = showInfo;
+$("info-close").onclick = () => $("info-modal").classList.add("hidden");
+$("info-modal").onclick = (e) => { if (e.target === $("info-modal")) $("info-modal").classList.add("hidden"); };
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("info-modal").classList.add("hidden"); });
 
 $("item-search").addEventListener("input", renderItems);
 init();
