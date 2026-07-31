@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phase 2 Remarks — T-6A Gradesheet Observations</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-icon">✈</span>
+    <div>
+      <h1>Phase 2 Remarks</h1>
+      <p class="tagline">T-6A Gradesheet Observations · ΒαΔ 3-1 §41 · Phase 2 Syllabus MIF</p>
+    </div>
+  </div>
+  <div class="databadge" id="databadge">—</div>
+</header>
+
+<main class="layout">
+  <!-- STEP 1: Category -->
+  <section class="panel" id="panel-category">
+    <h2><span class="step">1</span> Κατηγορία</h2>
+    <div class="cat-grid" id="cat-grid"></div>
+  </section>
+
+  <!-- STEP 2: Item -->
+  <section class="panel" id="panel-item">
+    <h2><span class="step">2</span> Item</h2>
+    <input type="search" id="item-search" placeholder="Αναζήτηση item…" autocomplete="off" disabled>
+    <div class="item-list" id="item-list"><p class="hint">Διάλεξε πρώτα κατηγορία.</p></div>
+  </section>
+
+  <!-- STEP 3: Codes -->
+  <section class="panel" id="panel-codes">
+    <h2><span class="step">3</span> Κώδικες</h2>
+    <div id="row-select-wrap" class="hidden">
+      <label class="lbl">Ελιγμός / MIF γραμμή</label>
+      <select id="row-select"></select>
+    </div>
+    <label class="lbl">Επιθυμητός (MIF)</label>
+    <div class="chips" id="desired-chips"><p class="hint">—</p></div>
+    <label class="lbl">Κώδικας επίδοσης</label>
+    <div class="chips" id="achieved-chips"><p class="hint">—</p></div>
+  </section>
+
+  <!-- STEP 4: Results -->
+  <section class="panel wide" id="panel-results">
+    <h2><span class="step">4</span> Παρατηρήσεις <span id="result-count" class="count"></span></h2>
+    <div id="results"><p class="hint">Διάλεξε κατηγορία, item και κώδικες για να δεις τις διαθέσιμες παρατηρήσεις.</p></div>
+  </section>
+</main>
+
+<footer class="credit">
+  <span class="credit-line">
+    Developed by <strong>Koro</strong> · with <strong>Claude</strong> riding the right seat
+    · fueled by Kalamata coffee <span class="coffee">☕</span> — July 2026
+  </span>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

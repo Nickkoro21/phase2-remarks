@@ -1,0 +1,1792 @@
+{
+  "tables": [
+    {
+      "table_id": "contact_fs",
+      "title_verbatim": "CONTACT (F/S)",
+      "aircraft": "F/S",
+      "category": "contact",
+      "page_pdf": 91,
+      "columns": [
+        {
+          "unit": "B1001-02",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFU"
+        },
+        {
+          "unit": "C1101",
+          "sorties_dual": 1,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OF"
+        },
+        {
+          "unit": "C2101",
+          "sorties_dual": 1,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFU"
+        },
+        {
+          "unit": "C2201-02",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFP"
+        },
+        {
+          "unit": "C2301-02",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFU"
+        },
+        {
+          "unit": "C2401-03",
+          "sorties_dual": 3,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFP"
+        },
+        {
+          "unit": "C2501-03",
+          "sorties_dual": 3,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFU"
+        },
+        {
+          "unit": "C2601-04",
+          "sorties_dual": 4,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFP"
+        }
+      ],
+      "row_groups": [],
+      "items": [
+        {
+          "sn": 1,
+          "name": "Ground Procedures",
+          "codes": {
+            "B1001-02": "0",
+            "C1101": "1",
+            "C2101": "1",
+            "C2201-02": "1",
+            "C2301-02": "2",
+            "C2401-03": "3",
+            "C2501-03": "3",
+            "C2601-04": "3"
+          }
+        },
+        {
+          "sn": 2,
+          "name": "T/O",
+          "codes": {
+            "B1001-02": null,
+            "C1101": "0",
+            "C2101": "0",
+            "C2201-02": "1",
+            "C2301-02": "2",
+            "C2401-03": "2",
+            "C2501-03": "3",
+            "C2601-04": "3"
+          }
+        },
+        {
+          "sn": 3,
+          "name": "VFR Departure / Transition to Flight Areas",
+          "codes": {
+            "B1001-02": null,
+            "C1101": "0",
+            "C2101": "0",
+            "C2201-02": "1",
+            "C2301-02": "2",
+            "C2401-03": "2",
+            "C2501-03": "3",
+            "C2601-04": "3"
+          }
+        },
+        {
+          "sn": 4,
+          "name": "Area Awareness",
+          "codes": {
+            "B1001-02": null,
+            "C1101": "0",
+            "C2101": null,
+            "C2201-02": "1",
+            "C2301-02": null,
+            "C2401-03": "2",
+            "C2501-03": null,
+            "C2601-04": "3"
+          }
+        },
+        {
+          "sn": 5,
+          "name": "Basic A/C Control",
+          "codes": {
+            "B1001-02": "0",
+            "C1101": "0",
+            "C2101": "0",
+            "C2201-02": "1",
+            "C2301-02": "2",
+            "C2401-03": "3",
+            "C2501-03": "3",
+            "C2601-04": "3"
+          }
+        },
+        {
+          "sn": 6,
+          "name": "G-X Awareness",
+          "codes": {
+            "B1001-02": null,
+            "C1101": null,
+            "C2101": null,
+            "C2201-02": null,
+            "C2301-02": null,
+            "C2401-03": "2",
+            "C2501-03": null,
+            "C2601-04": "3"
+          }
+        },
+        {
+          "sn": 7,
+          "name": "Slow Flight",
+          "codes": {
+            "B1001-02": null,
+            "C1101": null,
+            "C2101": null,
+            "C2201-02": "0",
+            "C2301-02": null,
+            "C2401-03": "1",
+            "C2501-03": null,
+            "C2601-04": "3"
+          }
+        },
+        {
+          "sn": 8,
+          "name": "Power ON / ELP Stalls",
+          "codes": {
+            "B1001-02": null,
+            "C1101": "0",
+            "C2101": null,
+            "C2201-02": "0",
+            "C2301-02": null,
+            "C2401-03": "1",
+            "C2501-03": null,
+            "C2601-04": "3"
+          }
+        },
+        {
+          "sn": 9,
+          "name": "T/P Stalls",
+          "codes": {
+            "B1001-02": null,
+            "C1101": "0",
+            "C2101": null,
+            "C2201-02": "1",
+            "C2301-02": null,
+            "C2401-03": "1",
+            "C2501-03": null,
+            "C2601-04": "3"
+          }
+        },
+        {
+          "sn": 10,
+          "name": "Spin Prevention / Spin Recovery",
+          "codes": {
+            "B1001-02": null,
+            "C1101": null,
+            "C2101": null,
+            "C2201-02": "0",
+            "C2301-02": null,
+            "C2401-03": "0",
+            "C2501-03": null,
+            "C2601-04": "1"
+          }
+        },
+        {
+          "sn": 11,
+          "name": "Unusual Attitudes Recovery",
+          "codes": {
+            "B1001-02": null,
+            "C1101": "0",
+            "C2101": null,
+            "C2201-02": null,
+            "C2301-02": null,
+            "C2401-03": "1",
+            "C2501-03": null,
+            "C2601-04": "3"
+          }
+        },
+        {
+          "sn": 12,
+          "name": "Chandelle",
+          "codes": {
+            "B1001-02": null,
+            "C1101": null,
+            "C2101": null,
+            "C2201-02": "0",
+            "C2301-02": null,
+            "C2401-03": "0",
+            "C2501-03": null,
+            "C2601-04": "2"
+          }
+        },
+        {
+          "sn": 13,
+          "name": "Lazy Eight",
+          "codes": {
+            "B1001-02": null,
+            "C1101": null,
+            "C2101": null,
+            "C2201-02": "0",
+            "C2301-02": null,
+            "C2401-03": "0",
+            "C2501-03": null,
+            "C2601-04": "2"
+          }
+        },
+        {
+          "sn": 14,
+          "name": "Aileron Roll",
+          "codes": {
+            "B1001-02": null,
+            "C1101": null,
+            "C2101": null,
+            "C2201-02": "0",
+            "C2301-02": null,
+            "C2401-03": "0",
+            "C2501-03": null,
+            "C2601-04": "2"
+          }
+        },
+        {
+          "sn": 15,
+          "name": "Barrel Roll",
+          "codes": {
+            "B1001-02": null,
+            "C1101": null,
+            "C2101": null,
+            "C2201-02": null,
+            "C2301-02": null,
+            "C2401-03": null,
+            "C2501-03": null,
+            "C2601-04": "1"
+          }
+        },
+        {
+          "sn": 16,
+          "name": "Loop",
+          "codes": {
+            "B1001-02": null,
+            "C1101": null,
+            "C2101": null,
+            "C2201-02": "0",
+            "C2301-02": null,
+            "C2401-03": "0",
+            "C2501-03": null,
+            "C2601-04": "2"
+          }
+        },
+        {
+          "sn": 17,
+          "name": "Cuban Eight",
+          "codes": {
+            "B1001-02": null,
+            "C1101": null,
+            "C2101": null,
+            "C2201-02": null,
+            "C2301-02": null,
+            "C2401-03": "0",
+            "C2501-03": null,
+            "C2601-04": "1"
+          }
+        },
+        {
+          "sn": 18,
+          "name": "Immelman",
+          "codes": {
+            "B1001-02": null,
+            "C1101": null,
+            "C2101": null,
+            "C2201-02": null,
+            "C2301-02": null,
+            "C2401-03": "0",
+            "C2501-03": null,
+            "C2601-04": "1"
+          }
+        },
+        {
+          "sn": 19,
+          "name": "Split S",
+          "codes": {
+            "B1001-02": null,
+            "C1101": null,
+            "C2101": null,
+            "C2201-02": null,
+            "C2301-02": null,
+            "C2401-03": "0",
+            "C2501-03": null,
+            "C2601-04": "1"
+          }
+        },
+        {
+          "sn": 20,
+          "name": "Cloverleaf",
+          "codes": {
+            "B1001-02": null,
+            "C1101": null,
+            "C2101": null,
+            "C2201-02": null,
+            "C2301-02": null,
+            "C2401-03": "0",
+            "C2501-03": null,
+            "C2601-04": "1"
+          }
+        },
+        {
+          "sn": 21,
+          "name": "Descend – Traffic Pattern Entry",
+          "codes": {
+            "B1001-02": null,
+            "C1101": "0",
+            "C2101": null,
+            "C2201-02": "1",
+            "C2301-02": null,
+            "C2401-03": "1",
+            "C2501-03": null,
+            "C2601-04": "3"
+          }
+        },
+        {
+          "sn": 22,
+          "name": "Airport’s Traffic Pattern",
+          "codes": {
+            "B1001-02": null,
+            "C1101": null,
+            "C2101": null,
+            "C2201-02": null,
+            "C2301-02": null,
+            "C2401-03": "2",
+            "C2501-03": null,
+            "C2601-04": "3"
+          }
+        },
+        {
+          "sn": 23,
+          "name": "Normal Overhead Pattern",
+          "codes": {
+            "B1001-02": null,
+            "C1101": "0",
+            "C2101": null,
+            "C2201-02": "0",
+            "C2301-02": null,
+            "C2401-03": "2",
+            "C2501-03": null,
+            "C2601-04": "3"
+          }
+        },
+        {
+          "sn": 24,
+          "name": "Normal Landing",
+          "codes": {
+            "B1001-02": null,
+            "C1101": "0",
+            "C2101": null,
+            "C2201-02": "0",
+            "C2301-02": null,
+            "C2401-03": "2",
+            "C2501-03": null,
+            "C2601-04": "3"
+          }
+        },
+        {
+          "sn": 25,
+          "name": "No Flap Overhead Pattern",
+          "codes": {
+            "B1001-02": null,
+            "C1101": null,
+            "C2101": null,
+            "C2201-02": "0",
+            "C2301-02": null,
+            "C2401-03": "1",
+            "C2501-03": null,
+            "C2601-04": "2"
+          }
+        },
+        {
+          "sn": 26,
+          "name": "No-Flap Landing",
+          "codes": {
+            "B1001-02": null,
+            "C1101": null,
+            "C2101": null,
+            "C2201-02": "0",
+            "C2301-02": null,
+            "C2401-03": "1",
+            "C2501-03": null,
+            "C2601-04": "2"
+          }
+        },
+        {
+          "sn": 27,
+          "name": "Flaps TO Overhead Pattern",
+          "codes": {
+            "B1001-02": null,
+            "C1101": null,
+            "C2101": null,
+            "C2201-02": "0",
+            "C2301-02": null,
+            "C2401-03": "2",
+            "C2501-03": null,
+            "C2601-04": "3"
+          }
+        },
+        {
+          "sn": 28,
+          "name": "Flaps TO Landing",
+          "codes": {
+            "B1001-02": null,
+            "C1101": null,
+            "C2101": null,
+            "C2201-02": "0",
+            "C2301-02": null,
+            "C2401-03": "2",
+            "C2501-03": null,
+            "C2601-04": "3"
+          }
+        },
+        {
+          "sn": 29,
+          "name": "Straight-In Approach",
+          "codes": {
+            "B1001-02": null,
+            "C1101": "0",
+            "C2101": null,
+            "C2201-02": "1",
+            "C2301-02": null,
+            "C2401-03": "2",
+            "C2501-03": null,
+            "C2601-04": "2"
+          }
+        },
+        {
+          "sn": 30,
+          "name": "ELP",
+          "codes": {
+            "B1001-02": null,
+            "C1101": "0",
+            "C2101": null,
+            "C2201-02": "0",
+            "C2301-02": null,
+            "C2401-03": "1",
+            "C2501-03": null,
+            "C2601-04": "2"
+          }
+        },
+        {
+          "sn": 31,
+          "name": "ELP Landing",
+          "codes": {
+            "B1001-02": null,
+            "C1101": "0",
+            "C2101": null,
+            "C2201-02": "0",
+            "C2301-02": null,
+            "C2401-03": "1",
+            "C2501-03": null,
+            "C2601-04": "2"
+          }
+        },
+        {
+          "sn": 32,
+          "name": "AOA Overhead Pattern",
+          "codes": {
+            "B1001-02": null,
+            "C1101": null,
+            "C2101": null,
+            "C2201-02": null,
+            "C2301-02": null,
+            "C2401-03": null,
+            "C2501-03": null,
+            "C2601-04": "1"
+          }
+        },
+        {
+          "sn": 33,
+          "name": "AOA Landing",
+          "codes": {
+            "B1001-02": null,
+            "C1101": null,
+            "C2101": null,
+            "C2201-02": null,
+            "C2301-02": null,
+            "C2401-03": null,
+            "C2501-03": null,
+            "C2601-04": "1"
+          }
+        },
+        {
+          "sn": 34,
+          "name": "Go Around",
+          "codes": {
+            "B1001-02": null,
+            "C1101": "0",
+            "C2101": null,
+            "C2201-02": "0",
+            "C2301-02": null,
+            "C2401-03": "2",
+            "C2501-03": null,
+            "C2601-04": "3"
+          }
+        },
+        {
+          "sn": 35,
+          "name": "Closed Pattern",
+          "codes": {
+            "B1001-02": null,
+            "C1101": "0",
+            "C2101": null,
+            "C2201-02": "0",
+            "C2301-02": null,
+            "C2401-03": "2",
+            "C2501-03": null,
+            "C2601-04": "3"
+          }
+        },
+        {
+          "sn": 36,
+          "name": "Clearing",
+          "codes": {
+            "B1001-02": null,
+            "C1101": "0",
+            "C2101": null,
+            "C2201-02": "1",
+            "C2301-02": "1",
+            "C2401-03": "2",
+            "C2501-03": "2",
+            "C2601-04": "2"
+          }
+        },
+        {
+          "sn": 37,
+          "name": "Radio Comm.",
+          "codes": {
+            "B1001-02": null,
+            "C1101": "0",
+            "C2101": "1",
+            "C2201-02": "1",
+            "C2301-02": "2",
+            "C2401-03": "2",
+            "C2501-03": "2",
+            "C2601-04": "2"
+          }
+        },
+        {
+          "sn": 38,
+          "name": "Airmanship",
+          "codes": {
+            "B1001-02": null,
+            "C1101": "0",
+            "C2101": "0",
+            "C2201-02": "1",
+            "C2301-02": "1",
+            "C2401-03": "2",
+            "C2501-03": "2",
+            "C2601-04": "2"
+          }
+        },
+        {
+          "sn": 39,
+          "name": "Emergency Procedures",
+          "codes": {
+            "B1001-02": "0",
+            "C1101": "0",
+            "C2101": "1",
+            "C2201-02": "2",
+            "C2301-02": "2",
+            "C2401-03": "3",
+            "C2501-03": "3",
+            "C2601-04": "3"
+          }
+        },
+        {
+          "sn": 40,
+          "name": "General Knowledge",
+          "codes": {
+            "B1001-02": "0",
+            "C1101": "0",
+            "C2101": "1",
+            "C2201-02": "2",
+            "C2301-02": "2",
+            "C2401-03": "2",
+            "C2501-03": "3",
+            "C2601-04": "3"
+          }
+        },
+        {
+          "sn": 41,
+          "name": "Special Requirements",
+          "codes": {
+            "B1001-02": null,
+            "C1101": null,
+            "C2101": null,
+            "C2201-02": "1",
+            "C2301-02": null,
+            "C2401-03": "1",
+            "C2501-03": null,
+            "C2601-04": "2"
+          }
+        }
+      ],
+      "notes_verbatim": [],
+      "flags": [
+        "ΕΠΑΛΗΘΕΥΣΗ: κάθε κελί ελέγχθηκε οπτικά (zoom έως 4x) ΚΑΙ ανεξάρτητα με ανίχνευση πλέγματος + μέτρηση pixel μελάνης ανά κελί. Τα δύο περάσματα συμφωνούν 100% (41 items x 8 στήλες).",
+        "Ο πίνακας ΔΕΝ περιέχει «E», «*» ή «**». Εύρος τιμών: 0, 1, 2, 3 και κενό. Ο κωδικός «4» δεν εμφανίζεται.",
+        "ΑΝΩΜΑΛΙΑ ΧΡΩΜΑΤΟΣ ΚΕΝΟΥ ΚΕΛΙΟΥ (επιβεβαιωμένη): item #15 «Barrel Roll» @ C2401-03 είναι κενό αλλά με ΛΕΥΚΟ (zebra) φόντο, ενώ και τα 6 υπόλοιπα κενά της ίδιας γραμμής είναι ανοιχτοκίτρινα. Τα γειτονικά items #14 και #16 έχουν «0» στην ίδια στήλη. Πιθανή παράλειψη του πρωτοτύπου — καταγράφηκε ως null.",
+        "ΑΝΩΜΑΛΙΑ ΧΡΩΜΑΤΟΣ ΚΕΝΟΥ ΚΕΛΙΟΥ (επιβεβαιωμένη): items #25, #26, #27, #28 @ C1101 είναι κενά με ΛΕΥΚΟ/ΓΚΡΙ (zebra) φόντο αντί για κίτρινο. Τα #23/#24 έχουν «0» στην ίδια στήλη. Καταγράφηκαν ως null.",
+        "Καμία στήλη checkride (καμία πορτοκαλί κεφαλίδα) και όλα τα solo sorties = 0 (κανένα πράσινο ψηφίο) — ελέγχθηκε προγραμματιστικά στο φόντο/χρώμα κεφαλίδων.",
+        "Οι κωδικοί στηλών τυπώνονται ΧΩΡΙΣ κενό μετά το γράμμα-πρόθεμα (π.χ. «B1001-02»), σε αντίθεση με τις σελ. 94/96/98 όπου υπάρχει κενό. Μετρήθηκε 2 px letter-spacing εδώ έναντι 6-7 px εκεί.",
+        "item #22: το απόστροφο είναι τυπογραφικό δεξί μονό εισαγωγικό U+2019 («Airport’s Traffic Pattern»).",
+        "item #21 τυπώνεται «Descend – Traffic Pattern Entry» (en dash U+2013), ενώ το ομόλογο item #5 του FORMATION (F/S) σελ.96 τυπώνεται «Descent – …». Ασυνέπεια του εγγράφου, όχι σφάλμα ανάγνωσης.",
+        "Καμία τυπωμένη σημείωση κάτω από τον πίνακα (text layer σελ.91 = «-83- / CONTACT (F/S)»). notes_verbatim κενό εσκεμμένα."
+      ]
+    },
+    {
+      "table_id": "instrument_fs",
+      "title_verbatim": "INSTRUMENT (F/S)",
+      "aircraft": "F/S",
+      "category": "instrument",
+      "page_pdf": 94,
+      "columns": [
+        {
+          "unit": "I3101-02",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "A"
+        },
+        {
+          "unit": "I3201-03",
+          "sorties_dual": 3,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "A"
+        },
+        {
+          "unit": "I3301-04",
+          "sorties_dual": 4,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "A"
+        },
+        {
+          "unit": "I3401-04",
+          "sorties_dual": 4,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "A"
+        },
+        {
+          "unit": "I3501-04",
+          "sorties_dual": 4,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "A"
+        },
+        {
+          "unit": "I3601",
+          "sorties_dual": 1,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFP"
+        }
+      ],
+      "row_groups": [],
+      "items": [
+        {
+          "sn": 1,
+          "name": "Ground Procedures",
+          "codes": {
+            "I3101-02": "1",
+            "I3201-03": "2",
+            "I3301-04": "3",
+            "I3401-04": "3",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 2,
+          "name": "T/O",
+          "codes": {
+            "I3101-02": null,
+            "I3201-03": null,
+            "I3301-04": null,
+            "I3401-04": null,
+            "I3501-04": null,
+            "I3601": null
+          }
+        },
+        {
+          "sn": 3,
+          "name": "Standard Instrument Departure",
+          "codes": {
+            "I3101-02": "0",
+            "I3201-03": "1",
+            "I3301-04": "2",
+            "I3401-04": "2",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 4,
+          "name": "Basic A/C Control",
+          "codes": {
+            "I3101-02": "0",
+            "I3201-03": "1",
+            "I3301-04": "2",
+            "I3401-04": "2",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 5,
+          "name": "Steep Turns",
+          "codes": {
+            "I3101-02": "0",
+            "I3201-03": "1",
+            "I3301-04": "2",
+            "I3401-04": null,
+            "I3501-04": null,
+            "I3601": null
+          }
+        },
+        {
+          "sn": 6,
+          "name": "Airspeed Changes",
+          "codes": {
+            "I3101-02": "0",
+            "I3201-03": "1",
+            "I3301-04": "2",
+            "I3401-04": "2",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 7,
+          "name": "Constant Speed Climb and Descent",
+          "codes": {
+            "I3101-02": "0",
+            "I3201-03": "1",
+            "I3301-04": "2",
+            "I3401-04": null,
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 8,
+          "name": "Constant Rate Climb and Descent",
+          "codes": {
+            "I3101-02": "0",
+            "I3201-03": "1",
+            "I3301-04": "2",
+            "I3401-04": "2",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 9,
+          "name": "Vertical “S”",
+          "codes": {
+            "I3101-02": "0",
+            "I3201-03": "1",
+            "I3301-04": "2",
+            "I3401-04": null,
+            "I3501-04": null,
+            "I3601": null
+          }
+        },
+        {
+          "sn": 10,
+          "name": "Unusual Attitudes Recovery",
+          "codes": {
+            "I3101-02": "0",
+            "I3201-03": "1",
+            "I3301-04": "2",
+            "I3401-04": "2",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 11,
+          "name": "Confidence Maneuvers",
+          "codes": {
+            "I3101-02": "0",
+            "I3201-03": "1",
+            "I3301-04": "2",
+            "I3401-04": null,
+            "I3501-04": null,
+            "I3601": null
+          }
+        },
+        {
+          "sn": 12,
+          "name": "Course Intercepts",
+          "codes": {
+            "I3101-02": "0",
+            "I3201-03": "1",
+            "I3301-04": "2",
+            "I3401-04": "2",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 13,
+          "name": "Maintaining Course",
+          "codes": {
+            "I3101-02": "0",
+            "I3201-03": "1",
+            "I3301-04": "2",
+            "I3401-04": "2",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 14,
+          "name": "Arc Intercept",
+          "codes": {
+            "I3101-02": "0",
+            "I3201-03": "1",
+            "I3301-04": "2",
+            "I3401-04": "2",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 15,
+          "name": "Maintaining Arc",
+          "codes": {
+            "I3101-02": "0",
+            "I3201-03": "1",
+            "I3301-04": "2",
+            "I3401-04": "2",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 16,
+          "name": "Point to Point",
+          "codes": {
+            "I3101-02": "0",
+            "I3201-03": "1",
+            "I3301-04": "2",
+            "I3401-04": "2",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 17,
+          "name": "Holding",
+          "codes": {
+            "I3101-02": null,
+            "I3201-03": "0",
+            "I3301-04": "1",
+            "I3401-04": "2",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 18,
+          "name": "Instrument Descent (Penetration)",
+          "codes": {
+            "I3101-02": null,
+            "I3201-03": "0",
+            "I3301-04": "1",
+            "I3401-04": "2",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 19,
+          "name": "En-Route Descent",
+          "codes": {
+            "I3101-02": null,
+            "I3201-03": "0",
+            "I3301-04": "1",
+            "I3401-04": "2",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 20,
+          "name": "VOR / TACAN Approach",
+          "codes": {
+            "I3101-02": null,
+            "I3201-03": "0",
+            "I3301-04": "1",
+            "I3401-04": "2",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 21,
+          "name": "ILS Approach",
+          "codes": {
+            "I3101-02": null,
+            "I3201-03": "0",
+            "I3301-04": "1",
+            "I3401-04": "2",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 22,
+          "name": "Localizer Approach",
+          "codes": {
+            "I3101-02": null,
+            "I3201-03": "0",
+            "I3301-04": "1",
+            "I3401-04": "2",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 23,
+          "name": "GCA Approach (ASR)",
+          "codes": {
+            "I3101-02": null,
+            "I3201-03": "0",
+            "I3301-04": "1",
+            "I3401-04": "1",
+            "I3501-04": "2",
+            "I3601": "2"
+          }
+        },
+        {
+          "sn": 24,
+          "name": "GCA Approach (PAR)",
+          "codes": {
+            "I3101-02": null,
+            "I3201-03": "0",
+            "I3301-04": "1",
+            "I3401-04": "1",
+            "I3501-04": "2",
+            "I3601": "2"
+          }
+        },
+        {
+          "sn": 25,
+          "name": "GCA Approach (Gyro Out)",
+          "codes": {
+            "I3101-02": null,
+            "I3201-03": null,
+            "I3301-04": null,
+            "I3401-04": "1",
+            "I3501-04": "2",
+            "I3601": "2"
+          }
+        },
+        {
+          "sn": 26,
+          "name": "Standby Instruments Approach",
+          "codes": {
+            "I3101-02": null,
+            "I3201-03": "0",
+            "I3301-04": "1",
+            "I3401-04": "1",
+            "I3501-04": "2",
+            "I3601": "2"
+          }
+        },
+        {
+          "sn": 27,
+          "name": "Circling Approach",
+          "codes": {
+            "I3101-02": null,
+            "I3201-03": "0",
+            "I3301-04": "1",
+            "I3401-04": "2",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 28,
+          "name": "Landing",
+          "codes": {
+            "I3101-02": null,
+            "I3201-03": null,
+            "I3301-04": null,
+            "I3401-04": null,
+            "I3501-04": null,
+            "I3601": null
+          }
+        },
+        {
+          "sn": 29,
+          "name": "Missed Approach",
+          "codes": {
+            "I3101-02": null,
+            "I3201-03": "1",
+            "I3301-04": "2",
+            "I3401-04": "2",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 30,
+          "name": "Radio Comm.",
+          "codes": {
+            "I3101-02": "0",
+            "I3201-03": "1",
+            "I3301-04": "2",
+            "I3401-04": "2",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 31,
+          "name": "Airmanship",
+          "codes": {
+            "I3101-02": "0",
+            "I3201-03": "1",
+            "I3301-04": "2",
+            "I3401-04": "2",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 32,
+          "name": "Emergency Procedures",
+          "codes": {
+            "I3101-02": "1",
+            "I3201-03": "2",
+            "I3301-04": "3",
+            "I3401-04": "3",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 33,
+          "name": "General Knowledge",
+          "codes": {
+            "I3101-02": "1",
+            "I3201-03": "2",
+            "I3301-04": "3",
+            "I3401-04": "3",
+            "I3501-04": "3",
+            "I3601": "3"
+          }
+        },
+        {
+          "sn": 34,
+          "name": "Special Requirements",
+          "codes": {
+            "I3101-02": null,
+            "I3201-03": "1",
+            "I3301-04": null,
+            "I3401-04": null,
+            "I3501-04": null,
+            "I3601": null
+          }
+        }
+      ],
+      "notes_verbatim": [],
+      "flags": [
+        "ΕΠΑΛΗΘΕΥΣΗ: κάθε κελί ελέγχθηκε οπτικά (zoom έως 12x) ΚΑΙ ανεξάρτητα με ανίχνευση πλέγματος + μέτρηση pixel μελάνης ανά κελί. Τα δύο περάσματα συμφωνούν 100% (34 items x 6 στήλες).",
+        "ΕΠΙΒΕΒΑΙΩΘΗΚΕ το γνωστό ερωτηματικό (σελ.94, item #7 @ I3401-04): το κελί «Constant Speed Climb and Descent» / I3401-04 είναι ΟΝΤΩΣ ΚΕΝΟ και μάλιστα με ΛΕΥΚΟ (zebra) φόντο, όχι με το ανοιχτοκίτρινο των εσκεμμένων κενών. Γείτονες: I3301-04=«2», I3501-04=«3»· η ομόλογη γραμμή #8 «Constant Rate Climb and Descent» έχει «2» εκεί. Είναι το ΜΟΝΑΔΙΚΟ τέτοιο κελί του πίνακα — ισχυρή ένδειξη παράλειψης του πρωτοτύπου. Καταγράφηκε ως null.",
+        "Ο πίνακας ΔΕΝ περιέχει «E», «*» ή «**» — το «**» υπάρχει μόνο στον INSTRUMENT / T-6A (σελ.95). Εύρος τιμών: 0, 1, 2, 3 και κενό.",
+        "items #2 «T/O» και #28 «Landing»: κενά και στις 6 στήλες, όλα με κίτρινο φόντο (εσκεμμένα, δεν αξιολογούνται στον εξομοιωτή).",
+        "Το πρόθεμα «I» των κωδικών στηλών τυπώνεται περιστραμμένο 90° και εμφανίζεται ως οριζόντια μπάρα· επιβεβαιώθηκε ως κεφαλαίο «I» (συμφωνεί με τον I3201 που υπάρχει ως κείμενο στην PDF σελ.193). Στην κεφαλίδα υπάρχει κενό μετά το «I» («I 3101-02» κ.λπ.· 6 px έναντι 2 px φυσιολογικού spacing) — αποθηκεύτηκε χωρίς το κενό.",
+        "item #9: «Vertical “S”» με τυπογραφικά διπλά εισαγωγικά U+201C / U+201D.",
+        "Καμία στήλη checkride (καμία πορτοκαλί κεφαλίδα)· όλα τα solo sorties = 0.",
+        "Καμία τυπωμένη σημείωση κάτω από τον πίνακα (text layer σελ.94 = «-86- / INSTRUMENT (F/S)»). notes_verbatim κενό εσκεμμένα."
+      ]
+    },
+    {
+      "table_id": "formation_fs",
+      "title_verbatim": "FORMATION (F/S)",
+      "aircraft": "F/S",
+      "category": "formation",
+      "page_pdf": 96,
+      "columns": [
+        {
+          "unit": "F3101-2",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFP"
+        },
+        {
+          "unit": "F3201-3",
+          "sorties_dual": 3,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFP"
+        }
+      ],
+      "row_groups": [
+        {
+          "name": "LEADER",
+          "sn_from": 1,
+          "sn_to": 6
+        },
+        {
+          "name": "WINGMAN",
+          "sn_from": 7,
+          "sn_to": 13
+        },
+        {
+          "name": "GENERAL",
+          "sn_from": 14,
+          "sn_to": 38
+        }
+      ],
+      "items": [
+        {
+          "sn": 1,
+          "name": "Formation T/O",
+          "codes": {
+            "F3101-2": "E",
+            "F3201-3": "1"
+          }
+        },
+        {
+          "sn": 2,
+          "name": "Interval T/O",
+          "codes": {
+            "F3101-2": "3",
+            "F3201-3": "3"
+          }
+        },
+        {
+          "sn": 3,
+          "name": "Departure",
+          "codes": {
+            "F3101-2": "1",
+            "F3201-3": "2"
+          }
+        },
+        {
+          "sn": 4,
+          "name": "In flight Planning/ Formation Consistency",
+          "codes": {
+            "F3101-2": "1",
+            "F3201-3": "2"
+          }
+        },
+        {
+          "sn": 5,
+          "name": "Descent – Traffic Pattern Entry",
+          "codes": {
+            "F3101-2": "1",
+            "F3201-3": "2"
+          }
+        },
+        {
+          "sn": 6,
+          "name": "Formation Approach",
+          "codes": {
+            "F3101-2": "1",
+            "F3201-3": "2"
+          }
+        },
+        {
+          "sn": 7,
+          "name": "Formation T/O",
+          "codes": {
+            "F3101-2": "0",
+            "F3201-3": "1"
+          }
+        },
+        {
+          "sn": 8,
+          "name": "Interval T/O",
+          "codes": {
+            "F3101-2": "3",
+            "F3201-3": "3"
+          }
+        },
+        {
+          "sn": 9,
+          "name": "Turning Rejoin",
+          "codes": {
+            "F3101-2": "0",
+            "F3201-3": "1"
+          }
+        },
+        {
+          "sn": 10,
+          "name": "Straight Ahead Rejoin",
+          "codes": {
+            "F3101-2": "0",
+            "F3201-3": "1"
+          }
+        },
+        {
+          "sn": 11,
+          "name": "Overshoot",
+          "codes": {
+            "F3101-2": "0",
+            "F3201-3": "1"
+          }
+        },
+        {
+          "sn": 12,
+          "name": "Breakout",
+          "codes": {
+            "F3101-2": "0",
+            "F3201-3": "1"
+          }
+        },
+        {
+          "sn": 13,
+          "name": "Formation Approach",
+          "codes": {
+            "F3101-2": "0",
+            "F3201-3": "1"
+          }
+        },
+        {
+          "sn": 14,
+          "name": "Mission Planning - Briefing",
+          "codes": {
+            "F3101-2": "1",
+            "F3201-3": "2"
+          }
+        },
+        {
+          "sn": 15,
+          "name": "Ground Procedures",
+          "codes": {
+            "F3101-2": "3",
+            "F3201-3": "3"
+          }
+        },
+        {
+          "sn": 16,
+          "name": "Pitch Out / Spacing",
+          "codes": {
+            "F3101-2": "0",
+            "F3201-3": "1"
+          }
+        },
+        {
+          "sn": 17,
+          "name": "Fingertip",
+          "codes": {
+            "F3101-2": "0",
+            "F3201-3": "1"
+          }
+        },
+        {
+          "sn": 18,
+          "name": "Route / Fighting Wing",
+          "codes": {
+            "F3101-2": "0",
+            "F3201-3": "1"
+          }
+        },
+        {
+          "sn": 19,
+          "name": "Echelon Turn",
+          "codes": {
+            "F3101-2": "0",
+            "F3201-3": "1"
+          }
+        },
+        {
+          "sn": 20,
+          "name": "Position Change (Cross Under)",
+          "codes": {
+            "F3101-2": "0",
+            "F3201-3": "1"
+          }
+        },
+        {
+          "sn": 21,
+          "name": "Lead Change",
+          "codes": {
+            "F3101-2": null,
+            "F3201-3": null
+          }
+        },
+        {
+          "sn": 22,
+          "name": "Close Trail",
+          "codes": {
+            "F3101-2": "0",
+            "F3201-3": "1"
+          }
+        },
+        {
+          "sn": 23,
+          "name": "Extended Trail (Leader/ Wingman)",
+          "codes": {
+            "F3101-2": null,
+            "F3201-3": null
+          }
+        },
+        {
+          "sn": 24,
+          "name": "Tactical Formation",
+          "codes": {
+            "F3101-2": null,
+            "F3201-3": null
+          }
+        },
+        {
+          "sn": 25,
+          "name": "Delay 90°",
+          "codes": {
+            "F3101-2": null,
+            "F3201-3": null
+          }
+        },
+        {
+          "sn": 26,
+          "name": "Delay 45°",
+          "codes": {
+            "F3101-2": null,
+            "F3201-3": null
+          }
+        },
+        {
+          "sn": 27,
+          "name": "In Place",
+          "codes": {
+            "F3101-2": null,
+            "F3201-3": null
+          }
+        },
+        {
+          "sn": 28,
+          "name": "Cross/ Hook/ Shackle/ Check turns",
+          "codes": {
+            "F3101-2": null,
+            "F3201-3": null
+          }
+        },
+        {
+          "sn": 29,
+          "name": "Basic A/C – Formation Control",
+          "codes": {
+            "F3101-2": "2",
+            "F3201-3": "2"
+          }
+        },
+        {
+          "sn": 30,
+          "name": "Landing Pattern",
+          "codes": {
+            "F3101-2": "3",
+            "F3201-3": "3"
+          }
+        },
+        {
+          "sn": 31,
+          "name": "Landing",
+          "codes": {
+            "F3101-2": "3",
+            "F3201-3": "3"
+          }
+        },
+        {
+          "sn": 32,
+          "name": "Visual Signals",
+          "codes": {
+            "F3101-2": null,
+            "F3201-3": null
+          }
+        },
+        {
+          "sn": 33,
+          "name": "Clearing",
+          "codes": {
+            "F3101-2": null,
+            "F3201-3": null
+          }
+        },
+        {
+          "sn": 34,
+          "name": "Radio Comm.",
+          "codes": {
+            "F3101-2": "0",
+            "F3201-3": "1"
+          }
+        },
+        {
+          "sn": 35,
+          "name": "Airmanship",
+          "codes": {
+            "F3101-2": "0",
+            "F3201-3": "1"
+          }
+        },
+        {
+          "sn": 36,
+          "name": "Emergency Procedures",
+          "codes": {
+            "F3101-2": "0",
+            "F3201-3": "1"
+          }
+        },
+        {
+          "sn": 37,
+          "name": "General Knowledge",
+          "codes": {
+            "F3101-2": "1",
+            "F3201-3": "2"
+          }
+        },
+        {
+          "sn": 38,
+          "name": "Special Requirements",
+          "codes": {
+            "F3101-2": null,
+            "F3201-3": null
+          }
+        }
+      ],
+      "notes_verbatim": [],
+      "flags": [
+        "ΕΠΑΛΗΘΕΥΣΗ: κάθε κελί ελέγχθηκε οπτικά (zoom έως 14x) ΚΑΙ ανεξάρτητα με ανίχνευση πλέγματος + μέτρηση pixel μελάνης ανά κελί. Τα δύο περάσματα συμφωνούν 100% (38 items x 2 στήλες).",
+        "ΕΠΙΒΕΒΑΙΩΜΕΝΟ ΜΟΝΟΨΗΦΙΟ ΕΠΙΘΕΜΑ: οι δύο στήλες τυπώνονται «F 3101-2» και «F 3201-3» — με κενό μετά το «F» (μετρήθηκε 6 px έναντι 2 px φυσιολογικού spacing) ΚΑΙ με μονοψήφιο επίθεμα «-2» / «-3», σε αντίθεση με ΟΛΟΥΣ τους άλλους πίνακες MIF που έχουν διψήφιο (C2201-02, I3301-04, N2301-04, F4301-06 κ.λπ.). Αποθηκεύτηκαν ως «F3101-2» / «F3201-3»: αφαιρέθηκε ΜΟΝΟ το κενό, ΔΕΝ έγινε κανονικοποίηση σε «-02»/«-03».",
+        "Οι κωδικοί F31xx / F32xx ΔΕΝ εμφανίζονται πουθενά αλλού στο text layer του PDF (αναζητήθηκαν), οπότε η μορφή τους δεν διασταυρώνεται με άλλη πηγή μέσα στο έγγραφο.",
+        "ΕΠΙΒΕΒΑΙΩΜΕΝΟ «E»: item #1 (LEADER) «Formation T/O» @ F3101-2 = «E». Είναι το ΜΟΝΑΔΙΚΟ «E» του πίνακα· το ομώνυμο item #7 (WINGMAN) έχει «0», σε αντίθεση με τον FORMATION / T-6A (σελ.97) όπου και τα δύο (#1, #7) είναι «E». Το «E» δεν ορίζεται πουθενά στο έγγραφο — δεν ερμηνεύεται εδώ.",
+        "Ομάδες γραμμών επιβεβαιώθηκαν οπτικά από τις κατακόρυφες μπάντες αριστερά και τα έντονα οριζόντια όρια: LEADER 1–6, WINGMAN 7–13, GENERAL 14–38.",
+        "ΟΛΑ τα κενά κελιά είναι ανοιχτοκίτρινα — καμία ανωμαλία χρώματος σε αυτόν τον πίνακα (κενά: #21, #23-#28, #32, #33, #38).",
+        "items #25/#26: ο εκθέτης αποδόθηκε ως σύμβολο μοιρών «°» (U+00B0), σε συμφωνία με το mif_t6a.json· στην ανάλυση της εικόνας (872 dpi ισοδύναμο) δεν διακρίνεται με απόλυτη βεβαιότητα από εκθετικό πεζό «o».",
+        "Ασυνέπεια διαστημάτων γύρω από την κάθετο ΜΕΣΑ στον ίδιο πίνακα (διατηρήθηκε όπως τυπώνεται): #4 «In flight Planning/ Formation Consistency», #23 «Extended Trail (Leader/ Wingman)», #28 «Cross/ Hook/ Shackle/ Check turns» ΧΩΡΙΣ κενό πριν την κάθετο, ενώ #16 «Pitch Out / Spacing» και #18 «Route / Fighting Wing» ΜΕ κενό.",
+        "Παύλες: #14 «Mission Planning - Briefing» με ενωτικό «-» (U+002D)· #5 «Descent – Traffic Pattern Entry» και #29 «Basic A/C – Formation Control» με en dash «–» (U+2013). Επιβεβαιώθηκε με μεγέθυνση 14x.",
+        "#5 «Descent – Traffic Pattern Entry» έναντι «Descend – Traffic Pattern Entry» (item #21) του CONTACT (F/S) σελ.91 — ασυνέπεια του εγγράφου.",
+        "Καμία στήλη checkride· solo sorties = 0 και στις δύο στήλες. Καμία τυπωμένη σημείωση (text layer σελ.96 = «-88- / FORMATION (F/S)»).",
+        "ΕΚΤΟΣ ΠΙΝΑΚΑ (καταγράφεται κατ’ απαίτηση, επιβεβαιώθηκε από το text layer): το έγγραφο είναι ασυνεπές για το τελικό checkride Formation — «F4690» στις PDF σελ. 101 και 221, «F4790» στον mission table της PDF σελ. 207. Αφορά τον FORMATION / T-6A (σελ.97), όχι αυτόν τον πίνακα του εξομοιωτή."
+      ]
+    },
+    {
+      "table_id": "vfr_navigation_fs",
+      "title_verbatim": "NAVIGATION (F/S)",
+      "aircraft": "F/S",
+      "category": "vfr_navigation",
+      "page_pdf": 98,
+      "columns": [
+        {
+          "unit": "N2101",
+          "sorties_dual": 1,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFP"
+        },
+        {
+          "unit": "N2201-02",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFP"
+        },
+        {
+          "unit": "N2301-04",
+          "sorties_dual": 4,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFP"
+        }
+      ],
+      "row_groups": [],
+      "items": [
+        {
+          "sn": 1,
+          "name": "Mission Planning/ Briefing - Debriefing",
+          "codes": {
+            "N2101": "1",
+            "N2201-02": "2",
+            "N2301-04": "3"
+          }
+        },
+        {
+          "sn": 2,
+          "name": "Ground Procedures",
+          "codes": {
+            "N2101": "1",
+            "N2201-02": "2",
+            "N2301-04": "3"
+          }
+        },
+        {
+          "sn": 3,
+          "name": "T/O",
+          "codes": {
+            "N2101": "*",
+            "N2201-02": "*",
+            "N2301-04": "*"
+          }
+        },
+        {
+          "sn": 4,
+          "name": "VFR / SID Departure",
+          "codes": {
+            "N2101": "2",
+            "N2201-02": "2",
+            "N2301-04": "3"
+          }
+        },
+        {
+          "sn": 5,
+          "name": "Basic A/C control",
+          "codes": {
+            "N2101": "2",
+            "N2201-02": "2",
+            "N2301-04": "3"
+          }
+        },
+        {
+          "sn": 6,
+          "name": "In flight Planning/ Formation Consistency",
+          "codes": {
+            "N2101": "1",
+            "N2201-02": "2",
+            "N2301-04": "3"
+          }
+        },
+        {
+          "sn": 7,
+          "name": "Fingertip",
+          "codes": {
+            "N2101": null,
+            "N2201-02": null,
+            "N2301-04": null
+          }
+        },
+        {
+          "sn": 8,
+          "name": "Tactical Formation",
+          "codes": {
+            "N2101": null,
+            "N2201-02": null,
+            "N2301-04": null
+          }
+        },
+        {
+          "sn": 9,
+          "name": "Tactical Turns",
+          "codes": {
+            "N2101": null,
+            "N2201-02": null,
+            "N2301-04": null
+          }
+        },
+        {
+          "sn": 10,
+          "name": "Maintaining Course",
+          "codes": {
+            "N2101": "1",
+            "N2201-02": "2",
+            "N2301-04": "3"
+          }
+        },
+        {
+          "sn": 11,
+          "name": "Map Reading",
+          "codes": {
+            "N2101": "1",
+            "N2201-02": "2",
+            "N2301-04": "3"
+          }
+        },
+        {
+          "sn": 12,
+          "name": "Turning Points Recognition",
+          "codes": {
+            "N2101": "1",
+            "N2201-02": "2",
+            "N2301-04": "3"
+          }
+        },
+        {
+          "sn": 13,
+          "name": "GPS Use",
+          "codes": {
+            "N2101": null,
+            "N2201-02": null,
+            "N2301-04": null
+          }
+        },
+        {
+          "sn": 14,
+          "name": "VFR Arrival / Traffic Pattern Entry",
+          "codes": {
+            "N2101": "3",
+            "N2201-02": "3",
+            "N2301-04": "3"
+          }
+        },
+        {
+          "sn": 15,
+          "name": "Instrument Procedures",
+          "codes": {
+            "N2101": "*",
+            "N2201-02": "*",
+            "N2301-04": "*"
+          }
+        },
+        {
+          "sn": 16,
+          "name": "Formation Approach",
+          "codes": {
+            "N2101": null,
+            "N2201-02": null,
+            "N2301-04": null
+          }
+        },
+        {
+          "sn": 17,
+          "name": "Airport Traffic Pattern",
+          "codes": {
+            "N2101": "*",
+            "N2201-02": "*",
+            "N2301-04": "*"
+          }
+        },
+        {
+          "sn": 18,
+          "name": "Landing Pattern",
+          "codes": {
+            "N2101": "*",
+            "N2201-02": "*",
+            "N2301-04": "*"
+          }
+        },
+        {
+          "sn": 19,
+          "name": "Landing",
+          "codes": {
+            "N2101": "*",
+            "N2201-02": "*",
+            "N2301-04": "*"
+          }
+        },
+        {
+          "sn": 20,
+          "name": "Instrument Procedures",
+          "codes": {
+            "N2101": null,
+            "N2201-02": null,
+            "N2301-04": null
+          }
+        },
+        {
+          "sn": 21,
+          "name": "Clearing",
+          "codes": {
+            "N2101": "1",
+            "N2201-02": "3",
+            "N2301-04": "3"
+          }
+        },
+        {
+          "sn": 22,
+          "name": "Radio Comm.",
+          "codes": {
+            "N2101": "1",
+            "N2201-02": "2",
+            "N2301-04": "3"
+          }
+        },
+        {
+          "sn": 23,
+          "name": "Airmanship",
+          "codes": {
+            "N2101": "1",
+            "N2201-02": "2",
+            "N2301-04": "3"
+          }
+        },
+        {
+          "sn": 24,
+          "name": "Emergency Procedures",
+          "codes": {
+            "N2101": "1",
+            "N2201-02": "2",
+            "N2301-04": "3"
+          }
+        },
+        {
+          "sn": 25,
+          "name": "General Knowledge",
+          "codes": {
+            "N2101": "1",
+            "N2201-02": "2",
+            "N2301-04": "3"
+          }
+        },
+        {
+          "sn": 26,
+          "name": "Special Requirements",
+          "codes": {
+            "N2101": null,
+            "N2201-02": null,
+            "N2301-04": null
+          }
+        }
+      ],
+      "notes_verbatim": [],
+      "flags": [
+        "ΕΠΑΛΗΘΕΥΣΗ: κάθε κελί ελέγχθηκε οπτικά (zoom έως 14x) ΚΑΙ ανεξάρτητα με ανίχνευση πλέγματος + μέτρηση pixel μελάνης ανά κελί. Τα δύο περάσματα συμφωνούν 100% (26 items x 3 στήλες).",
+        "ΕΠΙΒΕΒΑΙΩΜΕΝΟ ΔΙΠΛΟ ITEM: τα #15 και #20 έχουν ΤΑΥΤΟΣΗΜΟ όνομα «Instrument Procedures» (ελέγχθηκε με μεγέθυνση, δεν υπάρχει διαφοροποιητικό επίθετο). Διαφορετικές τιμές: #15 = «*» και στις 3 στήλες, #20 = κενό και στις 3. Ίδιο φαινόμενο και στον NAVIGATION / T-6A (σελ.99).",
+        "ΕΠΙΒΕΒΑΙΩΜΕΝΟΙ ΑΣΤΕΡΙΣΚΟΙ: items #3 «T/O», #15, #17 «Airport Traffic Pattern», #18 «Landing Pattern», #19 «Landing» έχουν ΜΟΝΟ αστερίσκο «*» (όχι «**») σε ΟΛΕΣ τις στήλες, τυπωμένο πάνω σε ανοιχτοκίτρινο φόντο.",
+        "Ο αστερίσκος ΔΕΝ επεξηγείται στη σελ.98 — το text layer της σελίδας περιέχει μόνο «-90- / NAVIGATION (F/S)». Η σημείωση «(*) According to the standard of the Training Section SP is flying» τυπώνεται ΜΟΝΟ στη σελ.99 (NAVIGATION / T-6A). Γι’ αυτό το notes_verbatim εδώ είναι ΚΕΝΟ εσκεμμένα· η κατ’ αναλογία ισχύς της σημείωσης είναι υπόθεση, όχι τυπωμένο κείμενο.",
+        "ΕΠΑΛΗΘΕΥΜΕΝΗ ΑΝΩΜΑΛΗ ΤΙΜΗ: item #21 «Clearing» = 1 / 3 / 3 (ΟΧΙ 1/2/3 όπως όλες οι άλλες προοδευτικές γραμμές). Το μεσαίο κελί N2201-02 είναι «3» — επιβεβαιώθηκε με μεγέθυνση 14x και με μέτρηση pixel μελάνης (28 px = «3», ενώ «2» δίνει 25 px στο ίδιο φόντο).",
+        "ΟΛΑ τα κενά κελιά είναι ανοιχτοκίτρινα — καμία ανωμαλία χρώματος (κενά: #7, #8, #9, #13, #16, #20, #26).",
+        "Ο πίνακας ΔΕΝ περιέχει «E» ούτε «**». Εύρος τιμών: 1, 2, 3, «*» και κενό (δεν εμφανίζεται ούτε «0»).",
+        "Οι κωδικοί στηλών τυπώνονται με κενό μετά το «N» («N 2101», «N 2201-02», «N 2301-04»· 7 px έναντι 2 px φυσιολογικού spacing) — αποθηκεύτηκαν χωρίς το κενό.",
+        "Ονοματολογία: #5 «Basic A/C control» με ΠΕΖΟ «c» (έναντι «Basic A/C Control» στις σελ. 91 και 94). #1 και #6 χωρίς κενό πριν την κάθετο, ενώ #4 «VFR / SID Departure» και #14 «VFR Arrival / Traffic Pattern Entry» με κενό. #1 «Mission Planning/ Briefing - Debriefing» με ενωτικό «-».",
+        "#17 «Airport Traffic Pattern» ΧΩΡΙΣ απόστροφο, σε αντίθεση με «Airport’s Traffic Pattern» (item #22) του CONTACT (F/S) σελ.91.",
+        "Καμία στήλη checkride (καμία πορτοκαλί κεφαλίδα)· όλα τα solo sorties = 0."
+      ]
+    }
+  ]
+}

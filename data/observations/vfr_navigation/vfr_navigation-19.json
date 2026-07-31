@@ -1,0 +1,100 @@
+{
+  "item_id": "vfr_navigation-19",
+  "item_name": "LANDING",
+  "category": "vfr_navigation",
+  "mif_numbers": [19],
+  "mif_rows": [
+    {
+      "sn": 19,
+      "row_name": "Landing",
+      "desired_codes_seen": [3]
+    },
+    {
+      "sn": 19,
+      "row_name": "Landing (F/S)",
+      "desired_codes_seen": []
+    }
+  ],
+  "observations": [
+    {
+      "id": "vfr_navigation-19-19-d3a0-v1",
+      "mif_row": "Landing",
+      "desired": 3,
+      "achieved": 0,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to a late and shallow round-out with power retained above idle, did not arrest the sink rate at the correct landing attitude in the FLAPS LDG configuration, with the result of a touch-down approximately 1900 feet from the beginning of the runway and 14 knots above the computed touch-down speed, beyond the code 1 limits of 1500 feet and +10 knots. The IP took the controls and directed the go-around. Landing technique and aim point control require further practice.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-19-19-d3a0-v2",
+      "mif_row": "Landing",
+      "desired": 3,
+      "achieved": 0,
+      "variant": "human_factor",
+      "hf_concept": "hf-monitoring-cross-check",
+      "text": "SP, due to inadequate monitoring of airspeed during the approach at the end of a long navigation route, did not establish the touch-down speed nor the runway centerline before the flare, with the result of a touch-down about 22 feet left of the centerline, beyond the code 1 limit of 15 feet. Recognition of the developing deviation did not occur without assistance and the IP executed part of the directional control during the roll-out. A deliberate cross-check of speed and lateral track on final is required.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-19-19-d3a1-v1",
+      "mif_row": "Landing",
+      "desired": 3,
+      "achieved": 1,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to an early power reduction followed by an extended float, did not place the aircraft on the runway within the desired touch-down zone, with the result of a touch-down at approximately 1500 feet from the beginning of the runway, at the code 1 limit. The flare technique was corrected only after the IP's verbal prompts and recognition of the deviation was delayed. No IP intervention on the controls was required.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-19-19-d3a1-v2",
+      "mif_row": "Landing",
+      "desired": 3,
+      "achieved": 1,
+      "variant": "human_factor",
+      "hf_concept": "hf-continuation-bias",
+      "text": "SP, due to continuation bias in maintaining the approach after the aim point had already drifted, did not re-establish the aiming point nor the computed touch-down speed before the flare, with the result of a touch-down 10 knots fast, at the code 1 limit of +10 knots. The energy excess was recognized and corrected only following the IP's verbal instruction, with delay. The go-around option was not considered at any point.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-19-19-d3a2-v1",
+      "mif_row": "Landing",
+      "desired": 3,
+      "achieved": 2,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to a round-out initiated slightly above the correct height, did not hold the landing attitude uniformly through the flare, with the result of a touch-down at approximately 1250 feet from the beginning of the runway, between the desired 1000 feet and the code 1 limit of 1500 feet. The deviation was recognized and the aim point corrected on the following pattern in a timely manner, without IP's intervention.",
+      "sentences": 2
+    },
+    {
+      "id": "vfr_navigation-19-19-d3a2-v2",
+      "mif_row": "Landing",
+      "desired": 3,
+      "achieved": 2,
+      "variant": "human_factor",
+      "hf_concept": "hf-attention-bottleneck",
+      "text": "SP, due to an attention bottleneck on the arrival radio calls at the expense of the visual aim point, did not hold the lateral track through the final segment, with the result of a touch-down approximately 10 feet right of the centerline, between the desired 5 feet and the code 1 limit of 15 feet. Directional control was re-established during the roll-out in a timely manner and without IP's intervention. The aircraft state was not allowed to develop further.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-19-19-d3a3-v1",
+      "mif_row": "Landing",
+      "desired": 3,
+      "achieved": 3,
+      "variant": "marginal",
+      "hf_concept": null,
+      "text": "SP performed the landings within the desired standards, touching down inside the 1000 feet zone, within 5 feet of the centerline and within the 0 to +5 knot band. However, the touch-down point reached the far edge of the desired zone on two of the three landings and the flare was each time initiated marginally high, requiring a small attitude correction. Marginal performance for the Training Section - consistency in flare height judgement and aim point control is expected to improve.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-19-19-d3a4-v1",
+      "mif_row": "Landing",
+      "desired": 3,
+      "achieved": 4,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP executed the landings with precise energy management and a stabilized final segment, placing the aircraft consistently on the 1000 feet aim point with negligible deviations from the centerline and from the computed touch-down speed. Directional control through the roll-out was maintained without corrective inputs and no IP prompting was required at any stage. Accuracy and speed of correction were above the desired levels for the Training Section. Above end of block MIF achieved.",
+      "sentences": 4
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "item_id": "vfr_navigation-17",
+  "item_name": "TRAFFIC PATTERN PROCEDURES",
+  "category": "vfr_navigation",
+  "mif_numbers": [17],
+  "mif_rows": [
+    {
+      "sn": 17,
+      "row_name": "Airport Traffic Pattern",
+      "desired_codes_seen": [3]
+    }
+  ],
+  "observations": [
+    {
+      "id": "vfr_navigation-17-17-d3a0-v1",
+      "mif_row": "Airport Traffic Pattern",
+      "desired": 3,
+      "achieved": 0,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to a pattern entry technique that traded altitude control for spacing, did not overfly the traffic pattern points described in the LAP within the maximum radius of 0.5 NM and did not maintain the pattern altitude, with the result of a 400 feet altitude deviation on the downwind leg and a 25 knot airspeed excess. The IP directed the repositioning and flew part of the crosswind turn to re-establish spacing with the preceding traffic. The procedure could not be completed without assistance.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-17-17-d3a0-v2",
+      "mif_row": "Airport Traffic Pattern",
+      "desired": 3,
+      "achieved": 0,
+      "variant": "human_factor",
+      "hf_concept": "hf-situational-awareness",
+      "text": "SP, due to loss of situational awareness of the aircraft's position in the pattern, did not maintain proper spacing to the other traffic and did not give the standardized position reports at the published points, with the result of a 350 feet altitude deviation and an overflight of the pattern entry point 1.2 NM outside the 0.5 NM radius of the LAP point. The IP took control to re-enter the pattern and passed the required reports. Pattern geometry and position reporting are to be re-briefed before the next sortie.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-17-17-d3a1-v1",
+      "mif_row": "Airport Traffic Pattern",
+      "desired": 3,
+      "achieved": 1,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to a late roll-out technique in the crosswind and downwind turns, did not overfly the traffic pattern points as described in the LAP and did not check continuously the control and performance instruments, with the result of a 300 feet altitude deviation and a 20 knot airspeed deviation on the downwind leg. Corrections were applied only after the IP's verbal prompts, and the deviations were recognized and corrected with delay. No IP intervention on the controls was required.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-17-17-d3a1-v2",
+      "mif_row": "Airport Traffic Pattern",
+      "desired": 3,
+      "achieved": 1,
+      "variant": "human_factor",
+      "hf_concept": "hf-workload-management",
+      "text": "SP, due to inadequate workload management during the approach phase, did not monitor the radio and did not check the position of the other aircraft according to their position reports and the ATC instructions, with the result that the base turn was started 10 degrees off the LAP heading and the pattern altitude was low by 300 feet. Spacing to the preceding traffic was restored only after the IP's verbal prompts, with delayed recognition of the developing sequence. Clearing and radio monitoring remained incomplete for the rest of the pattern.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-17-17-d3a2-v1",
+      "mif_row": "Airport Traffic Pattern",
+      "desired": 3,
+      "achieved": 2,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to a delayed power reduction abeam the landing threshold, did not hold the pattern airspeed on the downwind leg, with the result of a 15 knot airspeed deviation and a 200 feet climb above the pattern altitude. The deviations were recognized and corrected in a timely manner, without the IP's intervention. Spacing to the preceding traffic and the standardized position reports were maintained throughout the pattern.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-17-17-d3a2-v2",
+      "mif_row": "Airport Traffic Pattern",
+      "desired": 3,
+      "achieved": 2,
+      "variant": "human_factor",
+      "hf_concept": "hf-complacency",
+      "text": "SP, due to complacency in a familiar pattern that replaced an active scan, did not check continuously the indications of the control and performance instruments during the crosswind turn, with the result of an 8 degree deviation from the LAP downwind heading and a 200 feet altitude deviation. Both errors were minor and were recognized and corrected in a timely manner, without the IP's intervention. All standardized position reports were given at the published points and clearing was maintained.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-17-17-d3a3-v1",
+      "mif_row": "Airport Traffic Pattern",
+      "desired": 3,
+      "achieved": 3,
+      "variant": "marginal",
+      "hf_concept": null,
+      "text": "SP executed the airport traffic pattern within the desired standards, overflying the LAP points within the 0.5 NM radius and holding the pattern altitude within 150 feet and the airspeed within 10 knots. However, spacing to the preceding traffic on the downwind leg was twice re-adjusted late, and two standardized position reports were given after the published point. Marginal performance for the Training Section - anticipation of the pattern points and timeliness of the position reports are expected to improve.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-17-17-d3a4-v1",
+      "mif_row": "Airport Traffic Pattern",
+      "desired": 3,
+      "achieved": 4,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP executed the airport traffic pattern with exceptional accuracy and standardization, overflying all LAP points well inside the 0.5 NM radius while clearing constantly and maintaining proper spacing to the other traffic. Altitude, airspeed and headings were held with negligible deviations throughout the pattern, and all standardized position reports were given at the published points without any prompting. Radio monitoring and correlation of the other aircraft positions with their reports and the ATC instructions were continuous. Above end of block MIF achieved.",
+      "sentences": 4
+    }
+  ]
+}

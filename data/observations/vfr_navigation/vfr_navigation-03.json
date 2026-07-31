@@ -1,0 +1,99 @@
+{
+  "item_id": "vfr_navigation-03",
+  "item_name": "TAKEOFF",
+  "category": "vfr_navigation",
+  "mif_numbers": [
+    3
+  ],
+  "mif_rows": [
+    {
+      "sn": 3,
+      "row_name": "T/O",
+      "desired_codes_seen": [
+        3
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "id": "vfr_navigation-03-3-d3a0-v1",
+      "mif_row": "T/O",
+      "desired": 3,
+      "achieved": 0,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to late and coarse rudder inputs from brakes release onward, did not maintain the A/C at the centerline during T/O and did not bring the A/C to the proper T/O attitude. Lateral displacement reached 16 ft from the runway centerline, well beyond the 10 ft limit, and the IP had to make corrective rudder inputs on the take off roll. The After Takeoff Checklist and the L/G and flaps retraction were completed only after the IP directed each item. Directional control technique on the take off roll requires further work before the next navigation sortie.",
+      "sentences": 4
+    },
+    {
+      "id": "vfr_navigation-03-3-d3a0-v2",
+      "mif_row": "T/O",
+      "desired": 3,
+      "achieved": 0,
+      "variant": "human_factor",
+      "hf_concept": "hf-attention-bottleneck",
+      "text": "SP, due to attention captured by a minor system indication while the aircraft state went unmonitored, did not execute the T/O with the standard airspeed and did not accelerate to the standard climb airspeed as required by the calculated T/O data. Take off airspeed exceeded the standard value by 15 knots against a permitted +10 knots, and the A/C was allowed to remain in the T/O configuration past the point of retraction. The IP had to direct the L/G and flaps retraction and to set the proper climbing attitude. The item could not be completed without IP assistance.",
+      "sentences": 4
+    },
+    {
+      "id": "vfr_navigation-03-3-d3a1-v1",
+      "mif_row": "T/O",
+      "desired": 3,
+      "achieved": 1,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to a delayed rotation input that held the A/C on the runway past the calculated rotation point, did not execute the T/O with the standard airspeed. Take off airspeed reached +10 knots over the standard value, at the outer limit of the permitted deviation. The deviation was recognized and corrected with delay, only after the IP's verbal prompt to set the proper T/O attitude, with no IP intervention on the controls.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-03-3-d3a1-v2",
+      "mif_row": "T/O",
+      "desired": 3,
+      "achieved": 1,
+      "variant": "human_factor",
+      "hf_concept": "hf-distraction",
+      "text": "SP, due to distraction by a secondary cockpit task during a critical phase of flight, did not maintain the A/C at the centerline during T/O. Lateral displacement reached 10 ft, at the limit of the permitted deviation, and the drift was allowed to develop before any correction was applied. The A/C was returned to the centerline only after the IP's verbal call, with recognition and correction achieved with delay. Scan discipline between brakes release and lift-off is to be re-established.",
+      "sentences": 4
+    },
+    {
+      "id": "vfr_navigation-03-3-d3a2-v1",
+      "mif_row": "T/O",
+      "desired": 3,
+      "achieved": 2,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to insufficient aileron input into the crosswind during the acceleration phase, did not hold the A/C precisely at the centerline during T/O. Lateral displacement reached 8 ft, beyond the 5 ft desired value but inside the 10 ft limit. The deviation was recognized and corrected in a timely manner without IP intervention, and the Lineup Check and After Takeoff Checklist were completed without omissions.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-03-3-d3a2-v2",
+      "mif_row": "T/O",
+      "desired": 3,
+      "achieved": 2,
+      "variant": "human_factor",
+      "hf_concept": "hf-monitoring-cross-check",
+      "text": "SP, due to failure to monitor the aircraft state after the configuration change, did not accelerate and maintain the proper climb airspeed immediately after the L/G and flaps retraction. Airspeed reached +7 knots over the standard value, outside the desired +5 knots but within the permitted +10 knots, with no speed limit violation during cleanup. The trend was recognized and corrected in a timely manner by adjusting the climbing attitude, without IP intervention.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-03-3-d3a3-v1",
+      "mif_row": "T/O",
+      "desired": 3,
+      "achieved": 3,
+      "variant": "marginal",
+      "hf_concept": null,
+      "text": "SP executed the T/O within the desired standards, performing the Lineup Check without omissions, allowing no A/C movement during engine run-up and cleaning the A/C configuration without violating the speed limit. Take off airspeed was held at +5 knots and lateral displacement from the runway centerline touched 5 ft on two occasions, at the edge of the desired values, with correction applied without IP prompting. Marginal performance for the Training Section, as the parameters were held at the boundary rather than centered. Tighter airspeed control at rotation and earlier centerline corrections are expected to improve on the next navigation sortie.",
+      "sentences": 4
+    },
+    {
+      "id": "vfr_navigation-03-3-d3a4-v1",
+      "mif_row": "T/O",
+      "desired": 3,
+      "achieved": 4,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP executed the departure with accuracy and speed, completing the Lineup Check and the After Takeoff Checklist without omissions and confirming A/C performance against the calculated T/O data. Take off airspeed was flown within +1 knot of the standard value and the A/C was held within 2 ft of the runway centerline throughout the take off roll, deviations that were negligible. The proper T/O attitude and the subsequent climbing attitude were set and maintained, with L/G and flaps retraction inside the speed limit and immediate acceleration to the standard climb airspeed. No IP prompting was required at any point of the sequence. Above end of block MIF achieved.",
+      "sentences": 5
+    }
+  ]
+}

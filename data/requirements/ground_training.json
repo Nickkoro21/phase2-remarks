@@ -1,0 +1,1084 @@
+{
+  "domain": "ground_training",
+  "scope": "Phase II student pilots (T-6A)",
+  "scope_notes": "ΜΟΝΟ μαθητές ιπτάμενοι (Ίκαροι / Ανθυποσμηναγοί) του Βασικού Σταδίου Phase II σε Τ-6Α. Εξαιρούνται: Κεφ.3 (ΜΕΤ/ΕΕΠ/εκπαιδευτές), Κεφ.4 (συντήρηση), Κεφ.5 (επιδείξεις), Κεφ.6 (ραδιοναυτίλοι ΣΜΥΑ), 3-01 §§73-82 (Phase III/IV M-346). ΔΙΕΥΚΡΙΝΙΣΗ: οι παρ. 89-90 και ο Πίνακας 8 της 3-01 («Επαναδιάθεση Μαθητών», PDF 73-74) ΕΙΝΑΙ ΕΝΤΟΣ ΠΕΡΙΜΕΤΡΟΥ — η παρ. 89 δεσμεύει ρητά την ΠΡΟ «ΜΟΝΟΣ» φάση του Βασικού (Phase II) και ο Πίνακας 8 ισχύει για κάθε μαθητή που χάνει τη διαθεσιμότητα, ανεξαρτήτως Σταδίου· ΔΕΝ καλύπτονται από τον αποκλεισμό §§73-82. Οι διατάξεις του ΠΔ 29/2020 Άρθρο 3 περιλαμβάνονται γιατί δεσμεύουν ρητά Ικάρους/Ανθσγούς της ΣΙ.",
+  "sources": [
+    {
+      "file": "Phase_2_Syllabus_2025.pdf",
+      "pages_pdf": [9, 23, 101, 102, 105, 106, 107, 109, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 141, 143, 146, 151, 157, 159, 160, 167, 193],
+      "note": "Offset τυπωμένη σελίδα + 8 = PDF σελίδα. PART I §§2,5,6 & §9· PART II §11 Ground Training (Training Program + Program Analysis)· PART III §12 A/C Familiarization Program (§12.a Training Program, §12.b General Knowledge, §12.c.(1) Special Instructions)· PART IV/V πεδία «RESTRICTIONS» των Training Sections (PDF 141-193) που περιέχουν προαπαιτούμενα ΘΕΩΡΗΤΙΚΗΣ εκπαίδευσης."
+    },
+    {
+      "file": "3-01_2025_ΔΑΕ.pdf",
+      "pages_pdf": [37, 38, 39, 42, 43, 46, 53, 54, 55, 56, 61, 62, 63, 64, 65, 66, 67, 73, 74],
+      "note": "Offset τυπωμένη σελίδα + 18 = PDF σελίδα (Κεφάλαια). ΚΕΦΑΛΑΙΟ 2 «ΠΤΗΤΙΚΗ ΕΚΠΑΙΔΕΥΣΗ ΜΑΘΗΤΩΝ», συμπεριλαμβανομένων των παρ. 52 (Exit Level Phase II) και 89-90 + Πίνακας 8 («Επαναδιάθεση Μαθητών»)."
+    },
+    {
+      "file": "fek_a_57_2020.pdf",
+      "pages_pdf": [5, 6],
+      "note": "ΠΔ 29/2020 (ΦΕΚ Α΄ 57), Άρθρο 3 «Ίκαροι ή Ανθυποσμηναγοί Ιπτάμενοι στα στάδια Πτητικής Εκπαίδευσης της Σχολής Ικάρων» (παρ. 1, 4, 5 στην PDF 5· παρ. 10 στην PDF 6)."
+    }
+  ],
+  "requirements": [
+    {
+      "id": "gt-01",
+      "topic": "Φορέας παροχής θεωρητικής εκπαίδευσης",
+      "requirement": "Η θεωρητική (εδάφους) εκπαίδευση που υποστηρίζει το Βασικό Στάδιο (Phase II) παρέχεται στους μαθητές κατά την παραμονή τους στην 120ΠΕΑ από τη Μοίρα που είναι υπεύθυνη για την πτητική εκπαίδευση. Δύναται να προστεθεί επιπλέον εκπαίδευση (εκπαιδευτικές περίοδοι και F/S) πέραν του προγράμματος.",
+      "verbatim": "Ground Training that supports Basic Training Phase (Phase II) is provided to SPs, during their stay at 120 FTW, by Squadron that is responsible for the flight training. The subjects included in the Ground Training are determined in the training program below. Additional training (educational periods and F/S) could be added to the following training program.",
+      "values": {},
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 105, "ref": "PART II, 11. GROUND TRAINING, a. GENERAL"},
+      "links": ["gt-02", "gt-14"],
+      "flags": []
+    },
+    {
+      "id": "gt-02",
+      "topic": "Σύνολο εκπαιδευτικών περιόδων θεωρητικής εκπαίδευσης",
+      "requirement": "Οι μαθητές παρακολουθούν πρόγραμμα θεωρητικής εκπαίδευσης 524 εκπαιδευτικών περιόδων (282 για τους αλλοδαπούς μαθητές κατά το κείμενο). Οι κωδικοί που χρησιμοποιούνται παραπέμπουν στο CBTS.",
+      "verbatim": "SPs shall attend Ground Training program, which comprises 524 (282 for the foreign SPs) training periods. Codes used, refer to CBTS.",
+      "values": {
+        "training_periods_total_greek_sp": 524,
+        "training_periods_total_foreign_sp_text": 282,
+        "training_periods_total_foreign_sp_table": 279
+      },
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 105, "ref": "PART II, 11.b.(1)"},
+      "links": ["gt-10", "gt-11", "gt-27"],
+      "flags": [
+        "ΑΝΤΙΦΑΣΗ (εντός Syllabus): Το κείμενο §11.b.(1) (PDF 105) αναφέρει 282 περιόδους για αλλοδαπούς μαθητές, ενώ ο πίνακας §11.b.(6) (PDF 107) δίνει TOTAL 279. Το άθροισμα των γραμμών του πίνακα επαληθεύεται ακριβώς στο 279. Διαφορά 3 περιόδων — ΔΕΝ επιλύεται."
+      ]
+    },
+    {
+      "id": "gt-03",
+      "topic": "Ελάχιστη διάρκεια θεωρητικής εκπαίδευσης",
+      "requirement": "Η ελάχιστη διάρκεια της θεωρητικής (εδάφους) εκπαίδευσης είναι είκοσι πέντε (25) εργάσιμες ημέρες, στις οποίες περιλαμβάνονται 10 ημέρες εκπαίδευσης WSGES.",
+      "verbatim": "In advance, minimum duration for ground training is twenty five (25) working days (including 10 days of WSGES training).",
+      "values": {
+        "min_ground_training_working_days": 25,
+        "of_which_wsges_days": 10,
+        "min_flying_days_phase": 78
+      },
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 9, "ref": "PART I, 2. TRAINING DURATION"},
+      "links": ["gt-14"],
+      "flags": []
+    },
+    {
+      "id": "gt-04",
+      "topic": "Χρόνος διεξαγωγής γραπτής εξέτασης ανά μάθημα",
+      "requirement": "Τρεις ημέρες μετά την ολοκλήρωση κάθε μαθήματος/αντικειμένου, οι μαθητές δίνουν γραπτή εξέταση.",
+      "verbatim": "Three days after completion of each subject – lesson, SPs will take a written exam.",
+      "values": {"days_after_lesson_completion": 3},
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 105, "ref": "PART II, 11.b.(2)"},
+      "links": ["gt-29", "fail-29"],
+      "flags": [
+        "ΔΙΑΦΟΡΑ ΔΙΑΤΥΠΩΣΗΣ με 3-01 §4.α (PDF 38): «Τουλάχιστον 3 ημερολογιακές ημέρες μετά από την ολοκλήρωση του αντίστοιχου μαθήματος (μη συμπεριλαμβανομένης της ημέρας που ολοκληρώθηκε το μάθημα)». Το Syllabus λέει «Three days after» (χωρίς «τουλάχιστον» και χωρίς τη διευκρίνιση εξαίρεσης της ημέρας ολοκλήρωσης)."
+      ]
+    },
+    {
+      "id": "gt-05",
+      "topic": "Μορφή και εύρος ερωτηματολογίων θεωρητικής εξέτασης",
+      "requirement": "Οι εξετάσεις, ανάλογα με το αντικείμενο, συνίστανται σε ερωτηματολόγια πολλαπλών απαντήσεων ή περιγραφικού τύπου και περιέχουν 20 έως 50 ερωτήσεις ανοικτού ή κλειστού βιβλίου. Τα ερωτηματολόγια ανακτώνται από το CBTS ή παρέχονται σε έντυπη μορφή από τη Μοίρα Εκπαίδευσης.",
+      "verbatim": "Exams, depending on the training subject, will consist of questionnaires based on multiple question forms or descriptive ones and they will contain 20 to 50 open or closed book questions. Questionnaires may be retrieved from the CBTS or provided in print outs by the Training Squadron.",
+      "values": {"questions_min": 20, "questions_max": 50},
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 105, "ref": "PART II, 11.b.(2)"},
+      "links": ["gt-29", "gt-35", "fail-29"],
+      "flags": []
+    },
+    {
+      "id": "gt-06",
+      "topic": "Ελάχιστος βαθμός επιτυχίας θεωρητικής εξέτασης (Syllabus)",
+      "requirement": "Ο ελάχιστος επιτρεπόμενος βαθμός επιτυχίας μαθητή στις θεωρητικές εξετάσεις είναι 80%.",
+      "verbatim": "The minimum allowed grade for a SP to succeed is 80%.",
+      "values": {"min_pass_percent": 80},
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 105, "ref": "PART II, 11.b.(2)"},
+      "links": ["gt-36", "fail-29"],
+      "flags": []
+    },
+    {
+      "id": "gt-07",
+      "topic": "Αποτυχία σε θεωρητική εξέταση — επανεξέταση",
+      "requirement": "Μαθητές που αποτυγχάνουν στις ανωτέρω εξετάσεις υποβάλλονται σε γραπτές εξετάσεις σύμφωνα με όσα καθορίζονται στη ΒαΔ 3-1/ΔΑΕ.",
+      "verbatim": "SPs that fail the aforementioned exams will undergo written examinations, according to what is determined in BD 3-1/HATC.",
+      "values": {},
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 105, "ref": "PART II, 11.b.(3)"},
+      "links": ["gt-40", "gt-45", "gt-46", "gt-47", "fail-29", "fail-32"],
+      "flags": []
+    },
+    {
+      "id": "gt-08",
+      "topic": "Παραπομπή σε ΒαΔ 3-1/ΔΑΕ για κατευθύνσεις",
+      "requirement": "Οι κατευθύνσεις που αφορούν στη θεωρητική (εδάφους) εκπαίδευση παρέχονται στη ΒαΔ 3-1/ΔΑΕ.",
+      "verbatim": "Directions referring to Ground Training are provided in BD 3-1/HATC.",
+      "values": {},
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 105, "ref": "PART II, 11.b.(4)"},
+      "links": ["gt-28", "gt-29"],
+      "flags": []
+    },
+    {
+      "id": "gt-09",
+      "topic": "Πρόγραμμα θεωρητικής εκπαίδευσης Ελλήνων μαθητών — πλήρης πίνακας",
+      "requirement": "Το πρόγραμμα θεωρητικής εκπαίδευσης για τους Έλληνες μαθητές περιλαμβάνει 19 μαθήματα/ενότητες με συνολικά 524 εκπαιδευτικές περιόδους, κατανεμημένες ως εξής (κωδικός CBTS / περίοδοι).",
+      "verbatim": "The Ground Training for the Greek SPs includes the following:",
+      "values": {
+        "total_training_periods": 524,
+        "subjects": [
+          {"sn": 1, "subject": "A/C systems training (WSGES)", "code": "A/C's Systems", "periods": 60},
+          {"sn": 2, "subject": "Orientation to training.", "code": "OP 101-15", "periods": 2},
+          {"sn": 3, "subject": "Introduction to CAI (Computer Assisted Instruction)", "code": "IC 101", "periods": 1},
+          {"sn": 4, "subject": "Meteorology I", "items": [
+            {"n": 1, "title": "Meteorology", "code": "JX 101-109", "periods": 12},
+            {"n": 2, "title": "Exams on Meteorology", "code": "JX 190", "periods": 3, "is_exam": true},
+            {"n": 3, "title": "OJT (On the Job Training)", "code": "JX", "periods": 15}
+          ]},
+          {"sn": 5, "subject": "Aerodynamics", "items": [
+            {"n": 1, "title": "Aerodynamics", "code": "AΕ 101-108", "periods": 17},
+            {"n": 2, "title": "Exams on Aerodynamics", "code": "AΕ 190", "periods": 2, "is_exam": true},
+            {"n": 3, "title": "OJT (On the Job Training)", "code": null, "periods": 11}
+          ]},
+          {"sn": 6, "subject": "Flying Principles", "items": [
+            {"n": 1, "title": "Basic principles of flying", "code": "FF 101-107", "periods": 17},
+            {"n": 2, "title": "Exams on Basic principles of flying", "code": "FF 190", "periods": 2, "is_exam": true},
+            {"n": 3, "title": "Basic Contact maneuvers", "code": "CO 101-105", "periods": 8},
+            {"n": 4, "title": "Exams on Basic Contact maneuvers", "code": "CO 190", "periods": 2, "is_exam": true},
+            {"n": 5, "title": "Advanced Contact maneuvers", "code": "CO 106-107", "periods": 6},
+            {"n": 6, "title": "OJT (On the Job Training)", "code": null, "periods": 11}
+          ]},
+          {"sn": 7, "subject": "IFR Navigation", "items": [
+            {"n": 1, "title": "Basic Instruments", "code": "IN 101-105", "periods": 8},
+            {"n": 2, "title": "Exams on Basic Instruments", "code": "IN 190", "periods": 2, "is_exam": true},
+            {"n": 3, "title": "Advanced Instruments", "code": "ΙΝ 201-210", "periods": 23},
+            {"n": 4, "title": "Exams on Advanced Instruments", "code": "ΙΝ 290", "periods": 2, "is_exam": true},
+            {"n": 5, "title": "Navigation IFR", "code": "NA 101-3", "periods": 8},
+            {"n": 6, "title": "Air Traffic Rules", "code": null, "periods": 2},
+            {"n": 7, "title": "IFR Navigation Examination", "code": "NA 191", "periods": 1, "is_exam": true},
+            {"n": 8, "title": "Planning Procedure", "code": "OPR PL2", "periods": 7},
+            {"n": 9, "title": "OJT (On the Job Training)", "code": null, "periods": 25}
+          ]},
+          {"sn": 8, "subject": "Normal and Emergency procedures", "code": "PR 101-113", "periods": 21},
+          {"sn": 9, "subject": "Flight Safety – Local Area Procedures (LAP)", "code": "LP 101-108", "periods": 10},
+          {"sn": 10, "subject": "Briefing Analysis", "code": "BA 101-103", "periods": 2},
+          {"sn": 11, "subject": "Standard Operation Procedures (SOP)", "code": "SOP 101-104", "periods": 8},
+          {"sn": 12, "subject": "In Flight Guide (IFG) analysis", "code": "IFG 101-102", "periods": 4},
+          {"sn": 13, "subject": "Ejection – Survival procedures", "code": "BB 101-102", "periods": 2},
+          {"sn": 14, "subject": "A/C's Performance Tables", "items": [
+            {"n": 1, "title": "A/C's Performance Tables", "code": "PT 101-104", "periods": 4},
+            {"n": 2, "title": "Exams on A/C's Performance Tables", "code": "PT 190", "periods": 2, "is_exam": true}
+          ]},
+          {"sn": 15, "subject": "Use of GPS in flight", "code": "GPS", "periods": 2},
+          {"sn": 16, "subject": "Applied Aerodynamics", "items": [
+            {"n": 1, "title": "Landing Pattern and AOA Landing", "code": "CO 110", "periods": 2},
+            {"n": 2, "title": "Night Flight", "code": "CO 109", "periods": 2},
+            {"n": 3, "title": "Formation", "code": "FO 101-4", "periods": 11},
+            {"n": 4, "title": "Formation Examination", "code": "FO 190", "periods": 1, "is_exam": true},
+            {"n": 5, "title": "Extended Trail", "code": "FO 201", "periods": 2},
+            {"n": 6, "title": "Tactical Formation", "code": "TACFOR 501-6", "periods": 6},
+            {"n": 7, "title": "Tactical Formation Examination", "code": "TACFOR 590", "periods": 1, "is_exam": true},
+            {"n": 8, "title": "OJT (On the Job Training)", "code": null, "periods": 20}
+          ]},
+          {"sn": 17, "subject": "Navigation", "items": [
+            {"n": 1, "title": "VFR Navigation", "code": "NA 104-11", "periods": 15},
+            {"n": 2, "title": "VFR Navigation Examination", "code": "NA 190", "periods": 1, "is_exam": true},
+            {"n": 3, "title": "Low Altitude Navigation", "code": "LNAV 701-5", "periods": 5},
+            {"n": 4, "title": "Low Altitude Navigation Examination", "code": "LNAV 790", "periods": 1, "is_exam": true}
+          ]},
+          {"sn": 18, "subject": "Meteorology II", "items": [
+            {"n": 1, "title": "Meteo Briefing", "code": null, "periods": 29},
+            {"n": 2, "title": "Exams on Meteorology", "code": "JX 191", "periods": 1, "is_exam": true}
+          ]},
+          {"sn": 19, "subject": "General Briefing", "items": [
+            {"n": 1, "title": "Flying Technique", "code": null, "periods": 25},
+            {"n": 2, "title": "Airmanship Basics Analysis", "code": null, "periods": 20},
+            {"n": 3, "title": "Flying Procedures", "code": null, "periods": 25},
+            {"n": 4, "title": "Emergency Procedures", "code": null, "periods": 30},
+            {"n": 5, "title": "Flight Safety", "code": null, "periods": 25}
+          ]}
+        ]
+      },
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 105, "ref": "PART II, 11.b.(5), πίνακας — συνεχίζεται στη σελίδα PDF 106 έως «TOTAL 524»"},
+      "links": ["gt-02", "gt-10", "gt-12", "gt-13"],
+      "flags": [
+        "Ο κωδικός της γραμμής «OJT» της Μετεωρολογίας Ι εμφανίζεται στον πίνακα ως σκέτο «JX» (στήλη CODE) με 15 περιόδους (στήλη TRNG PERIODS)· στο Program Analysis (PDF 113) η γραμμή φέρει κωδικό «OJT» χωρίς πρόθεμα JX. Στην ανάλυση μαθήματος 4 (PDF 113) το κείμενο των αντικειμένων αναφέρει «Introduction /analysis of MET/SHELL» — δεν προκύπτει σαφής κωδικός τύπου «JX 151».",
+        "ΑΝΤΙΦΑΣΗ (εντός Syllabus) FO 101-4: Training Program (PDF 106, Έλληνες & PDF 107, αλλοδαποί) = 11 περίοδοι· Program Analysis (PDF 124) = 10 περίοδοι (στήλη περιόδων για CO 109 / CO 110 / FO 101-4 / FO 190 / FO 201 = 2, 2, 10, 2, 2). ΔΕΝ επιλύεται.",
+        "Το άθροισμα όλων των γραμμών επαληθεύεται ακριβώς στο 524."
+      ]
+    },
+    {
+      "id": "gt-10",
+      "topic": "Πρόγραμμα θεωρητικής εκπαίδευσης αλλοδαπών μαθητών — πλήρης πίνακας",
+      "requirement": "Το πρόγραμμα θεωρητικής εκπαίδευσης για τους αλλοδαπούς μαθητές περιλαμβάνει 17 μαθήματα/ενότητες με σύνολο πίνακα 279 εκπαιδευτικές περιόδους. Δεν περιλαμβάνει OJT, ούτε τα μαθήματα 18 (Meteorology II) και 19 (General Briefing) που είναι μόνο για Έλληνες μαθητές.",
+      "verbatim": "The Ground Training for the foreign SPs includes the following:",
+      "values": {
+        "total_training_periods_table": 279,
+        "subjects": [
+          {"sn": 1, "subject": "A/C systems training (WSGES)", "code": "A/C's Systems", "periods": 60},
+          {"sn": 2, "subject": "Orientation to training.", "code": "OP 101-15", "periods": 2},
+          {"sn": 3, "subject": "Introduction to CAI (Computer Assisted Instruction)", "code": "IC 101", "periods": 1},
+          {"sn": 4, "subject": "Meteorology I", "items": [
+            {"n": 1, "title": "Meteorology", "code": "JX 101-109", "periods": 12},
+            {"n": 2, "title": "Exams on Meteorology", "code": "JX 190", "periods": 1, "is_exam": true}
+          ]},
+          {"sn": 5, "subject": "Aerodynamics", "items": [
+            {"n": 1, "title": "Aerodynamics", "code": "AΕ 101-108", "periods": 17},
+            {"n": 2, "title": "Exams on Aerodynamics", "code": "AΕ 190", "periods": 1, "is_exam": true}
+          ]},
+          {"sn": 6, "subject": "Flying Principles", "items": [
+            {"n": 1, "title": "Basic principles of flying", "code": "FF 101-107", "periods": 17},
+            {"n": 2, "title": "Exams on Basic principles of flying", "code": "FF 190", "periods": 1, "is_exam": true},
+            {"n": 3, "title": "Basic Contact maneuvers", "code": "CO 101-105", "periods": 8},
+            {"n": 4, "title": "Exams on Basic Contact maneuvers", "code": "CO 190", "periods": 1, "is_exam": true},
+            {"n": 5, "title": "Advanced Contact maneuvers", "code": "CO 106-107", "periods": 6}
+          ]},
+          {"sn": 7, "subject": "IFR Navigation", "items": [
+            {"n": 1, "title": "Basic Instruments", "code": "IN 101-105", "periods": 8},
+            {"n": 2, "title": "Exams on Basic Instruments", "code": "IN 190", "periods": 1, "is_exam": true},
+            {"n": 3, "title": "Advanced Instruments", "code": "ΙΝ 201-210", "periods": 23},
+            {"n": 4, "title": "Exams on Advanced Instruments", "code": "ΙΝ 290", "periods": 1, "is_exam": true},
+            {"n": 5, "title": "Navigation IFR", "code": "NA 101-3", "periods": 8},
+            {"n": 6, "title": "Air Traffic Rules", "code": null, "periods": 2},
+            {"n": 7, "title": "IFR Navigation Examination", "code": "NA 191", "periods": 1, "is_exam": true},
+            {"n": 8, "title": "Planning Procedure", "code": "OPR PL2", "periods": 7}
+          ]},
+          {"sn": 8, "subject": "Normal and Emergency procedures", "code": "PR 101-113", "periods": 21},
+          {"sn": 9, "subject": "Flight Safety – Local Area Procedures (LAP)", "code": "LP 101-108", "periods": 10},
+          {"sn": 10, "subject": "Briefing Analysis", "code": "BA 101-103", "periods": 2},
+          {"sn": 11, "subject": "Standard Operation Procedures (SOP)", "code": "SOP 101-104", "periods": 8},
+          {"sn": 12, "subject": "In Flight Guide (IFG) analysis", "code": "IFG 101-102", "periods": 4},
+          {"sn": 13, "subject": "Ejection – Survival procedures", "code": "BB 101-102", "periods": 2},
+          {"sn": 14, "subject": "A/C's Performance Tables", "items": [
+            {"n": 1, "title": "A/C's Performance Tables", "code": "PT 101-104", "periods": 4},
+            {"n": 2, "title": "Exams on A/C's Performance Tables", "code": "PT 190", "periods": 2, "is_exam": true}
+          ]},
+          {"sn": 15, "subject": "Use of GPS in flight", "code": "GPS", "periods": 2},
+          {"sn": 16, "subject": "Applied Aerodynamics", "items": [
+            {"n": 1, "title": "Landing Pattern and AOA Landing", "code": "CO 110", "periods": 2},
+            {"n": 2, "title": "Night Flight", "code": "CO 109", "periods": 1},
+            {"n": 3, "title": "Formation", "code": "FO 101-4", "periods": 11},
+            {"n": 4, "title": "Formation Examination", "code": "FO 190", "periods": 1, "is_exam": true},
+            {"n": 5, "title": "Extended Trail", "code": "FO 201", "periods": 2},
+            {"n": 6, "title": "Tactical Formation", "code": "TACFOR 501-6", "periods": 6},
+            {"n": 7, "title": "Tactical Formation Examination", "code": "TACFOR 590", "periods": 1, "is_exam": true}
+          ]},
+          {"sn": 17, "subject": "Navigation", "items": [
+            {"n": 1, "title": "VFR Navigation", "code": "NA 104-11", "periods": 15},
+            {"n": 2, "title": "VFR Navigation Examination", "code": "NA 190", "periods": 1, "is_exam": true},
+            {"n": 3, "title": "Low Altitude Navigation", "code": "LNAV 701-5", "periods": 5},
+            {"n": 4, "title": "Low Altitude Navigation Examination", "code": "LNAV 790", "periods": 1, "is_exam": true}
+          ]}
+        ]
+      },
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 107, "ref": "PART II, 11.b.(6), πίνακας έως «TOTAL 279»"},
+      "links": ["gt-02", "gt-09", "gt-18"],
+      "flags": [
+        "ΕΚΤΟΣ ΚΥΡΙΑΣ ΠΕΡΙΜΕΤΡΟΥ ΩΣ ΠΡΟΣ ΤΟΥΣ ΕΛΛΗΝΕΣ ΜΑΘΗΤΕΣ — καταγράφεται για πληρότητα και για την ανίχνευση της αντίφασης 282/279 (βλ. gt-02).",
+        "Ο πίνακας αλλοδαπών δίνει PT 190 = 2 περιόδους (ίδιο με τους Έλληνες), ενώ όλες οι υπόλοιπες γραμμές εξετάσεων μειώνονται σε 1. Πιθανή αβλεψία της πηγής — ΔΕΝ επιλύεται."
+      ]
+    },
+    {
+      "id": "gt-11",
+      "topic": "Κατάλογος θεωρητικών εξετάσεων Phase II (κωδικοί, περίοδοι, είδος)",
+      "requirement": "Οι θεωρητικές εξετάσεις που προβλέπονται ρητά στο Αναλυτικό Πρόγραμμα Phase II είναι οι κάτωθι. Όλες είναι ΓΡΑΠΤΕΣ (WRITTEN EXAMINATION), σε ερωτηματολόγιο ανοικτού ή κλειστού βιβλίου 20-50 ερωτήσεων πολλαπλών απαντήσεων ή περιγραφικού τύπου, με δυνατότητα διεξαγωγής μέσω CBTS.",
+      "verbatim": "WRITTEN EXAMINATION IN METEOROLOGY / WRITTEN EXAMINATION IN AERODYNAMICS / WRITTEN EXAMINATION IN BASIC FLIGHT PRINCIPLES / WRITTEN EXAMINATION IN BASIC MANEUVERS OF CONTACT CATEGORY / WRITTEN EXAMINATION IN BASIC INSTRUMENTS / WRITTEN EXAMINATION IN ADVANCED INSTRUMENTS / WRITTEN EXAMINATION IN IFR NAVIGATION / BOLDFACE EXAMINATION / A/C PERFORMANCE TABLES EXAMINATION / WRITTEN EXAMINATION IN FORMATION / WRITTEN EXAMINATION IN TACTICAL FORMATION / WRITTEN EXAMINATION IN VFR NAVIGATION / WRITTEN EXAMINATION IN LOW LEVEL NAVIGATION / PHYSIOLOGY OF FLIGHT EXAMINATION",
+      "values": {
+        "exam_count_greek_sp": 14,
+        "exams": [
+          {"code": "JX 190", "title": "Exams on Meteorology (Meteorology I)", "subject_sn": 4, "periods_program_table": 3, "periods_program_analysis": 1, "type": "written", "page_pdf": 113, "verbatim_title": "WRITTEN EXAMINATION IN METEOROLOGY"},
+          {"code": "AΕ 190", "title": "Exams on Aerodynamics", "subject_sn": 5, "periods_program_table": 2, "periods_program_analysis": 2, "type": "written", "page_pdf": 114, "verbatim_title": "WRITTEN EXAMINATION IN AERODYNAMICS"},
+          {"code": "FF 190", "title": "Exams on Basic principles of flying", "subject_sn": 6, "periods_program_table": 2, "periods_program_analysis": 2, "type": "written", "page_pdf": 115, "verbatim_title": "WRITTEN EXAMINATION IN BASIC FLIGHT PRINCIPLES"},
+          {"code": "CO 190", "title": "Exams on Basic Contact maneuvers", "subject_sn": 6, "periods_program_table": 2, "periods_program_analysis": 2, "type": "written", "page_pdf": 116, "verbatim_title": "WRITTEN EXAMINATION IN BASIC MANEUVERS OF CONTACT CATEGORY"},
+          {"code": "IN 190", "title": "Exams on Basic Instruments", "subject_sn": 7, "periods_program_table": 2, "periods_program_analysis": 2, "type": "written", "page_pdf": 117, "verbatim_title": "WRITTEN EXAMINATION IN BASIC INSTRUMENTS"},
+          {"code": "ΙΝ 290", "title": "Exams on Advanced Instruments", "subject_sn": 7, "periods_program_table": 2, "periods_program_analysis": 2, "type": "written", "page_pdf": 117, "verbatim_title": "WRITTEN EXAMINATION IN ADVANCED INSTRUMENTS"},
+          {"code": "NA 191", "title": "IFR Navigation Examination", "subject_sn": 7, "periods_program_table": 1, "periods_program_analysis": 1, "type": "written", "code_in_analysis": "IN 191", "page_pdf": 118, "verbatim_title": "WRITTEN EXAMINATION IN IFR NAVIGATION"},
+          {"code": "PR 113", "title": "BOLDFACE EXAMINATION", "subject_sn": 8, "periods_program_table": null, "periods_program_analysis": 1, "type": "written", "page_pdf": 119, "verbatim_title": "BOLDFACE EXAMINATION"},
+          {"code": "PT 190", "title": "A/C Performance Tables Examination", "subject_sn": 14, "periods_program_table": 2, "periods_program_analysis": 1, "type": "written", "page_pdf": 123, "verbatim_title": "A/C PERFORMANCE TABLES EXAMINATION"},
+          {"code": "FO 190", "title": "Formation Examination", "subject_sn": 16, "periods_program_table": 1, "periods_program_analysis": 2, "type": "written", "page_pdf": 124, "verbatim_title": "WRITTEN EXAMINATION IN FORMATION"},
+          {"code": "TACFOR 590", "title": "Tactical Formation Examination", "subject_sn": 16, "periods_program_table": 1, "periods_program_analysis": 1, "type": "written", "page_pdf": 125, "verbatim_title": "WRITTEN EXAMINATION IN TACTICAL FORMATION"},
+          {"code": "NA 190", "title": "VFR Navigation Examination", "subject_sn": 17, "periods_program_table": 1, "periods_program_analysis": 1, "type": "written", "page_pdf": 126, "verbatim_title": "WRITTEN EXAMINATION IN VFR NAVIGATION"},
+          {"code": "LNAV 790", "title": "Low Altitude / Low Level Navigation Examination", "subject_sn": 17, "periods_program_table": 1, "periods_program_analysis": 1, "type": "written", "page_pdf": 126, "verbatim_title": "WRITTEN EXAMINATION IN LOW LEVEL NAVIGATION"},
+          {"code": "JX 191", "title": "Exams on Meteorology (Meteorology II)", "subject_sn": 18, "periods_program_table": 1, "periods_program_analysis": 1, "type": "written", "page_pdf": 127, "verbatim_title": "WRITTEN EXAMINATION IN METEOROLOGY"},
+          {"code": "JP 190", "title": "Physiology of Flight Examination", "subject_sn": 20, "periods_program_table": 1, "periods_program_analysis": 1, "type": "written", "conditional": "μόνο για όσους δεν το διδάχθηκαν στη Σχολή τους", "page_pdf": 129, "verbatim_title": "PHYSIOLOGY OF FLIGHT EXAMINATION"}
+        ]
+      },
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 113, "ref": "PART II, 11.c PROGRAM ANALYSIS (PDF 111-130) σε συνδυασμό με 11.b πίνακες (PDF 105-107). Η PDF 113 είναι η πρώτη σελίδα όπου εμφανίζεται τίτλος εξέτασης· η ακριβής σελίδα κάθε τίτλου δίνεται στο πεδίο page_pdf κάθε εγγραφής του values.exams."},
+      "links": ["gt-09", "gt-12", "gt-19", "gt-49"],
+      "flags": [
+        "ΑΝΤΙΦΑΣΗ (εντός Syllabus) JX 190: Training Program Ελλήνων μαθητών (PDF 105) = 3 περίοδοι· Program Analysis (PDF 113) = 1 περίοδος. ΔΕΝ επιλύεται.",
+        "ΑΝΤΙΦΑΣΗ (εντός Syllabus) PT 190: Training Program (PDF 106, Έλληνες & PDF 107, αλλοδαποί) = 2 περίοδοι· Program Analysis (PDF 123) = 1 περίοδος. ΔΕΝ επιλύεται.",
+        "ΑΝΤΙΦΑΣΗ (εντός Syllabus) FO 190: Training Program (PDF 106 & 107) = 1 περίοδος· Program Analysis (PDF 124) = 2 περίοδοι. ΔΕΝ επιλύεται.",
+        "ΑΝΤΙΦΑΣΗ (εντός Syllabus) FO 101-4 (μάθημα, όχι εξέταση): Training Program (PDF 106 & 107) = 11 περίοδοι· Program Analysis (PDF 124) = 10 περίοδοι. ΔΕΝ επιλύεται. (βλ. και gt-09)",
+        "ΠΑΡΑΓΩΓΗ ΤΙΜΗ: το exam_count_greek_sp = 14 ΔΕΝ υπάρχει αυτολεξεί σε καμία πηγή — προκύπτει ως πλήθος των 15 εγγραφών του values.exams μείον την υπό προϋπόθεση JP 190 (η οποία δεν αφορά όσους διδάχθηκαν το μάθημα στη Σχολή τους). Επαληθεύτηκε αριθμητικά.",
+        "ΑΝΤΙΦΑΣΗ ΚΩΔΙΚΟΥ: Ο πίνακας δίνει «NA 191» για την IFR Navigation Examination, ενώ το Program Analysis (PDF 118) δίνει «IN 191». Ομοίως 3-01 §65.δ (PDF 65) αναφέρει «NA191».",
+        "Το BOLDFACE EXAMINATION (PR 113) ΔΕΝ εμφανίζεται ως ξεχωριστή γραμμή εξέτασης στους πίνακες 11.b — εμφανίζεται μόνο στην ανάλυση του μαθήματος 8 (PDF 119), εντός του αθροίσματος PR 101-113 = 21 περιόδων."
+      ]
+    },
+    {
+      "id": "gt-12",
+      "topic": "Ανάλυση μαθήματος 8 «Normal and Emergency procedures» — υποενότητες και εξέταση Boldface",
+      "requirement": "Το μάθημα «Normal and Emergency Procedures» (PR 101-113, 21 περίοδοι συνολικά) αναλύεται σε: Κανονικές Διαδικασίες (PR 101-6, 7 περίοδοι), Διαδικασίες Ανάγκης (PR 107-11, 12 περίοδοι), Όρια Α/Φ (PR 112, 1 περίοδος) και ΕΞΕΤΑΣΗ BOLDFACE (PR 113, 1 περίοδος).",
+      "verbatim": "NORMAL PROCEDURES PR 101-6 7 / EMERGENCY PROCEDURES PR 107-11 12 / A/C LMITATIONS PR 112 1 / BOLDFACE EXAMINATION PR113 1",
+      "values": {
+        "normal_procedures": {"code": "PR 101-6", "periods": 7},
+        "emergency_procedures": {"code": "PR 107-11", "periods": 12},
+        "ac_limitations": {"code": "PR 112", "periods": 1},
+        "boldface_examination": {"code": "PR 113", "periods": 1},
+        "total_periods": 21
+      },
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 119, "ref": "PART II, 11.c PROGRAM ANALYSIS, 8. NORMAL AND EMERGENCY PROCEDURES"},
+      "links": ["gt-11", "gt-32", "gt-36"],
+      "flags": ["Το πρωτότυπο γράφει «A/C LMITATIONS» (τυπογραφικό της πηγής για «LIMITATIONS»)."]
+    },
+    {
+      "id": "gt-13",
+      "topic": "On the Job Training (OJT) — μόνο για Έλληνες μαθητές",
+      "requirement": "Το πρόγραμμα των Ελλήνων μαθητών περιλαμβάνει On the Job Training (OJT) συνολικά 82 εκπαιδευτικών περιόδων, κατανεμημένων σε 5 μαθήματα. Το OJT της Μετεωρολογίας Ι περιλαμβάνει παρακολούθηση γενικής ενημέρωσης, εισαγωγή/ανάλυση του MET/SHELL και εξοικείωση με αυτό· το OJT της Αεροδυναμικής περιλαμβάνει παρακολούθηση ενημέρωσης, μελέτη και διαλέξεις-σεμινάρια.",
+      "verbatim": "ON THE JOB TRAINING* - General briefing attendance. - Introduction /analysis of MET/SHELL. -Operating/ familiarization with the MET/SHELL.",
+      "values": {
+        "ojt_total_periods": 82,
+        "by_subject": [
+          {"subject_sn": 4, "subject": "Meteorology I", "periods": 15},
+          {"subject_sn": 5, "subject": "Aerodynamics", "periods": 11},
+          {"subject_sn": 6, "subject": "Flying Principles", "periods": 11},
+          {"subject_sn": 7, "subject": "IFR Navigation", "periods": 25},
+          {"subject_sn": 16, "subject": "Applied Aerodynamics", "periods": 20}
+        ]
+      },
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 113, "ref": "PART II, 11.c PROGRAM ANALYSIS, 4. METEOROLOGY I (και PDF 114, 116, 118, 125)"},
+      "links": ["gt-09"],
+      "flags": [
+        "Ο αστερίσκος «*» στις γραμμές OJT δεν επεξηγείται στις σελίδες ανάλυσης· η μόνη επεξήγηση αστερίσκου στο PART II είναι «* For Greek SPs only.» στη σελίδα PDF 128 (General Briefing).",
+        "ΠΑΡΑΓΩΓΗ ΤΙΜΗ: το ojt_total_periods = 82 ΔΕΝ υπάρχει αυτολεξεί σε καμία πηγή — είναι άθροισμα των επαληθευμένων γραμμών OJT του πίνακα 11.b (15 + 11 + 11 + 25 + 20 = 82). Επαληθεύτηκε αριθμητικά. Οι επιμέρους τιμές του by_subject τεκμηριώνονται στις PDF 105-106."
+      ]
+    },
+    {
+      "id": "gt-14",
+      "topic": "Εκπαίδευση Συστημάτων Α/Φ — αρμοδιότητα ΣΟΣΜΕ/WSGES",
+      "requirement": "Η Μοίρα είναι υπεύθυνη για την ολοκλήρωση της θεωρητικής εκπαίδευσης, ΜΕ ΕΞΑΙΡΕΣΗ τα Συστήματα Α/Φ, για τα οποία την ευθύνη έχει το Σχολείο Οπλικών Συστημάτων και Μέσων Εδάφους (WSGES). Το μάθημα καταλαμβάνει 60 εκπαιδευτικές περιόδους.",
+      "verbatim": "Squadron is responsible to complete Ground Training with the exception of the A/C's Systems in which the responsibility lies on the Weapon System Ground Equipment School (WSGES).",
+      "values": {
+        "ac_systems_periods": {"value": 60, "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 111, "ref": "PART II, 11.c PROGRAM ANALYSIS, 1. A/C SYSTEMS II", "verbatim": "1. A/C SYSTEMS II 60 (WSGES)"}, "also_in": [{"page_pdf": 105, "ref": "πίνακας 11.b.(5), γραμμή 1"}, {"page_pdf": 107, "ref": "πίνακας 11.b.(6), γραμμή 1 «A/C systems training (WSGES) A/C's Systems 60»"}]},
+        "wsges_days": {"value": 10, "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 9, "ref": "PART I, 2. TRAINING DURATION — βλ. gt-03", "verbatim": "In advance, minimum duration for ground training is twenty five (25) working days (including 10 days of WSGES training)."}}
+      },
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 109, "ref": "PART II, 11.c.(1) SPECIAL INSTRUCTIONS, (a) — άγκυρα του verbatim ΜΟΝΟ· οι αριθμητικές τιμές έχουν δική τους πηγή εντός του values (PDF 111 για το 60, PDF 9 για το 10)"},
+      "links": ["gt-01", "gt-03", "gt-09", "gt-50"],
+      "flags": [
+        "Στην ανάλυση (PDF 111) το μάθημα τιτλοφορείται «A/C SYSTEMS II», ενώ στους πίνακες 11.b «A/C systems training (WSGES)» με κωδικό «A/C's Systems». Στο 3-01 §65.β (PDF 65) ο σχετικός κωδικός βαθμολογίας γράφεται «WSGS».",
+        "ΔΙΟΡΘΩΣΗ ΑΝΑΦΟΡΑΣ: η σελίδα PDF 109 (§11.c.(1)(a)-(c) και πίνακας JP/CRM) ΔΕΝ περιέχει ούτε το «60» ούτε το «10». Οι τιμές μεταφέρθηκαν σε ξεχωριστά υπο-πεδία source εντός του values."
+      ]
+    },
+    {
+      "id": "gt-15",
+      "topic": "Ενημέρωση προσανατολισμού (OP 101-15) — φορέας και χρόνος",
+      "requirement": "Η ενότητα OP 101-15 καλύπτεται από τον Διοικητή Μοίρας ή τον Αξιωματικό Επιχειρήσεων και σκοπεί στην εκτενή παρουσίαση του τρόπου διεξαγωγής της εκπαίδευσης, των επιπέδων απόδοσης που αναμένονται από τους μαθητές και της σχέσης μεταξύ μαθητών, εκπαιδευτών και τεχνικού προσωπικού. Η ενημέρωση λαμβάνει χώρα αμέσως μετά την άφιξη των Ικάρων στην Πτέρυγα.",
+      "verbatim": "Lesson Section OΡ101–15 will be covered by Squadron Commander or Operational Officer and intends to extensively present to SPs the way that Training will be held, Performance levels that are going to be expected from SPs and the relationship that will develop between SPs, IPs and Technical Personnel..",
+      "values": {"periods": 2, "code": "OP 101-15"},
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 109, "ref": "PART II, 11.c.(1) SPECIAL INSTRUCTIONS, (b) — και ανάλυση PDF 111 «Special Training Directives: This briefing will take place immediately after the arrival of the Cadets at the FTW.»"},
+      "links": ["gt-09"],
+      "flags": []
+    },
+    {
+      "id": "gt-16",
+      "topic": "Εισαγωγή στο CBTS/CAI (IC 101) — προαπαιτούμενο χρήσης CBTS",
+      "requirement": "Η ενημέρωση «Introduction to CAI» (IC 101, 1 περίοδος) περιλαμβάνει ανάλυση του συστήματος CBTS, το σύστημα αξιολόγησης και τις επιδόσεις κάτω των STANDARDs, τις υποχρεώσεις των μαθητών και τη διαδικασία Log in – Log off, και πραγματοποιείται ΠΡΙΝ από τη χρήση του συστήματος CBTS.",
+      "verbatim": "Special Training Directives This briefing will take place prior to the use of CBTS system.",
+      "values": {"periods": 1, "code": "IC 101"},
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 112, "ref": "PART II, 11.c PROGRAM ANALYSIS, 3. CAI"},
+      "links": ["gt-05", "gt-29"],
+      "flags": []
+    },
+    {
+      "id": "gt-17",
+      "topic": "Μετεωρολογία Ι & ΙΙ — διδασκαλία από Μετεωρολόγο",
+      "requirement": "Η διάλεξη της Μετεωρολογίας (Ι και ΙΙ) εκτελείται από Μετεωρολόγο.",
+      "verbatim": "Special Training Directives The lecture will be performed by a Meteorologist.",
+      "values": {
+        "meteorology_I_lesson_periods": 12,
+        "meteorology_I_exam_periods_program_table": 3,
+        "meteorology_I_ojt_periods": 15,
+        "meteorology_II_briefing_periods_program_table": 29,
+        "meteorology_II_exam_periods": 1
+      },
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 113, "ref": "PART II, 11.c PROGRAM ANALYSIS, 4. METEOROLOGY I (και 18. METEOROLOGY II, PDF 127)"},
+      "links": ["gt-09", "gt-11", "gt-49"],
+      "flags": [
+        "ΑΝΤΙΦΑΣΗ (εντός Syllabus) Meteo Briefing: ο πίνακας 11.b (PDF 106) δίνει 29 περιόδους· το Program Analysis (PDF 127) τυπώνει στο κελί TRNG PERIODS «2 (25)*». Ούτε 2 ούτε 2+25=27 συμφωνούν με το 29. ΔΕΝ επιλύεται."
+      ]
+    },
+    {
+      "id": "gt-18",
+      "topic": "Φυσιολογία Πτήσης (JP) και CRM — υπό προϋπόθεση μαθήματα",
+      "requirement": "Για μαθητές που δεν έχουν διδαχθεί τα μαθήματα Φυσιολογίας Πτήσης και CRM στη Σχολή τους, στο τέλος της θεωρητικής εκπαίδευσης προστίθενται: Φυσιολογία Πτήσης (JP 101-110, 18 περίοδοι) με εξέταση (JP 190, 1 περίοδος) και Crew Resource Management (CR 101-4/201-2, 8 περίοδοι). Η διάλεξη και η εξέταση Φυσιολογίας Πτήσης διεξάγονται από Ιατρό.",
+      "verbatim": "For foreign SPs who haven’t been taught the JP101-103/190 and CRM101-04/201-2 lessons in their Air Force Academy, at the end of the ground training, lays the lessons analysis for JP and CRM.",
+      "values": {
+        "flight_physiology": {"code": "JP 101-110", "periods": 18},
+        "flight_physiology_exam": {"code": "JP 190", "periods": 1},
+        "crm": {"code": "CR 101-4/201-2", "periods": 8},
+        "conditional_total_periods": 27
+      },
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 109, "ref": "PART II, 11.c.(1) SPECIAL INSTRUCTIONS, (c) και πίνακας ίδιας σελίδας· ανάλυση PDF 129 (20. PHYSIOLOGY OF FLIGHT) και PDF 130 (21. CRM)"},
+      "links": ["gt-10", "gt-11"],
+      "flags": [
+        "ΑΝΤΙΦΑΣΗ ΚΩΔΙΚΟΥ: Η §11.c.(1)(c) γράφει «JP101-103/190», ο πίνακας της ίδιας σελίδας «JP 101-110» και η ανάλυση (PDF 129) «JP 101-10». ΔΕΝ επιλύεται.",
+        "ΑΝΤΙΦΑΣΗ ΠΕΡΙΜΕΤΡΟΥ: Η §11.c.(1)(c) περιορίζει τα μαθήματα σε «foreign SPs», ενώ η εισαγωγή του ίδιου τμήματος στη σελίδα PDF 129 λέει «(d) The following lessons will take place for those students who haven’t been taught them in their Air Force Academy» χωρίς περιορισμό εθνικότητας. Επηρεάζει το αν δεσμεύει Έλληνες μαθητές — ΔΕΝ επιλύεται.",
+        "Τα 27 αυτά περίοδοι ΔΕΝ περιλαμβάνονται στα σύνολα 524 / 279.",
+        "ΠΑΡΑΓΩΓΗ ΤΙΜΗ: το conditional_total_periods = 27 ΔΕΝ υπάρχει αυτολεξεί σε καμία πηγή — είναι άθροισμα των επαληθευμένων γραμμών του πίνακα της PDF 109 (JP 101-110 = 18, JP 190 = 1, CR 101-4/201-2 = 8). Επαληθεύτηκε αριθμητικά."
+      ]
+    },
+    {
+      "id": "gt-19",
+      "topic": "LAP — απαίτηση ικανοποιητικού επιπέδου κατανόησης ανά ενότητα",
+      "requirement": "Στο τέλος κάθε εκπαιδευτικής ενότητας του μαθήματος Flight Safety – Local Area Procedures (LAP 101-8, 10 περίοδοι), ο μαθητής πρέπει να επιδεικνύει ικανοποιητικό επίπεδο κατανόησης στα διδαχθέντα αντικείμενα.",
+      "verbatim": "Special Training Directives In the end of each educational Section, SP must demonstrate a satisfactory level of comprehension in the taught subjects.",
+      "values": {"periods": 10, "code": "LAP 101-8"},
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 120, "ref": "PART II, 11.c PROGRAM ANALYSIS, 9. FLIGHT AREA - LOCAL AREA PROCEDURES"},
+      "links": ["gt-20", "gt-22"],
+      "flags": ["Ο κωδικός στην ανάλυση είναι «LAP 101-8» ενώ στους πίνακες 11.b είναι «LP 101-108»."]
+    },
+    {
+      "id": "gt-20",
+      "topic": "Ατομική βιβλιογραφία και ύλη κλειστού/ανοικτού βιβλίου",
+      "requirement": "Η ατομική βιβλιογραφία των μαθητών και η ύλη κλειστού/ανοικτού βιβλίου καθορίζονται σε πίνακα. Επιπλέον, ΟΛΟΙ οι μαθητές πρέπει να γνωρίζουν και αξιολογούνται με εξετάσεις ΚΛΕΙΣΤΟΥ ΒΙΒΛΙΟΥ και στα εξής αντικείμενα: 1/ Local Area Procedures (όρια - περιορισμοί - διαταγές), 2/ Standardized Operation Procedures (SOPs). Κατά τις εξετάσεις, αξιολογήσεις και επιθεωρήσεις εδάφους χρησιμοποιούνται ερωτηματολόγια με ερωτήσεις από την ατομική βιβλιογραφία.",
+      "verbatim": "SP’s Personal Bibliography, as well as closed and open book syllabus are specified in the following table. Besides, all SPs should know and will be evaluated in the form of closed book exams in the following topics too: 1/. Local Area Procedures (limits - limitations - directives) 2/. Standardized Operation Procedures (SOPs)",
+      "values": {"mandatory_closed_book_topics": 2},
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 131, "ref": "PART II, 11.c.2 Personal Bibliography, (a) και (b)"},
+      "links": ["gt-21", "gt-34"],
+      "flags": []
+    },
+    {
+      "id": "gt-21",
+      "topic": "Πίνακας ατομικής βιβλιογραφίας — ύλη κλειστού και ανοικτού βιβλίου",
+      "requirement": "Η ατομική βιβλιογραφία των μαθητών Βασικού Σταδίου (Phase II) T-6A και ο διαχωρισμός ύλης κλειστού/ανοικτού βιβλίου καθορίζονται σε πίνακα 9 εγγραφών.",
+      "verbatim": "SPs PERSONAL BIBLIOGRAPHY AND CLOSED-OPEN BOOK SYLLABUS BASIC PHASE (PHASE II) T-6 A",
+      "values": {
+        "entries_count": 9,
+        "entries": [
+          {"sn": 1, "code": "(-11)", "title": "Τ-6Α FLIGHT MANUAL ( -11 )", "closed": "WARNINGS – CAUTIONS - NOTES AND SECTION I, II, III, V, VI, VII - BOLDFACE", "open": "APPENDIX A , B"},
+          {"sn": 2, "code": null, "title": "T-6 TECHNIQUE & PROCEDURES MANUAL", "closed": "All Contents", "open": "-"},
+          {"sn": 3, "code": null, "title": "Τ-6Α FLIGHT CHECK LIST", "closed": "BOLD FACE – Emergency Procedures", "open": "Remaining Contents"},
+          {"sn": 4, "code": "AFM 11-217", "title": "INSTRUMENT FLIGHT PROCEDURES", "closed": "(1)", "open": "All Contents"},
+          {"sn": 5, "code": "Α.Ε 00-3-10", "title": "MAIP VOL 1, 2, 3", "closed": "(1)", "open": "All Contents"},
+          {"sn": 6, "code": "ICAO DOC 9432 / ICAO DOC 4444", "title": null, "closed": "(1)", "open": "(1)"},
+          {"sn": 7, "code": "AFH 11-203", "title": "WEATHER FOR AIRCREWS VOL 1 / VOL 2", "closed": "(1)", "open": "All Contents"},
+          {"sn": 8, "code": "T.N. 3/07", "title": "PHRASEOLOGY", "closed": "(1)", "open": "-"},
+          {"sn": 9, "code": null, "title": "SOP’s", "closed": "All Contents", "open": null}
+        ],
+        "note_1": "Note(1): The content (Syllabus) to be defined by the Squadron."
+      },
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 132, "ref": "PART II, 11.c.2 Personal Bibliography, πίνακας"},
+      "links": ["gt-20", "gt-34"],
+      "flags": ["Το πρωτότυπο γράφει «T-6 TECNHNIQUE & PROCEDURES MANUAL» (τυπογραφικό της πηγής)."]
+    },
+    {
+      "id": "gt-22",
+      "topic": "Προαπαιτούμενο θεωρητικής εκπαίδευσης πριν από κάθε ενότητα/άσκηση",
+      "requirement": "Κανένας μαθητής δεν αρχίζει εκπαίδευση σε Ενότητα ή Άσκηση εάν δεν έχει προηγουμένως παρακολουθήσει ΚΑΙ αξιολογηθεί ΕΠΙΤΥΧΩΣ στα αντικείμενα της θεωρητικής εκπαίδευσης, όπως αυτά εμφανίζονται στο Διάγραμμα Ροής Εκπαίδευσης (Training Flow Chart).",
+      "verbatim": "No SP shall begin training in a Training Section or Exercise if he/she has not previously attended and successfully been evaluated upon the objects of ground training, as they appear in the Training Flow Chart.",
+      "values": {},
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 101, "ref": "PART I, 9. GENERAL DIRECTIVES, b."},
+      "links": ["gt-23", "gt-30", "gt-19", "gt-58", "gt-59", "gt-61", "st-40", "ft-16"],
+      "flags": ["Το Training Flow Chart καθαυτό βρίσκεται στις σελίδες PDF 10 κ.ε. ως εικόνα/διάγραμμα και δεν είναι εξαγώγιμο ως κείμενο. ΩΣΤΟΣΟ τα επιμέρους προαπαιτούμενα θεωρητικής εκπαίδευσης ανά Training Section ΕΙΝΑΙ διαθέσιμα ως καθαρό κείμενο στα πεδία «RESTRICTIONS» των αναλύσεων ενοτήτων (PDF 141, 143, 151, 157, 159, 160, 167, 193) και έχουν καταγραφεί στο gt-58."]
+    },
+    {
+      "id": "gt-23",
+      "topic": "Γενικές Γνώσεις (General Knowledge) — προϋποθέσεις γνωστικού υποβάθρου",
+      "requirement": "Για την επιτυχή εκπλήρωση των καθηκόντων και ευθυνών του Σταδίου, ο μαθητής οφείλει: (a) να έχει ολοκληρώσει επιτυχώς τη θεωρητική εκπαίδευση για τα συστήματα του Τ-6Α, (b) να κατέχει πλήρως τα εγχειρίδια του Α/Φ, (c) να γνωρίζει τις τεχνικές πτήσης του Α/Φ, (d) να έχει παρακολουθήσει τη θεωρητική εκπαίδευση (μαθήματα και F/S) που αποτελεί προαπαιτούμενο για τη συνέχιση του προγράμματος, (e) να είναι εξοικειωμένος με τη μετεωρολογία ώστε να παρακολουθεί προσεκτικά την ημερήσια μετεωρολογική ενημέρωση, (f) να έχει εις βάθος γνώση των βασικών αεροδυναμικών αρχών, (g) να γνωρίζει τις διαδικασίες εναέριας κυκλοφορίας του αεροδρομίου και επαρκώς τους Κανόνες Εναέριας Κυκλοφορίας, (h) να γνωρίζει τις διαδικασίες ναυτιλίας, (i) να γνωρίζει αεροπορική ιατρική και φυσιολογία πτήσης, (j) να γνωρίζει τις διαδικασίες επιβίωσης θαλάσσης και ξηράς και διάσωσης από μέσα SAR.",
+      "verbatim": "To successfully complete the duties and responsibilities listed above, SP ought to: a. Have successfully completed the ground training for the Τ-6A systems. b. Have full command of the A/C Manuals. c. Be aware of the A/C flying techniques. d. Have attended the ground training (lessons and F/S) which is prerequisite for the continuation of the program.",
+      "values": {"general_knowledge_items": 10},
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 23, "ref": "PART I, 5. GENERAL KNOWLEDGE (τυπ. σελ. -15-)"},
+      "links": ["gt-22", "gt-14", "gt-24", "st-77"],
+      "flags": []
+    },
+    {
+      "id": "gt-24",
+      "topic": "Προσόντα εισαγωγής στο Βασικό Στάδιο (Phase II)",
+      "requirement": "Για να γίνει δεκτός ο μαθητής στο Βασικό Στάδιο (Phase II) πρέπει να πληροί: (a) Εκπαίδευση: να είναι μαθητής της Σχολής Ικάρων (HAFA) ή μέλος χώρας με την οποία υφίσταται MOU με την Ελλάδα· (b) Εμπειρία: να έχει ολοκληρώσει επιτυχώς το Στάδιο Επιλογής (Phase I) και την εκπαίδευση στο Σχολείο Επιβίωσης στη Θάλασσα· (c) Υγειονομική κατάσταση: να έχει πιστοποιηθεί ως κατάλληλος για Πλήρωμα Αέρος Κατηγορίας Α (Ίκαροι) ή Κατηγορίας Β (Αξιωματικοί) από την ΑΑΥΕ (SAFMC).",
+      "verbatim": "For SP to be accepted in the Basic Phase (Phase II), he/she must meet the following requirements: a. Education: SP is a student of the Hellenic Air Force Academy (HAFA) or he/she is a member of a country where an MOU between Greece and his/her country has been achieved. b. Experience: SP has successfully completed the Selection Phase (Phase I) and the Water Survival School training. c. Medical condition: SP has been certified as fit for Class A Flight Crew (cadets) or Class B Flight Crew (officers) by Supreme Air Force Medical Committee (SAFMC).",
+      "values": {"qualification_criteria": 3},
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 23, "ref": "PART I, 6. QUALIFICATIONS (τυπ. σελ. -15-)"},
+      "links": ["gt-23"],
+      "flags": []
+    },
+    {
+      "id": "gt-25",
+      "topic": "Γενική Γνώση στο Πρόγραμμα Εξοικείωσης με το Α/Φ — βάση επιτυχίας 90%",
+      "requirement": "ΥΠΟ ΤΗΝ ΑΙΡΕΣΗ βλάβης ή μη διαθεσιμότητας του Εξομοιωτή Πτήσεων (F/S), οι μαθητές παρακολουθούν Πρόγραμμα Εξοικείωσης με το Α/Φ 4 εκπαιδευτικών περιόδων (1,5 ώρα εκάστη): EX 1001 Exterior inspection, EX 1002 Familiarization in COCKPIT, EX 1003 Normal Procedures – Start, EX 1004 Emergency Procedures. Εντός αυτού, ο έλεγχος γνώσεων διενεργείται στις πρώτες πτήσεις της κατηγορίας Contact και στην εξέταση τυφλού χειρισμού (blind control examination) πριν από την πτήση ελέγχου C4790. Η βάση επιτυχίας ορίζεται στο 90%. Σε περίπτωση αποτυχίας, η εξέταση τυφλού χειρισμού επαναλαμβάνεται την επόμενη ημέρα. Ως ελάχιστη απαίτηση, ο μαθητής πρέπει να αναγνωρίζει πέραν πάσης αμφιβολίας: OBOGS regulator, χειριστήριο flaps, χειριστήριο συστήματος προσγείωσης, διακόπτες μπαταρίας/γεννήτριας, χειριστήριο ανάγκης L/G, διακόπτες R/T, διακόπτες φώτων Landing/Taxi και διακόπτες Caution/Warning.",
+      "verbatim": "SPs, in case of Flight Simulator (F/S) malfunction/unavailability, will attend familiarization with the A/C training program, which includes four (4) training periods as in the table below: 1. Exterior inspection ΕX 1001 1 / 1,5 2. Familiarization in COCKPIT ΕX 1002 1 / 1,5 3. Normal Procedures – Start ΕX 1003 1 / 1,5 4. Emergency Procedures ΕX 1004 1 / 1,5 ... Knowledge check will take place in first flights of Contact Category Training and in blind control examination prior to C4790 checkride. Pass mark is set at 90%. In case of failure, blind control examination is repeated the following day. As minimum requirement, SP must be in a position to recognize beyond doubt: OBOGS regulator, flaps handle, landing gear handle, battery/generator switches, emergency L/G handle, R/T switches, Landing/Taxi lights switches and Caution/Warning switches.",
+      "values": {
+        "activation_condition": "in case of Flight Simulator (F/S) malfunction/unavailability",
+        "pass_mark_percent": 90,
+        "repeat_after_days": 1,
+        "familiarization_periods": 4,
+        "hours_per_period": 1.5,
+        "min_recognition_items": 8,
+        "periods_detail": [
+          {"sn": 1, "subject": "Exterior inspection", "code": "EX 1001", "periods_hours": "1 / 1,5"},
+          {"sn": 2, "subject": "Familiarization in COCKPIT", "code": "EX 1002", "periods_hours": "1 / 1,5"},
+          {"sn": 3, "subject": "Normal Procedures – Start", "code": "EX 1003", "periods_hours": "1 / 1,5"},
+          {"sn": 4, "subject": "Emergency Procedures", "code": "EX 1004", "periods_hours": "1 / 1,5"}
+        ]
+      },
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 133, "ref": "PART III, 12. A/C FAMILIARIZATION PROGRAM, a. TRAINING PROGRAM και b. GENERAL KNOWLEDGE (τυπ. σελ. -125-)"},
+      "links": ["gt-06", "gt-36", "gt-61", "st-09", "st-10", "fail-35"],
+      "flags": [
+        "ΑΝΤΙΦΑΣΗ ΚΑΤΩΦΛΙΟΥ: Η βάση 90% εδώ διαφέρει από το γενικό 80% των ερωτηματολογίων εδάφους (Syllabus §11.b.(2) και 3-01 §25.β) και από το 100% των ζωτικών διαδικασιών ανάγκης/ορίων Α/Φ. Πρόκειται για διακριτό, ειδικό έλεγχο γνώσεων — ΔΕΝ επιλύεται ως προς την ιεράρχηση.",
+        "Οριακό ως προς τον τομέα: το Πρόγραμμα Εξοικείωσης με το Α/Φ ανήκει στο PART III (μαζί με το F/S), αλλά η απαίτηση είναι γνωστικού ελέγχου.",
+        "ΑΙΡΕΣΗ ΕΝΕΡΓΟΠΟΙΗΣΗΣ: ολόκληρο το Πρόγραμμα Εξοικείωσης (και συνεπώς οι 4 περίοδοι, το 1,5 ώρα και το 90%) ΔΕΝ είναι άνευ όρων — ενεργοποιείται μόνο «in case of Flight Simulator (F/S) malfunction/unavailability» (§12.a, PDF 133).",
+        "ΠΑΡΑΓΩΓΗ ΤΙΜΗ: το min_recognition_items = 8 ΔΕΝ υπάρχει αυτολεξεί στην πηγή — είναι το πλήθος των αντικειμένων που απαριθμούνται στο verbatim της §12.b. Επαληθεύτηκε με καταμέτρηση."
+      ]
+    },
+    {
+      "id": "gt-26",
+      "topic": "Σύνολο εκπαιδευτικών περιόδων εδάφους κατά 3-01 (Πίνακας 1)",
+      "requirement": "Κατά τον Πίνακα 1 του Κεφαλαίου 2 της ΒαΔ 3-01, η Εκπαίδευση Εδάφους (ΣΟΣΜΕ) του Βασικού Σταδίου (Phase II) σε Τ-6Α ανέρχεται σε 524 εκπαιδευτικές περιόδους.",
+      "verbatim": "Εκπση Εδάφους (Εκπ. Περ.)-ΣΟΣΜΕ 524 210 90",
+      "values": {
+        "phase_ii_ground_periods": 524,
+        "phase_iii_ground_periods": 210,
+        "phase_iv_ground_periods": 90,
+        "phase_ii_ac_familiarization_sorties_hours": "2/2,0",
+        "phase_ii_fs_sorties_hours": "46/61,6"
+      },
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 37, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 2, Πίνακας 1 (τυπ. σελ. -19-)"},
+      "links": ["gt-02", "gt-09", "st-07", "ft-152"],
+      "flags": ["Οι στήλες Phase III/IV (210 και 90 περίοδοι) είναι ΕΚΤΟΣ ΠΕΡΙΜΕΤΡΟΥ — καταγράφονται μόνο ως συγκείμενο του πίνακα."]
+    },
+    {
+      "id": "gt-27",
+      "topic": "Αναφορά έναρξης και πέρατος εκπαίδευσης ΣΟΣΜΕ",
+      "requirement": "Η 120ΠΕΑ αναφέρει στη Διοίκηση την έναρξη και το πέρας της εκπαίδευσης των μαθητών στο ΣΟΣΜΕ και την προπαρασκευή πτήσεων.",
+      "verbatim": "H 120ΠΕΑ να αναφέρει στη Διοίκηση την έναρξη και το πέρας της εκπαίδευσης των μαθητών στο ΣΟΣΜΕ και την προπαρασκευή πτήσεων.",
+      "values": {},
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 37, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 3 (τυπ. σελ. -19-)"},
+      "links": ["gt-14"],
+      "flags": []
+    },
+    {
+      "id": "gt-28",
+      "topic": "Παρακολούθηση Αναλυτικών Προγραμμάτων και συνθήκες διεξαγωγής γραπτών εξετάσεων",
+      "requirement": "Οι μαθητές παρακολουθούν τα προγράμματα εκπαίδευσης εδάφους και διδάσκονται τα αντικείμενα των Αναλυτικών Προγραμμάτων των Σταδίων. Όπου απαιτείται έλεγχος γνώσεων με γραπτές εξετάσεις, αυτές διενεργούνται: (α) τουλάχιστον 3 ημερολογιακές ημέρες μετά την ολοκλήρωση του αντίστοιχου μαθήματος, μη συμπεριλαμβανομένης της ημέρας ολοκλήρωσης· (β) πριν την έναρξη των πτήσεων στο F/S ή στο Α/Φ, της ενότητας ή της κατηγορίας ασκήσεων που αφορούν στις διαλέξεις· (γ) υπό μορφή ερωτηματολογίου κλειστού ή ανοικτού βιβλίου των 20-50 ερωτήσεων πολλαπλών απαντήσεων ή περιγραφικού τύπου, ανάλογα με τη διδαχθείσα ύλη· (δ) μέσω των υπολογιστών του CBTS, οπότε πρέπει να τυπώνεται αποδεικτικό της επίδοσης και να τίθεται στον φάκελο εκπαίδευσης.",
+      "verbatim": "α. Τουλάχιστον 3 ημερολογιακές ημέρες μετά από την ολοκλήρωση του αντίστοιχου μαθήματος (μη συμπεριλαμβανομένης της ημέρας που ολοκληρώθηκε το μάθημα). β. Πριν την έναρξη των πτήσεων στο F/S ή στο Α/Φ, της ενότητας ή της κατηγορίας ασκήσεων που αφορούν στις διαλέξεις. γ. Υπό μορφή ερωτηματολογίου κλειστού ή ανοικτού βιβλίου των 20-50 ερωτήσεων πολλαπλών απαντήσεων ή περιγραφικού τύπου, ανάλογα με τη διδαχθείσα ύλη και όπως καθορίζεται από τα προγράμματα εκπαίδευσης. δ. Μέσω των υπολογιστών του Computer Based Training System (CBTS). Στη συγκεκριμένη περίπτωση, θα πρέπει να τυπώνεται αποδεικτικό της επίδοσης των μαθητών και να μπαίνει στο φάκελο εκπαίδευσης τους.",
+      "values": {"min_calendar_days_after_lesson": 3, "questions_min": 20, "questions_max": 50},
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 38, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 4.α-δ (τυπ. σελ. -20-· η εισαγωγή της παρ. 4 στην PDF 37)"},
+      "links": ["gt-04", "gt-05", "gt-22", "gt-30", "ft-139"],
+      "flags": [
+        "Το Syllabus §11.b.(2) λέει «Three days after completion» χωρίς «τουλάχιστον» και χωρίς τον αποκλεισμό της ημέρας ολοκλήρωσης (βλ. gt-04)."
+      ]
+    },
+    {
+      "id": "gt-29",
+      "topic": "Προϋπόθεση έναρξης εκπαίδευσης Αέρος — ολοκλήρωση μαθημάτων διαγράμματος ροής",
+      "requirement": "Η έναρξη της εκπαίδευσης Αέρος προϋποθέτει την ολοκλήρωση των μαθημάτων/θεμάτων που καθορίζονται στο διάγραμμα ροής του Αναλυτικού Προγράμματος Εκπαίδευσης κάθε σταδίου. Για την εκτέλεση των υπολοίπων μαθημάτων ακολουθείται το ίδιο διάγραμμα.",
+      "verbatim": "Η έναρξη της εκπαίδευσης Αέρος προϋποθέτει την ολοκλήρωση των μαθημάτων/θεμάτων που καθορίζονται στο διάγραμμα ροής του Αναλυτικού Προγράμματος Εκπαίδευσης κάθε σταδίου. Για την εκτέλεση των υπολοίπων μαθημάτων να ακολουθείται το ίδιο διάγραμμα.",
+      "values": {},
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 38, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 5 (τυπ. σελ. -20-)"},
+      "links": ["gt-22", "gt-28", "st-41", "ft-138"],
+      "flags": []
+    },
+    {
+      "id": "gt-30",
+      "topic": "Ερωτηματολόγια Επαγγελματικών Θεμάτων (ΕΕΘ) — συχνότητα στο Phase II",
+      "requirement": "Οι μαθητές εξετάζονται γραπτώς με Ερωτηματολόγια Επαγγελματικών Θεμάτων (ΕΕΘ): κάθε εβδομάδα κατά την προ «ΜΟΝΟΣ» φάση του Βασικού Σταδίου (Phase II)· κάθε 15 ημέρες μετά την προ «ΜΟΝΟΣ» φάση στο Βασικό Στάδιο (Phase II).",
+      "verbatim": "Οι μαθητές να εξετάζονται γραπτώς με Ερωτηματολόγια Επαγγελματικών Θεμάτων (ΕΕΘ): α. Κάθε εβδομάδα, κατά την προ «ΜΟΝΟΣ» φάση για τα Στάδια Βασικό (Phase II), και Προκεχωρημένο (Phase IΙI). β. Κάθε 15 ημέρες, μετά την προ «ΜΟΝΟΣ» φάση στο Βασικό Στάδιο (Phase II) και στο Προκεχωρημένο Στάδιο (Phase III). γ. Κάθε 30 ημέρες, στο Επιχειρησιακό Στάδιο (Phase IV).",
+      "values": {
+        "pre_solo_interval_days": 7,
+        "pre_solo_frequency": "κάθε εβδομάδα",
+        "post_solo_interval_days": 15,
+        "phase_iv_interval_days_out_of_scope": 30
+      },
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 38, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 6.α-γ (τυπ. σελ. -20-)"},
+      "links": ["gt-31", "gt-36", "gt-50"],
+      "flags": [
+        "Η παρ. 6.γ (κάθε 30 ημέρες στο Phase IV) είναι ΕΚΤΟΣ ΠΕΡΙΜΕΤΡΟΥ· το verbatim επεκτάθηκε ώστε να την περιλαμβάνει, επειδή η τιμή phase_iv_interval_days_out_of_scope = 30 προέρχεται από αυτήν.",
+        "ΠΑΡΑΓΩΓΗ ΤΙΜΗ: το pre_solo_interval_days = 7 ΔΕΝ υπάρχει αυτολεξεί στην πηγή — είναι μετατροπή του «Κάθε εβδομάδα» της παρ. 6.α σε ημέρες. Η αυτολεξεί διατύπωση διατηρείται στο πεδίο pre_solo_frequency.",
+        "Το post_solo_interval_days = 15 και το phase_iv_interval_days_out_of_scope = 30 υπάρχουν αυτολεξεί στο verbatim (παρ. 6.β και 6.γ αντίστοιχα)."
+      ]
+    },
+    {
+      "id": "gt-31",
+      "topic": "Σύνθεση ΕΕΘ και παράλληλη εξέταση Bold Face / ορίων Α/Φ",
+      "requirement": "Οι εξετάσεις ΕΕΘ γίνονται επί ερωτηματολογίου 20 ερωτήσεων Κλειστού Βιβλίου πολλαπλών απαντήσεων και επί ερωτηματολογίου 10 ερωτήσεων Ανοικτού Βιβλίου πολλαπλών απαντήσεων. Παράλληλα, οι μαθητές εξετάζονται γραπτώς σε πέντε (5) ζωτικές διαδικασίες ανάγκης (BOLD FACE) και στα όρια του Α/Φ που ίπτανται.",
+      "verbatim": "Οι ανωτέρω εξετάσεις να γίνονται επί ερωτηματολογίου 20 ερωτήσεων Κλειστού Βιβλίου πολλαπλών απαντήσεων και επί ερωτηματολογίου 10 ερωτήσεων Ανοικτού Βιβλίου πολλαπλών απαντήσεων. Παράλληλα να εξετάζονται γραπτώς σε πέντε ζωτικές διαδικασίες ανάγκης (BOLD FACE) και στα όρια του Α/Φ που ίπτανται.",
+      "values": {
+        "closed_book_questions": 20,
+        "open_book_questions": 10,
+        "boldface_procedures": 5,
+        "ac_limits_exam": true
+      },
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 38, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 7 (τυπ. σελ. -20-)"},
+      "links": ["gt-30", "gt-12", "gt-36", "gt-46", "fail-30"],
+      "flags": []
+    },
+    {
+      "id": "gt-32",
+      "topic": "Μηνιαία γραπτή εξέταση ταχείας απομάκρυνσης / εγκατάλειψης / επιβίωσης",
+      "requirement": "Οι μαθητές όλων των σταδίων εξετάζονται γραπτώς κάθε μήνα στις διαδικασίες ΤΑΧΕΙΑΣ ΑΠΟΜΑΚΡΥΝΣΗΣ ΑΠΟ ΤΟ Α/Φ - ΕΓΚΑΤΑΛΕΙΨΗΣ - ΕΠΙΒΙΩΣΗΣ (EMERGENCY GROUND EGRESS - EJECTION - LOW/HIGH POST EJECTION CHECKLIST).",
+      "verbatim": "Επίσης, οι μαθητές όλων των σταδίων να εξετάζονται γραπτώς κάθε μήνα στις διαδικασίες ΤΑΧΕΙΑΣ ΑΠΟΜΑΚΡΥΝΣΗΣ ΑΠΟ ΤΟ Α/Φ - ΕΓΚΑΤΑΛΕΙΨΗΣ - ΕΠΙΒΙΩΣΗΣ (EMERGENCY GROUND EGRESS - EJECTION - LOW/HIGH POST EJECTION CHECKLIST).",
+      "values": {"interval_days": 30, "frequency": "κάθε μήνα"},
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 38, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 8 (τυπ. σελ. -20-)"},
+      "links": ["gt-09", "gt-36", "ft-135", "fail-30"],
+      "flags": [
+        "Συνδέεται με το μάθημα 13 «Ejection – Survival procedures» (BB 101-102, 2 περίοδοι) του Syllabus, το οποίο όμως δεν προβλέπει δική του γραπτή εξέταση στους πίνακες 11.b.",
+        "ΠΑΡΑΓΩΓΗ ΤΙΜΗ: το interval_days = 30 ΔΕΝ υπάρχει αυτολεξεί στην πηγή — είναι μετατροπή του «κάθε μήνα» της παρ. 8 σε ημέρες. Η αυτολεξεί διατύπωση διατηρείται στο πεδίο frequency."
+      ]
+    },
+    {
+      "id": "gt-33",
+      "topic": "Καθορισμός ύλης ερωτηματολογίων και ατομικής βιβλιοθήκης",
+      "requirement": "Η ύλη των ερωτηματολογίων καθώς και η ατομική βιβλιοθήκη των μαθητών περιγράφεται στα επιμέρους Αναλυτικά Προγράμματα.",
+      "verbatim": "Η ύλη των εν λόγω ερωτηματολογίων καθώς και η ατομική βιβλιοθήκη των μαθητών να περιγράφεται στα επιμέρους Αναλυτικά Προγράμματα.",
+      "values": {},
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 38, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 9 (τυπ. σελ. -20-)"},
+      "links": ["gt-20", "gt-21"],
+      "flags": []
+    },
+    {
+      "id": "gt-34",
+      "topic": "Έκτακτα ερωτηματολόγια ελέγχου προόδου — έως 5 ανά Στάδιο",
+      "requirement": "Η Μοίρα, σε κάθε Στάδιο Εκπαίδευσης, ελέγχει έως 5 φορές την πρόοδο των μαθητών στην αφομοίωση της παρεχόμενης εκπαίδευσης στο γνωστικό πεδίο, με έκτακτα ερωτηματολόγια 50 ερωτήσεων κλειστού ή 25 ερωτήσεων ανοικτού βιβλίου πολλαπλών απαντήσεων ή περιγραφικού τύπου 5-10 ερωτήσεων.",
+      "verbatim": "Η Μοίρα σε κάθε Στάδιο Εκπαίδευσης, να ελέγχει έως 5 φορές, την πρόοδο των μαθητών στην αφομοίωση της παρεχόμενης εκπαίδευσης στο γνωστικό πεδίο, με έκτακτα ερωτηματολόγια 50 ερωτήσεων κλειστού ή 25 ερωτήσεων ανοικτού βιβλίου πολλαπλών απαντήσεων ή περιγραφικού τύπου 5 - 10 ερωτήσεων.",
+      "values": {
+        "max_extraordinary_questionnaires_per_stage": 5,
+        "closed_book_questions": 50,
+        "open_book_questions": 25,
+        "descriptive_questions_min": 5,
+        "descriptive_questions_max": 10
+      },
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 38, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 10 (τυπ. σελ. -20-, συνέχεια στην PDF 39)"},
+      "links": ["gt-05", "gt-36", "gt-43", "ft-136", "fail-31"],
+      "flags": []
+    },
+    {
+      "id": "gt-35",
+      "topic": "Αξιολόγηση σειρών από τη Διοίκηση — εξετάσεις εδάφους πριν το πέρας του Σταδίου",
+      "requirement": "Προκειμένου η Διοίκηση να διαμορφώνει άποψη για την απόδοση των μαθητών σε σχέση με την παρασχεθείσα εκπαίδευση, αξιολογεί τις επιδόσεις των σειρών πριν το πέρας της εκπαίδευσής τους στο Στάδιο. Η Αξιολόγηση περιλαμβάνει εξετάσεις εδάφους για ΟΛΟΥΣ τους μαθητές της σειράς (και Αξιολογήσεις Αέρος).",
+      "verbatim": "Προκειμένου η Διοίκηση να διαμορφώνει άποψη για την απόδοση των μαθητών, σε σχέση με την παρασχεθείσα σ’ αυτούς εκπαίδευση, θα αξιολογεί τις επιδόσεις των σειρών, πριν το πέρας της εκπαίδευσής τους στο Στάδιο. Η Αξιολόγηση θα περιλαμβάνει: (1) Εξετάσεις εδάφους, για όλους τους μαθητές της σειράς.",
+      "values": {},
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 42, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 22.ι (τυπ. σελ. -24-, συνέχεια στην PDF 43)"},
+      "links": ["gt-36", "gt-38", "ft-107", "ft-108", "ft-109", "fail-33"],
+      "flags": ["Η αρίθμηση «ι» επαναλαμβάνεται δύο φορές στην πηγή (παρ. 22.ι στην PDF 42 και εκ νέου «ι.» στην PDF 43) — τυπογραφικό της πηγής."]
+    },
+    {
+      "id": "gt-36",
+      "topic": "Εξετάσεις εδάφους από Αξιολογητές Διοίκησης με το πέρας κάθε Σταδίου — επανάληψη την επομένη",
+      "requirement": "Οι Αξιολογητές της Διοίκησης δύνανται να διενεργούν εξετάσεις εδάφους στα επαγγελματικά θέματα και στις ζωτικές διαδικασίες ανάγκης (Bold Face) με το πέρας κάθε Σταδίου. Σε περίπτωση ΑΠΟΤΥΧΙΑΣ, η εξέταση επαναλαμβάνεται την επομένη.",
+      "verbatim": "Εξετάσεις εδάφους στα επαγγελματικά θέματα και στις ζωτικές διαδικασίες ανάγκης (Bold Face) με το πέρας κάθε Σταδίου. Σε περίπτωση ΑΠΟΤΥΧΙΑΣ, η εξέταση να επαναλαμβάνεται την επομένη.",
+      "values": {"reexam_after_days": 1},
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 43, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 22.ι(2) (τυπ. σελ. -25-)"},
+      "links": ["gt-35", "gt-37", "ft-107", "ft-108", "ft-109", "fail-33"],
+      "flags": []
+    },
+    {
+      "id": "gt-37",
+      "topic": "Κλίμακα βαθμολογίας εκπαίδευσης εδάφους — 80% / 100% (ΚΡΙΣΙΜΟ)",
+      "requirement": "Σε όλες τις εξετάσεις εδάφους που γίνονται στο πλαίσιο της αξιολόγησης των γνώσεων των μαθητών στα μαθήματα και αντικείμενα των Αναλυτικών Προγραμμάτων εκπαίδευσης εδάφους, καθώς και στα ερωτηματολόγια που εξετάζονται κατά τη διάρκεια της εκπαίδευσης αέρος, ισχύει η εκατοστιαία κλίμακα βαθμολογίας. Για τους μαθητές (Ικάρους-Ανθσγούς) όλων των σταδίων, ως ελάχιστη εκατοστιαία βαθμολογία επιτυχίας στα ερωτηματολόγια καθορίζεται το 80%, ενώ στις ζωτικές διαδικασίες ανάγκης και τα όρια του Α/Φ το 100%.",
+      "verbatim": "25. Βαθμολογίες στην Εκπαίδευση Εδάφους α. Σε όλες τις εξετάσεις εδάφους που γίνονται στο πλαίσιο της αξιολόγησης των γνώσεων των μαθητών στα μαθήματα και στα αντικείμενα που περιγράφονται στα Αναλυτικά Προγράμματα εκπαίδευσης εδάφους των σταδίων, καθώς και στα ερωτηματολόγια που εξετάζονται κατά τη διάρκεια της εκπαίδευσης αέρος, ισχύει η εκατοστιαία κλίμακα βαθμολογίας. β. Για τους μαθητές (Ικάρους-Ανθσγούς) όλων των σταδίων, ως ελάχιστη εκατοστιαία βαθμολογία ώστε να θεωρούνται επιτυχόντες στα ερωτηματολόγια καθορίζεται το 80%, ενώ στις ζωτικές διαδικασίες ανάγκης και τα όρια του Α/Φ το 100%.",
+      "values": {
+        "scale": "εκατοστιαία (0-100%)",
+        "min_pass_questionnaires_percent": 80,
+        "min_pass_boldface_percent": 100,
+        "min_pass_ac_limits_percent": 100,
+        "applies_to": "μαθητές (Ίκαροι-Ανθυποσμηναγοί) όλων των σταδίων"
+      },
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 46, "ref": "ΚΕΦΑΛΑΙΟ 2, Κριτήρια Απόδοσης και Βαθμολογίες, παρ. 25.α-β (τυπ. σελ. -28-)"},
+      "links": ["gt-06", "gt-11", "gt-12", "gt-31", "gt-32", "gt-34", "gt-25", "gt-40", "ft-140", "fail-28"],
+      "flags": [
+        "Συμφωνεί με το Syllabus §11.b.(2) ως προς το 80%. Το Syllabus ΔΕΝ αναφέρει το κατώφλι 100% για ζωτικές διαδικασίες ανάγκης / όρια Α/Φ — η απαίτηση προκύπτει ΜΟΝΟ από την 3-01 §25.β.",
+        "Το ειδικό 90% της εξέτασης τυφλού χειρισμού (Syllabus PART III §12.b, βλ. gt-25) δεν προβλέπεται στην 3-01 §25."
+      ]
+    },
+    {
+      "id": "gt-38",
+      "topic": "Αναστολή θεωρητικής εκπαίδευσης κατά την κρίση Πτητικής Καταλληλότητας",
+      "requirement": "Κατά το χρονικό διάστημα παραπομπής του μαθητή στο Συμβούλιο Πτητικής Ικανότητας για κρίση της Πτητικής του Καταλληλότητας (είτε για θεωρητική είτε για Πτητική Ανεπάρκεια), διακόπτονται ΟΛΕΣ οι δραστηριότητές του στη Μοίρα, συμπεριλαμβανομένων των μαθημάτων και εξετάσεων εδάφους.",
+      "verbatim": "Κατά το χρονικό διάστημα παραπομπής του μαθητή στο Συμβούλιο Πτητικής Ικανότητας για κρίση της Πτητικής του Καταλληλότητας (είτε για θεωρητική είτε για Πτητική Ανεπάρκεια), να διακόπτονται όλες οι δραστηριότητές του στη Μοίρα (πτήσεις με Α/Φ, πτήσεις στο F/S, μαθήματα - εξετάσεις εδάφους).",
+      "values": {},
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 53, "ref": "ΚΕΦΑΛΑΙΟ 2, Κρίση Πτητικής Καταλληλότητας, παρ. 31 (τυπ. σελ. -35-)"},
+      "links": ["gt-44", "gt-45", "gt-53", "st-66", "fail-61"],
+      "flags": ["Η παρ. 31 παραπέμπει για τα κριτήρια Phase II στις παρ. 57 έως 59 του ίδιου Κεφαλαίου (βλ. gt-44 έως gt-46)."]
+    },
+    {
+      "id": "gt-39",
+      "topic": "ΚΕΠΕ — γενικός σκοπός και σύνδεση με θεωρητική εκπαίδευση",
+      "requirement": "Η ΚΕΠΕ (Κατάσταση Ειδικής Παρακολούθησης Εκπαίδευσης Μαθητή) αποτελεί βραχυπρόθεσμο πρόγραμμα επίβλεψης της προόδου για μαθητές με τάσεις μειωμένης απόδοσης. Ο μαθητής τίθεται σε ΚΕΠΕ κατά την κρίση του Διοικητή της Μοίρας ή του Α.Ε., όταν οι επιδόσεις του στην πτητική Ή ΘΕΩΡΗΤΙΚΗ εκπαίδευση υπολείπονται έναντι της παρεχόμενης εκπαίδευσης.",
+      "verbatim": "Μαθητής να τίθεται σε ΚΕΠΕ κατά την κρίση του Διοικητή της Μοίρας ή του Α.Ε. αυτής, όταν οι επιδόσεις του στην πτητική ή θεωρητική εκπαίδευση υπολείπονται έναντι της παρεχόμενης εκπαίδευσης, με αποτέλεσμα να απαιτείται ιδιαίτερη παρακολούθηση της προόδου του.",
+      "values": {},
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 54, "ref": "ΚΕΦΑΛΑΙΟ 2, Κατάσταση Ειδικής Παρακολούθησης Εκπαίδευσης Μαθητή (ΚΕΠΕ), παρ. 32.α-β (τυπ. σελ. -36-)"},
+      "links": ["gt-40", "gt-41", "gt-42", "gt-43", "fail-43"],
+      "flags": []
+    },
+    {
+      "id": "gt-40",
+      "topic": "ΚΕΠΕ — κατώφλι μίας αποτυχίας σε γραπτή εξέταση εδάφους ή CBT",
+      "requirement": "Ο μαθητής τίθεται σε ΚΕΠΕ αν σε ΜΙΑ (1) γραπτή αξιολόγηση ή εξέταση εδάφους (συμπεριλαμβανομένων εξετάσεων σε CBT) χαρακτηρισθεί ως «ΑΠΟΤΥΧΩΝ».",
+      "verbatim": "Σε μία γραπτή αξιολόγηση ή εξέταση εδάφους (συμπεριλαμβανομένων εξετάσεων σε CBT) χαρακτηρισθεί ως «ΑΠΟΤΥΧΩΝ».",
+      "values": {"failed_written_ground_exams_threshold": 1, "includes_cbt": true},
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 54, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 32.β(4) (τυπ. σελ. -36-)"},
+      "links": ["gt-37", "gt-39", "gt-42", "gt-45", "st-67", "fail-43", "fail-44"],
+      "flags": []
+    },
+    {
+      "id": "gt-41",
+      "topic": "ΚΕΠΕ — κατώφλι προφορικών εξετάσεων κατά την ενημέρωση",
+      "requirement": "Ο μαθητής τίθεται σε ΚΕΠΕ αν σε 2 συνεχόμενες ή 4 μη συνεχόμενες ΠΡΟΦΟΡΙΚΕΣ εξετάσεις εδάφους κατά την ομαδική ή/και ατομική προ πτήσεως ενημέρωση χαρακτηρισθεί ως «ΑΠΟΤΥΧΩΝ».",
+      "verbatim": "Σε 2 συνεχόμενες ή 4 μη συνεχόμενες προφορικές εξετάσεις εδάφους κατά την ομαδική ή/και ατομική προ πτήσεως ενημέρωση, χαρακτηρισθεί ως «ΑΠΟΤΥΧΩΝ».",
+      "values": {
+        "consecutive_failed_oral_exams": 2,
+        "non_consecutive_failed_oral_exams": 4,
+        "context": "ομαδική ή/και ατομική προ πτήσεως ενημέρωση"
+      },
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 54, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 32.β(5) (τυπ. σελ. -36-)"},
+      "links": ["gt-39", "gt-42", "gt-46", "st-67", "fail-43", "fail-44"],
+      "flags": [
+        "ΠΡΟΣΟΧΗ στη διαφορά κλίμακας: το κατώφλι ΚΕΠΕ είναι 2 συνεχόμενες / 4 μη συνεχόμενες (παρ. 32.β(5)), ενώ το κατώφλι παραπομπής για κρίση Πτητικής Καταλληλότητας είναι 4 συνεχόμενες / 8 μη συνεχόμενες (παρ. 58.ζ και ΠΔ 29/2020 Άρθρο 3 §1.ζ). Δεν είναι αντίφαση αλλά κλιμάκωση — καταγράφεται για αποφυγή σύγχυσης."
+      ]
+    },
+    {
+      "id": "gt-42",
+      "topic": "ΚΕΠΕ — μέγιστος αριθμός εισόδων λόγω αποτυχίας σε εξετάσεις εδάφους",
+      "requirement": "Μαθητής ενός Σταδίου μπορεί να εισέλθει σε ΚΕΠΕ το μέγιστο δύο (2) φορές λόγω ΑΠΟΤΥΧΙΑΣ σε εξετάσεις εδάφους (γραπτές ή προφορικές).",
+      "verbatim": "Μαθητής ενός Σταδίου μπορεί να εισέλθει σε ΚΕΠΕ το μέγιστο: (1) Δύο φορές, λόγω ΑΠΟΤΥΧΙΑΣ σε εξετάσεις εδάφους (γραπτές ή προφορικές).",
+      "values": {
+        "max_kepe_entries_ground_exams_per_stage": 2,
+        "max_kepe_entries_adaptation_category": 2,
+        "max_kepe_entries_other_categories": 1
+      },
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 54, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 32.γ(1) (τυπ. σελ. -36-, συνέχεια PDF 55 για (3))"},
+      "links": ["gt-39", "gt-40", "gt-41", "st-68", "fail-45"],
+      "flags": []
+    },
+    {
+      "id": "gt-43",
+      "topic": "ΚΕΠΕ — μέτρα και στόχοι εξόδου που αφορούν τη θεωρητική εκπαίδευση",
+      "requirement": "Στο έντυπο ΚΕΠΕ αναγράφονται τα μέτρα που λαμβάνονται, μεταξύ των οποίων «Επιπρόσθετη θεωρητική εκπαίδευση». Στο ίδιο έντυπο αναγράφεται ο στόχος εξόδου από την ΚΕΠΕ· θεωρητικοί στόχοι είναι: η επιτυχία σε ατομικό ή ομαδικό, τακτικό ή έκτακτο ερωτηματολόγιο, και η επιτυχία σε διαδοχικές προφορικές εξετάσεις.",
+      "verbatim": "(γ) Επιπρόσθετη θεωρητική εκπαίδευση. ... (γ) Η επιτυχία σε ατομικό ή ομαδικό, τακτικό ή έκτακτο ερωτηματολόγιο. (δ) Η επιτυχία σε διαδοχικές προφορικές εξετάσεις.",
+      "values": {},
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 55, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 32.δ(4)(γ) και 32.δ(5)(γ),(δ) (τυπ. σελ. -37-)"},
+      "links": ["gt-34", "gt-39", "gt-41", "st-69", "fail-46", "fail-47", "fail-48", "fail-49"],
+      "flags": []
+    },
+    {
+      "id": "gt-44",
+      "topic": "Κριτήριο επιτυχίας Phase II — Exit Level",
+      "requirement": "Η εκπαίδευση ενός μαθητή στο Phase II κρίνεται ως ΕΠΙΤΥΧΗΣ εφόσον επιτύχει τα αντίστοιχα Exit Level στο τέλος του Σταδίου Εκπαίδευσης (παρ. 57). Το ίδιο το Επίπεδο Εξόδου (Exit Level) του Σταδίου καθορίζεται από το ΓΕΑ/ΑΑΣ κατόπιν εισήγησης της ΔΑΕ· ο μαθητής ΣΤΗΝ ΕΝΑΡΞΗ του Σταδίου πρέπει να καλύπτει το Επίπεδο Εξόδου του προηγούμενου σταδίου, και στο τέλος του Σταδίου πρέπει να είναι ικανός/ή για εν συνεχεία εκπαίδευση στο Προκεχωρημένο Στάδιο ή στους αντίστοιχους φορείς εκπαίδευσης των Ε/Π ή των μεταφορικών Α/Φ (παρ. 52).",
+      "verbatim": "57. Η εκπαίδευση ενός μαθητή στο Phase II κρίνεται ως ΕΠΙΤΥΧΗΣ, εφόσον επιτύχει τα αντίστοιχα Exit Level στο τέλος Σταδίου Εκπαίδευσης. || 52. Το Επίπεδο Εξόδου για το Στάδιο καθορίζεται από το ΓΕΑ / ΑΑΣ, κατόπιν εισήγησης της ΔΑΕ. Ο μαθητής στην έναρξη του Σταδίου, πρέπει να καλύπτει το Επίπεδο Εξόδου του προηγούμενου σταδίου. Στο τέλος του Σταδίου πρέπει να είναι ικανός/ή για εν συνεχεία εκπαίδευση στο Προκεχωρημένο Στάδιο ή στους αντίστοιχους φορείς εκπαίδευσης των Ε/Π ή των μεταφορικών Α/Φ.",
+      "values": {
+        "exit_level_authority": "ΓΕΑ / ΑΑΣ, κατόπιν εισήγησης ΔΑΕ",
+        "entry_condition": "κάλυψη του Exit Level του προηγούμενου σταδίου (Phase I)"
+      },
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 62, "ref": "ΚΕΦΑΛΑΙΟ 2, Κριτήρια Επιτυχίας Μαθητών Βασικού Σταδίου (Phase II), παρ. 57 (τυπ. σελ. -44-)"},
+      "source_refs": [
+        {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 62, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 57 (τυπ. σελ. -44-)"},
+        {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 61, "ref": "ΚΕΦΑΛΑΙΟ 2, ΒΑΣΙΚΟ ΣΤΑΔΙΟ ΕΚΠΑΙΔΕΥΣΗΣ (PHASE II) ΜΕ Α/Φ Τ-6Α — Exit Level, παρ. 52 (τυπ. σελ. -43-)"}
+      ],
+      "links": ["gt-24", "gt-47", "gt-51", "gt-60", "ft-121", "ft-125", "fail-82"],
+      "flags": ["Η παρ. 52 (PDF 61) ορίζει τον φορέα καθορισμού του Exit Level και την ΠΡΟΫΠΟΘΕΣΗ ΕΙΣΟΔΟΥ (κάλυψη του Exit Level του προηγούμενου σταδίου), στοιχεία που δεν προκύπτουν από την παρ. 57."]
+    },
+    {
+      "id": "gt-45",
+      "topic": "Παραπομπή για κρίση Πτητικής Καταλληλότητας — 2 συνεχόμενες αποτυχίες σε γραπτές εξετάσεις εδάφους",
+      "requirement": "Ο μαθητής παραπέμπεται για κρίση Πτητικής Καταλληλότητας, σύμφωνα με το ΠΔ 29/2020, όταν αποτυγχάνει σε ΔΥΟ (2) συνεχόμενες γραπτές αξιολογήσεις ή εξετάσεις εδάφους που συντελούνται από τη Μοίρα ή τη Μονάδα στην οποία παρέχεται η πτητική εκπαίδευση ή την Προϊστάμενη αρχή.",
+      "verbatim": "Όταν αποτυγχάνει σε 2 συνεχόμενες γραπτές αξιολογήσεις ή εξετάσεις εδάφους που συντελούνται από τη Μοίρα ή τη Μονάδα στην οποία παρέχεται η πτητική εκπαίδευση ή την Προϊστάμενη αρχή.",
+      "values": {"consecutive_failed_written_ground_exams": 2},
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 63, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 58.στ (τυπ. σελ. -45-)"},
+      "links": ["gt-37", "gt-38", "gt-40", "gt-54", "gt-60", "fail-32", "fail-62", "fail-85"],
+      "flags": [
+        "Ταυτόσημο με ΠΔ 29/2020, Άρθρο 3, παρ. 1.στ (fek_a_57_2020.pdf, PDF 5) — ΧΩΡΙΣ αντίφαση.",
+        "ΣΥΝΕΠΕΙΑ ΤΟΥ ΚΑΤΩΦΛΙΟΥ (τομέας fail-*): κατά το ΠΔ 29/2020 Άρθρο 3 παρ. 5 (fek_a_57_2020.pdf, PDF 5) «Κατά τις περιπτώσεις των υποπαραγράφων 1στ, 1η, 1θ και 1ι συντάσσεται ειδική έκθεση από τον Διοικητή της Μοίρας και ο κρινόμενος παραπέμπεται στο Συμβούλιο Πτητικής Ικανότητας για κρίση της πτητικής του καταλληλότητας.» Δηλαδή η περίπτωση 1στ (2 συνεχόμενες αποτυχίες σε ΓΡΑΠΤΕΣ εξετάσεις εδάφους) οδηγεί ΑΠΕΥΘΕΙΑΣ στο Συμβούλιο, ΧΩΡΙΣ ενδιάμεση πτήση Δοκιμής Προόδου — σε αντίθεση με την περίπτωση 1ζ (προφορικές, βλ. gt-46/gt-54). Η πλήρης καταγραφή ανήκει στον τομέα fail-flight-suitability-referral."
+      ]
+    },
+    {
+      "id": "gt-46",
+      "topic": "Αποτυχία σε προφορικές εξετάσεις ενημέρωσης — γραπτή εξέταση επαγγελματικής κατάρτισης",
+      "requirement": "Όταν ο μαθητής αποτυγχάνει σε 4 συνεχόμενες ή 8 μη συνεχόμενες προβλεπόμενες προφορικές εξετάσεις κατά την ομαδική ή/και ατομική προ πτήσεως ενημέρωση, κρίνεται η επαγγελματική του κατάρτιση με γραπτή εξέταση από τον Δκτή ή τον Α.Ε. της Μοίρας. Η γραπτή εξέταση διενεργείται μετά από 2 ημερολογιακές ημέρες (μη συμπεριλαμβανομένης της τελευταίας ημέρας που ΑΠΕΤΥΧΕ). Ο μαθητής εξετάζεται σε ερωτηματολόγιο επαγγελματικών θεμάτων αποτελούμενο από: 50 ερωτήσεις κλειστού βιβλίου, 25 ανοικτού βιβλίου και 5 Ζωτικές Διαδικασίες Ανάγκης (BOLD FACE – CAPs) από την ύλη που προβλέπεται στα αντίστοιχα Αναλυτικά Προγράμματα.",
+      "verbatim": "Όταν αποτυγχάνει σε 4 συνεχόμενες ή 8 μη συνεχόμενες προβλεπόμενες προφορικές εξετάσεις κατά την ομαδική ή/και ατομική προ πτήσεως ενημέρωση, τότε να κρίνεται η επαγγελματική του κατάρτιση με γραπτή εξέταση από τον Δκτή ή τον ΑΕ της Μοίρας. Η γραπτή εξέταση να διενεργείται μετά από 2 ημερολογιακές ημέρες (μη συμπεριλαμβανομένης της τελευταίας ημέρας που ΑΠΕΤΥΧΕ). Ο μαθητής να εξετάζεται σε ερωτηματολόγιο επαγγελματικών θεμάτων αποτελούμενο από: (1) 50 ερωτήσεις κλειστού βιβλίου, (2) 25 ανοικτού βιβλίου και (3) 5 Ζωτικές Διαδικασίες Ανάγκης (BOLD FACE – CAPs) από την ύλη που προβλέπεται στα αντίστοιχα Αναλυτικά Προγράμματα.",
+      "values": {
+        "consecutive_failed_oral_exams": 4,
+        "non_consecutive_failed_oral_exams": 8,
+        "written_exam_after_calendar_days": 2,
+        "closed_book_questions": 50,
+        "open_book_questions": 25,
+        "boldface_procedures": 5
+      },
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 63, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 58.ζ (τυπ. σελ. -45-)"},
+      "links": ["gt-31", "gt-41", "gt-47", "gt-54", "fail-36", "fail-37"],
+      "flags": ["Ταυτόσημο κατώφλι με ΠΔ 29/2020, Άρθρο 3, παρ. 1.ζ (fek_a_57_2020.pdf, PDF 5) — ΧΩΡΙΣ αντίφαση. Η 3-01 εξειδικεύει επιπλέον τη σύνθεση του ερωτηματολογίου και την προθεσμία των 2 ημερών."]
+    },
+    {
+      "id": "gt-47",
+      "topic": "Επανεξέταση μετά από αποτυχία στη γραπτή εξέταση επαγγελματικών θεμάτων",
+      "requirement": "Σε περίπτωση ΑΠΟΤΥΧΙΑΣ, ο μαθητής επανεξετάζεται μετά από 2 ημερολογιακές ημέρες (μη συμπεριλαμβανομένης της ημέρας που ΑΠΕΤΥΧΕ) στα ίδια αντικείμενα. Σε περίπτωση νέας ΑΠΟΤΥΧΙΑΣ εφαρμόζεται το ΠΔ 29/2020.",
+      "verbatim": "Σε περίπτωση ΑΠΟΤΥΧΙΑΣ να επανεξετάζεται μετά από 2 ημερολογιακές ημέρες (μη συμπεριλαμβανομένης της ημέρας που ΑΠΕΤΥΧΕ) στα ίδια αντικείμενα. Σε περίπτωση νέας ΑΠΟΤΥΧΙΑΣ, να εφαρμόζεται το ΠΔ 29/2020.",
+      "values": {"reexam_after_calendar_days": 2, "same_objects": true, "max_attempts_before_pd29": 2},
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 63, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 58.η (τυπ. σελ. -45-)"},
+      "links": ["gt-07", "gt-46", "gt-54", "fail-38"],
+      "flags": []
+    },
+    {
+      "id": "gt-48",
+      "topic": "Σύνθεση συνολικής Βαθμολογίας Πτητικής Εκπαίδευσης — βαρύτητα εδάφους 15%",
+      "requirement": "Σύμφωνα με το Άρθρο 36 παρ. 8 του ΠΔ 151/2013 (Α΄238) «Οργανισμός Σχολής Ικάρων», όπως τροποποιήθηκε από το ΠΔ 42/2020 (Α΄94), η συνολική Βαθμολογία Πτητικής Εκπαίδευσης (ΒΠΕ) εξάγεται ως: ΒΠΕ = 0,85 x ΒΠΕΑ + 0,15 x ΒΠΕΕ, όπου ΒΠΕΑ η Βαθμολογία Πτητικής Εκπαίδευσης Αέρος και ΒΠΕΕ η Βαθμολογία Πτητικής Εκπαίδευσης Εδάφους.",
+      "verbatim": "(ΒΠΕ) = 0,85 x (ΒΠΕΑ) + 0,15 (ΒΠΕΕ)",
+      "values": {
+        "weight_air_bpea": 0.85,
+        "weight_ground_bpee": 0.15,
+        "legal_basis": "ΠΔ 151/2013 (Α΄238) Άρθρο 36 παρ. 8, όπως τροποποιήθηκε από ΠΔ 42/2020 (Α΄94)"
+      },
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 64, "ref": "ΚΕΦΑΛΑΙΟ 2, Εξαγωγή Βαθμολογίας, παρ. 60-61 (τυπ. σελ. -46-)"},
+      "links": ["gt-49", "gt-50", "gt-51", "gt-52", "ft-128"],
+      "flags": ["Το πρωτότυπο γράφει «+ 0,15 (ΒΠΕΕ)» χωρίς το σύμβολο πολλαπλασιασμού «x» στον δεύτερο όρο (τυπογραφικό της πηγής)."]
+    },
+    {
+      "id": "gt-49",
+      "topic": "Μαθήματα θεωρητικής εκπαίδευσης Phase II κατά ΣΙ και συντελεστές βαρύτητας (Πίνακας 5)",
+      "requirement": "Το Γενικό Πρόγραμμα Εκπαίδευσης Ακαδημαϊκού Έτους της Σ.Ι. καθορίζει ότι η εκπαίδευση Εδάφους στο Phase II συνίσταται σε 4 μαθήματα: (α) Εφαρμοσμένη Αεροπορική Μετεωρολογία Ι & ΙΙ, (β) Συστήματα Αεροσκάφους, (γ) Εφαρμοσμένη Μηχανική Πτήσης και Αεροδυναμική, (δ) Εφαρμοσμένη Αεροναυτιλία Ι & ΙΙ και Εναέρια Κυκλοφορία Ι & ΙΙ. Για τον υπολογισμό της ΒΠΕΕ καθορίζεται διαφορετικός συντελεστής βαρύτητας ανά μάθημα.",
+      "verbatim": "ΕΦΑΡΜΟΣΜΕΝΗ ΑΕΡΟΠΟΡΙΚΗ ΜΕΤΕΩΡΟΛΟΓΙΑ Ι & II ΜΕΤ Ι & II Meteorology 30 0,1 ΣΥΣΤΗΜΑΤΑ ΑΕΡΟΣΚΑΦΟΥΣ ΣΥΣΤ Aircraft General Knowledge, Operational Procedures, Flight Performance & Planning, Principles of Flight 90 0,3 ΕΝΑΕΡΙΑ ΚΥΚΛΟΦΟΡΙΑ Ι & ΙΙ ΕΦΑΡΜΟΣΜΕΝΗ ΑΕΡΟΝΑΥΤΙΛΙΑ Ι & ΙΙ NAYΤΙΛΙΑ & ΕΝΑΕΡΙΑ ΚΥΚΛΟΦΟΡΙΑ Instrument & Navigation 90 0,3 ΕΦΑΡΜΟΣΜΕΝΗ ΜΗΧΑΝΙΚΗ ΠΤΗΣΗΣ Ι & ΙΙ ΜΗΧ Ι & ΙΙ Contact & Formation 90 0,3",
+      "values": {
+        "subjects": [
+          {"name": "ΕΦΑΡΜΟΣΜΕΝΗ ΑΕΡΟΠΟΡΙΚΗ ΜΕΤΕΩΡΟΛΟΓΙΑ Ι & II", "code": "ΜΕΤ Ι & II", "domain": "Meteorology", "training_periods": 30, "weight": 0.1},
+          {"name": "ΣΥΣΤΗΜΑΤΑ ΑΕΡΟΣΚΑΦΟΥΣ", "code": "ΣΥΣΤ", "domain": "Aircraft General Knowledge, Operational Procedures, Flight Performance & Planning, Principles of Flight", "training_periods": 90, "weight": 0.3},
+          {"name": "ΕΝΑΕΡΙΑ ΚΥΚΛΟΦΟΡΙΑ Ι & ΙΙ / ΕΦΑΡΜΟΣΜΕΝΗ ΑΕΡΟΝΑΥΤΙΛΙΑ Ι & ΙΙ", "code": "ΝΑΥΤΙΛΙΑ & ΕΝΑΕΡΙΑ ΚΥΚΛΟΦΟΡΙΑ", "domain": "Instrument & Navigation", "training_periods": 90, "weight": 0.3},
+          {"name": "ΕΦΑΡΜΟΣΜΕΝΗ ΜΗΧΑΝΙΚΗ ΠΤΗΣΗΣ Ι & ΙΙ", "code": "ΜΗΧ Ι & ΙΙ", "domain": "Contact & Formation", "training_periods": 90, "weight": 0.3}
+        ],
+        "weights_sum": 1.0,
+        "training_periods_sum_table5": 300
+      },
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 64, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 62-63, Πίνακας 5 (τυπ. σελ. -46-, ο τίτλος «Πίνακας 5» τυπώνεται στην PDF 65)"},
+      "links": ["gt-48", "gt-50", "gt-52", "gt-53", "st-70", "ft-141"],
+      "flags": [
+        "ΑΝΤΙΦΑΣΗ (εντός 3-01): Ο Πίνακας 5 (PDF 64) δίνει 90 ΕΚΠ.ΠΕΡ. για ΝΑΥΤΙΛΙΑ & ΕΝ.ΚΥΚΛ., ενώ ο Πίνακας 6 (PDF 66) δίνει 60 για το ίδιο μάθημα. ΔΕΝ επιλύεται.",
+        "Το άθροισμα ΕΚΠ.ΠΕΡ. του Πίνακα 5 (300) και του Πίνακα 6 (270) ΔΕΝ ισούται με τις 524 εκπαιδευτικές περιόδους του Syllabus / Πίνακα 1 της 3-01. Πρόκειται για διαφορετική λογιστική βάση (ακαδημαϊκά μαθήματα ΣΙ έναντι εκπαιδευτικών περιόδων ΑΠΕ) — καταγράφεται ως ασάφεια.",
+        "ΠΑΡΑΓΩΓΗ ΤΙΜΗ: το training_periods_sum_table5 = 300 ΔΕΝ τυπώνεται ως γραμμή συνόλου στον Πίνακα 5 — είναι άθροισμα των επαληθευμένων γραμμών του (30 + 90 + 90 + 90 = 300). Επαληθεύτηκε αριθμητικά."
+      ]
+    },
+    {
+      "id": "gt-50",
+      "topic": "Συστατικά στοιχεία βαθμολογίας ανά μάθημα (Πίνακας 6) και τύποι υπολογισμού",
+      "requirement": "Για την εξαγωγή της βαθμολογίας σε κάθε διδασκόμενο μάθημα λαμβάνονται υπόψη οι επιδόσεις του μαθητή σε ερωτηματολόγια στο CBTS, σε Ερωτηματολόγια Επαγγελματικών Θεμάτων (ΕΕΘ) καθώς και η πρακτική εξάσκηση στις συσκευές F/S. Η βαθμολογία των μαθημάτων εξάγεται ως Μέσος Όρος (ΜΟ) των αντίστοιχων συστατικών.",
+      "verbatim": "α. ΜΕΤ= ΜΟ (JX190 + JX191) β. ΣΥΣΤ= ΜΟ (WSGS + ΕΕΘ1 +.…+ΕΕΘX(2)) γ. MHX= ΜΟ (FF190 + AE190 + C O190 + FO190 + ΤΑCFOR590 + B1001 + … + ΠΧΧΧΧ + Σ3101 +…+ ΣΧΧΧΧ) δ. ΝΑΥΤ & EN. KYKΛ.= ΜΟ (IN190 + IN290 + NA190 + NA191 + LNAV190 + Ο3101 + … + Ο3ΧΧΧ + Ν2101 + … + ΝΧΧΧΧ).",
+      "values": {
+        "formulas": {
+          "ΜΕΤ": "ΜΟ (JX190 + JX191)",
+          "ΣΥΣΤ": "ΜΟ (WSGS + ΕΕΘ1 + … + ΕΕΘX)",
+          "ΜΗΧ": "ΜΟ (FF190 + AE190 + CO190 + FO190 + ΤΑCFOR590 + B1001 + … + ΠΧΧΧΧ + Σ3101 + … + ΣΧΧΧΧ)",
+          "ΝΑΥΤ & ΕΝ.ΚΥΚΛ": "ΜΟ (IN190 + IN290 + NA190 + NA191 + LNAV190 + Ο3101 + … + Ο3ΧΧΧ + Ν2101 + … + ΝΧΧΧΧ)"
+        },
+        "table6_components": {
+          "ΜΕΤ": {"training_periods": 30, "weight": 0.1, "components": ["JX 190", "JX 191"]},
+          "ΣΥΣΤ": {"training_periods": 90, "weight": 0.3, "components": ["WSGS", "ΕΕΘ1", "ΕΕΘ2", "ΕΕΘ3", "ΕΕΘ4", "ΕΕΘ5", "ΕΕΘ6", "ΕΕΘ7", "ΕΕΘ8", "ΕΕΘ9", "ΕΕΘ10"]},
+          "ΜΗΧ": {"training_periods": 90, "weight": 0.3, "components": ["FF190", "AE190", "CO190", "FO190", "TACFOR90", "B1001", "B1002", "F/S CONTACT", "F/S FORMATION"]},
+          "ΝΑΥΤ & ΕΝ.ΚΥΚΛ.": {"training_periods": 60, "weight": 0.3, "components": ["IN 190", "IN 290", "ΝΑ190", "LΝΑV190", "F/S INSTRUMENT", "F/S NAVIGATION"]}
+        },
+        "eeth_count_table6": 10
+      },
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 65, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 64-65 (τυπ. σελ. -47-)· Πίνακας 6 στην PDF 66 (τυπ. σελ. -48-)"},
+      "links": ["gt-11", "gt-30", "gt-31", "gt-49", "gt-51", "gt-52", "st-70", "ft-142"],
+      "flags": [
+        "ΑΝΤΙΦΑΣΗ ΚΩΔΙΚΩΝ με Syllabus: η 3-01 γράφει «LNAV190» (παρ. 65.δ και Πίνακας 6) ενώ ο κωδικός εξέτασης Low Altitude Navigation στο Syllabus είναι «LNAV 790». ΔΕΝ επιλύεται.",
+        "ΑΝΤΙΦΑΣΗ ΚΩΔΙΚΩΝ εντός 3-01: παρ. 65.γ γράφει «ΤΑCFOR590» ενώ ο Πίνακας 6 γράφει «TACFOR90». Το Syllabus χρησιμοποιεί «TACFOR 590».",
+        "Ο κωδικός συστημάτων Α/Φ γράφεται «WSGS» στην 3-01 και «WSGES» στο Syllabus.",
+        "ΑΝΤΙΦΑΣΗ ΠΕΡΙΕΧΟΜΕΝΟΥ: η παρ. 65.δ περιλαμβάνει «NA191» στη ΝΑΥΤΙΛΙΑ, ενώ ο Πίνακας 6 ΔΕΝ το περιλαμβάνει (αναφέρει μόνο IN 190, IN 290, ΝΑ190, LΝΑV190). ΔΕΝ επιλύεται.",
+        "ΑΝΤΙΦΑΣΗ ΠΕΡΙΟΔΩΝ: Πίνακας 6 δίνει 60 ΕΚΠ.ΠΕΡ. στη ΝΑΥΤΙΛΙΑ έναντι 90 στον Πίνακα 5 (βλ. gt-49).",
+        "Ο Πίνακας 6 απαριθμεί ΕΕΘ1 έως ΕΕΘ10 (10 ΕΕΘ) με υποσημείωση «(2)», η οποία δεν αναλύεται στο εξαγόμενο κείμενο."
+      ]
+    },
+    {
+      "id": "gt-51",
+      "topic": "Αποκλεισμός βαθμολογίας επαναξιολόγησης",
+      "requirement": "Σε περίπτωση ΑΠΟΤΥΧΙΑΣ σε γραπτή εξέταση ή σε πτήση στο F/S, ΔΕΝ λαμβάνεται υπόψη η βαθμολογία της επαναξιολόγησης.",
+      "verbatim": "Σε περίπτωση ΑΠΟΤΥΧΙΑΣ σε γραπτή εξέταση ή σε πτήση στο F/S, δεν θα λαμβάνεται υπόψη η βαθμολογία επαναξιολόγησης.",
+      "values": {},
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 65, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 66 (τυπ. σελ. -47-)"},
+      "links": ["gt-07", "gt-47", "gt-50", "gt-52", "st-71", "fail-34"],
+      "flags": ["Ασάφεια: δεν διευκρινίζεται αν στον ΜΟ προσμετράται η αρχική (αποτυχούσα) βαθμολογία ή αν το αντικείμενο εξαιρείται εντελώς από τον ΜΟ."]
+    },
+    {
+      "id": "gt-52",
+      "topic": "Τύπος υπολογισμού Βαθμολογίας Πτητικής Εκπαίδευσης Εδάφους (ΒΠΕΕ)",
+      "requirement": "Η Βαθμολογία Πτητικής Εκπαίδευσης Εδάφους καθορίζεται ως: ΒΠΕΕ = 0,1 x (ΜΕΤ) + 0,3 x (ΣΥΣΤ) + 0,3 x (ΜΗΧ) + 0,3 x (ΝΑΥΤ. & ΕΝ.ΚΥΚΛ).",
+      "verbatim": "(ΒΠΕΕ) = 0,1 x (ΜΕΤ) + 0,3 x (ΣΥΣΤ) + 0,3 x (MHX) + 0,3 x (ΝΑΥΤ. & EN.ΚΥΚΛ)",
+      "values": {
+        "weight_met": 0.1,
+        "weight_syst": 0.3,
+        "weight_mih": 0.3,
+        "weight_naft_enkykl": 0.3,
+        "sum": 1.0
+      },
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 65, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 67 (τυπ. σελ. -47-)"},
+      "links": ["gt-48", "gt-49", "gt-50", "gt-53"],
+      "flags": []
+    },
+    {
+      "id": "gt-53",
+      "topic": "Ακρίβεια εξαγωγής βαθμολογιών",
+      "requirement": "Όλες οι Βαθμολογίες εξάγονται με ακρίβεια χιλιοστών (3 δεκαδικά ψηφία).",
+      "verbatim": "Όλες οι Βαθμολογίες να εξάγονται με την ακρίβεια χιλιοστών.",
+      "values": {"decimal_places": 3},
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 67, "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 72 (τυπ. σελ. -49-)"},
+      "links": ["gt-48", "gt-52", "ft-132"],
+      "flags": []
+    },
+    {
+      "id": "gt-54",
+      "topic": "ΠΔ 29/2020 Άρθρο 3 — κατώφλια θεωρητικής ανεπάρκειας Ικάρων/Ανθσγών",
+      "requirement": "Ίκαρος ή Ανθυποσμηναγός Ιπτάμενος της ΠΑ που εκπαιδεύεται σε οποιοδήποτε στάδιο της πτητικής εκπαίδευσης της ΣΙ τίθεται σε κρίση πτητικής καταλληλότητας: (στ) όταν αποτυγχάνει σε δύο (2) συνεχόμενες γραπτές αξιολογήσεις ή εξετάσεις εδάφους που συντελούνται από τη Μοίρα ή τη Μονάδα στην οποία παρέχεται η πτητική εκπαίδευση ή την προϊστάμενη αρχή· (ζ) όταν αποτυγχάνει σε τέσσερις (4) συνεχόμενες ή οκτώ (8) μη συνεχόμενες προβλεπόμενες προφορικές εξετάσεις κατά την ομαδική ή/και ατομική προ πτήσεως ενημέρωση. Κατά την περίπτωση 1ζ ο παραπεμπόμενος εξετάζεται από τον Α.Ε. της Μοίρας σε γραπτές εξετάσεις εδάφους σε όλα τα επαγγελματικά θέματα και εφόσον κριθεί ΕΠΙΤΥΧΩΝ συνεχίζει τις πτήσεις, ενώ αν κριθεί ΑΠΟΤΥΧΩΝ παραπέμπεται στο Συμβούλιο Πτητικής Ικανότητας.",
+      "verbatim": "στ. Όταν αποτυγχάνει σε δύο (2) συνεχόμενες γραπτές αξιολογήσεις ή εξετάσεις εδάφους που συντελούνται από τη Μοίρα ή τη Μονάδα στην οποία παρέχεται η πτητική εκπαίδευση ή την προϊστάμενη αρχή. ζ. Όταν αποτυγχάνει σε τέσσερις (4) συνεχόμενες ή οκτώ (8) μη συνεχόμενες προβλεπόμενες από την εκάστοτε ισχύουσα διαταγή εκπαιδεύσεως προφορικές εξετάσεις κατά την ομαδική ή/και ατομική προ πτήσεως ενημέρωση.",
+      "values": {
+        "consecutive_failed_written_ground_exams": 2,
+        "consecutive_failed_oral_exams": 4,
+        "non_consecutive_failed_oral_exams": 8
+      },
+      "source": {"file": "fek_a_57_2020.pdf", "page_pdf": 5, "ref": "ΠΔ 29/2020, Άρθρο 3 «Ίκαροι ή Ανθυποσμηναγοί Ιπτάμενοι στα στάδια Πτητικής Εκπαίδευσης της Σχολής Ικάρων», παρ. 1.στ, 1.ζ και παρ. 4"},
+      "links": ["gt-45", "gt-46", "gt-47", "gt-38", "fail-32", "fail-36", "fail-39", "fail-62"],
+      "flags": [
+        "ΣΥΜΦΩΝΙΑ: τα κατώφλια 2 / 4 / 8 ταυτίζονται με 3-01 §58.στ και §58.ζ — ΔΕΝ υπάρχει αντίφαση.",
+        "Η 3-01 §58.ζ αναθέτει τη γραπτή εξέταση στον «Δκτή ή τον ΑΕ της Μοίρας», ενώ το ΠΔ 29/2020 Άρθρο 3 παρ. 4 αναφέρει μόνο «τον ΑΕ της Μοίρας». Μικρή απόκλιση αρμοδιότητας — ΔΕΝ επιλύεται.",
+        "ΔΙΑΦΟΡΕΤΙΚΗ ΟΔΟΣ ΑΝΑ ΠΕΡΙΠΤΩΣΗ (παρ. 5, PDF 5): «Κατά τις περιπτώσεις των υποπαραγράφων 1στ, 1η, 1θ και 1ι συντάσσεται ειδική έκθεση από τον Διοικητή της Μοίρας και ο κρινόμενος παραπέμπεται στο Συμβούλιο Πτητικής Ικανότητας για κρίση της πτητικής του καταλληλότητας.» Άρα η 1στ (γραπτές εξετάσεις εδάφους) πηγαίνει ΑΠΕΥΘΕΙΑΣ στο Συμβούλιο, ενώ η 1ζ (προφορικές) περνά πρώτα από γραπτή εξέταση του ΑΕ (παρ. 4). Πλήρης καταγραφή: τομέας fail-flight-suitability-referral."
+      ]
+    },
+    {
+      "id": "gt-55",
+      "topic": "Τελικές εξετάσεις κατηγοριών ασκήσεων και συνεχείς αποτυχίες",
+      "requirement": "Η τελευταία έξοδος κάθε Κατηγορίας Ασκήσεων (Contact – Instruments – Formation και Navigation) αποτελεί αξιολόγηση και συνιστά την τελική εξέταση των κατηγοριών αυτών· πρόκειται για τις εξόδους C5490, I4890, F4690 και Ν4690. Σε περίπτωση που ο μαθητής αποτυγχάνει συνεχόμενα σε πτήσεις ή στην εκπαίδευση GBTS, εφαρμόζονται οι σχετικές διαταγές (Προεδρικό Διάταγμα).",
+      "verbatim": "d. The last sortie of each Category of Training Exercises (Contact – Instruments – Formation and Navigation) stands as an evaluation and constitutes the final examination for these categories. The sorties in question are: C5490, I4890, F4690 and Ν4690. e. In case that SP fails consecutively at flights or GBTS training, the appropriate orders (Presidential Decree) will apply.",
+      "values": {
+        "final_examination_sorties": ["C5490", "I4890", "F4690", "Ν4690"],
+        "count": 4
+      },
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 101, "ref": "PART I, 9. GENERAL DIRECTIVES, d. και e. (τυπ. σελ. -93-)"},
+      "links": ["gt-22", "gt-44", "gt-54", "ft-18", "fail-21", "fail-59"],
+      "flags": ["Πρόκειται για ΠΤΗΤΙΚΕΣ τελικές εξετάσεις (όχι θεωρητικές)· καταγράφεται εδώ επειδή το §9.b της ίδιας παραγράφου θέτει τη θεωρητική προϋπόθεση (gt-22) και επειδή το §9.e ενεργοποιεί το ΠΔ. Ο κύριος τομέας είναι flight/fail."]
+    },
+    {
+      "id": "gt-56",
+      "topic": "Επαναδιάθεση μαθητή μετά από απώλεια διαθεσιμότητας — υποχρεωτικό πρόγραμμα ΘΕΩΡΗΤΙΚΗΣ ΕΚΠΑΙΔΕΥΣΗΣ (Πίνακας 8)",
+      "requirement": "Μαθητής που έχει αποχή από τις πτήσεις για περισσότερες από 30 ημέρες ΧΑΝΕΙ τη διαθεσιμότητα στον τύπο του Α/Φ. Στην περίπτωση αυτή, και ΠΡΙΝ τη συνέχιση της πτητικής του εκπαίδευσης, πρέπει υποχρεωτικά να παρακολουθήσει το πρόγραμμα του Πίνακα 8. Το σκέλος ΘΕΩΡΗΤΙΚΗΣ ΕΚΠΑΙΔΕΥΣΗΣ κλιμακώνεται ανά περίοδο αποχής (1-3 μήνες / 3-6 μήνες / 6-12 μήνες) και περιλαμβάνει: Ανάλυση Ασκήσεων 2:00 / 4:00 / 12:00 ώρες· Διαδικασίες Ανάγκης 2:00 / 3:00 / 6:00 ώρες (ο εκπαιδευόμενος εκπαιδεύεται ΚΑΙ στις Κανονικές Διαδικασίες)· Συστήματα Α/Φ 3:00 / 5:00 / 11:00 ώρες· Γραπτή εξέταση 1:00 / 1:00 / 1:00 ώρα· ΣΥΝΟΛΑ 8:00 / 13:00 / 30:00 ώρες. Ανεξάρτητα από την απώλεια διαθεσιμότητας, ισχύει και ο κανόνας της παρ. 89: μαθητής με αποχή μεγαλύτερη των 15 ημερών για την ΠΡΟ «ΜΟΝΟΣ» φάση του Βασικού Σταδίου (Phase II) — και μεγαλύτερη των 20 ημερών για το υπόλοιπο των Σταδίων — πριν πετάξει βαθμολογούμενη άσκηση ίπταται 1 μη βαθμολογούμενη πτήση σε ελιγμούς, κατά την κρίση του Διοικητή της Μοίρας.",
+      "verbatim": "89. Η μακρά αποχή του μαθητή από τις πτήσεις επιδρά αρνητικά, τόσο στη συνέχεια της εκπαίδευσης, όσο και στην απόδοσή του. Για το σκοπό αυτό μαθητής που θα έχει αποχή μεγαλύτερη των 15 ημερών για την ΠΡΟ ΜΟΝΟΣ φάση του Βασικού (Phase ΙΙ) και του Προκεχωρημένου Σταδίου (Phase ΙIΙ) και μεγαλύτερη των 20 ημερών, για το υπόλοιπο των Σταδίων Εκπσης, πριν πετάξει βαθμολογούμενη άσκηση να ίπταται 1 πτήση, χωρίς βαθμολόγηση, σε ελιγμούς κατά την κρίση του Διοικητή της Μοίρας. 90. Μαθητής που έχει αποχή από τις πτήσεις για περισσότερες από 30 ημέρες χάνει τη διαθεσιμότητα στον τύπο του Α/Φ. Στη συγκεκριμένη περίπτωση και πριν την συνέχιση της πτητικής εκπαίδευσής του πρέπει να παρακολουθήσει το πρόγραμμα του παρακάτω Πίνακα 8: || ΠΕΡΙΟΔΟΙ ΑΠΟΧΗΣ ΜΑΘΗΤΩΝ 1 - 3 ΜΗΝΕΣ / 3 - 6 ΜΗΝΕΣ / 6 - 12 ΜΗΝΕΣ. Είδος Εκπσης — Αντικείμενα Εκπσης — Διάρκεια (Ώρες). ΘΕΩΡΗΤΙΚΗ ΕΚΠΑΙΔΕΥΣΗ: Ανάλυση Ασκήσεων 2:00 4:00 12:00· Διαδικασίες Ανάγκης(5) 2:00 3:00 6:00· Συστήματα Α/Φ 3:00 5:00 11:00· Γραπτή εξέταση (1) 1:00 1:00 1:00· ΣΥΝΟΛΑ 8:00 13:00 30:00. || Σημειώσεις: (5) Ο εκπαιδευόμενος θα εκπαιδευτεί και στις Κανονικές Διαδικασίες. || Πίνακας 8",
+      "values": {
+        "trigger_loss_of_currency_days": 30,
+        "refresher_flight_thresholds": {
+          "phase_ii_pre_solo_days": 15,
+          "other_phases_days": 20,
+          "unscored_sorties": 1,
+          "content": "ελιγμοί, κατά την κρίση του Διοικητή της Μοίρας"
+        },
+        "ground_training_by_absence_period": [
+          {"absence_period": "1-3 ΜΗΝΕΣ", "exercise_analysis_hours": "2:00", "emergency_procedures_hours": "2:00", "ac_systems_hours": "3:00", "written_exam_hours": "1:00", "total_hours": "8:00"},
+          {"absence_period": "3-6 ΜΗΝΕΣ", "exercise_analysis_hours": "4:00", "emergency_procedures_hours": "3:00", "ac_systems_hours": "5:00", "written_exam_hours": "1:00", "total_hours": "13:00"},
+          {"absence_period": "6-12 ΜΗΝΕΣ", "exercise_analysis_hours": "12:00", "emergency_procedures_hours": "6:00", "ac_systems_hours": "11:00", "written_exam_hours": "1:00", "total_hours": "30:00"}
+        ],
+        "note_5": "Ο εκπαιδευόμενος θα εκπαιδευτεί και στις Κανονικές Διαδικασίες."
+      },
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 74, "ref": "ΚΕΦΑΛΑΙΟ 2, Επαναδιάθεση Μαθητών, Πίνακας 8 (τυπ. σελ. -56-)"},
+      "source_refs": [
+        {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 73, "ref": "ΚΕΦΑΛΑΙΟ 2, Επαναδιάθεση Μαθητών, παρ. 89-90 (τυπ. σελ. -55-)"},
+        {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 74, "ref": "ΚΕΦΑΛΑΙΟ 2, Πίνακας 8 και Σημειώσεις (1)-(5) (τυπ. σελ. -56-)"}
+      ],
+      "links": ["gt-28", "gt-34", "gt-37", "gt-57", "st-72", "fail-14"],
+      "flags": [
+        "ΕΝΤΟΣ ΠΕΡΙΜΕΤΡΟΥ: η παρ. 89 δεσμεύει ΡΗΤΑ την ΠΡΟ «ΜΟΝΟΣ» φάση του Βασικού Σταδίου (Phase II) και ο Πίνακας 8 της παρ. 90 ισχύει για κάθε μαθητή που χάνει τη διαθεσιμότητα ανεξαρτήτως Σταδίου. ΔΕΝ καλύπτονται από τον αποκλεισμό «3-01 §§73-82 (Phase III/IV M-346)» των scope_notes.",
+        "ΕΚΤΟΣ ΤΟΜΕΑ (καταγράφονται μόνο ως συγκείμενο του ίδιου πίνακα): οι γραμμές FLIGHT SIMULATOR (4/4:00, 6/6:00, 6/6:00 με Σημ. (2) και (3)) ανήκουν στον τομέα sim-* και οι γραμμές ΠΤΗΤΙΚΗ ΕΚΠΑΙΔΕΥΣΗ (1 έως 3 / μέχρι 3 / μέχρι 5 έξοδοι, Σημ. (4)) στον τομέα flight-*.",
+        "Ο Πίνακας 8 μετρά ΩΡΕΣ (μορφή Ω:ΛΛ), όχι εκπαιδευτικές περιόδους όπως οι πίνακες 11.b του Syllabus — διαφορετική μονάδα μέτρησης, δεν είναι συγκρίσιμα μεγέθη.",
+        "ΑΣΑΦΕΙΑ: ο Πίνακας 8 δεν καλύπτει αποχή μεγαλύτερη των 12 μηνών ούτε το διάστημα μεταξύ 30 ημερών (κατώφλι απώλειας διαθεσιμότητας της παρ. 90) και 1 μήνα (πρώτη στήλη). ΔΕΝ επιλύεται."
+      ]
+    },
+    {
+      "id": "gt-57",
+      "topic": "Γραπτή εξέταση επαναδιάθεσης — ερωτηματολόγιο 50 ή 100 ερωτήσεων (Πίνακας 8, Σημ. 1)",
+      "requirement": "Στο πρόγραμμα επαναδιάθεσης μετά από απώλεια διαθεσιμότητας (Πίνακας 8), προβλέπεται ΥΠΟΧΡΕΩΤΙΚΗ γραπτή εξέταση διάρκειας 1:00 ώρας σε κάθε περίοδο αποχής. Το μέγεθος του ερωτηματολογίου κλιμακώνεται: για μαθητές με αποχή πτήσεων 1-3 μηνών η γραπτή εξέταση αποτελείται από ερωτηματολόγιο 50 ερωτήσεων· για αποχή 3-6 μηνών και άνω των 6 μηνών από ερωτηματολόγιο 100 ερωτήσεων.",
+      "verbatim": "(1) Για τους μαθητές που έχουν 1-3 μήνες αποχή πτήσεων, η Γραπτή εξέταση να αποτελείται από ερωτηματολόγιο 50 ερωτήσεων, ενώ για 3-6 μήνες και πάνω από 6 μήνες να αποτελείται από ερωτηματολόγιο 100 ερωτήσεων.",
+      "values": {
+        "exam_duration_hours": "1:00",
+        "questions_by_absence_period": [
+          {"absence_period": "1-3 ΜΗΝΕΣ", "questions": 50},
+          {"absence_period": "3-6 ΜΗΝΕΣ", "questions": 100},
+          {"absence_period": "6-12 ΜΗΝΕΣ", "questions": 100}
+        ]
+      },
+      "source": {"file": "3-01_2025_ΔΑΕ.pdf", "page_pdf": 74, "ref": "ΚΕΦΑΛΑΙΟ 2, Πίνακας 8, Σημείωση (1) (τυπ. σελ. -56-)"},
+      "links": ["gt-05", "gt-28", "gt-34", "gt-37", "gt-56", "st-72", "fail-28"],
+      "flags": [
+        "ΔΙΑΚΡΙΤΟ ΜΕΓΕΘΟΣ ΕΡΩΤΗΜΑΤΟΛΟΓΙΟΥ: τα 50/100 του Πίνακα 8 ΔΕΝ αντιστοιχούν σε κανένα άλλο κατώφλι του τομέα — Syllabus §11.b.(2) και 3-01 §4.γ: 20-50 ερωτήσεις (gt-05, gt-28)· 3-01 §7: 20 κλειστού + 10 ανοικτού (gt-31)· 3-01 §10: 50 κλειστού ή 25 ανοικτού (gt-34)· 3-01 §58.ζ: 50 + 25 + 5 BOLD FACE (gt-46). Το ερωτηματολόγιο των 100 ερωτήσεων είναι το ΜΕΓΑΛΥΤΕΡΟ που προβλέπεται σε ολόκληρο τον τομέα.",
+        "ΑΣΑΦΕΙΑ: ο Πίνακας 8 δεν ορίζει κατώφλι επιτυχίας για τη συγκεκριμένη εξέταση ούτε συνέπειες αποτυχίας. Κατ' εφαρμογή της 3-01 §25.β (gt-37) εφαρμόζεται το γενικό 80% (και 100% για ζωτικές διαδικασίες ανάγκης/όρια Α/Φ), αλλά αυτό ΔΕΝ δηλώνεται ρητά στην πηγή — ΔΕΝ επιλύεται.",
+        "Ο Πίνακας 8 δεν διευκρινίζει αν το ερωτηματολόγιο είναι κλειστού ή ανοικτού βιβλίου, ούτε τον τύπο των ερωτήσεων."
+      ]
+    },
+    {
+      "id": "gt-58",
+      "topic": "Προαπαιτούμενα θεωρητικής εκπαίδευσης / εξετάσεων εδάφους ανά Ενότητα Εκπαίδευσης (πεδία RESTRICTIONS)",
+      "requirement": "Πέραν της γενικής απαίτησης του gt-22, το Αναλυτικό Πρόγραμμα ορίζει ΡΗΤΑ, ανά Ενότητα Εκπαίδευσης (Training Section), ποιο συγκεκριμένο αντικείμενο ή εξέταση θεωρητικής εκπαίδευσης πρέπει να έχει ολοκληρωθεί ΠΡΙΝ την έναρξη της ενότητας. Τα προαπαιτούμενα αυτά τυπώνονται ως καθαρό κείμενο στο πεδίο «RESTRICTIONS» κάθε ενότητας.",
+      "verbatim": "PR 113 Ground Training should have been completed prior to the Section. || CO 190 Ground Training examination must have been completed prior to the Section. || SP should have successfully executed Training Section IN 190 in Ground Training. || 1. C5201 must have been executed before starting this Training Section. 2. FO 190 must have been executed before starting this Training Section. || 1. C5201 must have been executed before starting this Training Section. 2. NA 190 must have been executed before starting this Training Section. || LNAV 790 must have been executed before starting this Training Section. || CR 202 and C2101 Ground Training must have been completed prior to the sortie. || 1. VMC in flight area. 2. Prerequisites are IN290, C4791 and I3201.",
+      "values": {
+        "prerequisites_by_section": [
+          {"section": "B10XX", "section_title": "BASIC EXERCISES CATEGORY (FAMILIARIZATION)", "ground_prereq": ["PR 113"], "other_prereq": [], "page_pdf": 141, "verbatim": "PR 113 Ground Training should have been completed prior to the Section."},
+          {"section": "C11XX", "section_title": "CONTACT CATEGORY", "ground_prereq": ["CO 190"], "other_prereq": [], "page_pdf": 143, "verbatim": "CO 190 Ground Training examination must have been completed prior to the Section."},
+          {"section": "I31XX", "section_title": "INSTRUMENT CATEGORY — Basic Instruments Procedures", "ground_prereq": ["IN 190"], "other_prereq": [], "page_pdf": 151, "verbatim": "SP should have successfully executed Training Section IN 190 in Ground Training."},
+          {"section": "F31XX", "section_title": "FORMATION CATEGORY — Two-ship Formation", "ground_prereq": ["FO 190"], "other_prereq": ["C5201"], "page_pdf": 157, "verbatim": "1. C5201 must have been executed before starting this Training Section. 2. FO 190 must have been executed before starting this Training Section."},
+          {"section": "N21XX", "section_title": "NAVIGATION CATEGORY — VFR Navigation (Medium Level)", "ground_prereq": ["NA 190"], "other_prereq": ["C5201"], "page_pdf": 159, "verbatim": "1. C5201 must have been executed before starting this Training Section. 2. NA 190 must have been executed before starting this Training Section."},
+          {"section": "N22XX", "section_title": "NAVIGATION CATEGORY — VFR Navigation (Low Level)", "ground_prereq": ["LNAV 790"], "other_prereq": [], "page_pdf": 160, "verbatim": "LNAV 790 must have been executed before starting this Training Section."},
+          {"section": "C41XX", "section_title": "Contact – Familiarization (αέρος)", "ground_prereq": ["CR 202", "C2101"], "other_prereq": [], "page_pdf": 167, "verbatim": "RESTRICTIONS: CR 202 and C2101 Ground Training must have been completed prior to the sortie."},
+          {"section": "I41XX", "section_title": "Basic Instrument (αέρος)", "ground_prereq": ["IN 290"], "other_prereq": ["C4791", "I3201"], "page_pdf": 193, "verbatim": "1. VMC in flight area. 2. Prerequisites are IN290, C4791 and I3201."}
+        ],
+        "sections_with_ground_prerequisites": 8
+      },
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 141, "ref": "Αναλύσεις Ενοτήτων Εκπαίδευσης, πεδία «RESTRICTIONS» (PDF 141, 143, 151, 157, 159, 160, 167, 193). Η ακριβής σελίδα κάθε γραμμής δίνεται στο πεδίο page_pdf της αντίστοιχης εγγραφής του values.prerequisites_by_section."},
+      "links": ["gt-11", "gt-12", "gt-22", "gt-29", "gt-37", "gt-59", "st-40", "ft-16"],
+      "flags": [
+        "ΔΙΑΦΟΡΑ ΔΙΑΤΥΠΩΣΗΣ εντός της ίδιας πηγής: άλλες ενότητες γράφουν «should have been completed» (PDF 141), άλλες «must have been completed» (PDF 143, 167), άλλες «must have been executed» (PDF 157, 159, 160) και άλλες «should have successfully executed» (PDF 151). Μόνο η PDF 151 απαιτεί ρητά ΕΠΙΤΥΧΙΑ («successfully»). ΔΕΝ επιλύεται αν η διαφορά είναι ουσιαστική ή συντακτική.",
+        "ΤΥΠΟΓΡΑΦΙΚΟ ΠΗΓΗΣ: στην PDF 160 (N22XX) η επικεφαλίδα τυπώνεται «RECTRICTIONS» αντί «RESTRICTIONS».",
+        "ΜΙΚΤΑ ΠΡΟΑΠΑΙΤΟΥΜΕΝΑ: οι κωδικοί C5201, C4791, I3201, C2101 είναι ΠΤΗΤΙΚΕΣ/F-S ασκήσεις, όχι θεωρητικά αντικείμενα — καταγράφονται στο πεδίο other_prereq για πληρότητα· ο κύριος τομέας τους είναι flight/sim.",
+        "Ο κωδικός CR 202 (PDF 167) δεν αντιστοιχεί σε καμία γραμμή των πινάκων 11.b· ο μόνος συναφής κωδικός του Ground Training είναι «CR 101-4/201-2» (CRM, gt-18). ΔΕΝ επιλύεται."
+      ]
+    },
+    {
+      "id": "gt-59",
+      "topic": "Γνώση Bold Face «by heart» ως κριτήριο εξόδου της ενότητας C23XX",
+      "requirement": "Στο τέλος της Ενότητας Εκπαίδευσης C23XX (Emergency Procedures Training in a Mission Profile), ο μαθητής πρέπει να γνωρίζει ΑΠΕΞΩ (by heart) τις ζωτικές (Bold Face) διαδικασίες και να είναι σε θέση να εκτελεί τις υπόλοιπες (μη ζωτικές) διαδικασίες με χρήση του Checklist.",
+      "verbatim": "At the end of the Section, SP must know by heart the critical (Bold Face) procedures and be able to execute the other procedures (non critical) using the Checklist.",
+      "values": {
+        "section": "C23XX",
+        "section_title": "Emergency Procedures Training in a Mission Profile",
+        "device": "UTD/OFT/FTD",
+        "sorties_hours_total": "2/2,6",
+        "boldface_knowledge": "by heart (χωρίς βοήθημα)",
+        "non_critical_procedures": "εκτέλεση με χρήση Checklist"
+      },
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 146, "ref": "Ανάλυση Ενότητας Εκπαίδευσης C23XX, πεδίο «RESTRICTIONS» (τυπ. σελ. -138-)"},
+      "links": ["gt-12", "gt-22", "gt-31", "gt-37", "gt-58", "st-40"],
+      "flags": [
+        "Πρόκειται για αυτοτελή ΓΝΩΣΤΙΚΗ απαίτηση (κριτήριο εξόδου ενότητας) και όχι για προαπαιτούμενο εισόδου, παρότι τυπώνεται στο ίδιο πεδίο «RESTRICTIONS» με τα προαπαιτούμενα του gt-58.",
+        "ΣΥΝΔΕΣΗ ΚΑΤΩΦΛΙΟΥ: η απαίτηση «by heart» είναι το ποιοτικό αντίστοιχο του ποσοτικού κατωφλιού 100% της 3-01 §25.β για τις ζωτικές διαδικασίες ανάγκης (gt-37). Η πηγή ΔΕΝ αναφέρει ποσοστό εδώ."
+      ]
+    },
+    {
+      "id": "gt-60",
+      "topic": "ΠΔ 29/2020 Άρθρο 3 §10 — βάση αξιολογήσεων ΕΔΑΦΟΥΣ τα STANDARDS της διαταγής εκπαίδευσης",
+      "requirement": "Οι αξιολογήσεις αέρος ΚΑΙ ΕΔΑΦΟΥΣ γίνονται με βάση τα κριτήρια απόδοσης (STANDARDS) που καθορίζονται από την εκάστοτε ισχύουσα διαταγή εκπαίδευσης για κάθε στάδιο πτητικής εκπαίδευσης. Η διάταξη δεσμεύει άμεσα κάθε αξιολόγηση εδάφους του Phase II και συνδέει κανονιστικά το ΠΔ 29/2020 με το Αναλυτικό Πρόγραμμα Εκπαίδευσης (Syllabus) και τη ΒαΔ 3-01/ΔΑΕ.",
+      "verbatim": "10. Οι αξιολογήσεις αέρος και εδάφους γίνονται με βάση τα κριτήρια απόδοσης (STANDARDS) που καθορίζονται από την εκάστοτε ισχύουσα διαταγή εκπαίδευσης για κάθε στάδιο πτητικής εκπαίδευσης.",
+      "values": {
+        "applies_to": ["αξιολογήσεις αέρος", "αξιολογήσεις εδάφους"],
+        "criteria_source": "εκάστοτε ισχύουσα διαταγή εκπαίδευσης ανά στάδιο πτητικής εκπαίδευσης"
+      },
+      "source": {"file": "fek_a_57_2020.pdf", "page_pdf": 6, "ref": "ΠΔ 29/2020 (ΦΕΚ Α΄ 57), Άρθρο 3, παρ. 10"},
+      "links": ["gt-22", "gt-37", "gt-44", "gt-54", "gt-58", "ft-128", "fail-74"],
+      "flags": [
+        "ΚΑΝΟΝΙΣΤΙΚΗ ΓΕΦΥΡΑ: η διάταξη είναι ο λόγος για τον οποίο τα κατώφλια 80% / 100% της 3-01 §25.β (gt-37) και τα STANDARDS του Syllabus δεσμεύουν νομικά τις αξιολογήσεις εδάφους. Δεν ορίζει η ίδια αριθμητικό κατώφλι.",
+        "Η παρ. 10 δεν διακρίνει μεταξύ γραπτών και προφορικών αξιολογήσεων εδάφους — καλύπτει και τις δύο."
+      ]
+    },
+    {
+      "id": "gt-61",
+      "topic": "Σειρά θεωρητικής εκπαίδευσης πριν το Πρόγραμμα Εξοικείωσης με το Α/Φ",
+      "requirement": "Το Πρόγραμμα Εξοικείωσης με το Α/Φ (A/C familiarization program) ΑΡΧΙΖΕΙ ΜΕΤΑ την εκπαίδευση στα Συστήματα Α/Φ (A/C Systems) και στις Κανονικές Διαδικασίες (Normal Procedures). Οι τρεις (3) πρώτες έξοδοι πρέπει να έχουν ολοκληρωθεί πριν την έναρξη της εκπαίδευσης αέρος και η τέταρτη (EX 1004) πρέπει να προηγείται της C4790.",
+      "verbatim": "(a) A/C familiarization program will begin after the training on A/C Systems and Normal procedures. (b) The first three (3) sorties must be completed before the beginning of air training and the fourth one (EX1004) must precede C4790.",
+      "values": {
+        "ground_prerequisites": ["A/C Systems", "Normal Procedures"],
+        "first_sorties_before_air_training": 3,
+        "fourth_sortie_code": "EX 1004",
+        "fourth_sortie_precedes": "C4790"
+      },
+      "source": {"file": "Phase_2_Syllabus_2025.pdf", "page_pdf": 133, "ref": "PART III, 12. A/C FAMILIARIZATION PROGRAM, c. PROGRAM ANALYSIS, (1) Special instructions, (a) και (b) (τυπ. σελ. -125-)"},
+      "links": ["gt-12", "gt-14", "gt-22", "gt-25", "gt-58", "st-09", "st-11"],
+      "flags": [
+        "Καθαρός κανόνας ΣΕΙΡΑΣ/ΠΡΟΑΠΑΙΤΟΥΜΕΝΟΥ θεωρητικής εκπαίδευσης: τα «A/C Systems» αντιστοιχούν στο μάθημα 1 των πινάκων 11.b (60 περίοδοι, gt-14) και οι «Normal procedures» στο PR 101-6 του μαθήματος 8 (7 περίοδοι, gt-12).",
+        "Η ίδια αίρεση ενεργοποίησης ισχύει και εδώ: ολόκληρο το Πρόγραμμα Εξοικείωσης προϋποθέτει βλάβη/μη διαθεσιμότητα του F/S (§12.a, βλ. gt-25).",
+        "Το σκέλος (b) (σειρά εξόδων έναντι εκπαίδευσης αέρος και C4790) ανήκει κυρίως στους τομείς sim-*/flight-* — καταγράφεται εδώ ως συγκείμενο του κανόνα σειράς."
+      ]
+    }
+  ]
+}

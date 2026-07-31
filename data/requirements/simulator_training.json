@@ -1,0 +1,2680 @@
+{
+  "domain": "simulator_training",
+  "scope": "Phase II student pilots (T-6A)",
+  "sources": [
+    {
+      "file": "Phase_2_Syllabus_2025.pdf",
+      "pages_pdf": [
+        9,
+        23,
+        90,
+        91,
+        94,
+        96,
+        98,
+        101,
+        102,
+        103,
+        105,
+        133,
+        134,
+        135,
+        136,
+        137,
+        139,
+        140,
+        141,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        163,
+        165
+      ]
+    },
+    {
+      "file": "3-01_2025_ΔΑΕ.pdf",
+      "pages_pdf": [
+        24,
+        37,
+        38,
+        39,
+        42,
+        43,
+        44,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        59,
+        61,
+        62,
+        64,
+        65,
+        66,
+        73,
+        74
+      ]
+    },
+    {
+      "file": "recon/mif_tables.json (οπτική ανάγνωση πινάκων MIF — Syllabus PDF 91-99)",
+      "pages_pdf": [
+        91,
+        94,
+        96,
+        98
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "id": "st-01",
+      "topic": "Training devices — inventory (GBTS)",
+      "requirement": "Η εκπαίδευση εδάφους του Phase II περιλαμβάνει τέσσερις συσκευές F/S: Section Training Device (UTD), Part Task Trainer (PTT), Operational Flight Trainer (OFT) και Flight Training Device (FTD).",
+      "verbatim": "Air training comprises Ground Training Units combined with Air Training Units. Ground Training also includes the following devices: Section Training Device (UTD), Part Task Trainer (PTT), Operational Flight Trainer (OFT) and Flight Training Device (FTD).",
+      "values": {
+        "devices_count": 4,
+        "devices": [
+          "UTD",
+          "PTT",
+          "OFT",
+          "FTD"
+        ]
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 139,
+        "ref": "PART III §13.a GENERAL PROGRAM"
+      },
+      "links": [
+        "st-02",
+        "st-03"
+      ],
+      "flags": [
+        "Το 3-01 (Κεφ.2 παρ.23) απαριθμεί έξι συσκευές F/S: «UTD, OFT, PTT, FTD, SBT, FMS» — δύο επιπλέον (SBT, FMS) που ΔΕΝ αναφέρονται στο Syllabus Phase II."
+      ]
+    },
+    {
+      "id": "st-02",
+      "topic": "Device coding letters (O/F/U/P/A)",
+      "requirement": "Τα training devices κωδικοποιούνται μονογράμματα: O = OFT, F = FTD, U = UTD, P = PTT, A = όλα τα μέσα εκπαίδευσης. Οι κωδικοί αυτοί συνθέτουν τη γραμμή «MEANS OF TRAINING» των πινάκων MIF F/S (π.χ. OFU, OF, OFP, A).",
+      "verbatim": "d. The training devices are coded with the letter O for OFT, F for FTD, U for UTD, P for PTT and A for all the devices of training.",
+      "values": {
+        "codes": {
+          "O": "OFT",
+          "F": "FTD",
+          "U": "UTD",
+          "P": "PTT",
+          "A": "all devices"
+        },
+        "codes_count": 5
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 90,
+        "ref": "§8. PERFORMANCE STANDARDS (MIF), παρ. d"
+      },
+      "links": [
+        "st-01",
+        "st-03",
+        "st-62"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-03",
+      "topic": "UTD — optical stimuli exemption",
+      "requirement": "Οι κώδικες MIF που αφορούν ελιγμούς οι οποίοι απαιτούν οπτικά ερεθίσματα (optical stimuli) ΔΕΝ λαμβάνονται υπόψη όταν το Training Exercise εκτελείται στο UTD.",
+      "verbatim": "c. The codes referring to maneuvers that demand optical stimuli will not be taken into consideration in case the Training Exercise is executed in the UTD.",
+      "values": {
+        "device": "UTD",
+        "excluded_codes": "maneuvers demanding optical stimuli",
+        "applies_to": "MIF performance codes"
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 90,
+        "ref": "§8. PERFORMANCE STANDARDS (MIF), παρ. c"
+      },
+      "links": [
+        "st-02",
+        "st-04",
+        "st-62"
+      ],
+      "flags": [
+        "Δεν υπάρχει στο Syllabus ρητή λίστα των ελιγμών που «απαιτούν οπτικά ερεθίσματα» — η ταυτοποίησή τους αφήνεται στην κρίση του IP/Μοίρας."
+      ]
+    },
+    {
+      "id": "st-04",
+      "topic": "Optical stimuli — ορισμοί (complex / IMC)",
+      "requirement": "Όταν οι οδηγίες ενός Training Section αναφέρουν «use of complex optical stimuli», εννοείται ότι τα οπτικά στοιχεία που πρέπει να έχει ο SP κατά την εκτέλεση της αποστολής είναι VFR ή VFR on top. Όταν χρησιμοποιείται ο όρος «use of IMC stimuli», πρέπει να χρησιμοποιούνται οπτικά στοιχεία IMC. Η χρήση IMC stimuli σε ενόργανη προσέγγιση/προσγείωση περιλαμβάνει κριτήρια ύψους βάσης νεφών και ορατότητας για βελτιστοποίηση της παρεχόμενης εκπαίδευσης.",
+      "verbatim": "If directives in the individual Training Section refer to the «use of complex optical stimuli», this means that the optical elements an SP should have, while executing the mission, are VFR or VFR on top. When the term «use of IMC stimuli» is used, this means that IMC optical elements must be used. The use of IMC stimuli during an instrument approach and landing includes altitude criteria for cloud base and visibility for optimization of the training provided.",
+      "values": {
+        "complex_optical_stimuli": [
+          "VFR",
+          "VFR on top"
+        ],
+        "imc_stimuli": "IMC optical elements",
+        "applicable_devices": [
+          "PTT",
+          "OFT",
+          "FTD"
+        ]
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 139,
+        "ref": "PART III §13.b(2) Use of optical stimuli at PTT/OFT/FTD devices"
+      },
+      "links": [
+        "st-03",
+        "st-30",
+        "st-31"
+      ],
+      "flags": [
+        "Δεν καθορίζονται αριθμητικά τα «κριτήρια ύψους βάσης νεφών και ορατότητας» για τα IMC stimuli — παραμένουν απροσδιόριστα στο κείμενο."
+      ]
+    },
+    {
+      "id": "st-05",
+      "topic": "Device escalation — ανάθεση εξόδων σε ανώτερη συσκευή",
+      "requirement": "Όλες οι έξοδοι που ανατίθενται σε συσκευές F/S στοχεύουν στην πλήρη εκμετάλλευση της συσκευής. Αν ο SP έχει προγραμματιστεί σε συσκευή και υπάρχει διαθέσιμη συσκευή ανώτερου επιπέδου, χρησιμοποιείται η τελευταία. Ειδικά, έξοδος προγραμματισμένη για UTD μπορεί να εκτελεστεί σε PTT, OFT ή FTD μόλις είναι διαθέσιμα.",
+      "verbatim": "All sorties assigned to F/S devices aim at full device exploitation and intimate training of SP. If a SP is scheduled to fly in a device and there is an available device of a higher level, then the latter shall be used. Specifically, a sortie that has been scheduled to the UTD can be flown in the ΡΤΤ, OFT or FTD, as soon as they are available.",
+      "values": {
+        "rule": "upgrade to higher-level device when available",
+        "example_from": "UTD",
+        "example_to": [
+          "PTT",
+          "OFT",
+          "FTD"
+        ]
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 139,
+        "ref": "PART III §13.b(1) Training assignment"
+      },
+      "links": [
+        "st-01",
+        "st-02"
+      ],
+      "flags": [
+        "Δεν ορίζεται ρητά η ιεραρχία («level») των συσκευών· υπονοείται UTD < PTT < OFT/FTD αλλά δεν δηλώνεται αριθμητικά ούτε διαχωρίζεται OFT από FTD."
+      ]
+    },
+    {
+      "id": "st-06",
+      "topic": "F/S General Program — σύνολα ανά Training Section",
+      "requirement": "Το γενικό πρόγραμμα F/S του Phase II περιλαμβάνει: FAMILIARIZATION 2 έξοδοι / 2,0 ώρες· CONTACT 16 / 20,8· INSTRUMENT 18 / 23,2· FORMATION 5 / 6,5· NAVIGATION 7 / 9,1· ΣΥΝΟΛΟ 48 έξοδοι / 61,6 ώρες.",
+      "verbatim": "F/S TRAINING SECTION SORTIES / HOURS  FAMILIARIZATION 2/2,0  CONTACT 16 / 20,8  INSTRUMENT 18 / 23,2  FORMATION 5 / 6,5  NAVIGATION 7 / 9,1  TOTAL 48 / 61,6",
+      "values": {
+        "familiarization": {
+          "sorties": 2,
+          "hours": 2.0
+        },
+        "contact": {
+          "sorties": 16,
+          "hours": 20.8
+        },
+        "instrument": {
+          "sorties": 18,
+          "hours": 23.2
+        },
+        "formation": {
+          "sorties": 5,
+          "hours": 6.5
+        },
+        "navigation": {
+          "sorties": 7,
+          "hours": 9.1
+        },
+        "total": {
+          "sorties": 48,
+          "hours": 61.6
+        }
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 139,
+        "ref": "PART III §13.a GENERAL PROGRAM"
+      },
+      "links": [
+        "st-07",
+        "st-20"
+      ],
+      "flags": [
+        "ΑΝΤΙΦΑΣΗ με 3-01 Κεφ.2 Πίνακας 1 (PDF 37): εκεί «Εκπση στο F/S (Εξ. / Ωρ.) 46/61,6» για το Βασικό Στάδιο, ενώ το Syllabus δίνει TOTAL 48/61,6. Διαφορά 2 εξόδων με ΙΔΙΕΣ ώρες — βλ. st-07."
+      ]
+    },
+    {
+      "id": "st-07",
+      "topic": "3-01 Πίνακας 1 — σύνολα Phase II (F/S & εξοικείωση)",
+      "requirement": "Ο συγκεντρωτικός Πίνακας 1 του Κεφ.2 της 3-01 για το ΒΑΣΙΚΟ Στάδιο (Phase II) / Τ-6Α ορίζει: Εκπση Εδάφους (Εκπ. Περ.) - ΣΟΣΜΕ 524· Εξοικείωση με Α/Φ 2/2,0 (Εξ./Ωρ.)· Εκπση στο F/S 46/61,6 (Εξ./Ωρ.)· Εκπση Αέρος 77/94,6 (D/S) και 8/7,9 (Μόνος).",
+      "verbatim": "ΕΙΔΟΣ ΕΚΠΣΗΣ (Εξ./Ωρ. Συγκυβ) T-6Α ... Εκπση Εδάφους (Εκπ. Περ.)-ΣΟΣΜΕ 524 ... Εξοικείωση με Α/Φ (Εξ. / Ωρ.) 2/2,0 ... Εκπση στο F/S (Εξ. / Ωρ.) 46/61,6 ... Εκπση Αέρος (Εξ. / Ωρ. Μόνος)(Εξ. / Ωρ. D/S) 77/94,6 8/ 7,9",
+      "values": {
+        "ground_training_periods": 524,
+        "ac_familiarization": {
+          "sorties": 2,
+          "hours": 2.0
+        },
+        "fs_training": {
+          "sorties": 46,
+          "hours": 61.6
+        },
+        "air_training_dual": {
+          "sorties": 77,
+          "hours": 94.6
+        },
+        "air_training_solo": {
+          "sorties": 8,
+          "hours": 7.9
+        }
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 37,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 2, Πίνακας 1"
+      },
+      "links": [
+        "st-06",
+        "st-09",
+        "gt-26",
+        "ft-152"
+      ],
+      "flags": [
+        "ΑΝΤΙΦΑΣΗ 1: 46/61,6 (3-01) vs 48/61,6 (Syllabus §13a). Οι 48-46=2 έξοδοι αντιστοιχούν στο FAMILIARIZATION 2/2,0 του Syllabus, ΟΜΩΣ οι ώρες παραμένουν 61,6 και στα δύο — άρα το 46/61,6 είναι εσωτερικά ασύμβατο (46 έξοδοι θα αντιστοιχούσαν σε 59,6 ώρες).",
+        "ΑΝΤΙΦΑΣΗ 2: «Εξοικείωση με Α/Φ 2/2,0» (3-01) vs Syllabus §12 A/C Familiarization Program = 4 training periods x 1,5 h = 4/6,0. Το 2/2,0 της 3-01 ταυτίζεται αριθμητικά με το F/S FAMILIARIZATION (B10XX), όχι με το §12."
+      ]
+    },
+    {
+      "id": "st-08",
+      "topic": "Διάρκεια εκπαίδευσης F/S πριν την έναρξη πτήσεων",
+      "requirement": "Η διάρκεια της απαιτούμενης εκπαίδευσης F/S πριν την έναρξη της πτητικής δραστηριότητας εξαρτάται από τη διαθεσιμότητα των training devices και τον αριθμό των μαθητών (δεν καθορίζεται σταθερός αριθμός ημερών).",
+      "verbatim": "Duration of required F/S training before starting flying activity, depends on availability of training devices and number of cadets.",
+      "values": {
+        "flight_training_min_flying_days": 78,
+        "ground_training_min_working_days": 25,
+        "wsges_days_included": 10,
+        "fs_duration_before_flying": "variable — depends on device availability and number of cadets"
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 9,
+        "ref": "PART I §2. TRAINING DURATION"
+      },
+      "links": [
+        "st-05",
+        "st-18"
+      ],
+      "flags": [
+        "Δεν ορίζεται ελάχιστος/μέγιστος χρόνος F/S πριν τις πτήσεις — μόνη ποσοτική δέσμευση είναι έμμεση μέσω του Flow Chart."
+      ]
+    },
+    {
+      "id": "st-09",
+      "topic": "A/C Familiarization Program — ενεργοποίηση & σύνολα",
+      "requirement": "Σε περίπτωση βλάβης/μη διαθεσιμότητας του Flight Simulator (F/S), οι SP παρακολουθούν πρόγραμμα εξοικείωσης με το Α/Φ, το οποίο περιλαμβάνει τέσσερις (4) training periods: EX 1001 Exterior inspection 1/1,5· EX 1002 Familiarization in COCKPIT 1/1,5· EX 1003 Normal Procedures – Start 1/1,5· EX 1004 Emergency Procedures 1/1,5.",
+      "verbatim": "SPs, in case of Flight Simulator (F/S) malfunction/unavailability, will attend familiarization with the A/C training program, which includes four (4) training periods as in the table below: 1. Exterior inspection ΕX 1001 1 / 1,5  2. Familiarization in COCKPIT ΕX 1002 1 / 1,5  3. Normal Procedures – Start ΕX 1003 1 / 1,5  4. Emergency Procedures ΕX 1004 1 / 1,5",
+      "values": {
+        "trigger": "F/S malfunction/unavailability",
+        "training_periods": 4,
+        "hours_per_period": 1.5,
+        "total_hours": 6.0,
+        "exercises": [
+          {
+            "code": "EX 1001",
+            "periods": 1,
+            "hours": 1.5
+          },
+          {
+            "code": "EX 1002",
+            "periods": 1,
+            "hours": 1.5
+          },
+          {
+            "code": "EX 1003",
+            "periods": 1,
+            "hours": 1.5
+          },
+          {
+            "code": "EX 1004",
+            "periods": 1,
+            "hours": 1.5
+          }
+        ]
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 133,
+        "ref": "PART III §12.a TRAINING PROGRAM"
+      },
+      "links": [
+        "st-07",
+        "st-10",
+        "st-11",
+        "st-12",
+        "st-13",
+        "st-14",
+        "gt-25",
+        "gt-61"
+      ],
+      "flags": [
+        "Το σύνολο 4/6,0 δεν αναγράφεται ρητά στον πίνακα (προκύπτει με άθροιση 4 x 1,5).",
+        "ΑΝΤΙΦΑΣΗ με 3-01 Πίνακας 1 που δίνει «Εξοικείωση με Α/Φ 2/2,0» — βλ. st-07."
+      ]
+    },
+    {
+      "id": "st-10",
+      "topic": "A/C Familiarization — γενικές γνώσεις & βαθμολογία 90%",
+      "requirement": "Σε κάθε training period ο IP πρώτα επιδεικνύει και ο SP εξασκείται. Το Grade Sheet συμπληρώνεται ΧΩΡΙΣ αναγραφή συγκεκριμένου βαθμού (NG). Ο έλεγχος γνώσεων γίνεται στις πρώτες πτήσεις της Contact Category και στην εξέταση blind control πριν το checkride C4790. Η βάση επιτυχίας ορίζεται στο 90%. Σε περίπτωση αποτυχίας, η εξέταση blind control επαναλαμβάνεται την επόμενη ημέρα.",
+      "verbatim": "During each training period, IP first demonstrates and SP will practice. Grade sheet will be filled out without annotating a specific grade (NG). Knowledge check will take place in first flights of Contact Category Training and in blind control examination prior to C4790 checkride. Pass mark is set at 90%. In case of failure, blind control examination is repeated the following day.",
+      "values": {
+        "pass_mark_percent": 90,
+        "grade_annotation": "NG (no grade)",
+        "failure_retest_days": 1,
+        "knowledge_check_points": [
+          "first flights of Contact Category",
+          "blind control examination prior to C4790"
+        ],
+        "min_recognition_items": [
+          "OBOGS regulator",
+          "flaps handle",
+          "landing gear handle",
+          "battery/generator switches",
+          "emergency L/G handle",
+          "R/T switches",
+          "Landing/Taxi lights switches",
+          "Caution/Warning switches"
+        ],
+        "min_recognition_items_count": 8
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 133,
+        "ref": "PART III §12.b GENERAL KNOWLEDGE"
+      },
+      "links": [
+        "st-09",
+        "st-11",
+        "st-45",
+        "gt-25"
+      ],
+      "flags": [
+        "Η βάση 90% εδώ ΔΙΑΦΕΡΕΙ από τη γενική βάση 80% των ερωτηματολογίων εδάφους (3-01 Κεφ.2 παρ.25β, PDF 46 / Syllabus §11.b(2), PDF 105: «The minimum allowed grade for a SP to succeed is 80%») και από το 100% των ζωτικών διαδικασιών ανάγκης (3-01 Κεφ.2 παρ.25β, PDF 46)."
+      ]
+    },
+    {
+      "id": "st-11",
+      "topic": "A/C Familiarization — σειρά, προαπαιτούμενα, αναλογία IP:SP, βαθμολόγηση",
+      "requirement": "Ειδικές οδηγίες: (a) το πρόγραμμα εξοικείωσης αρχίζει ΜΕΤΑ την εκπαίδευση σε A/C Systems και Normal procedures· (b) οι πρώτες τρεις (3) έξοδοι πρέπει να ολοκληρωθούν ΠΡΙΝ την έναρξη της εκπαίδευσης αέρος και η τέταρτη (EX1004) πρέπει να προηγείται του C4790· (c) είναι δυνατόν ένας (1) IP να εκπαιδεύει δύο (2) SP ταυτόχρονα· (d) μετά από κάθε έξοδο εξοικείωσης συμπληρώνεται Grade Sheet Contact Category όπου βαθμολογούνται Ground Procedures, Basic A/C Control (περιλαμβάνει flight checks), Emergency Procedures και General Knowledge, με MIF Standards ίδια με B1001, B1002, C1101 και C2101 αντίστοιχα· (e) η exterior inspection εκτελείται στο Α/Φ.",
+      "verbatim": "(a) A/C familiarization program will begin after the training on A/C Systems and Normal procedures. (b) The first three (3) sorties must be completed before the beginning of air training and the fourth one (EX1004) must precede C4790. (c) It is possible for one (1) IP to train two (2) SPs simultaneously. (d) After every familiarization sortie, a Grade Sheet of Contact Category will be filled out, in which Ground Procedures, Basic A/C Control (which includes flight checks), Emergency Procedures and General Knowledge items will be graded. MIF Standards will be the same as of B1001, B1002, C1101 and C2101, respectively. (e) The exterior inspection will be executed at the A/C.",
+      "values": {
+        "sorties_before_air_training": 3,
+        "sortie_before_C4790": "EX1004",
+        "ip_to_sp_ratio": "1:2",
+        "prerequisite_ground_training": [
+          "A/C Systems",
+          "Normal procedures"
+        ],
+        "grade_sheet_type": "Contact Category",
+        "graded_items": [
+          "Ground Procedures",
+          "Basic A/C Control (incl. flight checks)",
+          "Emergency Procedures",
+          "General Knowledge"
+        ],
+        "mif_reference_sections": [
+          "B1001",
+          "B1002",
+          "C1101",
+          "C2101"
+        ]
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 133,
+        "ref": "PART III §12.c(1) Special instructions"
+      },
+      "links": [
+        "st-09",
+        "st-10",
+        "st-20",
+        "st-21",
+        "st-23",
+        "gt-61"
+      ],
+      "flags": [
+        "Το §12.c(1)(d) αντιστοιχίζει 4 βαθμολογούμενα items σε 4 Training Sections (B1001, B1002, C1101, C2101) — αλλά τα B1001/B1002 είναι οι ΔΥΟ έξοδοι του ΙΔΙΟΥ Section B10XX, όχι δύο Sections."
+      ]
+    },
+    {
+      "id": "st-12",
+      "topic": "EX 1001 — External inspection / εξοικείωση θέσης χειριστή",
+      "requirement": "EX 1001 (1,5 ώρες): πρακτική εκπαίδευση στη θέση του χειριστή για εξοικείωση με διακόπτες, χειριστήρια και διαδικασίες. Αντικείμενα: ρύθμιση/έλεγχος ατομικού εξοπλισμού επιβίωσης· εξωτερική επιθεώρηση – είσοδος στο Α/Φ· πρόσδεση, ρύθμιση καθίσματος και πεντάλ· κανονικές διαδικασίες – χρήση Check list· εξάσκηση χειρισμού διακοπτών και μοχλών. Στο τέλος του Training Section ο SP πρέπει να μπορεί να εκτελεί τα τέσσερα πρώτα.",
+      "verbatim": "ΕX 1001 1,5 EXTERNAL INSPECTION – FAMILIARIZATION WITH THE PILOT’S SEAT ... 3. SPECIAL REQUIREMENTS At the end of the Training Section, SP must be capable of executing: a. Adjustment – Inspection of personal survival equipment. b. External Inspection – Entry in the A/C. c. Strap-in, seat and pedals adjustment. d. Normal procedures.",
+      "values": {
+        "code": "EX 1001",
+        "duration_hours": 1.5,
+        "periods": 1,
+        "training_objects_count": 5,
+        "special_requirements_count": 4
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 134,
+        "ref": "PART III §12.c(2) Training Period Analysis — EX 1001"
+      },
+      "links": [
+        "st-09",
+        "st-11"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-13",
+      "topic": "EX 1002 — Familiarization at the pilot position",
+      "requirement": "EX 1002 (1,5 ώρες): περαιτέρω εκπαίδευση στα αντικείμενα του προηγούμενου Training Section, και επιπλέον: χειρισμός διακοπτών/μοχλών ΧΩΡΙΣ ενεργοποίηση συστημάτων Α/Φ, Fuel Checks, μέτρα ασφαλείας (γενικά), Cross Check και Clearing. Στο τέλος ο SP πρέπει να γνωρίζει τον χειρισμό διακοπτών, το Fuel Check, τα μέτρα ασφαλείας και την τεχνική Cross Check / Clearing.",
+      "verbatim": "ΕX 1002 1,5 FAMILIARIZATION AT THE PILOT POSITION ... b. SP will: (1) Practice operating A/C switches and levers without activating A/C systems. (2) Fuel Checks. (3) Safety Measures (general). (4) Cross Check, Clearing.",
+      "values": {
+        "code": "EX 1002",
+        "duration_hours": 1.5,
+        "periods": 1,
+        "training_objects_count": 4,
+        "special_requirements_count": 4
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 135,
+        "ref": "PART III §12.c(2) Training Period Analysis — EX 1002"
+      },
+      "links": [
+        "st-09",
+        "st-11"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-14",
+      "topic": "EX 1003 — Normal procedures / Start up",
+      "requirement": "EX 1003 (1,5 ώρες): ο SP, με υποβοήθηση–επίβλεψη IP, εκτελεί όλες τις διαδικασίες μέχρι την εκκίνηση κινητήρα, εκκινεί τον κινητήρα, εκτελεί όλες τις κανονικές διαδικασίες μέχρι το lineup, εκτελεί όλες τις μετά την πτήση κανονικές διαδικασίες και εξασκείται στη χρήση R/T.",
+      "verbatim": "ΕX 1003 1,5 NORMAL PROCEDURES – START UP ... b. SP with assistance – supervision of IP will: (1) Perform all procedures until engine start. (2) Start the Engine. (3) Perform all normal procedures up to lineup. (4) Execute all after flight normal procedures. (5) Practice the use of R/T.",
+      "values": {
+        "code": "EX 1003",
+        "duration_hours": 1.5,
+        "periods": 1,
+        "training_objects_count": 5,
+        "special_requirements_count": 3
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 136,
+        "ref": "PART III §12.c(2) Training Period Analysis — EX 1003"
+      },
+      "links": [
+        "st-09",
+        "st-11"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-15",
+      "topic": "EX 1004 — Emergency procedures (πριν το C4790)",
+      "requirement": "EX 1004 (1,5 ώρες): ο SP με υποβοήθηση–επίβλεψη IP εξασκείται σε: checklists κανονικών διαδικασιών· κρίσιμες διαδικασίες ανάγκης (BOLD FACE)· όλες τις διαδικασίες Airstart (PMU NORMAL, PMU OFF, IMMEDIATE AIRSTART)· λοιπές διαδικασίες ανάγκης· Manual Fuel Balancing. Στο τέλος ο SP πρέπει να γνωρίζει απ' έξω όλα τα κρίσιμα EPs (BOLD FACE), να εκτελεί τα υπόλοιπα με checklist, και να μπορεί να εκτελεί blind control procedures στο εμπρόσθιο cockpit.",
+      "verbatim": "ΕX 1004 1,5 EMERGENCY PROCEDURES ... c. All A/C Airstart procedures (PMU NORMAL, PMU OFF, IMMEDIATE AIRSTART) ... a. Know by heart all critical EPs (BOLD FACE) and be able to execute the rest of EPs (non critical) with use of the checklist. ... e. Be able to perform blind control procedures in the front cockpit.",
+      "values": {
+        "code": "EX 1004",
+        "duration_hours": 1.5,
+        "periods": 1,
+        "training_objects_count": 5,
+        "special_requirements_count": 5,
+        "airstart_procedures": [
+          "PMU NORMAL",
+          "PMU OFF",
+          "IMMEDIATE AIRSTART"
+        ],
+        "must_precede": "C4790"
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 137,
+        "ref": "PART III §12.c(2) Training Period Analysis — EX 1004"
+      },
+      "links": [
+        "st-09",
+        "st-10",
+        "st-11"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-16",
+      "topic": "Ατομικός εξοπλισμός σε ΟΛΕΣ τις εξόδους F/S",
+      "requirement": "Οι SP προσέρχονται στην εκπαίδευση εφοδιασμένοι με όλα τα απαιτούμενα εγχειρίδια για την ολοκλήρωση της πτήσης, σε ΟΛΕΣ τις εξόδους F/S.",
+      "verbatim": "SPs will attend training equipped with all required manuals for flight completion, in all F/S sorties.",
+      "values": {
+        "scope": "all F/S sorties",
+        "required": "all manuals for flight completion"
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 139,
+        "ref": "PART III §13.b(3) Personal Equipment Requirements"
+      },
+      "links": [],
+      "flags": []
+    },
+    {
+      "id": "st-17",
+      "topic": "Εξάσκηση διαδικασιών ανάγκης σε κάθε έξοδο F/S",
+      "requirement": "Διαδικασίες ανάγκης μπορούν να δίδονται σε ΚΑΘΕ έξοδο F/S, επιπλέον των προσχεδιασμένων, υπό την προϋπόθεση ότι έχουν επιτευχθεί τα κριτήρια του Training Section.",
+      "verbatim": "Emergency procedures can be given in every F/S sortie, in addition to the pre-planned ones, on condition that the criteria for the Training Section have been achieved.",
+      "values": {
+        "scope": "every F/S sortie",
+        "condition": "Training Section criteria achieved",
+        "additional_to": "pre-planned EPs"
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 139,
+        "ref": "PART III §13.b(4) Emergency Procedures Practice"
+      },
+      "links": [
+        "st-24",
+        "st-26"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-18",
+      "topic": "Τροποποίηση F/S flow chart σε χαμηλή διαθεσιμότητα συσκευών",
+      "requirement": "Σε περίπτωση χαμηλής διαθεσιμότητας συσκευών που διαρκεί μεγάλο χρονικό διάστημα, το F/S flow chart μπορεί να τροποποιηθεί ώστε να μη διακοπεί η εκπαίδευση με Α/Φ. Έτσι ο SP μπορεί να συνεχίσει τις εξόδους με Α/Φ ΧΩΡΙΣ να έχει καλύψει όλες τις απαιτήσεις στις συσκευές F/S.",
+      "verbatim": "In case of low devices availability that lasts for a long period, the F/S flow chart can be modified, in order not to interrupt the A/C training. In this way, SP will be able to continue A/C sorties without having met all requirements at F/S devices.",
+      "values": {
+        "trigger": "low device availability for a long period",
+        "effect": "F/S flow chart may be modified; A/C sorties may proceed without all F/S requirements met"
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 139,
+        "ref": "PART III §13.c(1) SPECIAL INSTRUCTIONS"
+      },
+      "links": [
+        "st-05",
+        "st-08",
+        "st-09",
+        "st-19",
+        "st-58"
+      ],
+      "flags": [
+        "Δεν ορίζεται τι σημαίνει «long period» ούτε ποιος εγκρίνει την τροποποίηση του flow chart.",
+        "ΠΙΘΑΝΗ ΕΝΤΑΣΗ με Syllabus §9.b (PDF 101), που απαγορεύει έναρξη Training Section/Exercise χωρίς προηγούμενη επιτυχή αξιολόγηση κατά το Training Flow Chart."
+      ]
+    },
+    {
+      "id": "st-19",
+      "topic": "Instrument Category — τήρηση Flow Chart για σταδιακή βελτίωση",
+      "requirement": "Ειδικά για την Instrument Category, η Μοίρα είναι υπεύθυνη να ακολουθεί το Flow Chart, εφόσον είναι δυνατόν, ώστε να επιτυγχάνεται σταδιακή βελτίωση της απόδοσης στο F/S ΠΡΙΝ από τις αντίστοιχες εξόδους πτήσης.",
+      "verbatim": "For Instrument Category in particular, Squadron is responsible to follow the Flow Chart, if possible, in order to achieve a gradual improvement of performance at the F/S before flight sorties.",
+      "values": {
+        "category": "Instrument",
+        "responsible": "Squadron",
+        "ordering": "F/S before flight sorties",
+        "strength": "if possible"
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 139,
+        "ref": "PART III §13.c(2)"
+      },
+      "links": [
+        "st-18",
+        "st-58"
+      ],
+      "flags": [
+        "Η διατύπωση «if possible» καθιστά τον κανόνα μη απόλυτο — δεν είναι σαφές πώς τεκμηριώνεται η αδυναμία τήρησης."
+      ]
+    },
+    {
+      "id": "st-20",
+      "topic": "Συνέχιση εξόδων F/S μετά την ολοκλήρωση κατηγορίας",
+      "requirement": "Οι SP μπορούν να συνεχίσουν να πετούν στο F/S ακόμη και μετά την ολοκλήρωση μιας Training Category, με σκοπό την περαιτέρω βελτίωση των δεξιοτήτων τους και την αύξηση της εμπειρίας τους.",
+      "verbatim": "SPs may continue flying in the F/S, even after the completion of a Training Category, in order to further improve their skills and increase their experience.",
+      "values": {
+        "allowed_after": "completion of a Training Category",
+        "purpose": "skill improvement / experience"
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 140,
+        "ref": "PART III §13.c(3)"
+      },
+      "links": [
+        "st-46",
+        "st-47"
+      ],
+      "flags": [
+        "Δεν ορίζεται αν οι έξοδοι αυτές βαθμολογούνται ή αν προσμετρώνται στα όρια πτήσεων ΕΠΑΝΑΛΗΨΗΣ της 3-01 (παρ.17 / παρ.53)."
+      ]
+    },
+    {
+      "id": "st-21",
+      "topic": "F/S Training Section B10XX",
+      "requirement": "Training Section B10XX — MISSION: Basic exercises category, normal procedures.. DEVICE: UTD or in the A/C. SORTIES/HOURS TOTAL: 2/2,0. OBJECTIVE: Front seat practice aims at familiarizing SP with switches, levers, controls and procedures. ANALYTICAL DESCRIPTION OF SECTION EXERCISES: ο IP επιδεικνύει και ο SP εξασκείται σε 12 αντικείμενα. SPECIAL REQUIREMENTS: SP will practice in: Adjustment / Inspection of personal survival equipment· Interior inspection – Entry in the front seat· Strap-in, seat – pedals adjustment· Normal procedures (τέσσερα SRs ΧΩΡΙΣ κωδικό SR — δεν περιλαμβάνονται στον πίνακα §10, PDF 103). Επιπλέον ο IP συζητά με τον SP: Emergency procedures· General Knowledge και θέματα από το A/C Flight Manual· Airmanship (ανάλυση από τα performance standards). RESTRICTIONS: PR 113 Ground Training should have been completed prior to the Section.",
+      "verbatim": "TRAINING SECTION: B10ΧΧ SORTIES/HOURS TOTAL: 2/2.0 MISSION: Basic exercises category, normal procedures. DEVICE: UTD or in the A/C. ... SPECIAL DIRECTIVES – AIDS: 1. Special Requirements: SP will practice in: - Adjustment / Inspection of personal survival equipment. - Interior inspection – Entry in the front seat. - Strap-in, seat – pedals adjustment. - Normal procedures. 2. IP will discuss with SP: - Emergency procedures. - General Knowledge and subjects from the A/C Flight Manual. - Airmanship (analysis from the performance standards). RESTRICTIONS: PR 113 Ground Training should have been completed prior to the Section.",
+      "values": {
+        "training_section": "B10XX",
+        "sorties": 2,
+        "hours": 2.0,
+        "devices": [
+          "UTD",
+          "A/C"
+        ],
+        "mif_means_of_training": "OFU",
+        "ground_prerequisite": "PR 113",
+        "category": "FAMILIARIZATION / BASIC (B)",
+        "mif_columns": "B1001-02",
+        "training_objects_count": 12,
+        "special_requirements_count": 4,
+        "special_requirements": [
+          "Adjustment / Inspection of personal survival equipment",
+          "Interior inspection – Entry in the front seat",
+          "Strap-in, seat – pedals adjustment",
+          "Normal procedures"
+        ],
+        "special_requirement_codes": [],
+        "ip_discussion_items": [
+          "Emergency procedures",
+          "General Knowledge and subjects from the A/C Flight Manual",
+          "Airmanship (analysis from the performance standards)"
+        ]
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 141,
+        "ref": "PART III §13.d TRAINING ANALYSIS — B10XX"
+      },
+      "links": [
+        "st-09",
+        "st-11",
+        "st-12",
+        "st-58",
+        "st-62",
+        "st-74"
+      ],
+      "flags": [
+        "ΑΣΥΜΦΩΝΙΑ Syllabus §13.d vs MIF: το κείμενο ορίζει DEVICE «UTD or in the A/C», ενώ ο πίνακας MIF CONTACT (F/S) (PDF 91) δίνει MEANS OF TRAINING = «OFU» (OFT+FTD+UTD) — το κείμενο δεν αναφέρει OFT/FTD, ο πίνακας δεν αναφέρει A/C.",
+        "Τα 4 Special Requirements του B10XX είναι ΑΚΩΔΙΚΟΠΟΙΗΤΑ (δεν φέρουν κωδικό SRC-x) και γι' αυτό ΔΕΝ εμφανίζονται στον πίνακα §10 SPECIAL REQUIREMENTS (PDF 103) — βλ. st-74. Παρά ταύτα, κατά §10.b (PDF 102) η εκτέλεσή τους είναι προαπαιτούμενο προαγωγής στο επόμενο Training Section.",
+        "Τα ίδια 4 SRs επαναλαμβάνονται σχεδόν αυτολεξεί στο EX 1001 του A/C Familiarization Program (st-12, PDF 134), με μόνη διαφορά «External Inspection – Entry in the A/C» (EX 1001) έναντι «Interior inspection – Entry in the front seat» (B10XX)."
+      ]
+    },
+    {
+      "id": "st-22",
+      "topic": "F/S Training Section C11XX",
+      "requirement": "Training Section C11XX — MISSION: Contact.. DEVICE: PTT/OFT/FTD. SORTIES/HOURS TOTAL: 1/1,3. OBJECTIVE: SP’s training in Basic A/C Control and familiarization with A/C flight characteristics. SPECIAL REQUIREMENTS/DIRECTIVES: None (IP demonstrates and SP practices; IP discusses ground reference points, flight characteristics in traffic pattern stalls / abnormal flight recoveries, EPs). RESTRICTIONS: CO 190 Ground Training examination must have been completed prior to the Section.",
+      "verbatim": "TRAINING SECTION: C11XX SORTIES/HOURS TOTAL: 1/1,3 MISSION: Contact. DEVICE: PTT/OFT/FTD.",
+      "values": {
+        "training_section": "C11XX",
+        "sorties": 1,
+        "hours": 1.3,
+        "devices": [
+          "PTT",
+          "OFT",
+          "FTD"
+        ],
+        "mif_means_of_training": "OF",
+        "ground_prerequisite": "CO 190",
+        "category": "CONTACT",
+        "mif_columns": "C1101"
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 143,
+        "ref": "PART III §13.d TRAINING ANALYSIS — C11XX"
+      },
+      "links": [
+        "st-58",
+        "st-62"
+      ],
+      "flags": [
+        "ΑΣΥΜΦΩΝΙΑ Syllabus §13.d vs MIF: το κείμενο ορίζει DEVICE «PTT/OFT/FTD», ενώ ο πίνακας MIF CONTACT (F/S) δίνει MEANS OF TRAINING = «OF» (μόνο OFT+FTD, ΧΩΡΙΣ PTT)."
+      ]
+    },
+    {
+      "id": "st-23",
+      "topic": "F/S Training Section C21XX",
+      "requirement": "Training Section C21XX — MISSION: Emergency Procedures.. DEVICE: OFT/UTD/FTD. SORTIES/HOURS TOTAL: 1/1,3. OBJECTIVE: SP’s training in Emergency Procedures. SPECIAL REQUIREMENTS/DIRECTIVES: Στο τέλος του Section ο SP πρέπει να γνωρίζει απ' έξω τις κρίσιμες (Bold Face) διαδικασίες και να εκτελεί τις υπόλοιπες (non critical) με Checklist· εξάσκηση σε ΟΛΕΣ τις διαδικασίες airstart (PMU NORMAL, PMU OFF, IMMEDIATE AIRSTART)· ικανότητα εκτέλεσης blind check procedures στο εμπρόσθιο κάθισμα. RESTRICTIONS: None.",
+      "verbatim": "TRAINING SECTION: C21XX SORTIES/HOURS TOTAL: 1/1,3 MISSION: Emergency Procedures. DEVICE: OFT/UTD/FTD.",
+      "values": {
+        "training_section": "C21XX",
+        "sorties": 1,
+        "hours": 1.3,
+        "devices": [
+          "OFT",
+          "UTD",
+          "FTD"
+        ],
+        "mif_means_of_training": "OFU",
+        "category": "CONTACT",
+        "mif_columns": "C2101",
+        "airstart_procedures": [
+          "PMU NORMAL",
+          "PMU OFF",
+          "IMMEDIATE AIRSTART"
+        ],
+        "airstart_procedures_count": 3
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 144,
+        "ref": "PART III §13.d TRAINING ANALYSIS — C21XX"
+      },
+      "links": [
+        "st-15",
+        "st-26",
+        "st-62"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-24",
+      "topic": "F/S Training Section C22XX",
+      "requirement": "Training Section C22XX — MISSION: Contact.. DEVICE: PTT/OFT/FTD. SORTIES/HOURS TOTAL: 2/2,6. OBJECTIVE: SP’s familiarization with A/C flight characteristics and demonstration/practice of fundamental flight maneuvers. SPECIAL REQUIREMENTS/DIRECTIVES: SP practice on No FLAPS Traffic Pattern Stalls (SRC-2). RESTRICTIONS: None.",
+      "verbatim": "TRAINING SECTION: C22XX SORTIES/HOURS TOTAL: 2/2,6 MISSION: Contact. DEVICE: PTT/OFT/FTD.",
+      "values": {
+        "training_section": "C22XX",
+        "sorties": 2,
+        "hours": 2.6,
+        "devices": [
+          "PTT",
+          "OFT",
+          "FTD"
+        ],
+        "mif_means_of_training": "OFP",
+        "category": "CONTACT",
+        "mif_columns": "C2201-02",
+        "special_requirement_codes": [
+          "SRC-2"
+        ]
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 145,
+        "ref": "PART III §13.d TRAINING ANALYSIS — C22XX"
+      },
+      "links": [
+        "st-59",
+        "st-62"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-25",
+      "topic": "F/S Training Section C23XX",
+      "requirement": "Training Section C23XX — MISSION: Emergency Procedures Training in a Mission Profile.. DEVICE: UTD/OFT/FTD. SORTIES/HOURS TOTAL: 2/2,6. OBJECTIVE: SP’s training in Emergency Procedures. SPECIAL REQUIREMENTS/DIRECTIVES: Έμφαση στην εξάσκηση και απόδοση του SP στις διαδικασίες airstart (PMU NORMAL, PMU OFF και IMMEDIATE AIRSTART). RESTRICTIONS: At the end of the Section, SP must know by heart the critical (Bold Face) procedures and be able to execute the other procedures (non critical) using the Checklist.",
+      "verbatim": "TRAINING SECTION: C23XX SORTIES/HOURS TOTAL: 2/2,6 MISSION: Emergency Procedures Training in a Mission Profile. DEVICE: UTD/OFT/FTD.",
+      "values": {
+        "training_section": "C23XX",
+        "sorties": 2,
+        "hours": 2.6,
+        "devices": [
+          "UTD",
+          "OFT",
+          "FTD"
+        ],
+        "mif_means_of_training": "OFU",
+        "category": "CONTACT",
+        "mif_columns": "C2301-02",
+        "airstart_procedures": [
+          "PMU NORMAL",
+          "PMU OFF",
+          "IMMEDIATE AIRSTART"
+        ]
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 146,
+        "ref": "PART III §13.d TRAINING ANALYSIS — C23XX"
+      },
+      "links": [
+        "st-23",
+        "st-62"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-26",
+      "topic": "F/S Training Section C24XX",
+      "requirement": "Training Section C24XX — MISSION: Contact.. DEVICE: PTT/OFT/FTD. SORTIES/HOURS TOTAL: 3/3,9. OBJECTIVE: Practice on fundamental flight maneuvers and landings. SPECIAL REQUIREMENTS/DIRECTIVES: SP must perform at least 2 landings with 10-20 knots crosswind. RESTRICTIONS: None.",
+      "verbatim": "TRAINING SECTION: C24XX SORTIES/HOURS TOTAL: 3/3,9 MISSION: Contact. DEVICE: PTT/OFT/FTD.",
+      "values": {
+        "training_section": "C24XX",
+        "sorties": 3,
+        "hours": 3.9,
+        "devices": [
+          "PTT",
+          "OFT",
+          "FTD"
+        ],
+        "mif_means_of_training": "OFP",
+        "category": "CONTACT",
+        "mif_columns": "C2401-03",
+        "min_crosswind_landings": 2,
+        "crosswind_min_kt": 10,
+        "crosswind_max_kt": 20
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 147,
+        "ref": "PART III §13.d TRAINING ANALYSIS — C24XX"
+      },
+      "links": [
+        "st-27",
+        "st-62"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-27",
+      "topic": "F/S Training Section C2501",
+      "requirement": "Training Section C2501 — MISSION: Emergency Procedures Training in a Mission Profile.. DEVICE: UTD/OFT/FTD. SORTIES/HOURS TOTAL: 3/3,9. OBJECTIVE: SPs’ practice on Emergency procedures. SPECIAL REQUIREMENTS/DIRECTIVES: SP must perform at least 2 landings with 10-20 knots crosswind. (a) Τουλάχιστον μία από τις εξόδους εκτελείται σε OFT/FTD, ώστε να καλυφθούν οι απαιτήσεις για ELP, Straight In και Landing. (b) Έμφαση στην εξάσκηση και απόδοση σε flight engine restart (PMU NORMAL AIRSTART, PMU OFF AIRSTART, IMMEDIATE AIRSTART / PMU NORM). (c) Consult performance standards for graded profile maneuvers. RESTRICTIONS: None.",
+      "verbatim": "TRAINING SECTION: C2501 SORTIES/HOURS TOTAL: 3/3,9 MISSION: Emergency Procedures Training in a Mission Profile. DEVICE: UTD/OFT/FTD.",
+      "values": {
+        "training_section": "C2501",
+        "sorties": 3,
+        "hours": 3.9,
+        "devices": [
+          "UTD",
+          "OFT",
+          "FTD"
+        ],
+        "mif_means_of_training": "OFU",
+        "category": "CONTACT",
+        "mif_columns": "C2501-03",
+        "min_sorties_at_OFT_FTD": 1,
+        "min_crosswind_landings": 2,
+        "crosswind_min_kt": 10,
+        "crosswind_max_kt": 20,
+        "OFT_FTD_required_for": [
+          "ELP",
+          "Straight In",
+          "Landing"
+        ],
+        "airstart_procedures": [
+          "PMU NORMAL AIRSTART",
+          "PMU OFF AIRSTART",
+          "IMMEDIATE AIRSTART / PMU NORM"
+        ]
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 148,
+        "ref": "PART III §13.d TRAINING ANALYSIS — C2501"
+      },
+      "links": [
+        "st-26",
+        "st-03",
+        "st-62"
+      ],
+      "flags": [
+        "Ο κωδικός γράφεται «C2501» στην επικεφαλίδα του Section (ενικός), ενώ ο πίνακας MIF CONTACT (F/S) έχει στήλη «C2501-03» (3 έξοδοι) — ασυμφωνία κωδικοποίησης, όχι αριθμού εξόδων.",
+        "Η απαίτηση «at least 2 landings with 10-20 knots crosswind» εμφανίζεται ΠΑΝΟΜΟΙΟΤΥΠΗ και στο C24XX (st-26) — δεν διευκρινίζεται αν είναι αθροιστική ή ανεξάρτητη ανά Section."
+      ]
+    },
+    {
+      "id": "st-28",
+      "topic": "F/S Training Section C26XX",
+      "requirement": "Training Section C26XX — MISSION: Contact.. DEVICE: PTT/OFT/FTD. SORTIES/HOURS TOTAL: 4/5,2. OBJECTIVE: Practice on fundamental flight maneuvers and landings. SPECIAL REQUIREMENTS/DIRECTIVES: None. RESTRICTIONS: None.",
+      "verbatim": "TRAINING SECTION: C26XX SORTIES/HOURS TOTAL: 4/5,2 MISSION: Contact. DEVICE: PTT/OFT/FTD.",
+      "values": {
+        "training_section": "C26XX",
+        "sorties": 4,
+        "hours": 5.2,
+        "devices": [
+          "PTT",
+          "OFT",
+          "FTD"
+        ],
+        "mif_means_of_training": "OFP",
+        "category": "CONTACT",
+        "mif_columns": "C2601-04"
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 149,
+        "ref": "PART III §13.d TRAINING ANALYSIS — C26XX"
+      },
+      "links": [
+        "st-62"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-29",
+      "topic": "F/S Training Section I31XX",
+      "requirement": "Training Section I31XX — MISSION: Basic Instruments Procedures. DEVICE: UTD/OFT/FTD/PTT. SORTIES/HOURS TOTAL: 2/2,4. OBJECTIVE: The familiarization of SP with instruments flying and his/her practice in Basic Instruments. SPECIAL REQUIREMENTS/DIRECTIVES: None. RESTRICTIONS: SP should have successfully executed Training Section IN 190 in Ground Training.",
+      "verbatim": "TRAINING SECTION: I31XX SORTIES/HOURS TOTAL: 2/2,4 MISSION: Basic Instruments Procedures DEVICE: UTD/OFT/FTD/PTT.",
+      "values": {
+        "training_section": "I31XX",
+        "sorties": 2,
+        "hours": 2.4,
+        "devices": [
+          "UTD",
+          "OFT",
+          "FTD",
+          "PTT"
+        ],
+        "mif_means_of_training": "A",
+        "category": "INSTRUMENT",
+        "mif_columns": "I3101-02",
+        "ground_prerequisite": "IN 190",
+        "hours_per_sortie": 1.2
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 151,
+        "ref": "PART III §13.d TRAINING ANALYSIS — I31XX"
+      },
+      "links": [
+        "st-58",
+        "st-62"
+      ],
+      "flags": [
+        "Μοναδικό Section με λόγο ωρών/έξοδο 1,2 (2/2,4) αντί του 1,3 που ισχύει σε όλα τα υπόλοιπα Sections — δεν εξηγείται στο κείμενο."
+      ]
+    },
+    {
+      "id": "st-30",
+      "topic": "F/S Training Section I32XX",
+      "requirement": "Training Section I32XX — MISSION: Basic and Advanced Instruments.. DEVICE: UTD/OFT/FTD/PTT. SORTIES/HOURS TOTAL: 3/3,9. OBJECTIVE: Familiarization of SP with instrument flights and his/her practice in Basic and Advanced Instruments. Introduction to Instrument Approach procedures. SPECIAL REQUIREMENTS/DIRECTIVES: SP will practice Spatial Disorientation maneuvers (SRI-1)· SP will practice timed and magnetic compass turns (SRI-2)· Use of complex optical stimuli (provided that SP flies in OFT/FTD). RESTRICTIONS: As a minimum, two sorties should be executed at OFT/FTD.",
+      "verbatim": "TRAINING SECTION: I32XX SORTIES/HOURS TOTAL: 3/3,9 MISSION: Basic and Advanced Instruments. DEVICE: UTD/OFT/FTD/PTT.",
+      "values": {
+        "training_section": "I32XX",
+        "sorties": 3,
+        "hours": 3.9,
+        "devices": [
+          "UTD",
+          "OFT",
+          "FTD",
+          "PTT"
+        ],
+        "mif_means_of_training": "A",
+        "category": "INSTRUMENT",
+        "mif_columns": "I3201-03",
+        "min_sorties_at_OFT_FTD": 2,
+        "special_requirement_codes": [
+          "SRI-1",
+          "SRI-2"
+        ],
+        "optical_stimuli": "complex (VFR / VFR on top), if in OFT/FTD"
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 152,
+        "ref": "PART III §13.d TRAINING ANALYSIS — I32XX"
+      },
+      "links": [
+        "st-04",
+        "st-59",
+        "st-62"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-31",
+      "topic": "F/S Training Section I33XX",
+      "requirement": "Training Section I33XX — MISSION: Basic and Advanced Instruments.. DEVICE: UTD/OFT/FTD/PTT. SORTIES/HOURS TOTAL: 4/5,2. OBJECTIVE: Familiarization of SP with instrument flying and his/her practice in Basic and Advanced Instruments and Instrument Approach procedures. SPECIAL REQUIREMENTS/DIRECTIVES: SP will practice, at least once, Missed Approach from any point of a circling approach· In one sortie SP will use complex optical stimuli. RESTRICTIONS: None.",
+      "verbatim": "TRAINING SECTION: I33XX SORTIES/HOURS TOTAL: 4/5,2 MISSION: Basic and Advanced Instruments. DEVICE: UTD/OFT/FTD/PTT.",
+      "values": {
+        "training_section": "I33XX",
+        "sorties": 4,
+        "hours": 5.2,
+        "devices": [
+          "UTD",
+          "OFT",
+          "FTD",
+          "PTT"
+        ],
+        "mif_means_of_training": "A",
+        "category": "INSTRUMENT",
+        "mif_columns": "I3301-04",
+        "min_missed_approach_from_circling": 1,
+        "sorties_with_complex_optical_stimuli": 1
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 153,
+        "ref": "PART III §13.d TRAINING ANALYSIS — I33XX"
+      },
+      "links": [
+        "st-04",
+        "st-62"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-32",
+      "topic": "F/S Training Section I34XX",
+      "requirement": "Training Section I34XX — MISSION: IFR Navigation.. DEVICE: UTD/OFT/FTD/PTT. SORTIES/HOURS TOTAL: 4/5,2. OBJECTIVE: Familiarization of SP with IFR navigation procedures. SPECIAL REQUIREMENTS/DIRECTIVES: Special requirements: None. Ο SP εκτελεί τουλάχιστον μία (1) προσέγγιση σε εναλλακτικά αεροδρόμια (LGAD, LGRX ή LGSA) και εφόσον είναι δυνατόν σε LGTG, LGBL, LGSY. Δίδεται η ευκαιρία εξάσκησης σε διάφορες καιρικές συνθήκες, όπως χαμηλή βάση νεφών και περιορισμένη ορατότητα (OFT/FTD). RESTRICTIONS: None.",
+      "verbatim": "TRAINING SECTION: I34XX SORTIES/HOURS TOTAL: 4/5,2 MISSION: IFR Navigation. DEVICE: UTD/OFT/FTD/PTT.",
+      "values": {
+        "training_section": "I34XX",
+        "sorties": 4,
+        "hours": 5.2,
+        "devices": [
+          "UTD",
+          "OFT",
+          "FTD",
+          "PTT"
+        ],
+        "mif_means_of_training": "A",
+        "category": "INSTRUMENT",
+        "mif_columns": "I3401-04",
+        "min_approaches_at_alternate": 1,
+        "alternate_airports_primary": [
+          "LGAD",
+          "LGRX",
+          "LGSA"
+        ],
+        "alternate_airports_if_possible": [
+          "LGTG",
+          "LGBL",
+          "LGSY"
+        ],
+        "weather_practice_devices": [
+          "OFT",
+          "FTD"
+        ]
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 154,
+        "ref": "PART III §13.d TRAINING ANALYSIS — I34XX"
+      },
+      "links": [
+        "st-04",
+        "st-33",
+        "st-62"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-33",
+      "topic": "F/S Training Section I35XX",
+      "requirement": "Training Section I35XX — MISSION: IFR Navigation. DEVICE: UTD/OFT/FTD/PTT. SORTIES/HOURS TOTAL: 4/5,2. OBJECTIVE: Familiarization of SP with IFR navigation procedures. SPECIAL REQUIREMENTS/DIRECTIVES: Special requirements: None. Ο SP εκτελεί τουλάχιστον μία (1) προσέγγιση σε εναλλακτικά αεροδρόμια (LGAD, LGRX ή LGSA) και εφόσον είναι δυνατόν σε LGTG, LGBL, LGSY. Δίδεται η ευκαιρία εξάσκησης σε διάφορες καιρικές συνθήκες, όπως χαμηλή βάση νεφών και περιορισμένη ορατότητα (OFT/FTD). RESTRICTIONS: None.",
+      "verbatim": "TRAINING SECTION: I35XX SORTIES/HOURS TOTAL: 4/5,2 MISSION: IFR Navigation DEVICE: UTD/OFT/FTD/PTT.",
+      "values": {
+        "training_section": "I35XX",
+        "sorties": 4,
+        "hours": 5.2,
+        "devices": [
+          "UTD",
+          "OFT",
+          "FTD",
+          "PTT"
+        ],
+        "mif_means_of_training": "A",
+        "category": "INSTRUMENT",
+        "mif_columns": "I3501-04",
+        "min_approaches_at_alternate": 1,
+        "alternate_airports_primary": [
+          "LGAD",
+          "LGRX",
+          "LGSA"
+        ],
+        "alternate_airports_if_possible": [
+          "LGTG",
+          "LGBL",
+          "LGSY"
+        ]
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 155,
+        "ref": "PART III §13.d TRAINING ANALYSIS — I35XX"
+      },
+      "links": [
+        "st-32",
+        "st-62"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-34",
+      "topic": "F/S Training Section I36XX",
+      "requirement": "Training Section I36XX — MISSION: Night IFR Navigation.. DEVICE: OFT/FTD/PTT. SORTIES/HOURS TOTAL: 1/1,3. OBJECTIVE: Familiarization of SP with IFR navigation procedures during night flight. SPECIAL REQUIREMENTS/DIRECTIVES: Special requirements: None. Ο SP εκτελεί τουλάχιστον μία (1) προσέγγιση σε εναλλακτικά αεροδρόμια (LGAD, LGRX ή LGSA). Η έξοδος εκτελείται με συνθήκες νυχτερινής πτήσης (OFT/FTD). RESTRICTIONS: None.",
+      "verbatim": "TRAINING SECTION: I36XX SORTIES/HOURS TOTAL: 1/1,3 MISSION: Night IFR Navigation. DEVICE: OFT/FTD/PTT.",
+      "values": {
+        "training_section": "I36XX",
+        "sorties": 1,
+        "hours": 1.3,
+        "devices": [
+          "OFT",
+          "FTD",
+          "PTT"
+        ],
+        "mif_means_of_training": "OFP",
+        "category": "INSTRUMENT",
+        "mif_columns": "I3601",
+        "min_approaches_at_alternate": 1,
+        "alternate_airports": [
+          "LGAD",
+          "LGRX",
+          "LGSA"
+        ],
+        "night_conditions_required": true,
+        "night_conditions_devices": [
+          "OFT",
+          "FTD"
+        ]
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 156,
+        "ref": "PART III §13.d TRAINING ANALYSIS — I36XX"
+      },
+      "links": [
+        "st-32",
+        "st-33",
+        "st-62"
+      ],
+      "flags": [
+        "Το DEVICE ορίζεται «OFT/FTD/PTT» αλλά η ειδική οδηγία 4 απαιτεί συνθήκες νυχτερινής πτήσης «(OFT/FTD)» — υπονοείται ότι το PTT δεν επαρκεί για την κάλυψη της απαίτησης."
+      ]
+    },
+    {
+      "id": "st-35",
+      "topic": "F/S Training Section F31XX",
+      "requirement": "Training Section F31XX — MISSION: Two-ship Formation. DEVICE: PTT/OFT/FTD. SORTIES/HOURS TOTAL: 2/2,6. OBJECTIVE: Familiarization of SP with formation maneuvers. SPECIAL REQUIREMENTS/DIRECTIVES: None. RESTRICTIONS: 1. C5201 must have been executed before starting this Training Section. 2. FO 190 must have been executed before starting this Training Section.",
+      "verbatim": "TRAINING SECTION: F31XX SORTIES/HOURS TOTAL: 2/2,6 MISSION: Two-ship Formation DEVICE: PTT/OFT/FTD.",
+      "values": {
+        "training_section": "F31XX",
+        "sorties": 2,
+        "hours": 2.6,
+        "devices": [
+          "PTT",
+          "OFT",
+          "FTD"
+        ],
+        "mif_means_of_training": "OFP",
+        "category": "FORMATION",
+        "mif_columns": "F3101-2",
+        "prerequisite_air_sortie": "C5201",
+        "ground_prerequisite": "FO 190"
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 157,
+        "ref": "PART III §13.d TRAINING ANALYSIS — F31XX"
+      },
+      "links": [
+        "st-58",
+        "st-62"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-36",
+      "topic": "F/S Training Section F32XX",
+      "requirement": "Training Section F32XX — MISSION: Two-ship Formation.. DEVICE: PTT/OFT/FTD. SORTIES/HOURS TOTAL: 3/3,9. OBJECTIVE: Familiarization of SP with formation maneuvers. SPECIAL REQUIREMENTS/DIRECTIVES: None. RESTRICTIONS: None.",
+      "verbatim": "TRAINING SECTION: F32XX SORTIES/HOURS TOTAL: 3/3,9 MISSION: Two-ship Formation. DEVICE: PTT/OFT/FTD.",
+      "values": {
+        "training_section": "F32XX",
+        "sorties": 3,
+        "hours": 3.9,
+        "devices": [
+          "PTT",
+          "OFT",
+          "FTD"
+        ],
+        "mif_means_of_training": "OFP",
+        "category": "FORMATION",
+        "mif_columns": "F3201-3"
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 158,
+        "ref": "PART III §13.d TRAINING ANALYSIS — F32XX"
+      },
+      "links": [
+        "st-35",
+        "st-62"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-37",
+      "topic": "F/S Training Section N21XX",
+      "requirement": "Training Section N21XX — MISSION: VFR Navigation (Medium Level).. DEVICE: PTT/OFT/FTD. SORTIES/HOURS TOTAL: 1/1,3. OBJECTIVE: Familiarization of SP with VFR Navigation Procedures. SPECIAL REQUIREMENTS/DIRECTIVES: Special Requirements: - RESTRICTIONS: 1. C5201 must have been executed before starting this Training Section. 2. NA 190 must have been executed before starting this Training Section.",
+      "verbatim": "TRAINING SECTION: N21XX SORTIES/HOURS TOTAL: 1/1,3 MISSION: VFR Navigation (Medium Level). DEVICE: PTT/OFT/FTD.",
+      "values": {
+        "training_section": "N21XX",
+        "sorties": 1,
+        "hours": 1.3,
+        "devices": [
+          "PTT",
+          "OFT",
+          "FTD"
+        ],
+        "mif_means_of_training": "OFP",
+        "category": "NAVIGATION",
+        "mif_columns": "N2101",
+        "prerequisite_air_sortie": "C5201",
+        "ground_prerequisite": "NA 190"
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 159,
+        "ref": "PART III §13.d TRAINING ANALYSIS — N21XX"
+      },
+      "links": [
+        "st-58",
+        "st-62"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-38",
+      "topic": "F/S Training Section N22XX",
+      "requirement": "Training Section N22XX — MISSION: VFR Navigation (Low Level).. DEVICE: PTT/OFT/FTD. SORTIES/HOURS TOTAL: 2/2,6. OBJECTIVE: Familiarization of SP with VFR Navigation Procedures. SPECIAL REQUIREMENTS/DIRECTIVES: Special Requirements: None. An instrument approach will be flown at least in one sortie in N22XX Section during RTB. RESTRICTIONS: LNAV 790 must have been executed before starting this Training Section.",
+      "verbatim": "TRAINING SECTION: N22XX SORTIES/HOURS TOTAL: 2/2,6 MISSION: VFR Navigation (Low Level). DEVICE: PTT/OFT/FTD.",
+      "values": {
+        "training_section": "N22XX",
+        "sorties": 2,
+        "hours": 2.6,
+        "devices": [
+          "PTT",
+          "OFT",
+          "FTD"
+        ],
+        "mif_means_of_training": "OFP",
+        "category": "NAVIGATION",
+        "mif_columns": "N2201-02",
+        "ground_prerequisite": "LNAV 790",
+        "min_sorties_with_instrument_approach_on_RTB": 1
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 160,
+        "ref": "PART III §13.d TRAINING ANALYSIS — N22XX"
+      },
+      "links": [
+        "st-39",
+        "st-58",
+        "st-62"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-39",
+      "topic": "F/S Training Section N23XX",
+      "requirement": "Training Section N23XX — MISSION: VFR Navigation (Low Level).. DEVICE: PTT/OFT/FTD. SORTIES/HOURS TOTAL: 4/5,2. OBJECTIVE: Familiarization of SP with VFR Navigation Procedures. SPECIAL REQUIREMENTS/DIRECTIVES: An instrument approach will be flown at least in two sorties in N23XX Section during RTB. RESTRICTIONS: None.",
+      "verbatim": "TRAINING SECTION: N23XX SORTIES/HOURS TOTAL: 4/5,2 MISSION: VFR Navigation (Low Level). DEVICE: PTT/OFT/FTD.",
+      "values": {
+        "training_section": "N23XX",
+        "sorties": 4,
+        "hours": 5.2,
+        "devices": [
+          "PTT",
+          "OFT",
+          "FTD"
+        ],
+        "mif_means_of_training": "OFP",
+        "category": "NAVIGATION",
+        "mif_columns": "N2301-04",
+        "min_sorties_with_instrument_approach_on_RTB": 2
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 161,
+        "ref": "PART III §13.d TRAINING ANALYSIS — N23XX"
+      },
+      "links": [
+        "st-38",
+        "st-62"
+      ],
+      "flags": [
+        "Η υποπαράγραφος «1. Special Requirements:» εμφανίζεται ΚΕΝΗ στο κείμενο (χωρίς «None» ούτε περιεχόμενο)."
+      ]
+    },
+    {
+      "id": "st-40",
+      "topic": "Προαπαιτούμενο εδάφους πριν από κάθε Training Section/Exercise",
+      "requirement": "Κανένας SP δεν αρχίζει εκπαίδευση σε Training Section ή Exercise εάν δεν έχει προηγουμένως παρακολουθήσει και αξιολογηθεί επιτυχώς στα αντικείμενα της εκπαίδευσης εδάφους, όπως αυτά εμφανίζονται στο Training Flow Chart. Ισχύει και για τις εξόδους F/S.",
+      "verbatim": "b. No SP shall begin training in a Training Section or Exercise if he/she has not previously attended and successfully been evaluated upon the objects of ground training, as they appear in the Training Flow Chart.",
+      "values": {
+        "scope": "every Training Section or Exercise (incl. F/S)",
+        "prerequisite": "successful ground training evaluation per Flow Chart"
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 101,
+        "ref": "§9. GENERAL DIRECTIVES, παρ. b"
+      },
+      "links": [
+        "st-18",
+        "st-21",
+        "st-22",
+        "st-29",
+        "st-35",
+        "st-37",
+        "st-38",
+        "st-41",
+        "gt-22",
+        "gt-58",
+        "gt-59"
+      ],
+      "flags": [
+        "ΕΝΤΑΣΗ με §13.c(1) (st-18) που επιτρέπει συνέχιση εκπαίδευσης χωρίς κάλυψη των απαιτήσεων F/S σε χαμηλή διαθεσιμότητα συσκευών."
+      ]
+    },
+    {
+      "id": "st-41",
+      "topic": "Εξετάσεις εδάφους πριν την έναρξη πτήσεων F/S ή Α/Φ",
+      "requirement": "Οι γραπτές εξετάσεις γνώσεων διενεργούνται: (α) τουλάχιστον 3 ημερολογιακές ημέρες μετά την ολοκλήρωση του αντίστοιχου μαθήματος (μη συμπεριλαμβανομένης της ημέρας ολοκλήρωσης)· (β) ΠΡΙΝ την έναρξη των πτήσεων στο F/S ή στο Α/Φ, της ενότητας ή της κατηγορίας ασκήσεων που αφορούν στις διαλέξεις· (γ) υπό μορφή ερωτηματολογίου κλειστού ή ανοικτού βιβλίου των 20-50 ερωτήσεων· (δ) μέσω των υπολογιστών του CBTS με εκτύπωση αποδεικτικού στον φάκελο εκπαίδευσης.",
+      "verbatim": "β. Πριν την έναρξη των πτήσεων στο F/S ή στο Α/Φ, της ενότητας ή της κατηγορίας ασκήσεων που αφορούν στις διαλέξεις. γ. Υπό μορφή ερωτηματολογίου κλειστού ή ανοικτού βιβλίου των 20-50 ερωτήσεων πολλαπλών απαντήσεων ή περιγραφικού τύπου",
+      "values": {
+        "min_calendar_days_after_lesson": 3,
+        "questions_min": 20,
+        "questions_max": 50,
+        "timing": "before start of F/S or A/C flights of the relevant unit/category"
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 38,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 4"
+      },
+      "links": [
+        "st-40",
+        "st-45",
+        "gt-29"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-42",
+      "topic": "Ελιγμοί που δεν εξασκήθηκαν στο F/S — υποχρεωτική επίδειξη στον αέρα",
+      "requirement": "Όλοι οι ελιγμοί που ΔΕΝ έχουν εξασκηθεί στο F/S πρέπει να επιδεικνύονται στον αέρα τουλάχιστον μία φορά από τον IP, πριν ζητηθεί από τον SP να τους εκτελέσει.",
+      "verbatim": "All maneuvers that have not been practiced in the F/S will be demonstrated in the air at least once by IP, before SP is asked to execute them.",
+      "values": {
+        "min_ip_demonstrations_in_air": 1,
+        "condition": "maneuver not practiced in F/S"
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 163,
+        "ref": "PART IV §14.b(2) GENERAL DIRECTIVES"
+      },
+      "links": [
+        "st-18",
+        "st-40",
+        "ft-27"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-43",
+      "topic": "Επιλογή Εκπαιδευτή Εξομοιωτή στο F/S",
+      "requirement": "Ο μαθητής κατά την εκπαίδευση στο F/S δύναται να ίπταται με ΟΠΟΙΟΝΔΗΠΟΤΕ Εκπαιδευτή Εξομοιωτή Πτήσεων διαθέσιμο στη συγκεκριμένη συσκευή.",
+      "verbatim": "15. Ο μαθητής κατά την εκπαίδευση στο F/S, δύναται να ίπταται με οποιονδήποτε Εκπαιδευτή Εξομοιωτή Πτήσεων διαθέσιμο στη συγκεκριμένη συσκευή.",
+      "values": {
+        "instructor_constraint": "none — any available Flight Simulator Instructor"
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 39,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, «Γενικές κατευθύνσεις εκπαίδευσης στο F/S», παρ. 15"
+      },
+      "links": [
+        "st-44",
+        "st-56"
+      ],
+      "flags": [
+        "ΕΞΑΙΡΕΣΗ από τον κανόνα των μέγιστων 3 Εκπαιδευτών στην «ΠΡΟ ΜΟΝΟΣ» φάση (Κεφ.2 παρ.24ζ(1)) — δεν δηλώνεται ρητά ότι ο περιορισμός δεν αφορά το F/S, αλλά η παρ.15 τον υπερκεράζει για τις συσκευές."
+      ]
+    },
+    {
+      "id": "st-44",
+      "topic": "Καθορισμός συσκευής GBTS ανά άσκηση",
+      "requirement": "Στα Αναλυτικά Προγράμματα των Σταδίων Εκπαίδευσης πρέπει να περιγράφεται η συσκευή του GBTS στην οποία δύναται να πραγματοποιηθεί η κάθε άσκηση.",
+      "verbatim": "16. Στα Αναλυτικά Προγράμματα των Σταδίων Εκπαίδευσης να περιγράφεται η συσκευή του GBTS στο οποίο δύναται να πραγματοποιηθεί η κάθε άσκηση.",
+      "values": {
+        "requirement": "each exercise must state its permissible GBTS device"
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 39,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 16"
+      },
+      "links": [
+        "st-01",
+        "st-02",
+        "st-62"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-45",
+      "topic": "Πτήσεις ΕΠΑΝΑΛΗΨΗΣ στο F/S — γενικός κανόνας (έως 3 ανά Στάδιο)",
+      "requirement": "Κάθε μαθητής δύναται να πετάξει έως 3 πτήσεις επανάληψης στο F/S, ανά Στάδιο εκπαίδευσης, μη βαθμολογούμενες, κατά την κρίση του Διοικητή Μοίρας.",
+      "verbatim": "17. Κάθε μαθητής δύναται να πετάξει έως 3 πτήσεις επανάληψης στο F/S, ανά Στάδιο εκπαίδευσης, μη βαθμολογούμενες, κατά την κρίση του Δκτή Μοίρας.",
+      "values": {
+        "max_repeat_fs_sorties_per_stage": 3,
+        "graded": false,
+        "approval": "Διοικητής Μοίρας"
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 39,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 17"
+      },
+      "links": [
+        "st-46",
+        "st-55",
+        "ft-119",
+        "fail-42"
+      ],
+      "flags": [
+        "ΑΝΤΙΦΑΣΗ με 3-01 Κεφ.2 παρ.53 (PDF 61) που για το ΒΑΣΙΚΟ Στάδιο (Phase II) ορίζει «έως 5 πτήσεις ΕΠΑΝΑΛΗΨΗΣ στο F/S». Η παρ.32δ(5)(ζ) (PDF 56) παραπέμπει στην «παρ. 17 (Phase II)», ενισχύοντας τη σύγχυση: η παρ.17 είναι γενική, ενώ η ειδική για Phase II είναι η παρ.53."
+      ]
+    },
+    {
+      "id": "st-46",
+      "topic": "Πτήσεις ΕΠΑΝΑΛΗΨΗΣ στο F/S — Phase II (έως 5)",
+      "requirement": "Ειδικά για το Βασικό Στάδιο (Phase II): κάθε μαθητής δύναται να πετάξει έως 5 πτήσεις ΕΠΑΝΑΛΗΨΗΣ στο F/S, μη βαθμολογούμενες (μη συμπεριλαμβανομένων των πτήσεων ΕΠΑΝΑΛΗΨΗΣ λόγω απώλειας διαθεσιμότητας), κατά την κρίση του Δκτή Μοίρας.",
+      "verbatim": "53. Κάθε μαθητής δύναται να πετάξει έως 5 πτήσεις ΕΠΑΝΑΛΗΨΗΣ στο F/S, μη βαθμολογούμενες (μη συμπεριλαμβανομένων των πτήσεων ΕΠΑΝΑΛΗΨΗΣ λόγω απώλειας διαθεσιμότητας), κατά την κρίση του Δκτή Μοίρας.",
+      "values": {
+        "max_repeat_fs_sorties_phase_II": 5,
+        "graded": false,
+        "excluded_from_count": "repeat sorties due to loss of currency (απώλεια διαθεσιμότητας)",
+        "approval": "Διοικητής Μοίρας",
+        "comparison_other_phases": {
+          "phase_III": 2,
+          "phase_IV": 3
+        }
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 61,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, ΒΑΣΙΚΟ ΣΤΑΔΙΟ (PHASE II), «Ειδικές Οδηγίες», παρ. 53"
+      },
+      "links": [
+        "st-45",
+        "st-55",
+        "st-60",
+        "ft-120",
+        "fail-41"
+      ],
+      "flags": [
+        "ΑΝΤΙΦΑΣΗ με παρ.17 (έως 3 ανά Στάδιο). Οι τιμές 2 (Phase III) και 3 (Phase IV) της παρ.76 (PDF 68) είναι επίσης ασύμβατες με το «έως 3 ανά Στάδιο» της παρ.17."
+      ]
+    },
+    {
+      "id": "st-47",
+      "topic": "Simulator Sickness — παραπομπή σε Αναλυτικά Προγράμματα",
+      "requirement": "Οδηγίες για την εκπαίδευση στο F/S και την εξοικείωση με το Α/Φ δίδονται στα αντίστοιχα Αναλυτικά Προγράμματα εκπαίδευσης των Α/Φ Τ-6 και M-346, όπου θα γίνεται αναφορά και στα συμπτώματα Κινήτωσης (Simulator Sickness).",
+      "verbatim": "18. Οδηγίες για την εκπαίδευση στο F/S και την εξοικείωση με το Α/Φ δίδονται στα αντίστοιχα Αναλυτικά Προγράμματα εκπαίδευσης των Α/Φ Τ-6 και M-346, όπου θα γίνεται αναφορά και στα συμπτώματα Κινήτωσης (Simulator Sickness).",
+      "values": {
+        "topic": "Simulator Sickness",
+        "delegated_to": "Αναλυτικά Προγράμματα Τ-6 / M-346"
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 39,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 18"
+      },
+      "links": [
+        "st-09"
+      ],
+      "flags": [
+        "ΚΕΝΟ: το Syllabus Phase II 2025 (PART III §12–§13) ΔΕΝ περιέχει καμία αναφορά σε Simulator Sickness / Κινήτωση, παρότι η 3-01 παρ.18 το απαιτεί ρητά."
+      ]
+    },
+    {
+      "id": "st-48",
+      "topic": "Μέγιστες ημερήσιες έξοδοι — «ΠΡΟ ΜΟΝΟΣ» φάση",
+      "requirement": "Κατά την «ΠΡΟ ΜΟΝΟΣ» φάση στο Βασικό (Phase II) Στάδιο, ο μαθητής δύναται να πραγματοποιεί: (1) μία έξοδο με Α/Φ και μία στο F/S (πλην της περίπτωσης που η έξοδος αυτή ματαιώνεται στον αέρα λόγω καιρού ή βλάβης Α/Φ και λογίζεται ΑΔΕ), ή (2) δύο εξόδους στο F/S.",
+      "verbatim": "α. Κατά την «ΠΡΟ ΜΟΝΟΣ» φάση, στο Βασικό (Phase II) και στο Προκεχωρημένο (Phase III) Στάδιο, ο μαθητής δύναται να πραγματοποιεί: (1) Μία έξοδο με Α/Φ και μία στο F/S (πλην της περίπτωσης που η έξοδος αυτή ματαιώνεται στον αέρα λόγω καιρού ή βλάβης Α/Φ και λογίζεται ΑΔΕ). (2) Δύο εξόδους στο F/S.",
+      "values": {
+        "phase": "PRE-SOLO",
+        "option_1": {
+          "ac_sorties": 1,
+          "fs_sorties": 1
+        },
+        "option_2": {
+          "ac_sorties": 0,
+          "fs_sorties": 2
+        },
+        "fs_devices_covered": [
+          "UTD",
+          "OFT",
+          "PTT",
+          "FTD",
+          "SBT",
+          "FMS"
+        ]
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 43,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, «Πλαίσιο Απασχόλησης Μαθητών», παρ. 23α"
+      },
+      "links": [
+        "st-49",
+        "st-50",
+        "st-51",
+        "ft-110",
+        "fail-84"
+      ],
+      "flags": [
+        "Το Syllabus §14.c(2) (PDF 165) δηλώνει «Up to “PRE-SOLO” phase, SP will be scheduled and fly maximum one (1) A/C and one (1) F/S sortie daily» — ΔΕΝ αναφέρει την εναλλακτική των ΔΥΟ εξόδων F/S που επιτρέπει η 3-01 παρ.23α(2). Πιθανή αντίφαση/παράλειψη."
+      ]
+    },
+    {
+      "id": "st-49",
+      "topic": "Μέγιστες ημερήσιες έξοδοι — Syllabus (Contact, μέχρι PRE-SOLO)",
+      "requirement": "Μέχρι τη φάση «PRE-SOLO», ο SP προγραμματίζεται και πετά το πολύ μία (1) έξοδο Α/Φ και μία (1) έξοδο F/S ημερησίως, εκτός από την περίπτωση ματαίωσης αποστολής μετά την απογείωση λόγω δυσμενούς καιρού ή βλάβης Α/Φ (MIC).",
+      "verbatim": "(2) Up to “PRE-SOLO” phase, SP will be scheduled and fly maximum one (1) A/C and one (1) F/S sortie daily, apart from the instance of an aborting mission, after becoming airborne, due to adverse weather or A/C malfunction (MIC).",
+      "values": {
+        "phase": "up to PRE-SOLO",
+        "max_ac_sorties_daily": 1,
+        "max_fs_sorties_daily": 1,
+        "exception": "aborted mission after becoming airborne (adverse weather or A/C malfunction — MIC)"
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 165,
+        "ref": "PART IV §14.c(2) CONTACT CATEGORY SPECIAL INSTRUCTIONS"
+      },
+      "links": [
+        "st-48",
+        "ft-38"
+      ],
+      "flags": [
+        "Βλ. flag st-48: η 3-01 παρ.23α(2) επιτρέπει επιπλέον τον συνδυασμό «δύο εξόδους στο F/S», τον οποίο το Syllabus δεν προβλέπει."
+      ]
+    },
+    {
+      "id": "st-50",
+      "topic": "Μέγιστες ημερήσιες έξοδοι — «ΜΕΤΑ ΜΟΝΟΣ» φάση (επίσπευση)",
+      "requirement": "Εφόσον κριθεί αναγκαία η επίσπευση των Προγραμμάτων Εκπαίδευσης πέραν του εκτιμώμενου από την Έκθεση Πέρατος χρόνου, στην «ΜΕΤΑ ΜΟΝΟΣ» φάση του Βασικού Σταδίου (Phase II) ο μαθητής δύναται να πραγματοποιεί ημερησίως: (1) δύο εξόδους Α/Φ και μία έξοδο F/S, ή (2) μία έξοδο με Α/Φ και δύο εξόδους F/S. Στους συνδυασμούς αυτούς περιλαμβάνεται μόνο μία νυχτερινή πτήση.",
+      "verbatim": "β. Σε περίπτωση που κριθεί αναγκαία η επίσπευση των Προγραμμάτων Εκπαίδευσης ... (1) Δύο εξόδους Α/Φ και μία έξοδο F/S. (2) Μία έξοδο με Α/Φ και δύο εξόδους F/S. γ. Στους ανωτέρω συνδυασμούς να περιλαμβάνεται μόνο μία νυχτερινή πτήση.",
+      "values": {
+        "phase": "POST-SOLO",
+        "condition": "acceleration beyond Έκθεση Πέρατος estimate",
+        "option_1": {
+          "ac_sorties": 2,
+          "fs_sorties": 1
+        },
+        "option_2": {
+          "ac_sorties": 1,
+          "fs_sorties": 2
+        },
+        "max_night_sorties": 1
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 43,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 23β και 23γ"
+      },
+      "links": [
+        "st-48",
+        "ft-111"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-51",
+      "topic": "Ελάχιστη διάρκεια απασχόλησης και ελάχιστο διάστημα μεταξύ εξόδων",
+      "requirement": "Η διάρκεια απασχόλησης κάθε μαθητή σε μία πτήση δεν μπορεί να είναι μικρότερη από 3 ώρες, ώστε να καλύπτονται οι φάσεις ενημέρωσης και απενημέρωσης. Μεταξύ 2 εξόδων του ίδιου μαθητή (με Α/Φ ή F/S ή συνδυασμό αυτών) παρεμβάλλεται κατ' ελάχιστο χρόνος 2 ωρών από την Π/Γ μέχρι την Α/Γ. Εξαιρέσεις: (1) όταν η πρώτη πτήση δεν ολοκληρώθηκε λόγω καιρού ή βλάβης Α/Φ και διήρκεσε λιγότερο από 30΄· (2) μεταξύ της πτήσης Αξιολόγησης για πρώτη πτήση «ΜΟΝΟΣ» και της πρώτης πτήσης «ΜΟΝΟΣ» του Βασικού Σταδίου (Phase II).",
+      "verbatim": "δ. Η διάρκεια απασχόλησης κάθε μαθητή σε μία πτήση ... Δεν μπορεί όμως να είναι μικρότερη από 3 ώρες ... ε. Μεταξύ 2 εξόδων του ίδιου μαθητή (με Α/Φ ή F/S ή συνδυασμό αυτών), να παρεμβάλλεται κατ’ ελάχιστο χρόνος 2 ωρών από την Π/Γ, μέχρι την Α/Γ.",
+      "values": {
+        "min_employment_hours_per_sortie": 3,
+        "min_hours_between_sorties": 2,
+        "applies_to": [
+          "A/C",
+          "F/S",
+          "combination"
+        ],
+        "exception_short_flight_minutes": 30
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 44,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 23δ και 23ε"
+      },
+      "links": [
+        "st-48",
+        "st-50",
+        "ft-113",
+        "fail-84"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-52",
+      "topic": "Μέγιστες κατηγορίες ασκήσεων ανά προγραμματισμό",
+      "requirement": "Κάθε μαθητής/εκπαιδευόμενος μπορεί να προγραμματίζεται σε δύο κατηγορίες ασκήσεων το μέγιστο (Α/Φ, F/S ή συνδυασμό και των δύο), ΜΗ συμπεριλαμβανομένης της εκπαίδευσης F/S στις κανονικές και διαδικασίες ανάγκης.",
+      "verbatim": "Τέλος, κάθε μαθητής / εκπαιδευόμενος μπορεί να προγραμματίζεται σε δύο κατηγορίες ασκήσεων το μέγιστο (Α/Φ, F/S ή συνδυασμό και των δύο, μη συμπεριλαμβανομένης της εκπαίδευσης F/S στις κανονικές και διαδικασίες ανάγκης).",
+      "values": {
+        "max_exercise_categories": 2,
+        "excluded_from_count": "F/S training in normal and emergency procedures"
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 24,
+        "ref": "ΚΕΦΑΛΑΙΟ 1, «Προγραμματισμός Πτήσεων», παρ. 16"
+      },
+      "links": [
+        "st-48",
+        "st-50"
+      ],
+      "flags": [
+        "Η εξαίρεση «εκπαίδευση F/S στις κανονικές και διαδικασίες ανάγκης» δεν αντιστοιχίζεται ρητά σε συγκεκριμένα Training Sections· πρακτικά αφορά τα C21XX/C23XX/C2501 (EP profiles) — δεν δηλώνεται στο κείμενο."
+      ]
+    },
+    {
+      "id": "st-53",
+      "topic": "Ημέρα πτήσης Αξιολόγησης — απαγόρευση δεύτερης εξόδου (και F/S)",
+      "requirement": "Μαθητής που προγραμματίζεται για πτήση Αξιολόγησης οποιασδήποτε κατηγορίας και σε οποιοδήποτε Στάδιο Εκπαίδευσης, ΔΕΝ θα πετάει άλλη έξοδο την ίδια ημέρα (πτήση ή F/S), προκειμένου να έχει επαρκή χρόνο για προετοιμασία.",
+      "verbatim": "θ. Μαθητής ή εκπαιδευόμενος που προγραμματίζεται για πτήση Αξιολόγησης οποιασδήποτε κατηγορίας και σε οποιοδήποτε Στάδιο Εκπαίδευσης, δεν θα πετάει άλλη έξοδο την ίδια ημέρα (πτήση ή F/S), προκειμένου να έχει επαρκή χρόνο για προετοιμασία.",
+      "values": {
+        "max_other_sorties_on_evaluation_day": 0,
+        "includes_fs": true
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 42,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 22θ"
+      },
+      "links": [
+        "st-48",
+        "st-49",
+        "st-50",
+        "ft-106",
+        "fail-17"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-54",
+      "topic": "Ενιαία βαθμολόγηση Αέρος και F/S — δύο βαθμολογίες ανά έξοδο",
+      "requirement": "Ο έλεγχος προόδου γίνεται με τη βαθμολογία στους ελιγμούς. Στα Φύλλα Βαθμολογίας δίδονται 2 ξεχωριστές βαθμολογίες σε κάθε πτήση: μία στον κάθε ελιγμό (Απόλυτη — σύγκριση με τα STANDARDS χωρίς να λαμβάνεται υπόψη η μέχρι τότε εκπαίδευση) και μία που αντικατοπτρίζει τη Γενική Απόδοση (Σχετική — αν η πρόοδος συμβαδίζει με την παρασχεθείσα εκπαίδευση). Ο κανόνας ισχύει ενιαία για τα Προγράμματα Αέρος ΚΑΙ F/S.",
+      "verbatim": "26. Βαθμολογίες στα Προγράμματα Αέρος και F/S. ... γ. Στα Φύλλα Βαθμολογίας των παραπάνω Σταδίων σε κάθε πτήση δίδονται 2 ξεχωριστές βαθμολογίες. Μία στον κάθε ελιγμό (Απόλυτη) και μία που αντικατοπτρίζει την Γενική Απόδοση (Σχετική).",
+      "values": {
+        "grades_per_sortie": 2,
+        "absolute": "per maneuver vs STANDARDS",
+        "relative": "General Performance vs training received",
+        "applies_to": [
+          "Αέρος",
+          "F/S"
+        ]
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 46,
+        "pages_pdf": [
+          46,
+          47
+        ],
+        "ref": "ΚΕΦΑΛΑΙΟ 2, «Κριτήρια Απόδοσης και Βαθμολογίες», παρ. 26 επικεφαλίδα και 26α (PDF 46)· παρ. 26γ «Στα Φύλλα Βαθμολογίας… 2 ξεχωριστές βαθμολογίες» (PDF 47)"
+      },
+      "links": [
+        "st-55",
+        "st-56",
+        "st-57",
+        "ft-149"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-55",
+      "topic": "Κώδικες Απόδοσης (Πίνακας 2) — ισχύουν και στο F/S",
+      "requirement": "Οι Κώδικες Απόδοσης χρησιμοποιούνται για τη βαθμολόγηση με τον απόλυτο τρόπο του έργου των μαθητών στην πτήση ΚΑΙ στο F/S, σε όλα τα στάδια: «Ε» = ουσιώδη σφάλματα που θέτουν σε κίνδυνο την ασφάλεια του Α/Φ / επικίνδυνη πτήση (τίθεται και σε επίδειξη ελιγμού)· «0» = δεν ολοκληρώνει το έργο χωρίς βοήθεια· «1» = ολοκληρώνει με σχετική βοήθεια (προφορικές υποδείξεις), διορθώνει με καθυστέρηση· «2» = μικρές ατέλειες, έγκαιρη διόρθωση· «3» = ΠΟΛΥ ΙΚΑΝΟΠΟΙΗΤΙΚΑ, ακριβής και ταχύς· «4» = ΕΞΑΙΡΕΤΟΣ, πάνω από τα επιθυμητά επίπεδα.",
+      "verbatim": "27. Κώδικες Απόδοσης Οι παρακάτω Κώδικες Απόδοσης χρησιμοποιούνται για τη βαθμολόγηση με τον απόλυτο τρόπο, του έργου των μαθητών στην πτήση και στο F/S. Εφαρμόζονται σε όλα τα στάδια εκπαίδευσης",
+      "values": {
+        "codes": [
+          "E",
+          "0",
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "codes_count": 6,
+        "E": "ουσιώδη σφάλματα / επικίνδυνη πτήση / επίδειξη ελιγμού",
+        "0": "δεν ολοκληρώνει χωρίς βοήθεια",
+        "1": "ολοκληρώνει με σχετική (προφορική) βοήθεια",
+        "2": "μικρές ατέλειες, έγκαιρη διόρθωση",
+        "3": "ΠΟΛΥ ΙΚΑΝΟΠΟΙΗΤΙΚΑ",
+        "4": "ΕΞΑΙΡΕΤΟΣ",
+        "applies_to": [
+          "πτήση",
+          "F/S"
+        ]
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 47,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 27 και Πίνακας 2 (PDF 48)"
+      },
+      "links": [
+        "st-54",
+        "st-56",
+        "st-62",
+        "ft-151"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-56",
+      "topic": "Βαθμολογία Γενικής Απόδοσης — εκατοστιαία κλίμακα (πτήση και F/S)",
+      "requirement": "Η Γενική απόδοση στην πτήση ΚΑΙ στο F/S βαθμολογείται, σύμφωνα με το ΠΔ 151/13 όπως ισχύει, με την εκατοστιαία κλίμακα: «Α» Άριστα 90%-100%· «ΛΚ» Λίαν Καλώς 75%-89%· «Κ» Καλώς 60%-74%· «ΣΚ» Σχεδόν Καλώς 50%-59%· «Ε» ΑΠΟΤΥΧΩΝ 0%-49%.",
+      "verbatim": "29. Βαθμολογία Γενικής Απόδοσης. Η Γενική απόδοση στην πτήση και στο F/S βαθμολογείται, σύμφωνα με το ΠΔ 151/13 όπως ισχύει, με την εκατοστιαία κλίμακα, ως εξής: α. «Α» Άριστα (Βαθμολογία 90%-100%). ... β. «ΛΚ» Λίαν Καλώς (Βαθμολογία 75%-89%). ... γ. «Κ» Καλώς (Βαθμολογία 60%-74%). ... δ. «ΣΚ» Σχεδόν Καλώς (Βαθμολογία 50%-59%). ... ε. «Ε» ΑΠΟΤΥΧΩΝ (Βαθμολογία 0%-49%).",
+      "values": {
+        "scale": {
+          "Α_Άριστα": [
+            90,
+            100
+          ],
+          "ΛΚ_Λίαν_Καλώς": [
+            75,
+            89
+          ],
+          "Κ_Καλώς": [
+            60,
+            74
+          ],
+          "ΣΚ_Σχεδόν_Καλώς": [
+            50,
+            59
+          ],
+          "Ε_ΑΠΟΤΥΧΩΝ": [
+            0,
+            49
+          ]
+        },
+        "legal_basis": "ΠΔ 151/13",
+        "applies_to": [
+          "πτήση",
+          "F/S"
+        ]
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 50,
+        "pages_pdf": [
+          50,
+          51
+        ],
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 29 — επικεφαλίδα και 29α-29γ «Α»/«ΛΚ»/«Κ» (PDF 50)· 29δ «ΣΚ» 50%-59% και 29ε «Ε» 0%-49% (PDF 51)"
+      },
+      "links": [
+        "st-54",
+        "st-57",
+        "st-59",
+        "st-60",
+        "fail-01"
+      ],
+      "flags": [
+        "Το «ΣΚ» ορίζεται 50%-59% ενώ πολλά κατώφλια (ΚΕΠΕ, μη-ΜΟΝΟΣ, παραπομπή) χρησιμοποιούν το «59% και κάτω» / «0%-59%», που καλύπτει ΚΑΙ το ΣΚ ΚΑΙ το Ε."
+      ]
+    },
+    {
+      "id": "st-57",
+      "topic": "Κανόνες Οπισθοδρόμησης (Πίνακας 3)",
+      "requirement": "Από τη στιγμή που ο μαθητής επιτύχει ένα επίπεδο απόδοσης σε ελιγμό/έργο/διαδικασία, πρέπει να το διατηρεί ή να το αυξάνει στην επόμενη ενότητα· διαφορετικά ΟΠΙΣΘΟΔΡΟΜΕΙ. Κανόνες: προβλεπόμενος κώδικας «1» → επιτευχθείς «Ε» = ΑΠΟΤΥΧΙΑ, «0» = ΥΣΤΕΡΗΣΗ· προβλεπόμενος «2» → «Ε» ή «0» = ΑΠΟΤΥΧΙΑ, «1» = ΥΣΤΕΡΗΣΗ· προβλεπόμενος «3» → «Ε», «0», «1» = ΑΠΟΤΥΧΙΑ, «2» = ΥΣΤΕΡΗΣΗ. Δεν αποτελεί οπισθοδρόμηση όταν ο μαθητής επιτύχει κώδικα μεγαλύτερο του προβλεπόμενου ΠΑΠ και στη συνέχεια επανέλθει στα προβλεπόμενα επίπεδα.",
+      "verbatim": "ΚΑΝΟΝΕΣ ΟΠΙΣΘΟΔΡΟΜΗΣΗΣ ΠΡΟΒΛΕΠ. ΚΩΔΙΚΑΣ ΕΛΙΓΜΟΥ / ΕΠΙΤΕΥΧΘΕΙΣ ΚΩΔΙΚΑΣ ΑΠΟΔΟΣΗΣ / ΒΑΘΜΟΛΟΓΗΣΗ: «1» «Ε» ΑΠΟΤΥΧΙΑ, «0» ΥΣΤΕΡΗΣΗ· «2» «Ε» ή «0» ΑΠΟΤΥΧΙΑ, «1» ΥΣΤΕΡΗΣΗ· «3» «Ε», «0», «1» ΑΠΟΤΥΧΙΑ, «2» ΥΣΤΕΡΗΣΗ",
+      "values": {
+        "rules": [
+          {
+            "required": "1",
+            "achieved": [
+              "E"
+            ],
+            "result": "ΑΠΟΤΥΧΙΑ"
+          },
+          {
+            "required": "1",
+            "achieved": [
+              "0"
+            ],
+            "result": "ΥΣΤΕΡΗΣΗ"
+          },
+          {
+            "required": "2",
+            "achieved": [
+              "E",
+              "0"
+            ],
+            "result": "ΑΠΟΤΥΧΙΑ"
+          },
+          {
+            "required": "2",
+            "achieved": [
+              "1"
+            ],
+            "result": "ΥΣΤΕΡΗΣΗ"
+          },
+          {
+            "required": "3",
+            "achieved": [
+              "E",
+              "0",
+              "1"
+            ],
+            "result": "ΑΠΟΤΥΧΙΑ"
+          },
+          {
+            "required": "3",
+            "achieved": [
+              "2"
+            ],
+            "result": "ΥΣΤΕΡΗΣΗ"
+          }
+        ]
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 52,
+        "pages_pdf": [
+          51,
+          52
+        ],
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 30α και 30β (PDF 51)· Πίνακας 3 «ΚΑΝΟΝΕΣ ΟΠΙΣΘΟΔΡΟΜΗΣΗΣ» και παρ. 30γ (PDF 52)"
+      },
+      "links": [
+        "st-55",
+        "st-59",
+        "st-60",
+        "fail-02",
+        "fail-03"
+      ],
+      "flags": [
+        "Ο Πίνακας 3 δεν καλύπτει προβλεπόμενο κώδικα «4» ούτε «0» — δεν ορίζεται οπισθοδρόμηση για αυτά."
+      ]
+    },
+    {
+      "id": "st-58",
+      "topic": "ΠΑΠ / MIF — κανόνες επίτευξης κωδίκων ανά ενότητα",
+      "requirement": "Οι αναγραφόμενοι Κώδικες πρέπει να επιτυγχάνονται έως την τελευταία έξοδο της ενότητας, διαφορετικά δεν υπάρχει πρόοδος. Ο Κώδικας που επιτεύχθηκε στην τελευταία πτήση μιας ενότητας αποτελεί τον ελάχιστο Κώδικα της πρώτης εξόδου της επόμενης στον ίδιο ελιγμό. Στην πρώτη πτήση κάθε κατηγορίας ασκήσεων ο ελάχιστος Κώδικας για καινούργιο ελιγμό είναι «Ε» εφόσον έγινε μόνο επίδειξη/διδασκαλία· εφόσον γίνεται και εξάσκηση, βαθμολογείται τουλάχιστον με «0». Όταν στο τέλος της ενότητας απαιτείται «1», ο ελάχιστος κώδικας στις προηγούμενες εξόδους είναι «0». Όταν απαιτούνται δύο κώδικες πάνω από τον ελάχιστο της πρώτης εξόδου (π.χ. από «0» σε «2»), ο «0» ισχύει για τις μισές εξόδους της ενότητας (δεν προσμετρούνται η τελευταία και η πρώτη εφόσον βαθμολογήθηκε «E»)· σε μονό αριθμό εξόδων ο κώδικας ισχύει για τις περισσότερες εξόδους, ενώ για τις υπόλοιπες έως την προτελευταία ισχύει ο «1».",
+      "verbatim": "γ. Οι αναγραφόμενοι Κώδικες πρέπει να επιτυγχάνονται έως την τελευταία έξοδο της ενότητας διαφορετικά δεν υπάρχει πρόοδος. δ. Ο Κώδικας που έχει επιτύχει ο μαθητής στην τελευταία πτήση μιας ενότητας αποτελεί τον ελάχιστο Κώδικα που πρέπει να επιτύχει στη πρώτη έξοδο της επόμενης στον ίδιο ελιγμό. ε. Στην πρώτη πτήση κάθε κατηγορίας ασκήσεων ο ελάχιστος Κώδικας Απόδοσης για έναν καινούργιο ελιγμό είναι «Ε» εφόσον έγινε μόνο επίδειξη / διδασκαλία. Εφόσον γίνεται και εξάσκηση του μαθητή στον ελιγμό βαθμολογείται τουλάχιστον με «0».",
+      "values": {
+        "min_code_new_maneuver_demo_only": "E",
+        "min_code_new_maneuver_practiced": "0",
+        "carryover": "last sortie code of a unit = minimum for first sortie of next unit (same maneuver)",
+        "half_sorties_rule": "code «0» valid for half the unit's sorties (excluding last, and first if graded «E»)",
+        "odd_number_rule": "code valid for the majority of sorties; «1» for the rest up to the penultimate"
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 49,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 28α–28η"
+      },
+      "links": [
+        "st-55",
+        "st-57",
+        "st-59",
+        "st-62"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-59",
+      "topic": "Ελάχιστος Κώδικας «2» για ασφαλή εκτέλεση",
+      "requirement": "Ως ελάχιστος Κώδικας Επίδοσης για την ασφαλή εκτέλεση ενός ελιγμού, έργου ή διαδικασίας ορίζεται ο Κώδικας «2», μιας και η επίτευξή του επιτρέπει την εκτέλεσή τους από τον μαθητή σε πτήση «ΜΟΝΟΣ». Το επίπεδο αυτό θεωρείται ιδιαίτερα σημαντικό.",
+      "verbatim": "θ. Ως ελάχιστος Κώδικας Επίδοσης για την ασφαλή εκτέλεση ενός ελιγμού, έργου ή διαδικασίας, ορίζεται ο Κώδικας «2» μιας και η επίτευξή του επιτρέπει την εκτέλεσή τους από τον μαθητή σε πτήση «ΜΟΝΟΣ». Το επίπεδο αυτό θεωρείται ιδιαίτερα σημαντικό.",
+      "values": {
+        "min_safe_code": "2",
+        "enables": "SOLO execution of the maneuver"
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 50,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 28θ"
+      },
+      "links": [
+        "st-55",
+        "st-57",
+        "st-58",
+        "ft-29",
+        "ft-51",
+        "ft-54",
+        "ft-55",
+        "ft-91"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-60",
+      "topic": "ΥΣΤΕΡΗΣΗ/ΑΠΟΤΥΧΙΑ σε έξοδο F/S — άμεσες συνέπειες",
+      "requirement": "Μαθητής που βαθμολογήθηκε με «ΥΣΤΕΡΗΣΗ» ή «ΑΠΟΤΥΧΙΑ» σε οποιαδήποτε πτήση στο Α/Φ ή στο F/S, ΔΕΝ θα ίπταται άλλη πτήση την ίδια μέρα στο Α/Φ ή στο F/S. Την επόμενη εργάσιμη μέρα προγραμματίζεται, στο Α/Φ ή στο F/S αντίστοιχα, για την επόμενη άσκηση της ίδιας ενότητας, στην οποία επαναλαμβάνει ΟΛΟΥΣ τους ελιγμούς και τις διαδικασίες που ΥΣΤΕΡΗΣΕ ή ΑΠΕΤΥΧΕ.",
+      "verbatim": "ε. Μαθητής που βαθμολογήθηκε με «ΥΣΤΕΡΗΣΗ» ή «ΑΠΟΤΥΧΙΑ» σε οποιαδήποτε πτήση στο Α/Φ ή στο F/S, δεν θα ίπταται άλλη πτήση την ίδια μέρα στο Α/Φ ή στο F/S. Την επόμενη εργάσιμη μέρα να προγραμματίζεται, στο Α/Φ ή στο F/S αντίστοιχα, για την επόμενη άσκηση της ίδιας ενότητας, στην οποία να επαναλαμβάνει όλους τους ελιγμούς και τις διαδικασίες που ΥΣΤΕΡΗΣΕ ή ΑΠΕΤΥΧΕ.",
+      "values": {
+        "same_day_additional_sorties": 0,
+        "reschedule": "next working day",
+        "device": "same medium (A/C or F/S)",
+        "repeat_scope": "all failed/deficient maneuvers and procedures"
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 52,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 30ε"
+      },
+      "links": [
+        "st-56",
+        "st-57",
+        "st-61",
+        "st-63",
+        "fail-10"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-61",
+      "topic": "ΥΣΤΕΡΗΣΗ/ΑΠΟΤΥΧΙΑ στην ΤΕΛΕΥΤΑΙΑ έξοδο ενότητας F/S — κλιμάκωση",
+      "requirement": "Μαθητής που βαθμολογήθηκε με «ΥΣΤΕΡΗΣΗ» ή «ΑΠΟΤΥΧΙΑ» στην τελευταία πτήση της ενότητας στο F/S, επαναλαμβάνει την άσκηση στο F/S. Εφόσον κριθεί ΕΠΙΤΥΧΩΝ, συνεχίζει την πτητική του εκπαίδευση. Σε περίπτωση ΝΕΑΣ ΥΣΤΕΡΗΣΗΣ ή ΑΠΟΤΥΧΙΑΣ στο F/S, προγραμματίζεται για πτήση στο F/S μετά από 2 ημερολογιακές ημέρες (μη συμπεριλαμβανομένης της ημέρας που ΥΣΤΕΡΗΣΕ ή ΑΠΕΤΥΧΕ). Εφόσον κριθεί ΕΠΙΤΥΧΩΝ συνεχίζει· σε περίπτωση νέας ΥΣΤΕΡΗΣΗΣ ή ΑΠΟΤΥΧΙΑΣ εφαρμόζεται το ΠΔ 29/2020 κατά περίπτωση.",
+      "verbatim": "στ. Μαθητής που βαθμολογήθηκε με «ΥΣΤΕΡΗΣΗ» ή «ΑΠΟΤΥΧΙΑ» στην τελευταία πτήση της ενότητας στο F/S, να επαναλαμβάνει την άσκηση στο F/S. Εφόσον κριθεί ΕΠΙΤΥΧΩΝ, να συνεχίζει την Πτητική του εκπαίδευση. Σε περίπτωση νέας ΥΣΤΕΡΗΣΗΣ ή ΑΠΟΤΥΧΙΑΣ στο F/S, να προγραμματίζεται για πτήση στο F/S, μετά από 2 ημερολογιακές ημέρες (μη συμπεριλαμβανομένης της ημέρας που ΥΣΤΕΡΗΣΕ ή ΑΠΕΤΥΧΕ). Εφόσον κριθεί ΕΠΙΤΥΧΩΝ, να συνεχίζει την Πτητική του εκπαίδευση. Σε περίπτωση νέας ΥΣΤΕΡΗΣΗΣ ή ΑΠΟΤΥΧΙΑΣ, να εφαρμόζεται το ΠΔ 29/2020 κατά περίπτωση.",
+      "values": {
+        "attempt_1": "repeat exercise in F/S",
+        "attempt_2_delay_calendar_days": 2,
+        "attempt_3_outcome": "ΠΔ 29/2020",
+        "total_failures_before_PD": 3,
+        "medium": "F/S"
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 52,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 30στ"
+      },
+      "links": [
+        "st-58",
+        "st-60",
+        "st-64",
+        "st-65",
+        "fail-11"
+      ],
+      "flags": [
+        "ΔΙΑΦΟΡΑ ΑΠΟ ΤΟΝ ΑΕΡΑ: για την τελευταία πτήση ενότητας ΑΕΡΟΣ (παρ. 30ζ) προβλέπεται Εξέταση Καταλληλότητας με Αξιολογητή Μοίρας, ΕΝΩ για το F/S προβλέπεται απλή επανάληψη της άσκησης χωρίς Αξιολογητή."
+      ]
+    },
+    {
+      "id": "st-62",
+      "topic": "Πίνακες MIF F/S — δομή και MEANS OF TRAINING ανά Training Section",
+      "requirement": "Υπάρχουν τέσσερις (4) πίνακες MIF ειδικά για F/S: CONTACT (F/S) PDF 91 — 8 στήλες (B1001-02, C1101, C2101, C2201-02, C2301-02, C2401-03, C2501-03, C2601-04), 41 items, MEANS: OFU/OF/OFU/OFP/OFU/OFP/OFU/OFP· INSTRUMENT (F/S) PDF 94 — 6 στήλες (I3101-02, I3201-03, I3301-04, I3401-04, I3501-04, I3601), 34 items, MEANS: A/A/A/A/A/OFP· FORMATION (F/S) PDF 96 — 2 στήλες (F3101-2, F3201-3), 38 items σε 3 ομάδες (LEADER/WINGMAN/GENERAL), MEANS: OFP/OFP· NAVIGATION (F/S) PDF 98 — 3 στήλες (N2101, N2201-02, N2301-04), 26 items, MEANS: OFP/OFP/OFP. Καμία στήλη checkride δεν υπάρχει στους πίνακες F/S· η γραμμή SORTIES (D/S) δίνει πάντα SOLO = 0.",
+      "verbatim": "a. Performance Standards (MIF) consist of maneuver lists in every Training Exercise, with the corresponding performance code for every Training Section or Exercise. b. Performance standards indicate SP’s progress in each Training Section, as well as the qualitative requirements of training.",
+      "values": {
+        "fs_mif_tables": 4,
+        "contact_fs": {
+          "page_pdf": 91,
+          "columns": 8,
+          "items": 41,
+          "sections": [
+            "B1001-02",
+            "C1101",
+            "C2101",
+            "C2201-02",
+            "C2301-02",
+            "C2401-03",
+            "C2501-03",
+            "C2601-04"
+          ],
+          "means": [
+            "OFU",
+            "OF",
+            "OFU",
+            "OFP",
+            "OFU",
+            "OFP",
+            "OFU",
+            "OFP"
+          ]
+        },
+        "instrument_fs": {
+          "page_pdf": 94,
+          "columns": 6,
+          "items": 34,
+          "sections": [
+            "I3101-02",
+            "I3201-03",
+            "I3301-04",
+            "I3401-04",
+            "I3501-04",
+            "I3601"
+          ],
+          "means": [
+            "A",
+            "A",
+            "A",
+            "A",
+            "A",
+            "OFP"
+          ]
+        },
+        "formation_fs": {
+          "page_pdf": 96,
+          "columns": 2,
+          "items": 38,
+          "groups": [
+            "LEADER",
+            "WINGMAN",
+            "GENERAL"
+          ],
+          "sections": [
+            "F3101-2",
+            "F3201-3"
+          ],
+          "means": [
+            "OFP",
+            "OFP"
+          ]
+        },
+        "navigation_fs": {
+          "page_pdf": 98,
+          "columns": 3,
+          "items": 26,
+          "sections": [
+            "N2101",
+            "N2201-02",
+            "N2301-04"
+          ],
+          "means": [
+            "OFP",
+            "OFP",
+            "OFP"
+          ]
+        },
+        "solo_sorties_in_fs": 0,
+        "checkride_columns_in_fs": 0
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 90,
+        "ref": "§8. PERFORMANCE STANDARDS (MIF) — πίνακες PDF 91, 94, 96, 98"
+      },
+      "links": [
+        "st-02",
+        "st-03",
+        "st-21",
+        "st-22",
+        "st-55",
+        "st-58"
+      ],
+      "flags": [
+        "ΑΣΥΜΦΩΝΙΑ MEANS OF TRAINING vs κείμενο §13.d σε ΔΥΟ Sections: (α) B10XX — κείμενο «UTD or in the A/C», MIF «OFU»· (β) C11XX — κείμενο «PTT/OFT/FTD», MIF «OF» (χωρίς P). Όλα τα υπόλοιπα 17 Sections συμφωνούν.",
+        "Οι πίνακες MIF (PDF 91-99) είναι ενσωματωμένες ΕΙΚΟΝΕΣ χωρίς text layer — τα δεδομένα προέρχονται από οπτική ανάγνωση (recon mif_tables.json), όχι από εξαγωγή κειμένου.",
+        "Στον NAVIGATION (F/S) εμφανίζεται «*» σε κελιά (items 3, 15, 17, 18, 19) χωρίς τυπωμένη επεξήγηση στη σελίδα 98 — η επεξήγηση υπάρχει μόνο στη σελ. 99 (NAVIGATION / T-6A)."
+      ]
+    },
+    {
+      "id": "st-63",
+      "topic": "Παρεμβαλλόμενη μη εκτελεσθείσα έξοδος F/S μετά από αποτυχία πτήσης",
+      "requirement": "Στην περίπτωση όπου μεταξύ της πτήσης στην οποία ΑΠΕΤΥΧΕ ή ΥΣΤΕΡΗΣΕ ο μαθητής και της επόμενης παρεμβάλλεται από το διάγραμμα ροής έξοδος στο F/S η οποία δεν έχει εκτελεστεί, ο μαθητής προγραμματίζεται την επόμενη ημέρα για την έξοδο στο F/S και τη μεθεπόμενη για την πτήση με το Α/Φ. Σε περίπτωση νέας ΥΣΤΕΡΗΣΗΣ ή ΑΠΟΤΥΧΙΑΣ στην ίδια κατηγορία ασκήσεων, προγραμματίζεται την επόμενη εργάσιμη ημέρα ή εφαρμόζεται το ΠΔ 29/2020 κατά περίπτωση.",
+      "verbatim": "(2) Στην περίπτωση όπου μεταξύ της πτήσης, στην οποία ΑΠΕΤΥΧΕ ή ΥΣΤΕΡΗΣΕ ο μαθητής και στην επόμενη, παρεμβάλλεται από το διάγραμμα ροής έξοδος στο F/S η οποία δεν έχει εκτελεστεί, να προγραμματίζεται την επόμενη ημέρα για την έξοδο στο F/S και τη μεθεπόμενη για την πτήση με το Α/Φ.",
+      "values": {
+        "day_plus_1": "F/S sortie",
+        "day_plus_2": "A/C flight",
+        "baseline_rule": "χωρίς παρεμβαλλόμενο F/S: επαναπρογραμματισμός τη μεθεπόμενη εργάσιμη στην ίδια κατηγορία"
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 52,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 30δ(1) και 30δ(2)"
+      },
+      "links": [
+        "st-60",
+        "st-61",
+        "fail-08",
+        "fail-09"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-64",
+      "topic": "Παραπομπή σε κρίση Πτητικής Καταλληλότητας — κριτήρια F/S (Phase II)",
+      "requirement": "Μαθητής του Βασικού Σταδίου (Phase II) παραπέμπεται για κρίση Πτητικής Καταλληλότητας σύμφωνα με το ΠΔ 29/2020 εάν κατά την εκπαίδευση στον εξομοιωτή πτήσεων (F/S) βαθμολογηθεί: (1) μετά τις 3 πρώτες εξόδους του σταδίου και σε 3 συνεχόμενες πτήσεις με βαθμολογία από 0% έως 59%· ή (2) στο 20% των πτήσεων του σταδίου και όχι σε λιγότερες από 3, με βαθμολογία από 0% έως 59%.",
+      "verbatim": "ε. Εάν κατά την εκπαίδευση στον εξομοιωτή πτήσεων (F/S), βαθμολογηθεί: (1) Μετά τις 3 πρώτες εξόδους του σταδίου και σε 3 συνεχόμενες πτήσεις με βαθμολογία από 0% έως 59%. (2) Στο 20% των πτήσεων του σταδίου και όχι σε λιγότερες από 3 με βαθμολογία από 0% έως 59%.",
+      "values": {
+        "criterion_1": {
+          "after_first_sorties": 3,
+          "consecutive_sorties": 3,
+          "grade_range_percent": [
+            0,
+            59
+          ]
+        },
+        "criterion_2": {
+          "percent_of_stage_sorties": 20,
+          "min_sorties": 3,
+          "grade_range_percent": [
+            0,
+            59
+          ]
+        },
+        "legal_basis": "ΠΔ 29/2020"
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 62,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, «Κριτήρια Επιτυχίας Μαθητών Βασικού Σταδίου (Phase II)», παρ. 58ε"
+      },
+      "links": [
+        "st-06",
+        "st-56",
+        "st-61",
+        "st-65",
+        "st-66"
+      ],
+      "flags": [
+        "Η βάση υπολογισμού του «20% των πτήσεων του σταδίου» δεν προσδιορίζεται: 48 (Syllabus §13a) ή 46 (3-01 Πίνακας 1) έξοδοι F/S — 20% δίνει 9,6 ή 9,2 αντίστοιχα. Βλ. st-06/st-07.",
+        "Δεν διευκρινίζεται αν οι μη βαθμολογούμενες πτήσεις ΕΠΑΝΑΛΗΨΗΣ (st-45/st-46) και οι έξοδοι επαναδιάθεσης (st-68) προσμετρώνται στον παρονομαστή."
+      ]
+    },
+    {
+      "id": "st-65",
+      "topic": "Διαδοχικές αποτυχίες σε πτήσεις ή GBTS — εφαρμογή ΠΔ",
+      "requirement": "Σε περίπτωση που ο SP αποτύχει διαδοχικά σε πτήσεις ή στην εκπαίδευση GBTS, εφαρμόζονται οι σχετικές διαταγές (Προεδρικό Διάταγμα).",
+      "verbatim": "e. In case that SP fails consecutively at flights or GBTS training, the appropriate orders (Presidential Decree) will apply.",
+      "values": {
+        "trigger": "consecutive failures at flights or GBTS training",
+        "consequence": "Presidential Decree applies"
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 101,
+        "ref": "§9. GENERAL DIRECTIVES, παρ. e"
+      },
+      "links": [
+        "st-61",
+        "st-64"
+      ],
+      "flags": [
+        "Το Syllabus δεν ποσοτικοποιεί το «consecutively» ούτε ονομάζει το ΠΔ· η ποσοτικοποίηση δίνεται μόνο στην 3-01 παρ.58ε (st-64) με παραπομπή στο ΠΔ 29/2020."
+      ]
+    },
+    {
+      "id": "st-66",
+      "topic": "Αναστολή δραστηριοτήτων F/S κατά την κρίση Πτητικής Καταλληλότητας",
+      "requirement": "Κατά το χρονικό διάστημα παραπομπής του μαθητή στο Συμβούλιο Πτητικής Ικανότητας για κρίση της Πτητικής του Καταλληλότητας (είτε για θεωρητική είτε για Πτητική Ανεπάρκεια), διακόπτονται ΟΛΕΣ οι δραστηριότητές του στη Μοίρα: πτήσεις με Α/Φ, πτήσεις στο F/S, μαθήματα – εξετάσεις εδάφους.",
+      "verbatim": "Κατά το χρονικό διάστημα παραπομπής του μαθητή στο Συμβούλιο Πτητικής Ικανότητας για κρίση της Πτητικής του Καταλληλότητας (είτε για θεωρητική είτε για Πτητική Ανεπάρκεια), να διακόπτονται όλες οι δραστηριότητές του στη Μοίρα (πτήσεις με Α/Φ, πτήσεις στο F/S, μαθήματα - εξετάσεις εδάφους).",
+      "values": {
+        "suspended_activities": [
+          "πτήσεις Α/Φ",
+          "πτήσεις F/S",
+          "μαθήματα εδάφους",
+          "εξετάσεις εδάφους"
+        ],
+        "legal_basis": "ΠΔ 29/2020",
+        "criteria_paragraphs_phase_II": "57-59"
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 53,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, «Κρίση Πτητικής Καταλληλότητας», παρ. 31"
+      },
+      "links": [
+        "st-64",
+        "st-65",
+        "gt-38",
+        "fail-61"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-67",
+      "topic": "ΚΕΠΕ — έναρξη λόγω βαθμολογίας σε έξοδο F/S",
+      "requirement": "Μαθητής τίθεται σε Κατάσταση Ειδικής Παρακολούθησης Εκπαίδευσης (ΚΕΠΕ) κατά την κρίση του Διοικητή Μοίρας ή του Α.Ε. εάν συντρέξει τουλάχιστον μία συνθήκη, μεταξύ των οποίων: σε οποιαδήποτε έξοδο αέρος (πλην περιπτώσεων ΑΕΡΟΝΑΥΤΙΑΣ / Περιστατικού Φυσιολογίας Πτήσεων) Ή F/S βαθμολογηθεί με 59% και κάτω· ή σε δύο συνεχόμενες πτήσεις (εκτός τελικών εξετάσεων και Δοκιμών Προόδου) βαθμολογηθεί με 63% και κάτω.",
+      "verbatim": "(1) Σε οποιαδήποτε έξοδο αέρος, πλην (περιπτώσεων ΑΕΡΟΝΑΥΤΙΑΣ, Περιστατικού Φυσιολογίας Πτήσεων) ή F/S βαθμολογηθεί με 59% και κάτω. (2) Σε δύο συνεχόμενες πτήσεις, εκτός των τελικών εξετάσεων και Δοκιμών Προόδου, βαθμολογηθεί με 63% και κάτω.",
+      "values": {
+        "threshold_single_sortie_percent": 59,
+        "threshold_two_consecutive_percent": 63,
+        "includes_fs": true,
+        "decision_authority": [
+          "Διοικητής Μοίρας",
+          "Α.Ε."
+        ]
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 54,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, «ΚΕΠΕ», παρ. 32β(1)-(2)"
+      },
+      "links": [
+        "st-56",
+        "st-68",
+        "st-69",
+        "gt-40",
+        "gt-41",
+        "fail-43",
+        "fail-44"
+      ],
+      "flags": []
+    },
+    {
+      "id": "st-68",
+      "topic": "ΚΕΠΕ — μέγιστος αριθμός εισόδων ανά κατηγορία F/S",
+      "requirement": "Μαθητής ενός Σταδίου μπορεί να εισέλθει σε ΚΕΠΕ το μέγιστο: δύο (2) φορές λόγω ΑΠΟΤΥΧΙΑΣ σε εξετάσεις εδάφους (γραπτές ή προφορικές)· δύο (2) φορές λόγω μειωμένης απόδοσης στην κατηγορία Προσαρμογής· και μία (1) φορά λόγω μειωμένης απόδοσης ανά κατηγορία για τις υπόλοιπες κατηγορίες ασκήσεων αέρος ΚΑΙ κατηγορίες F/S.",
+      "verbatim": "(3) Μία φορά λόγω μειωμένης απόδοσης ανά κατηγορία για τις υπόλοιπες κατηγορίες ασκήσεων αέρος και κατηγορίες F/S.",
+      "values": {
+        "max_entries_ground_exam_failure": 2,
+        "max_entries_adaptation_category": 2,
+        "max_entries_per_other_category": 1,
+        "includes_fs_categories": true
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 55,
+        "pages_pdf": [
+          54,
+          55
+        ],
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 32γ επικεφαλίδα και 32γ(1)-(2) → max_entries_ground_exam_failure / max_entries_adaptation_category (PDF 54)· παρ. 32γ(3) verbatim (PDF 55)"
+      },
+      "links": [
+        "st-67",
+        "st-69",
+        "gt-42",
+        "fail-45"
+      ],
+      "flags": [
+        "Δεν διευκρινίζεται αν οι «κατηγορίες F/S» μετρώνται χωριστά από τις ομώνυμες κατηγορίες αέρος (π.χ. F/S CONTACT vs CONTACT αέρος) — η διατύπωση «και κατηγορίες F/S» υποδηλώνει χωριστή μέτρηση αλλά δεν το δηλώνει ρητά."
+      ]
+    },
+    {
+      "id": "st-69",
+      "topic": "ΚΕΠΕ — μέτρα που αφορούν το F/S",
+      "requirement": "Τα μέτρα ΚΕΠΕ περιλαμβάνουν: (α) περιορισμό των ημερησίων εξόδων του μαθητή σε μία έξοδο συγκυβέρνησης Ή μία έξοδο F/S την ημέρα — ο μαθητής δύναται να πετάει πέραν της μίας εξόδου (αέρος ή F/S) μόνον εφόσον η δεύτερη έξοδος είναι πτήση «ΜΟΝΟΣ»· (β) περιορισμό του αριθμού των εκπαιδευτών· (γ) επιπρόσθετη θεωρητική εκπαίδευση. Επίσης, με σκοπό τη βελτίωση της απόδοσης, ο μαθητής δύναται να πετάξει μη βαθμολογούμενες πτήσεις ΕΠΑΝΑΛΗΨΗΣ στο F/S κατά κρίση του Διοικητή Μοίρας, στο πλαίσιο των αναφερομένων στην παρ. 17 (Phase II).",
+      "verbatim": "(α) Περιορισμό του αριθμού των εξόδων που θα εκτελεί ημερησίως ο μαθητής σε μία έξοδο συγκυβέρνησης ή μία έξοδο F/S την ημέρα. Ο μαθητής δύναται να πετάει πέραν της μιας εξόδου (αέρος ή F/S), μόνον εφόσον η δεύτερη έξοδος είναι πτήση «ΜΟΝΟΣ». ... (ζ) Με σκοπό τη βελτίωση της απόδοσής του, ο μαθητής δύναται να πετάξει μη βαθμολογούμενες πτήσεις ΕΠΑΝΑΛΗΨΗΣ στο F/S, κατά κρίση του Διοικητή της Μοίρας, στο πλαίσιο των αναφερόμενων στην παρ. 17 (Phase II) και παρ. 76 (Phase III και IV), του παρόντος ΚΕΦΑΛΑΙΟΥ.",
+      "values": {
+        "max_daily_sorties_in_KEPE": 1,
+        "exception": "second sortie allowed only if it is a SOLO flight",
+        "fs_repeat_sorties": "non-graded, per παρ. 17 (Phase II)",
+        "measures_count": 3
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 55,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 32δ(4)(α)-(γ) και 32δ(5)(ζ) (PDF 56)"
+      },
+      "links": [
+        "st-45",
+        "st-46",
+        "st-48",
+        "st-67",
+        "gt-43",
+        "fail-46",
+        "fail-47",
+        "fail-48",
+        "fail-49"
+      ],
+      "flags": [
+        "Η παρ. 32δ(5)(ζ) παραπέμπει ρητά στην «παρ. 17 (Phase II)» για τα όρια πτήσεων ΕΠΑΝΑΛΗΨΗΣ F/S (=3), ενώ η ειδική διάταξη Phase II είναι η παρ. 53 (=5). Ενισχύει την αντίφαση st-45/st-46."
+      ]
+    },
+    {
+      "id": "st-70",
+      "topic": "Συνεισφορά F/S στη Βαθμολογία Πτητικής Εκπαίδευσης Εδάφους (ΒΠΕΕ)",
+      "requirement": "Για την εξαγωγή της βαθμολογίας κάθε μαθήματος λαμβάνεται υπόψη και η πρακτική εξάσκηση στις συσκευές F/S. Κατά τον Πίνακα 6: στο μάθημα ΜΗΧ (Εφαρμοσμένη Μηχανική Πτήσης, συντ. 0,3) περιλαμβάνονται «F/S CONTACT» και «F/S FORMATION» μαζί με FF190, AE190, CO190, FO190, TACFOR90, B1001, B1002· στο μάθημα ΝΑΥΤ & ΕΝ.ΚΥΚΛ. (συντ. 0,3) περιλαμβάνονται «F/S INSTRUMENT» και «F/S NAVIGATION» μαζί με IN190, IN290, NA190, LNAV190. Ο τύπος: ΒΠΕΕ = 0,1 x (ΜΕΤ) + 0,3 x (ΣΥΣΤ) + 0,3 x (ΜΗΧ) + 0,3 x (ΝΑΥΤ. & ΕΝ.ΚΥΚΛ). Η συνολική Βαθμολογία Πτητικής Εκπαίδευσης: ΒΠΕ = 0,85 x (ΒΠΕΑ) + 0,15 x (ΒΠΕΕ).",
+      "verbatim": "64. Για την εξαγωγή της βαθμολογίας σε κάθε διδασκόμενο μάθημα να ληφθούν υπόψη οι επιδόσεις του μαθητή σε ερωτηματολόγια στο CBTS, ερωτηματολόγια Επαγγελματικών Θεμάτων (ΕΕΘ) καθώς επίσης και η πρακτική εξάσκηση στις συσκευές F/S. ... (ΒΠΕΕ) = 0,1 x (ΜΕΤ) + 0,3 x (ΣΥΣΤ) + 0,3 x (MHX) + 0,3 x (ΝΑΥΤ. & EN.ΚΥΚΛ) ... (ΒΠΕ) = 0,85 x (ΒΠΕΑ) + 0,15 (ΒΠΕΕ)",
+      "values": {
+        "BPEE_weights": {
+          "ΜΕΤ": 0.1,
+          "ΣΥΣΤ": 0.3,
+          "ΜΗΧ": 0.3,
+          "ΝΑΥΤ_ΕΝ_ΚΥΚΛ": 0.3
+        },
+        "BPE_weights": {
+          "ΒΠΕΑ": 0.85,
+          "ΒΠΕΕ": 0.15
+        },
+        "fs_blocks_in_MHX": [
+          "F/S CONTACT",
+          "F/S FORMATION"
+        ],
+        "fs_blocks_in_NAYT": [
+          "F/S INSTRUMENT",
+          "F/S NAVIGATION"
+        ],
+        "legal_basis": "ΠΔ 151/2013 Άρθρο 36 παρ.8, όπως τροπ. ΠΔ 42/2020",
+        "precision": "χιλιοστά"
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 65,
+        "pages_pdf": [
+          64,
+          65,
+          66
+        ],
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 61 → ΒΠΕ = 0,85 x (ΒΠΕΑ) + 0,15 (ΒΠΕΕ), και Πίνακας 5 (PDF 64)· παρ. 64, 65, 67 → τύπος ΒΠΕΕ (PDF 65)· Πίνακας 6 (PDF 66)"
+      },
+      "links": [
+        "st-71",
+        "st-56",
+        "gt-49",
+        "gt-50",
+        "ft-141",
+        "ft-142",
+        "fail-34"
+      ],
+      "flags": [
+        "Ο Πίνακας 6 (PDF 66) δίνει για ΝΑΥΤ & ΕΝ.ΚΥΚΛ. «60» εκπαιδευτικές περιόδους, ενώ ο Πίνακας 5 (PDF 64) για το ίδιο μάθημα δίνει «90» — ασυμφωνία εντός της ίδιας 3-01.",
+        "Οι τύποι της παρ.65 (ΜΗΧ / ΝΑΥΤ) αναφέρουν κωδικούς εξόδων (B1001, Σ3101, Ο3101, Ν2101 κ.λπ.) αλλά ο Πίνακας 6 αναφέρει συγκεντρωτικά μπλοκ «F/S CONTACT/FORMATION/INSTRUMENT/NAVIGATION» — δεν διευκρινίζεται αν πρόκειται για Μ.Ο. όλων των εξόδων F/S της κατηγορίας."
+      ]
+    },
+    {
+      "id": "st-71",
+      "topic": "Αποκλεισμός βαθμολογίας επαναξιολόγησης μετά από αποτυχία σε πτήση F/S",
+      "requirement": "Σε περίπτωση ΑΠΟΤΥΧΙΑΣ σε γραπτή εξέταση ή σε πτήση στο F/S, ΔΕΝ θα λαμβάνεται υπόψη η βαθμολογία επαναξιολόγησης (στον υπολογισμό της ΒΠΕΕ).",
+      "verbatim": "66. Σε περίπτωση ΑΠΟΤΥΧΙΑΣ σε γραπτή εξέταση ή σε πτήση στο F/S, δεν θα λαμβάνεται υπόψη η βαθμολογία επαναξιολόγησης.",
+      "values": {
+        "excluded": "re-evaluation grade after failure",
+        "applies_to": [
+          "written exam",
+          "F/S sortie"
+        ],
+        "context": "ΒΠΕΕ computation"
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 65,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 66"
+      },
+      "links": [
+        "st-61",
+        "st-70",
+        "gt-51",
+        "fail-34"
+      ],
+      "flags": [
+        "Δεν διευκρινίζεται αν διατηρείται η αρχική (αποτυχούσα) βαθμολογία ή αν η έξοδος εξαιρείται εντελώς από τον Μ.Ο."
+      ]
+    },
+    {
+      "id": "st-72",
+      "topic": "Επαναδιάθεση μετά από αποχή >30 ημερών — πρόγραμμα F/S (Πίνακας 8)",
+      "requirement": "Μαθητής με αποχή από τις πτήσεις >30 ημερών χάνει τη διαθεσιμότητα στον τύπο Α/Φ και πρέπει να παρακολουθήσει το πρόγραμμα του Πίνακα 8. Το σκέλος FLIGHT SIMULATOR: για αποχή 1-3 μήνες → Κανονικές Διαδικασίες 2 έξοδοι/2:00, Διαδικασίες Ανάγκης 2/2:00, ΠΔΟ –, ΣΥΝΟΛΑ 4 έξοδοι/4:00· για 3-6 μήνες → 2/2:00 + 2/2:00 + ΠΔΟ 2/2:00, ΣΥΝΟΛΑ 6/6:00· για 6-12 μήνες → 2/2:00 + 2/2:00 + ΠΔΟ 2/2:00, ΣΥΝΟΛΑ 6/6:00. ΟΛΕΣ οι έξοδοι στο F/S (FTD, PTT, OFT, UTD, FMS ή SBT) είναι ΜΗ βαθμολογούμενες. Οι έξοδοι ΠΔΟ στο F/S εκτελούνται μόνο αν είχε αρχίσει ασκήσεις της κατηγορίας Οργάνων.",
+      "verbatim": "FLIGHT SIMULATOR (2) Έξοδοι Ώρες ... Κανονικές Διαδικασίες 2 2:00 2 2:00 2 2:00 Διαδικασίες Ανάγκης 2 2:00 2 2:00 2 2:00 ΠΔΟ (3) - - 2 2:00 2 2:00 ΣΥΝΟΛΑ 4 4:00 6 6:00 6 6:00 ... (2) Όλες οι έξοδοι στο F/S (FTD, PTT, OFT, UTD, FMS ή SBT) είναι μη βαθμολογούμενες (3) Οι έξοδοι ΠΔΟ στο F/S να εκτελούνται μόνο αν είχε αρχίσει ασκήσεις της κατηγορίας Οργάνων.",
+      "values": {
+        "currency_loss_days": 30,
+        "absence_1_3_months": {
+          "normal_procedures": {
+            "sorties": 2,
+            "hours": "2:00"
+          },
+          "emergency_procedures": {
+            "sorties": 2,
+            "hours": "2:00"
+          },
+          "PDO": null,
+          "total": {
+            "sorties": 4,
+            "hours": "4:00"
+          }
+        },
+        "absence_3_6_months": {
+          "normal_procedures": {
+            "sorties": 2,
+            "hours": "2:00"
+          },
+          "emergency_procedures": {
+            "sorties": 2,
+            "hours": "2:00"
+          },
+          "PDO": {
+            "sorties": 2,
+            "hours": "2:00"
+          },
+          "total": {
+            "sorties": 6,
+            "hours": "6:00"
+          }
+        },
+        "absence_6_12_months": {
+          "normal_procedures": {
+            "sorties": 2,
+            "hours": "2:00"
+          },
+          "emergency_procedures": {
+            "sorties": 2,
+            "hours": "2:00"
+          },
+          "PDO": {
+            "sorties": 2,
+            "hours": "2:00"
+          },
+          "total": {
+            "sorties": 6,
+            "hours": "6:00"
+          }
+        },
+        "all_fs_sorties_graded": false,
+        "fs_devices": [
+          "FTD",
+          "PTT",
+          "OFT",
+          "UTD",
+          "FMS",
+          "SBT"
+        ],
+        "PDO_condition": "only if Instrument category exercises had been started"
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 74,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, «Επαναδιάθεση Μαθητών», παρ. 90 και Πίνακας 8"
+      },
+      "links": [
+        "st-46",
+        "st-73",
+        "gt-56",
+        "gt-57"
+      ],
+      "flags": [
+        "Ο Πίνακας 8 δεν προβλέπει στήλη για αποχή >12 μήνες.",
+        "Οι συσκευές FMS και SBT εμφανίζονται εδώ και στην παρ.23 της 3-01, αλλά ΔΕΝ υπάρχουν στο Syllabus Phase II (§13a) — βλ. flag st-01."
+      ]
+    },
+    {
+      "id": "st-73",
+      "topic": "Επαναδιάθεση μετά από αποχή 15/20 ημερών — μη βαθμολογούμενη πτήση",
+      "requirement": "Μαθητής με αποχή μεγαλύτερη των 15 ημερών για την ΠΡΟ ΜΟΝΟΣ φάση του Βασικού Σταδίου (Phase II) και μεγαλύτερη των 20 ημερών για το υπόλοιπο των Σταδίων, πριν πετάξει βαθμολογούμενη άσκηση, ίπταται 1 πτήση χωρίς βαθμολόγηση σε ελιγμούς κατά την κρίση του Διοικητή της Μοίρας.",
+      "verbatim": "89. ... μαθητής που θα έχει αποχή μεγαλύτερη των 15 ημερών για την ΠΡΟ ΜΟΝΟΣ φάση του Βασικού (Phase ΙΙ) και του Προκεχωρημένου Σταδίου (Phase ΙIΙ) και μεγαλύτερη των 20 ημερών, για το υπόλοιπο των Σταδίων Εκπσης, πριν πετάξει βαθμολογούμενη άσκηση να ίπταται 1 πτήση, χωρίς βαθμολόγηση, σε ελιγμούς κατά την κρίση του Διοικητή της Μοίρας.",
+      "values": {
+        "absence_days_pre_solo_phase_II": 15,
+        "absence_days_rest_of_stages": 20,
+        "non_graded_sorties": 1,
+        "decision_authority": "Διοικητής Μοίρας"
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 73,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 89"
+      },
+      "links": [
+        "st-72",
+        "fail-14"
+      ],
+      "flags": [
+        "Δεν διευκρινίζεται αν η «1 πτήση χωρίς βαθμολόγηση» μπορεί να εκτελεστεί στο F/S ή μόνο με Α/Φ — η παρ.89 λέει «πτήση», ενώ η παρ.90/Πίνακας 8 διαχωρίζει ρητά F/S και Πτητική Εκπαίδευση."
+      ]
+    },
+    {
+      "id": "st-74",
+      "topic": "Special Requirements (SR) — πλαίσιο και κωδικοποίηση",
+      "requirement": "Τα Special Requirements (SRs) αφορούν ελιγμούς ή/και διαδικασίες που πρέπει να επιδειχθούν ή/και να εξασκηθούν από τον SP. Η εκτέλεση των SRs είναι ΠΡΟΑΠΑΙΤΟΥΜΕΝΟ για την προαγωγή του SP στο επόμενο Training Section ή για να πετάξει SOLO, εάν το SR σχετίζεται με την πτήση SOLO. Αν το SR δεν είναι προαπαιτούμενο, μπορεί να εκτελεστεί στο επόμενο block. Οι κωδικοί αρχίζουν με SR + γράμμα κατηγορίας (C/I/F/N) + αριθμό (π.χ. SRC-2). Πρέπει να καταβάλλεται κάθε προσπάθεια ώστε τα SRs να καλύπτονται στις ΠΡΩΤΕΣ εξόδους κάθε Training Section, για να διευκολύνεται η επανάληψη.",
+      "verbatim": "b. The execution of the SRs is a prerequisite for the promotion of SP to the next Training Section or for him/her to fly SOLO, if the SR is related to the SOLO flight. If Special requirement is not a prerequisite, it can be executed in the next block. ... d. Every possible effort must be made so that SRs are met during the first sorties of each Training Section, in order to facilitate repetition.",
+      "values": {
+        "code_format": "SR + category letter (C/I/F/N) + number",
+        "example": "SRC-2",
+        "fs_relevant_srs": [
+          "SRC-2 (C22XX)",
+          "SRI-1 (I32XX)",
+          "SRI-2 (I32XX)"
+        ],
+        "total_sr_codes": 15,
+        "sr_contact": 11,
+        "sr_instrument": 2,
+        "sr_formation": 1,
+        "sr_navigation": 1,
+        "srs_defined": {
+          "SRC-2": "Practice in No Flap Traffic Pattern Stalls",
+          "SRI-1": "Spatial disorientation avoidance maneuvers",
+          "SRI-2": "Time and magnetic compass turns",
+          "SRF-1": "Simulated Lost wingman procedures"
+        }
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 102,
+        "ref": "§10. SPECIAL REQUIREMENTS (πίνακας PDF 103)"
+      },
+      "links": [
+        "st-24",
+        "st-30"
+      ],
+      "flags": [
+        "Μόνο 3 ΚΩΔΙΚΟΠΟΙΗΜΕΝΑ SRs ανατίθενται ρητά σε F/S Training Sections (SRC-2 στο C22XX, SRI-1 και SRI-2 στο I32XX). Το SRF-1 (Simulated Lost wingman) δεν ανατίθεται σε F/S Section παρότι τα F31XX/F32XX περιλαμβάνουν «Lost Wingman Procedures» στα items.",
+        "Η σελ. 103 ΔΕΝ τυπώνει σύνολο κωδικών· η καταμέτρηση 15 προκύπτει από τις γραμμές του πίνακα SPECIAL REQUIREMENTS (SRC-1…SRC-11 = 11, SRI-1…SRI-2 = 2, SRF-1 = 1, SRN-1 = 1) και συμφωνεί με τα υποσύνολα sr_contact/sr_instrument/sr_formation/sr_navigation.",
+        "ΤΟ ΠΕΔΙΟ fs_relevant_srs ΚΑΤΑΓΡΑΦΕΙ ΜΟΝΟ ΚΩΔΙΚΟΠΟΙΗΜΕΝΑ SRs: το Training Section B10XX (st-21) περιλαμβάνει ΤΕΣΣΕΡΑ Special Requirements (PDF 141, «SPECIAL DIRECTIVES – AIDS: 1. Special Requirements») τα οποία ΔΕΝ φέρουν κωδικό SR και άρα δεν εμφανίζονται στον πίνακα της σελ. 103 ούτε στο fs_relevant_srs. Κατά §10.b η εκτέλεσή τους παραμένει προαπαιτούμενο προαγωγής στο επόμενο Training Section."
+      ]
+    },
+    {
+      "id": "st-75",
+      "topic": "Τελευταία έξοδος ενότητας — υποχρεωτικές ενέργειες Εκπαιδευτή σε μη προβλεπόμενη πρόοδο (Αέρος και F/S)",
+      "requirement": "Η τελευταία έξοδος κάθε ενότητας είναι καθοριστική, διότι απαιτείται η επίτευξη των επιπέδων απόδοσης που αναφέρονται στην ενότητα. Αν η πρόοδος του μαθητή δεν είναι η προβλεπόμενη, ο Εκπαιδευτής κατά την κρίση του ΔΕΝ θα περιμένει την τελευταία έξοδο της ενότητας για να ελέγξει ή να διαπιστώσει την επάρκεια του μαθητή, αλλά ΟΦΕΙΛΕΙ να ενεργήσει ως εξής: (1) να εισηγηθεί την είσοδο του μαθητή σε ΚΕΠΕ· (2) να εισηγηθεί την αποχή του μαθητή από τις πτήσεις της επόμενης ημέρας, με σκοπό την καλύτερη προετοιμασία του για την αποστολή· (3) να βαθμολογήσει τον μαθητή στην πτήση από 0-59% με το αιτιολογικό της μη παραδεκτής προόδου. Ο κανόνας εντάσσεται στην παρ. 26 «Βαθμολογίες στα Προγράμματα Αέρος και F/S» και άρα δεσμεύει ρητά ΚΑΙ τις εξόδους F/S.",
+      "verbatim": "26. Βαθμολογίες στα Προγράμματα Αέρος και F/S. ... β. Η τελευταία έξοδος κάθε ενότητας είναι καθοριστική, διότι απαιτείται η επίτευξη των επιπέδων απόδοσης που αναφέρονται στην ενότητα. Αν η πρόοδος του μαθητή δεν είναι η προβλεπόμενη, ο Εκπαιδευτής κατά την κρίση του, δεν θα περιμένει την τελευταία έξοδο της ενότητας για να ελέγξει ή να διαπιστώσει την επάρκεια του μαθητή, αλλά οφείλει να ενεργήσει ως εξής: (1) Να εισηγηθεί την είσοδο του μαθητή σε ΚΕΠΕ. (2) Να εισηγηθεί την αποχή του μαθητή από τις πτήσεις της επόμενης ημέρας, με σκοπό την καλύτερη προετοιμασία του για την αποστολή. (3) Να βαθμολογήσει τον μαθητή στην πτήση από 0-59% με το αιτιολογικό της μη παραδεκτής προόδου.",
+      "values": {
+        "grade_range_percent": [
+          0,
+          59
+        ],
+        "actions_count": 3,
+        "actions": [
+          "εισήγηση εισόδου σε ΚΕΠΕ",
+          "εισήγηση αποχής από τις πτήσεις της επόμενης ημέρας",
+          "βαθμολόγηση 0-59% με αιτιολογικό μη παραδεκτής προόδου"
+        ],
+        "trigger": "πρόοδος μαθητή μη προβλεπόμενη, πριν την τελευταία έξοδο της ενότητας",
+        "binding": "υποχρεωτικό («οφείλει»), με διακριτική ευχέρεια ως προς τον χρόνο ενεργοποίησης («κατά την κρίση του»)",
+        "applies_to": [
+          "Αέρος",
+          "F/S"
+        ]
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 46,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, «Κριτήρια Απόδοσης και Βαθμολογίες», παρ. 26β"
+      },
+      "links": [
+        "st-54",
+        "st-58",
+        "st-60",
+        "st-61",
+        "st-67",
+        "ft-133",
+        "fail-04",
+        "fail-05"
+      ],
+      "flags": [
+        "Το κατώφλι 0-59% ταυτίζεται με το κατώφλι εισόδου σε ΚΕΠΕ της παρ. 32β(1) (st-67) και με τα κριτήρια παραπομπής της παρ. 58ε (st-64), αλλά η παρ. 26β το επιβάλλει ως ΕΝΕΡΓΕΙΑ του Εκπαιδευτή, όχι ως αποτέλεσμα μέτρησης απόδοσης.",
+        "Η ίδια πρόβλεψη επαναλαμβάνεται συνοπτικά ως «Σημείωση» στην παρ. 32β (PDF 54): «Ο Εκπαιδευτής κατά την κρίση του, δεν θα περιμένει την τελευταία έξοδο της ενότητας να ελέγξει ή να διαπιστώσει την επάρκεια του μαθητή».",
+        "Δεν διευκρινίζεται αν οι 3 ενέργειες είναι σωρευτικές ή διαζευκτικές — το κείμενο τις παραθέτει χωρίς «ή»/«και»."
+      ]
+    },
+    {
+      "id": "st-76",
+      "topic": "Μη βαθμολογούμενες κατηγορίες πτήσεων — γενικός κανόνας και υποχρέωση συμπλήρωσης Φ.Β.",
+      "requirement": "Οι ΕΠΑΝΑΛΗΨΕΙΣ, οι πτήσεις ΑΔΕ (εκτός των περιπτώσεων ΑΕΡΟΝΑΥΤΙΑΣ ή περιστατικού Φυσιολογίας Πτήσεων), οι επαναδιαθέσεις και οι πτήσεις εθισμού που δίνονται από το ΚΑΙ σε περιπτώσεις ΑΕΡΟΝΑΥΤΙΑΣ ΔΕΝ βαθμολογούνται στη γενική απόδοση, ακόμη και αν η απόδοση του μαθητή δικαιολογεί ΥΣΤΕΡΗΣΗ ή ΑΠΟΤΥΧΙΑ. Παρά ταύτα, το Φύλλο Βαθμολογίας (Φ.Β.) συμπληρώνεται ΚΑΝΟΝΙΚΑ με τους σχετικούς κώδικες απόδοσης, ενώ στη στήλη των παρατηρήσεων αναγράφεται αναλυτικά η απόδοση του μαθητή καθώς και η αιτία μη ολοκλήρωσης της άσκησης.",
+      "verbatim": "43. Οι ΕΠΑΝΑΛΗΨΕΙΣ, οι πτήσεις ΑΔΕ (εκτός των περιπτώσεων ΑΕΡΟΝΑΥΤΙΑΣ ή περιστατικού Φυσιολογίας Πτήσεων), οι επαναδιαθέσεις και οι πτήσεις εθισμού που δίνονται από το ΚΑΙ σε περιπτώσεις ΑΕΡΟΝΑΥΤΙΑΣ, δεν θα βαθμολογούνται στη γενική απόδοση (ακόμη και αν η απόδοση του μαθητή δικαιολογεί ΥΣΤΕΡΗΣΗ ή ΑΠΟΤΥΧΙΑ). Το Φ.Β. να συμπληρώνεται κανονικά με τους σχετικούς κώδικες απόδοσης και στη στήλη των παρατηρήσεων, να αναγράφεται αναλυτικά η απόδοση του μαθητή, καθώς επίσης και η αιτία μη ολοκλήρωσης της άσκησης.",
+      "values": {
+        "non_graded_categories": [
+          "ΕΠΑΝΑΛΗΨΕΙΣ",
+          "πτήσεις ΑΔΕ (πλην ΑΕΡΟΝΑΥΤΙΑΣ / περιστατικού Φυσιολογίας Πτήσεων)",
+          "επαναδιαθέσεις",
+          "πτήσεις εθισμού από ΚΑΙ σε περιπτώσεις ΑΕΡΟΝΑΥΤΙΑΣ"
+        ],
+        "non_graded_categories_count": 4,
+        "graded_in_general_performance": false,
+        "override_even_if": "η απόδοση δικαιολογεί ΥΣΤΕΡΗΣΗ ή ΑΠΟΤΥΧΙΑ",
+        "grade_sheet_required": true,
+        "grade_sheet_content": [
+          "σχετικοί κώδικες απόδοσης",
+          "αναλυτική απόδοση μαθητή στη στήλη παρατηρήσεων",
+          "αιτία μη ολοκλήρωσης της άσκησης"
+        ]
+      },
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 59,
+        "ref": "ΚΕΦΑΛΑΙΟ 2, παρ. 43"
+      },
+      "links": [
+        "st-45",
+        "st-46",
+        "st-55",
+        "st-72",
+        "st-73",
+        "fail-88"
+      ],
+      "flags": [
+        "Είναι ο ΓΕΝΙΚΟΣ κανόνας που στηρίζει τον χαρακτηρισμό «μη βαθμολογούμενες» στις παρ. 17 (st-45), παρ. 53 (st-46), Πίνακας 8 (st-72) και παρ. 89 (st-73), και προσθέτει την αυτοτελή υποχρέωση συμπλήρωσης Φ.Β. με κώδικες απόδοσης — απαίτηση που ΔΕΝ επαναλαμβάνεται στις ειδικές αυτές διατάξεις.",
+        "Η παρ. 43 δεν διαχωρίζει Α/Φ από F/S· εφαρμόζεται στις πτήσεις ΕΠΑΝΑΛΗΨΗΣ F/S των st-45/st-46 και στις εξόδους F/S επαναδιάθεσης του Πίνακα 8 (st-72), όπου το «μη βαθμολογούμενες» δηλώνεται ρητά.",
+        "Η εξαίρεση «μη βαθμολόγηση στη γενική απόδοση» δεν αίρει τη βαθμολόγηση των μεμονωμένων ελιγμών με κώδικες (απόλυτος τρόπος, st-54/st-55) — αντιθέτως, την επιβάλλει."
+      ]
+    },
+    {
+      "id": "st-77",
+      "topic": "GENERAL KNOWLEDGE — παρακολούθηση ground training (μαθήματα ΚΑΙ F/S) ως προαπαιτούμενο συνέχισης",
+      "requirement": "Για την επιτυχή εκπλήρωση των καθηκόντων και ευθυνών του, ο SP οφείλει να έχει παρακολουθήσει την εκπαίδευση εδάφους (μαθήματα ΚΑΙ F/S), η οποία αποτελεί προαπαιτούμενο για τη ΣΥΝΕΧΙΣΗ του προγράμματος. Η διάταξη εντάσσει ρητά το F/S στο περιεχόμενο του «ground training» του Phase II.",
+      "verbatim": "5. GENERAL KNOWLEDGE To successfully complete the duties and responsibilities listed above, SP ought to: ... d. Have attended the ground training (lessons and F/S) which is prerequisite for the continuation of the program.",
+      "values": {
+        "prerequisite_scope": [
+          "lessons",
+          "F/S"
+        ],
+        "condition": "attendance (παρακολούθηση)",
+        "consequence": "προαπαιτούμενο για τη συνέχιση του προγράμματος",
+        "context": "General Knowledge — καθήκοντα και ευθύνες SP"
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 23,
+        "ref": "PART I §5. GENERAL KNOWLEDGE, παρ. d"
+      },
+      "links": [
+        "st-08",
+        "st-18",
+        "st-40",
+        "gt-23"
+      ],
+      "flags": [
+        "ΣΧΕΣΗ ΜΕ st-40 (§9.b, PDF 101): το §5.d απαιτεί ΠΑΡΑΚΟΛΟΥΘΗΣΗ («have attended»), ενώ το §9.b απαιτεί επιπλέον ΕΠΙΤΥΧΗ ΑΞΙΟΛΟΓΗΣΗ («attended and successfully been evaluated») κατά το Training Flow Chart. Το §9.b είναι το αυστηρότερο και υπερισχύει ανά Training Section· το §5.d θέτει τον γενικό όρο συνέχισης του προγράμματος.",
+        "Το §5.d είναι η μοναδική διάταξη του PART I που εντάσσει ΡΗΤΑ το F/S στο «ground training» — ενισχύει τη λογική του Πίνακα 6 της 3-01 (st-70), όπου η πρακτική εξάσκηση στις συσκευές F/S προσμετράται στη Βαθμολογία Πτητικής Εκπαίδευσης ΕΔΑΦΟΥΣ (ΒΠΕΕ).",
+        "ΕΝΤΑΣΗ με §13.c(1) (st-18): σε παρατεταμένη χαμηλή διαθεσιμότητα συσκευών επιτρέπεται συνέχιση εκπαίδευσης Α/Φ χωρίς κάλυψη όλων των απαιτήσεων F/S, παρότι το §5.d ορίζει το F/S ως προαπαιτούμενο συνέχισης."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "item_id": "vfr_navigation-20",
+  "item_name": "INSTRUMENT PROCEDURES",
+  "category": "vfr_navigation",
+  "mif_numbers": [20],
+  "mif_rows": [
+    {
+      "sn": 20,
+      "row_name": "Instrument Procedures",
+      "desired_codes_seen": [3]
+    }
+  ],
+  "observations": [
+    {
+      "id": "vfr_navigation-20-20-d3a0-v1",
+      "mif_row": "Instrument Procedures",
+      "desired": 3,
+      "achieved": 0,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to a fixated instrument cross-check that dwelled on the attitude indicator, did not maintain the assigned altitude, heading and airspeed while flying the published instrument procedure. Altitude departed 400 feet from the assigned level and heading 15 degrees from the assigned course, with the result that the IP issued directive corrections and flew part of the procedure. Attitude instrument flying technique and radial cross-check require further work.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-20-20-d3a0-v2",
+      "mif_row": "Instrument Procedures",
+      "desired": 3,
+      "achieved": 0,
+      "variant": "human_factor",
+      "hf_concept": "hf-over-reliance-on-automation",
+      "text": "SP, due to reliance on the automated navigation solution in place of the basic instrument scan, did not detect the developing departure from the assigned altitude and procedure airspeed during the instrument segment. Altitude diverged 450 feet from the assigned level and airspeed decayed 25 KIAS below the procedure speed, with the result that the IP took control to re-establish the aircraft on the procedure. The instrument procedure could not be completed without assistance.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-20-20-d3a1-v1",
+      "mif_row": "Instrument Procedures",
+      "desired": 3,
+      "achieved": 1,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to a cross-check rate that lagged the pitch and power changes at the procedure turn, did not hold the assigned altitude and airspeed while transitioning to the inbound course. Altitude reached the 300 feet limit and airspeed the 20 KIAS limit before any correction was initiated, with the result that the procedure was completed only after the IP's verbal prompts. Errors were recognized and corrected with delay.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-20-20-d3a1-v2",
+      "mif_row": "Instrument Procedures",
+      "desired": 3,
+      "achieved": 1,
+      "variant": "human_factor",
+      "hf_concept": "hf-workload-management",
+      "text": "SP, due to inadequate workload management during the approach phase, did not complete tuning and identification of the navigation aid before commencing the procedural descent. Heading diverged 10 degrees from the inbound course and altitude 300 feet from the procedural altitude, with the result that the profile was regained only after the IP's verbal prompts. Recognition and correction of the deviations were delayed.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-20-20-d3a2-v1",
+      "mif_row": "Instrument Procedures",
+      "desired": 3,
+      "achieved": 2,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to over-controlled pitch inputs while re-trimming after the configuration change, did not hold the procedural altitude precisely on the level segment of the instrument procedure. Altitude varied 200 feet and airspeed 15 KIAS from the assigned values, with the result of minor deviations recognized and corrected in a timely manner without the IP's intervention.",
+      "sentences": 2
+    },
+    {
+      "id": "vfr_navigation-20-20-d3a2-v2",
+      "mif_row": "Instrument Procedures",
+      "desired": 3,
+      "achieved": 2,
+      "variant": "human_factor",
+      "hf_concept": "hf-distraction",
+      "text": "SP, due to distraction by radio traffic while established on the inbound course, briefly interrupted the instrument cross-check during the procedural descent. Heading drifted 8 degrees from the assigned course and altitude 200 feet from the step-down altitude, with the result of minor errors that SP identified and corrected in a timely manner without the IP's intervention.",
+      "sentences": 2
+    },
+    {
+      "id": "vfr_navigation-20-20-d3a3-v1",
+      "mif_row": "Instrument Procedures",
+      "desired": 3,
+      "achieved": 3,
+      "variant": "marginal",
+      "hf_concept": null,
+      "text": "SP flew the instrument procedures within the desired standards, maintaining altitude within 130 feet, airspeed within 8 KIAS and heading within 4 degrees of the assigned values. Corrections were self-initiated without the IP's intervention, but on two occasions were applied near the edge of those tolerances rather than at the onset of the deviation. Marginal performance for the Training Section - a faster and more even instrument cross-check is expected to improve consistency.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-20-20-d3a4-v1",
+      "mif_row": "Instrument Procedures",
+      "desired": 3,
+      "achieved": 4,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP flew the instrument procedures with exceptional precision, maintaining altitude within 50 feet, airspeed within 5 KIAS and heading within 2 degrees throughout the SID departure, the enroute instrument segment and the approach. Navigation aid tuning and identification, level-offs and procedural sequencing were completed early and without the IP's intervention, with the cross-check preserved through every configuration change. Above end of block MIF achieved.",
+      "sentences": 3
+    }
+  ]
+}

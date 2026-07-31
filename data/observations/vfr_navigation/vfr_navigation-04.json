@@ -1,0 +1,165 @@
+{
+  "item_id": "vfr_navigation-04",
+  "item_name": "VFR DEPARTURE / SID",
+  "category": "vfr_navigation",
+  "mif_numbers": [4],
+  "mif_rows": [
+    {
+      "sn": 4,
+      "row_name": "VFR / SID Departure",
+      "desired_codes_seen": [2, 3]
+    }
+  ],
+  "observations": [
+    {
+      "id": "vfr_navigation-04-4-d2a0-v1",
+      "mif_row": "VFR / SID Departure",
+      "desired": 2,
+      "achieved": 0,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to a non-standardized departure flow that left the climb procedures unstarted, did not execute the VFR departure over the published routing and did not arrive above Zero Point with all required procedures completed. The IP directed the initial turn on course and flew part of the climb segment, with heading diverging by 18 degrees and altitude by 450 feet from the departure profile. Review of the VFR departure and SID routing before the next sortie is required.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-04-4-d2a0-v2",
+      "mif_row": "VFR / SID Departure",
+      "desired": 2,
+      "achieved": 0,
+      "variant": "human_factor",
+      "hf_concept": "hf-workload-management",
+      "text": "SP, due to inadequate workload management during the departure phase, did not complete the required procedures before Zero Point and did not maintain the briefed departure climb profile. Airspeed decayed 30 knots below the briefed climb speed and altitude at the first level segment was 500 feet low, with the result that the IP took the controls to re-establish the profile. Further practice in sequencing the departure tasks is required.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-04-4-d2a1-v1",
+      "mif_row": "VFR / SID Departure",
+      "desired": 2,
+      "achieved": 1,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to late reference to the departure plate during the initial climb, did not intercept the published departure track at the prescribed point and did not have all required procedures completed before Zero Point. Heading was held 10 degrees off the departure course and altitude reached a 300 feet deviation at level off, corrected with delay only after the IP's verbal prompts and without intervention on the controls.",
+      "sentences": 2
+    },
+    {
+      "id": "vfr_navigation-04-4-d2a1-v2",
+      "mif_row": "VFR / SID Departure",
+      "desired": 2,
+      "achieved": 1,
+      "variant": "human_factor",
+      "hf_concept": "hf-monitoring-cross-check",
+      "text": "SP, due to an interrupted instrument cross-check while attention remained on the navigation display, did not monitor the climb parameters against the briefed VFR departure profile. Airspeed reached a 20 knots deviation and altitude a 300 feet deviation at the level off, recognized and corrected with delay after the IP's verbal prompts. No IP intervention on the controls was required.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-04-4-d2a2-v1",
+      "mif_row": "VFR / SID Departure",
+      "desired": 2,
+      "achieved": 2,
+      "variant": "marginal",
+      "hf_concept": null,
+      "text": "SP executed the VFR departure and arrived above Zero Point with all required procedures completed, within the desired standards for the Training Section. Altitude at level off deviated by 200 feet and heading by 8 degrees on the departure leg, both recognized and corrected in a timely manner without IP's intervention. Marginal performance within the desired code; a tighter altitude capture at the top of the departure climb is expected to improve over the following sorties.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-04-4-d2a3-v1",
+      "mif_row": "VFR / SID Departure",
+      "desired": 2,
+      "achieved": 3,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP executed the VFR departure over the published routing with accuracy and speed, completing all required procedures before arriving above Zero Point. Altitude was held within 100 feet, airspeed within 5 knots and heading within 3 degrees of the departure profile, without any verbal prompt from the IP. Above end of block MIF achieved.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-04-4-d2a4-v1",
+      "mif_row": "VFR / SID Departure",
+      "desired": 2,
+      "achieved": 4,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP executed the VFR departure and the SID transition with exceptional precision, sequencing the required procedures so that the A/C was above Zero Point fully prepared and on profile. Deviations in altitude, airspeed and heading throughout the departure were negligible, and the departure was flown without a single correction or prompt from the IP. Above end of block MIF achieved.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-04-4-d3a0-v1",
+      "mif_row": "VFR / SID Departure",
+      "desired": 3,
+      "achieved": 0,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to an incorrect setting of the navigation aids for the assigned SID, did not follow the published departure track and did not have the required procedures completed on arrival above Zero Point. Heading deviation exceeded 15 degrees and altitude at the first constraint was 400 feet low, with the result that the IP directed the correcting turn and executed part of the climb. Study of the SID plate and of the associated navigation setup before the next sortie is required.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-04-4-d3a0-v2",
+      "mif_row": "VFR / SID Departure",
+      "desired": 3,
+      "achieved": 0,
+      "variant": "human_factor",
+      "hf_concept": "hf-situational-awareness",
+      "text": "SP, due to loss of situational awareness of the A/C position relative to the departure track, did not execute the VFR departure over the predetermined routing and did not reach Zero Point with all required procedures completed. Heading diverged by 20 degrees and altitude by 450 feet from the departure profile, with the result that the IP directed the recovery to the correct routing. The departure was completed only with the IP flying part of the segment.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-04-4-d3a1-v1",
+      "mif_row": "VFR / SID Departure",
+      "desired": 3,
+      "achieved": 1,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to a climb technique that was not adjusted to the departure gradient required, did not maintain the briefed departure profile after the turn on course. Altitude reached a 300 feet deviation and airspeed a 20 knots deviation before being corrected with delay following the IP's verbal prompts. The required procedures were completed above Zero Point only after the IP's reminder, without intervention on the controls.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-04-4-d3a1-v2",
+      "mif_row": "VFR / SID Departure",
+      "desired": 3,
+      "achieved": 1,
+      "variant": "human_factor",
+      "hf_concept": "hf-distraction",
+      "text": "SP, due to distraction by radio traffic during the departure turn, did not maintain the assigned departure heading and deferred the remaining climb procedures. Heading reached a 10 degrees deviation and altitude a 300 feet deviation at level off, recognized and corrected with delay after the IP's verbal prompts. No intervention on the controls was required.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-04-4-d3a2-v1",
+      "mif_row": "VFR / SID Departure",
+      "desired": 3,
+      "achieved": 2,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to a late power reduction at the level off from the departure climb, did not stabilize the A/C on the briefed departure airspeed at the first level segment. Airspeed reached a 15 knots deviation and altitude a 200 feet deviation, both recognized and corrected in a timely manner without IP's intervention. All required procedures were completed before the A/C was above Zero Point.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-04-4-d3a2-v2",
+      "mif_row": "VFR / SID Departure",
+      "desired": 3,
+      "achieved": 2,
+      "variant": "human_factor",
+      "hf_concept": "hf-workload-distribution",
+      "text": "SP, due to a workload distribution that left the SP flying and transmitting at the same time during the departure turn, did not hold the published departure track within the desired tolerance. Heading deviated by 8 degrees and altitude by 200 feet on the climb segment, both recognized and corrected in a timely manner without IP's intervention. The A/C was above Zero Point with all required procedures completed.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-04-4-d3a3-v1",
+      "mif_row": "VFR / SID Departure",
+      "desired": 3,
+      "achieved": 3,
+      "variant": "marginal",
+      "hf_concept": null,
+      "text": "SP executed the VFR departure and SID transition accurately and with all required procedures completed before Zero Point, within the desired standards. Altitude was held within 130 feet and heading within 5 degrees, values close to the limit of the desired code, and the departure track was re-centered twice on the initial leg. Marginal performance for the Training Section; consistency in departure track discipline is expected to improve.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-04-4-d3a4-v1",
+      "mif_row": "VFR / SID Departure",
+      "desired": 3,
+      "achieved": 4,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP executed the VFR departure and SID transition with exceptional precision, completing every required procedure in sequence so that the A/C crossed Zero Point on profile and on time. Altitude, airspeed and heading deviations throughout the departure were negligible, and the published routing was flown without any prompt or correction from the IP. Above end of block MIF achieved.",
+      "sentences": 3
+    }
+  ]
+}

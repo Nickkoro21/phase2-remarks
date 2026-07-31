@@ -1,0 +1,278 @@
+{
+  "item_id": "instrument-06",
+  "item_name": "AIRSPEED CHANGES",
+  "category": "instrument",
+  "mif_numbers": [6],
+  "mif_rows": [
+    {
+      "sn": 6,
+      "row_name": "Airspeed Changes",
+      "desired_codes_seen": [0, 1, 2, 3]
+    }
+  ],
+  "observations": [
+    {
+      "id": "instrument-06-6-d0a0-v1",
+      "mif_row": "Airspeed Changes",
+      "desired": 0,
+      "achieved": 0,
+      "variant": "marginal",
+      "hf_concept": null,
+      "text": "SP, on the initial instrument sortie, did not complete the commanded airspeed changes without assistance, and the IP directed the power setting and executed part of the trim sequence. Altitude excursions during the decelerations reached 340 feet, beyond the plus or minus 300 feet tolerance, and heading wandered 12 degrees. Performance is at the block MIF for this sortie; a disciplined power, attitude and trim sequence is expected to contain the excursions on the next sortie.",
+      "sentences": 3
+    },
+    {
+      "id": "instrument-06-6-d0a1-v1",
+      "mif_row": "Airspeed Changes",
+      "desired": 0,
+      "achieved": 1,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP completed each commanded airspeed change with the IP's verbal prompts only, with no control input from the front cockpit. Altitude was held at the plus or minus 300 feet limit and heading at 10 degrees, with the deviations recognized and corrected, although with delay. Above end of block MIF achieved.",
+      "sentences": 3
+    },
+    {
+      "id": "instrument-06-6-d0a2-v1",
+      "mif_row": "Airspeed Changes",
+      "desired": 0,
+      "achieved": 2,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP applied power, pitch attitude and trim in the correct order for each airspeed change and kept the cross-check moving between the attitude indicator and the performance instruments. Errors were minor, with altitude held within 210 feet, heading within 8 degrees and airspeed stabilized within 15 KIAS of the commanded value, each recognized and corrected in a timely manner without IP's intervention. Above end of block MIF achieved.",
+      "sentences": 3
+    },
+    {
+      "id": "instrument-06-6-d0a3-v1",
+      "mif_row": "Airspeed Changes",
+      "desired": 0,
+      "achieved": 3,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP executed every commanded airspeed change accurately and rapidly, leading with the power change, holding the pitch attitude and trimming off the residual control pressure. Altitude remained within 90 feet, heading within 4 degrees, and the aircraft stabilized on each new airspeed within 6 KIAS with no further correction required. Above end of block MIF achieved.",
+      "sentences": 3
+    },
+    {
+      "id": "instrument-06-6-d0a4-v1",
+      "mif_row": "Airspeed Changes",
+      "desired": 0,
+      "achieved": 4,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP anticipated each command, set the required power and pitch simultaneously and retrimmed continuously as the airspeed changed. Deviations were negligible, at 30 feet of altitude, 1 degree of heading and 3 KIAS on capture of the new airspeed, and no IP prompting was required at any point. Above end of block MIF achieved.",
+      "sentences": 3
+    },
+
+    {
+      "id": "instrument-06-6-d1a0-v1",
+      "mif_row": "Airspeed Changes",
+      "desired": 1,
+      "achieved": 0,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to a reversed power and attitude sequence, did not lead the deceleration with the power reduction and did not retrim as the airspeed decayed. The result was an altitude divergence of 420 feet, well beyond the plus or minus 300 feet tolerance, and the IP took control to re-establish level flight.",
+      "sentences": 2
+    },
+    {
+      "id": "instrument-06-6-d1a0-v2",
+      "mif_row": "Airspeed Changes",
+      "desired": 1,
+      "achieved": 0,
+      "variant": "human_factor",
+      "hf_concept": "hf-monitoring-cross-check",
+      "text": "SP, due to an interrupted instrument cross-check while attention remained on the airspeed indicator, did not monitor pitch attitude and altitude during the acceleration. Heading diverged 16 degrees and altitude 380 feet, both beyond the plus or minus 10 degrees and plus or minus 300 feet tolerances. The IP directed the correction and flew part of the recovery to level flight.",
+      "sentences": 3
+    },
+    {
+      "id": "instrument-06-6-d1a1-v1",
+      "mif_row": "Airspeed Changes",
+      "desired": 1,
+      "achieved": 1,
+      "variant": "marginal",
+      "hf_concept": null,
+      "text": "SP completed each commanded airspeed change and contained altitude at the plus or minus 300 feet limit, heading at 10 degrees and airspeed at 20 KIAS from the commanded value. Recognition and correction of the deviations followed the IP's verbal prompts rather than the SP's own cross-check. Performance is at the block MIF; a self-initiated scan sequence and earlier trim inputs are expected to shorten the correction time on the next sortie.",
+      "sentences": 3
+    },
+    {
+      "id": "instrument-06-6-d1a2-v1",
+      "mif_row": "Airspeed Changes",
+      "desired": 1,
+      "achieved": 2,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP set power, attitude and trim in the correct sequence for each commanded airspeed change, with only minor errors. Altitude was held within 200 feet, heading within 7 degrees and airspeed within 14 KIAS of the commanded value, each deviation recognized and corrected in a timely manner without IP's intervention. Above end of block MIF achieved.",
+      "sentences": 3
+    },
+    {
+      "id": "instrument-06-6-d1a3-v1",
+      "mif_row": "Airspeed Changes",
+      "desired": 1,
+      "achieved": 3,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP executed the airspeed changes with accuracy and speed, holding the pitch attitude through the power change and trimming as the airspeed stabilized. Altitude remained within 100 feet, heading within 5 degrees and each new airspeed was captured within 7 KIAS with no IP prompting. Above end of block MIF achieved.",
+      "sentences": 3
+    },
+    {
+      "id": "instrument-06-6-d1a4-v1",
+      "mif_row": "Airspeed Changes",
+      "desired": 1,
+      "achieved": 4,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP anticipated every command, coordinated power and pitch in a single smooth input and retrimmed continuously through each transition. Deviations were negligible, at 25 feet of altitude, 2 degrees of heading and 3 KIAS on capture of the new airspeed. Execution was flawless and matched the technique described in the Techniques and Procedures Manual. Above end of block MIF achieved.",
+      "sentences": 4
+    },
+
+    {
+      "id": "instrument-06-6-d2a0-v1",
+      "mif_row": "Airspeed Changes",
+      "desired": 2,
+      "achieved": 0,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to a power setting that was continuously readjusted instead of being set and held, did not allow the airspeed to settle before applying the next correction. The resulting pitch chasing produced altitude excursions of 450 feet and airspeed overshoots of 30 KIAS past the commanded value, both beyond the plus or minus 300 feet and plus or minus 20 KIAS tolerances. The IP intervened on the controls to stop the divergence.",
+      "sentences": 3
+    },
+    {
+      "id": "instrument-06-6-d2a0-v2",
+      "mif_row": "Airspeed Changes",
+      "desired": 2,
+      "achieved": 0,
+      "variant": "human_factor",
+      "hf_concept": "hf-attention-bottleneck",
+      "text": "SP, due to attention captured by the airspeed indicator while the aircraft state went unmonitored, did not maintain the pitch attitude and heading during the deceleration. Altitude decayed 400 feet and heading drifted 18 degrees before the deviation was noticed, beyond both the plus or minus 300 feet and plus or minus 10 degrees tolerances. The IP directed the recovery and set the power himself to stabilize the aircraft on the commanded airspeed.",
+      "sentences": 3
+    },
+    {
+      "id": "instrument-06-6-d2a1-v1",
+      "mif_row": "Airspeed Changes",
+      "desired": 2,
+      "achieved": 1,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to late and incomplete trim inputs after each power change, did not relieve the control pressures and held the aircraft off altitude with continuous back pressure. Altitude reached the plus or minus 300 feet limit and airspeed the 20 KIAS limit, and correction followed the IP's verbal prompts with delay.",
+      "sentences": 2
+    },
+    {
+      "id": "instrument-06-6-d2a1-v2",
+      "mif_row": "Airspeed Changes",
+      "desired": 2,
+      "achieved": 1,
+      "variant": "human_factor",
+      "hf_concept": "hf-distraction",
+      "text": "SP, due to distraction from the primary scan by an unrelated switch action, did not re-establish the instrument cross-check after setting the new power. Heading drifted to the 10 degrees limit and altitude to 300 feet, and both were recognized and corrected only after the IP's verbal prompts, with delay.",
+      "sentences": 2
+    },
+    {
+      "id": "instrument-06-6-d2a2-v1",
+      "mif_row": "Airspeed Changes",
+      "desired": 2,
+      "achieved": 2,
+      "variant": "marginal",
+      "hf_concept": null,
+      "text": "SP executed the commanded airspeed changes within the desired standards, with minor errors recognized and corrected in a timely manner without IP's intervention. Altitude deviations twice reached 250 feet and airspeed overshoots 17 KIAS, close to the plus or minus 300 feet and plus or minus 20 KIAS limits. Marginal performance for the Training Section; an earlier power lead and continuous trim are expected to reduce the deviations on the following sorties.",
+      "sentences": 3
+    },
+    {
+      "id": "instrument-06-6-d2a3-v1",
+      "mif_row": "Airspeed Changes",
+      "desired": 2,
+      "achieved": 3,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP executed each commanded airspeed change accurately and rapidly, leading with power, holding the attitude on the attitude indicator and trimming as the airspeed changed. Altitude was held within 110 feet, heading within 4 degrees and each new airspeed was captured within 8 KIAS, with no IP prompting. Above end of block MIF achieved.",
+      "sentences": 3
+    },
+    {
+      "id": "instrument-06-6-d2a4-v1",
+      "mif_row": "Airspeed Changes",
+      "desired": 2,
+      "achieved": 4,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP anticipated each command and flew the transitions with a single coordinated power and pitch input, retrimming continuously. Deviations were negligible, at 30 feet of altitude, 2 degrees of heading and 3 KIAS on stabilization, and the instrument cross-check never stopped. Above end of block MIF achieved.",
+      "sentences": 3
+    },
+
+    {
+      "id": "instrument-06-6-d3a0-v1",
+      "mif_row": "Airspeed Changes",
+      "desired": 3,
+      "achieved": 0,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to failure to lead the acceleration with the required power increase and to compensate with forward pressure, did not hold level flight through the transition. The aircraft climbed 380 feet, beyond the plus or minus 300 feet tolerance, and the commanded airspeed was overshot by 28 KIAS. The IP took the controls and re-established the briefed level flight profile.",
+      "sentences": 3
+    },
+    {
+      "id": "instrument-06-6-d3a0-v2",
+      "mif_row": "Airspeed Changes",
+      "desired": 3,
+      "achieved": 0,
+      "variant": "human_factor",
+      "hf_concept": "hf-breaking-the-error-chain",
+      "text": "SP, due to failure to break the error chain at the first recognizable deviation, continued into the next commanded airspeed change while the aircraft was already off altitude. Altitude error accumulated to 500 feet and heading to 20 degrees, both beyond the plus or minus 300 feet and plus or minus 10 degrees tolerances. The IP intervened, took control and reset the maneuver.",
+      "sentences": 3
+    },
+    {
+      "id": "instrument-06-6-d3a1-v1",
+      "mif_row": "Airspeed Changes",
+      "desired": 3,
+      "achieved": 1,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to power settings judged by feel rather than set on the torque indication, did not establish the target power for each commanded airspeed. Airspeed stabilized 20 KIAS from the commanded value and altitude reached the plus or minus 300 feet limit, and both were corrected only after the IP's verbal prompts.",
+      "sentences": 2
+    },
+    {
+      "id": "instrument-06-6-d3a1-v2",
+      "mif_row": "Airspeed Changes",
+      "desired": 3,
+      "achieved": 1,
+      "variant": "human_factor",
+      "hf_concept": "hf-stress",
+      "text": "SP, due to stress that narrowed the scan to the parameter being evaluated, did not maintain heading and altitude while capturing the new airspeed. Heading reached the 10 degrees limit and altitude the 300 feet limit, and recognition and correction followed the IP's verbal prompts with delay.",
+      "sentences": 2
+    },
+    {
+      "id": "instrument-06-6-d3a2-v1",
+      "mif_row": "Airspeed Changes",
+      "desired": 3,
+      "achieved": 2,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to trim applied only after the airspeed had fully stabilized, did not relieve the control pressures during the transitions. Altitude varied by 220 feet and heading by 8 degrees, inside the plus or minus 300 feet and plus or minus 10 degrees limits, and each deviation was recognized and corrected in a timely manner without IP's intervention.",
+      "sentences": 2
+    },
+    {
+      "id": "instrument-06-6-d3a2-v2",
+      "mif_row": "Airspeed Changes",
+      "desired": 3,
+      "achieved": 2,
+      "variant": "human_factor",
+      "hf_concept": "hf-workload-distribution",
+      "text": "SP, due to poor workload distribution, with the airspeed change flown at the same time as a radio call, did not keep the instrument cross-check moving through the transition. Airspeed overshot the commanded value by 16 KIAS and altitude varied by 190 feet, both inside the plus or minus 20 KIAS and plus or minus 300 feet limits. The errors were minor and were self-corrected in a timely manner without IP's intervention.",
+      "sentences": 3
+    },
+    {
+      "id": "instrument-06-6-d3a3-v1",
+      "mif_row": "Airspeed Changes",
+      "desired": 3,
+      "achieved": 3,
+      "variant": "marginal",
+      "hf_concept": null,
+      "text": "SP executed the commanded airspeed changes accurately and without IP's intervention, holding altitude within 140 feet, heading within 5 degrees and capturing each new airspeed within 9 KIAS. All values remained inside the desired standards, but sat close to the plus or minus 150 feet and plus or minus 10 KIAS tolerances, and two transitions required a second power correction. Marginal performance at the block MIF; a tighter initial power selection is expected to improve consistency on the following sorties.",
+      "sentences": 3
+    },
+    {
+      "id": "instrument-06-6-d3a4-v1",
+      "mif_row": "Airspeed Changes",
+      "desired": 3,
+      "achieved": 4,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP anticipated each command, set power and pitch together and trimmed continuously, so that the transitions were flown without any secondary correction. Deviations were negligible, at 25 feet of altitude, 1 degree of heading and 2 KIAS on capture of the commanded airspeed. Execution was flawless and required no IP prompting at any stage. Above end of block MIF achieved.",
+      "sentences": 4
+    }
+  ]
+}

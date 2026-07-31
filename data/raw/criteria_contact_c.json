@@ -1,0 +1,391 @@
+{
+  "category": "contact",
+  "source": {
+    "file": "Phase_2_Syllabus_2025.pdf",
+    "pages_pdf": [42, 48]
+  },
+  "items": [
+    {
+      "id": "contact-34",
+      "numbers": [34],
+      "name": "GO AROUND",
+      "heading_verbatim": "(34) GO AROUND",
+      "pages_pdf": [41, 42],
+      "execution": [
+        "When SP performs Go Around, he/she executes a pre-planned Go Around, with his/her own initiative, or following command by IP, ATC or the Contact Car Officer."
+      ],
+      "conditions": [
+        "In the execution of Go Around, the following conditions apply:",
+        "1/ Day or Night.",
+        "2/ Go Around is executed either when landing is not ensured or is performed as a pre-planned maneuver."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {"key": null, "text": "To fulfill the General Criteria when executing the Training Exercise, SP:"},
+          {"key": "a", "text": "Makes the right decision to Go Around in a timely manner, when required."},
+          {"key": "b", "text": "Responds immediately and executes Go Around without any delay, as soon as the order is given by IP or ATC or the Contact Car Officer."},
+          {"key": "c", "text": "Cleans the A/C configuration according to standard procedures and within the airspeed limitations."},
+          {"key": "d", "text": "Follows the standard procedure according to the Techniques and Procedures Manual."},
+          {"key": "e", "text": "Does not allow the onset of stall characteristics."},
+          {"key": "f", "text": "Does not violate the landing pattern altitude as reported in LAP."}
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "ΟΡΙΟ CHUNK: η επικεφαλίδα «(34) GO AROUND» ξεκινά στη σελίδα PDF 41 (y=310), δηλαδή ΕΞΩ από το ονομαστικό εύρος 42-48. Συμπεριλήφθηκε επειδή το ΠΕΡΙΕΧΟΜΕΝΟ ΤΜΗΜΑΤΟΣ την ορίζει ρητά ως πρώτο item του chunk. ΠΙΘΑΝΗ ΕΠΙΚΑΛΥΨΗ με το προηγούμενο chunk (σελ. ...-41) — ο parent πρέπει να κάνει dedupe στο id contact-34.",
+        "Το σώμα του item σπάει στο γύρισμα 41→42: η γενική κριτήριο f/ ολοκληρώνεται στη σελ. 42 («...landing pattern altitude | as reported in LAP.»)."
+      ]
+    },
+    {
+      "id": "contact-35",
+      "numbers": [35],
+      "name": "CLOSED PATTERN",
+      "heading_verbatim": "(35) CLOSED PATTERN",
+      "pages_pdf": [42],
+      "execution": [
+        "SP executes close pattern according to the Techniques and Procedures Manual and the LAP."
+      ],
+      "conditions": [
+        "Upon the implementation of the Training Exercise, the following conditions apply:",
+        "1/ After T/O or GO AROUND.",
+        "2/ After an ATC clearance.",
+        "3/ Day or Night.",
+        "4/ Airspeed 140 KIAS minimum"
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {"key": null, "text": "To fulfill the General Criteria when executing the Training Exercise, SP:"},
+          {"key": "a", "text": "Maintains bank and proper airspeeds during the maneuver according to the Flight Manual and the Techniques and Procedures Manual."},
+          {"key": "b", "text": "Enters downwind according to existed traffic, with minimum airspeed 140 KIAS."},
+          {"key": "c", "text": "Initially sets MAX power – adjusts power afterwards as required."},
+          {"key": "d", "text": "Does not allow the onset of stall characteristics."},
+          {"key": "e", "text": "Follows the standard procedure according to the Techniques and Procedures Manual and LAPs."}
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "lead_in_verbatim": "The following parameters are set as specific criteria for the Training Exercise:",
+          "table_header_verbatim": "MANEUVER PARAMETER | Ε | 0 | 1 | 2 | 3 | 4",
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "LEVEL OFF ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "±300΄",
+              "code_3_raw": "±150΄",
+              "code_1": {"kind": "deviation", "plus": 300, "minus": 300},
+              "code_3": {"kind": "deviation", "plus": 150, "minus": 150},
+              "interpolation": "standard",
+              "notes": "x-coordinate verified: table grid columns are [50.7-249.0]=MANEUVER PARAMETER, [249.0-292.8]=Ε, [292.8-336.5]=0, [336.5-380.1]=1, [380.1-423.9]=2, [423.9-467.6]=3, [467.6-504.2]=4. Value ±300΄ has x-center 358.30 → column «1»; value ±150΄ has x-center 445.70 → column «3». Both centers match the column-header centers exactly."
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "TYPO ΠΗΓΗΣ: η EXECUTION γράφει «close pattern» ενώ η επικεφαλίδα γράφει «CLOSED PATTERN». Διατηρήθηκε verbatim.",
+        "Η επικεφαλίδα του πίνακα γράφει «MANEUVER PARAMETER» (ενικός), σε αντίθεση με «MANEUVER PARAMETERS» των υπόλοιπων πινάκων.",
+        "Η στήλη-ένδειξη E του πίνακα είναι ελληνικό «Ε» (U+0395), όχι λατινικό E. Δεν έχει τιμές και δεν χρησιμοποιείται.",
+        "Το σύμβολο feet «΄» είναι U+0384 GREEK TONOS (όχι prime/απόστροφος). Διατηρήθηκε στα *_raw, αφαιρέθηκε στα normalized (unit=feet).",
+        "Το «±» σε αυτή τη σελίδα εξάγεται σωστά ως U+00B1 (ΔΕΝ εμφανίζεται το γνωστό πρόβλημα U+FFFF «￿» των σελ. 30,31,33,35,84).",
+        "Στο raw ΔΕΝ υπάρχει κενό μετά το «±» («±300΄», «±150΄»), σε αντίθεση με άλλες σελίδες που τυπώνουν «± 300΄».",
+        "Ο πίνακας έχει 7 στήλες — ΔΕΝ υπάρχει ξεχωριστό merged κελί φάσης. Το «LEVEL OFF» βρίσκεται μέσα στο ίδιο (μοναδικό) κελί με το «ALTITUDE (feet)», γι' αυτό maneuver=null και parameter=«LEVEL OFF ALTITUDE (feet)». Αν ο consumer θέλει διαχωρισμό φάσης, το «LEVEL OFF» είναι σημασιολογικά η φάση.",
+        "Γραμματικό λάθος πηγής στο b/: «according to existed traffic». Διατηρήθηκε verbatim.",
+        "Στο c/ το ενωτικό είναι en dash U+2013 («MAX power – adjusts power»)."
+      ]
+    },
+    {
+      "id": "contact-36",
+      "numbers": [36],
+      "name": "CLEARING",
+      "heading_verbatim": "(36) CLEARING",
+      "pages_pdf": [42, 43],
+      "execution": [
+        "Upon Clearing implementation, SP correctly allocates his/her attention, executing visual check, taking into consideration R/T reports to avoid potentially dangerous situations, always maintaining A/C under control."
+      ],
+      "conditions": [
+        "Clearing is performed throughout the mission."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {"key": null, "text": "To fulfill the General Criteria when executing Clearance, SP:"},
+          {"key": "a", "text": "Checks, uninterruptedly, the surrounding space during flight and particularly when in the airport traffic pattern."},
+          {"key": "b", "text": "Detects timely nearby moving A/C, maintains appropriate separation and avoids entering into a hazardous situation. If required takes action and maneuvers accordingly in order to avoid midair collision."},
+          {"key": "c", "text": "Effectively and continuously monitors the R/T, in pursuing to build Situational Awareness (SA) and to avoid any imminent threat airborne."},
+          {"key": "d", "text": "Maintains appropriate VFR distance from clouds."}
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "ΑΣΥΝΕΠΕΙΑ ΟΡΟΛΟΓΙΑΣ ΠΗΓΗΣ: η επικεφαλίδα και η EXECUTION λένε «CLEARING» / «Clearing», αλλά η εισαγωγή των General Criteria λέει «when executing Clearance». Διατηρήθηκε verbatim.",
+        "Το item σπάει στο γύρισμα σελίδας 42→43 (η EXECUTION στη σελ. 42, από CONDITIONS και μετά στη σελ. 43)."
+      ]
+    },
+    {
+      "id": "contact-37",
+      "numbers": [37],
+      "name": "RADIO COMMUNICATION",
+      "heading_verbatim": "(37) RADIO COMMUNICATION",
+      "pages_pdf": [43, 44],
+      "execution": [
+        "When SP communicates through the R/T:",
+        "1/ Establishes two-way communication with ground station and other A/C.",
+        "2/ Is aware of the proper operation and use of the R/T."
+      ],
+      "conditions": [
+        "Throughout the mission, from engine start up to engine shut down after flight."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {"key": null, "text": "To fulfill General Criteria when communicating through R/T, SP:"},
+          {"key": "a", "text": "Is cognizant of the use of radio procedures and executes them, without any support from IP."},
+          {"key": "b", "text": "Continuously monitors radio communication and responds as soon as possible to calls from ground stations or other A/C."},
+          {"key": "c", "text": "Obtains contact with the ground station or other A/C following the standard procedures and phraseology."},
+          {"key": "d", "text": "Precisely follows instructions given by ground stations, without misinterpretations."},
+          {"key": "e", "text": "Does not interrupt communication between ground station and A/C (particularly after frequency change) and executes initial contact, where it is required."}
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Το item σπάει στο γύρισμα σελίδας 43→44: το γενικό κριτήριο e/ ολοκληρώνεται στη σελ. 44 («...executes initial | contact, where it is required.»)."
+      ]
+    },
+    {
+      "id": "contact-38",
+      "numbers": [38],
+      "name": "AIRMANSHIP",
+      "heading_verbatim": "(38) AIRMANSHIP",
+      "pages_pdf": [44, 45],
+      "execution": [
+        "SP shall demonstrate the following features of pilot’s characteristics that additionally play a major role in CRM development.",
+        "1/ Awareness/Judgment: Correlates and keeps track of what is happening on the ground, in own aircraft, and other flight members, and copes with any subsequent mission impact as a result of these happenings.",
+        "2/ Risk management/Decision making: SP assesses risk and makes appropriate decisions.",
+        "3/ Task prioritization/Saturation: SP is able to put an order on his tasks according their significance.",
+        "4/ Flexibility: Copes with rapidly changing situations or conditions, in-flight or on the ground, and adjust mission as needed, to obtain desired objectives.",
+        "5/ Capacity: Cognizant of how large a task loading he/she can cope with before becoming saturated, confused, or frustrated to the point that safety is jeopardized or the mission is rendered ineffective.",
+        "6/ Flight Discipline: Follows directives and carries out all required steps in a procedure in the proper order."
+      ],
+      "conditions": [
+        "SP shall demonstrate the proper airmanship throughout the mission"
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {"key": null, "text": "To fulfill General Criteria for Airmanship, SP must:"},
+          {"key": "a", "text": "Awareness/Judgment:"},
+          {"key": "a.1", "text": "Demonstrate the ability to minimize the effects of adverse factors and capitalize on opportunities to avoid mission degradation. Factors to be considered may include, but are not limited to, such items as weather conditions, airspace and approach restrictions, high-density traffic, aircraft capabilities and limitations, and fuel conservation."},
+          {"key": "a.2", "text": "Performs all operational checks according to Check list, Techniques and Procedures Manual and Standard Operating Procedures (SOPs)."},
+          {"key": "a.3", "text": "Maintains orientation during flight."},
+          {"key": "a.4", "text": "Is able to return to base (RTB) safely or deviate to the alternate airfield."},
+          {"key": "a.5", "text": "Continuously monitors Control and Performance Instruments of the A/C and crosschecks with the A/C position. Performs required corrections by prioritizing his/her task accordingly in reference with outside visual cues during maneuvering and throughout the flight"},
+          {"key": "a.6", "text": "Adjusts the execution of the mission in relation with the available flight time, in order to take advantage in the most efficient way of the remaining fuel (taking into account the current weather conditions), as well as the assigned flight area."},
+          {"key": "b", "text": "Risk management/Decision making:"},
+          {"key": "b.1", "text": "Accurately identifies contingencies and alternatives."},
+          {"key": "b.2", "text": "Properly gather all available data before arriving at final decision."},
+          {"key": "b.3", "text": "Clearly state decisions."},
+          {"key": "b.4", "text": "Provide rationale in taking decisions."},
+          {"key": "b.5", "text": "Realize actual or potential hazards effectively and regulate his/her flight correspondingly, in order to positively avoid them."},
+          {"key": "c", "text": "Task prioritization / saturation:"},
+          {"key": "c.1", "text": "SP put tasks in order without missing anything significant or violating any rule."},
+          {"key": "c.2", "text": "SP is able to handle multitasks in sequence without dropping any task out."},
+          {"key": "c.3", "text": "His/her task management does not drive into a channelized attention situation."},
+          {"key": "d", "text": "Flexibility in taking the right decision:"},
+          {"key": "d.1", "text": "Correctly assesses all possible factors bearing on the situation and selects the best course of action."},
+          {"key": "d.2", "text": "Makes correct decisions based on complete or incomplete knowledge of the situation, foresees the outcome(s) of present actions and modify those actions as necessary to obtain the best outcome."},
+          {"key": "d.3", "text": "Makes alternative choices if need be, in order to alleviate the working stress and enhance mission effectiveness."},
+          {"key": "e", "text": "Capacity: Never exceeds his/her capabilities to control the aircraft safely. Selects an alternative course of action, when needed, to reduce task loading and allow for effective mission accomplishment."},
+          {"key": "f", "text": "Flight Discipline:"},
+          {"key": "f.1", "text": "Has complete knowledge of all rules and regulations regarding flight."},
+          {"key": "f.2", "text": "Carries out all duties with minimum IP’s supervision."}
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "SP shall demonstrate the following features of pilot’s characteristics that additionally play a major role in CRM development."
+      ],
+      "flags": [
+        "ΞΕΝΟ ΣΥΜΒΟΛΟ ΠΗΓΗΣ: μεταξύ του «(a) EXECUTION» και του «SP shall demonstrate...» υπάρχει ένας μεμονωμένος χαρακτήρας backtick «`» (σελ. 44, y=144.84, x0=113.40, στο αριστερό περιθώριο). Δεν συμπεριλήφθηκε στο κείμενο.",
+        "ΙΕΡΑΡΧΙΑ: τα General Criteria του (38) έχουν δύο επίπεδα (a/…f/ και από κάτω γυμνοί αριθμοί 1…6). Επειδή το σχήμα general_criteria είναι επίπεδο, τα υπο-στοιχεία κωδικοποιήθηκαν ως keys «a.1», «a.2» κ.λπ. Τα keys «a», «b», «c», «d», «f» είναι ΜΟΝΟ επικεφαλίδες ομάδας (χωρίς δικό τους κριτήριο)· το «e» (Capacity) έχει ενιαίο κείμενο χωρίς υπο-αρίθμηση.",
+        "Η CONDITIONS τελειώνει χωρίς τελεία στην πηγή («...throughout the mission»). Διατηρήθηκε verbatim.",
+        "Γραμματικό λάθος πηγής στο 3/ της EXECUTION: «according their significance» (λείπει «to»). Διατηρήθηκε verbatim.",
+        "Το a.5 τελειώνει χωρίς τελεία στην πηγή («...throughout the flight»)· σπάει στο γύρισμα σελίδας 44→45.",
+        "Οι απόστροφοι «pilot’s», «IP’s» είναι U+2019 (τυπογραφικοί) — διατηρήθηκαν."
+      ]
+    },
+    {
+      "id": "contact-39",
+      "numbers": [39],
+      "name": "EMERGENCY PROCEDURES",
+      "heading_verbatim": "(39) EMERGENCY PROCEDURES",
+      "pages_pdf": [45, 46],
+      "execution": [
+        "SP must know all emergency procedures (BOLD FACE by heart) according to Check List and execute them, while in ground or during flight."
+      ],
+      "conditions": [
+        "To fulfill the General Criteria, SP must know how to apply the Emergency Procedures:",
+        "1/ In pre-flight or post flight briefing.",
+        "2/ During the whole mission, from engine start up to engine shut down after flight, if required or requested by IP."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {"key": "a", "text": "Must state proper steps in critical action procedures (BOLD FACE) in sequence, by heart, without mistakes."},
+          {"key": "b", "text": "Knows and observes A/C limits reported in Section V of the Flight Manual."},
+          {"key": "c", "text": "Executes all procedures according to Check List/IFG, without IP’s intervention, flawlessly, timely and according to the standardized sequence."},
+          {"key": "d", "text": "Knows in detail all emergency procedures and the relevant systems, set as daily assignment."},
+          {"key": "e", "text": "Handles the emergency procedure effectively."}
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Η επικεφαλίδα «(39) EMERGENCY PROCEDURES» βρίσκεται στην τελευταία γραμμή της σελ. 45 (y=763.41)· όλο το σώμα του item είναι στη σελ. 46.",
+        "Τα GENERAL CRITERIA ΔΕΝ έχουν εισαγωγική πρόταση («To fulfill...»)· ξεκινούν απευθείας από το a/. Αντ' αυτού η φράση «To fulfill the General Criteria, SP must know how to apply the Emergency Procedures:» εμφανίζεται στο CONDITIONS — ασυνήθιστη τοποθέτηση στην πηγή, διατηρήθηκε όπως τυπώθηκε."
+      ]
+    },
+    {
+      "id": "contact-40",
+      "numbers": [40],
+      "name": "GENERAL KNOWLEDGE",
+      "heading_verbatim": "(40) GENERAL KNOWLEDGE",
+      "pages_pdf": [46, 47],
+      "execution": [
+        "SP must know and use with confidence any handbooks related to the flight and required by BD 3-1/HATC."
+      ],
+      "conditions": [
+        "General Knowledge is presented:",
+        "1/ At the pre-flight briefing",
+        "2/ During the flight.",
+        "3/ At the post flight briefing."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {"key": null, "text": "To fulfill the General Criteria on General Knowledge, SP must:"},
+          {"key": "a", "text": "Knows in detail all exercises given as daily assignment."},
+          {"key": "b", "text": "Κnows in detail the Flight Manual, the A/C Techniques and Procedures Manual, the AFMAN 11-202 VOL3 and the aeronautical publications (ΜAΙΡ, maps etc.)."},
+          {"key": "c", "text": "Has knowledge of meteorological principles and be able to attend the morning meteorological briefing without problem."},
+          {"key": "d", "text": "Has aerodynamics knowledge, so as to be able to explain, theoretically, situations to be encountered during flight."},
+          {"key": "e", "text": "Knows airport traffic procedures and have sufficient knowledge in order to plan a flight."},
+          {"key": "f", "text": "Has knowledge of air medicine and flight physiology, so that he/she can interpret all the physiology conditions and flight effects to be encountered."},
+          {"key": "g", "text": "Be aware of both sea and land survival procedures and the rescue procedures from SAR means."}
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "ΕΛΛΗΝΙΚΑ LOOKALIKES στο κριτήριο b/ (διατηρήθηκαν verbatim κατά τον κανόνα «fix nothing silently»): (1) «Κnows» — το πρώτο γράμμα είναι ελληνικό Κ (U+039A) αντί λατινικού K· (2) «ΜAΙΡ» — Μ=U+039C (ελληνικό Μυ), A=U+0041 λατινικό, Ι=U+0399 (ελληνικό Ιώτα), Ρ=U+03A1 (ελληνικό Ρω)· σωστό: «MAIP» (όλα λατινικά). Αν χρειάζεται normalized έκδοση: «Knows in detail ... publications (MAIP, maps etc.).»",
+        "Στην πηγή υπάρχει επιπλέον κενό μετά το «d/» (« Has aerodynamics knowledge») — αφαιρέθηκε κατά το reflow.",
+        "Το 1/ των CONDITIONS τελειώνει χωρίς τελεία («At the pre-flight briefing»). Διατηρήθηκε verbatim.",
+        "Ασυνέπεια πηγής: η εισαγωγή λέει «SP must:» αλλά τα κριτήρια είναι σε γ' ενικό («Knows», «Has»). Διατηρήθηκε verbatim.",
+        "Το item σπάει στο γύρισμα σελίδας 46→47 (το κριτήριο b/ ξεκινά στη σελ. 46 και ολοκληρώνεται στη σελ. 47)."
+      ]
+    },
+    {
+      "id": "contact-41",
+      "numbers": [41],
+      "name": "SPECIAL REQUIREMENTS",
+      "heading_verbatim": "(41) SPECIAL REQUIREMENTS",
+      "pages_pdf": [47],
+      "execution": [
+        "As determined by the Training Exercises analysis and the Performance Standards (MIF)."
+      ],
+      "conditions": [],
+      "expected_performance": {
+        "general_criteria": [],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "As determined by the Training Exercises analysis and the Performance Standards (MIF)."
+      ],
+      "flags": [
+        "ΔΟΜΗ: το item (41) ΔΕΝ έχει υποενότητες (a) EXECUTION / (b) CONDITIONS / (c) EXPECTED PERFORMANCE. Αποτελείται από μία μόνο πρόταση, η οποία τοποθετήθηκε στο πεδίο execution ελλείψει γενικού πεδίου «body» στο σχήμα.",
+        "Η πρόταση είναι παραπομπή σε «Training Exercises analysis» και «Performance Standards (MIF)» — τμήματα του εγγράφου, όχι άλλο item/κατηγορία· καταχωρήθηκε και στα cross_refs για ανιχνευσιμότητα, reference_target=null."
+      ]
+    },
+    {
+      "id": "contact-crm",
+      "numbers": [],
+      "name": "CRM",
+      "heading_verbatim": "CRM",
+      "pages_pdf": [47, 48],
+      "execution": [
+        "1/ Integrate CRM skills into briefings - debriefings in accordance with CRM training.",
+        "2/ Gradesheets contain the following CRM items (where applicable):",
+        "a/ Mission planning/briefing/debriefing.",
+        "b/ Communication.",
+        "c/ Airmanship and its subcategories.",
+        "3/ Some or all of the above items are graded on every sortie.",
+        "4/ Discuss particular areas for CRM development / improvement.",
+        "5/ Solicit comments when CRM enhances mission effectiveness and safety.",
+        "6/ Check (V) mark the “CRM box” after debriefing to complete the grade sheet."
+      ],
+      "conditions": [
+        "1/ During the briefing.",
+        "2/ Throughout the flight.",
+        "3/ During the debriefing."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {"key": "a", "text": "SP understands when CRM enhances mission performance and flight safety."},
+          {"key": "b", "text": "SP uses the IFG/CRM matrix chart to highlight particular items."},
+          {"key": "c", "text": "SP uses CRM concept – at max extend- when planning maneuvers or when analyzing certain situations (i.e. emergencies, etc)"},
+          {"key": "d", "text": "If SP performs lower than expected, consider his/her level of experience. Apply MIF on items regarding his/her weak area and note on the gradesheet. (ie, When SP messes up radio drill in a blind situation use the appropriate MIF scale respectively for grading his performance)."}
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "c/ Airmanship and its subcategories."
+      ],
+      "flags": [
+        "ID: το item είναι ΑΝΑΡΙΘΜΗΤΟ (numbers=[]). Το σχήμα ορίζει id=«<category>-<zero-padded first number>» — χρησιμοποιήθηκε το fallback id «contact-crm». Χρειάζεται ευθυγράμμιση αν άλλα chunks χρησιμοποιούν διαφορετική σύμβαση.",
+        "ΕΠΙΠΕΔΟ: επιβεβαιώθηκε με x-συντεταγμένες ότι το «CRM» (σελ. 47, x0=212.65) είναι στο ΙΔΙΟ επίπεδο με τους τίτλους των αριθμημένων items (π.χ. «SPECIAL» του (41) στο x0=212.64), απλώς χωρίς αριθμό στη θέση x0=184.30. Είναι το ΤΕΛΕΥΤΑΙΟ item της κατηγορίας Contact — αμέσως μετά (σελ. 49) αρχίζει το «c. INSTRUMENT CATEGORY PERFORMANCE CRITERIA».",
+        "ΙΕΡΑΡΧΙΑ EXECUTION: τα a/ b/ c/ είναι υπο-στοιχεία του 2/ (Gradesheets contain the following CRM items). Επειδή το execution είναι επίπεδη λίστα strings, διατηρήθηκαν ως ξεχωριστές εγγραφές με τη σειρά τους.",
+        "Τα GENERAL CRITERIA δεν έχουν εισαγωγική πρόταση· ξεκινούν απευθείας από το a/.",
+        "Το κριτήριο c/ τελειώνει χωρίς τελεία και με ανώμαλη στίξη στην πηγή («– at max extend- ... etc)»)· το «extend» πιθανότατα typo για «extent». Διατηρήθηκε verbatim. Οι παύλες: πρώτη = en dash U+2013, δεύτερη = hyphen-minus.",
+        "Τα εισαγωγικά στο 6/ («CRM box») είναι U+201C/U+201D — διατηρήθηκαν."
+      ]
+    }
+  ]
+}

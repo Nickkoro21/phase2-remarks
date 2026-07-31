@@ -1,0 +1,225 @@
+{
+  "item_id": "vfr_navigation-12",
+  "item_name": "PILOTAGE",
+  "category": "vfr_navigation",
+  "mif_numbers": [12],
+  "mif_rows": [
+    {
+      "sn": 12,
+      "row_name": "Turning Points Recognition",
+      "desired_codes_seen": [1, 2, 3]
+    }
+  ],
+  "observations": [
+    {
+      "id": "vfr_navigation-12-12-d1a0-v1",
+      "mif_row": "Turning Points Recognition",
+      "desired": 1,
+      "achieved": 0,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to a map-reading technique that relied on a single ground feature instead of a cross-referenced feature pattern, did not recognize the second turning point and did not turn to the next heading in order to continue navigation. The point was overflown displaced by 2.8 NM, beyond the 2 NM tolerance, and the IP had to identify the turning point and direct the turn back onto the planned route.",
+      "sentences": 2
+    },
+    {
+      "id": "vfr_navigation-12-12-d1a0-v2",
+      "mif_row": "Turning Points Recognition",
+      "desired": 1,
+      "achieved": 0,
+      "variant": "human_factor",
+      "hf_concept": "situational awareness",
+      "text": "SP, due to loss of situational awareness of the aircraft's position along the planned route, did not recognize the turning point and did not monitor the determined duration of the leg. Arrival time at the turning point was in error by 95 seconds against the 60 second tolerance. The IP had to identify the point and execute part of the re-navigation to the following leg.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-12-12-d1a1-v1",
+      "mif_row": "Turning Points Recognition",
+      "desired": 1,
+      "achieved": 1,
+      "variant": "marginal",
+      "hf_concept": null,
+      "text": "SP recognized the turning points and turned to the next heading within the desired standards for the Training Section; on two of the five points, however, recognition followed the IP's verbal prompt. Deviation from the turning points reached 2 NM and arrival time reached 60 seconds, at the limit of the specified tolerances, with the errors recognized and corrected with delay. Marginal performance for this block - independent identification of the turning points is expected to improve.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-12-12-d1a2-v1",
+      "mif_row": "Turning Points Recognition",
+      "desired": 1,
+      "achieved": 2,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP, working from the planned map study, recognized most of the turning points and turned to the next heading timely without the IP's verbal prompts. Deviation from the turning points was held to 1.4 NM and arrival time to 45 seconds, with total navigation flight duration within 60 seconds of plan. The minor errors were recognized and corrected in a timely manner without IP's intervention. Above end of block MIF achieved.",
+      "sentences": 4
+    },
+    {
+      "id": "vfr_navigation-12-12-d1a3-v1",
+      "mif_row": "Turning Points Recognition",
+      "desired": 1,
+      "achieved": 3,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP recognized all turning points confidently and turned to the next heading in order to continue navigation without any prompting. Deviation from the turning points did not exceed 0.7 NM and arrival time stayed within 20 seconds, with total navigation flight duration within 30 seconds of the planned figure. Pilotage was accurate, timely and proficient throughout the route. Above end of block MIF achieved.",
+      "sentences": 4
+    },
+    {
+      "id": "vfr_navigation-12-12-d1a4-v1",
+      "mif_row": "Turning Points Recognition",
+      "desired": 1,
+      "achieved": 4,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP identified every turning point at range from the briefed feature pattern and turned to the next heading with no perceptible delay. Deviation from the turning points remained within 0.2 NM and arrival time within 5 seconds, with total navigation flight duration within 8 seconds of plan. Accuracy in pilotage was exceptional and above the desired levels for the Training Section. Above end of block MIF achieved.",
+      "sentences": 4
+    },
+    {
+      "id": "vfr_navigation-12-12-d2a0-v1",
+      "mif_row": "Turning Points Recognition",
+      "desired": 2,
+      "achieved": 0,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to a chart orientation technique that was not maintained after the second leg, did not recognize the turning point and did not turn to the next heading in order to continue navigation. The point was overflown displaced by 3.0 NM and arrival time was in error by 110 seconds, both beyond the 2 NM and 60 second tolerances. The IP had to identify the turning point and execute part of the re-navigation.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-12-12-d2a0-v2",
+      "mif_row": "Turning Points Recognition",
+      "desired": 2,
+      "achieved": 0,
+      "variant": "human_factor",
+      "hf_concept": "continuation bias",
+      "text": "SP, due to continuation of the plan after the information that invalidated it had already been received, held the outbound heading past the turning point instead of turning to the next point at the completion of leg time. Total navigation flight duration exceeded the plan by 140 seconds against the 90 second tolerance. The IP had to direct the turn and recover the aircraft to the planned track.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-12-12-d2a1-v1",
+      "mif_row": "Turning Points Recognition",
+      "desired": 2,
+      "achieved": 1,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to a leg-time computation that was not updated for the actual groundspeed, did not monitor the determined durations of each leg and turned late at two turning points. Deviation from the turning points reached 2 NM and arrival time 60 seconds, at the limit of the specified tolerances. Both turns to the next heading were completed only after the IP's verbal prompts, with recognition and correction delayed.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-12-12-d2a1-v2",
+      "mif_row": "Turning Points Recognition",
+      "desired": 2,
+      "achieved": 1,
+      "variant": "human_factor",
+      "hf_concept": "over-reliance on automation",
+      "text": "SP, due to over-reliance on automation that was not fully understood, worked the moving map instead of recognizing the turning points visually and did not turn to the next heading timely. Total navigation flight duration was in error by 90 seconds, at the limit of the specified tolerance. The turns were initiated only after the IP's verbal prompts and the error was recognized with delay.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-12-12-d2a2-v1",
+      "mif_row": "Turning Points Recognition",
+      "desired": 2,
+      "achieved": 2,
+      "variant": "marginal",
+      "hf_concept": null,
+      "text": "SP recognized most of the turning points and turned to the next heading within the desired standards, with the minor errors self-corrected without IP's intervention. Deviation from the turning points twice reached 1.8 NM and arrival time 55 seconds, close to the limits of the specified tolerances. Marginal performance for the Training Section - tighter control of the determined leg durations is expected to improve consistency at the turning points.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-12-12-d2a3-v1",
+      "mif_row": "Turning Points Recognition",
+      "desired": 2,
+      "achieved": 3,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP recognized all turning points and turned to the next heading in order to continue navigation without IP's intervention. Deviation from the turning points was held within 0.8 NM, arrival time within 20 seconds and total navigation flight duration within 35 seconds of plan. Pilotage was accurate, timely and proficient on every leg of the route. Above end of block MIF achieved.",
+      "sentences": 4
+    },
+    {
+      "id": "vfr_navigation-12-12-d2a4-v1",
+      "mif_row": "Turning Points Recognition",
+      "desired": 2,
+      "achieved": 4,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP identified every turning point in advance from the briefed feature pattern and turned to the next heading with no perceptible delay, including the leg where the point was covered by clouds and the turn was flown at the completion of leg time. Deviation from the turning points remained within 0.2 NM and arrival time within 5 seconds, with total navigation flight duration within 10 seconds of plan. Accuracy was exceptional and above the desired levels for the Training Section. Above end of block MIF achieved.",
+      "sentences": 4
+    },
+    {
+      "id": "vfr_navigation-12-12-d3a0-v1",
+      "mif_row": "Turning Points Recognition",
+      "desired": 3,
+      "achieved": 0,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to a route study that did not establish alternate identification features for each turning point, could not recognize the third turning point and did not turn to the next heading in order to continue navigation. The point was overflown displaced by 3.2 NM, beyond the 2 NM tolerance, and total navigation flight duration exceeded the plan by 150 seconds. The IP had to identify the turning point and execute part of the re-navigation to the following leg.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-12-12-d3a0-v2",
+      "mif_row": "Turning Points Recognition",
+      "desired": 3,
+      "achieved": 0,
+      "variant": "human_factor",
+      "hf_concept": "distraction",
+      "text": "SP, due to distraction by a secondary cockpit task during the inbound leg, did not monitor the determined leg duration and did not recognize the turning point that was covered by clouds. The turn was not flown at the completion of leg time, arrival at the following point was 120 seconds late against the 60 second tolerance and the aircraft was 2.6 NM outside the planned turning radius. The IP had to direct the turn and re-establish the planned route.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-12-12-d3a1-v1",
+      "mif_row": "Turning Points Recognition",
+      "desired": 3,
+      "achieved": 1,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to a map-to-ground scan technique that was started too late on each leg, did not recognize the turning points confidently and did not turn to the next heading timely. Deviation from the turning points reached 2 NM and arrival time 60 seconds, at the limit of the specified tolerances. The turns were completed only after the IP's verbal prompts and the errors were recognized and corrected with delay.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-12-12-d3a1-v2",
+      "mif_row": "Turning Points Recognition",
+      "desired": 3,
+      "achieved": 1,
+      "variant": "human_factor",
+      "hf_concept": "workload management",
+      "text": "SP, due to task sequencing that concentrated all cockpit workload inside the turn, did not monitor the determined durations of each leg and did not recognize two turning points without assistance. Total navigation flight duration was in error by 90 seconds, at the limit of the specified tolerance. Both turns to the next heading were initiated only after the IP's verbal prompts, with delayed recognition of the error.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-12-12-d3a2-v1",
+      "mif_row": "Turning Points Recognition",
+      "desired": 3,
+      "achieved": 2,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to a chart fold that obscured the feature line short of the second turning point, recognized the point late and turned to the next heading with a slight delay. Deviation from the turning point reached 1.6 NM and arrival time 50 seconds, between the specified tolerances. The error was recognized and corrected in a timely manner without IP's intervention.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-12-12-d3a2-v2",
+      "mif_row": "Turning Points Recognition",
+      "desired": 3,
+      "achieved": 2,
+      "variant": "human_factor",
+      "hf_concept": "workload distribution",
+      "text": "SP, due to workload distribution that left the SP flying and transmitting at the same time, did not maintain the running check of leg duration and recognized the turning point later than planned. Arrival time at the turning points reached 55 seconds and total navigation flight duration 70 seconds, between the specified tolerances. The deviations were recognized and corrected in a timely manner without IP's intervention.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-12-12-d3a3-v1",
+      "mif_row": "Turning Points Recognition",
+      "desired": 3,
+      "achieved": 3,
+      "variant": "marginal",
+      "hf_concept": null,
+      "text": "SP recognized all turning points and turned to the next heading within the desired standards, monitoring the determined leg durations without IP's intervention. Deviation from the turning points reached 0.9 NM and arrival time 28 seconds, at the outer edge of the code 3 tolerances, and one point was identified only abeam rather than ahead of the aircraft. Marginal performance for the Training Section - earlier identification of the turning points is expected to improve with route familiarity.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-12-12-d3a4-v1",
+      "mif_row": "Turning Points Recognition",
+      "desired": 3,
+      "achieved": 4,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP recognized every turning point ahead of the aircraft from the briefed feature pattern and turned to the next heading in order to continue navigation without any prompting. Deviation from the turning points remained within 0.2 NM, arrival time within 5 seconds and total navigation flight duration within 10 seconds of plan. Pilotage accuracy was exceptional and above the desired levels for this stage of training. Above end of block MIF achieved.",
+      "sentences": 4
+    }
+  ]
+}

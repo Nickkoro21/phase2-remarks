@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDD Course Reference — Spec-Driven Development with Coding Agents</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117;
+  --bg-surface: #181a20;
+  --bg-card: #1e2028;
+  --bg-hover: #252830;
+  --text: #e4e4e7;
+  --text-muted: #9ca3af;
+  --text-dim: #6b7280;
+  --accent: #818cf8;
+  --accent-soft: rgba(129,140,248,0.12);
+  --accent-glow: rgba(129,140,248,0.25);
+  --green: #34d399;
+  --green-soft: rgba(52,211,153,0.12);
+  --orange: #fb923c;
+  --orange-soft: rgba(251,146,60,0.12);
+  --red: #f87171;
+  --border: #2a2d35;
+  --border-light: #3a3d45;
+  --radius: 10px;
+  --sidebar-w: 300px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  position: fixed; top: 0; left: 0;
+  width: var(--sidebar-w); height: 100vh;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto; z-index: 100;
+  padding: 24px 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-light) transparent;
+}
+.sidebar-header {
+  padding: 0 20px 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+.sidebar-header h1 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.sidebar-header p {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+.nav-group {
+  margin-bottom: 6px;
+}
+.nav-group-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+  padding: 12px 20px 6px;
+}
+.nav-link {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 7px 20px;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.4;
+  transition: all 0.15s;
+  border-left: 2px solid transparent;
+}
+.nav-link:hover {
+  background: var(--bg-hover);
+  color: var(--text);
+}
+.nav-link.active {
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: var(--accent-soft);
+}
+.nav-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  min-width: 22px;
+  padding-top: 1px;
+}
+.nav-sub {
+  padding-left: 52px;
+  font-size: 12px;
+  color: var(--text-dim);
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+.nav-sub:hover { color: var(--text-muted); }
+
+/* ── Main Content ── */
+.main {
+  margin-left: var(--sidebar-w);
+  max-width: 820px;
+  padding: 48px 48px 120px;
+}
+.hero {
+  margin-bottom: 56px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+}
+.hero h1 {
+  font-family: 'Source Serif 4', serif;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+.hero .subtitle {
+  font-size: 17px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.hero .meta {
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--text-dim);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ── Sections ── */
+.lesson {
+  margin-bottom: 56px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+}
+.lesson:last-child { border-bottom: none; }
+.lesson-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.lesson-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.lesson h2 {
+  font-family: 'Source Serif 4', serif;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.lesson h3 {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 28px 0 12px;
+  padding-left: 14px;
+  border-left: 3px solid var(--accent);
+}
+.lesson h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 20px 0 8px;
+}
+.lesson p {
+  margin-bottom: 12px;
+  color: var(--text-muted);
+}
+.lesson p strong { color: var(--text); font-weight: 600; }
+
+/* ── Special blocks ── */
+.key-concept {
+  background: var(--accent-soft);
+  border: 1px solid rgba(129,140,248,0.2);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 16px 0;
+}
+.key-concept .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.tip-block {
+  background: var(--green-soft);
+  border: 1px solid rgba(52,211,153,0.2);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 16px 0;
+}
+.tip-block .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--green);
+  margin-bottom: 8px;
+}
+.warn-block {
+  background: var(--orange-soft);
+  border: 1px solid rgba(251,146,60,0.2);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 16px 0;
+}
+.warn-block .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--orange);
+  margin-bottom: 8px;
+}
+
+ul, ol {
+  margin: 8px 0 16px 20px;
+  color: var(--text-muted);
+}
+li { margin-bottom: 6px; }
+li strong { color: var(--text); }
+
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  background: var(--bg-hover);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--accent);
+}
+pre {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  overflow-x: auto;
+  margin: 12px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 14px;
+}
+th {
+  text-align: left;
+  padding: 10px 14px;
+  background: var(--bg-hover);
+  color: var(--text);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-light);
+}
+td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.flow-diagram {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+  font-size: 14px;
+}
+.flow-step {
+  background: var(--bg-hover);
+  border: 1px solid var(--border-light);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  color: var(--text);
+}
+.flow-arrow { color: var(--accent); font-size: 18px; }
+
+/* ── Mobile ── */
+@media (max-width: 900px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; padding: 24px 20px 80px; }
+  .hero h1 { font-size: 28px; }
+  .lesson h2 { font-size: 22px; }
+}
+
+/* ── Back to top ── */
+.back-top {
+  position: fixed; bottom: 24px; right: 24px;
+  width: 44px; height: 44px;
+  background: var(--accent);
+  color: var(--bg);
+  border: none; border-radius: 50%;
+  font-size: 20px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.3s;
+  z-index: 99;
+}
+.back-top.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ SIDEBAR ═══════════ -->
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <h1>📐 SDD Course</h1>
+    <p>Spec-Driven Development<br>with Coding Agents</p>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Εισαγωγή</div>
+    <a class="nav-link" href="#lesson-01"><span class="nav-num">01</span> Introduction</a>
+    <a class="nav-link" href="#lesson-02"><span class="nav-num">02</span> Why Spec-Driven Development</a>
+    <a class="nav-link" href="#lesson-03"><span class="nav-num">03</span> Workflow Overview</a>
+    <a class="nav-link" href="#lesson-04"><span class="nav-num">04</span> Set Up Your Environment</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Constitution</div>
+    <a class="nav-link" href="#lesson-05"><span class="nav-num">05</span> Creating the Constitution</a>
+    <a class="nav-sub" href="#l05-mission">Mission</a>
+    <a class="nav-sub" href="#l05-techstack">Tech Stack</a>
+    <a class="nav-sub" href="#l05-roadmap">Roadmap</a>
+    <a class="nav-sub" href="#l05-interview">Συζήτηση με τον Agent</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Feature Loop #1</div>
+    <a class="nav-link" href="#lesson-06"><span class="nav-num">06</span> Feature Specification</a>
+    <a class="nav-sub" href="#l06-plan">Feature Plan</a>
+    <a class="nav-sub" href="#l06-requirements">Requirements</a>
+    <a class="nav-sub" href="#l06-validation">Validation Scorecard</a>
+    <a class="nav-link" href="#lesson-07"><span class="nav-num">07</span> Feature Implementation</a>
+    <a class="nav-link" href="#lesson-08"><span class="nav-num">08</span> Feature Validation</a>
+    <a class="nav-sub" href="#l08-hitl">Human-in-the-Loop</a>
+    <a class="nav-sub" href="#l08-drift">Spec Drift</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Replanning & Εξέλιξη</div>
+    <a class="nav-link" href="#lesson-09"><span class="nav-num">09</span> Project Replanning</a>
+    <a class="nav-sub" href="#l09-testing">Testing Framework</a>
+    <a class="nav-sub" href="#l09-responsive">Responsive Update</a>
+    <a class="nav-sub" href="#l09-skills">Changelog Skill</a>
+    <a class="nav-link" href="#lesson-10"><span class="nav-num">10</span> The Second Feature Phase</a>
+    <a class="nav-sub" href="#l10-fatigue">AI Fatigue</a>
+    <a class="nav-sub" href="#l10-deepreview">Deep Review με Sub-agents</a>
+    <a class="nav-link" href="#lesson-11"><span class="nav-num">11</span> The MVP</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Προχωρημένα</div>
+    <a class="nav-link" href="#lesson-12"><span class="nav-num">12</span> Legacy Support</a>
+    <a class="nav-link" href="#lesson-13"><span class="nav-num">13</span> Build Your Own Workflow</a>
+    <a class="nav-sub" href="#l13-skills">Agent Skills</a>
+    <a class="nav-sub" href="#l13-mcp">MCP vs CLI + Skills</a>
+    <a class="nav-sub" href="#l13-plugins">Plugins & Packages</a>
+    <a class="nav-link" href="#lesson-14"><span class="nav-num">14</span> Agent Replaceability</a>
+    <a class="nav-sub" href="#l14-standards">MCP, AGENTS.md, ACP</a>
+    <a class="nav-link" href="#lesson-15"><span class="nav-num">15</span> Conclusion</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Αναφορά</div>
+    <a class="nav-link" href="#appendix-workflow">📐 SDD Workflow Σύνοψη</a>
+    <a class="nav-link" href="#appendix-rubric">📋 Challenge Rubric</a>
+    <a class="nav-link" href="#appendix-glossary">📘 Γλωσσάρι</a>
+  </div>
+</nav>
+
+<!-- ═══════════ MAIN ═══════════ -->
+<div class="main">
+
+<div class="hero">
+  <h1>Spec-Driven Development<br>with Coding Agents</h1>
+  <p class="subtitle">Πλήρες Reference Guide βασισμένο στο course του DeepLearning.AI σε συνεργασία με την JetBrains. Instructor: Paul Everitt, Developer Advocate at JetBrains.</p>
+  <p class="meta">15 VIDEO LESSONS · BEGINNER · COURSE TRANSCRIPTS IN FULL</p>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- LESSON 01 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="lesson" id="lesson-01">
+  <div class="lesson-header">
+    <span class="lesson-num">LESSON 01</span>
+    <h2>Introduction</h2>
+  </div>
+
+  <p>To Spec-Driven Development (SDD) είναι αυτή τη στιγμή ο καλύτερος τύπος workflow για τη δημιουργία σοβαρών εφαρμογών με agentic coding assistance. Δίνεις στον coding agent ένα markdown αρχείο ή ένα αναλυτικό prompt που εξηγεί ακριβώς τι να χτίσει, και αυτός υλοποιεί το spec. Αντί να γράφεις κώδικα με το χέρι, <strong>εστιάζεις στο να γράψεις το context που ο agent δεν γνωρίζει ήδη</strong>.</p>
+
+  <h3>Τα 3 Κύρια Οφέλη του SDD</h3>
+  <ol>
+    <li><strong>Amplification (Ενίσχυση):</strong> Ελέγχεις μεγάλες αλλαγές κώδικα με μικρές αλλαγές στο spec. Μία πρόταση όπως "use SQLite with Prisma ORM" μπορεί να επηρεάσει εκατοντάδες γραμμές κώδικα. Άλλαξέ το σε "MongoDB" για ανάλογο downstream effect.</li>
+    <li><strong>Context Preservation:</strong> Τα specs εξαλείφουν το context decay μεταξύ sessions. Οι agents είναι stateless — το loading με high-quality context στο boot-up είναι κρίσιμο.</li>
+    <li><strong>Intent Fidelity:</strong> Τα specs βελτιώνουν την πιστότητα πρόθεσης. Ορίζεις το πρόβλημα, τα success criteria, τα constraints, και ο agent μπορεί να αναπτύξει ένα πιο πλήρες πλάνο.</li>
+  </ol>
+
+  <div class="key-concept">
+    <div class="label">Βασική Αρχή</div>
+    <p>Ένας τρόπος να γράψεις ένα spec είναι μέσω <strong>συζήτησης με τον agent</strong> (Claude Code, Gemini, ChatGPT Codex) — παίρνεις τις βασικές αρχιτεκτονικές αποφάσεις και μετά ζητάς από τον agent να συνοψίσει τις αποφάσεις σε ένα markdown αρχείο.</p>
+  </div>
+
+  <p>Η συγγραφή spec απαιτεί σκέψη — πρέπει να αποφασίσεις τι προϊόν θέλεις, ποια features, ποια τεχνική αρχιτεκτονική. <strong>Χωρίς spec, αφήνεις αυτές τις σημαντικές αποφάσεις στις ορέξεις του coding agent</strong>, κάτι που μπορεί να είναι OK για γρήγορο prototyping αλλά οδηγεί σε λιγότερο maintainable κώδικα.</p>
+
+  <h3>SDD Workflow Overview</h3>
+  <p>Το SDD περιλαμβάνει την ανάπτυξη ενός <strong>Constitution</strong> στο επίπεδο project για τον ορισμό των immutable standards. Μετά, iteration μέσω <strong>feature development loops</strong> που απομονώνουν κάθε feature σε δικό του branch με βήματα <strong>Plan → Implement → Verify</strong>.</p>
+
+  <p>Το ίδιο workflow υποστηρίζει τόσο <strong>greenfield</strong> (νέα projects) όσο και <strong>brownfield</strong> (υπάρχουσες codebases). Σε greenfield, αναπτύσσεις το constitution σε συζήτηση με τον agent. Σε brownfield, <strong>generate το constitution βάσει υπάρχοντα κώδικα</strong>.</p>
+
+  <div class="tip-block">
+    <div class="label">Πρακτική Συμβουλή</div>
+    <p>Αν ένας coding agent πρόκειται να γράψει κώδικα για 20-30 λεπτά (αρκετές ώρες παραδοσιακής δουλειάς), είναι καλύτερα να καθίσεις 3-4 λεπτά και να γράψεις πραγματικά ξεκάθαρες οδηγίες πρώτα.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- LESSON 02 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="lesson" id="lesson-02">
+  <div class="lesson-header">
+    <span class="lesson-num">LESSON 02</span>
+    <h2>Why Spec-Driven Development?</h2>
+  </div>
+
+  <h3>Vibe Coding vs SDD</h3>
+  <p>Το <strong>vibe coding</strong> δίνει γρήγορα αποτελέσματα: γράφεις ένα prompt ("create me a button"), ελπίζεις για το καλύτερο, κοιτάς το αποτέλεσμα, διορθώνεις ξανά και ξανά. Αυτό λειτουργεί για ένα κουμπί, <strong>αλλά δεν κλιμακώνεται σε μεγάλα, ongoing projects</strong>. Τα high-level prompts οδηγούν σε disposable κώδικα και αυξανόμενο technical debt.</p>
+
+  <div class="key-concept">
+    <div class="label">Ορισμός SDD</div>
+    <p>Spec-Driven Development = η επαγγελματική απάντηση στο χάος της ανεπιτήρητης AI-generated κωδικοποίησης. Είναι ένα <strong>paradigm shift</strong> όπου το Specification (what &amp; why) αποσυνδέεται από το Implementation (how).</p>
+  </div>
+
+  <h3>Τα 3 Οφέλη Αναλυτικά</h3>
+  <h4>1. Amplification — Μικρές αλλαγές spec → Μεγάλες αλλαγές κώδικα</h4>
+  <p>Μερικές προτάσεις στο spec που περιγράφουν το look &amp; feel μπορεί να μεταφραστούν σε εκατοντάδες γραμμές CSS. Αυτή η spec-driven προσέγγιση <strong>μειώνει το cognitive overhead</strong> στη δουλειά με ultra-fast coding agents.</p>
+
+  <h4>2. Context Preservation — Εξάλειψη Context Decay</h4>
+  <p>Καθώς δουλεύεις με τον coding agent, το context window γεμίζει, οδηγώντας σε περισσότερα λάθη. Τα specs <strong>persist μεταξύ sessions και ακόμα μεταξύ agents</strong>, αγκυρώνοντας τον agent στο core context.</p>
+
+  <h4>3. Intent Fidelity — Ο agent παράγει κώδικα πιο κοντά στους στόχους σου</h4>
+  <p>Τα specs σε αναγκάζουν να ορίσεις το πρόβλημα, success criteria, constraints, user flows <strong>πριν ο agent αρχίσει να παράγει κώδικα</strong>.</p>
+
+  <h3>Η Αναλογία του Compiler</h3>
+  <p>Σκέψου τους compilers: μετατρέπουν κατανοητό source code σε machine code. Αντίστοιχα, το SDD καθοδηγεί τον agent να <strong>μετατρέπει specs σε source code</strong>. Ακόμα καλύτερα, τα specs είναι σε ανθρώπινη γλώσσα, κάνοντάς τα εύκολα κατανοητά από stakeholders.</p>
+
+  <h3>Coding Agents vs Chatbots</h3>
+  <p>Ένα chatbot μπορεί να μιλήσει για κώδικα, αλλά <strong>δεν έχει πρόσβαση στο project σου ούτε σε εργαλεία</strong>. Οι agents παίρνουν το prompt σου, κάνουν plan, και οδηγούν τον εαυτό τους σε αποτέλεσμα χρησιμοποιώντας reasoning. Σημαντικό: οι agents <strong>έχουν πρόσβαση στη codebase σου και τα development tools σου</strong>.</p>
+
+  <div class="key-concept">
+    <div class="label">Βασική Αρχή</div>
+    <p>Στο SDD workflow, αντιμετωπίζουμε τους agents ως <strong>highly capable pair programmers</strong>. Αυτοί παρέχουν τεχνική γνώση και ταχύτητα — εσύ, ο senior architect, παρέχεις τα blueprints. <strong>Ο agent είναι ο μυς, αλλά το SPEC είναι ο εγκέφαλος.</strong></p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- LESSON 03 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="lesson" id="lesson-03">
+  <div class="lesson-header">
+    <span class="lesson-num">LESSON 03</span>
+    <h2>Workflow Overview</h2>
+  </div>
+
+  <p>Το SDD λέει στον agent πώς να χτίσει αυτό που θέλεις — πρώτα up-front για το project, μετά για κάθε feature, <strong>βελτιώνοντας καθώς προχωράς</strong>.</p>
+
+  <h3>Σωστό Επίπεδο Λεπτομέρειας</h3>
+  <p>Ένα κλειδί στο SDD είναι <strong>knowing the right level of detail</strong>. Αν αντιμετωπίσεις τον agent σαν highly capable pair programmer, συνήθως θα βρεις το σωστό επίπεδο:</p>
+  <ul>
+    <li><strong>Πολύ context</strong> για: Goals, mission, target audience, constraints</li>
+    <li><strong>Λίγο context</strong> για: Low-level αποφάσεις που ο agent μπορεί να αποφασίσει μόνος του</li>
+  </ul>
+
+  <h3>Το Constitution</h3>
+  <p>Ένα Constitution είναι ένας τρόπος να formalize τις project-level λεπτομέρειες. Πολλοί developers χρησιμοποιούν ένα top-level <code>agents.md</code> αρχείο, αλλά ένα Constitution είναι <strong>agent-agnostic και πιο structured</strong>.</p>
+  <p>Αποτελείται από 3 τμήματα:</p>
+
+  <table>
+    <tr><th>Αρχείο</th><th>Σκοπός</th><th>Για ποιον</th></tr>
+    <tr><td><code>mission.md</code></td><td>Το <strong>why</strong> — vision, audiences, scope</td><td>Όλους (stakeholders, team, agent)</td></tr>
+    <tr><td><code>tech-stack.md</code></td><td>Engineering — τεχνολογίες, deployment, constraints</td><td>Engineering team + agent</td></tr>
+    <tr><td><code>roadmap.md</code></td><td>Σειρά φάσεων — κάθε μία υλοποιείται με feature spec process</td><td>Project management</td></tr>
+  </table>
+
+  <h3>Feature Development Loop</h3>
+  <div class="flow-diagram">
+    <span class="flow-step">📝 Plan</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">⚙️ Implement</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">✅ Validate</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">🔄 Replan</span>
+  </div>
+  <p>Μεταξύ features, γίνεται <strong>replanning</strong>: αναθεώρηση Constitution, update roadmap, βελτίωση process.</p>
+
+  <h3>Η Αναλογία του Αρχιτέκτονα</h3>
+  <p>Φαντάσου ότι είσαι αρχιτέκτονας που δίνει αναλυτικά σχέδια κτιρίου σε χτίστες. Ο ρόλος σου είναι να <strong>σχεδιάσεις, εποπτεύσεις την κατασκευή, κι έπειτα να κάνεις review</strong> και αποδοχή ή αλλαγές. Αποφεύγεις να πεις στους χτίστες πώς να κάνουν τη δουλειά τους και εστιάζεις στο context που δεν γνωρίζουν.</p>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- LESSON 04 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="lesson" id="lesson-04">
+  <div class="lesson-header">
+    <span class="lesson-num">LESSON 04</span>
+    <h2>Set Up Your Environment</h2>
+  </div>
+
+  <h3>Repository</h3>
+  <p>Το course repo: <code>https-deeplearning-ai/sc-spec-driven-development-files</code></p>
+  <pre>git clone https://github.com/https-deeplearning-ai/sc-spec-driven-development-files.git
+cp -r Lesson_04/ my-agentclinic/
+cd my-agentclinic
+npm install</pre>
+  <p>Κάθε <code>Lesson_NN/</code> φάκελος είναι ένα self-contained snapshot του project όπως πρέπει να φαίνεται στην αρχή εκείνου του μαθήματος. Μπορείς να πάρεις οποιονδήποτε φάκελο θέλεις.</p>
+
+  <h3>IDE</h3>
+  <p>Το course χρησιμοποιεί <strong>WebStorm</strong> (JetBrains), αλλά οποιοδήποτε IDE λειτουργεί — VS Code, Zed, Cursor, Neovim. <strong>Το SDD δεν είναι δεμένο σε συγκεκριμένο εργαλείο.</strong></p>
+
+  <h3>Coding Agent</h3>
+  <p>Το course χρησιμοποιεί <strong>Claude Code</strong> στο terminal μέσα στο IDE, αλλά ξανά — οποιοδήποτε coding agent δουλεύει. Τα specs ταξιδεύουν μαζί σου όταν αλλάζεις εργαλεία.</p>
+
+  <div class="tip-block">
+    <div class="label">Σημείωση για εμάς</div>
+    <p>Εμείς δουλεύουμε σε <strong>Claude Chat</strong> (claude.ai), οπότε προσαρμόζουμε ανάλογα: δημιουργούμε αρχεία για download, ο χρήστης κάνει git/npm manually.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- LESSON 05 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="lesson" id="lesson-05">
+  <div class="lesson-header">
+    <span class="lesson-num">LESSON 05</span>
+    <h2>Creating the Constitution</h2>
+  </div>
+
+  <p>Πρέπει να πεις στον agent για το project σου — τη mission, το audience, και άλλες αποφάσεις. Σε αυτό το μάθημα, δουλεύεις <strong>μαζί με τον agent</strong> για να γράψεις το Constitution.</p>
+
+  <h3>Τι είναι πραγματικά το project σου;</h3>
+  <p>Τρεις θεμελιώδεις αρχές σχηματίζουν το Constitution — <strong>ένα global set από high-level requirements</strong> που θα καθοδηγήσουν τη μελλοντική ανάπτυξη:</p>
+  <ol>
+    <li><strong>Core idea</strong> — Τι πρόβλημα λύνεις;</li>
+    <li><strong>Tech stack</strong> — Ποιες τεχνολογίες ταιριάζουν στο εταιρικό σας σύστημα;</li>
+    <li><strong>Planned features</strong> — Τι θα χτίσεις;</li>
+  </ol>
+
+  <p>Αυτά πρέπει να γραφτούν — <strong>για τον agent, για τους συνεργάτες σου, για το μέλλον</strong>. Αλλά δεν τα γράφεις μόνος. Τα γράφεις σε <strong>συζήτηση με τον agent</strong>.</p>
+
+  <div class="tip-block">
+    <div class="label">Καλές Ερωτήσεις Agent</div>
+    <p>Θα εκπλαγείς με τις ερωτήσεις του agent: architecture patterns που δεν είχες σκεφτεί, external packages που κάνουν ήδη τη δουλειά, ή tradeoffs (π.χ. speed vs data fidelity).</p>
+  </div>
+
+  <h3 id="l05-mission">Mission Document</h3>
+  <p>Το <strong>AgentClinic</strong> (το project του course) είναι μια παρωδία-κλινική όπου AI agents πάνε για θεραπεία. Το mission document περιλαμβάνει:</p>
+  <ul>
+    <li>Τα πραγματικά προβλήματα (hallucinations, context rot, memory issues)</li>
+    <li>Visit lifecycle με TRIAGE step</li>
+    <li>FOLLOW-UP states</li>
+    <li>Ailment catalog με codes και severity levels</li>
+    <li>Custom ailment auto-creation (similarity threshold 0.6)</li>
+    <li>Ακριβής αλγόριθμος για treatment effectiveness</li>
+  </ul>
+  <p>Μετά τη συγγραφή, <strong>συζήτηση με τον agent για αποσαφήνιση</strong> — π.χ. threshold inconsistency, ασφάλεια dashboard, ποιο LLM model, archiving behavior.</p>
+
+  <h3 id="l05-techstack">Tech Stack Document</h3>
+  <p>Αυτό το document χωρίζει τις <strong>αρχιτεκτονικές αποφάσεις από το mission</strong>. Βασικά στοιχεία:</p>
+  <ul>
+    <li>Full pipeline (π.χ. τι γίνεται όταν ένας agent κάνει POST στο <code>/visits</code>)</li>
+    <li><strong>Database schema</strong> για όλα τα tables — κρίσιμο να υπάρχει εκ των προτέρων γιατί τα schema updates είναι headache</li>
+    <li>Λίστα treatments (π.χ. Temperature Reduction)</li>
+    <li>Ailment-to-treatment mapping</li>
+    <li>Βασικά smoke tests</li>
+  </ul>
+
+  <h3 id="l05-roadmap">Roadmap</h3>
+  <p>Οργανωμένο σε <strong>μικρά βήματα</strong>. Ο καθηγητής τονίζει: πες στον agent να οργανώσει το roadmap σε μικρά βήματα.</p>
+
+  <h3 id="l05-interview">Συζήτηση με τον Agent — Διαδικασία</h3>
+  <ol>
+    <li>Παρέχεις project description στον agent</li>
+    <li>Αναφέρεις υπάρχοντα αρχεία (π.χ. README.md)</li>
+    <li>Ζητάς constitution: mission, tech-stack, roadmap</li>
+    <li>Ο agent <strong>κάνει ερωτήσεις</strong> — π.χ. τόνος mission, backend γλώσσα, granularity roadmap</li>
+    <li>Εσύ απαντάς και submit</li>
+    <li>Ο agent ζητά <strong>write permissions</strong></li>
+    <li>Αποτέλεσμα: 3 αρχεία στο <code>specs/</code> directory</li>
+  </ol>
+
+  <h3>Human-in-the-Loop Review</h3>
+  <p>Μετά τη δημιουργία, <strong>κάνε review</strong>. Παράδειγμα: η mission μπορεί να λείπει target audience — λογικό, πώς θα ήξερε ο agent; <strong>Αντί να επεξεργαστείς απευθείας, συνέχισε τη συζήτηση</strong> — ο agent θα ενημερώσει όλα τα σχετικά documents.</p>
+
+  <div class="warn-block">
+    <div class="label">Σημαντικό</div>
+    <p>Μην κάνεις manual edit σε spec files. Πάντα <strong>ζήτα τον agent να κάνει τις αλλαγές</strong> ώστε να μείνουν τα artifacts consistent μεταξύ τους. Manual editing μπορεί να σε οδηγήσει σε missed updates σε related documents.</p>
+  </div>
+
+  <p>Τελική ενέργεια: <strong>commit το Constitution</strong> — θα είναι ένα living document.</p>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- LESSON 06 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="lesson" id="lesson-06">
+  <div class="lesson-header">
+    <span class="lesson-num">LESSON 06</span>
+    <h2>Feature Specification</h2>
+  </div>
+
+  <p>Έχουμε roadmap με features. Αλλά πώς τα χτίζουμε; Με specs φυσικά. <strong>Δεν αρχίζουμε coding πριν συζητήσουμε το spec.</strong></p>
+
+  <h3 id="l06-plan">Feature Plan</h3>
+  <p>Ένα καλό plan περιγράφει:</p>
+  <ul>
+    <li>Την <strong>προσέγγιση</strong></li>
+    <li>Τη <strong>σειρά εργασίας</strong> (task groups)</li>
+    <li>Πώς θα <strong>validate</strong> την επιτυχία</li>
+  </ul>
+  <p>Ξεκινάς με fresh agent context. Ο agent μπορεί να πάρει αυτά που χρειάζεται <strong>από την official πηγή — το constitution</strong>.</p>
+
+  <h4>Prompt στον Agent</h4>
+  <p>Θα δουλέψεις σε ξεχωριστό branch. Το prompt θα βοηθήσει να ξεκινήσει η συζήτηση για:</p>
+  <ul>
+    <li>Feature spec — plan for tasks</li>
+    <li>Collect requirements</li>
+    <li>Scorecard for validation</li>
+  </ul>
+
+  <p><strong>Ο agent θα σε ρωτήσει να πάρεις αποφάσεις.</strong> Πρόσεξε πιθανές conflicts ή προβλήματα. Δεν χρειάζεται να συμφωνείς με τις προτεινόμενες λύσεις.</p>
+
+  <h3 id="l06-requirements">Requirements</h3>
+  <p>Εδώ δηλώνεις <strong>σημαντικές τεχνικές ανάγκες ή constraints</strong>. Μην τα πας τρεχάτα, αλλά μην δηλώνεις minor τεχνικές λεπτομέρειες (π.χ. ονόματα μεταβλητών). Θέλεις να <strong>ελέγχεις τη διαδικασία αλλά να μην οδηγήσεις υπερβολικά τον agent</strong> (oversteer).</p>
+
+  <h3 id="l06-validation">Validation Scorecard</h3>
+  <p>Βεβαιώσου ότι ο agent μπορεί να ελέγξει αν τα πήγε σωστά. Τα validation criteria πρέπει να <strong>ενημερωθούν αν αλλαχτούν τα requirements</strong>.</p>
+
+  <div class="key-concept">
+    <div class="label">Βασική Αρχή</div>
+    <p>Οι αλλαγές που κάνεις εδώ στα specs <strong>θα επεκταθούν downstream σε εκατοντάδες γραμμές κώδικα</strong>. Ο χρόνος που ξοδεύεις εδώ είναι well spent.</p>
+  </div>
+
+  <p>Τελική ενέργεια: commit τα feature spec files.</p>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- LESSON 07 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="lesson" id="lesson-07">
+  <div class="lesson-header">
+    <span class="lesson-num">LESSON 07</span>
+    <h2>Feature Implementation</h2>
+  </div>
+
+  <p>Έχεις το feature spec — ώρα για υλοποίηση.</p>
+
+  <h3>Διαδικασία</h3>
+  <ol>
+    <li><strong>Clear context</strong> — Ξεκίνα με καθαρό context (<code>/clear</code>)</li>
+    <li><strong>Prompt τον agent</strong> — Ζήτα να υλοποιήσει όλα τα task groups. Εναλλακτικά, <strong>κάνε ένα task group τη φορά</strong> — ιδιαίτερα χρήσιμο σε ευαίσθητα areas (security, database management)</li>
+    <li><strong>Παρακολούθηση</strong> — Ενώ ο agent δουλεύει, βλέπεις τις αλλαγές στο console σε real-time</li>
+    <li><strong>Review</strong> — Δες τις αλλαγές στο commit window</li>
+  </ol>
+
+  <div class="key-concept">
+    <div class="label">Ρόλος Developer</div>
+    <p>Αυτός είναι ο βασικός ρόλος του developer σε αυτό το paradigm: <strong>να δρα ως architect/supervisor</strong> και να εξασφαλίζει ότι ο agent έχει ξεκάθαρο contract.</p>
+  </div>
+
+  <p>Μετά την ολοκλήρωση, τρέξε την εφαρμογή. Ο agent έκανε validation — στο επόμενο μάθημα κάνεις εσύ τη δική σου.</p>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- LESSON 08 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="lesson" id="lesson-08">
+  <div class="lesson-header">
+    <span class="lesson-num">LESSON 08</span>
+    <h2>Feature Validation</h2>
+  </div>
+
+  <p>Είναι ωραίο να έχεις feature ready, αλλά <strong>μην κάνεις merge ακόμα</strong>. Σε αυτό το βήμα, συνεργάζεσαι με τον agent για review.</p>
+
+  <h3 id="l08-hitl">Human-in-the-Loop Validation</h3>
+  <ol>
+    <li><strong>Commit view</strong> — Πέρασε τις αλλαγές</li>
+    <li><strong>Εστίασε σε high-level concerns</strong> — λειτουργούν τα features; Αντικατοπτρίζουν το spec; <strong>Όχι σε λεπτομέρειες σαν CSS classes</strong></li>
+    <li><strong>Αν βρεις πρόβλημα</strong> — Ζήτα τον agent να κάνει fix, διορθώνοντας <strong>τόσο spec όσο και implementation</strong></li>
+  </ol>
+
+  <h3 id="l08-drift">Spec Drift & Cognitive Debt</h3>
+  <p>Η διαδικασία "agent generates → εσύ verify" είναι γνωστή ως <strong>human-in-the-loop</strong>. Επειδή οι agents γράφουν κώδικα πολύ γρήγορα, υπάρχει κίνδυνος <strong>cognitive debt</strong> — το mental load να παρακολουθείς τι κάνει ο κώδικας.</p>
+
+  <div class="warn-block">
+    <div class="label">Προσοχή: Spec Drift</div>
+    <p>Μετακίνηση αρχείων ή αλλαγές μέσω IDE (χωρίς τον agent) μπορεί να οδηγήσει σε <strong>drift</strong> — τα specs, readmes κλπ. ξεσυγχρονίζονται. Πάντα ζήτα τον agent να fix mentions μετά από τέτοιες αλλαγές.</p>
+  </div>
+
+  <h3>Merge & Versioning</h3>
+  <p>Τμήμα του constitution ενημερώθηκε μαζί με το feature στο branch. Η μικρή αλλαγή (checking off στο roadmap) μπορεί να μείνει στο ίδιο branch. <strong>Αν η constitution update είναι πιο σύνθετη, καλύτερα σε ξεχωριστό branch.</strong></p>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- LESSON 09 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="lesson" id="lesson-09">
+  <div class="lesson-header">
+    <span class="lesson-num">LESSON 09</span>
+    <h2>Project Replanning</h2>
+  </div>
+
+  <p>Μετά το πρώτο feature, <strong>μη βιαστείς στο επόμενο</strong>. Κάνε ένα βήμα πίσω. "You have to run slow to run fast."</p>
+
+  <h3 id="l09-testing">Testing Framework</h3>
+  <p>Δεν δώσαμε στον agent τα testing preferences μας. Ας φτιάξουμε ένα <strong>replanning branch</strong> για update στο tech stack.</p>
+  <ol>
+    <li>Γράφεις prompt με τα testing policy σου</li>
+    <li>Ο agent ενημερώνει <code>package.json</code></li>
+    <li>Ζητάς update στα <strong>υπάρχοντα feature specs και implementation</strong></li>
+    <li>Ζητάς να γραφτούν tests</li>
+    <li>Τρέχεις tests <strong>στον debugger</strong> — μέρος του human-in-the-loop</li>
+  </ol>
+
+  <div class="tip-block">
+    <div class="label">Πρακτική Συμβουλή</div>
+    <p>Το constitution είναι <strong>living document</strong>. Κάνε updates σε ξεχωριστό branch ώστε να παρακολουθείς ποιες εκδόσεις παρήγαγαν ποιον κώδικα.</p>
+  </div>
+
+  <h3 id="l09-responsive">Ενημέρωση Specs — Responsive Design</h3>
+  <p>Παράδειγμα: product manager λέει ότι 40% users είναι σε mobile. Θέλουμε responsive design.</p>
+  <ul>
+    <li>Πες τον agent τι θέλεις</li>
+    <li>Ζήτα update σε <strong>product specs, feature specs, ΚΑΙ κώδικα</strong></li>
+    <li>Αν η αλλαγή είναι μικρή → implement κατά τη διάρκεια replanning</li>
+    <li><strong>Αν είναι μεγάλη → schedule στο roadmap</strong> ως ξεχωριστή feature phase</li>
+  </ul>
+
+  <h3>Roadmap Housekeeping</h3>
+  <p>Κοίτα τα επόμενα tasks. Έχει νόημα ακόμα; Μπορεί κάποια features να κολλάνε μαζί; <strong>Update roadmap αντίστοιχα.</strong></p>
+
+  <h3 id="l09-skills">Changelog Skill — Agent Skills</h3>
+  <p>Οι περισσότεροι AI coding agents υποστηρίζουν <strong>skills</strong> — πακέτα οδηγιών που δίνουν στον agent νέες δυνατότητες. Ιδανικά για <strong>definable, repeatable workflows</strong>.</p>
+
+  <h4>Παράδειγμα: Changelog Skill</h4>
+  <ul>
+    <li>Non-technical stakeholders θέλουν να παρακολουθούν progress</li>
+    <li>Θέλεις auto-update changelog σε κάθε merge</li>
+    <li>Ο agent μπορεί να <strong>σε βοηθήσει να γράψεις ένα skill</strong></li>
+    <li>Σκέψου: αυτό το skill είναι specific σε αυτό το project ή standard; Αν standard → <strong>global skills area</strong></li>
+  </ul>
+
+  <div class="key-concept">
+    <div class="label">Automation Pattern</div>
+    <p>Το validation step μπορεί να περιλαμβάνει: updating readme, linting, formatting, test writing, quality checks. <strong>Package αυτά σε ένα validation skill</strong>. Repeatable process, less manual work.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- LESSON 10 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="lesson" id="lesson-10">
+  <div class="lesson-header">
+    <span class="lesson-num">LESSON 10</span>
+    <h2>The Second Feature Phase</h2>
+  </div>
+
+  <h3 id="l10-fatigue">AI Fatigue — Αντιμετώπιση</h3>
+  <p>Agents παράγουν πολύ κώδικα με πολλές αλλαγές. Αυτό κάνει το human-in-the-loop validation <strong>εξαντλητικό</strong>. Για να καταπολεμήσεις αυτό:</p>
+  <ul>
+    <li><strong>Clean division</strong> μεταξύ κάθε feature phase</li>
+    <li>Checklist πριν ξεκινήσεις: Unfinished work? Merged last branch? Next roadmap item correct? Cleared agent context?</li>
+  </ul>
+
+  <h3>Flow State Checklist</h3>
+  <ol>
+    <li>Έχω unfinished work;</li>
+    <li>Έκανα merge το τελευταίο feature branch;</li>
+    <li>Είναι σωστό το επόμενο roadmap item;</li>
+    <li>Έκανα clear το context window;</li>
+    <li><strong>Τα specs capture το intent, όχι memory snapshots</strong></li>
+  </ol>
+
+  <h3>Planning Phase</h3>
+  <p>Ο agent ρωτάει καλές ερωτήσεις — π.χ. αν θα κρατήσεις features μαζί σε μία φάση, migrations (plain SQL vs ORM), validation approach.</p>
+  <p>Μπορείς να αλλάξεις αποφάσεις — π.χ. "θέλουμε PicoCSS ως CSS framework".</p>
+
+  <h3>Implementation — Μεγάλα Features</h3>
+  <p>Αν το feature φαίνεται πολύ μεγάλο, <strong>ζήτα τον agent να implement μέρος πρώτα</strong>. Αυτό κρατάει τις αλλαγές manageable.</p>
+
+  <h3>Review Style</h3>
+  <p>Κάθε developer έχει το δικό του στυλ review. <strong>Παίξε στα πλεονεκτήματα του agent:</strong></p>
+  <ul>
+    <li>Κοίτα higher-level requirements</li>
+    <li><strong>Μην κάνεις nitpick σε variable names</strong></li>
+    <li>Βεβαιώσου ότι ο κώδικας μπορεί να κάνεις commit στο δικό σου όνομα</li>
+    <li>Παράδειγμα: inline type info → ζήτα standalone TypeScript type. Αυτή η απόφαση <strong>εξελίσσει το spec</strong></li>
+  </ul>
+
+  <div class="key-concept">
+    <div class="label">Evolving Specs</div>
+    <p>Μια παράλειψη (π.χ. extracted prop types) <strong>δεν είναι αποτυχία</strong>. Εξελίσσεις το spec καθώς ανακαλύπτεις νέες λεπτομέρειες — και αυτό capture οδηγεί σε καλύτερα μελλοντικά αποτελέσματα.</p>
+  </div>
+
+  <h3 id="l10-deepreview">Deep Review με Sub-agents</h3>
+  <p>Μερικές φορές πρέπει να validate ότι <strong>δεν σε εξαπάτησαν</strong>. Πες τον agent:</p>
+  <ul>
+    <li>Spawn <strong>πολλαπλά sub-agents</strong> για deep review ολόκληρου του project</li>
+    <li>Αυτό δίνει <strong>περισσότερο χώρο σκέψης</strong> στον agent</li>
+    <li>Τα sub-agents <strong>διατηρούν το context window</strong> του main agent</li>
+    <li>Γυρίζουν με issues και recommendations</li>
+    <li>Ο agent μπορεί μετά να κάνει fixes</li>
+  </ul>
+
+  <div class="tip-block">
+    <div class="label">Πρακτική Συμβουλή</div>
+    <p>Κράτα αυτό στο tool chest σου. <strong>Ο agent μπορεί συνήθως να βρει σημαντικά issues σε ένα second look.</strong></p>
+  </div>
+
+  <p>Τελική ενέργεια: commit feature, χρήση changelog skill, merge branch.</p>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- LESSON 11 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="lesson" id="lesson-11">
+  <div class="lesson-header">
+    <span class="lesson-num">LESSON 11</span>
+    <h2>The MVP</h2>
+  </div>
+
+  <p>Δύο features υλοποιημένα, management ζητάει MVP. Ας κάνουμε ένα <strong>πείραμα</strong>.</p>
+
+  <h3>MVP ως Extreme Test</h3>
+  <p>Variation του standard feature spec prompt: πες τον agent <strong>να υλοποιήσει το υπόλοιπο roadmap</strong>. Δώσε guidance για υπάρχοντα feature specs.</p>
+
+  <div class="warn-block">
+    <div class="label">Πότε να κάνεις MVP</div>
+    <p>Implement τέτοιο μεγάλο chunk <strong>μόνο αν νιώθεις σίγουρος</strong> για την ποιότητα του constitution και spec. Όσο καλύτερο context δίνεις, τόσο πιο confident μπορείς να είσαι. Και πρέπει να μπορείς <strong>να χειριστείς review &amp; validation</strong>.</p>
+  </div>
+
+  <h3>Διαδικασία MVP</h3>
+  <ol>
+    <li>Ο agent κάνει ερωτήσεις — <strong>αυτά γίνονται spec files</strong></li>
+    <li>Review specs — θα βρεις <strong>incorrect assumptions</strong> που ο agent έκανε</li>
+    <li>Commit planning feature specs</li>
+    <li>Ο agent κάνει μεγάλο implementation step</li>
+    <li>Βλέπεις MVP</li>
+    <li>Ζήτα τον agent να <strong>validate τα specs</strong> — βρίσκει holes στο planning</li>
+    <li>Share evaluation με stakeholders</li>
+  </ol>
+
+  <div class="key-concept">
+    <div class="label">Lesson Learned</div>
+    <p>Μετά ένα constitution και δύο features, <strong>το MVP παρήγαγε ένα χρήσιμο demo χάρη στο guidance μας</strong>. Η ποιότητα των specs καθορίζει την ποιότητα του αποτελέσματος.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- LESSON 12 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="lesson" id="lesson-12">
+  <div class="lesson-header">
+    <span class="lesson-num">LESSON 12</span>
+    <h2>Legacy Support</h2>
+  </div>
+
+  <p>Πολλοί λένε ότι SDD είναι μόνο για greenfield projects. <strong>Λάθος.</strong> Λειτουργεί εξίσου καλά για existing legacy projects.</p>
+
+  <h3>Brownfield Approach</h3>
+  <ol>
+    <li>Ξεκινάς <strong>χωρίς specs folder</strong> — νέο session, νέο project directory</li>
+    <li>Ίσως έχεις README.md, TODO.md, ή product plans σε issue trackers, spreadsheets</li>
+    <li>Χρησιμοποιείς σχεδόν το ίδιο prompt με lesson 05, αλλά λες τον agent να <strong>ψάξει roadmap items σε υπάρχοντα artifacts</strong></li>
+  </ol>
+
+  <h3>Reverse Engineering Constitution</h3>
+  <p>Ο agent θα <strong>ανακαλύψει και θα reverse-engineer τα SDD artifacts</strong> από τον υπάρχοντα κώδικα. Θα δεις πολλά tool calls καθώς εξερευνά τη codebase.</p>
+  <ul>
+    <li><strong>Mission:</strong> audience, project idea, extra info</li>
+    <li><strong>Tech stack:</strong> extracted file structure, framework versions, clarifications</li>
+    <li><strong>Roadmap:</strong> φάσεις που αντιστοιχούν στα TODO</li>
+  </ul>
+
+  <div class="key-concept">
+    <div class="label">Βασική Αρχή</div>
+    <p>To constitution <strong>ευθυγραμμίζει μελλοντικές αλλαγές</strong> κώδικα (από τον agent) με αυτά που έχουν ήδη δημιουργήσει προηγούμενοι developers. Τα specs γίνονται <strong>η μνήμη του project</strong>.</p>
+  </div>
+
+  <p>Από εδώ και πέρα, <strong>το workflow είναι ακριβώς το ίδιο</strong>: feature spec → implement → validate → replan.</p>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- LESSON 13 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="lesson" id="lesson-13">
+  <div class="lesson-header">
+    <span class="lesson-num">LESSON 13</span>
+    <h2>Build Your Own Workflow</h2>
+  </div>
+
+  <p>Θέλεις κάτι γρηγορότερο; Αυτοματοποίησε πράγματα <strong>με τον δικό σου τρόπο</strong>.</p>
+
+  <h3 id="l13-skills">Agent Skills</h3>
+  <p>Agent Skills είναι ένα <strong>open standard</strong> που δίνει στους agents νέες δυνατότητες. Παράδειγμα: επαναλαμβάνεις το ίδιο prompt κάθε φορά που ξεκινάς feature spec. Αυτοματοποίησέ το σε ένα skill.</p>
+
+  <h4>Δημιουργία Skill</h4>
+  <ol>
+    <li>Ζήτα τον agent να χρησιμοποιήσει τον <strong>skill creator</strong></li>
+    <li>Ο agent μπορεί να κάνει <strong>follow-up ερωτήσεις</strong> — συνήθως πολύ καλές</li>
+    <li>Παρακολούθησε το output — κάνει τις σωστές επιλογές;</li>
+    <li>Τα skills μπορεί να είναι <strong>per project ή global</strong></li>
+  </ol>
+
+  <h4>Invocation</h4>
+  <ul>
+    <li>Αναφορά στο prompt: αναφέρεις το skill πριν πεις τι θέλεις</li>
+    <li>Ένα skill μπορεί <strong>να καλέσει άλλο skill</strong></li>
+    <li>Σύμφωνα με το skills open standard, οι agents χρησιμοποιούν το <strong>skill description</strong> για progressive disclosure</li>
+    <li>Αν ξέρεις ότι θέλεις ένα skill, <strong>ονόμασέ το</strong> — γλιτώνεις thinking tokens</li>
+  </ul>
+
+  <h3 id="l13-mcp">MCP vs CLI + Skills</h3>
+  <p>Μέχρι τώρα ο universal τρόπος να extend agents ήταν το <strong>MCP (Model Context Protocol)</strong>. Π.χ. Context7 — ένα MCP που φέρνει updated documentation packages στο context.</p>
+
+  <p>Αλλά <strong>η τάση μετακινείται</strong> από MCP servers σε <strong>skills + CLI tools</strong>:</p>
+  <ul>
+    <li>CLI tools μπορούν να κάνουν action <strong>με λιγότερο setup</strong></li>
+    <li><strong>Λιγότερη context usage</strong></li>
+    <li>Π.χ. Context7 πλέον προτείνει CLI + skill αντί MCP server</li>
+  </ul>
+
+  <h3 id="l13-plugins">Plugins & Packages</h3>
+  <p>Agents όπως Claude Code έχουν <strong>plugins</strong> — collection agent extensions. Υπάρχει growing community δωρεάν plugins. <strong>Τα plugins δεν είναι ακόμα cross-agent standard</strong> — σαν apps ή dependencies, εκτελούν κώδικα, οπότε trust on install.</p>
+
+  <h3>Existing SDD Frameworks</h3>
+  <table>
+    <tr><th>Framework</th><th>Βήματα</th><th>Περιγραφή</th></tr>
+    <tr><td><strong>GitHub Spec Kit</strong></td><td>constitution, plan, tasks, implement</td><td>Formalizes SDD workflow με / commands</td></tr>
+    <tr><td><strong>OpenSpec (Fission AI)</strong></td><td>propose, explore, apply, archive</td><td>Propose/explore = plan, apply = implement, archive = replanning. Canonical patterns for quick features</td></tr>
+  </table>
+  <p>Και τα δύο περιλαμβάνουν branch management, verification scripts, opinionated spec formats.</p>
+
+  <h3>Research Backlog Pattern</h3>
+  <p>Μερικές φορές στη μέση ενός feature έχεις μια ιδέα (π.χ. επιλογή database). Δεν θέλεις να σταματήσεις τη δουλειά σου αλλά <strong>δεν θέλεις να χάσεις την ιδέα</strong>:</p>
+  <ol>
+    <li>Research με τον agent</li>
+    <li>Γράψε report σε γνωστό location (backlog)</li>
+    <li>Αργότερα, schedule στο roadmap με link στο backlog file</li>
+    <li>Ως αυτό μεγαλώνει, <strong>γράψε skill για αυτοματοποίηση</strong></li>
+  </ol>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- LESSON 14 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="lesson" id="lesson-14">
+  <div class="lesson-header">
+    <span class="lesson-num">LESSON 14</span>
+    <h2>Agent Replaceability</h2>
+  </div>
+
+  <p>To SDD μετακινεί τη δουλειά <strong>από το "how" στο "what" και "why"</strong>. Δεν θέλεις το workflow σου δεμένο σε ένα agent.</p>
+
+  <h3 id="l14-standards">Agent Standards</h3>
+  <table>
+    <tr><th>Standard</th><th>Σκοπός</th></tr>
+    <tr><td><strong>MCP</strong></td><td>External tools — σύνδεση agent με εξωτερικά εργαλεία</td></tr>
+    <tr><td><strong>AGENTS.md</strong></td><td>Rules — κανόνες και οδηγίες για τον agent</td></tr>
+    <tr><td><strong>Agent Skills</strong></td><td>Repeatable workflows — με extra context</td></tr>
+    <tr><td><strong>ACP (Agent Client Protocol)</strong></td><td>Σύνδεση agents με clients (IDEs, editors)</td></tr>
+  </table>
+
+  <h3>ACP — Agent Client Protocol</h3>
+  <p>Σχεδιάστηκε για εύκολο plug-and-play μεταξύ agents και clients. Χρησιμοποιεί αρχιτεκτονική παρόμοια με <strong>LSP (Language Server Protocol)</strong>.</p>
+  <p>Καλύπτει:</p>
+  <ul>
+    <li>Next Edit Suggestion στον editor</li>
+    <li>Plan mode</li>
+    <li>Δυνατότητα γραφής <strong>custom agent</strong> με τοπική εγκατάσταση</li>
+  </ul>
+
+  <h4>ACP Registry</h4>
+  <p>Αυτοματοποιεί finding, installing, connecting agents με clients. Καλύπτει <strong>ολόκληρο τον life cycle</strong>.</p>
+  <p>Παράδειγμα: στα JetBrains IDEs, το AI Chat window οδηγεί σε installation από ACP Registry. Μπορείς να εγκαταστήσεις agents (π.χ. OpenCode) δίπλα σε υπάρχοντα agents.</p>
+
+  <h3>Cross-agent Portability</h3>
+  <p>Παράδειγμα: feature spec skill μεταφέρεται από Claude Code σε <strong>Codex (OpenAI)</strong> — τρέχει κανονικά. Αυτό σημαίνει <strong>μπορείς να εναλλάσσεσαι μεταξύ agents</strong> στο ίδιο project.</p>
+
+  <h3>Benchmarks & Leaderboards</h3>
+  <p>Benchmark sites με leaderboards παρέχουν αξιολογήσεις agents. <strong>Αλλάζουν γρήγορα</strong> — stay up to date. Βάσισε την απόφασή σου στα κριτήρια που μετράνε για σένα.</p>
+
+  <div class="key-concept">
+    <div class="label">Βασική Αρχή</div>
+    <p>Τα specs δουλεύουν σε higher level — <strong>δεν δένονται σε κανένα agent ή IDE</strong>. Χτίζεις workflow και tools independent από τον agent. Καθώς εμφανίζονται νέα standards, η ευελιξία θα αυξηθεί.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- LESSON 15 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="lesson" id="lesson-15">
+  <div class="lesson-header">
+    <span class="lesson-num">LESSON 15</span>
+    <h2>Conclusion</h2>
+  </div>
+
+  <p>Κατά τη διάρκεια αυτού του course, πέρασες <strong>από vibe coding σε Spec-Driven Development</strong>:</p>
+  <ul>
+    <li>Έγραψες <strong>constitutions</strong></li>
+    <li>Σχεδίασες features μέσω συζήτησης</li>
+    <li>Validated ως <strong>human-in-the-loop</strong></li>
+    <li>Αυτοματοποίησες workflow με <strong>skills &amp; standards</strong></li>
+  </ul>
+
+  <div class="key-concept">
+    <div class="label">Τελικό Μήνυμα</div>
+    <p>"The specs you write today become the <strong>memory of your projects tomorrow</strong>. Keep them sharp, keep improving your process, and remember — the best code starts with a great spec."</p>
+    <p>"Let's bring back some engineering. Let's keep you as <strong>the driver of your software</strong>."</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- APPENDICES -->
+<!-- ════════════════════════════════════════════ -->
+
+<section class="lesson" id="appendix-workflow">
+  <div class="lesson-header">
+    <span class="lesson-num">APPENDIX A</span>
+    <h2>📐 SDD Workflow — Πλήρης Σύνοψη</h2>
+  </div>
+
+  <h3>Phase 1: Constitution</h3>
+  <div class="flow-diagram">
+    <span class="flow-step">📋 mission.md</span>
+    <span class="flow-arrow">+</span>
+    <span class="flow-step">⚙️ tech-stack.md</span>
+    <span class="flow-arrow">+</span>
+    <span class="flow-step">🗺️ roadmap.md</span>
+  </div>
+  <ul>
+    <li>Συζήτηση με agent → agent κάνει ερωτήσεις</li>
+    <li>Human review → agent fixes</li>
+    <li>Commit constitution</li>
+  </ul>
+
+  <h3>Phase 2: Feature Loop (επαναλαμβανόμενο)</h3>
+  <div class="flow-diagram">
+    <span class="flow-step">📝 Plan</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">📋 Requirements</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">✅ Validation</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">⚙️ Implement</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">🔍 Validate</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">📦 Commit &amp; Merge</span>
+  </div>
+  <ol>
+    <li><strong>Plan:</strong> Fresh context, feature branch, interview με agent → feature-plan.md</li>
+    <li><strong>Requirements:</strong> Τεχνικές ανάγκες, constraints → requirements.md</li>
+    <li><strong>Validation scorecard:</strong> Πώς ελέγχουμε → validation.md</li>
+    <li><strong>Implement:</strong> Agent υλοποιεί task groups (μπορεί ένα-ένα)</li>
+    <li><strong>Validate:</strong> Human review, tests, deep review, fixes</li>
+    <li><strong>Commit &amp; Merge:</strong> Feature complete</li>
+  </ol>
+
+  <h3>Phase 3: Replanning</h3>
+  <ul>
+    <li>Update constitution / roadmap</li>
+    <li>Add testing, responsive, ή νέα requirements</li>
+    <li>Create/improve skills</li>
+    <li>Housekeeping: changelog, readme</li>
+  </ul>
+
+  <h3>Βασικές Πρακτικές</h3>
+  <table>
+    <tr><th>Πρακτική</th><th>Γιατί</th></tr>
+    <tr><td>Clear context πριν κάθε feature</td><td>Αποφυγή context pollution</td></tr>
+    <tr><td>Feature branches</td><td>Isolation αλλαγών</td></tr>
+    <tr><td>Μικρά commits συχνά</td><td>Μείωση cognitive debt</td></tr>
+    <tr><td>Agent κάνει edits (όχι manual)</td><td>Αποφυγή spec drift</td></tr>
+    <tr><td>Sub-agents για deep review</td><td>Βρίσκουν issues, διατηρούν main context</td></tr>
+    <tr><td>Skills για repeatable tasks</td><td>Automation, consistency</td></tr>
+  </table>
+</section>
+
+<section class="lesson" id="appendix-rubric">
+  <div class="lesson-header">
+    <span class="lesson-num">APPENDIX B</span>
+    <h2>📋 Challenge Rubric — Tiny Tamagotchi</h2>
+  </div>
+
+  <h3>Απαιτήσεις</h3>
+  <table>
+    <tr><th>✅ Required</th><th>🚫 Not Allowed</th></tr>
+    <tr><td>Pet: Naming, 1 user, 1 evolution, 1 recovery path</td><td>Authentication, πολλαπλοί users/pets, inventories, currencies</td></tr>
+    <tr><td>Stats (0–100): Hunger, Happiness, Energy</td><td>Mini-games, social features, notifications</td></tr>
+    <tr><td>Actions: Feed, Play, Rest</td><td>Admin features, complex evolutions</td></tr>
+    <tr><td>States: Normal, Sick, Evolved</td><td>Permanent death</td></tr>
+  </table>
+
+  <h3>Κριτήρια Αξιολόγησης (0 ή 1)</h3>
+  <table>
+    <tr><th>Criteria Group</th><th>Individual Criteria</th></tr>
+    <tr><td><strong>Completeness</strong></td><td>Mission, audience, constraints, user flows, success criteria, edge cases</td></tr>
+    <tr><td><strong>Clarity &amp; Specificity</strong></td><td>Αλγόριθμοι, thresholds, lifecycles explicitly stated</td></tr>
+    <tr><td><strong>Internal Consistency</strong></td><td>Feature MDs internally consistent (no contradictions)</td></tr>
+    <tr><td><strong>Internal Consistency</strong></td><td>Feature specs consistent with constitution specs</td></tr>
+    <tr><td><strong>Testability</strong></td><td>75%+ validation strategies test explicitly stated specs</td></tr>
+    <tr><td><strong>Testability</strong></td><td>≥2 difficulty levels (automated + manual, smoke + flow)</td></tr>
+    <tr><td><strong>Testability</strong></td><td>Testing suite correctly and fully implemented</td></tr>
+  </table>
+
+  <h3>Submission Structure</h3>
+  <pre>/specs/
+  mission.md
+  roadmap.md
+  tech-stack.md
+/feature-name/
+  feature-plan.md
+  requirements.md
+  validation.md</pre>
+  <p>+ Video walkthrough (π.χ. Loom screen capture)</p>
+
+  <h3>4 Πυλώνες Tamagotchi</h3>
+  <ol>
+    <li><strong>Living Vitals:</strong> Hunger, Happiness, Energy meters (0–100) tick down αυτόματα</li>
+    <li><strong>The Care Loop:</strong> Feed, Play, Rest actions</li>
+    <li><strong>Dynamic States:</strong> Normal → Sick / Evolved με visual feedback</li>
+    <li><strong>Personal Touches:</strong> Easter eggs, quirky reactions, μοναδική προσωπικότητα</li>
+  </ol>
+</section>
+
+<section class="lesson" id="appendix-glossary">
+  <div class="lesson-header">
+    <span class="lesson-num">APPENDIX C</span>
+    <h2>📘 Γλωσσάρι Όρων</h2>
+  </div>
+
+  <table>
+    <tr><th>Όρος</th><th>Περιγραφή</th></tr>
+    <tr><td><strong>SDD</strong></td><td>Spec-Driven Development — ανάπτυξη βάσει specifications</td></tr>
+    <tr><td><strong>Constitution</strong></td><td>Σύνολο αρχείων (mission, tech-stack, roadmap) που ορίζουν τις βασικές αρχές project</td></tr>
+    <tr><td><strong>Feature Spec</strong></td><td>Σύνολο αρχείων (plan, requirements, validation) για ένα feature</td></tr>
+    <tr><td><strong>Vibe Coding</strong></td><td>Γρήγορο coding με agent χωρίς formal spec — δεν κλιμακώνεται</td></tr>
+    <tr><td><strong>Human-in-the-Loop</strong></td><td>Ο άνθρωπος κάνει review σε κάθε βήμα</td></tr>
+    <tr><td><strong>Cognitive Debt</strong></td><td>Mental load παρακολούθησης κώδικα που αλλάζει γρήγορα</td></tr>
+    <tr><td><strong>Context Decay</strong></td><td>Αποδυνάμωση context window καθώς γεμίζει</td></tr>
+    <tr><td><strong>Intent Fidelity</strong></td><td>Πόσο πιστά ο κώδικας αντικατοπτρίζει τις προθέσεις σου</td></tr>
+    <tr><td><strong>Amplification</strong></td><td>Μικρή αλλαγή spec → μεγάλη αλλαγή κώδικα</td></tr>
+    <tr><td><strong>Spec Drift</strong></td><td>Ξεσυγχρονισμός specs και κώδικα</td></tr>
+    <tr><td><strong>Agent Skills</strong></td><td>Πακέτα instructions/resources που δίνουν νέες δυνατότητες</td></tr>
+    <tr><td><strong>MCP</strong></td><td>Model Context Protocol — πρωτόκολλο σύνδεσης agents με external tools</td></tr>
+    <tr><td><strong>ACP</strong></td><td>Agent Client Protocol — πρωτόκολλο σύνδεσης agents με editors/IDEs</td></tr>
+    <tr><td><strong>AGENTS.md</strong></td><td>Top-level αρχείο με κανόνες για agents σε project</td></tr>
+    <tr><td><strong>Progressive Disclosure</strong></td><td>Agents χρησιμοποιούν skill descriptions για να αποφασίσουν πότε να invoke</td></tr>
+    <tr><td><strong>Greenfield</strong></td><td>Νέο project από το μηδέν</td></tr>
+    <tr><td><strong>Brownfield</strong></td><td>Υπάρχον project — legacy codebase</td></tr>
+    <tr><td><strong>Sub-agents</strong></td><td>Agents που spawn-ονται για deep review χωρίς pollution του main context</td></tr>
+    <tr><td><strong>AI Fatigue</strong></td><td>Εξάντληση από review μεγάλου όγκου AI-generated κώδικα</td></tr>
+    <tr><td><strong>Replanning</strong></td><td>Φάση μεταξύ features: αναθεώρηση specs, roadmap, workflow</td></tr>
+  </table>
+</section>
+
+</div><!-- /main -->
+
+<button class="back-top" onclick="window.scrollTo({top:0})">↑</button>
+
+<script>
+// Active nav link tracking
+const sections = document.querySelectorAll('.lesson');
+const navLinks = document.querySelectorAll('.nav-link');
+const backTop = document.querySelector('.back-top');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.nav-link[href="#${id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -60% 0px' });
+
+sections.forEach(s => observer.observe(s));
+
+window.addEventListener('scroll', () => {
+  backTop.classList.toggle('show', window.scrollY > 400);
+});
+</script>
+
+</body>
+</html>

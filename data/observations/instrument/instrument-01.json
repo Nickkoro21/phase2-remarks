@@ -1,0 +1,231 @@
+{
+ "item_id": "instrument-01",
+ "item_name": "GROUND PROCEDURES",
+ "category": "instrument",
+ "mif_numbers": [
+  1
+ ],
+ "mif_rows": [
+  {
+   "sn": 1,
+   "row_name": "Ground Procedures",
+   "desired_codes_seen": [
+    1,
+    2,
+    3
+   ]
+  }
+ ],
+ "observations": [
+  {
+   "id": "instrument-01-1-d1a0-v1",
+   "mif_row": "Ground Procedures",
+   "desired": 1,
+   "achieved": 0,
+   "variant": "technique",
+   "hf_concept": null,
+   "text": "SP, due to a non-standardized cockpit setup flow, did not tune and identify the departure navigation aids and did not load the GPS flight plan before taxi, with the result that the IP had to direct and execute part of the avionics setup. The Before Taxiing checks were therefore not completed without assistance. Further study of the use and operation of the navigation aids and the GPS is required.",
+   "sentences": 3
+  },
+  {
+   "id": "instrument-01-1-d1a0-v2",
+   "mif_row": "Ground Procedures",
+   "desired": 1,
+   "achieved": 0,
+   "variant": "human_factor",
+   "hf_concept": "hf-lack-of-knowledge",
+   "text": "SP, due to lack of knowledge of the published procedure for the condition encountered, could not specify the A/C condition and decide its flight permissibility from the maintenance forms, with the result that the IP directed the acceptance decision and executed part of the pre-flight sequence. The normal procedures of the Flight Manual and the SOPs were not applied without assistance. Review of the ground procedures before the next sortie is required.",
+   "sentences": 3
+  },
+  {
+   "id": "instrument-01-1-d1a1-v1",
+   "mif_row": "Ground Procedures",
+   "desired": 1,
+   "achieved": 1,
+   "variant": "marginal",
+   "hf_concept": null,
+   "text": "SP completed the ground procedures at the standard desired for the Training Section, entering the GPS flight plan and identifying the departure navigation aids after the IP's verbal prompts. Deviations in the checklist sequence were recognized and corrected with delay. Marginal performance for the Section - self-initiated detection of setup omissions is expected to improve on the next sorties.",
+   "sentences": 3
+  },
+  {
+   "id": "instrument-01-1-d1a2-v1",
+   "mif_row": "Ground Procedures",
+   "desired": 1,
+   "achieved": 2,
+   "variant": "above",
+   "hf_concept": null,
+   "text": "SP executed the ground procedures with only minor errors in the avionics setup, which were recognized and corrected in a timely manner without the IP's intervention. The departure navigation aids were tuned and identified and the GPS flight plan was verified per the SOPs before taxi. Above end of block MIF achieved.",
+   "sentences": 3
+  },
+  {
+   "id": "instrument-01-1-d1a3-v1",
+   "mif_row": "Ground Procedures",
+   "desired": 1,
+   "achieved": 3,
+   "variant": "above",
+   "hf_concept": null,
+   "text": "SP executed all checks according to the checklist, without the IP's intervention, in an impeccable and standardized manner, and operated the A/C navigation aids and the GPS accurately and rapidly. The specified taxi route was followed, the ground path was ensured clear of obstacles and the A/C was stopped as required without oscillations. Above end of block MIF achieved.",
+   "sentences": 3
+  },
+  {
+   "id": "instrument-01-1-d1a4-v1",
+   "mif_row": "Ground Procedures",
+   "desired": 1,
+   "achieved": 4,
+   "variant": "above",
+   "hf_concept": null,
+   "text": "SP planned the mission and the alternative mission in full and took part in the briefing according to the Mission Briefing Guide, executing every normal procedure of the Flight Manual, the Local Area Procedures and the SOPs without omission. Knowledge and operation of the A/C navigation aids and the GPS were exact, with negligible deviations in tuning, identification and cross-check of the loaded departure. Cooperation with the ground crew and taxi route discipline were above the desired levels. Above end of block MIF achieved.",
+   "sentences": 4
+  },
+  {
+   "id": "instrument-01-1-d2a0-v1",
+   "mif_row": "Ground Procedures",
+   "desired": 2,
+   "achieved": 0,
+   "variant": "technique",
+   "hf_concept": null,
+   "text": "SP, due to an incorrect sequence in the avionics setup, did not verify the navigation source displayed against the loaded GPS flight plan and could not complete the Before Taxiing checks without assistance, with the result that the IP directed and executed part of the procedure. The departure navigation aids were still unidentified at the line-up point. Further study of the normal procedures and of the GPS operation is required.",
+   "sentences": 3
+  },
+  {
+   "id": "instrument-01-1-d2a0-v2",
+   "mif_row": "Ground Procedures",
+   "desired": 2,
+   "achieved": 0,
+   "variant": "human_factor",
+   "hf_concept": "hf-active-failures",
+   "text": "SP, due to a mis-set cockpit selection that went uncorrected, left the departure navigation aid frequency unidentified and did not detect the discrepancy at the checklist step provided for it, with the result that the IP had to intervene and complete the setup before taxi. The ground procedures were not completed without assistance.",
+   "sentences": 2
+  },
+  {
+   "id": "instrument-01-1-d2a1-v1",
+   "mif_row": "Ground Procedures",
+   "desired": 2,
+   "achieved": 1,
+   "variant": "technique",
+   "hf_concept": null,
+   "text": "SP, due to a non-standardized checklist flow, did not perform the Before Taxiing checks in the prescribed sequence and omitted the verification of the GPS flight plan, with the result that the checks were completed only after the IP's verbal prompts. The omission was recognized and corrected with delay.",
+   "sentences": 2
+  },
+  {
+   "id": "instrument-01-1-d2a1-v2",
+   "mif_row": "Ground Procedures",
+   "desired": 2,
+   "achieved": 1,
+   "variant": "human_factor",
+   "hf_concept": "hf-workload-management",
+   "text": "SP, due to workload management that left the checklist unfinished before taxi, did not ask and wait for the instructor's answer about the BOTH procedures, with the result that the item was covered only after the IP's verbal prompt. Recognition of the omitted call came with delay.",
+   "sentences": 2
+  },
+  {
+   "id": "instrument-01-1-d2a2-v1",
+   "mif_row": "Ground Procedures",
+   "desired": 2,
+   "achieved": 2,
+   "variant": "marginal",
+   "hf_concept": null,
+   "text": "SP performed the ground procedures within the desired standards; however, the identification of the departure navigation aids was repeated twice after an initial mis-selection. The errors were recognized and corrected in a timely manner, without the IP's intervention. Marginal performance for the Training Section - consistency in the avionics setup flow is expected to improve.",
+   "sentences": 3
+  },
+  {
+   "id": "instrument-01-1-d2a3-v1",
+   "mif_row": "Ground Procedures",
+   "desired": 2,
+   "achieved": 3,
+   "variant": "above",
+   "hf_concept": null,
+   "text": "SP executed all checks according to the checklist, without the IP's intervention, in an impeccable and standardized manner, and operated the A/C navigation aids and the GPS accurately and rapidly. The specified taxi route was followed and the A/C was stopped as required without oscillations and with no movement during the leak check and line-up. Above end of block MIF achieved.",
+   "sentences": 3
+  },
+  {
+   "id": "instrument-01-1-d2a4-v1",
+   "mif_row": "Ground Procedures",
+   "desired": 2,
+   "achieved": 4,
+   "variant": "above",
+   "hf_concept": null,
+   "text": "SP planned the mission and the alternative mission completely, cooperated with the ground crew without allowing any mis-apprehension and executed the normal procedures of the Flight Manual, the Local Area Procedures and the SOPs without a single omission. Setup, identification and cross-check of the navigation aids and of the GPS flight plan were exact, with negligible deviations. Above end of block MIF achieved.",
+   "sentences": 3
+  },
+  {
+   "id": "instrument-01-1-d3a0-v1",
+   "mif_row": "Ground Procedures",
+   "desired": 3,
+   "achieved": 0,
+   "variant": "technique",
+   "hf_concept": null,
+   "text": "SP, due to insufficient knowledge of the A/C levers and switches, could not complete the engine start and the subsequent avionics setup without assistance, with the result that the IP had to direct and execute part of the procedure. The GPS flight plan was not loaded and the departure navigation aids were not identified before taxi. Further study of the normal procedures is required.",
+   "sentences": 3
+  },
+  {
+   "id": "instrument-01-1-d3a0-v2",
+   "mif_row": "Ground Procedures",
+   "desired": 3,
+   "achieved": 0,
+   "variant": "human_factor",
+   "hf_concept": "hf-distraction",
+   "text": "SP, due to distraction by a secondary cockpit task during the ground checks, was not aware of the ground crew's position before actuating the flight controls, with the result that the check was interrupted by the IP. The remainder of the sequence was completed under the IP's direction.",
+   "sentences": 2
+  },
+  {
+   "id": "instrument-01-1-d3a1-v1",
+   "mif_row": "Ground Procedures",
+   "desired": 3,
+   "achieved": 1,
+   "variant": "technique",
+   "hf_concept": null,
+   "text": "SP, due to a non-standardized checklist flow, did not perform the Before Taxiing checks in the prescribed sequence, omitting the identification of the departure navigation aids and the verification of the GPS departure loading, with the result that the checks were completed only after the IP's verbal prompts. The omissions were recognized and corrected with delay.",
+   "sentences": 2
+  },
+  {
+   "id": "instrument-01-1-d3a1-v2",
+   "mif_row": "Ground Procedures",
+   "desired": 3,
+   "achieved": 1,
+   "variant": "human_factor",
+   "hf_concept": "hf-inquiry-and-advocacy",
+   "text": "SP, due to failure to question an assumption that was already contradicted by the displayed navigation source, did not ask and wait for the instructor's answer about the procedure in doubt, with the result that the selection was corrected only after the IP's verbal prompt. Recognition of the wrong navigation source came with delay.",
+   "sentences": 2
+  },
+  {
+   "id": "instrument-01-1-d3a2-v1",
+   "mif_row": "Ground Procedures",
+   "desired": 3,
+   "achieved": 2,
+   "variant": "technique",
+   "hf_concept": null,
+   "text": "SP, due to an interrupted taxi scan while completing the avionics setup, deviated slightly from the specified taxi route before regaining it, with the result of a minor deviation that was recognized and corrected in a timely manner, without the IP's intervention. The ground path of the A/C was kept clear of obstacles throughout.",
+   "sentences": 2
+  },
+  {
+   "id": "instrument-01-1-d3a2-v2",
+   "mif_row": "Ground Procedures",
+   "desired": 3,
+   "achieved": 2,
+   "variant": "human_factor",
+   "hf_concept": "hf-workload-distribution",
+   "text": "SP, due to poor workload distribution, with the GPS flight plan entry, the ground crew coordination and the checklist attempted simultaneously, stopped the A/C with slight oscillations at the last chance area, with the result of a minor deviation. The error was recognized and corrected in a timely manner, without the IP's intervention.",
+   "sentences": 2
+  },
+  {
+   "id": "instrument-01-1-d3a3-v1",
+   "mif_row": "Ground Procedures",
+   "desired": 3,
+   "achieved": 3,
+   "variant": "marginal",
+   "hf_concept": null,
+   "text": "SP performed the ground procedures accurately and rapidly, within the desired standards, executing all checks according to the checklist without the IP's intervention. Operation of the A/C navigation aids and the GPS was correct, although the loaded departure was confirmed only on the second cross-check. Marginal performance for the Training Section - a consolidated avionics setup flow is expected to improve.",
+   "sentences": 3
+  },
+  {
+   "id": "instrument-01-1-d3a4-v1",
+   "mif_row": "Ground Procedures",
+   "desired": 3,
+   "achieved": 4,
+   "variant": "above",
+   "hf_concept": null,
+   "text": "SP planned the mission and the alternative mission in full and executed the briefing according to the Mission Briefing Guide, applying every normal procedure of the Flight Manual, the Local Area Procedures and the SOPs without omission. Knowledge and operation of the A/C navigation aids and the GPS were exact, with negligible deviations in tuning, identification and cross-check of the loaded departure. Cooperation with the ground crew, taxi route discipline and stopping technique were above the desired levels. Above end of block MIF achieved.",
+   "sentences": 4
+  }
+ ]
+}

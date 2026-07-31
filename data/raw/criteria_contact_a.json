@@ -1,0 +1,538 @@
+{
+  "category": "contact",
+  "source": {
+    "file": "Phase_2_Syllabus_2025.pdf",
+    "pages_pdf": [24, 33],
+    "section_heading_verbatim": "b. CONTACT CATEGORY PERFORMANCE CRITERIA",
+    "section_heading_page_pdf": 26,
+    "parent_heading_verbatim": "7. PERFORMANCE CRITERIA",
+    "parent_heading_page_pdf": 24
+  },
+  "conventions": {
+    "deviation_null": "Στα αντικείμενα code_1/code_3 με kind=\"deviation\", η τιμή null στο plus ή στο minus σημαίνει ότι η ΠΗΓΗ ΔΕΝ ΟΡΙΖΕΙ όριο προς εκείνη την κατεύθυνση (μονόπλευρη ανοχή). Είναι ΔΙΑΚΡΙΤΗ από το ρητό 0, το οποίο χρησιμοποιείται ΜΟΝΟ όταν το «0» είναι τυπωμένο αυτούσιο στην πηγή (π.χ. contact-02 «-0,+10» → minus:0). Καταναλωτής που βρίσκει null ΔΕΝ πρέπει να το ερμηνεύσει ως μηδενική ανοχή ούτε να απορρίψει αποκλίσεις προς εκείνη την κατεύθυνση· η παράμετρος απλώς δεν μετράται προς τα εκεί.",
+    "one_sided": "Το προαιρετικό πεδίο one_sided σε μια γραμμή parameters δηλώνει ρητά ποια πλευρά μετράται (\"minus\" ή \"plus\") όταν η πηγή δίνει μονόπλευρο όριο χωρίς τυπωμένο 0.",
+    "general_criteria_preamble": "Όπου η υποενότητα «1/ GENERAL CRITERIA» έχει εισαγωγική πρόταση στην πηγή (π.χ. «To fulfill the General criteria for T/O, SP:»), αυτή αποθηκεύεται ΑΥΤΟΥΣΙΑ ως ΠΡΩΤΟ στοιχείο του general_criteria με key=\"preamble\" (ίδια σύμβαση με το contact-00-general). Δεν είναι κριτήριο βαθμολόγησης: καταναλωτής που απαριθμεί κριτήρια πρέπει να φιλτράρει το key=\"preamble\". Το contact-06 ΔΕΝ έχει preamble γιατί η πηγή (σελ. PDF 30) δεν έχει εισαγωγική πρόταση εκεί.",
+    "lead_in_verbatim": "Το lead_in_verbatim στο specific_criteria κρατά αυτούσια την εισαγωγική πρόταση του πίνακα (π.χ. «The following parameters are set as specific criteria for T/O execution:»). Ονοματοδοσία ευθυγραμμισμένη με το criteria_contact_c.json. Απουσία του πεδίου = η πηγή δεν έχει εισαγωγική πρόταση (π.χ. contact-07, σελ. PDF 31, όπου ο πίνακας ακολουθεί αμέσως το «2/ SPECIFIC CRITERIA»).",
+    "cross_ref_targets": "Ο πίνακας cross_ref_targets είναι ΠΑΡΑΛΛΗΛΟΣ (ίδιο μήκος, ίδια σειρά) με τον cross_refs και δίνει τον μηχαναγνώσιμο στόχο κάθε παραπομπής (id item) ή null όταν ο στόχος δεν αναλύεται μονοσήμαντα. Ο cross_refs παραμένει πίνακας συμβολοσειρών, όπως σε όλα τα αρχεία του corpus."
+  },
+  "items": [
+    {
+      "id": "contact-00-general",
+      "numbers": [],
+      "name": "GENERAL",
+      "heading_verbatim": "a. GENERAL",
+      "pages_pdf": [24, 25],
+      "execution": [],
+      "conditions": [],
+      "expected_performance": {
+        "general_criteria": [
+          { "key": "preamble", "text": "The performance of SP in Basic Phase (Phase II) will be evaluated according to the following criteria, described below per category. For this purpose, the following rules apply:" },
+          { "key": "1", "text": "The training program, the Performance Standards and the analysis of the Phase Training Units define the training pace. SP must have met the performance criteria by the end of the Training Phase." },
+          { "key": "2", "text": "Aircraft control must be smooth and solid. This means that a SP may meet the defined criteria for a maneuver - performance within limits - however, he/she may fail due to instability or negligence to precision or uncertainty." },
+          { "key": "3", "text": "Instantaneous, but not constant, deviations beyond the permissible “PLUS” or “MINUS” limits for altitude, airspeed, bank or other parameters are acceptable if immediate actions are taken by SP to correct them. Flight Safety must not be jeopardized and the instructor shall not need to prompt, intervene or take command of the Aircraft to restore smooth flight, throughout the maneuvering." },
+          { "key": "4", "text": "Knowledge and procedures application must be in accordance with the standardization of the relevant Manuals and instructions provided by Squadron, aiming at the efficacious mission implementation." },
+          { "key": "5", "text": "Specific maneuvers, intended to be solely demonstrated or performed during flight only, shall be separately cited on the remarks section of the grade sheet. When specific criteria are not mentioned for certain maneuvers, general criteria will be applied, along with criteria described in the Basic A/C Control standards." },
+          { "key": "6", "text": "Whenever IP’s intervention is required for completion of a maneuver being performed by SP, the latter will be graded with either “0” (minimum possible performance) or “D” (Dangerous handling of the aircraft)." },
+          { "key": "7", "text": "Performance Criteria, upon which SPs are evaluated, are divided into General and Specific." },
+          { "key": "7(a)", "text": "Evaluation of SP on the General criteria is carried out by Instructor Pilot (IP), based upon SP’s performance, in reference to the desirable performance criteria. Upon grading, IP is required to take into consideration both his estimation on SP’s experience and the relation between SP’s performance and the training section he/she is undergoing (according to IP’s judgment)." },
+          { "key": "7(b)", "text": "The performance of SP shall also be evaluated according to Specific criteria which define the deviations from the standard parameters of the maneuvers (altitude, airspeed, heading, etc.), as described below. These define the performance standards “1” and “3”, while the intermediate deviations define the performance code “2”." },
+          { "key": "8", "text": "Executing the maneuvers with deviations smaller than those mentioned at Specific criteria will be graded with “4”, whereas larger deviations will result in a “0” or “D” rating." },
+          { "key": "9", "text": "The maneuvers and procedures will be carried out during daylight and with VMC or IMC flight conditions, unless otherwise mentioned in the relevant criteria." },
+          { "key": "10", "text": "Criteria of the maneuvers performed under VMC flight conditions must be met in combination with spatial awareness control." }
+        ],
+        "specific_criteria": { "kind": "none", "reference_text": null, "reference_target": null, "parameters": [] }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ειδικό item (δεν αντιστοιχεί σε αριθμημένο item του φύλλου βαθμολογίας). Γονική επικεφαλίδα: «7. PERFORMANCE CRITERIA» (σελ. PDF 24).",
+        "Το general_criteria περιέχει 13 εγγραφές: το εισαγωγικό (key «preamble»), τους 10 αριθμημένους κανόνες (1)-(10) και τα δύο υπο-εδάφια με κλειδιά «7(a)» / «7(b)».",
+        "Κλειδί «7(b)» (σελ. PDF 24): ορίζει ρητά ότι οι δύο αριθμητικές στήλες των πινάκων είναι τα πρότυπα «1» και «3», με τις ενδιάμεσες αποκλίσεις να δίνουν κωδικό «2». Αυτό επιβεβαιώνει την αντιστοίχιση code_1 = αριστερή/χαλαρότερη, code_3 = δεξιά/αυστηρότερη.",
+        "Ο κανόνας (9) σπάει στο γύρισμα σελ. PDF 24→25 («...carried out during» / «daylight and with VMC or IMC...»)· ενώθηκε.",
+        "Κανόνας (2): στο πρωτότυπο το «- performance within limits -» τελειώνει στο τέλος της γραμμής χωρίς κενό πριν το «however»· προστέθηκε κενό κατά την ένωση γραμμών."
+      ]
+    },
+    {
+      "id": "contact-01",
+      "numbers": [1],
+      "name": "GROUND PROCEDURES",
+      "heading_verbatim": "(1) GROUND PROCEDURES",
+      "pages_pdf": [26, 27],
+      "execution": [
+        "To properly implement Ground Procedures, SP:",
+        "1/ Plans the mission suitably, according to A/C energy planning and his/her training level, taking into consideration all the data required for Mission planning.",
+        "2/ Informs the Instructor Pilot (IP) for any handicaps (if any) so far in his training.",
+        "3/ He/she takes part in or executes mission briefing according to the Mission Briefing Guide.",
+        "4/ SP must also be in a position to plan the alternative mission (when existing).",
+        "5/ Executes the normal procedures described in the Flight Manual, in the Local Area Procedures and in SOPs."
+      ],
+      "conditions": [
+        "Upon Ground Procedures execution, the following Conditions apply:",
+        "1/ SP has the Flight Manual, Aeronautical maps, Guide Books, Navigation computer and mission planning sheets, at his/her disposal.",
+        "2/ Personal pilot equipment is provided for SP according to B.D.3-1/HATC."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          { "key": "preamble", "text": "To fulfill the General Criteria on Ground Procedures, SP:" },
+          { "key": "a", "text": "Executes all checks according to check list, without IP’s intervention, in an impeccable and standardized manner." },
+          { "key": "b", "text": "Does not skip any procedure according to LAP and SOPs." },
+          { "key": "c", "text": "Cooperates with ground crew, without allowing mis-apprehensions." },
+          { "key": "d", "text": "Specifies the A/C condition and decides its flight permissibility correctly and confidently." },
+          { "key": "e", "text": "Is aware of ground crew’s position before activating any switch or move any A/C controls." },
+          { "key": "f", "text": "Follows specified taxi route and ensures that the ground path of the A/C is clear of obstacles." },
+          { "key": "g", "text": "Stops the A/C as required without oscillations and without IP’s intervention." },
+          { "key": "h", "text": "Does not allow any A/C movement when it should be halted (leak check, line-up, etc.)." },
+          { "key": "i", "text": "Knows and uses correctly all A/C levers and switches." },
+          { "key": "j", "text": "Asks and waits answer from the instructor about the (BOTH) procedures." }
+        ],
+        "specific_criteria": { "kind": "none", "reference_text": null, "reference_target": null, "parameters": [] }
+      },
+      "cross_refs": [],
+      "flags": [
+        "ΔΕΝ υπάρχει υποενότητα «2/ SPECIFIC CRITERIA» για το item (1)· μετά το κριτήριο j/ ακολουθεί απευθείας το «(2) TAKE OFF» (σελ. PDF 27). Κατά τον κανόνα 7.a(5) εφαρμόζονται μόνο τα γενικά κριτήρια.",
+        "Κριτήριο j/: το «(BOTH)» είναι ασαφές στο πρωτότυπο (πιθανόν αναφορά σε συγκεκριμένη διαδικασία BOTH)· διατηρήθηκε verbatim.",
+        "Το item σπάει στο γύρισμα σελ. PDF 26→27 (γενικά κριτήρια h/, i/, j/ στη σελ. 27)."
+      ]
+    },
+    {
+      "id": "contact-02",
+      "numbers": [2],
+      "name": "TAKE OFF",
+      "heading_verbatim": "(2) TAKE OFF",
+      "pages_pdf": [27, 28],
+      "execution": [
+        "To properly execute T/O, SP:",
+        "1/ Executes the departure, which includes:",
+        "a/ Performing of Lineup Check and After Takeoff Checklist.",
+        "b/ Brakes release until the acceleration of the A/C up to the standard climb airspeed.",
+        "c/ A/C performance checks in accordance with the calculated T/O data.",
+        "d/ L/G and flaps retraction.",
+        "e/ Acceleration of the A/C to the standard climb airspeed.",
+        "f/ During Touch and Go, from the moment when SP places PCL at MAΧ position, until the A/C accelerates up to the standard climb speed."
+      ],
+      "conditions": [
+        "Upon take off execution, the following conditions apply:",
+        "1/ SP takes off from runway centerline.",
+        "2/ Wind parameters are within limits."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          { "key": "preamble", "text": "To fulfill the General criteria for T/O, SP:" },
+          { "key": "a", "text": "Executes LINE UP checks without omissions." },
+          { "key": "b", "text": "During engine run-up, does not allow any movement of the A/C." },
+          { "key": "c", "text": "Maintains the A/C at the centerline during T/O." },
+          { "key": "d", "text": "Brings and maintains the A/C to the proper T/O attitude." },
+          { "key": "e", "text": "Executes T/O with the standard airspeed." },
+          { "key": "f", "text": "Brings the A/C at the proper climbing attitude and maintains it." },
+          { "key": "g", "text": "Cleans the A/C configuration without violating Speed limit." },
+          { "key": "h", "text": "Accelerates and maintains the proper climb airspeed." }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "lead_in_verbatim": "The following parameters are set as specific criteria for T/O execution:",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "Take off Airspeed (knots)",
+              "unit": "knots",
+              "code_1_raw": "-0,+10",
+              "code_3_raw": "-0,+5",
+              "code_1": { "kind": "deviation", "plus": 10, "minus": 0 },
+              "code_3": { "kind": "deviation", "plus": 5, "minus": 0 },
+              "interpolation": "standard",
+              "notes": "Μονόπλευρη ανοχή: μόνο υπέρβαση (+) επιτρέπεται, μηδενική ανοχή προς τα κάτω. Επιβεβαιωμένη αντιστοίχιση στήλης με x-συντεταγμένες (PyMuPDF, σελ. PDF 28): το «-0,+10» στο κελί 281.9-345.9 = στήλη «1»· το «-0,+5» στο 379.0-474.0 = στήλη «3»."
+            },
+            {
+              "maneuver": null,
+              "parameter": "Maintain in the center line of RWY (ft)",
+              "unit": "feet",
+              "code_1_raw": "±10",
+              "code_3_raw": "±5",
+              "code_1": { "kind": "deviation", "plus": 10, "minus": 10 },
+              "code_3": { "kind": "deviation", "plus": 5, "minus": 5 },
+              "interpolation": "standard",
+              "notes": "Το «±» εδώ εξάγεται σωστά ως U+00B1 (σε αντίθεση με τις σελ. 30/31/33)."
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Σελ. PDF 27, EXECUTION 1/f/: «MAΧ» — το τελευταίο γράμμα είναι ΕΛΛΗΝΙΚΟ Χ (U+03A7) αντί για λατινικό X· σωστή ανάγνωση = «MAX». Διατηρήθηκε verbatim.",
+        "Η επικεφαλίδα του πίνακα (σελ. 28) είναι «MANEUVER PARAMETER» (ενικός), ενώ στις σελ. 30/31/33 είναι «MANEUVER PARAMETERS».",
+        "Ο πίνακας έχει ΜΙΑ συγχωνευμένη στήλη ετικέτας (x 45.9-223.1)· δεν υπάρχει ξεχωριστό κελί «maneuver», γι' αυτό maneuver=null. Το «Take off» είναι μέρος της ετικέτας της γραμμής.",
+        "Οι στήλες D, 0, 2, 4 υπάρχουν στην κεφαλίδα αλλά είναι κενές σε όλες τις γραμμές.",
+        "Το item σπάει στο γύρισμα σελ. PDF 27→28 (το κριτήριο f/ κόβεται: «...proper climbing attitude» / «and maintains it.»)."
+      ]
+    },
+    {
+      "id": "contact-03",
+      "numbers": [3],
+      "name": "DEPARTURE / TRANSITION TO FLIGHT AREAS",
+      "heading_verbatim": "(3) DEPARTURE / TRANSITION TO FLIGHT AREAS",
+      "pages_pdf": [28],
+      "execution": [
+        "To properly perform in this item, SP executes the departure maneuver and heads to assigned areas-points.",
+        "1/ Remains in the traffic pattern according to the Local Area Procedures (LAP).",
+        "2/ Performs VFR or IFR departure, climb and level off while heading to the flight area."
+      ],
+      "conditions": [
+        "Upon execution, the following conditions apply:",
+        "1/ The technique is determined by the Techniques and Procedures Manual and the Local Area Procedures (LAP).",
+        "2/ Courses and Routes are predetermined."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          { "key": "preamble", "text": "To fulfill the General criteria for this item, SP:" },
+          { "key": "a", "text": "Follows the local traffic pattern exit - departure procedures." },
+          { "key": "b", "text": "Directs the A/C safely to the assigned flight areas." },
+          { "key": "c", "text": "Does not violate adjacent flight areas without authorization." }
+        ],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "Criteria/deviations during climb are described in Basic A/C Control.",
+          "reference_target": "contact-05",
+          "parameters": []
+        }
+      },
+      "cross_refs": ["Criteria/deviations during climb are described in Basic A/C Control."],
+      "cross_ref_targets": ["contact-05"],
+      "flags": [
+        "reference_target=contact-05: το «Basic A/C Control» αντιστοιχεί μονοσήμαντα στο item (5) BASIC A/C CONTROL (σελ. PDF 29-30)."
+      ]
+    },
+    {
+      "id": "contact-04",
+      "numbers": [4],
+      "name": "AREA AWARENESS",
+      "heading_verbatim": "(4) AREA AWARENESS",
+      "pages_pdf": [29],
+      "execution": [
+        "SP must be aware of the areas limits and also be able to recognize and maintain the assigned area."
+      ],
+      "conditions": ["Weather is within limits for VFR flights."],
+      "expected_performance": {
+        "general_criteria": [
+          { "key": "preamble", "text": "To fulfill the General criteria for this item, SP:" },
+          { "key": "a", "text": "Does not violate adjacent flight areas without authorization." },
+          { "key": "b", "text": "Is aware of and remains within the flight area characteristic points and altitudes assigned for flight." },
+          { "key": "c", "text": "Is able to use VOR/ TACAN or GPS to confirm his position." },
+          { "key": "d", "text": "Is able to return to base (RTB) safely or deviate to the alternate airfield." }
+        ],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "Allowed deviations are described in Basic A/C Control.",
+          "reference_target": "contact-05",
+          "parameters": []
+        }
+      },
+      "cross_refs": ["Allowed deviations are described in Basic A/C Control."],
+      "cross_ref_targets": ["contact-05"],
+      "flags": [
+        "Η EXECUTION και τα CONDITIONS δεν έχουν αριθμημένες ρήτρες — μοναδική πρόταση χωρίς δείκτη (verbatim).",
+        "«VOR/ TACAN»: το κενό μετά την κάθετο είναι όπως στο πρωτότυπο."
+      ]
+    },
+    {
+      "id": "contact-05",
+      "numbers": [5],
+      "name": "BASIC A/C CONTROL",
+      "heading_verbatim": "(5) BASIC A/C CONTROL",
+      "pages_pdf": [29, 30],
+      "execution": [
+        "On Basic A/C control, SP:",
+        "1/ Maintains positive and smooth A/C control taking into consideration the current flight conditions.",
+        "2/ Trims the A/C in detail during flight.",
+        "3/ Performs cross check."
+      ],
+      "conditions": ["Day only (VFR – VMC)"],
+      "expected_performance": {
+        "general_criteria": [
+          { "key": "preamble", "text": "To fulfill the General criteria for Basic A/C Control, SP:" },
+          { "key": "a", "text": "Handles the aileron, elevator and rudder trim correctly, with ease and without any difficulty, within the full airspeed range during all flight phases and maneuvers." },
+          { "key": "b", "text": "Uses all A/C levers and switches with ease, without any difficulty and/or faults." },
+          { "key": "c", "text": "Executes all actions and checks according to Flight Manual, Standard Operating Procedures and Local Area Procedures." },
+          { "key": "d", "text": "Maintains the A/C within operational limits." },
+          { "key": "e", "text": "Maintains throughout the flight the required distance from clouds in order to remain VFR." },
+          { "key": "f", "text": "Checks continuously the indications from control and performance instruments of the A/C and compares them with the A/C positioning in space." },
+          { "key": "g", "text": "Executes the corresponding corrections, depending on the exterior stimuli and the duration of A/C maneuvers in all the flight phases." },
+          { "key": "h", "text": "Timely locates erroneous readings from A/C instruments, informs IP (when in dual flight) and executes the corresponding procedures." },
+          { "key": "i", "text": "Does not skip any procedure." },
+          { "key": "j", "text": "Knows the position and use of all A/C levers and switches." }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "lead_in_verbatim": "The following parameters are set as specific criteria for Basic A/C control:",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "￿ 300΄",
+              "code_3_raw": "￿ 150΄",
+              "code_1": { "kind": "deviation", "plus": 300, "minus": 300 },
+              "code_3": { "kind": "deviation", "plus": 150, "minus": 150 },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:» (γραμμή πάνω από τον πίνακα, σελ. PDF 30)."
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "￿ 20",
+              "code_3_raw": "￿ 10",
+              "code_1": { "kind": "deviation", "plus": 20, "minus": 20 },
+              "code_3": { "kind": "deviation", "plus": 10, "minus": 10 },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:»."
+            },
+            {
+              "maneuver": null,
+              "parameter": "EXIT HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "￿ 10 ο",
+              "code_3_raw": "￿ 5ο",
+              "code_1": { "kind": "deviation", "plus": 10, "minus": 10 },
+              "code_3": { "kind": "deviation", "plus": 5, "minus": 5 },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:». Το σύμβολο μοιρών είναι ΕΛΛΗΝΙΚΟ ομικρόν (U+03BF) αντί °."
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "ΣΗΜΑΝΤΙΚΟ: το «±» στον πίνακα της σελ. PDF 30 εξάγεται ως U+FFFF (￿) — σπασμένο glyph στο ίδιο το PDF (εμφανίζεται ως tofu και στο render). Επιβεβαιωμένα είναι «±». Τα *_raw κρατήθηκαν όπως εξάγονται.",
+        "Το σύμβολο ποδιών στις τιμές ALTITUDE είναι U+0384 (ελληνικός τόνος «΄») αντί για σύμβολο ποδιών — αφαιρέθηκε στα normalized πεδία (unit=feet).",
+        "Η εμβέλεια του πίνακα δίνεται από τη γραμμή πάνω από αυτόν και ΟΧΙ από συγχωνευμένο κελί φάσης· γι' αυτό maneuver=null και η εμβέλεια καταγράφηκε στο notes κάθε γραμμής.",
+        "Αντιστοίχιση στηλών επαληθεύτηκε με PyMuPDF x-συντεταγμένες + κάθετες γραμμές πλέγματος (σελ. 30: στήλη «1» = 327.1-376.7, στήλη «3» = 405.0-454.6).",
+        "Η ενότητα σπάει στο γύρισμα σελ. PDF 29→30 (το κριτήριο c/ κόβεται)."
+      ]
+    },
+    {
+      "id": "contact-06",
+      "numbers": [6],
+      "name": "G –AWARENESS",
+      "heading_verbatim": "(6) G –AWARENESS",
+      "pages_pdf": [30, 31],
+      "execution": [
+        "SP performs the AGSM in accordance with Aerospace physiology and the Techniques and Procedures Manual."
+      ],
+      "conditions": [
+        "1/ Day only (VFR – VMC).",
+        "2/ During mission profile whenever more than 3Gs required."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          { "key": "a", "text": "Ensure proper anti G suit operation." },
+          { "key": "b", "text": "SP performs the AGSM in accordance with the Techniques and Procedures Manual." },
+          { "key": "c", "text": "Avoid exceeding A/C G-limits" },
+          { "key": "d", "text": "Maintain awareness of G loading during all maneuvers." }
+        ],
+        "specific_criteria": { "kind": "none", "reference_text": null, "reference_target": null, "parameters": [] }
+      },
+      "cross_refs": [],
+      "flags": [
+        "ΔΕΝ υπάρχει υποενότητα «2/ SPECIFIC CRITERIA» για το item (6).",
+        "Επικεφαλίδα με ανώμαλη στίξη στο πρωτότυπο: «G –AWARENESS» (κενό πριν το en-dash, κανένα μετά). Επαληθεύτηκε με x-συντεταγμένες (σελ. 30).",
+        "Το γενικό κριτήριο c/ δεν έχει τελεία στο πρωτότυπο («Avoid exceeding A/C G-limits») — διατηρήθηκε verbatim.",
+        "Το «1/ GENERAL CRITERIA» δεν έχει εισαγωγική φράση (π.χ. «To fulfill...»), σε αντίθεση με τα υπόλοιπα items.",
+        "Το item σπάει στο γύρισμα σελ. PDF 30→31 (κριτήρια c/, d/ στη σελ. 31)."
+      ]
+    },
+    {
+      "id": "contact-07",
+      "numbers": [7],
+      "name": "SLOW FLIGHT",
+      "heading_verbatim": "(7) SLOW FLIGHT",
+      "pages_pdf": [31],
+      "execution": [
+        "SP executes Slow Flight in accordance with the Techniques and Procedures Manual."
+      ],
+      "conditions": [
+        "When in Slow Flight, the following conditions apply:",
+        "1/ Execution with minimum safe altitude, as determined in Procedures and Techniques Manual.",
+        "2/ Day only (VFR - VMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          { "key": "preamble", "text": "To fulfill the General criteria for Slow Flight, SP:" },
+          { "key": "a", "text": "Executes Slow Flight as described in the Techniques and Procedures manual." },
+          { "key": "b", "text": "Does not allow the inadvertent appearance of stall characteristics." }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "￿ 300’",
+              "code_3_raw": "￿ 150’",
+              "code_1": { "kind": "deviation", "plus": 300, "minus": 300 },
+              "code_3": { "kind": "deviation", "plus": 150, "minus": 150 },
+              "interpolation": "standard",
+              "notes": null
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "+15 - 5",
+              "code_3_raw": "+ 5 - 0",
+              "code_1": { "kind": "deviation", "plus": 15, "minus": 5 },
+              "code_3": { "kind": "deviation", "plus": 5, "minus": 0 },
+              "interpolation": "standard",
+              "notes": "Ασύμμετρη ανοχή (+A / -B), όχι ±. Στον κωδικό 3 η ανοχή προς τα κάτω είναι μηδενική."
+            },
+            {
+              "maneuver": null,
+              "parameter": "HEADING - BANK (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "± 10°",
+              "code_3_raw": "￿ 5°",
+              "code_1": { "kind": "deviation", "plus": 10, "minus": 10 },
+              "code_3": { "kind": "deviation", "plus": 5, "minus": 5 },
+              "interpolation": "standard",
+              "notes": "Η τιμή του κωδικού 1 έχει γνήσιο «±» (U+00B1) ενώ του κωδικού 3 έχει σπασμένο glyph (U+FFFF) — ίδιο σύμβολο, διαφορετική κωδικοποίηση."
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ο πίνακας δεν έχει εισαγωγική φράση· ακολουθεί αμέσως μετά το «2/ SPECIFIC CRITERIA».",
+        "Το «±» στις γραμμές ALTITUDE και στον κωδικό 3 του HEADING-BANK εξάγεται ως U+FFFF (￿)· επιβεβαιωμένα είναι «±».",
+        "Το σύμβολο ποδιών εδώ είναι U+2019 (’) — διαφορετικό από τη σελ. 30 που χρησιμοποιεί U+0384.",
+        "Η γραμμή AIRSPEED ΔΕΝ είναι συμμετρική ±: code 1 = +15/-5, code 3 = +5/-0. Η γραμμική παρεμβολή για τον κωδικό «2» πρέπει να γίνεται ξεχωριστά ανά πλευρά (+ και -).",
+        "Η ετικέτα «HEADING - BANK (degrees)» καλύπτει δύο διαφορετικές παραμέτρους (heading και bank) με κοινή ανοχή — πιθανή ανάγκη διάσπασης στην εφαρμογή.",
+        "Στο κριτήριο a/ το «manual» γράφεται με πεζό m (αντί «Manual») — verbatim."
+      ]
+    },
+    {
+      "id": "contact-08",
+      "numbers": [8],
+      "name": "POWER ON / ELP STALLS",
+      "heading_verbatim": "(8) POWER ON / ELP STALLS",
+      "pages_pdf": [31, 32],
+      "execution": [
+        "Upon the Training Exercise, SP executes Power on / ELP Stalls in accordance with the Techniques and Procedures Manual and regains A/C control."
+      ],
+      "conditions": [
+        "1/ At the altitude determined in Techniques and Procedures Manual and the SOPs.",
+        "2/ With \"clean\" A/C.",
+        "3/ Day only (VFR – VMC).",
+        "4/ Within assigned flight areas."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          { "key": "preamble", "text": "To fulfill the Training Exercise criteria, SP:" },
+          { "key": "a", "text": "Maintains climb attitude (before stall) and bank (if required)." },
+          { "key": "b", "text": "Executes the maneuver in accordance with the Techniques and Procedures Manual." },
+          { "key": "c", "text": "Initiates recovery, at the beginning of loss of A/C control, according to the Techniques and Procedures manual criteria." },
+          { "key": "d", "text": "Levels off the A/C by losing the minimum altitude possible." },
+          { "key": "e", "text": "Does not allow the appearance of secondary stall. In such a case SP takes proper action." }
+        ],
+        "specific_criteria": { "kind": "none", "reference_text": null, "reference_target": null, "parameters": [] }
+      },
+      "cross_refs": [],
+      "flags": [
+        "ΔΕΝ υπάρχει υποενότητα «2/ SPECIFIC CRITERIA» για το item (8)· μετά το e/ ακολουθεί απευθείας το «(9) TRAFFIC PATTERN STALLS» (σελ. PDF 32).",
+        "Η εισαγωγική φράση των γενικών κριτηρίων είναι «To fulfill the Training Exercise criteria, SP:» (όχι «General criteria»).",
+        "Τα CONDITIONS δεν έχουν εισαγωγική φράση.",
+        "Το item σπάει στο γύρισμα σελ. PDF 31→32 (το EXPECTED PERFORMANCE ξεκινά στη σελ. 32)."
+      ]
+    },
+    {
+      "id": "contact-09",
+      "numbers": [9],
+      "name": "TRAFFIC PATTERN STALLS",
+      "heading_verbatim": "(9) TRAFFIC PATTERN STALLS",
+      "pages_pdf": [32, 33],
+      "execution": [
+        "SP executes deliberately, according to the Techniques and Procedures Manual, the following landing pattern stalls:",
+        "1/ BREAK stall and recovery.",
+        "2/ Undershooting (Nose-high) Final Turn Stall and recovery.",
+        "3/ Overshooting (Nose-low) Final Turn Stall and recovery.",
+        "4/ Landing Attitude Stall and recovery."
+      ],
+      "conditions": [
+        "When executing Traffic Pattern Stalls, the following conditions apply:",
+        "1/ The altitude is determined by the Techniques and Procedures Manual and the SOPs.",
+        "2/ Appropriate A/C configuration.",
+        "3/ Day only (VFR – VMC).",
+        "4/ Within the assigned flight area."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          { "key": "preamble", "text": "To fulfill the General Criteria on Traffic Pattern Stalls, SP:" },
+          { "key": "a", "text": "Flies the A/C into stall, according to the Techniques and Procedures Manual." },
+          { "key": "b", "text": "Executes recovery procedures with the appearance of first stall characteristics." },
+          { "key": "c", "text": "Does not allow the appearance of secondary stall. In such a case SP takes the appropriate action." },
+          { "key": "d", "text": "Does not exceed the airspeed limits of landing gear and flaps." }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "lead_in_verbatim": "The following parameters are set as specific criteria for Traffic Pattern Stalls execution:",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "BREAK STALL – ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "￿ 300’",
+              "code_3_raw": "￿ 150΄",
+              "code_1": { "kind": "deviation", "plus": 300, "minus": 300 },
+              "code_3": { "kind": "deviation", "plus": 150, "minus": 150 },
+              "interpolation": "standard",
+              "notes": "Η μοναδική γραμμή του πίνακα με αμφίπλευρη ανοχή (±)· οι άλλες δύο είναι μονόπλευρες (μόνο απώλεια ύψους)."
+            },
+            {
+              "maneuver": null,
+              "parameter": "BASE LEG STALL–  ALTITUDE (feet)",
+              "unit": "feet",
+              "one_sided": "minus",
+              "code_1_raw": "- 300’",
+              "code_3_raw": "- 150΄",
+              "code_1": { "kind": "deviation", "plus": null, "minus": 300 },
+              "code_3": { "kind": "deviation", "plus": null, "minus": 150 },
+              "interpolation": "standard",
+              "notes": "Μονόπλευρη ανοχή: μετράται μόνο η απώλεια ύψους (-). Η πηγή (σελ. PDF 33) δίνει ΜΟΝΟ αρνητικό όριο («- 300’» / «- 150΄»· επιβεβαιωμένο σε επίπεδο codepoint: U+002D, όχι σπασμένο ±) — ΚΑΜΙΑ τιμή προς τα πάνω δεν είναι τυπωμένη. Γι' αυτό plus=null (= απροσδιόριστο/δεν μετράται) και ΟΧΙ plus=0, που θα σήμαινε ρητή μηδενική ανοχή την οποία η πηγή δεν διατυπώνει. Βλ. source.conventions.deviation_null."
+            },
+            {
+              "maneuver": null,
+              "parameter": "STALL WITH LANDING ATTITUDE – ALTITUDE (feet)",
+              "unit": "feet",
+              "one_sided": "minus",
+              "code_1_raw": "- 300’",
+              "code_3_raw": "- 150΄",
+              "code_1": { "kind": "deviation", "plus": null, "minus": 300 },
+              "code_3": { "kind": "deviation", "plus": null, "minus": 150 },
+              "interpolation": "standard",
+              "notes": "Μονόπλευρη ανοχή: μετράται μόνο η απώλεια ύψους (-). Η πηγή (σελ. PDF 33) δίνει ΜΟΝΟ αρνητικό όριο («- 300’» / «- 150΄»· επιβεβαιωμένο σε επίπεδο codepoint: U+002D, όχι σπασμένο ±) — ΚΑΜΙΑ τιμή προς τα πάνω δεν είναι τυπωμένη. Γι' αυτό plus=null (= απροσδιόριστο/δεν μετράται) και ΟΧΙ plus=0. Βλ. source.conventions.deviation_null. Η ετικέτα καταλαμβάνει δύο τυπογραφικές γραμμές στο ίδιο κελί."
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "SP completes recovery applying the criteria of Basic A/C Control, with minimum loss of altitude."
+      ],
+      "cross_ref_targets": ["contact-05"],
+      "flags": [
+        "ΑΝΑΝΤΙΣΤΟΙΧΙΑ: η EXECUTION απαριθμεί 4 stalls (BREAK / Undershooting Final Turn / Overshooting Final Turn / Landing Attitude), αλλά ο πίνακας Specific Criteria έχει μόνο 3 γραμμές και χρησιμοποιεί τον όρο «BASE LEG STALL» που ΔΕΝ αναφέρεται στην EXECUTION. Η αντιστοίχιση BASE LEG ↔ (2)/(3) Final Turn Stalls είναι ΑΒΕΒΑΙΗ — χρειάζεται επιβεβαίωση από τον χρήστη.",
+        "Η ετικέτα «BASE LEG STALL–  ALTITUDE (feet)» έχει ΔΙΠΛΟ κενό μετά το en-dash και κανένα πριν (επαληθεύτηκε με x-συντεταγμένες: κενό 6.7pt έναντι 3.3pt του κανονικού) — διατηρήθηκε verbatim.",
+        "ΑΝΑΜΕΙΞΗ ΣΥΜΒΟΛΩΝ ΠΟΔΙΩΝ στην ίδια γραμμή: ο κωδικός 1 χρησιμοποιεί U+2019 (300’) ενώ ο κωδικός 3 U+0384 (150΄).",
+        "Το «±» στη γραμμή BREAK STALL εξάγεται ως U+FFFF (￿)· επιβεβαιωμένα είναι «±». Αντίθετα, οι άλλες δύο γραμμές είναι κανονικό hyphen-minus (U+002D) = πραγματικό μείον, ΟΧΙ σπασμένο ±.",
+        "ΔΙΟΡΘΩΣΗ: οι δύο μονόπλευρες γραμμές (BASE LEG STALL, STALL WITH LANDING ATTITUDE) είχαν αρχικά κωδικοποιηθεί με plus=0. Αυτό ήταν επινοημένος περιορισμός — η πηγή δεν τυπώνει καμία τιμή προς τα πάνω. Άλλαξε σε plus=null + one_sided=\"minus\". Ρητό 0 διατηρείται μόνο όπου το «0» είναι τυπωμένο (contact-02 «-0,+10» / «-0,+5» → minus:0· contact-07 AIRSPEED code 3 «+ 5 - 0» → minus:0). Βλ. conventions.deviation_null στην κορυφή του αρχείου.",
+        "Η πρόταση «SP completes recovery applying the criteria of Basic A/C Control, with minimum loss of altitude.» εμφανίζεται μέσα στην υποενότητα SPECIFIC CRITERIA, ΜΕΤΑ την εισαγωγική πρόταση του πίνακα και ΠΡΙΝ τον πίνακα (σελ. PDF 33, y=206.0-219.8) — αποθηκεύτηκε στο cross_refs με μηχαναγνώσιμο στόχο στο cross_ref_targets[0] = \"contact-05\".",
+        "Το item σπάει στο γύρισμα σελ. PDF 32→33 (η επικεφαλίδα ξεκινά στη σελ. 32, ο πίνακας είναι στη σελ. 33)."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4042 @@
+{
+  "category": "formation",
+  "source": {
+    "file": "Phase_2_Syllabus_2025.pdf",
+    "pages_pdf": [
+      62,
+      83
+    ],
+    "chunks": [
+      {
+        "file": "criteria_formation_a.json",
+        "pages_pdf": [
+          62,
+          69
+        ],
+        "items": 12
+      },
+      {
+        "file": "criteria_formation_b.json",
+        "pages_pdf": [
+          69,
+          76
+        ],
+        "items": 10
+      },
+      {
+        "file": "criteria_formation_c.json",
+        "pages_pdf": [
+          76,
+          83
+        ],
+        "items": 12
+      }
+    ],
+    "conventions": {
+      "mixed_units": "Όταν ένα κελί του πίνακα Specific Criteria τυπώνει το «+» σκέλος και το «-» σκέλος σε ΔΙΑΦΟΡΕΤΙΚΕΣ μονάδες, το πεδίο unit της γραμμής παίρνει την τιμή \"mixed\" και οι πραγματικές μονάδες δηλώνονται ΡΗΤΑ: στη γραμμή με τα πεδία plus_unit/minus_unit και μέσα σε ΚΑΘΕ αντικείμενο code_N με τα ίδια πεδία. Καταναλωτής ΔΕΝ επιτρέπεται να εφαρμόσει ενιαία μονάδα σε ολόκληρη τη γραμμή όταν unit=\"mixed\", ούτε να διαβάσει γυμνό αριθμό χωρίς τη μονάδα του σκέλους του. Η παρεμβολή (interpolation=\"standard\") εφαρμόζεται ΑΝΑ ΣΚΕΛΟΣ, μέσα στη δική του μονάδα (plus: feet -> feet, minus: span -> span). Μοναδική περίπτωση στο αρχείο: formation-18 → «a/ ROUTE POSITION» → «DISTANCE (span)» (σελ. PDF 72, y=398.23), όπου το «+» τυπώνεται σε ΠΟΔΙΑ (+200’ / +100’, feet mark U+2019) και το «-» σε ΑΝΟΙΓΜΑΤΑ ΠΤΕΡΥΓΩΝ (-1/2 span / -0 span), παρότι η ετικέτα της γραμμής γράφει (span).",
+      "nominal_change": "Το kind=\"nominal_change\" σημαίνει ότι ΑΛΛΑΖΕΙ η ονομαστική τιμή μεταξύ κωδίκων (και όχι μόνο το εύρος ανοχής). Η ονομαστική τιμή αποθηκεύεται ΠΑΝΤΑ στο πεδίο value — ίδιο σχήμα με τις υπόλοιπες εμφανίσεις του corpus (criteria_contact_b.json contact-24/contact-29, criteria_formation_a.json formation-11). Όταν η πηγή τυπώνει ΚΑΙ ανοχή γύρω από την ονομαστική τιμή (π.χ. formation-17 «50° ± 5°» / «30°± 5°»), αυτή προστίθεται στα ΠΡΟΑΙΡΕΤΙΚΑ πεδία plus/minus χωρίς να μετονομάζεται το value. Το πεδίο value είναι ΥΠΟΧΡΕΩΤΙΚΟ σε κάθε αντικείμενο με kind=\"nominal_change\".",
+      "subsection_role_qualifier": "Όπου η πηγή τυπώνει προσδιορισμό ρόλου δίπλα στην επικεφαλίδα υποενότητας («(b) CONDITIONS (AS WINGMAN)», «(c) EXPECTED PERFORMANCE (AS WINGMAN)», «2/ SPECIFIC CRITERIA (AS WINGMAN)»), το αντίστοιχο πεδίο κρατά ΜΟΝΟ το περιεχόμενο και ο προσδιορισμός καταγράφεται ως flag του item με ρητή αναφορά σελίδας/y — ίδια σύμβαση με criteria_formation_c.json / formation-34 («(a) EXECUTION (AS LEADER)»). Ο προσδιορισμός ΠΕΡΙΟΡΙΖΕΙ το εύρος εφαρμογής της υποενότητας στον συγκεκριμένο ρόλο, ΑΚΟΜΗ ΚΑΙ όταν άλλες υποενότητες του ίδιου item έχουν και κλάδο «As leader».",
+      "synthetic_sub_keys": "Στα general_criteria, τα σύνθετα κλειδιά τύπου «a.1», «b.2» δηλώνουν ΙΕΡΑΡΧΙΑ (υπο-στοιχείο κάτω από το a/ ή b/) και ΔΕΝ σημαίνουν κατ' ανάγκη ότι η πηγή τυπώνει ψηφίο. Όπου το ψηφίο τυπώνεται όντως (υπογραμμισμένοι αριθμοί 1/2/3: formation-14, formation-17, formation-23 κλάδος b/) υπάρχει σχετικό flag. Όπου ΔΕΝ τυπώνεται ψηφίο και το κείμενο ακολουθεί απευθείας το a/ ή b/ (formation-22 κλάδοι a/ και b/, formation-23 κλάδος a/), το «.1» είναι ΚΑΘΑΡΑ ΔΟΜΙΚΟ κλειδί και σημειώνεται ρητά με flag στο item.",
+      "role_subsection": "Η κατηγορία «d. FORMATION CATEGORY PERFORMANCE CRITERIA» (σελ. PDF 62, y=91.45) χωρίζεται σε τρεις υποενότητες ρόλου, τυπωμένες σε Arial-BoldMT: «LEADER» (σελ. PDF 62, y=111.24), «WINGMAN» (σελ. PDF 64, y=710.01) και «GENERAL» (σελ. PDF 69, y=105.24, x=155.95). Όλα τα items αυτού του αρχείου — (14) έως (23) — ανήκουν στην υποενότητα GENERAL, δηλαδή ΔΕΝ είναι role-specific, σε αντίθεση με τα items (1)-(13) του criteria_formation_a.json. Ο ρόλος καταγράφεται ως flag «Ρόλος: …» σε ΚΑΘΕ item, με την ίδια σύμβαση όπως στο criteria_formation_a.json.",
+      "resolved_rule": "Στο μπλοκ expected_performance.resolved το πεδίο rule παίρνει ΔΥΟ ΜΟΝΟ τιμές (κλειστό enum). rule=\"explicit_reference\": η πηγή τυπώνει ΡΗΤΗ παραπομπή ΟΠΟΥΔΗΠΟΤΕ ΜΕΣΑ ΣΤΟ ITEM — όχι μόνο στο «2/ SPECIFIC CRITERIA», αλλά και στο «(a) EXECUTION», στο «(b) CONDITIONS» ή στα «1/ GENERAL CRITERIA» — και η παραπομπή παρατίθεται verbatim στο sources[].basis. rule=\"rule_7a5_default\": ΔΕΝ τυπώνεται καμία ρητή παραπομπή μέσα στο item και εφαρμόζεται ο προεπιλεγμένος κανόνας 7.a(5) (σελ. PDF 24, contact-00-general, general_criteria key=\"5\"): «general criteria + criteria described in the Basic A/C Control standards». ΣΥΝΕΠΕΙΑ ΓΙΑ ΚΑΤΑΝΑΛΩΤΗ: το rule ΔΕΝ είναι συνάρτηση του specific_criteria.kind. ΕΠΤΑ items με kind=\"none\" φέρουν rule=\"explicit_reference\" ακριβώς επειδή η ρητή παραπομπή τυπώνεται ΕΚΤΟΣ του specific_criteria: formation-01 (general a/ → contact-02), formation-05 (general b/ → contact-05), formation-13 (ενιαία αναρίθμητη παράγραφος general criteria, key=null → formation-17 — ΜΟΝΑΔΙΚΗ ΕΝΔΟ-ΚΑΤΗΓΟΡΙΑΚΗ παραπομπή της ομάδας λύθηκε με τις αποφάσεις χρήστη 2α/3α της 2026-07-31 και έχει πλέον status=\"resolved\"), formation-15 (execution + conditions + general a/ → contact-01), formation-33 (general a.6 → contact-36), formation-34 (execution 3/ + general a.1 → contact-37), formation-36 (execution 1/ + general a/ → contact-39). Επομένως φίλτρο rule==\"rule_7a5_default\" επιστρέφει ΜΟΝΟ τα items που λύθηκαν με τον προεπιλεγμένο κανόνα και ΔΕΝ ισοδυναμεί με «όλα τα items χωρίς τυπωμένο πίνακα specific criteria» — γι' αυτό το τελευταίο χρησιμοποίησε specific_criteria.kind==\"none\". Η διάκριση «ρητή παραπομπή ΜΕΣΑ στο specific_criteria» (formation-03/08/23/24/30/31/35/37/crm, kind=\"reference\") από «ρητή παραπομπή αλλού μέσα στο item» (τα έξι παραπάνω, kind=\"none\") γίνεται με τον ΣΥΝΔΥΑΣΜΟ specific_criteria.kind + resolved.rule και ΟΧΙ με τρίτη τιμή του rule."
+    }
+  },
+  "items": [
+    {
+      "id": "formation-01",
+      "numbers": [
+        1,
+        2
+      ],
+      "name": "TAKE OFF (FORMATION - INTERVAL)",
+      "heading_verbatim": "(1),(2) TAKE OFF (FORMATION - INTERVAL)",
+      "pages_pdf": [
+        62,
+        62
+      ],
+      "execution": [
+        "When executing the Training Exercise, SP executes formation or interval T/O IAW Techniques and Procedures Manual and SOPs."
+      ],
+      "conditions": [
+        "1/ Wind is within limits.",
+        "2/ Pre-planned Maneuver.",
+        "3/ SP occupies half of RWY or as determined by orders."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Criteria mentioned in the Contact Category corresponding section apply."
+          },
+          {
+            "key": "b",
+            "text": "Takes into consideration all the essential factors to place No2 on the correct side."
+          },
+          {
+            "key": "c",
+            "text": "Effectively monitors No2 during maneuver."
+          },
+          {
+            "key": "d",
+            "text": "Confirms that No2 is safely airborne, prior giving the command for landing gear retraction."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "contact-02",
+              "scope": "Όλος ο πίνακας T/O του Contact (Take off Airspeed, Maintain in the center line of RWY)· καλύπτει και τα δύο σκέλη της ενιαίας επικεφαλίδας — (1) FORMATION T/O και (2) INTERVAL T/O.",
+              "basis": "GENERAL CRITERIA a/ verbatim: «Criteria mentioned in the Contact Category corresponding section apply.» → Contact «(2) TAKE OFF» (contact-02, σελ. PDF 27-28)· είναι το μοναδικό item T/O της Contact. Διασταύρωση: το αδελφό wingman item formation-08 παραπέμπει ρητά στο ίδιο τμήμα. ΣΚΟΠΙΜΗ ΠΑΡΑΛΕΙΨΗ ΤΟΥ BASIC A/C CONTROL: ο πίνακας contact-05 ΔΕΝ φορτώθηκε εδώ, παρότι κατά αυστηρή ανάγνωση του 7.a(5) («general criteria + Basic A/C Control standards») θα μπορούσε να συνυπάρχει. Λόγοι: (i) η ρητή παραπομπή του γενικού κριτηρίου a/ είναι ΕΙΔΙΚΟΤΕΡΗ και δείχνει ακριβώς στο αντίστοιχο τμήμα T/O της Contact, ενώ ο κανόνας 7.a(5) είναι προεπιλογή για ΑΠΟΥΣΙΑ παραπομπής· (ii) ο πίνακας contact-05 φέρει τυπωμένη εμβέλεια «For Straight and Level Flight and turns up to 60° of bank:» (σελ. PDF 30), που δεν περιγράφει το T/O roll / rotation· (iii) θα εισήγαγε δεύτερη, ασύμβατη ανοχή ταχύτητας (AIRSPEED ±20 / ±10) δίπλα στην τυπωμένη T/O airspeed (-0,+10 / -0,+5) του contact-02 για την ίδια φάση. ΣΥΜΜΕΤΡΙΑ: το formation-01 είναι συμμετρικό με το formation-08 (interval T/O — ρητή παραπομπή, μόνο contact-02)· η διαφορά από το αδελφό formation-07 (contact-05) οφείλεται στο ότι εκείνο ΔΕΝ τυπώνει καμία παραπομπή και γι' αυτό λύνεται με rule_7a5_default (βλ. basis του formation-07)."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "Take off Airspeed (knots)",
+              "unit": "knots",
+              "code_1_raw": "-0,+10",
+              "code_3_raw": "-0,+5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 0
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Μονόπλευρη ανοχή: μόνο υπέρβαση (+) επιτρέπεται, μηδενική ανοχή προς τα κάτω. Επιβεβαιωμένη αντιστοίχιση στήλης με x-συντεταγμένες (PyMuPDF, σελ. PDF 28): το «-0,+10» στο κελί 281.9-345.9 = στήλη «1»· το «-0,+5» στο 379.0-474.0 = στήλη «3».",
+              "provenance": "contact-02"
+            },
+            {
+              "maneuver": null,
+              "parameter": "Maintain in the center line of RWY (ft)",
+              "unit": "feet",
+              "code_1_raw": "±10",
+              "code_3_raw": "±5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Το «±» εδώ εξάγεται σωστά ως U+00B1 (σε αντίθεση με τις σελ. 30/31/33).",
+              "provenance": "contact-02"
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "Criteria mentioned in the Contact Category corresponding section apply."
+      ],
+      "flags": [
+        "Ρόλος: LEADER — η υποενότητα «LEADER» ανοίγει ακριβώς πριν το item, σελ. PDF 62 (κάτω από «d. FORMATION CATEGORY PERFORMANCE CRITERIA»).",
+        "Ενιαία επικεφαλίδα για δύο αριθμούς item: (1) FORMATION T/O και (2) INTERVAL T/O. id = formation-01 (πρώτος αριθμός).",
+        "Το item δεν έχει υποενότητα «2/ SPECIFIC CRITERIA» καθόλου.",
+        "Το cross-ref «Contact Category corresponding section» αναλύεται πιθανότατα στο contact-02 (TAKE OFF, σελ. PDF 27), αλλά δεν κατονομάζεται ρητά στο κείμενο."
+      ]
+    },
+    {
+      "id": "formation-03",
+      "numbers": [
+        3
+      ],
+      "name": "DEPARTURE",
+      "heading_verbatim": "(3) DEPARTURE",
+      "pages_pdf": [
+        62,
+        62
+      ],
+      "execution": [
+        "When executing the Training Exercise, SP executes climb / departure from air traffic pattern and transits to the assigned flight area, according to LAPs, Techniques and Procedures Manual and SOPs."
+      ],
+      "conditions": [
+        "Day only (VFR / VMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Directs formation safely to the assigned flight area."
+          },
+          {
+            "key": "b",
+            "text": "Follows the local departure procedures regarding the air traffic pattern."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "The A/C Basic Control of Contact category specific criteria apply.",
+          "reference_target": "contact-05",
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "contact-05",
+              "scope": "Πλήρης πίνακας contact-05: ALTITUDE (feet) / AIRSPEED (knots) / EXIT HEADING (degrees). Ισχύς κατά την πηγή: «For Straight and Level Flight and turns up to 60° of bank:». Εφαρμογή: όλη η φάση climb / departure / transit προς την περιοχή πτήσης.",
+              "basis": "specific_criteria.reference_text verbatim: «The A/C Basic Control of Contact category specific criteria apply.» (kind=\"reference\", reference_target=\"contact-05\", επιβεβαιωμένο στα flags του item: Contact «(5) BASIC A/C CONTROL», σελ. PDF 29)."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "￿ 300΄",
+              "code_3_raw": "￿ 150΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:» (γραμμή πάνω από τον πίνακα, σελ. PDF 30).",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "￿ 20",
+              "code_3_raw": "￿ 10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:».",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "EXIT HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "￿ 10 ο",
+              "code_3_raw": "￿ 5ο",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:». Το σύμβολο μοιρών είναι ΕΛΛΗΝΙΚΟ ομικρόν (U+03BF) αντί °.",
+              "provenance": "contact-05"
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "The A/C Basic Control of Contact category specific criteria apply."
+      ],
+      "flags": [
+        "Ρόλος: LEADER.",
+        "Το reference_target=contact-05 επιβεβαιώθηκε: στην Contact Category το item «(5) BASIC A/C CONTROL» βρίσκεται στη σελ. PDF 29."
+      ]
+    },
+    {
+      "id": "formation-04",
+      "numbers": [
+        4
+      ],
+      "name": "IN FLIGHT PLANNING / FORMATION CONSISTENCY",
+      "heading_verbatim": "(4) IN FLIGHT PLANNING / FORMATION CONSISTENCY",
+      "pages_pdf": [
+        62,
+        63
+      ],
+      "execution": [
+        "SP performs in flight planning, taking into consideration changes in mission profile, maneuver sequence, energy conservation and fuel management."
+      ],
+      "conditions": [
+        "Day only (VFR / VMC)"
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Adjusts mission profile depending on meteorological conditions, fuel and time constraints and mission objectives."
+          },
+          {
+            "key": "b",
+            "text": "For the time being a leader of the formation, adjusts the execution of the profile on the time specified during the briefing, so as to take advantage of the allocated fuel in the best way, taking into consideration the weather conditions as well as the assigned area (vertical and lateral limits)."
+          },
+          {
+            "key": "c",
+            "text": "Throughout the duration of his formation leadership, he monitors, controls and takes into account the wingman."
+          },
+          {
+            "key": "d",
+            "text": "Keeps the formation flexible and consistent despite the various external flight conditions and breaks out when required, in accordance with the manuals and the briefing."
+          },
+          {
+            "key": "e",
+            "text": "He takes into account the position of No2 in relation to the sun and the local area and performs the appropriate maneuver."
+          },
+          {
+            "key": "f",
+            "text": "He performs smoothly the above maneuvers, informing the wingman (by visual signs or by radio) for any upcoming major data flight changes without causing him any problems of staying in place."
+          },
+          {
+            "key": "g",
+            "text": "During the maneuvers he remains always predictable and his effect on the A/C’s flight controls is smooth and progressive, without affecting the proper execution of the exercises."
+          },
+          {
+            "key": "h",
+            "text": "He checks at any time the position of No2 and he has a clear understanding of how it moves in space."
+          },
+          {
+            "key": "i",
+            "text": "He provides the wingman with all required instructions and information."
+          },
+          {
+            "key": "j",
+            "text": "He completes his task smoothly."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "rule_7a5_default",
+          "sources": [
+            {
+              "item": "contact-00-general",
+              "scope": "Πηγή ΚΑΝΟΝΑ (όχι πηγή τιμών) — σελ. PDF 24.",
+              "basis": "Κανόνας 7.a(5) — «7. PERFORMANCE CRITERIA» → «a. GENERAL», κανόνας (5), σελ. PDF 24 (contact-00-general, general_criteria key=\"5\"), verbatim: «When specific criteria are not mentioned for certain maneuvers, general criteria will be applied, along with criteria described in the Basic A/C Control standards.»"
+            },
+            {
+              "item": "contact-05",
+              "scope": "Πλήρης πίνακας contact-05: ALTITUDE (feet) / AIRSPEED (knots) / EXIT HEADING (degrees). Ισχύς κατά την πηγή: «For Straight and Level Flight and turns up to 60° of bank:». Εφαρμογή: όλη η εν πτήσει φάση του item, με τον SP ως leader.",
+              "basis": "Το item «(29) BASIC A/C - FORMATION CONTROL» της ίδιας κατηγορίας (formation-29) ΔΕΝ τυπώνει πίνακα specific criteria (kind=\"none\"), άρα τα «Basic A/C Control standards» της κατηγορίας Formation αντλούνται τεκμηριωμένα από το Contact «(5) BASIC A/C CONTROL» (contact-05, σελ. PDF 29-30). Η αλυσίδα τεκμηρίωσης βρίσκεται μέσα στην ίδια την κατηγορία Formation: formation-03 (specific_criteria.reference_text) «The A/C Basic Control of Contact category specific criteria apply.» και formation-05 γενικό κριτήριο b/ «The A/C Basic Control (Contact category) specific criteria apply.» — δηλαδή η ίδια η πηγή ταυτίζει τα Basic A/C Control standards της Formation με τον πίνακα contact-05. Το item είναι kind=\"none\" (δεν τυπώνεται «2/ SPECIFIC CRITERIA») και έχει μετρήσιμη διάσταση πτήσης (ο SP χειρίζεται το A/C ενώ αναπροσαρμόζει το προφίλ), άρα ισχύει ο προεπιλεγμένος κανόνας 7.a(5)."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "￿ 300΄",
+              "code_3_raw": "￿ 150΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:» (γραμμή πάνω από τον πίνακα, σελ. PDF 30).",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "￿ 20",
+              "code_3_raw": "￿ 10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:».",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "EXIT HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "￿ 10 ο",
+              "code_3_raw": "￿ 5ο",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:». Το σύμβολο μοιρών είναι ΕΛΛΗΝΙΚΟ ομικρόν (U+03BF) αντί °.",
+              "provenance": "contact-05"
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: LEADER.",
+        "Το CONDITIONS «Day only (VFR / VMC)» τυπώνεται ΧΩΡΙΣ τελεία στο τέλος (σε αντίθεση με τα γειτονικά items) — διατηρήθηκε verbatim.",
+        "Η επικεφαλίδα αρχίζει στη σελ. PDF 62· όλο το σώμα του item είναι στη σελ. PDF 63."
+      ]
+    },
+    {
+      "id": "formation-05",
+      "numbers": [
+        5
+      ],
+      "name": "RETURN / DESCENT / TRAFFIC PATTERN ENTRY",
+      "heading_verbatim": "(5) RETURN / DESCENT / TRAFFIC PATTERN ENTRY",
+      "pages_pdf": [
+        63,
+        64
+      ],
+      "execution": [
+        "1/ SP departs the assigned flight area as determined in LAP, according to ATC instructions and approaches the authorized VFR entry points.",
+        "2/ Enters the air traffic pattern from standard entry points following ATC directives."
+      ],
+      "conditions": [
+        "Day only (VFR / VMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Following ATC instructions, directs the formation in time to the entry point and is able to carry out pre-descent procedures and checks, achieving the assigned altitude before the entry point."
+          },
+          {
+            "key": "b",
+            "text": "The A/C Basic Control (Contact category) specific criteria apply."
+          },
+          {
+            "key": "c",
+            "text": "Uses VOR/DME, TACAN or GPS, when it is required, in order to be orientated with the airport environment and uses them for his / her return."
+          },
+          {
+            "key": "d",
+            "text": "Follows ATC directives, without misapprehensions and is cognizant of the entry points and the approach procedure."
+          },
+          {
+            "key": "e",
+            "text": "Places wingman to the right position for BREAK execution and directs the formation to the BREAK of active RWY."
+          },
+          {
+            "key": "f",
+            "text": "Follows landing pattern procedures, as described in LAPs."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "contact-05",
+              "scope": "Πλήρης πίνακας contact-05: ALTITUDE (feet) / AIRSPEED (knots) / EXIT HEADING (degrees). Ισχύς κατά την πηγή: «For Straight and Level Flight and turns up to 60° of bank:». Εφαρμογή: όλη η φάση return / descent / traffic pattern entry.",
+              "basis": "GENERAL CRITERIA b/ verbatim: «The A/C Basic Control (Contact category) specific criteria apply.» → contact-05 (σελ. PDF 29-30). Η παραπομπή τυπώνεται ΜΕΣΑ στα general criteria, γι᾽ αυτό το specific_criteria είναι kind=\"none\". Σημείωση: το γενικό κριτήριο f/ «Follows landing pattern procedures, as described in LAPs.» παραπέμπει σε ΕΞΩΤΕΡΙΚΟ έγγραφο (Local Area Procedures) εκτός corpus — δεν αποδίδει αριθμητικά όρια εδώ."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "￿ 300΄",
+              "code_3_raw": "￿ 150΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:» (γραμμή πάνω από τον πίνακα, σελ. PDF 30).",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "￿ 20",
+              "code_3_raw": "￿ 10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:».",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "EXIT HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "￿ 10 ο",
+              "code_3_raw": "￿ 5ο",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:». Το σύμβολο μοιρών είναι ΕΛΛΗΝΙΚΟ ομικρόν (U+03BF) αντί °.",
+              "provenance": "contact-05"
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "The A/C Basic Control (Contact category) specific criteria apply.",
+        "Follows landing pattern procedures, as described in LAPs."
+      ],
+      "flags": [
+        "Ρόλος: LEADER.",
+        "Το item ΔΕΝ έχει υποενότητα «2/ SPECIFIC CRITERIA»· η παραπομπή στα specific criteria του Basic A/C Control (contact-05) εμφανίζεται ΜΕΣΑ στα GENERAL CRITERIA (κριτήριο b/)."
+      ]
+    },
+    {
+      "id": "formation-06",
+      "numbers": [
+        6
+      ],
+      "name": "FORMATION APPROACH",
+      "heading_verbatim": "(6) FORMATION APPROACH",
+      "pages_pdf": [
+        64,
+        64
+      ],
+      "execution": [
+        "When executing the Training Exercise, SP executes formation approach as leader in a dual ship formation, straight in approach or formation approach in the flight area (simulation of an instrument approach) as a leader, according to Techniques and Procedures Manual, LAPs and SOPs."
+      ],
+      "conditions": [
+        "1/ Maneuvers are up to 30º of bank.",
+        "2/ Day only (VFR - VMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Brings the A/C into landing configuration timely and correctly."
+          },
+          {
+            "key": "b",
+            "text": "Checks the proper configuration of the wingman."
+          },
+          {
+            "key": "c",
+            "text": "Monitors the wingman and asserts that he/she has reached proper position in time, depending on the approach to be executed."
+          },
+          {
+            "key": "d",
+            "text": "The General Criteria for the Basic A/C Control of Contact and Instrument category, also apply in this Training Exercise, considering SP’s experience."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "rule_7a5_default",
+          "sources": [
+            {
+              "item": "contact-00-general",
+              "scope": "Πηγή ΚΑΝΟΝΑ (όχι πηγή τιμών) — σελ. PDF 24.",
+              "basis": "Κανόνας 7.a(5) — «7. PERFORMANCE CRITERIA» → «a. GENERAL», κανόνας (5), σελ. PDF 24 (contact-00-general, general_criteria key=\"5\"), verbatim: «When specific criteria are not mentioned for certain maneuvers, general criteria will be applied, along with criteria described in the Basic A/C Control standards.»"
+            },
+            {
+              "item": "contact-05",
+              "scope": "Σκέλος CONTACT — οπτικό τμήμα της προσέγγισης (Day only VFR - VMC, maneuvers up to 30º of bank): ALTITUDE (feet) / AIRSPEED (knots) / EXIT HEADING (degrees).",
+              "basis": "GENERAL CRITERIA d/ verbatim: «The General Criteria for the Basic A/C Control of Contact and Instrument category, also apply in this Training Exercise, considering SP’s experience.» Η πρόταση ονοματίζει ΔΥΟ κατηγορίες, άρα αντιγράφονται ΚΑΙ οι δύο πίνακες Basic A/C Control με διακριτό scope. Η πρόταση αναφέρεται ρητά στα GENERAL criteria· τα αριθμητικά specific εισάγονται μέσω του κανόνα 7.a(5) (kind=\"none\"). Τα όρια των δύο πινάκων ΤΑΥΤΙΖΟΝΤΑΙ αριθμητικά (ύψος ±300΄/±150΄, ταχύτητα ±20/±10, πορεία ±10°/±5°) — δεν προκύπτει σύγκρουση τιμών. Κανόνας 7.a(5) — «7. PERFORMANCE CRITERIA» → «a. GENERAL», κανόνας (5), σελ. PDF 24 (contact-00-general, general_criteria key=\"5\"), verbatim: «When specific criteria are not mentioned for certain maneuvers, general criteria will be applied, along with criteria described in the Basic A/C Control standards.»"
+            },
+            {
+              "item": "instrument-04",
+              "scope": "Σκέλος INSTRUMENT — το τμήμα «formation approach in the flight area (simulation of an instrument approach)» του EXECUTION: ALTITUDE (feet) / AIRSPEED (KIAS) / HEADING (degrees).",
+              "basis": "GENERAL CRITERIA d/ verbatim: «The General Criteria for the Basic A/C Control of Contact and Instrument category, also apply in this Training Exercise, considering SP’s experience.» Η πρόταση ονοματίζει ΔΥΟ κατηγορίες, άρα αντιγράφονται ΚΑΙ οι δύο πίνακες Basic A/C Control με διακριτό scope. Η πρόταση αναφέρεται ρητά στα GENERAL criteria· τα αριθμητικά specific εισάγονται μέσω του κανόνα 7.a(5) (kind=\"none\"). Τα όρια των δύο πινάκων ΤΑΥΤΙΖΟΝΤΑΙ αριθμητικά (ύψος ±300΄/±150΄, ταχύτητα ±20/±10, πορεία ±10°/±5°) — δεν προκύπτει σύγκρουση τιμών. Κανόνας 7.a(5) — «7. PERFORMANCE CRITERIA» → «a. GENERAL», κανόνας (5), σελ. PDF 24 (contact-00-general, general_criteria key=\"5\"), verbatim: «When specific criteria are not mentioned for certain maneuvers, general criteria will be applied, along with criteria described in the Basic A/C Control standards.»"
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "￿ 300΄",
+              "code_3_raw": "￿ 150΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:» (γραμμή πάνω από τον πίνακα, σελ. PDF 30).",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "￿ 20",
+              "code_3_raw": "￿ 10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:».",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "EXIT HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "￿ 10 ο",
+              "code_3_raw": "￿ 5ο",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:». Το σύμβολο μοιρών είναι ΕΛΛΗΝΙΚΟ ομικρόν (U+03BF) αντί °.",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 300΄",
+              "code_3_raw": "± 150΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Το σύμβολο ποδιών είναι U+0384 GREEK TONOS (΄), όχι apostrophe/prime.",
+              "provenance": "instrument-04"
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (KIAS)",
+              "unit": "KIAS",
+              "code_1_raw": "± 20",
+              "code_3_raw": "± 10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": null,
+              "provenance": "instrument-04"
+            },
+            {
+              "maneuver": null,
+              "parameter": "HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "± 10°",
+              "code_3_raw": "± 5°",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Και τα δύο ° είναι γνήσιο U+00B0 DEGREE SIGN.",
+              "provenance": "instrument-04"
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "The General Criteria for the Basic A/C Control of Contact and Instrument category, also apply in this Training Exercise, considering SP’s experience."
+      ],
+      "flags": [
+        "Ρόλος: LEADER (εκδοχή leader του FORMATION APPROACH· η αντίστοιχη wingman εκδοχή είναι το item (13), formation-13, με ΙΔΙΟ όνομα).",
+        "«30º» τυπώνεται με U+00BA (masculine ordinal indicator) αντί για ° (U+00B0) — διατηρήθηκε verbatim.",
+        "Το CONDITIONS 2/ χρησιμοποιεί ASCII παύλα «(VFR - VMC)», ενώ από τη σελ. PDF 65 και μετά χρησιμοποιείται en dash «(VFR – VMC)»."
+      ]
+    },
+    {
+      "id": "formation-07",
+      "numbers": [
+        7
+      ],
+      "name": "FORMATION TAKE OFF",
+      "heading_verbatim": "(7) FORMATION TAKE OFF",
+      "pages_pdf": [
+        64,
+        65
+      ],
+      "execution": [
+        "SP executes formation T/O as a wingman, according to Techniques and Procedures Manual, LAPs and SOPs."
+      ],
+      "conditions": [
+        "1/ Day only (VFR – VMC).",
+        "2/ Dual flight only.",
+        "3/ Wind is within limits."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Executes line up checks, without mistakes and informs formation leader."
+          },
+          {
+            "key": "b",
+            "text": "Keeps the proper position during T/O roll, otherwise informs the leader timely."
+          },
+          {
+            "key": "c",
+            "text": "Follows the leader's signals and cleans the A/C configuration."
+          },
+          {
+            "key": "d",
+            "text": "Has smooth control of the A/C."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "rule_7a5_default",
+          "sources": [
+            {
+              "item": "contact-00-general",
+              "scope": "Πηγή ΚΑΝΟΝΑ (όχι πηγή τιμών) — σελ. PDF 24.",
+              "basis": "Κανόνας 7.a(5) — «7. PERFORMANCE CRITERIA» → «a. GENERAL», κανόνας (5), σελ. PDF 24 (contact-00-general, general_criteria key=\"5\"), verbatim: «When specific criteria are not mentioned for certain maneuvers, general criteria will be applied, along with criteria described in the Basic A/C Control standards.»"
+            },
+            {
+              "item": "contact-05",
+              "scope": "Πλήρης πίνακας contact-05: ALTITUDE (feet) / AIRSPEED (knots) / EXIT HEADING (degrees). Ισχύς κατά την πηγή: «For Straight and Level Flight and turns up to 60° of bank:». Εφαρμογή: T/O ως No2 (formation take off), όλη η διάρκεια του item.",
+              "basis": "Το item «(29) BASIC A/C - FORMATION CONTROL» της ίδιας κατηγορίας (formation-29) ΔΕΝ τυπώνει πίνακα specific criteria (kind=\"none\"), άρα τα «Basic A/C Control standards» της κατηγορίας Formation αντλούνται τεκμηριωμένα από το Contact «(5) BASIC A/C CONTROL» (contact-05, σελ. PDF 29-30). Η αλυσίδα τεκμηρίωσης βρίσκεται μέσα στην ίδια την κατηγορία Formation: formation-03 (specific_criteria.reference_text) «The A/C Basic Control of Contact category specific criteria apply.» και formation-05 γενικό κριτήριο b/ «The A/C Basic Control (Contact category) specific criteria apply.» — δηλαδή η ίδια η πηγή ταυτίζει τα Basic A/C Control standards της Formation με τον πίνακα contact-05. ΠΡΟΣΟΧΗ ΣΤΗΝ ΕΠΙΛΟΓΗ ΠΗΓΗΣ: το item ΔΕΝ τυπώνει καμία παραπομπή στην Contact, σε αντίθεση με τα formation-01 (leader) και formation-08 (interval T/O) που παραπέμπουν ΡΗΤΑ στο Contact «(2) TAKE OFF». Γι᾽ αυτό εφαρμόζεται ο προεπιλεγμένος κανόνας 7.a(5) και ΟΧΙ ο πίνακας contact-02: ο wingman δεν πετά ονομαστική T/O airspeed ούτε κεντρική γραμμή διαδρόμου (κρατά θέση ως προς τον leader στο μισό του RWY)."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "￿ 300΄",
+              "code_3_raw": "￿ 150΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:» (γραμμή πάνω από τον πίνακα, σελ. PDF 30).",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "￿ 20",
+              "code_3_raw": "￿ 10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:».",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "EXIT HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "￿ 10 ο",
+              "code_3_raw": "￿ 5ο",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:». Το σύμβολο μοιρών είναι ΕΛΛΗΝΙΚΟ ομικρόν (U+03BF) αντί °.",
+              "provenance": "contact-05"
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: WINGMAN — η υποενότητα «WINGMAN» ανοίγει ακριβώς πριν το item (7), σελ. PDF 64. Ισχύει για όλα τα items (7)-(13).",
+        "Στο κριτήριο c/ το «leader's» χρησιμοποιεί ASCII απόστροφο U+0027 (αλλού στο ίδιο τμήμα χρησιμοποιείται U+2019)."
+      ]
+    },
+    {
+      "id": "formation-08",
+      "numbers": [
+        8
+      ],
+      "name": "INTERVAL TAKE OFF",
+      "heading_verbatim": "(8) INTERVAL TAKE OFF",
+      "pages_pdf": [
+        65,
+        65
+      ],
+      "execution": [],
+      "conditions": [],
+      "expected_performance": {
+        "general_criteria": [],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "The criteria of the relevant section in Contact Category apply for this Training Exercise.",
+          "reference_target": "contact-02",
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "contact-02",
+              "scope": "Όλος ο πίνακας T/O του Contact (Take off Airspeed, Maintain in the center line of RWY). Η παραπομπή καλύπτει ΟΛΟΚΛΗΡΟ το item (δεν τυπώνονται υποενότητες a/b/c) — βλ. flags.",
+              "basis": "specific_criteria.reference_text verbatim: «The criteria of the relevant section in Contact Category apply for this Training Exercise.» → contact-02 (σελ. PDF 27-28). Στην Contact ΔΕΝ υπάρχει item «INTERVAL TAKE OFF»· το μόνο σχετικό είναι το «(2) TAKE OFF» (κατά τα flags του item: μέτρια-υψηλή βεβαιότητα)."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "Take off Airspeed (knots)",
+              "unit": "knots",
+              "code_1_raw": "-0,+10",
+              "code_3_raw": "-0,+5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 0
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Μονόπλευρη ανοχή: μόνο υπέρβαση (+) επιτρέπεται, μηδενική ανοχή προς τα κάτω. Επιβεβαιωμένη αντιστοίχιση στήλης με x-συντεταγμένες (PyMuPDF, σελ. PDF 28): το «-0,+10» στο κελί 281.9-345.9 = στήλη «1»· το «-0,+5» στο 379.0-474.0 = στήλη «3».",
+              "provenance": "contact-02"
+            },
+            {
+              "maneuver": null,
+              "parameter": "Maintain in the center line of RWY (ft)",
+              "unit": "feet",
+              "code_1_raw": "±10",
+              "code_3_raw": "±5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Το «±» εδώ εξάγεται σωστά ως U+00B1 (σε αντίθεση με τις σελ. 30/31/33).",
+              "provenance": "contact-02"
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "The criteria of the relevant section in Contact Category apply for this Training Exercise."
+      ],
+      "flags": [
+        "Ρόλος: WINGMAN.",
+        "ΔΟΜΙΚΗ ΕΞΑΙΡΕΣΗ: το item ΔΕΝ έχει υποενότητες (a) EXECUTION / (b) CONDITIONS / (c) EXPECTED PERFORMANCE. Ολόκληρο το σώμα του είναι η μία πρόταση-παραπομπή, η οποία καταχωρήθηκε ως specific_criteria.reference_text· γι' αυτό execution/conditions/general_criteria είναι κενά.",
+        "Η παραπομπή καλύπτει ΟΛΟ το item (όχι μόνο τα specific criteria) — η τοποθέτηση σε specific_criteria είναι αναγκαστική λόγω σχήματος.",
+        "reference_target=contact-02 (TAKE OFF, σελ. PDF 27): στην Contact Category ΔΕΝ υπάρχει item με τίτλο «INTERVAL TAKE OFF»· το μόνο σχετικό είναι το (2) TAKE OFF. Μέτρια-υψηλή βεβαιότητα."
+      ]
+    },
+    {
+      "id": "formation-09",
+      "numbers": [
+        9
+      ],
+      "name": "TURNING REJOIN",
+      "heading_verbatim": "(9) TURNING REJOIN",
+      "pages_pdf": [
+        65,
+        66
+      ],
+      "execution": [
+        "1/ Executes turning rejoin in Fingertip, or any other formation type after T/O, according to the leader’s command or the briefing analysis.",
+        "2/ Executes turning rejoin after pitch out.",
+        "3/ Executes rejoin in any other case, following the formation leader’s command.",
+        "4/ Executes turning tactical rejoin."
+      ],
+      "conditions": [
+        "Day only (VFR – VMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Never points the velocity vector at the formation leader until his/her stabilization in route."
+          },
+          {
+            "key": "b",
+            "text": "Is cognizant of the Aspect Angle, Angle Off and pursuit curve concept."
+          },
+          {
+            "key": "c",
+            "text": "Controls the A/C in a smooth and solid manner."
+          },
+          {
+            "key": "d",
+            "text": "Initially approaches the leading A/C at the same altitude and afterwards descends at the wing’s level."
+          },
+          {
+            "key": "e",
+            "text": "Continuously keeps visual on the formation leader."
+          },
+          {
+            "key": "f",
+            "text": "If overshoot is unavoidable, he/she informs the formation leader timely and executes Overshoot safely."
+          },
+          {
+            "key": "g",
+            "text": "Executes turning tactical rejoin according to Techniques and Procedures Manual."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "DEVIATION FROM REJOIN ANGLE",
+              "unit": "degrees",
+              "code_1_raw": "± 20°",
+              "code_3_raw": "±10°",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": "* Do not apply specific criteria on tactical rejoin."
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED IN ROUTE POSITION (knots)",
+              "unit": "knots",
+              "code_1_raw": "± 15",
+              "code_3_raw": "± 5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 15,
+                "minus": 15
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "* Do not apply specific criteria on tactical rejoin."
+            },
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE FROM Νο1 LEVEL (feet)",
+              "unit": "feet",
+              "code_1_raw": "±100'",
+              "code_3_raw": "±50'",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 100,
+                "minus": 100
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 50,
+                "minus": 50
+              },
+              "interpolation": "standard",
+              "notes": "* Do not apply specific criteria on tactical rejoin."
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: WINGMAN.",
+        "Πίνακας specific criteria στη σελ. PDF 66. Επαλήθευση στηλών με PyMuPDF x-coords: κεφαλίδες D@285-294, 0@315-321, 1@362-369, 2@408-415, 3@458-465, 4@508-515. Όλες οι πρώτες τιμές έχουν κέντρο ~365 (στήλη «1»), όλες οι δεύτερες ~461 (στήλη «3»). Καμία τιμή στις στήλες D/0/2/4.",
+        "«ALTITUDE FROM Νο1 LEVEL (feet)»: το «Νο1» τυπώνεται με ΕΛΛΗΝΙΚΑ γράμματα Ν (U+039D) + ο (U+03BF) + «1». Διατηρήθηκε verbatim στο πεδίο parameter· η λατινική μορφή είναι «No1».",
+        "Υποσημείωση πίνακα (verbatim): «* Do not apply specific criteria on tactical rejoin.» — ισχύει για όλες τις γραμμές, αντιγράφηκε στο notes κάθε γραμμής.",
+        "Το «±» εδώ είναι σωστό U+00B1 (ΟΧΙ το γνωστό σφάλμα U+FFFF άλλων σελίδων). Τα feet marks είναι ASCII U+0027."
+      ]
+    },
+    {
+      "id": "formation-10",
+      "numbers": [
+        10
+      ],
+      "name": "STRAIGHT AHEAD REJOIN",
+      "heading_verbatim": "(10) STRAIGHT AHEAD REJOIN",
+      "pages_pdf": [
+        66,
+        67
+      ],
+      "execution": [
+        "1/ SP executes straight ahead rejoin according to Techniques and Procedures Manual.",
+        "2/ Executes straight ahead tactical rejoin."
+      ],
+      "conditions": [
+        "Day only (VFR – VMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Controls the A/C in a smooth and solid manner."
+          },
+          {
+            "key": "b",
+            "text": "Is cognizant of Aspect Angle and Angle Off."
+          },
+          {
+            "key": "c",
+            "text": "Continuously keeps visual on No1."
+          },
+          {
+            "key": "d",
+            "text": "If overshoot is unavoidable, he/she informs the formation leader timely and executes Overshoot safely. In case of losing visual contact with formation leader during Overshoot, executes timely Break Out, on his / her own initiative."
+          },
+          {
+            "key": "e",
+            "text": "Executes straight ahead tactical rejoin according to Techniques and Procedures Manual."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED IN ROUTE POSITION (knots)",
+              "unit": "knots",
+              "code_1_raw": "± 15",
+              "code_3_raw": "± 5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 15,
+                "minus": 15
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "* Do not apply specific criteria on tactical rejoin."
+            },
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE FROM Νο1 LEVEL (feet)",
+              "unit": "feet",
+              "code_1_raw": "±100'",
+              "code_3_raw": "±50'",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 100,
+                "minus": 100
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 50,
+                "minus": 50
+              },
+              "interpolation": "standard",
+              "notes": "* Do not apply specific criteria on tactical rejoin."
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: WINGMAN.",
+        "Το item σπάει σε γύρισμα σελίδας: επικεφαλίδα + EXECUTION/CONDITIONS/GENERAL στη σελ. PDF 66, «2/ SPECIFIC CRITERIA» + πίνακας στη σελ. PDF 67 (η κεφαλίδα πίνακα ΕΠΑΝΑΛΑΜΒΑΝΕΤΑΙ, αλλά το πλέγμα στηλών ΑΛΛΑΖΕΙ σε σχέση με τη σελ. 66).",
+        "Επαλήθευση στηλών σελ. 67 με PyMuPDF x-coords: D@336-345, 0@365-372, 1@415-422, 2@464-471, 3@507-514, 4@547-553. Πρώτες τιμές κέντρο ~418 → στήλη «1»· δεύτερες ~510 → στήλη «3».",
+        "Ο πίνακας ΔΕΝ περιλαμβάνει τη γραμμή «DEVIATION FROM REJOIN ANGLE» (υπάρχει μόνο στο turning rejoin, formation-09) — δεν πρόκειται για απώλεια εξαγωγής, επιβεβαιώθηκε οπτικά στο layout.",
+        "«ALTITUDE FROM Νο1 LEVEL (feet)»: «Νο1» με ελληνικά Ν (U+039D) + ο (U+03BF)."
+      ]
+    },
+    {
+      "id": "formation-11",
+      "numbers": [
+        11
+      ],
+      "name": "OVERSHOOT",
+      "heading_verbatim": "(11) OVERSHOOT",
+      "pages_pdf": [
+        67,
+        68
+      ],
+      "execution": [
+        "When executing the Training Exercise, SP executes Overshoot, when approaching for rejoin with excessive Overtake, bank or angle and estimating that he/she won’t make it to save a rejoin."
+      ],
+      "conditions": [
+        "1/ Day only (VFR – VMC).",
+        "2/ The formation leader, following wingman’s report, maintains his/her attitude until wingman overshoots.",
+        "3/ Overshoot is executed by IP’s order or by SP’s initiative when integration is not fully assured or for training reasons (pre-planned maneuver)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": null,
+            "text": "Timely informs the formation leader and:"
+          },
+          {
+            "key": null,
+            "text": "In turn:"
+          },
+          {
+            "key": "a",
+            "text": "Passes safely behind and lower No1’s 6 o'clock and never above or below the leading A/C."
+          },
+          {
+            "key": "b",
+            "text": "Cross No1’s 6 o’clock with a minimum spacing at least two (2) ship lengths."
+          },
+          {
+            "key": "c",
+            "text": "Reposition to rejoin from inside leader’s turn in a time manner."
+          },
+          {
+            "key": null,
+            "text": "In straight ahead:"
+          },
+          {
+            "key": "a",
+            "text": "Executes a break out without affecting the leader’s flight path."
+          },
+          {
+            "key": "b",
+            "text": "Try not to overshoot 3/9 o’clock of leader."
+          },
+          {
+            "key": "c",
+            "text": "Rejoins without abrupt maneuvers."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "DISTANCE BEHIND No1 (feet)",
+              "unit": "feet",
+              "code_1_raw": "200'",
+              "code_3_raw": "80'",
+              "code_1": {
+                "kind": "nominal_change",
+                "value": 200
+              },
+              "code_3": {
+                "kind": "nominal_change",
+                "value": 80
+              },
+              "interpolation": "undefined",
+              "notes": "Τυπώνεται χωρίς ± — μονή τιμή ανά κωδικό."
+            },
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE FROM Νο1 (feet)",
+              "unit": "feet",
+              "code_1_raw": "200'",
+              "code_3_raw": "80'",
+              "code_1": {
+                "kind": "nominal_change",
+                "value": 200
+              },
+              "code_3": {
+                "kind": "nominal_change",
+                "value": 80
+              },
+              "interpolation": "undefined",
+              "notes": "Τυπώνεται χωρίς ± — μονή τιμή ανά κωδικό."
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: WINGMAN.",
+        "Τα GENERAL CRITERIA έχουν ΔΥΟ ομάδες με ΕΠΑΝΑΛΑΜΒΑΝΟΜΕΝΑ κλειδιά a/ b/ c/: μία υπό «In turn:» και μία υπό «In straight ahead:». Οι εισαγωγικές γραμμές («Timely informs the formation leader and:», «In turn:», «In straight ahead:») καταχωρήθηκαν με key=null, στη σειρά του εγγράφου. Τα κλειδιά a/b/c ΔΕΝ είναι μοναδικά μέσα στο item — απαιτείται group-aware χειρισμός downstream.",
+        "Πίνακας specific criteria στη σελ. PDF 68 (το item σπάει σε γύρισμα σελίδας 67→68, με επανάληψη της κεφαλίδας πίνακα και ΔΙΑΦΟΡΕΤΙΚΟ πλέγμα στηλών).",
+        "Επαλήθευση στηλών σελ. 68 με PyMuPDF x-coords: D@269-278, 0@297-304, 1@350-357, 2@403-410, 3@453-460, 4@503-509. «200'» κέντρο 353.5 → στήλη «1»· «80'» κέντρο 456.5 → στήλη «3».",
+        "ΑΒΕΒΑΙΟΤΗΤΑ ΕΡΜΗΝΕΙΑΣ: οι τιμές τυπώνονται ΧΩΡΙΣ «±». Δεν προκύπτει από το κείμενο αν είναι μέγιστη επιτρεπτή απόκλιση (≤200'/≤80') ή ονομαστική τιμή. Επειδή η αυστηρότερη βαθμίδα (κωδ. 3) έχει ΜΙΚΡΟΤΕΡΗ τιμή, πιθανότερη ερμηνεία = ανώτατο όριο απόκλισης. Χαρακτηρίστηκε ως nominal_change / interpolation undefined.",
+        "Ασυνέπεια πηγής μέσα στον ΙΔΙΟ πίνακα: «DISTANCE BEHIND No1 (feet)» με ΛΑΤΙΝΙΚΟ «No1», ενώ «ALTITUDE FROM Νο1 (feet)» με ΕΛΛΗΝΙΚΑ Ν (U+039D) + ο (U+03BF).",
+        "Ασυνέπεια αποστρόφων στο κριτήριο a/ της ομάδας «In turn»: «No1’s» με U+2019 αλλά «o'clock» με ASCII U+0027 (στο b/ και τα δύο U+2019). Διατηρήθηκαν verbatim."
+      ]
+    },
+    {
+      "id": "formation-12",
+      "numbers": [
+        12
+      ],
+      "name": "BREAK OUT",
+      "heading_verbatim": "(12) BREAK OUT",
+      "pages_pdf": [
+        68,
+        68
+      ],
+      "execution": [
+        "Executes breakout maneuver according to Techniques and Procedures Manual."
+      ],
+      "conditions": [
+        "a/ Ordered by formation leader or IP",
+        "b/ When there is an imminent dangerous situation developing.",
+        "c/ When visual contact is lost.",
+        "d/ When SP passes in front of the formation leader (3/9 line), and loss of visual contact is imminent.",
+        "e/ Day only (VFR – VMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Apply timely proper control inputs in order to ensure break out / separation of the A/C flight path."
+          },
+          {
+            "key": "b",
+            "text": "Executes Breakout timely and flawlessly, whenever it is imposed, without the necessity for IP’s intervention."
+          },
+          {
+            "key": "c",
+            "text": "Informs the formation leader in time."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "rule_7a5_default",
+          "sources": [
+            {
+              "item": "contact-00-general",
+              "scope": "Πηγή ΚΑΝΟΝΑ (όχι πηγή τιμών) — σελ. PDF 24.",
+              "basis": "Κανόνας 7.a(5) — «7. PERFORMANCE CRITERIA» → «a. GENERAL», κανόνας (5), σελ. PDF 24 (contact-00-general, general_criteria key=\"5\"), verbatim: «When specific criteria are not mentioned for certain maneuvers, general criteria will be applied, along with criteria described in the Basic A/C Control standards.»"
+            },
+            {
+              "item": "contact-05",
+              "scope": "Πλήρης πίνακας contact-05: ALTITUDE (feet) / AIRSPEED (knots) / EXIT HEADING (degrees). Ισχύς κατά την πηγή: «For Straight and Level Flight and turns up to 60° of bank:». Εφαρμογή: εκτέλεση break out / διαχωρισμού ως No2.",
+              "basis": "Το item «(29) BASIC A/C - FORMATION CONTROL» της ίδιας κατηγορίας (formation-29) ΔΕΝ τυπώνει πίνακα specific criteria (kind=\"none\"), άρα τα «Basic A/C Control standards» της κατηγορίας Formation αντλούνται τεκμηριωμένα από το Contact «(5) BASIC A/C CONTROL» (contact-05, σελ. PDF 29-30). Η αλυσίδα τεκμηρίωσης βρίσκεται μέσα στην ίδια την κατηγορία Formation: formation-03 (specific_criteria.reference_text) «The A/C Basic Control of Contact category specific criteria apply.» και formation-05 γενικό κριτήριο b/ «The A/C Basic Control (Contact category) specific criteria apply.» — δηλαδή η ίδια η πηγή ταυτίζει τα Basic A/C Control standards της Formation με τον πίνακα contact-05. Το item είναι kind=\"none\" και αφορά χειρισμό του A/C (μετρήσιμη διάσταση πτήσης), άρα ισχύει ο κανόνας 7.a(5). Η πηγή δεν τυπώνει αριθμητικά όρια ειδικά για το break out."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "￿ 300΄",
+              "code_3_raw": "￿ 150΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:» (γραμμή πάνω από τον πίνακα, σελ. PDF 30).",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "￿ 20",
+              "code_3_raw": "￿ 10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:».",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "EXIT HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "￿ 10 ο",
+              "code_3_raw": "￿ 5ο",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:». Το σύμβολο μοιρών είναι ΕΛΛΗΝΙΚΟ ομικρόν (U+03BF) αντί °.",
+              "provenance": "contact-05"
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: WINGMAN.",
+        "ΤΥΠΟΓΡΑΦΙΚΗ ΑΝΩΜΑΛΙΑ: τα CONDITIONS αριθμούνται με ΓΡΑΜΜΑΤΑ a/–e/ αντί για 1/–5/ όπως σε όλα τα υπόλοιπα items της κατηγορίας. Διατηρήθηκε verbatim.",
+        "Το «a/ Ordered by formation leader or IP» τυπώνεται χωρίς τελεία στο τέλος."
+      ]
+    },
+    {
+      "id": "formation-13",
+      "numbers": [
+        13
+      ],
+      "name": "FORMATION APPROACH.",
+      "heading_verbatim": "(13) FORMATION APPROACH.",
+      "pages_pdf": [
+        68,
+        69
+      ],
+      "execution": [
+        "SP keeps his/her wingman position in landing configuration into the flight area, or in an instrument approach or in a straight in approach."
+      ],
+      "conditions": [
+        "1/ No1 executes maneuvers up to 30º of bank.",
+        "2/ Dual-flight only.",
+        "3/ Day only (VFR – VMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": null,
+            "text": "The fingertip criteria, concerning longitudinal and lateral separation, are applied. Moreover, SP can fly up to + 10' / - 5' altitude difference from Leader’s wing level."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "formation-17",
+              "scope": "Πίνακας «2/ SPECIFIC CRITERIA (AS WINGMAN)» του FINGERTIP (σελ. PDF 71): LATERAL SEPARATION και OBSERVANCE ANGLE (η VERTICAL SEPARATION αντικαταστάθηκε από το τυπωμένο όριο του ίδιου του item — απόφαση 2α). Ο ρόλος συμφωνεί (formation-13 = WINGMAN).",
+              "basis": "GENERAL CRITERIA (key=null) verbatim: «The fingertip criteria, concerning longitudinal and lateral separation, are applied. Moreover, SP can fly up to + 10' / - 5' altitude difference from Leader’s wing level.» → formation-17 «(17) FINGERTIP» (σελ. PDF 70-71). Ο στόχος είναι μονοσήμαντος· αμφίσημη ήταν η ΕΚΤΑΣΗ εφαρμογής (βλ. resolved.note — απόφαση χρήστη 2α/3α, 2026-07-31)."
+            },
+            {
+              "item": "formation-13",
+              "scope": "Το ίδιο το item — το τυπωμένο υψομετρικό όριο των GENERAL CRITERIA τροφοδοτεί τη γραμμή VERTICAL SEPARATION (κατόπιν απόφασης 2α).",
+              "basis": "GENERAL CRITERIA (key=null) verbatim: «Moreover, SP can fly up to + 10' / - 5' altitude difference from Leader’s wing level.» — ΑΠΟΦΑΣΗ ΧΡΗΣΤΗ 2α (2026-07-31): αντικαθιστά τη γραμμή VERTICAL SEPARATION του formation-17 και για τους δύο κώδικες."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "LATERAL SEPARATION *(feet)",
+              "unit": "feet",
+              "code_1_raw": "- 0’, + 20’",
+              "code_3_raw": "- 0’, + 10’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 0
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Table footnote (*): *The reference point for deviations is set at 10΄ of minimum lateral separation",
+              "provenance": "formation-17"
+            },
+            {
+              "maneuver": null,
+              "parameter": "VERTICAL SEPARATION *(feet)",
+              "unit": "feet",
+              "code_1_raw": "+ 10' / - 5'",
+              "code_3_raw": "+ 10' / - 5'",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 5
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 5
+              },
+              "interpolation": "undefined",
+              "notes": "Table footnote (*): *The reference point for deviations is set at 10΄ of minimum lateral separation",
+              "provenance": "formation-13",
+              "override_note": "Per user decision 2α (2026-07-31): the printed '+ 10' / - 5' altitude difference from Leader's wing level' replaces the Fingertip VERTICAL SEPARATION line for both codes."
+            },
+            {
+              "maneuver": null,
+              "parameter": "OBSERVANCE ANGLE (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "50° ± 5°",
+              "code_3_raw": "30°± 5°",
+              "code_1": {
+                "kind": "nominal_change",
+                "value": 50,
+                "plus": 5,
+                "minus": 5
+              },
+              "code_3": {
+                "kind": "nominal_change",
+                "value": 30,
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "undefined",
+              "notes": "Nominal observance angle changes between codes (50° -> 30°); the ±5° tolerance is identical for both codes.",
+              "provenance": "formation-17",
+              "note": "Per user decision 3α (2026-07-31): the Observance Angle renders the longitudinal position — no separate longitudinal criterion."
+            }
+          ],
+          "note": "User decision 2026-07-31: 2α, 3α"
+        }
+      },
+      "cross_refs": [
+        "The fingertip criteria, concerning longitudinal and lateral separation, are applied."
+      ],
+      "flags": [
+        "Ρόλος: WINGMAN (η wingman εκδοχή του FORMATION APPROACH· η leader εκδοχή είναι το item (6), formation-06, με σχεδόν ΙΔΙΟ όνομα — προσοχή σε name-based matching downstream).",
+        "Η επικεφαλίδα τυπώνεται με ΤΕΛΕΙΑ στο τέλος: «(13) FORMATION APPROACH.» — το name διατηρήθηκε verbatim με την τελεία.",
+        "Το item σπάει σε γύρισμα σελίδας 68→69· η τελευταία φράση («difference from Leader’s wing level.») βρίσκεται στην κορυφή της σελ. PDF 69.",
+        "Τα GENERAL CRITERIA είναι ΕΝΙΑΙΑ αναρίθμητη παράγραφος (χωρίς a/ b/ c/) — key=null.",
+        "ΕΝΣΩΜΑΤΩΜΕΝΑ ΑΡΙΘΜΗΤΙΚΑ ΟΡΙΑ ΜΕΣΑ ΣΕ GENERAL CRITERIA (όχι σε πίνακα): «+ 10' / - 5'» καθ' ύψος ως προς το wing level του Leader — ασύμμετρη απόκλιση, στο τυπωμένο κείμενο δεν αντιστοιχίζεται σε κωδικούς 1/3. ΑΠΟΦΑΣΗ ΧΡΗΣΤΗ 2α (2026-07-31): αντιστοιχίστηκε πλέον ΚΑΙ στους δύο κώδικες (γραμμή VERTICAL SEPARATION, provenance formation-13). Οι απόστροφοι είναι ASCII U+0027.",
+        "Παραπομπή στα fingertip criteria → formation-17 (FINGERTIP, σελ. PDF 70-71) για longitudinal/lateral separation· ΕΚΤΟΣ αυτού του chunk.",
+        "«30º» με U+00BA αντί για ° (U+00B0)."
+      ]
+    },
+    {
+      "id": "formation-14",
+      "numbers": [
+        14
+      ],
+      "name": "MISSION PLANNING / BRIEFING.",
+      "heading_verbatim": "(14) MISSION PLANNING / BRIEFING.",
+      "pages_pdf": [
+        69
+      ],
+      "execution": [
+        "1/ As leader",
+        "a/ Has control of the briefing/debriefing process.",
+        "b/ Executes mission briefing, according to briefing Guide Book.",
+        "c/ Plans mission profile, as required, taking under consideration alternative ways of execution.",
+        "d/ Sets mission objectives according to experience level and mission difficulty level.",
+        "e/ Ensures that the mission has been fully understood by all members before briefing completion.",
+        "f/ Executes mission debriefing according to Briefing Guide, where he/she covers formation members faults and analyzes objectives completion.",
+        "2/ As wingman",
+        "Attends the briefing/debriefing flow and is always ready to help the leader in assessing mission elements (notams, meteorological, alternative airports)."
+      ],
+      "conditions": [
+        "Conducted in briefing/debriefing Squadron rooms."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "As leader"
+          },
+          {
+            "key": "a.1",
+            "text": "Determines mission profile and objectives."
+          },
+          {
+            "key": "a.2",
+            "text": "Gives solid directives for mission profile."
+          },
+          {
+            "key": "a.3",
+            "text": "Makes sure that CRM is completely comprehensible by all formation members."
+          },
+          {
+            "key": "b",
+            "text": "As wingman"
+          },
+          {
+            "key": "b.1",
+            "text": "Attends and assists the leader if needed or asked."
+          },
+          {
+            "key": "b.2",
+            "text": "Comprehends briefing and debriefing and is able to answer questions if asked."
+          },
+          {
+            "key": "b.3",
+            "text": "Does not interrupt briefing / debriefing, unless asked by the formation leader."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "rule_7a5_default",
+          "sources": [
+            {
+              "item": "contact-00-general",
+              "scope": "Πηγή ΚΑΝΟΝΑ — σελ. PDF 24. Δεν αντλούνται τιμές από κανένα item.",
+              "basis": "qualitative item — no numeric standards applicable. Το item εκτελείται αποκλειστικά στο έδαφος («Conducted in briefing/debriefing Squadron rooms») και δεν έχει καμία μετρήσιμη διάσταση πτήσης (ύψος / ταχύτητα / πορεία / απόσταση), άρα ο κανόνας 7.a(5) αποδίδει ΜΟΝΟ general criteria και κανένα αριθμητικό πρότυπο: δεν φορτώνεται πίνακας Basic A/C Control. Κανόνας 7.a(5) — «7. PERFORMANCE CRITERIA» → «a. GENERAL», κανόνας (5), σελ. PDF 24 (contact-00-general, general_criteria key=\"5\"), verbatim: «When specific criteria are not mentioned for certain maneuvers, general criteria will be applied, along with criteria described in the Basic A/C Control standards.»"
+            }
+          ],
+          "parameters": []
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: GENERAL — η υποενότητα «GENERAL» (Arial-BoldMT) ανοίγει ακριβώς πριν το item, σελ. PDF 69 (y=105.24, x=155.95), κάτω από «d. FORMATION CATEGORY PERFORMANCE CRITERIA» (σελ. PDF 62, y=91.45). Ισχύει για όλα τα items (14)-(23): τα κριτήριά τους ΔΕΝ είναι role-specific, σε αντίθεση με τις υποενότητες «LEADER» (σελ. PDF 62, y=111.24) και «WINGMAN» (σελ. PDF 64, y=710.01) που καλύπτουν τα items (1)-(13).",
+        "Η επικεφαλίδα τυπώνεται με τελεία στο τέλος: «(14) MISSION PLANNING / BRIEFING.». Η τελεία διατηρήθηκε ΚΑΙ στο heading_verbatim ΚΑΙ στο name, σύμφωνα με τη σύμβαση του corpus (criteria_formation_a.json formation-13 «FORMATION APPROACH.», criteria_contact_b.json contact-29, criteria_instrument_b.json instrument-30).",
+        "Δεν υπάρχει SPECIFIC CRITERIA (kind=none) – μόνο GENERAL CRITERIA.",
+        "Τα υπο-στοιχεία 1,2,3 κάτω από a/ και b/ ΤΥΠΩΝΟΝΤΑΙ όντως (υπογραμμισμένοι αριθμοί, χωρίς «/»· σελ. PDF 69, y=566.02/599.62/633.21 και y=686.61/720.21/753.81, x=297.70). Χρησιμοποιήθηκαν σύνθετα κλειδιά a.1 … b.3 για διατήρηση της ιεραρχίας."
+      ]
+    },
+    {
+      "id": "formation-15",
+      "numbers": [
+        15
+      ],
+      "name": "GROUND PROCEDURES.",
+      "heading_verbatim": "(15) GROUND PROCEDURES.",
+      "pages_pdf": [
+        70
+      ],
+      "execution": [
+        "As described in the corresponding section of the Contact Training Exercise Category."
+      ],
+      "conditions": [
+        "As described in the corresponding section of the Contact Training Exercise Category."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "The general criteria described in the corresponding section of the Contact Training Exercise Category, apply."
+          },
+          {
+            "key": "b",
+            "text": "As No2, keeps standard distance from the leader, during taxi."
+          },
+          {
+            "key": "c",
+            "text": "Executes frequency checks in the ground (before taxi), timely and correctly, without need for IP intervention and according to pre – flight briefing."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "contact-01",
+              "scope": "Ολόκληρο το Contact «(1) GROUND PROCEDURES» (σελ. PDF 26-27) — EXECUTION, CONDITIONS και GENERAL CRITERIA. Το item της Formation προσθέτει δύο δικά του κριτήρια (b/ απόσταση ως No2 στο taxi, c/ frequency checks).",
+              "basis": "EXECUTION / CONDITIONS verbatim: «As described in the corresponding section of the Contact Training Exercise Category.» και GENERAL CRITERIA a/ «The general criteria described in the corresponding section of the Contact Training Exercise Category, apply.» → contact-01. ΤΟ contact-01 ΕΙΝΑΙ ΚΑΙ ΑΥΤΟ kind=\"none\" (δεν τυπώνει «2/ SPECIFIC CRITERIA», 11 γενικά κριτήρια χωρίς κανέναν αριθμό): qualitative item — no numeric standards applicable — διαδικασία εδάφους."
+            }
+          ],
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "As described in the corresponding section of the Contact Training Exercise Category.",
+        "The general criteria described in the corresponding section of the Contact Training Exercise Category, apply."
+      ],
+      "flags": [
+        "Ρόλος: GENERAL.",
+        "Η επικεφαλίδα τυπώνεται με τελεία: «(15) GROUND PROCEDURES.». Η τελεία διατηρήθηκε ΚΑΙ στο name (σύμβαση corpus).",
+        "EXECUTION και CONDITIONS είναι πλήρεις παραπομπές στην κατηγορία Contact (contact-01 GROUND PROCEDURES) – δεν υπάρχει ίδιο κείμενο.",
+        "«pre – flight» τυπώνεται με en dash (U+2013) και κενά αντί για ενωτικό."
+      ]
+    },
+    {
+      "id": "formation-16",
+      "numbers": [
+        16
+      ],
+      "name": "PITCH OUT / SPACING",
+      "heading_verbatim": "(16) PITCH OUT / SPACING",
+      "pages_pdf": [
+        70
+      ],
+      "execution": [
+        "SP executes A/C pitch out, following leader’s command, according to Techniques and Procedures Manual."
+      ],
+      "conditions": [
+        "1/ Day only (VFR – VMC).",
+        "2 During pitch out, formation members maintain pre-determined airspeeds/banks."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Controls the A/C in a smooth and solid way."
+          },
+          {
+            "key": "b",
+            "text": "If blind situation is encountered he/she handles it correctly in a time manner."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "rule_7a5_default",
+          "sources": [
+            {
+              "item": "contact-00-general",
+              "scope": "Πηγή ΚΑΝΟΝΑ (όχι πηγή τιμών) — σελ. PDF 24.",
+              "basis": "Κανόνας 7.a(5) — «7. PERFORMANCE CRITERIA» → «a. GENERAL», κανόνας (5), σελ. PDF 24 (contact-00-general, general_criteria key=\"5\"), verbatim: «When specific criteria are not mentioned for certain maneuvers, general criteria will be applied, along with criteria described in the Basic A/C Control standards.»"
+            },
+            {
+              "item": "contact-05",
+              "scope": "Πλήρης πίνακας contact-05: ALTITUDE (feet) / AIRSPEED (knots) / EXIT HEADING (degrees). Ισχύς κατά την πηγή: «For Straight and Level Flight and turns up to 60° of bank:». Εφαρμογή: εκτέλεση pitch out και δημιουργία spacing.",
+              "basis": "Το item «(29) BASIC A/C - FORMATION CONTROL» της ίδιας κατηγορίας (formation-29) ΔΕΝ τυπώνει πίνακα specific criteria (kind=\"none\"), άρα τα «Basic A/C Control standards» της κατηγορίας Formation αντλούνται τεκμηριωμένα από το Contact «(5) BASIC A/C CONTROL» (contact-05, σελ. PDF 29-30). Η αλυσίδα τεκμηρίωσης βρίσκεται μέσα στην ίδια την κατηγορία Formation: formation-03 (specific_criteria.reference_text) «The A/C Basic Control of Contact category specific criteria apply.» και formation-05 γενικό κριτήριο b/ «The A/C Basic Control (Contact category) specific criteria apply.» — δηλαδή η ίδια η πηγή ταυτίζει τα Basic A/C Control standards της Formation με τον πίνακα contact-05. Το item είναι kind=\"none\" και έχει μετρήσιμη διάσταση πτήσης. Η πηγή ΔΕΝ τυπώνει αριθμητικό όριο για το spacing (η CONDITIONS 2 αναφέρει μόνο «pre-determined airspeeds/banks», χωρίς τιμές)."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "￿ 300΄",
+              "code_3_raw": "￿ 150΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:» (γραμμή πάνω από τον πίνακα, σελ. PDF 30).",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "￿ 20",
+              "code_3_raw": "￿ 10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:».",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "EXIT HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "￿ 10 ο",
+              "code_3_raw": "￿ 5ο",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:». Το σύμβολο μοιρών είναι ΕΛΛΗΝΙΚΟ ομικρόν (U+03BF) αντί °.",
+              "provenance": "contact-05"
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: GENERAL.",
+        "ΤΥΠΟΓΡΑΦΙΚΟ ΠΡΩΤΟΤΥΠΟΥ: η 2η συνθήκη τυπώνεται «2 During pitch out…» χωρίς την κάθετο («2/»), σε αντίθεση με την «1/». Διατηρήθηκε verbatim."
+      ]
+    },
+    {
+      "id": "formation-17",
+      "numbers": [
+        17
+      ],
+      "name": "FINGERTIP",
+      "heading_verbatim": "(17) FINGERTIP",
+      "pages_pdf": [
+        70,
+        71
+      ],
+      "execution": [
+        "1/ As leader",
+        "Executes climbs, descents, turns and modified Lazy Eights with No2 at Fingertip position.",
+        "2/ As wingman",
+        "Preserves the fingertip position as Νº2 in both sides of the leading A/C, who maneuvers according to Techniques and Procedures Manual."
+      ],
+      "conditions": [
+        "1/ As leader",
+        "a/ Day only (VFR – VMC).",
+        "b/ 2-3 Gs load",
+        "c/ On lazy “8” type maneuvers increase bank up to 90º and allow airspeed changes approximately 80 - 100 KIAS.",
+        "d/ Minimum airspeed 120 KIAS.",
+        "2/ As wingman",
+        "a/ Day only (VFR – VMC).",
+        "b/ During all flight phases."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "As leader"
+          },
+          {
+            "key": "a.1",
+            "text": "Executes and completes the planned maneuvers smoothly."
+          },
+          {
+            "key": "a.2",
+            "text": "Maintains positive pressure on flying controls during Lazy Eight type maneuvers, in order to help the wingman staying in position."
+          },
+          {
+            "key": "a.3",
+            "text": "Takes into consideration the wingman's position, with regard to the sun and flight area borders and executes the corresponding maneuvers."
+          },
+          {
+            "key": "b",
+            "text": "As wingman"
+          },
+          {
+            "key": "b.1",
+            "text": "Controls the A/C in a smooth and solid way, without abrupt corrections. Moreover, he/she uses the engine power properly and continuously trims the A/C."
+          },
+          {
+            "key": "b.2",
+            "text": "Gets training in the use of Speed Brake from both sides, following Leader’s command or when required to keep Overtake under control."
+          },
+          {
+            "key": "b.3",
+            "text": "Preserves the position determined in the Techniques and Procedures Manual with the deviations stated in Specific criteria."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "LATERAL SEPARATION *(feet)",
+              "unit": "feet",
+              "code_1_raw": "- 0’, + 20’",
+              "code_3_raw": "- 0’, + 10’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 0
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Table footnote (*): *The reference point for deviations is set at 10΄ of minimum lateral separation"
+            },
+            {
+              "maneuver": null,
+              "parameter": "VERTICAL SEPARATION *(feet)",
+              "unit": "feet",
+              "code_1_raw": "+ 6’, - 10’",
+              "code_3_raw": "± 4’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 6,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 4,
+                "minus": 4
+              },
+              "interpolation": "standard",
+              "notes": "Table footnote (*): *The reference point for deviations is set at 10΄ of minimum lateral separation"
+            },
+            {
+              "maneuver": null,
+              "parameter": "OBSERVANCE ANGLE (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "50° ± 5°",
+              "code_3_raw": "30°± 5°",
+              "code_1": {
+                "kind": "nominal_change",
+                "value": 50,
+                "plus": 5,
+                "minus": 5
+              },
+              "code_3": {
+                "kind": "nominal_change",
+                "value": 30,
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "undefined",
+              "notes": "Nominal observance angle changes between codes (50° -> 30°); the ±5° tolerance is identical for both codes."
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: GENERAL.",
+        "Η υποενότητα SPECIFIC CRITERIA τυπώνεται με προσδιορισμό ρόλου: «2/ SPECIFIC CRITERIA (AS WINGMAN)» (σελ. PDF 71, y=607.42, x=269.36, Arial-BoldMT). Ο πίνακας ειδικών κριτηρίων (LATERAL / VERTICAL SEPARATION, OBSERVANCE ANGLE) ισχύει ΜΟΝΟ όταν ο SP πετά ως wingman — ΔΕΝ εφαρμόζεται στον κλάδο «1/ As leader» των EXECUTION / CONDITIONS / GENERAL CRITERIA του ίδιου item. Βλ. conventions.subsection_role_qualifier.",
+        "EXECUTION 2/: «Νº2» τυπώνεται με ΕΛΛΗΝΙΚΟ Ν (U+039D) + º (U+00BA, masculine ordinal). Σημαίνει «No2». Διατηρήθηκε verbatim.",
+        "CONDITIONS 1/c/: «90º» χρησιμοποιεί º (U+00BA) αντί για ° (U+00B0).",
+        "CONDITIONS 1/c/: τα εισαγωγικά στο «8» είναι curly (U+201C/U+201D) – στα items (22)/(23) τα ίδια εισαγωγικά είναι ASCII \".",
+        "Feet marks στον πίνακα: U+2019 (’). Στην υποσημείωση: U+0384 GREEK TONOS (΄).",
+        "OBSERVANCE ANGLE: kind=nominal_change (αλλάζει η ονομαστική τιμή 50°->30°), interpolation=undefined – ΔΕΝ επιτρέπεται γραμμική παρεμβολή μεταξύ κωδίκων. Η ονομαστική τιμή αποθηκεύεται στο πεδίο value (ενιαίο σχήμα με όλες τις εμφανίσεις nominal_change στο corpus)· τα plus/minus κρατούν την τυπωμένη ανοχή ±5°, που είναι ίδια και στους δύο κωδικούς. Βλ. conventions.nominal_change.",
+        "Αντιστοίχιση στηλών επιβεβαιωμένη με PyMuPDF x-coords (σελ.71): grid x=[93.0, 286.7, 320.2, 353.7, 420.7, 458.0, 525.0, 562.2] -> κωδ.1=[353.7-420.7], κωδ.3=[458.0-525.0]. Οι στήλες D/0/2/4 είναι κενές."
+      ]
+    },
+    {
+      "id": "formation-18",
+      "numbers": [
+        18
+      ],
+      "name": "ROUTE / FIGHTING WING FORMATION",
+      "heading_verbatim": "(18) ROUTE / FIGHTING WING FORMATION",
+      "pages_pdf": [
+        71,
+        72
+      ],
+      "execution": [
+        "1/ As leader",
+        "Executes the maneuvers according to handbooks and makes smooth movements, without complicating or surprising No2.",
+        "2/ As wingman",
+        "Maintain Route or Fighting Wing position according to Techniques and Procedures Manual."
+      ],
+      "conditions": [
+        "Day only (VFR – VMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": null,
+            "text": "Assumes position timely when given the corresponding command or has to execute in flight checks."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": "a/ ROUTE POSITION",
+              "parameter": "DISTANCE (span)",
+              "unit": "mixed",
+              "plus_unit": "feet",
+              "minus_unit": "span",
+              "code_1_raw": "+200’, -1/2 span",
+              "code_3_raw": "+100’ ,  -0 span",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 200,
+                "plus_unit": "feet",
+                "minus": 0.5,
+                "minus_unit": "span"
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 100,
+                "plus_unit": "feet",
+                "minus": 0,
+                "minus_unit": "span"
+              },
+              "interpolation": "standard",
+              "notes": "Mixed units inside the cell: the «+» value is printed in FEET (200’ / 100’, feet mark U+2019) while the «-» value is printed in WING SPANS (1/2 span / 0 span), although the row label reads (span). unit=\"mixed\" and the per-leg units are declared explicitly in plus_unit/minus_unit both on the row and inside each code_N object — see conventions.mixed_units. Interpolation is per leg, each in its own unit (plus: 200 ft -> 100 ft; minus: 0.5 span -> 0 span). Sign convention footnote: «+» : in front of the line abreast position, «-» : behind the line abreast position"
+            },
+            {
+              "maneuver": "a/ ROUTE POSITION",
+              "parameter": "HEIGHT (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 50΄",
+              "code_3_raw": "± 20΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 50,
+                "minus": 50
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "interpolation": "standard",
+              "notes": "The ± symbol is produced in the PDF as an ASCII '+' carrying a vector underline (page 72, underline rects at y=437.6, x=300.6-307.6 and x=430.0-437.0); plain text extraction yields '+ 50' / '+ 20'. Visually and semantically it is ±."
+            },
+            {
+              "maneuver": "a/ ROUTE POSITION",
+              "parameter": "LATERAL* (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "+15° , -60°",
+              "code_3_raw": "+5° ,- 50°",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 15,
+                "minus": 60
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 50
+              },
+              "interpolation": "standard",
+              "notes": "Sign convention footnote (*): «+» : in front of the line abreast position, «-» : behind the line abreast position"
+            },
+            {
+              "maneuver": "b/ FIGHTING WING POSITION",
+              "parameter": "DISTANCE (feet)",
+              "unit": "feet",
+              "code_1_raw": "500’ - 1500’",
+              "code_3_raw": "500’ - 1000’",
+              "code_1": {
+                "kind": "range",
+                "min": 500,
+                "max": 1500
+              },
+              "code_3": {
+                "kind": "range",
+                "min": 500,
+                "max": 1000
+              },
+              "interpolation": "undefined",
+              "notes": "Allowed band, not a deviation from a nominal value."
+            },
+            {
+              "maneuver": "b/ FIGHTING WING POSITION",
+              "parameter": "POSITION (cone)",
+              "unit": "degrees",
+              "code_1_raw": "20° - 60°",
+              "code_3_raw": "30° - 45°",
+              "code_1": {
+                "kind": "range",
+                "min": 20,
+                "max": 60
+              },
+              "code_3": {
+                "kind": "range",
+                "min": 30,
+                "max": 45
+              },
+              "interpolation": "undefined",
+              "notes": "Row label reads (cone); the printed values are angles in degrees. Allowed band, not a deviation."
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: GENERAL.",
+        "Η υποενότητα CONDITIONS τυπώνεται με προσδιορισμό ρόλου: «(b) CONDITIONS (AS WINGMAN)» (σελ. PDF 72, y=212.04, x=198.46) — η συνθήκη «Day only (VFR – VMC).» δηλώνεται για τον ρόλο wingman. Βλ. conventions.subsection_role_qualifier.",
+        "Η υποενότητα EXPECTED PERFORMANCE τυπώνεται με προσδιορισμό ρόλου: «(c) EXPECTED PERFORMANCE (AS WINGMAN)» (σελ. PDF 72, y=251.64· το «AS WINGMAN» σε ξεχωριστά spans, x=363.14/366.81/445.47, με τις παρενθέσεις σε μέγεθος 11 αντί 12). Ολόκληρο το EXPECTED PERFORMANCE — GENERAL CRITERIA ΚΑΙ ο πίνακας SPECIFIC CRITERIA (a/ ROUTE POSITION, b/ FIGHTING WING POSITION) — ισχύει ΜΟΝΟ για ρόλο wingman, ΠΑΡΟΤΙ το EXECUTION του ίδιου item έχει και κλάδο «1/ As leader». Βλ. conventions.subsection_role_qualifier.",
+        "ΔΥΟ ξεχωριστοί πίνακες Specific Criteria ενοποιήθηκαν σε ένα parameters[]· η ετικέτα του κάθε υπο-πίνακα μπήκε στο πεδίο «maneuver» ΜΑΖΙ με τον τυπωμένο δείκτη («a/ ROUTE POSITION» σελ. PDF 72 y=344.63, «b/ FIGHTING WING POSITION» σελ. PDF 72 y=498.43), σύμφωνα με τη σύμβαση του criteria_contact_b.json / contact-24 («a/ FLAPS LDG - FLAPS T/O – AΟA.», «b/ FLAPS UP»).",
+        "ΠΑΓΙΔΑ: HEIGHT (feet) – το «±» τυπώνεται ως «+» με υπογράμμιση (vector line), οπότε η εξαγωγή κειμένου δίνει «+ 50΄» / «+ 20΄». Επαληθεύτηκε με render εικόνας ΚΑΙ με get_drawings(). Τα raw πεδία γράφτηκαν ως «± 50΄» / «± 20΄» (όπως ΤΥΠΩΝΕΤΑΙ).",
+        "HEIGHT feet mark = U+0384 GREEK TONOS (΄), ενώ DISTANCE/FIGHTING WING feet mark = U+2019 (’).",
+        "DISTANCE (span): ΜΙΚΤΕΣ ΜΟΝΑΔΕΣ μέσα στο ίδιο κελί — το «+» σκέλος τυπώνεται σε ΠΟΔΙΑ (+200’ / +100’, feet mark U+2019 επιβεβαιωμένο ως codepoint 0x2019) και το «-» σκέλος σε ΑΝΟΙΓΜΑΤΑ ΠΤΕΡΥΓΩΝ (-1/2 span / -0 span), παρότι η ετικέτα της γραμμής γράφει (span). Κωδικοποιήθηκε μηχαναγνώσιμα: unit=\"mixed\" + plus_unit=\"feet\" / minus_unit=\"span\" στη γραμμή ΚΑΙ μέσα σε κάθε code_N. Ο αριθμός 200 ΔΕΝ πρέπει ποτέ να διαβαστεί ως 200 spans (~6.600 ft για T-6A). Βλ. conventions.mixed_units.",
+        "code_3 της DISTANCE (span) τυπώνεται με διπλό κενό: «+100’ ,  -0 span» – διατηρήθηκε verbatim.",
+        "FIGHTING WING: DISTANCE 500-1500 ft / 500-1000 ft και POSITION (cone) 20°-60° / 30°-45° -> kind=range, interpolation=undefined.",
+        "Αντιστοίχιση στηλών επιβεβαιωμένη με x-coords (σελ.72): ROUTE table κέντρα κωδ.1=314.45, κωδ.3=443.85· FIGHTING WING table κέντρα κωδ.1=318.9, κωδ.3=444.85. Κάθε τιμή είναι κεντραρισμένη ακριβώς στο κέντρο της αντίστοιχης στήλης."
+      ]
+    },
+    {
+      "id": "formation-19",
+      "numbers": [
+        19
+      ],
+      "name": "ECHELON TURN (AS WINGMAN)",
+      "heading_verbatim": "(19) ECHELON TURN (AS WINGMAN)",
+      "pages_pdf": [
+        72,
+        73
+      ],
+      "execution": [
+        "SP remains in Echelon position, as No2, according to Techniques and Procedures Manual."
+      ],
+      "conditions": [
+        "1/ Pre-planned maneuver: No1 executes turns up to 60° of bank.",
+        "2/ Day only (VFR – VMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": null,
+            "text": "Maintains the correct position as No2, with the further down deviations from the leading A/C:"
+          },
+          {
+            "key": "a",
+            "text": "Keep in safe distance (10 feet approximately) and no more than 1 ½ wing span, regarding the lateral separation."
+          },
+          {
+            "key": "b",
+            "text": "Do not fly above or below the midpoint of each wing, regarding vertical separation."
+          },
+          {
+            "key": "c",
+            "text": "Do not exceed the leading edge of the wing and the trailing edge of the stabilator, regarding the longitudinal separation."
+          },
+          {
+            "key": "d",
+            "text": "Controls the A/C in a smooth and solid way and makes the appropriate corrections in time."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "LATERAL SEPARATION *(feet)",
+              "unit": "feet",
+              "code_1_raw": "- 0’, + 50’",
+              "code_3_raw": "- 0’, + 10’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 50,
+                "minus": 0
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Table footnote (*): *The reference point for deviations is set at 10΄ of minimum lateral separation"
+            },
+            {
+              "maneuver": null,
+              "parameter": "VERTICAL SEPARATION (feet)",
+              "unit": "feet",
+              "code_1_raw": "±10’",
+              "code_3_raw": "± 4’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 4,
+                "minus": 4
+              },
+              "interpolation": "standard",
+              "notes": null
+            },
+            {
+              "maneuver": null,
+              "parameter": "LONGITUDINAL SEPARATION (feet)",
+              "unit": "feet",
+              "code_1_raw": "±10'",
+              "code_3_raw": "± 4’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 4,
+                "minus": 4
+              },
+              "interpolation": "standard",
+              "notes": "code_1 is printed with an ASCII apostrophe (U+0027) as the feet mark, unlike every other cell of this table which uses U+2019."
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: GENERAL.",
+        "LONGITUDINAL SEPARATION code_1: το feet mark είναι ASCII ' (U+0027), ενώ όλα τα υπόλοιπα κελιά του πίνακα χρησιμοποιούν ’ (U+2019). Διατηρήθηκε verbatim.",
+        "Το εισαγωγικό κείμενο των GENERAL CRITERIA («Maintains the correct position as No2, with the further down deviations from the leading A/C:») δεν φέρει γράμμα – key=null.",
+        "Αντιστοίχιση στηλών επιβεβαιωμένη με x-coords (σελ.73): grid x=[93.0, 311.9, 340.2, 368.6, 432.4, 460.8, 531.6, 560.0] -> κωδ.1=[368.6-432.4], κωδ.3=[460.8-531.6]."
+      ]
+    },
+    {
+      "id": "formation-20",
+      "numbers": [
+        20
+      ],
+      "name": "CROSS UNDER",
+      "heading_verbatim": "(20) CROSS UNDER",
+      "pages_pdf": [
+        73
+      ],
+      "execution": [
+        "SP executes position change in closed or route formation, according to Techniques and Procedures Manual"
+      ],
+      "conditions": [
+        "1/ Day only (VFR - VMC).",
+        "2/ Leader’s maximum bank angle is 30°.",
+        "3/ Execution following leader’s command"
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Executes, timely and correctly, position change, without the necessity for IP intervention."
+          },
+          {
+            "key": "b",
+            "text": "Does not fly in a distance greater than one A/C length."
+          },
+          {
+            "key": "c",
+            "text": "Does not fly into the leader's prop wash.."
+          },
+          {
+            "key": "d",
+            "text": "Does not approach No1 in distance closer than 10 feet."
+          },
+          {
+            "key": "e",
+            "text": "Controls the A/C in a smooth, continuous and solid manner."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "rule_7a5_default",
+          "sources": [
+            {
+              "item": "contact-00-general",
+              "scope": "Πηγή ΚΑΝΟΝΑ (όχι πηγή τιμών) — σελ. PDF 24.",
+              "basis": "Κανόνας 7.a(5) — «7. PERFORMANCE CRITERIA» → «a. GENERAL», κανόνας (5), σελ. PDF 24 (contact-00-general, general_criteria key=\"5\"), verbatim: «When specific criteria are not mentioned for certain maneuvers, general criteria will be applied, along with criteria described in the Basic A/C Control standards.»"
+            },
+            {
+              "item": "contact-05",
+              "scope": "Πλήρης πίνακας contact-05: ALTITUDE (feet) / AIRSPEED (knots) / EXIT HEADING (degrees). Ισχύς κατά την πηγή: «For Straight and Level Flight and turns up to 60° of bank:». Εφαρμογή: αλλαγή θέσης (cross under) σε closed ή route formation, με μέγιστη κλίση leader 30°.",
+              "basis": "Το item «(29) BASIC A/C - FORMATION CONTROL» της ίδιας κατηγορίας (formation-29) ΔΕΝ τυπώνει πίνακα specific criteria (kind=\"none\"), άρα τα «Basic A/C Control standards» της κατηγορίας Formation αντλούνται τεκμηριωμένα από το Contact «(5) BASIC A/C CONTROL» (contact-05, σελ. PDF 29-30). Η αλυσίδα τεκμηρίωσης βρίσκεται μέσα στην ίδια την κατηγορία Formation: formation-03 (specific_criteria.reference_text) «The A/C Basic Control of Contact category specific criteria apply.» και formation-05 γενικό κριτήριο b/ «The A/C Basic Control (Contact category) specific criteria apply.» — δηλαδή η ίδια η πηγή ταυτίζει τα Basic A/C Control standards της Formation με τον πίνακα contact-05. Το item είναι kind=\"none\". ΣΗΜΕΙΩΣΗ: τα ΜΟΝΑ αριθμητικά όρια που τυπώνει η πηγή για το item βρίσκονται μέσα στα GENERAL CRITERIA και ΔΕΝ διαφοροποιούνται ανά κωδικό 1/3 — b/ «Does not fly in a distance greater than one A/C length.» και d/ «Does not approach No1 in distance closer than 10 feet.»· γι᾽ αυτό δεν μπορούν να μπουν ως γραμμές πίνακα και παραμένουν στα γενικά κριτήρια του item."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "￿ 300΄",
+              "code_3_raw": "￿ 150΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:» (γραμμή πάνω από τον πίνακα, σελ. PDF 30).",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "￿ 20",
+              "code_3_raw": "￿ 10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:».",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "EXIT HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "￿ 10 ο",
+              "code_3_raw": "￿ 5ο",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:». Το σύμβολο μοιρών είναι ΕΛΛΗΝΙΚΟ ομικρόν (U+03BF) αντί °.",
+              "provenance": "contact-05"
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: GENERAL.",
+        "ΤΥΠΟΓΡΑΦΙΚΟ ΠΡΩΤΟΤΥΠΟΥ: το GENERAL CRITERIA c/ τελειώνει με ΔΙΠΛΗ τελεία («prop wash..»). Διατηρήθηκε verbatim.",
+        "EXECUTION και CONDITIONS 3/ τυπώνονται ΧΩΡΙΣ τελεία στο τέλος.",
+        "Δεν υπάρχει SPECIFIC CRITERIA (kind=none)· τα αριθμητικά όρια (μία A/C length, 10 feet) βρίσκονται μέσα στα GENERAL CRITERIA."
+      ]
+    },
+    {
+      "id": "formation-21",
+      "numbers": [
+        21
+      ],
+      "name": "LEAD CHANGE",
+      "heading_verbatim": "(21) LEAD CHANGE",
+      "pages_pdf": [
+        73,
+        74
+      ],
+      "execution": [
+        "SP performs lead change at the point that has been determined during the pre-flight briefing according to Techniques and Procedures Manual and SOP’s."
+      ],
+      "conditions": [
+        "Day only (VFR - VMC)"
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Executes safely and without misinterpretation of the lead change, following the leader's verbal or visual signal."
+          },
+          {
+            "key": "b",
+            "text": "No2 assumes formation leadership without uncertainty, after receiving the command."
+          },
+          {
+            "key": "c",
+            "text": "Comply with the restrictions of B.O 3-1/ATC for lead change."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "rule_7a5_default",
+          "sources": [
+            {
+              "item": "contact-00-general",
+              "scope": "Πηγή ΚΑΝΟΝΑ (όχι πηγή τιμών) — σελ. PDF 24.",
+              "basis": "Κανόνας 7.a(5) — «7. PERFORMANCE CRITERIA» → «a. GENERAL», κανόνας (5), σελ. PDF 24 (contact-00-general, general_criteria key=\"5\"), verbatim: «When specific criteria are not mentioned for certain maneuvers, general criteria will be applied, along with criteria described in the Basic A/C Control standards.»"
+            },
+            {
+              "item": "contact-05",
+              "scope": "Πλήρης πίνακας contact-05: ALTITUDE (feet) / AIRSPEED (knots) / EXIT HEADING (degrees). Ισχύς κατά την πηγή: «For Straight and Level Flight and turns up to 60° of bank:». Εφαρμογή: εκτέλεση lead change στο προκαθορισμένο σημείο.",
+              "basis": "Το item «(29) BASIC A/C - FORMATION CONTROL» της ίδιας κατηγορίας (formation-29) ΔΕΝ τυπώνει πίνακα specific criteria (kind=\"none\"), άρα τα «Basic A/C Control standards» της κατηγορίας Formation αντλούνται τεκμηριωμένα από το Contact «(5) BASIC A/C CONTROL» (contact-05, σελ. PDF 29-30). Η αλυσίδα τεκμηρίωσης βρίσκεται μέσα στην ίδια την κατηγορία Formation: formation-03 (specific_criteria.reference_text) «The A/C Basic Control of Contact category specific criteria apply.» και formation-05 γενικό κριτήριο b/ «The A/C Basic Control (Contact category) specific criteria apply.» — δηλαδή η ίδια η πηγή ταυτίζει τα Basic A/C Control standards της Formation με τον πίνακα contact-05. Το item είναι kind=\"none\" και εκτελείται εν πτήσει (μετρήσιμη διάσταση). Το γενικό κριτήριο c/ παραπέμπει σε ΕΞΩΤΕΡΙΚΟ κανονισμό («B.O 3-1/ATC») εκτός corpus — δεν αποδίδει αριθμητικά όρια εδώ."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "￿ 300΄",
+              "code_3_raw": "￿ 150΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:» (γραμμή πάνω από τον πίνακα, σελ. PDF 30).",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "￿ 20",
+              "code_3_raw": "￿ 10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:».",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "EXIT HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "￿ 10 ο",
+              "code_3_raw": "￿ 5ο",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:». Το σύμβολο μοιρών είναι ΕΛΛΗΝΙΚΟ ομικρόν (U+03BF) αντί °.",
+              "provenance": "contact-05"
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: GENERAL.",
+        "Η επικεφαλίδα «(21) LEAD CHANGE» τυπώνεται στο ΤΕΛΟΣ της σελ.73 (y=753.4)· όλο το περιεχόμενο βρίσκεται στη σελ.74.",
+        "Το c/ παραπέμπει σε ΕΞΩΤΕΡΙΚΟ κανονισμό («B.O 3-1/ATC»), όχι σε άλλο item – δεν καταχωρήθηκε στα cross_refs.",
+        "CONDITIONS τυπώνεται χωρίς τελεία στο τέλος."
+      ]
+    },
+    {
+      "id": "formation-22",
+      "numbers": [
+        22
+      ],
+      "name": "CLOSE TRAIL",
+      "heading_verbatim": "(22) CLOSE TRAIL",
+      "pages_pdf": [
+        74,
+        75
+      ],
+      "execution": [
+        "1/ As Leader",
+        "Executes turns, precision maneuvers (modified Lazy \"8\" and Chandelle) or modified Barrel Rolls, with No2 in Close Trail position and maintains airspeed within the range of 120-250 KIAS.",
+        "2/ As Wingman",
+        "Maintains Close Trail position, as No2, according to Techniques and Procedures Manual."
+      ],
+      "conditions": [
+        "1/ As Leader",
+        "a/ Day only (VFR / VMC).",
+        "b/ Maneuvers up to 3 Gs.",
+        "c/ Maximum Bank is 90°.",
+        "2/ As Wingman",
+        "a/ Day only (VFR / VMC).",
+        "b/ Dual flight only."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "As Leader"
+          },
+          {
+            "key": "a.1",
+            "text": "Smoothly carries out the aforementioned maneuvers, maintaining positive-Gs at all times and orientation within the assigned flight area."
+          },
+          {
+            "key": "b",
+            "text": "As Wingman"
+          },
+          {
+            "key": "b.1",
+            "text": "Maintains Close trail position 1 to 2 ship lengths (nose-tail separation), as far as the longitude distance is concerned and slightly below the Leaders exhaust. Never fly less than 1 ship length or further than 2 ship lengths."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "VERTICAL SEPARATION (feet)",
+              "unit": "feet",
+              "code_1_raw": "+0,-15",
+              "code_3_raw": "+0,- 5’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 0,
+                "minus": 15
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 0,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "code_1 is printed without a feet mark while code_3 carries one (5’); the row label supplies the unit."
+            },
+            {
+              "maneuver": null,
+              "parameter": "LONGITUDINAL SEPARATION (ship length)",
+              "unit": "ship lengths",
+              "code_1_raw": "3-4",
+              "code_3_raw": "1-2",
+              "code_1": {
+                "kind": "range",
+                "min": 3,
+                "max": 4
+              },
+              "code_3": {
+                "kind": "range",
+                "min": 1,
+                "max": 2
+              },
+              "interpolation": "undefined",
+              "notes": "Allowed band. Code 3 (1-2 ship lengths) matches the GENERAL CRITERIA text; code 1 (3-4) is a different, further-aft band, not a superset of code 3."
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: GENERAL.",
+        "GENERAL CRITERIA a/ και b/: το κείμενο ακολουθεί ΧΩΡΙΣ τυπωμένο υπο-αριθμό (σελ. PDF 74, y=690.81 «a/ As Leader» -> κείμενο y=710.61 χωρίς ψηφίο· σελ. PDF 74, y=758.01 «b/ As Wingman» -> κείμενο σελ. PDF 75, y=85.45 χωρίς ψηφίο). Τα κλειδιά «a.1» και «b.1» είναι ΚΑΘΑΡΑ ΔΟΜΙΚΑ, για ομοιομορφία με τα items που όντως τυπώνουν υπογραμμισμένα ψηφία (14, 17, 23/κλάδος b/) — ΔΕΝ αντιστοιχούν σε τυπωμένο αριθμό. Βλ. conventions.synthetic_sub_keys.",
+        "GENERAL CRITERIA b/: τα αριθμητικά όρια «1» και «2» («1 to 2 ship lengths», «less than 1», «further than 2») τυπώνονται με ΕΝΤΟΝΑ (Arial-BoldMT) ενώ το περιβάλλον κείμενο είναι ArialMT — σελ. PDF 75: y=85.45 x=470.63 («1») και x=502.41 («2»), y=113.04 x=391.71 («1»), y=126.84 x=99.25 («2»). Η πηγή τονίζει έτσι ακριβώς τις βαθμολογούμενες τιμές· η μορφοποίηση ΔΕΝ αποτυπώνεται στο πεδίο text.",
+        "ΠΡΟΣΟΧΗ ΣΤΗΝ ΕΡΜΗΝΕΙΑ: LONGITUDINAL SEPARATION -> κωδ.1 = 3-4 ship lengths, κωδ.3 = 1-2 ship lengths. Οι δύο ζώνες ΔΕΝ επικαλύπτονται (η κωδ.1 δεν περιέχει την κωδ.3), οπότε interpolation=undefined.",
+        "Το κείμενο των GENERAL CRITERIA («1 to 2 ship lengths … never less than 1 … further than 2») συμφωνεί με τον κωδ.3, όχι με τον κωδ.1.",
+        "VERTICAL SEPARATION κωδ.1 «+0,-15» τυπώνεται χωρίς σύμβολο ποδιών, ενώ ο κωδ.3 «+0,- 5’» το έχει.",
+        "Ο πίνακας (σελ.75) είναι ΧΩΡΙΣΤΟΣ από την επικεφαλίδα του item (σελ.74) – split σε γύρισμα σελίδας, χωρίς επανάληψη επικεφαλίδας item.",
+        "Το label «LONGITUDINAL SEPARATION (ship length)» τυπώνεται σε 3 γραμμές μέσα στο κελί· ενοποιήθηκε.",
+        "Τα εισαγωγικά στο Lazy \"8\" είναι ASCII (U+0022), σε αντίθεση με το item (17) που έχει curly.",
+        "Αντιστοίχιση στηλών επιβεβαιωμένη με x-coords (σελ.75): grid x=[87.8, 281.5, 315.0, 348.5, 415.5, 452.7, 519.7, 557.0] -> κωδ.1=[348.5-415.5], κωδ.3=[452.7-519.7]."
+      ]
+    },
+    {
+      "id": "formation-23",
+      "numbers": [
+        23
+      ],
+      "name": "EXTENDED TRAIL",
+      "heading_verbatim": "(23) EXTENDED TRAIL",
+      "pages_pdf": [
+        75,
+        76
+      ],
+      "execution": [
+        "1/ As Leader",
+        "SP performs turns, precision maneuvers (modified Lazy \"8\" and Chandelle), modified Barrel Roll or Cloverleaves with the No2 in Extended Trail position, within speed range 120-250K.",
+        "2/ As Wingman",
+        "SP maintains No2 position in Extended Trail formation according to Techniques and Procedures Manual."
+      ],
+      "conditions": [
+        "1/ As Leader",
+        "a/ Day only (VFR - VMC).",
+        "b/ Maneuvers up to 4 Gs.",
+        "2/ As Wingman",
+        "a/ Day only (VFR - VMC).",
+        "b/ Dual flight only."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "As Leader"
+          },
+          {
+            "key": "a.1",
+            "text": "Smoothly carry out the aforementioned maneuvers, maintaining orientation within the assigned flight area and controlling the wingman."
+          },
+          {
+            "key": "b",
+            "text": "As Wingman"
+          },
+          {
+            "key": "b.1",
+            "text": "He/she does not stagnate in No1’s 6-o’clock."
+          },
+          {
+            "key": "b.2",
+            "text": "Does not constitute a threat for the formation, during the maneuver."
+          },
+          {
+            "key": "b.3",
+            "text": "Maintains Extended Trail position as described in the Techniques and Procedures Manual."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "a/ Specific criteria of Fighting Wing apply. b/ SP does not violate the 500’ safety distance (bubble). Momentary deviations are acceptable with immediately correct action.",
+          "reference_target": "formation-18",
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "formation-18",
+              "scope": "ΜΟΝΟ ο υπο-πίνακας «b/ FIGHTING WING POSITION» του formation-18 (σελ. PDF 72): DISTANCE (feet) και POSITION (cone). Ο υπο-πίνακας «a/ ROUTE POSITION» ΔΕΝ αντιγράφεται. Ρόλος: AS WINGMAN («2/ SPECIFIC CRITERIA (AS WINGMAN)», σελ. PDF 76).",
+              "basis": "specific_criteria.reference_text verbatim: «a/ Specific criteria of Fighting Wing apply. b/ SP does not violate the 500’ safety distance (bubble). Momentary deviations are acceptable with immediately correct action.» → formation-18 «(18) ROUTE / FIGHTING WING FORMATION», υπο-πίνακας b/. ΠΡΟΣΟΧΗ: το σκέλος b/ (500’ safety bubble) είναι ΠΡΟΣΘΕΤΟ απόλυτο όριο ασφαλείας που ΔΕΝ προκύπτει από τον πίνακα Fighting Wing και ΔΕΝ διαφοροποιείται ανά κωδικό 1/3 — παραμένει στο reference_text του item."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": "b/ FIGHTING WING POSITION",
+              "parameter": "DISTANCE (feet)",
+              "unit": "feet",
+              "code_1_raw": "500’ - 1500’",
+              "code_3_raw": "500’ - 1000’",
+              "code_1": {
+                "kind": "range",
+                "min": 500,
+                "max": 1500
+              },
+              "code_3": {
+                "kind": "range",
+                "min": 500,
+                "max": 1000
+              },
+              "interpolation": "undefined",
+              "notes": "Allowed band, not a deviation from a nominal value.",
+              "provenance": "formation-18"
+            },
+            {
+              "maneuver": "b/ FIGHTING WING POSITION",
+              "parameter": "POSITION (cone)",
+              "unit": "degrees",
+              "code_1_raw": "20° - 60°",
+              "code_3_raw": "30° - 45°",
+              "code_1": {
+                "kind": "range",
+                "min": 20,
+                "max": 60
+              },
+              "code_3": {
+                "kind": "range",
+                "min": 30,
+                "max": 45
+              },
+              "interpolation": "undefined",
+              "notes": "Row label reads (cone); the printed values are angles in degrees. Allowed band, not a deviation.",
+              "provenance": "formation-18"
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "Specific criteria of Fighting Wing apply."
+      ],
+      "flags": [
+        "Ρόλος: GENERAL.",
+        "Η υποενότητα SPECIFIC CRITERIA τυπώνεται με προσδιορισμό ρόλου: «2/ SPECIFIC CRITERIA (AS WINGMAN)» (σελ. PDF 76, y=105.24, x=226.81, Arial-BoldMT). Τα δύο ειδικά κριτήρια (a/ παραπομπή στο Fighting Wing, b/ όριο 500’ bubble) ισχύουν ΜΟΝΟ για ρόλο wingman — ΔΕΝ εφαρμόζονται στον κλάδο «1/ As Leader» των EXECUTION / CONDITIONS / GENERAL CRITERIA του ίδιου item. Βλ. conventions.subsection_role_qualifier.",
+        "GENERAL CRITERIA a/: το κείμενο ακολουθεί ΧΩΡΙΣ τυπωμένο υπο-αριθμό (σελ. PDF 75, y=604.02 «a/ As Leader» -> κείμενο y=623.82 χωρίς ψηφίο)· το κλειδί «a.1» είναι ΚΑΘΑΡΑ ΔΟΜΙΚΟ. Αντιθέτως ο κλάδος b/ ΤΥΠΩΝΕΙ όντως υπογραμμισμένα ψηφία 1/2/3 (σελ. PDF 75, y=691.01/724.61/758.21, x=297.70), άρα τα b.1…b.3 αντιστοιχούν σε τυπωμένους αριθμούς. Βλ. conventions.synthetic_sub_keys.",
+        "SPECIFIC CRITERIA = παραπομπή στον πίνακα b/ FIGHTING WING POSITION του item (18) ROUTE / FIGHTING WING FORMATION -> reference_target=formation-18 (DISTANCE 500-1500/500-1000 ft, POSITION cone 20°-60°/30°-45°).",
+        "Το reference_text περιέχει ΚΑΙ πρόσθετο απόλυτο όριο ασφαλείας (b/ 500’ bubble) που ΔΕΝ προκύπτει από τον πίνακα Fighting Wing και δεν διαφοροποιείται ανά κωδικό.",
+        "ΟΡΙΟ ΤΜΗΜΑΤΟΣ: στη σελ.76 (PDF) ξεκινούν επίσης οι επικεφαλίδες «(24) TACTICAL FORMATION» (y=178.4) και «(24) – (28)TACTICAL TURNS DELAY 90°, DELAY 45°, IN PLACE, CROSS / HOOK / SHACKLE/ CHECK TURNS» (y=585.8). ΔΕΝ συμπεριλήφθηκαν εδώ, επειδή το ΠΕΡΙΕΧΟΜΕΝΟ του τμήματος ορίστηκε ρητά ως (14)…(23) Extended Trail. Πρέπει να καλυφθούν από το επόμενο chunk· αν το επόμενο chunk ξεκινά στη σελ.77 θα χαθούν."
+      ]
+    },
+    {
+      "id": "formation-24",
+      "numbers": [
+        24
+      ],
+      "name": "TACTICAL FORMATION",
+      "heading_verbatim": "(24) TACTICAL FORMATION",
+      "pages_pdf": [
+        76
+      ],
+      "execution": [
+        "1/ SP performs the maneuvers required to maintain position as No2, during all the phases of flight.",
+        "2/ SP maintains position as No2, according to Techniques and Procedures Manual."
+      ],
+      "conditions": [
+        "Day only (VFR - VMC)"
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Executes clearing at the proper area, as No1 or No2, depending on relative position in the formation."
+          },
+          {
+            "key": "b",
+            "text": "Exploits and converts the A/C energy in order to maintain position."
+          },
+          {
+            "key": "c",
+            "text": "Is familiar with the technique and timely applies the proper corrections to alleviate any deviations from the tactical formation position."
+          },
+          {
+            "key": "d",
+            "text": "Knows and executes all the visual signals given by the Leader."
+          },
+          {
+            "key": "e",
+            "text": "Uses the engine with consideration to the fuel reserve."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "Specific criteria of tactical turns are applied.",
+          "reference_target": "formation-24b",
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "formation-24b",
+              "scope": "Όλος ο πίνακας «2/ SPECIFIC CRITERIA (TACTICAL FORMATION - TACTICAL TURNS)» (σελ. PDF 77): ALTITUDE / SPEED ENTRY-EXIT / RECOVERY HEADING / Gs (continous) / LINE ABREAST DEVIATION / LATERAL SEPARATION.",
+              "basis": "specific_criteria.reference_text verbatim: «Specific criteria of tactical turns are applied.» → formation-24b. Επιπλέον, ο ΙΔΙΟΣ ο τίτλος του πίνακα στη σελ. PDF 77 ονοματίζει ρητά και τα δύο items: «2/ SPECIFIC CRITERIA (TACTICAL FORMATION - TACTICAL TURNS)». Οι τιμές αποθηκεύονται μία φορά (στο formation-24b) και εδώ αντιγράφονται."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "+1000 / -500",
+              "code_3_raw": "+500 / -300",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 1000,
+                "minus": 500
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 500,
+                "minus": 300
+              },
+              "interpolation": "standard",
+              "notes": "Ασύμμετρη απόκλιση (+/- διαφορετικά).",
+              "provenance": "formation-24b"
+            },
+            {
+              "maneuver": null,
+              "parameter": "SPEED ENTRY/EXIT (knots)",
+              "unit": "knots",
+              "code_1_raw": "±30",
+              "code_3_raw": "±15",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 30,
+                "minus": 30
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 15,
+                "minus": 15
+              },
+              "interpolation": "standard",
+              "notes": null,
+              "provenance": "formation-24b"
+            },
+            {
+              "maneuver": null,
+              "parameter": "RECOVERY HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "±30",
+              "code_3_raw": "±10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 30,
+                "minus": 30
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": null,
+              "provenance": "formation-24b"
+            },
+            {
+              "maneuver": null,
+              "parameter": "Gs (continous)",
+              "unit": "G",
+              "code_1_raw": "±1,0",
+              "code_3_raw": "±0,5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 1.0,
+                "minus": 1.0
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 0.5,
+                "minus": 0.5
+              },
+              "interpolation": "standard",
+              "notes": "Υποδιαστολή με κόμμα στο πρωτότυπο (±1,0 / ±0,5). Τυπογραφικό «continous» αντί «continuous» — διατηρείται ως έχει.",
+              "provenance": "formation-24b"
+            },
+            {
+              "maneuver": null,
+              "parameter": "LINE ABREAST DEVIATION (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "±30",
+              "code_3_raw": "±10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 30,
+                "minus": 30
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": null,
+              "provenance": "formation-24b"
+            },
+            {
+              "maneuver": null,
+              "parameter": "LATERAL SEPARATION (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 1000",
+              "code_3_raw": "± 500",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 1000,
+                "minus": 1000
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 500,
+                "minus": 500
+              },
+              "interpolation": "standard",
+              "notes": "Στο πρωτότυπο υπάρχει κενό ανάμεσα στο «±» και τον αριθμό.",
+              "provenance": "formation-24b"
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "Specific criteria of tactical turns are applied."
+      ],
+      "flags": [
+        "ΔΙΠΛΗ ΑΡΙΘΜΗΣΗ: το τυπωμένο «(24)» χρησιμοποιείται ΔΥΟ φορές στη σελ. 76 — εδώ για το TACTICAL FORMATION και αμέσως μετά για το «(24) – (28) TACTICAL TURNS». Για να αποφευχθεί σύγκρουση id, αυτό το item κρατά το id \"formation-24\" και το δεύτερο πήρε id \"formation-24b\". Τα πεδία numbers/heading_verbatim κρατούν την αρίθμηση ΟΠΩΣ ΤΥΠΩΝΕΤΑΙ.",
+        "Ο πίνακας Specific Criteria στη σελ. 77 τιτλοφορείται «2/ SPECIFIC CRITERIA (TACTICAL FORMATION - TACTICAL TURNS)», δηλαδή καλύπτει ΡΗΤΑ ΚΑΙ αυτό το item. Οι τιμές αποθηκεύονται μία φορά, στο item formation-24b· εδώ δίνεται ως reference."
+      ]
+    },
+    {
+      "id": "formation-24b",
+      "numbers": [
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "name": "TACTICAL TURNS DELAY 90°, DELAY 45°, IN PLACE, CROSS / HOOK / SHACKLE/ CHECK TURNS",
+      "heading_verbatim": "(24) – (28)TACTICAL TURNS DELAY 90°, DELAY 45°, IN PLACE, CROSS / HOOK / SHACKLE/ CHECK TURNS",
+      "pages_pdf": [
+        76,
+        77
+      ],
+      "execution": [
+        "Executes the tactical turns with comm-in or comm-out as Νº1 or Νº2."
+      ],
+      "conditions": [
+        "Day only (VFR - VMC)"
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "SP checks the corresponding responsibility airspace during turn."
+          },
+          {
+            "key": "b",
+            "text": "Exploits and converts the A/C energy in order to maintain position."
+          },
+          {
+            "key": "c",
+            "text": "Is familiar with the correction technique in order to remain in tactical formation position."
+          },
+          {
+            "key": "d",
+            "text": "Take initiative for safe separation during tactical turns."
+          },
+          {
+            "key": "e",
+            "text": "Knows and executes the visual signals in a comm-out turn."
+          },
+          {
+            "key": "f",
+            "text": "Uses the engine with consideration to the fuel reserve."
+          },
+          {
+            "key": "g",
+            "text": "Executes clearing and ensures safe altitude for maneuvering over mountains."
+          },
+          {
+            "key": "h",
+            "text": "Executes the tactical turns as described in the Techniques and Procedures Manual and rolls out in tactical formation position."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "+1000 / -500",
+              "code_3_raw": "+500 / -300",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 1000,
+                "minus": 500
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 500,
+                "minus": 300
+              },
+              "interpolation": "standard",
+              "notes": "Ασύμμετρη απόκλιση (+/- διαφορετικά)."
+            },
+            {
+              "maneuver": null,
+              "parameter": "SPEED ENTRY/EXIT (knots)",
+              "unit": "knots",
+              "code_1_raw": "±30",
+              "code_3_raw": "±15",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 30,
+                "minus": 30
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 15,
+                "minus": 15
+              },
+              "interpolation": "standard",
+              "notes": null
+            },
+            {
+              "maneuver": null,
+              "parameter": "RECOVERY HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "±30",
+              "code_3_raw": "±10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 30,
+                "minus": 30
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": null
+            },
+            {
+              "maneuver": null,
+              "parameter": "Gs (continous)",
+              "unit": "G",
+              "code_1_raw": "±1,0",
+              "code_3_raw": "±0,5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 1.0,
+                "minus": 1.0
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 0.5,
+                "minus": 0.5
+              },
+              "interpolation": "standard",
+              "notes": "Υποδιαστολή με κόμμα στο πρωτότυπο (±1,0 / ±0,5). Τυπογραφικό «continous» αντί «continuous» — διατηρείται ως έχει."
+            },
+            {
+              "maneuver": null,
+              "parameter": "LINE ABREAST DEVIATION (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "±30",
+              "code_3_raw": "±10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 30,
+                "minus": 30
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": null
+            },
+            {
+              "maneuver": null,
+              "parameter": "LATERAL SEPARATION (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 1000",
+              "code_3_raw": "± 500",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 1000,
+                "minus": 1000
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 500,
+                "minus": 500
+              },
+              "interpolation": "standard",
+              "notes": "Στο πρωτότυπο υπάρχει κενό ανάμεσα στο «±» και τον αριθμό."
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "ΔΙΠΛΗ ΑΡΙΘΜΗΣΗ: η επικεφαλίδα τυπώνεται «(24) – (28)» ενώ το αμέσως προηγούμενο item τυπώνεται επίσης «(24)» (σελ. 76). Το πρωτότυπο έχει επικαλυπτόμενη αρίθμηση — πιθανό τυπογραφικό του Syllabus (αναμενόμενο θα ήταν «(25) – (28)»). Δόθηκε id \"formation-24b\" για μοναδικότητα· το numbers=[24,25,26,27,28] αποδίδει την αρίθμηση όπως τυπώνεται.",
+        "Στην επικεφαλίδα ΛΕΙΠΕΙ κενό: τυπώνεται «(28)TACTICAL TURNS» (χωρίς space). Διατηρείται στο heading_verbatim, αφαιρείται στο name.",
+        "Ελληνικά lookalikes στο EXECUTION: «Νº1 or Νº2» — «Ν» = U+039D (ελληνικό Νι) και «º» = U+00BA (masculine ordinal) αντί «No1 / No2». Διατηρείται verbatim· κανονικοποιημένο = «No1 or No2».",
+        "Κεφαλίδα πίνακα: «MANEUVER PARAMETERS Ε 0 1 2 3 4» — το «Ε» είναι U+0395 (ελληνικό Έψιλον) εκεί όπου άλλοι πίνακες τυπώνουν «D». Η στήλη D/E είναι ΚΕΝΗ (χωρίς τιμές) και ΔΕΝ χρησιμοποιείται.",
+        "Επαλήθευση στηλών με PyMuPDF x-coordinates (σελ. 77): κέντρα κεφαλίδων 0=340.7, 1=395.7, 2=454.1, 3=505.6, 4=556.2. ΟΛΕΣ οι αριστερές τιμές κεντράρονται στο 395.7 (κωδικός 1) και ΟΛΕΣ οι δεξιές στο 505.6 (κωδικός 3). Οι στήλες 0, 2, 4 είναι κενές. Η αντιστοίχιση 1/3 είναι ΕΠΙΒΕΒΑΙΩΜΕΝΗ, όχι εικασία σειράς ανάγνωσης.",
+        "Ο πίνακας ΔΕΝ σπάει σε γύρισμα σελίδας (ολόκληρος στη σελ. 77, y=360-519). Όλα τα «±» είναι γνήσια U+00B1 — ΔΕΝ εμφανίστηκε το πρόβλημα U+FFFF σε αυτή τη σελίδα.",
+        "Ο τίτλος του πίνακα «2/ SPECIFIC CRITERIA (TACTICAL FORMATION - TACTICAL TURNS)» καλύπτει ΚΑΙ το item formation-24 (TACTICAL FORMATION)."
+      ]
+    },
+    {
+      "id": "formation-29",
+      "numbers": [
+        29
+      ],
+      "name": "BASIC A/C - FORMATION CONTROL",
+      "heading_verbatim": "(29) BASIC A/C - FORMATION CONTROL",
+      "pages_pdf": [
+        77,
+        78
+      ],
+      "execution": [
+        "1/ As Leader",
+        "a/ Maintains A/C control, preserving flight parameters within specified limitations, during all phases of flight. Especially, constraints must be met during climb, descent, level off and cruise. Turns are allowed up to: 90° of bank when Wingman is in Fingertip; up to 60° of bank when Wingman is in Route; 45° - 60° of bank when Wingman is in Echelon and up to 30º of bank for Crossunders.",
+        "b/ Trims promptly the A/C throughout the flight phases.",
+        "c/ In dual flight, crew coordination at specific actions is applied, as described in the briefing and debriefing manuals..",
+        "d/ Maintains control of G load and formation energy awareness and keeps the formation within the assigned area.",
+        "e/ Maintains his/her orientation within flight areas.",
+        "2/ As Wingman",
+        "a/ Maintains A/C control and monitors Gs.",
+        "b/ Trims promptly the A/C throughout the flight phases.",
+        "c/ Reports to Leader immediately, whenever perceives any abnormal situation."
+      ],
+      "conditions": [
+        "1/ Day only (VFR - VMC)",
+        "2/ Mission Profile is predetermined.",
+        "3/ Maximum G load is 4 Gs and control of the A/C is smooth and positive."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "As Leader"
+          },
+          {
+            "key": "a.1",
+            "text": "Executes the maneuvers in a smooth manner, paying attention to Wingman and without exceeding Wingman’s A/C limitations"
+          },
+          {
+            "key": "a.2",
+            "text": "Gives the appropriate radio calls or visual signals to Wingman before starting any maneuver or comm-out tactical turn."
+          },
+          {
+            "key": "a.3",
+            "text": "Executes all checks according to the check list and informs the Wingman."
+          },
+          {
+            "key": "a.4",
+            "text": "Gives the appropriate radio calls or visual signals to Wingman before any change in A/C configuration."
+          },
+          {
+            "key": "a.5",
+            "text": "Knows the area borders and keeps the formation within the assigned area."
+          },
+          {
+            "key": "a.6",
+            "text": "Maintains his/her orientation within flight areas and capable of returning to mother base or the alternate airport."
+          },
+          {
+            "key": "a.7",
+            "text": "Keeps formation fluid, with the assistance of IP, in order to exploit fuel, weather conditions and the flight area, for the time being a Leader."
+          },
+          {
+            "key": "b",
+            "text": "As Wingman"
+          },
+          {
+            "key": "b.1",
+            "text": "Maintains A/C control and monitors Gs."
+          },
+          {
+            "key": "b.2",
+            "text": "Trims promptly the A/C throughout the flight phases."
+          },
+          {
+            "key": "b.3",
+            "text": "Reports to Leader whenever flight parameters reach any limit."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "rule_7a5_default",
+          "sources": [
+            {
+              "item": "contact-00-general",
+              "scope": "Πηγή ΚΑΝΟΝΑ (όχι πηγή τιμών) — σελ. PDF 24.",
+              "basis": "Κανόνας 7.a(5) — «7. PERFORMANCE CRITERIA» → «a. GENERAL», κανόνας (5), σελ. PDF 24 (contact-00-general, general_criteria key=\"5\"), verbatim: «When specific criteria are not mentioned for certain maneuvers, general criteria will be applied, along with criteria described in the Basic A/C Control standards.»"
+            },
+            {
+              "item": "contact-05",
+              "scope": "Πλήρης πίνακας contact-05: ALTITUDE (feet) / AIRSPEED (knots) / EXIT HEADING (degrees). Ισχύς κατά την πηγή: «For Straight and Level Flight and turns up to 60° of bank:». Εφαρμογή: όλες οι φάσεις πτήσης (climb, descent, level off, cruise), ως Leader και ως Wingman. Οι επιτρεπόμενες κλίσεις ορίζονται από το EXECUTION 1/a/ του ίδιου item (90° Fingertip, 60° Route, 45°-60° Echelon, 30º Crossunder), ΕΝΩ ο πίνακας contact-05 δηλώνει ισχύ «for turns up to 60° of bank».",
+              "basis": "ΚΡΙΣΙΜΟ ITEM: αυτό ΕΙΝΑΙ το Basic A/C Control της κατηγορίας Formation και επιβεβαιωμένα ΔΕΝ τυπώνει «2/ SPECIFIC CRITERIA» (μετά το b.3 ακολουθεί κατευθείαν η επικεφαλίδα «(30) LANDING PATTERN», σελ. PDF 78) — δεν πρόκειται για χαμένο πίνακα. Το item «(29) BASIC A/C - FORMATION CONTROL» της ίδιας κατηγορίας (formation-29) ΔΕΝ τυπώνει πίνακα specific criteria (kind=\"none\"), άρα τα «Basic A/C Control standards» της κατηγορίας Formation αντλούνται τεκμηριωμένα από το Contact «(5) BASIC A/C CONTROL» (contact-05, σελ. PDF 29-30). Η αλυσίδα τεκμηρίωσης βρίσκεται μέσα στην ίδια την κατηγορία Formation: formation-03 (specific_criteria.reference_text) «The A/C Basic Control of Contact category specific criteria apply.» και formation-05 γενικό κριτήριο b/ «The A/C Basic Control (Contact category) specific criteria apply.» — δηλαδή η ίδια η πηγή ταυτίζει τα Basic A/C Control standards της Formation με τον πίνακα contact-05. Επομένως οι αριθμητικές τιμές που εφαρμόζονται εδώ είναι του contact-05. Κανόνας 7.a(5) — «7. PERFORMANCE CRITERIA» → «a. GENERAL», κανόνας (5), σελ. PDF 24 (contact-00-general, general_criteria key=\"5\"), verbatim: «When specific criteria are not mentioned for certain maneuvers, general criteria will be applied, along with criteria described in the Basic A/C Control standards.»"
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "￿ 300΄",
+              "code_3_raw": "￿ 150΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:» (γραμμή πάνω από τον πίνακα, σελ. PDF 30).",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "￿ 20",
+              "code_3_raw": "￿ 10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:».",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "EXIT HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "￿ 10 ο",
+              "code_3_raw": "￿ 5ο",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:». Το σύμβολο μοιρών είναι ΕΛΛΗΝΙΚΟ ομικρόν (U+03BF) αντί °.",
+              "provenance": "contact-05"
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "ΔΕΝ υπάρχει «2/ SPECIFIC CRITERIA» για αυτό το item — μετά το «3 Reports to Leader whenever flight parameters reach any limit.» ακολουθεί κατευθείαν η επικεφαλίδα «(30) LANDING PATTERN» (σελ. 78). Άρα kind=\"none\", ΟΧΙ χαμένος πίνακας.",
+        "EXECUTION 1/a/: «up to 30º of bank» — το «º» είναι U+00BA (masculine ordinal) αντί «°» (U+00B0), ενώ στην ίδια πρόταση τα «90°/60°/45°» είναι κανονικά U+00B0. Διατηρείται verbatim.",
+        "EXECUTION 1/c/: διπλή τελεία στο πρωτότυπο («manuals..»). Διατηρείται ως έχει.",
+        "GENERAL CRITERIA a.1: λείπει η τελεία στο τέλος («limitations»). Διατηρείται ως έχει.",
+        "Ένθετη δομή a/ As Leader (1-7) και b/ As Wingman (1-3): αποδόθηκε με σύνθετα keys «a.1»…«a.7», «b.1»…«b.3», με τα «a» και «b» να κρατούν τον τίτλο ρόλου."
+      ]
+    },
+    {
+      "id": "formation-30",
+      "numbers": [
+        30
+      ],
+      "name": "LANDING PATTERN",
+      "heading_verbatim": "(30) LANDING PATTERN",
+      "pages_pdf": [
+        78,
+        79
+      ],
+      "execution": [],
+      "conditions": [],
+      "expected_performance": {
+        "general_criteria": [],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "The criteria and parameters determined in the corresponding section of Contact Category apply.",
+          "reference_target": "contact-23",
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "contact-23",
+              "scope": "Όλος ο πίνακας του Contact «(23),(25),(27),(32) LANDING PATTERN» (σελ. PDF 36-38), με τις φάσεις BREAK / DOWN WIND / BASE LEG / FINAL και τη γραμμή AOA UNITS.",
+              "basis": "specific_criteria.reference_text verbatim: «The criteria and parameters determined in the corresponding section of Contact Category apply.» → contact-23 (item καθαρής παραπομπής: δεν τυπώνονται υποενότητες a/b/c, άρα η παραπομπή καλύπτει ΟΛΟ το item)."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": "BREAK",
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 300΄",
+              "code_3_raw": "± 150",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Το code_3 τυπώνεται ΧΩΡΙΣ σύμβολο ποδιών ('± 150'), σε αντίθεση με τις υπόλοιπες γραμμές ALTITUDE.",
+              "provenance": "contact-23"
+            },
+            {
+              "maneuver": "BREAK",
+              "parameter": "BANK (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "± 15°",
+              "code_3_raw": "± 10°",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 15,
+                "minus": 15
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": null,
+              "provenance": "contact-23"
+            },
+            {
+              "maneuver": "DOWN WIND",
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 300΄",
+              "code_3_raw": "± 150’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Το σύμβολο ποδιών στο code_3 είναι U+2019 (’) ενώ στο code_1 είναι U+0384 (΄) - ασυνέπεια γλύφων στο ίδιο κελί-ζεύγος.",
+              "provenance": "contact-23"
+            },
+            {
+              "maneuver": "DOWN WIND",
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "+ 20, - 0",
+              "code_3_raw": "+10, - 0",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 0
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Μονόπλευρη ανοχή (μόνο υπέρβαση επιτρέπεται).",
+              "provenance": "contact-23"
+            },
+            {
+              "maneuver": "BASE LEG",
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "+ 20, - 0",
+              "code_3_raw": "+10, - 0",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 0
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Μονόπλευρη ανοχή (μόνο υπέρβαση επιτρέπεται).",
+              "provenance": "contact-23"
+            },
+            {
+              "maneuver": "FINAL",
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "+ 200΄, - 100΄",
+              "code_3_raw": "+100΄, - 50΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 200,
+                "minus": 100
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 100,
+                "minus": 50
+              },
+              "interpolation": "standard",
+              "notes": "Ασύμμετρη ανοχή.",
+              "provenance": "contact-23"
+            },
+            {
+              "maneuver": "FINAL",
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "+ 15, - 0",
+              "code_3_raw": "+10, - 0",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 15,
+                "minus": 0
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Μονόπλευρη ανοχή (μόνο υπέρβαση επιτρέπεται).",
+              "provenance": "contact-23"
+            },
+            {
+              "maneuver": "DOWN WIND - BASE - FINAL",
+              "parameter": "AOA UNITS",
+              "unit": "AOA units",
+              "code_1_raw": "± 3",
+              "code_3_raw": "± 1.5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 3,
+                "minus": 3
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 1.5,
+                "minus": 1.5
+              },
+              "interpolation": "standard",
+              "notes": "Ανήκει στην υπο-ενότητα του πίνακα με τίτλο-γραμμή 'AOA LANDING PATTERN' (συνέχεια του πίνακα στη σελ. PDF 38, χωρίς επανάληψη κεφαλίδας). Ισχύει μόνο για το AOA pattern.",
+              "provenance": "contact-23"
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "The criteria and parameters determined in the corresponding section of Contact Category apply."
+      ],
+      "flags": [
+        "Item καθαρής παραπομπής: ΔΕΝ τυπώνονται υποενότητες (a) EXECUTION / (b) CONDITIONS / (c) EXPECTED PERFORMANCE — μόνο η μία πρόταση παραπομπής. Γι' αυτό execution/conditions/general_criteria είναι κενά και όλη η ουσία είναι στο specific_criteria.reference_text.",
+        "reference_target: στην Contact Category το αντίστοιχο item τυπώνεται «(23),(25),(27),(32) LANDING PATTERN (NORMAL, NO FLAP, FLAP T/O - …)» στη σελ. 36 PDF· κατά το σχήμα (πρώτος αριθμός) → \"contact-23\".",
+        "Η επικεφαλίδα ξεκινά στο τέλος της σελ. 78, το σώμα στη σελ. 79."
+      ]
+    },
+    {
+      "id": "formation-31",
+      "numbers": [
+        31
+      ],
+      "name": "LANDING",
+      "heading_verbatim": "(31) LANDING",
+      "pages_pdf": [
+        79
+      ],
+      "execution": [],
+      "conditions": [],
+      "expected_performance": {
+        "general_criteria": [],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "The criteria and parameters determined in the corresponding section of Contact Category apply.",
+          "reference_target": "contact-24",
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "contact-24",
+              "scope": "Όλος ο πίνακας του Contact «(24),(26),(28),(33) LANDING» (σελ. PDF 39-41), και οι δύο υπο-πίνακες: «a/ FLAPS LDG - FLAPS T/O – AΟA.» και «b/ FLAPS UP».",
+              "basis": "specific_criteria.reference_text verbatim: «The criteria and parameters determined in the corresponding section of Contact Category apply.» → contact-24 (item καθαρής παραπομπής). ΚΑΜΙΑ ΤΡΟΠΟΠΟΙΗΣΗ: το γνωστό override των touch-down ορίων σε ±1.000 ft (κωδ.1) / ±500 ft (κωδ.3) αφορά ΑΠΟΚΛΕΙΣΤΙΚΑ το instrument-28 (Instrument LANDING), το οποίο τυπώνει ρητά τη μεταβολή· το formation-31 ΔΕΝ τυπώνει τέτοια πρόταση, άρα οι τιμές του contact-24 αντιγράφονται αυτούσιες (TOUCH DOWN POINT 1500΄/1000΄ και 2000΄/1500΄)."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": "a/ FLAPS LDG - FLAPS T/O – AΟA.",
+              "parameter": "TOUCH DOWN POINT (feet from the beginning of the RWY)",
+              "unit": "feet",
+              "code_1_raw": "1500΄",
+              "code_3_raw": "1000΄",
+              "code_1": {
+                "kind": "nominal_change",
+                "value": 1500
+              },
+              "code_3": {
+                "kind": "nominal_change",
+                "value": 1000
+              },
+              "interpolation": "undefined",
+              "notes": "Απόλυτο άνω όριο απόστασης σημείου επαφής από την αρχή του διαδρόμου (όχι απόκλιση). Το label της γραμμής σπάει σελ. 40 ('TOUCH DOWN POINT (feet from the') -> σελ. 41 ('beginning of the RWY)').",
+              "provenance": "contact-24"
+            },
+            {
+              "maneuver": "a/ FLAPS LDG - FLAPS T/O – AΟA.",
+              "parameter": "DEVIATION FROM CENTER LINE (feet)",
+              "unit": "feet",
+              "code_1_raw": "15",
+              "code_3_raw": "5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 15,
+                "minus": 15
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Στο πρωτότυπο ΔΕΝ τυπώνεται '±'· η συμμετρική ερμηνεία (±) προκύπτει από το όνομα της παραμέτρου ('DEVIATION FROM CENTER LINE'). Βλ. flags.",
+              "provenance": "contact-24"
+            },
+            {
+              "maneuver": "a/ FLAPS LDG - FLAPS T/O – AΟA.",
+              "parameter": "TOUCH DOWN SPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "-5,+10",
+              "code_3_raw": "0,+5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 5
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Το raw τυπώνει πρώτα το αρνητικό σκέλος (-5,+10 / 0,+5), αντίστροφα από τους άλλους πίνακες.",
+              "provenance": "contact-24"
+            },
+            {
+              "maneuver": "b/ FLAPS UP",
+              "parameter": "TOUCH DOWN POINT (feet from the beginning of the RWY)",
+              "unit": "feet",
+              "code_1_raw": "2000΄",
+              "code_3_raw": "1500΄",
+              "code_1": {
+                "kind": "nominal_change",
+                "value": 2000
+              },
+              "code_3": {
+                "kind": "nominal_change",
+                "value": 1500
+              },
+              "interpolation": "undefined",
+              "notes": "Απόλυτο άνω όριο απόστασης σημείου επαφής από την αρχή του διαδρόμου (όχι απόκλιση).",
+              "provenance": "contact-24"
+            },
+            {
+              "maneuver": "b/ FLAPS UP",
+              "parameter": "DEVIATION FROM CENTER LINE (feet)",
+              "unit": "feet",
+              "code_1_raw": "15",
+              "code_3_raw": "5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 15,
+                "minus": 15
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Στο πρωτότυπο ΔΕΝ τυπώνεται '±'· βλ. flags.",
+              "provenance": "contact-24"
+            },
+            {
+              "maneuver": "b/ FLAPS UP",
+              "parameter": "TOUCH DOWN SPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "-5,+10",
+              "code_3_raw": "0,+5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 5
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Το raw τυπώνει πρώτα το αρνητικό σκέλος.",
+              "provenance": "contact-24"
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "The criteria and parameters determined in the corresponding section of Contact Category apply."
+      ],
+      "flags": [
+        "Item καθαρής παραπομπής (χωρίς υποενότητες a/b/c).",
+        "reference_target: στην Contact Category το αντίστοιχο item τυπώνεται «(24),(26),(28),(33) LANDING (FLAPS LDG - FLAPS UP - FLAPS Τ/Ο - ELP - …)» στη σελ. 39 PDF → \"contact-24\"."
+      ]
+    },
+    {
+      "id": "formation-32",
+      "numbers": [
+        32
+      ],
+      "name": "VISUAL SIGNALS",
+      "heading_verbatim": "(32) VISUAL SIGNALS",
+      "pages_pdf": [
+        79
+      ],
+      "execution": [
+        "SP executes and apprehends the visual signals, between the members of the formation and/or the tower, either as Leader or Wingman."
+      ],
+      "conditions": [
+        "Day only (VFR – VMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Knows and executes all the visual signals in a way that are perceivable from the other member of formation, beyond doubt."
+          },
+          {
+            "key": "b",
+            "text": "Confirms with visual signal that he/she has understood the signals addressed to him/her."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "rule_7a5_default",
+          "sources": [
+            {
+              "item": "contact-00-general",
+              "scope": "Πηγή ΚΑΝΟΝΑ — σελ. PDF 24. Δεν αντλούνται τιμές από κανένα item.",
+              "basis": "qualitative item — no numeric standards applicable. Το item αφορά γνώση και εκτέλεση οπτικών σημάτων (κατανόηση / αναγνώριση), χωρίς καμία μετρήσιμη παράμετρο πτήσης· ο κανόνας 7.a(5) αποδίδει μόνο general criteria. Κανόνας 7.a(5) — «7. PERFORMANCE CRITERIA» → «a. GENERAL», κανόνας (5), σελ. PDF 24 (contact-00-general, general_criteria key=\"5\"), verbatim: «When specific criteria are not mentioned for certain maneuvers, general criteria will be applied, along with criteria described in the Basic A/C Control standards.»"
+            }
+          ],
+          "parameters": []
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Το EXECUTION είναι μία ενιαία απαρίθμητη πρόταση (χωρίς «1/»).",
+        "CONDITIONS: εδώ «(VFR – VMC)» με en-dash (U+2013), ενώ στα items 24/24b τυπώνεται «(VFR - VMC)» με hyphen. Διατηρείται verbatim."
+      ]
+    },
+    {
+      "id": "formation-33",
+      "numbers": [
+        33
+      ],
+      "name": "CLEARING",
+      "heading_verbatim": "(33) CLEARING",
+      "pages_pdf": [
+        79,
+        80
+      ],
+      "execution": [
+        "1/ Addresses the work inside and outside cockpit dividing appropriately his/her attention, in visual and verbal (R/T) stimuli, so as to avoid a possible mid-air collision, or an imminent CFIT (controlled flight into terrain).",
+        "2/ Executes clearing as No2 depending on relative position in the formation and supports No1, who nevertheless holds the main responsibility."
+      ],
+      "conditions": [
+        "1/ Day only (VFR / VMC)",
+        "2/ SP executes clearing throughout flight, either as Leader or No2."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "As Leader"
+          },
+          {
+            "key": "a.1",
+            "text": "Continuously checks the airspace at the full period he / she is in charge of the formation and particularly in landing pattern."
+          },
+          {
+            "key": "a.2",
+            "text": "Locates timely nearby flying A/Cs and maintains the proper separation."
+          },
+          {
+            "key": "a.3",
+            "text": "Conceives active or potential hazards and regulates accordingly the flight parameters in order to avoid them."
+          },
+          {
+            "key": "a.4",
+            "text": "Effectively uses admissible Clearing techniques for mid-air collision avoidance."
+          },
+          {
+            "key": "a.5",
+            "text": "Effectively uses the R/T for creating safe separation from the air traffic."
+          },
+          {
+            "key": "a.6",
+            "text": "The criteria and parameters determined in the corresponding section of Contact Category apply."
+          },
+          {
+            "key": "b",
+            "text": "As Wingman"
+          },
+          {
+            "key": "b.1",
+            "text": "Executes clearing, depending on his/her position within the formation (always towards the Leader during fingertip)."
+          },
+          {
+            "key": "b.2",
+            "text": "Monitors the radio transmissions and has an explicit perception of the situation."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "contact-36",
+              "scope": "Ολόκληρο το Contact «(36) CLEARING» (σελ. PDF 42-43).",
+              "basis": "GENERAL CRITERIA a.6 verbatim: «The criteria and parameters determined in the corresponding section of Contact Category apply.» → contact-36 (κατά τα flags του item). Το contact-36 είναι και αυτό kind=\"none\" και τα 5 γενικά κριτήριά του δεν περιέχουν κανέναν αριθμό: qualitative item — no numeric standards applicable."
+            }
+          ],
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "The criteria and parameters determined in the corresponding section of Contact Category apply."
+      ],
+      "flags": [
+        "Η παραπομπή στην Contact Category είναι ΕΝΘΕΤΗ (general criterion a.6), όχι ξεχωριστό specific_criteria. Στόχος παραπομπής: Contact «(36) CLEARING» (σελ. 42 PDF) → \"contact-36\".",
+        "Το item σπάει σε γύρισμα σελίδας 79→80 (μέσα στο a/ As Leader, ανάμεσα στα a.3 και a.4)."
+      ]
+    },
+    {
+      "id": "formation-34",
+      "numbers": [
+        34
+      ],
+      "name": "RADIO COMMUNICATION",
+      "heading_verbatim": "(34) RADIO COMMUNICATION",
+      "pages_pdf": [
+        80
+      ],
+      "execution": [
+        "1/ Maintains R/T contact with ground stations, other A/C (depending on the case), as well as with other formation members.",
+        "2/ Contacts ground stations and gives the formal position reports.",
+        "3/ The criteria and parameters determined in the corresponding section of Contact Category apply."
+      ],
+      "conditions": [
+        "Throughout the mission."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "As Leader"
+          },
+          {
+            "key": "a.1",
+            "text": "The criteria and parameters determined in the corresponding section of Contact Category apply."
+          },
+          {
+            "key": "a.2",
+            "text": "Provides accurate information to his/her Wingman and reminds him/her functional A/C checks and fuel check."
+          },
+          {
+            "key": "b",
+            "text": "As Wingman"
+          },
+          {
+            "key": "b.1",
+            "text": "Confirms every given information / direction from the formation Leader."
+          },
+          {
+            "key": "b.2",
+            "text": "Monitors the Leader’s radio comm with ground stations and other A/C and interferes whenever asked or demanded for flight safety."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "contact-37",
+              "scope": "Ολόκληρο το Contact «(37) RADIO COMMUNICATION» (σελ. PDF 43-44).",
+              "basis": "ΔΥΟ ένθετες παραπομπές, verbatim: EXECUTION 3/ και GENERAL CRITERIA a.1 «The criteria and parameters determined in the corresponding section of Contact Category apply.» → contact-37 (κατά τα flags του item). Το contact-37 είναι kind=\"none\", χωρίς αριθμούς στα 6 γενικά κριτήριά του: qualitative item — no numeric standards applicable."
+            }
+          ],
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "The criteria and parameters determined in the corresponding section of Contact Category apply."
+      ],
+      "flags": [
+        "Η υποενότητα EXECUTION τυπώνεται με προσδιορισμό ρόλου: «(a) EXECUTION (AS LEADER)».",
+        "Δύο ένθετες παραπομπές στην Contact Category (execution 3/ και general criterion a.1). Στόχος: Contact «(37) RADIO COMMUNICATION» (σελ. 43 PDF) → \"contact-37\"."
+      ]
+    },
+    {
+      "id": "formation-35",
+      "numbers": [
+        35
+      ],
+      "name": "AIRMANSHIP",
+      "heading_verbatim": "(35) AIRMANSHIP",
+      "pages_pdf": [
+        80
+      ],
+      "execution": [],
+      "conditions": [],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": null,
+            "text": "In advance, a wingman is able to anticipate No1’s intention but will never assume."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "The criteria and parameters determined in the corresponding section of Contact Category apply. In advance, a wingman is able to anticipate No1’s intention but will never assume.",
+          "reference_target": "contact-38",
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "contact-38",
+              "scope": "Ολόκληρο το Contact «(38) AIRMANSHIP» (σελ. PDF 44-45).",
+              "basis": "specific_criteria.reference_text verbatim: «The criteria and parameters determined in the corresponding section of Contact Category apply. In advance, a wingman is able to anticipate No1’s intention but will never assume.» → contact-38. Το contact-38 είναι kind=\"none\": qualitative item — no numeric standards applicable. Η δεύτερη πρόταση είναι ΠΡΟΣΘΕΤΗ ποιοτική απαίτηση του formation-35 (καταγεγραμμένη και ως general criterion με key=null)."
+            }
+          ],
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "The criteria and parameters determined in the corresponding section of Contact Category apply."
+      ],
+      "flags": [
+        "Item παραπομπής ΜΕ ΕΠΙΠΛΕΟΝ απαίτηση: εκτός από την παραπομπή, προστίθεται αναρίθμητη πρόταση «In advance, a wingman is able to anticipate No1’s intention but will never assume.». Καταγράφηκε ΚΑΙ ως general criterion με key=null (αναρίθμητο) ΚΑΙ μέσα στο reference_text (που κρατά ολόκληρη την τυπωμένη παράγραφο verbatim).",
+        "reference_target: Contact «(38) AIRMANSHIP» (σελ. 44 PDF) → \"contact-38\".",
+        "Το key=null σημαίνει «αναρίθμητο/χωρίς γράμμα στο πρωτότυπο» — δεν είναι σφάλμα εξαγωγής."
+      ]
+    },
+    {
+      "id": "formation-36",
+      "numbers": [
+        36
+      ],
+      "name": "EMERGENCY PROCEDURES",
+      "heading_verbatim": "(36) EMERGENCY PROCEDURES",
+      "pages_pdf": [
+        80,
+        81
+      ],
+      "execution": [
+        "1/ The criteria and parameters determined in the corresponding section of Contact Category apply.",
+        "2/ Provides assistance to the formation member who suffers an emergency situation.",
+        "3/ Contacts ground stations when emergency A/C’s R/T contact has been lost.",
+        "4/ Performs lost Wingman procedures either virtually as a predetermined on VMC or actually in IMC conditions."
+      ],
+      "conditions": [
+        "To fulfill the General Criteria, SP must know how to apply the Emergency Procedures:",
+        "1/ In pre-flight or post flight briefing.",
+        "2/ During the whole mission, from the engine start up to the engine shut down after the flight, if required or requested by IP."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "The criteria and parameters determined in the corresponding section of Contact Category apply."
+          },
+          {
+            "key": "b",
+            "text": "Knows and safely performs lost wingman procedures either as a Leader or as a Wingman (VMC-IMC)."
+          },
+          {
+            "key": "c",
+            "text": "Informs the Leader timely and performs safe transition to IFR flight, when in Wingman position."
+          },
+          {
+            "key": "d",
+            "text": "In an actual situation, informs ATC timely and obtains IFR Clearance."
+          },
+          {
+            "key": "e",
+            "text": "Additionally, SP provides assistance to the formation member who suffers an emergency situation and contacts ground stations when emergency A/C’s R/T contact has been lost."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "contact-39",
+              "scope": "Ολόκληρο το Contact «(39) EMERGENCY PROCEDURES» (σελ. PDF 45-46).",
+              "basis": "ΔΥΟ ένθετες παραπομπές, verbatim: EXECUTION 1/ και GENERAL CRITERIA a/ «The criteria and parameters determined in the corresponding section of Contact Category apply.» → contact-39 (κατά τα flags του item). Το contact-39 είναι kind=\"none\", χωρίς αριθμούς: qualitative item — no numeric standards applicable. Τα κριτήρια b/-e/ (lost wingman procedures κ.λπ.) είναι πρόσθετες ποιοτικές απαιτήσεις της Formation."
+            }
+          ],
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "The criteria and parameters determined in the corresponding section of Contact Category apply."
+      ],
+      "flags": [
+        "Το item σπάει σε γύρισμα σελίδας 80→81: στη σελ. 80 τυπώνονται μόνο η επικεφαλίδα «(36) EMERGENCY PROCEDURES» και το «(a) EXECUTION»· όλο το σώμα είναι στη σελ. 81.",
+        "Η πρώτη γραμμή των CONDITIONS είναι εισαγωγική πρόταση χωρίς αρίθμηση — καταγράφηκε ως ξεχωριστή εγγραφή πριν τα 1/ και 2/.",
+        "Ένθετες παραπομπές στην Contact Category (execution 1/ και general criterion a/). Στόχος: Contact «(39) EMERGENCY PROCEDURES» (σελ. 45 PDF) → \"contact-39\"."
+      ]
+    },
+    {
+      "id": "formation-37",
+      "numbers": [
+        37
+      ],
+      "name": "GENERAL KNOWLEDGE",
+      "heading_verbatim": "(37) GENERAL KNOWLEDGE",
+      "pages_pdf": [
+        81
+      ],
+      "execution": [],
+      "conditions": [],
+      "expected_performance": {
+        "general_criteria": [],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "The criteria and parameters determined in the corresponding section of Contact Category apply to all formation members.",
+          "reference_target": "contact-40",
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "contact-40",
+              "scope": "Ολόκληρο το Contact «(40) GENERAL KNOWLEDGE» (σελ. PDF 46-47), «to all formation members».",
+              "basis": "specific_criteria.reference_text verbatim: «The criteria and parameters determined in the corresponding section of Contact Category apply to all formation members.» → contact-40 (item καθαρής παραπομπής, χωρίς υποενότητες a/b/c). Το contact-40 είναι kind=\"none\": qualitative item — no numeric standards applicable."
+            }
+          ],
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "The criteria and parameters determined in the corresponding section of Contact Category apply to all formation members."
+      ],
+      "flags": [
+        "Item καθαρής παραπομπής (χωρίς υποενότητες a/b/c).",
+        "Η διατύπωση διαφέρει από τα υπόλοιπα reference items: προστίθεται «to all formation members» — ΔΕΝ είναι η τυπική φράση. Διατηρείται verbatim.",
+        "reference_target: Contact «(40) GENERAL KNOWLEDGE» (σελ. 46 PDF) → \"contact-40\"."
+      ]
+    },
+    {
+      "id": "formation-crm",
+      "numbers": [],
+      "name": "CRM",
+      "heading_verbatim": "CRM",
+      "pages_pdf": [
+        81
+      ],
+      "execution": [],
+      "conditions": [],
+      "expected_performance": {
+        "general_criteria": [],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "The criteria and parameters determined in the corresponding section of Contact Category apply.",
+          "reference_target": "contact-crm",
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "contact-crm",
+              "scope": "Ολόκληρο το Contact «CRM» (σελ. PDF 47-48· επίσης αναρίθμητο item).",
+              "basis": "specific_criteria.reference_text verbatim: «The criteria and parameters determined in the corresponding section of Contact Category apply.» → contact-crm. Το contact-crm είναι kind=\"none\": qualitative item — no numeric standards applicable."
+            }
+          ],
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "The criteria and parameters determined in the corresponding section of Contact Category apply."
+      ],
+      "flags": [
+        "ΑΝΑΡΙΘΜΗΤΟ item — δεν φέρει «(N)» στο πρωτότυπο, άρα numbers=[]. Το id δεν μπορεί να παραχθεί από τον κανόνα «<category>-<zero-padded first number>»· δόθηκε \"formation-crm\" (ίδια σύμβαση με το αντίστοιχο CRM της Contact Category).",
+        "Είναι το ΤΕΛΕΥΤΑΙΟ item της κατηγορίας Formation. Η σελ. 82 PDF είναι ΕΝΤΕΛΩΣ ΚΕΝΗ (0 χαρακτήρες, 0 words κατά PyMuPDF) και η σελ. 83 ξεκινά νέα κατηγορία «e. VFR NAVIGATION PERFORMANCE CRITERIA».",
+        "reference_target: Contact «CRM» (σελ. 47 PDF, επίσης αναρίθμητο) → \"contact-crm\". Αν το chunk της Contact χρησιμοποίησε άλλο id για το CRM, χρειάζεται ευθυγράμμιση."
+      ]
+    }
+  ]
+}

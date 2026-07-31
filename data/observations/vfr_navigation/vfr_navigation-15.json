@@ -1,0 +1,95 @@
+{
+  "item_id": "vfr_navigation-15",
+  "item_name": "INSTRUMET PROCEDURES",
+  "category": "vfr_navigation",
+  "mif_numbers": [15],
+  "mif_rows": [
+    {
+      "sn": 15,
+      "row_name": "Instrument Procedures",
+      "desired_codes_seen": [3]
+    }
+  ],
+  "observations": [
+    {
+      "id": "vfr_navigation-15-15-d3a0-v1",
+      "mif_row": "Instrument Procedures",
+      "desired": 3,
+      "achieved": 0,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to an unsystematic instrument cross-check on transition from visual navigation to the instrument segment, did not maintain altitude, airspeed and heading within the determined tolerances during the level-off and the following turn at 30 degrees of bank. Altitude diverged 400 feet from the assigned level and heading 15 degrees from the assigned course, without the divergence being recognized. The IP had to direct the correction and fly part of the segment. Further practice in the basic instrument scan is required.",
+      "sentences": 4
+    },
+    {
+      "id": "vfr_navigation-15-15-d3a0-v2",
+      "mif_row": "Instrument Procedures",
+      "desired": 3,
+      "achieved": 0,
+      "variant": "human_factor",
+      "hf_concept": "hf-over-reliance-on-automation",
+      "text": "SP, due to reliance on the automated navigation solution in place of the basic instrument scan, did not monitor airspeed and altitude during the instrument descent. Airspeed decayed 25 KIAS below the briefed value and the aircraft was 450 feet below the assigned altitude at level-off. SP did not identify the departure from the determined tolerances and the IP took control to re-establish the parameters.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-15-15-d3a1-v1",
+      "mif_row": "Instrument Procedures",
+      "desired": 3,
+      "achieved": 1,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to a slow and non-sequential scan of the primary flight instruments, did not hold altitude and heading within the determined tolerances during the instrument turn and the subsequent level flight. Deviations reached 300 feet in altitude and 10 degrees in heading, at the limit of the acceptable values. Both were corrected only after the IP's verbal prompts, with delayed recognition by SP.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-15-15-d3a1-v2",
+      "mif_row": "Instrument Procedures",
+      "desired": 3,
+      "achieved": 1,
+      "variant": "human_factor",
+      "hf_concept": "hf-attention-bottleneck",
+      "text": "SP, due to attention captured by the navigation display while the aircraft state went unmonitored, did not maintain airspeed control within the determined tolerances during the instrument climb. Airspeed reached 20 KIAS below the briefed climb speed and altitude was 280 feet low at the assigned level. The deviations were recognized and corrected with delay, after the IP's verbal prompts.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-15-15-d3a2-v1",
+      "mif_row": "Instrument Procedures",
+      "desired": 3,
+      "achieved": 2,
+      "variant": "technique",
+      "hf_concept": null,
+      "text": "SP, due to late power and pitch adjustment at the level-off, did not stabilize altitude and airspeed within the determined tolerances immediately after the instrument climb. Altitude overshot the assigned level by 200 feet and airspeed exceeded the briefed value by 15 KIAS. Both deviations were recognized and corrected in a timely manner, without the IP's intervention.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-15-15-d3a2-v2",
+      "mif_row": "Instrument Procedures",
+      "desired": 3,
+      "achieved": 2,
+      "variant": "human_factor",
+      "hf_concept": "hf-workload-management",
+      "text": "SP, due to task sequencing that concentrated all cockpit workload inside the turn, did not hold heading and altitude within the determined tolerances while re-establishing the instrument segment. Heading deviated 8 degrees from the assigned course and altitude 190 feet from the assigned level. SP self-corrected both parameters promptly and no IP intervention was needed.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-15-15-d3a3-v1",
+      "mif_row": "Instrument Procedures",
+      "desired": 3,
+      "achieved": 3,
+      "variant": "marginal",
+      "hf_concept": null,
+      "text": "SP maintained control of airspeed, altitude and heading within the determined tolerances throughout the instrument segment, in climb, level-off, level flight, descent and turns up to 30 degrees of bank. However, altitude twice reached 140 feet from the assigned level and airspeed 9 KIAS from the briefed value before correction, with corrections applied reactively rather than anticipated from the trend. Marginal performance for the Training Section; a tighter and more anticipatory instrument cross-check is expected to improve consistency in the following sorties.",
+      "sentences": 3
+    },
+    {
+      "id": "vfr_navigation-15-15-d3a4-v1",
+      "mif_row": "Instrument Procedures",
+      "desired": 3,
+      "achieved": 4,
+      "variant": "above",
+      "hf_concept": null,
+      "text": "SP maintained control of airspeed, altitude and heading with negligible deviations in all phases of the instrument segment, including climb, level-off, level flight, descent and turns up to 30 degrees of bank. Altitude was held within 50 feet, airspeed within 5 KIAS and heading within 2 degrees of the assigned values. The transitions between visual navigation and the instrument procedures were anticipated and executed with accuracy and speed, without any IP prompting. Above end of block MIF achieved.",
+      "sentences": 4
+    }
+  ]
+}

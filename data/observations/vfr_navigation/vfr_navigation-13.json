@@ -1,0 +1,150 @@
+{
+ "item_id": "vfr_navigation-13",
+ "item_name": "NAVIGATION WITH GPS",
+ "category": "vfr_navigation",
+ "mif_numbers": [
+  13
+ ],
+ "mif_rows": [
+  {
+   "sn": 13,
+   "row_name": "GPS Use",
+   "desired_codes_seen": [
+    1,
+    2
+   ]
+  }
+ ],
+ "observations": [
+  {
+   "id": "vfr_navigation-13-13-d1a0-v1",
+   "mif_row": "GPS Use",
+   "desired": 1,
+   "achieved": 0,
+   "variant": "technique",
+   "hf_concept": null,
+   "text": "SP, due to an unmethodical GPS data entry technique, did not program all preplanned turning points before taxi and could not complete the flight plan sequence airborne without assistance. The IP had to direct the entry and execute part of the programming, with the result that heading diverged beyond the 10 degree limit and altitude beyond the 300 foot limit before the aircraft was returned to the planned track. Further study of the GPS page structure and of the waypoint entry procedure is required.",
+   "sentences": 3
+  },
+  {
+   "id": "vfr_navigation-13-13-d1a0-v2",
+   "mif_row": "GPS Use",
+   "desired": 1,
+   "achieved": 0,
+   "variant": "human_factor",
+   "hf_concept": "hf-mode-confusion",
+   "text": "SP, due to mode confusion over the selected avionics mode and what it was protecting, did not identify that the GPS was sequencing to the wrong turning point and did not crosscheck the indication against TACAN and the map. The error was not recognized without help, with the result that the IP took over the navigation task and reselected the active leg. Heading error exceeded 10 degrees and altitude deviation exceeded 300 feet from the planned profile.",
+   "sentences": 3
+  },
+  {
+   "id": "vfr_navigation-13-13-d1a1-v1",
+   "mif_row": "GPS Use",
+   "desired": 1,
+   "achieved": 1,
+   "variant": "marginal",
+   "hf_concept": null,
+   "text": "SP programmed the preplanned turning points and used the GPS within the desired standards for the Training Section; however, the waypoint sequence was completed only after two verbal prompts from the IP. Heading was held at the 10 degree limit and altitude at the 300 foot limit until the correction was applied, and the crosscheck of GPS data against TACAN and the map was performed with delay. Marginal performance for the block - independent handling of the GPS flight plan pages is expected to improve.",
+   "sentences": 3
+  },
+  {
+   "id": "vfr_navigation-13-13-d1a2-v1",
+   "mif_row": "GPS Use",
+   "desired": 1,
+   "achieved": 2,
+   "variant": "above",
+   "hf_concept": null,
+   "text": "SP programmed all preplanned turning points and the associated mission parameters, and used the GPS efficiently both on the ground and airborne without prompting. Deviations of 200 feet in altitude and 8 degrees in heading during the data entry were recognized and corrected in a timely manner without the IP's intervention. GPS data were crosschecked against TACAN and the map at each turning point. Above end of block MIF achieved.",
+   "sentences": 4
+  },
+  {
+   "id": "vfr_navigation-13-13-d1a3-v1",
+   "mif_row": "GPS Use",
+   "desired": 1,
+   "achieved": 3,
+   "variant": "above",
+   "hf_concept": null,
+   "text": "SP handled the GPS accurately and rapidly, programming all preplanned turning points and the parameters necessary for mission execution without prompting, and using the available GPS capabilities in flight. Altitude was held within 100 feet, airspeed within 7 knots and heading within 4 degrees of the planned profile on every navigation leg. GPS data were crosschecked continuously against VOR-DME/TACAN and the map. Above end of block MIF achieved.",
+   "sentences": 4
+  },
+  {
+   "id": "vfr_navigation-13-13-d1a4-v1",
+   "mif_row": "GPS Use",
+   "desired": 1,
+   "achieved": 4,
+   "variant": "above",
+   "hf_concept": null,
+   "text": "SP demonstrated thorough knowledge of the GPS and used all of its capabilities, programming every preplanned turning point and the associated parameters without error on the ground and amending the route airborne without degrading the instrument crosscheck. Deviations from planned altitude, airspeed and heading were negligible on every leg. Independent verification of the GPS solution against VOR-DME/TACAN and the map was maintained throughout the navigation. Above end of block MIF achieved.",
+   "sentences": 4
+  },
+  {
+   "id": "vfr_navigation-13-13-d2a0-v1",
+   "mif_row": "GPS Use",
+   "desired": 2,
+   "achieved": 0,
+   "variant": "technique",
+   "hf_concept": null,
+   "text": "SP, due to a waypoint entry technique that was not verified against the mission card, did not program all preplanned turning points before engine start and did not detect the reversed leg order once airborne. The IP directed the correction and executed part of the reprogramming, with the result that the aircraft passed abeam the turning point with a heading error beyond 10 degrees and an altitude deviation beyond 300 feet. Programming of the full route on the ground before taxi is required.",
+   "sentences": 3
+  },
+  {
+   "id": "vfr_navigation-13-13-d2a0-v2",
+   "mif_row": "GPS Use",
+   "desired": 2,
+   "achieved": 0,
+   "variant": "human_factor",
+   "hf_concept": "hf-over-reliance-on-automation",
+   "text": "SP, due to over-reliance on automation that was not fully understood, accepted the GPS steering solution without an independent crosscheck against VOR-DME/TACAN and the map. The stale waypoint was not identified and the deviation could not be corrected without help, with the result that the IP assumed the navigation task and re-established the aircraft on the planned track. Airspeed and altitude excursions exceeded 20 knots and 300 feet during the return to course.",
+   "sentences": 3
+  },
+  {
+   "id": "vfr_navigation-13-13-d2a1-v1",
+   "mif_row": "GPS Use",
+   "desired": 2,
+   "achieved": 1,
+   "variant": "technique",
+   "hf_concept": null,
+   "text": "SP, due to a slow and non-standardized sequence on the GPS flight plan pages, did not complete programming of the remaining turning points before the next leg and did not use the direct-to function when the route was amended. The task was completed only after the IP's verbal prompts, with the result that heading reached the 10 degree limit and airspeed the 20 knot limit before the deviation was recognized and corrected with delay.",
+   "sentences": 2
+  },
+  {
+   "id": "vfr_navigation-13-13-d2a1-v2",
+   "mif_row": "GPS Use",
+   "desired": 2,
+   "achieved": 1,
+   "variant": "human_factor",
+   "hf_concept": "hf-automation-surprise",
+   "text": "SP, due to surprise at an avionics reversion that had not been anticipated, did not reselect the active leg and did not crosscheck the GPS data against the map and TACAN. Recognition came only after the IP's verbal prompt, with the result of a 10 degree heading error and a 300 foot altitude deviation at the limit of the tolerance, corrected with delay.",
+   "sentences": 2
+  },
+  {
+   "id": "vfr_navigation-13-13-d2a2-v1",
+   "mif_row": "GPS Use",
+   "desired": 2,
+   "achieved": 2,
+   "variant": "marginal",
+   "hf_concept": null,
+   "text": "SP programmed the preplanned turning points and used the GPS within the desired standards for the Training Section. However, the attention devoted to the GPS pages during the second leg produced altitude deviations of 200 feet and heading deviations of 8 degrees, twice recognized and corrected in a timely manner without the IP's intervention. Marginal performance for the block - a steadier division of attention between the GPS and the flight instruments is expected to improve.",
+   "sentences": 3
+  },
+  {
+   "id": "vfr_navigation-13-13-d2a3-v1",
+   "mif_row": "GPS Use",
+   "desired": 2,
+   "achieved": 3,
+   "variant": "above",
+   "hf_concept": null,
+   "text": "SP programmed all preplanned turning points and the parameters necessary for mission execution accurately and rapidly, and used the GPS efficiently on the ground and airborne without prompting. Altitude was maintained within 100 feet, airspeed within 6 knots and heading within 4 degrees on every navigation leg. GPS data were crosschecked at each turning point against VOR-DME/TACAN and the map. Above end of block MIF achieved.",
+   "sentences": 4
+  },
+  {
+   "id": "vfr_navigation-13-13-d2a4-v1",
+   "mif_row": "GPS Use",
+   "desired": 2,
+   "achieved": 4,
+   "variant": "above",
+   "hf_concept": null,
+   "text": "SP demonstrated complete knowledge of the GPS and used all of its capabilities, programming the full route and the associated parameters without error and amending it airborne while the instrument crosscheck was maintained. Deviations in altitude, airspeed and heading were negligible throughout the navigation. The GPS solution was independently verified against VOR-DME/TACAN and the map on every leg, and position errors were identified before they affected the track. Above end of block MIF achieved.",
+   "sentences": 4
+  }
+ ]
+}

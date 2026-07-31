@@ -1,0 +1,867 @@
+{
+  "category": "formation",
+  "source": {
+    "file": "Phase_2_Syllabus_2025.pdf",
+    "pages_pdf": [
+      69,
+      76
+    ]
+  },
+  "conventions": {
+    "mixed_units": "Όταν ένα κελί του πίνακα Specific Criteria τυπώνει το «+» σκέλος και το «-» σκέλος σε ΔΙΑΦΟΡΕΤΙΚΕΣ μονάδες, το πεδίο unit της γραμμής παίρνει την τιμή \"mixed\" και οι πραγματικές μονάδες δηλώνονται ΡΗΤΑ: στη γραμμή με τα πεδία plus_unit/minus_unit και μέσα σε ΚΑΘΕ αντικείμενο code_N με τα ίδια πεδία. Καταναλωτής ΔΕΝ επιτρέπεται να εφαρμόσει ενιαία μονάδα σε ολόκληρη τη γραμμή όταν unit=\"mixed\", ούτε να διαβάσει γυμνό αριθμό χωρίς τη μονάδα του σκέλους του. Η παρεμβολή (interpolation=\"standard\") εφαρμόζεται ΑΝΑ ΣΚΕΛΟΣ, μέσα στη δική του μονάδα (plus: feet -> feet, minus: span -> span). Μοναδική περίπτωση στο αρχείο: formation-18 → «a/ ROUTE POSITION» → «DISTANCE (span)» (σελ. PDF 72, y=398.23), όπου το «+» τυπώνεται σε ΠΟΔΙΑ (+200’ / +100’, feet mark U+2019) και το «-» σε ΑΝΟΙΓΜΑΤΑ ΠΤΕΡΥΓΩΝ (-1/2 span / -0 span), παρότι η ετικέτα της γραμμής γράφει (span).",
+    "nominal_change": "Το kind=\"nominal_change\" σημαίνει ότι ΑΛΛΑΖΕΙ η ονομαστική τιμή μεταξύ κωδίκων (και όχι μόνο το εύρος ανοχής). Η ονομαστική τιμή αποθηκεύεται ΠΑΝΤΑ στο πεδίο value — ίδιο σχήμα με τις υπόλοιπες εμφανίσεις του corpus (criteria_contact_b.json contact-24/contact-29, criteria_formation_a.json formation-11). Όταν η πηγή τυπώνει ΚΑΙ ανοχή γύρω από την ονομαστική τιμή (π.χ. formation-17 «50° ± 5°» / «30°± 5°»), αυτή προστίθεται στα ΠΡΟΑΙΡΕΤΙΚΑ πεδία plus/minus χωρίς να μετονομάζεται το value. Το πεδίο value είναι ΥΠΟΧΡΕΩΤΙΚΟ σε κάθε αντικείμενο με kind=\"nominal_change\".",
+    "subsection_role_qualifier": "Όπου η πηγή τυπώνει προσδιορισμό ρόλου δίπλα στην επικεφαλίδα υποενότητας («(b) CONDITIONS (AS WINGMAN)», «(c) EXPECTED PERFORMANCE (AS WINGMAN)», «2/ SPECIFIC CRITERIA (AS WINGMAN)»), το αντίστοιχο πεδίο κρατά ΜΟΝΟ το περιεχόμενο και ο προσδιορισμός καταγράφεται ως flag του item με ρητή αναφορά σελίδας/y — ίδια σύμβαση με criteria_formation_c.json / formation-34 («(a) EXECUTION (AS LEADER)»). Ο προσδιορισμός ΠΕΡΙΟΡΙΖΕΙ το εύρος εφαρμογής της υποενότητας στον συγκεκριμένο ρόλο, ΑΚΟΜΗ ΚΑΙ όταν άλλες υποενότητες του ίδιου item έχουν και κλάδο «As leader».",
+    "synthetic_sub_keys": "Στα general_criteria, τα σύνθετα κλειδιά τύπου «a.1», «b.2» δηλώνουν ΙΕΡΑΡΧΙΑ (υπο-στοιχείο κάτω από το a/ ή b/) και ΔΕΝ σημαίνουν κατ' ανάγκη ότι η πηγή τυπώνει ψηφίο. Όπου το ψηφίο τυπώνεται όντως (υπογραμμισμένοι αριθμοί 1/2/3: formation-14, formation-17, formation-23 κλάδος b/) υπάρχει σχετικό flag. Όπου ΔΕΝ τυπώνεται ψηφίο και το κείμενο ακολουθεί απευθείας το a/ ή b/ (formation-22 κλάδοι a/ και b/, formation-23 κλάδος a/), το «.1» είναι ΚΑΘΑΡΑ ΔΟΜΙΚΟ κλειδί και σημειώνεται ρητά με flag στο item.",
+    "role_subsection": "Η κατηγορία «d. FORMATION CATEGORY PERFORMANCE CRITERIA» (σελ. PDF 62, y=91.45) χωρίζεται σε τρεις υποενότητες ρόλου, τυπωμένες σε Arial-BoldMT: «LEADER» (σελ. PDF 62, y=111.24), «WINGMAN» (σελ. PDF 64, y=710.01) και «GENERAL» (σελ. PDF 69, y=105.24, x=155.95). Όλα τα items αυτού του αρχείου — (14) έως (23) — ανήκουν στην υποενότητα GENERAL, δηλαδή ΔΕΝ είναι role-specific, σε αντίθεση με τα items (1)-(13) του criteria_formation_a.json. Ο ρόλος καταγράφεται ως flag «Ρόλος: …» σε ΚΑΘΕ item, με την ίδια σύμβαση όπως στο criteria_formation_a.json."
+  },
+  "items": [
+    {
+      "id": "formation-14",
+      "numbers": [
+        14
+      ],
+      "name": "MISSION PLANNING / BRIEFING.",
+      "heading_verbatim": "(14) MISSION PLANNING / BRIEFING.",
+      "pages_pdf": [
+        69
+      ],
+      "execution": [
+        "1/ As leader",
+        "a/ Has control of the briefing/debriefing process.",
+        "b/ Executes mission briefing, according to briefing Guide Book.",
+        "c/ Plans mission profile, as required, taking under consideration alternative ways of execution.",
+        "d/ Sets mission objectives according to experience level and mission difficulty level.",
+        "e/ Ensures that the mission has been fully understood by all members before briefing completion.",
+        "f/ Executes mission debriefing according to Briefing Guide, where he/she covers formation members faults and analyzes objectives completion.",
+        "2/ As wingman",
+        "Attends the briefing/debriefing flow and is always ready to help the leader in assessing mission elements (notams, meteorological, alternative airports)."
+      ],
+      "conditions": [
+        "Conducted in briefing/debriefing Squadron rooms."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "As leader"
+          },
+          {
+            "key": "a.1",
+            "text": "Determines mission profile and objectives."
+          },
+          {
+            "key": "a.2",
+            "text": "Gives solid directives for mission profile."
+          },
+          {
+            "key": "a.3",
+            "text": "Makes sure that CRM is completely comprehensible by all formation members."
+          },
+          {
+            "key": "b",
+            "text": "As wingman"
+          },
+          {
+            "key": "b.1",
+            "text": "Attends and assists the leader if needed or asked."
+          },
+          {
+            "key": "b.2",
+            "text": "Comprehends briefing and debriefing and is able to answer questions if asked."
+          },
+          {
+            "key": "b.3",
+            "text": "Does not interrupt briefing / debriefing, unless asked by the formation leader."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: GENERAL — η υποενότητα «GENERAL» (Arial-BoldMT) ανοίγει ακριβώς πριν το item, σελ. PDF 69 (y=105.24, x=155.95), κάτω από «d. FORMATION CATEGORY PERFORMANCE CRITERIA» (σελ. PDF 62, y=91.45). Ισχύει για όλα τα items (14)-(23): τα κριτήριά τους ΔΕΝ είναι role-specific, σε αντίθεση με τις υποενότητες «LEADER» (σελ. PDF 62, y=111.24) και «WINGMAN» (σελ. PDF 64, y=710.01) που καλύπτουν τα items (1)-(13).",
+        "Η επικεφαλίδα τυπώνεται με τελεία στο τέλος: «(14) MISSION PLANNING / BRIEFING.». Η τελεία διατηρήθηκε ΚΑΙ στο heading_verbatim ΚΑΙ στο name, σύμφωνα με τη σύμβαση του corpus (criteria_formation_a.json formation-13 «FORMATION APPROACH.», criteria_contact_b.json contact-29, criteria_instrument_b.json instrument-30).",
+        "Δεν υπάρχει SPECIFIC CRITERIA (kind=none) – μόνο GENERAL CRITERIA.",
+        "Τα υπο-στοιχεία 1,2,3 κάτω από a/ και b/ ΤΥΠΩΝΟΝΤΑΙ όντως (υπογραμμισμένοι αριθμοί, χωρίς «/»· σελ. PDF 69, y=566.02/599.62/633.21 και y=686.61/720.21/753.81, x=297.70). Χρησιμοποιήθηκαν σύνθετα κλειδιά a.1 … b.3 για διατήρηση της ιεραρχίας."
+      ]
+    },
+    {
+      "id": "formation-15",
+      "numbers": [
+        15
+      ],
+      "name": "GROUND PROCEDURES.",
+      "heading_verbatim": "(15) GROUND PROCEDURES.",
+      "pages_pdf": [
+        70
+      ],
+      "execution": [
+        "As described in the corresponding section of the Contact Training Exercise Category."
+      ],
+      "conditions": [
+        "As described in the corresponding section of the Contact Training Exercise Category."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "The general criteria described in the corresponding section of the Contact Training Exercise Category, apply."
+          },
+          {
+            "key": "b",
+            "text": "As No2, keeps standard distance from the leader, during taxi."
+          },
+          {
+            "key": "c",
+            "text": "Executes frequency checks in the ground (before taxi), timely and correctly, without need for IP intervention and according to pre – flight briefing."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "As described in the corresponding section of the Contact Training Exercise Category.",
+        "The general criteria described in the corresponding section of the Contact Training Exercise Category, apply."
+      ],
+      "flags": [
+        "Ρόλος: GENERAL.",
+        "Η επικεφαλίδα τυπώνεται με τελεία: «(15) GROUND PROCEDURES.». Η τελεία διατηρήθηκε ΚΑΙ στο name (σύμβαση corpus).",
+        "EXECUTION και CONDITIONS είναι πλήρεις παραπομπές στην κατηγορία Contact (contact-01 GROUND PROCEDURES) – δεν υπάρχει ίδιο κείμενο.",
+        "«pre – flight» τυπώνεται με en dash (U+2013) και κενά αντί για ενωτικό."
+      ]
+    },
+    {
+      "id": "formation-16",
+      "numbers": [
+        16
+      ],
+      "name": "PITCH OUT / SPACING",
+      "heading_verbatim": "(16) PITCH OUT / SPACING",
+      "pages_pdf": [
+        70
+      ],
+      "execution": [
+        "SP executes A/C pitch out, following leader’s command, according to Techniques and Procedures Manual."
+      ],
+      "conditions": [
+        "1/ Day only (VFR – VMC).",
+        "2 During pitch out, formation members maintain pre-determined airspeeds/banks."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Controls the A/C in a smooth and solid way."
+          },
+          {
+            "key": "b",
+            "text": "If blind situation is encountered he/she handles it correctly in a time manner."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: GENERAL.",
+        "ΤΥΠΟΓΡΑΦΙΚΟ ΠΡΩΤΟΤΥΠΟΥ: η 2η συνθήκη τυπώνεται «2 During pitch out…» χωρίς την κάθετο («2/»), σε αντίθεση με την «1/». Διατηρήθηκε verbatim."
+      ]
+    },
+    {
+      "id": "formation-17",
+      "numbers": [
+        17
+      ],
+      "name": "FINGERTIP",
+      "heading_verbatim": "(17) FINGERTIP",
+      "pages_pdf": [
+        70,
+        71
+      ],
+      "execution": [
+        "1/ As leader",
+        "Executes climbs, descents, turns and modified Lazy Eights with No2 at Fingertip position.",
+        "2/ As wingman",
+        "Preserves the fingertip position as Νº2 in both sides of the leading A/C, who maneuvers according to Techniques and Procedures Manual."
+      ],
+      "conditions": [
+        "1/ As leader",
+        "a/ Day only (VFR – VMC).",
+        "b/ 2-3 Gs load",
+        "c/ On lazy “8” type maneuvers increase bank up to 90º and allow airspeed changes approximately 80 - 100 KIAS.",
+        "d/ Minimum airspeed 120 KIAS.",
+        "2/ As wingman",
+        "a/ Day only (VFR – VMC).",
+        "b/ During all flight phases."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "As leader"
+          },
+          {
+            "key": "a.1",
+            "text": "Executes and completes the planned maneuvers smoothly."
+          },
+          {
+            "key": "a.2",
+            "text": "Maintains positive pressure on flying controls during Lazy Eight type maneuvers, in order to help the wingman staying in position."
+          },
+          {
+            "key": "a.3",
+            "text": "Takes into consideration the wingman's position, with regard to the sun and flight area borders and executes the corresponding maneuvers."
+          },
+          {
+            "key": "b",
+            "text": "As wingman"
+          },
+          {
+            "key": "b.1",
+            "text": "Controls the A/C in a smooth and solid way, without abrupt corrections. Moreover, he/she uses the engine power properly and continuously trims the A/C."
+          },
+          {
+            "key": "b.2",
+            "text": "Gets training in the use of Speed Brake from both sides, following Leader’s command or when required to keep Overtake under control."
+          },
+          {
+            "key": "b.3",
+            "text": "Preserves the position determined in the Techniques and Procedures Manual with the deviations stated in Specific criteria."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "LATERAL SEPARATION *(feet)",
+              "unit": "feet",
+              "code_1_raw": "- 0’, + 20’",
+              "code_3_raw": "- 0’, + 10’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 0
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Table footnote (*): *The reference point for deviations is set at 10΄ of minimum lateral separation"
+            },
+            {
+              "maneuver": null,
+              "parameter": "VERTICAL SEPARATION *(feet)",
+              "unit": "feet",
+              "code_1_raw": "+ 6’, - 10’",
+              "code_3_raw": "± 4’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 6,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 4,
+                "minus": 4
+              },
+              "interpolation": "standard",
+              "notes": "Table footnote (*): *The reference point for deviations is set at 10΄ of minimum lateral separation"
+            },
+            {
+              "maneuver": null,
+              "parameter": "OBSERVANCE ANGLE (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "50° ± 5°",
+              "code_3_raw": "30°± 5°",
+              "code_1": {
+                "kind": "nominal_change",
+                "value": 50,
+                "plus": 5,
+                "minus": 5
+              },
+              "code_3": {
+                "kind": "nominal_change",
+                "value": 30,
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "undefined",
+              "notes": "Nominal observance angle changes between codes (50° -> 30°); the ±5° tolerance is identical for both codes."
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: GENERAL.",
+        "Η υποενότητα SPECIFIC CRITERIA τυπώνεται με προσδιορισμό ρόλου: «2/ SPECIFIC CRITERIA (AS WINGMAN)» (σελ. PDF 71, y=607.42, x=269.36, Arial-BoldMT). Ο πίνακας ειδικών κριτηρίων (LATERAL / VERTICAL SEPARATION, OBSERVANCE ANGLE) ισχύει ΜΟΝΟ όταν ο SP πετά ως wingman — ΔΕΝ εφαρμόζεται στον κλάδο «1/ As leader» των EXECUTION / CONDITIONS / GENERAL CRITERIA του ίδιου item. Βλ. conventions.subsection_role_qualifier.",
+        "EXECUTION 2/: «Νº2» τυπώνεται με ΕΛΛΗΝΙΚΟ Ν (U+039D) + º (U+00BA, masculine ordinal). Σημαίνει «No2». Διατηρήθηκε verbatim.",
+        "CONDITIONS 1/c/: «90º» χρησιμοποιεί º (U+00BA) αντί για ° (U+00B0).",
+        "CONDITIONS 1/c/: τα εισαγωγικά στο «8» είναι curly (U+201C/U+201D) – στα items (22)/(23) τα ίδια εισαγωγικά είναι ASCII \".",
+        "Feet marks στον πίνακα: U+2019 (’). Στην υποσημείωση: U+0384 GREEK TONOS (΄).",
+        "OBSERVANCE ANGLE: kind=nominal_change (αλλάζει η ονομαστική τιμή 50°->30°), interpolation=undefined – ΔΕΝ επιτρέπεται γραμμική παρεμβολή μεταξύ κωδίκων. Η ονομαστική τιμή αποθηκεύεται στο πεδίο value (ενιαίο σχήμα με όλες τις εμφανίσεις nominal_change στο corpus)· τα plus/minus κρατούν την τυπωμένη ανοχή ±5°, που είναι ίδια και στους δύο κωδικούς. Βλ. conventions.nominal_change.",
+        "Αντιστοίχιση στηλών επιβεβαιωμένη με PyMuPDF x-coords (σελ.71): grid x=[93.0, 286.7, 320.2, 353.7, 420.7, 458.0, 525.0, 562.2] -> κωδ.1=[353.7-420.7], κωδ.3=[458.0-525.0]. Οι στήλες D/0/2/4 είναι κενές."
+      ]
+    },
+    {
+      "id": "formation-18",
+      "numbers": [
+        18
+      ],
+      "name": "ROUTE / FIGHTING WING FORMATION",
+      "heading_verbatim": "(18) ROUTE / FIGHTING WING FORMATION",
+      "pages_pdf": [
+        71,
+        72
+      ],
+      "execution": [
+        "1/ As leader",
+        "Executes the maneuvers according to handbooks and makes smooth movements, without complicating or surprising No2.",
+        "2/ As wingman",
+        "Maintain Route or Fighting Wing position according to Techniques and Procedures Manual."
+      ],
+      "conditions": [
+        "Day only (VFR – VMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": null,
+            "text": "Assumes position timely when given the corresponding command or has to execute in flight checks."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": "a/ ROUTE POSITION",
+              "parameter": "DISTANCE (span)",
+              "unit": "mixed",
+              "plus_unit": "feet",
+              "minus_unit": "span",
+              "code_1_raw": "+200’, -1/2 span",
+              "code_3_raw": "+100’ ,  -0 span",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 200,
+                "plus_unit": "feet",
+                "minus": 0.5,
+                "minus_unit": "span"
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 100,
+                "plus_unit": "feet",
+                "minus": 0,
+                "minus_unit": "span"
+              },
+              "interpolation": "standard",
+              "notes": "Mixed units inside the cell: the «+» value is printed in FEET (200’ / 100’, feet mark U+2019) while the «-» value is printed in WING SPANS (1/2 span / 0 span), although the row label reads (span). unit=\"mixed\" and the per-leg units are declared explicitly in plus_unit/minus_unit both on the row and inside each code_N object — see conventions.mixed_units. Interpolation is per leg, each in its own unit (plus: 200 ft -> 100 ft; minus: 0.5 span -> 0 span). Sign convention footnote: «+» : in front of the line abreast position, «-» : behind the line abreast position"
+            },
+            {
+              "maneuver": "a/ ROUTE POSITION",
+              "parameter": "HEIGHT (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 50΄",
+              "code_3_raw": "± 20΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 50,
+                "minus": 50
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "interpolation": "standard",
+              "notes": "The ± symbol is produced in the PDF as an ASCII '+' carrying a vector underline (page 72, underline rects at y=437.6, x=300.6-307.6 and x=430.0-437.0); plain text extraction yields '+ 50' / '+ 20'. Visually and semantically it is ±."
+            },
+            {
+              "maneuver": "a/ ROUTE POSITION",
+              "parameter": "LATERAL* (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "+15° , -60°",
+              "code_3_raw": "+5° ,- 50°",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 15,
+                "minus": 60
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 50
+              },
+              "interpolation": "standard",
+              "notes": "Sign convention footnote (*): «+» : in front of the line abreast position, «-» : behind the line abreast position"
+            },
+            {
+              "maneuver": "b/ FIGHTING WING POSITION",
+              "parameter": "DISTANCE (feet)",
+              "unit": "feet",
+              "code_1_raw": "500’ - 1500’",
+              "code_3_raw": "500’ - 1000’",
+              "code_1": {
+                "kind": "range",
+                "min": 500,
+                "max": 1500
+              },
+              "code_3": {
+                "kind": "range",
+                "min": 500,
+                "max": 1000
+              },
+              "interpolation": "undefined",
+              "notes": "Allowed band, not a deviation from a nominal value."
+            },
+            {
+              "maneuver": "b/ FIGHTING WING POSITION",
+              "parameter": "POSITION (cone)",
+              "unit": "degrees",
+              "code_1_raw": "20° - 60°",
+              "code_3_raw": "30° - 45°",
+              "code_1": {
+                "kind": "range",
+                "min": 20,
+                "max": 60
+              },
+              "code_3": {
+                "kind": "range",
+                "min": 30,
+                "max": 45
+              },
+              "interpolation": "undefined",
+              "notes": "Row label reads (cone); the printed values are angles in degrees. Allowed band, not a deviation."
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: GENERAL.",
+        "Η υποενότητα CONDITIONS τυπώνεται με προσδιορισμό ρόλου: «(b) CONDITIONS (AS WINGMAN)» (σελ. PDF 72, y=212.04, x=198.46) — η συνθήκη «Day only (VFR – VMC).» δηλώνεται για τον ρόλο wingman. Βλ. conventions.subsection_role_qualifier.",
+        "Η υποενότητα EXPECTED PERFORMANCE τυπώνεται με προσδιορισμό ρόλου: «(c) EXPECTED PERFORMANCE (AS WINGMAN)» (σελ. PDF 72, y=251.64· το «AS WINGMAN» σε ξεχωριστά spans, x=363.14/366.81/445.47, με τις παρενθέσεις σε μέγεθος 11 αντί 12). Ολόκληρο το EXPECTED PERFORMANCE — GENERAL CRITERIA ΚΑΙ ο πίνακας SPECIFIC CRITERIA (a/ ROUTE POSITION, b/ FIGHTING WING POSITION) — ισχύει ΜΟΝΟ για ρόλο wingman, ΠΑΡΟΤΙ το EXECUTION του ίδιου item έχει και κλάδο «1/ As leader». Βλ. conventions.subsection_role_qualifier.",
+        "ΔΥΟ ξεχωριστοί πίνακες Specific Criteria ενοποιήθηκαν σε ένα parameters[]· η ετικέτα του κάθε υπο-πίνακα μπήκε στο πεδίο «maneuver» ΜΑΖΙ με τον τυπωμένο δείκτη («a/ ROUTE POSITION» σελ. PDF 72 y=344.63, «b/ FIGHTING WING POSITION» σελ. PDF 72 y=498.43), σύμφωνα με τη σύμβαση του criteria_contact_b.json / contact-24 («a/ FLAPS LDG - FLAPS T/O – AΟA.», «b/ FLAPS UP»).",
+        "ΠΑΓΙΔΑ: HEIGHT (feet) – το «±» τυπώνεται ως «+» με υπογράμμιση (vector line), οπότε η εξαγωγή κειμένου δίνει «+ 50΄» / «+ 20΄». Επαληθεύτηκε με render εικόνας ΚΑΙ με get_drawings(). Τα raw πεδία γράφτηκαν ως «± 50΄» / «± 20΄» (όπως ΤΥΠΩΝΕΤΑΙ).",
+        "HEIGHT feet mark = U+0384 GREEK TONOS (΄), ενώ DISTANCE/FIGHTING WING feet mark = U+2019 (’).",
+        "DISTANCE (span): ΜΙΚΤΕΣ ΜΟΝΑΔΕΣ μέσα στο ίδιο κελί — το «+» σκέλος τυπώνεται σε ΠΟΔΙΑ (+200’ / +100’, feet mark U+2019 επιβεβαιωμένο ως codepoint 0x2019) και το «-» σκέλος σε ΑΝΟΙΓΜΑΤΑ ΠΤΕΡΥΓΩΝ (-1/2 span / -0 span), παρότι η ετικέτα της γραμμής γράφει (span). Κωδικοποιήθηκε μηχαναγνώσιμα: unit=\"mixed\" + plus_unit=\"feet\" / minus_unit=\"span\" στη γραμμή ΚΑΙ μέσα σε κάθε code_N. Ο αριθμός 200 ΔΕΝ πρέπει ποτέ να διαβαστεί ως 200 spans (~6.600 ft για T-6A). Βλ. conventions.mixed_units.",
+        "code_3 της DISTANCE (span) τυπώνεται με διπλό κενό: «+100’ ,  -0 span» – διατηρήθηκε verbatim.",
+        "FIGHTING WING: DISTANCE 500-1500 ft / 500-1000 ft και POSITION (cone) 20°-60° / 30°-45° -> kind=range, interpolation=undefined.",
+        "Αντιστοίχιση στηλών επιβεβαιωμένη με x-coords (σελ.72): ROUTE table κέντρα κωδ.1=314.45, κωδ.3=443.85· FIGHTING WING table κέντρα κωδ.1=318.9, κωδ.3=444.85. Κάθε τιμή είναι κεντραρισμένη ακριβώς στο κέντρο της αντίστοιχης στήλης."
+      ]
+    },
+    {
+      "id": "formation-19",
+      "numbers": [
+        19
+      ],
+      "name": "ECHELON TURN (AS WINGMAN)",
+      "heading_verbatim": "(19) ECHELON TURN (AS WINGMAN)",
+      "pages_pdf": [
+        72,
+        73
+      ],
+      "execution": [
+        "SP remains in Echelon position, as No2, according to Techniques and Procedures Manual."
+      ],
+      "conditions": [
+        "1/ Pre-planned maneuver: No1 executes turns up to 60° of bank.",
+        "2/ Day only (VFR – VMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": null,
+            "text": "Maintains the correct position as No2, with the further down deviations from the leading A/C:"
+          },
+          {
+            "key": "a",
+            "text": "Keep in safe distance (10 feet approximately) and no more than 1 ½ wing span, regarding the lateral separation."
+          },
+          {
+            "key": "b",
+            "text": "Do not fly above or below the midpoint of each wing, regarding vertical separation."
+          },
+          {
+            "key": "c",
+            "text": "Do not exceed the leading edge of the wing and the trailing edge of the stabilator, regarding the longitudinal separation."
+          },
+          {
+            "key": "d",
+            "text": "Controls the A/C in a smooth and solid way and makes the appropriate corrections in time."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "LATERAL SEPARATION *(feet)",
+              "unit": "feet",
+              "code_1_raw": "- 0’, + 50’",
+              "code_3_raw": "- 0’, + 10’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 50,
+                "minus": 0
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Table footnote (*): *The reference point for deviations is set at 10΄ of minimum lateral separation"
+            },
+            {
+              "maneuver": null,
+              "parameter": "VERTICAL SEPARATION (feet)",
+              "unit": "feet",
+              "code_1_raw": "±10’",
+              "code_3_raw": "± 4’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 4,
+                "minus": 4
+              },
+              "interpolation": "standard",
+              "notes": null
+            },
+            {
+              "maneuver": null,
+              "parameter": "LONGITUDINAL SEPARATION (feet)",
+              "unit": "feet",
+              "code_1_raw": "±10'",
+              "code_3_raw": "± 4’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 4,
+                "minus": 4
+              },
+              "interpolation": "standard",
+              "notes": "code_1 is printed with an ASCII apostrophe (U+0027) as the feet mark, unlike every other cell of this table which uses U+2019."
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: GENERAL.",
+        "LONGITUDINAL SEPARATION code_1: το feet mark είναι ASCII ' (U+0027), ενώ όλα τα υπόλοιπα κελιά του πίνακα χρησιμοποιούν ’ (U+2019). Διατηρήθηκε verbatim.",
+        "Το εισαγωγικό κείμενο των GENERAL CRITERIA («Maintains the correct position as No2, with the further down deviations from the leading A/C:») δεν φέρει γράμμα – key=null.",
+        "Αντιστοίχιση στηλών επιβεβαιωμένη με x-coords (σελ.73): grid x=[93.0, 311.9, 340.2, 368.6, 432.4, 460.8, 531.6, 560.0] -> κωδ.1=[368.6-432.4], κωδ.3=[460.8-531.6]."
+      ]
+    },
+    {
+      "id": "formation-20",
+      "numbers": [
+        20
+      ],
+      "name": "CROSS UNDER",
+      "heading_verbatim": "(20) CROSS UNDER",
+      "pages_pdf": [
+        73
+      ],
+      "execution": [
+        "SP executes position change in closed or route formation, according to Techniques and Procedures Manual"
+      ],
+      "conditions": [
+        "1/ Day only (VFR - VMC).",
+        "2/ Leader’s maximum bank angle is 30°.",
+        "3/ Execution following leader’s command"
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Executes, timely and correctly, position change, without the necessity for IP intervention."
+          },
+          {
+            "key": "b",
+            "text": "Does not fly in a distance greater than one A/C length."
+          },
+          {
+            "key": "c",
+            "text": "Does not fly into the leader's prop wash.."
+          },
+          {
+            "key": "d",
+            "text": "Does not approach No1 in distance closer than 10 feet."
+          },
+          {
+            "key": "e",
+            "text": "Controls the A/C in a smooth, continuous and solid manner."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: GENERAL.",
+        "ΤΥΠΟΓΡΑΦΙΚΟ ΠΡΩΤΟΤΥΠΟΥ: το GENERAL CRITERIA c/ τελειώνει με ΔΙΠΛΗ τελεία («prop wash..»). Διατηρήθηκε verbatim.",
+        "EXECUTION και CONDITIONS 3/ τυπώνονται ΧΩΡΙΣ τελεία στο τέλος.",
+        "Δεν υπάρχει SPECIFIC CRITERIA (kind=none)· τα αριθμητικά όρια (μία A/C length, 10 feet) βρίσκονται μέσα στα GENERAL CRITERIA."
+      ]
+    },
+    {
+      "id": "formation-21",
+      "numbers": [
+        21
+      ],
+      "name": "LEAD CHANGE",
+      "heading_verbatim": "(21) LEAD CHANGE",
+      "pages_pdf": [
+        73,
+        74
+      ],
+      "execution": [
+        "SP performs lead change at the point that has been determined during the pre-flight briefing according to Techniques and Procedures Manual and SOP’s."
+      ],
+      "conditions": [
+        "Day only (VFR - VMC)"
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Executes safely and without misinterpretation of the lead change, following the leader's verbal or visual signal."
+          },
+          {
+            "key": "b",
+            "text": "No2 assumes formation leadership without uncertainty, after receiving the command."
+          },
+          {
+            "key": "c",
+            "text": "Comply with the restrictions of B.O 3-1/ATC for lead change."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: GENERAL.",
+        "Η επικεφαλίδα «(21) LEAD CHANGE» τυπώνεται στο ΤΕΛΟΣ της σελ.73 (y=753.4)· όλο το περιεχόμενο βρίσκεται στη σελ.74.",
+        "Το c/ παραπέμπει σε ΕΞΩΤΕΡΙΚΟ κανονισμό («B.O 3-1/ATC»), όχι σε άλλο item – δεν καταχωρήθηκε στα cross_refs.",
+        "CONDITIONS τυπώνεται χωρίς τελεία στο τέλος."
+      ]
+    },
+    {
+      "id": "formation-22",
+      "numbers": [
+        22
+      ],
+      "name": "CLOSE TRAIL",
+      "heading_verbatim": "(22) CLOSE TRAIL",
+      "pages_pdf": [
+        74,
+        75
+      ],
+      "execution": [
+        "1/ As Leader",
+        "Executes turns, precision maneuvers (modified Lazy \"8\" and Chandelle) or modified Barrel Rolls, with No2 in Close Trail position and maintains airspeed within the range of 120-250 KIAS.",
+        "2/ As Wingman",
+        "Maintains Close Trail position, as No2, according to Techniques and Procedures Manual."
+      ],
+      "conditions": [
+        "1/ As Leader",
+        "a/ Day only (VFR / VMC).",
+        "b/ Maneuvers up to 3 Gs.",
+        "c/ Maximum Bank is 90°.",
+        "2/ As Wingman",
+        "a/ Day only (VFR / VMC).",
+        "b/ Dual flight only."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "As Leader"
+          },
+          {
+            "key": "a.1",
+            "text": "Smoothly carries out the aforementioned maneuvers, maintaining positive-Gs at all times and orientation within the assigned flight area."
+          },
+          {
+            "key": "b",
+            "text": "As Wingman"
+          },
+          {
+            "key": "b.1",
+            "text": "Maintains Close trail position 1 to 2 ship lengths (nose-tail separation), as far as the longitude distance is concerned and slightly below the Leaders exhaust. Never fly less than 1 ship length or further than 2 ship lengths."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "VERTICAL SEPARATION (feet)",
+              "unit": "feet",
+              "code_1_raw": "+0,-15",
+              "code_3_raw": "+0,- 5’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 0,
+                "minus": 15
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 0,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "code_1 is printed without a feet mark while code_3 carries one (5’); the row label supplies the unit."
+            },
+            {
+              "maneuver": null,
+              "parameter": "LONGITUDINAL SEPARATION (ship length)",
+              "unit": "ship lengths",
+              "code_1_raw": "3-4",
+              "code_3_raw": "1-2",
+              "code_1": {
+                "kind": "range",
+                "min": 3,
+                "max": 4
+              },
+              "code_3": {
+                "kind": "range",
+                "min": 1,
+                "max": 2
+              },
+              "interpolation": "undefined",
+              "notes": "Allowed band. Code 3 (1-2 ship lengths) matches the GENERAL CRITERIA text; code 1 (3-4) is a different, further-aft band, not a superset of code 3."
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Ρόλος: GENERAL.",
+        "GENERAL CRITERIA a/ και b/: το κείμενο ακολουθεί ΧΩΡΙΣ τυπωμένο υπο-αριθμό (σελ. PDF 74, y=690.81 «a/ As Leader» -> κείμενο y=710.61 χωρίς ψηφίο· σελ. PDF 74, y=758.01 «b/ As Wingman» -> κείμενο σελ. PDF 75, y=85.45 χωρίς ψηφίο). Τα κλειδιά «a.1» και «b.1» είναι ΚΑΘΑΡΑ ΔΟΜΙΚΑ, για ομοιομορφία με τα items που όντως τυπώνουν υπογραμμισμένα ψηφία (14, 17, 23/κλάδος b/) — ΔΕΝ αντιστοιχούν σε τυπωμένο αριθμό. Βλ. conventions.synthetic_sub_keys.",
+        "GENERAL CRITERIA b/: τα αριθμητικά όρια «1» και «2» («1 to 2 ship lengths», «less than 1», «further than 2») τυπώνονται με ΕΝΤΟΝΑ (Arial-BoldMT) ενώ το περιβάλλον κείμενο είναι ArialMT — σελ. PDF 75: y=85.45 x=470.63 («1») και x=502.41 («2»), y=113.04 x=391.71 («1»), y=126.84 x=99.25 («2»). Η πηγή τονίζει έτσι ακριβώς τις βαθμολογούμενες τιμές· η μορφοποίηση ΔΕΝ αποτυπώνεται στο πεδίο text.",
+        "ΠΡΟΣΟΧΗ ΣΤΗΝ ΕΡΜΗΝΕΙΑ: LONGITUDINAL SEPARATION -> κωδ.1 = 3-4 ship lengths, κωδ.3 = 1-2 ship lengths. Οι δύο ζώνες ΔΕΝ επικαλύπτονται (η κωδ.1 δεν περιέχει την κωδ.3), οπότε interpolation=undefined.",
+        "Το κείμενο των GENERAL CRITERIA («1 to 2 ship lengths … never less than 1 … further than 2») συμφωνεί με τον κωδ.3, όχι με τον κωδ.1.",
+        "VERTICAL SEPARATION κωδ.1 «+0,-15» τυπώνεται χωρίς σύμβολο ποδιών, ενώ ο κωδ.3 «+0,- 5’» το έχει.",
+        "Ο πίνακας (σελ.75) είναι ΧΩΡΙΣΤΟΣ από την επικεφαλίδα του item (σελ.74) – split σε γύρισμα σελίδας, χωρίς επανάληψη επικεφαλίδας item.",
+        "Το label «LONGITUDINAL SEPARATION (ship length)» τυπώνεται σε 3 γραμμές μέσα στο κελί· ενοποιήθηκε.",
+        "Τα εισαγωγικά στο Lazy \"8\" είναι ASCII (U+0022), σε αντίθεση με το item (17) που έχει curly.",
+        "Αντιστοίχιση στηλών επιβεβαιωμένη με x-coords (σελ.75): grid x=[87.8, 281.5, 315.0, 348.5, 415.5, 452.7, 519.7, 557.0] -> κωδ.1=[348.5-415.5], κωδ.3=[452.7-519.7]."
+      ]
+    },
+    {
+      "id": "formation-23",
+      "numbers": [
+        23
+      ],
+      "name": "EXTENDED TRAIL",
+      "heading_verbatim": "(23) EXTENDED TRAIL",
+      "pages_pdf": [
+        75,
+        76
+      ],
+      "execution": [
+        "1/ As Leader",
+        "SP performs turns, precision maneuvers (modified Lazy \"8\" and Chandelle), modified Barrel Roll or Cloverleaves with the No2 in Extended Trail position, within speed range 120-250K.",
+        "2/ As Wingman",
+        "SP maintains No2 position in Extended Trail formation according to Techniques and Procedures Manual."
+      ],
+      "conditions": [
+        "1/ As Leader",
+        "a/ Day only (VFR - VMC).",
+        "b/ Maneuvers up to 4 Gs.",
+        "2/ As Wingman",
+        "a/ Day only (VFR - VMC).",
+        "b/ Dual flight only."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "As Leader"
+          },
+          {
+            "key": "a.1",
+            "text": "Smoothly carry out the aforementioned maneuvers, maintaining orientation within the assigned flight area and controlling the wingman."
+          },
+          {
+            "key": "b",
+            "text": "As Wingman"
+          },
+          {
+            "key": "b.1",
+            "text": "He/she does not stagnate in No1’s 6-o’clock."
+          },
+          {
+            "key": "b.2",
+            "text": "Does not constitute a threat for the formation, during the maneuver."
+          },
+          {
+            "key": "b.3",
+            "text": "Maintains Extended Trail position as described in the Techniques and Procedures Manual."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "a/ Specific criteria of Fighting Wing apply. b/ SP does not violate the 500’ safety distance (bubble). Momentary deviations are acceptable with immediately correct action.",
+          "reference_target": "formation-18",
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "Specific criteria of Fighting Wing apply."
+      ],
+      "flags": [
+        "Ρόλος: GENERAL.",
+        "Η υποενότητα SPECIFIC CRITERIA τυπώνεται με προσδιορισμό ρόλου: «2/ SPECIFIC CRITERIA (AS WINGMAN)» (σελ. PDF 76, y=105.24, x=226.81, Arial-BoldMT). Τα δύο ειδικά κριτήρια (a/ παραπομπή στο Fighting Wing, b/ όριο 500’ bubble) ισχύουν ΜΟΝΟ για ρόλο wingman — ΔΕΝ εφαρμόζονται στον κλάδο «1/ As Leader» των EXECUTION / CONDITIONS / GENERAL CRITERIA του ίδιου item. Βλ. conventions.subsection_role_qualifier.",
+        "GENERAL CRITERIA a/: το κείμενο ακολουθεί ΧΩΡΙΣ τυπωμένο υπο-αριθμό (σελ. PDF 75, y=604.02 «a/ As Leader» -> κείμενο y=623.82 χωρίς ψηφίο)· το κλειδί «a.1» είναι ΚΑΘΑΡΑ ΔΟΜΙΚΟ. Αντιθέτως ο κλάδος b/ ΤΥΠΩΝΕΙ όντως υπογραμμισμένα ψηφία 1/2/3 (σελ. PDF 75, y=691.01/724.61/758.21, x=297.70), άρα τα b.1…b.3 αντιστοιχούν σε τυπωμένους αριθμούς. Βλ. conventions.synthetic_sub_keys.",
+        "SPECIFIC CRITERIA = παραπομπή στον πίνακα b/ FIGHTING WING POSITION του item (18) ROUTE / FIGHTING WING FORMATION -> reference_target=formation-18 (DISTANCE 500-1500/500-1000 ft, POSITION cone 20°-60°/30°-45°).",
+        "Το reference_text περιέχει ΚΑΙ πρόσθετο απόλυτο όριο ασφαλείας (b/ 500’ bubble) που ΔΕΝ προκύπτει από τον πίνακα Fighting Wing και δεν διαφοροποιείται ανά κωδικό.",
+        "ΟΡΙΟ ΤΜΗΜΑΤΟΣ: στη σελ.76 (PDF) ξεκινούν επίσης οι επικεφαλίδες «(24) TACTICAL FORMATION» (y=178.4) και «(24) – (28)TACTICAL TURNS DELAY 90°, DELAY 45°, IN PLACE, CROSS / HOOK / SHACKLE/ CHECK TURNS» (y=585.8). ΔΕΝ συμπεριλήφθηκαν εδώ, επειδή το ΠΕΡΙΕΧΟΜΕΝΟ του τμήματος ορίστηκε ρητά ως (14)…(23) Extended Trail. Πρέπει να καλυφθούν από το επόμενο chunk· αν το επόμενο chunk ξεκινά στη σελ.77 θα χαθούν."
+      ]
+    }
+  ]
+}

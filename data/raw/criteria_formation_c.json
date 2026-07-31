@@ -1,0 +1,489 @@
+{
+  "category": "formation",
+  "source": {
+    "file": "Phase_2_Syllabus_2025.pdf",
+    "pages_pdf": [76, 83]
+  },
+  "items": [
+    {
+      "id": "formation-24",
+      "numbers": [24],
+      "name": "TACTICAL FORMATION",
+      "heading_verbatim": "(24) TACTICAL FORMATION",
+      "pages_pdf": [76],
+      "execution": [
+        "1/ SP performs the maneuvers required to maintain position as No2, during all the phases of flight.",
+        "2/ SP maintains position as No2, according to Techniques and Procedures Manual."
+      ],
+      "conditions": [
+        "Day only (VFR - VMC)"
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {"key": "a", "text": "Executes clearing at the proper area, as No1 or No2, depending on relative position in the formation."},
+          {"key": "b", "text": "Exploits and converts the A/C energy in order to maintain position."},
+          {"key": "c", "text": "Is familiar with the technique and timely applies the proper corrections to alleviate any deviations from the tactical formation position."},
+          {"key": "d", "text": "Knows and executes all the visual signals given by the Leader."},
+          {"key": "e", "text": "Uses the engine with consideration to the fuel reserve."}
+        ],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "Specific criteria of tactical turns are applied.",
+          "reference_target": "formation-24b",
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "Specific criteria of tactical turns are applied."
+      ],
+      "flags": [
+        "ΔΙΠΛΗ ΑΡΙΘΜΗΣΗ: το τυπωμένο «(24)» χρησιμοποιείται ΔΥΟ φορές στη σελ. 76 — εδώ για το TACTICAL FORMATION και αμέσως μετά για το «(24) – (28) TACTICAL TURNS». Για να αποφευχθεί σύγκρουση id, αυτό το item κρατά το id \"formation-24\" και το δεύτερο πήρε id \"formation-24b\". Τα πεδία numbers/heading_verbatim κρατούν την αρίθμηση ΟΠΩΣ ΤΥΠΩΝΕΤΑΙ.",
+        "Ο πίνακας Specific Criteria στη σελ. 77 τιτλοφορείται «2/ SPECIFIC CRITERIA (TACTICAL FORMATION - TACTICAL TURNS)», δηλαδή καλύπτει ΡΗΤΑ ΚΑΙ αυτό το item. Οι τιμές αποθηκεύονται μία φορά, στο item formation-24b· εδώ δίνεται ως reference."
+      ]
+    },
+    {
+      "id": "formation-24b",
+      "numbers": [24, 25, 26, 27, 28],
+      "name": "TACTICAL TURNS DELAY 90°, DELAY 45°, IN PLACE, CROSS / HOOK / SHACKLE/ CHECK TURNS",
+      "heading_verbatim": "(24) – (28)TACTICAL TURNS DELAY 90°, DELAY 45°, IN PLACE, CROSS / HOOK / SHACKLE/ CHECK TURNS",
+      "pages_pdf": [76, 77],
+      "execution": [
+        "Executes the tactical turns with comm-in or comm-out as Νº1 or Νº2."
+      ],
+      "conditions": [
+        "Day only (VFR - VMC)"
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {"key": "a", "text": "SP checks the corresponding responsibility airspace during turn."},
+          {"key": "b", "text": "Exploits and converts the A/C energy in order to maintain position."},
+          {"key": "c", "text": "Is familiar with the correction technique in order to remain in tactical formation position."},
+          {"key": "d", "text": "Take initiative for safe separation during tactical turns."},
+          {"key": "e", "text": "Knows and executes the visual signals in a comm-out turn."},
+          {"key": "f", "text": "Uses the engine with consideration to the fuel reserve."},
+          {"key": "g", "text": "Executes clearing and ensures safe altitude for maneuvering over mountains."},
+          {"key": "h", "text": "Executes the tactical turns as described in the Techniques and Procedures Manual and rolls out in tactical formation position."}
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "+1000 / -500",
+              "code_3_raw": "+500 / -300",
+              "code_1": {"kind": "deviation", "plus": 1000, "minus": 500},
+              "code_3": {"kind": "deviation", "plus": 500, "minus": 300},
+              "interpolation": "standard",
+              "notes": "Ασύμμετρη απόκλιση (+/- διαφορετικά)."
+            },
+            {
+              "maneuver": null,
+              "parameter": "SPEED ENTRY/EXIT (knots)",
+              "unit": "knots",
+              "code_1_raw": "±30",
+              "code_3_raw": "±15",
+              "code_1": {"kind": "deviation", "plus": 30, "minus": 30},
+              "code_3": {"kind": "deviation", "plus": 15, "minus": 15},
+              "interpolation": "standard",
+              "notes": null
+            },
+            {
+              "maneuver": null,
+              "parameter": "RECOVERY HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "±30",
+              "code_3_raw": "±10",
+              "code_1": {"kind": "deviation", "plus": 30, "minus": 30},
+              "code_3": {"kind": "deviation", "plus": 10, "minus": 10},
+              "interpolation": "standard",
+              "notes": null
+            },
+            {
+              "maneuver": null,
+              "parameter": "Gs (continous)",
+              "unit": "G",
+              "code_1_raw": "±1,0",
+              "code_3_raw": "±0,5",
+              "code_1": {"kind": "deviation", "plus": 1.0, "minus": 1.0},
+              "code_3": {"kind": "deviation", "plus": 0.5, "minus": 0.5},
+              "interpolation": "standard",
+              "notes": "Υποδιαστολή με κόμμα στο πρωτότυπο (±1,0 / ±0,5). Τυπογραφικό «continous» αντί «continuous» — διατηρείται ως έχει."
+            },
+            {
+              "maneuver": null,
+              "parameter": "LINE ABREAST DEVIATION (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "±30",
+              "code_3_raw": "±10",
+              "code_1": {"kind": "deviation", "plus": 30, "minus": 30},
+              "code_3": {"kind": "deviation", "plus": 10, "minus": 10},
+              "interpolation": "standard",
+              "notes": null
+            },
+            {
+              "maneuver": null,
+              "parameter": "LATERAL SEPARATION (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 1000",
+              "code_3_raw": "± 500",
+              "code_1": {"kind": "deviation", "plus": 1000, "minus": 1000},
+              "code_3": {"kind": "deviation", "plus": 500, "minus": 500},
+              "interpolation": "standard",
+              "notes": "Στο πρωτότυπο υπάρχει κενό ανάμεσα στο «±» και τον αριθμό."
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "ΔΙΠΛΗ ΑΡΙΘΜΗΣΗ: η επικεφαλίδα τυπώνεται «(24) – (28)» ενώ το αμέσως προηγούμενο item τυπώνεται επίσης «(24)» (σελ. 76). Το πρωτότυπο έχει επικαλυπτόμενη αρίθμηση — πιθανό τυπογραφικό του Syllabus (αναμενόμενο θα ήταν «(25) – (28)»). Δόθηκε id \"formation-24b\" για μοναδικότητα· το numbers=[24,25,26,27,28] αποδίδει την αρίθμηση όπως τυπώνεται.",
+        "Στην επικεφαλίδα ΛΕΙΠΕΙ κενό: τυπώνεται «(28)TACTICAL TURNS» (χωρίς space). Διατηρείται στο heading_verbatim, αφαιρείται στο name.",
+        "Ελληνικά lookalikes στο EXECUTION: «Νº1 or Νº2» — «Ν» = U+039D (ελληνικό Νι) και «º» = U+00BA (masculine ordinal) αντί «No1 / No2». Διατηρείται verbatim· κανονικοποιημένο = «No1 or No2».",
+        "Κεφαλίδα πίνακα: «MANEUVER PARAMETERS Ε 0 1 2 3 4» — το «Ε» είναι U+0395 (ελληνικό Έψιλον) εκεί όπου άλλοι πίνακες τυπώνουν «D». Η στήλη D/E είναι ΚΕΝΗ (χωρίς τιμές) και ΔΕΝ χρησιμοποιείται.",
+        "Επαλήθευση στηλών με PyMuPDF x-coordinates (σελ. 77): κέντρα κεφαλίδων 0=340.7, 1=395.7, 2=454.1, 3=505.6, 4=556.2. ΟΛΕΣ οι αριστερές τιμές κεντράρονται στο 395.7 (κωδικός 1) και ΟΛΕΣ οι δεξιές στο 505.6 (κωδικός 3). Οι στήλες 0, 2, 4 είναι κενές. Η αντιστοίχιση 1/3 είναι ΕΠΙΒΕΒΑΙΩΜΕΝΗ, όχι εικασία σειράς ανάγνωσης.",
+        "Ο πίνακας ΔΕΝ σπάει σε γύρισμα σελίδας (ολόκληρος στη σελ. 77, y=360-519). Όλα τα «±» είναι γνήσια U+00B1 — ΔΕΝ εμφανίστηκε το πρόβλημα U+FFFF σε αυτή τη σελίδα.",
+        "Ο τίτλος του πίνακα «2/ SPECIFIC CRITERIA (TACTICAL FORMATION - TACTICAL TURNS)» καλύπτει ΚΑΙ το item formation-24 (TACTICAL FORMATION)."
+      ]
+    },
+    {
+      "id": "formation-29",
+      "numbers": [29],
+      "name": "BASIC A/C - FORMATION CONTROL",
+      "heading_verbatim": "(29) BASIC A/C - FORMATION CONTROL",
+      "pages_pdf": [77, 78],
+      "execution": [
+        "1/ As Leader",
+        "a/ Maintains A/C control, preserving flight parameters within specified limitations, during all phases of flight. Especially, constraints must be met during climb, descent, level off and cruise. Turns are allowed up to: 90° of bank when Wingman is in Fingertip; up to 60° of bank when Wingman is in Route; 45° - 60° of bank when Wingman is in Echelon and up to 30º of bank for Crossunders.",
+        "b/ Trims promptly the A/C throughout the flight phases.",
+        "c/ In dual flight, crew coordination at specific actions is applied, as described in the briefing and debriefing manuals..",
+        "d/ Maintains control of G load and formation energy awareness and keeps the formation within the assigned area.",
+        "e/ Maintains his/her orientation within flight areas.",
+        "2/ As Wingman",
+        "a/ Maintains A/C control and monitors Gs.",
+        "b/ Trims promptly the A/C throughout the flight phases.",
+        "c/ Reports to Leader immediately, whenever perceives any abnormal situation."
+      ],
+      "conditions": [
+        "1/ Day only (VFR - VMC)",
+        "2/ Mission Profile is predetermined.",
+        "3/ Maximum G load is 4 Gs and control of the A/C is smooth and positive."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {"key": "a", "text": "As Leader"},
+          {"key": "a.1", "text": "Executes the maneuvers in a smooth manner, paying attention to Wingman and without exceeding Wingman’s A/C limitations"},
+          {"key": "a.2", "text": "Gives the appropriate radio calls or visual signals to Wingman before starting any maneuver or comm-out tactical turn."},
+          {"key": "a.3", "text": "Executes all checks according to the check list and informs the Wingman."},
+          {"key": "a.4", "text": "Gives the appropriate radio calls or visual signals to Wingman before any change in A/C configuration."},
+          {"key": "a.5", "text": "Knows the area borders and keeps the formation within the assigned area."},
+          {"key": "a.6", "text": "Maintains his/her orientation within flight areas and capable of returning to mother base or the alternate airport."},
+          {"key": "a.7", "text": "Keeps formation fluid, with the assistance of IP, in order to exploit fuel, weather conditions and the flight area, for the time being a Leader."},
+          {"key": "b", "text": "As Wingman"},
+          {"key": "b.1", "text": "Maintains A/C control and monitors Gs."},
+          {"key": "b.2", "text": "Trims promptly the A/C throughout the flight phases."},
+          {"key": "b.3", "text": "Reports to Leader whenever flight parameters reach any limit."}
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "ΔΕΝ υπάρχει «2/ SPECIFIC CRITERIA» για αυτό το item — μετά το «3 Reports to Leader whenever flight parameters reach any limit.» ακολουθεί κατευθείαν η επικεφαλίδα «(30) LANDING PATTERN» (σελ. 78). Άρα kind=\"none\", ΟΧΙ χαμένος πίνακας.",
+        "EXECUTION 1/a/: «up to 30º of bank» — το «º» είναι U+00BA (masculine ordinal) αντί «°» (U+00B0), ενώ στην ίδια πρόταση τα «90°/60°/45°» είναι κανονικά U+00B0. Διατηρείται verbatim.",
+        "EXECUTION 1/c/: διπλή τελεία στο πρωτότυπο («manuals..»). Διατηρείται ως έχει.",
+        "GENERAL CRITERIA a.1: λείπει η τελεία στο τέλος («limitations»). Διατηρείται ως έχει.",
+        "Ένθετη δομή a/ As Leader (1-7) και b/ As Wingman (1-3): αποδόθηκε με σύνθετα keys «a.1»…«a.7», «b.1»…«b.3», με τα «a» και «b» να κρατούν τον τίτλο ρόλου."
+      ]
+    },
+    {
+      "id": "formation-30",
+      "numbers": [30],
+      "name": "LANDING PATTERN",
+      "heading_verbatim": "(30) LANDING PATTERN",
+      "pages_pdf": [78, 79],
+      "execution": [],
+      "conditions": [],
+      "expected_performance": {
+        "general_criteria": [],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "The criteria and parameters determined in the corresponding section of Contact Category apply.",
+          "reference_target": "contact-23",
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "The criteria and parameters determined in the corresponding section of Contact Category apply."
+      ],
+      "flags": [
+        "Item καθαρής παραπομπής: ΔΕΝ τυπώνονται υποενότητες (a) EXECUTION / (b) CONDITIONS / (c) EXPECTED PERFORMANCE — μόνο η μία πρόταση παραπομπής. Γι' αυτό execution/conditions/general_criteria είναι κενά και όλη η ουσία είναι στο specific_criteria.reference_text.",
+        "reference_target: στην Contact Category το αντίστοιχο item τυπώνεται «(23),(25),(27),(32) LANDING PATTERN (NORMAL, NO FLAP, FLAP T/O - …)» στη σελ. 36 PDF· κατά το σχήμα (πρώτος αριθμός) → \"contact-23\".",
+        "Η επικεφαλίδα ξεκινά στο τέλος της σελ. 78, το σώμα στη σελ. 79."
+      ]
+    },
+    {
+      "id": "formation-31",
+      "numbers": [31],
+      "name": "LANDING",
+      "heading_verbatim": "(31) LANDING",
+      "pages_pdf": [79],
+      "execution": [],
+      "conditions": [],
+      "expected_performance": {
+        "general_criteria": [],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "The criteria and parameters determined in the corresponding section of Contact Category apply.",
+          "reference_target": "contact-24",
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "The criteria and parameters determined in the corresponding section of Contact Category apply."
+      ],
+      "flags": [
+        "Item καθαρής παραπομπής (χωρίς υποενότητες a/b/c).",
+        "reference_target: στην Contact Category το αντίστοιχο item τυπώνεται «(24),(26),(28),(33) LANDING (FLAPS LDG - FLAPS UP - FLAPS Τ/Ο - ELP - …)» στη σελ. 39 PDF → \"contact-24\"."
+      ]
+    },
+    {
+      "id": "formation-32",
+      "numbers": [32],
+      "name": "VISUAL SIGNALS",
+      "heading_verbatim": "(32) VISUAL SIGNALS",
+      "pages_pdf": [79],
+      "execution": [
+        "SP executes and apprehends the visual signals, between the members of the formation and/or the tower, either as Leader or Wingman."
+      ],
+      "conditions": [
+        "Day only (VFR – VMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {"key": "a", "text": "Knows and executes all the visual signals in a way that are perceivable from the other member of formation, beyond doubt."},
+          {"key": "b", "text": "Confirms with visual signal that he/she has understood the signals addressed to him/her."}
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Το EXECUTION είναι μία ενιαία απαρίθμητη πρόταση (χωρίς «1/»).",
+        "CONDITIONS: εδώ «(VFR – VMC)» με en-dash (U+2013), ενώ στα items 24/24b τυπώνεται «(VFR - VMC)» με hyphen. Διατηρείται verbatim."
+      ]
+    },
+    {
+      "id": "formation-33",
+      "numbers": [33],
+      "name": "CLEARING",
+      "heading_verbatim": "(33) CLEARING",
+      "pages_pdf": [79, 80],
+      "execution": [
+        "1/ Addresses the work inside and outside cockpit dividing appropriately his/her attention, in visual and verbal (R/T) stimuli, so as to avoid a possible mid-air collision, or an imminent CFIT (controlled flight into terrain).",
+        "2/ Executes clearing as No2 depending on relative position in the formation and supports No1, who nevertheless holds the main responsibility."
+      ],
+      "conditions": [
+        "1/ Day only (VFR / VMC)",
+        "2/ SP executes clearing throughout flight, either as Leader or No2."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {"key": "a", "text": "As Leader"},
+          {"key": "a.1", "text": "Continuously checks the airspace at the full period he / she is in charge of the formation and particularly in landing pattern."},
+          {"key": "a.2", "text": "Locates timely nearby flying A/Cs and maintains the proper separation."},
+          {"key": "a.3", "text": "Conceives active or potential hazards and regulates accordingly the flight parameters in order to avoid them."},
+          {"key": "a.4", "text": "Effectively uses admissible Clearing techniques for mid-air collision avoidance."},
+          {"key": "a.5", "text": "Effectively uses the R/T for creating safe separation from the air traffic."},
+          {"key": "a.6", "text": "The criteria and parameters determined in the corresponding section of Contact Category apply."},
+          {"key": "b", "text": "As Wingman"},
+          {"key": "b.1", "text": "Executes clearing, depending on his/her position within the formation (always towards the Leader during fingertip)."},
+          {"key": "b.2", "text": "Monitors the radio transmissions and has an explicit perception of the situation."}
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "The criteria and parameters determined in the corresponding section of Contact Category apply."
+      ],
+      "flags": [
+        "Η παραπομπή στην Contact Category είναι ΕΝΘΕΤΗ (general criterion a.6), όχι ξεχωριστό specific_criteria. Στόχος παραπομπής: Contact «(36) CLEARING» (σελ. 42 PDF) → \"contact-36\".",
+        "Το item σπάει σε γύρισμα σελίδας 79→80 (μέσα στο a/ As Leader, ανάμεσα στα a.3 και a.4)."
+      ]
+    },
+    {
+      "id": "formation-34",
+      "numbers": [34],
+      "name": "RADIO COMMUNICATION",
+      "heading_verbatim": "(34) RADIO COMMUNICATION",
+      "pages_pdf": [80],
+      "execution": [
+        "1/ Maintains R/T contact with ground stations, other A/C (depending on the case), as well as with other formation members.",
+        "2/ Contacts ground stations and gives the formal position reports.",
+        "3/ The criteria and parameters determined in the corresponding section of Contact Category apply."
+      ],
+      "conditions": [
+        "Throughout the mission."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {"key": "a", "text": "As Leader"},
+          {"key": "a.1", "text": "The criteria and parameters determined in the corresponding section of Contact Category apply."},
+          {"key": "a.2", "text": "Provides accurate information to his/her Wingman and reminds him/her functional A/C checks and fuel check."},
+          {"key": "b", "text": "As Wingman"},
+          {"key": "b.1", "text": "Confirms every given information / direction from the formation Leader."},
+          {"key": "b.2", "text": "Monitors the Leader’s radio comm with ground stations and other A/C and interferes whenever asked or demanded for flight safety."}
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "The criteria and parameters determined in the corresponding section of Contact Category apply."
+      ],
+      "flags": [
+        "Η υποενότητα EXECUTION τυπώνεται με προσδιορισμό ρόλου: «(a) EXECUTION (AS LEADER)».",
+        "Δύο ένθετες παραπομπές στην Contact Category (execution 3/ και general criterion a.1). Στόχος: Contact «(37) RADIO COMMUNICATION» (σελ. 43 PDF) → \"contact-37\"."
+      ]
+    },
+    {
+      "id": "formation-35",
+      "numbers": [35],
+      "name": "AIRMANSHIP",
+      "heading_verbatim": "(35) AIRMANSHIP",
+      "pages_pdf": [80],
+      "execution": [],
+      "conditions": [],
+      "expected_performance": {
+        "general_criteria": [
+          {"key": null, "text": "In advance, a wingman is able to anticipate No1’s intention but will never assume."}
+        ],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "The criteria and parameters determined in the corresponding section of Contact Category apply. In advance, a wingman is able to anticipate No1’s intention but will never assume.",
+          "reference_target": "contact-38",
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "The criteria and parameters determined in the corresponding section of Contact Category apply."
+      ],
+      "flags": [
+        "Item παραπομπής ΜΕ ΕΠΙΠΛΕΟΝ απαίτηση: εκτός από την παραπομπή, προστίθεται αναρίθμητη πρόταση «In advance, a wingman is able to anticipate No1’s intention but will never assume.». Καταγράφηκε ΚΑΙ ως general criterion με key=null (αναρίθμητο) ΚΑΙ μέσα στο reference_text (που κρατά ολόκληρη την τυπωμένη παράγραφο verbatim).",
+        "reference_target: Contact «(38) AIRMANSHIP» (σελ. 44 PDF) → \"contact-38\".",
+        "Το key=null σημαίνει «αναρίθμητο/χωρίς γράμμα στο πρωτότυπο» — δεν είναι σφάλμα εξαγωγής."
+      ]
+    },
+    {
+      "id": "formation-36",
+      "numbers": [36],
+      "name": "EMERGENCY PROCEDURES",
+      "heading_verbatim": "(36) EMERGENCY PROCEDURES",
+      "pages_pdf": [80, 81],
+      "execution": [
+        "1/ The criteria and parameters determined in the corresponding section of Contact Category apply.",
+        "2/ Provides assistance to the formation member who suffers an emergency situation.",
+        "3/ Contacts ground stations when emergency A/C’s R/T contact has been lost.",
+        "4/ Performs lost Wingman procedures either virtually as a predetermined on VMC or actually in IMC conditions."
+      ],
+      "conditions": [
+        "To fulfill the General Criteria, SP must know how to apply the Emergency Procedures:",
+        "1/ In pre-flight or post flight briefing.",
+        "2/ During the whole mission, from the engine start up to the engine shut down after the flight, if required or requested by IP."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {"key": "a", "text": "The criteria and parameters determined in the corresponding section of Contact Category apply."},
+          {"key": "b", "text": "Knows and safely performs lost wingman procedures either as a Leader or as a Wingman (VMC-IMC)."},
+          {"key": "c", "text": "Informs the Leader timely and performs safe transition to IFR flight, when in Wingman position."},
+          {"key": "d", "text": "In an actual situation, informs ATC timely and obtains IFR Clearance."},
+          {"key": "e", "text": "Additionally, SP provides assistance to the formation member who suffers an emergency situation and contacts ground stations when emergency A/C’s R/T contact has been lost."}
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "The criteria and parameters determined in the corresponding section of Contact Category apply."
+      ],
+      "flags": [
+        "Το item σπάει σε γύρισμα σελίδας 80→81: στη σελ. 80 τυπώνονται μόνο η επικεφαλίδα «(36) EMERGENCY PROCEDURES» και το «(a) EXECUTION»· όλο το σώμα είναι στη σελ. 81.",
+        "Η πρώτη γραμμή των CONDITIONS είναι εισαγωγική πρόταση χωρίς αρίθμηση — καταγράφηκε ως ξεχωριστή εγγραφή πριν τα 1/ και 2/.",
+        "Ένθετες παραπομπές στην Contact Category (execution 1/ και general criterion a/). Στόχος: Contact «(39) EMERGENCY PROCEDURES» (σελ. 45 PDF) → \"contact-39\"."
+      ]
+    },
+    {
+      "id": "formation-37",
+      "numbers": [37],
+      "name": "GENERAL KNOWLEDGE",
+      "heading_verbatim": "(37) GENERAL KNOWLEDGE",
+      "pages_pdf": [81],
+      "execution": [],
+      "conditions": [],
+      "expected_performance": {
+        "general_criteria": [],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "The criteria and parameters determined in the corresponding section of Contact Category apply to all formation members.",
+          "reference_target": "contact-40",
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "The criteria and parameters determined in the corresponding section of Contact Category apply to all formation members."
+      ],
+      "flags": [
+        "Item καθαρής παραπομπής (χωρίς υποενότητες a/b/c).",
+        "Η διατύπωση διαφέρει από τα υπόλοιπα reference items: προστίθεται «to all formation members» — ΔΕΝ είναι η τυπική φράση. Διατηρείται verbatim.",
+        "reference_target: Contact «(40) GENERAL KNOWLEDGE» (σελ. 46 PDF) → \"contact-40\"."
+      ]
+    },
+    {
+      "id": "formation-crm",
+      "numbers": [],
+      "name": "CRM",
+      "heading_verbatim": "CRM",
+      "pages_pdf": [81],
+      "execution": [],
+      "conditions": [],
+      "expected_performance": {
+        "general_criteria": [],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "The criteria and parameters determined in the corresponding section of Contact Category apply.",
+          "reference_target": "contact-crm",
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "The criteria and parameters determined in the corresponding section of Contact Category apply."
+      ],
+      "flags": [
+        "ΑΝΑΡΙΘΜΗΤΟ item — δεν φέρει «(N)» στο πρωτότυπο, άρα numbers=[]. Το id δεν μπορεί να παραχθεί από τον κανόνα «<category>-<zero-padded first number>»· δόθηκε \"formation-crm\" (ίδια σύμβαση με το αντίστοιχο CRM της Contact Category).",
+        "Είναι το ΤΕΛΕΥΤΑΙΟ item της κατηγορίας Formation. Η σελ. 82 PDF είναι ΕΝΤΕΛΩΣ ΚΕΝΗ (0 χαρακτήρες, 0 words κατά PyMuPDF) και η σελ. 83 ξεκινά νέα κατηγορία «e. VFR NAVIGATION PERFORMANCE CRITERIA».",
+        "reference_target: Contact «CRM» (σελ. 47 PDF, επίσης αναρίθμητο) → \"contact-crm\". Αν το chunk της Contact χρησιμοποίησε άλλο id για το CRM, χρειάζεται ευθυγράμμιση."
+      ]
+    }
+  ]
+}

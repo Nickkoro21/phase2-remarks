@@ -1,0 +1,1459 @@
+{
+  "source": "Human Factors in Aviation & Military Aviation.md",
+  "purpose": "Cause-side phrase bank for T-6A gradesheet remarks (BaD 3-1 §41.f/§41.g). Every term is attested in the source document, either verbatim or as a composite label whose components are attested; nothing is invented.",
+  "remark_template": "SP, due to <cause_phrase>, did not <precise deviation>, with the result <quantified outcome>. Fill <cause_phrase> ONLY from concepts whose applicability is cause_slot or cause_slot_caution. Concepts with applicability=context_only carry «cause_phrases»: [] by design; their wordings are held in «debrief_phrases» and belong to the debrief, never to the written remark.",
+  "field_semantics": {
+    "cause_phrases": "Noun phrases that fit grammatically after «due to» and stand alone as the cause. They contain no result clause and no internal comma: the deviation belongs to the «did not …» slot and the outcome to the «with the result …» slot. Empty for every context_only concept.",
+    "debrief_phrases": "Present only on context_only concepts. Framings for IP-led debrief, safety channels and recurrent training. They are NOT gradesheet wording and must never be written into a remark."
+  },
+  "applicability_legend": {
+    "cause_slot": "May be used directly in the «due to …» slot of a gradesheet remark as an SP-attributable cause.",
+    "cause_slot_caution": "May be used in the cause slot, but carries a disciplinary or medical implication — use only on observed/reported fact and with squadron-standard wording.",
+    "context_only": "Framework, supervisory, organizational or debrief-tool concept. NOT an SP-attributable cause. Such concepts carry «cause_phrases»: [] and hold their wordings in «debrief_phrases», for debrief, safety channels or IP notes only — never the gradesheet cause slot."
+  },
+  "gradesheet_item_naming": "typical_gradesheet_items follow data/manifest.json item names, normalized: trailing periods removed, «G –AWARENESS» written «G-AWARENESS». Match case-insensitively after stripping punctuation. The FULL manifest name is reproduced, including any parenthetical qualifier — «STRAIGHT-IN (FLAPS LDG, FLAPS UP, FLAPS Τ/Ο)», not «STRAIGHT-IN». Manifest typos and non-Latin characters are reproduced verbatim so the cross-reference stays exact: «INSTRUMET PROCEDURES», «FORMATION INTERGRITY», and the Greek Τ (U+03A4) and Ο (U+039F) inside «Τ/Ο». All 45 distinct item names used here resolve against data/manifest.json under this rule. The same name may exist in more than one category (contact / instrument / formation / vfr_navigation).",
+  "concepts": [
+    {
+      "id": "hf-attention-bottleneck",
+      "term": "attention bottleneck",
+      "category": "attention_management",
+      "applicability": "cause_slot",
+      "definition_short": "An attention failure in which one salient minor problem captures the whole crew so completely that flying and cross-check duties lapse. At Eastern 401 a burnt-out nose-gear indicator bulb captured the attention of all three flight deck crew; the document states that no amount of stick-and-rudder skill can fix it.",
+      "cause_phrases": [
+        "an attention bottleneck on a single caution indication at the expense of the instrument cross-check",
+        "attention captured by a minor system indication while the aircraft state went unmonitored",
+        "locking onto one malfunction instead of continuing to fly the aircraft",
+        "absorption in a cockpit indication that left the descent rate unmonitored"
+      ],
+      "typical_gradesheet_items": ["BASIC A/C CONTROL", "EMERGENCY PROCEDURES", "AIRPORT TRAFFIC PATTERN", "AREA AWARENESS", "CLEARING"],
+      "case_refs": ["Eastern 401", "United 173"],
+      "source_anchor": "§2 (1960s–1970s — Ergonomics and SHELL; 1978 — United 173 Portland); §3.3 SHELL Model — Anchor: Eastern 401"
+    },
+    {
+      "id": "hf-monitoring-cross-check",
+      "term": "monitoring/cross-check",
+      "category": "attention_management",
+      "applicability": "cause_slot",
+      "definition_short": "The TEM execution countermeasure of actively monitoring aircraft state and cross-checking instruments and the other crew member. At Asiana 214 none of the three pilots monitored the airspeed adequately; the document prescribes «active monitoring with cross-check» for glass-cockpit and HUD operations.",
+      "cause_phrases": [
+        "inadequate monitoring of airspeed during the approach",
+        "an interrupted instrument cross-check while attention remained on the HUD",
+        "absent cross-check of aircraft state against the primary flight instruments",
+        "failure to monitor the aircraft state after the configuration change"
+      ],
+      "typical_gradesheet_items": ["BASIC A/C CONTROL", "MAINTAINING COURSE", "ILS APPROACH", "LANDING PATTERN", "STRAIGHT-IN (FLAPS LDG, FLAPS UP, FLAPS Τ/Ο)", "CRM"],
+      "case_refs": ["Asiana 214", "Air France 447"],
+      "source_anchor": "§3.4 TEM countermeasures; §6.5 Asiana 214; §7.5 Automation Surprise and Mode Confusion (T-6A implication)"
+    },
+    {
+      "id": "hf-distraction",
+      "term": "Distraction",
+      "category": "attention_management",
+      "applicability": "cause_slot",
+      "definition_short": "One of the Dirty Dozen maintenance-origin human factor precursors (Dupont, Transport Canada, 1993), used in the document as a precursor state that diverts the operator from the task in hand.",
+      "cause_phrases": [
+        "distraction by a secondary cockpit task during a critical phase of flight",
+        "distraction by radio traffic while established on final",
+        "distraction from the primary scan by an unrelated switch action"
+      ],
+      "typical_gradesheet_items": ["GROUND PROCEDURES", "AIRPORT TRAFFIC PATTERN", "RADIO COMMUNICATION", "BASIC A/C CONTROL", "CLEARING"],
+      "case_refs": ["Aloha 243"],
+      "source_anchor": "§3.5 Dirty Dozen — Anchor: Aloha Airlines 243"
+    },
+    {
+      "id": "hf-complacency",
+      "term": "Complacency",
+      "category": "attention_management",
+      "applicability": "cause_slot",
+      "definition_short": "A Dirty Dozen precursor state; in the Aloha 243 mapping it describes inspectors and operators treating a known, previously benign condition as requiring no further attention.",
+      "cause_phrases": [
+        "complacency on a maneuver flown repeatedly without incident",
+        "complacency toward a known but previously benign aircraft indication",
+        "complacency in a familiar pattern that replaced an active scan"
+      ],
+      "typical_gradesheet_items": ["GROUND PROCEDURES", "CLEARING", "AIRMANSHIP", "AIRPORT TRAFFIC PATTERN", "TACTICAL FORMATION"],
+      "case_refs": ["Aloha 243"],
+      "source_anchor": "§3.5 Dirty Dozen — Anchor: Aloha Airlines 243"
+    },
+    {
+      "id": "hf-lack-of-awareness",
+      "term": "Lack of Awareness",
+      "category": "situational_awareness",
+      "applicability": "cause_slot",
+      "definition_short": "A Dirty Dozen precursor state: failure to recognize the significance of information that is available. In the Aloha 243 mapping it covers a flagged service bulletin and a visible crack that was seen but not acted upon.",
+      "cause_phrases": [
+        "lack of awareness of the aircraft's position relative to the area boundary",
+        "lack of awareness of the fuel state during the working phase of the sortie",
+        "lack of awareness of a published restriction that was available in the briefing material"
+      ],
+      "typical_gradesheet_items": ["AREA AWARENESS", "AIRMANSHIP", "MAINTAIN TRACK", "GENERAL KNOWLEDGE", "IN-FLIGHT PLANNING / FORMATION INTERGRITY"],
+      "case_refs": ["Aloha 243"],
+      "source_anchor": "§3.5 Dirty Dozen — Anchor: Aloha Airlines 243"
+    },
+    {
+      "id": "hf-situational-awareness",
+      "term": "situational awareness",
+      "category": "situational_awareness",
+      "applicability": "cause_slot",
+      "definition_short": "A core CRM training domain from Gen 2 onward (team building, briefing strategies, situational awareness, stress management, breaking the error chain) and a recurring construct across the document's TEM and CRM material.",
+      "cause_phrases": [
+        "loss of situational awareness of the aircraft's position in the pattern",
+        "degraded situational awareness after the unplanned change of sequence",
+        "situational awareness limited to the instrument in use"
+      ],
+      "typical_gradesheet_items": ["AREA AWARENESS", "AIRPORT TRAFFIC PATTERN", "MAINTAIN TRACK", "TACTICAL FORMATION", "CRM"],
+      "case_refs": [],
+      "source_anchor": "§3.6 CRM Generations 1–6 (Gen 2); §5.3 CRM Behaviors Actually Demonstrated"
+    },
+    {
+      "id": "hf-distributed-situational-awareness",
+      "term": "distributed situational awareness",
+      "category": "crm_communication",
+      "applicability": "cause_slot",
+      "definition_short": "A nameable CRM behavior demonstrated on UA232: each crew member maintains a different mental model of the aircraft state and the situation, and the models are kept consolidated by frequent plain-language cross-talk.",
+      "cause_phrases": [
+        "failure to keep the IP's and SP's mental models consolidated by cross-talk",
+        "absent plain-language cross-talk on the changing aircraft state",
+        "an unshared assessment of the aircraft state between front and rear cockpit"
+      ],
+      "typical_gradesheet_items": ["CRM", "RADIO COMMUNICATION", "IN-FLIGHT PLANNING / FORMATION INTERGRITY", "FORMATION APPROACH", "EMERGENCY PROCEDURES"],
+      "case_refs": ["United 232"],
+      "source_anchor": "§1 (takeaway 2); §5.3 CRM Behaviors Actually Demonstrated"
+    },
+    {
+      "id": "hf-mental-model",
+      "term": "mental model",
+      "category": "situational_awareness",
+      "applicability": "cause_slot",
+      "definition_short": "The crew's internal representation of aircraft state and situation. AF447 shows CRM degrading as the aircraft state diverged from the crew's mental model; the document notes that in the two-seat trainer the SP's mental model is by definition incomplete.",
+      "cause_phrases": [
+        "an aircraft state that had diverged from the SP's mental model without being reassessed",
+        "an incomplete mental model of the approach sequence that was not updated when the clearance changed",
+        "retention of the briefed mental model after the actual configuration had changed"
+      ],
+      "typical_gradesheet_items": ["BASIC A/C CONTROL", "UNUSUAL ATTITUDES RECOVERY", "HOLDING", "MISSED APPROACH", "CRM"],
+      "case_refs": ["Air France 447"],
+      "source_anchor": "§6.4 Air France 447; §7.3 The two-seat training cockpit as a CRM environment"
+    },
+    {
+      "id": "hf-workload-distribution",
+      "term": "workload distribution",
+      "category": "workload",
+      "applicability": "cause_slot",
+      "definition_short": "A trainable CRM behavior: allocating tasks so that nobody is doing everybody's job. On UA232 Haynes assigned roles explicitly. The document notes that in the IP/SP cockpit workload distribution is asymmetric and variable across the sortie.",
+      "cause_phrases": [
+        "poor workload distribution that left one crew member doing every job",
+        "failure to shed a secondary task when workload increased",
+        "workload distribution that left the SP flying and transmitting at the same time"
+      ],
+      "typical_gradesheet_items": ["CRM", "BASIC A/C CONTROL", "EMERGENCY PROCEDURES", "IN-FLIGHT PLANNING / FORMATION INTERGRITY", "INSTRUMET PROCEDURES"],
+      "case_refs": ["United 232"],
+      "source_anchor": "§1 (takeaway 2); §5.3 Workload distribution under impossible load; §7.3"
+    },
+    {
+      "id": "hf-workload-management",
+      "term": "workload management",
+      "category": "workload",
+      "applicability": "cause_slot",
+      "definition_short": "A TEM execution countermeasure, listed alongside monitoring/cross-check, by which the crew manages task load so that threats are handled before they become errors.",
+      "cause_phrases": [
+        "inadequate workload management during the approach phase",
+        "task sequencing that concentrated all cockpit workload inside the turn",
+        "workload management that left the checklist unfinished before the descent"
+      ],
+      "typical_gradesheet_items": ["CRM", "GROUND PROCEDURES", "DESCENT - TRAFFIC PATTERN ENTRY", "ILS APPROACH", "MISSION PLANNING / BRIEFING"],
+      "case_refs": ["US Airways 1549"],
+      "source_anchor": "§3.4 Threat and Error Management (countermeasures); §6.3 US Airways 1549"
+    },
+    {
+      "id": "hf-role-assignment",
+      "term": "explicit role assignment",
+      "category": "crm_communication",
+      "applicability": "cause_slot",
+      "definition_short": "The behavior of stating who does what under load — Haynes on UA232, de Crespigny on QF32, Sullenberger's «my aircraft» / «get the QRH» inside the first twenty seconds on US Airways 1549. The document notes that speed of role allocation matters more than depth of communication when the clock is short.",
+      "cause_phrases": [
+        "absent explicit role assignment when the malfunction occurred",
+        "an unstated transfer of aircraft control between cockpits",
+        "delayed role allocation in the first seconds after the abnormal indication",
+        "ambiguity over who was flying and who was working the procedure"
+      ],
+      "typical_gradesheet_items": ["CRM", "EMERGENCY PROCEDURES", "RADIO COMMUNICATION", "AIRMANSHIP", "LEAD CHANGE"],
+      "case_refs": ["United 232", "Qantas 32", "US Airways 1549"],
+      "source_anchor": "§3.4 (QF32); §5.2–§5.3 UA232; §6.3 US Airways 1549"
+    },
+    {
+      "id": "hf-inquiry-and-advocacy",
+      "term": "inquiry and advocacy",
+      "category": "crm_communication",
+      "applicability": "cause_slot",
+      "definition_short": "A nameable CRM behavior: openly questioning assumptions, testing hypotheses and discarding approaches that do not work without ego cost. It is also the TEM review countermeasure (evaluation/inquiry).",
+      "cause_phrases": [
+        "failure to question an assumption that was already contradicted by the instruments",
+        "absent inquiry when the observed aircraft performance did not match the expected",
+        "no advocacy of an alternative course of action once the first plan had clearly failed"
+      ],
+      "typical_gradesheet_items": ["CRM", "AIRMANSHIP", "EMERGENCY PROCEDURES", "MISSION PLANNING / BRIEFING", "GENERAL KNOWLEDGE"],
+      "case_refs": ["United 232"],
+      "source_anchor": "§1 (takeaway 2); §3.4 TEM review countermeasures; §5.3 Inquiry and advocacy"
+    },
+    {
+      "id": "hf-leadership-and-followership",
+      "term": "leadership and followership",
+      "category": "crm_communication",
+      "applicability": "cause_slot",
+      "definition_short": "A CRM behavior pair demonstrated on UA232: Haynes accepted outside expertise onto the controls without hesitation, and Fitch followed Haynes' command authority while exercising independent technical judgment.",
+      "cause_phrases": [
+        "failure to exercise formation lead responsibilities after the lead change",
+        "followership that did not include independent technical judgment on the flown parameters",
+        "reluctance to accept direction once the IP had taken the aircraft"
+      ],
+      "typical_gradesheet_items": ["CRM", "LEAD CHANGE", "FORMATION APPROACH", "AIRMANSHIP", "MISSION PLANNING / BRIEFING"],
+      "case_refs": ["United 232"],
+      "source_anchor": "§1 (takeaway 2); §5.3 Leadership and followership"
+    },
+    {
+      "id": "hf-authority-gradient",
+      "term": "authority gradient",
+      "category": "crm_communication",
+      "applicability": "cause_slot",
+      "definition_short": "The steepness of the command relationship on the flight deck. Military hierarchy is steeper than civilian by design — a feature in combat, a bug in CRM — and the trainer environment amplifies it because the student is continuously evaluated and the IP holds career-impacting authority.",
+      "cause_phrases": [
+        "an authority gradient in the IP/SP cockpit that suppressed the upward challenge",
+        "reluctance to challenge a decision perceived as the instructor's prerogative",
+        "an unvoiced disagreement with the flown profile because of the evaluation relationship",
+        "deference to the front cockpit that replaced the SP's own assessment"
+      ],
+      "typical_gradesheet_items": ["CRM", "AIRMANSHIP", "RADIO COMMUNICATION", "EMERGENCY PROCEDURES", "FORMATION APPROACH"],
+      "case_refs": ["Tenerife", "Smolensk Tu-154M", "Asiana 214", "Czar 52"],
+      "source_anchor": "§2 (1977 — Tenerife); §4.6 Authority gradient cuts both ways; §6.2 Smolensk; §6.5 Asiana 214; §7.3 Military-Specific Stressors"
+    },
+    {
+      "id": "hf-lack-of-assertiveness",
+      "term": "Lack of Assertiveness",
+      "category": "crm_communication",
+      "applicability": "cause_slot",
+      "definition_short": "A Dirty Dozen precursor state, reinforced by the document's Asiana 214 lesson: «Unable to comply» is a complete sentence, and so is «going around» — both must be sayable across every rank and culture gradient, including from SP to IP.",
+      "cause_phrases": [
+        "lack of assertiveness in stating «unable» when the clearance could not be complied with",
+        "failure to call the go-around once the approach was no longer stable",
+        "lack of assertiveness in voicing a recognized unsafe condition",
+        "an unstated request for a repeat of the instruction that was not understood"
+      ],
+      "typical_gradesheet_items": ["CRM", "GO AROUND", "RADIO COMMUNICATION", "AIRMANSHIP", "LANDING PATTERN"],
+      "case_refs": ["Asiana 214", "Aloha 243"],
+      "source_anchor": "§3.5 Dirty Dozen; §6.5 Asiana 214 (transferable lesson); §9.2 recommendation 7"
+    },
+    {
+      "id": "hf-non-standard-phraseology",
+      "term": "non-standard phraseology",
+      "category": "crm_communication",
+      "applicability": "cause_slot",
+      "definition_short": "Departure from standard radio and crew phraseology. At Tenerife it appeared in three places — «we are now at takeoff», the controller's «OK», and «OK, we'll report when we're clear» — and is one of the aligned holes in the canonical Swiss Cheese accident.",
+      "cause_phrases": [
+        "non-standard phraseology that left the intention ambiguous to the controller",
+        "an unstandard read-back that did not confirm the actual clearance",
+        "phraseology that could be read as either a position report or a takeoff call",
+        "a transmission that masked the reply from the other station"
+      ],
+      "typical_gradesheet_items": ["RADIO COMMUNICATION", "COMMUNICATION", "CRM", "GROUND PROCEDURES", "VISUAL SIGNALS"],
+      "case_refs": ["Tenerife"],
+      "source_anchor": "§2 (1977 — Tenerife); §3.1 Tenerife as the canonical demonstration; §10 question 5"
+    },
+    {
+      "id": "hf-plain-language-communication",
+      "term": "plain-language communication",
+      "category": "crm_communication",
+      "applicability": "cause_slot",
+      "definition_short": "A context-driven adaptation demonstrated on UA232: the crew dropped most jargon and reverted to plain English with ATC («we have no controls» rather than a technical description).",
+      "cause_phrases": [
+        "a technically worded transmission where plain language was required to convey the emergency",
+        "failure to state the problem in plain language to ATC",
+        "jargon that obscured the aircraft's actual condition"
+      ],
+      "typical_gradesheet_items": ["RADIO COMMUNICATION", "COMMUNICATION", "EMERGENCY PROCEDURES", "CRM"],
+      "case_refs": ["United 232"],
+      "source_anchor": "§5.3 Plain-language communication"
+    },
+    {
+      "id": "hf-lack-of-communication",
+      "term": "Lack of Communication",
+      "category": "crm_communication",
+      "applicability": "cause_slot",
+      "definition_short": "The first of the Dirty Dozen precursor states; in the document it is also the founding CRM problem — on United 173 the first officer and flight engineer hinted at the fuel state and were not heard.",
+      "cause_phrases": [
+        "lack of communication of the recognized problem to the other cockpit",
+        "an indirect hint instead of a direct statement of the aircraft state",
+        "failure to pass a required call at the briefed point"
+      ],
+      "typical_gradesheet_items": ["CRM", "RADIO COMMUNICATION", "COMMUNICATION", "VISUAL SIGNALS", "GROUND PROCEDURES"],
+      "case_refs": ["United 173", "Aloha 243"],
+      "source_anchor": "§2 (1978 — United 173 Portland); §3.5 Dirty Dozen"
+    },
+    {
+      "id": "hf-lack-of-teamwork",
+      "term": "Lack of Teamwork",
+      "category": "crm_communication",
+      "applicability": "cause_slot",
+      "definition_short": "A Dirty Dozen precursor state describing the failure of the crew to operate as a coordinated unit.",
+      "cause_phrases": [
+        "an unagreed division of lookout responsibility within the formation",
+        "an uncoordinated response between the two cockpits during the procedure",
+        "failure to work the problem as a crew rather than individually"
+      ],
+      "typical_gradesheet_items": ["CRM", "FORMATION APPROACH", "TACTICAL FORMATION", "CLEARING", "MISSION PLANNING / BRIEFING"],
+      "case_refs": ["Aloha 243"],
+      "source_anchor": "§3.5 Dirty Dozen — Anchor: Aloha Airlines 243"
+    },
+    {
+      "id": "hf-crew-resource-management",
+      "term": "crew resource management (CRM)",
+      "category": "crm_communication",
+      "applicability": "cause_slot",
+      "definition_short": "In the document's framing, CRM is behavior, not vocabulary — identifiable, trainable behaviors rather than a platitude. In DoD HFACS 7.0 it appears as a Tier 2 personnel factor (CRM/coordination).",
+      "cause_phrases": [
+        "inadequate crew coordination between front and rear cockpit",
+        "a CRM breakdown in which the required behavior — explicit role assignment — was not performed",
+        "crew coordination that did not survive the increase in workload"
+      ],
+      "typical_gradesheet_items": ["CRM", "EMERGENCY PROCEDURES", "AIRMANSHIP", "FORMATION APPROACH", "MISSION PLANNING / BRIEFING"],
+      "case_refs": ["United 232", "United 173"],
+      "source_anchor": "§1 (takeaway 2); §3.2 Tier 2 Preconditions (personnel factors); §5.4 CRM as a behavioral repertoire, not a vocabulary"
+    },
+    {
+      "id": "hf-two-seat-training-cockpit",
+      "term": "the two-seat training cockpit as a CRM environment",
+      "category": "crm_communication",
+      "applicability": "cause_slot",
+      "definition_short": "The document's IP/SP construct: structurally analogous to a captain/first officer dyad with three differences — a steeper upward inquiry path (evaluation authority), asymmetric and variable workload distribution across the sortie, and an SP mental model that is by definition incomplete.",
+      "cause_phrases": [
+        "reluctance to raise the concern upward across the evaluation relationship",
+        "an unclear handover of aircraft control between IP and SP",
+        "asymmetric workload across the sortie that was not rebalanced when the SP saturated"
+      ],
+      "typical_gradesheet_items": ["CRM", "BASIC A/C CONTROL", "AIRMANSHIP", "EMERGENCY PROCEDURES"],
+      "case_refs": [],
+      "source_anchor": "§7.3 The two-seat training cockpit as a CRM environment"
+    },
+    {
+      "id": "hf-knock-it-off-and-unable-discipline",
+      "term": "«knock-it-off» and «unable» discipline",
+      "category": "crm_communication",
+      "applicability": "cause_slot",
+      "definition_short": "The document's squadron standard: knock-it-off call standards are part of the crew brief, and both calls must be trained upward and downward in the IP/SP cockpit, practiced, and never punished.",
+      "cause_phrases": [
+        "failure to make the knock-it-off call when the briefed parameters were exceeded",
+        "continuation of the engagement after the conditions for a knock-it-off had been met",
+        "failure to state «unable» when the instruction could not be safely complied with"
+      ],
+      "typical_gradesheet_items": ["CRM", "AIRMANSHIP", "TACTICAL FORMATION", "EXTENDED TRAIL", "RADIO COMMUNICATION"],
+      "case_refs": [],
+      "source_anchor": "§8.2 Briefing and Debriefing Techniques; §9.2 recommendation 7"
+    },
+    {
+      "id": "hf-breaking-the-error-chain",
+      "term": "breaking the error chain",
+      "category": "error_types",
+      "applicability": "cause_slot",
+      "definition_short": "A CRM Gen 2 training module: recognizing and interrupting the accumulating sequence of errors before it produces an accident.",
+      "cause_phrases": [
+        "failure to break the error chain at the first recognizable deviation",
+        "continuation of a sequence of small errors without any interruption of the profile",
+        "no reset of the maneuver after the first parameter was exceeded"
+      ],
+      "typical_gradesheet_items": ["AIRMANSHIP", "CRM", "PRECISION - AEROBATIC MANEUVERS", "LANDING PATTERN", "EMERGENCY PROCEDURES"],
+      "case_refs": [],
+      "source_anchor": "§3.6 CRM Generations 1–6 (Gen 2)"
+    },
+    {
+      "id": "hf-mission-completion-bias",
+      "term": "mission-completion bias",
+      "category": "decision_making",
+      "applicability": "cause_slot",
+      "definition_short": "«Press-on-itis» and «get-home-itis»: a crew progresses past go/no-go decision points because of mission importance, schedule pressure, or the social/political weight of the passenger. Antidotes named in the document are explicit pre-mission divert criteria, named decision points, and command-level support for the divert.",
+      "cause_phrases": [
+        "mission-completion bias in pressing on past the briefed decision point",
+        "mission-completion bias that overrode the briefed divert criteria",
+        "continuation of the sortie past a go/no-go point in order to complete the syllabus event",
+        "schedule pressure that displaced the divert decision"
+      ],
+      "typical_gradesheet_items": ["AIRMANSHIP", "MISSION PLANNING / BRIEFING", "IN-FLIGHT PLANNING / FORMATION INTERGRITY", "EMERGENCY PROCEDURES", "MAINTAIN TRACK"],
+      "case_refs": ["Smolensk Tu-154M", "American 1420"],
+      "source_anchor": "§6.2 Smolensk; §7.3 Military-Specific Stressors — Mission-completion bias"
+    },
+    {
+      "id": "hf-important-passenger-effect",
+      "term": "«important passenger» effect",
+      "category": "decision_making",
+      "applicability": "context_only",
+      "definition_short": "One of the three dominant framework lenses the document applies to Smolensk, alongside authority gradient and mission-completion bias — the Commander-in-Chief of the Polish Air Force was present in the cockpit during the final approach. The document's rule is that when the people on your manifest carry more political weight than your decision authority, your real go/no-go authority has already been compromised.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "a passenger whose weight on the manifest exceeded the crew's practical go/no-go authority",
+        "a high-profile mission brief that did not explicitly empty the back-seat passenger of operational say"
+      ],
+      "typical_gradesheet_items": ["MISSION PLANNING / BRIEFING", "CRM"],
+      "case_refs": ["Smolensk Tu-154M"],
+      "source_anchor": "§6.2 Polish Air Force Tu-154M, Smolensk — Dominant framework lens; Transferable lesson"
+    },
+    {
+      "id": "hf-continuation-bias",
+      "term": "continuation bias",
+      "category": "decision_making",
+      "applicability": "cause_slot",
+      "definition_short": "The document cites continuation bias, together with fatigue, as an NTSB-identified contributing factor in the American 1420 runway overrun during a severe thunderstorm landing at the end of a long duty day.",
+      "cause_phrases": [
+        "continuation bias in maintaining the approach after the conditions had deteriorated below the briefed minima",
+        "continuation of the plan after the information that invalidated it had already been received",
+        "continuation bias at the end of a long duty day"
+      ],
+      "typical_gradesheet_items": ["AIRMANSHIP", "LANDING", "ILS APPROACH", "MISSED APPROACH", "GO AROUND"],
+      "case_refs": ["American 1420"],
+      "source_anchor": "§7.2 Fatigue Science — Anchor accidents (American 1420)"
+    },
+    {
+      "id": "hf-divert-criteria-and-decision-points",
+      "term": "explicit divert criteria / named decision points",
+      "category": "decision_making",
+      "applicability": "cause_slot",
+      "definition_short": "The document's antidote to mission-completion bias and the required content of a TEM-structured brief: divert criteria stated explicitly and decision points named before the sortie.",
+      "cause_phrases": [
+        "the absence of explicit divert criteria in the mission brief",
+        "no named decision point for the weather deterioration that had been forecast",
+        "a briefed decision point that was passed without any decision being made"
+      ],
+      "typical_gradesheet_items": ["MISSION PLANNING / BRIEFING", "IN-FLIGHT PLANNING / FORMATION INTERGRITY", "AIRMANSHIP", "MAINTAIN TRACK"],
+      "case_refs": [],
+      "source_anchor": "§7.3 Mission-completion bias (antidotes); §8.2 Briefing structure"
+    },
+    {
+      "id": "hf-overconfidence",
+      "term": "mental state of overconfidence",
+      "category": "decision_making",
+      "applicability": "cause_slot",
+      "definition_short": "A DoD HFACS Tier 2 precondition identified in the Czar 52 mapping, alongside the established cockpit gradient and the crew composition problem.",
+      "cause_phrases": [
+        "overconfidence in the margin available at that airspeed and bank",
+        "an overconfident assessment of personal capability on a maneuver flown for the first time unsupervised",
+        "overconfidence that replaced the required pre-maneuver checks"
+      ],
+      "typical_gradesheet_items": ["AIRMANSHIP", "PRECISION - AEROBATIC MANEUVERS", "BASIC A/C CONTROL", "G-AWARENESS", "SPIN PREVENTION /SPIN RECOVERY"],
+      "case_refs": ["Czar 52"],
+      "source_anchor": "§4.3 HFACS Mapping — Tier 2 Preconditions"
+    },
+    {
+      "id": "hf-threats",
+      "term": "threats",
+      "category": "threat_error_management",
+      "applicability": "cause_slot",
+      "definition_short": "In TEM, events or errors outside the flight crew's influence that increase operational complexity — weather, terrain, ATC issues, mechanical anomalies, passenger problems, aircraft state. QF32 is framed in terms of anticipated and unanticipated threats.",
+      "cause_phrases": [
+        "an unanticipated threat that had not been covered in the mission brief",
+        "failure to identify a known threat during mission planning",
+        "an anticipated threat that was briefed but not managed in flight"
+      ],
+      "typical_gradesheet_items": ["MISSION PLANNING / BRIEFING", "IN-FLIGHT PLANNING / FORMATION INTERGRITY", "AIRMANSHIP", "EMERGENCY PROCEDURES"],
+      "case_refs": ["United 232", "Qantas 32"],
+      "source_anchor": "§3.4 Threat and Error Management (TEM) — Core constructs"
+    },
+    {
+      "id": "hf-tem-errors",
+      "term": "errors (TEM)",
+      "category": "threat_error_management",
+      "applicability": "cause_slot",
+      "definition_short": "In TEM, crew actions or inactions that lead to a deviation from intentions or expectations.",
+      "cause_phrases": [
+        "an error of omission in the sequence that had been briefed",
+        "an action that produced a deviation from the briefed intention",
+        "an inaction at the point where the procedure required a positive input"
+      ],
+      "typical_gradesheet_items": ["GROUND PROCEDURES", "BASIC A/C CONTROL", "EMERGENCY PROCEDURES", "CRM"],
+      "case_refs": [],
+      "source_anchor": "§3.4 Threat and Error Management (TEM) — Core constructs"
+    },
+    {
+      "id": "hf-undesired-aircraft-state",
+      "term": "Undesired Aircraft State (UAS)",
+      "category": "threat_error_management",
+      "applicability": "cause_slot",
+      "definition_short": "Flight-crew-induced aircraft conditions that clearly reduce safety margins: altitude/heading/speed deviations, incorrect automation configuration, unstable approach. In TEM the crew manages UAS before they become incidents or accidents.",
+      "cause_phrases": [
+        "failure to recognize the undesired aircraft state before it developed further",
+        "an undesired aircraft state that was allowed to persist rather than being corrected",
+        "an incorrect automation configuration that was not detected",
+        "an unstable approach that was continued instead of being terminated"
+      ],
+      "typical_gradesheet_items": ["BASIC A/C CONTROL", "LANDING PATTERN", "STRAIGHT-IN (FLAPS LDG, FLAPS UP, FLAPS Τ/Ο)", "GO AROUND", "ILS APPROACH", "UNUSUAL ATTITUDES RECOVERY"],
+      "case_refs": ["Asiana 214", "United 232"],
+      "source_anchor": "§3.4 TEM — Core constructs; §5.2 TEM Mapping"
+    },
+    {
+      "id": "hf-countermeasures",
+      "term": "countermeasures",
+      "category": "threat_error_management",
+      "applicability": "cause_slot",
+      "definition_short": "The three TEM countermeasure groups: planning (briefings, contingency management), execution (monitoring/cross-check, workload management), and review (evaluation/inquiry).",
+      "cause_phrases": [
+        "absent contingency management in the pre-takeoff brief",
+        "planning countermeasures that did not cover the briefed abnormal",
+        "no rolling review of the plan as the situation changed",
+        "execution countermeasures — monitoring and cross-check — that lapsed under workload"
+      ],
+      "typical_gradesheet_items": ["MISSION PLANNING / BRIEFING", "CRM", "GROUND PROCEDURES", "EMERGENCY PROCEDURES", "IN-FLIGHT PLANNING / FORMATION INTERGRITY"],
+      "case_refs": ["United 232", "Qantas 32"],
+      "source_anchor": "§3.4 TEM — Core constructs; §5.2 TEM Mapping (Countermeasures)"
+    },
+    {
+      "id": "hf-undetected-errors",
+      "term": "errors that went undetected or were not responded to",
+      "category": "error_types",
+      "applicability": "cause_slot",
+      "definition_short": "The central LOSA finding quoted in the document: approximately 45% of observed errors in the LOSA Archive went undetected or were not responded to by the flight crew — making error detection, not error avoidance, the heart of TEM.",
+      "cause_phrases": [
+        "an error that went undetected because the cross-check was not re-established",
+        "a recognized error that was not responded to before it produced a deviation",
+        "failure to detect the mis-set value at the point where it could still be trapped"
+      ],
+      "typical_gradesheet_items": ["GROUND PROCEDURES", "BASIC A/C CONTROL", "HOLDING", "COURSE INTERCEPTS", "CRM"],
+      "case_refs": [],
+      "source_anchor": "§3.4 TEM — LOSA Collaborative Archive finding"
+    },
+    {
+      "id": "hf-detect-trap-mitigate",
+      "term": "detect, trap, mitigate",
+      "category": "error_types",
+      "applicability": "cause_slot",
+      "definition_short": "The Gen 5 (Error Management / TEM-integrated) CRM principle from Helmreich's recognition that error is endemic: the goal is to detect, trap and mitigate error rather than to prevent it.",
+      "cause_phrases": [
+        "failure to trap an error that had already been detected",
+        "no mitigation applied after the error was recognized",
+        "an error that was neither detected nor trapped before it affected the aircraft state"
+      ],
+      "typical_gradesheet_items": ["CRM", "GROUND PROCEDURES", "EMERGENCY PROCEDURES", "AIRMANSHIP"],
+      "case_refs": ["US Airways 1549"],
+      "source_anchor": "§3.6 CRM Generations 1–6 (Gen 5)"
+    },
+    {
+      "id": "hf-acts-errors",
+      "term": "errors (skill-based, decision, perceptual)",
+      "category": "error_types",
+      "applicability": "cause_slot",
+      "definition_short": "DoD HFACS 7.0 Tier 1 (Acts) error categories, as distinct from violations. The Czar 52 mapping cites a skill-based error — allowing airspeed to bleed below sustainable in the turn.",
+      "cause_phrases": [
+        "a skill-based error in control input during the recovery",
+        "a decision error in selecting a profile the conditions did not support",
+        "a perceptual error in judging closure and lateral separation",
+        "a skill-based error in trim technique"
+      ],
+      "typical_gradesheet_items": ["BASIC A/C CONTROL", "UNUSUAL ATTITUDES RECOVERY", "LANDING", "TURNING REJOIN", "PRECISION - AEROBATIC MANEUVERS"],
+      "case_refs": ["Czar 52"],
+      "source_anchor": "§3.2 HFACS — Tier 1 Acts; §4.3 HFACS Mapping"
+    },
+    {
+      "id": "hf-hfacs-act-nanocodes",
+      "term": "Tier 1 Acts nanocodes (AE101–AE104)",
+      "category": "error_types",
+      "applicability": "cause_slot",
+      "definition_short": "Example DoD HFACS 7.0 nanocodes quoted in the document: AE101 Unintended Operation of Equipment, AE102 Checklist Not Followed Correctly, AE103 Procedure Not Followed Correctly, AE104 Over/Undercontrolled Aircraft.",
+      "cause_phrases": [
+        "unintended operation of equipment (AE101) during the configuration change",
+        "a checklist not followed correctly (AE102) before takeoff",
+        "a procedure not followed correctly (AE103) during the recovery",
+        "an over-controlled aircraft (AE104) in the correction",
+        "an under-controlled aircraft (AE104) during the roll-out"
+      ],
+      "typical_gradesheet_items": ["GROUND PROCEDURES", "BASIC A/C CONTROL", "EMERGENCY PROCEDURES", "SPIN PREVENTION /SPIN RECOVERY", "LANDING"],
+      "case_refs": [],
+      "source_anchor": "§3.2 HFACS — Tier 1 Acts (nanocodes)"
+    },
+    {
+      "id": "hf-violations-routine-exceptional",
+      "term": "violations (routine, exceptional)",
+      "category": "discipline_deviance",
+      "applicability": "cause_slot_caution",
+      "definition_short": "The second DoD HFACS Tier 1 Acts category. Czar 52 is mapped as an exceptional violation — intentional disregard of bank, pitch, and altitude limits; the C-17 Elmendorf mishap as intentional violation of demonstrated maneuver limits.",
+      "cause_phrases": [
+        "intentional disregard of the published bank limit",
+        "a routine violation of a procedure that the squadron habitually abbreviates",
+        "an exceptional violation of the briefed altitude floor",
+        "intentional violation of demonstrated maneuver limits"
+      ],
+      "typical_gradesheet_items": ["AIRMANSHIP", "SPECIAL REQUIREMENTS", "PRECISION - AEROBATIC MANEUVERS", "AIRPORT TRAFFIC PATTERN", "TACTICAL FORMATION"],
+      "case_refs": ["Czar 52", "C-17 Elmendorf"],
+      "source_anchor": "§3.2 HFACS — Tier 1 Acts; §4.3 HFACS Mapping; §6.1 C-17A Elmendorf"
+    },
+    {
+      "id": "hf-slips-lapses-mistakes",
+      "term": "honest error / human error (inadvertent slips, lapses, or mistakes)",
+      "category": "just_culture",
+      "applicability": "cause_slot",
+      "definition_short": "The just-culture category in which the operator's intent was correct and the execution was wrong. The Reason substitution test decides it: if a comparably qualified peer would not have behaved differently, the focus belongs on the system, not the individual.",
+      "cause_phrases": [
+        "an inadvertent slip in selecting the adjacent switch",
+        "a lapse in which a briefed item was omitted under workload",
+        "a mistake in applying the correct procedure to the wrong condition"
+      ],
+      "typical_gradesheet_items": ["GROUND PROCEDURES", "EMERGENCY PROCEDURES", "GENERAL KNOWLEDGE", "CRM", "BASIC A/C CONTROL"],
+      "case_refs": [],
+      "source_anchor": "§7.4 Just Culture vs Blame Culture"
+    },
+    {
+      "id": "hf-at-risk-behavior",
+      "term": "at-risk behavior",
+      "category": "just_culture",
+      "applicability": "cause_slot_caution",
+      "definition_short": "A conscious choice in the face of risk, where the risk is not recognized or is mistakenly believed to be justified. The document's prescribed responses are coaching, training and system redesign — not discipline.",
+      "cause_phrases": [
+        "at-risk behavior in accepting a margin mistakenly believed sufficient",
+        "a conscious choice to continue with a risk that had not been recognized as such",
+        "at-risk behavior in deferring a required action to a later and busier phase"
+      ],
+      "typical_gradesheet_items": ["AIRMANSHIP", "SPECIAL REQUIREMENTS", "EMERGENCY PROCEDURES", "AIRPORT TRAFFIC PATTERN"],
+      "case_refs": [],
+      "source_anchor": "§7.4 Just Culture vs Blame Culture; §10 question 9"
+    },
+    {
+      "id": "hf-reckless-behavior",
+      "term": "reckless behavior",
+      "category": "just_culture",
+      "applicability": "cause_slot_caution",
+      "definition_short": "Conscious choice to take a substantial and unjustifiable risk — disregard for safety. The document states that discipline is the appropriate response, and only after the substitution test has been honestly run.",
+      "cause_phrases": [
+        "conscious disregard of a published limit despite recognized risk",
+        "reckless disregard for the safety margin required by the maneuver"
+      ],
+      "typical_gradesheet_items": ["AIRMANSHIP", "SPECIAL REQUIREMENTS"],
+      "case_refs": ["Czar 52"],
+      "source_anchor": "§7.4 Just Culture vs Blame Culture; §8.4 How to receive a report"
+    },
+    {
+      "id": "hf-substitution-test",
+      "term": "substitution test",
+      "category": "just_culture",
+      "applicability": "context_only",
+      "definition_short": "Reason's test quoted in the document: substitute the individual concerned for someone else from the same domain with comparable qualifications and experience, and ask whether they would have behaved any differently. If not, the focus belongs on the system.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "whether a comparably qualified student would have behaved differently in the same conditions",
+        "a procedural design that would have produced the same error in a comparable crew"
+      ],
+      "typical_gradesheet_items": ["CRM", "GENERAL KNOWLEDGE"],
+      "case_refs": [],
+      "source_anchor": "§7.4 Just Culture vs Blame Culture; §8.4 How to receive a report"
+    },
+    {
+      "id": "hf-just-culture",
+      "term": "just culture",
+      "category": "safety_culture",
+      "applicability": "context_only",
+      "definition_short": "The Reason/Dekker framework distinguishing honest error, at-risk behavior and reckless behavior, and applying curiosity, coaching and discipline respectively. A blame culture punishes all three indistinguishably and suppresses the reporting that safety data depends on.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "a squadron reporting environment in which the deviation had not previously been surfaced",
+        "conflation of honest error with at-risk behavior in prior feedback"
+      ],
+      "typical_gradesheet_items": ["CRM"],
+      "case_refs": ["Longford", "BP Texas City"],
+      "source_anchor": "§7.4 Just Culture vs Blame Culture; §8.4 Building and Sustaining a Healthy Safety Culture"
+    },
+    {
+      "id": "hf-normalization-of-deviance",
+      "term": "normalization of deviance",
+      "category": "discipline_deviance",
+      "applicability": "cause_slot",
+      "definition_short": "Vaughan's mechanism: people within the organization become so accustomed to a deviation that they no longer consider it deviant, despite far exceeding their own rules for elementary safety. Recognition signals given in the document are «we've always done it this way», «no one got hurt last time», «he's our best pilot», and local heroes who get away with it.",
+      "cause_phrases": [
+        "acceptance of a previously uncorrected deviation as the new working standard",
+        "normalization of a boundary push that had produced no adverse outcome on earlier sorties",
+        "a personal envelope established over previous sorties that lay outside the published limits",
+        "repetition of a technique tolerated on earlier sorties without reference to the published limit"
+      ],
+      "typical_gradesheet_items": ["AIRMANSHIP", "SPECIAL REQUIREMENTS", "AIRPORT TRAFFIC PATTERN", "PRECISION - AEROBATIC MANEUVERS", "GROUND PROCEDURES"],
+      "case_refs": ["Czar 52", "C-17 Elmendorf", "Challenger", "Columbia"],
+      "source_anchor": "§1 (takeaway 4); §4.5 Normalization of Deviance in Action; §7.1 Normalization of Deviance and Drift into Failure"
+    },
+    {
+      "id": "hf-drift-into-failure",
+      "term": "drift into failure",
+      "category": "discipline_deviance",
+      "applicability": "context_only",
+      "definition_short": "Dekker's generalization of Vaughan's mechanism: cumulative, locally rational adaptations under resource and competitive pressure take an organization outside its safe envelope without any single person deciding to do so.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "a locally rational adaptation that had accumulated across the syllabus phase",
+        "an accepted local practice that had drifted outside the published envelope"
+      ],
+      "typical_gradesheet_items": ["AIRMANSHIP", "SPECIAL REQUIREMENTS"],
+      "case_refs": ["Czar 52", "C-17 Elmendorf"],
+      "source_anchor": "§2 (2011 — Drift into Failure and Safety-II); §7.1"
+    },
+    {
+      "id": "hf-norms",
+      "term": "Norms",
+      "category": "discipline_deviance",
+      "applicability": "cause_slot",
+      "definition_short": "The twelfth Dirty Dozen precursor: unwritten local practice that displaces the published standard. In the Aloha 243 mapping it covers D-checks broken into multiple shorter sessions rather than performed as a single uninterrupted inspection.",
+      "cause_phrases": [
+        "an unwritten local practice followed in place of the published procedure",
+        "a squadron norm applied where the checklist specified otherwise",
+        "reliance on how the maneuver is habitually flown rather than on the published criteria"
+      ],
+      "typical_gradesheet_items": ["GROUND PROCEDURES", "AIRMANSHIP", "SPECIAL REQUIREMENTS", "GENERAL KNOWLEDGE"],
+      "case_refs": ["Aloha 243"],
+      "source_anchor": "§3.5 Dirty Dozen — Anchor: Aloha Airlines 243"
+    },
+    {
+      "id": "hf-fatigue",
+      "term": "fatigue",
+      "category": "fatigue_physiology",
+      "applicability": "cause_slot_caution",
+      "definition_short": "Not tiredness but a physiological state with measurable cognitive consequences; the document states that treating it as a willpower problem is the equivalent of treating hypoxia as a willpower problem. It is also one of the Dirty Dozen precursors.",
+      "cause_phrases": [
+        "fatigue accumulated across consecutive sorties",
+        "fatigue at the end of a long duty day",
+        "reported fatigue that had not been declared before the sortie"
+      ],
+      "typical_gradesheet_items": ["BASIC A/C CONTROL", "AIRMANSHIP", "MISSION PLANNING / BRIEFING", "CRM", "GENERAL KNOWLEDGE"],
+      "case_refs": ["Colgan 3407", "American 1420", "Air India Express 812", "Aloha 243"],
+      "source_anchor": "§1 (takeaway 3); §3.5 Dirty Dozen; §7.2 Fatigue Science"
+    },
+    {
+      "id": "hf-sleep-debt",
+      "term": "sleep debt",
+      "category": "fatigue_physiology",
+      "applicability": "cause_slot_caution",
+      "definition_short": "Cumulative shortfall from individual baseline sleep requirement (typically 7–9 hours per 24). Five consecutive nights of 4–5 hours produce cognitive impairment comparable to 24 hours of continuous wakefulness.",
+      "cause_phrases": [
+        "accumulated sleep debt from consecutive short nights",
+        "a cumulative shortfall from baseline sleep requirement over the preceding week",
+        "reported sleep in the prior 24 hours well below the individual baseline"
+      ],
+      "typical_gradesheet_items": ["BASIC A/C CONTROL", "AIRMANSHIP", "MISSION PLANNING / BRIEFING", "GENERAL KNOWLEDGE"],
+      "case_refs": ["Colgan 3407"],
+      "source_anchor": "§7.2 Fatigue Science — Sleep debt"
+    },
+    {
+      "id": "hf-microsleeps",
+      "term": "microsleeps",
+      "category": "fatigue_physiology",
+      "applicability": "cause_slot_caution",
+      "definition_short": "Involuntary 1–15 second sleep episodes during sustained wakefulness, particularly within the WOCL. The pilot is not aware they have occurred, and they are sufficient to miss a callout, an altitude alert, or a TCAS RA.",
+      "cause_phrases": [
+        "a microsleep episode sufficient to miss the required callout",
+        "an unnoticed lapse of consciousness of the order of seconds during the cruise segment"
+      ],
+      "typical_gradesheet_items": ["BASIC A/C CONTROL", "MAINTAIN TRACK", "RADIO COMMUNICATION", "CLEARING"],
+      "case_refs": [],
+      "source_anchor": "§7.2 Fatigue Science — Microsleeps"
+    },
+    {
+      "id": "hf-window-of-circadian-low",
+      "term": "window of circadian low (WOCL)",
+      "category": "fatigue_physiology",
+      "applicability": "cause_slot_caution",
+      "definition_short": "From the Borbély two-process model: performance is degraded when the sleep homeostat (Process S) is high and the circadian process (Process C) is low — the WOCL, roughly 03:00–05:00 for a day-adapted human.",
+      "cause_phrases": [
+        "a show time inside the window of circadian low",
+        "a predawn sortie flown during the circadian low",
+        "high sleep pressure combined with a circadian trough at the time of the event"
+      ],
+      "typical_gradesheet_items": ["BASIC A/C CONTROL", "GROUND PROCEDURES", "AIRMANSHIP", "MISSION PLANNING / BRIEFING"],
+      "case_refs": [],
+      "source_anchor": "§7.2 Fatigue Science — Two-process model (Borbély, 1982)"
+    },
+    {
+      "id": "hf-cognitive-impairment-equivalents",
+      "term": "cognitive impairment equivalents",
+      "category": "fatigue_physiology",
+      "applicability": "context_only",
+      "definition_short": "17–19 hours of continuous wakefulness produces psychomotor performance equivalent to a 0.05% blood alcohol concentration; 24 hours equals approximately 0.10% BAC (Dawson & Reid 1997; Lamond & Dawson 1999; Williamson & Feyer 2000).",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "a duty period extending beyond 17 hours of continuous wakefulness",
+        "continuous wakefulness at the level associated with measurable psychomotor impairment"
+      ],
+      "typical_gradesheet_items": ["AIRMANSHIP", "MISSION PLANNING / BRIEFING"],
+      "case_refs": [],
+      "source_anchor": "§1 (takeaway 3); §7.2 Fatigue Science — Cognitive impairment equivalents"
+    },
+    {
+      "id": "hf-sustained-operations",
+      "term": "Sustained operations",
+      "category": "fatigue_physiology",
+      "applicability": "context_only",
+      "definition_short": "The first of the three military-specific fatigue issues named in the document, alongside trainer-syndrome and show-time/finis-flight pressure: 24+ hour combat sorties, alert shifts, and night ops where the WOCL collides with critical task workload.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "alert shifts and night operations where the WOCL collides with critical task workload",
+        "a 24+ hour operational cycle of a kind the T-6A training syllabus does not reproduce"
+      ],
+      "typical_gradesheet_items": ["MISSION PLANNING / BRIEFING", "AIRMANSHIP"],
+      "case_refs": [],
+      "source_anchor": "§7.2 Fatigue Science — Military-specific issues (Sustained operations)"
+    },
+    {
+      "id": "hf-trainer-syndrome",
+      "term": "trainer-syndrome",
+      "category": "fatigue_physiology",
+      "applicability": "context_only",
+      "definition_short": "A military-specific fatigue issue named in the document: back-to-back IP sorties — particularly with multiple students per day — compress duty into windows where the IP fatigues faster than the airframe.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "back-to-back sorties compressed into a single duty period",
+        "a third consecutive sortie in the same duty day"
+      ],
+      "typical_gradesheet_items": ["AIRMANSHIP", "MISSION PLANNING / BRIEFING", "CRM"],
+      "case_refs": [],
+      "source_anchor": "§7.2 Fatigue Science — Military-specific issues (Trainer-syndrome)"
+    },
+    {
+      "id": "hf-show-time-and-finis-flight-pressure",
+      "term": "show-time and finis-flight pressure",
+      "category": "stress",
+      "applicability": "cause_slot_caution",
+      "definition_short": "A military-specific fatigue and scheduling stressor named in the document — the same factor that put Wolff in the Czar 52 cockpit on short notice, added to the schedule the morning of the flight without full mission planning involvement.",
+      "cause_phrases": [
+        "a late addition to the schedule without full mission planning involvement",
+        "short-notice crewing that left the mission planning phase incomplete",
+        "show-time pressure that truncated the pre-flight preparation"
+      ],
+      "typical_gradesheet_items": ["MISSION PLANNING / BRIEFING", "GROUND PROCEDURES", "AIRMANSHIP", "CRM"],
+      "case_refs": ["Czar 52"],
+      "source_anchor": "§4.3 Tier 2 Preconditions (crew composition); §7.2 Military-specific issues"
+    },
+    {
+      "id": "hf-fatigue-risk-management-systems",
+      "term": "Fatigue Risk Management Systems (FRMS)",
+      "category": "fatigue_physiology",
+      "applicability": "context_only",
+      "definition_short": "Codified in ICAO Doc 9966; combines hard duty/rest limits, bio-mathematical modeling (SAFE, FAID, FRI, FAST/SAFTE), individual fatigue reporting, and incident-data feedback loops.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "a duty and rest pattern outside the limits the squadron's fatigue management applies",
+        "an unreported fatigue state that the individual reporting pathway existed to capture"
+      ],
+      "typical_gradesheet_items": ["MISSION PLANNING / BRIEFING"],
+      "case_refs": [],
+      "source_anchor": "§7.2 Fatigue Science — FRMS; §9.1 FRMS maturation; §9.2 recommendation 2"
+    },
+    {
+      "id": "hf-hypoxia",
+      "term": "hypoxia",
+      "category": "fatigue_physiology",
+      "applicability": "cause_slot_caution",
+      "definition_short": "A physiological factor listed in the document as especially insidious in unpressurized or rapidly depressurized cockpits; it notes that the T-6A has experienced documented physiological events. Recognition and team callout discipline are the trained responses.",
+      "cause_phrases": [
+        "insidious onset of hypoxia symptoms that were not recognized",
+        "delayed recognition of a physiological event in the cockpit",
+        "failure to apply the hypoxia recognition and callout discipline"
+      ],
+      "typical_gradesheet_items": ["EMERGENCY PROCEDURES", "GENERAL KNOWLEDGE", "CRM", "AIRMANSHIP"],
+      "case_refs": [],
+      "source_anchor": "§7.3 Physiological factors; §8.1 CRM/TEM Scenarios (Hypoxia event simulated)"
+    },
+    {
+      "id": "hf-g-loc-and-a-loc",
+      "term": "G-LOC and A-LOC",
+      "category": "fatigue_physiology",
+      "applicability": "cause_slot_caution",
+      "definition_short": "G-induced loss of consciousness and almost-loss of consciousness. The document notes the T-6A is capable of +7/-3.5 G, that G-tolerance is not binary, and that it is degraded by dehydration, fatigue, and recent illness.",
+      "cause_phrases": [
+        "reduced G-tolerance associated with dehydration and fatigue",
+        "an inadequate anti-G straining maneuver for the G applied",
+        "G-onset applied faster than the protective response could be established"
+      ],
+      "typical_gradesheet_items": ["G-AWARENESS", "PRECISION - AEROBATIC MANEUVERS", "CONFIDENCE MANEUVERS", "TACTICAL FORMATION", "EXTENDED TRAIL"],
+      "case_refs": [],
+      "source_anchor": "§7.3 Physiological factors — G-LOC and A-LOC"
+    },
+    {
+      "id": "hf-spatial-disorientation",
+      "term": "spatial disorientation",
+      "category": "fatigue_physiology",
+      "applicability": "cause_slot",
+      "definition_short": "Described in the document as the leading killer in fighter and trainer aviation in low-visibility or night flight, with Type I (unrecognized) the most dangerous. The related trained discipline is instrument transition, tested by the inadvertent-IMC scenario.",
+      "cause_phrases": [
+        "spatial disorientation on entering cloud during the turn",
+        "unrecognized (Type I) spatial disorientation in the absence of an external horizon",
+        "a false attitude perception that was not resolved against the instruments",
+        "delayed instrument transition after inadvertent entry into IMC"
+      ],
+      "typical_gradesheet_items": ["UNUSUAL ATTITUDES RECOVERY", "BASIC A/C CONTROL", "INSTRUMET PROCEDURES", "CONFIDENCE MANEUVERS", "EMERGENCY PROCEDURES"],
+      "case_refs": ["Air India Express 812"],
+      "source_anchor": "§7.3 Physiological factors — Spatial disorientation; §8.1 Inadvertent IMC during low-level/contact sortie"
+    },
+    {
+      "id": "hf-stress",
+      "term": "Stress",
+      "category": "stress",
+      "applicability": "cause_slot",
+      "definition_short": "A Dirty Dozen precursor state and a CRM Gen 2 training module (stress management).",
+      "cause_phrases": [
+        "stress associated with the check-ride environment",
+        "stress that narrowed the scan to the parameter being evaluated",
+        "an unmanaged stress response after the abnormal indication"
+      ],
+      "typical_gradesheet_items": ["CRM", "BASIC A/C CONTROL", "EMERGENCY PROCEDURES", "AIRMANSHIP", "SPECIAL REQUIREMENTS"],
+      "case_refs": ["Aloha 243"],
+      "source_anchor": "§3.5 Dirty Dozen; §3.6 CRM Generations 1–6 (Gen 2)"
+    },
+    {
+      "id": "hf-pressure",
+      "term": "Pressure",
+      "category": "stress",
+      "applicability": "cause_slot",
+      "definition_short": "A Dirty Dozen precursor state; in the Aloha 243 mapping it is utilization-driven scheduling pressure, and elsewhere in the document it appears as schedule and mission pressure at the go/no-go decision.",
+      "cause_phrases": [
+        "schedule pressure to complete the syllabus event within the available window",
+        "self-imposed pressure to complete the profile as briefed",
+        "pressure to keep the recovery sequence with the formation"
+      ],
+      "typical_gradesheet_items": ["AIRMANSHIP", "MISSION PLANNING / BRIEFING", "IN-FLIGHT PLANNING / FORMATION INTERGRITY", "GROUND PROCEDURES"],
+      "case_refs": ["Aloha 243"],
+      "source_anchor": "§3.5 Dirty Dozen — Anchor: Aloha Airlines 243; §7.3 Mission-completion bias"
+    },
+    {
+      "id": "hf-startle-effect",
+      "term": "startle effect",
+      "category": "stress",
+      "applicability": "cause_slot",
+      "definition_short": "Singled out by the BEA in AF447 at autopilot disconnect, and made first-order CRM content in Gen 6 (startle/surprise training). The document's departure-from-controlled-flight scenario is designed to test recovery procedure discipline under startle.",
+      "cause_phrases": [
+        "the startle effect at the onset of the departure from controlled flight",
+        "a startle response that displaced the memorized recovery sequence",
+        "surprise at an unannounced malfunction"
+      ],
+      "typical_gradesheet_items": ["SPIN PREVENTION /SPIN RECOVERY", "UNUSUAL ATTITUDES RECOVERY", "EMERGENCY PROCEDURES", "POWER ON / ELP STALLS", "TRAFFIC PATTERN STALLS"],
+      "case_refs": ["Air France 447"],
+      "source_anchor": "§2 (2009 — Air France 447); §3.6 CRM Gen 6; §6.4 Air France 447; §8.1 Departure from controlled flight"
+    },
+    {
+      "id": "hf-self-imposed-stressors",
+      "term": "fitness for duty / self-imposed stressors",
+      "category": "fatigue_physiology",
+      "applicability": "cause_slot_caution",
+      "definition_short": "A DoD HFACS 7.0 Tier 2 personnel factor, listed alongside CRM/coordination under Preconditions for Unsafe Acts.",
+      "cause_phrases": [
+        "a self-imposed stressor that reduced fitness for duty on the day",
+        "a fitness-for-duty condition that had not been declared before the sortie",
+        "dehydration and inadequate rest before a high-G profile"
+      ],
+      "typical_gradesheet_items": ["G-AWARENESS", "AIRMANSHIP", "MISSION PLANNING / BRIEFING", "CRM"],
+      "case_refs": [],
+      "source_anchor": "§3.2 HFACS — Tier 2 Preconditions (personnel factors)"
+    },
+    {
+      "id": "hf-condition-of-the-operator",
+      "term": "condition of the operator (cognitive, psycho-behavioral, adverse physiological)",
+      "category": "fatigue_physiology",
+      "applicability": "cause_slot",
+      "definition_short": "A DoD HFACS 7.0 Tier 2 precondition group, alongside environmental factors (physical and technological) and personnel factors.",
+      "cause_phrases": [
+        "an adverse physiological condition present at the time of the sortie",
+        "a cognitive condition that reduced available capacity for the task",
+        "a psycho-behavioral state that shaped the choice of technique"
+      ],
+      "typical_gradesheet_items": ["AIRMANSHIP", "CRM", "BASIC A/C CONTROL", "EMERGENCY PROCEDURES"],
+      "case_refs": [],
+      "source_anchor": "§3.2 HFACS — Tier 2 Preconditions for Unsafe Acts"
+    },
+    {
+      "id": "hf-environmental-factors",
+      "term": "environmental factors (physical and technological)",
+      "category": "threat_error_management",
+      "applicability": "cause_slot",
+      "definition_short": "A DoD HFACS 7.0 Tier 2 precondition group covering the physical and technological environment in which the act occurs; in SHELL terms the L–E and L–H interfaces.",
+      "cause_phrases": [
+        "a physical environment factor — glare on the instrument face — during the turn",
+        "a technological environment factor in the display presentation used for the task",
+        "an ambient condition in the cockpit that degraded the scan"
+      ],
+      "typical_gradesheet_items": ["BASIC A/C CONTROL", "INSTRUMET PROCEDURES", "GROUND PROCEDURES", "CLEARING"],
+      "case_refs": ["Eastern 401"],
+      "source_anchor": "§3.2 HFACS — Tier 2 Preconditions; §3.3 SHELL Model"
+    },
+    {
+      "id": "hf-automation-surprise",
+      "term": "automation surprise",
+      "category": "automation",
+      "applicability": "cause_slot",
+      "definition_short": "A Gen 6 CRM domain: the automation behaves in a way the crew did not expect. In the T-6A the document places the same dynamic in miniature in the glass cockpit, HUD and integrated avionics suite.",
+      "cause_phrases": [
+        "an automation state that behaved other than the SP expected",
+        "surprise at an avionics reversion that had not been anticipated",
+        "an unexpected mode change that was not identified before the aircraft state changed"
+      ],
+      "typical_gradesheet_items": ["INSTRUMET PROCEDURES", "NAVIGATION WITH GPS", "BASIC A/C CONTROL", "ILS APPROACH", "GENERAL KNOWLEDGE"],
+      "case_refs": ["Air France 447", "Asiana 214"],
+      "source_anchor": "§3.6 CRM Gen 6; §7.5 Automation Surprise and Mode Confusion"
+    },
+    {
+      "id": "hf-mode-confusion",
+      "term": "mode confusion",
+      "category": "automation",
+      "applicability": "cause_slot",
+      "definition_short": "Sarter & Woods' construct, front and center at Asiana 214: the captain selected FLCH and did not understand that the autothrottle had reverted to HOLD and would not protect speed. The document's counter-discipline is knowledge of mode hierarchy plus active monitoring with cross-check.",
+      "cause_phrases": [
+        "mode confusion over the selected avionics mode and what it was protecting",
+        "an incorrect assumption about which mode was active",
+        "insufficient knowledge of the mode hierarchy for the selection made",
+        "selection of a mode that did not do what the intuitive reading suggested"
+      ],
+      "typical_gradesheet_items": ["INSTRUMET PROCEDURES", "NAVIGATION WITH GPS", "ILS APPROACH", "GENERAL KNOWLEDGE", "BASIC A/C CONTROL"],
+      "case_refs": ["Asiana 214"],
+      "source_anchor": "§6.5 Asiana 214; §7.5 Automation Surprise and Mode Confusion; §10 question 8"
+    },
+    {
+      "id": "hf-automation-paradox",
+      "term": "automation paradox",
+      "category": "automation",
+      "applicability": "context_only",
+      "definition_short": "Bainbridge's «Ironies of Automation» (1983): automation deskills the operator precisely in the regime where, when the automation fails, the operator most needs the skill — «when manual take-over is needed there is likely to be something wrong in the process».",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "an automation-supported technique that had displaced the underlying manual skill",
+        "reliance on a protection that was no longer available in the degraded mode"
+      ],
+      "typical_gradesheet_items": ["BASIC A/C CONTROL", "INSTRUMET PROCEDURES", "STANDBY INSTRUMENTS APPROACH"],
+      "case_refs": ["Air France 447"],
+      "source_anchor": "§2 (2009 — Air France 447); §7.5 Automation Surprise and Mode Confusion"
+    },
+    {
+      "id": "hf-over-reliance-on-automation",
+      "term": "over-reliance on automation",
+      "category": "automation",
+      "applicability": "cause_slot",
+      "definition_short": "The NTSB's Asiana 214 probable-cause element: mismanagement of the approach combined with over-reliance on automation that the crew «did not fully understand». Parasuraman and Riley typed the failure modes as use, misuse, disuse, and abuse of automation.",
+      "cause_phrases": [
+        "over-reliance on automation that was not fully understood",
+        "misuse of an automated function in a regime it was not intended to cover",
+        "acceptance of the automated solution without an independent check of the parameters",
+        "reliance on the automated navigation solution in place of the basic instrument scan"
+      ],
+      "typical_gradesheet_items": ["NAVIGATION WITH GPS", "INSTRUMET PROCEDURES", "MAINTAIN TRACK", "MAP READING", "PILOTAGE"],
+      "case_refs": ["Asiana 214", "Air France 447"],
+      "source_anchor": "§6.5 Asiana 214; §7.5 Automation Surprise and Mode Confusion (T-6A implication)"
+    },
+    {
+      "id": "hf-manual-flying-skill-decay",
+      "term": "manual-skill deficit / skill decay",
+      "category": "automation",
+      "applicability": "cause_slot",
+      "definition_short": "The AF447 lesson: sustained automation reliance creates a manual-skill deficit that no checklist can paper over when the automation hands control back unexpectedly. The document's counter is frequent manual flying to prevent skill decay.",
+      "cause_phrases": [
+        "manual handling skill that had decayed through sustained reliance on the automation",
+        "insufficient recent practice in raw-data manual flying",
+        "degraded basic instrument scan after prolonged automated navigation"
+      ],
+      "typical_gradesheet_items": ["BASIC A/C CONTROL", "STANDBY INSTRUMENTS APPROACH", "CONSTANT AIRSPEED - CONSTANT RATE CLIMBS / DESCENTS AND VERTICAL “S”", "GCA APPROACH (ASR)", "INSTRUMET PROCEDURES"],
+      "case_refs": ["Air France 447"],
+      "source_anchor": "§6.4 Air France 447; §7.5 (T-6A implication); §9.2 recommendation 6; §10 question 4"
+    },
+    {
+      "id": "hf-lack-of-knowledge",
+      "term": "Lack of Knowledge",
+      "category": "knowledge_training",
+      "applicability": "cause_slot",
+      "definition_short": "A Dirty Dozen precursor state; in the document it is exemplified at Eastern 401 by a pilot population that did not understand the autopilot's reversion logic, and at Asiana 214 by automation the crew did not fully understand.",
+      "cause_phrases": [
+        "insufficient knowledge of the system's reversion logic",
+        "lack of knowledge of the published procedure for the condition encountered",
+        "incomplete knowledge of the limits applicable to the maneuver"
+      ],
+      "typical_gradesheet_items": ["GENERAL KNOWLEDGE", "EMERGENCY PROCEDURES", "INSTRUMET PROCEDURES", "SPECIAL REQUIREMENTS", "GROUND PROCEDURES"],
+      "case_refs": ["Eastern 401", "Asiana 214", "Aloha 243"],
+      "source_anchor": "§3.3 SHELL — Eastern 401; §3.5 Dirty Dozen; §6.5 Asiana 214"
+    },
+    {
+      "id": "hf-lack-of-resources",
+      "term": "Lack of Resources",
+      "category": "resource_management",
+      "applicability": "cause_slot",
+      "definition_short": "A Dirty Dozen precursor state covering absent or unavailable means to do the task correctly.",
+      "cause_phrases": [
+        "an unavailable resource that the briefed procedure assumed",
+        "planning conducted without the current publication for the route"
+      ],
+      "typical_gradesheet_items": ["MISSION PLANNING / BRIEFING", "GROUND PROCEDURES", "MAP READING"],
+      "case_refs": ["Aloha 243"],
+      "source_anchor": "§3.5 Dirty Dozen — Anchor: Aloha Airlines 243"
+    },
+    {
+      "id": "hf-distributed-expertise",
+      "term": "distributed expertise",
+      "category": "resource_management",
+      "applicability": "cause_slot",
+      "definition_short": "The UA232 lesson made squadron-specific: Fitch was a passenger. The IP in the back seat, the SOF, the duty officer and the experienced wingman are crew members on the sortie even if they are not in the cockpit.",
+      "cause_phrases": [
+        "failure to use the expertise available outside the cockpit",
+        "no use of the SOF or duty officer as a resource during the abnormal",
+        "an unasked question to the resource that could have resolved it"
+      ],
+      "typical_gradesheet_items": ["CRM", "EMERGENCY PROCEDURES", "RADIO COMMUNICATION", "AIRMANSHIP"],
+      "case_refs": ["United 232"],
+      "source_anchor": "§5.4 The value of distributed expertise"
+    },
+    {
+      "id": "hf-briefing-and-threat-identification",
+      "term": "threat identification in mission planning",
+      "category": "planning_briefing",
+      "applicability": "cause_slot",
+      "definition_short": "The document's TEM-based briefing structure and minimum threat set for every T-6A sortie: weather; crew fatigue (objective sleep in prior 24 and 48 hours, subjective Samn-Perelli or NASA-TLX); currency; aircraft status; formation dynamics; low-level/area considerations; mission-specific factors.",
+      "cause_phrases": [
+        "a threat that was present in the minimum threat set but not identified in the brief",
+        "mission planning that did not address the forecast weather at the recovery time",
+        "a currency shortfall that was not addressed in the mission planning phase",
+        "formation dynamics — lead/wing experience asymmetry — that were not briefed"
+      ],
+      "typical_gradesheet_items": ["MISSION PLANNING / BRIEFING", "IN-FLIGHT PLANNING / FORMATION INTERGRITY", "GROUND PROCEDURES", "MAINTAIN TRACK"],
+      "case_refs": [],
+      "source_anchor": "§8.2 Briefing structure; §8.3 Threat Identification in Mission Planning"
+    },
+    {
+      "id": "hf-operational-risk-management",
+      "term": "Operational Risk Management (ORM)",
+      "category": "planning_briefing",
+      "applicability": "cause_slot",
+      "definition_short": "ORM as actually used, not as a checkbox. The document states that caution-range mission scoring is valid data: if the mission is in caution range, the response is to mitigate the threats, not to fly it as if the score were green.",
+      "cause_phrases": [
+        "a caution-range ORM score that was treated as if it were green",
+        "an ORM assessment completed as a checkbox without any mitigation of the identified threats",
+        "identified risk that was scored but not mitigated before the sortie"
+      ],
+      "typical_gradesheet_items": ["MISSION PLANNING / BRIEFING", "GROUND PROCEDURES", "AIRMANSHIP"],
+      "case_refs": ["C-17 Elmendorf"],
+      "source_anchor": "§8.2 Good ORM practices"
+    },
+    {
+      "id": "hf-debrief-models-desc-stear",
+      "term": "DESC model / STEAR model",
+      "category": "planning_briefing",
+      "applicability": "context_only",
+      "definition_short": "DESC (Describe — Express — Suggest — Consequences) for addressing observed performance issues, and STEAR (Setup — Threats — Errors — Actions — Results) for a structured TEM-based debrief. Both are described as far more useful than free-form discussion.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "a debrief point that had not been closed from the previous sortie",
+        "an unaddressed performance issue carried forward from the previous debrief"
+      ],
+      "typical_gradesheet_items": ["MISSION PLANNING / BRIEFING", "CRM"],
+      "case_refs": [],
+      "source_anchor": "§8.2 Debriefing structure"
+    },
+    {
+      "id": "hf-active-failures",
+      "term": "active failures",
+      "category": "error_types",
+      "applicability": "cause_slot",
+      "definition_short": "In Reason's Swiss Cheese Model, the unsafe acts at the sharp end — the pilot's mis-set autopilot, the controller's missed callout — as distinct from latent failures.",
+      "cause_phrases": [
+        "an unsafe act at the sharp end that the defenses did not trap",
+        "a mis-set cockpit selection that went uncorrected",
+        "a missed callout at the point where the defense depended on it"
+      ],
+      "typical_gradesheet_items": ["GROUND PROCEDURES", "BASIC A/C CONTROL", "RADIO COMMUNICATION", "CRM"],
+      "case_refs": ["Tenerife", "Czar 52"],
+      "source_anchor": "§3.1 Reason's Swiss Cheese Model — Core constructs"
+    },
+    {
+      "id": "hf-latent-failures",
+      "term": "latent failures",
+      "category": "supervision_organizational",
+      "applicability": "context_only",
+      "definition_short": "Organizational pathogens — design decisions, procurement choices, training shortfalls, regulatory gaps — that lie dormant for months or years and require a triggering event to manifest. On Czar 52 the active failures were the spark; the latent failures were the powder.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "a training shortfall in the syllabus that had not previously been surfaced",
+        "a procedural gap that had lain dormant until this condition arose"
+      ],
+      "typical_gradesheet_items": ["GENERAL KNOWLEDGE"],
+      "case_refs": ["Tenerife", "Czar 52", "Air France 447"],
+      "source_anchor": "§3.1 Reason's Swiss Cheese Model; §4.4 Reason Overlay"
+    },
+    {
+      "id": "hf-swiss-cheese-model",
+      "term": "Swiss Cheese Model",
+      "category": "frameworks",
+      "applicability": "context_only",
+      "definition_short": "Reason (1990): accidents result from the simultaneous alignment of holes in successive defensive layers (procedures, training, hardware safeguards, supervision, regulation). Tenerife is the canonical demonstration, with holes aligned across at least seven layers.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "which of the defensive layers — procedures, training, hardware safeguards, supervision — the deviation passed through",
+        "an alignment of conditions that the normal defenses would otherwise have separated"
+      ],
+      "typical_gradesheet_items": [],
+      "case_refs": ["Tenerife", "Czar 52"],
+      "source_anchor": "§3.1 Reason's Swiss Cheese Model — Anchor: Tenerife 1977"
+    },
+    {
+      "id": "hf-shell-model",
+      "term": "SHELL model",
+      "category": "frameworks",
+      "applicability": "context_only",
+      "definition_short": "Edwards (1972)/Hawkins (1987): Liveware at the center interacting with Software (procedures, checklists, symbology, manuals), Hardware (aircraft, controls, displays), Environment (physical, organizational, regulatory) and other Liveware (crew, ATC, maintenance). The mismatched interfaces, not the components, are where accidents originate.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "a mismatch between the published procedure and the display presentation actually used",
+        "a cockpit layout interface that did not support the task as trained"
+      ],
+      "typical_gradesheet_items": ["GENERAL KNOWLEDGE", "INSTRUMET PROCEDURES"],
+      "case_refs": ["Eastern 401"],
+      "source_anchor": "§3.3 SHELL Model — Anchor: Eastern 401"
+    },
+    {
+      "id": "hf-hfacs",
+      "term": "Human Factors Analysis and Classification System (DoD HFACS 7.0)",
+      "category": "frameworks",
+      "applicability": "context_only",
+      "definition_short": "A four-tier taxonomy — Acts, Preconditions, Supervision, Organizational Influences — operationalizing Reason's model. DoD HFACS 7.0 is the version codified in current Air Force Safety Automated System (AFSAS) practice for Class A, B and Class E Physiological mishaps under AFI/DAFI 91-204.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "a Tier 1 act that the taxonomy classifies as an error rather than a violation",
+        "which Tier 2 precondition applied — environmental factors, condition of the operator, or personnel factors"
+      ],
+      "typical_gradesheet_items": [],
+      "case_refs": ["Czar 52"],
+      "source_anchor": "§3.2 HFACS — Anchor: Czar 52; §4.3 HFACS Mapping"
+    },
+    {
+      "id": "hf-hfacs-tier3-supervisory",
+      "term": "Supervisory Failures (Tier 3)",
+      "category": "supervision_organizational",
+      "applicability": "context_only",
+      "definition_short": "Inadequate supervision, planned inappropriate operations, failure to correct a known problem, supervisory violations. In Czar 52 this is the heavy-loaded tier — multiple commanders had documented Holland's pattern across three years without effective corrective action.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "a known problem that had not been corrected before this sortie",
+        "a planned operation whose profile exceeded what the aircraft or the student could support"
+      ],
+      "typical_gradesheet_items": [],
+      "case_refs": ["Czar 52", "C-17 Elmendorf"],
+      "source_anchor": "§3.2 HFACS — Tier 3; §4.3 HFACS Mapping — Tier 3 Supervisory"
+    },
+    {
+      "id": "hf-hfacs-tier4-organizational",
+      "term": "Organizational Influences (Tier 4)",
+      "category": "supervision_organizational",
+      "applicability": "context_only",
+      "definition_short": "Resource management, organizational climate, organizational process. In Czar 52 a wing culture that accepted a «hot stick» reputation as an asset rather than a hazard, and an airshow demonstration program without rigorous external review and standardization.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "an organizational climate that treated the boundary push as an asset",
+        "an organizational process without effective external review of the profile"
+      ],
+      "typical_gradesheet_items": [],
+      "case_refs": ["Czar 52"],
+      "source_anchor": "§3.2 HFACS — Tier 4; §4.3 HFACS Mapping — Tier 4 Organizational Influences"
+    },
+    {
+      "id": "hf-supervisory-courage",
+      "term": "supervisory courage",
+      "category": "supervision_organizational",
+      "applicability": "context_only",
+      "definition_short": "The document's central squadron lesson: Lt Col McGeehan tried to ground Bud Holland and was overruled. Supervisory courage is described as the failure mode that defines or prevents the next Class A, and the individual courage of one squadron commander unsupported by the chain above is not enough.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "a pattern that had been reported but not acted upon at squadron level",
+        "an uncomfortable conversation that the chain had declined to have"
+      ],
+      "typical_gradesheet_items": [],
+      "case_refs": ["Czar 52"],
+      "source_anchor": "§1 (takeaway 5); §4.6 Lessons for a Trainer Squadron; §8.5 Recognizing and Challenging «Bud Holland» Patterns; §9.2 recommendation 4"
+    },
+    {
+      "id": "hf-safety-culture-and-reporting",
+      "term": "reporting environment / healthy safety culture",
+      "category": "safety_culture",
+      "applicability": "context_only",
+      "definition_short": "The document's squadron model: known reporting pathways (ASAP/MFOQA/USAF Safety Net or equivalent, anonymous where needed), receipt of a report with curiosity and the substitution test rather than the disciplinary instinct, and visible command support.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "a condition known informally in the squadron that had never been formally reported",
+        "an absent reporting pathway for the issue at the time it was first observed"
+      ],
+      "typical_gradesheet_items": [],
+      "case_refs": ["Longford", "BP Texas City"],
+      "source_anchor": "§7.4 Just Culture vs Blame Culture; §8.4 Building and Sustaining a Healthy Safety Culture"
+    },
+    {
+      "id": "hf-safety-ii-resilience",
+      "term": "Safety-II / resilience engineering",
+      "category": "safety_culture",
+      "applicability": "context_only",
+      "definition_short": "Hollnagel's reframing of safety as the presence of successful adaptation, not merely the absence of failure — «what goes right, not just what goes wrong». The document recommends debriefs that capture what was done right as well as what went wrong.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "an adaptation that worked on this occasion but was not the briefed technique",
+        "the successful adaptation that produced the safe outcome named so that it can be trained"
+      ],
+      "typical_gradesheet_items": ["CRM", "AIRMANSHIP"],
+      "case_refs": ["United 232", "Qantas 32"],
+      "source_anchor": "§2 (2011 — Drift into Failure and Safety-II); §9.1 Safety-II / Resilience engineering"
+    },
+    {
+      "id": "hf-adaptive-capacity",
+      "term": "adaptive capacity",
+      "category": "decision_making",
+      "applicability": "cause_slot",
+      "definition_short": "The UA232 lesson on the limits of standardization: no checklist covered total hydraulic loss, and the crew built a procedure in 44 minutes. Standardization is necessary, but adaptive capacity — from CRM training and from accepting input outside the normal authority chain — produced the outcome.",
+      "cause_phrases": [
+        "an attempt to apply a published procedure to a condition it did not cover",
+        "no adaptation of technique once the standard solution had clearly failed",
+        "rigid adherence to the briefed sequence after the conditions had changed"
+      ],
+      "typical_gradesheet_items": ["EMERGENCY PROCEDURES", "AIRMANSHIP", "CRM", "IN-FLIGHT PLANNING / FORMATION INTERGRITY"],
+      "case_refs": ["United 232"],
+      "source_anchor": "§5.4 The limits of standardization"
+    },
+    {
+      "id": "hf-crm-generations",
+      "term": "CRM Generations 1–6",
+      "category": "frameworks",
+      "applicability": "context_only",
+      "definition_short": "Helmreich, Merritt and Wilhelm's model of CRM as an evolving discipline: Gen 1 Cockpit Resource Management, Gen 2 aviation-specific modules, Gen 3 integration with technical training (LOFT/AQP), Gen 4 procedural CRM with behavioral markers, Gen 5 error management/TEM-integrated, Gen 6 resilience and automation-era CRM.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "a CRM behavioral marker that the SOP requires but that was not demonstrated",
+        "a CRM domain — automation surprise — that the sortie exposed and the training had not covered"
+      ],
+      "typical_gradesheet_items": ["CRM"],
+      "case_refs": ["United 173", "United 232", "US Airways 1549", "Air France 447"],
+      "source_anchor": "§3.6 CRM Generations 1–6"
+    },
+    {
+      "id": "hf-crm-decay",
+      "term": "decay of CRM attitudes between recurrent cycles",
+      "category": "crm_communication",
+      "applicability": "context_only",
+      "definition_short": "A well-documented implementation problem noted in the document (Helmreich & Taggart, 1995): CRM attitudes decay between recurrent training cycles.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "CRM behaviors that had decayed since the last recurrent training cycle",
+        "a coordination standard that had lapsed since it was last practiced"
+      ],
+      "typical_gradesheet_items": ["CRM"],
+      "case_refs": [],
+      "source_anchor": "§3.6 CRM Generations 1–6 — Limitations"
+    },
+    {
+      "id": "hf-dirty-dozen",
+      "term": "Dirty Dozen",
+      "category": "frameworks",
+      "applicability": "context_only",
+      "definition_short": "Gordon Dupont, Transport Canada, 1993 — twelve maintenance-origin human factor precursors: Lack of Communication, Complacency, Lack of Knowledge, Distraction, Lack of Teamwork, Fatigue, Lack of Resources, Pressure, Lack of Assertiveness, Stress, Lack of Awareness, Norms.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "the precursor states carried into the sortie and whether any of them was named in the brief",
+        "a combination of precursor states — fatigue and pressure — present on the day"
+      ],
+      "typical_gradesheet_items": ["GROUND PROCEDURES", "AIRMANSHIP"],
+      "case_refs": ["Aloha 243"],
+      "source_anchor": "§3.5 Dirty Dozen — Anchor: Aloha Airlines 243"
+    },
+    {
+      "id": "hf-threat-and-error-management",
+      "term": "Threat and Error Management (TEM)",
+      "category": "frameworks",
+      "applicability": "context_only",
+      "definition_short": "Helmreich, Klinect and Wilhelm's operational triad out of the LOSA program — threats → errors → undesired aircraft states, each managed by countermeasures. Adopted by ICAO Doc 9803 and successor TEM material.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "the point in the sortie at which the threat became an error and the countermeasure available there",
+        "the point at which the error became an undesired aircraft state and what would have trapped it"
+      ],
+      "typical_gradesheet_items": ["MISSION PLANNING / BRIEFING", "CRM"],
+      "case_refs": ["United 232", "Qantas 32", "US Airways 1549"],
+      "source_anchor": "§3.4 Threat and Error Management (TEM) — Anchor: United 232"
+    },
+    {
+      "id": "hf-pilot-mental-health",
+      "term": "pilot mental health / peer support",
+      "category": "safety_culture",
+      "applicability": "context_only",
+      "definition_short": "Put on the industry agenda at scale by Germanwings 9525: mental health, the patient-confidentiality / public-safety interface, and pilot peer support programs. The document recommends a protected squadron peer-support pathway and treating mental health as a flight safety issue.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "a personal condition that the peer-support pathway existed to surface",
+        "an undeclared condition affecting fitness to fly"
+      ],
+      "typical_gradesheet_items": [],
+      "case_refs": ["Germanwings 9525"],
+      "source_anchor": "§2 (2015 — Germanwings 9525); §9.1 Mental health post-Germanwings; §9.2 recommendation 3"
+    },
+    {
+      "id": "hf-rpa-human-factors",
+      "term": "UAS/RPA human factors",
+      "category": "emerging_technology",
+      "applicability": "context_only",
+      "definition_short": "Documented MQ-9/MQ-1 operator fatigue, distributed crew situational awareness, and the psychological load of «warfare from a trailer». Absence of vestibular and proprioceptive cues, latency-bridged decision making, and the home-life/operations interface produce different fatigue and stress signatures than manned operations.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "an absence of vestibular and proprioceptive cues in the training device used",
+        "latency-bridged decision making in the simulated environment"
+      ],
+      "typical_gradesheet_items": [],
+      "case_refs": [],
+      "source_anchor": "§9.1 Forward Trends — UAS/RPA human factors"
+    },
+    {
+      "id": "hf-neurophysiological-monitoring",
+      "term": "neuro-physiological monitoring",
+      "category": "emerging_technology",
+      "applicability": "context_only",
+      "definition_short": "HRV for workload, EEG for vigilance, eye-tracking for SA and gaze entropy, increasingly available as cockpit-embeddable sensor packages, with ethical limits on who sees the data and how it interacts with medical certification.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "an objectively measured workload level above the band the task assumes",
+        "a scan pattern measurably narrower than the task required"
+      ],
+      "typical_gradesheet_items": [],
+      "case_refs": [],
+      "source_anchor": "§9.1 Forward Trends — Neuro-physiological monitoring"
+    },
+    {
+      "id": "hf-ai-human-teaming",
+      "term": "AI co-pilot / human-AI teaming",
+      "category": "emerging_technology",
+      "applicability": "context_only",
+      "definition_short": "DARPA ALIAS / Sikorsky MATRIX autonomy and Garmin Autoland as precedents for reduced-crew and single-pilot operations; the document recommends squadrons develop training models for human-AI teaming now.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "an automated decision-support output accepted without an independent check",
+        "an unclear division of authority between the crew and the automated function"
+      ],
+      "typical_gradesheet_items": [],
+      "case_refs": [],
+      "source_anchor": "§9.1 Forward Trends — AI co-pilot / decision support"
+    },
+    {
+      "id": "hf-vr-xr-generative-training",
+      "term": "VR/XR and generative AI in training",
+      "category": "emerging_technology",
+      "applicability": "context_only",
+      "definition_short": "A forward trend in the document: affordable VR for CRM scenarios, AI-driven debrief assistants that analyze CVR-equivalent intercom recordings, and generative scenario authoring — useful provided they augment rather than replace the IP-led debrief.",
+      "cause_phrases": [],
+      "debrief_phrases": [
+        "a training device whose scenario fidelity did not reproduce the condition met in the aircraft",
+        "an AI-assisted debrief output used to augment the IP-led debrief rather than to replace it"
+      ],
+      "typical_gradesheet_items": [],
+      "case_refs": [],
+      "source_anchor": "§9.1 Forward Trends — VR/XR and generative AI in training"
+    }
+  ],
+  "usage_rules": [
+    "Cause-side vocabulary only (BaD 3-1 §41.f: precise deviation + cause; no vague wording such as «unstable on altitude»). These phrases fill the «due to …» slot; the deviation and the quantified result are written separately.",
+    "Remark template: «SP, due to <cause_phrase>, did not <precise deviation>, with the result <quantified outcome>.» Keep the quantification (feet, knots, degrees, seconds) in the result clause, not in the cause clause.",
+    "Cause slot grammar. A cause_phrase is a bare noun phrase that hangs from the preposition «due to». It carries NO result clause («so that …», «so …», «which delayed …») and NO internal comma. A result clause inside the cause slot double-books the «with the result …» slot and yields an ungrammatical run-on with two competing result clauses; a deviation stated inside it double-books «did not …». One slot, one job.",
+    "Do not cite accident cases, aircraft types or crew names in gradesheet remarks — case_refs exist for IP-led debrief and recurrent training discussion only (§9.2 rec. 5; §10 discussion questions).",
+    "Use only terminology attested in the source document. Terms commonly used elsewhere in HF literature but ABSENT from this document — «channelized attention», «task saturation», «plan continuation bias» — must not be produced; use «attention bottleneck», «workload distribution / workload management» and «mission-completion bias» / «continuation bias» instead.",
+    "One cause per observation. If two concepts apply, pick the one closest to the observed behavior and keep the other for the debrief.",
+    "Concepts marked applicability=context_only (HFACS Tier 3/4, latent failures, supervisory courage, just culture, safety culture, FRMS, frameworks, emerging technology) are NOT SP-attributable causes. Never write an organizational or supervisory factor as the cause of a student's deviation on a gradesheet. Enforced structurally: every context_only concept carries «cause_phrases»: [] and holds its wordings in «debrief_phrases», so a generator iterating concepts[].cause_phrases cannot emit them. Never read debrief_phrases into the «due to …» slot.",
+    "Concepts marked applicability=cause_slot_caution carry a disciplinary or medical implication (violations, at-risk behavior, reckless behavior, fatigue, sleep debt, microsleeps, WOCL, hypoxia, G-LOC/A-LOC, fitness for duty). Use them only on observed or reported fact, never on inference, and run the substitution test before any wording that implies at-risk or reckless behavior (§7.4, §8.4).",
+    "Name the missing behavior, not the label: «CRM is behavior, not vocabulary» (§1 takeaway 2; §5.4). Write «absent explicit role assignment», not «poor CRM».",
+    "DoD HFACS 7.0 nanocodes (AE101–AE104) may be quoted in parentheses where the squadron works to AFSAS terminology; keep the plain-English phrase primary so the remark remains readable to the student.",
+    "cause_phrases are templates: substitute the specific object of the sortie (the actual indication, instrument, mode, limit or parameter) so the remark is precise as §41.f requires. Do not leave a generic phrase where a specific one is available.",
+    "Choose the concept from typical_gradesheet_items where possible, so the cause matches the item being graded; the same item name may appear in more than one category (contact / instrument / formation / vfr_navigation).",
+    "Per §41.c/d a remark is required for every deviation from the expected code AND when performance is above the expected code; the cause phrase for a positive remark should name the behavior that was demonstrated (e.g. «explicit role assignment», «inquiry and advocacy»), not a deficiency.",
+    "Spelling follows the source document, which is uniformly American: behavior, recognize, maneuver, practiced, defense, center. Do not introduce British -our / -ise / -re forms, and keep every cause_phrase spelled consistently with the term field of its own concept — a concept whose term reads «at-risk behavior» must not spell it any other way in its own phrases.",
+    "Register. The remark is a signed evaluation document: use institutional terminology, not the source's slang or its rhetorical closings. Write «mission-completion bias», not «press-on-itis» or «get-home-itis»; write «reliance on the automated navigation solution in place of the basic instrument scan», not «flying the magenta line». The slang belongs to the debrief."
+  ]
+}

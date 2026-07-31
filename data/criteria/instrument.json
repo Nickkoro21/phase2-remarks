@@ -1,0 +1,3257 @@
+{
+  "category": "instrument",
+  "source": {
+    "file": "Phase_2_Syllabus_2025.pdf",
+    "pages_pdf": [
+      49,
+      61
+    ],
+    "chunks": [
+      {
+        "file": "criteria_instrument_a.json",
+        "pages_pdf": [
+          49,
+          55
+        ],
+        "items": 15
+      },
+      {
+        "file": "criteria_instrument_b.json",
+        "pages_pdf": [
+          55,
+          61
+        ],
+        "items": 15
+      }
+    ],
+    "conventions": {}
+  },
+  "items": [
+    {
+      "id": "instrument-01",
+      "numbers": [
+        1
+      ],
+      "name": "GROUND PROCEDURES",
+      "heading_verbatim": "(1) GROUND PROCEDURES",
+      "pages_pdf": [
+        49
+      ],
+      "body_verbatim": "As described in Contact category. Additionally, SP must know the use and operation of the A/C navigation aids and the GPS.",
+      "execution": [
+        "Additionally, SP must know the use and operation of the A/C navigation aids and the GPS."
+      ],
+      "conditions": [],
+      "expected_performance": {
+        "general_criteria": [],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "As described in Contact category.",
+          "reference_target": "contact-01",
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "contact-01",
+              "scope": "όλο το item (Contact (1) GROUND PROCEDURES, PDF σελ. 26-27) — general criteria a/–j/",
+              "basis": "verbatim (instrument-01 body_verbatim / specific_criteria.reference_text): «As described in Contact category.» Ο στόχος contact-01 έχει specific_criteria.kind=\"none\": δεν τυπώνεται υποενότητα «2/ SPECIFIC CRITERIA» και δεν υπάρχει κανένας αριθμητικός πίνακας. qualitative item — no numeric standards applicable (διαδικασίες εδάφους: mission planning, briefing, checks, taxi· καμία μετρήσιμη διάσταση πτήσης), γι' αυτό ΔΕΝ φορτώνεται ο πίνακας Basic A/C Control μέσω του 7.a(5) default. Ισχύουν τα 10 general criteria a/–j/ του contact-01 συν η πρόσθετη απαίτηση του instrument-01 (γνώση χρήσης και λειτουργίας των A/C navigation aids και του GPS)."
+            }
+          ],
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "As described in Contact category."
+      ],
+      "flags": [
+        "Το item ΔΕΝ έχει υποενότητες (a) EXECUTION / (b) CONDITIONS / (c) EXPECTED PERFORMANCE. Ολόκληρο το τυπωμένο σώμα (μία παράγραφος) διατηρείται αυτούσιο στο body_verbatim. Η πρόταση-παραπομπή 'As described in Contact category.' ΔΕΝ τοποθετείται στο execution[] (δεν είναι ρήτρα EXECUTION)· βρίσκεται στα cross_refs[] και στο specific_criteria.reference_text. Στο execution[] παραμένει μόνο η ουσιαστική δεύτερη πρόταση.",
+        "Η παραπομπή 'As described in Contact category.' αναλύθηκε σε contact-01 (Contact (1) GROUND PROCEDURES, PDF σελ. 26-27)."
+      ]
+    },
+    {
+      "id": "instrument-02",
+      "numbers": [
+        2
+      ],
+      "name": "TAKE OFF",
+      "heading_verbatim": "(2) TAKE OFF",
+      "pages_pdf": [
+        49
+      ],
+      "body_verbatim": "As described in Contact category.",
+      "execution": [],
+      "conditions": [],
+      "expected_performance": {
+        "general_criteria": [],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "As described in Contact category.",
+          "reference_target": "contact-02",
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "contact-02",
+              "scope": "όλος ο πίνακας «2/ SPECIFIC CRITERIA» του Contact (2) TAKE OFF (PDF σελ. 28) — 2 γραμμές",
+              "basis": "verbatim (instrument-02 body_verbatim / specific_criteria.reference_text): «As described in Contact category.» Lead-in του πίνακα-πηγή (contact-02): «The following parameters are set as specific criteria for T/O execution:» Αντιστοίχιση αριθμού: instrument sn 2 = «T/O» ↔ contact sn 2 = «T/O»."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "Take off Airspeed (knots)",
+              "unit": "knots",
+              "code_1_raw": "-0,+10",
+              "code_3_raw": "-0,+5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 0
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Μονόπλευρη ανοχή: μόνο υπέρβαση (+) επιτρέπεται, μηδενική ανοχή προς τα κάτω. Επιβεβαιωμένη αντιστοίχιση στήλης με x-συντεταγμένες (PyMuPDF, σελ. PDF 28): το «-0,+10» στο κελί 281.9-345.9 = στήλη «1»· το «-0,+5» στο 379.0-474.0 = στήλη «3».",
+              "provenance": "contact-02"
+            },
+            {
+              "maneuver": null,
+              "parameter": "Maintain in the center line of RWY (ft)",
+              "unit": "feet",
+              "code_1_raw": "±10",
+              "code_3_raw": "±5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Το «±» εδώ εξάγεται σωστά ως U+00B1 (σε αντίθεση με τις σελ. 30/31/33).",
+              "provenance": "contact-02"
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "As described in Contact category."
+      ],
+      "flags": [
+        "Το item ΔΕΝ έχει υποενότητες (a)/(b)/(c). Ολόκληρο το σώμα είναι μία πρόταση-παραπομπή και διατηρείται στο body_verbatim· ΔΕΝ τοποθετείται στο execution[] (δεν είναι ρήτρα EXECUTION), οπότε execution = []. Το κείμενο υπάρχει επίσης στα cross_refs[] και στο specific_criteria.reference_text.",
+        "Η παραπομπή αναλύθηκε σε contact-02 (Contact (2) TAKE OFF, PDF σελ. 27-28)."
+      ]
+    },
+    {
+      "id": "instrument-03",
+      "numbers": [
+        3
+      ],
+      "name": "STANDARD INSTRUMENT DEPARTURE (SID)",
+      "heading_verbatim": "(3) STANDARD INSTRUMENT DEPARTURE (SID)",
+      "pages_pdf": [
+        49
+      ],
+      "execution": [
+        "SP executes climb and SID."
+      ],
+      "conditions": [
+        "Day or Night (VFR/IFR – VMC/IMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Knows and executes published instrument departure, as described in MAIP, flawlessly, without IP assistance and according to Basic Control Standards."
+          },
+          {
+            "key": "b",
+            "text": "Timely corrects any track deviations."
+          },
+          {
+            "key": "c",
+            "text": "Always comply with the ATC instructions."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "table_header_verbatim": "MANEUVER PARAMETERs | D | 0 | 1 | 2 | 3 | 4",
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "COURSE DEVIATION (radials)",
+              "unit": "degrees",
+              "code_1_raw": "± 8",
+              "code_3_raw": "± 5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 8,
+                "minus": 8
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Τυπωμένη μονάδα '(radials)'· κανονικοποιήθηκε σε degrees (1 radial = 1 μοίρα ραδιοβοηθήματος)."
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "according to Basic Control Standards."
+      ],
+      "flags": [
+        "Η κεφαλίδα του πίνακα τυπώνεται 'MANEUVER PARAMETERs D 0 1 2 3 4' με πεζό 's' (μοναδική περίπτωση· όλοι οι άλλοι πίνακες του τμήματος γράφουν 'PARAMETERS'). Επιβεβαιώθηκε με PyMuPDF, δεν είναι σφάλμα εξαγωγής.",
+        "Στήλες επιβεβαιωμένες με x-συντεταγμένες (PDF σελ. 49): header col '1' x=415.3-422.0, col '3' x=496.5-503.2· '± 8' κέντρο 418.6 → κωδ. 1, '± 5' κέντρο 499.8 → κωδ. 3."
+      ]
+    },
+    {
+      "id": "instrument-04",
+      "numbers": [
+        4
+      ],
+      "name": "BASIC A/C CONTROL",
+      "heading_verbatim": "(4) BASIC A/C CONTROL",
+      "pages_pdf": [
+        49,
+        50
+      ],
+      "execution": [
+        "SP maintains control of airspeed, altitude, heading under determined tolerances in all phases of flight, such as climb, descent, level off, level flight and turns up to 30° of bank."
+      ],
+      "conditions": [
+        "Day or night (VFR/IFR – VMC/IMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "SP handles the A/C with comfort and ease and use the A/C switches flawlessly."
+          },
+          {
+            "key": "b",
+            "text": "SP controls the engine power depending on the phase of flight, as determined by Flight Manuals or as it is required in order to maintain flight parameters (altitude, airspeed and heading)."
+          },
+          {
+            "key": "c",
+            "text": "SP handles the aileron, elevator and rudder trim correctly, with comfort and ease, in the full airspeed range, flight and A/C maneuvers."
+          },
+          {
+            "key": "d",
+            "text": "SP is cognizant of the operation of radio aids and is capable of using them to maintain his/her orientation. Moreover, SP can return to the departure or fly to the alternate airport using flight instruments and radio aids."
+          },
+          {
+            "key": "e",
+            "text": "Criteria mentioned in the Contact Category corresponding section also apply."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "table_header_verbatim": "MANEUVER PARAMETERS | D | 0 | 1 | 2 | 3 | 4",
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 300΄",
+              "code_3_raw": "± 150΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Το σύμβολο ποδιών είναι U+0384 GREEK TONOS (΄), όχι apostrophe/prime."
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (KIAS)",
+              "unit": "KIAS",
+              "code_1_raw": "± 20",
+              "code_3_raw": "± 10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": null
+            },
+            {
+              "maneuver": null,
+              "parameter": "HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "± 10°",
+              "code_3_raw": "± 5°",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Και τα δύο ° είναι γνήσιο U+00B0 DEGREE SIGN."
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "Criteria mentioned in the Contact Category corresponding section also apply."
+      ],
+      "flags": [
+        "Το cross_ref του γενικού κριτηρίου e/ αναλύεται σε contact-05 (Contact (5) BASIC A/C CONTROL, PDF σελ. 29) — επιβεβαιώθηκε με αναζήτηση κειμένου.",
+        "Το «±» σε αυτή τη σελίδα είναι γνήσιο U+00B1 (ΔΕΝ εμφανίστηκε η παγίδα U+FFFF των σελ. 30/31/33/35/84).",
+        "Στήλες επιβεβαιωμένες με x-συντεταγμένες (PDF σελ. 50, πίνακας y≈253-338): header col '1' κέντρο 344.55, col '3' κέντρο 433.75· και οι 3 γραμμές δίνουν κέντρα ακριβώς 344.55 / 433.75."
+      ]
+    },
+    {
+      "id": "instrument-05",
+      "numbers": [
+        5
+      ],
+      "name": "STEEP TURNS",
+      "heading_verbatim": "(5) STEEP TURNS",
+      "pages_pdf": [
+        50
+      ],
+      "execution": [
+        "SP performs steep turns (45° κaι 60° of bank) using instrument references only."
+      ],
+      "conditions": [
+        "1/ Day only (VFR – VMC).",
+        "2/ Determined heading exit (recommended heading change: 360º)."
+      ],
+      "expected_performance": {
+        "general_criteria": [],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "table_header_verbatim": "MANEUVER PARAMETERS | D | 0 | 1 | 2 | 3 | 4",
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 300΄",
+              "code_3_raw": "± 150΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Σύμβολο ποδιών = U+0384 GREEK TONOS."
+            },
+            {
+              "maneuver": null,
+              "parameter": "SPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "± 20",
+              "code_3_raw": "± 10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": "Η ετικέτα είναι 'SPEED', όχι 'AIRSPEED' όπως στα υπόλοιπα items."
+            },
+            {
+              "maneuver": null,
+              "parameter": "HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "± 10 ο",
+              "code_3_raw": "± 5ο",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "ΚΑΙ τα δύο 'ο' είναι U+03BF GREEK SMALL LETTER OMICRON αντί για ° (U+00B0). Στον κωδ. 1 υπάρχει επιπλέον κενό: '± 10 ο'."
+            },
+            {
+              "maneuver": null,
+              "parameter": "BANK (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "± 10ο",
+              "code_3_raw": "± 5°",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Ασυνεπής τυπογραφία στην ίδια γραμμή: κωδ. 1 '10ο' με U+03BF GREEK SMALL LETTER OMICRON, κωδ. 3 '5°' με γνήσιο U+00B0 DEGREE SIGN."
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Στο EXECUTION τυπώνεται 'κaι' = U+03BA GREEK SMALL LETTER KAPPA + λατινικό 'a' + U+03B9 GREEK SMALL LETTER IOTA. Προφανώς εννοείται το αγγλικό 'and' (ελληνικό 'και' ξέμεινε από τη μετάφραση). Διατηρήθηκε verbatim.",
+        "Στα CONDITIONS '360º' χρησιμοποιεί U+00BA MASCULINE ORDINAL INDICATOR αντί για ° (U+00B0).",
+        "Η (c) EXPECTED PERFORMANCE ΔΕΝ έχει καθόλου GENERAL CRITERIA· η ενότητα SPECIFIC CRITERIA αριθμείται λανθασμένα '1/ SPECIFIC CRITERIA' αντί για '2/'. general_criteria = [].",
+        "Στήλες επιβεβαιωμένες με x-συντεταγμένες (PDF σελ. 50, πίνακας y≈557-662): header col '1' κέντρο 343.2, col '3' κέντρο 434.75· και οι 4 γραμμές αντιστοιχούν ακριβώς."
+      ]
+    },
+    {
+      "id": "instrument-06",
+      "numbers": [
+        6
+      ],
+      "name": "AIRSPEED CHANGES",
+      "heading_verbatim": "(6) AIRSPEED CHANGES",
+      "pages_pdf": [
+        50,
+        51
+      ],
+      "execution": [
+        "SP will execute airspeed changes after IP’s command or whenever required."
+      ],
+      "conditions": [
+        "Day or night (VFR/IFR – VMC/IMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": null,
+            "text": "SP is cognizant of the Airspeed Changes technique and executes them as analyzed in the Techniques and Procedures Manual. Execution must be flawless without requiring IP’s intervention."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "Same as Basic A/C Control.",
+          "reference_target": "instrument-04",
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "instrument-04",
+              "scope": "όλος ο πίνακας Basic A/C Control της Instrument category — ALTITUDE / AIRSPEED / HEADING (PDF σελ. 50)",
+              "basis": "verbatim (specific_criteria.reference_text): «Same as Basic A/C Control.» → instrument-04, ίδια κατηγορία (το (4) BASIC A/C CONTROL προηγείται μέσα στην Instrument category· βλ. flags του instrument-06). Το general criterion e/ του instrument-04 («Criteria mentioned in the Contact Category corresponding section also apply.») προσθέτει το contact-05, του οποίου οι αριθμητικές τιμές είναι ταυτόσημες (±300΄/±150΄ ύψος, ±20/±10 ταχύτητα, ±10/±5 μοίρες), οπότε δεν προκύπτει σύγκρουση τιμών."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 300΄",
+              "code_3_raw": "± 150΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Το σύμβολο ποδιών είναι U+0384 GREEK TONOS (΄), όχι apostrophe/prime.",
+              "provenance": "instrument-04"
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (KIAS)",
+              "unit": "KIAS",
+              "code_1_raw": "± 20",
+              "code_3_raw": "± 10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": null,
+              "provenance": "instrument-04"
+            },
+            {
+              "maneuver": null,
+              "parameter": "HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "± 10°",
+              "code_3_raw": "± 5°",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Και τα δύο ° είναι γνήσιο U+00B0 DEGREE SIGN.",
+              "provenance": "instrument-04"
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "Same as Basic A/C Control."
+      ],
+      "flags": [
+        "Τα GENERAL CRITERIA είναι μία ενιαία παράγραφος χωρίς γράμμα-δείκτη (a/, b/ ...)· key = null.",
+        "Η παραπομπή 'Same as Basic A/C Control.' αναλύθηκε σε instrument-04 (ίδια κατηγορία), ΟΧΙ σε contact-05: το item βρίσκεται εντός της Instrument category και το (4) BASIC A/C CONTROL προηγείται στην ίδια κατηγορία."
+      ]
+    },
+    {
+      "id": "instrument-07",
+      "numbers": [
+        7,
+        8,
+        9
+      ],
+      "name": "CONSTANT AIRSPEED - CONSTANT RATE CLIMBS / DESCENTS AND VERTICAL “S”",
+      "heading_verbatim": "(7), (8), (9) CONSTANT AIRSPEED - CONSTANT RATE CLIMBS / DESCENTS AND VERTICAL “S”",
+      "pages_pdf": [
+        51
+      ],
+      "execution_lead_in_verbatim": "SP executes:",
+      "execution": [
+        "1/ Climbs / descents at constant airspeed.",
+        "2/ Climbs / descents at constant airspeed and rate.",
+        "3/ Vertical S."
+      ],
+      "conditions": [
+        "Day or night (VFR/IFR – VMC/IMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "SP knows and executes climbs / descents at constant airspeed / rate and vertical S, as described in the Techniques and Procedures Manual, without mistakes and IP’s intervention."
+          },
+          {
+            "key": "b",
+            "text": "A/C control must be smooth, continuous and in a way that does not induce extreme or continuous A/C attitude changes, in order to correct flight parameter deviations."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "table_header_verbatim": "MANEUVER PARAMETERS | D | 0 | 1 | 2 | 3 | 4",
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "CLIMB / DESCENT RATE (feet/min)",
+              "unit": "feet_per_min",
+              "code_1_raw": "± 300’",
+              "code_3_raw": "± 150",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "ΑΣΥΜΜΕΤΡΗ ΤΥΠΟΓΡΑΦΙΑ: ο κωδ. 1 τυπώνεται '300’' (με U+2019) ενώ ο κωδ. 3 τυπώνεται '150' ΧΩΡΙΣ σύμβολο ποδιών. Δεν διορθώθηκε σιωπηρά."
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "± 20",
+              "code_3_raw": "± 10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": null
+            },
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 300’",
+              "code_3_raw": "± 150’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Σύμβολο ποδιών = U+2019 RIGHT SINGLE QUOTATION MARK (σε αντίθεση με τις σελ. 50 όπου είναι U+0384 GREEK TONOS)."
+            },
+            {
+              "maneuver": null,
+              "parameter": "BANK (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "± 10°",
+              "code_3_raw": "± 5°",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": null
+            },
+            {
+              "maneuver": null,
+              "parameter": "HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "± 10°",
+              "code_3_raw": "± 5°",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": null
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "GROUPED ITEM: μία επικεφαλίδα καλύπτει τα items (7), (8) και (9). id από τον πρώτο αριθμό.",
+        "Η εισαγωγική φράση πριν τις ρήτρες 1/ 2/ 3/ (PDF σελ. 51, y=285.2) δεν συμπεριλήφθηκε στο execution[] (καθαρό lead-in χωρίς κριτήριο), σύμφωνα με τη σύμβαση του σχήματος· αποθηκεύεται αυτούσια στο execution_lead_in_verbatim.",
+        "Τα εισαγωγικά στο 'VERTICAL “S”' είναι U+201C / U+201D (typographic), όχι ASCII.",
+        "Στήλες επιβεβαιωμένες με x-συντεταγμένες (PDF σελ. 51): header col '1' κέντρο 405.4, col '3' κέντρο 494.0· και οι 5 γραμμές αντιστοιχούν ακριβώς."
+      ]
+    },
+    {
+      "id": "instrument-10",
+      "numbers": [
+        10
+      ],
+      "name": "UNUSUAL ATTITUDES RECOVERY",
+      "heading_verbatim": "(10) UNUSUAL ATTITUDES RECOVERY",
+      "pages_pdf": [
+        51,
+        52
+      ],
+      "execution": [
+        "SP executes recovery from unusual attitudes with nose up or down using control and performance instruments."
+      ],
+      "conditions": [
+        "1/ IP flies the A/C into unusual attitude",
+        "2/ Day only (VFR – VMC).",
+        "3/ Descent attitude is at least 20° nose down and climb attitude at least 10° pitch up.",
+        "4/ Any possible bank is to be expected.",
+        "5/ All required instruments are operational."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Timely and correctly recognizes the type of unusual attitude."
+          },
+          {
+            "key": "b",
+            "text": "Recovers the A/C in level flight promptly, without flying the A/C into stall or exceeding its limitations, with the minimum loss of altitude and without requiring IP’s intervention"
+          },
+          {
+            "key": "c",
+            "text": "Uses correct instrument flight references IAW AFMAN 11-202 VOL3."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "rule_7a5_default",
+          "sources": [
+            {
+              "item": "instrument-04",
+              "scope": "όλος ο πίνακας Basic A/C Control της ΙΔΙΑΣ κατηγορίας — ALTITUDE / AIRSPEED / HEADING (PDF σελ. 50)",
+              "basis": "§7.a(5) — PDF σελ. 24 · contact-00-general → general_criteria key «5», verbatim: «Specific maneuvers, intended to be solely demonstrated or performed during flight only, shall be separately cited on the remarks section of the grade sheet. When specific criteria are not mentioned for certain maneuvers, general criteria will be applied, along with criteria described in the Basic A/C Control standards.» — Το instrument-10 δεν τυπώνει υποενότητα SPECIFIC CRITERIA (kind=none, βλ. flags), άρα ισχύουν τα general criteria a/–c/ του item μαζί με τα Basic A/C Control standards της ίδιας κατηγορίας (instrument-04). Η άσκηση έχει μετρήσιμες διαστάσεις πτήσης (επαναφορά σε level flight: ύψος, ταχύτητα, πορεία), οπότε ο πίνακας είναι συναφής."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 300΄",
+              "code_3_raw": "± 150΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Το σύμβολο ποδιών είναι U+0384 GREEK TONOS (΄), όχι apostrophe/prime.",
+              "provenance": "instrument-04"
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (KIAS)",
+              "unit": "KIAS",
+              "code_1_raw": "± 20",
+              "code_3_raw": "± 10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": null,
+              "provenance": "instrument-04"
+            },
+            {
+              "maneuver": null,
+              "parameter": "HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "± 10°",
+              "code_3_raw": "± 5°",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Και τα δύο ° είναι γνήσιο U+00B0 DEGREE SIGN.",
+              "provenance": "instrument-04"
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Δεν υπάρχει ενότητα SPECIFIC CRITERIA για αυτό το item (kind = 'none'). Κατά §7.a(5) σελ. 24 ισχύουν τα general criteria μαζί με τα Basic A/C Control standards.",
+        "Η ρήτρα CONDITIONS 1/ τυπώνεται χωρίς τελεία στο τέλος ('...into unusual attitude').",
+        "Το γενικό κριτήριο b/ τυπώνεται χωρίς τελεία στο τέλος ('...without requiring IP’s intervention')."
+      ]
+    },
+    {
+      "id": "instrument-11",
+      "numbers": [
+        11
+      ],
+      "name": "CONFIDENCE MANEUVERS",
+      "heading_verbatim": "(11) CONFIDENCE MANEUVERS",
+      "pages_pdf": [
+        52
+      ],
+      "execution_lead_in_verbatim": "SP executes the following confidence maneuvers using Instruments:",
+      "execution": [
+        "1/ Aileron Roll.",
+        "2/ Wingover."
+      ],
+      "conditions": [
+        "Day only and VMC."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Knows and executes confidence maneuvers flawlessly, according to standard procedures as reported in Techniques and Procedures Manual , without IP’s intervention."
+          },
+          {
+            "key": "b",
+            "text": "Has constant, smooth and continuous control of the A/C."
+          },
+          {
+            "key": "c",
+            "text": "Does not bring the A/C to any unusual attitude."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "rule_7a5_default",
+          "sources": [
+            {
+              "item": "instrument-04",
+              "scope": "όλος ο πίνακας Basic A/C Control της ΙΔΙΑΣ κατηγορίας — ALTITUDE / AIRSPEED / HEADING (PDF σελ. 50)",
+              "basis": "§7.a(5) — PDF σελ. 24 · contact-00-general → general_criteria key «5», verbatim: «Specific maneuvers, intended to be solely demonstrated or performed during flight only, shall be separately cited on the remarks section of the grade sheet. When specific criteria are not mentioned for certain maneuvers, general criteria will be applied, along with criteria described in the Basic A/C Control standards.» — Το instrument-11 (CONFIDENCE MANEUVERS: Aileron Roll, Wingover «using Instruments») δεν τυπώνει υποενότητα SPECIFIC CRITERIA (kind=none, βλ. flags), άρα ισχύουν τα general criteria a/–c/ μαζί με τα Basic A/C Control standards της ίδιας κατηγορίας (instrument-04). Η άσκηση έχει μετρήσιμες διαστάσεις πτήσης (ύψος / ταχύτητα / πορεία εισόδου-εξόδου)."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 300΄",
+              "code_3_raw": "± 150΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Το σύμβολο ποδιών είναι U+0384 GREEK TONOS (΄), όχι apostrophe/prime.",
+              "provenance": "instrument-04"
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (KIAS)",
+              "unit": "KIAS",
+              "code_1_raw": "± 20",
+              "code_3_raw": "± 10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": null,
+              "provenance": "instrument-04"
+            },
+            {
+              "maneuver": null,
+              "parameter": "HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "± 10°",
+              "code_3_raw": "± 5°",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Και τα δύο ° είναι γνήσιο U+00B0 DEGREE SIGN.",
+              "provenance": "instrument-04"
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Δεν υπάρχει ενότητα SPECIFIC CRITERIA για αυτό το item (kind = 'none').",
+        "Η εισαγωγική φράση της (a) EXECUTION (PDF σελ. 52, y=431.6-445.4) δεν είναι ρήτρα και ΔΕΝ μπήκε στο execution[]· αποθηκεύεται αυτούσια στο execution_lead_in_verbatim. Ο προσδιορισμός 'using Instruments' — που διακρίνει την άσκηση από την ομώνυμη της κατηγορίας Contact — είναι έτσι μηχαναγνώσιμος.",
+        "Τυπογραφικό στο γενικό κριτήριο a/: 'Procedures Manual , without' — περιττό κενό πριν το κόμμα. Διατηρήθηκε verbatim."
+      ]
+    },
+    {
+      "id": "instrument-12",
+      "numbers": [
+        12
+      ],
+      "name": "COURSE INTERCEPTS",
+      "heading_verbatim": "(12) COURSE INTERCEPTS",
+      "pages_pdf": [
+        52,
+        53
+      ],
+      "execution": [
+        "VOR/TACAN/GPS (OBS MODE) course intercepts inbound and outbound, including immediately after station passage."
+      ],
+      "conditions": [
+        "Day or night (VFR/IFR – VMC/IMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "SP knows and flawlessly solves the problem of assessing the course intercepts, according to standardized procedures, as described in the AFMAN 11-202 VOL3, without mistakes and IP’s intervention."
+          },
+          {
+            "key": "b",
+            "text": "SP executes course intercepts using the appropriate lead."
+          },
+          {
+            "key": "c",
+            "text": "SP executes Inbound and Outbound tracking timely and correctly."
+          },
+          {
+            "key": "d",
+            "text": "The Basic A/C Control Criteria apply."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "table_header_verbatim": "MANEUVER PARAMETERS | D | 0 | 1 | 2 | 3 | 4",
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "DEVIATION (radials)",
+              "unit": "degrees",
+              "code_1_raw": "± 8",
+              "code_3_raw": "± 5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 8,
+                "minus": 8
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Τυπωμένη μονάδα '(radials)'· κανονικοποιήθηκε σε degrees."
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "The Basic A/C Control Criteria apply."
+      ],
+      "flags": [
+        "ΑΡΙΘΜΗΣΗ: η ενότητα SPECIFIC CRITERIA τυπώνεται '1/ SPECIFIC CRITERIA' ενώ προηγείται ήδη '1/ GENERAL CRITERIA' στην ίδια (c) EXPECTED PERFORMANCE. Θα έπρεπε να είναι '2/'.",
+        "Το cross_ref 'The Basic A/C Control Criteria apply.' αναλύεται σε instrument-04 (ίδια κατηγορία).",
+        "Στήλες επιβεβαιωμένες με x-συντεταγμένες (PDF σελ. 53, πίνακας y≈305-332): col '1' κέντρο 411.05, col '3' κέντρο 499.4· '± 8' → 411.1, '± 5' → 499.4."
+      ]
+    },
+    {
+      "id": "instrument-13",
+      "numbers": [
+        13
+      ],
+      "name": "MAINTAINING COURSE",
+      "heading_verbatim": "(13) MAINTAINING COURSE",
+      "pages_pdf": [
+        53
+      ],
+      "execution": [
+        "SP maintains course after a VOR/TACAN/GPS (OBS MODE) course intercepts inbound and outbound, including immediately after station passage."
+      ],
+      "conditions": [
+        "Same conditions apply as in the execution of Course Intercept Exercise."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "SP executes Inbound and Outbound tracking timely and flawlessly."
+          },
+          {
+            "key": "b",
+            "text": "The Basic A/C Control Criteria apply."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "table_header_verbatim": "MANEUVER PARAMETERS | D | 0 | 1 | 2 | 3 | 4",
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "DEVIATION (radials)",
+              "unit": "degrees",
+              "code_1_raw": "± 8",
+              "code_3_raw": "± 5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 8,
+                "minus": 8
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Τυπωμένη μονάδα '(radials)'· κανονικοποιήθηκε σε degrees."
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "Same conditions apply as in the execution of Course Intercept Exercise.",
+        "The Basic A/C Control Criteria apply."
+      ],
+      "flags": [
+        "Τα CONDITIONS παραπέμπουν στο instrument-12 (COURSE INTERCEPTS)· το cross_ref του γενικού κριτηρίου b/ παραπέμπει στο instrument-04.",
+        "Στήλες επιβεβαιωμένες με x-συντεταγμένες (PDF σελ. 53, πίνακας y≈618-644): col '1' κέντρο 413.55, col '3' κέντρο 497.65· '± 8' → 413.5, '± 5' → 497.7. ΠΡΟΣΟΧΗ: το πλέγμα στηλών ΔΙΑΦΕΡΕΙ από τον πίνακα του instrument-12 στην ΙΔΙΑ σελίδα (411.05/499.4)."
+      ]
+    },
+    {
+      "id": "instrument-14",
+      "numbers": [
+        14
+      ],
+      "name": "ARC INTERCEPT",
+      "heading_verbatim": "(14) ARC INTERCEPT",
+      "pages_pdf": [
+        53,
+        54
+      ],
+      "execution": [
+        "SP performs intercepts to and from an arc and maintains the arc."
+      ],
+      "conditions": [
+        "Same conditions apply as in the execution of Course Intercepts."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": null,
+            "text": "The Basic A/C Control Criteria apply."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "lead_in_verbatim": "The following parameter is set as specific criteria for the Training Exercise:",
+          "table_header_verbatim": "MANEUVER PARAMETERS | D | 0 | 1 | 2 | 3 | 4",
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "DISTANCE FROM ARC (DME)",
+              "unit": "DME",
+              "code_1_raw": "± 2",
+              "code_3_raw": "± 1",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 2,
+                "minus": 2
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 1,
+                "minus": 1
+              },
+              "interpolation": "standard",
+              "notes": null
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "Same conditions apply as in the execution of Course Intercepts.",
+        "The Basic A/C Control Criteria apply."
+      ],
+      "flags": [
+        "Τα GENERAL CRITERIA είναι μία πρόταση χωρίς γράμμα-δείκτη· key = null.",
+        "Η φράση 'Same conditions apply as in the execution of Course Intercepts.' σπάει στο γύρισμα σελίδας 53→54 ('...of Course' / 'Intercepts.').",
+        "Στήλες επιβεβαιωμένες με x-συντεταγμένες (PDF σελ. 54): col '1' κέντρο 387.35, col '3' κέντρο 461.95· '± 2' → 387.4, '± 1' → 461.9."
+      ]
+    },
+    {
+      "id": "instrument-15",
+      "numbers": [
+        15
+      ],
+      "name": "MAINTAINING ARC",
+      "heading_verbatim": "(15) MAINTAINING ARC",
+      "pages_pdf": [
+        54
+      ],
+      "execution": [
+        "SP maintains arc, using VOR - TACAN or/and GPS (OBS MODE)."
+      ],
+      "conditions": [
+        "Same conditions apply as in the execution of course intercepts."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": null,
+            "text": "The Basic A/C Control Criteria apply."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "table_header_verbatim": "MANEUVER PARAMETERS | D | 0 | 1 | 2 | 3 | 4",
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "MAINTAINING ARC (DME)",
+              "unit": "DME",
+              "code_1_raw": "± 2",
+              "code_3_raw": "± 1",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 2,
+                "minus": 2
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 1,
+                "minus": 1
+              },
+              "interpolation": "standard",
+              "notes": null
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "Same conditions apply as in the execution of course intercepts.",
+        "The Basic A/C Control Criteria apply."
+      ],
+      "flags": [
+        "Τα GENERAL CRITERIA είναι μία πρόταση χωρίς γράμμα-δείκτη· key = null.",
+        "Στήλες επιβεβαιωμένες με x-συντεταγμένες (PDF σελ. 54, πίνακας y≈489-516): col '1' κέντρο 384.15, col '3' κέντρο 460.65. Το πλέγμα ΔΙΑΦΕΡΕΙ ελαφρώς από τον πίνακα του instrument-14 στην ίδια σελίδα (387.35/461.95)."
+      ]
+    },
+    {
+      "id": "instrument-16",
+      "numbers": [
+        16
+      ],
+      "name": "POINT TO POINT",
+      "heading_verbatim": "(16) POINT TO POINT",
+      "pages_pdf": [
+        54,
+        55
+      ],
+      "execution": [
+        "SP performs fix-to-fix navigation using VOR/DME or TACAN and Direct-to-Fix navigation using GPS (RNAV) IAW Techniques and Procedures Manual and AFMAN 11-202 VOL3."
+      ],
+      "conditions": [
+        "Same conditions apply as in the execution of course intercepts."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Takes the transition heading in time."
+          },
+          {
+            "key": "b",
+            "text": "Calculates the correct heading continuously during transition and corrects any deviations in time."
+          },
+          {
+            "key": "c",
+            "text": "Knows and solves flawlessly the problem of assessing the transition heading, according to standardized procedures, as described in the Techniques and Procedures Manual and AFMAN 11-202 VOL3, without mistakes and IP’s intervention."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "table_header_verbatim": "MANEUVER PARAMETERS | D | 0 | 1 | 2 | 3 | 4",
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "DISTANCE (DME)",
+              "unit": "DME",
+              "code_1_raw": "± 4",
+              "code_3_raw": "± 2",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 4,
+                "minus": 4
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 2,
+                "minus": 2
+              },
+              "interpolation": "standard",
+              "notes": null
+            },
+            {
+              "maneuver": null,
+              "parameter": "The parameter above (distance) can be expressed in radials.",
+              "unit": "degrees",
+              "is_note_row": true,
+              "derived_from": 0,
+              "code_1_raw": "± 4",
+              "code_3_raw": "± 2",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 4,
+                "minus": 4
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 2,
+                "minus": 2
+              },
+              "interpolation": "standard",
+              "notes": "ΓΡΑΜΜΗ-ΣΗΜΕΙΩΣΗ (is_note_row = true, derived_from = 0), όχι κανονική ετικέτα παραμέτρου: το κελί περιέχει ολόκληρη πρόταση σε 2 τυπωμένες γραμμές ('The parameter above (distance) can be' / 'expressed in radials.') με τις τιμές ± 4 / ± 2 στη μεσαία γραμμή. Είναι η ΙΔΙΑ ανοχή με την προηγούμενη γραμμή, εκφρασμένη σε radials αντί για DME."
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "Same conditions apply as in the execution of course intercepts."
+      ],
+      "flags": [
+        "Ο πίνακας SPECIFIC CRITERIA έχει 2 γραμμές, εκ των οποίων η 2η είναι διευκρινιστική σημείωση με ΤΙΣ ΙΔΙΕΣ τιμές (± 4 / ± 2) σε διαφορετική μονάδα (radials αντί DME) — ΔΕΝ είναι πρόσθετη ανεξάρτητη παράμετρος. Σημαίνεται μηχαναγνώσιμα με is_note_row = true και derived_from = 0 (δείκτης στη γραμμή 'DISTANCE (DME)'), ώστε ο downstream κώδικας να τη φιλτράρει χωρίς να διαβάζει ελληνικό κείμενο.",
+        "Στήλες επιβεβαιωμένες με x-συντεταγμένες (PDF σελ. 55): col '1' κέντρο 411.75, col '3' κέντρο 497.0· και οι δύο γραμμές έχουν τιμές ΑΚΡΙΒΩΣ στα ίδια x (403.5-420.0 και 488.7-505.3), επιβεβαιώνοντας ότι αφορούν τις ίδιες στήλες."
+      ]
+    },
+    {
+      "id": "instrument-17",
+      "numbers": [
+        17
+      ],
+      "name": "HOLDING",
+      "heading_verbatim": "(17) HOLDING",
+      "pages_pdf": [
+        55
+      ],
+      "execution": [
+        "SP performs entry and maintain designated pattern IAW Techniques and Procedures Manual and AFMAN 11-202 VOL3 (AIM/ICAO procedures)."
+      ],
+      "conditions": [
+        "1/ Day or night (VFR/IFR – VMC/IMC).",
+        "2/ SP must have acquired ATC clearance prior to execution."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Compensates for wind changes without IP’s intervention."
+          },
+          {
+            "key": "b",
+            "text": "Executes pre-descent checks."
+          },
+          {
+            "key": "c",
+            "text": "The Basic A/C Control Criteria apply."
+          },
+          {
+            "key": "d",
+            "text": "Complies with ATC instructions"
+          },
+          {
+            "key": "e",
+            "text": "Enters and remains within Holding airspace according to standardized procedures, as described in AFMAN 11-202 VOL3, without mistakes and IP’s intervention."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "table_header_verbatim": "MANEUVER PARAMETERS | D | 0 | 1 | 2 | 3 | 4",
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "DEVIATION FROM HOLDING PATTERN (radials)",
+              "unit": "degrees",
+              "code_1_raw": "± 8",
+              "code_3_raw": "± 5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 8,
+                "minus": 8
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Η ετικέτα τυπώνεται σε 2 γραμμές ('DEVIATION FROM HOLDING PATTERN' / '(radials)') με τις τιμές στη μεσαία γραμμή (y=669.9), ανάμεσα στα δύο τμήματα της ετικέτας. Τυπωμένη μονάδα '(radials)' → degrees."
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "± 20",
+              "code_3_raw": "± 10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": null
+            },
+            {
+              "maneuver": null,
+              "parameter": "ESTIMATED TIME OVER IAF (min)",
+              "unit": "minutes",
+              "code_1_raw": "± 2",
+              "code_3_raw": "± 1",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 2,
+                "minus": 2
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 1,
+                "minus": 1
+              },
+              "interpolation": "standard",
+              "notes": "Η τυπωμένη μονάδα είναι '(min)' = λεπτά (PDF σελ. 55, y=736.2). unit = 'minutes'· οι τιμές (± 2 / ± 1) παραμένουν σε λεπτά, ΚΑΜΙΑ μετατροπή. Πρώτη χρήση της μονάδας 'minutes' στο corpus (η μόνη άλλη μονάδα χρόνου είναι 'seconds' στο criteria_vfrnav.json / vfr_navigation-12)."
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "The Basic A/C Control Criteria apply."
+      ],
+      "flags": [
+        "Το γενικό κριτήριο d/ τυπώνεται χωρίς τελεία στο τέλος ('Complies with ATC instructions').",
+        "Ο πίνακας έχει ετικέτα που σπάει σε 3 τυπωμένες γραμμές με τις τιμές ΕΝΔΙΑΜΕΣΑ — η απλή ανάγνωση κατά σειρά θα έδινε λάθος αντιστοίχιση. Λύθηκε με x/y συντεταγμένες PyMuPDF.",
+        "Στήλες επιβεβαιωμένες με x-συντεταγμένες (PDF σελ. 55, πίνακας y≈637-736): col '1' κέντρο 423.85, col '3' κέντρο 502.95· και οι 3 γραμμές αντιστοιχούν ακριβώς.",
+        "Η 3η παράμετρος είναι η μοναδική χρονική ανοχή σε λεπτά του corpus: unit = 'minutes' (πρώτη χρήση). Το πεδίο unit είναι ελεύθερου κειμένου — δεν υπάρχει κλειστό enum — βλ. notes της γραμμής."
+      ]
+    },
+    {
+      "id": "instrument-18",
+      "numbers": [
+        18
+      ],
+      "name": "INSTRUMENT DESCENT (PENETRATION)",
+      "heading_verbatim": "(18) INSTRUMENT DESCENT (PENETRATION)",
+      "pages_pdf": [
+        55,
+        56
+      ],
+      "execution": [
+        "SP executes descent using VOR/DME or TACAN, until on final approach."
+      ],
+      "conditions": [
+        "1/ Day or night (VFR/IFR – VMC/IMC).",
+        "2/ SP must have acquired ATC clearance prior to execution."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Complies with ATC instructions."
+          },
+          {
+            "key": "b",
+            "text": "Does not violate the routing and altitude restrictions, as published in MAIP and Instrument Approach Manuals."
+          },
+          {
+            "key": "c",
+            "text": "Executes descent flawlessly, according to standardized procedures, as described in the Techniques and Procedures Manual and AFMAN 11-202 VOL3, without mistakes and IP’s intervention."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "+ 15, - 10",
+              "code_3_raw": "+ 10, - 5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 15,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": null
+            },
+            {
+              "maneuver": null,
+              "parameter": "MAINTAINING COURSE (radials)",
+              "unit": "degrees",
+              "code_1_raw": "± 8",
+              "code_3_raw": "± 5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 8,
+                "minus": 8
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Printed unit is \"radials\"; normalized to degrees."
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "ΟΡΙΟ ΤΜΗΜΑΤΟΣ: η επικεφαλίδα «(18) INSTRUMENT DESCENT (PENETRATION)» τυπώνεται στην ΤΕΛΕΥΤΑΙΑ γραμμή της σελ. PDF 55 (y=764.8)· ΟΛΟ το σώμα ((a)/(b)/(c) + ο πίνακας με τις 2 γραμμές) βρίσκεται στη σελ. 56. Γι' αυτό το item.pages_pdf=[55,56] και το source.pages_pdf του αρχείου διευρύνθηκε σε [55,61] ώστε να καλύπτει πράγματι όλα τα items του chunk.",
+        "ΔΙΠΛΟΕΓΓΡΑΦΗ ΜΕΤΑΞΥ ΑΡΧΕΙΩΝ: το ίδιο item «instrument-18» υπάρχει ΚΑΙ στο criteria_instrument_a.json (source.pages_pdf=[49,55], item pages_pdf=[55,56]). ΚΑΝΟΝΑΣ ΚΥΡΙΟΤΗΤΑΣ: ιδιοκτήτης είναι ΑΥΤΟ το chunk (το σώμα του item βρίσκεται εξ ολοκλήρου στη σελ. 56). Στο merge πρέπει είτε να αφαιρεθεί το instrument-18 από το criteria_instrument_a.json είτε να γίνει ρητό dedup με κλειδί το id, αλλιώς θα εκπεμφθεί διπλή εγγραφή.",
+        "Το «±» στη σελ. 56 εξάγεται σωστά ως U+00B1 (όχι U+FFFF)."
+      ]
+    },
+    {
+      "id": "instrument-19",
+      "numbers": [
+        19
+      ],
+      "name": "EN-ROUTE DESCENT",
+      "heading_verbatim": "(19) EN-ROUTE DESCENT",
+      "pages_pdf": [
+        56,
+        56
+      ],
+      "execution": [
+        "SP executes en-route descent, using radio navigation aids, after having acquired ATC clearance."
+      ],
+      "conditions": [
+        "1/ Day or night (VFR/IFR – VMC/IMC).",
+        "2/ SP must have acquired ATC clearance prior to execution."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": null,
+            "text": "Instrument Descent and A/C Basic Control Training Exercises General Criteria apply."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "none",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "rule_7a5_default",
+          "sources": [
+            {
+              "item": "instrument-04",
+              "scope": "ΑΝΑΓΝΩΣΗ Α (αυστηρά γραμματική) — όλος ο πίνακας Basic A/C Control της ΙΔΙΑΣ κατηγορίας: ALTITUDE / AIRSPEED / HEADING (PDF σελ. 50). Αντιστοιχεί στα 3 rows με provenance \"instrument-04\".",
+              "basis": "§7.a(5) — PDF σελ. 24 · contact-00-general → general_criteria key «5», verbatim: «Specific maneuvers, intended to be solely demonstrated or performed during flight only, shall be separately cited on the remarks section of the grade sheet. When specific criteria are not mentioned for certain maneuvers, general criteria will be applied, along with criteria described in the Basic A/C Control standards.» — Το instrument-19 δεν τυπώνει υποενότητα «2/ SPECIFIC CRITERIA» (kind=none· επαληθεύτηκε στο PDF σελ. 56: μετά το «1/ GENERAL CRITERIA» ακολουθεί απευθείας το «(20) VOR / TACAN APPROACH»). Το ίδιο το γενικό κριτήριο του item το επιβεβαιώνει ρητά, verbatim: «Instrument Descent and A/C Basic Control Training Exercises General Criteria apply.» Το flag του item προτείνει εναλλακτική ανάγνωση «A/C Basic Control = Contact category» (contact-05)· οι δύο υποψήφιες πηγές δίνουν αριθμητικά ΤΑΥΤΟΣΗΜΕΣ τιμές (ύψος ±300΄/±150΄, ταχύτητα ±20/±10, πορεία ±10/±5 μοίρες), οπότε η επιλογή είναι αριθμητικά αδιάφορη· επιλέχθηκε το instrument-04 ως το Basic A/C Control της ίδιας κατηγορίας, συνεπώς με instrument-06 / -12 / -13. Αυτή είναι η ΜΟΝΗ πηγή που στηρίζεται σε ρητό κανόνα (7.a(5)) — βλ. resolved.note (απόφαση χρήστη 1α, 2026-07-31)."
+            },
+            {
+              "item": "instrument-18",
+              "scope": "ΔΕΝ ΕΦΑΡΜΟΖΕΤΑΙ — ΙΣΤΟΡΙΚΗ ΣΗΜΕΙΩΣΗ ΜΟΝΟ. Οι 2 γραμμές SPECIFIC CRITERIA του (18) INSTRUMENT DESCENT (PENETRATION) — AIRSPEED (knots) και MAINTAINING COURSE (radials), PDF σελ. 56 — ΔΙΑΓΡΑΦΗΚΑΝ από τα resolved.parameters κατόπιν της απόφασης 1α του χρήστη (2026-07-31). Το instrument-18 ΔΕΝ είναι πλέον δότης τιμών για το instrument-19· καμία γραμμή με provenance \"instrument-18\" δεν υπάρχει πλέον στο item.",
+              "basis": "verbatim (general_criteria, key=null): «Instrument Descent and A/C Basic Control Training Exercises General Criteria apply.» ΠΡΟΣΟΧΗ — Η τυπωμένη πρόταση ονομάζει ρητά ΜΟΝΟ τα GENERAL criteria των δύο ασκήσεων, και τα general criteria a/b/c του instrument-18 είναι καθαρά ποιοτικά (ATC instructions / routing-altitude restrictions / flawless execution). Η αντιγραφή των ΔΥΟ αριθμητικών γραμμών SPECIFIC CRITERIA του instrument-18 ήταν ΕΠΕΚΤΑΣΗ της παραπομπής από τα general στα specific criteria και ΔΕΝ στηριζόταν στο γράμμα του κειμένου. ΑΠΟΦΑΣΗ ΧΡΗΣΤΗ 1α (2026-07-31): επιλέχθηκε η ΑΝΑΓΝΩΣΗ Α (αυστηρά γραμματική, κανόνας 7.a(5)) και οι δύο γραμμές ΑΦΑΙΡΕΘΗΚΑΝ — μαζί τους έπαψε να ισχύει και η συγκρουόμενη ταχύτητα +15/-10 · +10/-5, καθώς και το όριο πορείας ±8/±5 radials που το syllabus ΔΕΝ τυπώνει για το item (19). Η εγγραφή διατηρείται ΜΟΝΟ ως τεκμηρίωση ότι η ΑΝΑΓΝΩΣΗ Β εξετάστηκε και απορρίφθηκε."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 300΄",
+              "code_3_raw": "± 150΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Το σύμβολο ποδιών είναι U+0384 GREEK TONOS (΄), όχι apostrophe/prime.",
+              "provenance": "instrument-04"
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (KIAS)",
+              "unit": "KIAS",
+              "code_1_raw": "± 20",
+              "code_3_raw": "± 10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": null,
+              "provenance": "instrument-04"
+            },
+            {
+              "maneuver": null,
+              "parameter": "HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "± 10°",
+              "code_3_raw": "± 5°",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Και τα δύο ° είναι γνήσιο U+00B0 DEGREE SIGN.",
+              "provenance": "instrument-04"
+            }
+          ],
+          "note": "User decision 2026-07-31: 1α"
+        }
+      },
+      "cross_refs": [
+        "Instrument Descent and A/C Basic Control Training Exercises General Criteria apply."
+      ],
+      "flags": [
+        "Δεν υπάρχει καθόλου υποενότητα «2/ SPECIFIC CRITERIA» για το item (19) — kind=none.",
+        "Τα GENERAL CRITERIA είναι μία αδιαίρετη πρόταση χωρίς γράμμα a/b/c — key=null.",
+        "Παραπομπή σε δύο πηγές (Instrument Descent = instrument-18 και A/C Basic Control = Contact category) — δεν αναλύθηκε σε reference_target.",
+        "ΑΠΟΦΑΣΗ ΧΡΗΣΤΗ 1α (2026-07-31) — resolved.status=\"resolved\": η αντίφαση ταχύτητας ΑΡΘΗΚΕ. Διαγράφηκαν οι 2 γραμμές με provenance \"instrument-18\" (AIRSPEED (knots) +15/-10 · +10/-5 και MAINTAINING COURSE (radials) ±8/±5)· ισχύουν ΜΟΝΟ οι 3 γραμμές με provenance \"instrument-04\", άρα AIRSPEED (KIAS) ±20/±10."
+      ]
+    },
+    {
+      "id": "instrument-20",
+      "numbers": [
+        20
+      ],
+      "name": "VOR / TACAN APPROACH",
+      "heading_verbatim": "(20) VOR / TACAN APPROACH",
+      "pages_pdf": [
+        56,
+        57
+      ],
+      "execution": [
+        "SP executes final approach using either TACAN or VOR with or without DME."
+      ],
+      "conditions": [
+        "Day or night (VFR/IFR – VMC/IMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Complies with ATC instructions."
+          },
+          {
+            "key": "b",
+            "text": "Does not violate the routing and altitude restrictions, as published in MAIP and Instrument Approach Manuals."
+          },
+          {
+            "key": "c",
+            "text": "Knows and executes flawlessly the final approach using TACAN or VOR/DME according to standardized procedures, as described in AFMAN 11-202 VOL3 and Flight Manuals, without mistakes and IP’s intervention."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)*",
+              "unit": "knots",
+              "code_1_raw": "+ 15, - 10",
+              "code_3_raw": "+ 10, - 5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 15,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Footnote under the table: \"*(computed final approach airspeed after FAF)\"."
+            },
+            {
+              "maneuver": null,
+              "parameter": "MAINTAINING COURSE (radials)",
+              "unit": "degrees",
+              "code_1_raw": "± 8",
+              "code_3_raw": "± 5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 8,
+                "minus": 8
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Printed unit is \"radials\"; normalized to degrees."
+            },
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE DEVIATION (from MDA)",
+              "unit": "feet",
+              "code_1_raw": "+ 200΄ - 0΄",
+              "code_3_raw": "+ 100΄- 0",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 200,
+                "minus": 0
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 100,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Feet mark printed as U+0384 GREEK TONOS (΄). Code 3 cell is typographically inconsistent: \"100΄-\" is one glued token and the trailing 0 carries no feet mark; code 1 uses no comma between the two limits."
+            }
+          ]
+        }
+      },
+      "cross_refs": [],
+      "flags": [
+        "Το feet mark στον πίνακα της σελ. 57 είναι U+0384 (GREEK TONOS) και όχι απόστροφος/prime.",
+        "Ασυμμετρία τυπογραφίας στη γραμμή ALTITUDE DEVIATION (from MDA): code 1 «+ 200΄ - 0΄» vs code 3 «+ 100΄- 0» (λείπει το feet mark στο μηδέν του code 3)."
+      ]
+    },
+    {
+      "id": "instrument-21",
+      "numbers": [
+        21
+      ],
+      "name": "ILS APPROACH",
+      "heading_verbatim": "(21) ILS APPROACH",
+      "pages_pdf": [
+        57,
+        57
+      ],
+      "execution": [
+        "SP perfroms an ILS final approach IAW Techniques and Procedures Manual and AFMAN 11-202 VOL3."
+      ],
+      "conditions": [
+        "Day or night (VFR/IFR – VMC/IMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": null,
+            "text": "Same conditions apply as in the execution of VOR/TACAN approach."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE DH (feet)",
+              "unit": "feet",
+              "code_1_raw": "+ 200΄,-0΄",
+              "code_3_raw": "+ 100΄,-0΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 200,
+                "minus": 0
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 100,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Feet mark printed as U+0384 GREEK TONOS (΄)."
+            },
+            {
+              "maneuver": null,
+              "parameter": "LOCALIZER (CDI) (dots)",
+              "unit": "dots",
+              "code_1_raw": "± 2",
+              "code_3_raw": "± 1",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 2,
+                "minus": 2
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 1,
+                "minus": 1
+              },
+              "interpolation": "standard",
+              "notes": null
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)*",
+              "unit": "knots",
+              "code_1_raw": "+ 15, - 10",
+              "code_3_raw": "+ 10, - 5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 15,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Footnote under the table: \"*(computed final approach airspeed after FAF)\"."
+            },
+            {
+              "maneuver": null,
+              "parameter": "GLIDE PATH (GSI) (dots)**",
+              "unit": "dots",
+              "code_1_raw": "± 2 dots",
+              "code_3_raw": "± 1 dot",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 2,
+                "minus": 2
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 1,
+                "minus": 1
+              },
+              "interpolation": "standard",
+              "notes": "Row label carries a \"**\" marker but no \"**\" footnote is printed anywhere on the page."
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "Same conditions apply as in the execution of VOR/TACAN approach."
+      ],
+      "flags": [
+        "Τυπογραφικό λάθος στο πρωτότυπο: «SP perfroms» αντί «performs» (διατηρήθηκε verbatim).",
+        "Η γραμμή «GLIDE PATH (GSI) (dots)**» φέρει δείκτη υποσημείωσης ** χωρίς αντίστοιχη υποσημείωση στη σελ. 57 (υπάρχει μόνο η *).",
+        "Τα GENERAL CRITERIA είναι μία πρόταση-παραπομπή χωρίς γράμμα a/b/c — key=null.",
+        "Το κείμενο λέει «Same conditions apply» ενώ βρίσκεται κάτω από GENERAL CRITERIA (πιθανή αβλεψία του πρωτοτύπου· κρατήθηκε verbatim)."
+      ]
+    },
+    {
+      "id": "instrument-22",
+      "numbers": [
+        22
+      ],
+      "name": "LOCALIZER APPROACH",
+      "heading_verbatim": "(22) LOCALIZER APPROACH",
+      "pages_pdf": [
+        58,
+        58
+      ],
+      "execution": [
+        "SP executes Localizer-only final approach IAW Techniques and Procedures Manual and AFMAN 11-202 VOL3."
+      ],
+      "conditions": [
+        "Day or night (VFR/IFR – VMC/IMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": null,
+            "text": "Same conditions apply as in the execution of VOR/TACAN approach."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "MDA ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "+ 200’, -0’",
+              "code_3_raw": "+ 100’, -0’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 200,
+                "minus": 0
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 100,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Feet mark printed as U+2019 RIGHT SINGLE QUOTATION MARK (’) on this page, unlike p.57 which uses U+0384."
+            },
+            {
+              "maneuver": null,
+              "parameter": "LOCALIZER (CDI) (dots)",
+              "unit": "dots",
+              "code_1_raw": "± 2 dots",
+              "code_3_raw": "± 1 dot",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 2,
+                "minus": 2
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 1,
+                "minus": 1
+              },
+              "interpolation": "standard",
+              "notes": null
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)*",
+              "unit": "knots",
+              "code_1_raw": "+ 15, - 10",
+              "code_3_raw": "+ 10, - 5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 15,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Footnote under the table: \"*(computed final approach airspeed after FAF)\"."
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "Same conditions apply as in the execution of VOR/TACAN approach."
+      ],
+      "flags": [
+        "Το ίδιο περιεχόμενο με το ILS «ALTITUDE DH» εμφανίζεται εδώ ως «MDA ALTITUDE» με διαφορετικό glyph feet mark (’ U+2019 αντί ΄ U+0384)."
+      ]
+    },
+    {
+      "id": "instrument-23",
+      "numbers": [
+        23
+      ],
+      "name": "GCA APPROACH (ASR)",
+      "heading_verbatim": "(23) GCA APPROACH (ASR)",
+      "pages_pdf": [
+        58,
+        59
+      ],
+      "execution": [
+        "SP executes Instrument approach with GCA or Closed GCA Procedure IAW Techniques and Procedures Manual, MAIP, Local Area Procedures and AFMAN 11-202 VOL3."
+      ],
+      "conditions": [
+        "Day or night (VFR/IFR – VMC/IMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": null,
+            "text": "Same conditions apply as in the execution of VOR/TACAN."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE DEVIATION UNTIL ON FINAL (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 300’",
+              "code_3_raw": "± 150’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Label wraps over two printed lines (\"ALTITUDE DEVIATION UNTIL ON\" / \"FINAL (feet)\"); values sit on the intermediate baseline."
+            },
+            {
+              "maneuver": null,
+              "parameter": "HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "± 10°",
+              "code_3_raw": "± 5°",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Degree sign is a proper U+00B0 here (not a Greek/Latin lookalike)."
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "+ 20/-10",
+              "code_3_raw": "+ 10/-5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": null
+            },
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE DEVIATION AT MDA (feet)",
+              "unit": "feet",
+              "code_1_raw": "+ 200/-0",
+              "code_3_raw": "+ 100/-0",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 200,
+                "minus": 0
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 100,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Continuation row: printed at the top of PDF p.59 (y=91.9) with NO repeated header. Column grid differs from p.58 (p.58 cells: label 45.6-272.5, code1 323.2-396.7, code3 421.2-490.2; p.59 cells: label 88.1-315.1, code1 365.7-439.2, code3 463.8-532.7). Assignment verified against the drawn table borders."
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "Same conditions apply as in the execution of VOR/TACAN."
+      ],
+      "flags": [
+        "ΣΠΑΣΜΕΝΟΣ ΠΙΝΑΚΑΣ 58→59: η 4η γραμμή (ALTITUDE DEVIATION AT MDA) τυπώνεται στην κορυφή της σελ. 59 χωρίς επανάληψη κεφαλίδας· το πλέγμα στηλών μετατοπίζεται κατά ~+42.6 pt (mirrored margins). Η αντιστοίχιση 1/3 επιβεβαιώθηκε με PyMuPDF x-coordinates ΚΑΙ με τις κάθετες γραμμές του πίνακα (page.get_drawings()).",
+        "Στη σελ. 59 η γραμμή αυτή μπορεί οπτικά να συγχέεται με τον πίνακα του (24) GCA APPROACH (PAR) που ακολουθεί — ανήκει στο (23)."
+      ]
+    },
+    {
+      "id": "instrument-24",
+      "numbers": [
+        24
+      ],
+      "name": "GCA APPROACH (PAR)",
+      "heading_verbatim": "(24) GCA APPROACH (PAR)",
+      "pages_pdf": [
+        59,
+        59
+      ],
+      "execution": [
+        "SP executes Instrument approach with GCA or Closed GCA Procedure IAW Techniques and Procedures Manual, MAIP, Local Area Procedures and AFMAN 11-202 VOL3."
+      ],
+      "conditions": [
+        "Day or night (VFR/IFR – VMC/IMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": null,
+            "text": "Same conditions apply as in the execution of VOR/TACAN."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE DEVIATION UNTIL ON FINAL (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 300’",
+              "code_3_raw": "± 150’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Label wraps over two printed lines (\"ALTITUDE DEVIATION\" / \"UNTIL ON FINAL (feet)\")."
+            },
+            {
+              "maneuver": null,
+              "parameter": "HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "± 10°",
+              "code_3_raw": "± 5°",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": null
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "+ 20/-10",
+              "code_3_raw": "+ 10/-5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": null
+            },
+            {
+              "maneuver": null,
+              "parameter": "MAINTAINING GLIDE PATH (feet)",
+              "unit": "feet",
+              "code_1_raw": "Up to 300΄ high\nUp to 150΄ low",
+              "code_3_raw": "Slightly above\nSlightly below",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 150
+              },
+              "code_3": {
+                "kind": "qualitative",
+                "text": "Slightly above / Slightly below"
+              },
+              "interpolation": "undefined",
+              "notes": "Two-line cells: line 1 = deviation ABOVE the glide path (→ plus), line 2 = deviation BELOW (→ minus). Code 1 is quantitative and asymmetric: plus=300, minus=150 (unit from the row label \"(feet)\"). Code 3 is purely qualitative and NOT interpolatable, so interpolation stays \"undefined\" even though code 1 is numeric. Feet mark in code 1 is U+0384 GREEK TONOS (΄)."
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "Same conditions apply as in the execution of VOR/TACAN."
+      ],
+      "flags": [
+        "ΠΟΙΟΤΙΚΕΣ ΤΙΜΕΣ: η γραμμή «MAINTAINING GLIDE PATH (feet)» έχει code 3 = «Slightly above / Slightly below» χωρίς αριθμό → kind=qualitative, interpolation=undefined. Δεν παράγεται αριθμητική απόκλιση για το code 3.",
+        "ΑΣΥΜΜΕΤΡΗ ΑΝΟΧΗ στο code 1 της ίδιας γραμμής: «Up to 300΄ high / Up to 150΄ low» → kind=deviation με plus=300 (πάνω από το glide path) και minus=150 (κάτω). ΔΕΝ είναι ±: τα δύο σκέλη είναι ανεξάρτητα, όπως και στις υπόλοιπες ασύμμετρες γραμμές του corpus (π.χ. AIRSPEED «+ 20/-10» εδώ, «+300΄/-200΄» στο contact-29 Deviation from the desired glide path).",
+        "Οι δύο γραμμές κάθε κελιού διατηρήθηκαν στα *_raw με χαρακτήρα νέας γραμμής (\\n)."
+      ]
+    },
+    {
+      "id": "instrument-25",
+      "numbers": [
+        25
+      ],
+      "name": "GCA APPROACH (GYRO OUT)",
+      "heading_verbatim": "(25) GCA APPROACH (GYRO OUT)",
+      "pages_pdf": [
+        59,
+        59
+      ],
+      "execution": [
+        "SP executes Instrument approach with GCA or Closed GCA Procedure with gyro out, IAW Techniques and Procedures Manual, MAIP, Local Area Procedures and AFMAN 11-202 VOL3."
+      ],
+      "conditions": [
+        "Day or night (VFR/IFR – VMC/IMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": null,
+            "text": "Same conditions apply as in the execution of VOR/TACAN."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "Same criteria apply as with the GCA (PAR) and GCA (ASR), correspondingly.",
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "instrument-24",
+              "scope": "όταν η GCA εκτελείται ως PAR (precision) — και οι 4 γραμμές του (24) GCA APPROACH (PAR), PDF σελ. 59",
+              "basis": "verbatim (specific_criteria.reference_text): «Same criteria apply as with the GCA (PAR) and GCA (ASR), correspondingly.» Το «correspondingly» ορίζει επιλογή κατά την πτήση: εφαρμόζεται το σετ του τύπου προσέγγισης που όντως εκτελέστηκε. Το (25) GCA APPROACH (GYRO OUT) εκτελείται ως GCA ή Closed GCA με gyro out, άρα μπορεί να είναι είτε PAR είτε ASR (PDF σελ. 59). ΣΗΜΕΙΩΣΗ: η γραμμή «MAINTAINING GLIDE PATH (feet)» έχει code_3 ποιοτικό («Slightly above / Slightly below») και interpolation=undefined — αντιγράφηκε αυτούσια."
+            },
+            {
+              "item": "instrument-23",
+              "scope": "όταν η GCA εκτελείται ως ASR (surveillance) — και οι 4 γραμμές του (23) GCA APPROACH (ASR), PDF σελ. 58-59",
+              "basis": "verbatim (specific_criteria.reference_text): «Same criteria apply as with the GCA (PAR) and GCA (ASR), correspondingly.» Το «correspondingly» ορίζει επιλογή κατά την πτήση: εφαρμόζεται το σετ του τύπου προσέγγισης που όντως εκτελέστηκε. Το (25) GCA APPROACH (GYRO OUT) εκτελείται ως GCA ή Closed GCA με gyro out, άρα μπορεί να είναι είτε PAR είτε ASR (PDF σελ. 59). Και τα δύο σετ αντιγράφονται με διακριτό provenance (instrument-23 vs instrument-24)· οι τρεις πρώτες γραμμές είναι αριθμητικά ίδιες και στα δύο, η 4η διαφέρει (ASR: ALTITUDE DEVIATION AT MDA · PAR: MAINTAINING GLIDE PATH)."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE DEVIATION UNTIL ON FINAL (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 300’",
+              "code_3_raw": "± 150’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Label wraps over two printed lines (\"ALTITUDE DEVIATION\" / \"UNTIL ON FINAL (feet)\").",
+              "provenance": "instrument-24"
+            },
+            {
+              "maneuver": null,
+              "parameter": "HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "± 10°",
+              "code_3_raw": "± 5°",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": null,
+              "provenance": "instrument-24"
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "+ 20/-10",
+              "code_3_raw": "+ 10/-5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": null,
+              "provenance": "instrument-24"
+            },
+            {
+              "maneuver": null,
+              "parameter": "MAINTAINING GLIDE PATH (feet)",
+              "unit": "feet",
+              "code_1_raw": "Up to 300΄ high\nUp to 150΄ low",
+              "code_3_raw": "Slightly above\nSlightly below",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 150
+              },
+              "code_3": {
+                "kind": "qualitative",
+                "text": "Slightly above / Slightly below"
+              },
+              "interpolation": "undefined",
+              "notes": "Two-line cells: line 1 = deviation ABOVE the glide path (→ plus), line 2 = deviation BELOW (→ minus). Code 1 is quantitative and asymmetric: plus=300, minus=150 (unit from the row label \"(feet)\"). Code 3 is purely qualitative and NOT interpolatable, so interpolation stays \"undefined\" even though code 1 is numeric. Feet mark in code 1 is U+0384 GREEK TONOS (΄).",
+              "provenance": "instrument-24"
+            },
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE DEVIATION UNTIL ON FINAL (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 300’",
+              "code_3_raw": "± 150’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Label wraps over two printed lines (\"ALTITUDE DEVIATION UNTIL ON\" / \"FINAL (feet)\"); values sit on the intermediate baseline.",
+              "provenance": "instrument-23"
+            },
+            {
+              "maneuver": null,
+              "parameter": "HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "± 10°",
+              "code_3_raw": "± 5°",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Degree sign is a proper U+00B0 here (not a Greek/Latin lookalike).",
+              "provenance": "instrument-23"
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "+ 20/-10",
+              "code_3_raw": "+ 10/-5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": null,
+              "provenance": "instrument-23"
+            },
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE DEVIATION AT MDA (feet)",
+              "unit": "feet",
+              "code_1_raw": "+ 200/-0",
+              "code_3_raw": "+ 100/-0",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 200,
+                "minus": 0
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 100,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Continuation row: printed at the top of PDF p.59 (y=91.9) with NO repeated header. Column grid differs from p.58 (p.58 cells: label 45.6-272.5, code1 323.2-396.7, code3 421.2-490.2; p.59 cells: label 88.1-315.1, code1 365.7-439.2, code3 463.8-532.7). Assignment verified against the drawn table borders.",
+              "provenance": "instrument-23"
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "Same conditions apply as in the execution of VOR/TACAN.",
+        "Same criteria apply as with the GCA (PAR) and GCA (ASR), correspondingly."
+      ],
+      "flags": [
+        "Η παραπομπή δείχνει ΣΕ ΔΥΟ items ταυτόχρονα (instrument-24 = GCA PAR και instrument-23 = GCA ASR) με τη λέξη «correspondingly» → reference_target=null (το σχήμα δέχεται ένα μόνο target). Ο καταναλωτής πρέπει να επιλέξει PAR ή ASR ανάλογα με τον τύπο πλησίασης που εκτελέστηκε."
+      ]
+    },
+    {
+      "id": "instrument-26",
+      "numbers": [
+        26
+      ],
+      "name": "STANDBY INSTRUMENTS APPROACH",
+      "heading_verbatim": "(26) STANDBY INSTRUMENTS APPROACH",
+      "pages_pdf": [
+        59,
+        60
+      ],
+      "execution": [
+        "SP executes Instrument approach with GCA or Closed GCA Procedure with stby instruments, IAW Techniques and Procedures Manual, MAIP, Local Area Procedures and AFMAN 11-202 VOL3."
+      ],
+      "conditions": [
+        "Day or night (VFR/IFR – VMC/IMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": null,
+            "text": "Same conditions apply as in the execution of VOR/TACAN."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "Same criteria apply as with the GCA (PAR) and GCA (ASR), correspondingly.",
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "instrument-24",
+              "scope": "όταν η GCA εκτελείται ως PAR (precision) — και οι 4 γραμμές του (24) GCA APPROACH (PAR), PDF σελ. 59",
+              "basis": "verbatim (specific_criteria.reference_text): «Same criteria apply as with the GCA (PAR) and GCA (ASR), correspondingly.» Το «correspondingly» ορίζει επιλογή κατά την πτήση: εφαρμόζεται το σετ του τύπου προσέγγισης που όντως εκτελέστηκε. Το (26) STANDBY INSTRUMENTS APPROACH εκτελείται ως GCA ή Closed GCA με εφεδρικά όργανα, άρα μπορεί να είναι είτε PAR είτε ASR (PDF σελ. 59-60). ΣΗΜΕΙΩΣΗ: η γραμμή «MAINTAINING GLIDE PATH (feet)» έχει code_3 ποιοτικό («Slightly above / Slightly below») και interpolation=undefined — αντιγράφηκε αυτούσια."
+            },
+            {
+              "item": "instrument-23",
+              "scope": "όταν η GCA εκτελείται ως ASR (surveillance) — και οι 4 γραμμές του (23) GCA APPROACH (ASR), PDF σελ. 58-59",
+              "basis": "verbatim (specific_criteria.reference_text): «Same criteria apply as with the GCA (PAR) and GCA (ASR), correspondingly.» Το «correspondingly» ορίζει επιλογή κατά την πτήση: εφαρμόζεται το σετ του τύπου προσέγγισης που όντως εκτελέστηκε. Το (26) STANDBY INSTRUMENTS APPROACH εκτελείται ως GCA ή Closed GCA με εφεδρικά όργανα, άρα μπορεί να είναι είτε PAR είτε ASR (PDF σελ. 59-60). Και τα δύο σετ αντιγράφονται με διακριτό provenance (instrument-23 vs instrument-24)· οι τρεις πρώτες γραμμές είναι αριθμητικά ίδιες και στα δύο, η 4η διαφέρει (ASR: ALTITUDE DEVIATION AT MDA · PAR: MAINTAINING GLIDE PATH)."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE DEVIATION UNTIL ON FINAL (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 300’",
+              "code_3_raw": "± 150’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Label wraps over two printed lines (\"ALTITUDE DEVIATION\" / \"UNTIL ON FINAL (feet)\").",
+              "provenance": "instrument-24"
+            },
+            {
+              "maneuver": null,
+              "parameter": "HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "± 10°",
+              "code_3_raw": "± 5°",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": null,
+              "provenance": "instrument-24"
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "+ 20/-10",
+              "code_3_raw": "+ 10/-5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": null,
+              "provenance": "instrument-24"
+            },
+            {
+              "maneuver": null,
+              "parameter": "MAINTAINING GLIDE PATH (feet)",
+              "unit": "feet",
+              "code_1_raw": "Up to 300΄ high\nUp to 150΄ low",
+              "code_3_raw": "Slightly above\nSlightly below",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 150
+              },
+              "code_3": {
+                "kind": "qualitative",
+                "text": "Slightly above / Slightly below"
+              },
+              "interpolation": "undefined",
+              "notes": "Two-line cells: line 1 = deviation ABOVE the glide path (→ plus), line 2 = deviation BELOW (→ minus). Code 1 is quantitative and asymmetric: plus=300, minus=150 (unit from the row label \"(feet)\"). Code 3 is purely qualitative and NOT interpolatable, so interpolation stays \"undefined\" even though code 1 is numeric. Feet mark in code 1 is U+0384 GREEK TONOS (΄).",
+              "provenance": "instrument-24"
+            },
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE DEVIATION UNTIL ON FINAL (feet)",
+              "unit": "feet",
+              "code_1_raw": "± 300’",
+              "code_3_raw": "± 150’",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Label wraps over two printed lines (\"ALTITUDE DEVIATION UNTIL ON\" / \"FINAL (feet)\"); values sit on the intermediate baseline.",
+              "provenance": "instrument-23"
+            },
+            {
+              "maneuver": null,
+              "parameter": "HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "± 10°",
+              "code_3_raw": "± 5°",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Degree sign is a proper U+00B0 here (not a Greek/Latin lookalike).",
+              "provenance": "instrument-23"
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "+ 20/-10",
+              "code_3_raw": "+ 10/-5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": null,
+              "provenance": "instrument-23"
+            },
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE DEVIATION AT MDA (feet)",
+              "unit": "feet",
+              "code_1_raw": "+ 200/-0",
+              "code_3_raw": "+ 100/-0",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 200,
+                "minus": 0
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 100,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Continuation row: printed at the top of PDF p.59 (y=91.9) with NO repeated header. Column grid differs from p.58 (p.58 cells: label 45.6-272.5, code1 323.2-396.7, code3 421.2-490.2; p.59 cells: label 88.1-315.1, code1 365.7-439.2, code3 463.8-532.7). Assignment verified against the drawn table borders.",
+              "provenance": "instrument-23"
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "Same conditions apply as in the execution of VOR/TACAN.",
+        "Same criteria apply as with the GCA (PAR) and GCA (ASR), correspondingly."
+      ],
+      "flags": [
+        "Επικεφαλίδα στο τέλος της σελ. PDF 59 (y=766.2)· το σώμα του item ξεκινά στη σελ. 60.",
+        "Η παραπομπή δείχνει σε δύο items (instrument-24 GCA PAR και instrument-23 GCA ASR) → reference_target=null."
+      ]
+    },
+    {
+      "id": "instrument-27",
+      "numbers": [
+        27
+      ],
+      "name": "CIRCLING APPROACH",
+      "heading_verbatim": "(27) CIRCLING APPROACH",
+      "pages_pdf": [
+        60,
+        60
+      ],
+      "execution": [
+        "SP performs circling approach and aligns for landing, IAW Techniques and Procedures Manual, MAIP, Local Area Procedures and AFMAN 11-202 VOL3."
+      ],
+      "conditions": [
+        "Day or night (VMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Knows and executes circling approach, according to the standardized procedures, as described in Flight Manual and AFMAN 11-202 VOL3, without mistakes and IP’s intervention."
+          },
+          {
+            "key": "b",
+            "text": "Does not violate minimum altitude."
+          },
+          {
+            "key": "c",
+            "text": "Follows the ATC directives with precision."
+          },
+          {
+            "key": "d",
+            "text": "Follows the procedures published in MAIP."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "The A/C Basic Control and Normal Landing (Contact category) specific criteria apply.",
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "contact-05",
+              "scope": "A/C Basic Control (Contact category) — και οι 3 γραμμές (PDF σελ. 30). Εμβέλεια πίνακα κατά το πρωτότυπο: «For Straight and Level Flight and turns up to 60° of bank:» (βλ. notes γραμμών).",
+              "basis": "verbatim (specific_criteria.reference_text): «The A/C Basic Control and Normal Landing (Contact category) specific criteria apply.» Ο προσδιορισμός «(Contact category)» οδηγεί στο contact-05 και όχι στο instrument-04· οι τιμές είναι πάντως αριθμητικά ταυτόσημες. ΤΥΠΟΓΡΑΦΙΑ: τα code_*_raw του contact-05 φέρουν το σπασμένο glyph U+FFFF αντί για «±» (σπασμένο στο ίδιο το PDF, σελ. 30) και αντιγράφηκαν ΑΥΤΟΥΣΙΑ· τα normalized code_1/code_3 είναι σωστά."
+            },
+            {
+              "item": "contact-24",
+              "scope": "Normal Landing — ο υπο-πίνακας «a/ FLAPS LDG - FLAPS T/O – AΟA.» (3 γραμμές). Οι 3 γραμμές του υπο-πίνακα «b/ FLAPS UP» αντιγράφονται επίσης αυτούσιες για πληρότητα και διακρίνονται από το πεδίο maneuver — ο καταναλωτής επιλέγει με βάση τη διαμόρφωση προσγείωσης.",
+              "basis": "verbatim (specific_criteria.reference_text): «The A/C Basic Control and Normal Landing (Contact category) specific criteria apply.» Η «Normal Landing» της Contact category είναι το contact-24 (MIF sn 24 = «Normal Landing» → contact-24, βλ. README §7.6.C)· το item καλύπτει τους αριθμούς 24/26/28/33 και τυπώνει δύο υπο-πίνακες (a/ και b/), PDF σελ. 40-41. ΠΡΟΣΟΧΗ: η γραμμή «DEVIATION FROM CENTER LINE (feet)» τυπώνεται ΧΩΡΙΣ «±» στο πρωτότυπο και η συμμετρική ερμηνεία (±15 / ±5) είναι αβέβαιη (README §7.3) — αντιγράφηκε ως έχει."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "ALTITUDE (feet)",
+              "unit": "feet",
+              "code_1_raw": "￿ 300΄",
+              "code_3_raw": "￿ 150΄",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 300,
+                "minus": 300
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 150,
+                "minus": 150
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:» (γραμμή πάνω από τον πίνακα, σελ. PDF 30).",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "￿ 20",
+              "code_3_raw": "￿ 10",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 20,
+                "minus": 20
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:».",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": null,
+              "parameter": "EXIT HEADING (degrees)",
+              "unit": "degrees",
+              "code_1_raw": "￿ 10 ο",
+              "code_3_raw": "￿ 5ο",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Ισχύει για: «For Straight and Level Flight and turns up to 60° of bank:». Το σύμβολο μοιρών είναι ΕΛΛΗΝΙΚΟ ομικρόν (U+03BF) αντί °.",
+              "provenance": "contact-05"
+            },
+            {
+              "maneuver": "a/ FLAPS LDG - FLAPS T/O – AΟA.",
+              "parameter": "TOUCH DOWN POINT (feet from the beginning of the RWY)",
+              "unit": "feet",
+              "code_1_raw": "1500΄",
+              "code_3_raw": "1000΄",
+              "code_1": {
+                "kind": "nominal_change",
+                "value": 1500
+              },
+              "code_3": {
+                "kind": "nominal_change",
+                "value": 1000
+              },
+              "interpolation": "undefined",
+              "notes": "Απόλυτο άνω όριο απόστασης σημείου επαφής από την αρχή του διαδρόμου (όχι απόκλιση). Το label της γραμμής σπάει σελ. 40 ('TOUCH DOWN POINT (feet from the') -> σελ. 41 ('beginning of the RWY)').",
+              "provenance": "contact-24"
+            },
+            {
+              "maneuver": "a/ FLAPS LDG - FLAPS T/O – AΟA.",
+              "parameter": "DEVIATION FROM CENTER LINE (feet)",
+              "unit": "feet",
+              "code_1_raw": "15",
+              "code_3_raw": "5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 15,
+                "minus": 15
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Στο πρωτότυπο ΔΕΝ τυπώνεται '±'· η συμμετρική ερμηνεία (±) προκύπτει από το όνομα της παραμέτρου ('DEVIATION FROM CENTER LINE'). Βλ. flags.",
+              "provenance": "contact-24"
+            },
+            {
+              "maneuver": "a/ FLAPS LDG - FLAPS T/O – AΟA.",
+              "parameter": "TOUCH DOWN SPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "-5,+10",
+              "code_3_raw": "0,+5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 5
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Το raw τυπώνει πρώτα το αρνητικό σκέλος (-5,+10 / 0,+5), αντίστροφα από τους άλλους πίνακες.",
+              "provenance": "contact-24"
+            },
+            {
+              "maneuver": "b/ FLAPS UP",
+              "parameter": "TOUCH DOWN POINT (feet from the beginning of the RWY)",
+              "unit": "feet",
+              "code_1_raw": "2000΄",
+              "code_3_raw": "1500΄",
+              "code_1": {
+                "kind": "nominal_change",
+                "value": 2000
+              },
+              "code_3": {
+                "kind": "nominal_change",
+                "value": 1500
+              },
+              "interpolation": "undefined",
+              "notes": "Απόλυτο άνω όριο απόστασης σημείου επαφής από την αρχή του διαδρόμου (όχι απόκλιση).",
+              "provenance": "contact-24"
+            },
+            {
+              "maneuver": "b/ FLAPS UP",
+              "parameter": "DEVIATION FROM CENTER LINE (feet)",
+              "unit": "feet",
+              "code_1_raw": "15",
+              "code_3_raw": "5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 15,
+                "minus": 15
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Στο πρωτότυπο ΔΕΝ τυπώνεται '±'· βλ. flags.",
+              "provenance": "contact-24"
+            },
+            {
+              "maneuver": "b/ FLAPS UP",
+              "parameter": "TOUCH DOWN SPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "-5,+10",
+              "code_3_raw": "0,+5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 5
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Το raw τυπώνει πρώτα το αρνητικό σκέλος.",
+              "provenance": "contact-24"
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "The A/C Basic Control and Normal Landing (Contact category) specific criteria apply."
+      ],
+      "flags": [
+        "Παραπομπή σε ΔΥΟ items της Contact category (A/C Basic Control ΚΑΙ Normal Landing) → reference_target=null· απαιτείται συγχώνευση δύο συνόλων παραμέτρων στο downstream.",
+        "Οι CONDITIONS εδώ είναι «Day or night (VMC).» — μόνο VMC, σε αντίθεση με τα υπόλοιπα instrument items (VFR/IFR – VMC/IMC)."
+      ]
+    },
+    {
+      "id": "instrument-28",
+      "numbers": [
+        28
+      ],
+      "name": "LANDING",
+      "heading_verbatim": "(28) LANDING",
+      "pages_pdf": [
+        60,
+        61
+      ],
+      "execution": [
+        "SP executes transition from instrument flight to visual flight for landing, after TACAN, VOR, VOR/DME, GCA, ILS or LOCALIZER approach."
+      ],
+      "conditions": [
+        "Day or night (VFR – VMC)."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Smoothly transitions from instrument to visual flight for landing, without abrupt A/C attitude changes"
+          },
+          {
+            "key": "b",
+            "text": "Recognizes positively and timely the runway environment."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "Specific criteria of the corresponding section of the Contact category apply, except for the parameters regarding the touch down from the beginning of RWY (for landing after Precision Approach). Specifically, for standard “1” the effective distance limits are modified to ± 1.000 feet and for standard “3” to ± 500 feet, from the projected Touch Down Point.",
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "contact-24",
+              "scope": "όλος ο πίνακας Landing της Contact category — υπο-πίνακες «a/ FLAPS LDG - FLAPS T/O – AΟA.» και «b/ FLAPS UP», 6 γραμμές (PDF σελ. 40-41). Τροποποιήθηκαν ΜΟΝΟ οι δύο γραμμές «TOUCH DOWN POINT» (δείκτες 0 και 3)· οι υπόλοιπες 4 (DEVIATION FROM CENTER LINE, TOUCH DOWN SPEED × 2 διαμορφώσεις) αντιγράφηκαν αυτούσιες.",
+              "basis": "verbatim (specific_criteria.reference_text): «Specific criteria of the corresponding section of the Contact category apply, except for the parameters regarding the touch down from the beginning of RWY (for landing after Precision Approach). Specifically, for standard “1” the effective distance limits are modified to ± 1.000 feet and for standard “3” to ± 500 feet, from the projected Touch Down Point.» Το «corresponding section of the Contact category» είναι το contact-24 LANDING (MIF sn 24 = «Normal Landing» → contact-24). Η αριθμητική υπέρβαση εφαρμόστηκε στα σχετικά rows· βλ. override_note κάθε γραμμής και README §7.3 / §8.8."
+            }
+          ],
+          "parameters": [
+            {
+              "maneuver": "a/ FLAPS LDG - FLAPS T/O – AΟA.",
+              "parameter": "TOUCH DOWN POINT (feet from the beginning of the RWY)",
+              "unit": "feet",
+              "code_1_raw": "± 1.000 feet",
+              "code_3_raw": "± 500 feet",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 1000,
+                "minus": 1000
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 500,
+                "minus": 500
+              },
+              "interpolation": "standard",
+              "notes": "[ΥΠΕΡΒΑΣΗ instrument-28 — ΙΣΧΥΕΙ ΣΥΜΜΕΤΡΙΚΗ ΑΠΟΚΛΙΣΗ ±1000 ft (κωδ. «1») / ±500 ft (κωδ. «3») ΑΠΟ ΤΟ PROJECTED TOUCH DOWN POINT· η περιγραφή που ακολουθεί αφορά την ΠΡΩΤΟΤΥΠΗ γραμμή του contact-24 και ΔΕΝ ισχύει πλέον — βλ. override_note] Απόλυτο άνω όριο απόστασης σημείου επαφής από την αρχή του διαδρόμου (όχι απόκλιση). Το label της γραμμής σπάει σελ. 40 ('TOUCH DOWN POINT (feet from the') -> σελ. 41 ('beginning of the RWY)').",
+              "provenance": "contact-24",
+              "override_note": "ΥΠΕΡΒΑΣΗ ΑΠΟ ΤΟ instrument-28, verbatim: «Specific criteria of the corresponding section of the Contact category apply, except for the parameters regarding the touch down from the beginning of RWY (for landing after Precision Approach). Specifically, for standard “1” the effective distance limits are modified to ± 1.000 feet and for standard “3” to ± 500 feet, from the projected Touch Down Point.» ΠΡΩΤΟΤΥΠΕΣ ΤΙΜΕΣ contact-24 (πριν την υπέρβαση): code_1_raw=«1500΄», code_3_raw=«1000΄», code_1={\"kind\": \"nominal_change\", \"value\": 1500}, code_3={\"kind\": \"nominal_change\", \"value\": 1000}, interpolation=«undefined» — σημείο αναφοράς: Η ΑΡΧΗ ΤΟΥ ΔΙΑΔΡΟΜΟΥ (απόλυτο άνω όριο απόστασης, όχι απόκλιση). ΜΕΤΑ ΤΗΝ ΥΠΕΡΒΑΣΗ: συμμετρική απόκλιση ±1000 ft (standard «1») / ±500 ft (standard «3») από το PROJECTED TOUCH DOWN POINT — αλλάζει και το σημείο αναφοράς. kind: nominal_change → deviation και interpolation: undefined → standard, επειδή τα δύο σκέλη είναι πλέον αριθμητικές αποκλίσεις και ο κανόνας 7(b) για τον ενδιάμεσο κωδικό «2» εφαρμόζεται (500-1000 ft → κωδ. 2). «± 1.000 feet»: το «.» είναι ευρωπαϊκό διαχωριστικό χιλιάδων → 1000 ft, ΟΧΙ 1.0. ΕΜΒΕΛΕΙΑ: η τυπωμένη παρένθεση «(for landing after Precision Approach)» περιορίζει την υπέρβαση στις προσγειώσεις μετά από precision approach (ILS / GCA PAR)· κατά το γράμμα του κειμένου, για μη-precision προσεγγίσεις (VOR/TACAN/LOCALIZER/ASR) παραμένουν σε ισχύ τα πρωτότυπα όρια του contact-24 που καταγράφονται παραπάνω. Το πεδίο «notes» της γραμμής φέρει προθεματικό δείκτη «[ΥΠΕΡΒΑΣΗ instrument-28 …]»· το κείμενο ΜΕΤΑ τον δείκτη είναι πιστό αντίγραφο του contact-24 και περιγράφει την ΠΡΩΤΟΤΥΠΗ σημασιολογία — δεν ισχύει μετά την υπέρβαση. Ο δείκτης προστέθηκε ώστε η αντίφαση notes-vs-τιμών να είναι ορατή σε καταναλωτή που εμφανίζει το notes χωρίς να διαβάζει το override_note (μοναδική απόκλιση από τον κανόνα 1 της πιστής αντιγραφής, εντός της εξουσιοδοτημένης υπέρβασης του κανόνα 4)."
+            },
+            {
+              "maneuver": "a/ FLAPS LDG - FLAPS T/O – AΟA.",
+              "parameter": "DEVIATION FROM CENTER LINE (feet)",
+              "unit": "feet",
+              "code_1_raw": "15",
+              "code_3_raw": "5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 15,
+                "minus": 15
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Στο πρωτότυπο ΔΕΝ τυπώνεται '±'· η συμμετρική ερμηνεία (±) προκύπτει από το όνομα της παραμέτρου ('DEVIATION FROM CENTER LINE'). Βλ. flags.",
+              "provenance": "contact-24"
+            },
+            {
+              "maneuver": "a/ FLAPS LDG - FLAPS T/O – AΟA.",
+              "parameter": "TOUCH DOWN SPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "-5,+10",
+              "code_3_raw": "0,+5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 5
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Το raw τυπώνει πρώτα το αρνητικό σκέλος (-5,+10 / 0,+5), αντίστροφα από τους άλλους πίνακες.",
+              "provenance": "contact-24"
+            },
+            {
+              "maneuver": "b/ FLAPS UP",
+              "parameter": "TOUCH DOWN POINT (feet from the beginning of the RWY)",
+              "unit": "feet",
+              "code_1_raw": "± 1.000 feet",
+              "code_3_raw": "± 500 feet",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 1000,
+                "minus": 1000
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 500,
+                "minus": 500
+              },
+              "interpolation": "standard",
+              "notes": "[ΥΠΕΡΒΑΣΗ instrument-28 — ΙΣΧΥΕΙ ΣΥΜΜΕΤΡΙΚΗ ΑΠΟΚΛΙΣΗ ±1000 ft (κωδ. «1») / ±500 ft (κωδ. «3») ΑΠΟ ΤΟ PROJECTED TOUCH DOWN POINT· η περιγραφή που ακολουθεί αφορά την ΠΡΩΤΟΤΥΠΗ γραμμή του contact-24 και ΔΕΝ ισχύει πλέον — βλ. override_note] Απόλυτο άνω όριο απόστασης σημείου επαφής από την αρχή του διαδρόμου (όχι απόκλιση).",
+              "provenance": "contact-24",
+              "override_note": "ΥΠΕΡΒΑΣΗ ΑΠΟ ΤΟ instrument-28, verbatim: «Specific criteria of the corresponding section of the Contact category apply, except for the parameters regarding the touch down from the beginning of RWY (for landing after Precision Approach). Specifically, for standard “1” the effective distance limits are modified to ± 1.000 feet and for standard “3” to ± 500 feet, from the projected Touch Down Point.» ΠΡΩΤΟΤΥΠΕΣ ΤΙΜΕΣ contact-24 (πριν την υπέρβαση): code_1_raw=«2000΄», code_3_raw=«1500΄», code_1={\"kind\": \"nominal_change\", \"value\": 2000}, code_3={\"kind\": \"nominal_change\", \"value\": 1500}, interpolation=«undefined» — σημείο αναφοράς: Η ΑΡΧΗ ΤΟΥ ΔΙΑΔΡΟΜΟΥ (απόλυτο άνω όριο απόστασης, όχι απόκλιση). ΜΕΤΑ ΤΗΝ ΥΠΕΡΒΑΣΗ: συμμετρική απόκλιση ±1000 ft (standard «1») / ±500 ft (standard «3») από το PROJECTED TOUCH DOWN POINT — αλλάζει και το σημείο αναφοράς. kind: nominal_change → deviation και interpolation: undefined → standard, επειδή τα δύο σκέλη είναι πλέον αριθμητικές αποκλίσεις και ο κανόνας 7(b) για τον ενδιάμεσο κωδικό «2» εφαρμόζεται (500-1000 ft → κωδ. 2). «± 1.000 feet»: το «.» είναι ευρωπαϊκό διαχωριστικό χιλιάδων → 1000 ft, ΟΧΙ 1.0. ΕΜΒΕΛΕΙΑ: η τυπωμένη παρένθεση «(for landing after Precision Approach)» περιορίζει την υπέρβαση στις προσγειώσεις μετά από precision approach (ILS / GCA PAR)· κατά το γράμμα του κειμένου, για μη-precision προσεγγίσεις (VOR/TACAN/LOCALIZER/ASR) παραμένουν σε ισχύ τα πρωτότυπα όρια του contact-24 που καταγράφονται παραπάνω. Το πεδίο «notes» της γραμμής φέρει προθεματικό δείκτη «[ΥΠΕΡΒΑΣΗ instrument-28 …]»· το κείμενο ΜΕΤΑ τον δείκτη είναι πιστό αντίγραφο του contact-24 και περιγράφει την ΠΡΩΤΟΤΥΠΗ σημασιολογία — δεν ισχύει μετά την υπέρβαση. Ο δείκτης προστέθηκε ώστε η αντίφαση notes-vs-τιμών να είναι ορατή σε καταναλωτή που εμφανίζει το notes χωρίς να διαβάζει το override_note (μοναδική απόκλιση από τον κανόνα 1 της πιστής αντιγραφής, εντός της εξουσιοδοτημένης υπέρβασης του κανόνα 4)."
+            },
+            {
+              "maneuver": "b/ FLAPS UP",
+              "parameter": "DEVIATION FROM CENTER LINE (feet)",
+              "unit": "feet",
+              "code_1_raw": "15",
+              "code_3_raw": "5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 15,
+                "minus": 15
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "Στο πρωτότυπο ΔΕΝ τυπώνεται '±'· βλ. flags.",
+              "provenance": "contact-24"
+            },
+            {
+              "maneuver": "b/ FLAPS UP",
+              "parameter": "TOUCH DOWN SPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "-5,+10",
+              "code_3_raw": "0,+5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 5
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 0
+              },
+              "interpolation": "standard",
+              "notes": "Το raw τυπώνει πρώτα το αρνητικό σκέλος.",
+              "provenance": "contact-24"
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "Specific criteria of the corresponding section of the Contact category apply, except for the parameters regarding the touch down from the beginning of RWY (for landing after Precision Approach)."
+      ],
+      "flags": [
+        "ΠΡΟΣΟΧΗ — ΑΡΙΘΜΗΤΙΚΗ ΥΠΕΡΒΑΣΗ ΜΕΣΑ ΣΕ REFERENCE: το κείμενο ΤΡΟΠΟΠΟΙΕΙ τα όρια απόστασης touchdown της Contact category: standard «1» → ± 1.000 feet, standard «3» → ± 500 feet από το projected Touch Down Point. Δεν υπάρχει πίνακας, οπότε kind=reference· ο downstream κώδικας ΠΡΕΠΕΙ να εφαρμόσει την υπέρβαση (plus/minus 1000 για code 1, plus/minus 500 για code 3, unit=feet).",
+        "«± 1.000 feet»: το «.» είναι διαχωριστικό χιλιάδων (ευρωπαϊκή γραφή) → 1000 feet, ΟΧΙ 1.0.",
+        "Τα εισαγωγικά γύρω από τα “1” και “3” είναι U+201C/U+201D.",
+        "Το general criterion a/ τελειώνει χωρίς τελεία στο πρωτότυπο («...attitude changes») — διατηρήθηκε verbatim.",
+        "reference_target=null: η αντίστοιχη ενότητα Landing της Contact category δεν είναι διαθέσιμη σε αυτό το chunk."
+      ]
+    },
+    {
+      "id": "instrument-29",
+      "numbers": [
+        29
+      ],
+      "name": "MISSED APPROACH",
+      "heading_verbatim": "(29) MISSED APPROACH",
+      "pages_pdf": [
+        61,
+        61
+      ],
+      "execution": [
+        "When executing the Training Exercise, SP executes missed approach, following the instrument approach, IAW Technique and Procedures Manual, MAIP, Local Area Procedures and AFMAN 11-202 VOL3."
+      ],
+      "conditions": [
+        "Same conditions apply as in the execution of VOR/TACAN approach."
+      ],
+      "expected_performance": {
+        "general_criteria": [
+          {
+            "key": "a",
+            "text": "Knows and executes the missed approach procedure flawlessly and timely, without misapprehensions."
+          },
+          {
+            "key": "b",
+            "text": "Cleans the A/C configuration according to the standardized procedures, within airspeed limits."
+          }
+        ],
+        "specific_criteria": {
+          "kind": "table",
+          "reference_text": null,
+          "reference_target": null,
+          "parameters": [
+            {
+              "maneuver": null,
+              "parameter": "MISSED APPROACH RADIAL DEVIATION",
+              "unit": "degrees",
+              "code_1_raw": "± 8",
+              "code_3_raw": "± 5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 8,
+                "minus": 8
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 5,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": "No unit is printed in the label; the parameter is a radial deviation, normalized to degrees."
+            },
+            {
+              "maneuver": null,
+              "parameter": "AIRSPEED (knots)",
+              "unit": "knots",
+              "code_1_raw": "+ 15, - 10",
+              "code_3_raw": "+ 10, - 5",
+              "code_1": {
+                "kind": "deviation",
+                "plus": 15,
+                "minus": 10
+              },
+              "code_3": {
+                "kind": "deviation",
+                "plus": 10,
+                "minus": 5
+              },
+              "interpolation": "standard",
+              "notes": null
+            }
+          ]
+        }
+      },
+      "cross_refs": [
+        "Same conditions apply as in the execution of VOR/TACAN approach."
+      ],
+      "flags": [
+        "Τυπογραφικό στο πρωτότυπο: «IAW Technique and Procedures Manual» (ενικός «Technique» αντί «Techniques») — διατηρήθηκε verbatim.",
+        "Η γραμμή «MISSED APPROACH RADIAL DEVIATION» δεν φέρει μονάδα στην ετικέτα (radials εννοούνται)."
+      ]
+    },
+    {
+      "id": "instrument-30",
+      "numbers": [
+        30,
+        31,
+        32,
+        33
+      ],
+      "name": "RADIO COMMUNICATION, AIRMANSHIP, EMERGENCY PROCEDURES, GENERAL KNOWLEDGE.",
+      "heading_verbatim": "(30) - (33) RADIO COMMUNICATION, AIRMANSHIP, EMERGENCY PROCEDURES, GENERAL KNOWLEDGE.",
+      "pages_pdf": [
+        61,
+        61
+      ],
+      "execution": [],
+      "conditions": [],
+      "expected_performance": {
+        "general_criteria": [],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "As described in the CONTACT category.",
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "contact-37",
+              "scope": "αριθμός (30) του ομαδοποιημένου item — Contact «RADIO COMMUNICATION» (general criteria, χωρίς πίνακα)",
+              "basis": "verbatim (specific_criteria.reference_text): «As described in the CONTACT category.» Αντιστοίχιση αριθμού μέσω MIF: instrument sn 30 = «Radio Comm.». Ο στόχος contact-37 έχει specific_criteria.kind=\"none\" — qualitative item — no numeric standards applicable· ισχύουν μόνο τα general criteria του αντίστοιχου Contact item (και, κατά §7.a(5), τίποτε αριθμητικό δεν προκύπτει για καθαρά ποιοτικά αντικείμενα αυτού του τύπου)."
+            },
+            {
+              "item": "contact-38",
+              "scope": "αριθμός (31) του ομαδοποιημένου item — Contact «AIRMANSHIP» (general criteria, χωρίς πίνακα)",
+              "basis": "verbatim (specific_criteria.reference_text): «As described in the CONTACT category.» Αντιστοίχιση αριθμού μέσω MIF: instrument sn 31 = «Airmanship». Ο στόχος contact-38 έχει specific_criteria.kind=\"none\" — qualitative item — no numeric standards applicable· ισχύουν μόνο τα general criteria του αντίστοιχου Contact item (και, κατά §7.a(5), τίποτε αριθμητικό δεν προκύπτει για καθαρά ποιοτικά αντικείμενα αυτού του τύπου)."
+            },
+            {
+              "item": "contact-39",
+              "scope": "αριθμός (32) του ομαδοποιημένου item — Contact «EMERGENCY PROCEDURES» (general criteria, χωρίς πίνακα)",
+              "basis": "verbatim (specific_criteria.reference_text): «As described in the CONTACT category.» Αντιστοίχιση αριθμού μέσω MIF: instrument sn 32 = «Emergency Procedures». Ο στόχος contact-39 έχει specific_criteria.kind=\"none\" — qualitative item — no numeric standards applicable· ισχύουν μόνο τα general criteria του αντίστοιχου Contact item (και, κατά §7.a(5), τίποτε αριθμητικό δεν προκύπτει για καθαρά ποιοτικά αντικείμενα αυτού του τύπου)."
+            },
+            {
+              "item": "contact-40",
+              "scope": "αριθμός (33) του ομαδοποιημένου item — Contact «GENERAL KNOWLEDGE» (general criteria, χωρίς πίνακα)",
+              "basis": "verbatim (specific_criteria.reference_text): «As described in the CONTACT category.» Αντιστοίχιση αριθμού μέσω MIF: instrument sn 33 = «General Knowledge». Ο στόχος contact-40 έχει specific_criteria.kind=\"none\" — qualitative item — no numeric standards applicable· ισχύουν μόνο τα general criteria του αντίστοιχου Contact item (και, κατά §7.a(5), τίποτε αριθμητικό δεν προκύπτει για καθαρά ποιοτικά αντικείμενα αυτού του τύπου)."
+            }
+          ],
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "As described in the CONTACT category."
+      ],
+      "flags": [
+        "Ομαδοποιημένο item (30)-(33): ΔΕΝ έχει καθόλου υποενότητες (a) EXECUTION / (b) CONDITIONS / (c) EXPECTED PERFORMANCE. Ολόκληρο το περιεχόμενό του είναι η πρόταση «As described in the CONTACT category.», η οποία τοποθετήθηκε σε cross_refs και σε specific_criteria.reference_text.",
+        "Η τελεία στο τέλος της επικεφαλίδας («KNOWLEDGE.») ανήκει στο πρωτότυπο.",
+        "reference_target=null: αφορά 4 ξεχωριστά items της Contact category (Radio Communication, Airmanship, Emergency Procedures, General Knowledge)."
+      ]
+    },
+    {
+      "id": "instrument-34",
+      "numbers": [
+        34
+      ],
+      "name": "SPECIAL REQUIREMENTS",
+      "heading_verbatim": "(34) SPECIAL REQUIREMENTS",
+      "pages_pdf": [
+        61,
+        61
+      ],
+      "execution": [],
+      "conditions": [],
+      "expected_performance": {
+        "general_criteria": [],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "As determined by the Training Exercises analysis and the Performance Standards (MIF).",
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": null,
+              "scope": "εξωτερική πηγή — δεν παραπέμπει σε item του syllabus: «Training Exercises analysis» + «Performance Standards (MIF)» → mif/t6a.json (table instrument_t6a, sn 34 «Special Requirements») και mif/fs.json (table instrument_fs, sn 34 «Special Requirements»)",
+              "basis": "verbatim (specific_criteria.reference_text): «As determined by the Training Exercises analysis and the Performance Standards (MIF).» qualitative item — no numeric standards applicable: δεν τυπώνεται κανένας πίνακας και τα απαιτούμενα επίπεδα ορίζονται ανά training unit από τα κελιά MIF (κωδικοί 0-4 / E / *), όχι με αριθμητικές ανοχές παραμέτρων. Δεν φορτώνεται πίνακας Basic A/C Control (θα ήταν άσχετος)."
+            }
+          ],
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "As determined by the Training Exercises analysis and the Performance Standards (MIF)."
+      ],
+      "flags": [
+        "Δεν έχει υποενότητες (a)/(b)/(c). Το μοναδικό κείμενο είναι παραπομπή σε εξωτερική πηγή (Training Exercises analysis, Performance Standards / MIF) και όχι σε άλλο item του syllabus → reference_target=null.",
+        "Δεν υπάρχουν αριθμητικά κριτήρια — τα όρια ορίζονται ανά άσκηση από τον πίνακα MIF."
+      ]
+    },
+    {
+      "id": "instrument-crm",
+      "numbers": [],
+      "name": "CRM",
+      "heading_verbatim": "CRM",
+      "pages_pdf": [
+        61,
+        61
+      ],
+      "execution": [],
+      "conditions": [],
+      "expected_performance": {
+        "general_criteria": [],
+        "specific_criteria": {
+          "kind": "reference",
+          "reference_text": "As described in the CONTACT category.",
+          "reference_target": null,
+          "parameters": []
+        },
+        "resolved": {
+          "status": "resolved",
+          "rule": "explicit_reference",
+          "sources": [
+            {
+              "item": "contact-crm",
+              "scope": "όλο το item Contact CRM (ανάριθμο, general criteria a/… χωρίς πίνακα)",
+              "basis": "verbatim (specific_criteria.reference_text): «As described in the CONTACT category.» Ο στόχος contact-crm έχει specific_criteria.kind=\"none\" — qualitative item — no numeric standards applicable (CRM: briefings/debriefings, IFG-CRM matrix, situational awareness). Και τα δύο CRM items είναι ανάριθμα και δεν έχουν γραμμή MIF (README §7.6.B), άρα δεν υπάρχει καμία αριθμητική διάσταση."
+            }
+          ],
+          "parameters": []
+        }
+      },
+      "cross_refs": [
+        "As described in the CONTACT category."
+      ],
+      "flags": [
+        "Item ΧΩΡΙΣ αριθμό (numbers=[]). Το id «instrument-crm» δεν ακολουθεί τον κανόνα «<category>-<zero-padded first number>» επειδή δεν υπάρχει αριθμός — απαιτείται συμφωνία με τα υπόλοιπα chunks (η Contact category έχει επίσης ανάριθμο CRM).",
+        "Δεν έχει υποενότητες (a)/(b)/(c) — μόνο η πρόταση «As described in the CONTACT category.».",
+        "Τελευταίο item της Instrument category· ακολουθεί «d. FORMATION CATEGORY PERFORMANCE CRITERIA» στη σελ. PDF 62."
+      ]
+    }
+  ]
+}

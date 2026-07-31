@@ -1,0 +1,2420 @@
+{
+  "source_document": "Phase_2_Syllabus_2025.pdf",
+  "built_from": {
+    "criteria": [
+      "contact.json",
+      "instrument.json",
+      "formation.json",
+      "vfr_navigation.json"
+    ],
+    "mif": [
+      "mif/fs.json",
+      "mif/t6a.json"
+    ],
+    "raw_chunks": [
+      "criteria_contact_a.json",
+      "criteria_contact_b.json",
+      "criteria_contact_c.json",
+      "criteria_formation_a.json",
+      "criteria_formation_b.json",
+      "criteria_formation_c.json",
+      "criteria_instrument_a.json",
+      "criteria_instrument_b.json",
+      "criteria_vfrnav.json",
+      "mif_fs.json",
+      "mif_t6a.json"
+    ]
+  },
+  "counts": {
+    "criteria_items_total": 118,
+    "criteria_items_by_category": {
+      "contact": 28,
+      "instrument": 30,
+      "formation": 34,
+      "vfr_navigation": 26
+    },
+    "mif_tables": 9,
+    "mif_rows_total": 319,
+    "criteria_items_by_resolved_status": {
+      "resolved": 80,
+      "needs_user_decision": 0,
+      "n/a": 38
+    }
+  },
+  "items": [
+    {
+      "id": "contact-00-general",
+      "numbers": [],
+      "name": "GENERAL",
+      "category": "contact",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        24,
+        25
+      ]
+    },
+    {
+      "id": "contact-01",
+      "numbers": [
+        1
+      ],
+      "name": "GROUND PROCEDURES",
+      "category": "contact",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        26,
+        27
+      ]
+    },
+    {
+      "id": "contact-02",
+      "numbers": [
+        2
+      ],
+      "name": "TAKE OFF",
+      "category": "contact",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        27,
+        28
+      ]
+    },
+    {
+      "id": "contact-03",
+      "numbers": [
+        3
+      ],
+      "name": "DEPARTURE / TRANSITION TO FLIGHT AREAS",
+      "category": "contact",
+      "specific_kind": "reference",
+      "reference_target": "contact-05",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        28
+      ]
+    },
+    {
+      "id": "contact-04",
+      "numbers": [
+        4
+      ],
+      "name": "AREA AWARENESS",
+      "category": "contact",
+      "specific_kind": "reference",
+      "reference_target": "contact-05",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        29
+      ]
+    },
+    {
+      "id": "contact-05",
+      "numbers": [
+        5
+      ],
+      "name": "BASIC A/C CONTROL",
+      "category": "contact",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        29,
+        30
+      ]
+    },
+    {
+      "id": "contact-06",
+      "numbers": [
+        6
+      ],
+      "name": "G –AWARENESS",
+      "category": "contact",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        30,
+        31
+      ]
+    },
+    {
+      "id": "contact-07",
+      "numbers": [
+        7
+      ],
+      "name": "SLOW FLIGHT",
+      "category": "contact",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        31
+      ]
+    },
+    {
+      "id": "contact-08",
+      "numbers": [
+        8
+      ],
+      "name": "POWER ON / ELP STALLS",
+      "category": "contact",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        31,
+        32
+      ]
+    },
+    {
+      "id": "contact-09",
+      "numbers": [
+        9
+      ],
+      "name": "TRAFFIC PATTERN STALLS",
+      "category": "contact",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        32,
+        33
+      ]
+    },
+    {
+      "id": "contact-10",
+      "numbers": [
+        10
+      ],
+      "name": "SPIN PREVENTION /SPIN RECOVERY",
+      "category": "contact",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        33,
+        33
+      ]
+    },
+    {
+      "id": "contact-11",
+      "numbers": [
+        11
+      ],
+      "name": "UNUSUAL ATTITUDES RECOVERY",
+      "category": "contact",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        33,
+        34
+      ]
+    },
+    {
+      "id": "contact-12",
+      "numbers": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "name": "PRECISION - AEROBATIC MANEUVERS",
+      "category": "contact",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        34,
+        35
+      ]
+    },
+    {
+      "id": "contact-21",
+      "numbers": [
+        21
+      ],
+      "name": "DESCENT - TRAFFIC PATTERN ENTRY",
+      "category": "contact",
+      "specific_kind": "reference",
+      "reference_target": "contact-05",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        35,
+        36
+      ]
+    },
+    {
+      "id": "contact-22",
+      "numbers": [
+        22
+      ],
+      "name": "AIRPORT TRAFFIC PATTERN",
+      "category": "contact",
+      "specific_kind": "reference",
+      "reference_target": "contact-05",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        36,
+        36
+      ]
+    },
+    {
+      "id": "contact-23",
+      "numbers": [
+        23,
+        25,
+        27,
+        32
+      ],
+      "name": "LANDING PATTERN (NORMAL, NO FLAP, FLAP T/O - AΟA)",
+      "category": "contact",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        36,
+        38
+      ]
+    },
+    {
+      "id": "contact-24",
+      "numbers": [
+        24,
+        26,
+        28,
+        33
+      ],
+      "name": "LANDING (FLAPS LDG - FLAPS UP - FLAPS Τ/Ο - ELP - AΟA)",
+      "category": "contact",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        39,
+        41
+      ]
+    },
+    {
+      "id": "contact-29",
+      "numbers": [
+        29
+      ],
+      "name": "STRAIGHT-IN (FLAPS LDG, FLAPS UP, FLAPS Τ/Ο).",
+      "category": "contact",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        38,
+        39
+      ]
+    },
+    {
+      "id": "contact-30",
+      "numbers": [
+        30
+      ],
+      "name": "EMERGENCY LANDING PATTERN (ELP)",
+      "category": "contact",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        39,
+        39
+      ]
+    },
+    {
+      "id": "contact-34",
+      "numbers": [
+        34
+      ],
+      "name": "GO AROUND",
+      "category": "contact",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        41,
+        42
+      ]
+    },
+    {
+      "id": "contact-35",
+      "numbers": [
+        35
+      ],
+      "name": "CLOSED PATTERN",
+      "category": "contact",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        42
+      ]
+    },
+    {
+      "id": "contact-36",
+      "numbers": [
+        36
+      ],
+      "name": "CLEARING",
+      "category": "contact",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        42,
+        43
+      ]
+    },
+    {
+      "id": "contact-37",
+      "numbers": [
+        37
+      ],
+      "name": "RADIO COMMUNICATION",
+      "category": "contact",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        43,
+        44
+      ]
+    },
+    {
+      "id": "contact-38",
+      "numbers": [
+        38
+      ],
+      "name": "AIRMANSHIP",
+      "category": "contact",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        44,
+        45
+      ]
+    },
+    {
+      "id": "contact-39",
+      "numbers": [
+        39
+      ],
+      "name": "EMERGENCY PROCEDURES",
+      "category": "contact",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        45,
+        46
+      ]
+    },
+    {
+      "id": "contact-40",
+      "numbers": [
+        40
+      ],
+      "name": "GENERAL KNOWLEDGE",
+      "category": "contact",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        46,
+        47
+      ]
+    },
+    {
+      "id": "contact-41",
+      "numbers": [
+        41
+      ],
+      "name": "SPECIAL REQUIREMENTS",
+      "category": "contact",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        47
+      ]
+    },
+    {
+      "id": "contact-crm",
+      "numbers": [],
+      "name": "CRM",
+      "category": "contact",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        47,
+        48
+      ]
+    },
+    {
+      "id": "instrument-01",
+      "numbers": [
+        1
+      ],
+      "name": "GROUND PROCEDURES",
+      "category": "instrument",
+      "specific_kind": "reference",
+      "reference_target": "contact-01",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        49
+      ]
+    },
+    {
+      "id": "instrument-02",
+      "numbers": [
+        2
+      ],
+      "name": "TAKE OFF",
+      "category": "instrument",
+      "specific_kind": "reference",
+      "reference_target": "contact-02",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        49
+      ]
+    },
+    {
+      "id": "instrument-03",
+      "numbers": [
+        3
+      ],
+      "name": "STANDARD INSTRUMENT DEPARTURE (SID)",
+      "category": "instrument",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        49
+      ]
+    },
+    {
+      "id": "instrument-04",
+      "numbers": [
+        4
+      ],
+      "name": "BASIC A/C CONTROL",
+      "category": "instrument",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        49,
+        50
+      ]
+    },
+    {
+      "id": "instrument-05",
+      "numbers": [
+        5
+      ],
+      "name": "STEEP TURNS",
+      "category": "instrument",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        50
+      ]
+    },
+    {
+      "id": "instrument-06",
+      "numbers": [
+        6
+      ],
+      "name": "AIRSPEED CHANGES",
+      "category": "instrument",
+      "specific_kind": "reference",
+      "reference_target": "instrument-04",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        50,
+        51
+      ]
+    },
+    {
+      "id": "instrument-07",
+      "numbers": [
+        7,
+        8,
+        9
+      ],
+      "name": "CONSTANT AIRSPEED - CONSTANT RATE CLIMBS / DESCENTS AND VERTICAL “S”",
+      "category": "instrument",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        51
+      ]
+    },
+    {
+      "id": "instrument-10",
+      "numbers": [
+        10
+      ],
+      "name": "UNUSUAL ATTITUDES RECOVERY",
+      "category": "instrument",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        51,
+        52
+      ]
+    },
+    {
+      "id": "instrument-11",
+      "numbers": [
+        11
+      ],
+      "name": "CONFIDENCE MANEUVERS",
+      "category": "instrument",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        52
+      ]
+    },
+    {
+      "id": "instrument-12",
+      "numbers": [
+        12
+      ],
+      "name": "COURSE INTERCEPTS",
+      "category": "instrument",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        52,
+        53
+      ]
+    },
+    {
+      "id": "instrument-13",
+      "numbers": [
+        13
+      ],
+      "name": "MAINTAINING COURSE",
+      "category": "instrument",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        53
+      ]
+    },
+    {
+      "id": "instrument-14",
+      "numbers": [
+        14
+      ],
+      "name": "ARC INTERCEPT",
+      "category": "instrument",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        53,
+        54
+      ]
+    },
+    {
+      "id": "instrument-15",
+      "numbers": [
+        15
+      ],
+      "name": "MAINTAINING ARC",
+      "category": "instrument",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        54
+      ]
+    },
+    {
+      "id": "instrument-16",
+      "numbers": [
+        16
+      ],
+      "name": "POINT TO POINT",
+      "category": "instrument",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        54,
+        55
+      ]
+    },
+    {
+      "id": "instrument-17",
+      "numbers": [
+        17
+      ],
+      "name": "HOLDING",
+      "category": "instrument",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        55
+      ]
+    },
+    {
+      "id": "instrument-18",
+      "numbers": [
+        18
+      ],
+      "name": "INSTRUMENT DESCENT (PENETRATION)",
+      "category": "instrument",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        55,
+        56
+      ]
+    },
+    {
+      "id": "instrument-19",
+      "numbers": [
+        19
+      ],
+      "name": "EN-ROUTE DESCENT",
+      "category": "instrument",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        56,
+        56
+      ]
+    },
+    {
+      "id": "instrument-20",
+      "numbers": [
+        20
+      ],
+      "name": "VOR / TACAN APPROACH",
+      "category": "instrument",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        56,
+        57
+      ]
+    },
+    {
+      "id": "instrument-21",
+      "numbers": [
+        21
+      ],
+      "name": "ILS APPROACH",
+      "category": "instrument",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        57,
+        57
+      ]
+    },
+    {
+      "id": "instrument-22",
+      "numbers": [
+        22
+      ],
+      "name": "LOCALIZER APPROACH",
+      "category": "instrument",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        58,
+        58
+      ]
+    },
+    {
+      "id": "instrument-23",
+      "numbers": [
+        23
+      ],
+      "name": "GCA APPROACH (ASR)",
+      "category": "instrument",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        58,
+        59
+      ]
+    },
+    {
+      "id": "instrument-24",
+      "numbers": [
+        24
+      ],
+      "name": "GCA APPROACH (PAR)",
+      "category": "instrument",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        59,
+        59
+      ]
+    },
+    {
+      "id": "instrument-25",
+      "numbers": [
+        25
+      ],
+      "name": "GCA APPROACH (GYRO OUT)",
+      "category": "instrument",
+      "specific_kind": "reference",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        59,
+        59
+      ]
+    },
+    {
+      "id": "instrument-26",
+      "numbers": [
+        26
+      ],
+      "name": "STANDBY INSTRUMENTS APPROACH",
+      "category": "instrument",
+      "specific_kind": "reference",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        59,
+        60
+      ]
+    },
+    {
+      "id": "instrument-27",
+      "numbers": [
+        27
+      ],
+      "name": "CIRCLING APPROACH",
+      "category": "instrument",
+      "specific_kind": "reference",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        60,
+        60
+      ]
+    },
+    {
+      "id": "instrument-28",
+      "numbers": [
+        28
+      ],
+      "name": "LANDING",
+      "category": "instrument",
+      "specific_kind": "reference",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        60,
+        61
+      ]
+    },
+    {
+      "id": "instrument-29",
+      "numbers": [
+        29
+      ],
+      "name": "MISSED APPROACH",
+      "category": "instrument",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        61,
+        61
+      ]
+    },
+    {
+      "id": "instrument-30",
+      "numbers": [
+        30,
+        31,
+        32,
+        33
+      ],
+      "name": "RADIO COMMUNICATION, AIRMANSHIP, EMERGENCY PROCEDURES, GENERAL KNOWLEDGE.",
+      "category": "instrument",
+      "specific_kind": "reference",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        61,
+        61
+      ]
+    },
+    {
+      "id": "instrument-34",
+      "numbers": [
+        34
+      ],
+      "name": "SPECIAL REQUIREMENTS",
+      "category": "instrument",
+      "specific_kind": "reference",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        61,
+        61
+      ]
+    },
+    {
+      "id": "instrument-crm",
+      "numbers": [],
+      "name": "CRM",
+      "category": "instrument",
+      "specific_kind": "reference",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        61,
+        61
+      ]
+    },
+    {
+      "id": "formation-01",
+      "numbers": [
+        1,
+        2
+      ],
+      "name": "TAKE OFF (FORMATION - INTERVAL)",
+      "category": "formation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        62,
+        62
+      ]
+    },
+    {
+      "id": "formation-03",
+      "numbers": [
+        3
+      ],
+      "name": "DEPARTURE",
+      "category": "formation",
+      "specific_kind": "reference",
+      "reference_target": "contact-05",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        62,
+        62
+      ]
+    },
+    {
+      "id": "formation-04",
+      "numbers": [
+        4
+      ],
+      "name": "IN FLIGHT PLANNING / FORMATION CONSISTENCY",
+      "category": "formation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        62,
+        63
+      ]
+    },
+    {
+      "id": "formation-05",
+      "numbers": [
+        5
+      ],
+      "name": "RETURN / DESCENT / TRAFFIC PATTERN ENTRY",
+      "category": "formation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        63,
+        64
+      ]
+    },
+    {
+      "id": "formation-06",
+      "numbers": [
+        6
+      ],
+      "name": "FORMATION APPROACH",
+      "category": "formation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        64,
+        64
+      ]
+    },
+    {
+      "id": "formation-07",
+      "numbers": [
+        7
+      ],
+      "name": "FORMATION TAKE OFF",
+      "category": "formation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        64,
+        65
+      ]
+    },
+    {
+      "id": "formation-08",
+      "numbers": [
+        8
+      ],
+      "name": "INTERVAL TAKE OFF",
+      "category": "formation",
+      "specific_kind": "reference",
+      "reference_target": "contact-02",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        65,
+        65
+      ]
+    },
+    {
+      "id": "formation-09",
+      "numbers": [
+        9
+      ],
+      "name": "TURNING REJOIN",
+      "category": "formation",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        65,
+        66
+      ]
+    },
+    {
+      "id": "formation-10",
+      "numbers": [
+        10
+      ],
+      "name": "STRAIGHT AHEAD REJOIN",
+      "category": "formation",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        66,
+        67
+      ]
+    },
+    {
+      "id": "formation-11",
+      "numbers": [
+        11
+      ],
+      "name": "OVERSHOOT",
+      "category": "formation",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        67,
+        68
+      ]
+    },
+    {
+      "id": "formation-12",
+      "numbers": [
+        12
+      ],
+      "name": "BREAK OUT",
+      "category": "formation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        68,
+        68
+      ]
+    },
+    {
+      "id": "formation-13",
+      "numbers": [
+        13
+      ],
+      "name": "FORMATION APPROACH.",
+      "category": "formation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        68,
+        69
+      ]
+    },
+    {
+      "id": "formation-14",
+      "numbers": [
+        14
+      ],
+      "name": "MISSION PLANNING / BRIEFING.",
+      "category": "formation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        69
+      ]
+    },
+    {
+      "id": "formation-15",
+      "numbers": [
+        15
+      ],
+      "name": "GROUND PROCEDURES.",
+      "category": "formation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        70
+      ]
+    },
+    {
+      "id": "formation-16",
+      "numbers": [
+        16
+      ],
+      "name": "PITCH OUT / SPACING",
+      "category": "formation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        70
+      ]
+    },
+    {
+      "id": "formation-17",
+      "numbers": [
+        17
+      ],
+      "name": "FINGERTIP",
+      "category": "formation",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        70,
+        71
+      ]
+    },
+    {
+      "id": "formation-18",
+      "numbers": [
+        18
+      ],
+      "name": "ROUTE / FIGHTING WING FORMATION",
+      "category": "formation",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        71,
+        72
+      ]
+    },
+    {
+      "id": "formation-19",
+      "numbers": [
+        19
+      ],
+      "name": "ECHELON TURN (AS WINGMAN)",
+      "category": "formation",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        72,
+        73
+      ]
+    },
+    {
+      "id": "formation-20",
+      "numbers": [
+        20
+      ],
+      "name": "CROSS UNDER",
+      "category": "formation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        73
+      ]
+    },
+    {
+      "id": "formation-21",
+      "numbers": [
+        21
+      ],
+      "name": "LEAD CHANGE",
+      "category": "formation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        73,
+        74
+      ]
+    },
+    {
+      "id": "formation-22",
+      "numbers": [
+        22
+      ],
+      "name": "CLOSE TRAIL",
+      "category": "formation",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        74,
+        75
+      ]
+    },
+    {
+      "id": "formation-23",
+      "numbers": [
+        23
+      ],
+      "name": "EXTENDED TRAIL",
+      "category": "formation",
+      "specific_kind": "reference",
+      "reference_target": "formation-18",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        75,
+        76
+      ]
+    },
+    {
+      "id": "formation-24",
+      "numbers": [
+        24
+      ],
+      "name": "TACTICAL FORMATION",
+      "category": "formation",
+      "specific_kind": "reference",
+      "reference_target": "formation-24b",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        76
+      ]
+    },
+    {
+      "id": "formation-24b",
+      "numbers": [
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "name": "TACTICAL TURNS DELAY 90°, DELAY 45°, IN PLACE, CROSS / HOOK / SHACKLE/ CHECK TURNS",
+      "category": "formation",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        76,
+        77
+      ]
+    },
+    {
+      "id": "formation-29",
+      "numbers": [
+        29
+      ],
+      "name": "BASIC A/C - FORMATION CONTROL",
+      "category": "formation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        77,
+        78
+      ]
+    },
+    {
+      "id": "formation-30",
+      "numbers": [
+        30
+      ],
+      "name": "LANDING PATTERN",
+      "category": "formation",
+      "specific_kind": "reference",
+      "reference_target": "contact-23",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        78,
+        79
+      ]
+    },
+    {
+      "id": "formation-31",
+      "numbers": [
+        31
+      ],
+      "name": "LANDING",
+      "category": "formation",
+      "specific_kind": "reference",
+      "reference_target": "contact-24",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        79
+      ]
+    },
+    {
+      "id": "formation-32",
+      "numbers": [
+        32
+      ],
+      "name": "VISUAL SIGNALS",
+      "category": "formation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        79
+      ]
+    },
+    {
+      "id": "formation-33",
+      "numbers": [
+        33
+      ],
+      "name": "CLEARING",
+      "category": "formation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        79,
+        80
+      ]
+    },
+    {
+      "id": "formation-34",
+      "numbers": [
+        34
+      ],
+      "name": "RADIO COMMUNICATION",
+      "category": "formation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        80
+      ]
+    },
+    {
+      "id": "formation-35",
+      "numbers": [
+        35
+      ],
+      "name": "AIRMANSHIP",
+      "category": "formation",
+      "specific_kind": "reference",
+      "reference_target": "contact-38",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        80
+      ]
+    },
+    {
+      "id": "formation-36",
+      "numbers": [
+        36
+      ],
+      "name": "EMERGENCY PROCEDURES",
+      "category": "formation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        80,
+        81
+      ]
+    },
+    {
+      "id": "formation-37",
+      "numbers": [
+        37
+      ],
+      "name": "GENERAL KNOWLEDGE",
+      "category": "formation",
+      "specific_kind": "reference",
+      "reference_target": "contact-40",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        81
+      ]
+    },
+    {
+      "id": "formation-crm",
+      "numbers": [],
+      "name": "CRM",
+      "category": "formation",
+      "specific_kind": "reference",
+      "reference_target": "contact-crm",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        81
+      ]
+    },
+    {
+      "id": "vfr_navigation-01",
+      "numbers": [
+        1
+      ],
+      "name": "MISSION PLANNING / BRIEFING - DEBRIEFING",
+      "category": "vfr_navigation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        83
+      ]
+    },
+    {
+      "id": "vfr_navigation-02",
+      "numbers": [
+        2
+      ],
+      "name": "GROUND PROCEDURES",
+      "category": "vfr_navigation",
+      "specific_kind": "reference",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        83
+      ]
+    },
+    {
+      "id": "vfr_navigation-03",
+      "numbers": [
+        3
+      ],
+      "name": "TAKEOFF",
+      "category": "vfr_navigation",
+      "specific_kind": "reference",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        83,
+        84
+      ]
+    },
+    {
+      "id": "vfr_navigation-04",
+      "numbers": [
+        4
+      ],
+      "name": "VFR DEPARTURE / SID",
+      "category": "vfr_navigation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        84
+      ]
+    },
+    {
+      "id": "vfr_navigation-05",
+      "numbers": [
+        5
+      ],
+      "name": "BASIC A/C CONTROL / WINGMAN CONSIDERATION",
+      "category": "vfr_navigation",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        84
+      ]
+    },
+    {
+      "id": "vfr_navigation-06",
+      "numbers": [
+        6
+      ],
+      "name": "IN-FLIGHT PLANNING / FORMATION INTERGRITY",
+      "category": "vfr_navigation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        85
+      ]
+    },
+    {
+      "id": "vfr_navigation-07",
+      "numbers": [
+        7
+      ],
+      "name": "FINGERTIP",
+      "category": "vfr_navigation",
+      "specific_kind": "reference",
+      "reference_target": "formation-17",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        85,
+        86
+      ]
+    },
+    {
+      "id": "vfr_navigation-08",
+      "numbers": [
+        8
+      ],
+      "name": "TACTICAL FORMATION",
+      "category": "vfr_navigation",
+      "specific_kind": "reference",
+      "reference_target": "formation-24",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        86
+      ]
+    },
+    {
+      "id": "vfr_navigation-09",
+      "numbers": [
+        9
+      ],
+      "name": "TACTICAL TURNS",
+      "category": "vfr_navigation",
+      "specific_kind": "reference",
+      "reference_target": "formation-24b",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        86
+      ]
+    },
+    {
+      "id": "vfr_navigation-10",
+      "numbers": [
+        10
+      ],
+      "name": "MAINTAIN TRACK",
+      "category": "vfr_navigation",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        86
+      ]
+    },
+    {
+      "id": "vfr_navigation-11",
+      "numbers": [
+        11
+      ],
+      "name": "MAP READING",
+      "category": "vfr_navigation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        86
+      ]
+    },
+    {
+      "id": "vfr_navigation-12",
+      "numbers": [
+        12
+      ],
+      "name": "PILOTAGE",
+      "category": "vfr_navigation",
+      "specific_kind": "table",
+      "reference_target": null,
+      "resolved_status": "n/a",
+      "pages_pdf": [
+        87
+      ]
+    },
+    {
+      "id": "vfr_navigation-13",
+      "numbers": [
+        13
+      ],
+      "name": "NAVIGATION WITH GPS",
+      "category": "vfr_navigation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        87,
+        88
+      ]
+    },
+    {
+      "id": "vfr_navigation-14",
+      "numbers": [
+        14
+      ],
+      "name": "VFR ARRIVAL / TRAFFIC PATTERN ENTRY",
+      "category": "vfr_navigation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        88
+      ]
+    },
+    {
+      "id": "vfr_navigation-15",
+      "numbers": [
+        15
+      ],
+      "name": "INSTRUMET PROCEDURES",
+      "category": "vfr_navigation",
+      "specific_kind": "reference",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        88
+      ]
+    },
+    {
+      "id": "vfr_navigation-16",
+      "numbers": [
+        16
+      ],
+      "name": "FORMATION APPROACH",
+      "category": "vfr_navigation",
+      "specific_kind": "reference",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        88
+      ]
+    },
+    {
+      "id": "vfr_navigation-17",
+      "numbers": [
+        17
+      ],
+      "name": "TRAFFIC PATTERN PROCEDURES",
+      "category": "vfr_navigation",
+      "specific_kind": "reference",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        88
+      ]
+    },
+    {
+      "id": "vfr_navigation-18",
+      "numbers": [
+        18
+      ],
+      "name": "OVERHEAD PATTERN",
+      "category": "vfr_navigation",
+      "specific_kind": "reference",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        88
+      ]
+    },
+    {
+      "id": "vfr_navigation-19",
+      "numbers": [
+        19
+      ],
+      "name": "LANDING",
+      "category": "vfr_navigation",
+      "specific_kind": "reference",
+      "reference_target": "contact-24",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        88
+      ]
+    },
+    {
+      "id": "vfr_navigation-20",
+      "numbers": [
+        20
+      ],
+      "name": "INSTRUMENT PROCEDURES",
+      "category": "vfr_navigation",
+      "specific_kind": "reference",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        88
+      ]
+    },
+    {
+      "id": "vfr_navigation-21",
+      "numbers": [
+        21
+      ],
+      "name": "CLEARING",
+      "category": "vfr_navigation",
+      "specific_kind": "reference",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        88
+      ]
+    },
+    {
+      "id": "vfr_navigation-22",
+      "numbers": [
+        22
+      ],
+      "name": "COMMUNICATION",
+      "category": "vfr_navigation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        88
+      ]
+    },
+    {
+      "id": "vfr_navigation-23",
+      "numbers": [
+        23
+      ],
+      "name": "AIRMANSHIP",
+      "category": "vfr_navigation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        88,
+        89
+      ]
+    },
+    {
+      "id": "vfr_navigation-24",
+      "numbers": [
+        24
+      ],
+      "name": "EMERGENCY PROCEDURES",
+      "category": "vfr_navigation",
+      "specific_kind": "none",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        89
+      ]
+    },
+    {
+      "id": "vfr_navigation-25",
+      "numbers": [
+        25
+      ],
+      "name": "GENERAL KNOWLEDGE",
+      "category": "vfr_navigation",
+      "specific_kind": "reference",
+      "reference_target": null,
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        89
+      ]
+    },
+    {
+      "id": "vfr_navigation-crm",
+      "numbers": [],
+      "name": "CRM",
+      "category": "vfr_navigation",
+      "specific_kind": "reference",
+      "reference_target": "contact-crm",
+      "resolved_status": "resolved",
+      "pages_pdf": [
+        89
+      ]
+    }
+  ],
+  "mif_tables": [
+    {
+      "table_id": "contact_fs",
+      "file": "mif/fs.json",
+      "title_verbatim": "CONTACT (F/S)",
+      "aircraft": "F/S",
+      "category": "contact",
+      "page_pdf": 91,
+      "columns": [
+        "B1001-02",
+        "C1101",
+        "C2101",
+        "C2201-02",
+        "C2301-02",
+        "C2401-03",
+        "C2501-03",
+        "C2601-04"
+      ],
+      "column_details": [
+        {
+          "unit": "B1001-02",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFU"
+        },
+        {
+          "unit": "C1101",
+          "sorties_dual": 1,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OF"
+        },
+        {
+          "unit": "C2101",
+          "sorties_dual": 1,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFU"
+        },
+        {
+          "unit": "C2201-02",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFP"
+        },
+        {
+          "unit": "C2301-02",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFU"
+        },
+        {
+          "unit": "C2401-03",
+          "sorties_dual": 3,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFP"
+        },
+        {
+          "unit": "C2501-03",
+          "sorties_dual": 3,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFU"
+        },
+        {
+          "unit": "C2601-04",
+          "sorties_dual": 4,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFP"
+        }
+      ],
+      "row_groups": [],
+      "rows": 41
+    },
+    {
+      "table_id": "instrument_fs",
+      "file": "mif/fs.json",
+      "title_verbatim": "INSTRUMENT (F/S)",
+      "aircraft": "F/S",
+      "category": "instrument",
+      "page_pdf": 94,
+      "columns": [
+        "I3101-02",
+        "I3201-03",
+        "I3301-04",
+        "I3401-04",
+        "I3501-04",
+        "I3601"
+      ],
+      "column_details": [
+        {
+          "unit": "I3101-02",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "A"
+        },
+        {
+          "unit": "I3201-03",
+          "sorties_dual": 3,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "A"
+        },
+        {
+          "unit": "I3301-04",
+          "sorties_dual": 4,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "A"
+        },
+        {
+          "unit": "I3401-04",
+          "sorties_dual": 4,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "A"
+        },
+        {
+          "unit": "I3501-04",
+          "sorties_dual": 4,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "A"
+        },
+        {
+          "unit": "I3601",
+          "sorties_dual": 1,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFP"
+        }
+      ],
+      "row_groups": [],
+      "rows": 34
+    },
+    {
+      "table_id": "formation_fs",
+      "file": "mif/fs.json",
+      "title_verbatim": "FORMATION (F/S)",
+      "aircraft": "F/S",
+      "category": "formation",
+      "page_pdf": 96,
+      "columns": [
+        "F3101-2",
+        "F3201-3"
+      ],
+      "column_details": [
+        {
+          "unit": "F3101-2",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFP"
+        },
+        {
+          "unit": "F3201-3",
+          "sorties_dual": 3,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFP"
+        }
+      ],
+      "row_groups": [
+        {
+          "name": "LEADER",
+          "sn_from": 1,
+          "sn_to": 6
+        },
+        {
+          "name": "WINGMAN",
+          "sn_from": 7,
+          "sn_to": 13
+        },
+        {
+          "name": "GENERAL",
+          "sn_from": 14,
+          "sn_to": 38
+        }
+      ],
+      "rows": 38
+    },
+    {
+      "table_id": "vfr_navigation_fs",
+      "file": "mif/fs.json",
+      "title_verbatim": "NAVIGATION (F/S)",
+      "aircraft": "F/S",
+      "category": "vfr_navigation",
+      "page_pdf": 98,
+      "columns": [
+        "N2101",
+        "N2201-02",
+        "N2301-04"
+      ],
+      "column_details": [
+        {
+          "unit": "N2101",
+          "sorties_dual": 1,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFP"
+        },
+        {
+          "unit": "N2201-02",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFP"
+        },
+        {
+          "unit": "N2301-04",
+          "sorties_dual": 4,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": "OFP"
+        }
+      ],
+      "row_groups": [],
+      "rows": 26
+    },
+    {
+      "table_id": "contact_presolo_t6a",
+      "file": "mif/t6a.json",
+      "title_verbatim": "CONTACT (PRE-SOLO) / Τ-6A",
+      "aircraft": "T-6A",
+      "category": "contact",
+      "page_pdf": 92,
+      "columns": [
+        "C4101",
+        "C4201-03",
+        "C4301-03",
+        "C4401-03",
+        "C4590",
+        "C4601-02",
+        "C4790-91"
+      ],
+      "column_details": [
+        {
+          "unit": "C4101",
+          "sorties_dual": 1,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "C4201-03",
+          "sorties_dual": 3,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "C4301-03",
+          "sorties_dual": 3,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "C4401-03",
+          "sorties_dual": 3,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "C4590",
+          "sorties_dual": 1,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": true,
+          "means_of_training": null
+        },
+        {
+          "unit": "C4601-02",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "C4790-91",
+          "sorties_dual": 1,
+          "sorties_solo": 1,
+          "solo_green": true,
+          "checkride": true,
+          "means_of_training": null
+        }
+      ],
+      "row_groups": [],
+      "rows": 41
+    },
+    {
+      "table_id": "contact_t6a",
+      "file": "mif/t6a.json",
+      "title_verbatim": "CONTACT / Τ-6A",
+      "aircraft": "T-6A",
+      "category": "contact",
+      "page_pdf": 93,
+      "columns": [
+        "C4801-04",
+        "C4901-05",
+        "C5090",
+        "C5101-02",
+        "C5201-04",
+        "C5301-04",
+        "C5490"
+      ],
+      "column_details": [
+        {
+          "unit": "C4801-04",
+          "sorties_dual": 3,
+          "sorties_solo": 1,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "C4901-05",
+          "sorties_dual": 4,
+          "sorties_solo": 1,
+          "solo_green": true,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "C5090",
+          "sorties_dual": 1,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": true,
+          "means_of_training": null
+        },
+        {
+          "unit": "C5101-02",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "C5201-04",
+          "sorties_dual": 3,
+          "sorties_solo": 1,
+          "solo_green": true,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "C5301-04",
+          "sorties_dual": 3,
+          "sorties_solo": 1,
+          "solo_green": true,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "C5490",
+          "sorties_dual": 1,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": true,
+          "means_of_training": null
+        }
+      ],
+      "row_groups": [],
+      "rows": 41
+    },
+    {
+      "table_id": "instrument_t6a",
+      "file": "mif/t6a.json",
+      "title_verbatim": "INSTRUMENT / Τ-6A",
+      "aircraft": "T-6A",
+      "category": "instrument",
+      "page_pdf": 95,
+      "columns": [
+        "I4101-02",
+        "I4201-02",
+        "I4301-02",
+        "I4490",
+        "I4501-02",
+        "I4601-03",
+        "I4701",
+        "I4890"
+      ],
+      "column_details": [
+        {
+          "unit": "I4101-02",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "I4201-02",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "I4301-02",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "I4490",
+          "sorties_dual": 1,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": true,
+          "means_of_training": null
+        },
+        {
+          "unit": "I4501-02",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "I4601-03",
+          "sorties_dual": 3,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "I4701",
+          "sorties_dual": 1,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "I4890",
+          "sorties_dual": 1,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": true,
+          "means_of_training": null
+        }
+      ],
+      "row_groups": [],
+      "rows": 34
+    },
+    {
+      "table_id": "formation_t6a",
+      "file": "mif/t6a.json",
+      "title_verbatim": "FORMATION / Τ-6A",
+      "aircraft": "T-6A",
+      "category": "formation",
+      "page_pdf": 97,
+      "columns": [
+        "F4101-04",
+        "F4201-04",
+        "F4301-06",
+        "F4401-04",
+        "F4501-03",
+        "F4690"
+      ],
+      "column_details": [
+        {
+          "unit": "F4101-04",
+          "sorties_dual": 4,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "F4201-04",
+          "sorties_dual": 4,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "F4301-06",
+          "sorties_dual": 4,
+          "sorties_solo": 2,
+          "solo_green": true,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "F4401-04",
+          "sorties_dual": 4,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "F4501-03",
+          "sorties_dual": 2,
+          "sorties_solo": 1,
+          "solo_green": true,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "F4690",
+          "sorties_dual": 1,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": true,
+          "means_of_training": null
+        }
+      ],
+      "row_groups": [
+        {
+          "name": "LEADER",
+          "sn_from": 1,
+          "sn_to": 6
+        },
+        {
+          "name": "WINGMAN",
+          "sn_from": 7,
+          "sn_to": 13
+        },
+        {
+          "name": "GENERAL",
+          "sn_from": 14,
+          "sn_to": 38
+        }
+      ],
+      "rows": 38
+    },
+    {
+      "table_id": "vfr_navigation_t6a",
+      "file": "mif/t6a.json",
+      "title_verbatim": "NAVIGATION / Τ-6A",
+      "aircraft": "T-6A",
+      "category": "vfr_navigation",
+      "page_pdf": 99,
+      "columns": [
+        "N4101-02",
+        "N4201-02",
+        "N4301-02",
+        "N4401-03",
+        "N4501-03",
+        "N4690"
+      ],
+      "column_details": [
+        {
+          "unit": "N4101-02",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "N4201-02",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "N4301-02",
+          "sorties_dual": 2,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "N4401-03",
+          "sorties_dual": 3,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "N4501-03",
+          "sorties_dual": 3,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": false,
+          "means_of_training": null
+        },
+        {
+          "unit": "N4690",
+          "sorties_dual": 1,
+          "sorties_solo": 0,
+          "solo_green": false,
+          "checkride": true,
+          "means_of_training": null
+        }
+      ],
+      "row_groups": [],
+      "rows": 26
+    }
+  ]
+}
