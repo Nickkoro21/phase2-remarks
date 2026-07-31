@@ -103,8 +103,10 @@ async function selectItem(it, btn) {
   renderCodes();
   renderResults();
   try {
-    const res = await fetch(`../data/observations/${it.file}`, { cache: "no-store" });
-    state.itemData = await res.json();
+    const path = it.v2_file ? `../data/observations2/${it.v2_file}` : `../data/observations/${it.file}`;
+    const res = await fetch(path, { cache: "no-store" });
+    const data = await res.json();
+    state.itemData = data.schema === "v2-trunk" ? expandV2(data) : data;
   } catch (e) {
     $("results").innerHTML = `<p class="hint">Failed to load ${it.file}.</p>`;
     return;
@@ -114,6 +116,40 @@ async function selectItem(it, btn) {
   state.row = rows.length > 1 ? rows[0] : (rows[0] ?? null);
   renderCodes();
   renderResults();
+}
+
+/* v2-trunk: expand error modes into the flat observations shape the UI consumes.
+   Below MIF -> the mode's text for the achieved level; at MIF -> marginal; above -> positive + closing. */
+function expandV2(data) {
+  const obs = [];
+  for (const m of data.error_modes || []) {
+    for (let d = 0; d <= 3; d++) {
+      for (let a = 0; a <= 4; a++) {
+        let text, variant;
+        if (a < d) {
+          text = m.texts?.[String(a)];
+          variant = m.hf_concept ? "human_factor" : "technique";
+        } else if (a === d) {
+          text = m.texts?.marginal || m.texts?.[String(a)];
+          variant = "marginal";
+        } else {
+          const base = m.texts?.[String(a)];
+          text = base ? base.replace(/\s+$/, "") + " Above end of block MIF achieved." : null;
+          variant = "above";
+        }
+        if (!text) continue;
+        obs.push({
+          id: `${m.id}-d${d}a${a}`,
+          mif_row: m.mif_row ?? null,
+          desired: d, achieved: a, variant,
+          hf_concept: m.hf_concept ?? null,
+          mode: m.label ?? null,
+          text,
+        });
+      }
+    }
+  }
+  return { ...data, observations: obs };
 }
 
 function rowsWithData() {
@@ -223,6 +259,7 @@ function renderResults() {
       <div class="obs-head">
         <span class="obs-prefix">${prefix}</span>
         <span class="badge">${VARIANT_LABELS[o.variant] ?? o.variant}</span>
+        ${o.mode ? `<span class="badge mode">${esc(o.mode)}</span>` : ""}
         ${o.hf_concept ? `<span class="badge hf">${o.hf_concept}</span>` : ""}
         <a class="fb-btn" href="${feedbackUrl(o)}" target="_blank" rel="noopener" title="Report an error or suggest a correction for this remark">Feedback</a>
         <button class="copy-btn">Copy</button>
