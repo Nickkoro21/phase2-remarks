@@ -1,0 +1,147 @@
+{
+  "item_id": "instrument-20",
+  "item_name": "VOR / TACAN APPROACH",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [20],
+  "mif_rows": [
+    {"sn": 20, "row_name": "VOR / TACAN Approach"}
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-20-em01",
+      "label": "Final approach airspeed control after FAF",
+      "mif_row": "VOR / TACAN Approach",
+      "source": "specific:AIRSPEED (knots)*",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a power setting selected without reference to the computed final approach airspeed, did not stabilize speed after the FAF and made no corrective throttle input as the trend developed. Airspeed diverged past plus 15 and minus 10 knots from the computed value and continued to drift while the descent was flown. IP had to direct the power change to recover the approach speed before the MAP.",
+        "1": "SP, due to a late and coarse throttle response to a decaying descent profile, did not hold the computed final approach airspeed after the FAF. Airspeed reached the plus 15 and minus 10 knot limit and was returned toward the computed value only after verbal prompting from IP. The correction was applied with a delay that left the speed unsettled into the MDA segment.",
+        "2": "SP, due to a power reduction made before the descent rate was established, allowed the computed final approach airspeed to erode after the FAF. Airspeed reached the band between plus 10 and plus 15 knots fast and minus 5 and minus 10 knots slow, but SP recognized the trend on the airspeed indicator and restored the computed value with a timely throttle correction and no intervention.",
+        "3": "SP set power against the computed final approach airspeed immediately after the FAF and held it through the descent to MDA. Airspeed stayed inside plus 10 and minus 5 knots of the computed value, with small anticipatory throttle corrections applied as configuration and descent rate changed. Speed control did not degrade course or altitude tracking.",
+        "4": "SP established the computed final approach airspeed at the FAF on the first power setting and flew the entire final segment with negligible speed excursions. Throttle inputs were small, anticipatory and matched to configuration and wind changes, so the airspeed indicator remained essentially steady from FAF to MAP. Speed discipline left full attention available for course and altitude control.",
+        "marginal": "SP kept the computed final approach airspeed within standards but worked the throttle in repeated large corrections, so speed oscillated close to the fast side of tolerance through the final segment. The trend was toward late recognition of the decaying descent profile rather than anticipation of it. SP is expected to set power against the computed airspeed at the FAF and refine it with small inputs on subsequent approaches."
+      }
+    },
+    {
+      "id": "instrument-20-em02",
+      "label": "Course and radial tracking",
+      "mif_row": "VOR / TACAN Approach",
+      "source": "specific:MAINTAINING COURSE (radials)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to chasing raw course deviation with uncoordinated heading changes instead of establishing and holding a wind correction angle, did not maintain the published final approach course. Course displacement exceeded 8 degrees from the inbound radial and continued to increase toward the MAP. IP had to take corrective action to return the aircraft to the published course.",
+        "1": "SP, due to an unrecognized crosswind on the inbound radial, did not apply a wind correction angle and allowed the aircraft to drift steadily off the published course. Displacement reached the 8 degree limit and was corrected only after verbal instruction from IP, with the aircraft still recentering as MDA was approached. The correction was applied late and required more than one heading change to settle.",
+        "2": "SP, due to an initially insufficient wind correction angle after course intercept, allowed displacement from the inbound radial to grow into the band between 5 and 8 degrees. SP recognized the deviation on the course indicator, applied a measured heading correction, and reestablished the published course before the MDA segment without intervention.",
+        "3": "SP intercepted the published final approach course and held it inside 5 degrees throughout the inbound segment. A wind correction angle was established early and adjusted in small increments, so course deviation stayed centered rather than oscillating. Tracking was maintained through the descent without degrading airspeed or altitude control.",
+        "4": "SP intercepted the inbound radial cleanly and held the published course with negligible displacement to the MAP. The wind correction angle was identified within the first part of the final segment and required only minor refinement thereafter, keeping the course indicator effectively centered. Tracking precision was maintained while airspeed and altitude were simultaneously flown to tolerance.",
+        "marginal": "SP maintained the published final approach course within standards but tracked it with a repeating series of small overshoots either side of the radial rather than a settled wind correction angle. The trend was toward correcting deviation after it appeared instead of holding a computed drift correction. SP is expected to establish the wind correction angle at intercept and hold heading to keep the course indicator centered."
+      }
+    },
+    {
+      "id": "instrument-20-em03",
+      "label": "MDA altitude control",
+      "mif_row": "VOR / TACAN Approach",
+      "source": "specific:ALTITUDE DEVIATION (from MDA)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unarrested descent rate approaching the published minimum descent altitude, did not level off at MDA and did not respect the zero tolerance below it. The aircraft went below MDA, or remained more than 200 feet above it while the MAP passed, without corrective action by SP. IP had to intervene on the controls to restore the published minimum descent altitude.",
+        "1": "SP, due to a late power addition during the level off, did not capture the published minimum descent altitude at the planned point. Altitude settled at the 200 foot limit above MDA and was corrected toward the published value only after verbal prompting from IP. The delay consumed a significant part of the segment available before the MAP.",
+        "2": "SP, due to a descent rate not reduced early enough before level off, overshot the level altitude and stabilized between 100 and 200 feet above the published MDA. SP recognized the deviation on the altimeter, corrected with a timely descent to the published minimum descent altitude, and at no point descended below it or required intervention.",
+        "3": "SP anticipated the level off, reduced descent rate in time and captured the published minimum descent altitude within 100 feet above it with no descent below MDA. Altitude was then held steady to the MAP while course and airspeed were maintained. Power and pitch were coordinated so the level off did not disturb the approach speed.",
+        "4": "SP levelled off precisely at the published minimum descent altitude with negligible overshoot and no descent below it. Altitude was held essentially constant from level off to the MAP, with pitch and power coordinated so airspeed and course were unaffected by the transition. Altimeter control required no visible correction during the level segment.",
+        "marginal": "SP held the published minimum descent altitude within standards but captured it with a shallow oscillation and stayed consistently toward the upper part of the allowed band. The trend was toward starting the level off late and recovering the altitude rather than arriving at MDA already stabilized. SP is expected to anticipate the level off point and settle on the published minimum descent altitude with a single correction."
+      }
+    },
+    {
+      "id": "instrument-20-em04",
+      "label": "ATC instruction compliance and readback",
+      "mif_row": "VOR / TACAN Approach",
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incomplete listening watch while setting up the approach, did not comply with an ATC instruction affecting the approach clearance. The assigned heading, altitude or clearance limit was not flown as issued and no readback was made that would have exposed the discrepancy. IP had to intervene with ATC and on the controls to restore compliance.",
+        "1": "SP, due to a transmission received while the navigation aid was being retuned, did not act on an ATC instruction until the deviation was already established. Compliance was achieved only after IP prompted verbally, and the aircraft was at the edge of the cleared parameter when the correction started. Readback was incomplete and did not include the assigned altitude.",
+        "2": "SP, due to a delayed readback of an ATC instruction issued during the intercept, was late in starting the assigned turn or altitude change. SP detected the omission without prompting, read back the clearance correctly and complied within the approach parameters, so the deviation remained bounded and self-corrected.",
+        "3": "SP maintained an accurate listening watch throughout the approach, read back ATC instructions correctly and complied with each clearance promptly. Assigned headings, altitudes and clearance limits were flown as issued while the approach parameters were maintained. Radio work did not interrupt aircraft control or approach setup.",
+        "4": "SP handled all ATC instructions on the approach with correct, concise readbacks and immediate compliance, without any prompting. Clearances were integrated into the approach plan as they were received, so no assigned parameter was ever in question. Radio discipline was maintained with no measurable effect on flight parameter control.",
+        "marginal": "SP complied with all ATC instructions but consistently needed a repeat of the clearance before reading it back, and compliance began later than the traffic situation warranted. The trend was toward processing the instruction after the flying task rather than integrating the two. SP is expected to maintain a continuous listening watch and read back clearances on first transmission."
+      }
+    },
+    {
+      "id": "instrument-20-em05",
+      "label": "Published routing and altitude restrictions",
+      "mif_row": "VOR / TACAN Approach",
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to reading the approach plate without cross-checking the step-down fixes against DME or radial position, violated a published routing or altitude restriction as depicted in MAIP and the Instrument Approach Manuals. The aircraft descended below a published minimum segment altitude or flew outside the depicted track. IP had to intervene to restore the published profile.",
+        "1": "SP, due to an unverified fix identification during the intermediate segment, initiated descent before the applicable step-down fix and reached the published segment minimum at the limit of tolerance. The profile was corrected only after IP pointed out the restriction, and the aircraft remained low on profile for part of the segment. The published routing itself was maintained.",
+        "2": "SP, due to a descent started slightly early against the depicted step-down profile, allowed the aircraft to approach the published segment minimum before the fix. SP cross-checked DME and the approach plate, recognized the discrepancy and arrested the descent in time, so no published routing or altitude restriction was violated and no intervention was required.",
+        "3": "SP flew the depicted routing and honored every published altitude restriction from the initial segment to the MAP. Step-down fixes were identified by DME or radial before descent was initiated, and segment minima were respected throughout. The approach plate was used actively rather than from memory.",
+        "4": "SP flew the published routing and every segment altitude restriction with negligible deviation and no reference error. Each step-down fix was positively identified before descent, and the resulting profile matched the depicted procedure throughout. Plate management was orderly enough that no restriction required a late check.",
+        "marginal": "SP respected all published routing and altitude restrictions but identified several step-down fixes only just before the descent point, leaving no margin for a misread. The trend was toward late confirmation of the depicted profile rather than early planning of it. SP is expected to brief and confirm the step-down fixes before the segment begins."
+      }
+    },
+    {
+      "id": "instrument-20-em06",
+      "label": "Approach setup, navaid tuning and identification",
+      "mif_row": "VOR / TACAN Approach",
+      "source": "general:c",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to inadequate workload management during the approach phase, did not complete the approach setup before the intercept and did not tune and identify the VOR or TACAN facility for the final approach course. The approach was flown on an unverified or incorrect navigation source, contrary to the standardized procedures of AFMAN 11-202 VOL3 and the Flight Manual. IP had to intervene to correct the navigation setup.",
+        "1": "SP, due to task sequencing that left the approach setup until after the descent had begun, did not tune, identify and set the final approach course in time for a stabilized intercept. The setup was completed only after IP prompted, and the intercept was flown at the outer limit of the course tolerance while the equipment was still being configured. No item was left unset at the FAF.",
+        "2": "SP, due to a compressed task sequence on the transition to the approach, was late in identifying the VOR or TACAN facility and in setting the final approach course. SP detected the omission during the approach check, completed the setup before the intercept without prompting, and the approach was flown on a verified navigation source throughout.",
+        "3": "SP completed the approach setup in good time, tuned and positively identified the VOR or TACAN facility and set the final approach course before the intercept. The sequence followed the standardized procedures of AFMAN 11-202 VOL3 and the Flight Manual with no omitted item. Setup work was spread so that aircraft control was never interrupted.",
+        "4": "SP planned and executed the approach setup ahead of the aircraft, with the facility tuned and identified and all navigation and cockpit items configured well before the intercept. The sequence matched the standardized procedures exactly and left spare capacity for the ATC and flying tasks. No setup item required rework at any stage of the approach.",
+        "marginal": "SP completed the full approach setup and identified the facility correctly, but the work was compressed into the last part of the transition and left little margin before the intercept. The trend was toward reactive rather than planned task sequencing under increasing approach workload. SP is expected to complete the tune, identify and course set earlier so the intercept is flown from a settled cockpit."
+      }
+    },
+    {
+      "id": "instrument-20-em07",
+      "label": "FAF procedure and descent initiation",
+      "mif_row": "VOR / TACAN Approach",
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unmonitored station passage or DME reference, did not execute the required actions at the FAF and did not initiate the descent at the correct point. Time, configuration or descent initiation were wrong to the extent that the profile could not reach MDA before the MAP without an excessive descent rate. IP had to intervene to reestablish the published descent profile.",
+        "1": "SP, due to an ambiguous station passage indication that was not cross-checked against DME, delayed the FAF actions and started the descent late. Descent initiation was at the limit of what the segment allowed, and the required rate had to be increased after IP prompted the correction. Timing and configuration items at the FAF were completed out of the standard sequence.",
+        "2": "SP, due to attention held on course centering at station passage, was late by a short interval in starting time and initiating the descent at the FAF. SP recognized the omission promptly, completed the FAF actions and adjusted descent rate within normal limits so that MDA was reached in good time without intervention.",
+        "3": "SP identified the FAF positively, started time where required and initiated the descent at the correct point with the aircraft correctly configured. The descent rate selected was appropriate to groundspeed and the remaining distance to MDA. FAF actions were executed in the standardized sequence without omission.",
+        "4": "SP executed the FAF sequence precisely at station passage, with time started, configuration set and descent initiated in one coordinated flow. The descent rate was computed to groundspeed so that MDA was reached with an unhurried margin before the MAP. No FAF item was late or repeated.",
+        "marginal": "SP completed all FAF actions and started the descent within standards, but the sequence was executed item by item after station passage rather than as a prepared flow, leaving the descent slightly late. The trend was toward reacting to the fix instead of anticipating it. SP is expected to have the FAF actions prepared and to initiate the descent immediately at station passage."
+      }
+    },
+    {
+      "id": "instrument-20-em08",
+      "label": "Instrument cross-check during the final segment",
+      "mif_row": "VOR / TACAN Approach",
+      "source": "general:c",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to a scan that fixated on the course indicator to the exclusion of the other instruments, did not cross-check attitude, altitude and airspeed during the final segment. Deviations in the unmonitored parameters developed unnoticed and were still increasing when they exceeded approach tolerances. IP had to intervene to reestablish the flight parameters.",
+        "1": "SP, due to a scan narrowed onto the parameter being corrected, did not cross-check the remaining instruments and let a second parameter drift to the limit of tolerance while the first was being fixed. The drift was recognized only after IP called it out, and recovery of both parameters was still in progress at MDA. The scan remained sequential rather than integrated for the rest of the segment.",
+        "2": "SP, due to an interrupted cross-check while retuning and rechecking the navigation display, allowed a secondary parameter to move into the outer part of the approach tolerance band. SP restored a full instrument scan without prompting, detected the deviation on the next sweep and corrected it in time, keeping all parameters within limits.",
+        "3": "SP maintained a continuous cross-check of attitude, course, altitude and airspeed throughout the final segment. Deviations were detected while still small and corrected with single measured inputs, so no parameter approached its tolerance. The scan absorbed the radio and configuration tasks without breaking.",
+        "4": "SP flew the final segment on a fully integrated instrument cross-check, detecting trends before they became deviations. All approach parameters were held with negligible excursion while ATC calls and cockpit tasks were handled in stride. The scan rate never narrowed onto a single instrument, even during the level off at MDA.",
+        "marginal": "SP maintained the approach parameters within standards but the cross-check visibly slowed each time a correction was made, so the other instruments were sampled less often during those periods. The trend was toward a scan that narrows under a single-parameter correction. SP is expected to keep the full cross-check running while correcting, so trends are detected before deviations develop."
+      }
+    },
+    {
+      "id": "instrument-20-em09",
+      "label": "MAP recognition and missed approach decision",
+      "mif_row": "VOR / TACAN Approach",
+      "source": "general:b,c",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to continuation bias in maintaining the approach past the point at which the required conditions were not met, did not execute the missed approach at the MAP and did not respect the published minimum descent altitude. The aircraft continued beyond the MAP or descended below MDA without the required references. IP had to take control to initiate the missed approach.",
+        "1": "SP, due to persisting with the approach while looking for the required references, did not initiate the missed approach at the MAP and reached the limit of the published minimum without a decision. The go-around was started only after IP directed it, and the initial climb and heading were flown late relative to the published missed approach procedure. No descent below MDA occurred.",
+        "2": "SP, due to a slightly late recognition of the MAP against time and DME, delayed the missed approach decision by a short interval. SP identified the MAP without prompting, initiated the published missed approach procedure with correct power, pitch and configuration, and the delay produced no deviation beyond approach tolerances.",
+        "3": "SP identified the MAP by time or DME, made the decision without hesitation and initiated the published missed approach procedure immediately. Power, pitch, configuration and the published climb heading were applied in the standardized sequence. The minimum descent altitude was respected throughout the decision.",
+        "4": "SP arrived at the MAP with the decision already made against the briefed criteria and executed the published missed approach procedure without hesitation. The transition to climb was flown with the correct power, pitch and configuration sequence and an accurate climb heading, with negligible altitude loss or heading excursion. The published minimum was respected at every stage.",
+        "marginal": "SP executed the missed approach at the MAP within standards but the decision was visibly made at the fix rather than briefed in advance, producing a short pause before power was applied. The trend was toward extending the approach in the hope of acquiring the required references. SP is expected to state the decision criteria before the approach and act on them at the MAP without pause."
+      }
+    }
+  ]
+}

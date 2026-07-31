@@ -1,0 +1,132 @@
+{
+  "item_id": "contact-29",
+  "item_name": "STRAIGHT-IN (FLAPS LDG, FLAPS UP, FLAPS Τ/Ο).",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [29],
+  "mif_rows": [
+    {"sn": 29, "row_name": "Straight-In Approach"}
+  ],
+  "error_modes": [
+    {
+      "id": "contact-29-em01",
+      "label": "Final approach airspeed control",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots) / FINAL",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a late power reduction and an unstabilized pitch/power relationship, did not regulate the final approach airspeed within the one-sided tolerance of the effective landing pattern. Airspeed exceeded the computed final speed by more than 15 knots inside 2 NM and at a later point decayed below the computed value, which the criteria do not permit at all. IP had to direct power and pitch corrections, and the approach was never stabilized on speed before the threshold.",
+        "1": "SP, due to a delayed pitch/power correction after the configuration change, allowed the final approach airspeed to reach the +15 knot limit of the tolerance. SP reduced power only after repeated verbal prompting from the IP and the computed speed was re-established late on final. No control input by the IP was required, but the airspeed was regulated by instruction rather than by SP's own cross-check of the airspeed indicator.",
+        "2": "SP, due to a high power setting carried through the configuration change, allowed the final approach airspeed to increase past +10 knots above the computed value. SP identified the trend on the airspeed indicator, reduced power in time and contained the excursion short of the +15 knot limit, restoring the computed speed before short final. No prompting or intervention by the IP was needed.",
+        "3": "SP flew the final at the computed approach airspeed and held the deviation within +10, -0 knots throughout the approach. SP adjusted power promptly at each configuration change and at no point allowed the speed to decay below the computed value. Airspeed remained stable from the configuration point to the threshold.",
+        "4": "SP established the computed final approach airspeed immediately after configuring and held it to the threshold with negligible deviation. Power corrections were small and anticipatory, and the speed never approached the lower boundary of the tolerance. Airspeed control was maintained without any prompting at any stage of the approach.",
+        "marginal": "SP kept the final approach airspeed inside standards, but the deviation stayed consistently in the upper part of the band and required a further power reduction on short final on each approach. The tendency is to carry excess power through the configuration change and to correct reactively instead of anticipating the speed loss. SP is expected to set the target power earlier so that the computed airspeed is established before 2 NM."
+      }
+    },
+    {
+      "id": "contact-29-em02",
+      "label": "Glide path tracking on final",
+      "mif_row": null,
+      "source": "specific:Deviation from the desired glide path (feet)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to inadequate monitoring of the descent rate after the configuration change, did not track the desired glide path. Deviation exceeded 300 feet above the glide path and subsequently passed 200 feet below it with an increasing sink rate, and the IP intervened with power to arrest the descent. SP did not recognize the divergence until it was called from the front cockpit.",
+        "1": "SP, due to an interrupted cross-check between the aiming point and the vertical speed, allowed the aircraft to reach the +300 foot boundary of the glide path tolerance. SP corrected only after being told the aircraft was high, and the descent back to the desired glide path was slow and continued inside 2 NM. The approach was recovered without IP control input.",
+        "2": "SP, due to a late power reduction at the start of the descent, allowed the aircraft to climb between 150 and 300 feet above the desired glide path. SP detected the deviation during the cross-check, applied a measured power and pitch correction and re-established the glide path well before short final, remaining inside the code 1 boundary. No IP action was required.",
+        "3": "SP tracked the desired glide path within 150 feet for the whole of the final segment. SP maintained an active cross-check of the aiming point against the vertical speed and made small, timely power corrections. The aircraft arrived at the threshold on the desired glide path.",
+        "4": "SP established the desired glide path at the configuration point and held it with negligible vertical deviation to the threshold. Corrections were anticipatory and confined to small power adjustments, with no visible excursion above or below the glide path. The vertical profile was maintained without any prompting.",
+        "marginal": "SP remained within the glide path standards, but the aircraft was habitually on the high side of the desired glide path and was recovered by a steeper descent inside 2 NM. The trend is a delayed initial power reduction that leaves the correction to be made low on the approach. SP is expected to start the descent at the planned point so that the glide path is established rather than regained."
+      }
+    },
+    {
+      "id": "contact-29-em03",
+      "label": "Runway centerline alignment distance",
+      "mif_row": null,
+      "source": "specific:Distance at which SP must be aligned with the runway center line",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unassessed intercept angle and no allowance for the crosswind, did not align the aircraft with the runway centerline within the required distance. The aircraft was still displaced laterally inside 1/2 NM from the threshold, and the IP had to take control inputs to place the aircraft on the extended centerline. The lateral correction was still in progress at the point where the approach had to be established.",
+        "1": "SP, due to a late recognition of the drift, achieved alignment with the runway centerline only at about 1/2 NM from the threshold, at the limit of the criteria. SP applied the drift correction after being prompted from the front cockpit, and the final part of the approach was flown with residual lateral corrections. No control input by the IP was required.",
+        "2": "SP, due to an initially shallow intercept of the extended centerline, completed the alignment later than briefed, between 1 1/2 and 1/2 NM from the threshold. SP recognized the lateral displacement without prompting, increased the correction and stabilized the aircraft on the centerline in time for the remainder of the approach. No IP intervention was needed.",
+        "3": "SP aligned the aircraft with the runway centerline by 1 1/2 NM from the threshold and held that alignment for the rest of the approach. SP set the drift correction early and the lateral track required only minor adjustment thereafter. The aircraft remained on the extended centerline through short final.",
+        "4": "SP intercepted the extended runway centerline well before 1 1/2 NM and held it with negligible lateral deviation to the threshold. The drift correction was established at the first assessment of the crosswind and needed no significant change afterwards. Lateral tracking was precise throughout the approach without any prompting.",
+        "marginal": "SP met the alignment distance criterion, but the alignment was completed close to the limit on each approach and was followed by small lateral corrections on short final. The tendency is to intercept the extended centerline at too shallow an angle and to under-assess the crosswind on the first assessment. SP is expected to establish the drift correction earlier so that the aircraft is stable on the centerline well before 1 1/2 NM."
+      }
+    },
+    {
+      "id": "contact-29-em04",
+      "label": "Approach planning to the 5 NM point on the runway extension",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to no planning of the descent and closure against the runway extension, did not bring the aircraft to five NM on the runway extension ready to configure for final. The aircraft arrived displaced from the extended centerline and well above the required profile, and the IP had to redirect the approach path and the descent to make the approach flyable. The approach was not usable as planned from that point.",
+        "1": "SP, due to an unplanned descent point, arrived at the five NM position off the required profile in both height and lateral track, at the limit of what the approach could absorb. SP repositioned the aircraft only after specific verbal directions from the IP, and readiness to configure was reached late. No control input by the IP was necessary.",
+        "2": "SP, due to a late start of the descent, approached the five NM point higher and closer to the extension than planned. SP recognized the discrepancy in time, adjusted the descent and the closure and reached the five NM position ready to configure for final without any prompting. The remainder of the approach was flown from a usable starting point.",
+        "3": "SP planned the approach and brought the aircraft to five NM on the runway extension, on profile and ready to configure for final. The descent and the closure were managed so that no large correction was needed at the configuration point. The approach was set up in accordance with the Techniques and Procedures Manual.",
+        "4": "SP planned the approach precisely and arrived at the five NM point on the runway extension on speed, on profile and fully ready to configure for final. The lateral and vertical management of the run-in required no corrections of significance. The setup left ample capacity for the configuration and the final segment.",
+        "marginal": "SP arrived at the five NM point within standards, but consistently a little high and with the descent still being adjusted at the moment of configuring. The trend is to plan the descent point by reference to the runway rather than by a computed distance. SP is expected to fix the descent point during the planning so that the aircraft is stabilized at five NM before configuration begins."
+      }
+    },
+    {
+      "id": "contact-29-em05",
+      "label": "Configuration completion and gear/flap limitations",
+      "mif_row": null,
+      "source": "general:b,d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a disordered configuration sequence, did not complete the aircraft configuration prior to 2 NM and selected gear or flaps outside the limitations of the aircraft for the actual airspeed. IP intervened to stop the selection and to re-establish the configuration and the speed. The approach was continued only after the IP had restored the required configuration.",
+        "1": "SP, due to a late start of the configuration, completed it right at 2 NM after being told to configure by the IP. The gear and flap selections were made within the limitations, but only because the speed had been reduced on instruction, and the aircraft was still settling when the final segment began. No IP control input was required.",
+        "2": "SP, due to a late speed reduction that delayed the first flap selection, ran the configuration later than briefed but completed it prior to 2 NM. SP recognized the delay, adjusted the power and made the gear and flap selections within the published limitations. No prompting was needed to complete the configuration in time.",
+        "3": "SP completed the aircraft configuration prior to 2 NM, in the sequence of the Techniques and Procedures Manual and within the gear and flap limitations. Each selection was made at the appropriate airspeed and the aircraft was stabilized in the landing configuration before the final segment. The manoeuvre was flown as briefed for the applicable flap setting.",
+        "4": "SP completed the configuration well before 2 NM, with each gear and flap selection made at the correct point of the profile and comfortably within the limitations. The aircraft was stable in the required configuration with no residual pitch or power adjustment. The sequence followed the Techniques and Procedures Manual exactly.",
+        "marginal": "SP completed the configuration inside the required distance, but each selection was made near the top of the permitted speed range and the last item fell close to 2 NM. The tendency is to delay the initial speed reduction, which compresses the whole configuration sequence. SP is expected to reduce speed earlier so that the configuration is finished with margin rather than at the limit."
+      }
+    },
+    {
+      "id": "contact-29-em06",
+      "label": "ATC clearance and clearing during the approach",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-distraction",
+      "texts": {
+        "0": "SP, due to distraction by radio traffic while established on final, did not obtain the ATC clearance in a timely manner and did not execute the required clearing during the approach. The aircraft continued the straight-in without a valid clearance and with no lookout for conflicting traffic, and the IP had to make the transmission and take over the clearing. The approach was continued only after the IP had regularized the clearance.",
+        "1": "SP, due to distraction by a secondary cockpit task during the run-in, requested the straight-in clearance late and performed the clearing only after the IP prompted for it. The clearance was obtained before the final segment, but the traffic scan during the approach was verbal and incomplete. No IP control input was necessary.",
+        "2": "SP, due to a transmission made while the configuration was still being completed, requested the clearance later than planned. SP recognized the omission, obtained the clearance without prompting and executed the clearing turns and the visual scan during the remainder of the approach. The approach continued with a valid clearance and an adequate lookout.",
+        "3": "SP obtained the ATC clearance for the straight-in in a timely manner and executed the required clearing during the approach. The transmissions were made at the planned points and did not interfere with the flying of the profile. The traffic scan was maintained throughout the approach.",
+        "4": "SP obtained the clearance early and without any interference with the flight path, and maintained an active clearing scan through every segment of the approach. Radio work was concise, standard and fitted into the low workload parts of the profile. Nothing in the communications sequence had to be prompted or repeated.",
+        "marginal": "SP obtained the clearance and cleared during the approach as required, but the requests were made at the same moment as the configuration changes and the visual scan narrowed while transmitting. The trend is to concentrate the radio work into the busiest part of the profile. SP is expected to sequence the transmissions before the configuration point so that the lookout is not interrupted."
+      }
+    },
+    {
+      "id": "contact-29-em07",
+      "label": "Required checks and standardized reports",
+      "mif_row": null,
+      "source": "general:e,f",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to workload management that left the checklist unfinished before the descent, did not perform the required checks and did not give the standardized reports for the straight-in. Items of the before landing check were omitted and the position report was not transmitted, and the IP had to complete the checks and make the calls. The omission was not detected by SP at any point of the approach.",
+        "1": "SP, due to task sequencing that concentrated all cockpit workload inside the final segment, performed the required checks late and gave the standardized reports only after the IP prompted for them. The checks were eventually completed and the calls made in non-standard form. No IP control input was required.",
+        "2": "SP, due to a delayed start of the before landing check, ran the checks later than planned in the profile. SP recognized the delay without prompting, completed all the required items before the final segment and gave the standardized reports in the correct form. The workload was recovered within the approach.",
+        "3": "SP performed all the required checks at the planned points of the approach and gave the standardized reports in the prescribed form. The checks were completed before the configuration was finished and did not compete with the flying of the profile. Radio calls matched the standard phraseology.",
+        "4": "SP completed the required checks early and unhurriedly, and gave every standardized report exactly in the prescribed form and at the correct point. Checklist discipline and reporting were maintained without any degradation of the flight path. No item had to be prompted or corrected.",
+        "marginal": "SP completed the checks and gave the reports as required, but both were consistently done at the latest usable point of the profile. The tendency is to leave the before landing items until after the descent has started, which loads the final segment. SP is expected to run the checks earlier so that the workload on final is limited to flying the approach."
+      }
+    },
+    {
+      "id": "contact-29-em08",
+      "label": "Go-around decision and execution",
+      "mif_row": null,
+      "source": "general:g",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to continuation bias in maintaining the approach after the conditions for it had been lost, did not execute the go around when it was required. SP continued a straight-in that was outside the specific criteria in speed and glide path, and the IP had to direct and then initiate the go around. The recovery was not flown by SP within the time available.",
+        "1": "SP, due to continuation of the plan after the information that invalidated it had already been received, delayed the decision to go around until the IP called for it. SP then executed the go around with hesitation in the power and configuration sequence, and the manoeuvre was completed correctly only after verbal direction. No IP control input was required.",
+        "2": "SP, due to an initial reluctance to abandon an approach that was still being corrected, took longer than briefed to decide on the go around. SP made the decision without prompting while the aircraft was still in a position to recover, and executed the power application, the pitch attitude and the configuration change in the correct sequence. The go around was flown safely without IP intervention.",
+        "3": "SP recognized the condition that required the go around and executed it in time and correctly, without hesitation. The power, pitch and configuration sequence followed the Techniques and Procedures Manual and the aircraft was established in the climb promptly. The decision was made by SP without any prompting.",
+        "4": "SP identified the need for the go around at the earliest point at which it was apparent and executed it immediately and precisely. The power application, the attitude and the configuration changes were correct in sequence and timing, and the aircraft was established in the climb with no loss of altitude or heading control. The decision and the execution required nothing from the front cockpit.",
+        "marginal": "SP executed the go around correctly and within standards, but the decision was made later than the situation warranted and the first power application was tentative. The trend is to keep working an approach that has already ceased to meet the criteria. SP is expected to set and honour the decision point so that the go around is initiated as soon as the approach is no longer within the specific criteria."
+      }
+    }
+  ]
+}

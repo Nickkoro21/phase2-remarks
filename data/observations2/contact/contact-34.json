@@ -1,0 +1,147 @@
+{
+  "item_id": "contact-34",
+  "item_name": "GO AROUND",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [34],
+  "mif_rows": [
+    {"sn": 34, "row_name": "Go Around"}
+  ],
+  "error_modes": [
+    {
+      "id": "contact-34-em01",
+      "label": "Altitude control during the go around",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a late and coarse power application combined with an uncorrected nose-low attitude, did not arrest the descent and did not establish the go around climb at the target altitude. The aircraft deviated more than 300 feet from the assigned altitude and the trend continued to diverge. IP had to take the controls to stop the descent and re-establish the climb.",
+        "1": "SP, due to delayed pitch input after the power addition, did not hold the go around altitude within tolerance and allowed a deviation of about 300 feet. The correction was started only after repeated verbal prompting by IP and the aircraft remained off altitude through the upwind leg. No physical intervention was required, but the deviation reached the maximum allowable limit.",
+        "2": "SP, due to an uncoordinated pitch and power sequence, did not stabilize the climb attitude immediately and allowed the altitude to deviate between 150 and 300 feet. SP recognized the deviation on the altimeter and returned to the assigned altitude without any prompting. The correction was timely and no IP input was needed.",
+        "3": "SP applied power and set the go around pitch attitude promptly, holding the altitude within 150 feet throughout the maneuver. The climb was established without oscillation and the altimeter was cross-checked at each stage of the recovery.",
+        "4": "SP flew the go around with negligible altitude deviation, holding the target within a few tens of feet from power application to level off. Pitch and power were matched so precisely that no correction was required at any point.",
+        "marginal": "SP kept the altitude inside standards but the deviation trended consistently toward the low side after each power application, approaching the tolerance before correction. Every recovery was made by SP without prompting, however the pattern of late pitch capture repeats. SP is expected to anticipate the pitch change together with the power change and reduce the residual deviation in the next sorties."
+      }
+    },
+    {
+      "id": "contact-34-em02",
+      "label": "Airspeed control during the go around",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient power application combined with an excessive nose-up attitude at the initiation of the go around, did not maintain the go around airspeed. The airspeed deviated more than 20 knots below the target and continued to decay toward the low speed regime. IP intervened on throttle and pitch to restore the airspeed before the configuration was changed.",
+        "1": "SP, due to a slow throttle advance, did not achieve the required go around airspeed and allowed a deviation of about 20 knots. The airspeed was recovered only after IP called the deviation twice, and the aircraft remained off speed during the initial climb. The correction was late but no control intervention was necessary.",
+        "2": "SP, due to an imprecise power setting after the initial advance, did not hold the target airspeed and allowed a deviation between 10 and 20 knots. SP detected the trend on the airspeed indicator and corrected with throttle and pitch before the deviation grew further. The self correction was timely and independent.",
+        "3": "SP set the go around power without hesitation and held the target airspeed within 10 knots throughout the maneuver. The speed remained stable during the clean up and the aircraft accelerated as briefed.",
+        "4": "SP controlled the go around airspeed with negligible variation, staying within a few knots of the target from power application through the clean up. Throttle and pitch inputs were matched so accurately that the airspeed indicator showed no perceptible excursion.",
+        "marginal": "SP kept the go around airspeed inside standards but the value settled repeatedly near the slow end of the acceptable band before being corrected. Each correction came from SP without prompting, yet the margin above the minimum was smaller than desirable. SP is expected to advance the throttle more positively at initiation so the target speed is reached earlier."
+      }
+    },
+    {
+      "id": "contact-34-em03",
+      "label": "Exit heading and runway track",
+      "mif_row": null,
+      "source": "specific:EXIT HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to unbalanced rudder input at high power and no reference to the runway centerline, did not maintain the go around track and did not roll out on the required exit heading. The heading error exceeded 10 degrees and the aircraft drifted well off the extended runway centerline. IP had to correct the heading to keep the aircraft inside the pattern.",
+        "1": "SP, due to insufficient rudder against the power induced yaw, did not hold the runway heading and finished the maneuver about 10 degrees off the required exit heading. The heading was regained only after IP pointed out the drift, and the aircraft remained displaced from the centerline for most of the upwind leg. The deviation stayed at the limit of tolerance.",
+        "2": "SP, due to a late rudder correction as power was applied, did not track the runway centerline exactly and allowed an exit heading error between 5 and 10 degrees. SP identified the drift against the runway and corrected with coordinated aileron and rudder without any input from IP. The heading was re-established before the crosswind turn.",
+        "3": "SP held the runway heading during the go around and rolled out on the exit heading within 5 degrees. Rudder was applied smoothly with the power so the aircraft tracked the extended centerline without visible drift.",
+        "4": "SP maintained the exit heading with negligible error, keeping the aircraft aligned with the runway centerline throughout the go around. The yaw from the power application was anticipated and countered before any deviation could develop.",
+        "marginal": "SP kept the exit heading inside standards but the error grew toward the tolerance each time power was applied before being corrected. The tracking was acceptable and self corrected, yet the initial rudder input consistently lagged the throttle. SP is expected to lead the power change with rudder so the runway track stays centered from the start."
+      }
+    },
+    {
+      "id": "contact-34-em04",
+      "label": "Timeliness of the go around decision",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to continuation bias in maintaining the approach after the conditions had deteriorated below the briefed minima, did not make the right decision to go around in a timely manner when it was required. The approach was continued from an unstable position to a point where a safe landing was no longer available. IP directed the go around and then took the controls to execute it.",
+        "1": "SP, due to continuation of the plan after the information that invalidated it had already been received, did not initiate the go around at the point where the landing was clearly not ensured. The decision was made only after IP prompted verbally and the maneuver was started very late in the approach. No physical intervention was needed, but the delay left minimal margin.",
+        "2": "SP, due to a slow reassessment of the approach picture, did not decide to go around at the first indication that the landing was not ensured. SP recognized the situation shortly afterwards and initiated the go around on own initiative with adequate margin remaining. No prompting or intervention by IP was required.",
+        "3": "SP assessed the approach continuously and made the decision to go around on own initiative at the correct point, without hesitation. The intention was announced and the maneuver was initiated immediately with ample margin.",
+        "4": "SP recognized the developing situation early and decided to go around before the approach could deteriorate, stating the intention clearly. The judgment was made so far ahead that the maneuver was flown with complete margin and without any urgency.",
+        "marginal": "SP made the go around decisions within acceptable limits but consistently at the latest usable point rather than when the trend first became evident. Every decision was still SP's own and correctly executed, yet the margin was smaller than the profile allows. SP is expected to set and honor an earlier decision point so the call is made on the trend and not on the final picture."
+      }
+    },
+    {
+      "id": "contact-34-em05",
+      "label": "Response to a directed go around",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to an attention bottleneck on a single caution indication at the expense of the instrument cross-check, did not respond immediately and did not execute the go around without delay after the order was given by IP. The aircraft continued the approach for several seconds after the command with no power or pitch change. IP had to repeat the order and then take the controls to execute the maneuver.",
+        "1": "SP, due to absorption in a cockpit indication that left the descent rate unmonitored, did not execute the go around without delay after the order was given. The maneuver was started only after the command was repeated, with the aircraft already very close to the ground. Execution was correct once initiated, but the response was late.",
+        "2": "SP, due to a brief fixation inside the cockpit, did not react to the go around order at once and lost a short interval before applying power. SP then executed the maneuver correctly and recovered the lost interval without any further instruction. The response was late but self corrected in time.",
+        "3": "SP responded to the go around order immediately, applying power and setting the climb attitude as the command was received. Execution followed the standard sequence with no hesitation.",
+        "4": "SP acted on the go around order instantly, with power and pitch applied before the transmission was complete. The reaction was so immediate that the maneuver appeared pre-planned rather than commanded.",
+        "marginal": "SP responded to every go around order within acceptable limits, but a short pause preceded the power application on each occasion. The subsequent execution was correct and no repetition of the order was needed. SP is expected to make the power application the reflex first action so the interval between order and initiation disappears."
+      }
+    },
+    {
+      "id": "contact-34-em06",
+      "label": "Configuration clean up within airspeed limitations",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incorrect sequence of gear and flap selection made without reference to the airspeed indicator, did not clean the aircraft configuration according to standard procedures and did not respect the airspeed limitations of the configuration in use. The flaps were left extended while the aircraft accelerated beyond the limiting speed. IP intervened to select the correct configuration and protect the limits.",
+        "1": "SP, due to imprecise timing of the retraction sequence, did not clean the configuration in accordance with standard procedures and reached the limiting airspeed of the selected setting. The correct selections were made only after IP called them out, leaving the aircraft in the intermediate configuration far longer than briefed. The limitations were not exceeded but no margin remained.",
+        "2": "SP, due to a delayed check of the airspeed before selection, did not clean the configuration at the briefed points and retracted the flaps later than the standard procedure requires. SP noted the omission, verified the airspeed and completed the sequence correctly without prompting. The airspeed limitations were respected throughout.",
+        "3": "SP cleaned the aircraft configuration in the standard sequence, checking the airspeed before each selection and remaining well inside the published limitations. Gear and flaps were retracted at the correct points of the climb.",
+        "4": "SP managed the configuration change flawlessly, with every selection made at the briefed point and comfortably inside the airspeed limitations. The clean up was integrated with the climb so smoothly that no change of flight path resulted.",
+        "marginal": "SP completed the configuration clean up within standards but each selection was made close to the limiting airspeed rather than at the briefed point. The order of the selections was correct and no limitation was exceeded. SP is expected to anticipate the acceleration and initiate each retraction earlier to restore the intended margin."
+      }
+    },
+    {
+      "id": "contact-34-em07",
+      "label": "Standard go around procedure and sequence of actions",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incomplete recall of the go around procedure, did not follow the standard procedure of the Techniques and Procedures Manual and omitted required actions of the sequence. Steps were performed out of order and the required calls were not made. IP had to direct each remaining action and finally take the controls.",
+        "1": "SP, due to uncertainty over the order of the actions, did not follow the standard go around procedure and performed the steps in a disordered sequence. The procedure was completed only under continuous verbal guidance by IP, with the required radio call omitted until reminded. No control intervention occurred.",
+        "2": "SP, due to hurried execution, did not follow the standard sequence exactly and reversed two steps of the go around procedure. SP recognized the error, returned to the correct order and completed the remaining actions without assistance. All required items were finally accomplished.",
+        "3": "SP executed the go around exactly as described in the Techniques and Procedures Manual, performing every step in the correct order and making the required calls. The flow was smooth and no item was omitted.",
+        "4": "SP flew the go around procedure faultlessly, with each action, check and call delivered in the correct order and at the correct moment. The execution was fully automatic and left spare capacity for pattern and traffic awareness.",
+        "marginal": "SP followed the standard go around procedure within acceptable limits but the steps were recalled one at a time rather than flowed. No item was omitted and the order was correct, yet the pace was slow and the radio call trailed the maneuver. SP is expected to consolidate the sequence on the ground so the procedure runs as a single flow."
+      }
+    },
+    {
+      "id": "contact-34-em08",
+      "label": "Margin from the onset of stall characteristics",
+      "mif_row": null,
+      "source": "general:e",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to inadequate monitoring of airspeed during the approach, did not prevent the onset of stall characteristics and allowed stall warning to appear during the go around rotation. The airspeed decayed below the stall warning threshold with the aircraft low and in the landing configuration. IP took the controls to unload the wing and recover.",
+        "1": "SP, due to failure to monitor the aircraft state after the configuration change, did not keep the angle of attack clear of the stall regime and allowed the aircraft to reach the onset of buffet. The nose was lowered only after IP called the condition, and the margin above the stall remained minimal during the initial climb. The recovery was flown by SP after prompting.",
+        "2": "SP, due to an interrupted cross-check while attention remained outside, did not maintain the intended angle of attack margin and allowed the airspeed to approach the low end of the band. SP detected the trend on the AOA and airspeed indications and lowered the nose in time, so no stall characteristics developed. No intervention by IP was needed.",
+        "3": "SP kept the angle of attack well clear of the stall regime throughout the go around, with no stall indications at any point. The pitch attitude was set against the airspeed and AOA references and adjusted as the aircraft accelerated.",
+        "4": "SP flew the go around with an ample and constant margin above the stall, never allowing the AOA to approach the warning region. Pitch was controlled so precisely that the energy state remained comfortable throughout the maneuver.",
+        "marginal": "SP avoided any stall indication but the pitch attitude at rotation left a smaller margin above the stall regime than the profile calls for. The trend was corrected each time by SP as the aircraft accelerated. SP is expected to rotate against the AOA reference rather than by attitude alone so the margin is restored."
+      }
+    },
+    {
+      "id": "contact-34-em09",
+      "label": "Compliance with the landing pattern altitude of LAP",
+      "mif_row": null,
+      "source": "general:f",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unchecked climb rate after the power application, did not respect the landing pattern altitude reported in LAP and climbed through it by more than 300 feet. The aircraft entered the altitude band of the overlying pattern traffic without any level off. IP had to take the controls to return the aircraft to the published pattern altitude.",
+        "1": "SP, due to a late level off from the go around climb, did not maintain the landing pattern altitude reported in LAP and exceeded it by about 300 feet. The aircraft was returned to the published altitude only after IP called the deviation, and the level off was slow. No control intervention was required.",
+        "2": "SP, due to an excessive climb rate carried into the level off, did not capture the landing pattern altitude reported in LAP accurately and overshot it by between 150 and 300 feet. SP recognized the overshoot and returned to the published pattern altitude promptly on own initiative. Separation from the other pattern traffic was preserved.",
+        "3": "SP levelled off at the landing pattern altitude reported in LAP within 150 feet and held it around the pattern. The climb was arrested at the correct point with the power reduced in anticipation.",
+        "4": "SP captured and held the landing pattern altitude reported in LAP with negligible deviation, arresting the climb exactly at the published value. The level off required no subsequent correction.",
+        "marginal": "SP remained within the tolerance around the landing pattern altitude reported in LAP, but the level off was consistently completed above the published value before being brought back. The corrections were made by SP without prompting. SP is expected to begin the level off earlier and reduce power in anticipation so the altitude is captured directly."
+      }
+    }
+  ]
+}

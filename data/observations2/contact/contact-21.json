@@ -1,0 +1,132 @@
+{
+  "item_id": "contact-21",
+  "item_name": "DESCENT - TRAFFIC PATTERN ENTRY",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [21],
+  "mif_rows": [
+    {"sn": 21, "row_name": "Descend - Traffic Pattern Entry"}
+  ],
+  "error_modes": [
+    {
+      "id": "contact-21-em01",
+      "label": "ALTITUDE CONTROL DURING DESCENT TO THE ENTRY POINT",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unmonitored vertical speed after leaving the flight area, did not arrest the descent at the published entry altitude and did not apply the required pitch and power at level-off. Altitude deviated more than 300 feet from the assigned entry altitude and continued to diverge toward the entry point. The IP intervened on pitch and power to stop the descent and re-establish the aircraft at the entry altitude.",
+        "1": "SP, due to a delayed pitch and power correction after establishing the descent, allowed the aircraft to depart the assigned entry altitude by approximately 300 feet. The deviation was held at the limit of the standard until the IP prompted verbally with an altitude call. SP then recovered the altitude, but only after the aircraft had already reached the entry area.",
+        "2": "SP, due to a late reduction of the rate of descent approaching level-off, passed the assigned entry altitude by about 200 feet. SP recognized the deviation on the altimeter and corrected it with pitch and power without any input from the IP. Altitude was restored inside the standard before the entry point, although the level-off remained coarse.",
+        "3": "SP planned the rate of descent and initiated the level-off with adequate lead, holding the entry altitude within 150 feet throughout. Pitch and power were adjusted in small, timely increments and the altimeter remained part of a continuous cross-check. The aircraft arrived at the VFR entry point at the published altitude.",
+        "4": "SP flew the descent profile with negligible altitude deviations and levelled precisely at the published entry altitude with a single smooth pitch and power adjustment. Altitude was held effectively on target through the turns toward the entry point. The aircraft was trimmed so that the altitude required practically no further correction.",
+        "marginal": "SP held the entry altitude within standards, but the corrections were consistently late and every level-off needed a second pitch adjustment. The deviations tended toward the low side of the assigned altitude as the descent progressed. SP is expected to anticipate the level-off earlier and to use trim so that the altitude is held without repeated corrections."
+      }
+    },
+    {
+      "id": "contact-21-em02",
+      "label": "AIRSPEED CONTROL IN THE DESCENT",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to inadequate monitoring of airspeed during the descent, did not set power against the increasing rate of descent. Airspeed exceeded the briefed descent speed by more than 20 knots and continued to increase toward the pattern entry. The IP intervened on the power lever to reduce the airspeed before the entry point.",
+        "1": "SP, due to an interrupted cross-check while navigating toward the entry point, allowed airspeed to reach approximately 20 knots from the briefed descent speed. The deviation remained at the limit of the standard until the IP called the airspeed. SP then adjusted power, but the aircraft reached the entry point still off the briefed speed.",
+        "2": "SP, due to attention concentrated on the outside references for the entry point, let airspeed drift about 15 knots from the briefed descent speed. SP detected the trend at the next sweep of the cross-check and corrected it with power without any input from the IP. Airspeed was back inside 10 knots before reaching the entry point.",
+        "3": "SP maintained the briefed descent airspeed within 10 knots throughout the descent to the VFR entry point. Power was set early and adjusted in small increments as the descent was established. The airspeed indicator remained in a continuous cross-check with the outside references.",
+        "4": "SP held the descent airspeed effectively on the briefed value with negligible variation, including through the turns toward the entry point. Power changes were anticipated rather than reactive, so no deviation exceeded a few knots. Airspeed at the entry point was exactly as briefed.",
+        "marginal": "SP kept airspeed within standards, but the speed drifted to the fast side each time attention moved outside the cockpit. Corrections were applied only when the deviation had already approached the limit of the standard. SP is expected to include the airspeed indicator in the scan at shorter intervals so that the descent speed is held with small power changes."
+      }
+    },
+    {
+      "id": "contact-21-em03",
+      "label": "EXIT HEADING AND TRACK TO THE ENTRY POINT",
+      "mif_row": null,
+      "source": "specific:EXIT HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an imprecise roll-out from the turn out of the flight area, did not establish the heading required to track to the VFR entry point. The heading error exceeded 10 degrees and was allowed to persist, so the aircraft tracked progressively away from the entry point. The IP corrected the heading to re-establish the aircraft on the required track.",
+        "1": "SP, due to a coarse roll-out combined with an uncorrected drift, held a heading approximately 10 degrees from the one required for the entry point. The error stayed at the limit of the standard until the IP called the heading. SP then turned onto the correct track, but the aircraft had already displaced from the planned route.",
+        "2": "SP, due to a slightly overshot roll-out from the exit turn, established a heading about 8 degrees from the required track to the entry point. SP identified the error on the heading indicator and corrected it without any prompt from the IP. The heading was inside 5 degrees well before reaching the entry point.",
+        "3": "SP rolled out on the exit heading within 5 degrees and tracked accurately toward the VFR entry point. Roll-out anticipation was correct and the heading indicator was cross-checked against the outside references. Small drift corrections were applied promptly and kept the aircraft on the planned track.",
+        "4": "SP established the exit heading with negligible error and held it precisely through the descent to the entry point. Roll-out anticipation was exact and required no subsequent correction. The aircraft arrived at the VFR entry point exactly on the planned track.",
+        "marginal": "SP maintained the exit heading within standards, but every roll-out required an additional correction and the heading wandered during the descent. The track to the entry point was preserved by repeated small turns rather than by a stable heading. SP is expected to anticipate the roll-out and to trim the aircraft so that the exit heading is held without continuous correction."
+      }
+    },
+    {
+      "id": "contact-21-em04",
+      "label": "DESCENT CHECK AND PROCEDURE",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unstructured transition from the working area to the recovery, did not perform the required descent check and omitted the associated procedure. Several items were still unaddressed when the aircraft reached the entry point and the aircraft was not in the configuration required for pattern entry. The IP directed the descent check and prompted each item to restore the correct configuration.",
+        "1": "SP, due to starting the descent before organizing the cockpit tasks, performed the descent check incompletely and out of the published sequence. Items were completed only after the IP prompted them verbally, and the check was finished after the descent to the entry point had already begun. The aircraft reached pattern entry with the check only just completed.",
+        "2": "SP, due to a late start of the descent check, ran the items behind the briefed point in the profile. SP recognized the delay, resumed the published sequence without prompting and completed every item before the entry point. The check was correct in content, but the timing compressed the workload in the final part of the descent.",
+        "3": "SP performed the required descent check completely and in the published sequence at the correct point in the profile. Every item was actioned and verified before the descent to the entry point was established. Aircraft configuration at pattern entry matched the requirement of the procedure.",
+        "4": "SP completed the descent check flawlessly, with correct sequence, positive verification of every item and no interruption of the aircraft control task. The check was accomplished with time in hand, leaving full capacity for navigation to the entry point. Configuration and system settings were exactly as required for the pattern entry.",
+        "marginal": "SP performed the required descent check completely, but the items were recited rather than actioned one by one and two of them needed a second look to be verified. The check was started close to the latest usable point in the profile. SP is expected to start the descent check earlier and to verify each item positively as it is actioned."
+      }
+    },
+    {
+      "id": "contact-21-em05",
+      "label": "DESCENT PLANNING AND TIMING AGAINST THE CLEARANCE",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to inadequate workload management during the recovery phase, did not plan the departure from the flight area and did not descend prior to the entry point. The descent was begun without the required clearance and the aircraft reached the entry area more than 300 feet above the entry altitude, still descending. The IP took the radio and the descent profile to establish the aircraft correctly for pattern entry.",
+        "1": "SP, due to task sequencing that concentrated navigation, radio and checklist work into the same segment, requested the descent clearance late and started the descent behind the planned point. The aircraft reached the entry area approximately 300 feet high and the profile was corrected only after the IP prompted the descent. A timely entry was preserved only by an increased rate of descent.",
+        "2": "SP, due to a delay in shedding a secondary cockpit task, began the descent from the flight area later than planned after obtaining the clearance. SP recognized the compressed profile, adjusted power and rate of descent without prompting and reached the entry area about 200 feet high, restoring the standard shortly afterwards. The planning was correct in principle but executed late.",
+        "3": "SP departed the flight area as determined in the LAP and in accordance with the ATC instructions, obtained the required clearance and descended prior to the entry point in a timely manner. Cockpit tasks were sequenced so that the radio work did not interrupt the descent profile. The aircraft was established at the entry altitude before reaching the VFR entry point.",
+        "4": "SP managed the recovery with excellent anticipation, requesting the clearance and starting the descent at the optimum point so that no later rate or power adjustment was needed. The workload was distributed evenly across the descent, leaving capacity for lookout and navigation. The aircraft arrived stabilized at the entry point at the published altitude and the briefed airspeed.",
+        "marginal": "SP obtained the clearance and descended prior to the entry point, but the descent was started at the latest acceptable point and the radio work overlapped the level-off. The profile stayed within standards only because the rate of descent was increased. SP is expected to plan the clearance request and the top of descent earlier so that the workload is spread across the recovery."
+      }
+    },
+    {
+      "id": "contact-21-em06",
+      "label": "KNOWLEDGE OF ENTRY POINTS AND APPROACH PROCEDURES",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient preparation of the recovery portion of the mission, did not know the VFR entry points and could not state the applicable approach procedure. The aircraft was flown toward an incorrect reference point and the required entry procedure was not initiated. The IP identified the entry point and directed the procedure.",
+        "1": "SP, due to an incomplete review of the entry points before flight, identified the correct point only after the IP named the reference feature. The approach procedure was recalled in part and the remaining elements were supplied verbally by the IP. The aircraft reached the entry point on the published track, but the procedure was flown reactively.",
+        "2": "SP, due to hesitation in relating the briefed entry point to the terrain observed, initially steered toward the adjacent reference. SP resolved the identification without prompting, restated the correct entry point and applied the associated approach procedure. The resulting track error stayed inside the standard and the entry was flown as published.",
+        "3": "SP knew the VFR entry points and the associated approach procedures and applied them without hesitation. The correct point was identified visually and the entry was flown as published. Radio calls and headings matched the procedure for the point in use.",
+        "4": "SP demonstrated thorough knowledge of every VFR entry point and of the applicable approach procedures, including the alternatives for the opposite landing direction. The entry point was identified early and the procedure applied without reference to notes. The recovery was flown exactly as published throughout.",
+        "marginal": "SP knew the entry points and the approach procedures, but recall of the procedure for the point actually in use took noticeably longer than for the primary one. Identification was correct on each occasion, yet made close to the point itself. SP is expected to review the entry points and their procedures so that identification and application become immediate."
+      }
+    },
+    {
+      "id": "contact-21-em07",
+      "label": "USE OF VOR AND GPS FOR ORIENTATION AND RETURN TO THE AIRPORT",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to navigation aids left untuned before leaving the flight area, did not use the VOR and GPS when the visual references for the entry point were not available. Orientation in space was not re-established and the aircraft tracked more than 10 degrees off the heading required toward the airport. The IP set up the navigation aids and directed the return to the airport.",
+        "1": "SP, due to a late selection of the required frequency and waypoint, obtained the VOR and GPS information only after the IP indicated the need for it. The correction to the airport track was then applied with the heading at the limit of the standard, about 10 degrees from the required one. Orientation was recovered, but only with verbal prompting.",
+        "2": "SP, due to slow interpretation of the bearing information, took longer than briefed to convert the VOR and GPS indications into a heading to the airport. SP completed the interpretation and turned onto the correct track without any input from the IP, with the heading error held around 8 degrees. Orientation in space was restored before reaching the entry area.",
+        "3": "SP used the VOR and GPS as required to orient in space and to establish the return to the airport, with the aids correctly tuned and identified. The bearing information was interpreted quickly and converted into an accurate heading within 5 degrees. The navigation picture was cross-checked against the outside references.",
+        "4": "SP set up and used the VOR and GPS with negligible delay and kept an accurate position picture throughout the recovery. The indications were interpreted and applied immediately, so the track to the airport needed no subsequent adjustment. The navigation aids were cross-checked against the visual references without any loss of aircraft control.",
+        "marginal": "SP used the VOR and GPS correctly, but the setup was made only once the entry point was not immediately visible and the interpretation required a second look at the display. Heading corrections stayed within standards, yet each one was applied later than necessary. SP is expected to pre-set the aids before leaving the flight area so that the position picture is available continuously."
+      }
+    },
+    {
+      "id": "contact-21-em08",
+      "label": "AIRSPACE DISCIPLINE - ADJACENT FLIGHT AREAS",
+      "mif_row": null,
+      "source": "general:e",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to lack of awareness of the aircraft's position relative to the area boundary, did not monitor the track during the descent and violated the adjacent flight area. The aircraft continued outside the assigned area with the heading more than 10 degrees from the planned exit track. The IP took control and turned the aircraft back inside the assigned airspace.",
+        "1": "SP, due to a position picture built on a single reference feature, closed on the boundary of the adjacent flight area without recognizing it. The aircraft was turned away only after the IP called the proximity to the boundary, with the heading at the limit of the standard. No violation occurred, but the margin to the adjacent area was minimal.",
+        "2": "SP, due to attention held on the descent profile, allowed the track to converge toward the boundary of the adjacent flight area. SP re-established the position picture, turned away from the boundary without prompting and kept the heading error within about 8 degrees. The adjacent area was not violated and an adequate margin was preserved.",
+        "3": "SP maintained an accurate position picture throughout the departure from the flight area and did not violate the adjacent flight areas. The track was checked against the area boundaries and the entry point before and during the descent. Heading was held within 5 degrees of the planned exit track at all times.",
+        "4": "SP kept continuous awareness of the aircraft position relative to the assigned and the adjacent flight areas, with negligible track deviations during the descent. The route out of the area was flown so that a generous margin to every boundary was preserved. Position was confirmed by both visual references and the navigation aids without interrupting aircraft control.",
+        "marginal": "SP did not violate any adjacent flight area, but the exit track was flown close to the boundary and position was confirmed only once during the descent. The margin depended on the accuracy of a single heading rather than on a planned route. SP is expected to plan the exit track with a defined margin and to confirm position against the boundaries at regular intervals."
+      }
+    }
+  ]
+}

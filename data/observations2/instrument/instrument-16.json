@@ -1,0 +1,132 @@
+{
+  "item_id": "instrument-16",
+  "item_name": "POINT TO POINT",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [16],
+  "mif_rows": [
+    { "sn": 16, "row_name": "Point to Point" }
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-16-em01",
+      "label": "Arrival accuracy in DME at the target fix",
+      "mif_row": null,
+      "source": "specific:DISTANCE (DME)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a fix-to-fix solution built on a mis-read present DME, did not arrive at the target fix within the published distance tolerance. The aircraft crossed the fix more than 6 DME off, and the error was still increasing when the IP took the aircraft to re-establish the point-to-point leg. SP did not recognize the divergence from the tuned DME readout at any stage of the transition.",
+        "1": "SP, due to a single distance solution computed at the start and never revised, did not correct the closure error while the fix-to-fix leg was flown. Arrival distance reached the 4 DME limit of the standard and was reduced only after the IP verbally prompted a recheck of the DME. The correction was applied late and the aircraft stabilized on the fix well after the intended arrival point.",
+        "2": "SP, due to a coarse first estimate of the distance to run, did not fly the initial transition heading accurately enough to close the fix on the computed profile. Arrival distance opened to about 3 DME from the target fix, between the 2 and 4 DME values of the standard. SP identified the trend on the DME readout in time and closed the error without any IP input.",
+        "3": "SP computed the distance to the target fix from the DME and flew the transition heading that resolved it. Arrival was inside 2 DME of the fix throughout the leg, with the residual error taken out early and the DME readout used as the primary reference. The solution was reached quickly and without hesitation.",
+        "4": "SP resolved the fix-to-fix distance problem immediately and flew the leg so that the DME error never exceeded about 1 mile. Arrival over the target fix was essentially exact, with the distance to run reducing at the rate the solution predicted. No re-solution of the problem was required at any point.",
+        "marginal": "SP arrived at the target fix inside the published distance tolerance, but the DME error sat close to the 2 DME edge of the standard for most of the leg rather than reducing steadily. The trend was toward the outer limit and was arrested only in the last portion of the transition. SP is expected to tighten the running distance check so the arrival error reduces progressively rather than late."
+      }
+    },
+    {
+      "id": "instrument-16-em02",
+      "label": "Arrival accuracy expressed in radials",
+      "mif_row": null,
+      "source": "specific:The parameter above (distance) can be expressed in radials",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incorrect identification of the radial through the target fix, did not arrive on the required bearing from the station. The aircraft crossed the fix more than 6 degrees off the target radial, with no trend toward the correct one, and the IP intervened to re-establish the geometry. SP did not use the bearing pointer to detect that the fix was being approached from the wrong side.",
+        "1": "SP, due to a transition heading held without any reassessment of the radial being crossed, did not correct the angular error as the fix was approached. The arrival radial error reached the 4 degree limit of the standard and was reduced only after verbal prompting from the IP. The aircraft settled on the correct radial after the intended arrival point.",
+        "2": "SP, due to a rounded estimate of the angular difference between the present position and the target fix, did not fly the transition heading precisely enough to arrive on the required radial. The error grew to about 3 degrees, between the 2 and 4 degree values of the standard, before SP recognized the bearing trend and adjusted heading without IP input. The fix was then crossed on the correct radial.",
+        "3": "SP identified the radial through the target fix and flew the transition so that the angular error stayed within 2 degrees. The bearing pointer was used continuously to confirm that the aircraft was closing the correct radial. Arrival over the fix was on the required bearing without a late correction.",
+        "4": "SP resolved the geometry in radials at once and held the arrival bearing to within about 1 degree of the target radial. The bearing pointer tracked to the fix with no correction of consequence required. The angular solution and the distance solution converged on the same arrival point.",
+        "marginal": "SP arrived on the target radial within the published tolerance, but the angular error stayed near the 2 degree edge of the standard and was corrected in one late step rather than progressively. The bearing pointer was checked at intervals long enough to let the error accumulate. SP is expected to shorten the interval between bearing checks so the radial error is contained earlier in the transition."
+      }
+    },
+    {
+      "id": "instrument-16-em03",
+      "label": "Timeliness of taking the transition heading",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an attempt to complete the whole fix-to-fix computation before making any control input, did not take the transition heading in time. The aircraft continued on the previous heading for a large part of the available distance, so that the computed solution no longer applied when it was finally flown, and the IP directed the turn. The point-to-point leg had to be re-planned from a new present position.",
+        "1": "SP, due to hesitation over which of two candidate headings to fly, did not turn onto the transition heading at the point the solution required. The delay consumed enough of the leg to bring the arrival error to the limit of the standard, and the turn was started only after the IP prompted. SP then flew the heading correctly but from a position that no longer supported an accurate arrival.",
+        "2": "SP, due to a slow first computation of the transition heading, did not begin the turn immediately when the point-to-point was directed. The turn was started several seconds late and the resulting arrival error remained between the code 3 and code 1 values of the standard. SP recognized the delay, applied a corrected heading in good time and closed the fix without IP input.",
+        "3": "SP took the transition heading in time, turning onto the computed heading as soon as the point-to-point was directed. The initial solution was produced quickly enough that no distance was wasted on the previous heading. The aircraft was established on the fix-to-fix leg without delay.",
+        "4": "SP had the transition heading available almost immediately and rolled onto it with no measurable delay. The turn was made at a rate that put the aircraft on the computed track without overshoot. The whole entry to the point-to-point leg was completed as one continuous action.",
+        "marginal": "SP took the transition heading within an acceptable time, but the turn was consistently started at the late end of what the solution allowed, leaving little margin for later refinement. The delay did not by itself produce a deviation on this sortie. SP is expected to produce the first heading solution faster so the turn begins as the point-to-point is directed."
+      }
+    },
+    {
+      "id": "instrument-16-em04",
+      "label": "Continuous recomputation and timely correction en route",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to treating the initial transition heading as fixed for the whole leg, did not calculate the correct heading continuously during the transition. The geometry changed as the aircraft moved, the deviation grew past the outer values of the standard, and the IP had to intervene to re-solve the problem and regain the fix. No intermediate solution was attempted between the start of the leg and the intervention.",
+        "1": "SP, due to a scan that returned to the navigation display only at long intervals, did not correct the developing deviation in time. The recomputation was made only after the IP pointed out the divergence, and by then the error was at the limit of the standard. The corrected heading was accurate but applied too late to restore the planned arrival.",
+        "2": "SP, due to recomputing the heading in large steps rather than continuously, did not keep the solution matched to the changing geometry throughout the leg. The deviation opened to a value between the code 3 and code 1 limits before the next update was made. SP detected the trend, applied an intermediate correction in good time and arrived without IP input.",
+        "3": "SP recalculated the required heading continuously as the geometry changed and corrected the small deviations as they appeared. Each update was applied in time, so the error was held inside the code 3 values for the whole transition. No single large correction was needed near the fix.",
+        "4": "SP updated the fix-to-fix solution smoothly throughout the leg, so that heading changes were small and made before any deviation became visible. The aircraft tracked to the fix as if flown on a single computed course. The arrival required no correction at all in the final portion.",
+        "marginal": "SP recalculated the heading during the transition and stayed within standards, but the updates came in a few discrete steps and each was applied at the point where the deviation had already become noticeable. The technique worked on this leg and would not have tolerated a shorter distance to run. SP is expected to move to a continuous update of the solution rather than periodic re-solutions."
+      }
+    },
+    {
+      "id": "instrument-16-em05",
+      "label": "Knowledge of the standardized fix-to-fix solution method",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "insufficient knowledge of the published procedure",
+      "texts": {
+        "0": "SP, due to lack of knowledge of the published procedure for the condition encountered, did not solve the point-to-point problem according to the standardized method of the Techniques and Procedures Manual and AFMAN 11-202 VOL3. The heading produced was not derived from the present position and target fix geometry, the resulting error exceeded the outer values of the standard, and the IP took the aircraft and demonstrated the solution. SP could not state the steps of the method when questioned in flight.",
+        "1": "SP, due to incomplete knowledge of the standardized fix-to-fix sequence, did not apply the steps in the correct order and produced a heading with a systematic error. The deviation reached the limit of the standard and was resolved only after the IP talked SP through the method step by step. SP flew the corrected heading accurately once it had been supplied.",
+        "2": "SP, due to a partially recalled version of the standardized method, did not apply one step of the solution correctly and produced a heading that was close but not exact. The arrival error stayed between the code 3 and code 1 values of the standard. SP recognized that the geometry did not match the expected picture, reworked the solution correctly and completed the leg without IP input.",
+        "3": "SP solved the fix-to-fix problem by the standardized method described in the Techniques and Procedures Manual and AFMAN 11-202 VOL3, with the steps applied in the correct order. The heading produced was correct for the geometry and no IP intervention was required. SP was able to state the reasoning behind the solution when asked.",
+        "4": "SP applied the standardized point-to-point method flawlessly and produced the correct heading without any intermediate working being visible in the flight path. The method was used identically on each repetition, including the case where the fix lay behind the aircraft. SP explained the solution accurately and immediately when questioned.",
+        "marginal": "SP solved the problem by the standardized method and stayed within the published values, but the working was slow and one step was reconstructed rather than recalled. Knowledge of the method was sufficient for this geometry and would be thin under a shorter distance to run. SP is expected to consolidate the published sequence so the solution is produced without reconstruction."
+      }
+    },
+    {
+      "id": "instrument-16-em06",
+      "label": "Wind and groundspeed accounting on the point-to-point leg",
+      "mif_row": null,
+      "source": "general:b,c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a solution computed without any allowance for the known wind, did not correct the drift that developed along the fix-to-fix leg. The aircraft was displaced progressively downwind, the arrival error exceeded the outer values of the standard in both distance and radial, and the IP intervened to re-establish the track. SP did not compare the actual bearing trend with the trend the no-wind solution predicted.",
+        "1": "SP, due to a drift correction estimated once and never revised against the observed bearing change, did not keep the aircraft on the computed track. The displacement built up to the limit of the standard and was corrected only after the IP called attention to the bearing pointer. The final part of the leg was flown with a large drift correction that had to be removed again near the fix.",
+        "2": "SP, due to an initial drift allowance that was smaller than the actual wind required, did not hold the computed track through the first part of the transition. The error opened to a value between the code 3 and code 1 limits before SP compared the observed and expected bearing rates. The drift correction was then increased in good time and the fix was made without IP input.",
+        "3": "SP allowed for the wind in the transition heading and adjusted the drift correction as the observed bearing rate indicated. The aircraft held the computed track and arrived at the fix inside the code 3 values in both distance and radial. Groundspeed was used to confirm the time and distance to run.",
+        "4": "SP incorporated the wind into the solution from the outset and refined the drift correction by very small amounts as the bearing rate confirmed it. The track to the fix stayed effectively straight and the arrival error was negligible. Groundspeed and distance to run agreed throughout the leg.",
+        "marginal": "SP allowed for drift and remained within the published values, but the correction was set from the forecast wind and adjusted only once against what the instruments showed. The residual displacement stayed near the edge of the code 3 band for part of the leg. SP is expected to derive the drift correction from the observed bearing rate rather than relying on the pre-flight wind."
+      }
+    },
+    {
+      "id": "instrument-16-em07",
+      "label": "Instrument cross-check and aircraft control while solving the problem",
+      "mif_row": null,
+      "source": "general:a,b",
+      "hf_concept": "attention bottleneck / task saturation",
+      "texts": {
+        "0": "SP, due to an attention bottleneck on the navigation display at the expense of the instrument cross-check, did not maintain the aircraft state while working the point-to-point problem. Attitude, altitude and heading were left unmonitored long enough for the flight path to diverge, and the IP took the aircraft. The navigation solution was also not completed, so both the flying and the problem were lost together.",
+        "1": "SP, due to an interrupted instrument cross-check while attention remained on the fix-to-fix computation, did not keep the primary flight parameters under control during the transition. The deviation reached the limit of the standard and was recovered only after the IP called for a return to the basic scan. SP then flew the aircraft accurately but had to restart the navigation solution.",
+        "2": "SP, due to a scan that dwelt on the navigation display while the problem was being worked, did not cross-check the primary flight instruments at the required rate. Heading and altitude drifted enough to place the arrival error between the code 3 and code 1 values of the standard. SP recognized the narrowed scan, re-established the cross-check and corrected the deviation without IP input.",
+        "3": "SP kept the instrument cross-check running while solving the point-to-point problem, so that attitude, altitude and heading were held throughout the transition. The navigation work was fitted into the scan rather than replacing it. The fix was made inside the code 3 values with the aircraft state stable.",
+        "4": "SP worked the fix-to-fix solution without any detectable interruption of the instrument cross-check. The primary flight parameters were held essentially constant while the heading updates were computed and applied. Aircraft control and navigation were carried out as a single integrated task.",
+        "marginal": "SP kept the aircraft within standards while solving the problem, but the cross-check narrowed toward the navigation display each time a new heading was computed, and the primary parameters moved slightly before being recaptured. Capacity was adequate for this workload and left little margin for an added task. SP is expected to keep the basic scan running continuously while the point-to-point solution is worked."
+      }
+    },
+    {
+      "id": "instrument-16-em08",
+      "label": "GPS/RNAV direct-to-fix setup and mode management",
+      "mif_row": null,
+      "source": "general:a,c",
+      "hf_concept": "mode confusion / over-reliance on automation",
+      "texts": {
+        "0": "SP, due to mode confusion over the selected navigation source and what it was displaying, did not set up the direct-to-fix navigation correctly for the assigned point. The aircraft was flown toward a waypoint other than the one required and the resulting error was far outside the published values before the IP intervened and reselected the correct fix. SP did not cross-check the GPS/RNAV picture against the VOR/DME or TACAN raw data at any stage.",
+        "1": "SP, due to acceptance of the automated solution without an independent check of the parameters, did not verify that the direct-to entry matched the fix that had been assigned. The discrepancy was identified only after the IP questioned the displayed track, by which time the error was at the limit of the standard. SP corrected the entry and flew the leg accurately from that point.",
+        "2": "SP, due to a slow and partly incorrect sequence in entering the direct-to fix, did not complete the RNAV setup before the transition heading was required. The first part of the leg was flown on an approximate heading and the arrival error stayed between the code 3 and code 1 values. SP completed the entry, cross-checked it against the raw data and refined the heading without IP input.",
+        "3": "SP set up the direct-to-fix navigation for the assigned point correctly and confirmed it against the VOR/DME or TACAN raw data before turning. The selected mode and the displayed track were identified before they were used to fly the aircraft. The fix was made inside the code 3 values of the standard.",
+        "4": "SP configured the RNAV direct-to fix immediately and verified the entry, the active mode and the raw-data picture as one check. The transition heading was flown from a solution that the GPS and the ground-based aids both supported. No reselection or re-entry was needed at any point in the leg.",
+        "marginal": "SP set up the direct-to-fix navigation correctly and remained within the published values, but the entry was verified against the raw data only after the turn had been started. The cross-check confirmed rather than preceded the action. SP is expected to confirm the selected fix and mode against the raw data before flying the computed heading."
+      }
+    }
+  ]
+}

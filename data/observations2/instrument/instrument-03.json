@@ -1,0 +1,132 @@
+{
+  "item_id": "instrument-03",
+  "item_name": "STANDARD INSTRUMENT DEPARTURE (SID)",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [3],
+  "mif_rows": [
+    {"sn": 3, "row_name": "Standard Instrument Departure"}
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-03-em01",
+      "label": "Course deviation on the published SID radials",
+      "mif_row": null,
+      "source": "specific:COURSE DEVIATION (radials)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an uncontrolled bank angle in the turn to the departure course, did not intercept and hold the published radial and allowed course deviation to exceed 8 degrees with the CDI at full deflection. The divergence from the SID track was not recognized on the navigation display and continued to increase. IP intervention on the controls was required to regain the published course.",
+        "1": "SP, due to a late intercept turn at the departure fix, overshot the published radial and allowed course deviation to reach the 8 degree limit. The developing trend on the CDI was not detected, and the intercept back to course was started only after repeated verbal prompting from the IP. Course was recaptured well after the point at which the correction was required.",
+        "2": "SP, due to an imprecise wind correction angle on the climb-out radial, drifted off the published course by between 5 and 8 degrees. The deviation was recognized on the CDI while it was still developing and SP applied a measured intercept heading without IP input. Course was re-established on the SID radial and held from that point to the departure fix.",
+        "3": "SP intercepted and maintained the published SID radials with course deviation held within 5 degrees throughout the departure. Wind correction was established early and adjusted in small increments, keeping the CDI close to center. Each fix was tracked without overshoot.",
+        "4": "SP flew the published SID track with course deviation held to approximately 2 degrees, with the CDI effectively centered from the first radial intercept to the departure fix. The wind correction angle was set on the initial turn and required no further adjustment. Intercepts were completed without overshoot or subsequent hunting.",
+        "marginal": "SP kept course deviation inside the 5 degree standard, but the CDI was allowed to work out close to that limit before each correction was applied. Corrections were made as single large heading changes rather than early small ones, producing a slow oscillation about the published radial. The parameter is within standards; SP is expected to set the wind correction angle earlier and correct in smaller increments on subsequent sorties."
+      }
+    },
+    {
+      "id": "instrument-03-em02",
+      "label": "Knowledge and sequence of the published departure (MAIP)",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient study of the published departure in MAIP, did not know the SID sequence and flew an initial heading and climb segment other than the published one. The required turn point was passed without action and the aircraft continued outside the departure track. IP assistance was required to state the procedure and to fly the aircraft back onto the published routing.",
+        "1": "SP, due to reliance on memory instead of the departure plate, applied the SID segments out of sequence and started the turn at the wrong fix. The procedure was reconstructed only after the IP prompted the next step verbally, and the aircraft was by then at the outer edge of the departure track. The remaining segments were flown correctly but with continuous prompting.",
+        "2": "SP, due to an incomplete review of the departure plate before takeoff, hesitated at the transition between the first and second SID segments and began the turn late. SP identified the omission from the plate and executed the correct segment without IP assistance, keeping the aircraft on the published routing. No further sequencing errors occurred for the remainder of the departure.",
+        "3": "SP knew the published departure as described in MAIP and executed each segment in the correct sequence without IP assistance. Headings, turn points and altitude restrictions were applied at the published positions. The departure was flown to the transition fix as briefed.",
+        "4": "SP executed the published departure flawlessly and without IP assistance, anticipating every segment change before it was reached. The plate was used as confirmation rather than as a source of the sequence, and each restriction was met with the aircraft already configured for the next segment. The departure required no correction of any kind.",
+        "marginal": "SP executed the published departure without IP assistance, but the sequence was recalled a step at a time and each segment change was confirmed on the plate only as it arrived. This left no margin for a clearance amendment and slowed the transitions slightly. Performance meets the standard; SP is expected to arrive at the aircraft with the SID sequence memorized to the level required for anticipation."
+      }
+    },
+    {
+      "id": "instrument-03-em03",
+      "label": "Basic Control Standards during the climb on the SID",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an untrimmed aircraft after the climb was established, did not maintain the departure profile within Basic Control Standards, with airspeed and pitch attitude varying continuously through the climb. The published altitude restriction was passed without the level-off being started. IP intervention was required to stabilize the aircraft and to comply with the restriction.",
+        "1": "SP, due to a fixed rather than cyclic instrument cross-check, allowed climb airspeed and heading to reach the limits of Basic Control Standards during the departure. The deviations were corrected only after verbal indication from the IP, and the level-off at the published altitude was begun late. Parameters were restored, but the correction was not initiated by SP.",
+        "2": "SP, due to a delayed trim change after the initial climb was established, allowed climb airspeed and pitch attitude to move beyond the target values while remaining inside the outer control limits. SP identified the trend on the primary flight instruments and re-trimmed to the climb attitude without IP input. The published altitude restriction was then met with a normal level-off.",
+        "3": "SP maintained the departure profile within Basic Control Standards, holding climb airspeed, heading and attitude at the target values. The aircraft was trimmed for the climb and the instrument cross-check remained cyclic. Published altitude restrictions were met with stabilized level-offs.",
+        "4": "SP flew the climb on the SID with airspeed, heading and attitude effectively fixed at the target values and the aircraft trimmed hands-off after the initial climb was established. Level-offs at the published restrictions were anticipated and completed without any excursion. Control inputs throughout the departure were small and continuous.",
+        "marginal": "SP held the departure profile inside Basic Control Standards, but airspeed and attitude required repeated correction because the aircraft was flown out of trim for most of the climb. Each parameter was recovered before it approached the limit, at the cost of continuous attention to control inputs. The item is within standards; SP is expected to trim accurately at the start of the climb so that capacity is available for the navigation task."
+      }
+    },
+    {
+      "id": "instrument-03-em04",
+      "label": "Timeliness and quality of track deviation corrections",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to misinterpretation of the CDI rate of movement, did not recognize the developing track deviation and applied no correction while the aircraft continued to diverge from the published course. When a correction was finally attempted it was made in the wrong direction and increased the displacement. IP intervention was required to establish an intercept back to the SID track.",
+        "1": "SP, due to a scan that remained on the attitude and airspeed indications, detected the track deviation only when it had reached the outer limit and then applied an intercept angle large enough to produce an overshoot on the other side. The oscillation about the published course was stopped only after verbal guidance from the IP on the intercept heading to fly. Track was regained late in the departure segment.",
+        "2": "SP, due to an initially small intercept angle, corrected the track deviation more slowly than the geometry required and the displacement persisted for part of the segment. SP reassessed the closure rate on the CDI, increased the intercept angle and returned the aircraft to the published course without IP input. Subsequent deviations were corrected as soon as they appeared.",
+        "3": "SP corrected track deviations in a timely manner, applying intercept angles matched to the displacement and the distance remaining to the fix. Corrections were recognized from the CDI trend rather than from full displacement. The aircraft was returned to the published course without overshoot.",
+        "4": "SP anticipated track deviations from the first movement of the CDI and corrected them before any measurable displacement developed. Intercept angles were proportional and were reduced progressively so that the aircraft rolled out on course each time. No correction required a second input.",
+        "marginal": "SP corrected every track deviation and kept the aircraft on the published course, but the corrections were consistently started only after the displacement had become clearly visible rather than at the first trend indication. Each correction was therefore larger than necessary and required a follow-up input to settle. Performance is within standards; SP is expected to act on the CDI trend earlier so that a single proportional correction is sufficient."
+      }
+    },
+    {
+      "id": "instrument-03-em05",
+      "label": "Compliance with ATC instructions during the departure",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incorrect read-back that was not compared against the clearance received, did not comply with the ATC instruction and continued on the SID routing after being assigned radar vectors. The mismatch between the assigned and the flown heading was not detected. IP intervention was required to query ATC and to fly the assigned heading.",
+        "1": "SP, due to a read-back made without confirming the assigned altitude, complied with the ATC instruction only after the controller repeated it and the IP prompted verbally. The aircraft continued on the previous clearance until that point. Compliance was eventually achieved but at the limit of the time available.",
+        "2": "SP, due to attention held on the navigation task, acknowledged the ATC instruction late and started the assigned turn after the expected moment. SP recognized the delay, checked the assigned heading against the read-back and complied without IP assistance. Subsequent instructions were acknowledged and executed promptly.",
+        "3": "SP complied with all ATC instructions during the departure, reading back each clearance correctly and executing it promptly. Assigned headings and altitudes were cross-checked against the read-back before being flown. No clarification was required from the controller.",
+        "4": "SP complied with every ATC instruction immediately and accurately, with correct standard read-back on each transmission and the assigned values set on the aircraft before the turn was started. Amendments to the SID routing were absorbed without any interruption to the flight path or to the departure profile. The controller required no repetition or confirmation at any point.",
+        "marginal": "SP complied with all ATC instructions and read them back correctly, but each read-back was delayed while SP completed the flying task first and the controller had to wait for the acknowledgement. Compliance itself was always achieved within the required time. The item meets the standard; SP is expected to integrate the radio task with the flying task so that acknowledgement is not deferred."
+      }
+    },
+    {
+      "id": "instrument-03-em06",
+      "label": "Navigation aid and avionics setup for the SID",
+      "mif_row": null,
+      "source": "general:a|general:c",
+      "hf_concept": "hf-mode-confusion",
+      "texts": {
+        "0": "SP, due to mode confusion over the selected avionics mode and what it was displaying, flew the departure with the navigation source set to the wrong facility and did not track the published radial at all. The indications presented were accepted without being cross-checked against the departure plate. IP intervention was required to reconfigure the navigation source and to regain the SID track.",
+        "1": "SP, due to an incorrect assumption about which navigation mode was active, set the course for the second SID segment but left the source on the previous facility, and the error was found only when the IP indicated it verbally. Until that point the aircraft was tracking an indication that did not correspond to the published segment. The setup was corrected and the departure continued at the limit of the assigned track.",
+        "2": "SP, due to insufficient knowledge of the display hierarchy for the selection made, set the navigation source correctly but selected the course for the next segment late, leaving the intercept information unavailable during part of the turn. SP identified the omission at the mode annunciation, completed the setup and flew the segment without IP input. The remaining segments were set up before each transition.",
+        "3": "SP set the navigation aids and avionics for each SID segment correctly and in advance, with frequencies, courses and navigation source selected before the segment was reached. The selections were confirmed against the departure plate and the mode annunciations. No setup action was required inside a turn.",
+        "4": "SP configured the avionics for the entire departure before takeoff and confirmed each selection against the departure plate, so that every segment change required only a course change already pre-set. The active navigation mode was verified at each annunciation, and no indication was accepted without a cross-check. The departure was flown with the correct source displayed at all times.",
+        "marginal": "SP set the navigation aids and avionics correctly for every SID segment, but the selections were made close to the transition point rather than in advance, and the mode annunciation was checked only after the change. This left the setup competing with the flying task inside the turns. The item is within standards; SP is expected to pre-select and verify each segment well before it is reached."
+      }
+    },
+    {
+      "id": "instrument-03-em07",
+      "label": "Workload management and independence from IP assistance",
+      "mif_row": null,
+      "source": "general:a|general:b",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to task sequencing that concentrated all cockpit workload inside the departure turn, did not execute the climb checks and simultaneously lost control of the navigation task. Neither the checklist nor the SID track was completed without help, and the aircraft continued outside the published routing. IP intervention was required to fly the aircraft while the sequence was reordered.",
+        "1": "SP, due to workload management that left the climb checklist unfinished before the first altitude restriction, saturated at the transition and stopped flying the departure while working the cockpit tasks. Progress resumed only after the IP prompted the order of actions verbally. The departure was completed, but not without IP assistance as required by the standard.",
+        "2": "SP, due to failure to shed the secondary cockpit task when workload increased at the segment change, delayed the climb checks and briefly reduced attention to the SID track. SP recognized the saturation, deferred the secondary task and returned to the flying and navigation priorities without IP input. The remaining departure tasks were sequenced correctly.",
+        "3": "SP managed the departure workload effectively, completing the climb checks and the radio tasks between segment changes and without IP assistance. Priority was kept on flying the aircraft and tracking the published routing. No task was left outstanding at an altitude restriction or turn point.",
+        "4": "SP sequenced every departure task ahead of the aircraft, completing checks and communications in the quiet portions of each segment so that turns and level-offs required attention only to flying and navigation. Workload remained level throughout the departure with no point of saturation. The entire SID was executed without any IP assistance or prompting.",
+        "marginal": "SP completed all departure tasks without IP assistance, but several of them were carried out during the turns and level-offs rather than in the segments between, which concentrated the workload at the busiest points. Priorities were nonetheless kept correct and nothing was omitted. Performance meets the standard; SP is expected to plan the task sequence so that checks and calls are completed before the transitions."
+      }
+    },
+    {
+      "id": "instrument-03-em08",
+      "label": "Instrument transition and orientation after takeoff",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-spatial-disorientation",
+      "texts": {
+        "0": "SP, due to a delayed instrument transition after entry into cloud on the initial climb, flew on external references that were no longer valid and did not establish the departure attitude on the primary flight instruments. A false attitude perception developed and control inputs were made against the indications presented. IP intervention was required to take the aircraft and re-establish the climb on instruments.",
+        "1": "SP, due to a false attitude perception in the absence of an external horizon during the first turn, applied bank and pitch that did not match the attitude indicator and allowed the departure profile to reach the limits of the standard. The conflict was resolved only after the IP called the instrument indications verbally. Control on instruments was regained late in the segment.",
+        "2": "SP, due to an incomplete transition to instruments at the top of the initial climb, briefly flew with attention divided between outside references and the attitude indication, and the departure attitude was held imprecisely. SP recognized the conflict, disregarded the external cues and re-established a full instrument cross-check without IP input. The remainder of the departure was flown on instruments throughout.",
+        "3": "SP transitioned to instruments at the correct point in the initial climb and maintained the departure attitude from the primary flight instruments. Orientation was maintained through the turns with a cyclic cross-check. No conflict between external cues and the instrument indications was carried into control inputs.",
+        "4": "SP made the transition to instruments immediately at rotation and flew the entire departure from the primary flight instruments with no reference to external cues. Orientation was maintained through every turn and level-off, and the attitude indication was cross-checked against supporting instruments continuously. The profile showed no sign of any perceptual conflict.",
+        "marginal": "SP maintained orientation on instruments and flew the departure attitude correctly, but the cross-check narrowed to the attitude indicator during the turns and the supporting instruments were sampled only afterwards. Orientation was never in doubt, though the margin against a perceptual conflict was reduced. The item is within standards; SP is expected to keep the cross-check cyclic across all primary flight instruments during turning flight."
+      }
+    }
+  ]
+}

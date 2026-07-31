@@ -1,0 +1,117 @@
+{
+  "item_id": "contact-36",
+  "item_name": "CLEARING",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [36],
+  "mif_rows": [
+    { "sn": 36, "row_name": "Clearing" }
+  ],
+  "error_modes": [
+    {
+      "id": "contact-36-em01",
+      "label": "CONTINUOUS VISUAL LOOKOUT THROUGHOUT THE SORTIE",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-complacency",
+      "texts": {
+        "0": "SP, due to complacency in a familiar profile that replaced an active scan, did not check the surrounding space uninterruptedly during flight. The lookout lapsed for extended periods with attention held inside the cockpit, and traffic called by the controlling agency was never acquired visually. IP took the controls and maneuvered the aircraft to open separation from an aircraft SP had not seen.",
+        "1": "SP, due to a scan that settled into a fixed forward sector, checked the surrounding space only at long intervals. Entire quadrants, in particular high and behind the wing line, were left uncleared for the greater part of each maneuver, which is at the limit of what the standard allows. SP reestablished an effective scan only after repeated verbal prompting by the IP.",
+        "2": "SP, due to attention held on the maneuver being flown, allowed the visual scan to become irregular at times. Two or three sectors were left uncleared during the working phase, short of the tolerance limit but below the required continuity. SP recognized the omission and reestablished a full scan pattern in good time without any intervention.",
+        "3": "SP checked the surrounding space continuously throughout the sortie. The scan covered all sectors in a systematic sequence, including above, below and behind the wing line, and was maintained both between and during maneuvers. No sector was left uncleared before a maneuver was commenced.",
+        "4": "SP maintained an uninterrupted and disciplined lookout for the whole flight, with the scan sequence unaffected by workload or by the demands of the maneuvers being flown. Sectors were cleared before they were needed rather than after the fact. Every aircraft in the vicinity was acquired visually before it became a factor.",
+        "marginal": "SP checked the surrounding space to the required standard, but the scan tended to narrow toward the forward sector whenever task loading increased. The rear and high sectors were cleared at noticeably longer intervals than the rest. SP is expected to keep the scan sequence uniform across all sectors so that lookout does not thin out under workload."
+      }
+    },
+    {
+      "id": "contact-36-em02",
+      "label": "CLEARING IN THE AIRPORT TRAFFIC PATTERN",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to attention concentrated on the runway aim point, did not check the surrounding space while in the airport traffic pattern. Base and final legs were flown without any check of the sectors from which converging traffic could arrive, and preceding traffic in the pattern went unseen. IP intervened on the controls to break out of the pattern and reestablish spacing.",
+        "1": "SP, due to a lookout limited to the single aircraft being followed, cleared the pattern only in the direction of flight. The sectors toward the crosswind and the pattern entry were not checked before turning, leaving the position of other pattern traffic unknown to SP, at the limit of the acceptable standard. Clearing improved only after the IP called the traffic verbally.",
+        "2": "SP, due to a check made after rather than before the turn was initiated, cleared the pattern late on one occasion. The delay left the sector being turned into unchecked for a short period, between the two tolerance levels rather than at the limit. SP identified the omission, cleared the sector and adjusted the turn without any intervention.",
+        "3": "SP cleared the surrounding space before every turn in the airport traffic pattern. Traffic ahead and behind was kept visually acquired and the sectors toward the pattern entry were checked before each leg change. Pattern spacing was adjusted on the basis of the visual picture rather than on assumption.",
+        "4": "SP kept the whole traffic pattern visually mapped at all times, with each turn preceded by a deliberate clearing check of the sector to be entered. The position of every other aircraft in the pattern was known and used to plan the spacing. Clearing remained complete even while flying the configuration changes.",
+        "marginal": "SP cleared the airport traffic pattern within the standard, but the checks were concentrated on the aircraft immediately ahead and gave thinner coverage of traffic joining the pattern. The clearing check preceding base was brief. SP is expected to extend the pattern check to the entry sectors so that joining traffic is detected as early as traffic being followed."
+      }
+    },
+    {
+      "id": "contact-36-em03",
+      "label": "TIMELY DETECTION OF NEARBY TRAFFIC AND SEPARATION",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a lookout that was directed only along the flight path, did not detect nearby moving aircraft in time and did not maintain appropriate separation. Converging traffic closed to a distance where the situation had become hazardous before it was seen, and SP had no assessment of its relative motion. IP intervened on the controls to reestablish separation.",
+        "1": "SP, due to a scan interval too long for the traffic density in the area, detected nearby aircraft only when they were already close abeam. Separation was reduced to the minimum still acceptable and no margin remained for a further change of the other aircraft's flight path. SP repositioned only after the IP pointed out the traffic verbally.",
+        "2": "SP, due to attention retained on the maneuver being set up, detected nearby traffic later than the visual picture allowed. Separation was reduced but stayed clearly short of a hazardous condition, between the two tolerance levels. SP assessed the relative motion and adjusted the flight path in good time without any intervention.",
+        "3": "SP detected nearby moving aircraft in good time and maintained appropriate separation from each of them. Relative motion was assessed correctly on first acquisition and the flight path was adjusted early enough that no hazardous situation could develop. Traffic once acquired was kept in the scan until it was no longer a factor.",
+        "4": "SP acquired every nearby aircraft well before it became a factor and maintained separation with a comfortable margin at all times. Relative motion was assessed immediately and used to plan the maneuvering, so that no adjustment was ever made under time pressure. Traffic detection consistently preceded the radio call reporting it.",
+        "marginal": "SP detected nearby traffic and maintained separation within the standard, but acquisition came later than the conditions allowed and the resulting margins were smaller than necessary. The pattern indicates that relative motion is assessed only after the aircraft has been in view for some time. SP is expected to acquire traffic earlier so that separation is planned rather than preserved by a late adjustment."
+      }
+    },
+    {
+      "id": "contact-36-em04",
+      "label": "AVOIDANCE ACTION AND AIRCRAFT CONTROL DURING THE MANEUVER",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a delayed assessment of the developing conflict, did not take the action required to avoid entering a hazardous situation. No avoidance maneuver was initiated against traffic already converging, and when SP finally reacted the input was abrupt and the aircraft was not kept under control within the parameters of the maneuver. IP took the controls to complete the avoidance and recover the aircraft.",
+        "1": "SP, due to hesitation over whether the traffic was a factor, initiated the avoidance maneuver only when the conflict was fully developed. The maneuver produced the required separation, but only just, and aircraft control during it was coarse, at the limit of what remains acceptable. SP acted only after the IP directed the avoidance verbally.",
+        "2": "SP, due to a late decision on the direction of the avoidance turn, maneuvered later than the geometry allowed. The turn was made with more bank than the situation required, though the aircraft remained under positive control and separation was never in question. SP corrected the technique on the subsequent avoidance without any intervention.",
+        "3": "SP took timely action and maneuvered as required to avoid a midair collision. The avoidance turn was initiated early, in the direction that increased separation fastest, and was flown with the aircraft under full control throughout. SP returned to the planned profile once the conflict had passed.",
+        "4": "SP anticipated the developing conflict and resolved it with a small, early flight path change that made an avoidance maneuver unnecessary. Aircraft control remained precise throughout, with no excursion in attitude, altitude or airspeed. The resolution was communicated and the profile resumed without disruption.",
+        "marginal": "SP took avoidance action within the standard, but the decision to maneuver came close to the point where a larger input would have been needed. Control of the aircraft during the avoidance was adequate though not smooth. SP is expected to decide and act earlier, so that avoidance can be achieved with a gentle flight path change rather than an aggressive one."
+      }
+    },
+    {
+      "id": "contact-36-em05",
+      "label": "R/T MONITORING AND BUILD-UP OF SITUATIONAL AWARENESS",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to degraded situational awareness of the aircraft's position relative to the other traffic, did not monitor the R/T effectively or continuously. Position reports from other aircraft operating in the same area were not processed, so no mental picture of the surrounding traffic was built and an imminent airborne threat went unrecognized. IP had to take control and deconflict the aircraft.",
+        "1": "SP, due to attention absorbed by the maneuver in progress, monitored the R/T only intermittently. Several calls affecting the area in use were missed and SP could not state the position of traffic that had reported nearby, which is at the limit of the acceptable standard. The traffic picture was rebuilt only after the IP repeated the information verbally.",
+        "2": "SP, due to a transmission being prepared while another station was reporting, missed part of the R/T picture. One position report from traffic in the adjacent block was not assimilated, a shortfall short of the tolerance limit. SP requested clarification and restored an accurate traffic picture in good time without any intervention.",
+        "3": "SP monitored the R/T effectively and continuously throughout the sortie. Calls from other aircraft were used to build situational awareness of who was operating where, and the traffic picture was updated as each report was received. Visual search was directed toward the sectors indicated by the radio picture before any threat could develop.",
+        "4": "SP maintained a complete and current radio picture of all traffic in the operating area for the whole flight, integrating each report into the visual search plan. Potential conflicts were identified from the R/T well before they became visible and were resolved by planning rather than by reaction. SP could state at any time the position and intention of the other aircraft on frequency.",
+        "marginal": "SP monitored the R/T to the required standard, but the traffic picture built from it was retained only for the aircraft in the immediate vicinity and faded for the rest. Calls concerning adjacent areas were heard without being used. SP is expected to convert the whole radio picture into an active search plan so that situational awareness extends beyond the nearest aircraft."
+      }
+    },
+    {
+      "id": "contact-36-em06",
+      "label": "VFR DISTANCE FROM CLOUDS",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a flight path flown without reference to the developing cloud, did not maintain the appropriate VFR distance from clouds. The aircraft was flown close enough to the cloud edge that visual reference and the ability to see and avoid traffic emerging from it were lost. IP took the controls and repositioned the aircraft clear of the cloud.",
+        "1": "SP, due to a late recognition of the cloud build-up along the intended track, maintained only the minimum VFR distance from clouds. The margin was at the limit throughout the working phase and left no allowance for the cloud growing further. SP repositioned only after being directed verbally by the IP.",
+        "2": "SP, due to a maneuver commenced without checking the exit heading against the cloud, closed on the cloud edge more than planned. The VFR distance was reduced but remained clearly greater than the minimum. SP recognized the trend, moved the working area and restored a comfortable margin without any intervention.",
+        "3": "SP maintained appropriate VFR distance from clouds throughout the flight. The working area and maneuver entries were positioned so that every recovery heading kept the aircraft well clear of cloud. Visual reference to the horizon and to the ground was preserved at all times.",
+        "4": "SP planned each maneuver around the cloud picture, so that the VFR distance from clouds remained generous in every axis and required no repositioning. The cloud development was tracked continuously and anticipated in the choice of entry headings. Visual reference was never in question at any point of the sortie.",
+        "marginal": "SP maintained VFR distance from clouds within the standard, but the working area was set up closer to the cloud edge than the available airspace required. Margins were adequate on entry and reduced on exit from the maneuvers. SP is expected to position the maneuvering area so that the cloud clearance is preserved on the recovery heading as well as on the entry."
+      }
+    },
+    {
+      "id": "contact-36-em07",
+      "label": "ATTENTION ALLOCATION BETWEEN CLEARING AND AIRCRAFT CONTROL",
+      "mif_row": null,
+      "source": "general:a|general:c|execution",
+      "hf_concept": "hf-workload-distribution",
+      "texts": {
+        "0": "SP, due to workload distribution that left clearing, flying and transmitting to be done at the same time, did not allocate attention correctly during the clearing task. Either the lookout stopped while the aircraft was flown, or the aircraft state went unmonitored while SP looked out, and the aircraft was not maintained under control during the visual check. IP intervened on the controls to recover the flight parameters.",
+        "1": "SP, due to failure to shed a secondary cockpit task when the traffic situation demanded a lookout, divided attention poorly between clearing and aircraft control. Each outside check produced a noticeable excursion in attitude or altitude, and clearing was suspended entirely whenever the aircraft had to be corrected, which is at the limit of the standard. Balance was restored only after the IP prompted SP verbally.",
+        "2": "SP, due to a lookout sequence not matched to the phase of the maneuver, allowed attention to concentrate outside for longer than the aircraft state permitted. Small deviations in altitude and heading developed during the visual checks, short of the tolerance limit. SP recognized the imbalance, shortened the outside intervals and restored the crosscheck in good time without any intervention.",
+        "3": "SP allocated attention correctly between the visual check, the R/T and the control of the aircraft. Clearing was performed in short, complete sweeps interleaved with the instrument crosscheck, and the aircraft was maintained under control throughout. Neither task was allowed to displace the other.",
+        "4": "SP integrated clearing, R/T monitoring and aircraft control into a single continuous routine, with no detectable cost to any of the three. Outside sweeps were complete and the flight parameters remained stable to the accuracy flown between them. Attention allocation stayed effective even during the highest workload phases of the sortie.",
+        "marginal": "SP allocated attention between clearing and aircraft control within the standard, but the outside sweeps were long enough that small parameter deviations began to appear before the crosscheck was resumed. The tendency is toward one task at a time rather than an interleaved routine. SP is expected to shorten and repeat the outside checks so that lookout and aircraft control are sustained together."
+      }
+    }
+  ]
+}

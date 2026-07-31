@@ -1,0 +1,132 @@
+{
+  "item_id": "instrument-22",
+  "item_name": "LOCALIZER APPROACH",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [22],
+  "mif_rows": [
+    {"sn": 22, "row_name": "Localizer Approach"}
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-22-em01",
+      "label": "MDA control on the localizer-only final",
+      "mif_row": null,
+      "source": "specific:MDA ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unmonitored vertical speed after the FAF, did not level and hold the published MDA on the localizer-only final. The aircraft descended below MDA, which the -0 ft tolerance does not allow, and on one occasion remained more than 200 ft high on the preceding segment. IP intervened with a control input to arrest the descent and re-establish the approach.",
+        "1": "SP, due to a late transition from the descent to the level segment, did not capture the published MDA within tolerance. The aircraft settled at the +200 ft limit above MDA and drifted at that value until IP verbally prompted the power and pitch correction. The level-off was completed only after the prompt, with no IP control input.",
+        "2": "SP, due to an imprecise power reduction at the start of the final descent, did not level exactly at MDA on the first attempt. The aircraft stabilized between 100 and 200 ft above MDA, and SP recognized the deviation and returned to MDA without IP prompting or intervention. The descent below MDA was never approached.",
+        "3": "SP levelled the aircraft accurately at the published MDA and held it within +100 ft with no descent below the minimum. Pitch and power were set in one coordinated adjustment and the level segment was flown to the MAP without oscillation. Altitude control required no prompting.",
+        "4": "SP flew the descent to MDA with negligible altitude deviation, arriving level at the minimum with essentially no overshoot and no descent below it. The level segment was held steady to the MAP with only minor trim adjustments. Vertical control was consistently accurate throughout.",
+        "marginal": "SP maintained MDA within standards, but the level-off consistently arrived close to the +100 ft edge before the correction was applied. The trend is a late anticipation of the level segment rather than an inability to hold altitude. SP is expected to begin the level-off earlier so that MDA is captured with margin inside tolerance."
+      }
+    },
+    {
+      "id": "instrument-22-em02",
+      "label": "Localizer course tracking (CDI)",
+      "mif_row": null,
+      "source": "specific:LOCALIZER (CDI) (dots)",
+      "hf_concept": "hf-manual-flying-skill-decay",
+      "texts": {
+        "0": "SP, due to degraded basic instrument scan after prolonged automated navigation, did not track the localizer with the small heading corrections the approach requires. CDI displacement exceeded 2 dots and the correction applied was in the wrong sense on one occasion. IP intervened on the controls to recapture the localizer course.",
+        "1": "SP, due to insufficient recent practice in raw-data manual flying, did not damp the localizer corrections and over-controlled the heading. CDI reached the 2-dot limit and remained there until IP verbally called the required heading change. SP recentred the needle only after that verbal cue.",
+        "2": "SP, due to a heading correction applied later than the needle movement required, did not keep the CDI inside 1 dot throughout the final. Displacement reached between 1 and 2 dots and SP identified the trend and re-established the course promptly without prompting or IP intervention. The remainder of the final was tracked within tolerance.",
+        "3": "SP tracked the localizer accurately, holding the CDI within 1 dot for the whole final segment. Heading corrections were small, timely and correctly sensed, and the needle was recentred before displacement developed. No prompting was required.",
+        "4": "SP held the localizer needle essentially centred from course capture to the MAP, with deviations barely detectable on the CDI. Drift corrections were anticipated and applied in single small heading increments. Course tracking was consistently precise.",
+        "marginal": "SP kept the CDI within standards, but corrections were repeatedly applied only once displacement approached 1 dot, so the needle oscillated slowly about the centre. The trend is reactive rather than anticipatory tracking. SP is expected to apply smaller, earlier heading corrections to keep the needle stable near the centre."
+      }
+    },
+    {
+      "id": "instrument-22-em03",
+      "label": "Final approach airspeed control after the FAF",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)*",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to inadequate monitoring of airspeed during the approach, did not hold the computed final approach airspeed after the FAF. Airspeed departed the +15 / -10 kt band, reaching a value slow enough to require an immediate power increase. IP intervened with power to restore the approach speed.",
+        "1": "SP, due to an interrupted instrument cross-check while attention remained on the course needle, did not maintain the computed final approach airspeed within tolerance. Airspeed stabilized at the +15 kt limit and was corrected only after IP called the speed. No control intervention was needed, but the deviation persisted until the verbal cue.",
+        "2": "SP, due to a power setting left unchanged after the configuration change, did not hold the computed final approach airspeed inside the +10 / -5 kt band. Airspeed moved into the band between 10 and 15 kt fast, and SP detected it on the next cross-check and returned it to the target without prompting or intervention. The speed remained stable thereafter.",
+        "3": "SP maintained the computed final approach airspeed within +10 / -5 kt from the FAF to the MAP. Power was set once for the configuration and adjusted in small increments as required. Airspeed control needed no prompting.",
+        "4": "SP held the computed final approach airspeed with negligible variation throughout the final, effectively on target from the FAF to the MAP. Power changes were anticipated with configuration and trim changes. Speed control was consistently precise.",
+        "marginal": "SP maintained final approach airspeed within standards, but the indication regularly sat near the fast edge of the band before the power correction was made. The trend is a cross-check interval on airspeed that is longer than the other approach parameters. SP is expected to include airspeed in the scan at a rate that keeps deviations well inside tolerance."
+      }
+    },
+    {
+      "id": "instrument-22-em04",
+      "label": "Compliance with ATC instructions on the approach",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incorrect read-back that was never reconciled with the actual clearance, did not comply with ATC instructions during the localizer approach. The aircraft was flown on a heading and altitude other than those assigned, and the deviation was not corrected on the controller's repeat. IP intervened to fly the assigned clearance.",
+        "1": "SP, due to a clearance accepted without confirming the assigned intercept heading, did not comply with the ATC instruction as issued. The aircraft was flown through the assigned heading and reached the tolerance limits before the controller queried the deviation. SP corrected only after IP verbally directed the assigned values.",
+        "2": "SP, due to a delayed action on the descent clearance, did not comply with the ATC instruction at the point it was issued. The aircraft remained above the cleared altitude for a short period within the code 1 band, and SP recognized the omission and complied without prompting or intervention. Subsequent instructions were actioned on receipt.",
+        "3": "SP complied with all ATC instructions on the localizer approach, reading back correctly and flying the assigned headings, altitudes and speeds when issued. Clearances were actioned promptly and the approach clearance was accepted at the correct point. No prompting was required.",
+        "4": "SP anticipated and complied with every ATC instruction with no delay, and read-backs were complete and accurate. Assigned parameters were established immediately and confirmed against the approach plate. Coordination with the controller was consistently accurate throughout.",
+        "marginal": "SP complied with ATC instructions within standards, but action on each clearance came only after a noticeable pause and one read-back needed a controller correction. The trend is late assimilation of instructions during high cockpit workload. SP is expected to read back accurately and action clearances without delay."
+      }
+    },
+    {
+      "id": "instrument-22-em05",
+      "label": "Routing and altitude restrictions (MAIP / Instrument Approach Manuals)",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a published approach plate that was not reviewed before commencing the approach, did not observe the routing and altitude restrictions in the MAIP and Instrument Approach Manuals. A step-down altitude was flown below the published minimum on the intermediate segment, and the course was flown outside the depicted routing. IP intervened to restore the published profile.",
+        "1": "SP, due to a step-down fix that was not identified in the descent planning, did not respect the published altitude restriction at that fix. The aircraft arrived at the restriction at the code 1 limit and the profile was regained only after IP called the published altitude. The remainder of the approach followed the published routing.",
+        "2": "SP, due to a descent rate that was not adjusted for the distance remaining, did not meet the published step-down altitude exactly at the fix. The deviation stayed in the band between code 3 and code 1 and SP corrected the profile before the next segment without prompting or intervention. No published restriction was violated.",
+        "3": "SP flew the localizer approach on the published routing and met every altitude restriction of the MAIP and Instrument Approach Manuals. The step-down profile was planned before the FAF and flown accurately to MDA. No prompting was required.",
+        "4": "SP flew the published routing and altitude restrictions with negligible deviation, arriving at each fix at the correct altitude and track. Descent planning was completed early and the profile required no adjustment. Compliance with the published approach was consistently accurate.",
+        "marginal": "SP respected the published routing and altitude restrictions within standards, but arrivals at the step-down fixes were repeatedly close to the tolerance edge. The trend is descent planning done fix by fix rather than for the whole profile. SP is expected to plan the descent so that each published altitude is met with margin."
+      }
+    },
+    {
+      "id": "instrument-22-em06",
+      "label": "Execution of the localizer-only procedure sequence",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an approach sequence executed from memory instead of the published procedure, did not execute the localizer-only final IAW AFMAN 11-202 VOL3, the Flight Manuals and the Techniques and Procedures Manual. Approach mode selection and identification of the localizer were omitted, and the descent was started without the FAF being identified. IP intervened to re-establish the correct sequence.",
+        "1": "SP, due to an incomplete review of the approach plate during the setup, did not execute the procedure without mistakes. The navigation aid was tuned but not identified and the timing was not started at the FAF, and both items were completed only after IP verbally prompted them. No control intervention was required.",
+        "2": "SP, due to a setup begun later than the workload allowed, did not complete the approach sequence in the standardized order. Two items were performed out of sequence and SP recognized the omission and completed them before the FAF without prompting or intervention. The approach itself was flown as published.",
+        "3": "SP executed the localizer-only approach in accordance with the standardized procedures of AFMAN 11-202 VOL3 and the Flight Manuals, with the aid tuned and identified, the approach set up before the intercept and timing started at the FAF. The sequence was completed without mistakes and without IP intervention.",
+        "4": "SP executed the full localizer-only sequence flawlessly, with the setup complete well before the intercept and every step performed in the correct order. Cockpit organization left capacity available for aircraft control throughout the approach. No item required prompting at any stage.",
+        "marginal": "SP executed the procedure to standard, but the setup was consistently completed only just before the intercept, leaving little margin for a late change. The trend is compressed approach preparation rather than incorrect procedure. SP is expected to complete the setup and identification earlier so the final can be flown with spare capacity."
+      }
+    },
+    {
+      "id": "instrument-22-em07",
+      "label": "Configuration and timing management to the MAP",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a configuration change made without reference to the checklist, did not manage the final approach configuration and timing as required for a localizer-only approach. The aircraft reached MDA in an incorrect configuration and the timing to the MAP was neither started nor reconstructed, so the MAP could not be identified. IP intervened to configure the aircraft and identify the missed approach point.",
+        "1": "SP, due to attention held on the course needle during the configuration change, did not configure and start timing at the published point. Gear and flaps were selected late and the timing was started only after IP called it, which left the MAP identification dependent on the prompt. Aircraft control remained with SP throughout.",
+        "2": "SP, due to a configuration change initiated after the FAF rather than before it, did not have the aircraft fully stabilized at the start of the final segment. Airspeed and altitude moved inside the code 1 band during the change and SP restored both and confirmed the timing without prompting or intervention. The MAP was identified correctly.",
+        "3": "SP configured the aircraft at the correct point, started the timing at the FAF and identified the MAP accurately on the localizer-only approach. The aircraft was stable in the final configuration before the descent to MDA. No prompting was required.",
+        "4": "SP managed configuration and timing with negligible variation, with the aircraft stable in the landing configuration well before the FAF and the MAP identified precisely. Each action was anticipated and required no adjustment. Cockpit management was consistently accurate to the MAP.",
+        "marginal": "SP managed configuration and timing within standards, but the changes were repeatedly made at the last usable point before the FAF. The trend is task stacking at the start of the final segment. SP is expected to configure earlier so that the aircraft is stable before the descent to MDA begins."
+      }
+    },
+    {
+      "id": "instrument-22-em08",
+      "label": "Decision at the MAP and transition to the missed approach",
+      "mif_row": null,
+      "source": "general:b,c",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to continuation bias in maintaining the approach after the conditions had deteriorated below the briefed minima, did not execute the missed approach at the MAP with the required visual references absent. The aircraft was flown below MDA past the MAP, which the -0 ft tolerance does not permit. IP intervened on the controls to initiate the missed approach.",
+        "1": "SP, due to continuation of the plan after the information that invalidated it had already been received, did not decide at the MAP within the time available. The aircraft remained at MDA past the MAP and the go-around was initiated only after IP verbally directed it. The subsequent missed approach was flown by SP without control intervention.",
+        "2": "SP, due to a delayed assessment of the visual references at the minimum, did not initiate the missed approach exactly at the MAP. The go-around was started slightly late with altitude staying inside the code 1 band and no descent below MDA, and SP recognized the point and acted without prompting or intervention. The published missed approach was then flown correctly.",
+        "3": "SP made a timely decision at the MAP, initiated the missed approach at the published point with the correct pitch, power and configuration sequence, and did not descend below MDA. The published missed approach routing and altitude were followed accurately. No prompting was required.",
+        "4": "SP identified the MAP precisely and transitioned to the missed approach with negligible delay, establishing the climb and configuration in one smooth sequence. The published missed approach was flown accurately with the aircraft never below MDA. The decision and execution were consistently sound.",
+        "marginal": "SP decided at the MAP within standards, but the decision was consistently made at the last available moment and the go-around initiation was abrupt. The trend is a bias toward continuing rather than an unwillingness to go around. SP is expected to assess the references earlier and commit to the missed approach decision at the MAP without hesitation."
+      }
+    }
+  ]
+}

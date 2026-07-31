@@ -1,0 +1,132 @@
+{
+  "item_id": "instrument-04",
+  "item_name": "BASIC A/C CONTROL",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [4],
+  "mif_rows": [
+    {"sn": 4, "row_name": "Basic A/C Control"}
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-04-em01",
+      "label": "Altitude control (+/- 150 ft / +/- 300 ft)",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incomplete altimeter cross-check during level-off, did not arrest the vertical rate at the assigned altitude and did not re-establish level flight. The altitude deviation exceeded 300 ft and was still developing when the IP intervened on the controls to return the aircraft to the assigned altitude. SP did not identify the divergence until it was called.",
+        "1": "SP, due to a delayed pitch and power correction after entering the climb, allowed altitude to diverge to approximately 300 ft, at the limit of the standard. SP corrected only after repeated verbal prompting by the IP, and the return to the assigned altitude was slow. Altitude was eventually regained without IP intervention on the controls.",
+        "2": "SP, due to a coarse pitch input at level-off, overshot the assigned altitude by about 200 ft, between the 150 ft and 300 ft limits. SP detected the deviation on the altimeter and vertical speed indicator and corrected it in good time, without prompting and without IP intervention. The following level flight segment was held closer to the assigned altitude.",
+        "3": "SP maintained altitude within 150 ft in climb, descent, level-off, level flight and turns up to 30 degrees of bank. Corrections were prompt and were made with smooth pitch and power inputs. Deviations were detected early on the altimeter and never developed further.",
+        "4": "SP held the assigned altitude with negligible deviation throughout all phases of flight, including level-offs from climb and descent and turns up to 30 degrees of bank. Pitch and power were adjusted before any measurable divergence appeared. Altitude control required no comment or correction from the IP at any point.",
+        "marginal": "SP kept altitude within standards, but the deviations clustered near the outer part of the acceptable band, mainly at level-off from the climb. The trend was a repeated overshoot that SP corrected each time rather than anticipated. SP is expected to lead the level-off earlier so that the assigned altitude is captured with a tighter margin."
+      }
+    },
+    {
+      "id": "instrument-04-em02",
+      "label": "Airspeed control (+/- 10 KIAS / +/- 20 KIAS)",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (KIAS)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power settings not matched to the phase of flight, allowed airspeed to diverge by more than 20 KIAS from the target and did not recognize the divergence. The deviation was still increasing when the IP took the controls and reset power to recover the target airspeed. SP did not include the airspeed indicator in the scan during the transition.",
+        "1": "SP, due to a late power reduction at level-off, allowed airspeed to build to about 20 KIAS above the target, at the limit of the standard. SP reduced power only after the IP called the airspeed, and the recovery to the target was slow. No IP input on the controls was required.",
+        "2": "SP, due to a power change made in one coarse step, allowed airspeed to deviate by roughly 15 KIAS from the target, between the 10 and 20 KIAS limits. SP identified the trend on the airspeed indicator and restored the target speed in good time without prompting. Subsequent power changes were made in smaller increments.",
+        "3": "SP maintained airspeed within 10 KIAS of the target in climb, descent, level flight and turns up to 30 degrees of bank. Power was set for the phase of flight as determined by the Flight Manual, and small deviations were trapped early. Airspeed control did not degrade while altitude and heading corrections were being flown.",
+        "4": "SP held the target airspeed with negligible deviation through every phase of flight, including power and configuration changes. Power was anticipated and set before any speed trend developed. Airspeed remained stable even while SP flew simultaneous altitude and heading corrections.",
+        "marginal": "SP kept airspeed within standards, but the values sat consistently on the fast side of the target during descents. The trend was a reactive rather than anticipated power reduction, which left little margin before the limit. SP is expected to set descent power earlier so that airspeed stabilizes closer to the target."
+      }
+    },
+    {
+      "id": "instrument-04-em03",
+      "label": "Heading control and roll-out accuracy (+/- 5 deg / +/- 10 deg)",
+      "mif_row": null,
+      "source": "specific:HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to roll-out inputs made without reference to the HSI, stopped the turn more than 10 degrees from the assigned heading and continued to drift away from it. SP did not re-establish the assigned heading and the IP intervened to stop the divergence. The heading error was not identified by SP at any stage.",
+        "1": "SP, due to a rate of turn that was not reduced before the roll-out, stopped the turn about 10 degrees from the assigned heading, at the limit of the standard. SP corrected only after the IP called the heading, and the correction was applied late. The assigned heading was re-established without IP control input.",
+        "2": "SP, due to a late start of the roll-out from a 30 degree bank turn, overshot the assigned heading by roughly 8 degrees, between the 5 and 10 degree limits. SP recognized the overshoot on the HSI and returned to the assigned heading promptly and without prompting. Later turns were rolled out with an appropriate lead.",
+        "3": "SP maintained heading within 5 degrees in level flight and rolled out of turns up to 30 degrees of bank on the assigned heading. Turns were coordinated and the roll-out lead was correctly judged. Small heading errors were seen on the HSI and removed immediately.",
+        "4": "SP held assigned headings with negligible error throughout, including turns up to 30 degrees of bank flown while altitude and airspeed corrections were in progress. The roll-out lead was consistently accurate and needed no secondary correction. Heading control was maintained without any comment from the IP.",
+        "marginal": "SP kept heading within standards, but the errors were repeatedly close to the outer edge of the band after turns in one direction. The trend was a consistent slight overshoot corrected after the roll-out rather than prevented by lead. SP is expected to refine the roll-out lead so that headings are captured without a follow-up correction."
+      }
+    },
+    {
+      "id": "instrument-04-em04",
+      "label": "Instrument cross-check through phase transitions",
+      "mif_row": null,
+      "source": "general:e|execution",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an interrupted instrument cross-check that fixed attention on a single indicator, did not monitor aircraft state during the transition between phases of flight. Altitude, airspeed and heading diverged simultaneously beyond the standards and SP did not detect the trend. The IP intervened on the controls to restore the flight parameters.",
+        "1": "SP, due to an absent cross-check of aircraft state against the primary flight instruments while re-setting a cockpit control, allowed two parameters to reach the outer limits of the standards at the same time. SP restored the scan only after the IP called the deviations, and the recovery was slow. No IP control input was needed.",
+        "2": "SP, due to a scan that dwelt too long on the attitude indicator, was late in noticing developing altitude and airspeed trends at level-off. The deviations reached the mid-range of the acceptable band before SP restored a full cross-check and corrected them in good time. No prompting or IP intervention was required.",
+        "3": "SP maintained a continuous cross-check of the primary flight instruments through climb, descent, level-off, level flight and turns. Deviations in altitude, airspeed and heading were detected while still small and were corrected within the tight standards. The scan was not interrupted by secondary cockpit tasks.",
+        "4": "SP sustained a complete and evenly paced instrument cross-check in every phase of flight, including while managing switches and radios. Trends were identified before they became measurable deviations, so the corrections needed were minimal. The scan remained intact under increased task load.",
+        "marginal": "SP maintained an adequate cross-check overall, but the scan narrowed noticeably whenever a correction to one parameter was in progress. The trend was that a second parameter began to drift on each occasion, although always within standards. SP is expected to keep the full scan running while corrections are being flown."
+      }
+    },
+    {
+      "id": "instrument-04-em05",
+      "label": "Engine power management for the phase of flight",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power settings not selected for the phase of flight as determined by the Flight Manual, did not control the engine power so as to hold the flight parameters. Airspeed and altitude departed the standards together and the aircraft was left in an undesired energy state, requiring IP intervention. SP did not associate the parameter deviations with the power setting.",
+        "1": "SP, due to power changes made only after the flight parameters had already moved, held altitude and airspeed at the limits of the standards. SP set the correct power only after verbal guidance from the IP at each phase change. Engine limits were respected and no IP control input was required.",
+        "2": "SP, due to power selected in coarse steps rather than set and then refined, produced parameter excursions in the middle of the acceptable band at the climb and descent entries. SP recognized that the power setting was the cause and adjusted it in good time without prompting. The remaining transitions were flown with smaller power adjustments.",
+        "3": "SP controlled engine power appropriately for each phase of flight, as determined by the Flight Manual and as required to maintain altitude, airspeed and heading. Power was set at the start of each transition rather than in response to a deviation. Engine handling was smooth and within all limits.",
+        "4": "SP anticipated the power requirement for every phase of flight and set it precisely, so that the flight parameters were held with negligible deviation. Power changes were smooth, correctly timed and coordinated with pitch and trim. No re-adjustment was needed after any transition.",
+        "marginal": "SP managed engine power within standards, but the settings were arrived at by trial adjustment rather than selected directly. The trend was a small parameter excursion at every phase change before the power settled. SP is expected to select the known power setting for each phase so the parameters are held from the outset."
+      }
+    },
+    {
+      "id": "instrument-04-em06",
+      "label": "Trim technique across the airspeed range",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-acts-errors",
+      "texts": {
+        "0": "SP, due to a skill-based error in trim technique, did not handle the aileron, elevator and rudder trim correctly across the airspeed range. The aircraft was flown with large out-of-trim control forces, the parameters exceeded the standards, and the IP intervened to re-trim and stabilize the aircraft. SP did not recognize that the out-of-trim condition was driving the deviations.",
+        "1": "SP, due to trim applied only after the control forces had become large, worked against sustained out-of-trim pressures during the airspeed changes. Parameters were held at the limits of the standards and SP re-trimmed only after being prompted by the IP. Control of the aircraft was retained without IP control input.",
+        "2": "SP, due to elevator trim run in large steps after each speed change, was left with residual control pressures that produced mid-band altitude excursions. SP recognized the out-of-trim condition and refined the trim in good time without prompting. The later speed changes were trimmed progressively as the speed stabilized.",
+        "3": "SP handled aileron, elevator and rudder trim correctly and with ease throughout the airspeed range and in all maneuvers. The aircraft was kept in trim during and after each speed and power change, so the parameters were held within the tight standards with light control forces.",
+        "4": "SP trimmed the aircraft continuously and precisely in all three axes, keeping control forces effectively at zero across the full airspeed range. Trim was run during the speed change rather than after it, so no parameter excursion appeared. Aircraft handling was comfortable and unhurried throughout.",
+        "marginal": "SP trimmed adequately and remained within standards, but rudder trim was routinely left unattended after power changes. The trend was a small residual yaw that SP compensated with foot pressure instead of trim. SP is expected to include rudder trim in the standard sequence after every power change."
+      }
+    },
+    {
+      "id": "instrument-04-em07",
+      "label": "Radio aids, orientation and recovery to departure or alternate",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to a loss of situational awareness in the working area, was not cognizant of the operation of the available radio aids and could not use them to maintain orientation. SP was unable to state a heading to the departure or the alternate airport and the IP took over the navigation to recover the aircraft. Aircraft control also degraded beyond the standards while SP tried to interpret the navigation display.",
+        "1": "SP, due to incomplete set-up of the navigation aids before the maneuvers, lost track of the position relative to the departure airfield. SP re-established orientation only after step-by-step verbal guidance from the IP on which aid to select and how to read it. The flight parameters were held at the limits of the standards while this was done.",
+        "2": "SP, due to attention concentrated on aircraft control, was late in checking the radio aids and briefly lost the bearing to the alternate airport. SP recovered orientation without prompting by returning to the navigation display in good time, with the parameters staying in the mid-range of the standards. The route back to the departure airfield was then flown correctly.",
+        "3": "SP was cognizant of the operation of the available radio aids and used them to maintain orientation throughout. SP identified the position relative to the departure and alternate airfields on request and flew accurate headings towards them on flight instruments and radio aids, holding altitude, airspeed and heading within the tight standards.",
+        "4": "SP maintained a continuous and accurate picture of position from the radio aids without any interruption to aircraft control. SP could state the bearing to the departure and alternate airfields at any moment and turn towards either immediately. Navigation and instrument flying were handled together with no loss of precision.",
+        "marginal": "SP used the radio aids correctly and kept orientation, but the position picture was rebuilt on request rather than maintained continuously. The trend was a short pause in aircraft control each time SP interrogated the navigation display. SP is expected to update orientation in small steps within the normal scan."
+      }
+    },
+    {
+      "id": "instrument-04-em08",
+      "label": "Aircraft handling comfort and switch operation",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to unfamiliarity with the cockpit layout, did not handle the aircraft with comfort and ease and did not use the switches flawlessly, selecting the wrong control on more than one occasion. Control inputs were abrupt and out of phase with the aircraft response, and the resulting deviations exceeded the standards. The IP intervened to restore the correct configuration and stabilize the aircraft.",
+        "1": "SP, due to slow and hesitant switch selections that required prolonged head-down time, flew jerky corrections and held the parameters at the limits of the standards. SP completed the selections correctly only after verbal direction from the IP. No IP control input was required.",
+        "2": "SP, due to over-controlling in pitch and roll while searching for switches, produced deviations in the middle of the acceptable band. SP recognized the coarse handling, softened the inputs and completed the switch selections correctly in good time and without prompting. Handling improved noticeably over the remainder of the sortie.",
+        "3": "SP handled the aircraft with comfort and ease and used the aircraft switches flawlessly. Control inputs were smooth and proportionate, and switch selections were made without interrupting aircraft control or exceeding the tight standards.",
+        "4": "SP flew the aircraft with evident comfort and ease, using inputs that were smooth, small and correctly timed. Switch selections were made accurately and almost without looking, with no effect at all on the flight parameters. Cockpit handling was well above the standard expected at this stage.",
+        "marginal": "SP handled the aircraft and its switches to standard, but the inputs were firmer than necessary and every switch selection drew the eyes into the cockpit. The trend was a small parameter wobble accompanying each selection, always within limits. SP is expected to smooth the control inputs and learn the switch positions well enough to select them by feel."
+      }
+    }
+  ]
+}

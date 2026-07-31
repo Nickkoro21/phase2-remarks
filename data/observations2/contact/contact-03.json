@@ -1,0 +1,132 @@
+{
+  "item_id": "contact-03",
+  "item_name": "DEPARTURE / TRANSITION TO FLIGHT AREAS",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [3],
+  "mif_rows": [
+    {"sn": 3, "row_name": "VFR Departure / Transition to Flight Areas"}
+  ],
+  "error_modes": [
+    {
+      "id": "contact-03-em01",
+      "label": "Altitude control during departure climb and level off",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a late lead point and no anticipation of the pitch change at the level off altitude, did not arrest the climb at the assigned departure altitude and did not reduce power as the VVI decayed. The aircraft overshot by more than 300 feet and continued climbing while the trim was still set for the climb. IP took the controls to capture the assigned altitude and to prevent conflict with the overlying airspace.",
+        "1": "SP, due to a scan fixed outside on the departure ground references, did not include the altimeter in the cross-check during the transition to the assigned areas. The altitude deviation reached the 300 feet limit and was held there until IP prompted verbally for the level off. SP then recovered the assigned altitude, but only after the delay caused by the prompt.",
+        "2": "SP, due to a power setting left slightly high after the level off, did not stabilize the aircraft on the assigned departure altitude at first attempt. The deviation grew past 150 feet and reached approximately 200 feet before SP recognized the trend. SP corrected with a coordinated power and pitch adjustment and returned to the assigned altitude without any intervention.",
+        "3": "SP flew the departure climb with a steady pitch attitude and led the level off correctly, holding the assigned altitude within 150 feet throughout the transition to the flight areas. SP trimmed off the control pressures immediately after the level off and kept the altimeter inside a regular cross-check. Any tendency to climb was arrested before it became a deviation.",
+        "4": "SP anticipated the level off precisely, set climb power and cruise power at the correct points and held the assigned departure altitude with deviations that were negligible. SP kept the aircraft trimmed hands-off and the altimeter needle effectively static during the whole transition. Altitude control required no comment at any stage of the departure.",
+        "marginal": "SP held the assigned departure altitude within standards, but the altitude was maintained by repeated small corrections rather than by a stable trimmed attitude, with a consistent tendency to drift high after each turn. The deviations stayed inside the tolerance, yet the correction pattern shows that the level off is not yet anticipated. SP is expected to lead the level off earlier and trim the aircraft so that altitude is held without continuous input."
+      }
+    },
+    {
+      "id": "contact-03-em02",
+      "label": "Airspeed control during departure and transition",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unmonitored power setting after the climb was established, did not maintain the briefed departure climb speed and allowed the airspeed to decay progressively while the pitch attitude was held constant. The speed error exceeded 20 knots below the briefed value with the aircraft still climbing. IP directed the power increase and the pitch reduction to restore the climb speed schedule.",
+        "1": "SP, due to a cross-check that omitted the airspeed indicator while the departure route was being confirmed, did not detect the speed trend building during the climb. The airspeed deviation reached the 20 knots limit and remained there until IP called for the correction. SP then reset power and attitude, but the correction was made only after the verbal prompt.",
+        "2": "SP, due to a pitch attitude set slightly high for the power selected, did not hold the briefed climb airspeed after the departure turn. The airspeed dropped past 10 knots below the target and reached approximately 15 knots before SP recognized the deviation. SP lowered the nose and adjusted power promptly, recovering the briefed speed without intervention.",
+        "3": "SP set the briefed departure climb power and held the pitch attitude that produced the required airspeed, keeping the speed within 10 knots throughout the climb and the level off acceleration. SP made small, timely power and attitude adjustments as the aircraft accelerated in level flight. Airspeed control remained stable through the turns to the assigned areas.",
+        "4": "SP established the departure climb speed immediately after gear and flap retraction and held it with deviations that were barely perceptible on the indicator. SP transitioned to cruise speed after level off with a single coordinated power adjustment and no overshoot. Airspeed management was precise through every phase of the transition.",
+        "marginal": "SP maintained the departure airspeed within standards, but the speed was corrected in large power steps that produced repeated small excursions either side of the target. Control remained inside the tolerance, yet the pattern indicates that the power required for the briefed climb speed is not yet known by feel. SP is expected to set a known power value and to make finer corrections so that airspeed stabilizes without repeated overshoot."
+      }
+    },
+    {
+      "id": "contact-03-em03",
+      "label": "Exit heading and course tracking to the assigned area",
+      "mif_row": null,
+      "source": "specific:EXIT HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a roll out made without reference to the heading indicator, did not establish the published exit heading after leaving the traffic pattern and did not correct the resulting track error while the climb continued. The heading was off by more than 10 degrees and the aircraft diverged from the predetermined route. IP took the controls and turned the aircraft back onto the departure course.",
+        "1": "SP, due to a turn rate that was not reduced approaching the roll out point, did not stop the turn on the published exit heading and allowed the error to persist during the climb. The heading deviation stood at the 10 degrees limit until IP prompted the correction. SP regained the exit heading only after the verbal indication.",
+        "2": "SP, due to a late lead point in the departure turn, did not roll out exactly on the published exit heading. The error passed 5 degrees and reached approximately 8 degrees before SP identified it on the heading indicator. SP made a prompt shallow correction and re-established the exit heading and the predetermined track without intervention.",
+        "3": "SP rolled out on the published exit heading within 5 degrees and tracked the predetermined route to the assigned area with accurate small corrections. SP cross-checked the heading indicator against the ground references and the departure course throughout the climb. The aircraft remained on the briefed track.",
+        "4": "SP led the departure turn precisely and rolled out on the exit heading with a deviation that was negligible, then held the predetermined course with no visible track error. SP applied a correct drift correction for the wind without being prompted. Navigation to the assigned area was exact from roll out to arrival.",
+        "marginal": "SP held the exit heading within standards, but the heading was reacquired after each roll out by a series of small corrections instead of a single accurate lead, and drift was not compensated until it became visible. The result stayed inside the tolerance, yet the technique will not hold on a longer transit or in stronger wind. SP is expected to lead the roll out correctly and to apply a drift correction from the moment the exit heading is established."
+      }
+    },
+    {
+      "id": "contact-03-em04",
+      "label": "Compliance with traffic pattern exit and departure procedures",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-norms",
+      "texts": {
+        "0": "SP, due to an unwritten local practice adopted from previous sorties in place of the published departure, did not follow the traffic pattern exit and departure procedure of the Local Area Procedures and turned out before the published departure point. The aircraft left the pattern on an unpublished track and the deviation from the procedure could not be resolved by SP. IP intervened, directed the aircraft back to the published departure route and made the required radio call.",
+        "1": "SP, due to reliance on the sequence flown in the previous sortie rather than on the published procedure, did not carry out the traffic pattern exit at the correct point and continued past the departure turn point on the upwind. The resulting track and heading error stood at the tolerance limit and was corrected only after IP indicated the required action verbally. SP then completed the departure as published.",
+        "2": "SP, due to an imprecise recollection of the departure segment briefed for the day, did not initiate the pattern exit at the exact published point and started the departure turn late. The track error passed the code 3 tolerance before SP referred to the Local Area Procedures picture and recognized the omission. SP corrected the turn point and completed the remainder of the departure as published without intervention.",
+        "3": "SP followed the published traffic pattern exit and departure procedure of the Local Area Procedures in the correct sequence and at the correct points, with the technique required by the Techniques and Procedures Manual. SP made the departure radio calls at the briefed positions and remained inside the published lateral and vertical limits. No procedural step was omitted.",
+        "4": "SP executed the traffic pattern exit and the departure exactly as published, with each turn point, altitude and radio call made at the correct place without hesitation. SP integrated the procedure with the flying task so that neither degraded the other. The departure was flown to the standard expected of a fully prepared crew member.",
+        "marginal": "SP followed the published departure procedure within standards, but each step was recalled with a pause and the pattern exit point was identified visually rather than anticipated from the briefed sequence. Performance met the criteria, yet the procedure is not yet held to the level that survives a distraction or a change of runway. SP is expected to study the Local Area Procedures departure so that the sequence is executed from prior knowledge rather than reconstructed in flight."
+      }
+    },
+    {
+      "id": "contact-03-em05",
+      "label": "Routing and navigation to the assigned flight area",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incorrect identification of the assigned area on the departure route, did not direct the aircraft to the area allocated for the sortie and continued on a course toward a different sector. The track error grew well beyond the published route corridor and SP did not recognize the mistake from the available ground and navigation references. IP took control of the navigation and re-routed the aircraft to the correct area.",
+        "1": "SP, due to navigation carried out by ground features alone without cross-check of the navigation display, did not maintain the predetermined route to the assigned area and allowed the track to open progressively. The lateral and heading error reached the tolerance limit and was corrected only when IP indicated the correct course. SP then regained the route to the assigned area.",
+        "2": "SP, due to an incomplete plan for the point at which the departure route joins the area entry, did not establish the correct track to the assigned area immediately after level off. The deviation exceeded the code 3 tolerance before SP cross-checked heading, time and the navigation display. SP identified the error and corrected the track to the assigned area promptly and without intervention.",
+        "3": "SP directed the aircraft safely and directly to the assigned flight area along the predetermined route, cross-checking heading, time and the navigation display against the ground references. SP arrived at the area entry point at the correct altitude and airspeed, ready to begin the planned work. Routing required no correction.",
+        "4": "SP navigated to the assigned flight area with the track held exactly on the predetermined route and the area entry point reached at the planned time, altitude and airspeed. SP maintained a clear picture of position relative to the airfield and to the area boundaries throughout the transit. The transition was completed with no correction of any kind.",
+        "marginal": "SP reached the assigned flight area within standards, but position awareness during the transit was rebuilt at intervals rather than maintained continuously, and the area entry point was identified late. The route was flown inside the tolerance, yet the margin available if the wind or the routing changed would be small. SP is expected to keep a running position check against heading, time and ground references so that the area entry is anticipated rather than discovered."
+      }
+    },
+    {
+      "id": "contact-03-em06",
+      "label": "Area boundary discipline and avoidance of adjacent areas",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to a loss of situational awareness of position relative to the published area boundaries during the transition, did not remain clear of the adjacent flight area and crossed into it without authorization while still established in the climb. The aircraft penetrated the neighbouring sector with no coordination call made and SP did not detect the boundary crossing. IP took the controls, turned the aircraft clear and coordinated with the controlling agency.",
+        "1": "SP, due to attention directed at the climb parameters rather than at position relative to the boundary, did not keep the aircraft displaced from the edge of the adjacent area during the transit. The track error stood at the tolerance limit with the aircraft immediately on the boundary and no correction was initiated until IP called it. SP then turned to regain separation from the adjacent area.",
+        "2": "SP, due to a delayed update of position awareness after the departure turn, did not maintain the planned buffer from the adjacent area boundary. The track drifted past the code 3 tolerance toward the boundary before SP cross-checked position on the navigation display and against the ground references. SP turned back into the assigned area in time and no unauthorized penetration occurred.",
+        "3": "SP maintained continuous awareness of position relative to the published boundaries and kept the aircraft inside the assigned area throughout the transition, without entering any adjacent area. SP cross-checked the navigation display and ground references at regular intervals during the transit. Separation from the boundaries was maintained with a clear margin.",
+        "4": "SP maintained an accurate picture of the aircraft position relative to every adjacent area boundary at all times and kept a comfortable margin inside the assigned area with no corrective turn required. SP was able to state position and distance to the nearest boundary immediately when asked. Airspace discipline was exact throughout the departure and transition.",
+        "marginal": "SP remained clear of adjacent areas within standards, but the margin from the nearest boundary was smaller than planned and position relative to the boundary was confirmed only after a query. Airspace discipline met the criteria, yet a distraction or an unexpected turn would have removed the remaining margin. SP is expected to keep a deliberate buffer from the published boundaries and to maintain boundary awareness continuously rather than on request."
+      }
+    },
+    {
+      "id": "contact-03-em07",
+      "label": "Clearing, lookout and radio coordination during departure",
+      "mif_row": null,
+      "source": "general:a,b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to attention held entirely inside the cockpit on the climb instruments, did not clear the airspace before the departure turns and did not make the required departure radio calls at the published points. Conflicting traffic in the pattern was not seen and the departure call was omitted entirely. IP cleared the aircraft, took the controls for the turn and made the radio call.",
+        "1": "SP, due to a lookout scan interrupted by the workload of the climb, did not clear adequately in the direction of turn and delayed the departure radio call past the published point. The deviation from the procedure stood at the tolerance limit until IP prompted both the clearing turn and the call. SP then completed the lookout and the transmission.",
+        "2": "SP, due to a lookout pattern concentrated in the direction of flight, did not clear the full arc before the departure turn at first attempt. The turn was started with an incomplete scan and the radio call was slightly late relative to the published point, exceeding the code 3 standard. SP recognized the omission, completed the clearing scan and made the correct call without intervention.",
+        "3": "SP cleared the airspace effectively before each departure turn, maintained an outside scan appropriate to the traffic density and made the required radio calls with correct phraseology at the published points. SP acknowledged and complied with the instructions received during the transition. Lookout and radio work were integrated with the flying task without degrading either.",
+        "4": "SP maintained an effective lookout throughout the departure and transition, reporting traffic before it was called and clearing every turn thoroughly, while making concise and correctly phrased transmissions at exactly the published points. SP handled a change to the departure instruction without any deterioration in aircraft control. Clearing and radio coordination were of a standard requiring no comment.",
+        "marginal": "SP cleared the turns and made the required calls within standards, but the outside scan was reduced whenever the workload increased and transmissions were composed slowly, with occasional non-standard wording. The performance met the criteria, yet lookout and radio work are still competing with the flying task rather than running alongside it. SP is expected to maintain the outside scan through the higher workload periods and to prepare transmissions in advance so that phraseology is standard and brief."
+      }
+    },
+    {
+      "id": "contact-03-em08",
+      "label": "Task sequencing and workload management during the transition",
+      "mif_row": null,
+      "source": "general:a,b",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to inadequate workload management with the after takeoff and climb actions attempted simultaneously with the departure turn, did not sequence the tasks of the transition and stopped flying the aircraft while the checks were carried out. Altitude and heading both diverged beyond the published tolerances and the checks were left incomplete. IP took the controls, stabilized the aircraft and directed the correct sequence.",
+        "1": "SP, due to task saturation at the point where the pattern exit, the climb checks and the departure call coincided, did not order the actions and carried them out one at a time while the aircraft was left to drift. The resulting deviations stood at the tolerance limits and were addressed only after IP prompted a return to the primary flying task. SP then completed the remaining actions in the correct order.",
+        "2": "SP, due to the climb checks being started before the aircraft was trimmed and stabilized, did not maintain the intended sequence during the transition to the flight areas. Attention drawn inside the cockpit produced deviations that passed the code 3 tolerance before SP recognized the trend. SP returned to the flying task first, stabilized the aircraft and completed the checks correctly without intervention.",
+        "3": "SP sequenced the departure tasks correctly, stabilizing the aircraft in the climb before starting the checks and completing them without allowing altitude, airspeed or heading to leave the code 3 tolerances. SP prioritized aircraft control ahead of the secondary actions throughout the transition. Workload was managed so that every required action was completed at the correct point.",
+        "4": "SP distributed the departure workload so effectively that the checks, the radio calls and the navigation to the assigned area were completed with no perceptible effect on aircraft control. SP had spare capacity available and used it to anticipate the area entry and to monitor traffic. The transition was flown in a calm and correctly ordered sequence throughout.",
+        "marginal": "SP completed the departure tasks within standards, but the checks and the radio work were performed sequentially with visible spare capacity consumed, and each interruption produced a small excursion that had to be corrected afterwards. The parameters remained inside the tolerances, yet there is little margin for an additional task or an unexpected instruction. SP is expected to stabilize and trim the aircraft first and to interleave the secondary actions so that aircraft control is continuous."
+      }
+    }
+  ]
+}

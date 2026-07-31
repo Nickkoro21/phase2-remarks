@@ -1,0 +1,162 @@
+{
+  "item_id": "contact-05",
+  "item_name": "BASIC A/C CONTROL",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [5],
+  "mif_rows": [
+    {"sn": 5, "row_name": "Basic A/C Control"}
+  ],
+  "error_modes": [
+    {
+      "id": "contact-05-em01",
+      "label": "Altitude control in straight and level flight and in turns",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to pitch attitude set by outside reference alone and never confirmed on the altimeter, did not hold the assigned altitude in straight and level flight and in turns up to 60 degrees of bank. The nose was allowed to drop at each turn entry and the excursion built to about 450 feet, well beyond the 300 foot limit, with the trend still developing. IP had to intervene on the controls to return the aircraft to the assigned altitude.",
+        "1": "SP applied insufficient back pressure at turn entry and did not re-establish the pitch attitude with a positive elevator input. The altitude deviation reached 300 feet, at the limit of the standard, and was arrested only after repeated verbal prompting from IP. The return to the assigned altitude was slow and a residual error was carried into the next maneuver.",
+        "2": "SP was late in adding back pressure at turn entry, so altitude decayed about 220 feet below the assigned value. SP identified the deviation on the altimeter and VSI and flew the aircraft back to the assigned altitude without any intervention by IP. The excursion remained between the 150 and 300 foot bands, but the correction should have been started earlier.",
+        "3": "SP held the assigned altitude within 100 feet during straight and level flight and in turns up to 60 degrees of bank. Pitch corrections were small, applied promptly and completed without over-controlling. Every deviation was detected on the altimeter and removed immediately.",
+        "4": "SP maintained the assigned altitude within about 30 feet throughout, with the altimeter needle essentially steady through turn entries and rollouts. Pitch was set by attitude and confirmed on the instruments, so nothing more than a light control pressure was ever required.",
+        "marginal": "SP remained inside the altitude standard, but the deviations clustered near 140 feet and were consistently low during the turns. Each correction was effective yet started later than required and needed more elevator than a timely input would have. SP is expected to anticipate the pitch requirement at turn entry so that the altitude trace tightens over the next sorties."
+      }
+    },
+    {
+      "id": "contact-05-em02",
+      "label": "Airspeed control across flight phases",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power lever movements made by feel and not verified against the airspeed indicator, did not hold the briefed airspeed in straight and level flight and in the turns. Airspeed diverged by about 35 knots, far beyond the 20 knot limit, and continued to build while the pitch attitude was left unchanged. IP had to reset the power and re-establish the briefed airspeed.",
+        "1": "SP set an approximate power setting and did not refine it against the airspeed indication as the maneuver progressed. The airspeed deviation reached 20 knots, at the limit of the standard, and was reduced only after IP called the value verbally. The recovery to the briefed airspeed was late and the power setting kept oscillating afterwards.",
+        "2": "SP did not add power at the entry to the turn, so the airspeed decayed about 15 knots below the briefed value. SP detected the trend on the airspeed indicator and restored the briefed airspeed with a smooth power correction and no IP input. The deviation stayed between the 10 and 20 knot bands, but a leading power correction would have prevented it.",
+        "3": "SP held the briefed airspeed within 8 knots through all flight phases and maneuvers. Power was set to a known value and then adjusted in small increments against the indication. Deviations were recognized early and removed without any change of pitch attitude being required.",
+        "4": "SP maintained the briefed airspeed within about 3 knots throughout, including through turn entries and rollouts. Power was led rather than chased, so the airspeed indication remained essentially fixed on the target value.",
+        "marginal": "SP stayed inside the airspeed standard, but the deviations repeatedly sat close to 10 knots and always in the slow direction during turns. Corrections were made without prompting yet each of them followed the deviation instead of anticipating it. SP is expected to lead the power requirement at maneuver entry so that airspeed dispersion narrows on the following flights."
+      }
+    },
+    {
+      "id": "contact-05-em03",
+      "label": "Exit heading accuracy on rollout",
+      "mif_row": null,
+      "source": "specific:EXIT HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to no lead point computed for the rollout and no reference to the heading indicator during the turn, did not roll out on the assigned exit heading. The aircraft passed the target heading by about 20 degrees, twice the 10 degree limit, and SP started a reversal that overshot again in the opposite direction. IP had to take the controls to stop the wandering and establish the assigned heading.",
+        "1": "SP began the rollout without any lead and did not check the heading indicator until the wings were already level. The exit heading error reached 10 degrees, at the limit of the standard, and was corrected only after IP stated the assigned heading. The subsequent correction was flown slowly and the aircraft settled on heading well after the maneuver had ended.",
+        "2": "SP used an insufficient rollout lead for the bank angle flown and passed the assigned exit heading by about 8 degrees. SP recognized the error immediately on the heading indicator and returned to the assigned heading with a smooth, correctly sized turn and no IP input. The result stayed between the 5 and 10 degree bands, but the lead point should have matched the bank angle.",
+        "3": "SP rolled out within 4 degrees of the assigned exit heading on each turn. The rollout lead was matched to the bank angle and the heading indicator was checked before the wings reached level. Any residual error was removed at once with a small, controlled correction.",
+        "4": "SP rolled out on the assigned exit heading within about 1 degree on every turn, with the rollout rate matched to the bank angle. No secondary correction was needed after the wings were level.",
+        "marginal": "SP met the exit heading standard, but the rollouts were consistently about 5 degrees past the assigned heading and always in the same direction. The errors were self-corrected, yet the pattern shows a fixed rollout lead applied regardless of bank angle. SP is expected to scale the lead point to the bank angle and rate of turn so that rollouts finish on heading without a follow-up correction."
+      }
+    },
+    {
+      "id": "contact-05-em04",
+      "label": "Aileron, elevator and rudder trim technique",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-acts-errors",
+      "texts": {
+        "0": "SP, due to a skill-based error in trim technique, flew the aircraft with continuous control pressures through the airspeed changes and left the aileron and rudder trim at the setting of the previous flight phase. The out of trim condition produced altitude excursions beyond 300 feet and heading wander beyond 10 degrees that SP did not arrest. IP had to trim the aircraft and return it to the assigned parameters.",
+        "1": "SP trimmed only in pitch and did not use the aileron and rudder trim after the airspeed change, so a constant lateral pressure was carried throughout. The resulting deviations reached the 300 foot and 10 degree limits and were reduced only after IP pointed out the out of trim condition verbally. SP then trimmed with repeated large inputs rather than in small steps.",
+        "2": "SP was late in retrimming after the power and airspeed change and held control pressures for part of the maneuver. The residual pressures allowed altitude to drift about 200 feet and the heading to wander about 7 degrees before SP recognized the condition, trimmed the aircraft in all three axes and restored the parameters without IP intervention. Trim should have followed the airspeed change rather than the deviation it caused.",
+        "3": "SP handled the aileron, elevator and rudder trim correctly and without difficulty across the full airspeed range and in all flight phases. Trim followed every power and configuration change, so the aircraft was flown with the controls essentially free of pressure. Parameters were kept inside the tighter tolerance bands as a direct result.",
+        "4": "SP trimmed the aircraft in detail in all three axes throughout the flight, retrimming ahead of each airspeed change so that no residual control pressure was ever carried. The aircraft held attitude hands-off between corrections and the trim inputs themselves were small and unnoticeable.",
+        "marginal": "SP trimmed the aircraft to standard but the rudder trim was consistently left slightly out after each airspeed change and was addressed only when the ball was noticed off centre. The parameters stayed inside limits, yet a small lateral pressure was carried for longer than necessary. SP is expected to trim in all three axes as part of the power change itself so that the technique becomes automatic in the coming sorties."
+      }
+    },
+    {
+      "id": "contact-05-em05",
+      "label": "Instrument cross-check against aircraft position in space",
+      "mif_row": null,
+      "source": "general:f,g",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an interrupted instrument cross-check while attention remained on a single indication, did not compare the control and performance instruments with the position of the aircraft in space. Altitude and airspeed drifted together beyond 300 feet and 20 knots without being noticed and no correction was initiated. IP had to call the aircraft state and intervene on the controls to restore the assigned parameters.",
+        "1": "SP checked the instruments in a fixed sequence that stopped whenever a correction was being flown, so deviations were seen only after they had developed. Altitude reached 300 feet and airspeed 20 knots, at the limits of the standard, and the scan was re-established only after IP prompted verbally. Corrections were then made one parameter at a time while the others were left unmonitored.",
+        "2": "SP allowed the cross-check to slow during turns and looked at the attitude indicator for longer than the scan required. Altitude and airspeed reached about 200 feet and 15 knots before SP re-established the full scan, identified the deviations and corrected them in time and without IP intervention. The scan should have kept pace with the rate of change of the maneuver.",
+        "3": "SP continuously checked the indications of the control and performance instruments and compared them with the position of the aircraft in space. Deviations were detected while still small and the corresponding corrections were applied at once, keeping all parameters inside the tighter bands. The scan rate was adapted to the flight phase and to the duration of each maneuver.",
+        "4": "SP maintained a complete and evenly distributed cross-check throughout the flight, matching the scan rate to the rate of change of the aircraft state. Deviations were identified at the point of onset, so corrections remained at the level of light control pressures and no parameter was ever allowed to develop an error.",
+        "marginal": "SP kept the cross-check within standard, but it narrowed each time a correction was in progress and the heading indicator was the instrument most often left out. All parameters stayed inside limits, yet several deviations were caught later than an even scan would have allowed. SP is expected to keep the scan running through the correction itself and to include every performance instrument in the coming flights."
+      }
+    },
+    {
+      "id": "contact-05-em06",
+      "label": "Smooth and positive aircraft control and sizing of corrections",
+      "mif_row": null,
+      "source": "general:g|execution:1",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to control inputs applied in abrupt steps instead of smooth pressures, did not maintain positive and smooth aircraft control for the flight conditions of the sortie. Each oversized correction produced a deviation in the opposite direction and the resulting oscillation exceeded 300 feet in altitude and 20 knots in airspeed. IP had to take the controls to damp the oscillation and stabilize the aircraft.",
+        "1": "SP over-controlled in pitch and roll and chased the indications rather than setting an attitude and allowing it to take effect. The oscillations reached the 300 foot and 20 knot limits and were damped only after IP verbally directed a reduction of the input size. Control of the aircraft remained coarse for the rest of the maneuver sequence.",
+        "2": "SP applied corrections larger than the deviations required, so each one had to be reversed before the parameter settled. Altitude and airspeed swung to about 200 feet and 15 knots before SP reduced the size of the inputs, flew smooth pressures and stabilized the aircraft without IP intervention. Corrections should have been matched to the size of the deviation from the start.",
+        "3": "SP maintained positive and smooth aircraft control throughout, taking into account the flight conditions of the sortie. Corrections were sized to the deviation and applied as pressures rather than movements, so no parameter overshot in the opposite direction. The aircraft was flown steadily through entries, turns and rollouts.",
+        "4": "SP flew the aircraft with smooth, positive and precisely sized control inputs in every phase, so that corrections were barely perceptible and no parameter ever overshot. Attitude was set once and adjusted only by light pressures, and the aircraft remained steady throughout the sortie.",
+        "marginal": "SP maintained control within standard, but the first correction after each maneuver entry was consistently larger than needed and had to be partly reversed. Nothing exceeded the tolerances, yet the technique produced small oscillations that a smoother input would have avoided. SP is expected to set the attitude and let it take effect before adding further input, so that the corrections become smoother over the next flights."
+      }
+    },
+    {
+      "id": "contact-05-em07",
+      "label": "Handling and knowledge of cockpit levers and switches",
+      "mif_row": null,
+      "source": "general:b,j",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient knowledge of the position and use of the cockpit levers and switches, searched the panels for the required control and selected an adjacent switch instead. The heads-down time and the incorrect selection left the aircraft unmonitored and the parameters passed 300 feet and 20 knots. IP had to identify the correct control and fly the aircraft while the selection was corrected.",
+        "1": "SP located the required levers and switches only with hesitation and confirmed each position by looking at it for an extended period. The aircraft was left unmonitored during those periods and the deviations reached the 300 foot and 20 knot limits, being corrected only after IP prompted verbally. One selection was made in the wrong sequence and had to be repeated.",
+        "2": "SP was slow in reaching two cockpit selections and interrupted the scan while making them, so altitude drifted about 200 feet before the deviation was noticed. SP completed the selections correctly, re-established the scan and restored the parameters in time and without IP intervention. Familiarity with the switch positions should have kept the heads-down time shorter.",
+        "3": "SP used all aircraft levers and switches with ease, without difficulty and without any faulty selection. Each control was found and set by position without a prolonged search, so the instrument scan was not interrupted. SP demonstrated knowledge of the position and use of every control required for the sortie.",
+        "4": "SP operated all levers and switches accurately by position and without looking for them, so the flow was uninterrupted and the scan was never broken. Knowledge of the position and use of the cockpit controls was complete and every selection was correct at first attempt.",
+        "marginal": "SP handled the cockpit controls within standard, but two selections on the right console required a deliberate look before being made. No faulty selection resulted and the parameters were held, yet the associated heads-down time was longer than the flow allows. SP is expected to build the switch positions into muscle memory through cockpit familiarization so that selections are made without interrupting the scan."
+      }
+    },
+    {
+      "id": "contact-05-em08",
+      "label": "Execution of actions and checks per Flight Manual, SOP and Local Area Procedures",
+      "mif_row": null,
+      "source": "general:c,i",
+      "hf_concept": "hf-distraction",
+      "texts": {
+        "0": "SP, due to distraction by a secondary cockpit task during a critical phase of flight, did not execute the actions and checks in accordance with the Flight Manual, Standard Operating Procedures and Local Area Procedures. Items of the flow were skipped and the remaining ones were performed out of sequence, so the aircraft was flown in a configuration that had not been verified. IP had to direct the omitted items and take the controls while the checks were completed.",
+        "1": "SP interrupted a check to respond to a radio call and did not return to the point of interruption, leaving one item unaccomplished. The omission was detected and completed only after IP verbally directed it, and the associated attention shift let the parameters reach the 300 foot and 20 knot limits. The remaining checks were then rushed rather than flown in the published order.",
+        "2": "SP was distracted by a secondary task and delayed the start of a required check, then performed it while the maneuver was already in progress. Altitude drifted about 200 feet during the check before SP recognized the deviation, completed all items in the published sequence and restored the parameters without IP intervention. The check should have been completed before the maneuver was entered.",
+        "3": "SP executed all actions and checks in accordance with the Flight Manual, Standard Operating Procedures and Local Area Procedures and skipped no procedure. Each check was completed at the correct point in the sortie and without interrupting the control of the aircraft. Secondary tasks were shed while the checks were being flown.",
+        "4": "SP completed every action and check exactly as published and at the correct point of the profile, with no item omitted and no sequence altered. Aircraft control and the instrument scan were fully maintained throughout each check, and secondary tasks were deferred until the flow was complete.",
+        "marginal": "SP followed the published procedures without omission, but two checks were begun later than the profile requires and were completed close to the maneuver entry. Nothing was skipped and the parameters were held, yet the compressed timing left no margin had a distraction occurred. SP is expected to start each check at its planned point so that the sequence is unhurried on the following sorties."
+      }
+    },
+    {
+      "id": "contact-05-em09",
+      "label": "Operational limits and VFR cloud clearance",
+      "mif_row": null,
+      "source": "general:d,e",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the aircraft state being flown without reference to the published limitations, did not keep the aircraft within operational limits and did not preserve the distance from clouds required to remain VFR. The airspeed was allowed to build past the limit for the configuration and the aircraft was flown into the cloud clearance margin during the turn. IP had to take the controls to reduce the airspeed and reposition the aircraft clear of cloud.",
+        "1": "SP approached the published limit for the configuration and let the aircraft close on the cloud base while continuing the maneuver. Both conditions were corrected only after IP stated them verbally, and the associated attention shift left altitude at the 300 foot limit. The recovery to a compliant position was slow and the margins remained small afterwards.",
+        "2": "SP allowed the airspeed to move toward the published limit during the descending turn and did not plan the maneuver against the cloud base. SP recognized both conditions before any limit was reached, reduced power and repositioned the aircraft to preserve the required cloud clearance without IP intervention. The maneuver should have been positioned against the weather before it was entered.",
+        "3": "SP maintained the aircraft within operational limits at all times and preserved the distance from clouds required to remain VFR throughout the flight. Maneuvers were positioned against the cloud base before entry and the airspeed and bank were kept clear of the published limitations. No margin was reduced at any point of the sortie.",
+        "4": "SP kept the aircraft comfortably inside every operational limit and maintained generous VFR cloud clearance throughout, repositioning the working area in advance as the cloud base changed. Each maneuver was planned so that no limit or clearance margin was ever approached.",
+        "marginal": "SP remained within operational limits and VFR cloud clearance, but the working altitude was selected close to the cloud base and the margin had to be protected by shortening two maneuvers. No limit or clearance was infringed, yet the initial positioning left little room for the developing weather. SP is expected to select the working block against the observed cloud base so that the margins are built in from the start."
+      }
+    },
+    {
+      "id": "contact-05-em10",
+      "label": "Detection of erroneous instrument indications and notification of IP",
+      "mif_row": null,
+      "source": "general:h,f",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to each instrument being read in isolation and never cross-referenced against the others, did not locate the erroneous indication that was present during the maneuver. SP flew the aircraft on the faulty reading, did not inform IP and executed no corresponding procedure, so the parameters diverged beyond 300 feet and 20 knots. IP had to identify the erroneous instrument and take the controls.",
+        "1": "SP noticed that one indication did not agree with the aircraft state but continued the maneuver without resolving the disagreement. The erroneous reading was identified and reported to IP only after a verbal prompt, and the corresponding procedure was started late. During that period the deviations reached the 300 foot and 20 knot limits of the standard.",
+        "2": "SP was slow to compare the suspect indication against the other instruments and continued to fly on it for part of the maneuver, allowing about a 200 foot altitude drift. SP then identified the erroneous reading, informed IP and executed the corresponding procedure in time and without IP intervention. The cross-reference should have been made as soon as the indication disagreed with the aircraft state.",
+        "3": "SP timely located the erroneous instrument reading, informed IP and executed the corresponding procedure. The disagreement was resolved against the remaining control and performance instruments while aircraft control and the assigned parameters were fully maintained. The maneuver was continued on valid references.",
+        "4": "SP identified the erroneous indication at the moment it appeared, cross-referenced it against the remaining instruments, informed IP in clear terms and executed the corresponding procedure without any interruption of aircraft control. All parameters were held precisely throughout the sequence.",
+        "marginal": "SP detected the erroneous indication and reported it to IP within standard, but the cross-reference against the other instruments took longer than the situation allowed and the report was made after the maneuver had ended. Aircraft control was maintained and the correct procedure was applied, yet the detection was later than a full scan would have produced. SP is expected to resolve any disagreement between instruments as soon as it appears and to report it immediately in the coming flights."
+      }
+    }
+  ]
+}

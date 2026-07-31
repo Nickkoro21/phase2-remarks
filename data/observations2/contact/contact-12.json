@@ -1,0 +1,470 @@
+{
+  "item_id": "contact-12",
+  "item_name": "PRECISION - AEROBATIC MANEUVERS",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [12, 13, 14, 15, 16, 17, 18, 19, 20],
+  "mif_rows": [
+    {"sn": 12, "row_name": "Chandelle"},
+    {"sn": 13, "row_name": "Lazy Eight"},
+    {"sn": 14, "row_name": "Aileron Roll"},
+    {"sn": 15, "row_name": "Barrel Roll"},
+    {"sn": 16, "row_name": "Loop"},
+    {"sn": 17, "row_name": "Cuban Eight"},
+    {"sn": 18, "row_name": "Immelman"},
+    {"sn": 19, "row_name": "Split S"},
+    {"sn": 20, "row_name": "Cloverleaf"}
+  ],
+  "error_modes": [
+    {
+      "id": "contact-12-em01",
+      "label": "Chandelle - entry and completion airspeed",
+      "mif_row": "Chandelle",
+      "source": "specific:AIRSPEED (Start / End) (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an initial pull applied late and then unloaded through the first 90 degrees of turn, did not trade airspeed for altitude at the programmed rate and did not arrive at the 180-degree point on the briefed completion speed. Airspeed at roll-out was more than 15 knots fast, the Chandelle finished with excess energy and a descending nose, and the IP took the controls to re-establish level flight.",
+        "1": "SP, due to a pitch attitude held below the briefed value after the 90-degree point, did not continue the airspeed bleed toward the completion speed. Airspeed at roll-out settled at the outer edge of tolerance, about 15 knots fast, and was brought back only after the IP called the deviation verbally.",
+        "2": "SP, due to a slightly steep pitch attitude at entry, allowed the airspeed to decay faster than programmed through the second half of the Chandelle. The completion speed passed between 5 and 10 knots low, and SP recognized the trend before roll-out and relaxed back pressure to recover it without any IP input.",
+        "3": "SP set the entry airspeed on the briefed value and traded it smoothly against pitch and bank, arriving at the 180-degree point within 10 knots fast and 5 knots slow of the completion speed. Energy management was continuous and no catch-up correction was required.",
+        "4": "SP flew an airspeed profile that tracked the briefed schedule throughout the Chandelle and arrived at the completion point within a few knots of target. Pitch was adjusted in small anticipatory increments, so no correction was visible in the airspeed trend.",
+        "marginal": "SP kept the Chandelle completion speed inside the standards, but each repetition finished on the fast side of the band, indicating a pitch attitude set low for the bank being flown. SP should tighten the pitch and bank pairing at the 90-degree point so that the completion speed converges on the briefed value rather than on the upper tolerance."
+      }
+    },
+    {
+      "id": "contact-12-em02",
+      "label": "Chandelle - bank control through the 90-degree point",
+      "mif_row": "Chandelle",
+      "source": "specific:BANK (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to aileron pressure that was not held against the increasing angle of attack, allowed the bank to steepen progressively after the 90-degree point instead of holding the briefed value. Bank departed the briefed angle by more than 20 degrees with the nose falling through, and the IP intervened on the controls to unload and roll the wings level.",
+        "1": "SP, due to an interrupted cross-check of the wing line against the horizon, did not hold the briefed bank steady through the second half of the turn. Bank drifted to about 20 degrees off the briefed value and was re-established only after a verbal prompt from the IP.",
+        "2": "SP, due to slow aileron pressure at entry, set a bank shallower than briefed for the first quarter of the turn, with a deviation between 10 and 20 degrees. SP identified the shallow wing line early and re-established the briefed bank before the 90-degree point without assistance.",
+        "3": "SP set the briefed bank promptly at entry and held it within 10 degrees throughout the maneuver, correcting with small aileron pressures rather than large inputs.",
+        "4": "SP established and held the briefed bank within a few degrees for the whole Chandelle, and matched the roll-out rate to the remaining turn so that the wings arrived level exactly at the completion point.",
+        "marginal": "SP held the Chandelle bank inside the standards but consistently on the shallow side, which stretched the turn and forced a late correction near the completion point. SP should set the full briefed bank within the first seconds of the entry and expect the roll-out to be flown without a catch-up correction."
+      }
+    },
+    {
+      "id": "contact-12-em03",
+      "label": "Chandelle - roll-out heading and completion references",
+      "mif_row": "Chandelle",
+      "source": "specific:RECOVERY HEADING (degrees)|general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a roll-out started without reference to a ground feature or horizon point abeam the entry heading, did not plan the last 30 degrees of turn against the reciprocal. The Chandelle completed more than 20 degrees off the required recovery heading with the wings still rolling, and the IP took the controls to stop the turn.",
+        "1": "SP, due to a roll-out rate that was not adjusted to the remaining turn, did not stop the aircraft on the reciprocal of the entry heading. Recovery heading was off by about 20 degrees and SP corrected it only after the IP pointed out the error.",
+        "2": "SP, due to a late transition from the wing line back to the nose reference, rolled out between 10 and 20 degrees short of the required heading. SP detected the shortfall immediately at the wings-level point and closed it with a prompt, coordinated correction without IP intervention.",
+        "3": "SP used a preselected outside reference for the reciprocal and rolled out on the required recovery heading within 10 degrees, with the wings arriving level and the nose on the horizon at the same moment.",
+        "4": "SP completed the Chandelle within a few degrees of the required recovery heading, with wings level, nose on the horizon and completion airspeed achieved simultaneously, so that no post-maneuver correction was needed.",
+        "marginal": "SP finished the Chandelle inside the heading standards but tended to roll out short of the reciprocal on every repetition, showing a roll-out lead applied too early. SP should select a firm outside reference before entry and expect the recovery heading to be centered rather than repeatedly biased in one direction."
+      }
+    },
+    {
+      "id": "contact-12-em04",
+      "label": "Lazy Eight - airspeed at the 90-degree points and completion",
+      "mif_row": "Lazy Eight",
+      "source": "specific:AIRSPEED (Start / End) (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a pitch rate applied too aggressively in the first quarter, did not distribute the energy exchange evenly across the two halves of the Lazy Eight. Airspeed at the 90-degree point fell more than 10 knots below the briefed value with the nose still high, and the IP intervened on the controls before the aircraft reached the stall.",
+        "1": "SP, due to a nose-low attitude carried through the descending quarter, did not arrest the acceleration before the reversal. Airspeed reached about 15 knots above the briefed value at the low point and was reduced only after the IP made a verbal call.",
+        "2": "SP, due to an uneven pitch rate between the climbing and descending quarters, allowed a spread of between 10 and 15 knots fast at the low points of the Lazy Eight. SP recognized the asymmetry after the first eight and adjusted pitch on the following one without IP input.",
+        "3": "SP maintained the briefed airspeed schedule at both 90-degree points and at completion, within 10 knots fast and 5 knots slow, and the energy exchange was symmetric between the two halves.",
+        "4": "SP flew both halves of the Lazy Eight with matched airspeed values at the corresponding points, within a few knots of the briefed schedule, and returned to the entry speed at completion without any visible correction.",
+        "marginal": "SP kept the Lazy Eight airspeeds inside the standards but the second half consistently ran faster than the first, indicating that pitch was relaxed early in the descending quarter. SP should match the pitch rate of the two halves so that the airspeed values at the corresponding points are symmetric rather than drifting toward the fast tolerance."
+      }
+    },
+    {
+      "id": "contact-12-em05",
+      "label": "Lazy Eight - bank symmetry at the 45 and 90-degree points",
+      "mif_row": "Lazy Eight",
+      "source": "specific:BANK (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to aileron and rudder inputs applied out of phase with the pitch change, did not build the bank progressively toward the briefed maximum at the 90-degree point. Bank overshot the briefed value by more than 20 degrees with the nose slicing below the horizon, and the IP took the controls to recover the aircraft to level flight.",
+        "1": "SP, due to a bank that was set early and then left unchanged through the climbing quarter, did not match the roll rate to the pitch profile. Maximum bank was about 20 degrees away from the briefed value and was corrected only after the IP prompted verbally.",
+        "2": "SP, due to a hesitant roll input at the start of the second half, reached the 90-degree point with a bank between 10 and 20 degrees shallow. SP identified the asymmetry against the horizon and restored the briefed bank on the following reversal without assistance.",
+        "3": "SP built and reduced bank progressively so that the briefed maximum was reached at the 90-degree point within 10 degrees on both halves, with the wings level at each reversal.",
+        "4": "SP flew both halves of the Lazy Eight with maximum bank within a few degrees of the briefed value and matched between left and right, and the wings arrived exactly level at each 180-degree reversal.",
+        "marginal": "SP stayed within the bank standards but the turn in one direction was consistently steeper than the other, showing an uneven roll input between left and right. SP should equalize the roll rates in both directions and expect the two halves of the Lazy Eight to be flown as mirror images."
+      }
+    },
+    {
+      "id": "contact-12-em06",
+      "label": "Lazy Eight - reference point tracking and recovery heading",
+      "mif_row": "Lazy Eight",
+      "source": "specific:RECOVERY HEADING (degrees)|general:c",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an interrupted cross-check of aircraft state against the primary flight instruments and the selected ground reference, did not track the 45 and 90-degree points against a fixed line feature. The Lazy Eight completed more than 20 degrees off the entry heading with the reversal displaced from the reference, and the IP intervened to stop the maneuver and reposition the aircraft.",
+        "1": "SP, due to attention held inside the cockpit during the climbing quarters, did not use the outside reference to time the reversals. Recovery heading at completion was about 20 degrees off the entry heading and was corrected only after the IP called the deviation.",
+        "2": "SP, due to a scan that returned to the ground reference late in the descending quarter, allowed the reversal point to drift and completed the eight between 10 and 20 degrees off the entry heading. SP noticed the displacement at the wings-level point and corrected on the next repetition without IP input.",
+        "3": "SP kept a continuous cross-check between the selected ground reference and the flight instruments, reversed on the reference line each time and completed within 10 degrees of the entry heading.",
+        "4": "SP flew every reversal precisely over the selected reference and completed the Lazy Eight within a few degrees of the entry heading, with the pattern remaining symmetric about the reference line throughout.",
+        "marginal": "SP held the completion heading inside the standards but relied mainly on the attitude indicator, with only occasional glances at the outside reference. SP should establish the reference line before entry and expect the reversals to be timed visually so that the recovery heading is not the product of a late correction."
+      }
+    },
+    {
+      "id": "contact-12-em07",
+      "label": "Aileron Roll - entry and recovery airspeed",
+      "mif_row": "Aileron Roll",
+      "source": "specific:AIRSPEED (Start / End) (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a nose-high attitude held too long before the roll input, did not enter the Aileron Roll at the briefed airspeed and did not protect the energy through the inverted segment. Entry speed was more than 10 knots low, the roll finished with the nose well below the horizon and the recovery speed more than 15 knots fast, and the IP intervened on the controls to stop the acceleration.",
+        "1": "SP, due to a shallow pitch-up before the roll input, did not maintain the briefed nose position and allowed the airspeed to build through the roll. Recovery speed reached about 15 knots fast and was corrected only after the IP prompted verbally.",
+        "2": "SP, due to a slightly early roll input, entered with the nose a few degrees below the briefed pitch attitude, and the recovery speed ended between 10 and 15 knots fast. SP recognized the excess energy immediately after wings level and corrected pitch to recapture the briefed speed without IP input.",
+        "3": "SP set the briefed entry airspeed and pitch attitude before rolling, and completed the Aileron Roll with the recovery speed within 10 knots fast and 5 knots slow of the entry value.",
+        "4": "SP entered on the briefed airspeed and recovered within a few knots of it, holding the nose position throughout the roll so that no energy correction was required at completion.",
+        "marginal": "SP kept the Aileron Roll airspeeds inside the standards but the recovery speed was consistently at the upper edge of the band, showing a pitch attitude set slightly low at entry. SP should establish the full briefed nose position before the roll input and expect the recovery speed to return close to the entry value."
+      }
+    },
+    {
+      "id": "contact-12-em08",
+      "label": "Aileron Roll - roll rate and attitude control through 360 degrees",
+      "mif_row": "Aileron Roll",
+      "source": "specific:BANK (degrees)|general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to aileron pressure released around the inverted position and then reapplied, did not maintain a constant roll rate through the 360 degrees of the Aileron Roll. The roll stopped short of wings level by more than 20 degrees with the nose slicing away, and the IP took the controls to complete the recovery.",
+        "1": "SP, due to a roll rate that decayed in the second half of the maneuver, did not hold the aileron input to the wings-level point. Roll-out was about 20 degrees off wings level and the aircraft was leveled only after a verbal instruction from the IP.",
+        "2": "SP, due to a slight relaxation of aileron pressure through the inverted segment, arrived at the recovery point between 10 and 20 degrees off wings level. SP identified the residual bank against the horizon and rolled level promptly without IP intervention.",
+        "3": "SP applied and held a constant roll rate through the full 360 degrees and stopped the roll within 10 degrees of wings level, with coordinated rudder holding the nose on the reference point.",
+        "4": "SP flew the Aileron Roll at a steady roll rate with the nose tracking the reference throughout, and stopped precisely wings level within a few degrees, with no secondary correction.",
+        "marginal": "SP completed the Aileron Roll within the bank standards but the roll rate slowed noticeably through the inverted portion, leaving a small residual bank to correct at recovery. SP should hold constant aileron pressure through the whole roll and expect the wings to stop level without a follow-up input."
+      }
+    },
+    {
+      "id": "contact-12-em09",
+      "label": "Aileron Roll - recovery heading",
+      "mif_row": "Aileron Roll",
+      "source": "specific:RECOVERY HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to rudder applied against the roll direction instead of coordinating with it, did not keep the nose on the entry heading through the Aileron Roll. The aircraft recovered more than 20 degrees off the entry heading with a marked yaw excursion, and the IP intervened on the controls to realign the aircraft.",
+        "1": "SP, due to uncoordinated rudder during the inverted segment, allowed the nose to track away from the reference point. Recovery heading was about 20 degrees off the entry heading and was corrected only after the IP called it.",
+        "2": "SP, due to late rudder coordination in the second half of the roll, completed between 10 and 20 degrees off the entry heading. SP recognized the drift as soon as the wings came level and corrected back to the reference without assistance.",
+        "3": "SP kept the nose on the selected reference point throughout the roll and recovered within 10 degrees of the entry heading with the wings level.",
+        "4": "SP held the nose locked on the reference point through the entire roll and recovered within a few degrees of the entry heading, with no yaw excursion at any point of the maneuver.",
+        "marginal": "SP stayed inside the heading standards but the nose consistently drifted in the direction of roll, showing rudder coordination applied slightly late. SP should lead with coordinated rudder as the roll starts and expect the recovery heading to match the entry heading without a corrective turn."
+      }
+    },
+    {
+      "id": "contact-12-em10",
+      "label": "Barrel Roll - airspeed schedule through the maneuver",
+      "mif_row": "Barrel Roll",
+      "source": "specific:AIRSPEED (Start / End) (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a shallow pull applied at entry, did not build the pitch required to carry the aircraft over the top of the Barrel Roll and did not preserve the entry energy. Airspeed at recovery was more than 15 knots fast with the nose well below the horizon, and the IP took the controls to arrest the dive.",
+        "1": "SP, due to back pressure relaxed in the second quarter of the maneuver, did not maintain the briefed rate of energy exchange. Recovery airspeed reached about 15 knots fast and was reduced only after a verbal call from the IP.",
+        "2": "SP, due to a slightly low pitch attitude at the 90-degree point, arrived over the top with more speed than briefed and recovered between 10 and 15 knots fast. SP identified the excess energy in the descending quarter and corrected with pitch before completion, without IP input.",
+        "3": "SP entered on the briefed airspeed, carried the aircraft over the top with the planned energy margin and recovered within 10 knots fast and 5 knots slow of the entry speed.",
+        "4": "SP flew the Barrel Roll with an airspeed schedule that matched the briefed profile at every quarter point and recovered within a few knots of the entry speed, with the G loading applied smoothly throughout.",
+        "marginal": "SP kept the Barrel Roll airspeeds inside the standards but recovery was consistently at the fast edge of the band, indicating a pull applied too gently at entry. SP should set the full briefed pitch before starting the roll and expect the recovery speed to return close to the entry value."
+      }
+    },
+    {
+      "id": "contact-12-em11",
+      "label": "Barrel Roll - bank and displacement about the reference point",
+      "mif_row": "Barrel Roll",
+      "source": "specific:BANK (degrees)|general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a roll rate that was not matched to the pitch rate, did not fly a symmetric barrel about the 45-degree reference point. Bank at the quarter points departed the briefed values by more than 20 degrees, the aircraft fell out of the maneuver nose low and wing down, and the IP intervened on the controls to recover.",
+        "1": "SP, due to aileron input held constant while the pitch rate changed, did not keep the roll and pitch synchronized over the top. Bank at the quarter points was about 20 degrees off the briefed values and was corrected only after the IP prompted verbally.",
+        "2": "SP, due to a roll rate slightly slower than required in the first half, passed the 90-degree point with a bank between 10 and 20 degrees shallow. SP recognized the lag against the reference point and increased the roll rate to re-synchronize the maneuver without IP input.",
+        "3": "SP matched roll rate to pitch rate so that bank at each quarter point was within 10 degrees of the briefed value, and the aircraft described a symmetric barrel about the selected reference point.",
+        "4": "SP flew the Barrel Roll with bank within a few degrees of the briefed value at every quarter point, and the displacement about the reference point remained symmetric from entry to recovery.",
+        "marginal": "SP held the Barrel Roll bank inside the standards but the roll rate lagged the pitch rate in the first half and had to be increased over the top. SP should synchronize roll and pitch from the entry and expect the barrel to remain symmetric without a mid-maneuver catch-up."
+      }
+    },
+    {
+      "id": "contact-12-em12",
+      "label": "Barrel Roll - recovery heading",
+      "mif_row": "Barrel Roll",
+      "source": "specific:RECOVERY HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a reference point selected off the wing rather than at 45 degrees as briefed, did not fly the barrel around the intended axis and did not return to the entry heading. Recovery heading was more than 20 degrees off with the aircraft displaced laterally from the entry line, and the IP took the controls to reposition.",
+        "1": "SP, due to a roll that was completed before the pitch returned to the horizon, did not stop the maneuver on the entry heading. Recovery heading was about 20 degrees off and was corrected only after the IP identified the error verbally.",
+        "2": "SP, due to a slightly asymmetric second half of the barrel, recovered between 10 and 20 degrees off the entry heading. SP detected the offset immediately at wings level and turned back onto the entry line promptly, without IP intervention.",
+        "3": "SP completed the Barrel Roll with pitch and roll arriving together at the horizon and recovered within 10 degrees of the entry heading, on the entry line.",
+        "4": "SP recovered from the Barrel Roll within a few degrees of the entry heading and on the original ground track, with wings level and the nose on the horizon at the same instant.",
+        "marginal": "SP recovered inside the heading standards but consistently on one side of the entry heading, showing an asymmetry between the first and second halves of the barrel. SP should balance the two halves about the reference point and expect the recovery heading to be centered on the entry value."
+      }
+    },
+    {
+      "id": "contact-12-em13",
+      "label": "Loop - entry airspeed and energy over the top",
+      "mif_row": "Loop",
+      "source": "specific:AIRSPEED (Start / End) (knots)",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to continuation of the plan after the information that invalidated it had already been received, started the Loop with the entry airspeed still well below the briefed value instead of resetting the maneuver. Airspeed over the top fell more than 10 knots below the minimum briefed value with buffet developing, and the IP took the controls to unload and recover the aircraft.",
+        "1": "SP, due to pressing on with an entry that was known to be slow, did not re-establish the briefed airspeed before applying the pull. Speed at the entry gate was about 10 knots low and the maneuver was reset only after the IP directed it verbally.",
+        "2": "SP, due to a dive angle held slightly short in the acceleration, arrived at the entry gate between 5 and 10 knots slow. SP recognized the shortfall, extended the acceleration and re-entered on speed before the pull, without any IP input.",
+        "3": "SP established the briefed entry airspeed within 10 knots fast and 5 knots slow, applied the briefed G on entry and recovered on the entry speed with the required margin over the top.",
+        "4": "SP arrived at the Loop entry gate within a few knots of the briefed airspeed, maintained the planned energy over the top and recovered on the entry speed without any adjustment of the G schedule.",
+        "marginal": "SP entered the Loop within the airspeed standards but consistently at the slow edge of the band, which left a reduced energy margin at the top. SP should complete the acceleration before starting the pull and expect the entry gate speed to sit on the briefed value rather than at the lower tolerance."
+      }
+    },
+    {
+      "id": "contact-12-em14",
+      "label": "Loop - wings level in the vertical and bank control",
+      "mif_row": "Loop",
+      "source": "specific:BANK (degrees)|general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to rudder not applied against the wing drop as the airspeed decayed toward the top, did not keep the wings level in the vertical plane. Bank at the top exceeded 20 degrees with the nose tracking off the loop plane, and the IP intervened on the controls to prevent departure from controlled flight.",
+        "1": "SP, due to a delayed check of the wing line against the horizon over the top, did not correct the developing bank. Bank reached about 20 degrees in the second half of the Loop and was removed only after the IP called it verbally.",
+        "2": "SP, due to slightly asymmetric aileron pressure in the first quarter, allowed a bank between 10 and 20 degrees to develop before the top. SP identified the wing drop against the horizon and corrected it with coordinated rudder before the descending quarter, without IP input.",
+        "3": "SP held the wings within 10 degrees of level through the whole Loop, using coordinated rudder as the airspeed changed, and the aircraft stayed in the vertical plane throughout.",
+        "4": "SP flew the entire Loop within a few degrees of wings level, with rudder anticipating the airspeed change so that the aircraft remained exactly in the vertical plane from entry to recovery.",
+        "marginal": "SP kept the Loop inside the bank standards but a small wing drop appeared over the top on each repetition and was corrected after it developed. SP should anticipate the rudder requirement as the airspeed decays and expect the wings to remain level without a corrective input over the top."
+      }
+    },
+    {
+      "id": "contact-12-em15",
+      "label": "Loop - recovery heading and completion",
+      "mif_row": "Loop",
+      "source": "specific:RECOVERY HEADING (degrees)|general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a Loop flown out of the vertical plane and not corrected during the descending quarter, did not recover on the entry heading as required by the standardized procedure. Recovery heading was more than 20 degrees off the entry value with the aircraft displaced from the entry line, and the IP took the controls to level and reposition the aircraft.",
+        "1": "SP, due to a residual bank carried through the last quarter, did not align the aircraft with the entry heading before completion. Recovery heading was about 20 degrees off and was corrected only after the IP prompted verbally.",
+        "2": "SP, due to a small heading drift accumulated over the top, recovered between 10 and 20 degrees off the entry heading. SP recognized the offset as the nose came to the horizon and turned back onto the entry line promptly, without IP intervention.",
+        "3": "SP recovered from the Loop within 10 degrees of the entry heading, with wings level and the nose on the horizon at the entry altitude band, in accordance with the standardized procedure.",
+        "4": "SP completed the Loop within a few degrees of the entry heading and on the entry line, with the recovery airspeed, attitude and wings-level condition all arriving together.",
+        "marginal": "SP recovered inside the heading standards but always displaced to the same side of the entry heading, showing a small uncorrected wing drop in the first half of the Loop. SP should keep the wings level from entry and expect the recovery heading to match the entry heading without a closing turn."
+      }
+    },
+    {
+      "id": "contact-12-em16",
+      "label": "Cuban Eight - airspeed on the 45-degree down lines",
+      "mif_row": "Cuban Eight",
+      "source": "specific:AIRSPEED (Start / End) (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the 45-degree down line held far beyond the briefed duration after the half roll, did not control the acceleration between the two halves of the Cuban Eight. Airspeed at the start of the second half was more than 15 knots above the briefed value, the pull was made at excessive energy, and the IP intervened on the controls.",
+        "1": "SP, due to a late recognition of the pull point on the down line, did not begin the second half on the briefed airspeed. Entry speed for the second half was about 15 knots fast and was reduced only after the IP called the deviation verbally.",
+        "2": "SP, due to a slightly extended 45-degree line, started the second half between 10 and 15 knots fast. SP recognized the excess airspeed on the line, shortened the following down line and re-established the briefed entry speed without IP input.",
+        "3": "SP controlled the acceleration on both 45-degree down lines so that each half of the Cuban Eight started within 10 knots fast and 5 knots slow of the briefed airspeed, and the maneuver completed on the entry speed.",
+        "4": "SP flew both down lines to the briefed length with matched airspeeds at each pull point, within a few knots of target, and completed the Cuban Eight on the entry airspeed without any correction.",
+        "marginal": "SP kept the Cuban Eight airspeeds inside the standards but each 45-degree down line ran slightly long, leaving the pull points at the fast edge of the band. SP should fix the pull point by attitude and time on the line, and expect both halves to begin on the briefed airspeed rather than on the upper tolerance."
+      }
+    },
+    {
+      "id": "contact-12-em17",
+      "label": "Cuban Eight - half roll accuracy on the 45-degree line",
+      "mif_row": "Cuban Eight",
+      "source": "specific:BANK (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the half roll started before the 45-degree down attitude was established and with pitch not held during the roll, did not stop the aircraft upright on the line. Bank at the end of the half roll was more than 20 degrees off wings level with the nose dropping toward the vertical, and the IP took the controls to recover.",
+        "1": "SP, due to a roll rate that was not stopped positively at the wings-level point, did not complete the half roll on the 45-degree line as briefed. Residual bank was about 20 degrees and was removed only after the IP prompted verbally.",
+        "2": "SP, due to a slightly early start of the half roll, arrived on the down line with a bank between 10 and 20 degrees. SP identified the residual bank against the horizon and rolled the wings level before the pull, without IP intervention.",
+        "3": "SP established the 45-degree down attitude, executed the half roll at a constant rate and stopped within 10 degrees of wings level, holding the line attitude throughout the roll.",
+        "4": "SP performed both half rolls precisely on the established 45-degree lines, stopping within a few degrees of wings level with the pitch attitude unchanged through each roll.",
+        "marginal": "SP completed the half rolls inside the bank standards but the roll was consistently started before the 45-degree attitude was fully set, leaving a small residual bank at the end. SP should stabilize the down line first and expect each half roll to finish exactly wings level without a follow-up correction."
+      }
+    },
+    {
+      "id": "contact-12-em18",
+      "label": "Cuban Eight - recovery heading at each half",
+      "mif_row": "Cuban Eight",
+      "source": "specific:RECOVERY HEADING (degrees)|general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the absence of a selected reference line for the maneuver axis, did not fly the two halves of the Cuban Eight along the same ground line. Recovery heading at completion was more than 20 degrees off the entry heading with the second half displaced from the first, and the IP intervened to stop the maneuver.",
+        "1": "SP, due to a wing drop over the top of the second half that was not corrected, did not return the aircraft to the entry heading. Recovery heading was about 20 degrees off and was corrected only after a verbal call from the IP.",
+        "2": "SP, due to a small heading drift on the first 45-degree line, completed the Cuban Eight between 10 and 20 degrees off the entry heading. SP recognized the offset at the recovery point and realigned the aircraft on the reference line without IP input.",
+        "3": "SP used the selected reference line to keep both halves of the Cuban Eight on the same axis and recovered within 10 degrees of the entry heading.",
+        "4": "SP flew both halves of the Cuban Eight along the same ground reference and recovered within a few degrees of the entry heading, with the maneuver remaining symmetric about the axis.",
+        "marginal": "SP held the recovery heading inside the standards but the second half of the Cuban Eight was consistently displaced to one side of the reference line. SP should re-acquire the reference on each 45-degree down line and expect both halves to be flown on the same axis."
+      }
+    },
+    {
+      "id": "contact-12-em19",
+      "label": "Immelman - entry airspeed and energy at the top",
+      "mif_row": "Immelman",
+      "source": "specific:AIRSPEED (Start / End) (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a pull initiated before the briefed entry airspeed was reached, did not preserve enough energy to complete the half roll at the top of the Immelman. Airspeed at the top was more than 10 knots below the briefed value with the roll becoming sluggish, and the IP took the controls to unload and recover the aircraft.",
+        "1": "SP, due to a G loading applied above the briefed value in the first half of the pull, did not conserve the energy required at the top. Speed at the top was about 10 knots low and the recovery was completed only after the IP directed it verbally.",
+        "2": "SP, due to a slightly aggressive pull rate, arrived at the top between 5 and 10 knots slow. SP recognized the energy shortfall, relaxed the pull rate for the remainder of the arc and completed the half roll on schedule without IP input.",
+        "3": "SP entered the Immelman on the briefed airspeed within 10 knots fast and 5 knots slow, applied the briefed G and arrived at the top with the planned airspeed margin for the half roll.",
+        "4": "SP entered within a few knots of the briefed airspeed, flew a constant G arc and arrived at the top with the exact energy planned, completing the half roll and level-off with no speed correction.",
+        "marginal": "SP kept the Immelman airspeeds inside the standards but the speed at the top was consistently at the low edge of the band, showing a pull rate slightly above the briefed schedule. SP should moderate the initial G so that the energy at the top sits on the briefed value rather than on the lower tolerance."
+      }
+    },
+    {
+      "id": "contact-12-em20",
+      "label": "Immelman - bank control during the half roll at the top",
+      "mif_row": "Immelman",
+      "source": "specific:BANK (degrees)|general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the half roll started before the nose reached the horizon and with back pressure still applied, did not stop the aircraft upright and wings level at the top of the Immelman. Bank at the completion of the roll was more than 20 degrees with the nose falling below the horizon, and the IP intervened on the controls to recover.",
+        "1": "SP, due to a roll rate that was not stopped positively, did not level the wings at the end of the half roll. Residual bank was about 20 degrees and was removed only after a verbal prompt from the IP.",
+        "2": "SP, due to a late start of the half roll, finished with a bank between 10 and 20 degrees while the nose settled onto the horizon. SP identified the residual bank immediately and rolled level without IP intervention.",
+        "3": "SP began the half roll as the nose reached the horizon, unloaded appropriately and stopped the roll within 10 degrees of wings level with the aircraft in level flight.",
+        "4": "SP timed the half roll precisely to the horizon, held a constant roll rate and stopped within a few degrees of wings level, with the level-off and roll completion coinciding exactly.",
+        "marginal": "SP finished the Immelman inside the bank standards but the roll was consistently started slightly late, leaving a small residual bank as the nose reached the horizon. SP should time the roll input to the horizon and expect the wings to stop level without a follow-up correction."
+      }
+    },
+    {
+      "id": "contact-12-em21",
+      "label": "Immelman - recovery heading on the reciprocal",
+      "mif_row": "Immelman",
+      "source": "specific:RECOVERY HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a wing drop during the vertical segment that was left uncorrected, did not bring the aircraft onto the reciprocal of the entry heading. Recovery heading was more than 20 degrees off the required value and the aircraft was displaced from the entry line, and the IP took the controls to realign it.",
+        "1": "SP, due to uncoordinated rudder during the half roll, did not stop the aircraft on the reciprocal heading. Recovery heading was about 20 degrees off and was corrected only after the IP called the deviation.",
+        "2": "SP, due to a small heading drift accumulated during the pull, recovered between 10 and 20 degrees off the reciprocal. SP detected the offset at the level-off and corrected onto the required heading promptly, without IP input.",
+        "3": "SP kept the aircraft in the vertical plane through the pull and recovered within 10 degrees of the reciprocal of the entry heading, wings level and in level flight.",
+        "4": "SP flew the Immelman exactly in the vertical plane and recovered within a few degrees of the reciprocal heading, with heading, attitude and airspeed all established at the same moment.",
+        "marginal": "SP recovered inside the heading standards but consistently to the same side of the reciprocal, showing a small uncorrected wing drop during the vertical segment. SP should hold the wings level through the pull and expect the recovery heading to be achieved without a closing turn."
+      }
+    },
+    {
+      "id": "contact-12-em22",
+      "label": "Split S - entry airspeed and speed control in the pull-through",
+      "mif_row": "Split S",
+      "source": "specific:AIRSPEED (Start / End) (knots)",
+      "hf_concept": "hf-overconfidence",
+      "texts": {
+        "0": "SP, due to overconfidence in the margin available at that airspeed and bank, entered the Split S above the briefed speed and did not control the acceleration in the descending half. Recovery airspeed was more than 15 knots above the briefed value with the recovery completed low in the block, and the IP took the controls to arrest the descent.",
+        "1": "SP, due to an entry flown faster than briefed in the expectation that the pull would absorb it, did not stabilize the aircraft on the entry speed before rolling inverted. Recovery airspeed reached about 15 knots fast and was reduced only after the IP called it verbally.",
+        "2": "SP, due to a slightly high entry speed, completed the pull-through between 10 and 15 knots fast. SP recognized the excess energy during the descent, increased back pressure within limits and recovered on the briefed profile without IP input.",
+        "3": "SP established the briefed entry airspeed within 10 knots fast and 5 knots slow, rolled inverted and pulled through with the airspeed remaining inside the briefed schedule at recovery.",
+        "4": "SP entered the Split S within a few knots of the briefed airspeed and controlled the pull so that the recovery speed matched the briefed value exactly, with altitude loss as planned.",
+        "marginal": "SP kept the Split S airspeeds inside the standards but entered on the fast side of the band every time, which increased the altitude used in the pull-through. SP should stabilize on the briefed entry speed before rolling inverted and expect the recovery speed to sit on target rather than at the upper tolerance."
+      }
+    },
+    {
+      "id": "contact-12-em23",
+      "label": "Split S - inverted roll accuracy and bank before the pull",
+      "mif_row": "Split S",
+      "source": "specific:BANK (degrees)|general:b",
+      "hf_concept": "hf-spatial-disorientation",
+      "texts": {
+        "0": "SP, due to a false attitude perception in the inverted position that was not resolved against the instruments, did not stop the roll at the wings-level inverted attitude before applying back pressure. Bank at the start of the pull was more than 20 degrees off the required attitude, the aircraft sliced into a descending spiral, and the IP intervened on the controls to recover.",
+        "1": "SP, due to disorientation on entering the inverted attitude, did not check the wing line before starting the pull. Bank at the pull point was about 20 degrees off and the aircraft was realigned only after the IP prompted verbally.",
+        "2": "SP, due to a brief attitude misperception after the roll, began the pull with a bank between 10 and 20 degrees. SP cross-checked the attitude indicator against the horizon, removed the residual bank early in the pull and continued the maneuver without IP intervention.",
+        "3": "SP rolled to wings-level inverted, confirmed the attitude against the horizon and the instruments, and started the pull with bank within 10 degrees of the required attitude.",
+        "4": "SP rolled inverted at a constant rate, stopped within a few degrees of the wings-level inverted attitude and held that alignment through the entire pull-through, with no lateral excursion.",
+        "marginal": "SP started the pull inside the bank standards but the roll was routinely stopped with a small residual bank that was accepted rather than removed. SP should confirm the wings-level inverted attitude before applying back pressure and expect the pull to begin from an exactly aligned attitude."
+      }
+    },
+    {
+      "id": "contact-12-em24",
+      "label": "Split S - recovery heading on the reciprocal",
+      "mif_row": "Split S",
+      "source": "specific:RECOVERY HEADING (degrees)|general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a residual bank carried into the pull-through, did not recover on the reciprocal of the entry heading as required by the standardized procedure. Recovery heading was more than 20 degrees off the required value with the aircraft displaced from the entry line, and the IP took the controls to level and realign the aircraft.",
+        "1": "SP, due to uncoordinated inputs during the descending half, did not stop the aircraft on the reciprocal heading. Recovery heading was about 20 degrees off and was corrected only after the IP identified it verbally.",
+        "2": "SP, due to a small misalignment at the start of the pull, recovered between 10 and 20 degrees off the reciprocal. SP recognized the offset as the nose came to the horizon and turned onto the required heading without any IP input.",
+        "3": "SP completed the Split S within 10 degrees of the reciprocal of the entry heading, arriving wings level in level flight at the briefed altitude band.",
+        "4": "SP recovered from the Split S within a few degrees of the reciprocal heading, with wings level, nose on the horizon and briefed airspeed established simultaneously and no post-recovery correction.",
+        "marginal": "SP recovered inside the heading standards but always on the same side of the reciprocal, indicating a small residual bank carried into the pull. SP should confirm the alignment before the pull and expect the recovery heading to be achieved directly rather than after a correcting turn."
+      }
+    },
+    {
+      "id": "contact-12-em25",
+      "label": "Cloverleaf - airspeed at entry and at each recovery",
+      "mif_row": "Cloverleaf",
+      "source": "specific:AIRSPEED (Start / End) (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to failure to re-establish the entry parameters between the leaves, did not start each quadrant of the Cloverleaf on the briefed airspeed. Entry speed for the third leaf was more than 10 knots low with the aircraft slow over the top and buffet developing, and the IP took the controls to unload and recover.",
+        "1": "SP, due to a shortened acceleration segment between leaves, did not restore the briefed entry speed before the next pull. Entry airspeed was about 10 knots low and the maneuver was reset only after the IP directed it verbally.",
+        "2": "SP, due to an inconsistent dive angle between the leaves, entered one quadrant between 5 and 10 knots slow. SP recognized the shortfall at the entry gate, extended the acceleration for the following leaf and restored the briefed speed without IP input.",
+        "3": "SP re-established the briefed entry airspeed before each leaf, within 10 knots fast and 5 knots slow, and finished the Cloverleaf on the entry airspeed.",
+        "4": "SP entered every leaf of the Cloverleaf within a few knots of the briefed airspeed and recovered each time on the same value, so that all four quadrants were flown with an identical energy profile.",
+        "marginal": "SP kept the Cloverleaf entry speeds inside the standards but they degraded progressively from the first leaf to the last, showing an acceleration segment that was cut short as the maneuver went on. SP should restore the full entry parameters between leaves and expect the last quadrant to be flown on the same airspeed as the first."
+      }
+    },
+    {
+      "id": "contact-12-em26",
+      "label": "Cloverleaf - bank and 90-degree heading change over the top of each leaf",
+      "mif_row": "Cloverleaf",
+      "source": "specific:BANK (degrees)|general:a",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to task sequencing that concentrated all cockpit workload inside the turn over the top, did not set the bank required to produce the 90-degree heading change at the low airspeed portion of the leaf. Bank over the top departed the briefed value by more than 20 degrees with the nose slicing away from the plane of the leaf, and the IP intervened on the controls.",
+        "1": "SP, due to saturation during the pull and roll combination, did not hold the briefed bank through the top of the leaf. Bank was about 20 degrees off the briefed value and was corrected only after the IP made a verbal call.",
+        "2": "SP, due to bank applied later than briefed after the vertical, passed over the top with a deviation between 10 and 20 degrees. SP recognized that the heading change would be short, adjusted bank during the descending quarter and completed the leaf correctly, without IP input.",
+        "3": "SP applied the briefed bank over the top of each leaf within 10 degrees, producing an accurate 90-degree heading change per quadrant in accordance with the standardized procedure.",
+        "4": "SP flew all four leaves with bank over the top within a few degrees of the briefed value, and each quadrant produced an exact 90-degree heading change with no adjustment during the descent.",
+        "marginal": "SP kept the Cloverleaf bank inside the standards but the bank over the top was consistently applied late, so each 90-degree change was completed during the descending quarter. SP should distribute the workload so the roll begins as the nose passes the vertical and expect each leaf to be complete at the top."
+      }
+    },
+    {
+      "id": "contact-12-em27",
+      "label": "Cloverleaf - recovery heading at each quadrant",
+      "mif_row": "Cloverleaf",
+      "source": "specific:RECOVERY HEADING (degrees)|general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the absence of selected outside references for the four cardinal directions, did not complete each leaf on the intended 90-degree increment. Recovery heading after the second leaf was more than 20 degrees off the required value and the pattern was no longer aligned with the entry axis, and the IP stopped the maneuver and repositioned the aircraft.",
+        "1": "SP, due to references identified only after the maneuver had started, did not stop each leaf on the required heading. Recovery heading errors reached about 20 degrees and were corrected only after the IP prompted verbally.",
+        "2": "SP, due to a late transition back to the outside reference in the descending quarter, completed one leaf between 10 and 20 degrees off the required heading. SP recognized the error at the recovery point and re-established the correct axis for the following leaf without IP intervention.",
+        "3": "SP selected outside references before entry and recovered from each leaf within 10 degrees of the required heading, so that the four quadrants closed back onto the entry heading.",
+        "4": "SP completed each leaf within a few degrees of the required heading and finished the Cloverleaf on the entry heading, with the whole pattern remaining symmetric about the selected references.",
+        "marginal": "SP held every leaf inside the heading standards but the errors accumulated in the same direction across the four quadrants, leaving the last recovery near the tolerance edge. SP should re-acquire the outside reference on each leaf and expect the pattern to close back onto the entry heading without a final correction."
+      }
+    },
+    {
+      "id": "contact-12-em28",
+      "label": "Standardized maneuver procedures and pre-maneuver checks",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-normalization-of-deviance",
+      "texts": {
+        "0": "SP, due to acceptance of a previously uncorrected deviation as the new working standard, did not fly the aerobatic maneuvers according to the standardized procedures described in the Techniques and Procedures Manual and omitted the pre-maneuver clearing turn and checks. The sequence was flown outside the published entry parameters with the aircraft displaced from the assigned altitude block, and the IP took the controls and terminated the sequence.",
+        "1": "SP, due to a personal technique retained from earlier sorties in place of the published one, did not apply the standardized entry and recovery procedures for each maneuver. Several published steps were omitted or reordered and the correct sequence was flown only after the IP restated it verbally.",
+        "2": "SP, due to a habitual shortcut in the pre-maneuver flow, omitted one item of the published clearing procedure before the first maneuver. SP recognized the omission before entry, completed the check and flew the remaining maneuvers to the published procedure without IP input.",
+        "3": "SP flew each aerobatic maneuver according to the standardized procedures of the Techniques and Procedures Manual, with the clearing turn, altitude block check and entry parameters completed before every entry.",
+        "4": "SP executed the full aerobatic sequence exactly as published, with every pre-maneuver check, entry gate and recovery step performed in order and without prompting, and the sequence remained inside the assigned area and altitude block throughout.",
+        "marginal": "SP applied the standardized procedures but with a personal variation in the pre-maneuver flow that was carried into every entry. SP should fly the published sequence as written and expect the technique to be identical from one maneuver to the next rather than adapted by habit."
+      }
+    },
+    {
+      "id": "contact-12-em29",
+      "label": "Smooth and positive aircraft control and stall avoidance",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": "hf-acts-errors",
+      "texts": {
+        "0": "SP, due to a skill-based error in control input during the recovery, did not control the aircraft in a smooth and solid way and allowed the angle of attack to rise uncontrolled at low airspeed. The aircraft entered a stall with wing drop during the maneuver, and the IP took the controls to complete the stall recovery.",
+        "1": "SP, due to an over-controlled response to the developing buffet, did not apply the smooth and progressive inputs required at low airspeed. Approach-to-stall indications persisted at the top of the maneuver and the aircraft was unloaded only after the IP directed it verbally.",
+        "2": "SP, due to abrupt back pressure at entry, produced a G excursion and an early buffet during the pull. SP relaxed the input immediately, restored a smooth loading schedule and completed the maneuver without approaching the stall and without IP intervention.",
+        "3": "SP controlled the aircraft with smooth and solid inputs throughout the aerobatic sequence, applying the briefed G progressively and keeping the angle of attack clear of stall indications in every maneuver.",
+        "4": "SP flew the whole sequence with continuously smooth control inputs and a stable G schedule, with no buffet at any point, so that each maneuver looked identical in loading from entry to recovery.",
+        "marginal": "SP controlled the aircraft within standards but the initial pull of each maneuver was applied more sharply than the remainder, producing a brief G overshoot. SP should apply the loading progressively from the entry and expect the G trace to be smooth for the whole maneuver."
+      }
+    },
+    {
+      "id": "contact-12-em30",
+      "label": "Use of outside visual cues and reference lines",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to situational awareness limited to the instrument in use, did not use outside visual cues or reference lines to fly the aerobatic maneuvers and lost track of the aircraft position within the assigned area. The maneuvers were flown without a maneuvering axis and the aircraft approached the area boundary, and the IP took the controls to reposition it.",
+        "1": "SP, due to attention concentrated on the attitude indicator, did not establish reference lines before entry and did not check position within the area between maneuvers. The sequence was flown off any consistent axis and outside references were used only after the IP directed it.",
+        "2": "SP, due to a delayed transition from the instruments to the outside references after each entry, flew the first maneuvers without a defined axis. SP identified suitable ground reference lines, re-established the maneuvering axis for the remaining maneuvers and kept the aircraft inside the area without IP input.",
+        "3": "SP selected outside visual cues and reference lines before each maneuver, used them for entry, reversal and recovery, and maintained awareness of the aircraft position within the assigned area throughout the sequence.",
+        "4": "SP flew the complete aerobatic sequence on a consistent visual axis, using the horizon and selected ground references for every entry and recovery, while maintaining continuous awareness of the area boundaries and the altitude block.",
+        "marginal": "SP used outside references but returned to the attitude indicator as the primary source in the higher-workload portions of each maneuver. SP should build the maneuvers on the outside picture with the instruments as a cross-check, and expect the axis to be held visually throughout the sequence."
+      }
+    }
+  ]
+}

@@ -122,7 +122,16 @@ async function selectItem(it, btn) {
    Below MIF -> the mode's text for the achieved level; at MIF -> marginal; above -> positive + closing. */
 function expandV2(data) {
   const obs = [];
+  const rowName = (v) => {
+    if (v == null) return null;
+    if (typeof v === "number") {
+      const r = (data.mif_rows || []).find((x) => x.sn === v);
+      return r ? r.row_name : String(v);
+    }
+    return v;
+  };
   for (const m of data.error_modes || []) {
+    m.mif_row = rowName(m.mif_row);
     for (let d = 0; d <= 3; d++) {
       for (let a = 0; a <= 4; a++) {
         let text, variant;

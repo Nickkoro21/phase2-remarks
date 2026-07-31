@@ -1,0 +1,132 @@
+{
+  "item_id": "instrument-05",
+  "item_name": "STEEP TURNS",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [5],
+  "mif_rows": [
+    {"sn": 5, "row_name": "Steep Turns"}
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-05-em01",
+      "label": "Altitude control during the sustained turn",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient back pressure and nose-up trim at roll-in to 60 degrees of bank, did not maintain the entry altitude and allowed the aircraft to descend beyond the 300 ft tolerance. The descent rate continued to increase because the pitch correction was never applied. The IP directed a recovery and took the controls to arrest the descent, and the turn was discontinued before the determined heading.",
+        "1": "SP, due to a late and insufficient pitch input at 60 degrees of bank, did not hold the entry altitude and reached the 300 ft limit. The descent was arrested only after repeated verbal prompting from the IP, and the correction was applied well after the trend was displayed on the VSI. SP regained the entry altitude only after the turn had passed 180 degrees of heading change.",
+        "2": "SP, due to a delayed increase in back pressure at roll-in, allowed the altitude to deviate between 150 and 300 ft below the entry value. SP recognized the trend on the altimeter and VSI and applied a timely pitch and trim correction without any IP intervention. The remainder of the turn was flown within the entry altitude tolerance.",
+        "3": "SP maintained the entry altitude within 150 ft throughout both the 45 and the 60 degree bank turns. Pitch and trim corrections were small, prompt and accurate, and the altimeter was returned to the entry value as soon as a trend appeared. Altitude control was not degraded by the increase of bank.",
+        "4": "SP held the entry altitude with negligible excursions during both steep turns, with the altimeter effectively steady through roll-in, sustained turn and roll-out. Pitch inputs were smooth and anticipatory rather than corrective, so no deviation was allowed to develop at any point of the 360 degrees of heading change.",
+        "marginal": "SP kept the altitude within the standards but consistently in the lower part of the tolerance during the 60 degree bank turn, and each correction was applied only after the deviation had built. The tendency is a late recognition of the descent immediately after roll-in. SP is expected to lead the pitch and trim input at roll-in so that the altitude trace stays close to the entry value."
+      }
+    },
+    {
+      "id": "instrument-05-em02",
+      "label": "Airspeed control through roll-in and sustained turn",
+      "mif_row": null,
+      "source": "specific:SPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power not being advanced with the increase of bank to 60 degrees, did not maintain the entry speed and allowed it to decay beyond the 20 kt tolerance while the load factor increased. The deceleration was not recognized and no power correction was made. The IP intervened with a power and bank reduction to restore the entry speed.",
+        "1": "SP, due to a power setting left unchanged from the 45 degree bank turn, did not hold the entry speed and reached the 20 kt limit at 60 degrees of bank. SP added power only after the IP called the airspeed twice, and the correction was late enough that the speed remained at the limit for a large part of the turn. The entry speed was re-established only near the roll-out heading.",
+        "2": "SP, due to a power increase applied after rather than with the roll-in, allowed the speed to deviate between 10 and 20 kt from the entry value. SP detected the trend on the airspeed indicator and restored the entry speed with a timely power correction, without IP intervention. Speed was then held within tolerance for the remainder of the maneuver.",
+        "3": "SP maintained the entry speed within 10 kt for both steep turns. Power was advanced together with the roll-in and reduced with the roll-out, so the airspeed indicator remained essentially at the briefed value. No overshoot of the entry speed occurred at roll-out.",
+        "4": "SP held the entry speed with negligible variation through roll-in, sustained turn and roll-out at both 45 and 60 degrees of bank. Power was matched to the bank change so precisely that the airspeed indicator showed no perceptible trend during the maneuver.",
+        "marginal": "SP kept the airspeed within the standards but repeatedly toward the low side of the tolerance in the 60 degree bank turn, with power corrections applied after the deceleration had become visible. The tendency is a power input that lags the bank input. SP is expected to advance the power as the bank is increased so that the entry speed is held rather than recovered."
+      }
+    },
+    {
+      "id": "instrument-05-em03",
+      "label": "Roll-out on the determined heading",
+      "mif_row": null,
+      "source": "specific:HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to no lead point being computed for the 360 degree heading change, did not roll out on the determined heading and passed it by more than 10 degrees. The overshoot was not corrected and SP continued the turn while searching for the exit heading. The IP had to direct the roll-out and establish the aircraft on the briefed heading.",
+        "1": "SP, due to a roll-out initiated abeam the exit heading instead of at a computed lead point, did not stop the turn on the determined heading and finished at the 10 degree limit. The heading was regained only after the IP prompted the correction, and the return to the exit heading was delayed. SP required a second correcting turn to settle on the briefed heading.",
+        "2": "SP, due to an insufficient lead applied at high bank, rolled out between 5 and 10 degrees past the determined heading. SP identified the overshoot on the HSI and corrected it promptly with a shallow turn, without IP intervention. The exit heading was then held steady.",
+        "3": "SP rolled out on the determined heading within 5 degrees after the 360 degree heading change. The lead point was applied correctly for the bank angle used, and the aircraft was steady on the exit heading immediately after the roll-out.",
+        "4": "SP completed the 360 degree heading change and rolled out essentially on the determined heading, with no correcting turn required. The lead was judged accurately for both the 45 and the 60 degree bank turns and the aircraft settled on the exit heading with the roll-out.",
+        "marginal": "SP rolled out within the standards but consistently past the determined heading, requiring a small correcting turn after each maneuver. The tendency is an under-estimated lead point at 60 degrees of bank. SP is expected to compute the lead from the bank angle and rate of turn so that the roll-out terminates on the exit heading without a follow-up correction."
+      }
+    },
+    {
+      "id": "instrument-05-em04",
+      "label": "Bank angle precision at 45 and 60 degrees",
+      "mif_row": null,
+      "source": "specific:BANK (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unstabilized roll-in and continuous aileron inputs, did not maintain the briefed bank angle and exceeded the 10 degree tolerance, with the bank oscillating around the target value. The excursion toward the steeper side was accompanied by an increasing descent and was not arrested. The IP intervened to reduce the bank and stabilize the attitude.",
+        "1": "SP, due to attention held on the altimeter instead of the attitude indicator, did not hold the briefed bank angle and reached the 10 degree limit. The bank was reset to the briefed value only after the IP called it, and the correction was late. The same drift in bank reappeared before the roll-out heading.",
+        "2": "SP, due to a roll-in that overshot the target attitude, allowed the bank to deviate between 5 and 10 degrees from the briefed value. SP recognized the deviation on the attitude indicator and returned the bank to the briefed angle promptly, without IP intervention. The bank was then held steady for the remainder of the turn.",
+        "3": "SP established and maintained the briefed bank angle within 5 degrees for both the 45 and the 60 degree turns. The roll-in stopped at the target attitude without overshoot and the bank was held constant with small aileron inputs.",
+        "4": "SP set the briefed bank angle precisely at roll-in and held it with negligible variation throughout each turn. The attitude indicator showed a constant bank at both 45 and 60 degrees, with no oscillation and no need to reset the attitude during the maneuver.",
+        "marginal": "SP held the bank within the standards but with a repeated shallowing tendency in the 60 degree turn, each time reset only after the altitude began to increase. The tendency is a bank angle used to correct altitude instead of pitch and power. SP is expected to hold the briefed bank as a fixed reference and to control altitude with pitch and trim."
+      }
+    },
+    {
+      "id": "instrument-05-em05",
+      "label": "Instrument cross-check under increased bank",
+      "mif_row": null,
+      "source": "general:execution,conditions",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an interrupted instrument cross-check that fixed on the attitude indicator alone, did not monitor altitude and airspeed during the 60 degree bank turn. Both parameters left the code 1 tolerance simultaneously before any correction was attempted. The IP intervened and took the controls to re-establish the entry parameters.",
+        "1": "SP, due to a cross-check that omitted the altimeter for long periods of the turn, did not detect the developing deviations until they had reached the code 1 tolerance. Corrections were made only after the IP called each parameter in turn. The scan was re-established late and the remaining part of the turn was flown at the limit of the standards.",
+        "2": "SP, due to a cross-check that slowed when the bank was increased to 60 degrees, allowed altitude and heading to deviate into the band between the code 3 and the code 1 tolerance. SP re-established a complete scan of the attitude indicator, altimeter, airspeed indicator and HSI and corrected both parameters in time, without IP intervention.",
+        "3": "SP maintained a complete and continuous instrument cross-check throughout both steep turns, returning to the attitude indicator between each supporting instrument. Deviations were detected while still small and all parameters were held within the code 3 tolerances.",
+        "4": "SP sustained a fast and complete instrument cross-check at both bank angles, so that trends in altitude, airspeed, heading and bank were identified before they produced any measurable deviation. The scan rate was not affected by the increase of bank or by the workload of the roll-out.",
+        "marginal": "SP maintained an adequate cross-check and stayed within the standards, but the scan visibly narrowed toward the attitude indicator during the 60 degree bank turn and the supporting instruments were sampled less often. The tendency is a scan that concentrates under workload. SP is expected to keep the full instrument cross-check at the same rate at both bank angles."
+      }
+    },
+    {
+      "id": "instrument-05-em06",
+      "label": "Entry and roll-out technique, power and trim coordination",
+      "mif_row": null,
+      "source": "general:execution",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to roll, power and trim inputs applied separately and out of sequence, did not establish the steep turn from the briefed entry parameters and arrived at 60 degrees of bank with the aircraft out of trim. Altitude and airspeed both diverged past the code 1 tolerance during the entry. The IP took the controls and re-established the entry conditions before the maneuver could be continued.",
+        "1": "SP, due to back pressure and power added only after the bank was set, did not perform a coordinated entry and reached the code 1 tolerance in altitude during the roll-in. The aircraft was left out of trim for most of the turn and SP re-trimmed only after the IP pointed it out. The roll-out was equally uncoordinated and required prompting to complete.",
+        "2": "SP, due to a trim input that lagged the pitch and power changes, entered the turn with control forces that produced a deviation between the code 3 and the code 1 tolerance in altitude. SP recognized the out-of-trim condition, re-trimmed and stabilized the turn in time and without IP intervention. The roll-out was then flown with the correct sequence of inputs.",
+        "3": "SP entered each steep turn with bank, back pressure, power and trim applied together, so that the aircraft was stabilized on the briefed parameters immediately after roll-in. The roll-out was flown with the reverse sequence and the aircraft was returned to level flight in trim and on the entry parameters.",
+        "4": "SP flew the entry and the roll-out of both steep turns with fully coordinated bank, pitch, power and trim inputs, so that the aircraft was in trim and on parameters at every stage of the maneuver. No control force was carried into the sustained turn and no parameter was disturbed by the roll-out.",
+        "marginal": "SP flew the entries and roll-outs within the standards, but the trim input consistently followed the pitch and power changes instead of accompanying them, leaving residual control forces in the first part of each turn. The tendency is a technique that stabilizes the aircraft after the entry rather than during it. SP is expected to apply bank, back pressure, power and trim as one coordinated sequence."
+      }
+    },
+    {
+      "id": "instrument-05-em07",
+      "label": "Recognition and correction of developing deviations",
+      "mif_row": null,
+      "source": "general:execution,conditions",
+      "hf_concept": "hf-breaking-the-error-chain",
+      "texts": {
+        "0": "SP, due to a failure to break the error chain at the first recognizable deviation, continued the turn while altitude, airspeed and bank deteriorated together past the code 1 tolerances. No reset of the maneuver was attempted although the parameters had clearly been exceeded. The IP terminated the turn and took the controls to recover the aircraft.",
+        "1": "SP, due to continuation of the maneuver after the first parameter had been exceeded, allowed a second parameter to reach the code 1 tolerance before any correction was made. The corrections were applied only in response to verbal direction from the IP and were made one parameter at a time. The turn was completed at the limit of the standards.",
+        "2": "SP, due to a delayed response to the first deviation, allowed the parameter to move into the band between the code 3 and the code 1 tolerance before correcting. SP then interrupted the developing sequence, corrected the deviation and prevented any further parameter from being affected, without IP intervention. The maneuver was completed within the standards.",
+        "3": "SP identified each developing deviation early and corrected it before any other parameter was affected. Corrections were applied one at a time, in the correct order of priority, and the maneuver was completed with all parameters inside the code 3 tolerances.",
+        "4": "SP anticipated the developing trends and corrected them while they were still negligible, so that no deviation in one parameter ever propagated to another. The maneuver was flown as a continuously stabilized turn from entry to roll-out at both bank angles.",
+        "marginal": "SP corrected every deviation and remained within the standards, but the corrections were reactive and applied only once the parameter had visibly moved, with two of them coinciding. The tendency is a late interruption of a developing sequence of small errors. SP is expected to act on the first indication of a trend so that corrections remain single and small."
+      }
+    },
+    {
+      "id": "instrument-05-em08",
+      "label": "Use of instrument references only and disorientation management",
+      "mif_row": null,
+      "source": "general:execution,conditions",
+      "hf_concept": "hf-spatial-disorientation",
+      "texts": {
+        "0": "SP, due to a false attitude perception at 60 degrees of bank that was not resolved against the instruments, did not fly the maneuver on instrument references only and made control inputs against the indicated attitude. Bank and altitude were driven past the code 1 tolerances and the deviation continued to grow. The IP took the controls, levelled the aircraft and re-established the entry parameters.",
+        "1": "SP, due to a delayed transition back to the instrument references after a false sensation of bank, did not maintain the briefed attitude and reached the code 1 tolerance in bank and altitude. SP returned to the attitude indicator only after the IP directed it, and the correction was applied late. The remainder of the maneuver was flown with a hesitant acceptance of the indicated attitude.",
+        "2": "SP, due to a conflicting sensation during the roll-in to 60 degrees of bank, briefly hesitated to accept the indicated attitude and allowed bank and altitude to deviate between the code 3 and the code 1 tolerance. SP resolved the perception against the attitude indicator, disregarded the sensation and restored the briefed parameters in time, without IP intervention.",
+        "3": "SP flew both steep turns on instrument references only, disregarding conflicting sensations and controlling the aircraft from the indicated attitude throughout. All parameters were held within the code 3 tolerances and no reliance on the external horizon was observed.",
+        "4": "SP flew the entire maneuver from the flight instruments with complete acceptance of the indicated attitude, showing no hesitation at either bank angle and no reference to the outside horizon. Control inputs followed the instrument indications smoothly from entry to roll-out.",
+        "marginal": "SP flew the turns within the standards but showed a brief hesitation in accepting the indicated attitude at roll-in to 60 degrees of bank, with a short glance outside before returning to the instruments. The tendency is an incomplete commitment to the instrument references under increased bank. SP is expected to control the aircraft from the attitude indicator alone and to disregard conflicting sensations without interruption of the scan."
+      }
+    }
+  ]
+}

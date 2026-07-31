@@ -1,0 +1,117 @@
+{
+  "item_id": "instrument-12",
+  "item_name": "COURSE INTERCEPTS",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [12],
+  "mif_rows": [
+    {"sn": 12, "row_name": "Course Intercepts"}
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-12-em01",
+      "label": "Course deviation from the assigned radial",
+      "mif_row": null,
+      "source": "specific:DEVIATION (radials)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a correction started only after the CDI had already moved well off centre, did not stop the deviation from the assigned radial. Course error exceeded 8 deg and kept increasing, with the aircraft crossing the course a second time before any adequate heading was flown. IP intervened and directed the heading required to regain the assigned radial.",
+        "1": "SP, due to corrections sized without regard to the drift already present, did not arrest the deviation from the assigned radial. Course error reached 8 deg and stayed at that value until the IP prompted verbally. SP then regained the course, but the recovery followed the prompt and was not initiated by SP.",
+        "2": "SP, due to late recognition of the CDI trend, did not begin the correction at the first indication of drift off the assigned radial. Course error reached 7 deg before an adequate intercept heading was applied. SP recognized the deviation and returned inside 5 deg in good time and without IP intervention.",
+        "3": "SP maintained the assigned radial within 5 deg throughout the intercept and the tracking that followed. Corrections were applied at the first CDI movement and were sized so that the course was regained without overshoot.",
+        "4": "SP held the assigned radial with the CDI centred, with deviations not exceeding 1 to 2 deg at any point of the intercept. Each correction was anticipated from the rate of needle movement rather than from its displacement, so the course was flown with no visible needle excursion.",
+        "marginal": "SP kept the course deviation inside the 5 deg standard, but the CDI was repeatedly allowed to reach about 4 deg before a correction was applied. The corrections were triggered by displacement rather than by trend, which left a thin margin to the standard on the outbound leg. SP is expected to correct at the first needle movement so that the deviation stays within 2 to 3 deg."
+      }
+    },
+    {
+      "id": "instrument-12-em02",
+      "label": "Solution of the intercept problem and choice of intercept angle",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to an incomplete mental model of the intercept sequence that was not updated when the clearance changed, did not solve the problem of the course intercept according to the standardized procedures of AFMAN 11-202 VOL3. SP turned in the wrong direction for the assigned radial and established a heading that diverged from the course. Deviation opened past 8 deg and IP intervened to set the correct intercept heading.",
+        "1": "SP, due to an aircraft state that had diverged from the SP's mental model without being reassessed, did not determine the required intercept angle before starting the turn. The angle selected was too small for the displacement and the deviation held at 8 deg with no closure on the course. SP revised the angle only after the IP identified the error verbally.",
+        "2": "SP, due to retention of the briefed mental model after the assigned radial had been changed, did not compute the intercept from the current position relative to the course. The first intercept heading was in error and the deviation grew to 7 deg. SP reassessed the geometry, selected an adequate angle and regained the course inside 5 deg without IP intervention.",
+        "3": "SP solved the intercept problem correctly, determining the direction of turn and the intercept angle from the current position relative to the assigned course, in accordance with the standardized procedures. The selected angle brought the aircraft onto the course without overshoot and without any prompt from the IP.",
+        "4": "SP solved the intercept problem immediately and without hesitation, matching the intercept angle to both the displacement and the closure rate. The solution was stated before the turn, required no revision on any of the intercepts, and the course was joined with the CDI centred.",
+        "marginal": "SP solved the intercept problem correctly, but only after a pause during which the aircraft continued away from the assigned course. No deviation exceeded the standard, yet each solution was reached late enough that a larger intercept angle was then needed to recover the displacement. SP is expected to determine the direction of turn and the intercept angle before the displacement grows."
+      }
+    },
+    {
+      "id": "instrument-12-em03",
+      "label": "Lead point and rollout onto the course",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a high intercept angle flown with no lead computed for the closure rate, did not use the appropriate lead when rolling out on the assigned course. SP flew through the course and reached a deviation beyond 8 deg on the opposite side. IP intervened and directed the turn back to the assigned radial.",
+        "1": "SP, due to a lead taken from the CDI centring instead of from the closure rate, did not start the rollout in time on the assigned course. The overshoot reached 8 deg before any correction began, and the correction started only after the IP called the overshoot. SP then re-intercepted, but the recovery followed the prompt rather than SP's own assessment.",
+        "2": "SP, due to an underestimated closure rate on a 45 deg intercept, did not apply the appropriate lead when joining the assigned course. The overshoot reached 7 deg on the far side of the course. SP recognized it at once, re-intercepted and settled inside 5 deg without IP intervention.",
+        "3": "SP used the appropriate lead for the intercept angle and closure rate flown, beginning the rollout so that the aircraft settled on the assigned course within 5 deg. No overshoot required a second intercept and no prompting was needed.",
+        "4": "SP judged the lead precisely at every intercept angle flown, rolling out so that the CDI centred as the wings came level. The course was joined without overshoot and without any subsequent correction on any of the intercepts.",
+        "marginal": "SP used a lead that placed the aircraft on course within the standard, but the rollout consistently ended 3 to 4 deg on the far side before the course settled. The rollout was started late at the higher intercept angles. SP is expected to scale the lead with the closure rate so that the course is joined without crossing it."
+      }
+    },
+    {
+      "id": "instrument-12-em04",
+      "label": "Inbound and outbound tracking and wind correction",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a wind correction angle that was never established after the course was joined, did not execute the inbound and outbound tracking timely and correctly. Drift accumulated on both legs and the deviation passed 8 deg without any heading change. IP intervened and set the heading required to hold the assigned course.",
+        "1": "SP, due to corrections applied in fixed increments without bracketing the drift, did not track the assigned radial correctly. The deviation stabilized at 8 deg with no wind correction angle established. SP bracketed the drift and regained the course only after verbal direction from the IP.",
+        "2": "SP, due to a wind correction angle carried over unchanged from the inbound to the outbound leg, did not adjust the heading for the reversed drift after the course reversal. The deviation opened to 6 deg outbound. SP recognized the trend, bracketed the drift and regained the course inside 5 deg on his own.",
+        "3": "SP executed the inbound and outbound tracking timely and correctly, establishing a wind correction angle that held the deviation within 5 deg on both legs. Corrections were bracketed and reduced in size as the drift was identified.",
+        "4": "SP established the wind correction angle within the first seconds of each leg and held the assigned course with the CDI centred inbound and outbound. Drift was identified from the rate of needle movement and corrected before any measurable displacement developed.",
+        "marginal": "SP tracked the course inbound and outbound within the standard, but the wind correction angle was found by repeated symmetric corrections rather than by bracketing, leaving a slow oscillation of about 4 deg either side of the course. Tracking accuracy is met but not consolidated, particularly on the outbound leg. SP is expected to bracket the drift and settle on a single wind correction angle."
+      }
+    },
+    {
+      "id": "instrument-12-em05",
+      "label": "Station passage and immediate outbound re-intercept",
+      "mif_row": null,
+      "source": "general:c|execution",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to loss of situational awareness of the aircraft's position relative to the station, did not identify station passage from the TO/FROM reversal and the CDI behavior. SP chased the reversing needle instead of holding the computed outbound heading, and the course error exceeded 8 deg once the area of unreliable indications was left behind. IP intervened and re-established the outbound course.",
+        "1": "SP, due to degraded situational awareness after the change of sequence at the station, did not hold the computed heading through the area of CDI unreliability at station passage. The needle was chased throughout the passage and the deviation stood at 8 deg after the station. SP set the correct outbound heading only after the IP identified station passage verbally.",
+        "2": "SP, due to situational awareness limited to the instrument in use at the moment of station passage, did not start the outbound intercept immediately after the TO/FROM reversal. The delay allowed the deviation to reach 6 deg on the outbound radial. SP then recognized the passage, applied an adequate intercept angle and regained the course without IP intervention.",
+        "3": "SP identified station passage from the TO/FROM reversal, held the computed heading through the unreliable indications, then intercepted the outbound radial immediately and tracked it within 5 deg. No prompting was required at any point of the passage.",
+        "4": "SP anticipated station passage, held the outbound heading through the unreliable CDI indications without a single correction, and re-established the outbound course with the needle centred as soon as the indications settled. The transition from inbound to outbound was continuous, with no measurable deviation.",
+        "marginal": "SP handled the intercept immediately after station passage within the standard, but reacted to the first CDI fluctuations before the passage was confirmed, and the outbound course was re-established with about 4 deg of deviation. The technique depends on catching the reversal late rather than anticipating it. SP is expected to hold the computed heading through the area of unreliable indications and to start the outbound intercept at the confirmed passage."
+      }
+    },
+    {
+      "id": "instrument-12-em06",
+      "label": "Navaid tuning, identification and course setting for the intercept",
+      "mif_row": null,
+      "source": "general:a,d|execution",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a course set on the OBS that did not match the assigned radial and a navaid that was never identified, did not establish the correct reference before executing the intercept. The aircraft was flown accurately to a course other than the one assigned, leaving an error far beyond 8 deg from the cleared radial. IP intervened and reset the navigation reference.",
+        "1": "SP, due to an omitted check of the tuned frequency and identifier before starting the intercept, did not confirm that the displayed course was the assigned one. The intercept was flown against an offset course setting and the error remained at 8 deg from the assigned radial. SP corrected the setting only after the IP called for the identification check.",
+        "2": "SP, due to setting the OBS after the turn had already been started, did not have the intercept reference established before the maneuver. The initial heading was flown against the previous course setting and the deviation reached 6 deg. SP detected the error from the CDI behavior, reset the course and regained the assigned radial without IP intervention.",
+        "3": "SP tuned, identified and set the navaid for the assigned course before each intercept, so that every intercept was flown against a verified reference. Course settings matched the assignment throughout and no correction of the setup was required.",
+        "4": "SP completed the tune, identify and set sequence ahead of every intercept and cross-checked the displayed course against the clearance before turning. The navigation reference was correct on every leg, including the change between VOR/TACAN and GPS OBS mode, with no interruption of the tracking.",
+        "marginal": "SP set and identified the navaid correctly, but the sequence was completed only just before the turn was required, leaving no margin for a setup error. The setup meets the standard while remaining reactive to the clearance rather than anticipating it. SP is expected to complete tune, identify and set early enough to cross-check the course before the intercept begins."
+      }
+    },
+    {
+      "id": "instrument-12-em07",
+      "label": "Basic aircraft control while working the intercept",
+      "mif_row": null,
+      "source": "general:d|cross_ref:instrument-04",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to an attention bottleneck on the course indication at the expense of the instrument cross-check, did not maintain the Basic A/C Control Criteria while flying the intercept. Altitude departed by more than 300 ft and airspeed by more than 20 KIAS during the intercept turn. IP intervened to recover the assigned altitude and airspeed.",
+        "1": "SP, due to attention captured by the navigation display while the aircraft state went unmonitored, did not hold altitude and heading during the intercept. Altitude reached 300 ft below the assigned level and the rollout heading was 10 deg in error. SP restored both parameters only after the IP called the deviations.",
+        "2": "SP, due to absorption in the course indication during the intercept turn, did not maintain the Basic A/C Control Criteria at the required standard. Altitude deviated by 250 ft and airspeed by 15 KIAS while the turn was flown. SP resumed the cross-check, corrected both and returned inside 150 ft and 10 KIAS without IP intervention.",
+        "3": "SP maintained altitude within 150 ft, airspeed within 10 KIAS and heading within 5 deg throughout the intercepts while working the course problem. The instrument cross-check continued through the turns and the navigation task did not displace aircraft control.",
+        "4": "SP flew the intercepts with altitude, airspeed and heading effectively constant, with deviations not exceeding 50 ft and 5 KIAS. Trim was used so that the aircraft held the parameters while attention was given to the course, and the cross-check remained continuous through every turn.",
+        "marginal": "SP held the Basic A/C Control Criteria inside the standards, but altitude drifted to about 120 ft during each intercept turn and was recovered only after the turn was completed. The scan narrows towards the navigation display whenever the intercept problem is being solved. SP is expected to keep the cross-check running through the turn so that altitude does not move more than 50 ft."
+      }
+    }
+  ]
+}

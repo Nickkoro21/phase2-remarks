@@ -1,0 +1,162 @@
+{
+  "item_id": "contact-01",
+  "item_name": "GROUND PROCEDURES",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [1],
+  "mif_rows": [
+    {"sn": 1, "row_name": "Ground Procedures"}
+  ],
+  "error_modes": [
+    {
+      "id": "contact-01-em01",
+      "label": "MISSION PLANNING AND ENERGY PLAN",
+      "mif_row": null,
+      "source": "general:exec-1,exec-4",
+      "hf_concept": "hf-briefing-and-threat-identification",
+      "texts": {
+        "0": "SP, due to mission planning conducted without the current publication for the route, did not plan the mission according to aircraft energy planning and did not prepare the alternate mission at all. Fuel figures, working area allocation and recovery times were left undefined and the mission planning sheets were still blank at step-in. IP had to rebuild the plan on the ground and dictate the fuel and area limits before the sortie could proceed.",
+        "1": "SP, due to a threat present in the minimum threat set but not identified during planning, did not take into consideration the forecast weather at the recovery time and left the alternate mission unplanned. The mission planning sheets were completed only after IP pointed out each missing entry in turn. The plan reached the lower limit of the standard solely through verbal prompting and delayed step-in by about ten minutes.",
+        "2": "SP, due to a currency shortfall that was not addressed at the start of the planning phase, first built an energy plan that did not cover the transit to the second working area. SP identified the discrepancy while reviewing the planning sheets and recomputed fuel, times and area allocation before the brief, without IP intervention. The completed plan covered the profile and the alternate mission with the required margin.",
+        "3": "SP planned the mission suitably according to aircraft energy planning and own training level, taking into consideration all data required for mission planning. Fuel, area allocation, timings and the alternate mission were computed correctly and the planning sheets were complete and legible at the briefing. No entry required correction by IP.",
+        "4": "SP produced a mission plan of exceptional quality, with energy planning, timings and the alternate mission computed to the minute and cross-checked against the Flight Manual and Local Area Procedures. Every contingency raised in the brief was already supported by figures SP had computed in advance. Deviations from the ideal plan were negligible.",
+        "marginal": "SP planned the mission within standards, but the energy plan was built on the minimum fuel figure with no usable reserve and the alternate mission was worked out in outline only. The trend is toward a plan that satisfies the requirement on paper while leaving nothing available for an unplanned delay or a runway change. SP is expected to compute realistic reserves and a fully developed alternate mission before the next sortie."
+      }
+    },
+    {
+      "id": "contact-01-em02",
+      "label": "MISSION BRIEFING EXECUTION AND DECLARATION OF TRAINING HANDICAPS",
+      "mif_row": null,
+      "source": "general:exec-2,exec-3",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient preparation against the Mission Briefing Guide, did not execute the briefing in the prescribed order and omitted the maneuver sequence and the emergency review entirely. SP also did not inform IP of the handicaps carried over from the previous sorties. IP had to stop the briefing, take it over and rebrief the whole profile before the aircraft was accepted.",
+        "1": "SP, due to a briefing prepared from memory rather than from the Mission Briefing Guide, omitted the weather review and the abort criteria and stated own training handicaps only when asked directly. Each missing paragraph was covered only after IP prompted for it. The briefing ended at the lower limit of the standard and ran about fifteen minutes over the scheduled time.",
+        "2": "SP, due to an out-of-sequence start on the briefing guide, initially passed over the emergency review before the maneuver sequence. SP recognized the omission, returned to the emergency items and completed them in the correct order, and declared the outstanding training handicaps unprompted. The briefing was completed to standard without IP intervention and inside the scheduled time.",
+        "3": "SP executed the mission briefing according to the Mission Briefing Guide, covering every paragraph in sequence and in the time allotted. SP informed IP of the handicaps identified so far in training and tied them to specific objectives for the sortie. No item required prompting.",
+        "4": "SP executed an exceptional briefing, delivering every Mission Briefing Guide paragraph from a prepared flow and adding the specific handicaps carried over, with the corrective technique already proposed for each. The threat picture, abort criteria and alternate mission were presented so precisely that no clarification was required. Departures from the guide were negligible.",
+        "marginal": "SP executed the briefing within standards, but the emergency review and the abort criteria were delivered as a recitation with little reference to the actual conditions of the day. The trend is toward a briefing that covers the guide headings without converting them into decisions for this sortie. SP is expected to brief each contingency against the actual weather, runway and fuel state on the next event."
+      }
+    },
+    {
+      "id": "contact-01-em03",
+      "label": "CHECKLIST DISCIPLINE AND STANDARDIZATION",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to running the cockpit checks from memory instead of reading the checklist, did not execute all checks according to check list and completed them in a non-standardized manner. More than five items were missed across the interior and before-start checks, including one affecting aircraft configuration. IP had to intervene, stop the sequence and direct a complete rerun of the checklist before start.",
+        "1": "SP, due to an accelerated pace adopted to make up lost time, did not execute the checks in an impeccable and standardized manner and left two or three items unread on the before-start and before-taxi checks. The omissions were recovered only after IP called for the missed items verbally. The checklist was completed at the limit of the acceptable standard and only after that prompting.",
+        "2": "SP, due to an interruption from an intercom call during the interior check, initially skipped one checklist item and read two others out of the published order. SP detected the break in the flow, returned to the last completed item and repeated the remainder in sequence without IP intervention. All checks were completed correctly with only a short delay.",
+        "3": "SP executed all checks according to check list, without IP intervention, in an impeccable and standardized manner. Every item was read, actioned and verified in the published order, with responses given in standard phraseology and at a steady pace. No item was missed or repeated out of sequence.",
+        "4": "SP executed the checks to an exceptional standard, running each phase as a disciplined read-and-verify with the switch confirmed by touch before the response was given. The pace was uniform, the phraseology standard throughout, and one incorrectly positioned switch was identified and corrected during the check itself. Omissions were nil.",
+        "marginal": "SP executed all checks within standards, but the responses on the before-taxi check were given a fraction ahead of the actual switch confirmation on several items. The trend is toward a checklist read as a familiar rhythm rather than as a challenge and verified response. SP is expected to confirm each switch position physically before answering on the next sortie."
+      }
+    },
+    {
+      "id": "contact-01-em04",
+      "label": "COMPLETENESS OF LAP AND SOP PROCEDURE SEQUENCE",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unwritten local practice followed in place of the published procedure, skipped procedures required by Local Area Procedures and SOPs, including the walk-around sequence and the pre-taxi radio setup. The aircraft was configured for taxi with the flight plan and frequencies unset. IP had to intervene, halt the aircraft and run the omitted procedures from the start.",
+        "1": "SP, due to reliance on the previous sortie flow rather than on the applicable SOP, skipped two procedural steps of the ground sequence and performed the ejection seat and canopy checks out of the prescribed order. The steps were recovered only after repeated verbal reminders from IP. Procedural compliance ended at the lower limit of the standard.",
+        "2": "SP, due to an unfamiliar parking spot that changed the usual flow, initially omitted one SOP step in the pre-taxi sequence. SP recognized the gap before requesting taxi, stopped, completed the omitted step and resumed the sequence at the correct point without IP intervention. No procedure was left out and the delay was under one minute.",
+        "3": "SP did not skip any procedure according to Local Area Procedures and SOPs, executing the ground sequence complete and in the published order. Walk-around, strap-in, pre-start, start and pre-taxi flows were performed as written and at the correct trigger points. Nothing required prompting or repetition.",
+        "4": "SP executed the full Local Area Procedures and SOP ground sequence with exceptional discipline, adapting to a changed parking position and a delayed ground power connection without dropping or reordering a single step. SP additionally verified the applicable NOTAM and runway data at the point the SOP requires it. Procedural deviations were nil.",
+        "marginal": "SP completed the SOP ground sequence within standards, but several steps were performed noticeably later than their published trigger point and clustered together just before taxi. The trend is toward compressing the ground flow into the final minutes, which leaves no capacity for an unexpected item. SP is expected to run each procedure at its correct trigger point on the next sortie."
+      }
+    },
+    {
+      "id": "contact-01-em05",
+      "label": "GROUND CREW COORDINATION AND CLEARANCE BEFORE SWITCH OR CONTROL ACTIVATION",
+      "mif_row": null,
+      "source": "general:c,e",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, due to failure to pass a required call at the briefed point, did not cooperate with the ground crew and left a clear misapprehension over the intended start sequence unresolved. SP moved the control surfaces and selected the fuel pump without being aware of the ground crew position and without acknowledging the marshaller. IP had to intervene, stop the action and re-establish contact with the crew before the start was continued.",
+        "1": "SP, due to an indirect hint instead of a direct statement of intent to the ground crew, allowed a misapprehension over the chocks and ground power sequence to persist. SP began the control check with the crewman still inside the wingtip arc and stopped only when IP called it verbally. Coordination was restored at the limit of the acceptable standard and only after that intervention.",
+        "2": "SP, due to a hand signal given before eye contact was established, initially started the control sweep without positive acknowledgement from the marshaller. SP recognized the missing acknowledgement, stopped the control movement, obtained a clear thumbs-up and repeated the check with the crew visibly clear. The sequence was corrected in good time without IP intervention.",
+        "3": "SP cooperated with the ground crew without allowing misapprehensions, using standard signals and confirming each one before acting. SP was aware of the ground crew position before activating any switch and before moving any aircraft control, verifying the area clear on both sides. The start, control check and chock removal were coordinated without hesitation.",
+        "4": "SP coordinated with the ground crew to an exceptional standard, briefing the start sequence to the marshaller in advance and confirming positive acknowledgement before every switch selection and control movement. When the crewman changed position during the start, SP paused the sequence and re-established visual contact before continuing. No ambiguity arose at any point.",
+        "marginal": "SP coordinated with the ground crew within standards, but on two occasions the switch selection followed the signal so closely that the crew acknowledgement had not yet been confirmed. The trend is toward assuming the expected response rather than observing it. SP is expected to hold each action until the ground crew acknowledgement is positively seen on the next sortie."
+      }
+    },
+    {
+      "id": "contact-01-em06",
+      "label": "AIRCRAFT CONDITION ASSESSMENT AND FLIGHT PERMISSIBILITY DECISION",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a walk-around performed without reference to the Flight Manual limits, did not specify the aircraft condition correctly and could not decide its flight permissibility. SP overlooked an open write-up in the aircraft forms and a fluid trace on the left main gear, and declared the aircraft serviceable. IP had to intervene, re-inspect the aircraft and reverse the acceptance decision.",
+        "1": "SP, due to incomplete knowledge of the limits applicable to the accepted deferred defects, could not state the aircraft condition confidently and hesitated over the flight permissibility decision. The correct assessment was reached only after IP directed SP to the relevant forms entry and the applicable limitation. The decision was made at the lower limit of the standard and only through that guidance.",
+        "2": "SP, due to an initial reading of the aircraft forms that missed one deferred item, first assessed the aircraft as fully serviceable. SP re-checked the forms before strap-in, identified the deferred item, verified its applicable limitation in the Flight Manual and restated the flight permissibility decision correctly without IP intervention. The correction was made before any further action was taken.",
+        "3": "SP specified the aircraft condition and decided its flight permissibility correctly and confidently. The walk-around, forms review and cockpit condition check were tied together into a clear serviceability statement, with each deferred item matched to its limitation. The decision was made without hesitation and required no confirmation from IP.",
+        "4": "SP assessed the aircraft condition to an exceptional standard, identifying a discrepancy not previously recorded, matching it against the Flight Manual limitations and stating the flight permissibility decision with the applicable reference quoted. The assessment was complete, confident and made without delay to the schedule. Nothing in the condition of the aircraft was left undefined.",
+        "marginal": "SP assessed the aircraft condition within standards, but the flight permissibility statement was made tentatively and only after a second look at the forms. The trend is toward an assessment that is technically correct yet delivered without the confidence the decision requires. SP is expected to state the serviceability decision clearly and on the first pass at the next sortie."
+      }
+    },
+    {
+      "id": "contact-01-em07",
+      "label": "KNOWLEDGE AND HANDLING OF AIRCRAFT LEVERS AND SWITCHES",
+      "mif_row": null,
+      "source": "general:i",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient cockpit familiarization before the sortie, did not know or use correctly the aircraft levers and switches. SP selected the wrong panel on two occasions and moved a lever past the intended detent, producing a configuration that did not match the checklist step being run. IP had to intervene, restore the correct configuration and identify the controls for SP.",
+        "1": "SP, due to a cockpit flow learned by position rather than by function, hesitated over two switch selections and had to search the panel for a third. Correct selection was achieved only after IP identified the control verbally. Switch handling remained at the limit of the acceptable standard and slowed the ground sequence noticeably.",
+        "2": "SP, due to an inadvertent reach toward the adjacent switch during the after-start flow, initially placed a hand on the wrong selector. SP identified the error before the switch was moved, verified the correct control against the checklist and completed the selection properly without IP intervention. The remainder of the flow was run without further hesitation.",
+        "3": "SP knew and used correctly all aircraft levers and switches, selecting each control by function and confirming its position before moving on. Every selection was made at the correct point of the flow, with the correct grip and to the correct detent. No control was searched for and none was misidentified.",
+        "4": "SP handled the cockpit controls to an exceptional standard, selecting every lever and switch without visual search and confirming each position by touch and by indication. When a switch was found out of its normal position at strap-in, SP identified it immediately and restored the correct configuration. Handling errors were nil.",
+        "marginal": "SP used the aircraft levers and switches within standards, but two selections in the after-start flow required a brief visual search before the hand moved. The trend is toward controls located by memory of appearance rather than by an established flow. SP is expected to consolidate the cockpit flow so that each control is reached directly on the next sortie."
+      }
+    },
+    {
+      "id": "contact-01-em08",
+      "label": "TAXI ROUTE COMPLIANCE AND CLEARANCE OF THE GROUND PATH",
+      "mif_row": null,
+      "source": "general:f",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incorrect reading of the taxi clearance that was not verified against the airfield chart, did not follow the specified taxi route and did not ensure the ground path was clear of obstacles. SP turned onto the wrong taxiway and closed to within a wingspan of a parked aircraft without reducing speed. IP had to take control, stop the aircraft and taxi it clear.",
+        "1": "SP, due to attention held on the cockpit displays instead of outside the aircraft, drifted off the taxiway centerline by more than half the main gear track and approached the marked obstacle clearance line on the right. The correction was applied only after IP called for it, and the deviation reached the limit of the acceptable taxi corridor before it was stopped.",
+        "2": "SP, due to a late identification of the intersection while comparing the chart with the clearance, initially began the turn onto the wrong taxiway. SP recognized the error within a few meters, stopped the turn, confirmed the correct routing and regained the assigned taxiway centerline without IP intervention. Clearance from obstacles was maintained throughout.",
+        "3": "SP followed the specified taxi route and ensured that the ground path of the aircraft was clear of obstacles. The centerline was maintained within the main gear track throughout, turns were made at the correct intersections, and wingtip clearance from parked aircraft and equipment was continuously assessed. No correction was necessary.",
+        "4": "SP followed the assigned taxi route with exceptional precision, keeping the nose gear on the centerline through every turn and clearing the ground path visually well before each intersection. When ground equipment was found encroaching on the taxiway edge, SP identified it early, adjusted the path within the available surface and reported it on the ground frequency. Deviations were negligible.",
+        "marginal": "SP followed the specified taxi route within standards, but the aircraft rode consistently to the left of the centerline and the corrections were made in a series of late inputs at each turn. The trend is toward a track flown by reference to the nearest edge rather than to the centerline. SP is expected to establish and hold the centerline reference throughout the taxi on the next sortie."
+      }
+    },
+    {
+      "id": "contact-01-em09",
+      "label": "TAXI SPEED CONTROL, STOPPING WITHOUT OSCILLATIONS AND HOLDING THE AIRCRAFT STATIONARY",
+      "mif_row": null,
+      "source": "general:g,h",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power left set well above taxi requirements and braking applied only at the last moment, did not stop the aircraft as required and produced repeated pitching oscillations on the gear at every stop. SP also allowed the aircraft to creep forward during the leak check and again on the line-up, when it should have been halted. IP had to intervene on the brakes and stop the aircraft.",
+        "1": "SP, due to a taxi speed carried above walking pace into the confined area, arrived at the holding point fast and stopped only with a hard brake application that set up two clear fore-and-aft oscillations. The aircraft came to rest a full aircraft length past the holding line and was held there only after IP called for brakes. Speed and stopping control remained at the limit of the acceptable standard.",
+        "2": "SP, due to a delayed power reduction after the turn out of the parking area, initially allowed the taxi speed to build above that required for the ramp. SP recognized the excess, reduced power and used smooth braking to stop the aircraft on the holding line without oscillation and without IP intervention. The aircraft was then held stationary for the whole leak check.",
+        "3": "SP stopped the aircraft as required, without oscillations and without IP intervention, using a taxi speed appropriate to the area and to the surface conditions. Braking was smooth and progressive, each stop was made on the intended mark, and the aircraft was held completely stationary where the procedure required it. Power and brake use remained coordinated throughout.",
+        "4": "SP controlled taxi speed to an exceptional standard, anticipating each stop with an early power reduction so that only light braking was needed, and bringing the aircraft to rest precisely on the mark with no perceptible pitching. The aircraft was held rock steady through the leak check and the line-up with no creep at any time. Deviations from the intended stopping point were negligible.",
+        "marginal": "SP stopped the aircraft within standards, but each stop was achieved with a single firm brake application that produced a slight nose-down settle before the aircraft came to rest. The trend is toward speed managed by the brakes rather than by power planning ahead of the stop. SP is expected to reduce power earlier and stop with progressive braking on the next sortie."
+      }
+    },
+    {
+      "id": "contact-01-em10",
+      "label": "COORDINATION WITH IP ON THE (BOTH) PROCEDURES",
+      "mif_row": null,
+      "source": "general:j",
+      "hf_concept": "hf-authority-gradient",
+      "texts": {
+        "0": "SP, due to reluctance to challenge a decision perceived as the instructor prerogative, did not ask the IP about the (BOTH) procedures and acted on an assumption of what had been intended. SP carried out the selection without any call to the front cockpit and without waiting for an answer, leaving the two cockpits with different understandings of the aircraft configuration. IP had to intervene, stop the action and restate the procedure.",
+        "1": "SP, due to an unvoiced disagreement with the sequence because of the evaluation relationship, asked about the (BOTH) procedures in terms so tentative that no clear answer was returned, and then proceeded anyway. The coordination was established only after IP directed SP to make the call properly. The exchange met the requirement at its lower limit and only after that prompting.",
+        "2": "SP, due to deference to the front cockpit that initially replaced own assessment, started the (BOTH) selection before the reply from IP had been received. SP recognized the omission within a second or two, stopped the action, made the required call and waited for the answer before continuing, without IP intervention. Both cockpits then held the same picture of the configuration.",
+        "3": "SP asked the IP about the (BOTH) procedures and waited for the answer before acting, using clear and standard wording. The call was made at the correct point of the sequence and the action followed only once the reply had been received and understood. Both cockpits remained aligned on the aircraft configuration throughout.",
+        "4": "SP coordinated the (BOTH) procedures to an exceptional standard, stating the intended selection and the reason for it, waiting for the IP answer and reading back the direction received before acting. When the reply differed from the expectation, SP queried it directly and resolved the difference before any switch was moved. Coordination was complete at every step.",
+        "marginal": "SP asked about the (BOTH) procedures within standards, but the pause between the question and the action left barely enough time for a reply, and the acknowledgement was not read back. The trend is toward a call made to satisfy the requirement rather than to obtain an answer. SP is expected to wait for and confirm the IP response before acting on the next sortie."
+      }
+    }
+  ]
+}

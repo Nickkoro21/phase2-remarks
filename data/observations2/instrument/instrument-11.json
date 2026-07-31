@@ -1,0 +1,132 @@
+{
+  "item_id": "instrument-11",
+  "item_name": "CONFIDENCE MANEUVERS",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [11],
+  "mif_rows": [
+    { "sn": 11, "row_name": "Confidence Maneuvers" }
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-11-em01",
+      "label": "ALTITUDE CONTROL THROUGH ENTRY AND RECOVERY",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an entry altitude that was never re-established between repetitions, did not maintain the assigned altitude through the aileron roll and the wingover. Recovery altitude finished more than 300 ft below the entry value and the loss continued to build with each successive attempt. IP had to take control and return the aircraft to the assigned altitude before the sequence could be continued.",
+        "1": "SP, due to a delayed nose-position correction after the wingover apex, did not recover on the entry altitude and allowed the deviation to reach 300 ft. The descent was arrested only after IP called the altitude twice, and the aircraft was re-established late in the recovery. Altitude control remained at the outer limit of the standard for the rest of the exercise.",
+        "2": "SP, due to a recovery flown slightly nose-low after the wingover, initially lost about 200 ft relative to the entry altitude. SP identified the deviation on the altimeter and reset the entry altitude before commencing the next repetition, without IP intervention. Altitude stayed between 150 and 300 ft of the assigned value and was returned inside the standard promptly.",
+        "3": "SP maintained the assigned altitude throughout the confidence maneuvers, with recovery altitude matching the entry value within 150 ft on every repetition. Corrections were small, early and made against the altimeter and attitude indicator. Both the aileron roll and the wingover were flown inside the altitude standard without prompting.",
+        "4": "SP flew both confidence maneuvers with the recovery altitude returning essentially to the entry value, deviations remaining within a few tens of feet. Altitude was held by anticipation of the pitch requirement rather than by correction after the fact. The wingover climb and descent were symmetrical about the entry altitude on each repetition.",
+        "marginal": "SP maintained altitude within standards, but every repetition finished consistently low and the entry altitude was regained only after the maneuver was already complete. The trend is toward a cumulative loss that would exceed the standard if the sequence were extended. SP is expected to plan the recovery so that the entry altitude is regained inside the maneuver on the next sortie."
+      }
+    },
+    {
+      "id": "instrument-11-em02",
+      "label": "AIRSPEED CONTROL AT ENTRY AND RECOVERY",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (KIAS)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to entry airspeed set without reference to the airspeed indicator before roll-in, did not establish the briefed entry speed and exceeded it by more than 20 KIAS during the wingover recovery. Airspeed was still increasing while the nose was being raised and the same overspeed was repeated on the following attempt. IP had to intervene on the throttle and the control stick to contain the airspeed within the maneuvering range.",
+        "1": "SP, due to power left unchanged from the descending portion of the wingover, did not control airspeed in the recovery and reached the outer limit of 20 KIAS above the briefed entry speed. The excess was removed only after IP called the airspeed and directed a power reduction. Airspeed control remained at the limit of the standard for the remaining repetitions.",
+        "2": "SP, due to a late power reduction after the wingover apex, initially allowed airspeed to build about 15 KIAS above the briefed entry value. SP detected the trend on the airspeed indicator during the recovery and corrected with power and pitch attitude before the next entry, without IP intervention. Airspeed remained between 10 and 20 KIAS of the target and was re-established quickly.",
+        "3": "SP established the briefed entry airspeed for both confidence maneuvers and held it within 10 KIAS throughout. Power and pitch attitude were adjusted before any deviation developed, and recovery airspeed matched the entry value on each repetition. No airspeed call was required from IP.",
+        "4": "SP controlled airspeed so precisely that entry and recovery values agreed within a few knots on every repetition of the aileron roll and the wingover. Power was set in anticipation of the energy change rather than in response to it. Airspeed excursions were negligible in both the climbing and the descending portions of the maneuvers.",
+        "marginal": "SP kept airspeed within standards, but each recovery finished consistently fast and the briefed entry speed was regained only during the straight and level segment between repetitions. The trend is toward an energy state that would push the recovery airspeed outside the standard on a steeper wingover. SP is expected to anticipate the power reduction at the apex so that recovery airspeed is contained within the maneuver."
+      }
+    },
+    {
+      "id": "instrument-11-em03",
+      "label": "HEADING CONTROL AND RECOVERY HEADING ACCURACY",
+      "mif_row": null,
+      "source": "specific:HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to uncoordinated rudder use through the rolling portion of the maneuvers, did not maintain the entry heading in the aileron roll and did not roll out on the planned recovery heading after the wingover. Heading error exceeded 10 degrees on each repetition and increased progressively as the sequence continued. IP had to take control and re-establish the aircraft on the assigned heading before the exercise could proceed.",
+        "1": "SP, due to a roll-out started after the recovery heading had already passed, did not stop the turn on the planned heading and allowed the error to reach 10 degrees. The heading was regained only after IP called the deviation and directed the correction. Heading accuracy stayed at the outer limit of the standard for the remainder of the exercise.",
+        "2": "SP, due to a wingover flown with an apex slightly displaced from the planned reference, initially rolled out about 8 degrees off the intended recovery heading. SP recognized the error on the heading indicator and corrected it before setting up for the next repetition, without IP intervention. Heading error remained between 5 and 10 degrees and was reduced inside the standard without delay.",
+        "3": "SP maintained the entry heading through the aileron roll and rolled out of the wingover on the planned heading within 5 degrees. Rudder and aileron were coordinated so that heading excursions during the rolling portions were contained rather than corrected afterwards. No heading call was required from IP.",
+        "4": "SP completed both confidence maneuvers with the aileron roll finishing on the entry heading and the wingover rolling out on the planned heading within a couple of degrees. Heading was preserved through the maneuvers by coordinated control inputs rather than by post-maneuver correction. Deviations from the planned headings were negligible on every repetition.",
+        "marginal": "SP kept heading within standards, but every roll-out finished consistently on the same side of the planned heading and the correction was always applied after the wings were level. The trend is toward an error that would exceed the standard once bank angle at the apex is increased. SP is expected to lead the roll-out and control heading inside the maneuver on the next sortie."
+      }
+    },
+    {
+      "id": "instrument-11-em04",
+      "label": "AILERON ROLL - KNOWLEDGE AND STANDARD PROCEDURE",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient knowledge of the aileron roll procedure as described in the Techniques and Procedures Manual, did not set the required entry parameters and did not apply the roll input at the correct point in the sequence. The nose was allowed to fall through inverted and the maneuver finished more than 300 ft low and more than 20 KIAS fast. IP had to intervene on the controls to complete the recovery and the maneuver had to be demonstrated again from the beginning.",
+        "1": "SP, due to a step of the aileron roll sequence recalled only partially, did not establish the pitch attitude before roll input and did not maintain the roll rate through the inverted portion. The maneuver was completed only after IP prompted each stage verbally, and the exit parameters reached the limit of the standard at 300 ft and 20 KIAS. Knowledge of the procedure remained at the outer boundary of the standard.",
+        "2": "SP, due to an entry pitch attitude set slightly lower than the manual requires, initially flew the aileron roll with an insufficient nose-high attitude before roll input. SP recognized the shortfall during the maneuver, adjusted the entry for the following repetition and completed it in accordance with standard procedure, without IP intervention. Exit parameters stayed between 150 and 300 ft and between 10 and 20 KIAS of the entry values.",
+        "3": "SP knew the aileron roll procedure and executed it in accordance with the Techniques and Procedures Manual, setting the entry parameters and applying a constant roll rate through 360 degrees. The maneuver was completed within 150 ft, 10 KIAS and 5 degrees of the entry values. No stage of the sequence required intervention or prompting by IP.",
+        "4": "SP executed the aileron roll flawlessly, with entry parameters set precisely, a uniform roll rate maintained throughout and the nose held on the reference position from entry to recovery. Altitude, airspeed and heading at recovery were indistinguishable from the entry values. SP explained the aerodynamic basis of each stage of the sequence when questioned.",
+        "marginal": "SP executed the aileron roll within standards, but the sequence was reproduced mechanically and the entry parameters were reached only after two attempts at setting the attitude. The trend is toward a procedure that holds together at the briefed entry condition but is unlikely to survive a different entry speed or a rushed setup. SP is expected to know the reason behind each stage of the sequence and to set the entry parameters at the first attempt on the next sortie."
+      }
+    },
+    {
+      "id": "instrument-11-em05",
+      "label": "WINGOVER - KNOWLEDGE AND STANDARD PROCEDURE",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-overconfidence",
+      "texts": {
+        "0": "SP, due to overconfidence in the margin available at that airspeed and bank, did not fly the wingover in accordance with standard procedure and continued to increase bank past the apex without the corresponding pitch control. Airspeed at recovery exceeded the entry value by more than 20 KIAS and the aircraft finished more than 300 ft low. IP had to take control at the apex to prevent the maneuver from developing further.",
+        "1": "SP, due to an overconfident assessment of personal capability on a maneuver flown for the first time on instruments, did not coordinate the bank and pitch schedule of the wingover and reached the apex with the nose already falling. The maneuver was salvaged only after IP directed the bank reduction verbally, and exit parameters reached the limit of the standard at 300 ft and 20 KIAS. The same tendency reappeared on the following repetition.",
+        "2": "SP, due to an initial bank at the apex greater than the profile required, first flew the wingover with the descending portion steeper than briefed. SP recognized the developing energy build-up, reduced bank and re-established the pitch schedule before the recovery, without IP intervention. Exit altitude and airspeed remained between 150 and 300 ft and between 10 and 20 KIAS of the entry values.",
+        "3": "SP knew the wingover procedure and executed it according to the Techniques and Procedures Manual, coordinating the pitch and bank schedule through the climb, the apex and the descending portion. The recovery was completed within 150 ft, 10 KIAS and 5 degrees of the planned values. The maneuver required no intervention by IP.",
+        "4": "SP executed the wingover with the pitch and bank schedule coordinated throughout, the apex reached at the planned attitude and the recovery flown symmetrically to the climbing portion. Altitude, airspeed and heading at recovery matched the planned values almost exactly. SP briefed the energy trade of the maneuver accurately before flying it.",
+        "marginal": "SP executed the wingover within standards, but the apex was consistently reached with more bank than the profile called for and the recovery was flown at the upper end of the accepted airspeed range. The trend is toward an energy state that leaves progressively less margin as bank increases. SP is expected to fly the briefed bank and pitch schedule and to keep the recovery airspeed away from the limit on the next sortie."
+      }
+    },
+    {
+      "id": "instrument-11-em06",
+      "label": "SMOOTH AND CONTINUOUS AIRCRAFT CONTROL",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to control inputs applied in discrete steps rather than as a continuous movement, did not maintain constant, smooth and continuous control of the aircraft through the confidence maneuvers. Roll rate stopped and restarted twice inside the aileron roll and the pull at the wingover recovery was applied in successive jerks, producing altitude excursions beyond 300 ft. IP had to take control to stabilize the aircraft after the second repetition.",
+        "1": "SP, due to a tense grip on the control stick that prevented continuous input, did not fly the maneuvers smoothly and allowed the roll rate to vary noticeably through the inverted portion. Control became continuous only after IP verbally directed a relaxed grip and a steady input, and the resulting deviations reached 300 ft and 20 KIAS. Aircraft handling stayed at the outer limit of the standard.",
+        "2": "SP, due to a slightly abrupt initial input on entry to the wingover, first produced an uneven pitch rate through the climbing portion. SP relaxed the input and re-established a continuous, progressive application of the controls for the remainder of the maneuver, without IP intervention. Excursions stayed between 150 and 300 ft and between 10 and 20 KIAS of the entry values.",
+        "3": "SP had constant, smooth and continuous control of the aircraft throughout both confidence maneuvers. Roll and pitch inputs were applied progressively and at a uniform rate, and the aircraft never departed from the intended flight path. Altitude, airspeed and heading stayed within 150 ft, 10 KIAS and 5 degrees during the entire sequence.",
+        "4": "SP handled the aircraft with continuous, precisely metered inputs, so that roll and pitch rates remained uniform from entry to recovery in both maneuvers. There was no perceptible correction or hesitation at any stage of the sequence. The flight path traced through each maneuver matched the briefed profile with negligible deviation.",
+        "marginal": "SP maintained control of the aircraft within standards, but the initial input on each entry was firmer than required and the rate settled only after the first quarter of the maneuver. The trend is toward inputs that would produce visible excursions if the maneuver were flown at a higher entry speed. SP is expected to apply the controls progressively from the first moment of entry on the next sortie."
+      }
+    },
+    {
+      "id": "instrument-11-em07",
+      "label": "UNUSUAL ATTITUDE AVOIDANCE",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-spatial-disorientation",
+      "texts": {
+        "0": "SP, due to a false attitude perception during the inverted portion that was not resolved against the attitude indicator, did not prevent the aircraft from reaching an unusual attitude and applied control inputs opposite to those the instruments required. The aircraft finished nose-low with bank beyond the maneuvering range, more than 300 ft low and more than 20 KIAS fast. IP had to take control and fly the unusual attitude recovery.",
+        "1": "SP, due to unrecognized spatial disorientation in the absence of an external horizon reference, did not keep the aircraft clear of an unusual attitude at the wingover apex and allowed the nose to drop with bank still increasing. The attitude was corrected only after IP called the indications and directed the recovery, and the deviations reached 300 ft and 20 KIAS. The same disorientating sensation was reported on the following repetition.",
+        "2": "SP, due to a false sensation of continued rolling after the aileron roll was stopped, initially held a small opposite input that started to displace the nose from the reference attitude. SP resolved the conflict against the attitude indicator and returned the aircraft to the briefed attitude before it developed further, without IP intervention. Deviations remained between 150 and 300 ft and between 10 and 20 KIAS of the entry values.",
+        "3": "SP did not bring the aircraft to any unusual attitude during the confidence maneuvers, resolving every conflicting sensation against the attitude indicator. Pitch and bank stayed inside the briefed limits at all stages, and altitude, airspeed and heading remained within 150 ft, 10 KIAS and 5 degrees. The maneuvers required no attitude call from IP.",
+        "4": "SP flew both maneuvers with attitude controlled precisely at every stage and with no tendency toward an unusual attitude at any point. Conflicting vestibular sensations were reported and immediately discounted in favour of the instrument indications, without any effect on the flight path. Attitude excursions from the briefed profile were negligible.",
+        "marginal": "SP kept the aircraft clear of unusual attitudes, but the pitch attitude at the wingover apex was consistently at the upper end of the briefed range and the nose was allowed to fall further than planned before the recovery was started. The trend is toward an attitude that would qualify as unusual if the entry were flown slower or steeper. SP is expected to fly the apex attitude conservatively and to begin the recovery at the briefed point on the next sortie."
+      }
+    },
+    {
+      "id": "instrument-11-em08",
+      "label": "INSTRUMENT CROSS-CHECK DURING CONFIDENCE MANEUVERS",
+      "mif_row": null,
+      "source": "general:a,b",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to an attention bottleneck on the attitude indicator at the expense of the rest of the instrument cross-check, did not monitor altitude, airspeed and heading while executing the confidence maneuvers on instruments. The deviations went unnoticed until they exceeded 300 ft, 20 KIAS and 10 degrees at the same time. IP had to take control and re-establish the aircraft on the assigned parameters.",
+        "1": "SP, due to a cross-check that stopped as soon as the roll input was applied, did not detect the developing altitude and airspeed trends until they had reached 300 ft and 20 KIAS. The scan was restored only after IP called each parameter in turn during the recovery. The cross-check remained fixed on a single instrument for most of the exercise.",
+        "2": "SP, due to a scan narrowed to the attitude indicator during the first repetition, initially missed the altitude and airspeed trends that had built to about 200 ft and 15 KIAS. SP re-established the full cross-check between repetitions, detected the deviations and corrected them before the next entry, without IP intervention. Parameters stayed between 150 and 300 ft and between 10 and 20 KIAS of the entry values.",
+        "3": "SP maintained an effective instrument cross-check throughout both confidence maneuvers, sampling attitude, altitude, airspeed and heading at a rate that kept every deviation small. Corrections were made from the instruments as trends appeared rather than after they developed, and all parameters stayed within 150 ft, 10 KIAS and 5 degrees. No parameter call was required from IP.",
+        "4": "SP maintained a complete and continuous instrument cross-check through every stage of the aileron roll and the wingover, including the inverted and high-pitch portions. Deviations were identified at the trend stage and removed before they were measurable. SP was also able to report the exact parameters at the apex and at recovery on request.",
+        "marginal": "SP maintained the cross-check within standards, but the scan concentrated on the attitude indicator during each maneuver and the other parameters were checked only after the recovery was complete. The trend is toward deviations that would be detected too late if the maneuver were flown at a higher entry speed or repeated in sequence. SP is expected to keep altitude, airspeed and heading inside the scan during the maneuver on the next sortie."
+      }
+    }
+  ]
+}

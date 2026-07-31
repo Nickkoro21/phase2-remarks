@@ -1,0 +1,147 @@
+{
+  "item_id": "instrument-14",
+  "item_name": "ARC INTERCEPT",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [14],
+  "mif_rows": [
+    {"sn": 14, "row_name": "Arc Intercept"}
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-14-em01",
+      "label": "Distance from the arc (DME) during the intercept",
+      "mif_row": null,
+      "source": "specific:DISTANCE FROM ARC (DME)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a late and shallow turn onto the arc with no correction turns applied to the raw DME trend, did not stop the aircraft on the published DME arc. The distance from the arc exceeded 2 DME and kept increasing outside the arc with no turn back toward it. IP had to intervene and direct the correcting turn to regain the published DME arc.",
+        "1": "SP, due to reading the DME window without following its rate of change, did not apply timely correction turns to regain the arc. The distance from the arc reached 2 DME, at the tolerance limit, and SP turned back only after repeated verbal instruction from IP. The arc was eventually regained, but the deviation persisted through most of the intercept.",
+        "2": "SP, due to a slightly late roll-in on the intercept turn, did not roll out exactly on the published arc distance. The aircraft settled about 1.5 DME outside the arc, between the 1 DME and 2 DME limits. SP identified the trend on the DME readout and turned back to the arc in time, without verbal prompting or IP intervention.",
+        "3": "SP rolled out on the published DME arc and maintained the distance from the arc within 1 DME throughout the intercept. Corrections were made early and in small turn increments, so the DME readout was stabilized promptly on the nominal distance.",
+        "4": "SP flew the arc intercept with the distance from the arc never exceeding about 0.3 DME. The roll-out was placed on the arc with correctly anticipated lead, and the DME readout stayed essentially constant, requiring only minimal turn corrections.",
+        "marginal": "SP kept the distance from the arc inside the required tolerance, but the readout consistently rode near 0.9-1.0 DME outside the arc instead of being centered on it. Corrections were initiated late and in large increments, so the same drift toward the tolerance limit repeated on each intercept. SP is expected to anticipate the drift earlier and use smaller, earlier turns to hold the arc closer to the nominal distance."
+      }
+    },
+    {
+      "id": "instrument-14-em02",
+      "label": "Lead computation and turn onto the arc",
+      "mif_row": null,
+      "source": "general:null (Basic A/C Control Criteria apply) | conditions:same as Course Intercepts | xref:instrument-12:a,b",
+      "hf_concept": "hf-lack-of-knowledge",
+      "texts": {
+        "0": "SP, due to lack of knowledge of the standard lead used to turn onto a DME arc, did not solve the intercept problem according to standardized procedures. SP started the turn abeam the arc with no lead applied, and the aircraft cut inside the arc by more than 2 DME. IP had to intervene and take over the correcting turn to place the aircraft back on the published arc.",
+        "1": "SP, due to lack of knowledge of the relationship between groundspeed, bank angle and lead distance, did not compute a usable lead point for the turn onto the arc. The turn was started late and the aircraft rolled out about 2 DME outside the arc, at the tolerance limit, and was brought back only after IP verbally directed the correction. The intercept was completed, but the geometry was never re-established by SP alone.",
+        "2": "SP, due to an approximate rather than computed lead for the turn onto the arc, did not roll out on the published DME distance. The aircraft passed about 1.5 DME inside the arc, between the 1 DME and 2 DME limits, before the trend was arrested. SP recognized the error from the DME readout and corrected back onto the arc without any IP input.",
+        "3": "SP computed the lead for the turn onto the arc according to standardized procedures and rolled out on the published DME distance within 1 DME. The bank angle chosen matched the groundspeed, so the roll-out required no additional correction turn.",
+        "4": "SP applied the correct lead for the turn onto the arc and rolled out on the published distance with a deviation of no more than about 0.3 DME. The intercept geometry was solved before the turn was started, so the arc was captured in a single continuous turn with no re-intercept required.",
+        "marginal": "SP applied a lead for the turn onto the arc and stayed inside the required tolerance, but the lead used was the same for every intercept regardless of groundspeed. Each roll-out therefore finished around 0.9 DME off the published distance and required an additional correction turn. SP is expected to adjust the lead to the actual groundspeed and bank so that the arc is captured without a follow-up correction."
+      }
+    },
+    {
+      "id": "instrument-14-em03",
+      "label": "Altitude control while intercepting and holding the arc",
+      "mif_row": null,
+      "source": "general:null (Basic A/C Control Criteria apply) | xref:instrument-04:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to attention concentrated on the DME readout during the turn onto the arc, did not maintain the assigned altitude. Back pressure was not added as bank was applied and the aircraft descended more than 300 feet below the assigned altitude with an increasing rate. IP had to intervene and initiate the recovery to the assigned altitude.",
+        "1": "SP, due to failure to trim after the roll-in on the arc intercept, did not hold the assigned altitude. The aircraft reached 300 feet off the assigned altitude, at the tolerance limit, and SP started the correction only after IP verbally called the deviation. The altitude was regained slowly and the same trend reappeared during the arc.",
+        "2": "SP, due to a delayed power adjustment when bank was increased for the intercept turn, did not hold the assigned altitude precisely. The aircraft deviated about 200 feet, between the 150 foot and 300 foot limits, before the trend was arrested. SP detected the deviation on the altimeter and returned to the assigned altitude in time without IP intervention.",
+        "3": "SP maintained the assigned altitude within 150 feet throughout the turn onto the arc and along the arc. Pitch and power were coordinated with the bank changes, so altitude excursions were arrested as soon as they appeared.",
+        "4": "SP held the assigned altitude with deviations of no more than about 40 feet during the whole arc intercept. Altitude was protected during every turn onto and off the arc, with the altimeter needle remaining essentially stationary.",
+        "marginal": "SP remained within the altitude tolerance, but the aircraft was consistently 130-150 feet low every time bank was applied for a correction turn on the arc. The deviation was corrected each time, yet it recurred with the same pattern on each turn. SP is expected to anticipate the pitch requirement with bank so that altitude is held closer to the assigned value."
+      }
+    },
+    {
+      "id": "instrument-14-em04",
+      "label": "Airspeed control during the arc intercept",
+      "mif_row": null,
+      "source": "general:null (Basic A/C Control Criteria apply) | xref:instrument-04:AIRSPEED (KIAS)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to leaving the power lever unattended while working the navigation problem, did not control the engine power for the phase of flight. Airspeed decayed more than 20 KIAS below the briefed value and continued to reduce while the correcting turn was flown. IP had to intervene and restore power to recover the briefed airspeed.",
+        "1": "SP, due to a large unchecked power reduction during the turn onto the arc, did not maintain the briefed airspeed. Airspeed reached 20 KIAS off the briefed value, at the tolerance limit, and was corrected only after IP called for a power change. The airspeed then oscillated as power was applied in large steps.",
+        "2": "SP, due to a delayed power increase when bank was applied for the arc intercept, did not hold the briefed airspeed precisely. Airspeed deviated about 15 KIAS, between the 10 KIAS and 20 KIAS limits, before the trend was reversed. SP saw the trend on the airspeed indicator and reset power in time, without IP intervention.",
+        "3": "SP controlled engine power according to the phase of flight and maintained the briefed airspeed within 10 KIAS during the intercept and along the arc. Power adjustments were made in small increments as bank was applied and removed.",
+        "4": "SP maintained the briefed airspeed with deviations of no more than about 4 KIAS throughout the arc intercept. Power was adjusted proactively with each bank change, so the airspeed indication stayed practically constant.",
+        "marginal": "SP stayed within the airspeed tolerance, but the aircraft was carried about 9 KIAS fast for most of the arc, which increased the required lead and made every correction turn wider. Power was reset only after the deviation had developed rather than with the bank change. SP is expected to set power together with the turn so that the briefed airspeed is held closer to the target value."
+      }
+    },
+    {
+      "id": "instrument-14-em05",
+      "label": "Heading and bank discipline on correction turns",
+      "mif_row": null,
+      "source": "general:null (Basic A/C Control Criteria apply) | xref:instrument-04:HEADING (degrees), instrument-04:execution (bank up to 30 degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to chasing the DME readout with continuous uncoordinated turns, did not fly controlled correction headings on the arc. Bank was increased past 30 degrees and the rollout heading was missed by more than 10 degrees, so the aircraft never settled on a stable arc heading. IP had to intervene and take the aircraft back to a controlled heading on the arc.",
+        "1": "SP, due to rolling out without reference to a computed arc heading, did not stop the turns on the required headings. The rollout heading was off by 10 degrees, at the tolerance limit, and was corrected only after IP verbally provided the heading to fly. Successive corrections repeated the same overshoot pattern.",
+        "2": "SP, due to a slightly high roll-out rate on the correction turn, did not stop exactly on the required arc heading. The rollout heading was off by about 8 degrees, between the 5 degree and 10 degree limits. SP identified the overshoot on the HSI and corrected back to the required heading promptly without IP input.",
+        "3": "SP used bank within 30 degrees for all correction turns and rolled out on the required arc headings within 5 degrees. Turns were coordinated and each heading was held until the next correction was required by the DME trend.",
+        "4": "SP flew all correction turns on the arc with smooth, coordinated bank and rolled out on the required headings within about 2 degrees. Turn increments were sized to the DME trend, so no heading overshoot or reversal was needed.",
+        "marginal": "SP held rollout headings inside the tolerance, but each correction turn finished about 4-5 degrees past the required heading and had to be nudged back. The bank used was larger than needed for the small DME corrections required. SP is expected to size the correction turns to the actual deviation and anticipate the roll-out so that headings are captured directly."
+      }
+    },
+    {
+      "id": "instrument-14-em06",
+      "label": "Navigation aid setup and instrument cross-check",
+      "mif_row": null,
+      "source": "general:null (Basic A/C Control Criteria apply) | xref:instrument-04:d",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an interrupted instrument cross-check while attention stayed on a single navigation display, did not use the radio aids to maintain orientation on the arc. The station and the correct navigation source were not verified, so SP flew an intercept against an unchecked indication and ended more than 2 DME off the published arc while unaware of the aircraft position. IP had to intervene, identify the correct source and re-establish the aircraft on the arc.",
+        "1": "SP, due to absent cross-check of aircraft state against the primary flight instruments, did not confirm the navigation setup before starting the arc intercept. The error was recognized only after IP verbally directed a check of the navigation source, by which time the distance from the arc was 2 DME, at the tolerance limit. Orientation was restored, but only with continuous verbal guidance.",
+        "2": "SP, due to a cross-check that dwelt too long on the DME readout, did not scan the bearing pointer and the flight instruments at the same rate. The delayed information caused the aircraft to drift about 1.5 DME off the arc, between the 1 DME and 2 DME limits. SP resumed a full cross-check on its own initiative and corrected back onto the arc without IP intervention.",
+        "3": "SP verified the navigation aid setup before the intercept and maintained a continuous cross-check between the bearing pointer, the DME readout and the flight instruments. Orientation relative to the station was maintained at all times and the arc was held within 1 DME.",
+        "4": "SP checked and identified the navigation source before the intercept and kept an even, uninterrupted cross-check throughout the arc. Aircraft position relative to the station was reported accurately at any moment and the arc was held within about 0.3 DME.",
+        "marginal": "SP kept the aircraft on the arc within the required tolerance, but the cross-check remained weighted toward the DME readout, with the flight instruments scanned only after a deviation had built. The navigation setup was verified once and not re-checked after the source was changed. SP is expected to keep an even scan rate across the navigation and flight instruments so that deviations are seen as they start."
+      }
+    },
+    {
+      "id": "instrument-14-em07",
+      "label": "Wind correction while established on the arc",
+      "mif_row": null,
+      "source": "general:null (Basic A/C Control Criteria apply) | conditions:same as Course Intercepts",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to flying nominal arc headings without any allowance for the known wind, did not compensate for drift while established on the arc. The aircraft was pushed steadily off the published distance and the deviation grew beyond 2 DME with no correction applied. IP had to intervene and set the drift correction required to hold the arc.",
+        "1": "SP, due to applying a wind correction only after the deviation was visible on the DME readout, did not prevent the drift off the arc. The distance from the arc reached 2 DME, at the tolerance limit, and a correction was applied only after IP verbally identified the wind effect. The same drift reappeared as soon as the aircraft turned into the downwind portion of the arc.",
+        "2": "SP, due to a wind correction that was not updated as the arc heading changed, did not hold the published distance exactly. The aircraft drifted about 1.5 DME off the arc, between the 1 DME and 2 DME limits. SP noticed the trend, adjusted the correction turn and returned to the arc without IP intervention.",
+        "3": "SP allowed for the wind while established on the arc, adjusting the drift correction as the arc heading changed, and held the distance from the arc within 1 DME. Corrections were anticipated rather than reactive.",
+        "4": "SP anticipated the wind effect around the whole arc and continuously updated the drift correction, holding the distance from the arc within about 0.3 DME. The DME readout showed no sustained drift in any sector of the arc.",
+        "marginal": "SP held the arc within tolerance, but the drift correction was updated only after the DME had moved about 0.9 DME toward the outside of the arc in the downwind sector. The correction was adequate but always applied after the drift had developed. SP is expected to update the wind correction as the arc heading changes so that the drift does not build before it is countered."
+      }
+    },
+    {
+      "id": "instrument-14-em08",
+      "label": "Aircraft handling smoothness and trim",
+      "mif_row": null,
+      "source": "general:null (Basic A/C Control Criteria apply) | xref:instrument-04:a,c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to flying the arc with continuous out-of-trim control inputs and abrupt corrections, did not handle the aircraft with comfort and ease. Pitch and bank inputs were large and reversed frequently, and the resulting excursions took the aircraft more than 2 DME off the arc and more than 300 feet off the assigned altitude. IP had to intervene and stabilize the aircraft.",
+        "1": "SP, due to leaving the aircraft out of trim after each power change, did not control pitch and bank smoothly on the arc. Control forces were fought manually and the resulting oscillations reached 300 feet in altitude, at the tolerance limit, before SP retrimmed following IP verbal instruction. The workload created by the out-of-trim condition degraded the rest of the intercept.",
+        "2": "SP, due to trimming late after the roll-in on the intercept turn, did not fly the arc as smoothly as required. Small pitch oscillations produced altitude excursions of about 200 feet, between the 150 foot and 300 foot limits. SP retrimmed on its own initiative and the aircraft was stabilized without IP intervention.",
+        "3": "SP handled the aircraft with comfort and ease, trimming aileron, elevator and rudder after each configuration and power change. Control inputs were smooth and the aircraft remained within 1 DME of the arc and within 150 feet of the assigned altitude.",
+        "4": "SP flew the entire arc intercept trimmed and hands-light, with control inputs so small that altitude excursions stayed near 40 feet and the DME readout near 0.3 DME. Switch and power handling was flawless and did not disturb the aircraft attitude.",
+        "marginal": "SP kept all parameters within tolerance, but the aircraft was flown slightly out of trim in pitch for most of the arc, which required continuous manual pressure and produced small repetitive altitude corrections. Trim was reset only when the deviation became noticeable. SP is expected to retrim immediately after each power change so that the aircraft can be held on parameters with minimal control force."
+      }
+    },
+    {
+      "id": "instrument-14-em09",
+      "label": "Task prioritization and workload management during the intercept",
+      "mif_row": null,
+      "source": "general:null (Basic A/C Control Criteria apply) | conditions:same as Course Intercepts",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to poor workload management that left the navigation problem unsolved until the arc was already approaching, did not sequence the intercept tasks correctly. Aircraft control was released while SP worked the DME and bearing problem, and the aircraft passed more than 2 DME through the arc with the altitude uncontrolled. IP had to intervene, fly the aircraft and re-establish it on the arc.",
+        "1": "SP, due to attempting the navigation computation and a radio call at the same time as the intercept turn, did not prioritize aircraft control. The distance from the arc reached 2 DME, at the tolerance limit, while SP was heads-down, and the correction was made only after IP verbally reordered the tasks. The intercept was completed late and with continuous prompting.",
+        "2": "SP, due to a task sequence that placed the navigation setup after the turn had started, did not manage the workload of the intercept efficiently. The delay allowed the aircraft to drift about 1.5 DME off the arc, between the 1 DME and 2 DME limits. SP reprioritized to flying the aircraft first, then completed the setup and regained the arc without IP intervention.",
+        "3": "SP sequenced the intercept tasks correctly, completing the navigation setup and the lead computation before the turn onto the arc. Aircraft control was retained as the priority throughout and the arc was held within 1 DME with no other parameter exceeding its tolerance.",
+        "4": "SP planned the arc intercept well ahead, distributing the navigation, radio and flying tasks so that no phase was rushed. Every task was completed at the appropriate moment, the arc was held within about 0.3 DME and SP retained spare capacity to answer IP questions during the intercept.",
+        "marginal": "SP completed all intercept tasks within tolerance, but the navigation setup and the lead computation were consistently finished only just before the turn, leaving no margin for an unexpected clearance change. Radio calls were answered at the expense of a brief interruption in the scan. SP is expected to complete the intercept preparation earlier so that spare capacity remains available during the turn onto the arc."
+      }
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "item_id": "instrument-02",
+  "item_name": "TAKE OFF",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [2],
+  "mif_rows": [
+    {
+      "sn": 2,
+      "row_name": "T/O"
+    }
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-02-em01",
+      "label": "Takeoff airspeed control and rotation point",
+      "mif_row": null,
+      "source": "specific:Take off Airspeed (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an imprecise power application and a late reference to the calculated takeoff data, did not execute the T/O with the standard airspeed. Rotation was withheld well past the computed point and the aircraft was flown off more than 10 knots above the standard takeoff airspeed, outside the -0,+10 knots tolerance. The fast condition was not recognized and the acceleration continued unchecked. IP intervened with a directive call to rotate and set the takeoff attitude before the remaining runway became a factor.",
+        "1": "SP, due to a hesitant rotation input at the computed speed, did not execute the T/O with the standard airspeed. Liftoff occurred about 10 knots fast, at the limit of the -0,+10 knots tolerance. SP made no corrective input until the IP gave a verbal call, and the airspeed was brought back to the standard only after that prompt.",
+        "2": "SP, due to a delayed cross-check of the airspeed indication in the last part of the ground roll, did not rotate exactly at the standard takeoff airspeed. Liftoff occurred approximately 7 knots fast, between the -0,+5 and the -0,+10 knots tolerances. SP recognized the fast trend, set the takeoff attitude and contained the airspeed in time, with no IP intervention required.",
+        "3": "SP executed the T/O with the standard airspeed, cross-checking the airspeed indication against the calculated takeoff data throughout the ground roll. Rotation was initiated at the briefed speed and the airspeed at liftoff remained within the -0,+5 knots tolerance. Control inputs were smooth and no acceleration overshoot developed.",
+        "4": "SP executed the T/O with the standard airspeed and rotated precisely at the computed speed. Airspeed at liftoff showed negligible deviation from the standard takeoff airspeed, with no perceptible overshoot during the acceleration. The airspeed cross-check was continuous from brake release to liftoff and the calculated takeoff data were verified against actual aircraft performance.",
+        "marginal": "SP executed the T/O within the required airspeed tolerance, but rotation was consistently initiated a few knots late and the airspeed trended toward the upper edge of the standard on each attempt. No prompting was needed and every takeoff stayed within standards. SP is expected to tighten the airspeed cross-check in the final part of the ground roll so that rotation is initiated at the exact standard takeoff airspeed."
+      }
+    },
+    {
+      "id": "instrument-02-em02",
+      "label": "Runway centerline tracking during takeoff roll",
+      "mif_row": null,
+      "source": "specific:Maintain in the center line of RWY (ft)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient and late rudder input against the crosswind component, did not maintain the A/C at the centerline during T/O. Lateral displacement exceeded 10 ft from the runway centerline, outside the +/-10 ft tolerance, and continued to diverge through liftoff. IP intervened on the controls to re-establish the takeoff track along the centerline.",
+        "1": "SP, due to directional corrections applied only after the drift had become visible, did not maintain the A/C at the centerline during T/O. Displacement reached about 10 ft from the runway centerline, at the limit of the +/-10 ft tolerance, and the track was recovered only after a verbal call from the IP. No anticipatory rudder input was made during the acceleration.",
+        "2": "SP, due to coarse rudder inputs made after the drift developed rather than as it began, did not hold the A/C precisely on the centerline during the takeoff roll. Displacement reached approximately 8 ft, between the +/-5 ft and the +/-10 ft tolerances. SP identified the divergence, applied the correct rudder and re-established the track before liftoff without IP intervention.",
+        "3": "SP maintained the A/C at the centerline during T/O, tracking within +/-5 ft from brake release to liftoff. Rudder inputs were small, anticipatory and matched to the crosswind component, and the aircraft was flown off with no lateral divergence. Directional control was maintained without any assistance from the IP.",
+        "4": "SP maintained the A/C at the centerline during T/O with negligible lateral displacement throughout the ground roll and at liftoff. Rudder inputs anticipated the crosswind and the yaw from power application, so no correcting input larger than trim-level was required. The takeoff track remained aligned with the runway centerline into the climb.",
+        "marginal": "SP maintained the A/C at the centerline within the required tolerance, but the aircraft drifted repeatedly to the same side of the runway centerline and every correction was reactive rather than anticipatory. All displacements remained inside +/-5 ft and no prompting was needed. SP is expected to lead the crosswind with rudder from brake release so that the drift is prevented rather than corrected."
+      }
+    },
+    {
+      "id": "instrument-02-em03",
+      "label": "LINE UP checks completeness and sequence",
+      "mif_row": null,
+      "source": "general:a|execution:1a",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP, due to a lapse in which a briefed item was omitted under workload, did not execute the LINE UP checks without omissions and did not accomplish the After Takeoff Checklist at the correct point. More than one required item was left unverified and the omission was still uncorrected after liftoff. IP intervened by directing that the checks be re-accomplished in flight before the departure was continued.",
+        "1": "SP, due to a lapse under the workload of the line-up sequence, did not execute the LINE UP checks without omissions. One required item was omitted and was recovered only after the IP prompted the check, with the takeoff roll already begun. SP had accepted the checks as complete without a verification pass.",
+        "2": "SP, due to an interrupted flow through the LINE UP checks after the takeoff clearance was received, did not complete the checks in the briefed sequence on the first pass. SP detected the skipped item on his own, completed it before brake release and required no IP intervention. The departure was not delayed and no item entered the takeoff roll unverified.",
+        "3": "SP executed the LINE UP checks without omissions and accomplished the After Takeoff Checklist at the correct point in the departure. Each item was verified against the actual switch position and indication rather than from memory. The flow was completed inside the time available on the runway without rushing.",
+        "4": "SP executed the LINE UP checks without omissions, in the published sequence and with each item confirmed against the corresponding indication. The After Takeoff Checklist was accomplished at the correct point with no interruption to aircraft control. Checklist discipline was maintained despite the radio and traffic activity present at the time.",
+        "marginal": "SP executed the LINE UP checks without omissions, but the flow was slow and a second scan was needed before SP was satisfied that the checks were complete. All items were verified and no prompting was required. SP is expected to consolidate the check flow so that it is completed in one pass and does not compete with lineup and directional control tasks."
+      }
+    },
+    {
+      "id": "instrument-02-em04",
+      "label": "Brake hold and aircraft movement during engine run-up",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient brake pressure while advancing the PCL for the engine run-up, allowed movement of the A/C during the run-up. The aircraft crept forward before the run-up indications were checked and the run-up was not accomplished from a stationary position. IP intervened by directing the power to be retarded and the aircraft stopped before the takeoff was continued.",
+        "1": "SP, due to brake pressure that was relaxed as attention moved to the engine indications, allowed a continuous forward creep of the A/C during the run-up. The run-up parameters were checked while the aircraft was moving, and full brake pressure was reapplied only after the IP called the movement.",
+        "2": "SP, due to brake pressure applied slightly after the PCL was advanced, allowed a brief forward creep at the start of the engine run-up. SP recognized the movement immediately, arrested it with prompt brake application and completed the check of the run-up indications with the aircraft stationary. No IP intervention was required.",
+        "3": "SP held the brakes firmly throughout the engine run-up and did not allow any movement of the A/C. Power was set and the engine indications were checked against the calculated takeoff data with the aircraft stationary on the centerline. Brake release was made only after the run-up check was complete.",
+        "4": "SP held full brake pressure before advancing the PCL and did not allow any movement of the A/C during the engine run-up. The run-up indications were checked deliberately and compared with the calculated takeoff data while the aircraft remained exactly on the centerline. Brake release and power application were then made as a single smooth sequence.",
+        "marginal": "SP did not allow any movement of the A/C during the engine run-up, but the brake pressure applied was only just sufficient and a slight relaxation was observed as attention shifted to the engine indications. The aircraft remained stationary and no prompting was needed. SP is expected to establish and hold positive brake pressure before the PCL is advanced so that the margin does not depend on attention."
+      }
+    },
+    {
+      "id": "instrument-02-em05",
+      "label": "Takeoff and climb attitude establishment",
+      "mif_row": null,
+      "source": "general:d,f",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an imprecise pitch input at rotation and no subsequent attitude reference, did not bring and maintain the A/C to the proper T/O attitude and did not establish the proper climbing attitude. The aircraft was flown off in a shallow attitude and the airspeed increased more than 10 knots beyond the standard, outside the -0,+10 knots tolerance, while the pitch continued to wander. IP intervened on the controls to set and hold the climb attitude.",
+        "1": "SP, due to a pitch input that was not stabilized against the attitude reference, did not maintain the proper T/O and climbing attitude after liftoff. The attitude oscillated and the airspeed reached about 10 knots off the standard, at the limit of the -0,+10 knots tolerance. The attitude was stabilized only after repeated verbal directions from the IP.",
+        "2": "SP, due to a pitch rate at rotation that was slightly high and then relaxed, did not hold the proper T/O attitude steady through the initial climb. The resulting airspeed excursion reached roughly 7 knots from the standard, between the -0,+5 and the -0,+10 knots tolerances. SP recognized the attitude error against the attitude reference and re-established the proper climbing attitude promptly, with no IP intervention.",
+        "3": "SP brought and maintained the A/C to the proper T/O attitude at rotation and established the proper climbing attitude immediately after liftoff. The attitude was held steady against the attitude reference and the airspeed remained within the -0,+5 knots tolerance. No pitch oscillation developed during the transition to the climb.",
+        "4": "SP set the proper T/O attitude with a single smooth pitch input and transitioned directly to the proper climbing attitude with no intermediate correction. The attitude was held with negligible variation and the airspeed showed negligible deviation from the standard. Trim was used so that the climb attitude was maintained with light control forces.",
+        "marginal": "SP brought and maintained the A/C to the proper T/O and climbing attitude within standards, but the attitude was set through two or three small corrections rather than in one input and remained slightly unsteady in the first seconds of the climb. All resulting airspeed deviations stayed within the standard and no prompting was needed. SP is expected to set the target attitude in a single input and trim early so that the climb attitude is stable from liftoff."
+      }
+    },
+    {
+      "id": "instrument-02-em06",
+      "label": "Configuration cleanup within speed limits",
+      "mif_row": null,
+      "source": "general:g|execution:1d",
+      "hf_concept": "hf-workload-distribution",
+      "texts": {
+        "0": "SP, due to workload distribution that left the SP flying and transmitting at the same time, did not clean the A/C configuration without violating the speed limit. L/G and flaps retraction was commanded after the aircraft had accelerated past the limiting speed for the configuration, and the exceedance was neither recognized nor reported. IP intervened by directing the pitch increase and the retraction sequence.",
+        "1": "SP, due to attention divided between the departure transmission and aircraft control, did not command the L/G and flaps retraction at the briefed point. The retraction was initiated right at the limiting speed for the configuration and only after a verbal reminder from the IP, leaving no margin to the speed limit.",
+        "2": "SP, due to a retraction sequence delayed by a few seconds while the departure call was made, did not clean the A/C configuration at the briefed point. The airspeed approached but did not reach the limiting speed for the configuration. SP recognized the accelerating trend, adjusted the pitch attitude and completed the L/G and flaps retraction in time, with no IP intervention.",
+        "3": "SP cleaned the A/C configuration at the correct points in the departure and did not violate the speed limit for L/G or flaps. The retraction was sequenced with the climb attitude so that a comfortable margin to the limiting speeds was preserved, and the radio work was fitted between the control tasks.",
+        "4": "SP cleaned the A/C configuration exactly at the briefed points with a wide margin to the L/G and flaps limiting speeds. The retraction sequence, the attitude control and the departure transmission were separated in time so that no task competed with aircraft control. Configuration and indication checks were confirmed after each retraction.",
+        "marginal": "SP cleaned the A/C configuration without violating any speed limit, but the retractions were commanded consistently late and the margin to the limiting speeds was small on each occasion. Aircraft control was maintained and no prompting was required. SP is expected to sequence the retraction ahead of the departure transmission so that the configuration change is completed with a clear margin to the limiting speed."
+      }
+    },
+    {
+      "id": "instrument-02-em07",
+      "label": "Acceleration to and maintenance of standard climb airspeed",
+      "mif_row": null,
+      "source": "general:h|execution:1b,1e",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a pitch attitude flown without reference to the airspeed trend, did not accelerate and maintain the proper climb airspeed after the configuration was clean. The airspeed diverged more than 10 knots from the standard climb airspeed, beyond the -0,+10 knots tolerance applied to the takeoff airspeed, and the divergence persisted into the departure. IP intervened on the controls to re-establish the standard climb airspeed.",
+        "1": "SP, due to late and undersized pitch corrections, did not maintain the proper climb airspeed once the aircraft was clean. The airspeed settled about 10 knots off the standard climb airspeed, at the limit of the -0,+10 knots tolerance, and returned to the standard only after repeated verbal directions from the IP.",
+        "2": "SP, due to a pitch attitude set slightly low during the acceleration, did not stabilize on the standard climb airspeed at the briefed point. The airspeed deviation reached approximately 7 knots, between the -0,+5 and the -0,+10 knots tolerances. SP identified the deviation on the airspeed indication and corrected it with a measured pitch change, with no IP intervention.",
+        "3": "SP accelerated the A/C to the standard climb airspeed and maintained it through the departure. Pitch was adjusted in small increments against the airspeed indication and the airspeed was held within the -0,+5 knots tolerance. Trim was set so that the airspeed remained stable without continuous control input.",
+        "4": "SP accelerated the A/C to the standard climb airspeed on schedule and maintained it with negligible deviation. The pitch attitude required for the climb airspeed was identified quickly and held, and trim was set so that the aircraft flew the target airspeed hands-light. No airspeed oscillation was present at any point in the departure.",
+        "marginal": "SP accelerated to and maintained the proper climb airspeed inside the required tolerance, but the airspeed oscillated slowly around the standard and each correction was made a step behind the trend. No prompting was needed and the airspeed never left the standard. SP is expected to fly the known pitch attitude for the climb airspeed and trim early, so that the airspeed is held rather than chased."
+      }
+    },
+    {
+      "id": "instrument-02-em08",
+      "label": "Transition to instrument references and cross-check after liftoff",
+      "mif_row": null,
+      "source": "general:preamble,c,f|execution:1b",
+      "hf_concept": "hf-spatial-disorientation",
+      "texts": {
+        "0": "SP, due to a false attitude perception that was not resolved against the instruments, did not transition to the flight instruments at the briefed point after liftoff and did not maintain the proper climbing attitude by reference to them. Attitude and heading were flown on outside cues until the airspeed diverged more than 10 knots from the standard, outside the -0,+10 knots tolerance, and the departure track was lost. IP intervened, took the controls and re-established the climb on instruments.",
+        "1": "SP, due to a delayed instrument transition after liftoff, did not establish the instrument cross-check before the outside references were lost. Attitude control degraded until the airspeed reached about 10 knots off the standard, at the limit of the -0,+10 knots tolerance, and the parameters were recovered only after the IP called the required instrument indications.",
+        "2": "SP, due to an instrument cross-check that remained fixed on the attitude indication for several seconds after liftoff, did not include the airspeed and heading references in the scan at the briefed point. The airspeed deviation reached roughly 7 knots and the heading drifted off the departure track, between the code 3 and code 1 tolerances. SP re-established the full cross-check on his own and returned the parameters to the standard without IP intervention.",
+        "3": "SP transitioned to the flight instruments immediately at liftoff and maintained a continuous cross-check of attitude, airspeed, altitude and heading. Attitude was controlled by reference to the instruments and the airspeed was held within the -0,+5 knots tolerance while the departure track was flown accurately.",
+        "4": "SP transitioned to the flight instruments at liftoff with no interruption in aircraft control and maintained a systematic cross-check throughout the departure. Attitude, airspeed, altitude and heading were kept with negligible deviation, and each control input was made from the instrument indication rather than in reaction to it. The instrument scan was unaffected by the checklist and radio work.",
+        "marginal": "SP transitioned to the flight instruments after liftoff and held all parameters within standards, but the scan dwelled on the attitude indication and the remaining instruments were sampled at a low rate. No deviation left the standard and no prompting was required. SP is expected to broaden the cross-check rate immediately after liftoff so that airspeed and heading are captured before they move rather than after."
+      }
+    }
+  ]
+}

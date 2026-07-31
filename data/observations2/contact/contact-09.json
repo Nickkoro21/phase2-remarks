@@ -1,0 +1,132 @@
+{
+  "item_id": "contact-09",
+  "item_name": "TRAFFIC PATTERN STALLS",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [9],
+  "mif_rows": [
+    {"sn": 9, "row_name": "T/P Stalls"}
+  ],
+  "error_modes": [
+    {
+      "id": "contact-09-em01",
+      "label": "Break stall altitude control",
+      "mif_row": null,
+      "source": "specific:BREAK STALL – ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a late and coarse pitch reduction at the first buffet of the BREAK stall, did not contain the altitude excursion within the plus/minus 300 feet tolerance set for this stall. The aircraft ballooned above and then descended through the briefed entry altitude by more than 300 feet with no timely correction. The IP intervened on the controls to arrest the excursion and reposition the aircraft at pattern altitude.",
+        "1": "SP, due to a fixation on the horizon instead of the altimeter during the break, did not hold the entry altitude of the BREAK stall and reached the plus/minus 300 feet limit of the criteria. The correction was started only after repeated verbal prompting from the IP, and the aircraft was returned to the briefed altitude late, after the pattern spacing had already been lost.",
+        "2": "SP, due to a slightly aggressive back pressure at the break, did not keep the entry altitude within the tight tolerance and the aircraft deviated by roughly 200 to 250 feet, between the 150 and 300 feet criteria. SP recognized the trend on the altimeter and corrected it in time on his own, with no IP intervention and with the pattern position preserved.",
+        "3": "SP flies the BREAK stall with an accurate pitch input at the break and holds the entry altitude within the 150 feet tolerance of the criteria. The excursion is identified immediately on the altimeter and corrected with a smooth, prompt input, and the aircraft returns to the briefed altitude without loss of pattern position.",
+        "4": "SP flies the BREAK stall with a precise, measured entry that keeps the altitude excursion to a few tens of feet, negligible against the criteria. The altitude is controlled continuously throughout the entry and the recovery, with no perceptible ballooning and no descent below the briefed entry altitude.",
+        "marginal": "SP keeps the BREAK stall altitude within the standards, but works close to the edge of the 150 feet band with a repeated tendency to sink after the break before pitch is re-established. The deviation is always caught and corrected without prompting, so the criteria are met. SP is expected to anticipate the pitch requirement earlier so the excursion is reduced on the next sorties."
+      }
+    },
+    {
+      "id": "contact-09-em02",
+      "label": "Base leg stall altitude loss",
+      "mif_row": null,
+      "source": "specific:BASE LEG STALL–  ALTITUDE (feet)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to inadequate monitoring of airspeed during the approach, did not detect the developing base leg stall in time and did not limit the altitude loss to the 300 feet allowed by the criteria. The recovery was started well after the first stall characteristics and the aircraft descended more than 300 feet below the briefed entry altitude. The IP took the controls to complete the recovery and to re-establish a safe altitude on base.",
+        "1": "SP, due to an interrupted cross-check between the aim point and the altimeter, did not arrest the descent in the base leg stall until the altitude loss had reached the 300 feet limit of the criteria. The nose was lowered and power applied only after the IP called the sink rate, and the aircraft was recovered to the briefed altitude with a marked delay.",
+        "2": "SP, due to an incomplete cross-check of aircraft state during the entry, did not recover the base leg stall at the first indication and lost approximately 200 to 250 feet, between the 150 and 300 feet criteria. SP identified the excessive sink from the altimeter and vertical speed and completed the recovery in time, unassisted, with no IP input on the controls.",
+        "3": "SP maintains an active cross-check on entry to the base leg stall, recognizes the first stall characteristics immediately and recovers with an altitude loss inside the 150 feet tolerance. Pitch and power are applied together, the descent is arrested promptly and the aircraft is returned to the briefed base leg altitude.",
+        "4": "SP anticipates the base leg stall from the airspeed decay, recovers at the very first indication and holds the altitude loss to a few tens of feet, negligible against the criteria. The cross-check remains continuous through entry and recovery, and the aircraft never approaches an undesired state on base.",
+        "marginal": "SP recovers the base leg stall within the standards, but the altitude loss sits near the 150 feet band on each repetition because the recovery is initiated a fraction late relative to the first buffet. No prompting is required and the criteria are met throughout. SP is expected to tighten the airspeed cross-check so recognition, and therefore the altitude loss, improves on subsequent sorties."
+      }
+    },
+    {
+      "id": "contact-09-em03",
+      "label": "Landing attitude stall altitude loss",
+      "mif_row": null,
+      "source": "specific:STALL WITH LANDING ATTITUDE – ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a continued aft stick input after the stall characteristics appeared in the landing attitude, did not recover the aircraft within the 300 feet altitude loss allowed by the criteria. The aircraft mushed and descended more than 300 feet below the briefed entry altitude before pitch was reduced and power applied. The IP intervened on the controls to complete the recovery and re-establish level flight.",
+        "1": "SP, due to a reluctance to lower the nose from the landing attitude, did not limit the altitude loss of the stall and reached the 300 feet limit set by the criteria. The recovery inputs were made only after direct verbal instruction from the IP, and the aircraft regained the briefed altitude late and with excessive power demand.",
+        "2": "SP, due to a small delay in coordinating pitch reduction with power application, did not recover the landing attitude stall at the first indication and lost about 200 to 250 feet, between the 150 and 300 feet criteria. SP detected the excessive descent and completed the recovery in time without any IP intervention on the controls.",
+        "3": "SP holds the landing attitude accurately to the first stall characteristics, then reduces pitch and applies power together, keeping the altitude loss within the 150 feet tolerance. The recovery is prompt and smooth, and the aircraft is re-established in level flight at the briefed altitude with the correct configuration retained.",
+        "4": "SP flies the landing attitude stall with exact attitude control and recovers at the very first indication, with an altitude loss of only a few tens of feet, negligible against the criteria. Pitch, power and attitude are coordinated throughout, and the aircraft shows no tendency to mush or to sink after the recovery.",
+        "marginal": "SP recovers the landing attitude stall inside the standards, but the altitude loss remains near the 150 feet band because pitch is lowered slightly more than needed before power takes effect. The correction is always self-initiated and the criteria are met. SP is expected to blend pitch and power more closely so the altitude loss is reduced on the following sorties."
+      }
+    },
+    {
+      "id": "contact-09-em04",
+      "label": "Stall entry technique per Techniques and Procedures Manual",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incorrect entry sequence, did not fly the aircraft into the stall according to the Techniques and Procedures Manual, using a rate of deceleration and a bank angle that did not match the briefed profile. The stall developed in a condition other than the one required for the exercise and the resulting altitude excursion exceeded 300 feet. The IP intervened and terminated the entry.",
+        "1": "SP, due to an incomplete recall of the published entry technique, did not establish the required attitude, power and configuration before the stall and reproduced the manual profile only after step by step direction from the IP. The delay in setting the correct entry conditions produced an altitude deviation at the 300 feet limit of the criteria before the maneuver was stabilized.",
+        "2": "SP, due to a rushed setup, did not establish the entry parameters of the Techniques and Procedures Manual on the first attempt, with the deceleration rate faster than briefed. SP recognized the discrepancy, adjusted power and attitude in time on his own and contained the resulting deviation between the 150 and 300 feet criteria, without IP intervention.",
+        "3": "SP flies the aircraft into each traffic pattern stall exactly as prescribed by the Techniques and Procedures Manual, with the correct configuration, bank and deceleration rate, and at the altitude fixed by the manual and the SOPs. The entry is deliberate and stabilized, and the resulting deviations stay within the 150 feet tolerance of the criteria.",
+        "4": "SP sets up and flies every stall entry precisely to the published technique, with the configuration, power and attitude established before the deceleration begins and the profile reproduced identically on each repetition. Deviations from the briefed entry conditions are negligible and the exercise is flown deliberately throughout.",
+        "marginal": "SP flies the stall entries to the published technique and meets the standards, but the setup is compressed and the deceleration rate is at the fast end of what the manual allows. The parameters are still established before the break and no prompting is required. SP is expected to begin the entry earlier so each stall is set up with more margin on the next sorties."
+      }
+    },
+    {
+      "id": "contact-09-em05",
+      "label": "Recovery initiation at first stall characteristics",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": "hf-startle-effect",
+      "texts": {
+        "0": "SP, due to a startle response at the onset of the stall buffet, did not execute the recovery procedures with the appearance of the first stall characteristics and allowed the stall to develop fully. The delay in applying pitch and power produced an altitude loss beyond the 300 feet allowed by the criteria and an undesired nose attitude. The IP took the controls to recover the aircraft.",
+        "1": "SP, due to a startle response that displaced the memorized recovery sequence, did not initiate the recovery at the first stall characteristics and applied the required inputs only after the IP called for the recovery. The resulting altitude loss reached the 300 feet limit of the criteria and the recovery was completed late and out of sequence.",
+        "2": "SP, due to a momentary surprise at the onset of the buffet, did not begin the recovery at the very first stall characteristics and delayed the inputs by a short interval. SP then applied the correct pitch and power sequence unassisted, containing the altitude loss between the 150 and 300 feet criteria with no IP intervention.",
+        "3": "SP executes the recovery procedures with the appearance of the first stall characteristics on every repetition, applying the published sequence promptly and in the correct order. The stall is not allowed to develop, and the altitude loss stays within the 150 feet tolerance of the criteria.",
+        "4": "SP identifies the first stall characteristics immediately in all four traffic pattern stalls and recovers without hesitation, with the published sequence flown smoothly and in order. The aircraft is never allowed past the initial indication and the resulting altitude loss is negligible against the criteria.",
+        "marginal": "SP recovers at the first stall characteristics and meets the standards, but the initiation is consistently at the late end of the acceptable window, with a short pause between the buffet and the first control input. No IP prompting is required and the altitude criteria are met. SP is expected to shorten the recognition to input interval on subsequent sorties."
+      }
+    },
+    {
+      "id": "contact-09-em06",
+      "label": "Secondary stall prevention and corrective action",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-acts-errors",
+      "texts": {
+        "0": "SP, due to a skill-based error in control input during the recovery, applied back stick before the wing was flying again and allowed a secondary stall to develop, which is expressly excluded by the criteria. No appropriate corrective action was taken at the second buffet and the total altitude loss exceeded the 300 feet allowed. The IP took the controls to recover the aircraft to a safe flight condition.",
+        "1": "SP, due to a skill-based error in blending pitch with power, induced a secondary stall during the recovery and did not take the appropriate action until the IP called for it verbally. The aircraft was recovered only after the second entry had developed, and the accumulated altitude loss reached the 300 feet limit of the criteria.",
+        "2": "SP, due to a slightly early pitch increase during the recovery, produced a light secondary buffet instead of a clean recovery. SP recognized the indication immediately, relaxed the back pressure and completed the recovery unassisted, holding the total altitude loss between the 150 and 300 feet criteria with no IP intervention.",
+        "3": "SP completes each recovery without allowing the appearance of a secondary stall, holding the attitude until the aircraft is flying again before raising the nose. Pitch and power are blended correctly on every repetition and the aircraft is re-established in the briefed condition within the 150 feet tolerance.",
+        "4": "SP recovers every traffic pattern stall cleanly, with no trace of a secondary buffet and with the wing unloaded exactly as long as required before the climb attitude is set. The margin against a second entry is evident on all four stalls and the altitude loss is negligible against the criteria.",
+        "marginal": "SP avoids any secondary stall and meets the standards, but the nose is raised close to the point where the buffet would reappear, leaving little margin during the recovery. The technique is self-corrected each time and no prompting is required. SP is expected to hold the unloaded attitude marginally longer before establishing the climb on the next sorties."
+      }
+    },
+    {
+      "id": "contact-09-em07",
+      "label": "Landing gear and flap airspeed limits during recovery",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an excessive nose down attitude combined with full power during the recovery, exceeded the published airspeed limits for the landing gear and flaps, contrary to the criteria. The overspeed was not recognized and no action was taken to reduce the airspeed or to change the configuration. The IP intervened on the controls to unload the aircraft and bring the airspeed back inside the limits.",
+        "1": "SP, due to an unmonitored acceleration in the dive after the stall, allowed the airspeed to reach the published landing gear and flap limits and reacted only after the IP called the overspeed. Pitch was raised and power reduced late, and the recovery was completed with an altitude loss at the 300 feet limit of the criteria.",
+        "2": "SP, due to a slightly steep recovery attitude, allowed the airspeed to build toward the gear and flap limits without exceeding them, with the deviation from the briefed recovery profile placing the altitude loss between the 150 and 300 feet criteria. SP saw the airspeed trend, corrected the attitude in time and preserved the configuration limits without IP intervention.",
+        "3": "SP recovers each stall with an attitude and power setting that keep the airspeed comfortably inside the published landing gear and flap limits. The airspeed indicator is included in the cross-check throughout the recovery and the configuration is retained as briefed, with the altitude loss within the 150 feet tolerance.",
+        "4": "SP controls the recovery attitude precisely, so the airspeed remains well clear of the landing gear and flap limits on every repetition, with a comfortable margin at all times. The configuration is managed in accordance with the manual and the airspeed trend is anticipated rather than chased.",
+        "marginal": "SP keeps the airspeed inside the landing gear and flap limits and meets the standards, but the margin narrows on the recoveries flown with the steeper nose down attitude. The trend is detected and corrected without prompting each time. SP is expected to use a shallower recovery attitude so the airspeed margin against the configuration limits increases on subsequent sorties."
+      }
+    },
+    {
+      "id": "contact-09-em08",
+      "label": "Aircraft control quality during the recovery",
+      "mif_row": null,
+      "source": "general:cross_ref:contact-05",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to uncoordinated rudder and aileron inputs at the break, did not complete the recovery applying the criteria of Basic A/C Control and allowed an uncommanded bank and heading excursion to develop. Wings were not levelled and the flight path was not stabilized, and the altitude loss went beyond the 300 feet allowed by the criteria. The IP intervened on the controls to level the wings and stabilize the aircraft.",
+        "1": "SP, due to a delayed rudder input as the wing dropped, did not keep the aircraft coordinated during the recovery and levelled the wings only after the IP called for it. The heading excursion and the associated altitude loss reached the 300 feet limit of the criteria before the aircraft was re-established on the briefed flight path.",
+        "2": "SP, due to a small out of balance input during the recovery, did not complete it with the smoothness required by the Basic A/C Control criteria and the aircraft rolled slightly before the wings were levelled. SP corrected the bank and coordination in time on his own, holding the altitude loss between the 150 and 300 feet criteria without IP intervention.",
+        "3": "SP completes each recovery applying the criteria of Basic A/C Control, with coordinated inputs, wings levelled promptly and the aircraft re-established on the briefed heading and flight path with minimum loss of altitude, within the 150 feet tolerance. Control pressures are smooth and no secondary corrections are needed.",
+        "4": "SP recovers with fully coordinated control, no perceptible roll off at the break and immediate re-establishment of the briefed heading and attitude, with negligible loss of altitude. Basic aircraft control is maintained continuously through entry, stall and recovery in all four traffic pattern stalls.",
+        "marginal": "SP applies the Basic A/C Control criteria during the recovery and stays within the standards, but a small heading excursion recurs at the break before the rudder input takes effect. Each excursion is corrected without prompting and the altitude criteria are met. SP is expected to anticipate the rudder requirement so the recoveries are flown with tighter heading control on the next sorties."
+      }
+    }
+  ]
+}

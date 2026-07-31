@@ -1,0 +1,132 @@
+{
+  "item_id": "contact-10",
+  "item_name": "SPIN PREVENTION /SPIN RECOVERY",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [10],
+  "mif_rows": [
+    {"sn": 10, "row_name": "Spin Prevention / Spin Recovery"}
+  ],
+  "error_modes": [
+    {
+      "id": "contact-10-em01",
+      "label": "RECOVERY PROCEDURE RECALL AND SEQUENCE",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-lack-of-knowledge",
+      "texts": {
+        "0": "SP did not know the spin prevention and spin recovery procedures by heart, due to incomplete study of the boldface before the sortie. SP omitted and reversed steps of the published sequence, kept power applied with the controls displaced, and allowed the spin to continue through additional turns. IP took the aircraft and executed the recovery. The procedure was not applied in any recognisable order.",
+        "1": "SP recalled the recovery procedure only in fragments, due to weak memorisation of the boldface items. SP hesitated after the entry and applied the steps out of order, completing the sequence only after repeated verbal prompting by the IP. The delay allowed the spin to develop well past the incipient phase, at the limit of an acceptable recovery.",
+        "2": "SP applied the recovery procedure with an initial hesitation, due to incomplete memorisation of the sequence. SP paused before setting power to idle, then recognised the omission and completed the remaining steps in the correct order without any prompt. The delay cost part of a turn but the recovery was self-initiated and effective.",
+        "3": "SP knew the spin prevention and spin recovery procedures by heart and applied them without hesitation. SP identified the spin condition immediately and executed the published steps in the correct order and at the correct time. The aircraft was returned to controlled flight promptly on every attempt.",
+        "4": "SP recited and executed the recovery procedure flawlessly, with no pause between recognition and action. SP applied each step at the exact point required and verbalised the sequence while flying it. Recovery was immediate and identical on repeated entries.",
+        "marginal": "SP knew the recovery procedure and applied it within standards, but the recall was still recited rather than automatic and the first step came a beat late on each entry. This tendency did not affect the outcome, yet under a real departure it leaves little margin. SP is expected to bring the boldface to full automatic recall for the next sortie."
+      }
+    },
+    {
+      "id": "contact-10-em02",
+      "label": "CONTROL INPUTS DURING RECOVERY (SMOOTH AND SOLID)",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": "hf-startle-effect",
+      "texts": {
+        "0": "SP did not make smooth and solid stick movements during the recovery, due to a startle response at the spin entry. SP applied abrupt and reversed inputs, released the controls before the rotation stopped and re-entered the autorotation. IP had to take the controls and hold them in the recovery position to stop the spin.",
+        "1": "SP made rushed and uneven stick movements during the recovery, due to a startle response that persisted after the entry. SP relaxed the input before the rotation had fully stopped and re-applied it only after being told to hold the controls in position. Recovery was achieved at the limit of the acceptable, with rotation continuing longer than required.",
+        "2": "SP made the recovery inputs less smoothly than required, due to a brief startle at the departure. SP moved the stick abruptly on the first application, recognised the roughness and settled into a steady and solid hold for the remainder of the recovery without any comment from the IP. The aircraft recovered with only a slight increase in rotation.",
+        "3": "SP made smooth and solid stick movements throughout the recovery. SP applied the inputs positively, held them until the rotation stopped and then released them progressively as flying speed returned. Control handling was steady on each entry.",
+        "4": "SP made precise, smooth and firm stick movements with no trace of startle at the entry. SP held each input exactly as long as required and blended the release into the dive recovery without any control reversal. Handling was consistent and unhurried on all repetitions.",
+        "marginal": "SP made solid stick movements within standards, but the first input after each entry was still applied more quickly than the technique calls for. The tendency was self-limited and did not degrade the recovery. SP is expected to smooth the initial application on the next spin sortie."
+      }
+    },
+    {
+      "id": "contact-10-em03",
+      "label": "ALTITUDE LOSS DURING RECOVERY",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP did not recover the aircraft with minimum loss of altitude, due to late recognition of the spin and a slow application of the recovery steps. SP allowed the rotation to continue and then held a shallow dive angle far longer than required, losing altitude well beyond what the maneuver demands and approaching the recovery floor. IP intervened and terminated the maneuver.",
+        "1": "SP recovered the aircraft with excessive loss of altitude, due to a delayed dive recovery after the rotation stopped. SP left the nose low and accepted a prolonged descent, initiating the pull only after being prompted by the IP. Altitude loss reached the limit of the acceptable margin above the recovery floor.",
+        "2": "SP lost more altitude than necessary during the recovery, due to a slow transition from the anti-spin inputs to the dive recovery. SP recognised the increasing descent, promptly raised the nose to the horizon and stopped the altitude loss without any prompting. The remaining margin above the recovery floor stayed comfortable.",
+        "3": "SP recovered the aircraft with minimum loss of altitude. SP stopped the rotation promptly and made an immediate but controlled dive recovery to level flight. Altitude loss was consistent with the technique and the recovery floor was never a factor.",
+        "4": "SP recovered the aircraft with the least practicable loss of altitude on every entry. SP transitioned from the anti-spin inputs to the dive recovery with no dead time and levelled the aircraft with a large margin above the recovery floor. Altitude loss was repeatable and minimal.",
+        "marginal": "SP recovered within standards but the altitude loss trended toward the upper end of what the maneuver requires on each entry. The technique worked, yet the margin above the recovery floor was smaller than it needs to be. SP is expected to tighten the transition from rotation stop to dive recovery on the next sortie."
+      }
+    },
+    {
+      "id": "contact-10-em04",
+      "label": "SECONDARY STALL PREVENTION AND REACTION",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP allowed the appearance of a secondary stall during the dive recovery and did not take the proper action, due to an aggressive pull applied before flying speed had been regained. SP maintained back stick pressure through the buffet and let the aircraft depart again. IP took the controls to unload the aircraft and complete the recovery.",
+        "1": "SP allowed a secondary stall to develop during the dive recovery, due to an early and heavy pull after the rotation stopped. SP recognised the buffet only after the IP called it and then reduced the back pressure to unload the wing. The corrective action was correct but late, and the entry into the secondary stall was clear.",
+        "2": "SP approached a secondary stall during the dive recovery, due to a pull initiated slightly before adequate flying speed. SP felt the onset of the buffet, immediately relaxed the back pressure and completed the recovery at a reduced load factor without any input from the IP. No full secondary stall developed.",
+        "3": "SP did not allow the appearance of a secondary stall. SP waited for flying speed before applying back pressure and completed the dive recovery at a load factor well clear of the buffet. The wing remained unstalled throughout the recovery.",
+        "4": "SP kept the aircraft entirely clear of any secondary stall on every recovery, with no trace of buffet. SP judged the point of adequate flying speed accurately and blended the pull so that the load factor stayed comfortably below the onset. Angle of attack management was precise throughout.",
+        "marginal": "SP avoided any secondary stall and stayed within standards, but the back pressure during the dive recovery was applied close to the buffet margin on each attempt. Nothing developed, yet the technique leaves little room if the recovery is flown at a lower speed. SP is expected to delay the pull slightly and increase the margin next time."
+      }
+    },
+    {
+      "id": "contact-10-em05",
+      "label": "AIRCRAFT LIMITS DURING RECOVERY",
+      "mif_row": null,
+      "source": "general:e",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP exceeded the aircraft limits during the recovery, due to an unmonitored dive and a late, heavy pull. SP allowed the airspeed and the load factor to build past the published limits with no attempt to reduce power or unload. IP took the aircraft to arrest the acceleration and the exceedance had to be reported.",
+        "1": "SP took the aircraft to the published limits during the dive recovery, due to a nose-low attitude held too long with power applied. SP reduced the pull and checked the acceleration only after the IP called the airspeed. The limits were reached rather than exceeded, but only because of the verbal intervention.",
+        "2": "SP allowed the airspeed and load factor to increase toward the published limits during the dive recovery, due to a late reduction of the dive angle. SP noticed the trend on the instruments, raised the nose and eased the pull in time, keeping the values clear of the limits without any prompt. The margin remained adequate throughout.",
+        "3": "SP did not exceed the aircraft limits at any stage of the entry or the recovery. SP managed power, dive angle and load factor so that airspeed and G stayed within the published values. All parameters remained inside limits on each repetition.",
+        "4": "SP kept the aircraft well inside every published limit throughout the maneuver, with wide margins on airspeed and load factor. SP anticipated the acceleration in the dive and controlled it before it became a factor. Limit management was consistent on all entries.",
+        "marginal": "SP stayed within the aircraft limits, but airspeed in the dive recovery reached the upper part of the acceptable band on each attempt. No limit was approached closely enough to affect the grade, yet the trend is consistent. SP is expected to control the dive angle earlier so the margin to the limits increases."
+      }
+    },
+    {
+      "id": "contact-10-em06",
+      "label": "POST-RECOVERY ALTITUDE CONTROL",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP did not stabilise the aircraft at the recovery altitude, due to an unmonitored pitch attitude after the dive recovery. SP allowed the aircraft to porpoise through the target altitude and settled more than 300 feet away from it without recognising the deviation. IP took the aircraft to establish level flight.",
+        "1": "SP levelled off approximately 300 feet from the intended recovery altitude, due to a late check of the altimeter after the dive recovery. SP held the incorrect altitude and only started the correction after the IP pointed out the deviation. The recovery to the assigned altitude was slow.",
+        "2": "SP overshot the intended recovery altitude by between 150 and 300 feet, due to a nose-low attitude held slightly too long. SP identified the deviation on the altimeter and returned to the assigned altitude promptly and without prompting. Level flight was then maintained accurately.",
+        "3": "SP established level flight within 150 feet of the intended recovery altitude. SP checked the altimeter immediately after the dive recovery and set the pitch attitude required to stop the deviation. The altitude was then held steadily.",
+        "4": "SP stabilised the aircraft within a few tens of feet of the intended recovery altitude on every entry. SP anticipated the level-off during the dive recovery and arrived at the altitude with no overshoot. Altitude control after recovery was essentially exact.",
+        "marginal": "SP levelled off within standards but consistently on the low side of the intended recovery altitude, correcting back each time. The deviations stayed inside the tolerance and were self-corrected. SP is expected to anticipate the level-off earlier so the altitude is captured directly."
+      }
+    },
+    {
+      "id": "contact-10-em07",
+      "label": "POST-RECOVERY AIRSPEED CONTROL",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP did not stabilise the airspeed after the recovery, due to power being left unmanaged through the dive and the level-off. SP allowed the airspeed to deviate more than 20 knots from the target and made no correction as the trend continued. IP took the aircraft and set the required power.",
+        "1": "SP stabilised at approximately 20 knots from the target airspeed after the recovery, due to a late power application during the level-off. SP corrected only after the IP called the airspeed, and the correction itself was made in coarse power changes. The airspeed settled at the limit of the acceptable band.",
+        "2": "SP allowed the airspeed to deviate between 10 and 20 knots from the target after the recovery, due to power being restored slightly late during the level-off. SP recognised the trend on the airspeed indicator and adjusted power in time to bring it back on its own. The airspeed then remained steady.",
+        "3": "SP stabilised the airspeed within 10 knots of the target after the recovery. SP restored power at the correct point in the level-off and coordinated it with the pitch change. Airspeed was held steadily in level flight.",
+        "4": "SP recovered to the target airspeed with only negligible deviation, holding it within a few knots throughout. SP set the power at the exact point required so that airspeed and attitude stabilised together. Speed control after recovery was precise on every repetition.",
+        "marginal": "SP held the airspeed within standards after the recovery but the deviations were repeatedly toward the fast side, requiring a power reduction each time. The values stayed inside tolerance and the corrections were prompt. SP is expected to set the level-off power earlier so the target speed is captured without correction."
+      }
+    },
+    {
+      "id": "contact-10-em08",
+      "label": "EXIT HEADING CONTROL",
+      "mif_row": null,
+      "source": "specific:EXIT HEADING (degrees)",
+      "hf_concept": "hf-spatial-disorientation",
+      "texts": {
+        "0": "SP did not roll out on the intended exit heading, due to spatial disorientation carried over from the rotation. SP lost the reference completely, made no attempt to use the heading indicator and finished more than 10 degrees off, still turning. IP took the aircraft to establish the correct heading.",
+        "1": "SP rolled out approximately 10 degrees from the intended exit heading, due to disorientation following the spin that delayed the transfer of attention to the heading indicator. SP re-established the reference and corrected only after being told the heading by the IP. The correction was late and made in a single coarse turn.",
+        "2": "SP rolled out between 5 and 10 degrees from the intended exit heading, due to a brief disorientation after the rotation stopped. SP cross-checked the heading indicator, recognised the error and turned back onto the intended heading without any prompt. The correction was smooth and timely.",
+        "3": "SP rolled out within 5 degrees of the intended exit heading. SP re-established the visual and instrument references immediately after the rotation stopped and stopped the turn on the required heading. The heading was then maintained accurately.",
+        "4": "SP rolled out essentially on the intended exit heading on every recovery, with only a degree or two of deviation. SP retained orientation throughout the rotation and anticipated the rollout point. Heading control after recovery was exact and repeatable.",
+        "marginal": "SP rolled out within standards but consistently short of the intended exit heading, requiring a small correcting turn each time. The deviations remained inside tolerance and were corrected without prompting. SP is expected to anticipate the rollout so the exit heading is captured directly on the next sortie."
+      }
+    }
+  ]
+}

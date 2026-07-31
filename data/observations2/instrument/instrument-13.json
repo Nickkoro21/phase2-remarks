@@ -1,0 +1,132 @@
+{
+  "item_id": "instrument-13",
+  "item_name": "MAINTAINING COURSE",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [13],
+  "mif_rows": [
+    {"sn": 13, "row_name": "Maintaining Course"}
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-13-em01",
+      "label": "Course deviation control on the inbound and outbound radial",
+      "mif_row": null,
+      "source": "specific:DEVIATION (radials)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to course corrections applied without any reference to the rate at which the CDI was moving, did not stop the displacement from the selected radial after the intercept had been completed. The needle deflection continued to grow past 8 degrees from the course centerline with the aircraft still turning away from it. IP took the controls and re-established the aircraft on the published course.",
+        "1": "SP, due to a correction heading that only matched the drift instead of also closing the existing displacement, did not return the aircraft to the selected course once the deviation had developed. The displacement stabilized at the 8 degrees limit and stayed there until IP called for a larger correction. SP then turned toward the course, but the recovery followed the verbal prompt rather than SP's own assessment.",
+        "2": "SP, due to a correction heading taken slightly too small for the crosswind component, did not hold the aircraft on the selected radial after the turn onto the inbound course. The deviation grew past 5 degrees and reached approximately 7 degrees before SP recognized the trend. SP increased the correction, regained the course and held it, with no intervention required.",
+        "3": "SP maintained the selected radial within 5 degrees throughout both the inbound and the outbound legs, keeping the CDI needle close to centered at all times. SP identified small displacements early and removed them with measured heading corrections. Course keeping stayed steady for the whole tracking exercise.",
+        "4": "SP held the selected course with a needle deflection that remained effectively centered for the entire exercise, inbound and outbound. Each drift tendency was detected at the first indication and cancelled with a heading change of only a few degrees. Course accuracy required no comment at any point.",
+        "marginal": "SP kept the aircraft inside the course tolerance, but the CDI was held near the edge of the acceptable band for extended periods rather than centered, with a consistent displacement to the same side. Performance remained within standards, yet the pattern shows that the course is being contained rather than actively flown. SP is expected to work the needle back to center and to keep the displacement small enough that the tolerance is never the working reference."
+      }
+    },
+    {
+      "id": "instrument-13-em02",
+      "label": "Wind drift assessment and correction angle while tracking",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a wind correction angle that was never established after roll-out on course, did not compensate for the known crosswind and continued to fly the course heading as if in still air. The aircraft was carried steadily downwind and the deviation passed 8 degrees from the selected radial with no correction started. IP intervened to establish the required crab and to return the aircraft to the course.",
+        "1": "SP, due to a wind correction angle taken from the briefed forecast and never revised against the observed drift, did not prevent the aircraft from being displaced off the selected radial. The displacement built to the 8 degrees limit before any action was taken, and the correction followed only after IP pointed out the drift. SP then established a workable crab, but the response was late.",
+        "2": "SP, due to a crab angle removed too early once the needle started to return toward center, did not keep the aircraft steady on the selected course. The displacement re-opened past 5 degrees and reached approximately 6 to 7 degrees on the downwind side. SP re-applied the wind correction angle in good time and stabilized the aircraft on course without any assistance.",
+        "3": "SP established a wind correction angle appropriate to the observed drift shortly after rolling out on course and maintained the selected radial within 5 degrees. SP refined the crab in small increments as the drift was assessed against the needle movement. The correction held the aircraft on course on both the inbound and the outbound legs.",
+        "4": "SP determined the required wind correction angle almost immediately after roll-out and flew it precisely, so the CDI showed no perceptible drift for the remainder of the leg. SP adjusted the crab by one or two degrees only, and only where needle movement justified it. Drift was managed so accurately that no course regain was ever needed.",
+        "marginal": "SP corrected for drift within standards, but the wind correction angle was found through a series of trial headings rather than assessed, so the aircraft oscillated slowly either side of the course. The deviations stayed inside the tolerance, yet the drift is still being discovered rather than anticipated. SP is expected to assess drift from the first needle movement and to settle on a single crab angle that holds the course."
+      }
+    },
+    {
+      "id": "instrument-13-em03",
+      "label": "Re-establishment of course immediately after station passage",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to task sequencing that concentrated the course reset, the timing call and the outbound turn into the same few seconds over the station, did not re-establish the aircraft on the outbound course after station passage. The aircraft was allowed to diverge more than 8 degrees from the required radial while the cockpit tasks were still being worked. IP took control to stop the divergence and to place the aircraft on the outbound course.",
+        "1": "SP, due to workload management that left the outbound course setting until after the TO-FROM indication had already changed, did not begin outbound tracking in time. The displacement reached the 8 degrees limit before any correction was applied, and the turn back toward the course was made only after IP prompted. SP recovered the outbound radial, but the sequence remained behind the aircraft.",
+        "2": "SP, due to a slightly late start of the outbound turn while the station passage indications were still being confirmed, did not roll out exactly on the required radial. The deviation opened past 5 degrees and reached approximately 7 degrees before SP corrected. SP turned back onto the outbound course promptly and stabilized on it without intervention.",
+        "3": "SP anticipated station passage, had the outbound course set before the cone of confusion was entered and re-established tracking within 5 degrees immediately after passage. SP held the last drift-corrected heading through the ambiguity zone and resumed normal course keeping as soon as the indications settled. The transition from inbound to outbound was continuous and orderly.",
+        "4": "SP flew through station passage without any interruption of course keeping, holding the wind-corrected heading through the cone of confusion and resuming outbound tracking with a needle that stayed effectively centered. All cockpit tasks associated with passage were completed before the station was reached. The outbound leg began with no correction required.",
+        "marginal": "SP re-established the outbound course inside the tolerance, but the reset of the navigation display and the outbound turn were still being carried out at the same time, which left a short unmonitored period after passage. The result stayed within standards, yet the workload at the station is not yet spread out. SP is expected to complete the course setting before passage so that the outbound turn is the only remaining task."
+      }
+    },
+    {
+      "id": "instrument-13-em04",
+      "label": "Sizing and bracketing of course corrections",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to corrections applied as large heading changes with no assessment of the resulting needle rate, did not converge on the selected course and drove the aircraft repeatedly through it. Each overshoot produced a displacement larger than the one before, exceeding 8 degrees on the opposite side of the radial. IP took the controls to stop the oscillation and to stabilize the aircraft on course.",
+        "1": "SP, due to a correction technique that used the same heading change regardless of how far the aircraft was from the course, did not damp the excursions either side of the selected radial. The displacement reached the 8 degrees limit on each swing and settled only after IP specified the heading to fly. SP flew the directed heading and the oscillation stopped, but not through SP's own bracketing.",
+        "2": "SP, due to a first correction that was not reduced as the needle began to center, did not roll out on the selected course at the first attempt. The overshoot carried the aircraft past 5 degrees on the other side, to approximately 6 degrees. SP reduced the next correction, bracketed the course and stabilized on it without any prompt.",
+        "3": "SP used corrections proportional to the displacement and reduced them progressively as the needle centered, staying within 5 degrees of the selected course throughout. SP bracketed the required heading in no more than two steps on each leg. The course was regained without overshoot on either side.",
+        "4": "SP corrected each displacement with a single, correctly sized heading change and rolled out on a heading that both centered the needle and held it. No bracketing beyond the first correction was necessary on either leg. Corrections were so measured that CDI movement stayed almost imperceptible.",
+        "marginal": "SP kept the course within standards, but corrections were consistently larger than the displacement required and were then taken out late, so the needle crossed center on most of them. The excursions remained inside the tolerance, yet the technique still depends on overshoot and recovery. SP is expected to size the correction to the displacement and to reduce it as the needle centers."
+      }
+    },
+    {
+      "id": "instrument-13-em05",
+      "label": "Navaid selection, course setting and identification supporting the track",
+      "mif_row": null,
+      "source": "general:a,b",
+      "hf_concept": "hf-mode-confusion",
+      "texts": {
+        "0": "SP, due to mode confusion over the navigation source selected for display and what the CDI was actually presenting, did not track the assigned course and flew to a centered needle that referred to a different selected value. The aircraft was more than 8 degrees from the assigned radial and still diverging. IP identified the incorrect selection, took control and re-established the aircraft on the assigned course.",
+        "1": "SP, due to an incorrect assumption about which navigation mode was driving the course indication, did not set the assigned course correctly before starting to track. The resulting displacement from the assigned radial reached the 8 degrees limit and was recognized only when IP questioned the selection. SP reset the source and the course and regained the radial after the prompt.",
+        "2": "SP, due to a delayed check of the navaid identification and of the selected course after the frequency change, did not begin tracking on a fully verified indication. The aircraft was allowed to drift past 5 degrees, to approximately 6 degrees, while the setup was still being confirmed. SP completed the identification, corrected back to the assigned radial and continued without intervention.",
+        "3": "SP selected the correct navigation source, identified the station and set the assigned course before beginning to track, then held the radial within 5 degrees. SP cross-checked the course indication against heading and bearing information at intervals during each leg. The navigation setup supported accurate tracking throughout.",
+        "4": "SP completed navaid selection, identification and course setting well before they were required and cross-checked the presentation against an independent bearing source. Tracking then proceeded with a needle that remained effectively centered on both legs. At no point was the displayed course accepted without verification.",
+        "marginal": "SP set up and identified the navaid within standards, but confirmation of the selected source and course was carried out after tracking had already started. Course keeping stayed inside the tolerance, yet the verification remains reactive. SP is expected to complete selection, identification and course setting before turning to track, and to state the active mode as part of the setup."
+      }
+    },
+    {
+      "id": "instrument-13-em06",
+      "label": "Altitude control while maintaining course",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to attention devoted entirely to the course display while a correction was being flown, did not maintain the assigned altitude during tracking and allowed a descent to develop with the aircraft out of trim. The altitude error exceeded 300 feet and continued to increase without being recognized. IP took control to recover the assigned altitude.",
+        "1": "SP, due to an altimeter left out of the cross-check while the drift was being assessed, did not hold the assigned altitude on the outbound leg. The deviation reached the 300 feet limit and remained there until IP called the altitude. SP then returned to the assigned level, but only after the prompt.",
+        "2": "SP, due to bank inputs made without the small pitch compensation they require, did not hold the assigned altitude during the corrections back to course. The deviation passed 150 feet and reached approximately 250 feet before SP noticed the trend. SP corrected pitch and power in good time and regained the assigned altitude unaided.",
+        "3": "SP maintained the assigned altitude within 150 feet throughout the inbound and outbound tracking, including during the turns onto correction headings. SP kept the aircraft trimmed so that heading changes did not disturb the pitch attitude. Altitude control remained steady while the course work was being carried out.",
+        "4": "SP held the assigned altitude with deviations that were negligible for the whole exercise, with the aircraft trimmed and the altimeter effectively static. Corrections to course produced no change in the vertical profile. Altitude required no comment at any stage of the tracking.",
+        "marginal": "SP held the assigned altitude within standards, but the altitude was maintained by repeated small pitch corrections rather than by a trimmed attitude, with a consistent tendency to lose height whenever a course correction was flown. The deviations stayed inside the tolerance, yet the coupling between the turns and the pitch is not yet controlled. SP is expected to trim the aircraft properly and to add the small pitch compensation as bank is applied."
+      }
+    },
+    {
+      "id": "instrument-13-em07",
+      "label": "Airspeed and power control while maintaining course",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a power setting carried over from the previous exercise and never checked against the indicator, did not maintain the briefed tracking airspeed. The speed departed the briefed value by more than 20 knots while SP remained focused on the course indication. IP directed the power correction to restore the briefed airspeed.",
+        "1": "SP, due to an incomplete cross-check in which the airspeed indicator was not scanned during the correction turns, did not detect the speed trend building on the inbound leg. The deviation reached the 20 knots limit and stayed there until IP called for a power adjustment. SP reset the power, but the correction was made only after the verbal prompt.",
+        "2": "SP, due to a power change made for the turn and not reset on roll-out, did not hold the briefed tracking airspeed. The deviation passed 10 knots and reached approximately 15 knots before SP recognized it. SP restored the required power setting promptly and stabilized the airspeed without intervention.",
+        "3": "SP set and held the briefed power for the tracking exercise and maintained the airspeed within 10 knots on both legs. SP made small power adjustments where the turns or the altitude corrections required them and returned to the known setting afterwards. Airspeed remained stable throughout the course work.",
+        "4": "SP established the briefed tracking airspeed at the start of the exercise and held it with deviations that were barely perceptible. Power was moved only where the profile genuinely required it, and always in a single measured adjustment. Airspeed control did not compete with course keeping at any point.",
+        "marginal": "SP maintained the tracking airspeed within standards, but the speed was corrected in large power steps that produced repeated small excursions either side of the briefed value. The result stayed inside the tolerance, yet the power required for the condition is not yet known by feel. SP is expected to set a known power value and to correct in smaller increments so that airspeed settles without repeated overshoot."
+      }
+    },
+    {
+      "id": "instrument-13-em08",
+      "label": "Instrument cross-check integrating course display and flight instruments",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an interrupted instrument cross-check while attention remained on the course indicator, did not monitor the aircraft state during the tracking legs and did not detect the developing course and attitude errors. The course displacement passed 8 degrees while bank and assigned altitude were also allowed to change unnoticed. IP took the controls to restore both the aircraft state and the course.",
+        "1": "SP, due to an absent cross-check of aircraft state against the primary flight instruments, did not correlate the CDI indication with heading and attitude and applied corrections that the actual aircraft state did not support. The course displacement reached the 8 degrees limit before the error was recognized following IP's comment. SP re-established a working scan and regained the course only after that prompt.",
+        "2": "SP, due to a cross-check that dwelt too long on the navigation display after each correction, did not keep the scan rate needed to hold the course and the flight parameters together. The course deviation opened past 5 degrees and reached approximately 6 degrees before it was seen. SP resumed a regular cross-check, corrected back to the radial and continued unassisted.",
+        "3": "SP kept a regular cross-check between the attitude indicator, the heading and the course display, so course deviations were detected while still inside 5 degrees. SP interpreted each needle movement against the current heading and drift before acting on it. The scan supported accurate tracking without any single instrument dominating it.",
+        "4": "SP maintained an even and continuous cross-check in which the course display was one element among the flight instruments and never the focus. Deviations were detected at the first movement of the needle, so displacement stayed effectively centered on both legs. The scan pattern remained unchanged even while corrections were being flown.",
+        "marginal": "SP kept course and flight parameters within standards, but the cross-check slowed noticeably each time a correction was being computed, leaving attitude and altitude unmonitored for short periods. Performance stayed inside the tolerance, yet the scan is still interrupted by the navigation task. SP is expected to keep the cross-check running at a constant rate and to compute course corrections without pausing on the display."
+      }
+    }
+  ]
+}

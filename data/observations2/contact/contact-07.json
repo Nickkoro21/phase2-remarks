@@ -1,0 +1,132 @@
+{
+  "item_id": "contact-07",
+  "item_name": "SLOW FLIGHT",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [7],
+  "mif_rows": [
+    { "sn": 7, "row_name": "Slow Flight" }
+  ],
+  "error_modes": [
+    {
+      "id": "contact-07-em01",
+      "label": "ALTITUDE CONTROL",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to an attention bottleneck on the airspeed and AOA indications, stopped cross-checking the altimeter while establishing slow flight. SP did not trap the sink that developed when power was added late, and altitude departed more than 300 feet from the entry altitude. IP had to direct the recovery to regain the assigned altitude, and the margin above the minimum safe altitude required by the conditions was eroded.",
+        "1": "SP, due to a scan that dwelled on the airspeed indicator, checked the altimeter only at long intervals during slow flight. Altitude reached the 300 feet tolerance limit and SP began correcting only after verbal prompting from IP. The correction was then applied late and with a large pitch change instead of a small trimmed input.",
+        "2": "SP, due to a delayed pitch and power cross-check at the entry, allowed altitude to drift about 200 feet from the entry altitude. SP detected the deviation without prompting and returned inside tolerance with a smooth trimmed correction, with no IP intervention required. The trend was nevertheless allowed to develop before it was recognized.",
+        "3": "SP maintained the entry altitude within 150 feet throughout slow flight. SP cross-checked the altimeter and VSI at short intervals and corrected the first trend with small pitch and power inputs. Altitude was held while airspeed and configuration were being managed.",
+        "4": "SP held the entry altitude with negligible excursion during the whole slow flight sequence. SP anticipated the pitch change required with each power and configuration change and trimmed the aircraft precisely. The altimeter remained essentially steady, including through the turns.",
+        "marginal": "SP maintained altitude inside standards, but the excursions repeatedly reached the upper half of the tolerance and were removed with one large input rather than several small ones. The trend is toward late detection of the sink whenever attention shifts to airspeed. SP is expected to shorten the altimeter cross-check interval and lead the required power change so that deviations are contained earlier."
+      }
+    },
+    {
+      "id": "contact-07-em02",
+      "label": "AIRSPEED CONTROL",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to imprecise power management at the target slow flight airspeed, did not stabilize the aircraft on the airspeed prescribed by the Techniques and Procedures Manual. Excursions exceeded the plus 15 and minus 5 knots tolerance, including a decay below the target that IP had to arrest with a power call and control input. SP did not re-establish a stabilized condition unaided.",
+        "1": "SP, due to coarse throttle inputs followed by over-correction, oscillated around the target airspeed. Excursions reached the plus 15 knots and minus 5 knots limits and SP reduced them only after IP verbally identified the trend. Recovery to the target airspeed was slow and the aircraft never settled for more than a few seconds.",
+        "2": "SP, due to a power setting selected without reference to the pitch attitude required, allowed airspeed to run about 10 knots fast and briefly 2 to 3 knots slow. SP recognized the deviation and re-established the target airspeed with a single corrected power adjustment, without IP intervention. Time spent outside the tighter tolerance was short.",
+        "3": "SP established and maintained the slow flight airspeed within plus 5 and minus 0 knots. Power was set positively to the value required and refined in small increments while pitch was held with trim. Airspeed remained stable through the heading changes.",
+        "4": "SP flew the slow flight airspeed with negligible variation from the target and never allowed it to decay below the prescribed value. Power and pitch were coordinated so that each change was anticipated rather than chased. The condition was stabilized within a few seconds of entry and held there.",
+        "marginal": "SP kept airspeed inside standards but consistently on the fast side, using excess speed as a margin instead of flying the prescribed value. The trend is toward correcting with throttle alone while the pitch attitude is left unchecked. SP is expected to set the required pitch attitude first and use small power adjustments so that the target airspeed is held precisely."
+      }
+    },
+    {
+      "id": "contact-07-em03",
+      "label": "HEADING CONTROL",
+      "mif_row": null,
+      "source": "specific:HEADING - BANK (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to uncoordinated rudder use at high angle of attack and low airspeed, did not hold the reference heading during slow flight. Heading wandered beyond 10 degrees and continued to diverge while SP concentrated on airspeed. IP had to take corrective action to return the aircraft to the reference heading.",
+        "1": "SP, due to reliance on the attitude indicator without reference to the heading indication, allowed heading to reach the 10 degrees tolerance limit. SP started the correction only after IP prompted, and then used aileron without matching rudder, so the heading overshot on recapture.",
+        "2": "SP, due to residual yaw left uncorrected after each power change, drifted about 8 degrees from the reference heading. SP identified the drift on the next cross-check and returned to heading with coordinated aileron and rudder, without IP intervention. The correction was timely, but the yaw had been allowed to build first.",
+        "3": "SP maintained the reference heading within 5 degrees throughout slow flight. Rudder was applied with each power change to keep the ball centered and the heading steady. Corrections were small, coordinated and immediate.",
+        "4": "SP held the reference heading with negligible wander during slow flight and through the configuration changes. SP anticipated the yaw associated with each power change and applied rudder before the heading moved. Coordination remained precise at the low airspeed.",
+        "marginal": "SP held heading inside standards, but the aircraft was allowed to yaw before the rudder input was made and the ball was often off center. The trend is toward correcting heading with bank rather than with coordinated rudder. SP is expected to lead each power change with rudder so that heading is maintained without banking."
+      }
+    },
+    {
+      "id": "contact-07-em04",
+      "label": "BANK CONTROL",
+      "mif_row": null,
+      "source": "specific:HEADING - BANK (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to over-controlling in roll at the low airspeed, did not maintain the bank angle called for in the maneuver. Bank exceeded the 10 degrees tolerance and was allowed to increase while airspeed was decaying, which reduced the margin above the stall. IP intervened to level the wings and restore the flight condition.",
+        "1": "SP, due to large aileron inputs made without a fixed outside reference, allowed bank to reach the 10 degrees tolerance. SP stabilized the bank only after IP called the deviation, and the correction produced a roll oscillation before the wings settled.",
+        "2": "SP, due to a lag in checking roll once the turn was established, allowed bank to vary by about 8 degrees around the required angle. SP noticed the variation and stabilized the bank with a small aileron input, without IP intervention. The turns were completed inside the flight parameters.",
+        "3": "SP maintained bank within 5 degrees of the required angle during the slow flight turns. Roll inputs were small and the bank was checked against both the attitude indicator and the horizon. Turns were entered and stopped precisely.",
+        "4": "SP held bank with negligible variation and rolled into and out of each turn at a constant rate. The wings were stabilized immediately on the required angle without hunting. Bank was controlled with no associated loss of altitude or airspeed.",
+        "marginal": "SP kept bank inside standards but let it creep above the required angle in the turn before checking it. The trend is toward reactive rather than anticipatory roll control at low airspeed. SP is expected to stabilize the bank angle on entry to the turn and check it against a fixed reference so that it does not wander."
+      }
+    },
+    {
+      "id": "contact-07-em05",
+      "label": "ENTRY AND CONFIGURATION SEQUENCE",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to inadequate workload management during the entry, did not execute slow flight as described in the Techniques and Procedures Manual. SP made configuration and power changes out of order and omitted required checks, so the aircraft was never stabilized in the prescribed condition and parameters went beyond tolerance in more than one axis. IP had to direct the sequence and take the controls to re-establish the entry.",
+        "1": "SP, due to task saturation once power was reduced, executed the entry steps late and out of the briefed order. SP completed the sequence only after IP prompted each remaining item, and the aircraft reached the slow flight condition well after the point required. Parameters had to be recovered from the tolerance limit.",
+        "2": "SP, due to attention divided between configuring the aircraft and holding the parameters, reversed two steps of the entry sequence. SP recognized the omission, completed the missing item and stabilized the aircraft inside the flight parameters without IP intervention. Entry took longer than required, but the maneuver was flown as described in the manual.",
+        "3": "SP executed slow flight in accordance with the Techniques and Procedures Manual. Configuration, power and trim changes were made in the correct order and at the correct points, and the required checks were completed. The aircraft was stabilized in the prescribed condition promptly.",
+        "4": "SP executed the slow flight sequence exactly as described in the manual, with each configuration and power change anticipated and trimmed before the next step was taken. Checks were completed without interrupting the flight parameters. The aircraft was stabilized in the prescribed condition immediately on entry.",
+        "marginal": "SP followed the prescribed sequence but needed most of the available attention to do so, and the parameters loosened at each configuration change. The trend is toward handling flying and configuring one after the other rather than together. SP is expected to consolidate the sequence to the point where the aircraft can be configured while the parameters are held unchanged."
+      }
+    },
+    {
+      "id": "contact-07-em06",
+      "label": "PITCH, POWER AND TRIM TECHNIQUE",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to flying the maneuver untrimmed, did not apply the pitch and power technique described in the Techniques and Procedures Manual. SP held large control forces, which produced coupled altitude and airspeed excursions outside tolerance in both axes. IP had to take the controls to re-trim the aircraft and re-establish the condition.",
+        "1": "SP, due to trimming only after each deviation had developed, held the aircraft in slow flight with continuous control pressure. Parameters reached their tolerance limits and were corrected only after IP verbally prompted a trim change. Control inputs remained coarse for the remainder of the maneuver.",
+        "2": "SP, due to trim applied in one large step rather than progressively, allowed pitch to wander after the power change. SP recognized the residual control force, retrimmed and stabilized the aircraft inside the flight parameters without IP intervention. The technique was correct but applied late.",
+        "3": "SP flew slow flight with the aircraft trimmed for the condition, using pitch for flight path and power for airspeed as described in the manual. Control inputs were small and smooth at the low airspeed. The aircraft remained stabilized with minimal control pressure.",
+        "4": "SP trimmed the aircraft precisely for the slow flight condition and kept it trimmed through every power and configuration change. Inputs were anticipatory, small and smooth, and no control force was carried. The aircraft remained stabilized throughout with no parameter chasing.",
+        "marginal": "SP used the correct technique but carried a light out-of-trim force for much of the maneuver, which showed as slow pitch wander. The trend is toward substituting elevator pressure for trim at low airspeed. SP is expected to trim immediately after each power change so that the aircraft holds the condition without sustained control pressure."
+      }
+    },
+    {
+      "id": "contact-07-em07",
+      "label": "STALL MARGIN AND AVOIDANCE OF STALL CHARACTERISTICS",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to inadequate monitoring and cross-check of airspeed and AOA, allowed the inadvertent appearance of stall characteristics during slow flight. SP did not respond to the stall warning and buffet, airspeed fell below the minus 5 knots tolerance and the aircraft was allowed to approach a departure from the prescribed condition. IP took the controls to recover and the maneuver was terminated.",
+        "1": "SP, due to a cross-check that did not include the AOA indication, let airspeed decay to the minus 5 knots limit until the stall warning activated. SP relieved the condition only after IP called it, and the recovery was made with a large pitch reduction that cost altitude out to the tolerance limit.",
+        "2": "SP, due to a slow response to the first buffet cue, allowed the angle of attack to increase toward the low end of the airspeed tolerance. SP recognized the cue without prompting, added power and reduced angle of attack before any further stall characteristic developed, keeping the aircraft inside the flight parameters. No IP intervention was required.",
+        "3": "SP flew slow flight without allowing the inadvertent appearance of stall characteristics. SP monitored airspeed and AOA continuously and used power to keep a positive margin above the stall. The aircraft was kept clear of buffet throughout the maneuver.",
+        "4": "SP maintained a deliberate and consistent margin above the stall throughout slow flight, with no buffet or warning at any point. SP cross-checked AOA together with airspeed continuously and adjusted power before the margin could erode, including in the turns. Awareness of the stall margin was evident in every control input.",
+        "marginal": "SP avoided stall characteristics, but the margin above the stall stayed thin, particularly in the turns where the angle of attack was allowed to increase. The trend is toward monitoring airspeed alone instead of airspeed together with AOA. SP is expected to include the AOA indication in every cross-check and to use power earlier to protect the margin."
+      }
+    },
+    {
+      "id": "contact-07-em08",
+      "label": "CLEARING, ALTITUDE BLOCK AND OUTSIDE AWARENESS",
+      "mif_row": null,
+      "source": "general:a,b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to attention held inside the cockpit, did not clear the area or confirm the minimum safe altitude before entering slow flight. SP entered below the minimum safe altitude determined in the Techniques and Procedures Manual and did not monitor the aircraft position relative to the area boundaries. IP had to direct a repositioning before the maneuver could be flown.",
+        "1": "SP, due to an abbreviated clearing turn and a single check of the altitude, entered slow flight at the lower limit of the altitude required. SP corrected the entry altitude and resumed lookout only after IP prompted, and awareness of the area boundary remained weak for the rest of the maneuver.",
+        "2": "SP, due to a clearing scan that covered the turn direction but not the whole area, began the entry with an incomplete lookout. SP recognized the omission, completed the clearing and confirmed the altitude before establishing slow flight, without IP intervention. The maneuver was then flown inside the flight parameters.",
+        "3": "SP cleared the area, confirmed the minimum safe altitude and set the entry altitude before establishing slow flight. SP maintained lookout and awareness of the area boundaries and of the aircraft position throughout the maneuver, in the day VMC conditions required.",
+        "4": "SP cleared the area thoroughly, confirmed the altitude available and briefed the entry before establishing slow flight. SP maintained an unbroken lookout and continuous awareness of position, altitude margin and traffic while flying precise parameters. Attention was divided between the maneuver and the environment with neither degraded.",
+        "marginal": "SP cleared the area and respected the altitude limits, but the lookout narrowed once the maneuver was established and most of the scan stayed inside the cockpit. The trend is toward trading outside awareness for parameter precision. SP is expected to keep a deliberate external scan through the whole maneuver, including during the turns."
+      }
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "item_id": "contact-04",
+  "item_name": "AREA AWARENESS",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [4],
+  "mif_rows": [
+    {"sn": 4, "row_name": "Area Awareness"}
+  ],
+  "error_modes": [
+    {
+      "id": "contact-04-em01",
+      "label": "ALTITUDE CONTROL WITHIN THE ASSIGNED AREA BLOCK",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an altimeter cross-check that was interrupted while maneuvering inside the area, did not remain within the altitudes assigned for the flight. Altitude excursions exceeded 300 feet from the assigned value and the aircraft left the upper limit of the assigned block unrecognized. IP intervention on the controls was required to reestablish the aircraft in the assigned altitude block.",
+        "1": "SP, due to a scan that stayed outside the cockpit during repositioning within the area, did not maintain the assigned area altitude with the required precision. Deviations reached 300 feet, at the limit of the allowable tolerance, and were held there without being recognized. Correction was initiated only after verbal prompting from the IP.",
+        "2": "SP, due to a late power correction on rolling out of the turn, did not hold the assigned area altitude exactly. Deviations reached approximately 200 feet, between the 150 foot and the 300 foot tolerance. SP identified the trend on the altimeter and returned to the assigned altitude in good time without any intervention.",
+        "3": "SP remained within the altitudes assigned for the flight throughout the working phase, with deviations contained inside 150 feet. Corrections were small, prompt and applied with smooth pitch and power inputs. The altimeter stayed inside the cross-check while maneuvering in the area.",
+        "4": "SP held the assigned area altitude with negligible deviations, well inside 150 feet and for most of the sortie within a few tens of feet. Corrections were anticipatory rather than reactive, applied before any trend could develop. Altitude control was unaffected by the demands of the maneuvering being flown.",
+        "marginal": "SP remained within the altitude standard for the assigned area, but the deviations were consistently near the upper edge of the tolerance and were corrected late. The trend indicates an altimeter check made at long intervals while maneuvering. SP is expected to shorten the cross-check interval so that altitude is held comfortably inside the tolerance rather than close to its limit."
+      }
+    },
+    {
+      "id": "contact-04-em02",
+      "label": "AIRSPEED CONTROL DURING AREA WORK",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power settings applied without reference to the airspeed indicator during repositioning in the area, did not maintain the airspeed required for the assigned profile. Airspeed deviations exceeded 20 knots and were allowed to persist while the aircraft tracked toward the area boundary. IP intervention was required to reset power and recover the target airspeed.",
+        "1": "SP, due to attention concentrated on the outside area references, did not control airspeed with the required precision while working in the area. Deviations reached 20 knots, at the limit of the allowable tolerance, and remained unrecognized. Power was corrected only after the IP called the airspeed.",
+        "2": "SP, due to a power setting left unchanged after the change of pitch attitude, did not hold the target airspeed exactly. Deviations reached approximately 15 knots, between the 10 knot and the 20 knot tolerance. SP noted the divergence and reset power in good time, with no intervention required.",
+        "3": "SP controlled airspeed accurately while working in the assigned area, with deviations contained inside 10 knots. Power changes were anticipated for each attitude and configuration change. Airspeed remained inside the cross-check throughout the maneuvering.",
+        "4": "SP held the target airspeed with negligible deviations, well inside 10 knots for the entire working phase. Power was set precisely for each attitude change so that no correction was needed after the fact. Airspeed control remained stable even while position relative to the area boundary was being assessed.",
+        "marginal": "SP kept airspeed within the standard for the assigned area, but the deviations sat close to the tolerance and were corrected only after they had developed. The trend shows power being set by feel rather than confirmed against the indicator. SP is expected to confirm each power setting against the airspeed indication so that the margin to the tolerance increases."
+      }
+    },
+    {
+      "id": "contact-04-em03",
+      "label": "EXIT HEADING ACCURACY ON DEPARTING THE AREA",
+      "mif_row": null,
+      "source": "specific:EXIT HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a rollout begun without reference to the required exit heading, did not depart the assigned area on the heading briefed for the recovery. The heading error exceeded 10 degrees and the aircraft tracked toward an adjacent area rather than toward the recovery point. IP intervention was required to establish the correct exit heading.",
+        "1": "SP, due to a rate of roll not adjusted for the remaining turn, did not achieve the exit heading with the required precision. The heading error settled at 10 degrees, at the limit of the allowable tolerance, and was maintained without recognition. SP corrected onto the exit heading only after verbal prompting from the IP.",
+        "2": "SP, due to a late start of the rollout from the exit turn, did not roll out exactly on the required heading. The overshoot reached approximately 8 degrees, between the 5 degree and the 10 degree tolerance. SP recognized the error against the HSI and corrected onto the exit heading promptly without intervention.",
+        "3": "SP departed the assigned area on the required exit heading with an error contained inside 5 degrees. The rollout was anticipated and the heading was captured directly, without subsequent hunting. The exit was flown with the recovery track already established.",
+        "4": "SP rolled out on the required exit heading with negligible error, well inside 5 degrees. The lead point for the rollout was judged accurately and the heading was captured on the first attempt. The area was left on a track that required no further correction.",
+        "marginal": "SP achieved the required exit heading within the standard, but the rollout was consistently short of the target and the final capture was made in small stages. The trend indicates that the lead point is being judged reactively rather than computed from the turn rate. SP is expected to anticipate the rollout so that the exit heading is captured directly and with a wider margin to the tolerance."
+      }
+    },
+    {
+      "id": "contact-04-em04",
+      "label": "LATERAL CONTAINMENT AND ADJACENT AREA VIOLATION",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to lack of awareness of the aircraft's position relative to the area boundary, violated the adjacent flight area without authorization. The aircraft continued approximately two miles past the boundary before any deviation was recognized, with altitude also outside the assigned block by more than 300 feet. IP intervention was required to turn the aircraft back into the assigned area.",
+        "1": "SP, due to lack of awareness of the aircraft's position relative to the area boundary, did not maintain a working margin inside the assigned area. The aircraft was flown along the boundary with essentially no lateral margin and the altitude sat at the 300 foot limit of the tolerance. SP turned back toward the center of the area only after the IP called the proximity to the boundary.",
+        "2": "SP, due to lack of awareness of the closure rate toward the area boundary during the maneuvering, allowed the lateral margin to reduce below that briefed. The aircraft came within about one mile of the boundary with altitude deviating some 200 feet, between the 150 foot and 300 foot tolerance. SP identified the closure on the navigation display and turned back inside the area in good time, with no intervention required.",
+        "3": "SP recognized and maintained the assigned area throughout the sortie and did not violate any adjacent flight area. Maneuvering was planned so that each turn was completed with a comfortable lateral margin to the boundary, and the assigned altitudes were held inside 150 feet. Position relative to the boundary was checked before each new maneuver.",
+        "4": "SP maintained the assigned area with negligible erosion of the lateral margin, positioning every maneuver in the working portion of the area rather than near its edges. Adjacent areas were never approached and the assigned altitudes were held with deviations of a few tens of feet. Area boundaries were tracked continuously without any prompting.",
+        "marginal": "SP remained within the assigned flight area, but the maneuvering was repeatedly completed close to the boundary and the recovery turns were started late. The trend shows the boundary being used as a limit rather than as a margin. SP is expected to plan the maneuvering so that each sequence finishes well inside the area, restoring the buffer against an inadvertent violation."
+      }
+    },
+    {
+      "id": "contact-04-em05",
+      "label": "AREA CHARACTERISTIC POINTS AND ASSIGNED ALTITUDE BLOCK",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an area study not completed during mission planning, was not aware of the flight area characteristic points and the altitudes assigned for the flight. SP could not identify the reference points defining the area and flew more than 300 feet outside the assigned altitude block. IP had to state the area limits and take control to reposition the aircraft.",
+        "1": "SP, due to characteristic points memorized as names rather than associated with ground features, was not able to relate the aircraft position to the area reference points without assistance. The altitude was held at the 300 foot limit of the block tolerance. SP established the correct picture of the area only after the IP identified the reference points verbally.",
+        "2": "SP, due to a slow association between the area chart and the terrain below, was not immediately aware of which characteristic point defined the sector being worked. Altitude within the block deviated approximately 200 feet, between the 150 foot and 300 foot tolerance. SP resolved the picture using the chart and the visible features in good time and without intervention.",
+        "3": "SP was aware of the flight area characteristic points and remained within the altitudes assigned for the flight. The reference points were identified without hesitation and used to orient the maneuvering, with altitude held inside 150 feet of the assigned block. The area picture was maintained throughout the working phase.",
+        "4": "SP demonstrated a complete picture of the area, naming the characteristic points and their relative bearings without reference to the chart and holding the assigned altitudes with negligible deviation. Maneuvering was oriented on those points so that position was continuously known. The altitude block was respected with margin at both its upper and lower limits.",
+        "marginal": "SP was aware of the area characteristic points and stayed within the assigned altitudes, but each identification required a deliberate pause and a chart reference before the maneuvering resumed. The trend shows an area picture that is being reconstructed rather than retained. SP is expected to study the area before flight so that the reference points are recognized immediately and attention stays with the aircraft."
+      }
+    },
+    {
+      "id": "contact-04-em06",
+      "label": "POSITION CONFIRMATION USING VOR/TACAN OR GPS",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-over-reliance-on-automation",
+      "texts": {
+        "0": "SP, due to reliance on the automated navigation solution in place of a positive position fix, was not able to use VOR/TACAN or GPS to confirm the aircraft position when required. SP did not extract a radial and distance from the area reference point, and the position stated was in error by more than five miles. IP had to take over the navigation task to reestablish the aircraft within the assigned area.",
+        "1": "SP, due to acceptance of the automated navigation display without an independent check of the parameters, did not confirm the aircraft position with the required accuracy. The radial and distance were read incorrectly and the resulting position error placed the aircraft at the edge of the assigned area, with heading also at the 10 degree limit of the tolerance. SP obtained a valid fix only after the IP directed the correct selection.",
+        "2": "SP, due to a navigation source selected but not verified against the expected indications, was slow to confirm the aircraft position from VOR/TACAN. The initial fix contained an error of a few miles and the exit heading derived from it was off by approximately 8 degrees, between the 5 and 10 degree tolerance. SP cross-checked against GPS, corrected the fix and the heading in good time, without intervention.",
+        "3": "SP used VOR/TACAN and GPS correctly to confirm the aircraft position within the assigned area. The equipment was selected and identified before use, and the radial and distance were read accurately, giving an exit heading within 5 degrees of that required. Position was confirmed without interrupting the control of the aircraft.",
+        "4": "SP confirmed the aircraft position with negligible error, cross-checking the GPS position against the VOR/TACAN radial and distance without prompting and without any degradation of aircraft control. Each fix was obtained quickly and the results were integrated directly into the area maneuvering plan. Navigation displays were used as a check on the visual picture rather than as a substitute for it.",
+        "marginal": "SP was able to confirm position using VOR/TACAN or GPS, but each fix required a long head-down interval and altitude drifted toward the edge of the tolerance during it. The trend shows the position check being treated as a separate task rather than folded into the cross-check. SP is expected to break the navigation check into short looks so that aircraft control and area awareness are maintained throughout."
+      }
+    },
+    {
+      "id": "contact-04-em07",
+      "label": "RETURN TO BASE AND DIVERSION DECISION",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": "hf-mission-completion-bias",
+      "texts": {
+        "0": "SP, due to mission-completion bias in pressing on past the briefed decision point, did not initiate the return to base while the conditions still permitted a safe recovery. The area was left below the briefed recovery fuel and without a diversion to the alternate airfield being considered. IP had to direct and then fly the recovery.",
+        "1": "SP, due to mission-completion bias that overrode the briefed divert criteria, did not initiate the return to base at the planned point. The recovery was begun with the fuel at the briefed minimum and the exit heading toward base in error by 10 degrees, at the limit of the tolerance. SP started the RTB only after being prompted by the IP.",
+        "2": "SP, due to attention held on completing the last sequence in the area, was late in initiating the return to base. The recovery started after the planned time, with the exit heading approximately 8 degrees off, between the 5 and 10 degree tolerance, and the altitude some 200 feet from that assigned. SP recognized the delay, made the RTB decision unprompted and corrected the profile in good time.",
+        "3": "SP returned to base safely and at the briefed point, having monitored fuel and time against the criteria set in the brief. The area was left on the required exit heading within 5 degrees and at the assigned altitude within 150 feet. SP stated the intentions for the recovery and the alternate airfield without prompting.",
+        "4": "SP managed the sortie so that the return to base was initiated with margin against every briefed criterion, and was able to state the current diversion option and the fuel required for it at any point. The area was left with negligible deviation in heading and altitude. The recovery decision was made deliberately and communicated before it was executed.",
+        "marginal": "SP returned to base safely and within the criteria, but the decision was taken at the last of the briefed decision points and left little margin against the alternate. The trend shows the recovery being treated as the end of the working phase rather than as a planned event with its own criteria. SP is expected to track fuel and weather against the divert criteria continuously so that the RTB decision is made with margin in hand."
+      }
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "item_id": "contact-41",
+  "item_name": "SPECIAL REQUIREMENTS",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [41],
+  "mif_rows": [],
+  "error_modes": [
+    {
+      "id": "contact-41-em01",
+      "label": "Compliance with the briefed special requirement and its sequence",
+      "mif_row": null,
+      "source": "general:5|general:4|general:1",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incomplete review of the special requirement of the training unit before the sortie, did not carry out the specially required item in the sequence briefed by the IP. Steps of the required procedure were omitted and those that were flown were applied out of order. The IP had to take control to re-establish the profile before the item could be attempted again. Application of the procedure remained outside the general criteria for the whole of the item.",
+        "1": "SP, due to a briefed sequence that was not rehearsed on the ground, entered the specially required item with the preparatory steps unfinished and applied the procedure in the wrong order. The sequence was set right only after repeated verbal direction from the IP, and the correction was late. Compliance with the requirement stayed at the limit of the acceptable standard for the training unit.",
+        "2": "SP, due to a hurried setup for the specially required item, entered it with one preparatory step still outstanding and applied the remaining steps in the briefed order but later than planned. SP recognized the omission without prompting and completed the missing step before it affected the profile. The item finished within the standards, between the 3 and 1 levels, with no IP input required.",
+        "3": "SP carried out the specially required item in the sequence briefed for the training unit, with each step applied at its correct point and in accordance with the squadron instructions. Preparatory actions were complete before entry and no step needed repetition. Execution was accurate and prompt and required no prompting from the IP.",
+        "4": "SP carried out the specially required item exactly as briefed, with preparation complete well before entry and every step applied at its correct point. Sequencing was unhurried and departures from the briefed procedure were negligible. SP also verbalized the intended sequence before entry, which kept the item fully coordinated with the IP.",
+        "marginal": "SP completed the specially required item within the standards, but assembled the sequence step by step in flight instead of running a prepared plan, and each step was applied later in the profile than briefed. The trend over the repetitions was toward tighter sequencing, so the item remained acceptable. SP is expected to prepare the sequence on the ground so that it is flown without in-flight reconstruction."
+      }
+    },
+    {
+      "id": "contact-41-em02",
+      "label": "Smooth and solid aircraft control during the specially required item",
+      "mif_row": null,
+      "source": "general:2|general:8",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to abrupt control inputs made without trim, flew the specially required item with handling that was neither smooth nor solid, over-controlling the aircraft in pitch and bank at every correction. Parameters diverged progressively instead of settling and the flight path was never stabilized. The IP intervened on the controls to stop the divergence and complete the item. Aircraft control remained outside the general standard throughout.",
+        "1": "SP, due to control inputs applied in large discrete steps rather than as continuous pressures, flew the specially required item with pitch and bank oscillations that did not damp out. Smooth flight was restored only after verbal technique reminders from the IP, and the recovery of stability was delayed. Control quality stayed at the lower limit of the acceptable standard, although no IP intervention on the controls was needed.",
+        "2": "SP, due to late trim after the configuration change, held the specially required item against residual control pressure, which produced small pitch excursions and a slow drift in bank. SP recognized the out-of-trim condition and re-trimmed in time, after which the flight path became steady. The item was flown between the 3 and 1 standards with the correction made entirely by SP.",
+        "3": "SP flew the specially required item with smooth and solid aircraft control, trimming with each configuration or power change and correcting with small continuous pressures. Pitch, bank and heading were held steady and no correction produced an overshoot. Precision was maintained for the full duration of the item.",
+        "4": "SP flew the specially required item with control inputs so measured that the flight path showed no visible excursion in pitch or bank. The aircraft was kept in trim continuously and corrections were anticipated rather than reactive. Deviations from the target parameters were negligible throughout.",
+        "marginal": "SP flew the specially required item within the standards, but held the aircraft with continuous small corrections rather than a trimmed, settled attitude, and each correction was slightly larger than the deviation demanded. Control quality improved over the later repetitions and remained acceptable. SP is expected to trim earlier after each change so that precision is achieved without constant reworking of the flight path."
+      }
+    },
+    {
+      "id": "contact-41-em03",
+      "label": "Recognition and self-correction of deviations without IP prompting",
+      "mif_row": null,
+      "source": "general:3|general:6",
+      "hf_concept": "hf-breaking-the-error-chain",
+      "texts": {
+        "0": "SP, due to a failure to break the error chain at the first recognizable deviation, allowed successive parameter excursions during the specially required item to accumulate without any interruption of the profile. No corrective action was initiated for the airspeed and altitude departures, which became constant rather than instantaneous. The IP had to prompt and then take command of the aircraft to restore smooth flight. The deviations remained well beyond the tolerances that the general criteria allow.",
+        "1": "SP, due to continuation of the profile after the first parameter had already been exceeded, did not act on the initial deviation during the specially required item and let it persist. The excursion was corrected only after direct verbal instruction from the IP, and the response was slow once given. The resulting deviations reached the limit of the acceptable standard, although the IP did not have to take control.",
+        "2": "SP, due to a delayed reset of the maneuver after a first small deviation, allowed the parameters to move beyond the target values during the specially required item before acting. SP then detected the excursion unprompted and corrected it with immediate, measured inputs so that the deviation was instantaneous rather than constant. Parameters were held between the 3 and 1 standards and flight safety was never in question.",
+        "3": "SP monitored the aircraft state continuously during the specially required item and acted on each small deviation at the point it appeared. Corrections were immediate and returned the parameters to the target values without overshoot. No prompting, intervention or verbal direction from the IP was required at any stage.",
+        "4": "SP anticipated the conditions that would produce a deviation during the specially required item and applied the correction before any excursion developed. The parameters were held at the target values continuously and the few departures that occurred were momentary and self-arrested. No IP input of any kind was needed.",
+        "marginal": "SP kept the specially required item within the standards, but each deviation was detected only after it had grown to near the limit of the allowed tolerance, so the corrections were larger than they needed to be. Detection became earlier across the repetitions and the profile stayed safe throughout. SP is expected to act on the first indication of a departure so that corrections stay small and the item is flown with a margin."
+      }
+    },
+    {
+      "id": "contact-41-em04",
+      "label": "Knowledge and standardized application of manuals and squadron instructions",
+      "mif_row": null,
+      "source": "general:4|general:7(a)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to inadequate study of the manual procedure that the special requirement is based on, could not state the required actions or limits for the item and applied a technique that did not match any published procedure. Checklist items associated with the requirement were performed from memory and incorrectly. The IP had to stop the item and direct the correct procedure step by step. Knowledge and standardization were below the general criteria for the training unit.",
+        "1": "SP, due to knowledge of the special requirement that was recalled only in outline, applied the published procedure with the correct actions but with the wrong values and one item performed out of standardization. The correct procedure was arrived at only after the IP quoted the reference in flight, and the application remained hesitant afterwards. Standardization stayed at the limit of the acceptable standard for the training unit.",
+        "2": "SP, due to a partial recall of one limit associated with the special requirement, hesitated over a value during the item and initially set a figure that was not the published one. SP identified the discrepancy without prompting, corrected the setting and completed the remainder of the procedure to standardization. Knowledge and application of the procedure stayed between the 3 and 1 standards with no IP input.",
+        "3": "SP applied the special requirement in accordance with the standardization of the relevant manuals and the squadron instructions, using the correct actions, sequence and limits. Every associated checklist item was completed at the correct point. SP answered the related questions accurately and without hesitation, and the procedure supported efficient mission accomplishment.",
+        "4": "SP applied the special requirement fully to the published standardization and explained the reason for each step and limit when questioned. Associated checklist and switch actions were complete and verified before entry. Any departure from the published technique was negligible and the item contributed directly to the mission objective.",
+        "marginal": "SP applied the special requirement within standardization, but the actions and limits were recalled slowly and one value had to be confirmed against the reference before use. Recall improved during the sortie and no incorrect procedure was applied. SP is expected to consolidate the associated manual references so that the procedure is applied from immediate knowledge rather than confirmed in flight."
+      }
+    },
+    {
+      "id": "contact-41-em05",
+      "label": "Spatial and situational awareness while flying the special requirement under VMC",
+      "mif_row": null,
+      "source": "general:9|general:10",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to loss of situational awareness of the aircraft position relative to the working area and the pattern, flew the specially required item without maintaining spatial awareness control as the general criteria demand. SP could not state position, heading to base or the vertical limits when asked, and the item was continued toward the area boundary. Clearing turns and lookout were omitted while the requirement was flown. The IP took control to reposition the aircraft, and awareness stayed well outside the acceptable standard.",
+        "1": "SP, due to situational awareness that was limited to the parameter being flown, lost track of the aircraft position within the working area during the specially required item and continued without an outside scan. Awareness of position and of the traffic situation was rebuilt only after the IP called the aircraft position and directed a lookout. The recovery of awareness was late and remained at the limit of the acceptable standard.",
+        "2": "SP, due to attention concentrated on the specially required item, delayed the outside scan and allowed the aircraft to drift toward the near side of the working area before checking position. SP recognized the situation unprompted, re-established the lookout and repositioned within the area before the boundary became a factor. Spatial awareness was regained in time and the item stayed between the 3 and 1 standards.",
+        "3": "SP flew the specially required item under VMC while maintaining spatial awareness control, alternating the outside scan with the instrument cross-check and clearing the area before and during the item. Position within the working area, altitude blocks and the traffic picture were known throughout and reported accurately when asked. No prompting on position or lookout was needed.",
+        "4": "SP maintained a complete picture of position, area limits and traffic while flying the specially required item, and adjusted the entry point in advance so that the item was completed well inside the working area. The lookout was continuous and the instrument cross-check was never interrupted. Awareness was maintained without any degradation as the item progressed.",
+        "marginal": "SP kept spatial awareness within the standards during the specially required item, but the outside scan narrowed while the requirement was being flown and position within the area was reconstructed after the item rather than tracked during it. Awareness was recovered each time without prompting and no boundary or traffic issue developed. SP is expected to maintain the outside scan continuously so that position is known at every point of the item, not only at its completion."
+      }
+    },
+    {
+      "id": "contact-41-em06",
+      "label": "Workload management and pace toward the required training-unit standard",
+      "mif_row": null,
+      "source": "general:1|general:7(a)|general:8",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to inadequate workload management with all cockpit tasks concentrated inside the specially required item, saturated and stopped flying the aircraft while working the requirement. Radio calls, checklist items and aircraft control were attempted simultaneously and none was completed to standard. The IP had to take the aircraft so that the item could be terminated safely. Performance was far short of the standard set for this training unit.",
+        "1": "SP, due to task sequencing that left secondary work to be done during the specially required item, fell behind the aircraft and completed the requirement only with continuous verbal direction from the IP. The item was finished, but the pace was slow and the associated tasks were carried out late. Performance was at the limit of the standard expected at this point of the training phase.",
+        "2": "SP, due to a secondary cockpit task retained into the entry of the specially required item, was briefly behind the profile and applied the first actions late. SP shed the secondary task without prompting, restored the correct order of work and completed the requirement within the parameters. Performance was between the 3 and 1 standards and appropriate to the training unit and SP experience.",
+        "3": "SP organized the cockpit work so that secondary tasks were completed before entry and the specially required item was flown with spare capacity. Radio, checklist and aircraft control were kept in the correct priority throughout. The item met the standard set for this training unit without prompting or intervention.",
+        "4": "SP managed the workload so that the specially required item was flown with clear spare capacity, anticipating the associated tasks and completing them ahead of the profile. Priorities were maintained under the added demands of the requirement and no task was left outstanding. Performance exceeded what the training unit calls for at this stage.",
+        "marginal": "SP met the standard for the specially required item, but only by using all available capacity, with secondary tasks completed just before entry and little margin left for anything unplanned. The margin widened over the later repetitions and no task was dropped. SP is expected to sequence the associated work earlier so that the requirement is flown with reserve capacity available."
+      }
+    }
+  ]
+}

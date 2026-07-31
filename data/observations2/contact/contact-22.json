@@ -1,0 +1,132 @@
+{
+  "item_id": "contact-22",
+  "item_name": "AIRPORT TRAFFIC PATTERN",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [22],
+  "mif_rows": [
+    {"sn": 22, "row_name": "Airport's Traffic Pattern"}
+  ],
+  "error_modes": [
+    {
+      "id": "contact-22-em01",
+      "label": "Pattern altitude control",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incomplete cross-check between the outside references and the altimeter while maneuvering in the pattern, did not hold the pattern altitude published in the LAP. Altitude deviated by more than 300 feet on the downwind and the divergence continued through the base turn. The IP had to intervene on the controls to re-establish the aircraft at pattern altitude.",
+        "1": "SP, due to a cross-check that stopped at the outside references during the pattern turns, did not maintain the published pattern altitude. Peak deviations reached 300 feet, at the limit of the standard, mainly as a descent inside the turns. SP started the correction only after repeated verbal prompting from the IP and the level-off was late.",
+        "2": "SP, due to pitch corrections applied without a matching power adjustment during the pattern turns, allowed altitude to depart from the published pattern altitude by 200 to 250 feet, outside the desired band but inside the maximum. SP identified the trend on the altimeter without prompting and re-established pattern altitude before the following turn. No IP intervention was required.",
+        "3": "SP held the pattern altitude published in the LAP with a steady altimeter cross-check throughout the circuit. Deviations stayed within 150 feet and were corrected as they appeared, with small and coordinated pitch and power inputs. Bank and configuration changes did not disturb the altitude, and no prompting was needed at any point of the pattern.",
+        "4": "SP flew the entire pattern with the altimeter essentially fixed on the published pattern altitude. Deviations were of the order of 30 to 50 feet and were removed as they developed. Turns and configuration changes produced no measurable altitude excursion, and the level flight segments were held without visible correction.",
+        "marginal": "SP kept the pattern altitude within standards, but the deviations clustered in the upper part of the acceptable band, as a slow climb during the crosswind and base turns. Each correction was made, yet it followed the deviation instead of preventing it, and the altimeter was referenced only after the roll-out. SP is expected to anticipate the pitch and power required in the turns so that the altitude trend is contained rather than corrected."
+      }
+    },
+    {
+      "id": "contact-22-em02",
+      "label": "Pattern airspeed control",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to late and coarse power management on the downwind and base legs, did not hold the pattern airspeeds published in the LAP. Airspeed deviated by more than 20 knots and the aircraft arrived on final well outside the target speed. The IP had to set the power and direct the correction to restore an acceptable pattern speed.",
+        "1": "SP, due to a power reduction made after the flap and gear extension instead of with it, did not maintain the published pattern airspeed. The deviation reached about 20 knots, at the limit of the standard. SP corrected only after the IP called the airspeed, and the leg was flown with the speed still moving.",
+        "2": "SP, due to a power setting applied slightly late at the configuration change, allowed the airspeed to deviate by 12 to 18 knots, outside the desired band but within the maximum. SP recognized the deviation on the airspeed indicator and set the power required to regain the target speed before the base turn, without IP prompting.",
+        "3": "SP flew each leg of the pattern at the airspeed published in the LAP, with deviations contained within 10 knots. Power was set together with each configuration change, so the speed stabilized quickly on every leg. Speed control required no prompting at any point of the pattern.",
+        "4": "SP held the published pattern airspeeds within a few knots on every leg, arriving on final exactly at the target speed. Each configuration change was anticipated with the corresponding power setting, so no speed excursion developed. Speed control was precise and continuous throughout the circuit.",
+        "marginal": "SP kept the pattern airspeeds within standards, but the speed ran consistently fast on the downwind and had to be reduced late on base. The result was acceptable, yet it depended on correcting a repeating trend rather than preventing it. SP is expected to set the power for each configuration change earlier so that the target speed is reached and held without a late reduction."
+      }
+    },
+    {
+      "id": "contact-22-em03",
+      "label": "Roll-out heading on pattern legs",
+      "mif_row": null,
+      "source": "specific:EXIT HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to turns flown without an established lead point or roll-out reference, did not exit the pattern turns on the headings that define the downwind and base legs. Roll-out headings were more than 10 degrees off, so the legs were flown on the wrong track and the pattern geometry was lost. The IP had to intervene to re-establish the aircraft on the correct leg.",
+        "1": "SP, due to a roll-out started at the target heading rather than before it, did not exit the pattern turns on the required headings. Errors of about 10 degrees were reached, at the limit of the standard. SP corrected only after the IP called the heading, after a large part of the leg had already been flown displaced.",
+        "2": "SP, due to a variable rate of roll in the pattern turns, exited them 6 to 9 degrees off the required headings, outside the desired band but within the maximum. SP detected the error on the HSI and corrected it within a few seconds, before the leg was affected. No IP intervention was required.",
+        "3": "SP exited every pattern turn within 5 degrees of the required heading, using a consistent lead point for each roll-out. The downwind and base legs were established on the correct headings from the moment the wings were level. No corrective heading changes were needed after the roll-outs.",
+        "4": "SP rolled out of every pattern turn essentially on the required heading, with errors of one to two degrees. The lead point and the rate of roll were matched to the angle of bank on each turn, so no heading correction followed any roll-out. The legs of the pattern were established immediately and held.",
+        "marginal": "SP exited the pattern turns within standards, but consistently a few degrees short of the required heading in the same direction, and each roll-out was followed by a small corrective turn. The headings were achieved, yet the technique relied on that second correction. SP is expected to adjust the lead point so that the required heading is reached on the initial roll-out."
+      }
+    },
+    {
+      "id": "contact-22-em04",
+      "label": "Ground track over the LAP pattern points",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to weak identification and use of the ground references that define the pattern, did not overfly the points of the traffic pattern described in the LAP. The aircraft passed well beyond the 0.5 NM maximum radius, the downwind was flown wide and the published pattern geometry was no longer recognizable. The IP had to direct the corrections needed to re-establish the pattern.",
+        "1": "SP, due to a ground reference acquired late after each turn, did not track over the pattern points as described in the LAP. The aircraft passed at about 0.5 NM from them, at the limit of the permitted radius. SP corrected the displacement only after the IP pointed it out, and the correction was applied after the point had been passed.",
+        "2": "SP, due to a drift correction that was set but not refined, overflew the pattern points at 0.3 to 0.4 NM from them, inside the 0.5 NM maximum but wider than intended. SP recognized the displacement against the ground references and adjusted the track before the following point, without IP prompting.",
+        "3": "SP overflew each point of the traffic pattern described in the LAP well inside the 0.5 NM maximum radius. The ground references were identified early and the drift correction was set on each leg, so the track matched the published pattern. No prompting or correction from the IP was required.",
+        "4": "SP tracked essentially over the pattern points described in the LAP on every leg, with displacements of a small fraction of the permitted radius. Drift was assessed and corrected before it displaced the track, and the pattern flown reproduced the published geometry. The ground references were used continuously and without hesitation.",
+        "marginal": "SP overflew the pattern points inside the 0.5 NM radius, but consistently on the wide side and with the displacement growing from downwind to base. The standard was met, yet the margin available for a correction was small. SP is expected to set the drift correction earlier on each leg so that the track stays close to the published points rather than close to the limit."
+      }
+    },
+    {
+      "id": "contact-22-em05",
+      "label": "Spacing to other traffic and clearing",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to loss of situational awareness of the aircraft's position in the pattern relative to the preceding traffic, did not maintain proper spacing and did not clear constantly. Spacing closed to the point where the published sequence could no longer be flown, and the preceding aircraft was never acquired visually. The IP had to take corrective action to restore separation in the pattern.",
+        "1": "SP, due to degraded situational awareness of the sequence in the pattern, did not maintain proper spacing to the other traffic and cleared only intermittently. Spacing reduced to the minimum that still allowed the pattern to be flown. SP extended the leg to open the spacing only after the IP called the traffic.",
+        "2": "SP, due to situational awareness that stayed focused on the aircraft immediately ahead, allowed the spacing to become tighter than planned on the downwind. SP acquired the traffic during his own clearing scan and adjusted the leg length in time to restore proper spacing. No IP prompting or intervention was required.",
+        "3": "SP maintained proper spacing to the other traffic in the pattern and cleared constantly on every leg. The sequence was tracked from the position reports and confirmed visually, and the leg lengths were adjusted to keep the spacing stable. No prompting was required at any point.",
+        "4": "SP maintained proper spacing to all other traffic throughout the pattern, adjusting the legs early and by small amounts so the sequence was never in doubt. The clearing scan was continuous and each aircraft in the pattern was acquired visually before it became a factor. The pattern was flown with the traffic picture fully maintained.",
+        "marginal": "SP maintained the required spacing and cleared, but the lookout scan concentrated on the aircraft immediately ahead and the spacing adjustments were made late in the leg. Separation was never in question, yet the picture of the rest of the pattern was thin. SP is expected to broaden the clearing scan to the whole pattern and to adjust spacing earlier, so it is managed rather than recovered."
+      }
+    },
+    {
+      "id": "contact-22-em06",
+      "label": "Standardized position reports",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": "hf-non-standard-phraseology",
+      "texts": {
+        "0": "SP, due to non-standard phraseology that left the intention ambiguous to the controller, did not give the standardized position reports of the traffic pattern. Reports were omitted at prescribed points and those transmitted had to be queried by ATC. The IP had to make the calls for the pattern to continue as cleared.",
+        "1": "SP, due to phraseology built during the transmission instead of prepared before it, did not give the standardized position reports as required. More than one report was transmitted with non-standard wording and away from the prescribed point. SP used the correct format only after the IP dictated the call.",
+        "2": "SP, due to a report initiated before the wording was ready, departed from the standard phraseology on one call and transmitted another report late relative to the prescribed point. All required reports were made and SP corrected the format on the following call without prompting. No IP intervention was needed.",
+        "3": "SP gave all the standardized position reports at the prescribed points of the pattern, with correct phraseology and content. The calls were made with the aircraft stabilized on each leg and did not interfere with the flying task. No prompting or correction was required.",
+        "4": "SP gave every standardized position report at the correct point, with concise and fully standard phraseology. The calls were timed so they neither blocked other stations nor competed with a control input. Read-backs of ATC instructions were complete and accurate throughout the pattern.",
+        "marginal": "SP gave all the required position reports with acceptable phraseology, but several calls were rushed and made while the aircraft was still in the turn. The content was correct, yet the delivery was compressed and twice overlapped another station. SP is expected to prepare the call before keying and to transmit it with the aircraft stabilized on the leg."
+      }
+    },
+    {
+      "id": "contact-22-em07",
+      "label": "Radio monitoring and correlation of other traffic",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to an attention bottleneck on the flying task that left the radio unmonitored, did not check the position of other aircraft against their position reports and the ATC instructions. Calls addressed to the aircraft were missed and an ATC instruction was not complied with. The IP had to answer for the aircraft and restore compliance with the clearance.",
+        "1": "SP, due to attention captured by the flying task at the expense of the radio, did not build the traffic picture from the position reports of the other aircraft. Two transmissions addressed to the aircraft went unanswered and the ATC instruction was applied late. SP acted only after the IP repeated the instruction in the cockpit.",
+        "2": "SP, due to attention held on a single leg of the pattern, missed one position report from another aircraft and did not initially place that traffic in the sequence. SP asked for and obtained the information on the next transmission and corrected his own picture before the traffic became a factor. No IP intervention was required.",
+        "3": "SP monitored the radio throughout the pattern and checked the position of the other aircraft against their position reports and the ATC instructions. Every call addressed to the aircraft was answered promptly and correctly read back. The traffic picture was maintained without prompting for the whole circuit.",
+        "4": "SP monitored the radio continuously and maintained an accurate picture of every aircraft in the pattern from their reports and the ATC instructions. Clearances were read back completely and complied with without delay, including one change of sequence. Radio work was integrated with the flying task with no degradation of either.",
+        "marginal": "SP monitored the radio and complied with the ATC instructions, but the correlation of other traffic to their position reports was made only when that traffic became relevant to his own leg. Nothing was missed, yet the picture was reconstructed on demand rather than kept current. SP is expected to track all pattern traffic continuously so the sequence is known before it has to be used."
+      }
+    },
+    {
+      "id": "contact-22-em08",
+      "label": "Execution of the pattern per LAP and ATC instructions",
+      "mif_row": null,
+      "source": "execution",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient knowledge of the pattern as published in the LAP, did not execute the traffic pattern according to the LAP and the instructions given by ATC. Legs were flown in the wrong order and a cleared pattern direction was not followed. The IP had to take over the pattern sequence to keep the aircraft in the cleared flow.",
+        "1": "SP, due to a mental sequence of the pattern that was not fixed before the sortie, did not execute the pattern in accordance with the LAP and the ATC instructions. Two required actions were taken out of sequence and one clearance element was not applied. SP flew the correct sequence only after the IP prompted each step verbally.",
+        "2": "SP, due to a step of the pattern sequence recalled late, executed one leg out of the order described in the LAP. SP recognized the deviation, restored the published sequence at the next point and applied the ATC instruction correctly from then on. No IP intervention was required.",
+        "3": "SP executed the traffic pattern according to the LAP and the instructions given by ATC. Every leg, entry and exit was flown in the published sequence and all clearance elements were applied as received. The pattern was completed without prompting or correction.",
+        "4": "SP executed the traffic pattern exactly as published in the LAP and as instructed by ATC, including an amended sequence issued in flight. Each step was anticipated so the pattern progressed without pause or reconstruction. Actions and radio work were sequenced so that neither delayed the other.",
+        "marginal": "SP executed the pattern according to the LAP and the ATC instructions, but the sequence was recalled step by step and each leg was set up only after the previous one was complete. Nothing was omitted, yet there was no margin left when the pattern was busy. SP is expected to know the pattern sequence well enough to work one step ahead of the aircraft."
+      }
+    }
+  ]
+}

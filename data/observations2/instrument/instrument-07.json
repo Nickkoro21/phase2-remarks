@@ -1,0 +1,164 @@
+{
+  "item_id": "instrument-07",
+  "item_name": "CONSTANT AIRSPEED - CONSTANT RATE CLIMBS / DESCENTS AND VERTICAL \"S\"",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [7, 8, 9],
+  "mif_rows": [
+    {"sn": 7, "row_name": "Constant Speed Climb and Descent"},
+    {"sn": 8, "row_name": "Constant Rate Climb and Descent"},
+    {"sn": 9, "row_name": "Vertical \"S\""}
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-07-em01",
+      "label": "Airspeed control in constant airspeed climb / descent",
+      "mif_row": 7,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to pitch inputs made without reference to the airspeed trend, did not hold the briefed speed once the power was set for the constant airspeed climb. Airspeed diverged past 20 knots from the target and the divergence continued to build with each input. The IP intervened on the controls to reset the pitch attitude before the profile could be continued.",
+        "1": "SP, due to trimming after each deviation instead of first establishing the correct pitch attitude, allowed the airspeed in the constant airspeed climb and descent to reach the 20 knot limit. The excursion was corrected only after repeated verbal indications from the IP, and the return to the briefed speed was slow.",
+        "2": "SP, due to an initial pitch attitude set slightly low for the power applied, allowed the airspeed to move between 10 and 20 knots off the briefed value. SP identified the trend on the airspeed indicator and re-established the briefed speed in good time, without any intervention by the IP.",
+        "3": "SP set pitch attitude and power for the briefed value and held the constant airspeed climb and descent within 10 knots throughout. Corrections were small, applied early against the airspeed trend, and each one was trimmed off before the next segment.",
+        "4": "SP established the climb and descent attitude immediately and held the briefed airspeed with deviations barely readable on the indicator. Pitch and power were coordinated so that no correction greater than a few knots was ever required.",
+        "marginal": "SP held the constant airspeed climb and descent inside standards, but the deviations sat consistently toward the fast side of the band and were corrected only after they had developed. The tendency is to chase the indicator rather than to fix the attitude and work the trend. SP is expected to set attitude, trim, and then correct against the trend on the following sorties."
+      }
+    },
+    {
+      "id": "instrument-07-em02",
+      "label": "Altitude capture and level-off from constant airspeed climb / descent",
+      "mif_row": 7,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an interrupted instrument cross-check while attention remained on the airspeed indicator, did not begin the level-off at a lead point related to the rate of climb. The overshoot of the assigned altitude exceeded 300 feet and continued to increase. The IP took the controls to arrest the climb and re-establish level flight.",
+        "1": "SP, due to absent cross-check of altitude against vertical velocity while approaching the assigned level, started the level-off late. The excursion reached the 300 foot limit and the aircraft was returned to the assigned altitude only after the IP had called the deviation twice.",
+        "2": "SP, due to a lead point taken from habit rather than from the indicated rate, passed the assigned altitude by more than 150 feet. The deviation was picked up on the altimeter during the scan and flown back inside 150 feet promptly, without IP intervention.",
+        "3": "SP cross-checked altitude against vertical velocity, led the level-off appropriately for the rate being flown, and captured the assigned altitude within 150 feet. Power was reset for level flight as the attitude was changed, so the airspeed stayed under control through the transition.",
+        "4": "SP anticipated every level-off and stopped the altimeter on the assigned value with virtually no overshoot. Attitude, power and trim were applied as one coordinated sequence and the aircraft settled directly into level flight.",
+        "marginal": "SP captured the assigned altitudes inside standards, but each level-off showed the same overshoot in the same direction before the correction. The lead point is applied without reference to the actual rate of climb or descent. SP is expected to scale the lead to the indicated vertical velocity and remove the recurring overshoot."
+      }
+    },
+    {
+      "id": "instrument-07-em03",
+      "label": "Heading and bank control in constant airspeed climb / descent",
+      "mif_row": 7,
+      "source": "specific:HEADING (degrees)|specific:BANK (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to rudder pressure applied with the power change and never trimmed out, did not keep the wings level during the constant airspeed climb. Heading drifted more than 10 degrees from the assigned value and bank exceeded 10 degrees while the SP worked the airspeed. The IP intervened to level the aircraft and re-establish the assigned heading.",
+        "1": "SP, due to a scan that excluded the heading indicator once the climb was established, allowed the heading to reach 10 degrees off the assigned value with bank at the 10 degree limit. The wings were levelled and the heading regained only after verbal direction from the IP.",
+        "2": "SP, due to uncompensated yaw with the power adjustment, allowed the heading to move between 5 and 10 degrees off the assigned value with a corresponding small bank. SP saw the drift on the attitude indicator and heading indicator and corrected back inside 5 degrees without IP intervention.",
+        "3": "SP kept the wings level within 5 degrees of bank and held the assigned heading within 5 degrees throughout the climbs and descents. Rudder was applied with each power change so the aircraft remained in balance and no heading correction was needed at the level-off.",
+        "4": "SP held the assigned heading with deviations that were not perceptible on the indicator and kept the wings level throughout. Power changes were made with matching rudder so that neither heading nor bank was disturbed at entry or at level-off.",
+        "marginal": "SP kept heading and bank inside standards, but the aircraft drifted consistently in one direction whenever attention moved to airspeed. Balance is not maintained during power changes. SP is expected to trim rudder with each power adjustment so heading is held without repeated corrections."
+      }
+    },
+    {
+      "id": "instrument-07-em04",
+      "label": "Vertical velocity control in constant rate climb / descent",
+      "mif_row": 8,
+      "source": "specific:CLIMB / DESCENT RATE (feet/min)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power changes made in large steps without allowing the vertical velocity indicator to settle, did not stabilize the briefed rate of climb. The indicated rate varied by more than 300 feet per minute from the target and the excursions grew with each input. The IP intervened on the controls to set pitch and power for the briefed rate.",
+        "1": "SP, due to chasing the vertical velocity needle with pitch alone, allowed the rate to reach 300 feet per minute from the briefed value. The rate was recovered only after the IP called for the power adjustment, and stabilization on the briefed value was slow.",
+        "2": "SP, due to a power setting slightly low for the briefed rate at entry, allowed the descent rate to sit between 150 and 300 feet per minute off target. SP recognized the trend, adjusted power and pitch together and re-established the briefed rate in good time without IP intervention.",
+        "3": "SP set pitch and power together at entry and held the briefed rate within 150 feet per minute in both the climb and the descent. Corrections were small and made against the needle trend rather than against the instantaneous indication.",
+        "4": "SP stabilized the briefed rate immediately after entry and held it with deviations that were hardly discernible on the vertical velocity indicator. Rate and airspeed were controlled together so that no large correction was required at any stage.",
+        "marginal": "SP held the briefed rates inside standards, but the needle was worked continuously with small pitch inputs instead of being settled with a correct power setting. Rate stability degraded each time attention moved to another instrument. SP is expected to set power for the rate, trim, and then hold it with minimum control input."
+      }
+    },
+    {
+      "id": "instrument-07-em05",
+      "label": "Simultaneous control of rate and airspeed",
+      "mif_row": 8,
+      "source": "general:a|specific:AIRSPEED (knots)|specific:CLIMB / DESCENT RATE (feet/min)",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to task sequencing that concentrated all cockpit workload on one parameter at a time, did not control rate and airspeed as a pair. Every correction applied to the vertical velocity produced an airspeed excursion beyond 20 knots, and neither parameter was recovered. The IP intervened to re-establish the aircraft on the briefed profile.",
+        "1": "SP, due to inadequate workload management once the constant rate descent was established, worked the vertical velocity to the exclusion of the airspeed. Airspeed reached the 20 knot limit while the rate was being held, and both parameters were restored only after successive verbal directions from the IP.",
+        "2": "SP, due to workload management that addressed the two parameters in turn rather than together, allowed the airspeed to move beyond 10 knots while re-establishing the briefed rate. SP recognized the coupling, set power for the rate and attitude for the speed, and returned both inside limits without IP intervention.",
+        "3": "SP controlled pitch and power as a pair, holding the briefed rate within 150 feet per minute and the airspeed within 10 knots at the same time. Each correction was made with its effect on the other parameter anticipated.",
+        "4": "SP flew rate and airspeed as one problem, with power set for the rate and attitude for the speed, and both remained essentially on target throughout the climbs and descents. Continuous use of trim meant no sustained control pressure was carried at any point.",
+        "marginal": "SP kept both rate and airspeed inside standards, but attention alternated between them so that improving one briefly degraded the other. Control of pitch and power remains sequential rather than combined. SP is expected to anticipate the coupling between the two parameters and remove the alternating trend."
+      }
+    },
+    {
+      "id": "instrument-07-em06",
+      "label": "Level-off from constant rate climb / descent",
+      "mif_row": 8,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to applying a fixed lead regardless of the rate being flown, did not arrest the constant rate descent at the assigned altitude. The aircraft passed more than 300 feet below the assigned level and the descent continued unchecked. The IP intervened on the controls to recover the altitude.",
+        "1": "SP, due to a level-off initiated on reaching the altitude rather than before it, went through the assigned level by the full 300 feet permitted. The altitude was regained only after the IP directed the correction, and the recovery was late in relation to the rate flown.",
+        "2": "SP, due to a lead point that did not account for the higher rate being flown, passed the assigned altitude by more than 150 feet. The deviation was seen on the altimeter and corrected back inside 150 feet promptly and without prompting from the IP.",
+        "3": "SP scaled the lead point to the rate being flown and levelled off within 150 feet of the assigned altitude. Power was reset for level flight as the pitch was changed, so the airspeed did not deviate through the transition.",
+        "4": "SP arrested every constant rate climb and descent on the assigned altitude with no discernible overshoot. Lead, pitch change, power reset and trim were applied as one smooth and continuous sequence.",
+        "marginal": "SP levelled off inside standards on each occasion, but always in the same direction and only after a visible recovery back to the assigned altitude. The lead point is not being adjusted for the rate flown. SP is expected to derive the lead from the indicated rate so that the level-off no longer needs a recovery."
+      }
+    },
+    {
+      "id": "instrument-07-em07",
+      "label": "Reversal point control in the Vertical S",
+      "mif_row": 9,
+      "source": "specific:ALTITUDE (feet)|specific:CLIMB / DESCENT RATE (feet/min)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a reversal started without the lead needed to stop the climb on the reference altitude, did not change from climb to descent at the briefed point of the Vertical S. Altitude at the reversal was more than 300 feet from the assigned value and the briefed rate was not re-established in the opposite direction. The IP intervened on the controls to recover the maneuver.",
+        "1": "SP, due to a reversal flown by altimeter indication alone with no anticipation of the rate, reached the 300 foot limit at the reversal point of the Vertical S. The rate in the new direction was set only after the IP called for it, and the maneuver continued displaced from the reference altitude.",
+        "2": "SP, due to a lead applied late at the top of the climb segment, went through the reference altitude of the Vertical S by more than 150 feet before the descent was established. SP identified the excursion and set the briefed rate in the new direction in good time, without IP intervention.",
+        "3": "SP anticipated each reversal of the Vertical S, arrested the vertical velocity within 150 feet of the reference altitude and established the briefed rate in the opposite direction immediately. Pitch and power were changed together so that the airspeed remained on the briefed value through the reversal.",
+        "4": "SP reversed the Vertical S precisely on the reference altitude with the new rate established immediately and no perceptible pause in the vertical velocity. The transitions were flown so smoothly that airspeed and heading were unaffected.",
+        "marginal": "SP flew the Vertical S reversals inside standards, but each one required a visible correction back toward the reference altitude before the new rate settled. The lead into the reversal is applied too late for the rate being flown. SP is expected to anticipate the reversal so that the altitude and the new rate are achieved together."
+      }
+    },
+    {
+      "id": "instrument-07-em08",
+      "label": "Bank control during turning segments of the Vertical S",
+      "mif_row": 9,
+      "source": "specific:BANK (degrees)|specific:HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to bank being varied to correct vertical velocity during the Vertical S, did not hold the briefed angle of bank in the turning segments. Bank exceeded 10 degrees from the briefed value and the resulting heading error grew beyond 10 degrees. The IP intervened to re-establish the briefed bank and the turn.",
+        "1": "SP, due to attention held on the vertical velocity indicator through the turn, allowed the bank in the Vertical S to reach 10 degrees from the briefed angle with the rollout heading equally displaced. The bank was reset only after the IP called the deviation.",
+        "2": "SP, due to the pitch change at the reversal being made without holding the bank, allowed the angle of bank to vary between 5 and 10 degrees from the briefed value. SP corrected the bank on the attitude indicator and completed the turn on the briefed heading without IP intervention.",
+        "3": "SP held the briefed angle of bank within 5 degrees throughout the turning segments of the Vertical S and rolled out within 5 degrees of the briefed heading. Bank was maintained independently of the pitch and power changes at each reversal.",
+        "4": "SP held the briefed bank with deviations that were not readable on the attitude indicator and rolled out exactly on the briefed headings. The reversals were flown without any disturbance to the turn.",
+        "marginal": "SP held bank and heading inside standards during the Vertical S, but the bank shallowed noticeably at every reversal before being reset. Bank is being traded against the vertical velocity correction. SP is expected to hold the briefed angle of bank independently while the pitch and power are adjusted."
+      }
+    },
+    {
+      "id": "instrument-07-em09",
+      "label": "Knowledge and standard sequence of the maneuver (Vertical S)",
+      "mif_row": 9,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient study of the profile before the sortie, did not execute the Vertical S in the sequence described in the Techniques and Procedures Manual. Entry parameters and the reversal interval were both incorrect and the maneuver could not be continued as briefed. The IP intervened and demonstrated the maneuver.",
+        "1": "SP, due to an incomplete recall of the entry and reversal sequence, executed the Vertical S with omissions in the required order of actions. The maneuver was completed only under continuous verbal direction from the IP, with the entry parameters set after the reminder rather than before entry.",
+        "2": "SP, due to hesitation over the reversal interval, started the Vertical S with the sequence out of order. SP recognized the error, reset the maneuver at the reference altitude and completed the remaining segments in the correct order without IP intervention.",
+        "3": "SP knew the Vertical S profile and executed entry, reversals and rollout in the sequence described in the Techniques and Procedures Manual, without mistakes and without IP intervention. Entry parameters were set before the maneuver was started.",
+        "4": "SP executed the Vertical S exactly as described in the Techniques and Procedures Manual, with every step anticipated and the parameters set ahead of each transition. Knowledge of the profile was evident in the accuracy and timing of each segment.",
+        "marginal": "SP flew the Vertical S in the correct sequence, but each transition was preceded by a pause while the next step was recalled. Knowledge of the profile is adequate but not yet automatic, and the delay costs accuracy at the reversals. SP is expected to consolidate the sequence in preparation so that the maneuver is flown without hesitation."
+      }
+    },
+    {
+      "id": "instrument-07-em10",
+      "label": "Smoothness and continuity of control inputs",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": "hf-hfacs-act-nanocodes",
+      "texts": {
+        "0": "SP, due to an over-controlled aircraft (AE104) in the corrections, did not apply control inputs smoothly or continuously during the climbs, descents and the Vertical S. Abrupt pitch and power changes induced attitude excursions that produced deviations beyond 300 feet per minute and 20 knots. The IP took the controls to steady the aircraft.",
+        "1": "SP, due to an over-controlled aircraft (AE104) at each correction, made large and abrupt attitude changes to recover flight parameters. Deviations reached the limits of the allowed band and the aircraft was steadied only after the IP called for smaller and smoother inputs.",
+        "2": "SP, due to control inputs made in steps rather than continuously, induced attitude changes larger than the correction required and deviations grew beyond the code 3 band. SP recognized the over-control, reduced the size of the inputs and steadied the aircraft in good time without IP intervention.",
+        "3": "SP controlled the aircraft smoothly and continuously, with no extreme or repeated attitude changes made to correct flight parameter deviations. Each correction was sized to the deviation and trimmed off, and all parameters stayed within the code 3 band.",
+        "4": "SP handled the aircraft smoothly throughout, with corrections so small and so well anticipated that no attitude change was perceptible on the instruments. Trim was used continuously and the aircraft was never displaced by a correction.",
+        "marginal": "SP kept all parameters inside standards, but corrections were made with inputs larger than the deviation required, so each one had to be taken out again. The handling is safe but not yet smooth or continuous. SP is expected to reduce the size of the inputs and trim after each correction."
+      }
+    }
+  ]
+}

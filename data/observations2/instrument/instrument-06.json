@@ -1,0 +1,162 @@
+{
+  "item_id": "instrument-06",
+  "item_name": "AIRSPEED CHANGES",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [6],
+  "mif_rows": [
+    { "sn": 6, "row_name": "Airspeed Changes" }
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-06-em01",
+      "label": "Altitude control through the airspeed change",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to pitch attitude never being adjusted as thrust changed, did not hold the assigned altitude through the airspeed change. The aircraft ballooned as power was advanced and the excursion reached about 420 feet, beyond the 300 foot limit, with the climb still developing. IP had to take the controls to return the aircraft to the assigned altitude.",
+        "1": "SP applied the power change without any compensating elevator input, so the nose rose during the acceleration and dropped during the deceleration. The altitude deviation reached 300 feet, at the limit of the standard, and was arrested only after IP called the altitude twice. The return to the assigned level was slow and altitude was still being chased when the target airspeed was reached.",
+        "2": "SP was late in adding forward pressure as power was increased and climbed about 210 feet above the assigned altitude. SP identified the deviation on the altimeter and VSI and flew the aircraft back to the assigned altitude without any intervention by IP. The excursion stayed between the 150 and 300 foot bands, but the pitch correction should have accompanied the power change rather than followed it.",
+        "3": "SP held the assigned altitude within 100 feet throughout every acceleration and deceleration. Pitch was adjusted together with the power change, so the altimeter needle stayed effectively in place. Any small deviation was detected on the instruments and removed at once.",
+        "4": "SP maintained the assigned altitude within about 40 feet during every airspeed change, with the altimeter and VSI showing no appreciable movement at power application or reduction. Pitch, power and trim were coordinated so that only light control pressures were ever needed. The altitude trace was essentially flat through each transition.",
+        "marginal": "SP remained inside the altitude standard, but the deviations clustered near 140 feet and were consistently high during accelerations. Each correction was effective, yet it followed the power change instead of accompanying it, so the altimeter moved before SP responded. SP is expected to anticipate the pitch requirement at the moment the throttle is moved so that the altitude band tightens over the next sorties."
+      }
+    },
+    {
+      "id": "instrument-06-em02",
+      "label": "Acquisition and holding of the commanded airspeed",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (KIAS)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to throttle movements made in large steps with no reference to known power settings, did not acquire and hold the commanded airspeed. The speed overshot the target by about 35 knots on the deceleration and continued to diverge, well beyond the 20 knot limit. IP had to set the power to recover the commanded airspeed.",
+        "1": "SP did not lead the target airspeed with a timely power adjustment and let the speed run 20 knots below the commanded value, at the limit of the standard. The speed was recovered only after IP prompted the power correction, and a second overshoot followed in the opposite direction. The commanded airspeed was never stabilized within the sequence.",
+        "2": "SP set an initial power position that did not match the commanded airspeed, so the speed stabilized about 15 knots off target. SP recognized the error on the airspeed indicator and re-set the power to capture the commanded value without IP intervention. The deviation remained between the 10 and 20 knot bands and the capture took longer than the technique allows.",
+        "3": "SP acquired and maintained each commanded airspeed within 10 knots. Power was led toward the known setting for the new speed and fine-tuned once the indication had settled. Every transition was positive and no airspeed was allowed to wander after capture.",
+        "4": "SP captured every commanded airspeed within about 3 knots and held it steady thereafter. Power was set directly to the known value for the new airspeed, so no repeated corrections were required. The airspeed indicator settled on the target with no overshoot in either direction.",
+        "marginal": "SP kept every airspeed inside the standard, but each capture was reached from a 9 knot overshoot before the indication settled. The technique relied on chasing the airspeed indicator rather than on setting the known power for the commanded speed. SP is expected to use the published power settings so that the target airspeed is captured directly."
+      }
+    },
+    {
+      "id": "instrument-06-em03",
+      "label": "Heading control against torque and yaw with power change",
+      "mif_row": null,
+      "source": "specific:HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to rudder pressure not being applied as engine torque changed with power, did not hold the assigned heading during the airspeed changes. The aircraft yawed as power was reduced and the heading error grew to about 18 degrees, beyond the 10 degree limit, with the ball fully displaced. IP had to intervene on the rudder to stop the drift and regain the assigned heading.",
+        "1": "SP left the rudder trim set for the previous airspeed, so the aircraft drifted off heading with each power change. The heading error reached 10 degrees, at the limit of the standard, and was corrected only after IP pointed out the heading and the ball. The correction was then made with aileron alone, so the aircraft remained out of balance.",
+        "2": "SP applied the power change before adjusting rudder pressure and allowed the heading to drift about 7 degrees. SP noticed the divergence on the HSI, centered the ball and regained the assigned heading without IP intervention. The deviation stayed between the 5 and 10 degree bands, but the rudder input should have accompanied the power change.",
+        "3": "SP held the assigned heading within 5 degrees through all accelerations and decelerations. Rudder pressure was applied with the power change and the ball stayed centered. The heading indication remained stable and no correcting turns were required.",
+        "4": "SP maintained the assigned heading within about 2 degrees during every airspeed change, with the ball centered throughout. Rudder pressure and rudder trim followed the power change so closely that no yaw was apparent on the instruments. The heading indication did not move perceptibly at any point in the transition.",
+        "marginal": "SP stayed inside the heading standard, but the errors clustered near 4 degrees and always in the direction of the torque change. Rudder trim was re-set only after the new airspeed had stabilized, leaving the aircraft slightly out of balance during the transition itself. SP is expected to trim the rudder as the airspeed changes so that heading errors are removed at source."
+      }
+    },
+    {
+      "id": "instrument-06-em04",
+      "label": "Power setting technique and use of known power settings",
+      "mif_row": null,
+      "source": "general:paragraph|execution:1",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to no working knowledge of the power settings published in the Techniques and Procedures Manual, did not execute the airspeed change with a single coordinated power adjustment. The throttle was moved in large uncoordinated steps, the airspeed diverged past the 20 knot limit and the engine indications were driven to the edge of the normal operating range. IP had to take the throttle and re-set the power.",
+        "1": "SP moved the throttle without reference to a known setting for the new airspeed and produced a chain of successive corrections. The airspeed reached the outer limit of the standard before it stabilized, and did so only after IP called out the required power. Execution was not flawless and depended on verbal direction from the front cockpit throughout.",
+        "2": "SP set an approximate power position rather than the published setting for the commanded airspeed, so the first attempt undershot the target. SP recognized this from the airspeed trend and re-set the power to the correct value on its own initiative. The change was completed within the standard, but with one more throttle adjustment than the technique requires.",
+        "3": "SP executed each airspeed change with the power settings analyzed in the Techniques and Procedures Manual. The throttle was moved directly to the setting for the new airspeed and refined only slightly once the indication had settled. No intervention by IP was required at any point.",
+        "4": "SP applied exactly the published power setting for each commanded airspeed and reached the new value with a single throttle movement. Engine indications stayed well inside the normal range throughout and the technique matched the manual precisely. The whole sequence was completed with no corrective throttle work at all.",
+        "marginal": "SP used the correct technique and stayed within the standard, but the initial power position was routinely low and needed a second adjustment to complete the change. This lengthened each transition and left the airspeed drifting toward the target instead of capturing it. SP is expected to commit the published power settings to memory so that one throttle movement completes the change."
+      }
+    },
+    {
+      "id": "instrument-06-em05",
+      "label": "Attitude and trim technique through the transition",
+      "mif_row": null,
+      "source": "general:paragraph",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to trim being used to fly the aircraft instead of to relieve control pressures, did not maintain the pitch attitude required for level flight as the airspeed changed. Control forces were left untrimmed, the aircraft porpoised through the deceleration and the altitude and airspeed standards were exceeded together. IP had to take the controls and re-trim the aircraft.",
+        "1": "SP set the new attitude but did not re-trim as the airspeed changed, so a steady control force was carried throughout the maneuver. The deviations reached the limits of the standards and stayed there until IP directed the trim change. The required parameters were held only by continuous physical effort on the stick.",
+        "2": "SP made the attitude change correctly but re-trimmed only after the airspeed had stabilized, so a residual pressure was carried through the transition. SP identified the out of trim condition and removed it without prompting, keeping all parameters inside the standards. The aircraft should have been kept in trim as the speed changed rather than after it.",
+        "3": "SP set the pitch attitude required for the new airspeed and trimmed progressively as the speed changed. The aircraft was in trim on reaching the commanded airspeed and could be released without any change of parameters. Control inputs remained smooth from the start of the change to the new stabilized condition.",
+        "4": "SP flew each transition with continuous fine trim, so the stick force stayed effectively zero from the initiation of the change to the stabilized condition. Attitude was set on the attitude indicator and confirmed on the performance instruments. The aircraft arrived at the commanded airspeed fully trimmed and precisely in level flight.",
+        "marginal": "SP held every parameter, but the trim was always applied one step behind the airspeed, leaving a light out of trim force during each change. The result was a slight nose movement whenever the stick was released before SP corrected it. SP is expected to trim continuously through the transition so that no residual force remains at any point."
+      }
+    },
+    {
+      "id": "instrument-06-em06",
+      "label": "Instrument cross-check during the airspeed change",
+      "mif_row": null,
+      "source": "general:paragraph",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an interrupted instrument cross-check while attention remained fixed on the airspeed indicator, did not monitor attitude, altitude and heading during the change. The aircraft entered a descending turn that went unnoticed until several parameters were simultaneously outside their limits. IP had to intervene to recover the aircraft to the assigned parameters.",
+        "1": "SP concentrated the scan on the airspeed indicator alone and did not include the attitude indicator and altimeter in the cross-check. Altitude and heading reached the limits of their standards and were recovered only after IP called each deviation in turn. The scan was never re-established without direction from the front cockpit.",
+        "2": "SP narrowed the cross-check to airspeed while the new power was being set, and altitude began to deviate unnoticed. SP re-established the full scan on its own initiative, detected the error while it was still between the 150 and 300 foot bands and corrected it without IP intervention. The scan should not have been allowed to narrow during the power change.",
+        "3": "SP maintained a complete instrument cross-check throughout each airspeed change, using attitude as the control instrument and airspeed, altimeter and HSI as performance instruments. Every small deviation was detected as it appeared and removed immediately. The scan rate did not change when workload increased.",
+        "4": "SP kept an even and continuous cross-check across all flight instruments during the transitions, so no parameter moved before it had been seen. Deviations were anticipated from the attitude indication rather than read after the fact. Nothing in the scan was displaced by the power and trim work.",
+        "marginal": "SP kept every parameter inside the standard, but the scan visibly dwelt on the airspeed indicator while the new power was being set. Altitude and heading were checked only after the speed had settled, so corrections were reactive rather than anticipatory. SP is expected to keep the cross-check even through the power change so that deviations are caught at onset."
+      }
+    },
+    {
+      "id": "instrument-06-em07",
+      "label": "Sequence of the change per the Techniques and Procedures Manual",
+      "mif_row": null,
+      "source": "general:paragraph",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to no working knowledge of the technique analyzed in the Techniques and Procedures Manual, did not carry out the airspeed change in the published sequence of power, attitude and trim. Steps were taken out of order and some were omitted entirely, so the aircraft did not stabilize at the commanded airspeed at any point. IP had to demonstrate the maneuver before it could be attempted again.",
+        "1": "SP carried out the steps of the airspeed change out of sequence, setting attitude before power and leaving trim until last. The parameters reached the limits of the standards and the correct order was restored only after IP talked SP through each step. Execution required IP direction and cannot be considered flawless.",
+        "2": "SP started the first airspeed change with the attitude adjustment before the power change, contrary to the published sequence. SP recognized the departure from technique, restored the correct order for the remaining changes and kept every parameter inside the standards without IP intervention. The technique should have been applied correctly from the first change.",
+        "3": "SP executed each airspeed change in the sequence analyzed in the Techniques and Procedures Manual, with power, attitude and trim applied in the correct order and at the correct time. All parameters remained within the standards throughout and no step was omitted. Execution required no intervention by IP.",
+        "4": "SP applied the published technique exactly, with power, attitude and trim flowing into one another so that the change appeared as one continuous action. Each step was made at precisely the point the manual specifies. The sequence was reproduced identically on every change commanded during the sortie.",
+        "marginal": "SP applied the correct sequence and stayed within the standards, but the trim step was consistently deferred to the end of the change rather than applied throughout it. The pattern repeated on each change, which indicates the sequence has been learned as separate blocks. SP is expected to blend the published steps so that the change is executed as one continuous technique."
+      }
+    },
+    {
+      "id": "instrument-06-em08",
+      "label": "Response to the commanded airspeed and cockpit cross-talk",
+      "mif_row": null,
+      "source": "general:paragraph|execution:1",
+      "hf_concept": "hf-distributed-situational-awareness",
+      "texts": {
+        "0": "SP, due to an unshared assessment of the aircraft state between front and rear cockpit, did not respond to the commanded airspeed and continued at the previous value. No acknowledgment was made and no change was initiated, so the aircraft was left outside the airspeed required for that part of the profile. IP had to take control and set the commanded airspeed.",
+        "1": "SP, due to absent plain-language cross-talk on the changing aircraft state, acknowledged the commanded airspeed but did not begin the change until the command had been repeated. The delay allowed the parameters to reach the limits of the standards before the aircraft stabilized. The change was executed only after direct prompting from IP.",
+        "2": "SP was slow to acknowledge the commanded airspeed and began the change several seconds after the call. SP then completed the change correctly, kept every parameter inside the standards and confirmed the new airspeed to IP without further prompting. The response should have been immediate rather than delayed.",
+        "3": "SP acknowledged each commanded airspeed at once and started the change immediately. The new value was confirmed to IP as soon as the aircraft had stabilized. Cockpit communication was clear and left no doubt about the airspeed being flown.",
+        "4": "SP responded to every command without hesitation, stated the airspeed being set and confirmed the stabilized value, so both cockpits held the same picture of the aircraft state at all times. Queries from IP were answered while the change was still in progress and without any effect on the parameters.",
+        "marginal": "SP responded to every command and stayed inside the standards, but the acknowledgment was routinely made only once the change was already complete. IP was therefore left without confirmation during the transition itself. SP is expected to acknowledge the command immediately so that both cockpits share the same picture throughout the change."
+      }
+    },
+    {
+      "id": "instrument-06-em09",
+      "label": "Smoothness and sizing of control and power inputs",
+      "mif_row": null,
+      "source": "general:paragraph",
+      "hf_concept": "hf-acts-errors",
+      "texts": {
+        "0": "SP, due to a skill-based error in control input during the transitions, did not fly the airspeed changes smoothly and over-controlled the aircraft in pitch and power. Each correction produced a larger deviation in the opposite direction and the oscillation grew until the airspeed and altitude standards were both exceeded. IP had to take the controls to damp the aircraft.",
+        "1": "SP applied abrupt and oversized inputs, so every correction was followed by one of the opposite sense. The deviations reached the limits of the standards and were damped only after IP directed smaller inputs. No complete airspeed change was flown smoothly during the sortie.",
+        "2": "SP applied a correction larger than the deviation required, which produced a noticeable overshoot on the first airspeed change. SP recognized the over-control, reduced the size of the subsequent inputs and completed the remaining changes inside the standards without IP intervention. Inputs should have been proportioned to the deviation from the outset.",
+        "3": "SP flew the airspeed changes with smooth and positive inputs proportioned to the deviation being corrected. No overshoot or oscillation was apparent and the aircraft moved directly from one stabilized condition to the next. The instrument indications remained steady throughout each transition.",
+        "4": "SP flew every transition with inputs so precisely sized that no correction of the opposite sense was ever needed. The instruments moved steadily to the new values with no oscillation whatsoever. Handling was smooth, positive and entirely free of over-control.",
+        "marginal": "SP stayed within the standards, but the first input on each change was consistently larger than needed and had to be reduced immediately afterwards. This produced a small overshoot on the instruments before the parameters settled. SP is expected to size the initial input to the deviation so that no secondary correction is required."
+      }
+    },
+    {
+      "id": "instrument-06-em10",
+      "label": "Airspeed limits and margins during acceleration and deceleration",
+      "mif_row": null,
+      "source": "general:paragraph|conditions:1",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to no reference to the airspeed limitations of the Flight Manual, did not respect the limiting speeds while changing airspeed and allowed the aircraft to run toward a published limit during the acceleration. The condition was not recognized and no corrective action was initiated. IP had to intervene to keep the aircraft inside its operating limits.",
+        "1": "SP reduced the airspeed toward the lower end of the maneuvering range without adjusting power in time, and the aircraft approached the minimum recommended speed for the condition. Recovery was initiated only after IP called the airspeed. The safety margin was restored by direction from the front cockpit rather than by SP's own monitoring.",
+        "2": "SP allowed the deceleration to continue past the commanded airspeed toward the lower end of the useful range. SP recognized the trend on the airspeed indicator, added power in time and recovered the commanded value with the margin to every limit preserved and without IP intervention. The rate of deceleration should have been controlled earlier.",
+        "3": "SP executed the airspeed changes with full regard to the limiting speeds of the Flight Manual and kept an adequate margin to every limit. Rates of acceleration and deceleration were controlled so that no target was approached from an unsafe condition. All operating limits were respected throughout.",
+        "4": "SP managed each transition with a clear margin to every published limit and stated the relevant limiting speed when the profile approached it. Rates of change were selected so that the aircraft could be stabilized at the commanded airspeed under complete control. Operating limits were never a factor at any point in the sortie.",
+        "marginal": "SP respected every operating limit, but the decelerations were allowed to run close to the commanded airspeed before power was added, leaving a smaller margin than the technique intends. The same pattern appeared on each deceleration. SP is expected to arrest the rate of change earlier so that the margin to the lower speeds is preserved."
+      }
+    }
+  ]
+}

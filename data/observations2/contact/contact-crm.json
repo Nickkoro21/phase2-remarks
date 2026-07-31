@@ -1,0 +1,100 @@
+{
+  "item_id": "contact-crm",
+  "item_name": "CRM",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [],
+  "mif_rows": [],
+  "error_modes": [
+    {
+      "id": "contact-crm-em01",
+      "label": "Recognition of when CRM enhances mission performance and flight safety",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-complacency",
+      "texts": {
+        "0": "SP, due to complacency on a profile flown repeatedly without incident, did not recognize any point at which CRM affected mission performance or flight safety. SP handled the sortie as a single-seat task and produced no coordination input at the briefing, in flight or at the debriefing. The IP had to stop the item and direct the required crew actions before the profile could continue.",
+        "1": "SP, due to complacency toward crew coordination in a familiar pattern, treated CRM as relevant only where flight safety was already threatened and not where it would have improved mission performance. SP acted only after the IP had stated the point verbally more than once, and the coordination that followed came after the phase of flight in which it was useful. No IP control input was required.",
+        "2": "SP, due to an initially task-focused approach to the profile, missed the first opportunity where crew coordination would have improved mission performance. SP recognized the omission without prompting, stated the coordination requirement and applied it for the rest of the sortie. No IP prompting or intervention was needed.",
+        "3": "SP recognized accurately and without delay when CRM enhanced mission performance and flight safety, and stated it in the briefing, in flight and in the debriefing. Coordination was applied at the point where it produced an effect rather than after the event. All CRM items applicable to the sortie were covered without IP prompting.",
+        "4": "SP identified crew coordination opportunities before they became necessary and used them consistently across briefing, flight and debriefing. SP linked each specific CRM behavior to the resulting gain in mission performance and flight safety. Deviations from the expected standard on this axis were negligible.",
+        "marginal": "SP met the standard on recognizing when CRM enhances mission performance and flight safety, but did so almost only in the safety-related cases and rarely in the mission-performance ones. The trend across the sortie was toward recognition after the IP raised the subject rather than before. SP is expected to state the CRM benefit on his/her own initiative on the next sortie."
+      }
+    },
+    {
+      "id": "contact-crm-em02",
+      "label": "Use of the IFG/CRM matrix chart to highlight applicable items",
+      "mif_row": null,
+      "source": "general:b|execution:2",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to unfamiliarity with the publication, did not use the IFG/CRM matrix chart at any point and could not locate the items applicable to the sortie. No CRM item from the matrix was covered in the briefing and none was highlighted in the debriefing. The IP had to open the chart and work the applicable items with SP before the grade sheet could be completed.",
+        "1": "SP, due to incomplete pre-brief preparation, opened the IFG/CRM matrix chart but highlighted items unrelated to the profile flown. SP selected the correct items only after repeated verbal direction from the IP, and the discussion of them was pushed to the end of the debriefing. No further action beyond the extended debriefing was required.",
+        "2": "SP, due to a rushed review of the chart during mission planning, first highlighted a general matrix item instead of the one matching the maneuver flown. SP recognized the mismatch without prompting, returned to the IFG/CRM matrix chart and selected the correct item in time for the discussion. No IP direction was required.",
+        "3": "SP used the IFG/CRM matrix chart accurately and without delay to highlight the CRM items applicable to the sortie. The items selected matched the profile flown and the areas covered in the debriefing, and were presented in the standard sequence.",
+        "4": "SP used the IFG/CRM matrix chart to highlight the applicable items and tied each one to a specific event of the sortie. The selection was complete, correct and needed no revision by the IP, with negligible deviation from the expected standard.",
+        "marginal": "SP used the IFG/CRM matrix chart and met the standard, but selected the minimum number of items and needed a second look at the chart to confirm two of them. The trend was toward picking the familiar items rather than those matching the profile actually flown. SP is expected to preselect the applicable matrix items during mission planning on the next sortie."
+      }
+    },
+    {
+      "id": "contact-crm-em03",
+      "label": "Application of the CRM concept when planning maneuvers",
+      "mif_row": null,
+      "source": "general:c|execution:1",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to planning the profile as an individual rather than as a crew task, did not apply the CRM concept when planning the maneuvers and briefed no division of duties, no lookout responsibility and no knock-it-off criteria. Sequence and area limits were left undefined until the maneuvers were reached. The IP had to stop the briefing and rebuild the maneuver plan before the sortie could proceed.",
+        "1": "SP, due to time compression in the planning phase, applied the CRM concept to only one of the briefed maneuvers and left the rest without an agreed division of duties. SP added the missing content only after repeated verbal direction from the IP, and the plan was completed after the briefing was formally over. No IP intervention in flight was required.",
+        "2": "SP, due to an incomplete first run through the profile, planned the opening maneuver without stating clearing and lookout responsibilities. SP recognized the omission before the briefing ended, restated the plan with the CRM elements included and flew it as restated. No IP prompting was needed.",
+        "3": "SP applied the CRM concept to the maximum extent when planning the maneuvers, with duties, clearing responsibility, entry parameters and knock-it-off criteria agreed before flight. The plan was stated accurately and without delay and the maneuvers were flown as planned.",
+        "4": "SP planned every maneuver as a crew task, including the contingencies and the point at which each maneuver would be discontinued. The plan was complete and unambiguous, required no addition by the IP, and deviations from the expected standard were negligible.",
+        "marginal": "SP met the standard when planning the maneuvers as a crew task, but the CRM content was concentrated in the first maneuvers and thinned out toward the end of the profile. The trend was toward assuming the division of duties rather than stating it. SP is expected to brief duties and knock-it-off criteria for every maneuver on the next sortie."
+      }
+    },
+    {
+      "id": "contact-crm-em04",
+      "label": "Application of the CRM concept when analyzing abnormal and emergency situations",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-role-assignment",
+      "texts": {
+        "0": "SP, due to absent explicit role assignment under load, did not apply the CRM concept when analyzing the simulated emergency and worked the problem alone while aircraft control degraded. SP stated no problem summary, allocated no tasks and used the other cockpit as no resource at all. The IP had to take control and direct the analysis.",
+        "1": "SP, due to absent explicit role assignment at the onset of the abnormal indication, kept both the flying and the analysis and let the aircraft state drift while reading the checklist. SP allocated duties only after the IP had stated the requirement more than once, and the analysis was completed late relative to the time available for the situation. No IP control input was required.",
+        "2": "SP, due to an initial attempt to handle the situation single-handed, began the analysis without allocating tasks between the cockpits. SP recognized the loading quickly, stated the problem in plain language, assigned the flying and the checklist duties explicitly and completed the analysis in time. No IP prompting or intervention was required.",
+        "3": "SP applied the CRM concept to the maximum extent when analyzing the situation: the problem was stated in plain language, roles were allocated explicitly and the aircraft was flown throughout. The analysis was accurate and without delay and the response matched the published procedure.",
+        "4": "SP allocated roles within the first seconds of the abnormal indication, kept the aircraft flown and the analysis running in parallel, and reviewed the plan as the situation developed. The use of both cockpits as resources was complete and deviations from the expected standard were negligible.",
+        "marginal": "SP met the standard in analyzing the situation as a crew task, but the role allocation was made only after the first checklist step rather than at the onset of the indication. The trend was toward stating the division of duties once and not revisiting it as the situation developed. SP is expected to assign roles at recognition and to review them as the situation changes on the next sortie."
+      }
+    },
+    {
+      "id": "contact-crm-em05",
+      "label": "Communication and upward inquiry in the IP/SP cockpit",
+      "mif_row": null,
+      "source": "general:c|execution:2b",
+      "hf_concept": "hf-lack-of-assertiveness",
+      "texts": {
+        "0": "SP, due to lack of assertiveness in stating 'unable' when the direction could not be complied with, continued a maneuver already assessed as outside his/her current capability and made no call to the other cockpit. The doubt stayed unspoken until the deviation was fully established. The IP had to intervene on the controls to recover the situation.",
+        "1": "SP, due to lack of assertiveness in the IP/SP cockpit, passed the doubt as an indirect hint instead of a direct statement of the aircraft state. SP stated the problem clearly only after the IP had questioned him/her twice, and the delay left the correction to the last usable point. No IP control input was required.",
+        "2": "SP, due to an initial reluctance to interrupt the IP, delayed the first call on the deviating parameter. SP recognized the delay, made a direct call using standard phraseology and corrected the deviation without assistance. No IP prompting or intervention was needed.",
+        "3": "SP communicated with the other cockpit accurately and without delay, used standard phraseology and stated 'unable' where the direction could not be complied with. Calls were made at the point where they were useful and all acknowledgements and readbacks were complete.",
+        "4": "SP kept the two cockpits on a common picture throughout the sortie with short, standard and timely calls, and questioned an assumption that the instruments did not support. Communication was unambiguous in both directions with negligible deviation from the expected standard.",
+        "marginal": "SP met the communication standard, but the calls to the other cockpit were reactive and made after the IP had opened the subject rather than at the moment of recognition. The trend was toward reporting the deviation only once it was visible to both crew members. SP is expected to make the first call at recognition and to state 'unable' without hesitation on the next sortie."
+      }
+    },
+    {
+      "id": "contact-crm-em06",
+      "label": "Debriefing self-assessment and identification of CRM development areas",
+      "mif_row": null,
+      "source": "general:a,d|execution:4,5,6",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to reviewing the sortie only by maneuver outcome, took no part in the CRM discussion at the debriefing and offered no assessment of the coordination errors made in flight. SP attributed every deviation to external factors and identified no area for CRM development. The IP had to reconstruct the events and state the development areas without any input from SP, and the CRM box could be completed only on IP assessment.",
+        "1": "SP, due to reviewing the sortie only by maneuver outcome, described the events correctly but identified no CRM shortfall until the IP had raised each one verbally more than once. The development areas were finally accepted but SP did not connect them to the specific events of the sortie. No action beyond the extended debriefing was required.",
+        "2": "SP, due to an initially event-by-event rather than behavior-based review, missed the coordination element in the first deviation discussed. SP recognized this without prompting, restated the deviation in CRM terms and identified the development area unaided. No IP direction was required.",
+        "3": "SP took part fully in the CRM discussion, self-identified the coordination errors made in flight and stated specific areas for CRM development. The assessment was accurate, prompt and tied to identifiable events of the sortie.",
+        "4": "SP self-assessed the sortie in CRM terms before being asked, identified both the shortfalls and the points where CRM improved mission effectiveness and flight safety, and proposed specific corrective actions for the next sortie. Deviations from the expected standard on this axis were negligible.",
+        "marginal": "SP met the standard in the debriefing, but the self-assessment stayed at the level of what happened rather than which CRM behavior was missing. The trend was toward naming a development area only for the deviation that was most obvious. SP is expected to review each item of the profile in CRM terms and to propose the corrective action himself/herself on the next sortie."
+      }
+    }
+  ]
+}

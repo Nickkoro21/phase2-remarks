@@ -1,0 +1,117 @@
+{
+  "item_id": "contact-39",
+  "item_name": "EMERGENCY PROCEDURES",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [39],
+  "mif_rows": [
+    {"sn": 39, "row_name": "Emergency Procedures"}
+  ],
+  "error_modes": [
+    {
+      "id": "contact-39-em01",
+      "label": "BOLD FACE CRITICAL ACTION RECALL",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to incomplete memorization of the critical action procedures, did not state the BOLD FACE steps by heart in the printed sequence and without mistakes. Three memory items of the requested procedure were omitted and two were given out of order, and the recitation stopped before the last step on both attempts. IP had to state the remaining steps from the Check List for the procedure to be completed. Knowledge of the critical action procedures was below the level required to fly the sortie.",
+        "1": "SP, due to weak recall of the printed wording, did not state the BOLD FACE steps by heart without mistakes. Two steps were reversed and one was paraphrased instead of quoted verbatim, and SP restored the correct sequence only after repeated verbal prompts, about ten seconds after the first error. The procedure was finally stated in full, but at the lower limit of the standard and only with prompting from IP.",
+        "2": "SP, due to hesitation at the transition between memory items, did not deliver the BOLD FACE sequence at the required pace. One step was initially stated out of order and the recitation paused for about five seconds. SP recognized the break without any prompt, restarted from the preceding step and completed the procedure in the printed order and wording, with no intervention by IP.",
+        "3": "SP stated the critical action procedures by heart, in the printed sequence, without omissions, additions or paraphrase. Recall was immediate on every procedure requested and the wording matched the Check List exactly. SP kept the same accuracy for the procedures requested in flight as for those requested on the ground.",
+        "4": "SP recited every BOLD FACE procedure requested, on the ground and in flight, word for word and with no hesitation between items. SP also identified without prompting the point at which the memory items end and the amplified Check List procedure begins. Recall accuracy was equally precise on the rarely practiced procedures.",
+        "marginal": "SP stated all BOLD FACE steps in the printed sequence and within standards, but recall on the less frequently practiced procedures was noticeably slower and required a short pause before each item. The tendency is toward reconstructing the steps rather than reciting them from memory, which will not hold under the workload of an actual emergency. SP is expected to bring all critical action procedures to immediate recall pace in the coming sorties."
+      }
+    },
+    {
+      "id": "contact-39-em02",
+      "label": "CHECK LIST / IFG EXECUTION AND STANDARDIZED SEQUENCE",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient familiarity with the layout of the Check List, did not execute the amplified procedure according to Check List and IFG in the standardized sequence. Two items were actioned out of order and one complete step was skipped, and the procedure was left unfinished at the point where the landing configuration had to be selected. IP intervened, took over the Check List and directed the remaining steps to completion. Execution was neither flawless nor timely.",
+        "1": "SP, due to a checklist not followed correctly after the memory items were completed, did not execute the amplified procedure in the standardized sequence. Two steps were performed in reverse order and the transition to the IFG page came about fifteen seconds late, so that the procedure was still open when the aircraft reached the point at which it had to be complete. SP restored the correct sequence only after IP called out each remaining item in turn.",
+        "2": "SP, due to a rushed transition from the memory items to the amplified procedure, initially read the wrong Check List page for the malfunction being worked. SP detected the discrepancy within about five seconds, returned to the correct procedure and completed all steps in the standardized sequence without IP intervention. Total execution time remained inside the window required for the procedure.",
+        "3": "SP executed the procedure according to Check List and IFG, without IP intervention, flawlessly, timely and in the standardized sequence. Every step was actioned and confirmed in the printed order, and the transition from memory items to the amplified procedure was made without delay.",
+        "4": "SP executed all procedures according to Check List and IFG with no intervention, no omissions and no reordering, and completed each one well inside the required time. SP confirmed each switch position against the printed step before moving on, and kept the same standard on the second, unbriefed malfunction of the sortie.",
+        "marginal": "SP executed the amplified procedures in the standardized sequence and within standards, but relied on reading each step twice before actioning it, which left the procedure only just complete by the required point. The tendency is toward pace that depends on low workload rather than on procedural familiarity. SP is expected to consolidate the Check List and IFG flow so that timing does not degrade when the emergency is combined with pattern work."
+      }
+    },
+    {
+      "id": "contact-39-em03",
+      "label": "OBSERVANCE OF AIRCRAFT LIMITS DURING THE EMERGENCY",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to attention directed entirely at the Check List steps, did not know and observe the aircraft limits reported in Section V of the Flight Manual while working the procedure. SP lowered the landing gear about twenty-five knots above the published maximum gear extension speed and then selected landing flaps above the flap limit speed. IP intervened, retracted the gear and took control to bring the aircraft back inside the published limits.",
+        "1": "SP, due to lack of knowledge of the limits applicable to the configuration change, did not observe the maximum landing gear extension speed reported in Section V of the Flight Manual and selected the gear about ten knots fast. SP reduced airspeed back inside the limit only after IP called the exceedance, roughly eight seconds later. The remaining configuration changes were made inside the limits, but each one required a verbal reminder of the applicable speed.",
+        "2": "SP, due to a delayed power reduction while completing the memory items, allowed airspeed to build toward the maximum flap extension speed before the configuration change. SP recognized the trend before the limit was reached, delayed flap selection and reduced airspeed by about ten knots, so that every configuration change stayed inside the published values with no IP input.",
+        "3": "SP knew and observed the aircraft limits reported in Section V of the Flight Manual throughout the procedure. All configuration changes were made inside the published gear and flap speeds, and engine and airframe parameters were kept within limits while the malfunction was being worked.",
+        "4": "SP observed every applicable Section V limit throughout the emergency and stated the relevant limiting value before each configuration change. Airspeed at gear and flap selection was set with a comfortable margin below the published maximum, and no parameter approached a limit at any point in the procedure.",
+        "marginal": "SP kept all parameters inside the Section V limits, but configuration changes were made close to the published maximum speeds and the margin depended on IP not extending the profile further. The tendency is toward managing the limit reactively rather than planning the energy so the limit is never approached. SP is expected to establish the target airspeed for each configuration change before selecting it in the coming sorties."
+      }
+    },
+    {
+      "id": "contact-39-em04",
+      "label": "SYSTEMS KNOWLEDGE AND DAILY ASSIGNMENT PREPARATION",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": "hf-lack-of-knowledge",
+      "texts": {
+        "0": "SP, due to lack of knowledge of the published procedure for the condition encountered, did not know in detail the emergency procedures and the relevant systems set as the daily assignment. SP could not describe the indications associated with the malfunction and answered four of six briefing questions on the affected system incorrectly. IP had to teach the system on the ground before the sortie could continue, and the assignment was repeated.",
+        "1": "SP, due to insufficient knowledge of the system reversion logic, did not describe in detail the consequences of the malfunction on the associated systems. SP identified the cockpit indications correctly but could explain the follow-on effects only after IP guided the answer step by step. The daily assignment was covered at the lower limit of the standard and required prompting on every second question.",
+        "2": "SP, due to preparation that concentrated on the memory items rather than on the system, first gave an incomplete account of why the procedure requires the affected switch to be cycled. SP recognized the gap, referred to the correct paragraph and completed the explanation without further input from IP. All remaining questions on the daily assignment were answered accurately at the first attempt.",
+        "3": "SP knew in detail all emergency procedures and the relevant systems set as the daily assignment. SP described the cockpit indications, the affected components and the reason for each step of the procedure, and answered every briefing question correctly.",
+        "4": "SP answered every question on the emergency procedures and the associated systems accurately and without hesitation, including the secondary effects on other systems. SP related each step of the procedure to the system behavior it addresses and identified the conditions under which the procedure does not apply. Preparation clearly went beyond the material set as the daily assignment.",
+        "marginal": "SP knew the emergency procedures and the relevant systems to the required standard, but answers on system interactions were general where specific component behavior was expected. The tendency is toward memorizing the procedure without the system knowledge that supports decisions when the indications are ambiguous. SP is expected to study the affected systems in the depth set by the daily assignment before the next sortie."
+      }
+    },
+    {
+      "id": "contact-39-em05",
+      "label": "AIRCRAFT CONTROL PRIORITY WHILE WORKING THE PROBLEM",
+      "mif_row": null,
+      "source": "general:e",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to an attention bottleneck on a single caution indication at the expense of the instrument cross-check, did not handle the emergency procedure effectively and stopped flying the aircraft while working the steps. Altitude decayed by about 700 feet, airspeed dropped some 25 knots below the briefed value and heading wandered more than 30 degrees with the wings left in a shallow bank. IP took control to recover the aircraft state before the procedure could be resumed.",
+        "1": "SP, due to absorption in the cockpit indication that left the descent rate unmonitored, did not maintain the aircraft state while executing the procedure. Altitude decreased by about 300 feet and airspeed fell some 15 knots below the briefed value, reaching the limit of the acceptable deviation. SP returned to the briefed altitude and airspeed only after IP called both deviations, about ten seconds after they developed.",
+        "2": "SP, due to a short interruption of the instrument cross-check at the start of the procedure, allowed the aircraft to drift about 150 feet low and 10 knots slow. SP detected the deviation on the next scan cycle, corrected altitude and airspeed while continuing the procedure and re-established the cross-check without any input from IP. The procedure was completed with the aircraft back on the briefed parameters.",
+        "3": "SP handled the emergency procedure effectively while continuing to fly the aircraft. Altitude, airspeed and heading were held on the briefed values throughout the procedure, and the instrument cross-check was maintained between Check List steps.",
+        "4": "SP flew the aircraft precisely throughout the emergency, with no perceptible change in altitude, airspeed or heading while the procedure was being worked. SP interleaved each Check List step with a full cross-check and kept the aircraft positioned for a suitable forced landing field at all times.",
+        "marginal": "SP kept the aircraft within the required parameters while working the procedure, but the cross-check narrowed each time a switch had to be selected and the parameters were recovered only at the end of each step. The tendency is toward sequential rather than parallel task handling, which will not hold if the workload increases. SP is expected to keep a continuous scan running between Check List items in the coming sorties."
+      }
+    },
+    {
+      "id": "contact-39-em06",
+      "label": "CREW COORDINATION AND DECLARATION OF THE EMERGENCY",
+      "mif_row": null,
+      "source": "general:c,e",
+      "hf_concept": "hf-role-assignment",
+      "texts": {
+        "0": "SP, due to absent explicit role assignment when the malfunction occurred, did not handle the emergency effectively as a crew and left it unclear who was flying and who was working the procedure. No transfer of aircraft control was stated, no emergency was declared to ATC and the intentions were never passed to the front cockpit. IP had to state positive control of the aircraft, declare the emergency and direct the procedure.",
+        "1": "SP, due to an unstated transfer of aircraft control between cockpits, did not coordinate the execution of the procedure with IP. The declaration of the emergency was made about thirty seconds late and the intentions were passed only in fragments, so IP had to ask twice what SP intended to do. Control and task allocation were finally clear, but only after IP prompted each element.",
+        "2": "SP, due to delayed role allocation in the first seconds after the abnormal indication, initially worked the Check List without stating who was flying the aircraft. SP recognized the ambiguity within about five seconds, stated positive retention of control, assigned the Check List reading to IP and then declared the emergency and the intentions in full, without prompting.",
+        "3": "SP coordinated the handling of the emergency with IP throughout. Control of the aircraft and the reading of the procedure were assigned explicitly, the emergency was declared to ATC in plain language and the intentions were passed clearly and in time.",
+        "4": "SP assigned roles in the first seconds after the indication, retained control explicitly and kept IP informed of the aircraft state, the procedure step in progress and the intended recovery. The emergency declaration and the request to ATC were made in plain language, complete at the first transmission and correctly timed against the workload of the procedure.",
+        "marginal": "SP assigned roles and declared the emergency within standards, but the intentions were passed only after the procedure had been completed rather than as the plan developed. The tendency is toward working the problem in isolation and briefing the other cockpit afterwards. SP is expected to keep a running plain-language exchange on aircraft state and intentions during the procedure, not after it."
+      }
+    },
+    {
+      "id": "contact-39-em07",
+      "label": "RECOGNITION AND CORRECT SELECTION OF THE PROCEDURE",
+      "mif_row": null,
+      "source": "general:a,e",
+      "hf_concept": "hf-startle-effect",
+      "texts": {
+        "0": "SP, due to a startle response that displaced the memorized recovery sequence, did not identify the malfunction correctly and applied the wrong critical action procedure to the indication presented. The steps actioned did not address the failure and the correct procedure was never started, leaving the aircraft in the same condition some forty seconds after the indication appeared. IP had to identify the malfunction, stop the incorrect actions and direct the applicable procedure.",
+        "1": "SP, due to surprise at the unannounced malfunction, did not diagnose the indication within the time the procedure requires. SP announced the wrong system first and reached the correct procedure about twenty seconds after the indication appeared, and only after IP directed attention to the actual annunciation. The correct steps were then executed, but the delay placed the response at the limit of the acceptable standard.",
+        "2": "SP, due to a brief startle response at the onset of the abnormal indication, hesitated for about five seconds before naming the malfunction. SP then confirmed the indication against the relevant instruments, identified the correct procedure without prompting and began the memory items with no further delay. Diagnosis and selection of the procedure were correct at the first statement.",
+        "3": "SP recognized the abnormal indication immediately, identified the malfunction correctly and selected the applicable procedure without hesitation. Confirmation against the associated instruments was made before the first memory item was actioned, and the response was both accurate and timely.",
+        "4": "SP identified every malfunction presented within a second of the indication appearing, confirmed it against the associated instruments and named the applicable procedure before beginning the memory items. SP remained composed on the unannounced failures and distinguished correctly between two similar indications that call for different procedures.",
+        "marginal": "SP identified the malfunctions correctly and inside the required time, but the response to the first unannounced indication began with a visible pause before the diagnosis was stated. The tendency is toward a startle reaction that consumes the first seconds of a procedure in which those seconds matter. SP is expected to practise the recognition and confirmation sequence so the response becomes immediate regardless of when the malfunction is introduced."
+      }
+    }
+  ]
+}

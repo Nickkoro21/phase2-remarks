@@ -1,0 +1,117 @@
+{
+  "item_id": "instrument-10",
+  "item_name": "UNUSUAL ATTITUDES RECOVERY",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [10],
+  "mif_rows": [
+    { "sn": 10, "row_name": "Unusual Attitudes Recovery" }
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-10-em01",
+      "label": "ALTITUDE control during and after recovery",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a delayed pitch input after the nose-low entry followed by an abrupt over-rotation, failed to arrest the descent near the entry altitude and then ballooned while chasing it back. Level flight was established more than 300 ft from the target altitude, outside the maximum tolerance. The IP intervened on the controls to stop the excursion. The requirement to recover with the minimum loss of altitude was not met.",
+        "1": "SP, due to a shallow initial recovery pitch attitude that was held too long, allowed the altitude excursion to build to about 300 ft, at the limit of the tolerance. SP started the correction only after verbal prompting from the IP and returned to the target altitude late. No control intervention was required, but the recovery did not meet the minimum-loss-of-altitude requirement.",
+        "2": "SP, due to an initially insufficient pull during the nose-low recovery, let the altitude excursion reach roughly 200 ft, between the desired and the maximum tolerance. SP recognized the trend on the altimeter and the VVI and corrected it without prompting, establishing level flight promptly. The excursion stayed inside the 300 ft limit throughout.",
+        "3": "SP arrested the excursion early and established level flight within 150 ft of the target altitude on every recovery. The pitch correction was smooth and applied as soon as the attitude was identified, so the altitude stayed inside the desired band.",
+        "4": "SP recovered with almost no measurable altitude excursion, holding level flight within a few tens of feet of the target altitude. The initial pitch input was sized correctly on the first attempt, so no secondary correction was needed on any repetition.",
+        "marginal": "SP kept the altitude excursion inside standards on each recovery, but the values clustered near the outer part of the desired band and were consistently in the same direction, undershooting the level-off. The trend comes from recognizing the level-off point slightly late rather than from control technique. SP is expected to anticipate the level-off earlier so that the excursions settle nearer the target altitude."
+      }
+    },
+    {
+      "id": "instrument-10-em02",
+      "label": "AIRSPEED control during recovery",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (KIAS)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to inadequate monitoring of airspeed while attention stayed on the attitude indicator, left the power lever untouched during the nose-low recovery. Airspeed diverged more than 20 KIAS from the target, outside the maximum tolerance and toward the aircraft limitation, and the IP retarded the power to contain it. The control and performance technique required for the recovery was not applied.",
+        "1": "SP, due to an interrupted cross-check that omitted the airspeed indicator once the attitude was corrected, delayed the power adjustment until the IP called the trend. The excursion reached about 20 KIAS, at the tolerance limit, before it was contained. The recovery was completed without control intervention, but only after verbal prompting.",
+        "2": "SP, due to a power adjustment made after the pitch input rather than together with it, allowed airspeed to diverge about 15 KIAS from the target, between the desired and the maximum tolerance. SP picked the trend up in the cross-check and corrected it without prompting. Airspeed was back inside the desired band before level flight was stabilized.",
+        "3": "SP set power together with the pitch and bank correction, so airspeed stayed within 10 KIAS of the target on both nose-high and nose-low recoveries. The airspeed indicator was part of the cross-check from the first moment of the recovery.",
+        "4": "SP anticipated the airspeed change from the entry attitude and positioned power accordingly, keeping the excursion to a few knots. Airspeed was stable at the target value as level flight was established, with no secondary power correction.",
+        "marginal": "SP held airspeed inside standards, but the excursions repeatedly reached the outer part of the desired band on the nose-low entries, where the trend builds fastest. The power input is being made just after the pitch input instead of with it. SP is expected to make the power change part of the initial recovery action so that airspeed stays closer to the target."
+      }
+    },
+    {
+      "id": "instrument-10-em03",
+      "label": "HEADING on completion of the recovery",
+      "mif_row": null,
+      "source": "specific:HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to taking the roll-out reference from the turn needle instead of the attitude indicator and the HSI, stopped the recovery on a heading more than 10 deg from the target. SP then hunted the heading with alternating bank inputs and the IP took the controls to stabilize the aircraft. The requirement to recover to level flight on the intended heading was not met.",
+        "1": "SP, due to rolling the wings level without checking the HSI, finished the recovery about 10 deg off the target heading, at the tolerance limit. The error was corrected only after the IP pointed it out, and the correction itself was flown with excess bank. No control intervention was required.",
+        "2": "SP, due to a slightly late roll-out from the recovery bank, ended up about 8 deg from the target heading, between the desired and the maximum tolerance. SP identified the error on the HSI without prompting and closed it with a coordinated turn at a suitable bank angle. Heading was inside the desired band before the maneuver was terminated.",
+        "3": "SP rolled out within 5 deg of the target heading on each recovery, using the attitude indicator for the roll-out and the HSI to confirm it. No heading hunting followed the recovery.",
+        "4": "SP completed each recovery essentially on heading, with deviations of a degree or two. The roll-out was anticipated so that the wings came level exactly as the target heading arrived, on entries with small and large bank angles alike.",
+        "marginal": "SP kept heading inside standards, but the roll-outs finished consistently near the edge of the desired band and always in the direction of the recovery turn. The roll-out is being started at the target heading rather than before it. SP is expected to lead the roll-out so that the aircraft settles closer to the intended heading."
+      }
+    },
+    {
+      "id": "instrument-10-em04",
+      "label": "Recognition and identification of the unusual attitude",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-startle-effect",
+      "texts": {
+        "0": "SP, due to a startle response at the entry that displaced the memorized recovery sequence, did not identify whether the attitude was nose-high or nose-low before moving the controls. SP applied a nose-low recovery input to a nose-high attitude, aggravating the situation, and the IP took the controls. The requirement to recognize the type of unusual attitude timely and correctly was not met.",
+        "1": "SP, due to surprise at the entry, hesitated on the attitude indicator and identified the attitude only after the IP prompted a call. The recovery that followed was correct in type but started several seconds late, so the resulting excursions reached the outer tolerances. No control intervention was needed.",
+        "2": "SP, due to a short startle-related pause before transitioning to the attitude indicator, identified the attitude marginally late but correctly and without prompting. The recovery inputs were then applied in the right order. The delay produced excursions between the desired and the maximum tolerances and nothing beyond that.",
+        "3": "SP recognized the type of unusual attitude immediately at the entry and called it correctly, then applied the matching recovery sequence. The identification was based on the attitude indicator cross-checked with the airspeed and altimeter trends.",
+        "4": "SP identified nose-high and nose-low entries instantly and correctly on every repetition, including entries with large bank angles. The identification and the first recovery input were effectively simultaneous, with no hesitation between them.",
+        "marginal": "SP identified every entry correctly and within standards, but the identification took noticeably longer on the entries with high bank angle than on the near wings-level ones. The pause suggests the attitude is still being reasoned out rather than recognized at once. SP is expected to bring the recognition time down so that it is uniform regardless of the entry attitude."
+      }
+    },
+    {
+      "id": "instrument-10-em05",
+      "label": "Recovery technique and sequence (nose-high / nose-low)",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to applying the recovery actions out of sequence, pulled toward the horizon on the nose-high entry before unloading and rolling, and let the airspeed decay to the onset of buffet. The aircraft was flown to the edge of a stall and the IP took the controls to recover it. The requirement to recover without flying the aircraft into a stall was not met.",
+        "1": "SP, due to an incomplete recovery sequence on the nose-low entry, rolled and pulled without first reducing power, so the pull had to be prolonged and the excursions reached the outer tolerances. SP completed the missing action only after the IP called it. The aircraft stayed within its limitations and no control intervention was required.",
+        "2": "SP, due to performing the roll and the pitch input in partial overlap instead of in the correct order, made the recovery less efficient and needed a second correction to settle the aircraft. SP recognized the error and completed the sequence correctly without prompting. All resulting excursions stayed between the desired and the maximum tolerances.",
+        "3": "SP applied the correct recovery sequence for each entry type, setting power and unloading or rolling as required, and returned the aircraft to level flight in a continuous, controlled action. No step was omitted or reordered.",
+        "4": "SP flew each recovery as a single smooth sequence with correctly sized inputs and needed no secondary correction on any repetition. The technique was identical for nose-high and nose-low entries and unaffected by the bank angle at the entry.",
+        "marginal": "SP used the correct sequence throughout, but the individual actions were made one at a time with a visible gap between them, which lengthened the recovery. The technique is sound and the standards were met on every repetition. SP is expected to blend the actions into one continuous recovery so that the aircraft returns to level flight faster."
+      }
+    },
+    {
+      "id": "instrument-10-em06",
+      "label": "Aircraft limitations and promptness without IP intervention",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an over-aggressive pull during the nose-low recovery, exceeded the load limitation for the configuration while the airspeed was still increasing. The IP took the controls to unload the aircraft and complete the recovery. The requirement to recover without exceeding the aircraft limitations was not met.",
+        "1": "SP, due to a pull applied at a rate that brought the aircraft to the onset of buffet, left almost no margin to the limitation, and the IP had to call for the pull to be eased. SP responded to the verbal correction and the recovery was completed without control intervention. The recovery was neither prompt nor flown with an adequate margin.",
+        "2": "SP, due to a slightly excessive initial pull, produced a load and an airspeed trend that had to be adjusted during the recovery. SP eased the input without prompting after seeing the trend and completed the recovery with an adequate margin to the limits. No intervention was required and the excursions stayed inside the maximum tolerances.",
+        "3": "SP recovered promptly on every entry with the pull kept inside the load and airspeed limits, so the aircraft was never taken near a stall or an overspeed. The recoveries were completed without any prompting or intervention from the IP.",
+        "4": "SP recovered each entry at the fastest rate the limitations allow, using the available margin fully but never approaching it. The aircraft was returned to level flight quickly with the load and the airspeed under continuous control.",
+        "marginal": "SP stayed inside the aircraft limits on every recovery, but the nose-low pulls were consistently flown with a load close to the upper part of the usable range. The result met the standards, yet the margin left for an entry with a steeper attitude is small. SP is expected to size the pull with more margin while keeping the recovery prompt."
+      }
+    },
+    {
+      "id": "instrument-10-em07",
+      "label": "Instrument cross-check and control/performance references",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-spatial-disorientation",
+      "texts": {
+        "0": "SP, due to a false attitude perception that was not resolved against the instruments, flew the recovery on physical sensation instead of the attitude indicator and rolled in the wrong direction. The aircraft was taken further into the unusual attitude and the IP took the controls. The requirement to use the correct instrument flight references was not met.",
+        "1": "SP, due to conflicting attitude sensations that were left unresolved, fixated on the attitude indicator and did not bring the performance instruments into the cross-check. The resulting altitude and airspeed excursions reached the tolerance limits and were corrected only after the IP prompted them. No control intervention was required.",
+        "2": "SP, due to a short period of false attitude perception at the entry, delayed the transition to a full cross-check and initially referred only to the control instruments. SP resolved the sensation against the instruments without prompting and reintegrated the performance instruments, keeping the excursions between the desired and the maximum tolerances.",
+        "3": "SP used the control instruments to establish the recovery attitude and power and the performance instruments to confirm the result, in accordance with the applicable instrument flight procedures. The cross-check remained continuous through the recovery and no attitude sensation was acted on without instrument confirmation.",
+        "4": "SP maintained a complete and evenly distributed cross-check throughout every recovery, with no fixation on any single instrument. Control and performance instruments were used exactly as intended and the recoveries were flown entirely on instrument reference regardless of the entry attitude.",
+        "marginal": "SP used the correct instrument references and met the standards, but the cross-check narrowed to the attitude indicator for the first seconds of each recovery before widening again. Nothing was missed, although the performance instruments were brought back in later than ideal. SP is expected to keep the full cross-check running from the moment the entry is recognized."
+      }
+    }
+  ]
+}

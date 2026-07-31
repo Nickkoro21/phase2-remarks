@@ -1,0 +1,100 @@
+{
+  "item_id": "contact-35",
+  "item_name": "CLOSED PATTERN",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [35],
+  "mif_rows": [{"sn": 35, "row_name": "Closed Pattern"}],
+  "error_modes": [
+    {
+      "id": "contact-35-em01",
+      "label": "LEVEL OFF ALTITUDE AT PATTERN ALTITUDE",
+      "mif_row": null,
+      "source": "specific:LEVEL OFF ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the absence of a lead point for the level off in the climbing turn, did not arrest the climb at pattern altitude as required by the specific criteria. The aircraft passed more than 300 feet above the assigned pattern altitude and was still climbing when the IP took the controls to stop the overshoot. The return to pattern altitude was flown by the IP and not by SP.",
+        "1": "SP, due to a late power reduction after the roll out on downwind, did not complete the level off at pattern altitude within tolerance. Altitude reached the 300 feet limit above the assigned value and stayed there until the IP prompted verbally. SP corrected only after that call, so the level off was finished late and the downwind was flown high for several seconds.",
+        "2": "SP, due to slow relaxation of back pressure during the roll out, did not stop the climb at the assigned pattern altitude on the first attempt. Altitude deviated about 200 feet high, between the 150 and the 300 feet band. SP identified the trend without any prompting and re-established pattern altitude within a few seconds with no IP input.",
+        "3": "SP set the lead point in good time, reduced power and relaxed back pressure so that the level off was completed within 150 feet of the assigned pattern altitude. Altitude was then held steady while SP re-established downwind spacing. Pitch and power were adjusted in one continuous sequence rather than by successive corrections.",
+        "4": "SP anticipated the level off and stopped the climb within about 50 feet of pattern altitude, with no overshoot and no secondary correction. Altitude then remained essentially constant for the whole downwind leg. The transition from climb to level flight was made with a single smooth control and power input.",
+        "marginal": "SP levelled off inside the required tolerance, but each pattern finished about 130 feet above the assigned altitude and needed a small secondary correction to settle. The deviation was in the same direction every time, which shows the lead point is being set late rather than misjudged at random. SP is expected to anticipate the level off earlier so that pattern altitude is captured on the first input."
+      }
+    },
+    {
+      "id": "contact-35-em02",
+      "label": "BANK AND AIRSPEED CONTROL DURING THE MANEUVER",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to uncoordinated application of bank and back pressure at the initiation of the closed pattern, did not maintain the bank and the airspeeds prescribed by the Flight Manual and the Techniques and Procedures Manual. Bank increased about 25 deg past the briefed value while airspeed decayed well below the value for the turn, and the aircraft arrived on downwind low on energy and displaced from the intended track. The IP reduced bank and reset the flight path before the pattern could be continued.",
+        "1": "SP, due to chasing the flight path with bank instead of stabilizing pitch first, did not hold the bank and airspeeds of the Techniques and Procedures Manual. Bank varied about 15 deg either side of the briefed value and airspeed sat at the low limit for the turn until the IP called for a correction. SP recovered the parameters only after that verbal input, so the pattern was flown at the edge of the standard throughout.",
+        "2": "SP, due to a lagging cross-check between attitude and airspeed in the turn, did not hold the briefed bank and airspeed continuously. Bank wandered about 10 deg around the briefed value with a corresponding airspeed excursion, which left the aircraft between the 150 and 300 feet band on the subsequent level off. SP detected both deviations early and re-established the parameters without prompting and without IP action.",
+        "3": "SP established the briefed bank at the initiation and held it accurately, with airspeed maintained within the values of the Flight Manual and the Techniques and Procedures Manual throughout the turn. The cross-check between attitude, bank and airspeed remained continuous, so corrections were small and made early. The aircraft arrived on downwind on the intended track and on speed.",
+        "4": "SP flew the closed pattern with the bank set precisely at the briefed value and held it essentially constant, with airspeed steady inside the prescribed range from initiation to roll out. No corrective input beyond trim adjustment was needed at any point of the turn. The aircraft arrived on downwind on speed, on altitude and on the intended track.",
+        "marginal": "SP kept bank and airspeed inside the standards, but the bank was consistently a few degrees shallow and airspeed drifted toward the low end of the range in the second half of the turn. The pattern remained acceptable only because SP added power late each time. SP is expected to set the briefed bank at the initiation and protect the airspeed with the power setting rather than by unloading the turn."
+      }
+    },
+    {
+      "id": "contact-35-em03",
+      "label": "DOWNWIND ENTRY, TRAFFIC SEQUENCING AND MINIMUM ENTRY AIRSPEED",
+      "mif_row": null,
+      "source": "general:b|conditions:1,2,4",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to loss of situational awareness of the aircraft position in the pattern, did not enter downwind according to the existing traffic and did not respect the 140 KIAS minimum entry airspeed. The aircraft rolled out on downwind at 126 KIAS and inside the preceding aircraft, with no usable spacing for the following approach. The IP took control to restore separation and to re-establish the aircraft on the correct downwind position.",
+        "1": "SP, due to degraded situational awareness of the traffic already established in the pattern, did not adjust the closed pattern to the existing traffic and entered downwind at 140 KIAS with no margin. Spacing on the preceding aircraft was reduced to the point where the IP had to call for an extension of the downwind. SP acted only after that call, so the sequence was preserved by verbal direction rather than by SP planning.",
+        "2": "SP, due to a scan that stayed inside the cockpit during the turn, did not confirm the position of the preceding traffic before initiating the closed pattern. Airspeed on entering downwind was 145 KIAS, above the minimum but with the spacing tighter than briefed. SP identified the closure on the preceding aircraft in good time and adjusted the downwind track and power without prompting and without IP input.",
+        "3": "SP checked the pattern traffic before initiating and entered downwind clear of the preceding aircraft with an airspeed comfortably above the 140 KIAS minimum. Spacing supported a normal continuation to the following approach with no adjustment required. The lookout was maintained throughout the turn as well as on the downwind.",
+        "4": "SP built the closed pattern around the traffic already established, timing the initiation so that the downwind entry produced correct spacing with no later adjustment. Airspeed on entering downwind was well above the 140 KIAS minimum and stable. SP kept an accurate picture of every aircraft in the pattern and reported it correctly when asked.",
+        "marginal": "SP entered downwind above the 140 KIAS minimum and clear of traffic, but the decision to initiate was taken late each time and the spacing came out tighter than briefed. The picture of the preceding aircraft was rebuilt during the turn rather than established before it. SP is expected to confirm the traffic sequence before initiating the closed pattern so that the downwind entry needs no further adjustment."
+      }
+    },
+    {
+      "id": "contact-35-em04",
+      "label": "POWER MANAGEMENT AND ENERGY THROUGH THE PATTERN",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incomplete power lever movement at the initiation, did not set MAX power as required and did not adjust power afterwards as the pattern demanded. The aircraft entered the turn with a partial power setting and lost the energy required for the climbing turn, arriving below pattern altitude and slow. The IP advanced the power lever and reset the profile before the pattern could be completed.",
+        "1": "SP, due to setting power by feel instead of confirming the indication, did not set MAX power at the initiation of the closed pattern. Torque remained short of the required value for most of the climbing turn and airspeed decayed to the lower limit until the IP called for power. SP made the correction only after that call, and the level off was consequently reached at the 300 feet tolerance.",
+        "2": "SP, due to a delayed power reduction after the level off, did not adjust power as required once pattern altitude was reached. The aircraft accelerated through the briefed downwind speed and finished about 200 feet high before the correction took effect. SP recognized the excess energy without prompting and set the correct power to restore both altitude and speed with no IP input.",
+        "3": "SP set MAX power at the initiation, confirmed the indication and then adjusted power as required at the level off so that the downwind was flown at the briefed setting. Energy through the pattern was managed with anticipation rather than with reactive corrections. Altitude and airspeed were both re-established within tolerance at the same time.",
+        "4": "SP applied MAX power smoothly and precisely at the initiation and reduced it at exactly the point required for the level off, so that pattern altitude and downwind airspeed were captured together with no overshoot. Power changes were small, timely and matched to the flight path throughout the pattern. No further adjustment was needed during the downwind.",
+        "marginal": "SP set MAX power at the initiation and adjusted afterwards inside the standards, but the reduction at the level off was made in two steps and slightly late on each pattern. This left a small altitude and speed excursion that had to be corrected on the downwind. SP is expected to plan the power reduction with the level off so that both parameters are captured with a single adjustment."
+      }
+    },
+    {
+      "id": "contact-35-em05",
+      "label": "STALL MARGIN AND AVOIDANCE OF STALL CHARACTERISTICS",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to task sequencing that concentrated all cockpit workload inside the turn, increased back pressure to hold the flight path and allowed the onset of stall characteristics. Airframe buffet developed with the stall warning active while the aircraft was banked and climbing, and the margin above the stall was lost rather than protected. The IP took control, unloaded the aircraft and recovered the energy state.",
+        "1": "SP, due to workload management that left the radio call and the power setting to be completed inside the turn, allowed airspeed to decay to the point where the initial stall warning was heard. SP did not unload the aircraft until the IP called for it, so the margin was restored by direction and not by SP recognition. The pattern was continued only after the energy state had been re-established.",
+        "2": "SP, due to attention held on the traffic during the turn, allowed airspeed to fall toward the low end of the range for the bank being flown. The margin above the stall was reduced although no stall warning or buffet occurred. SP recognized the decay early, reduced bank and added power without prompting, and the aircraft was returned to the briefed airspeed with no IP input.",
+        "3": "SP protected the stall margin throughout the closed pattern by matching bank and back pressure to the available power, and no stall characteristics of any kind appeared. Airspeed stayed inside the prescribed range for the bank being flown at every stage of the turn. Secondary tasks were kept out of the highest workload part of the maneuver.",
+        "4": "SP flew the closed pattern with an ample and constant margin above the stall, with airspeed stable in the upper part of the prescribed range and no buffet or warning indication at any point. Workload was sequenced so that the turn required only flying, with radio and cockpit tasks completed before and after it. The energy state was managed with clear anticipation throughout.",
+        "marginal": "SP kept the aircraft clear of stall characteristics, but the airspeed reached the lower end of the acceptable range in the second half of each turn before power was added. The margin remained legal while depending on a late correction rather than on planning. SP is expected to sequence the cockpit tasks outside the turn and to protect the airspeed with power from the initiation."
+      }
+    },
+    {
+      "id": "contact-35-em06",
+      "label": "STANDARD PROCEDURE AND LAP COMPLIANCE",
+      "mif_row": null,
+      "source": "general:e|execution|conditions:2,3",
+      "hf_concept": "hf-norms",
+      "texts": {
+        "0": "SP, due to reliance on how the maneuver is habitually flown rather than on the published criteria, did not follow the standard procedure of the Techniques and Procedures Manual and the LAP. The closed pattern was initiated without the required clearance and the ground track was flown outside the published pattern limits, with the checks and calls of the procedure omitted. The IP intervened, took control and returned the aircraft to the published pattern.",
+        "1": "SP, due to an unwritten local practice followed in place of the published procedure, did not execute the closed pattern in the sequence prescribed by the Techniques and Procedures Manual and the LAP. Two required actions were taken out of order and the associated call was made late, which left the pattern at the limit of the published profile until the IP directed the correct sequence. SP complied only after that verbal direction.",
+        "2": "SP, due to reverting to the habitual sequence rather than the one published for the pattern in use, did not perform the required actions in the correct order at the initiation of the closed pattern. One item of the sequence was completed late in relation to the published procedure, with the resulting altitude deviation inside the 150 to 300 feet band. SP identified the omission on its own and completed the sequence correctly with no IP intervention.",
+        "3": "SP executed the closed pattern in accordance with the Techniques and Procedures Manual and the applicable LAP, initiating only under the specified conditions and with the required clearance. The sequence of checks, configuration and calls was completed in the correct order and at the correct points. The published ground track was respected throughout.",
+        "4": "SP executed the closed pattern exactly to the published procedure, with every check, configuration change and call made at the correct point without hesitation and without any reminder. The pattern was flown precisely on the LAP ground track under the specified conditions. SP also stated the applicable procedure correctly when questioned in the debrief.",
+        "marginal": "SP followed the published procedure and the LAP, but the calls and the required actions were made at the very end of their correct window on each pattern. The sequence was correct in content and consistently late in timing, which compressed the remaining part of the maneuver. SP is expected to complete each item at its published point so that the pattern is not flown under self-imposed time pressure."
+      }
+    }
+  ]
+}

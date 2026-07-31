@@ -1,0 +1,132 @@
+{
+  "item_id": "instrument-01",
+  "item_name": "GROUND PROCEDURES",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [1],
+  "mif_rows": [
+    {"sn": 1, "row_name": "Ground Procedures"}
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-01-em01",
+      "label": "CHECKLIST EXECUTION AND STANDARDIZATION",
+      "mif_row": null,
+      "source": "general:a,b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to reliance on memory instead of the printed check list, did not execute all checks according to check list in a standardized manner. SP omitted four items across the Before Start and Before Taxi checks, including one that affected the avionics configuration for the instrument sortie. The IP intervened, stopped the flow and re-ran both checks from the top before taxi was authorized.",
+        "1": "SP, due to reliance on memory instead of the printed check list, did not execute the checks in the sequence and wording required by the check list. SP omitted two items and had to be told item by item what remained outstanding, with the flow restarted only after three verbal prompts from the IP. The checks were finally completed correctly, but only through IP direction and with a delay of about two minutes on the planned start time.",
+        "2": "SP, due to a rushed challenge-and-response rhythm on the ground checks, did not read and confirm every line of the check list before moving on. SP skipped one item in the Before Taxi flow, recognized the gap while still stationary and re-ran the affected section on his/her own initiative. No IP intervention or prompting was required and the departure time was unaffected.",
+        "3": "SP executed all checks according to check list, in sequence and without omissions, and did not skip any procedure of LAP or SOPs. Each item was challenged and confirmed against the actual switch or indication before SP moved to the next line. The full ground flow was completed without any IP intervention and within the planned timeline.",
+        "4": "SP executed the complete ground check list flow in an impeccable and standardized manner, with every item verified against the corresponding indication. SP kept the challenge-and-response discipline unchanged under the added workload of the instrument avionics setup. No omission, no repetition and no IP input of any kind were required at any point.",
+        "marginal": "SP executed all checks according to check list and skipped no procedure, so the ground flow met the standard. However, SP's pace was uneven, with two items read back only after a visible pause to locate the corresponding switch, which leaves little margin on a compressed turnaround. SP is expected to consolidate the switch positions by memory location so that the check list is used for confirmation rather than for search."
+      }
+    },
+    {
+      "id": "instrument-01-em02",
+      "label": "AIRCRAFT CONDITION ASSESSMENT AND FLIGHT PERMISSIBILITY DECISION",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": "hf-mission-completion-bias",
+      "texts": {
+        "0": "SP, due to mission-completion bias in pressing on past the briefed decision point, did not specify the A/C condition correctly and did not decide its flight permissibility on the basis of the aircraft forms. SP accepted an open write-up affecting a navigation aid required for the planned instrument profile and declared the aircraft serviceable. The IP intervened, stopped the acceptance and directed a return to maintenance before start.",
+        "1": "SP, due to mission-completion bias in pressing on past the briefed decision point, did not review the aircraft forms fully before deciding on flight permissibility. SP declared the aircraft acceptable and revised that decision only after two direct questions from the IP about the open write-up and its effect on the instrument sortie. The final decision was correct but reached through IP prompting rather than through SP's own assessment.",
+        "2": "SP, due to a partial first pass through the aircraft forms, did not immediately relate an open write-up to the requirements of the planned instrument profile. SP re-opened the forms before walk-around, identified the entry and confirmed with maintenance that the affected system was serviceable for the sortie. The decision on flight permissibility was reached without IP intervention and without delay to the start.",
+        "3": "SP specified the A/C condition correctly and decided its flight permissibility confidently, on the basis of a complete review of the aircraft forms and the walk-around findings. SP related each open entry to the navigation equipment required for the instrument profile and stated the conclusion without hesitation. No IP input was needed at any stage of the assessment.",
+        "4": "SP specified the A/C condition and decided its flight permissibility correctly, confidently and without a single re-check being required. SP identified the one open write-up in the forms, stated precisely which system it affected and confirmed that the instrument profile as briefed remained flyable. The assessment was complete, accurate and delivered before the IP had asked for it.",
+        "marginal": "SP specified the A/C condition correctly and the decision on flight permissibility was sound, so the standard was met. However, SP stated the conclusion only after a second pass through the forms and phrased it tentatively, which indicates the assessment is not yet confident. SP is expected to consolidate the forms review into one deliberate pass and to state the flight permissibility decision without qualification."
+      }
+    },
+    {
+      "id": "instrument-01-em03",
+      "label": "GROUND CREW COORDINATION AND CLEARANCE BEFORE SWITCH OR CONTROL MOVEMENT",
+      "mif_row": null,
+      "source": "general:c,e",
+      "hf_concept": "hf-crew-resource-management",
+      "texts": {
+        "0": "SP, due to inadequate crew coordination between front and rear cockpit, did not confirm the ground crew's position before activating switches and moving the A/C controls. SP ran the flight control check with a marshaller still inside the wing arc and gave no hand signal in either direction. The IP intervened, halted the check and had the area cleared before the flow was resumed.",
+        "1": "SP, due to inadequate crew coordination between front and rear cockpit, did not establish a clear exchange with the ground crew before activating the electrical switches. SP began the sequence without a signal, and it was stopped and re-sequenced only after two verbal prompts from the IP to confirm that the crew was clear. Coordination was eventually correct but was driven entirely by IP direction.",
+        "2": "SP, due to a hand signal given before eye contact with the marshaller was established, did not ensure that the ground crew had acknowledged the intended action. SP recognized the missing acknowledgement, held the switch action, repeated the signal and proceeded only after a clear response. Cooperation with ground crew continued without mis-apprehensions and without IP intervention.",
+        "3": "SP cooperated with the ground crew without allowing mis-apprehensions and confirmed their position before activating any switch or moving any A/C controls. Each signal was given, acknowledged and answered before the corresponding action was taken. The whole start and pre-taxi sequence was completed without IP intervention.",
+        "4": "SP cooperated with the ground crew throughout with unambiguous, correctly timed signals, and verified their position visually before every switch activation and control movement. SP anticipated the marshaller's requirements at each step, so no signal had to be repeated or clarified. The exchange was complete, standard and free of any mis-apprehension.",
+        "marginal": "SP cooperated with the ground crew without mis-apprehensions and confirmed their position before acting, so the standard was met. However, two signals were given while SP's attention was still inside the cockpit, and the acknowledgement was obtained only on the second look outside. SP is expected to complete the visual clearance check before initiating the signal, so that the confirmation precedes rather than follows the action."
+      }
+    },
+    {
+      "id": "instrument-01-em04",
+      "label": "TAXI ROUTE ADHERENCE AND OBSTACLE CLEARANCE",
+      "mif_row": null,
+      "source": "general:f",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incomplete read of the taxi clearance before releasing the brakes, did not follow the specified taxi route and did not ensure that the ground path of the A/C was clear of obstacles. SP turned onto the wrong taxiway and continued toward a parked aircraft whose wingtip clearance was not assessed. The IP intervened, took control and stopped the aircraft before the turn was completed.",
+        "1": "SP, due to an incomplete read of the taxi clearance before releasing the brakes, did not follow the specified taxi route with certainty. SP started the wrong turn and corrected it only after two verbal indications from the IP that the cleared route was the parallel taxiway. The aircraft rejoined the correct route, but the correction was late and depended entirely on IP prompting.",
+        "2": "SP, due to a delayed identification of the taxiway markings under low light, did not track the specified taxi route on the first turn. SP recognized the discrepancy against the airfield chart within one aircraft length, stopped, and rejoined the cleared route on his/her own initiative. The ground path stayed clear of obstacles and no IP intervention was needed.",
+        "3": "SP followed the specified taxi route throughout and ensured that the ground path of the A/C remained clear of obstacles. SP identified each taxiway and hold point against the airfield chart in advance and kept the aircraft on the marked centerline. The whole taxi was completed without IP intervention or clarification.",
+        "4": "SP followed the specified taxi route precisely from chocks to the hold point, with the aircraft tracking the taxiway centerline throughout. SP scanned continuously outside for obstacles and wingtip clearance, and identified every turn before reaching it. No correction, prompt or IP input was required at any stage of the taxi.",
+        "marginal": "SP followed the specified taxi route and kept the ground path clear of obstacles, so the standard was met. However, SP identified the second turn only on reaching it and allowed the aircraft to track slightly off the centerline through that turn, which reduces the margin available on a congested ramp. SP is expected to identify each turn one segment in advance and to keep the nosewheel on the centerline through the turn."
+      }
+    },
+    {
+      "id": "instrument-01-em05",
+      "label": "TAXI SPEED CONTROL, STOPPING AND HOLDING THE AIRCRAFT STATIONARY",
+      "mif_row": null,
+      "source": "general:g,h",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to late and abrupt brake application from an excessive taxi speed, did not stop the A/C as required and allowed longitudinal oscillations on each stop. SP overran the hold-short line and, during the leak check, allowed the aircraft to creep forward while the check was still in progress. The IP intervened on the brakes and repositioned the aircraft before the check could be completed.",
+        "1": "SP, due to late and abrupt brake application from an excessive taxi speed, did not stop the A/C smoothly and stopped short of the hold line only after the IP called for brakes. SP allowed two noticeable pitch oscillations on the final stop and had to be reminded verbally to hold the aircraft stationary for the leak check. The aircraft was eventually held correctly, but only through IP prompting.",
+        "2": "SP, due to a taxi speed slightly above that required for the ramp area, did not achieve a smooth first stop and produced one perceptible pitch oscillation. SP reduced power early for the subsequent stops, and the aircraft was stopped on the line and held completely stationary through the leak check. All corrections were made by SP without any IP intervention.",
+        "3": "SP stopped the A/C as required, without oscillations and without IP's intervention, using early power reduction and progressive braking. SP held the aircraft completely stationary through the leak check and the line-up, allowing no movement at any point where the aircraft had to be halted. Taxi speed remained appropriate to the ramp and taxiway areas throughout.",
+        "4": "SP controlled taxi speed precisely and brought the A/C to a stop on the mark each time with no perceptible pitch oscillation. SP held the aircraft absolutely stationary during the leak check and the line-up, with brakes set before the check was called. No IP input, prompt or correction was required at any stage.",
+        "marginal": "SP stopped the A/C as required and allowed no movement where the aircraft had to be halted, so the standard was met. However, SP's first stop needed a firmer than necessary brake input because power was reduced late, and one slight pitch oscillation was perceptible. SP is expected to plan the deceleration earlier so that braking is progressive and the stop is achieved without any oscillation."
+      }
+    },
+    {
+      "id": "instrument-01-em06",
+      "label": "KNOWLEDGE AND CORRECT USE OF A/C LEVERS AND SWITCHES",
+      "mif_row": null,
+      "source": "general:i",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient cockpit familiarity with the switch panel layout, did not know and did not use correctly all A/C levers and switches. SP selected the adjacent switch on two occasions and left one system in the wrong configuration after the check was called complete. The IP intervened, identified the mis-selections and reconfigured the affected systems before taxi.",
+        "1": "SP, due to insufficient cockpit familiarity with the switch panel layout, did not select the correct switch on the first attempt for three items of the ground flow. SP corrected each one only after the IP pointed out the discrepancy, and required a direct indication of the switch location on two of them. The final configuration was correct, but it was achieved through IP direction rather than by SP.",
+        "2": "SP, due to hesitation in locating two less frequently used switches, did not operate them within the flow rhythm required by the check list. SP identified the correct control on the second look, selected it and verified the corresponding indication before continuing. All levers and switches ended in the correct position without any IP intervention.",
+        "3": "SP knew and used correctly all A/C levers and switches, selecting each control on the first attempt and verifying the associated indication. SP applied the correct technique on the guarded and detented controls without needing to search for them. The ground configuration was complete and correct with no IP input.",
+        "4": "SP operated every A/C lever and switch correctly, without hesitation and with the associated indication confirmed each time. SP's hand went directly to each control, including the less frequently used ones, and the flow rhythm was unbroken from Before Start through Before Taxi. No mis-selection, search or IP prompt occurred at any point.",
+        "marginal": "SP knew and used correctly all A/C levers and switches and the final configuration was accurate, so the standard was met. However, SP had to search visually for two of the less frequently used controls, which broke the flow rhythm and would cost time under a compressed sequence. SP is expected to consolidate the switch locations by touch so that selection keeps pace with the check list."
+      }
+    },
+    {
+      "id": "instrument-01-em07",
+      "label": "NAVIGATION AIDS AND GPS SETUP AND OPERATION",
+      "mif_row": null,
+      "source": "general:i,execution:navaids_gps_knowledge",
+      "hf_concept": "hf-mode-confusion",
+      "texts": {
+        "0": "SP, due to mode confusion over the selected avionics mode and what it was protecting, did not demonstrate knowledge of the use and operation of the A/C navigation aids and the GPS. SP left the navigation source on the wrong selection and loaded a flight plan that did not match the briefed instrument departure. The IP intervened, corrected the navigation source and reloaded the flight plan before taxi was authorized.",
+        "1": "SP, due to mode confusion over the selected avionics mode and what it was protecting, did not set the navigation aids and the GPS to the configuration required by the briefed instrument profile. SP identified the wrong navigation source only after three verbal indications from the IP and needed direction to sequence the GPS flight plan correctly. The setup was completed accurately but entirely under IP guidance.",
+        "2": "SP, due to an incorrect first assumption about which navigation mode was active, did not couple the display to the intended source at the first attempt. SP cross-checked the selection against the briefed departure, recognized the mismatch and reselected the correct source and GPS leg before taxi. The navigation setup was completed correctly with no IP intervention.",
+        "3": "SP demonstrated knowledge of the use and operation of the A/C navigation aids and the GPS, setting each source, frequency and course to the values required by the briefed instrument profile. SP verified the active GPS leg and the identification of each tuned aid before taxi. The complete navigation setup was accomplished without IP input.",
+        "4": "SP set and verified the A/C navigation aids and the GPS accurately and without hesitation, with every frequency, course and mode matching the briefed instrument departure. SP identified each aid, confirmed the active GPS leg and stated the expected first indications before taxi. The setup required no correction, repetition or IP involvement of any kind.",
+        "marginal": "SP set the navigation aids and the GPS correctly for the briefed profile and knew their operation, so the standard was met. However, SP reached the correct GPS page through two intermediate selections and confirmed the active mode only when asked to state it, which shows the mode logic is not yet fully consolidated. SP is expected to reach the required page directly and to state the active navigation source without being prompted."
+      }
+    },
+    {
+      "id": "instrument-01-em08",
+      "label": "INTERROGATION AND COORDINATION WITH THE IP ON PROCEDURES",
+      "mif_row": null,
+      "source": "general:j,c",
+      "hf_concept": "hf-lack-of-assertiveness",
+      "texts": {
+        "0": "SP, due to an unstated request for a repeat of the instruction that was not understood, did not ask and did not wait for the IP's answer about the (BOTH) procedures. SP proceeded on an assumption that contradicted the briefed sequence and configured the aircraft accordingly. The IP intervened, stopped the action and re-briefed the procedure on the ground before the flow could continue.",
+        "1": "SP, due to an unstated request for a repeat of the instruction that was not understood, did not raise the ambiguity in the (BOTH) procedures at the point where it arose. SP acted on the assumption and clarified it only after two direct questions from the IP about what had been understood. The procedure was completed correctly, but the coordination was initiated by the IP rather than by SP.",
+        "2": "SP, due to a delayed decision to voice a point that was not fully clear, did not ask about the (BOTH) procedures at the moment the doubt appeared. SP held the action, asked the question before any switch was moved and waited for the IP's answer before proceeding. The sequence continued correctly and no IP intervention was required.",
+        "3": "SP asked about the (BOTH) procedures and waited for the IP's answer before acting, keeping the exchange short and specific. SP stated clearly what was understood and confirmed the agreed sequence before continuing the ground flow. The coordination was complete and left no mis-apprehension between the cockpits.",
+        "4": "SP raised every point of the (BOTH) procedures that required confirmation, asked precisely and waited for the IP's answer each time before acting. SP's questions anticipated the ambiguity rather than following it, so the sequence was agreed in advance and never had to be interrupted. Coordination between the cockpits remained complete throughout the ground phase.",
+        "marginal": "SP asked about the (BOTH) procedures and waited for the IP's answer, so the standard was met. However, the question was raised late in the sequence and phrased tentatively, and SP had already begun reaching for the control before the answer was given. SP is expected to state the doubt as soon as it arises and to keep hands clear until the IP's answer has been received."
+      }
+    }
+  ]
+}

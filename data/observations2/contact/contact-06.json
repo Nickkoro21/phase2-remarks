@@ -1,0 +1,132 @@
+{
+  "item_id": "contact-06",
+  "item_name": "G –AWARENESS",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [6],
+  "mif_rows": [
+    { "sn": 6, "row_name": "G-X Awareness" }
+  ],
+  "error_modes": [
+    {
+      "id": "contact-06-em01",
+      "label": "ANTI-G SUIT SERVICEABILITY AND OPERATION CHECK",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incomplete anti-G suit check during the pre-flight and the pre-maneuver flow, did not verify hose connection, valve function and suit fit before entering the portion of the profile requiring more than 3Gs. SP did not detect that the suit failed to inflate on the first application above 3G and continued the maneuver sequence with no serviceability call. The IP had to direct a knock-it-off and assume control to unload the aircraft, and the resulting excursion exceeded 300 feet from the assigned altitude and 20 knots from the target airspeed.",
+        "1": "SP, due to a hurried anti-G suit check that stopped at the visual connection and omitted the inflation verification, entered the high-G portion of the profile without confirming proper suit operation. SP recognized the absence of suit inflation only after the IP prompted verbally and delayed the decision to unload, so the deviation reached 300 feet in altitude and 20 knots in airspeed before the aircraft was recovered to the assigned parameters. No physical intervention on the controls was required.",
+        "2": "SP, due to an anti-G suit check performed out of the normal sequence, entered the first maneuver above 3G before completing the inflation verification. SP recognized the omission on the initial G application, unloaded promptly, completed the check and re-entered the maneuver without any prompting or intervention from the IP. The excursion during the correction stayed between 150 and 300 feet in altitude and between 10 and 20 knots in airspeed.",
+        "3": "SP checked the anti-G suit connection, valve operation and fit before flight and verified proper inflation on the first application above 3G. SP called the suit serviceable, adjusted the fit as required and continued the profile with altitude held within 150 feet and airspeed within 10 knots. The suit check was completed without interruption to the planned maneuver sequence.",
+        "4": "SP verified anti-G suit connection, valve function and fit before flight, confirmed inflation at the first G onset and rechecked operation after each maneuver set. SP integrated the check into the maneuver flow so smoothly that no attention was diverted from aircraft control, with altitude and airspeed deviations remaining negligible throughout the high-G portion of the profile.",
+        "marginal": "SP completed the anti-G suit check and confirmed inflation, but the check was consistently performed late, immediately before the first G application rather than during the pre-maneuver flow. The suit was serviceable and parameters remained within standards, yet the trend was toward compressing the check into the entry to the maneuver. SP is expected to move the suit verification earlier in the flow so that serviceability is established well before the first application above 3G."
+      }
+    },
+    {
+      "id": "contact-06-em02",
+      "label": "AGSM EXECUTION TECHNIQUE PER TECHNIQUES AND PROCEDURES MANUAL",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incorrect breathing and straining technique, did not perform the AGSM in accordance with the Techniques and Procedures Manual: the leg, abdominal and chest muscle tension was not sustained and the breathing cycle was longer than the prescribed interval. SP showed loss of peripheral vision and delayed response to IP calls during sustained loading above 3G. The IP took the controls to unload the aircraft, and the recovery produced deviations beyond 300 feet in altitude and beyond 10 degrees on the exit heading.",
+        "1": "SP, due to an inconsistent strain and breathing cycle, performed an AGSM that did not match the technique prescribed in the Techniques and Procedures Manual, with muscle tension relaxing between breathing cycles. SP restored the correct cycle only after the IP called it verbally and the correction was delayed by several seconds of sustained loading. Altitude reached the 300 foot limit and the exit heading reached 10 degrees off target before parameters were re-established, without intervention on the controls.",
+        "2": "SP, due to an initially long breathing cycle, applied an AGSM that did not fully match the prescribed technique at the entry to the maneuver. SP recognized the onset of visual symptoms, tightened the muscle tension and shortened the breathing cycle to the prescribed interval without any prompting or intervention. Altitude and exit heading deviations during the correction remained between 150 and 300 feet and between 5 and 10 degrees.",
+        "3": "SP performed the AGSM in accordance with the Techniques and Procedures Manual, with sustained leg, abdominal and chest muscle tension and the prescribed breathing cycle maintained throughout the loading. SP showed no degradation of vision or response, kept the scan running through the maneuver and held altitude within 150 feet, airspeed within 10 knots and exit heading within 5 degrees.",
+        "4": "SP executed the AGSM exactly as prescribed in the Techniques and Procedures Manual, with correctly timed strain and breathing cycles and tension adjusted to the actual G level rather than applied uniformly. SP sustained the maneuver without any degradation of vision, voice or aircraft control, and deviations in altitude, airspeed and exit heading were negligible for the whole high-G portion of the profile.",
+        "marginal": "SP performed the AGSM to the prescribed technique and remained within standards, but the strain effort was applied at a level higher than required for the G actually being pulled, which produced early fatigue toward the end of the maneuver set. The technique itself was correct and no symptoms appeared, yet the trend was toward loss of effectiveness on the later repetitions. SP is expected to modulate the strain effort to the G level so that the AGSM remains effective through the whole sequence."
+      }
+    },
+    {
+      "id": "contact-06-em03",
+      "label": "AGSM ANTICIPATION AND TIMING RELATIVE TO G ONSET",
+      "mif_row": null,
+      "source": "general:b,d",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to inadequate workload management in the entry to the maneuver, left the AGSM until after the G had already built past 3G and treated the strain as a reaction rather than as a planned action. SP was still setting power and clearing the area when the loading arrived, so the straining maneuver started late and was never fully established. The IP had to intervene on the controls to unload the aircraft, and the exit was flown more than 300 feet from the assigned altitude and more than 20 knots off the target airspeed.",
+        "1": "SP, due to task saturation during the maneuver entry, began the AGSM after G onset instead of anticipating it as required by the Techniques and Procedures Manual. SP established the correct strain only after the IP prompted verbally, and by then the delay had allowed the altitude to reach the 300 foot limit and the airspeed to reach 20 knots from target. Parameters were re-established without any intervention on the controls.",
+        "2": "SP, due to a compressed task sequence at the entry, started the AGSM slightly after the initial G onset rather than immediately before it. SP recognized the late start on the first repetition, re-sequenced the pre-entry tasks and anticipated the strain correctly on the following maneuvers with no prompting from the IP. Deviations during the first repetition stayed between 150 and 300 feet in altitude and between 10 and 20 knots in airspeed.",
+        "3": "SP anticipated each G application, completed the pre-entry tasks early and established the AGSM immediately before the loading built above 3G. SP maintained the strain through the whole loaded portion and released it in a controlled manner on unloading, holding altitude within 150 feet, airspeed within 10 knots and exit heading within 5 degrees.",
+        "4": "SP sequenced clearing, power and configuration tasks so that the cockpit was quiet before every G application and the AGSM was established ahead of the onset on each repetition without exception. SP adjusted the timing to the different onset rates of the maneuvers flown and kept the aircraft on parameters with negligible deviations throughout.",
+        "marginal": "SP anticipated the AGSM and remained within standards, but the margin between the start of the strain and the G onset was small and shrank as the sortie progressed and workload increased. Timing was still adequate on every repetition and no symptoms appeared, yet the trend was toward reacting to the loading rather than preceding it. SP is expected to protect the pre-entry sequence so that the strain is consistently established before the onset regardless of workload."
+      }
+    },
+    {
+      "id": "contact-06-em04",
+      "label": "RESPECT OF AIRCRAFT G-LIMITS",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-overconfidence",
+      "texts": {
+        "0": "SP, due to overconfidence in the margin available at that airspeed and bank, applied an abrupt aft stick input without reference to the G indication and exceeded the aircraft G-limit for the configuration flown. SP did not call the exceedance and continued the profile as briefed. The IP took the controls, terminated the maneuver sequence and directed a return to base, and the recovery was flown more than 300 feet from the assigned altitude and more than 20 knots from the target airspeed.",
+        "1": "SP, due to an overconfident assessment of the recovery margin, allowed the G to build to the aircraft limit for the configuration during the pull and did not monitor the G indication during the application. SP relaxed the back pressure only after the IP called the G value, and the delayed correction left the altitude at the 300 foot limit and the airspeed at 20 knots from target. No intervention on the controls was required.",
+        "2": "SP, due to a rapid initial stick input, allowed the G to build faster than planned and approached but did not reach the aircraft limit for the configuration. SP detected the trend on the G indication, eased the back pressure and re-established the briefed loading without any prompting or intervention from the IP. Altitude deviation during the correction stayed between 150 and 300 feet and airspeed between 10 and 20 knots.",
+        "3": "SP applied smooth and progressive control inputs, monitored the G indication through each application and kept the loading within the aircraft G-limits for the configuration flown. SP matched the G applied to the maneuver briefed rather than to the maximum available, and held altitude within 150 feet, airspeed within 10 knots and exit heading within 5 degrees.",
+        "4": "SP controlled the onset rate as well as the peak value, kept every application comfortably inside the aircraft G-limits for the configuration and adjusted the loading to the entry airspeed on each repetition. SP verbalized the G being flown against the limit for the configuration and maintained parameters with negligible deviations throughout the profile.",
+        "marginal": "SP remained inside the aircraft G-limits on every application, but the peak values were consistently close to the limit for the configuration and the onset rate was faster than the maneuver required. No exceedance occurred and parameters stayed within standards, yet the trend was toward using the whole available margin on routine repetitions. SP is expected to fly the G value briefed for the maneuver and to reserve the upper part of the envelope for cases that actually require it."
+      }
+    },
+    {
+      "id": "contact-06-em05",
+      "label": "AWARENESS OF G LOADING AND RECOGNITION OF SYMPTOMS",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to a lack of awareness of the significance of the available G indication and of the first physiological cues, did not maintain awareness of G loading during the maneuvers and did not report the onset of greyout to the IP. SP continued the sequence with a degraded scan and did not respond to two consecutive IP calls. The IP took the controls to unload the aircraft and terminate the maneuver, and the excursion exceeded 300 feet in altitude and 10 degrees on the exit heading.",
+        "1": "SP, due to a scan that excluded the G indication during the loaded portion of the maneuvers, lost awareness of the actual G being pulled and of the accumulated exposure across the sequence. SP reported the loss of peripheral vision only after the IP asked directly, and the unloading was delayed, leaving the altitude at the 300 foot limit and the exit heading 10 degrees off target. No intervention on the controls was required.",
+        "2": "SP, due to attention concentrated on the outside reference during the pull, included the G indication in the scan later than required on the first repetitions. SP recognized the first symptoms of reduced peripheral vision, unloaded the aircraft immediately, reported the condition to the IP and re-entered the sequence with the G indication in the scan. Deviations stayed between 150 and 300 feet in altitude and between 5 and 10 degrees on the exit heading.",
+        "3": "SP maintained awareness of G loading during all maneuvers, kept the G indication in the scan and knew at all times the value being pulled and the cumulative exposure of the sequence. SP reported physiological status to the IP when asked without hesitation and held altitude within 150 feet, airspeed within 10 knots and exit heading within 5 degrees.",
+        "4": "SP maintained continuous awareness of G loading, anticipated the exposure of each planned maneuver, tracked the cumulative effect over the sequence and adjusted the AGSM and the pacing of the repetitions accordingly. SP reported physiological status without prompting, kept the scan complete under load and produced negligible deviations in altitude, airspeed and exit heading.",
+        "marginal": "SP maintained awareness of G loading and reported status accurately, but the awareness was reconstructed after each maneuver rather than tracked during it, and the G indication entered the scan only at the exit. Parameters remained within standards and no symptoms went unreported, yet the trend was toward retrospective rather than continuous awareness. SP is expected to keep the G value in the running cross-check during the loaded portion of every maneuver."
+      }
+    },
+    {
+      "id": "contact-06-em06",
+      "label": "ALTITUDE CONTROL DURING G LOADING",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a scan that collapsed onto the outside reference during the strain, did not maintain the assigned altitude while manoeuvring above 3G and did not detect the developing vertical trend. The altitude deviation exceeded 300 feet and continued to increase, and SP did not initiate a correction. The IP intervened on the controls to return the aircraft to the assigned altitude and terminate the maneuver.",
+        "1": "SP, due to a cross-check interrupted by the AGSM, did not maintain the assigned altitude during the loaded portion of the maneuvers and allowed the deviation to reach 300 feet. SP started the correction only after the IP called the altitude verbally, and the recovery was slow with the aircraft settling back on altitude several seconds later. No intervention on the controls was required.",
+        "2": "SP, due to a delayed return of the altimeter to the scan after each G application, allowed the altitude to deviate between 150 and 300 feet from the assigned value during the maneuvers. SP detected the deviation on the exit of the first repetition and corrected it promptly and smoothly, with no prompting or intervention from the IP, and subsequent repetitions were flown closer to the assigned altitude.",
+        "3": "SP maintained the assigned altitude within 150 feet throughout the maneuvers requiring more than 3Gs, keeping the altimeter in the cross-check during the loaded portion and correcting small trends before they developed. Corrections were smooth, timely and made without prompting.",
+        "4": "SP held the assigned altitude with deviations that were negligible in both the entry and the exit of every high-G maneuver, anticipating the vertical trend from the pitch attitude rather than reacting to the altimeter. The aircraft was flown back onto the reference altitude with corrections small enough to be barely perceptible.",
+        "marginal": "SP maintained the assigned altitude within standards, but the deviations were consistently in the same direction on every repetition and the correction was always applied at the exit rather than during the maneuver. The values stayed inside the required tolerance, yet the trend was toward a repeated one-sided error. SP is expected to keep the altimeter in the cross-check through the loaded portion so that the deviation is trapped as it develops."
+      }
+    },
+    {
+      "id": "contact-06-em07",
+      "label": "AIRSPEED CONTROL DURING G LOADING",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power and back pressure applied without reference to the airspeed indication during the strain, did not maintain the target airspeed for the maneuvers above 3G. The airspeed deviated by more than 20 knots and continued to diverge without any corrective input from SP, which reduced the margin available for the planned G. The IP took the controls to unload the aircraft and re-establish the target airspeed.",
+        "1": "SP, due to a fixed power setting held through the loaded portion regardless of the energy state, allowed the airspeed to deviate to the 20 knot limit during the maneuvers. SP adjusted power only after the IP called the airspeed, and the correction was late enough that the following entry was flown from an incorrect energy state. No intervention on the controls was required.",
+        "2": "SP, due to a late power adjustment at the entry to the maneuver, allowed the airspeed to deviate between 10 and 20 knots from the target value under load. SP identified the trend on the airspeed indication, corrected power promptly and re-established the target airspeed before the exit without prompting or intervention from the IP.",
+        "3": "SP maintained the target airspeed within 10 knots throughout the maneuvers requiring more than 3Gs, matching power to the G being applied and keeping the airspeed indication in the cross-check during the loaded portion. Corrections were small, timely and made without prompting.",
+        "4": "SP controlled airspeed with negligible deviations across the whole high-G sequence, anticipating the energy loss of each application and setting power before the deviation appeared. Every maneuver was entered from the correct energy state and exited on the target airspeed.",
+        "marginal": "SP maintained the target airspeed within standards, but the deviations were repeatedly on the low side and the power correction was applied only after the airspeed had already started to decay. The values stayed inside the required tolerance, yet the trend was toward a shrinking energy margin over the maneuver set. SP is expected to lead the power with the G application so that the airspeed is held rather than recovered."
+      }
+    },
+    {
+      "id": "contact-06-em08",
+      "label": "EXIT HEADING CONTROL AFTER HIGH-G MANEUVERING",
+      "mif_row": null,
+      "source": "specific:EXIT HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a rollout initiated without reference to the heading indication after the strain, did not exit the maneuver on the planned heading and did not recognize the error after the recovery. The exit heading was more than 10 degrees from the briefed value and no correction was initiated. The IP took the controls to re-establish the required heading before the next maneuver could be set up.",
+        "1": "SP, due to a rollout lead point that was not adjusted for the bank and G being flown, exited the maneuver 10 degrees from the planned heading. SP corrected the heading only after the IP called it verbally, and the delay meant the next entry was set up late. No intervention on the controls was required.",
+        "2": "SP, due to a rollout started slightly late on the first repetitions, exited the maneuver between 5 and 10 degrees from the planned heading. SP recognized the error immediately, corrected it with a smooth and coordinated input and adjusted the lead point on the following repetitions with no prompting or intervention from the IP.",
+        "3": "SP exited each high-G maneuver within 5 degrees of the planned heading, leading the rollout appropriately for the bank and G being flown and keeping the heading reference in the cross-check through the recovery. Corrections were coordinated, timely and made without prompting.",
+        "4": "SP rolled out on the planned heading with negligible error on every repetition, adjusting the lead point to the actual bank, G and rate of turn of each maneuver. The exits were coordinated and the aircraft was stabilized on heading immediately, with no secondary corrections required.",
+        "marginal": "SP exited the maneuvers within the required heading tolerance, but the error was consistently in the direction of an overshoot and was removed with a secondary correction after the rollout. The values stayed inside standards, yet the trend was toward a rollout lead point that was habitually too late. SP is expected to set the lead point from the actual turn rate so that the exit heading is achieved on the primary rollout."
+      }
+    }
+  ]
+}

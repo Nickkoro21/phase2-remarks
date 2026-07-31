@@ -1,0 +1,132 @@
+{
+  "item_id": "instrument-15",
+  "item_name": "MAINTAINING ARC",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [15],
+  "mif_rows": [
+    {"sn": 15, "row_name": "Maintaining Arc"}
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-15-em01",
+      "label": "ARC DISTANCE CONTROL (DME)",
+      "mif_row": "Maintaining Arc",
+      "source": "specific:MAINTAINING ARC (DME)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to late recognition of the DME trend and the use of one large heading change instead of small increments, did not maintain the arc within the published tolerance. Arc distance opened to 3.0 NM and then closed through the nominal value to 0.8 NM, exceeding the +/-2 NM limit in both directions. The IP had to direct the intercept heading to re-establish the arc.",
+        "1": "SP, due to a delayed response to the increasing DME and reliance on a single oversized correction, allowed arc distance to reach 2.0 NM, at the +/-2 NM limit. The deviation was arrested only after the IP's verbal prompt to turn toward the station, and the arc was re-established slowly and with a further overshoot inbound.",
+        "2": "SP, due to a late start of the correction turn and an undersized heading change, allowed arc distance to reach 1.5 NM, between the +/-1 NM and +/-2 NM values. SP recognized the trend without prompting and returned inside 1 NM with a timely 20 degree correction, and no IP input was required.",
+        "3": "SP maintained the arc within +/-1 NM throughout, working the DME with 10 to 20 degree heading increments and correcting each trend as soon as it appeared. Corrections were promptly applied and correctly sized, so the arc distance stabilized without overshoot.",
+        "4": "SP held arc distance within a few tenths of a mile of the nominal DME for the whole arc. Trends were anticipated from the bearing pointer and neutralized by small heading increments before any measurable deviation developed.",
+        "marginal": "SP kept arc distance inside the published tolerance but consistently worked the outer part of the band, starting corrections after the DME had already moved rather than on the trend. The result remains within standards, but SP is expected to tighten the arc by anticipating the trend and using smaller, more frequent heading increments."
+      }
+    },
+    {
+      "id": "instrument-15-em02",
+      "label": "ALTITUDE CONTROL WHILE WORKING THE ARC",
+      "mif_row": "Maintaining Arc",
+      "source": "general:basic-ac-control:ALTITUDE",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to an attention bottleneck on the DME readout at the expense of the instrument cross-check, did not maintain altitude within the Basic A/C Control tolerance while flying the arc. Altitude decayed 400 feet below the cleared level and was still descending when the IP directed the recovery and took the altitude call. Pitch and power were not reset until the IP intervened.",
+        "1": "SP, due to absorption in the DME and bearing pointer while the altimeter went unmonitored, allowed altitude to reach 300 feet below the cleared level, at the +/-300 feet limit. The trend was reversed only after the IP called the altitude, and the return to level flight was slow and accompanied by an airspeed excursion.",
+        "2": "SP, due to a scan that dwelt on the navigation display during each correction turn, allowed altitude to deviate 200 feet, between the +/-150 feet and +/-300 feet values. SP detected the deviation on his own scan and returned inside 150 feet with a smooth pitch and power correction, without any IP input.",
+        "3": "SP maintained altitude within +/-150 feet throughout the arc, keeping the altimeter and VSI in the scan while working the DME. Small pitch and power corrections were applied early, so level flight was preserved through every heading change.",
+        "4": "SP held altitude within about 50 feet of the cleared level for the entire arc. The cross-check remained evenly distributed between the navigation display and the primary flight instruments, and no pitch excursion developed during the correction turns.",
+        "marginal": "SP remained within the altitude tolerance but showed a repeating pattern of a slow altitude drift during each correction turn, followed by a late recovery. Performance is acceptable, but SP is expected to keep the altimeter in the scan through the turns so the deviation does not build before it is caught."
+      }
+    },
+    {
+      "id": "instrument-15-em03",
+      "label": "AIRSPEED AND POWER MANAGEMENT ON THE ARC",
+      "mif_row": "Maintaining Arc",
+      "source": "general:basic-ac-control:AIRSPEED",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power settings that were not adjusted for the bank changes required by the arc, did not maintain airspeed within the Basic A/C Control tolerance. Airspeed decayed 25 KIAS below the briefed value, beyond the +/-20 KIAS limit, and the IP had to direct the power increase before the trend was reversed.",
+        "1": "SP, due to a single late power correction applied after the airspeed had already moved, allowed airspeed to reach 20 KIAS from the briefed value, at the +/-20 KIAS limit. The correction followed the IP's verbal prompt, and the subsequent power change overshot in the opposite direction before airspeed settled.",
+        "2": "SP, due to a delayed power adjustment during the correction turns, allowed airspeed to deviate 15 KIAS, between the +/-10 KIAS and +/-20 KIAS values. SP identified the trend without prompting and restored the briefed airspeed with a timely power correction and no IP input.",
+        "3": "SP maintained airspeed within +/-10 KIAS for the whole arc, setting power for the phase of flight and adjusting it as bank was applied and removed. Airspeed remained stable through every heading increment and no large power changes were needed.",
+        "4": "SP held airspeed within a few knots of the briefed value throughout the arc. Power was anticipated for each turn rather than applied in response to an indication, so the airspeed trace remained essentially flat.",
+        "marginal": "SP stayed within the airspeed tolerance but let airspeed drift low in each turn and then recovered it with a larger than necessary power change. The result is acceptable, but SP is expected to anticipate the power requirement of the turn so airspeed is held without repeated corrections."
+      }
+    },
+    {
+      "id": "instrument-15-em04",
+      "label": "HEADING AND TURN INCREMENT DISCIPLINE",
+      "mif_row": "Maintaining Arc",
+      "source": "general:basic-ac-control:HEADING",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the use of unmeasured turns instead of defined heading increments, did not hold the computed arc heading within the Basic A/C Control tolerance. Heading wandered more than 15 degrees from the required value between corrections, exceeding the +/-10 degrees limit, and the IP had to state the heading to fly to stop the wander.",
+        "1": "SP, due to rolling out without reference to a target heading, allowed heading to deviate 10 degrees from the computed value, at the +/-10 degrees limit. The correct heading was regained only after the IP prompted the roll-out reference, and the following increment was again flown without a defined target.",
+        "2": "SP, due to imprecise roll-out from the correction turns, allowed heading to deviate 8 degrees from the computed value, between the +/-5 degrees and +/-10 degrees values. SP recognized the error on the HSI and re-established the required heading promptly, without IP input.",
+        "3": "SP flew the arc in defined heading increments and held each computed heading within +/-5 degrees. Roll-in and roll-out were accurate and bank was kept appropriate for the turn required, so the arc geometry was preserved.",
+        "4": "SP held each computed arc heading within about 2 degrees, rolling out precisely on the target value at every increment. Bank angle was selected to match the turn required and no heading chasing was observed.",
+        "marginal": "SP remained within the heading tolerance but rolled out consistently short of the computed value and then made a second small correction. Performance is acceptable, but SP is expected to select a target heading before each increment and roll out on it in one turn."
+      }
+    },
+    {
+      "id": "instrument-15-em05",
+      "label": "NAVIGATION AID SELECTION AND INTERPRETATION (VOR/TACAN/GPS OBS)",
+      "mif_row": "Maintaining Arc",
+      "source": "general:a (Basic A/C Control Criteria apply, key d - use of radio aids)",
+      "hf_concept": "hf-mode-confusion",
+      "texts": {
+        "0": "SP, due to mode confusion over which navigation source was driving the display, flew the arc against a GPS OBS reference that was not the intended aid and did not identify the station in use. The resulting arc distance exceeded +/-2 NM and the error was resolved only when the IP directed the correct selection and re-identification.",
+        "1": "SP, due to an incorrect assumption about the active navigation mode, worked the arc from an unverified source and allowed arc distance to reach 2.0 NM, at the +/-2 NM limit. The mis-selection was recognized only after the IP prompted a check of the navigation source, and re-establishment of the arc was delayed.",
+        "2": "SP, due to selecting the arc reference before confirming the mode of the navigation display, briefly worked from the wrong indication and allowed arc distance to reach 1.5 NM, between the +/-1 NM and +/-2 NM values. SP detected the discrepancy by cross-checking the second source, reselected correctly and closed the arc without IP input.",
+        "3": "SP selected, identified and cross-checked the VOR/TACAN and the GPS OBS reference before commencing the arc, and remained oriented on the correct source throughout. Arc distance was held within +/-1 NM and the indications of both aids were compared during the turn.",
+        "4": "SP pre-set and verified both navigation sources, stated the active mode, and continuously compared the two indications while flying the arc. Orientation to the station was maintained at all times and the arc showed no measurable error attributable to the navigation setup.",
+        "marginal": "SP used the correct navigation source but verified the active mode only once, at the start, and did not re-cross-check it during the arc. The setup was adequate on this sortie, but SP is expected to build in a periodic comparison of the two aids so a mode change would be detected before it affects the arc."
+      }
+    },
+    {
+      "id": "instrument-15-em06",
+      "label": "WIND DRIFT COMPENSATION AROUND THE ARC",
+      "mif_row": "Maintaining Arc",
+      "source": "general:a (Basic A/C Control Criteria apply); conditions:course intercepts",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to no allowance for the known wind while transiting the downwind portion of the arc, did not apply a drift correction and let the aircraft be carried away from the station. Arc distance opened to 3.0 NM, beyond the +/-2 NM limit, and the IP had to direct a cut toward the station to recover the arc.",
+        "1": "SP, due to applying the same heading increment regardless of the wind quadrant, allowed the drift to build until arc distance reached 2.0 NM, at the +/-2 NM limit. The wind effect was addressed only after the IP pointed out the direction of the trend, and the correction was then oversized.",
+        "2": "SP, due to a drift correction that was recognized late in the downwind sector, allowed arc distance to reach 1.5 NM, between the +/-1 NM and +/-2 NM values. SP identified the wind trend from the repeated DME movement, increased the correction toward the station and re-established the arc without IP assistance.",
+        "3": "SP applied a wind correction appropriate to each sector of the arc, varying the heading increments so the DME trend was neutralized before it developed. Arc distance was held within +/-1 NM around the full arc, including the downwind portion.",
+        "4": "SP anticipated the wind effect for every sector of the arc and adjusted the correction continuously, so the DME remained essentially constant. No sector of the arc showed a distance trend attributable to drift.",
+        "marginal": "SP compensated for the wind but only after the DME had begun to move in each sector, so the correction was always reactive. The arc remained within standards, and SP is expected to pre-plan the drift correction by sector so the deviation is prevented rather than corrected."
+      }
+    },
+    {
+      "id": "instrument-15-em07",
+      "label": "TRIM AND SMOOTHNESS OF CONTROL INPUTS",
+      "mif_row": "Maintaining Arc",
+      "source": "general:a (Basic A/C Control Criteria apply, keys a and c)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to flying the arc out of trim and countering the resulting control forces with abrupt inputs, did not handle the aircraft with the required comfort and ease. The uncommanded pitch changes produced altitude excursions beyond +/-300 feet together with an arc error beyond +/-2 NM, and the IP had to take the aircraft to re-trim and stabilize it.",
+        "1": "SP, due to leaving the aircraft out of trim through the correction turns, flew with continuous control pressures and allowed altitude to reach 300 feet from the cleared level, at the +/-300 feet limit. Trim was reset only after the IP prompted it, and the aircraft remained unsettled for the rest of that arc segment.",
+        "2": "SP, due to trimming late after each power and bank change, applied larger control inputs than required and allowed altitude to deviate 200 feet, between the +/-150 feet and +/-300 feet values. SP recognized the residual control pressure, re-trimmed and returned the aircraft to a stable condition without IP input.",
+        "3": "SP kept the aircraft in trim through the power and bank changes of the arc and used smooth, correctly sized control inputs. Altitude stayed within +/-150 feet and arc distance within +/-1 NM, with the aircraft handled with comfort and ease throughout.",
+        "4": "SP trimmed continuously and flew the arc with minimal control pressures, so heading increments produced no secondary pitch or airspeed disturbance. Aircraft handling was smooth and precise for the whole arc.",
+        "marginal": "SP kept the aircraft controlled within standards but trimmed only after the deviation appeared, so residual control pressures were carried through the turns. The result is acceptable, and SP is expected to trim immediately after each power and bank change so the aircraft holds the condition without continuous input."
+      }
+    },
+    {
+      "id": "instrument-15-em08",
+      "label": "INSTRUMENT CROSS-CHECK AND SCAN DISTRIBUTION",
+      "mif_row": "Maintaining Arc",
+      "source": "general:a (Basic A/C Control Criteria apply)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an interrupted instrument cross-check while attention remained on the navigation display, did not monitor the aircraft state and let more than one parameter deviate at the same time. Arc distance exceeded +/-2 NM while altitude exceeded +/-300 feet, and neither trend was identified until the IP intervened and directed the corrections.",
+        "1": "SP, due to a fixed scan that concentrated on the DME and bearing pointer, missed the developing trends until they reached the code 1 values, with arc distance at 2.0 NM and heading at 10 degrees from the computed value. Both were addressed only after the IP called the deviations, and the scan was not re-established until later in the arc.",
+        "2": "SP, due to a cross-check that slowed during each correction turn, allowed arc distance to reach 1.5 NM and altitude 200 feet, between the code 3 and code 1 values. SP re-established the scan on his own, prioritized the deviations correctly and returned both parameters inside the code 3 values without IP input.",
+        "3": "SP maintained an active cross-check between the navigation display and the primary flight instruments throughout the arc, so trends were caught early. Arc distance stayed within +/-1 NM and altitude, airspeed and heading remained within the Basic A/C Control code 3 values.",
+        "4": "SP kept a fully distributed cross-check for the entire arc, monitoring the aircraft state continuously while working the navigation solution. Deviations were identified at the moment they began and no parameter was allowed to develop a measurable trend.",
+        "marginal": "SP kept an adequate cross-check but let it narrow toward the navigation display during each correction turn, catching the flight instruments only after the turn was complete. Performance remains within standards, and SP is expected to keep the primary flight instruments in the scan throughout the turn so no parameter goes unmonitored."
+      }
+    }
+  ]
+}

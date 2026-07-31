@@ -1,0 +1,147 @@
+{
+  "item_id": "instrument-21",
+  "item_name": "ILS APPROACH",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [21],
+  "mif_rows": [
+    {"sn": 21, "row_name": "ILS Approach"}
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-21-em01",
+      "label": "Localizer (CDI) tracking on final",
+      "mif_row": "ILS Approach",
+      "source": "specific:LOCALIZER (CDI) (dots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a late and then oversized bank correction after localizer capture, did not maintain the final approach course within the published tolerance. CDI displacement exceeded 2 dots inside the FAF and the deviation continued to diverge rather than reduce. IP intervention was required to re-establish the aircraft on the localizer.",
+        "1": "SP, due to chasing the CDI with successive bank reversals instead of setting a computed drift-corrected heading, allowed localizer displacement to sit at the 2 dot limit through a long segment of final. The needle was brought back toward centerline only after verbal prompting from the IP. The aircraft was re-aligned late and the correction was still in progress approaching DH.",
+        "2": "SP, due to a wind correction angle applied later than the localizer trend required, allowed CDI displacement to open to between 1 and 2 dots after the FAF. SP recognized the trend unprompted and returned the needle toward centerline with a measured heading change well before DH. No IP intervention was required.",
+        "3": "SP tracked the localizer within 1 dot of CDI displacement throughout the final approach segment. Corrections were small, prompt and flown against a stable heading reference rather than by needle chasing. The aircraft remained on the final approach course to DH.",
+        "4": "SP held the localizer essentially centered from capture to DH, with CDI displacement negligible at every point of the approach. The drift correction was established on the first heading change and refined only in single-degree increments. There was no perceptible needle movement over the last mile.",
+        "marginal": "SP remained inside the required localizer tolerance but worked consistently on one side of centerline and held it there with repeated small heading reversals. No deviation exceeded standards, yet the pattern shows the wind correction angle being found by trial rather than computed and set. SP is expected to establish a deliberate drift correction so that localizer tracking becomes stable instead of continuously re-corrected."
+      }
+    },
+    {
+      "id": "instrument-21-em02",
+      "label": "Glide path (GSI) tracking",
+      "mif_row": "ILS Approach",
+      "source": "specific:GLIDE PATH (GSI) (dots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to failing to set an approximate on-glide-path rate of descent at glide slope intercept and then correcting with large pitch changes, did not maintain the glide path within the published tolerance. GSI displacement exceeded 2 dots and the aircraft remained low on the glide path with the deviation still increasing. IP intervention was required to return the aircraft to the glide path.",
+        "1": "SP, due to correcting glide path deviations with power alone while pitch remained unchanged, allowed GSI displacement to reach and remain at the 2 dot limit. The correction was started only after the IP called the deviation, and the aircraft regained the glide path late in the final segment.",
+        "2": "SP, due to a rate of descent set slightly high at glide slope intercept, allowed GSI displacement to open to between 1 and 2 dots below the glide path. SP identified the trend on the cross-check without prompting and re-established the correct descent rate with a coordinated pitch and power change. The glide path was regained before DH with no IP intervention.",
+        "3": "SP tracked the glide path within 1 dot of GSI displacement from intercept to DH. Corrections were made with combined pitch and power in small increments, and the rate of descent was reset to the value the approach required rather than repeatedly re-chased. The aircraft remained stabilized on the glide path.",
+        "4": "SP held the GSI effectively centered throughout the final approach, with deviations negligible at every stage. The descent rate was established at intercept and adjusted only in small, anticipated increments as the groundspeed changed. The approach remained fully stabilized to DH.",
+        "marginal": "SP maintained the glide path inside the required tolerance but the needle oscillated slowly about centerline for most of the approach. Standards were met, yet the corrections were reactive to the indication rather than anticipatory of the descent rate required. SP is expected to set and trim the correct rate of descent early so that glide path tracking settles instead of cycling."
+      }
+    },
+    {
+      "id": "instrument-21-em03",
+      "label": "Computed final approach airspeed after FAF",
+      "mif_row": "ILS Approach",
+      "source": "specific:AIRSPEED (knots)*",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to inadequate workload management inside the FAF where configuration change, approach checks and radio calls were all left to compete for the same seconds, did not maintain the computed final approach airspeed. Airspeed diverged beyond +15/-10 knots of the computed value and power was applied late and in the wrong sense. IP intervention on the throttle was required to restore the approach airspeed before DH.",
+        "1": "SP, due to task sequencing that concentrated the configuration change and the approach checks at the same point on final, allowed airspeed to reach the +15/-10 knot limit relative to the computed final approach airspeed. The power correction was made only after the IP prompted the speed, and the deviation persisted into the final part of the approach.",
+        "2": "SP, due to a power setting left unchanged after the gear and flap configuration change, allowed airspeed to drift into the band between +10/-5 and +15/-10 knots of the computed value. SP detected the trend on the cross-check without prompting and restored the computed approach airspeed with a single measured power correction. No IP intervention was required.",
+        "3": "SP maintained the computed final approach airspeed within +10/-5 knots throughout the segment after the FAF. Power was adjusted in anticipation of the configuration changes rather than in reaction to the airspeed indication, and the speed remained steady through the descent. The approach stayed stabilized on speed to DH.",
+        "4": "SP held the computed final approach airspeed with negligible variation from the FAF to DH. Power changes were anticipated for each configuration change and were small enough that the airspeed trace showed no excursion. Speed control did not compete with any other cockpit task.",
+        "marginal": "SP kept the computed final approach airspeed inside standards but the speed drifted repeatedly toward the slow side after each configuration change before being corrected. Nothing exceeded the required tolerance, yet the corrections were consistently late relative to the configuration change that caused them. SP is expected to sequence the approach tasks so that power is set with the configuration change rather than after the airspeed has already moved."
+      }
+    },
+    {
+      "id": "instrument-21-em04",
+      "label": "Altitude control at decision height",
+      "mif_row": "ILS Approach",
+      "source": "specific:ALTITUDE DH (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unmonitored rate of descent in the last part of the final segment and no altimeter reference set for the approach, did not respect the published decision height. The aircraft descended below DH without the required visual references, and the subsequent recovery left the aircraft more than 200 ft off the required altitude. IP intervention was required to arrest the descent and start the missed approach.",
+        "1": "SP, due to a scan that had narrowed onto the course and glide path indications, did not level at the published decision height on the first attempt and reached the 200 ft edge of the tolerance above DH before responding. The level-off was made only after the IP called the altitude, and the aircraft was still settling as the missed approach was started.",
+        "2": "SP, due to a level-off initiated slightly late for the rate of descent flown, arrived at the decision height with an altitude deviation between 100 and 200 ft above DH. SP identified the deviation unprompted and re-established the required altitude before continuing with the approach decision. Descent below DH did not occur and no IP intervention was required.",
+        "3": "SP flew the approach to the published decision height and levelled within 100 ft above DH with no descent below it. The altimeter was correctly set and was included in the cross-check at the correct points of the approach. The DH decision was made at the published altitude.",
+        "4": "SP arrived at the published decision height with negligible altitude deviation and no descent below DH at any point. The level-off was anticipated from the rate of descent and required no correction after it was made. Altitude awareness at the decision point was precise throughout.",
+        "marginal": "SP respected the decision height and stayed within standards, but the level-off was made abruptly after the altitude was already approaching the limit of the tolerance. There was no descent below DH, yet the DH was reached without an anticipated lead. SP is expected to anticipate the level-off from the rate of descent so that decision height is captured smoothly rather than caught late."
+      }
+    },
+    {
+      "id": "instrument-21-em05",
+      "label": "Compliance with ATC instructions during the approach",
+      "mif_row": "ILS Approach",
+      "source": "general:a",
+      "hf_concept": "hf-non-standard-phraseology",
+      "texts": {
+        "0": "SP, due to non-standard phraseology that left the intention ambiguous to the controller and a readback that was never verified against what had been issued, did not comply with the ATC instructions for the approach. The assigned heading and altitude for the intercept were not flown as cleared and the deviation was not detected by SP. IP intervention was required to query ATC and re-establish the cleared profile.",
+        "1": "SP, due to an incomplete readback and an assumption about what the controller had assigned, flew a clearance different from the one issued for the localizer intercept. The error was corrected only after the IP restated the instruction, and compliance was achieved late relative to the intercept point.",
+        "2": "SP, due to a readback made while the approach setup was still in progress, initially misapplied part of the ATC instruction for the approach. SP recognized the discrepancy on the next transmission, requested confirmation and complied without prompting and without further consequence to the approach. No IP intervention was required.",
+        "3": "SP complied with all ATC instructions issued during the approach. Readbacks were complete and in standard phraseology, and each clearance was applied to the aircraft promptly and correctly. No clarification was needed at any point.",
+        "4": "SP complied with every ATC instruction immediately and accurately, with standard phraseology and readbacks that left no ambiguity. Instructions were anticipated from the approach sequence and applied without any interruption of aircraft control. Radio work never competed with flying the approach.",
+        "marginal": "SP complied with all ATC instructions but readbacks were rushed and occasionally abbreviated, and one instruction had to be repeated by the controller. Nothing was flown incorrectly, yet the phraseology used leaves room for the intention to be misread on a busy frequency. SP is expected to use full standard readbacks so that compliance is verifiable rather than assumed."
+      }
+    },
+    {
+      "id": "instrument-21-em06",
+      "label": "Published routing and altitude restrictions",
+      "mif_row": "ILS Approach",
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an approach plate that was not reviewed against the actual routing before commencing the procedure, violated a published altitude restriction on the intermediate segment. The aircraft was flown below the segment minimum altitude specified in MAIP and the Instrument Approach Manual, and the routing was not corrected by SP. IP intervention was required to restore the published profile.",
+        "1": "SP, due to reading the approach plate segment by segment while already established rather than during the approach briefing, arrived at a step-down fix without the published restriction applied. The restriction was met only after the IP identified it, and the aircraft was at the limit of the allowable deviation when compliance was restored.",
+        "2": "SP, due to a descent started slightly early relative to the published fix, began deviating from the segment altitude profile before the restriction had been cleared. SP checked the plate unprompted, arrested the descent within the allowable band and re-established the published profile before the next fix. No IP intervention was required.",
+        "3": "SP flew the published routing and observed all altitude restrictions from MAIP and the Instrument Approach Manual. Each segment minimum was identified before it applied and the descent was initiated only at the published point. The approach profile matched the plate throughout.",
+        "4": "SP flew the published routing and every altitude restriction precisely, with each segment transition identified before it was reached. Descents were initiated exactly at the published points and the profile required no adjustment at any fix. Plate discipline was complete from the initial segment to DH.",
+        "marginal": "SP met all published routing and altitude restrictions but confirmed each one only as the fix was reached rather than during the approach briefing. No restriction was violated, yet the margin available to correct an error at any single fix was small. SP is expected to extract the segment altitudes and routing during the briefing so that compliance is planned rather than verified at the last moment."
+      }
+    },
+    {
+      "id": "instrument-21-em07",
+      "label": "ILS setup and standardized procedure sequence",
+      "mif_row": "ILS Approach",
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an approach setup completed out of sequence in which the ILS frequency was not identified and the navigation source was not confirmed, did not execute the procedure according to AFMAN 11-202 VOL3 and the Flight Manual. The approach was continued with the wrong navigation source displayed and the required approach checks were omitted. IP intervention was required to correct the configuration and re-sequence the procedure.",
+        "1": "SP, due to leaving the approach setup until after the intercept had begun, executed the standardized sequence with items out of order and the landing configuration established late. The omitted items were completed only after the IP prompted them, and the approach was flown from the FAF without the sequence having been fully caught up.",
+        "2": "SP, due to a checklist item deferred while the intercept was being flown, initially omitted one step of the standardized approach sequence. SP detected the omission unprompted at the FAF, completed the item and continued the procedure correctly with no effect on the approach profile. No IP intervention was required.",
+        "3": "SP executed the ILS approach according to the standardized procedures of AFMAN 11-202 VOL3 and the Flight Manual. The navigation source was set and identified, the approach checks were completed in sequence and the aircraft was configured at the published points. The procedure was flown without mistakes and without IP intervention.",
+        "4": "SP executed the standardized ILS procedure flawlessly, with the setup, identification, checks and configuration all completed ahead of the points at which they were required. The sequence was flown with no hesitation and left full capacity available for aircraft control. No item required repetition or correction.",
+        "marginal": "SP completed the standardized ILS sequence correctly but each item was actioned at the latest acceptable point rather than ahead of it. Nothing was omitted, yet any additional task inside the FAF would have displaced part of the sequence. SP is expected to complete the approach setup and checks earlier so that the procedure absorbs interruptions without slipping."
+      }
+    },
+    {
+      "id": "instrument-21-em08",
+      "label": "Instrument cross-check and correction technique",
+      "mif_row": "ILS Approach",
+      "source": "general:c",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to inadequate monitoring in which the scan fixed on the course and glide path indications and no longer included airspeed, attitude and altitude, did not maintain the required control of the approach. Two parameters were allowed to diverge simultaneously and neither was detected by SP. IP intervention was required to restore the instrument cross-check and the approach profile.",
+        "1": "SP, due to a cross-check that stopped at the flight director rather than confirming the raw data and aircraft state, detected deviations only after they had reached the limit of tolerance. Each parameter was corrected only after the IP named it, and the scan was re-established late in the approach.",
+        "2": "SP, due to a cross-check interrupted by the configuration change, temporarily narrowed the scan and allowed one parameter to open beyond the tight tolerance. SP recognized the omission without prompting, re-established the full cross-check and corrected the deviation before it developed further. No IP intervention was required.",
+        "3": "SP maintained a complete instrument cross-check throughout the approach, with attitude, airspeed, altitude, course and glide path all included at the appropriate rate. Deviations were detected while they were still small and corrected with proportionate inputs. The scan was not displaced by any cockpit task.",
+        "4": "SP maintained a full and evenly paced instrument cross-check from the intercept to DH, detecting trends before they became indications. Every correction was made from a correctly identified cause rather than from the deviation alone. The scan remained intact through configuration changes, radio work and the approach checks.",
+        "marginal": "SP maintained an adequate cross-check but it slowed noticeably whenever a secondary task was introduced, and deviations were caught later than at the start of the approach. Standards were held, yet the scan is not yet resistant to interruption. SP is expected to re-establish the full cross-check immediately after each cockpit task so that detection remains consistent across the whole approach."
+      }
+    },
+    {
+      "id": "instrument-21-em09",
+      "label": "Decision at DH and missed approach execution",
+      "mif_row": "ILS Approach",
+      "source": "general:c",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to continuation bias in maintaining the approach past the point where the required visual references were not available, did not act on the decision height as the procedure requires. The approach was continued below DH without the published references and no missed approach was initiated. IP intervention was required to execute the go-around.",
+        "1": "SP, due to hesitation over the decision while the approach indications were still being assessed, delayed the missed approach beyond the decision height. The go-around was initiated only after the IP directed it, and the initial climb and configuration were flown out of sequence.",
+        "2": "SP, due to a decision made slightly later than the DH called for, started the missed approach after a short delay at the decision point. SP then executed the published missed approach correctly and in sequence without prompting, and the climb, configuration and routing were flown as published. No IP intervention was required.",
+        "3": "SP made the decision at the published decision height and executed the missed approach promptly and in the correct sequence. Power, attitude, configuration and the published routing were applied without hesitation. The decision was based on the required visual references and not on an expectation of acquiring them.",
+        "4": "SP made an unhesitating and correct decision at the decision height and flew the published missed approach precisely in sequence. The transition to the climb was smooth and the aircraft was configured and on the missed approach routing without any deviation. The decision was clearly pre-briefed rather than improvised.",
+        "marginal": "SP made the correct decision at the decision height and flew the missed approach as published, but the decision was taken at the last moment and the initial actions were compressed as a result. Standards were met, yet the decision point was treated as a limit rather than as a planned event. SP is expected to brief and commit to the DH decision in advance so that the missed approach is initiated without compression."
+      }
+    }
+  ]
+}

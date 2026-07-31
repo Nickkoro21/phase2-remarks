@@ -1,0 +1,162 @@
+{
+  "item_id": "contact-11",
+  "item_name": "UNUSUAL ATTITUDES RECOVERY",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [11],
+  "mif_rows": [
+    {"sn": 11, "row_name": "Unusual Attitudes Recovery"}
+  ],
+  "error_modes": [
+    {
+      "id": "contact-11-em01",
+      "label": "POST-RECOVERY ALTITUDE CONTROL",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a late decision on when the unusual attitude had been resolved, did not transition from recovery inputs to level-flight control and left the pitch attitude uncaptured at the horizon. The altitude ran beyond 300 feet from the recovery reference and continued to diverge. IP had to intervene on the controls to establish level flight, and SP did not recognize the excursion before the intervention.",
+        "1": "SP, due to a delayed pitch capture at the horizon after the roll to wings level, allowed the altitude to run out to the 300 foot limit before any correction was made. The correction was initiated only after verbal prompting from the IP and the return to the reference altitude was slow. Altitude control after the recovery stayed at the outer edge of the standard for the remainder of the exercise.",
+        "2": "SP, due to an incomplete pitch capture at the horizon, allowed the altitude to deviate between 150 and 300 feet from the recovery reference once the aircraft was back in controlled flight. SP recognized the trend without prompting and returned to level flight with a smooth pitch and power adjustment. No IP intervention was required and the following recoveries were flown tighter.",
+        "3": "SP established level flight immediately on completion of each recovery and held the altitude within 150 feet of the recovery reference. The pitch capture at the horizon was positive, without overshoot, and altitude was stabilized before the next input was called for.",
+        "4": "SP captured level flight exactly at the horizon with negligible altitude excursion from the recovery reference. Pitch control through the transition from recovery to level flight was continuous, and the altitude was frozen at the first attempt on every attitude presented.",
+        "marginal": "SP kept the post-recovery altitude inside standards but arrested the excursion close to 150 feet on most attitudes rather than well within it. The trend was a pitch capture applied slightly late rather than anticipated at the horizon. SP is expected to lead the level-off and stabilize the altitude earlier in subsequent recoveries."
+      }
+    },
+    {
+      "id": "contact-11-em02",
+      "label": "POST-RECOVERY AIRSPEED CONTROL",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power that was not matched to the attitude during the recovery, left the throttle in the entry setting through the pitch change and did not re-establish the level-flight airspeed. From the nose-low attitudes the airspeed built more than 20 knots above the reference and from the nose-high attitudes it decayed more than 20 knots below it. IP had to take the throttle to bring the aircraft back inside the airspeed limits.",
+        "1": "SP, due to a power adjustment applied after the pitch input rather than with it, allowed the airspeed to reach the 20 knot limit from the reference before the throttle was moved. The correction was made only after the IP called the airspeed, and the return to the reference speed lagged the return to level flight. Airspeed control remained at the outer edge of the standard on each recovery.",
+        "2": "SP, due to a small mismatch between throttle movement and rate of pitch change, allowed the airspeed to deviate between 10 and 20 knots from the level-flight reference after the recovery. SP detected the trend on the airspeed indicator without prompting and restored the reference speed with a single, correctly sized power adjustment. No IP action on the throttle was required.",
+        "3": "SP matched the power to the changing attitude throughout each recovery and held the post-recovery airspeed within 10 knots of the level-flight reference. The throttle was moved with the pitch input rather than after it, so no airspeed chase developed.",
+        "4": "SP anticipated the airspeed effect of each attitude and set the power accordingly, holding the post-recovery airspeed essentially on the level-flight reference. There was no overshoot in either direction and no secondary throttle correction was needed on any of the attitudes flown.",
+        "marginal": "SP held the post-recovery airspeed inside standards but repeatedly let it approach 10 knots from the reference before the power correction was applied. The pattern was a throttle input that followed the pitch input instead of accompanying it. SP is expected to lead the power with the attitude change so the airspeed stays closer to the reference in later sorties."
+      }
+    },
+    {
+      "id": "contact-11-em03",
+      "label": "EXIT HEADING ACCURACY",
+      "mif_row": null,
+      "source": "specific:EXIT HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a roll-out that was not referenced to any heading, stopped the recovery wherever the wings happened to level and made no attempt to fly a defined exit heading. The exit heading was more than 10 degrees from the intended heading and the aircraft continued to drift in heading afterwards. IP had to direct the aircraft back onto the working heading for the next presentation.",
+        "1": "SP, due to a roll rate that was not reduced approaching wings level, overshot the intended exit heading and stopped at the 10 degree limit. The heading was regained only after the IP called it, and the correction was made with a shallow turn that took an extended period. Exit heading accuracy stayed at the outer edge of the standard on the following attitudes.",
+        "2": "SP, due to a slightly late reduction of roll rate at wings level, exited the recovery between 5 and 10 degrees from the intended heading. SP identified the offset on the heading indicator without prompting and corrected back with a small, coordinated turn before the next attitude was set. No IP prompting or intervention was required.",
+        "3": "SP rolled out on the intended exit heading within 5 degrees on each recovery. The roll rate was reduced approaching wings level so that heading was captured on the first attempt without a subsequent correcting turn.",
+        "4": "SP exited every recovery on the intended heading with negligible offset, capturing it directly out of the roll with no overshoot. Heading, wings level and level pitch were achieved in the same moment rather than in sequence.",
+        "marginal": "SP exited the recoveries inside the heading standard but with an offset that sat near 5 degrees more often than not, always in the direction of the roll. The trend was a roll rate carried slightly too long into wings level. SP is expected to anticipate the roll-out and stop the heading precisely on the intended value."
+      }
+    },
+    {
+      "id": "contact-11-em04",
+      "label": "ROLL TO THE NEAREST HORIZON",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a failure to read the bank angle and its direction before acting, rolled the aircraft away from the nearest horizon and took the long way round to wings level. The extended roll left the exit heading more than 10 degrees from the intended value and added altitude loss beyond 300 feet. IP had to take control and roll the aircraft level in the correct direction.",
+        "1": "SP, due to an attitude assessment made from the nose position alone without reading bank, started the roll in the wrong direction and reversed it only after the IP called the correct direction. The reversal left the exit heading at the 10 degree limit and delayed the level-off. The correct roll direction was applied on later attitudes only after the same verbal prompting.",
+        "2": "SP, due to a brief hesitation in identifying which horizon was nearer, started the roll late and initially at too low a rate. SP corrected the roll direction and rate without prompting and reached wings level with an exit heading between 5 and 10 degrees from the intended value. The level-off was completed without IP intervention.",
+        "3": "SP read the bank angle correctly on every attitude and rolled towards the nearest horizon without hesitation. The roll was made at a rate appropriate to the bank presented and wings level was reached on the shortest available path.",
+        "4": "SP identified the nearest horizon instantly on every presentation, including the high-bank attitudes, and rolled directly to wings level by the shortest path. The direction decision was never revised and the roll rate was matched to the bank throughout.",
+        "marginal": "SP consistently rolled towards the nearest horizon but with a short pause between recognizing the attitude and committing to the roll. The direction chosen was always correct and the exit parameters stayed inside standards. SP is expected to shorten the recognition-to-input interval so the roll begins as the attitude is read."
+      }
+    },
+    {
+      "id": "contact-11-em05",
+      "label": "STALL AVOIDANCE IN NOSE-HIGH RECOVERY",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": "hf-stress",
+      "texts": {
+        "0": "SP, due to stress in the evaluated environment that produced a pull towards the horizon instead of an unload, increased angle of attack in a decaying nose-high attitude and allowed the stall to develop. Airspeed fell more than 20 knots below the level-flight reference with the stick shaker active and the aircraft departed the intended flight path. IP took control to unload the wing and complete the recovery.",
+        "1": "SP, due to stress that delayed the sequence of power, roll and unload in the nose-high attitude, held back pressure while the airspeed decayed to the 20 knot limit and buffet onset was reached. The wing was unloaded only after the IP called the airspeed and the buffet. The margin to the stall was restored, but only through verbal intervention.",
+        "2": "SP, due to a slightly delayed unload after the roll in the nose-high attitude, allowed the airspeed to decay between 10 and 20 knots below the level-flight reference before angle of attack was reduced. SP recognized the decay on the airspeed indicator, unloaded and added power without prompting, and no buffet developed. The remaining nose-high attitudes were flown with the unload applied on time.",
+        "3": "SP applied power, rolled towards the nearest horizon and unloaded the wing in the correct order on every nose-high attitude, so that no approach to the stall developed. Airspeed was never allowed to decay more than 10 knots below the level-flight reference during the recovery.",
+        "4": "SP flew every nose-high recovery with the angle of attack reduced before the airspeed could decay, keeping a clear margin to the stall at all times. Power, roll and unload were applied as one coordinated action and there was no indication of approach to the stall at any point.",
+        "marginal": "SP avoided any approach to the stall in the nose-high attitudes but let the airspeed run down closer to the 10 knot band than required before unloading. The unload was correct in technique yet applied late in the sequence. SP is expected to unload the wing as the roll is started rather than after wings level is reached."
+      }
+    },
+    {
+      "id": "contact-11-em06",
+      "label": "SPLIT-S AVOIDANCE IN NOSE-LOW AND INVERTED RECOVERY",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a pull applied before the bank was removed, initiated back pressure while the aircraft was still inverted and effectively started a Split-S from the recovery attitude. Altitude loss exceeded 300 feet and continued to increase while the nose remained below the horizon. IP took control to roll the aircraft upright and arrest the descent.",
+        "1": "SP, due to an incorrect order of inputs from the inverted attitude, began the pull before wings level was reached and reversed the sequence only after the IP called for the roll first. Altitude loss reached the 300 foot limit before the nose was raised. The correct roll-then-pull sequence was applied on later attitudes only after the same prompting.",
+        "2": "SP, due to a slight overlap between the roll and the pull from the nose-low inverted attitude, started raising the nose before the bank was fully removed. SP recognized the overlap without prompting, completed the roll first and then raised the nose, keeping the altitude loss between 150 and 300 feet. No IP intervention was needed.",
+        "3": "SP removed the bank before applying any back pressure on every nose-low and inverted attitude, so no Split-S tendency developed. The roll-then-pull sequence was applied cleanly and the nose was raised only once the wings were level.",
+        "4": "SP separated the roll and the pull precisely on every inverted and nose-low attitude, with back pressure introduced only after wings level. There was never any tendency towards a Split-S and the recovery path was the shortest available in each case.",
+        "marginal": "SP kept the correct roll-then-pull sequence on all nose-low and inverted attitudes, but the pull was started just as the wings arrived at level rather than clearly after. The technique stayed within standards and no Split-S tendency appeared. SP is expected to keep a firmer separation between removing bank and raising the nose."
+      }
+    },
+    {
+      "id": "contact-11-em07",
+      "label": "AIRCRAFT LIMIT COMPLIANCE DURING RECOVERY",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-overconfidence",
+      "texts": {
+        "0": "SP, due to overconfidence in the margin available at the entry airspeed, applied an abrupt and large pull out of the nose-low attitude without regard for the load and speed limits. The recovery was flown with the airspeed running beyond the 20 knot band and the pull carried towards the aircraft limits. IP intervened on the controls to reduce the load and contain the airspeed.",
+        "1": "SP, due to an overconfident assessment of how quickly the nose could be raised, applied back pressure at a rate that brought the aircraft up against its limits and required an IP call to ease the pull. Airspeed reached the 20 knot limit during the recovery before the load was reduced. Limits were respected only after the verbal correction.",
+        "2": "SP, due to a pull rate slightly larger than the situation required, moved the recovery closer to the load and airspeed margins than necessary. SP recognized the trend on the instruments, eased the back pressure and completed the recovery with the airspeed between 10 and 20 knots of the reference. The limits were not approached again on the following attitudes.",
+        "3": "SP completed every recovery within the aircraft load and airspeed limits, using a pull rate matched to the attitude and the energy state. No limit was approached and the recovery was still completed promptly.",
+        "4": "SP flew every recovery with a comfortable margin to the load and airspeed limits while still resolving the attitude at the first opportunity. The control inputs were sized precisely to the attitude presented, with no unnecessary loading of the aircraft.",
+        "marginal": "SP stayed within the aircraft limits on every recovery but used a pull rate on the nose-low attitudes that left less margin than necessary. No limit was exceeded and the parameters remained inside standards. SP is expected to size the pull to the actual attitude and energy state rather than applying a uniformly aggressive input."
+      }
+    },
+    {
+      "id": "contact-11-em08",
+      "label": "MINIMUM ALTITUDE LOSS AND PROMPTNESS OF RECOVERY",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a long pause between the transfer of control and the first recovery input, allowed the nose-low attitudes to develop further before acting. Altitude loss exceeded 300 feet on the recoveries and the descent was still increasing when the IP took control to complete them. SP made no correction to the delay on subsequent presentations.",
+        "1": "SP, due to a hesitation in committing to the recovery inputs, started the roll and the pull late enough that altitude loss reached the 300 foot limit. The inputs were applied only after the IP prompted for the recovery to begin. The reaction time did not improve without repeated verbal prompting.",
+        "2": "SP, due to a short delay in reading the attitude before acting, started the recovery slightly late and lost between 150 and 300 feet in the process. SP recognized the delay and shortened the reaction time on the following attitudes without any prompting. IP intervention was not required at any point.",
+        "3": "SP began the recovery immediately on assuming control and completed it with the altitude loss held within 150 feet. Recognition, roll and pull followed each other without pause, so the attitude was resolved at the first opportunity.",
+        "4": "SP resolved every unusual attitude with negligible altitude loss, acting on the attitude the moment control was transferred. The recovery was complete before the aircraft state could develop further, on both the nose-high and the nose-low presentations.",
+        "marginal": "SP recovered from all attitudes with the altitude loss inside standards, but with a consistent short pause before the first input. The recoveries themselves were correct once started. SP is expected to compress the interval between assuming control and applying the first recovery input."
+      }
+    },
+    {
+      "id": "contact-11-em09",
+      "label": "ATTITUDE RECOGNITION AND INSTRUMENT CROSS-CHECK",
+      "mif_row": null,
+      "source": "general:a,b,c",
+      "hf_concept": "hf-spatial-disorientation",
+      "texts": {
+        "0": "SP, due to spatial disorientation on assuming control with no immediate external horizon reference, misread the attitude and applied inputs appropriate to the opposite pitch and bank. The wrong inputs drove the altitude beyond 300 feet from the reference and the airspeed beyond the 20 knot band. IP took control and re-established the aircraft in level flight before returning it to SP.",
+        "1": "SP, due to an attitude read from a single instrument without cross-check, identified the pitch correctly but the bank incorrectly and began the recovery on that basis. The error was corrected only after the IP called the actual attitude, and by then the altitude had reached the 300 foot limit. SP continued to rely on a narrow scan for the remaining presentations.",
+        "2": "SP, due to a scan that fixed briefly on the attitude indicator before including airspeed and altitude, was slow to build a complete picture of the aircraft state. SP completed the cross-check without prompting and recovered with the altitude between 150 and 300 feet of the reference. The scan was broadened on the following attitudes without IP input.",
+        "3": "SP read pitch, bank, airspeed and altitude in a single cross-check on assuming control and identified each attitude correctly before acting. The recovery inputs matched the actual aircraft state on every presentation and the parameters were held within the tighter tolerances.",
+        "4": "SP built a complete and correct picture of the aircraft state instantly on every presentation, including the high-bank and inverted attitudes. The cross-check was continuous through the recovery, so the inputs were adjusted as the state changed and the exit parameters were achieved with negligible deviation.",
+        "marginal": "SP identified every attitude correctly and kept all parameters inside standards, but the initial cross-check dwelt on the attitude indicator before airspeed and altitude were taken in. The picture was complete before the inputs were applied, only later than ideal. SP is expected to include energy state in the first sweep of the cross-check."
+      }
+    },
+    {
+      "id": "contact-11-em10",
+      "label": "SMOOTHNESS AND SIZING OF CONTROL INPUTS",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-acts-errors",
+      "texts": {
+        "0": "SP, due to a skill-based error in sizing the control inputs, over-controlled the aircraft in both roll and pitch and generated a series of reversals around wings level. The oscillation drove the altitude beyond 300 feet and the exit heading beyond 10 degrees from the intended value. IP took control to damp the inputs and stabilize the aircraft.",
+        "1": "SP, due to control inputs applied larger than required and then reversed, produced a pilot-induced oscillation in roll that continued until the IP called for the controls to be relaxed. The altitude reached the 300 foot limit and the exit heading the 10 degree limit during the oscillation. The input sizing improved only in response to the verbal correction.",
+        "2": "SP, due to an initial roll input larger than the bank required, overshot wings level and had to reverse once to stop the roll. SP damped the inputs without prompting and completed the recovery with the exit heading between 5 and 10 degrees and the altitude between 150 and 300 feet of the reference. No further oscillation appeared on the remaining attitudes.",
+        "3": "SP sized the roll and pitch inputs to the attitude presented and applied them smoothly, with no reversals or oscillation around wings level. Each recovery was completed with a single set of inputs and the parameters were held within the tighter tolerances.",
+        "4": "SP applied control inputs that were precisely proportional to each attitude, smooth in onset and removal, with no correction of the correction on any presentation. The aircraft arrived at level flight on the intended heading in one continuous movement.",
+        "marginal": "SP kept all parameters inside standards but applied roll inputs slightly larger than the bank required, needing a small damping input at wings level on most attitudes. No oscillation developed and the exit parameters were met. SP is expected to size the initial input to the actual bank so that no damping correction is needed."
+      }
+    }
+  ]
+}

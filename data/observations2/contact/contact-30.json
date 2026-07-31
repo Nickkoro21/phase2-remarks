@@ -1,0 +1,147 @@
+{
+  "item_id": "contact-30",
+  "item_name": "EMERGENCY LANDING PATTERN (ELP)",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [30],
+  "mif_rows": [
+    {"sn": 30, "row_name": "ELP"}
+  ],
+  "error_modes": [
+    {
+      "id": "contact-30-em01",
+      "label": "Airspeed control through the ELP",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a late and coarse pitch response to the simulated engine failure, did not hold the ELP airspeed schedule between high key and low key. Airspeed diverged to 22 knots above and later to 14 knots below the target, exceeding the +15 / -10 knots limit in both directions. The IP intervened on the controls to restore the glide speed before base key.",
+        "1": "SP, due to a pitch input that chased the ELP airspeed instead of setting an attitude, did not stabilize the glide speed after high key. Airspeed reached 15 knots fast on the descent and 10 knots slow in the turn to final, sitting on the +15 / -10 knots limit. The correction was applied only after repeated verbal prompting by the IP.",
+        "2": "SP, due to a trim setting left unchanged after the simulated failure, did not maintain the ELP airspeed within the tighter tolerance. Airspeed drifted to 13 knots fast approaching low key and 8 knots slow on final, between the +10 / -5 and +15 / -10 knots bands. SP recognized both excursions and recovered the schedule without any input from the IP.",
+        "3": "SP set the glide attitude promptly after the simulated failure and flew the ELP airspeed schedule accurately from high key to touchdown. Deviations remained inside +10 / -5 knots throughout the pattern, including the configuration changes and the turn to final. Corrections were small, timely and made with trim rather than with pressure on the stick.",
+        "4": "SP captured the ELP glide speed within seconds of the simulated failure and held it essentially on target for the whole pattern. Airspeed excursions did not exceed a few knots even during gear and flap extension and through the final turn. Speed control at the round out left ample margin above the stall.",
+        "marginal": "SP kept the ELP airspeed inside the required tolerance, but the trace shows a consistent bias to the fast side that grew through the descending turns. Corrections were correct in direction yet late enough that the deviation reached the outer part of the acceptable band before it was arrested. SP is expected to set and trim the glide speed earlier so that the schedule is held near the target rather than near the limit."
+      }
+    },
+    {
+      "id": "contact-30-em02",
+      "label": "Altitude at key points",
+      "mif_row": null,
+      "source": "specific:ALTITUDE AT KEY POINTS (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a pattern flown without reference to the computed key point altitudes, did not arrive at high key and low key at the planned heights. The aircraft was 420 feet high at high key and 260 feet low at low key, outside the +300 / -200 feet limit. The IP took control to reposition the pattern and preserve a safe glide to the runway.",
+        "1": "SP, due to a delayed assessment of the wind effect on the descending pattern, did not correct the energy state between key points. Altitude was 300 feet high at low key and 200 feet low at base key, exactly at the +300 / -200 feet limit. SP began the correction only after the IP called the deviation twice.",
+        "2": "SP, due to a bank angle held shallower than required in the turn from high key, did not track the planned altitude profile. The aircraft passed low key 230 feet high and base key 170 feet low, between the plus or minus 150 feet and the +300 / -200 feet bands. SP identified the error at low key and adjusted the ground track in time to regain the profile on final.",
+        "3": "SP flew the ELP so that high key, low key and base key were all reached within plus or minus 150 feet of the planned altitudes. Bank angle and ground track were adjusted continuously to protect the energy state as the pattern developed. The resulting glide gave a comfortable margin to the intended touchdown point.",
+        "4": "SP arrived at every key point within a few tens of feet of the planned altitude, with no visible correction required between them. The pattern was adjusted continuously and almost imperceptibly for the observed wind. Energy management at base key left the runway comfortably makeable with the flaps still available.",
+        "marginal": "SP met the key point altitudes within standards, but each point was reached on the high side with the excess energy carried forward rather than dissipated. The pattern remained flyable only because the final turn was tightened. SP is expected to assess the altitude at high key against the plan and to correct the ground track earlier so that low key and base key are reached closer to the planned figures."
+      }
+    },
+    {
+      "id": "contact-30-em03",
+      "label": "ELP planning to touch down within the first third of the runway",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an aim point selected without reference to the available glide, did not plan the ELP to touch down within the first third of the runway. The projected touchdown was well beyond the first third and the approach could not be salvaged with the remaining energy. The IP took the aircraft and initiated a go around.",
+        "1": "SP, due to a late decision on where to place the aim point, did not protect the intended touchdown zone. The aircraft was tracking to touch down at the very end of the first third with no margin remaining, and SP adjusted the profile only after the IP prompted a correction on final.",
+        "2": "SP, due to an aim point set slightly deep for the observed headwind, did not initially plan the touchdown as required. The projected point moved past the first quarter of the runway, but SP recognized the trend at base key and used the ground track and flap timing to bring the touchdown back inside the first third without any input from the IP.",
+        "3": "SP planned the ELP with a correctly chosen aim point and touched down within the first third of the runway. The energy state at base key was assessed against the actual wind and the pattern was adjusted accordingly. The touchdown point matched the one briefed for the exercise.",
+        "4": "SP planned the ELP so precisely that the aircraft arrived over the threshold with the intended energy and touched down close to the briefed point inside the first third. The plan was visibly revised in flight as the wind effect became apparent, with no loss of accuracy. The result would have left the maximum usable runway available in a real forced landing.",
+        "marginal": "SP touched down within the first third of the runway, but consistently in its last portion, leaving little margin for a misjudged flare or a stronger headwind. The plan was sound in principle yet the aim point was set deeper than the exercise intends. SP is expected to select the aim point earlier and to bias the plan short so that the touchdown falls comfortably inside the first third."
+      }
+    },
+    {
+      "id": "contact-30-em04",
+      "label": "Timely and correct aircraft configuration",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to inadequate workload management during the approach phase, did not configure the aircraft timely and correctly in the ELP. Gear and flaps were selected out of sequence and well after the planned points, leaving the aircraft unconfigured inside base key and the glide unable to reach the touchdown zone. The IP intervened to complete the configuration and terminate the pattern.",
+        "1": "SP, due to inadequate workload management during the approach phase, did not complete the ELP configuration at the planned points. Gear selection was delayed until after low key and landing flaps were set only on short final, so the drag change arrived too late to be flown out smoothly. The configuration was completed only after the IP called for it.",
+        "2": "SP, due to task sequencing that concentrated all cockpit workload inside the turn, did not configure the aircraft at the briefed points. Gear and flap selections were made noticeably late relative to low key, but SP recognized the compression, resequenced the remaining actions and had the aircraft fully configured on final with the airspeed schedule intact.",
+        "3": "SP configured the aircraft timely and correctly throughout the ELP, with gear and flap selections made at the briefed points and in the correct order. Each configuration change was flown out with pitch and trim so that the airspeed schedule was preserved. Cockpit workload remained distributed across the pattern.",
+        "4": "SP anticipated every configuration change in the ELP and made each selection at the correct point with the aircraft in trim and the speed on schedule. Drag changes produced no detectable excursion in airspeed or descent rate. Workload was managed so that the pattern was flown with capacity remaining for the simulated restart actions.",
+        "marginal": "SP configured the aircraft correctly and within the accepted window, but each selection was made at the late edge of that window and the actions bunched together approaching low key. The airspeed schedule held only because the corrections that followed were prompt. SP is expected to anticipate the gear and flap points and to spread the configuration actions across the pattern rather than compressing them into the turn."
+      }
+    },
+    {
+      "id": "contact-30-em05",
+      "label": "Simulated engine restart procedure",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-lack-of-knowledge",
+      "texts": {
+        "0": "SP, due to a lack of knowledge of the engine restart procedure required for this exercise, did not demonstrate cognizance of it or execute it in simulation. The steps were attempted in the wrong order and critical items were omitted, and the attempt consumed attention that was needed to fly the pattern. The IP stopped the simulated procedure and took the aircraft to restore the ELP profile.",
+        "1": "SP, due to an incomplete recall of the engine restart procedure, did not execute it in simulation without assistance. Several items were called out of sequence and the attempt was completed only after the IP prompted each remaining step, delaying the actions past low key.",
+        "2": "SP, due to an interrupted recall of the restart sequence under the workload of the pattern, did not initially execute the simulated procedure in the correct order. SP paused, identified the omitted item and completed the procedure correctly before base key without any prompting from the IP, and the flight path was not affected.",
+        "3": "SP demonstrated clear cognizance of the engine restart procedure and executed it in simulation at the appropriate point in the pattern. The items were called and actioned in the correct order while the ELP profile continued to be flown accurately. The simulation did not degrade the aircraft control or the pattern geometry.",
+        "4": "SP executed the simulated engine restart with immediate and complete recall of the procedure, integrating it into the pattern without any interruption of the scan. The sequence was verbalized clearly for the IP and completed with time in hand before low key. The airmanship shown in dividing attention between the procedure and the glide was of a high standard.",
+        "marginal": "SP knew the engine restart procedure and executed it in simulation acceptably, but the recall was hesitant and each item required a visible pause before it was actioned. Attention was drawn inside the cockpit for longer than the pattern comfortably allows. SP is expected to bring the procedure to the point of immediate recall so that the simulation costs no attention from the glide."
+      }
+    },
+    {
+      "id": "contact-30-em06",
+      "label": "Stall margin and low speed handling",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an attempt to stretch the glide to the intended touchdown point, did not prevent the appearance of stall characteristics in the final turn. Airspeed decayed well below the ELP schedule with buffet and stall warning present, and the recovery required advancing the throttle. The IP intervened on the controls to unload the aircraft and terminate the pattern.",
+        "1": "SP, due to a nose up pitch input held in the turn to final to protect the aim point, did not maintain the required stall margin. Airspeed fell to the low limit of the schedule with the stall warning triggering briefly, and SP relaxed the back pressure only after the IP called the speed.",
+        "2": "SP, due to increased back pressure applied during the final flap extension, did not preserve the intended speed margin. Airspeed decayed toward the low end of the acceptable band with no stall indications, and SP recognized the decay, lowered the nose and restored the schedule without any input from the IP or use of the throttle.",
+        "3": "SP flew the ELP with the stall margin protected throughout, including the final turn and the round out. No stall characteristics appeared at any point and the throttle was not required to recover the aircraft state. Bank angle and back pressure were traded correctly to preserve the speed.",
+        "4": "SP maintained a comfortable and consistent margin above the stall at every stage of the ELP, with the final turn flown at a bank and speed combination that left the aircraft well clear of the buffet. Control inputs were smooth and the flare was flown with the energy planned rather than borrowed. There was never any tendency toward a condition requiring throttle to recover.",
+        "marginal": "SP kept the aircraft clear of stall characteristics, but the final turn was flown at the low edge of the speed schedule with the margin thinner than the exercise intends. No warning appeared, yet the combination of bank and speed left little tolerance for a gust. SP is expected to protect the speed by adjusting the aim point rather than the pitch attitude when the glide appears short."
+      }
+    },
+    {
+      "id": "contact-30-em07",
+      "label": "ELP termination as touch and go or go around",
+      "mif_row": null,
+      "source": "general:e",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to continuation bias in maintaining the approach after the conditions had deteriorated below the briefed minima, did not terminate the ELP as a touch and go or a go around as required. SP continued toward a full stop from an approach that no longer met the parameters for the exercise. The IP took control and executed the go around.",
+        "1": "SP, due to continuation of the plan after the information that invalidated it had already been received, did not initiate the go around at the point where the ELP could no longer produce an acceptable touchdown. The termination was flown correctly but only after a direct instruction from the IP, by which time the aircraft was inside the last acceptable point for the decision.",
+        "2": "SP, due to a late reassessment of the energy state on short final, did not decide on the termination as early as the exercise requires. SP recognized without prompting that the touchdown zone could not be met, called and flew a clean go around, and the aircraft never approached an unsafe state.",
+        "3": "SP terminated the ELP correctly as a touch and go, with the decision made in good time and the transition flown to the published technique. Configuration and power were applied in the correct sequence and the runway was used as planned. The termination was stated clearly to the IP before it was flown.",
+        "4": "SP assessed the approach early, stated the intended termination and flew a precise touch and go with the aircraft on speed and on the centerline. The decision point was respected without any prompting and the transition was seamless. The judgment shown in selecting between touch and go and go around was exactly as briefed.",
+        "marginal": "SP terminated the ELP correctly, but the decision was made close to the last usable point and the announcement to the IP came after the action had begun. The execution itself was sound. SP is expected to assess the approach earlier and to state the intended termination before reaching short final."
+      }
+    },
+    {
+      "id": "contact-30-em08",
+      "label": "Pattern geometry and wind correction between key points",
+      "mif_row": null,
+      "source": "general:a,b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a ground track flown without any allowance for the reported wind, did not position the ELP pattern so that the runway remained makeable. The aircraft was displaced far downwind of the intended track and arrived at base key with the runway unreachable on the available glide. The IP took control to recover the pattern.",
+        "1": "SP, due to a wind correction applied only after the drift had become obvious, did not hold the planned ground track between high key and low key. The displacement was large enough that the final turn had to be flown at an abnormally steep bank, and the correction was made only after the IP pointed out the drift.",
+        "2": "SP, due to a bank angle held constant instead of varied for the drift, did not track the planned pattern on the downwind side. The aircraft was displaced noticeably wide at low key, but SP identified the drift, tightened the turn progressively and rolled out on final aligned with the runway without any assistance.",
+        "3": "SP flew the ELP pattern with the ground track correctly adjusted for the wind, varying the bank angle to keep the aircraft in a position from which the runway remained makeable. Roll out on final was aligned with the centerline and required only small corrections. The geometry supported the planned touchdown point.",
+        "4": "SP corrected for the wind continuously and precisely from high key onward, keeping the pattern geometry within a very tight band of the plan. The final turn required no unusual bank and the aircraft rolled out on centerline at the planned altitude and speed. The pattern would have been flyable to the same accuracy in a real forced landing.",
+        "marginal": "SP kept the pattern within a workable geometry, but each turn was rolled out slightly wide and the accumulated displacement had to be taken out in the final turn. The wind correction was reactive rather than planned. SP is expected to assess the drift at high key and to build the correction into the pattern rather than removing it on final."
+      }
+    },
+    {
+      "id": "contact-30-em09",
+      "label": "Coordination with IP and ATC during the simulated emergency",
+      "mif_row": null,
+      "source": "general:c,e|conditions:1,2",
+      "hf_concept": "hf-crew-resource-management",
+      "texts": {
+        "0": "SP, due to a CRM breakdown in which the required behavior of explicit role assignment was not performed, did not coordinate the simulated emergency with the IP and ATC. The ELP was begun without confirming the IP command and the required calls were never made, so the pattern was flown without a shared plan. The IP took control and terminated the exercise.",
+        "1": "SP, due to inadequate crew coordination between front and rear cockpit, did not keep the IP informed of the intended profile or complete the required transmissions in time. The calls were made only after the IP directed each one, and the position report reached ATC after the aircraft was already established in the pattern.",
+        "2": "SP, due to an unshared assessment of the aircraft state between front and rear cockpit, did not initially communicate the change of plan when the pattern was adjusted. SP recognized the omission, briefed the IP on the revised aim point and completed the required calls before base key without any prompting.",
+        "3": "SP coordinated the simulated emergency correctly, acknowledging the IP command, verbalizing the intended pattern and completing the required calls at the appropriate points. The IP was kept informed of the energy state and of the planned termination. Radio work did not interfere with flying the ELP.",
+        "4": "SP handled the coordination with the IP and ATC to a standard well above the level of training, stating the plan, the key points and the intended termination clearly and in good time. Every transmission was concise and correctly timed, and the IP had a complete picture of the SP intentions throughout. Communication was fitted around the flying rather than competing with it.",
+        "marginal": "SP coordinated adequately with the IP and ATC, but the calls came late in each phase and the intended termination was communicated only on short final. Nothing was omitted. SP is expected to state the plan and the intended termination earlier so that the IP is not left inferring the SP intentions from the flight path."
+      }
+    }
+  ]
+}

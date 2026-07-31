@@ -1,0 +1,132 @@
+{
+  "item_id": "contact-08",
+  "item_name": "POWER ON / ELP STALLS",
+  "category": "contact",
+  "schema": "v2-trunk",
+  "mif_numbers": [8],
+  "mif_rows": [
+    { "sn": 8, "row_name": "Power ON / ELP Stalls" }
+  ],
+  "error_modes": [
+    {
+      "id": "contact-08-em01",
+      "label": "ALTITUDE CONTROL THROUGH ENTRY AND RECOVERY",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a late and coarse pitch input at the recovery, did not contain the altitude excursion of the maneuver and went more than 300 ft below the entry altitude. The aircraft was still descending with no reversal of the vertical trend when the IP took the controls to arrest the loss and re-establish level flight. SP did not reference the entry altitude at any point of the recovery.",
+        "1": "SP, due to holding the nose low well past the cessation of the stall indications, allowed the aircraft to reach 300 ft below the entry altitude, exactly at the limit of the standard. The climb back to the entry altitude was started only after repeated verbal prompting by the IP. SP did not use the altimeter trend to plan the level off, so the correction was late although no control input by the IP was required.",
+        "2": "SP, due to a slightly delayed pitch reversal after the recovery, descended about 200 ft below the entry altitude, between the 150 ft and 300 ft limits. SP identified the excursion without any prompting and returned to the entry altitude within the following turn, arriving with a controlled rate and no overshoot above it. The subsequent stall was entered from the correct altitude.",
+        "3": "SP maintained the entry altitude before the stall and kept the total excursion of the maneuver within 150 ft of it. The vertical trend was reversed smoothly at the recovery and the aircraft was stabilized at the entry altitude with no overshoot. SP monitored the altimeter throughout the recovery and reported the altitude accurately.",
+        "4": "SP flew the entry altitude with excursions of a few tens of feet during the whole sequence of stalls, with the altimeter needle showing no perceptible overshoot at the level off. The pitch reversal was progressive and precisely timed, so the aircraft settled at the entry altitude at the first attempt each time.",
+        "marginal": "SP kept the altitude excursion inside the standard, but on every repetition the loss reached approximately 150 ft, consistently at the edge of the tight limit and always in the same low direction. The trend indicates that SP is trading altitude for a comfortable pitch attitude instead of controlling it. SP is expected to anticipate the pitch reversal earlier so that the excursion is reduced well inside the limit on the next sorties."
+      }
+    },
+    {
+      "id": "contact-08-em02",
+      "label": "AIRSPEED CONTROL AT ENTRY AND AFTER RECOVERY",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an uncontrolled power and pitch combination after the recovery, allowed the airspeed to diverge by more than 20 kts from the value required for the maneuver. The aircraft was accelerating towards the maneuvering limit with the nose still below the horizon when the IP intervened on the controls and on the power lever to re-establish the required airspeed. SP did not call any airspeed during the sequence.",
+        "1": "SP, due to leaving the power lever untouched while the nose was lowered at the recovery, let the airspeed deviate by 20 kts from the required value, at the limit of the standard. The power and pitch correction was applied only after the IP prompted verbally with the target airspeed. The deviation was arrested without any control input by the IP, but the aircraft remained off speed for a prolonged part of the recovery.",
+        "2": "SP, due to a small delay in coordinating power with the pitch change, allowed the airspeed to deviate by about 15 kts from the required value, between the 10 kts and 20 kts limits. SP detected the deviation on the airspeed indicator without prompting and corrected it promptly with a smooth power adjustment. The airspeed was stable at the required value before the next entry.",
+        "3": "SP set and maintained the entry airspeed and kept the deviation within 10 kts throughout the entry, the recovery and the level off. Power was coordinated with every pitch change, so the airspeed built up progressively with no overshoot of the target value. SP announced the airspeed at the recovery.",
+        "4": "SP controlled the airspeed with deviations of only a few knots across all repetitions, holding the entry value steady before each stall and rebuilding it without any overshoot after each recovery. The power lever movements were small and anticipatory rather than corrective.",
+        "marginal": "SP remained inside the airspeed standard, but the deviations repeatedly approached 10 kts and were always corrected after the fact rather than anticipated. The pattern shows that SP is reacting to the airspeed indicator instead of leading it with power. SP is expected to coordinate power with pitch earlier so that the deviations stay clearly inside the tight limit."
+      }
+    },
+    {
+      "id": "contact-08-em03",
+      "label": "EXIT HEADING CONTROL",
+      "mif_row": null,
+      "source": "specific:EXIT HEADING (degrees)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an interrupted instrument cross-check while attention remained on the pitch attitude, did not counter the yaw at the stall and exited more than 10 degrees off the entry heading. The aircraft continued to diverge in heading with rudder still misapplied until the IP took the controls to stop the yaw and return to the briefed heading. SP did not identify the direction of the divergence when asked.",
+        "1": "SP, due to an absent cross-check of the heading indicator during the recovery, exited 10 degrees off the entry heading, at the limit of the standard. The heading was regained only after the IP called the deviation and the direction of correction. SP kept the wings level thereafter, but the correction back to the entry heading was delayed and consumed most of the following straight leg.",
+        "2": "SP, due to a brief lapse in the cross-check while the power was being set, exited about 7 degrees off the entry heading, between the 5 and 10 degree limits. SP noticed the deviation on the heading indicator without prompting and corrected it with coordinated rudder and aileron before the next entry. The wings were kept level throughout the recovery.",
+        "3": "SP kept the yaw under control with timely rudder at the stall and exited within 5 degrees of the entry heading on each repetition. The heading indicator was included in the cross-check during the recovery and the exit heading was announced correctly. Aileron use remained coordinated with rudder.",
+        "4": "SP exited the maneuver on the entry heading with only a few degrees of deviation every time, holding the ball centred through the stall and the recovery. The rudder input matched the yaw tendency exactly, so no heading correction was needed after the recovery.",
+        "marginal": "SP held the exit heading inside the standard, but the deviation reached about 5 degrees on each repetition and always in the same direction, indicating an incomplete rudder input against the yaw at the stall. The cross-check of the heading indicator resumes only after the recovery is complete. SP is expected to include the heading in the cross-check during the recovery so that the exit deviation is reduced."
+      }
+    },
+    {
+      "id": "contact-08-em04",
+      "label": "CLIMB ATTITUDE AND BANK BEFORE THE STALL",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unstable pitch input during the deceleration, did not maintain the climb attitude before the stall and let the bank wander through and beyond the required value. The aircraft reached the stall in an attitude and bank that did not correspond to the exercise and the IP took the controls to prevent an uncontrolled roll at the buffet. The entry produced excursions beyond 300 ft in altitude and more than 20 kts in airspeed.",
+        "1": "SP, due to a pitch rate that did not match the deceleration, held the climb attitude only intermittently and allowed the bank to reach the limit of the required value before the stall. SP set the attitude and the bank correctly only after repeated verbal indications by the IP. No control input by the IP was needed, but the aircraft entered the stall with parameters at the edge of the standard.",
+        "2": "SP, due to a slightly aggressive initial pitch input, established the climb attitude with a small overshoot and let the bank vary moderately during the deceleration. SP detected the drift in attitude and bank on the attitude indicator and corrected it before the buffet, keeping the entry inside the tight limits of altitude and airspeed. The stall was entered with the intended attitude.",
+        "3": "SP established and maintained the climb attitude before the stall and held the required bank steady through the deceleration. The pitch rate matched the airspeed reduction, so the aircraft arrived at the buffet with the attitude and bank called in the briefing. The parameters of the entry remained inside the tight limits.",
+        "4": "SP set the climb attitude in one smooth movement and held it with negligible variation through the deceleration, with the bank fixed at the required value and the ball centred. The stall developed exactly in the attitude briefed, without any corrective input during the entry.",
+        "marginal": "SP maintained the climb attitude and the bank within the standards, but both required continuous small corrections and the bank drifted repeatedly towards the outer edge of the required value. The entry is being flown by correction rather than by a stable attitude reference. SP is expected to set the attitude and the bank once and hold them through the deceleration on the following sorties."
+      }
+    },
+    {
+      "id": "contact-08-em05",
+      "label": "MANEUVER EXECUTION PER TECHNIQUES AND PROCEDURES MANUAL",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient study of the maneuver, did not execute the Power on / ELP Stalls in accordance with the Techniques and Procedures Manual, omitting steps of the sequence and setting the power out of order. The maneuver was flown outside the described profile and the IP took the controls and terminated the exercise. SP could not state the correct sequence when debriefed in the air.",
+        "1": "SP, due to an imprecise recall of the sequence, executed the maneuver with steps taken out of the order described in the Techniques and Procedures Manual. SP performed the correct sequence only after the IP verbally called each step. The maneuver was completed without any control input by the IP, but the parameters reached the limits of the standard because of the delay.",
+        "2": "SP, due to hesitation at the transition from the entry to the recovery, executed one step of the sequence later than described in the Techniques and Procedures Manual. SP recognized the omission without prompting and completed the sequence in the correct order, keeping the maneuver inside the standard. The remaining repetitions followed the described profile.",
+        "3": "SP executed the Power on / ELP Stalls in accordance with the Techniques and Procedures Manual, with each step of the entry, the stall and the recovery taken in the described order and at the described point. The clearing turns and the configuration checks preceded the entry. SP verbalized the sequence accurately while flying it.",
+        "4": "SP executed the maneuver exactly as described in the Techniques and Procedures Manual on every repetition, with the steps flowing without hesitation and without any dead time between the recovery and the setup for the next entry. The verbalization matched the actions precisely.",
+        "marginal": "SP executed the maneuver in accordance with the Techniques and Procedures Manual, but each step required a visible pause for recall before it was applied. The sequence is being reconstructed in flight rather than being known. SP is expected to consolidate the sequence on the ground so that the execution becomes continuous in the following sorties."
+      }
+    },
+    {
+      "id": "contact-08-em06",
+      "label": "RECOVERY INITIATION AT THE ONSET OF LOSS OF CONTROL",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-startle-effect",
+      "texts": {
+        "0": "SP, due to a startle response at the onset of the departure from controlled flight that displaced the memorized recovery sequence, did not initiate the recovery at the first indication of loss of aircraft control. The stall was allowed to develop with the stick still aft and the loss exceeded 300 ft before the IP took the controls and recovered the aircraft. SP made no recovery input of his own.",
+        "1": "SP, due to surprise at the buffet, delayed the recovery beyond the first indication of loss of aircraft control and started it only after the IP called for it. The subsequent inputs followed the manual criteria and the aircraft was recovered without any control input by the IP, but the delay drove the altitude loss to 300 ft, at the limit of the standard.",
+        "2": "SP, due to a brief hesitation at the onset of the buffet, initiated the recovery slightly after the first indication of loss of aircraft control. SP applied the recovery criteria of the Techniques and Procedures Manual without any prompting and contained the altitude loss at about 200 ft, between the tight and the wide limit. The following entries were recovered on the first indication.",
+        "3": "SP initiated the recovery at the first indication of loss of aircraft control, applying the criteria of the Techniques and Procedures Manual without delay. The stall was broken immediately and the altitude loss stayed within 150 ft. SP identified and called the indication that triggered the recovery.",
+        "4": "SP recognized the onset of loss of aircraft control instantly on every repetition and initiated the recovery with the correct inputs in a single continuous action, with no hesitation between the indication and the response. The stall was broken with the minimum possible excursion in altitude and airspeed.",
+        "marginal": "SP initiated the recovery within the standard, but each time only after a short pause at the buffet, and the pause was consistent across all the repetitions. The recognition of the onset is still deliberate rather than automatic. SP is expected to reach an immediate and reflexive recovery initiation, so that the reaction is not dependent on conscious confirmation of the indication."
+      }
+    },
+    {
+      "id": "contact-08-em07",
+      "label": "LEVEL OFF WITH MINIMUM ALTITUDE LOSS",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to holding the recovery attitude far longer than necessary after the stall was broken, did not level off with the minimum altitude loss possible and the descent continued past 300 ft below the entry altitude. The aircraft was still going down with the power not yet matched to the attitude when the IP took the controls to level it. SP did not recognize that the aircraft had stopped stalling.",
+        "1": "SP, due to a level off that was flown as a single late pull instead of a progressive recovery to the horizon, lost 300 ft in the process, at the limit of the standard. SP levelled the aircraft only after the IP called the altitude and the correction. The maneuver was completed without any control input by the IP, but the altitude loss was clearly more than the maneuver required.",
+        "2": "SP, due to a slightly late start of the pitch reversal, levelled the aircraft with an altitude loss of about 200 ft, between the tight and the wide limit. SP recognized the excess without prompting and completed the level off smoothly with the power matched to the attitude. The following repetitions were levelled with a noticeably smaller loss.",
+        "3": "SP levelled the aircraft off with the minimum altitude loss possible for the maneuver, keeping the total loss within 150 ft. The pitch reversal was started as soon as the stall was broken and was progressive, with power set to support the level off. The aircraft was stabilized level at the target altitude.",
+        "4": "SP levelled the aircraft with an altitude loss reduced to the minimum the maneuver allows, blending the break of the stall directly into the level off without any intermediate descent. Pitch and power arrived at the level flight values simultaneously and the aircraft stabilized immediately.",
+        "marginal": "SP levelled the aircraft within the altitude standard, but the loss reached approximately 150 ft on each repetition because the pitch reversal is started only once the airspeed is comfortably high. The technique is safe but not yet economical in altitude. SP is expected to begin the level off as soon as the stall is broken so that the loss is reduced further."
+      }
+    },
+    {
+      "id": "contact-08-em08",
+      "label": "SECONDARY STALL PREVENTION AND CORRECTIVE ACTION",
+      "mif_row": null,
+      "source": "general:e",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to an aircraft state that had diverged from the SP's mental model without being reassessed, pulled back into the buffet before flying airspeed was regained and produced a secondary stall. SP took no proper action against it and the aircraft entered a second uncontrolled condition until the IP took the controls and recovered it. The total altitude loss exceeded 300 ft.",
+        "1": "SP, due to retaining the mental model of a completed recovery while the airspeed was still low, allowed a secondary stall to appear at the level off. SP applied the corrective action only after the IP called the secondary stall, and the resulting altitude loss reached 300 ft, at the limit of the standard. The aircraft was recovered without any control input by the IP.",
+        "2": "SP, due to a pull that slightly preceded the rebuilding of airspeed, allowed the onset of a secondary stall to appear at the level off. SP recognized the indication immediately without prompting, released the back pressure and took the proper action, containing the total altitude loss at about 200 ft. No secondary stall appeared on the following repetitions.",
+        "3": "SP did not allow the appearance of a secondary stall, matching the pull at the level off to the airspeed available on every repetition. The aircraft was flown out of the recovery with the buffet fully cleared and the total altitude loss stayed within 150 ft. SP monitored the airspeed against the attitude throughout the level off.",
+        "4": "SP kept the aircraft entirely clear of any secondary stall indication, controlling the back pressure at the level off so precisely that the buffet never reappeared even marginally. The airspeed and the attitude were reassessed continuously, so the recovery flowed into level flight in a single stable sequence.",
+        "marginal": "SP avoided any secondary stall, but on each level off the aircraft was brought close to the onset of the buffet before the back pressure was eased. The margin against a secondary stall is being managed by feel rather than by reference to the airspeed. SP is expected to reassess the airspeed before applying the pull, so that a clearer margin is maintained in the following sorties."
+      }
+    }
+  ]
+}

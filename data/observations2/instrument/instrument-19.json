@@ -1,0 +1,147 @@
+{
+  "item_id": "instrument-19",
+  "item_name": "EN-ROUTE DESCENT",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [19],
+  "mif_rows": [
+    {"sn": 19, "row_name": "En-Route Descent"}
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-19-em01",
+      "label": "Altitude control and level-off in the descent",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an interrupted instrument cross-check with attention held on the navigation display, did not monitor the altimeter through the descent and did not anticipate the level-off. SP passed the cleared altitude by more than 300 feet and continued descending until IP intervened with control inputs to arrest the descent. SP did not initiate any recovery on his/her own and the aircraft state was not restored without assistance.",
+        "1": "SP, due to an interrupted instrument cross-check that left the altimeter outside the scan for long intervals, did not lead the level-off with a timely power reduction and pitch change. Deviation from the cleared altitude reached the 300 feet limit and SP corrected only after repeated verbal prompting by IP. The recovery was late and the altitude was regained slowly.",
+        "2": "SP, due to a cross-check that dwelled on the navigation instruments at the expense of the altimeter, allowed the vertical profile to run ahead of the intended one. Altitude deviation grew past 150 feet and reached approximately 200 to 250 feet before SP detected it. SP corrected in good time and returned to the cleared altitude without IP intervention.",
+        "3": "SP maintained an active instrument cross-check that kept the altimeter in the scan throughout the descent. Altitude was held within 150 feet of the cleared and intermediate altitudes, and the level-off was led with a timely power and pitch change. Corrections were prompt and precise.",
+        "4": "SP flew the en-route descent with a continuous and evenly distributed cross-check, holding altitude essentially on the cleared values with negligible excursions. The level-off was anticipated and executed with no perceptible overshoot. Vertical profile control was of a standard well above the level expected at this stage.",
+        "marginal": "SP kept altitude within tolerance during the en-route descent, but the deviations clustered toward the outer part of the acceptable band and were consistently on the low side approaching level-off. SP corrected each time before any prompting, yet the cross-check returned to the altimeter later than desirable. SP is expected to tighten the vertical scan and lead the level-off earlier so that altitude control is centered rather than marginal."
+      }
+    },
+    {
+      "id": "instrument-19-em02",
+      "label": "Airspeed control during the descent",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (KIAS)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to setting descent power without reference to the pitch attitude required for the target airspeed, allowed the airspeed to diverge and did not arrest the trend. Airspeed departed the briefed value by more than 20 KIAS and continued to increase, so IP intervened on the power lever to recover the parameter. SP did not recognize the divergence from the airspeed indicator in time.",
+        "1": "SP, due to a power setting that did not match the selected descent attitude, did not stabilize the airspeed at the briefed value. Airspeed deviation reached the 20 KIAS limit and was corrected only after IP called it verbally. The subsequent correction was coarse and the airspeed settled slowly.",
+        "2": "SP, due to a delayed power adjustment after establishing the descent attitude, permitted the airspeed to drift from the briefed value. The deviation exceeded 10 KIAS and reached approximately 15 KIAS before SP recognized it. SP restored the airspeed in good time with a smooth power change and without IP intervention.",
+        "3": "SP established the descent with a power setting and attitude matched to the briefed airspeed and held the parameter within 10 KIAS throughout. Small deviations were detected early and corrected with smooth, measured power changes. Airspeed control remained stable through the level-off.",
+        "4": "SP controlled airspeed with negligible deviation from the briefed descent value from entry to level-off. Power and attitude were coordinated so precisely that no corrective input larger than a small power adjustment was required. Airspeed control was of a very high standard.",
+        "marginal": "SP held airspeed within tolerance, but the values sat persistently toward the fast side of the acceptable band and the trend was not fully arrested until late in the descent. SP recognized and corrected without assistance on each occasion. SP is expected to set descent power more decisively at entry so that airspeed remains centered on the briefed value rather than close to the outer limit."
+      }
+    },
+    {
+      "id": "instrument-19-em03",
+      "label": "Heading and course keeping during the descent",
+      "mif_row": null,
+      "source": "specific:HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to uncorrected trim and inattention to the heading indicator while managing the descent, allowed a continuous drift off the assigned heading. The deviation exceeded 10 degrees and continued to grow away from the cleared track, so IP intervened to return the aircraft to heading. SP did not detect the divergence unaided.",
+        "1": "SP, due to bank inputs that were not held steady while the power was being adjusted, did not maintain the assigned heading during the descent. Heading deviation reached the 10 degree limit and was corrected only after IP pointed it out. The correction was overcontrolled and required a second adjustment to settle.",
+        "2": "SP, due to an out-of-trim condition following the power reduction, allowed the aircraft to drift off the assigned heading. The deviation passed 5 degrees and reached approximately 7 to 8 degrees before SP noticed it. SP corrected promptly with a shallow, coordinated turn and regained the assigned heading without IP intervention.",
+        "3": "SP maintained the assigned heading within 5 degrees throughout the en-route descent, including during power and configuration changes. Corrections were small, coordinated and applied as soon as a trend appeared. Directional control remained steady through the level-off.",
+        "4": "SP held the assigned heading essentially on value for the whole descent, with excursions that were barely perceptible on the instrument. Turns to new headings were rolled out on target without oscillation. Directional control was consistently precise.",
+        "marginal": "SP kept heading within tolerance, but the aircraft was allowed to wander repeatedly to one side of the assigned value before each correction. SP detected and fixed the drift without prompting, although the corrections were reactive rather than anticipatory. SP is expected to keep the aircraft trimmed after each power change so that heading is held rather than repeatedly recaptured."
+      }
+    },
+    {
+      "id": "instrument-19-em04",
+      "label": "ATC clearance compliance and readback for the descent",
+      "mif_row": null,
+      "source": "general:instrument-18:a",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, due to an incomplete readback that left the assigned descent altitude unconfirmed, began the en-route descent to an altitude that was not the one cleared by ATC. SP did not comply with the ATC instruction and did not query the controller when the instruction was unclear. IP intervened, took the radios and stopped the descent before the aircraft continued below the cleared level.",
+        "1": "SP, due to a readback that omitted the altitude restriction issued with the clearance, did not comply fully with the ATC descent instruction. SP began the descent late and to the wrong intermediate level, and complied only after IP restated the clearance verbally. The resulting altitude deviation reached the 300 feet limit before the correct profile was resumed.",
+        "2": "SP, due to a hurried readback made while still adjusting the descent power, misheard part of the ATC instruction. SP started the descent with the wrong initial rate but recognized the discrepancy, requested confirmation from the controller on his/her own initiative and complied correctly. The resulting altitude deviation stayed between 150 and 300 feet and no IP intervention was required.",
+        "3": "SP read back the descent clearance completely and accurately, including the assigned altitude and any restriction, and complied with the ATC instruction without delay. Radio work did not interfere with aircraft control and all parameters remained within tolerance during the exchange. Coordination with the controller was clear and standard.",
+        "4": "SP handled the ATC descent clearance with a concise, complete readback and immediate, exact compliance, while flight parameters remained essentially unaffected. SP anticipated the clearance and was prepared for the descent before it was issued. Radio discipline and compliance were of a very high standard.",
+        "marginal": "SP complied with the ATC descent clearance and the readback contained all mandatory elements, but the phraseology was hesitant and the compliance action followed the instruction later than expected. Parameters stayed within tolerance during the radio work. SP is expected to consolidate standard phraseology so that clearances are read back and acted upon without hesitation."
+      }
+    },
+    {
+      "id": "instrument-19-em05",
+      "label": "Routing and altitude restrictions from MAIP and approach manuals",
+      "mif_row": null,
+      "source": "general:instrument-18:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not having reviewed the published route and altitude restrictions for the arrival before commencing the descent, violated a published minimum altitude segment. SP descended below the published level by more than 300 feet and showed no awareness of the restriction. IP intervened to level the aircraft and to restore the published profile.",
+        "1": "SP, due to an incomplete review of the MAIP and approach manual data, did not respect a published altitude restriction on the arrival. SP arrived at the restriction point at the 300 feet limit off the published altitude and corrected only after IP identified the restriction verbally. The published routing was regained late.",
+        "2": "SP, due to referring to the published restrictions only after the descent had begun, planned the descent rate against the wrong crossing point. Altitude at the restriction point was between 150 and 300 feet off the published value, but SP identified the error, adjusted the descent rate and complied at the following segment without IP intervention.",
+        "3": "SP flew the en-route descent within the routing and altitude restrictions published in MAIP and the Instrument Approach Manuals. Crossing altitudes were planned before commencing the descent and met within 150 feet. No restriction was violated at any point.",
+        "4": "SP applied the published routing and altitude restrictions with full accuracy, crossing every constraint point essentially on the published value. The descent rate was planned in advance so that no late adjustment was needed. Knowledge and application of the published data were of an exemplary standard.",
+        "marginal": "SP respected all published routing and altitude restrictions, but crossing altitudes were met with little margin and the descent rate was adjusted late at more than one segment. No restriction was violated and no assistance was needed. SP is expected to plan the descent profile earlier so that published constraints are met with a comfortable margin rather than marginally."
+      }
+    },
+    {
+      "id": "instrument-19-em06",
+      "label": "Standardized descent procedure and sequence without IP intervention",
+      "mif_row": null,
+      "source": "general:instrument-18:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not applying the descent sequence described in the Techniques and Procedures Manual and AFMAN 11-202 VOL3, omitted the descent checks and configured the aircraft out of order. The omissions accumulated and the aircraft was left in a state that required IP to take control and re-establish the correct procedure. SP did not execute the descent without mistakes or without IP intervention.",
+        "1": "SP, due to an unrehearsed descent flow, performed the required actions out of the standardized sequence and omitted one item until reminded. SP completed the procedure only after IP prompted each remaining step verbally. Flight parameters reached the outer limits, with altitude at 300 feet off the assigned value, while SP was catching up with the sequence.",
+        "2": "SP, due to starting the descent checks after rather than before initiating the descent, executed part of the sequence out of order. SP recognized the omission unaided, went back and completed the missing items correctly. Parameters remained between the code 3 and code 1 bands, with altitude no worse than 250 feet off, and IP did not intervene.",
+        "3": "SP executed the en-route descent according to the standardized procedures of the Techniques and Procedures Manual and AFMAN 11-202 VOL3, in the correct sequence and without mistakes. Descent checks were completed before entering the descent and no item was omitted. No IP intervention was required at any stage.",
+        "4": "SP flew the en-route descent to a standardized flow that was complete, correctly ordered and unhurried, with every check accomplished ahead of the point where it was needed. The procedure was executed flawlessly and left ample capacity for aircraft control and navigation. Procedural execution was of an exemplary standard.",
+        "marginal": "SP executed the descent procedure correctly and in sequence, but the flow was slow and each step was completed close to the point at which it was needed. No item was omitted and no prompting was required. SP is expected to rehearse the descent flow so that the procedure is completed with margin rather than at the last available moment."
+      }
+    },
+    {
+      "id": "instrument-19-em07",
+      "label": "Radio navigation aid use and orientation during the descent",
+      "mif_row": null,
+      "source": "general:instrument-04:d",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to a loss of awareness of the aircraft position relative to the navigation facility, did not tune, identify or correctly interpret the radio aid used for the en-route descent. SP became disoriented as to position along the route and continued the descent on an incorrect track. IP intervened to re-establish orientation and to return the aircraft to the cleared routing.",
+        "1": "SP, due to an incomplete picture of the aircraft position relative to the facility, did not use the radio aid to maintain orientation during the descent. SP required IP to state the position and the required track before continuing. The resulting heading deviation reached the 10 degree limit and the track was regained only after the verbal prompting.",
+        "2": "SP, due to a delayed update of the navigation picture after the descent was commenced, misread the position relative to the facility. SP identified the error from the raw data unaided, re-established orientation and returned to the correct track. Heading deviation stayed between 5 and 10 degrees and no IP intervention was needed.",
+        "3": "SP tuned and identified the radio aids correctly and used them to maintain accurate orientation throughout the en-route descent. Position relative to the facility was known at all times and the aircraft was flown on the cleared track within 5 degrees. SP demonstrated a clear navigation picture without assistance.",
+        "4": "SP used the radio navigation aids with full accuracy, maintaining an unbroken awareness of position along the route and of the distance and altitude required at each point. Orientation was never in doubt and SP could state the required action to reach the destination or the alternate at any moment. Navigation awareness was of a very high standard.",
+        "marginal": "SP maintained orientation with the radio aids and flew the cleared track within tolerance, but the navigation picture was rebuilt by repeated checks rather than held continuously. SP answered position questions correctly, though after a noticeable delay. SP is expected to keep the navigation picture updated throughout the descent so that orientation is immediate rather than reconstructed."
+      }
+    },
+    {
+      "id": "instrument-19-em08",
+      "label": "Power management and rate of descent",
+      "mif_row": null,
+      "source": "general:instrument-04:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not controlling engine power in accordance with the phase of flight as required by the Flight Manual, set a descent power that produced a rate of descent unsuited to the clearance. SP made no adjustment as the profile diverged and the aircraft arrived at the level-off far outside the required altitude, more than 300 feet off. IP intervened on the power lever to control the descent rate.",
+        "1": "SP, due to a descent power setting selected without reference to the distance and altitude to be lost, flew a rate of descent that did not match the required profile. SP adjusted the power only after IP called the discrepancy, and the resulting altitude error reached the 300 feet limit at the level-off point. The correction was late and coarse.",
+        "2": "SP, due to a power reduction that was smaller than required at descent entry, established a rate of descent below the one needed for the profile. SP detected the shortfall on the vertical picture, increased the rate in good time and met the level-off with an error between 150 and 300 feet. No IP intervention was required.",
+        "3": "SP controlled engine power appropriately for the descent phase, producing a rate of descent matched to the distance and altitude to be lost. Power changes were smooth and within the Flight Manual limits, and the level-off was met with altitude within 150 feet and airspeed within 10 KIAS. The profile required no significant correction.",
+        "4": "SP managed engine power throughout the en-route descent with precision, selecting a rate of descent that met the profile exactly and required only minimal refinement. Power changes were smooth, anticipatory and always within limits. Energy management during the descent was of an exemplary standard.",
+        "marginal": "SP managed power adequately and kept the descent within the required profile, but the rate of descent needed several corrections and the power changes were larger than necessary. All parameters remained within tolerance without assistance. SP is expected to select the correct descent power at entry so that the rate is set once rather than repeatedly adjusted."
+      }
+    },
+    {
+      "id": "instrument-19-em09",
+      "label": "Trim handling through the descent and level-off",
+      "mif_row": null,
+      "source": "general:instrument-04:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to leaving the aircraft out of trim after the power reduction and the airspeed change, flew the descent against sustained control forces. The out-of-trim condition led to continuous divergence in pitch and heading beyond 300 feet and 10 degrees, and SP was unable to hold the parameters. IP intervened to trim the aircraft and to restore controlled flight.",
+        "1": "SP, due to not retrimming elevator and rudder as the airspeed changed in the descent, held the aircraft with constant control pressure and was unable to fly it with comfort and ease. Deviations reached the 300 feet and 10 degree limits and were corrected only after IP prompted SP to trim. The aircraft was stabilized late.",
+        "2": "SP, due to trimming only in pitch and neglecting rudder trim after the power change, allowed the aircraft to fly slightly out of balance in the descent. Heading drift passed 5 degrees and altitude control became irregular within the 150 to 300 feet band. SP recognized the condition, completed the trimming correctly and restored stable flight without IP intervention.",
+        "3": "SP trimmed the aircraft correctly in pitch, roll and yaw as power and airspeed changed during the descent and at the level-off. The aircraft was flown with comfort and ease and remained essentially hands-off between corrections. Parameters were held within 150 feet and 5 degrees throughout.",
+        "4": "SP kept the aircraft accurately trimmed across the full airspeed range of the descent, retrimming immediately after each power or attitude change. The aircraft was flown almost entirely on trim with negligible control pressures and negligible parameter excursions. Trim handling was of a very high standard.",
+        "marginal": "SP trimmed the aircraft and kept all parameters within tolerance, but the retrimming followed each power change later than it should and residual control pressures were evident during the level-off. SP required no prompting and corrected the condition unaided. SP is expected to retrim promptly with every power and airspeed change so that the aircraft is flown on trim rather than held on the controls."
+      }
+    }
+  ]
+}
