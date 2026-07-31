@@ -1,0 +1,147 @@
+{
+  "item_id": "instrument-24",
+  "item_name": "GCA APPROACH (PAR)",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [24],
+  "mif_rows": [
+    {"sn": 24, "row_name": "GCA Approach (PAR)"}
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-24-em01",
+      "label": "Altitude deviation until on final",
+      "mif_row": null,
+      "source": "specific:ALTITUDE DEVIATION UNTIL ON FINAL (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a delayed power reduction after each level-off call, did not stabilize the assigned altitude during vectoring and allowed the altitude deviation until on final to exceed 300 ft. The excursion continued through the controller's altitude correction and the IP intervened to arrest the descent before the next vector. SP did not re-establish the assigned altitude before intercepting the final approach course.",
+        "1": "SP, due to an incomplete scan of the altimeter while working the assigned vector headings, let the altitude deviation until on final reach 300 ft. SP corrected only after repeated verbal prompting from the IP and the return to the assigned altitude was slow. No IP control input was required.",
+        "2": "SP, due to a slow trim adjustment after gear extension, let the assigned altitude drift between 150 ft and 300 ft during vectoring. SP detected the trend on the altimeter and returned to the assigned altitude before the controller called the deviation. No prompting and no intervention were needed.",
+        "3": "SP maintained every assigned altitude during vectoring within 150 ft. Power and trim were adjusted promptly at each level-off and the aircraft was stable in altitude before the next controller instruction. The altimeter was cross-checked regularly throughout the pattern.",
+        "4": "SP held every assigned altitude until on final with deviations that were barely perceptible on the altimeter. Level-offs were anticipated and power was set so that no follow-up correction was needed. Altitude control remained precise through configuration changes and vectoring turns.",
+        "marginal": "SP kept the altitude deviation until on final inside the required standards, but corrections tended to start late and were applied in large steps rather than small ones. The deviations grew mainly during vectoring turns combined with configuration changes. SP is expected to anticipate level-offs earlier and to hold the assigned altitude with smaller, smoother corrections."
+      }
+    },
+    {
+      "id": "instrument-24-em02",
+      "label": "Heading control on assigned vectors",
+      "mif_row": null,
+      "source": "specific:HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to uncoordinated and over-controlled turns onto the assigned vectors, exceeded 10 deg of deviation from the headings issued by the GCA controller. SP overshot successive vectors and the resulting track took the aircraft off the final approach course, so the IP intervened to re-intercept. Heading control was not re-established by SP without help.",
+        "1": "SP, due to rolling out without cross-checking the heading indicator, allowed heading deviations of about 10 deg from the assigned vectors. SP returned to the assigned heading only after verbal prompting and applied the corrections with delay. No IP control input was required.",
+        "2": "SP, due to a slightly high roll rate on the turns to final, rolled out with heading deviations between 5 deg and 10 deg from the assigned vectors. SP recognized the error on the heading indicator and corrected back promptly with small bank inputs. No prompting and no IP intervention were needed.",
+        "3": "SP flew every heading issued by the GCA controller within 5 deg. Turns were started immediately on receipt, bank was appropriate and roll-out was anticipated so that the assigned heading was captured without overshoot. The heading was then held steady until the next instruction.",
+        "4": "SP flew the assigned vectors with heading deviations that were hardly readable on the indicator. Each turn was rolled out exactly on the ordered heading and the aircraft was kept there without wandering. Drift corrections on final were small and continuous.",
+        "marginal": "SP held the assigned headings within the standards, but tended to overshoot slightly on each turn and then chase the heading back with repeated small corrections. This was most evident on the turn to the final approach course. SP is expected to anticipate roll-out and settle on the assigned heading with a single correction."
+      }
+    },
+    {
+      "id": "instrument-24-em03",
+      "label": "Airspeed control on the approach",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power settings not being adjusted for the configuration changes, exceeded the airspeed limits of the approach, going more than 20 kt fast during vectoring and more than 10 kt slow later on final. The excursions were not detected in time and the IP intervened with the throttle to restore the approach speed. Approach speed was never stabilized by SP.",
+        "1": "SP, due to a late power reduction when gear and flaps were selected, let the airspeed reach 20 kt above the target and later 10 kt below it. SP corrected only after verbal prompting and the airspeed returned to target slowly. No IP control input was required.",
+        "2": "SP, due to slightly coarse throttle handling during the configuration change, allowed airspeed excursions between 10 kt and 20 kt fast and between 5 kt and 10 kt slow. SP saw the trend on the airspeed indicator and set the correct power to recapture the target speed without prompting. Airspeed was stable well before the final descent.",
+        "3": "SP flew the approach within 10 kt fast and 5 kt slow of the target airspeed at all times. Power was set correctly for each configuration change and the airspeed was stable on final. Airspeed was cross-checked regularly together with attitude and altitude.",
+        "4": "SP held the target airspeed with negligible deviations throughout vectoring and the final approach. Configuration changes produced no noticeable speed excursion because power was set in anticipation. Airspeed remained on target all the way to the transition to landing.",
+        "marginal": "SP kept the airspeed inside the required standards, but it drifted repeatedly toward the fast side after each configuration change and needed several throttle corrections to settle. Speed stability was achieved only late on final. SP is expected to anticipate the power change with the configuration and to hold the target airspeed with fewer and smaller adjustments."
+      }
+    },
+    {
+      "id": "instrument-24-em04",
+      "label": "Maintaining the PAR glide path",
+      "mif_row": null,
+      "source": "specific:MAINTAINING GLIDE PATH (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a pitch and power combination not matched to the controller's glide path calls, went more than 300 ft above and later more than 150 ft below the glide path. SP did not respond correctly to the repeated below glide path calls and the IP intervened to arrest the sink rate. The approach as flown could not have been continued to minima.",
+        "1": "SP, due to correcting with pitch alone instead of a coordinated pitch and power input, reached about 300 ft above and about 150 ft below the glide path. SP regained the glide path only after verbal prompting and the corrections lagged the controller's calls. No IP control input was required.",
+        "2": "SP, due to slightly late responses to the controller's rate of descent calls, drifted from slightly above the glide path toward the 300 ft high band and later toward the 150 ft low band. SP recognized the trend from the sequence of controller calls and re-established the glide path in good time with a coordinated pitch and power correction. No prompting and no intervention were needed.",
+        "3": "SP tracked the glide path throughout the PAR final, remaining only slightly above or slightly below it. Corrections were made with small coordinated pitch and power changes as each controller call was received. Rate of descent was kept steady and appropriate to the groundspeed.",
+        "4": "SP flew the PAR final on the glide path with deviations the controller reported as negligible. Each on glide path call was maintained by anticipating rate of descent changes rather than by reacting to them. The descent rate remained smooth and constant from glide path intercept to minima.",
+        "marginal": "SP stayed within the glide path standards but tended to sit consistently on the high side and then correct with an increased rate of descent. The high-then-steep pattern repeated over the second half of the final. SP is expected to intercept the glide path more precisely and to hold it with smaller rate of descent changes."
+      }
+    },
+    {
+      "id": "instrument-24-em05",
+      "label": "Response to GCA controller corrections",
+      "mif_row": null,
+      "source": "general:a (Complies with ATC instructions) | general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to failing to build a clear picture from the controller's calls, applied corrections in the wrong sense, turning away from the ordered heading correction and increasing the rate of descent after an above glide path call. Compliance with ATC instructions was not achieved and the aircraft diverged from the final approach course. The IP intervened to correct the aircraft and re-establish the approach.",
+        "1": "SP, due to processing each controller instruction only after the following one had been transmitted, responded to the GCA corrections late throughout the final. Corrections were applied only after verbal prompting by the IP and several instructions had to be repeated by the controller. No IP control input was required.",
+        "2": "SP, due to a slightly slow interpretation of the controller's calls, responded to the heading and glide path corrections with a noticeable delay in the first part of the final. SP recognized the lag, tightened the response and was matching each call promptly by mid final. No prompting and no intervention were needed.",
+        "3": "SP complied with every GCA instruction immediately and in the correct sense. Each heading and glide path correction was applied with a magnitude appropriate to the reported deviation and the controller did not have to repeat any call. Instructions for gear, checks and minima were acknowledged and executed on time.",
+        "4": "SP responded to the controller's instructions with immediate and precisely sized corrections, so that most calls returned to on course and on glide path. The approach required only minimal further guidance from the controller. Every instruction was acknowledged and executed without hesitation.",
+        "marginal": "SP complied with the controller's instructions within standards, but the corrections were often larger than the reported deviation required and then had to be taken out again. This produced a slight oscillation about course and glide path. SP is expected to size each correction to the deviation called and to hold it rather than over-correct."
+      }
+    },
+    {
+      "id": "instrument-24-em06",
+      "label": "Radio discipline and readbacks with GCA",
+      "mif_row": null,
+      "source": "general:a (Complies with ATC instructions)",
+      "hf_concept": "hf-non-standard-phraseology",
+      "texts": {
+        "0": "SP, due to non-standard phraseology on the approach frequency, transmitted acknowledgements that identified neither the aircraft nor the instruction and did not read back the assigned altitudes and headings. One instruction was consequently misunderstood and the IP had to take the radios to clarify with the controller. Compliance with ATC instructions was not maintained.",
+        "1": "SP, due to using non-standard wording instead of the prescribed calls, made readbacks that were incomplete and had to be corrected by the controller. SP applied the correct phraseology only after verbal prompting by the IP. Radio work remained slow, but no intervention on the controls was needed.",
+        "2": "SP, due to occasional non-standard wording under the higher radio workload of the PAR, made two readbacks that omitted part of the instruction. SP noticed the omission and re-transmitted the complete readback before the controller queried it. Radio discipline was correct for the remainder of the approach.",
+        "3": "SP used standard phraseology on the GCA frequency throughout the approach. Every clearance, heading and altitude was read back correctly and acknowledgements were concise and timely. SP maintained the required transmissions during the no-transmission segment of the PAR final.",
+        "4": "SP handled the GCA frequency with precise standard phraseology and no wasted transmissions. Readbacks were complete and immediate and never interfered with aircraft control. Radio work required no correction from either the controller or the IP.",
+        "marginal": "SP kept radio work within standards, but phraseology drifted toward informal wording as the workload increased on final and readbacks became abbreviated. Aircraft control also degraded slightly while transmitting. SP is expected to keep standard phraseology under load and to separate radio work from control inputs."
+      }
+    },
+    {
+      "id": "instrument-24-em07",
+      "label": "Approach sequence, configuration and checks",
+      "mif_row": null,
+      "source": "general:c (executes the approach according to standardized procedures without mistakes and IP intervention)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unrehearsed approach sequence, did not complete the before-landing checks at the correct points and selected gear and landing flaps out of order and late on final. The approach was not executed according to the standardized procedures of AFMAN 11-202 VOL3 and the flight manual, and the IP intervened to complete the configuration. Several procedural steps were omitted entirely.",
+        "1": "SP, due to weak recall of the GCA procedure sequence, ran the descent and before-landing checks out of the prescribed order and completed them late. The missing items were caught only after verbal prompting by the IP. No IP action on the controls was needed.",
+        "2": "SP, due to a slightly rushed set-up after the vector to final, started the before-landing check later than briefed. SP identified the delay and completed the check in the correct sequence in time for glide path intercept. The rest of the procedure followed the standardized sequence without prompting.",
+        "3": "SP executed the GCA procedure in the correct sequence, with configuration changes and checks completed at the standard points. The approach was flown in accordance with the flight manual, the MAIP and local area procedures without mistakes and without IP intervention. The aircraft was configured and stabilized before glide path intercept.",
+        "4": "SP executed the whole PAR procedure fluently and in the exact prescribed sequence, with every check completed early enough to leave full capacity for flying the approach. Configuration changes were timed so that the aircraft was fully stabilized well before the final descent. No item required prompting at any stage.",
+        "marginal": "SP followed the standardized sequence within standards, but each check was completed close to the last acceptable point and left little margin before glide path intercept. The same pattern was repeated on both approaches. SP is expected to start the descent and before-landing checks earlier so that the aircraft is configured and stabilized ahead of final."
+      }
+    },
+    {
+      "id": "instrument-24-em08",
+      "label": "Restrictions, minima and the decision at DH",
+      "mif_row": null,
+      "source": "general:b (routing and altitude restrictions per MAIP and Instrument Approach Manuals) | general:c",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to continuation bias after the controller reported the aircraft slightly below glide path near minima, continued the descent past the published minimum without the required visual references. The published altitude restrictions of the MAIP and the approach manual were violated and the IP intervened to initiate the missed approach. The decision point was passed without any decision being made.",
+        "1": "SP, due to continuation bias on an approach that had been flown low on the glide path, held the descent at the published minimum although the criteria for continuing were not satisfied. SP initiated the missed approach only after being told verbally to do so and the initiation was late. No IP control input was required.",
+        "2": "SP, due to a late assessment of the approach against the published minima, allowed the aircraft to reach the minimum descent point before deciding. SP then recognized that the criteria were not met and executed the missed approach correctly on his own initiative. No routing or altitude restriction was violated.",
+        "3": "SP respected every routing and altitude restriction published in the MAIP and the instrument approach manual. The decision at minima was taken at the correct point and the resulting action, continuation to land or missed approach, was executed according to the published procedure. No restriction was approached without awareness of it.",
+        "4": "SP flew the approach with the published routing and altitude restrictions anticipated well in advance and briefed before each segment. The decision at minima was taken exactly at the published point and stated clearly, and the missed approach was flown precisely as published. The approach was never allowed to develop toward a restriction.",
+        "marginal": "SP complied with the published restrictions and minima, but assessed the approach only at the last moment instead of progressively during the final. This left minimal time to prepare the missed approach. SP is expected to evaluate the approach continuously against the published criteria and to pre-commit to the action at minima."
+      }
+    },
+    {
+      "id": "instrument-24-em09",
+      "label": "Instrument cross-check under PAR radio load",
+      "mif_row": null,
+      "source": "general:c (executes the final approach without mistakes and IP intervention)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an interrupted instrument cross-check while concentrating on the controller's continuous transmissions, stopped monitoring attitude and airspeed on the final. Several parameters degraded at the same time and the aircraft reached a state the IP had to correct. The approach was not flown by reference to the primary flight instruments as required.",
+        "1": "SP, due to a cross-check that fixated on the attitude indicator and left airspeed and altitude unmonitored, allowed parameters to reach the limits of the approach standards before noticing them. SP resumed a full scan only after verbal prompting by the IP. No IP control input was required.",
+        "2": "SP, due to a cross-check that slowed while the controller's calls were being processed, let attitude and airspeed drift beyond the precise band before detection. SP restored a regular scan of the primary flight instruments and recovered the parameters in good time. No prompting and no intervention were needed.",
+        "3": "SP maintained a regular instrument cross-check throughout the PAR, covering attitude, airspeed, altitude and heading while working the controller's instructions. Deviations were detected as trends and corrected before they became significant. Aircraft state was monitored continuously down to minima.",
+        "4": "SP maintained a fast and complete instrument cross-check under the continuous radio load of the PAR final, so that no parameter was left unmonitored at any time. Deviations were anticipated from the rate of change of the instruments rather than from their values. Aircraft state was known at every point of the approach.",
+        "marginal": "SP kept a cross-check adequate to hold the standards, but it narrowed noticeably each time the controller transmitted, with altitude and airspeed checked less often than attitude. Deviations were detected as values rather than as trends. SP is expected to keep the scan rate constant under radio load and to detect trends earlier."
+      }
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "item_id": "instrument-26",
+  "item_name": "STANDBY INSTRUMENTS APPROACH",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [26],
+  "mif_rows": [
+    { "sn": 26, "row_name": "Standby Instruments Approach" }
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-26-em01",
+      "label": "ALTITUDE DEVIATION UNTIL ON FINAL",
+      "mif_row": null,
+      "source": "specific:ALTITUDE DEVIATION UNTIL ON FINAL (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unmonitored rate of descent read on the standby altimeter, did not level off at the altitudes assigned by the controller during the initial and intermediate segments. Altitude deviation until on final exceeded 300 ft and continued to develop without recognition. IP intervened and returned the aircraft to the cleared altitude before the descent point.",
+        "1": "SP, due to late anticipation of the level-off with a lagging standby altimeter, did not arrest the descent at the assigned altitude. Altitude deviation until on final reached the 300 ft limit and the correction was applied only after repeated verbal prompting from the IP. The aircraft was re-established at the cleared altitude, but the pattern of late recognition repeated at the next level segment.",
+        "2": "SP, due to a pitch input applied without a corresponding power adjustment, did not hold the assigned altitude during the vectoring phase. Altitude deviation until on final grew to about 200 ft, between the 150 ft and 300 ft values, before SP recognized it on the standby altimeter. Correction was timely and the aircraft was re-established at the cleared altitude without IP intervention.",
+        "3": "SP maintained the altitudes assigned during the vectoring phase within 150 ft, using pitch and power inputs against the standby altimeter. Level-offs were anticipated and deviations were corrected promptly and accurately. Altitude control until on final remained within standards throughout the approach.",
+        "4": "SP held every assigned altitude until on final with deviations of a few tens of feet, reading only the standby altimeter. Level-offs were anticipated with correct lead and trim, so no correcting input of any significance was required. Altitude control was essentially exact throughout the vectoring phase.",
+        "marginal": "SP kept altitude deviation until on final inside the required tolerance, but corrections were repetitive and each level segment showed excursions approaching 150 ft before recovery. The trend was a consistent lag in anticipating the level-off with the standby altimeter, so the margin against standards was thin. SP is expected to tighten altitude control by anticipating level-offs earlier and holding the aircraft trimmed."
+      }
+    },
+    {
+      "id": "instrument-26-em02",
+      "label": "HEADING CONTROL ON STANDBY COMPASS AND STANDBY ATTITUDE INDICATOR",
+      "mif_row": null,
+      "source": "specific:HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to uncorrected turning and acceleration errors on the standby magnetic compass, did not roll out on the headings assigned by the controller. Heading deviation exceeded 10 degrees and the aircraft diverged progressively from the final approach course. IP took control to re-intercept the course before the approach could be continued.",
+        "1": "SP, due to a roll-out lead that did not account for the standby compass lag, did not stop the turn on the assigned heading. Heading deviation reached 10 degrees and was corrected only after the IP called the error verbally. The subsequent headings required the same prompting to be flown accurately.",
+        "2": "SP, due to a bank angle held slightly longer than required, did not roll out exactly on the assigned heading. Heading deviation reached about 8 degrees, between the 5 and 10 degree values, before SP cross-checked the standby attitude indicator and the compass. The heading was re-established promptly with a small correcting turn and no IP intervention.",
+        "3": "SP flew every heading assigned by the controller within 5 degrees, using the standby attitude indicator for bank control and the standby compass for reference. Roll-outs were anticipated with correct lead and deviations were corrected without delay. Heading control remained within standards throughout the approach.",
+        "4": "SP rolled out on each assigned heading with deviations of one to two degrees, allowing correctly for standby compass lag and turning error. Corrections were minimal and the final approach course was intercepted without overshoot. Heading control was precise from the first vector to the missed approach point.",
+        "marginal": "SP kept heading deviations inside the required tolerance, but roll-outs were consistently on the wide side and small corrections were needed on almost every vector. The trend was an over-reliance on the lagging standby compass instead of timing the roll-out on the standby attitude indicator, which left little margin on the assigned headings. SP is expected to lead the roll-out more accurately so headings are captured on the first attempt."
+      }
+    },
+    {
+      "id": "instrument-26-em03",
+      "label": "AIRSPEED CONTROL ON APPROACH",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to inadequate monitoring of airspeed during the approach, did not maintain the required approach speed after the configuration change. Airspeed deviation exceeded the +20/-10 kt values and the aircraft was allowed to decelerate below the approach speed on final. IP intervened with power to restore the approach speed.",
+        "1": "SP, due to an interrupted cross-check of the standby airspeed indicator while attention remained on the controller instructions, did not hold the required approach speed. Airspeed deviation reached the +20/-10 kt limit and power was adjusted only after the IP called the speed. Speed was restored, but the same lapse recurred after gear and flap extension.",
+        "2": "SP, due to a power setting left unchanged through the configuration change, did not hold the approach speed exactly. Airspeed deviation reached about +15 kt, between the +10 and +20 kt values, before SP detected it on the standby airspeed indicator. Power was corrected in time and the approach speed was re-established without IP intervention.",
+        "3": "SP maintained the required approach speed within +10/-5 kt throughout the approach, adjusting power promptly at each configuration change. Deviations were detected early on the standby airspeed indicator and corrected accurately. Airspeed control remained within standards to the missed approach point.",
+        "4": "SP held the approach speed with deviations of two to three knots from gear extension to the missed approach point. Power was set in anticipation of each configuration change, so no significant correction was needed. Airspeed control was stable and precise on the standby indicator alone.",
+        "marginal": "SP kept airspeed inside the required tolerance, but the speed drifted toward the fast side after every configuration change and needed a correcting power reduction. The trend was a cross-check that returned to the airspeed indicator too infrequently under the workload of the standby-instrument approach. SP is expected to include airspeed in the scan at a steadier rate and to anticipate power for each configuration change."
+      }
+    },
+    {
+      "id": "instrument-26-em04",
+      "label": "MAINTAINING GLIDE PATH (PAR)",
+      "mif_row": null,
+      "source": "specific:MAINTAINING GLIDE PATH (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a rate of descent that was not adjusted to the controller's glide path advisories, did not maintain the glide path on final. The aircraft went further than 300 ft above or 150 ft below the glide path and the deviation continued to increase. IP intervened to re-establish the descent profile.",
+        "1": "SP, due to pitch corrections applied in large steps rather than by small rate adjustments, did not follow the glide path advisories. The deviation reached the limiting values of 300 ft high and 150 ft low and was corrected only after verbal prompting on top of the controller's calls. The aircraft returned to the glide path late in the final segment.",
+        "2": "SP, due to a descent rate that was not re-trimmed after the last power change, did not hold the glide path precisely on final. The aircraft went noticeably above the glide path but stayed clearly inside the 300 ft high and 150 ft low values, and SP responded to the controller's advisory with a timely rate adjustment. The glide path was regained without IP intervention.",
+        "3": "SP maintained the glide path on final, remaining only slightly above or slightly below it in response to the controller's advisories. Rate of descent was adjusted with small, correct pitch and power inputs and the profile was stable. Glide path control remained within standards to the missed approach point.",
+        "4": "SP flew the glide path with deviations that were barely perceptible on the controller's advisories, holding a constant rate of descent to the missed approach point. Each advisory required at most a very small correction and the descent profile was never allowed to diverge. Glide path control was exact throughout the final segment.",
+        "marginal": "SP stayed on the glide path within standards, but the aircraft was consistently on the high side and every controller advisory produced a correcting input. The trend was a rate of descent set slightly low and then chased rather than established, which left little margin on the profile. SP is expected to set and trim the correct rate of descent at glide path intercept so that advisories require only minor adjustment."
+      }
+    },
+    {
+      "id": "instrument-26-em05",
+      "label": "ALTITUDE DEVIATION AT MDA (ASR)",
+      "mif_row": null,
+      "source": "specific:ALTITUDE DEVIATION AT MDA (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a rate of descent that was not reduced approaching the minimum descent altitude, did not level off at MDA. The aircraft descended below MDA, outside the +200/-0 ft values, without visual reference to the runway environment. IP intervened to arrest the descent and initiate the missed approach.",
+        "1": "SP, due to a late transition from descent to level flight on the standby altimeter, did not stabilize the aircraft at MDA. The altitude at MDA reached the 200 ft high limit and the aircraft was brought to the correct altitude only after verbal prompting. Level-off was achieved late in the final segment.",
+        "2": "SP, due to a lead point taken slightly late in the descent, did not level off exactly at MDA. The aircraft stabilized about 150 ft high, between the 100 and 200 ft values, and never went below MDA. SP recognized the excess altitude on the standby altimeter and descended promptly to MDA without IP intervention.",
+        "3": "SP levelled off at MDA within 100 ft high and at no point descended below the minimum descent altitude. The level-off was anticipated on the standby altimeter and the aircraft was stabilized before the missed approach point. Altitude at MDA remained within standards.",
+        "4": "SP arrested the descent essentially on MDA, with only a few tens of feet of excess altitude and no descent below the minimum. The level-off was anticipated and trimmed, so the aircraft was stable well before the missed approach point. Altitude control at MDA was exact.",
+        "marginal": "SP held the aircraft at or above MDA within standards, but the level-off was reached with a rate of descent that was arrested only just in time and the altitude settled near the upper edge of the tolerance. The trend was a lead point taken too late for the standby altimeter in use, leaving a narrow margin against a descent below minimums. SP is expected to plan the MDA level-off earlier and to stabilize the aircraft before the missed approach point."
+      }
+    },
+    {
+      "id": "instrument-26-em06",
+      "label": "PARTIAL PANEL CROSS-CHECK ON STANDBY INSTRUMENTS",
+      "mif_row": null,
+      "source": "general:instrument cross-check, aircraft control",
+      "hf_concept": "hf-manual-flying-skill-decay",
+      "texts": {
+        "0": "SP, due to a basic instrument scan degraded by sustained reliance on the primary flight display, did not establish a working cross-check of the standby attitude indicator, altimeter, airspeed indicator and compass. The scan fixated on single instruments and the aircraft state was allowed to diverge on more than one axis at the same time. IP took control to restore controlled flight on the standby instruments.",
+        "1": "SP, due to insufficient recent practice in raw-data flying on standby instruments, did not maintain a systematic cross-check during the approach. Deviations reached limiting values on more than one parameter and were identified for SP by the IP rather than by SP's own scan. Control was recovered on each occasion, but only after the deviation had been called.",
+        "2": "SP, due to a scan rate that slowed under the workload of the standby-instrument approach, did not cross-check all standby instruments at an even rate. Individual parameters drifted between the tighter and the limiting values before being detected, but SP re-established the scan and corrected each deviation in time and without IP intervention.",
+        "3": "SP maintained an organized cross-check of the standby attitude indicator, altimeter, airspeed indicator and compass throughout the approach. Deviations were detected early and corrected with small, correct control inputs, and aircraft control on partial panel remained positive. The approach was flown to standards on the standby instruments alone.",
+        "4": "SP flew the entire approach on standby instruments with a rapid and continuous cross-check that prevented any parameter from drifting appreciably. Control inputs were small, smooth and coordinated, and the aircraft was kept trimmed so that scan capacity remained available for the controller's instructions. Partial panel technique was of a very high standard.",
+        "marginal": "SP maintained an adequate cross-check on the standby instruments and kept the approach within standards, but the scan visibly concentrated on the standby attitude indicator with the altimeter and airspeed indicator checked less often. The trend was a scan that narrowed whenever workload increased, so detection of deviations depended on the controller's calls more than it should. SP is expected to keep the cross-check even across all standby instruments, particularly during configuration changes."
+      }
+    },
+    {
+      "id": "instrument-26-em07",
+      "label": "COMPLIANCE WITH CONTROLLER INSTRUCTIONS AND RADIO PROCEDURE",
+      "mif_row": null,
+      "source": "general:GCA procedure, radio discipline",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to instructions accepted without a correct read-back, did not comply with the headings, altitudes and advisories issued by the GCA controller. Clearances were misapplied and the aircraft was flown other than as directed, so the approach could not be continued as issued. IP intervened to restore compliance with the controller's instructions.",
+        "1": "SP, due to non-standard phraseology and incomplete read-backs, did not respond correctly to the controller's instructions during the approach. Corrective action followed only after the IP repeated the instruction in the cockpit, and required position and configuration calls were made late. The approach continued but was driven by prompting rather than by SP's own radio work.",
+        "2": "SP, due to attention divided between the standby instrument scan and the radio, did not answer some of the controller's instructions promptly. Read-backs were delayed and one advisory required a repeat from the controller, but SP recognized the omission, corrected the phraseology and complied with the instruction without IP intervention.",
+        "3": "SP complied with all GCA controller instructions promptly and used standard phraseology throughout. Read-backs were correct and complete, required calls were made at the proper points, and headings, altitudes and advisories were flown as issued. Radio and procedural discipline met the required standard.",
+        "4": "SP anticipated and complied with every controller instruction without delay, using concise and standard phraseology throughout the approach. Read-backs were accurate on first transmission and no instruction had to be repeated. Communication was integrated with the standby instrument scan without any loss of aircraft control.",
+        "marginal": "SP complied with the controller's instructions within standards, but read-backs were sometimes abbreviated and responses came noticeably late during the busier segments of the approach. The trend was radio work that suffered whenever the standby instrument scan demanded attention, leaving the exchange with the controller thinner than required. SP is expected to keep read-backs standard and timely regardless of cockpit workload."
+      }
+    },
+    {
+      "id": "instrument-26-em08",
+      "label": "APPROACH SEQUENCE, CONFIGURATION AND CHECKLIST",
+      "mif_row": null,
+      "source": "general:sequence of procedures, checklist, configuration",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an approach sequence flown from memory without reference to the published procedure, did not complete the required actions for the standby-instrument approach. Checklist items and the required configuration changes were omitted or performed out of order, and the aircraft arrived on final incorrectly configured. IP intervened to establish the correct configuration before the descent could continue.",
+        "1": "SP, due to task sequencing that concentrated the descent checks inside the turn to final, did not complete the approach checklist before the descent point. Items were completed only after the IP prompted them and the landing configuration was established at the limit of the available time. The approach was continued but the sequence remained behind the aircraft.",
+        "2": "SP, due to workload from the standby instrument scan, did not begin the approach checklist at the planned point. Gear and flap selection were made later than briefed, but SP recognized the delay, completed the remaining items in the correct order and had the aircraft configured before final without IP intervention.",
+        "3": "SP executed the approach in the correct sequence, completing the checklist and establishing the landing configuration at the planned points in accordance with the published procedure. Configuration changes were made with the corresponding pitch and power adjustments and the aircraft remained stable. Procedural execution met the required standard.",
+        "4": "SP executed the standby-instrument approach with the sequence, checklist and configuration changes completed ahead of each required point. Every configuration change was accompanied by the correct pitch and power input, so aircraft parameters were unaffected. Procedural execution was orderly and left ample capacity for the controller's instructions.",
+        "marginal": "SP completed the approach sequence and checklist within standards, but each item was actioned at the latest acceptable point and the landing configuration was established only just before final. The trend was a plan built around reacting to the controller rather than anticipating the published sequence, leaving very little margin in the busy segments. SP is expected to start the checklist earlier and to configure the aircraft at the planned points rather than at the last available moment."
+      }
+    },
+    {
+      "id": "instrument-26-em09",
+      "label": "DECISION AT MINIMUMS AND MISSED APPROACH",
+      "mif_row": null,
+      "source": "general:judgement, safety, missed approach",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to continuation of the approach after the conditions for it had been invalidated, did not initiate the missed approach at the missed approach point without the required visual reference. The aircraft was allowed to continue descending on standby instruments with no decision made. IP intervened, took control and flew the missed approach.",
+        "1": "SP, due to a decision point that was passed without any decision being made, did not initiate the missed approach at the correct point. The go-around was started at the limit of the available margin and only after the IP called for it, and the initial climb and configuration sequence were flown late. The aircraft was recovered to the missed approach procedure with prompting throughout.",
+        "2": "SP, due to hesitation in assessing the visual reference at minimums, did not initiate the missed approach at the exact point. The decision was made shortly afterwards, still inside the available margin, and SP applied power, established the climb attitude on the standby attitude indicator and flew the published missed approach without IP intervention.",
+        "3": "SP made the decision at minimums at the correct point, initiating the missed approach without delay when the required visual reference was not available. Power, attitude and configuration were sequenced correctly on the standby instruments and the published procedure was followed. The decision and its execution met the required standard.",
+        "4": "SP announced and executed the decision at minimums exactly at the missed approach point, with no hesitation and with the go-around sequence flown precisely on standby instruments. The climb was established immediately, the configuration changes were correctly ordered and the published missed approach was tracked accurately. Judgement and execution were exemplary.",
+        "marginal": "SP made the correct decision at minimums within standards, but the assessment was slow and the missed approach was initiated at the later end of the acceptable window. The trend was a reluctance to commit to the go-around while still looking for the visual reference, which narrows the margin available for the standby-instrument climb-out. SP is expected to state and act on the decision at minimums without delay."
+      }
+    }
+  ]
+}

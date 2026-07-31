@@ -1,0 +1,100 @@
+{
+  "item_id": "instrument-crm",
+  "item_name": "CRM",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [],
+  "mif_rows": [],
+  "error_modes": [
+    {
+      "id": "instrument-crm-em01",
+      "label": "CRM integration into mission planning, briefing and debriefing",
+      "mif_row": null,
+      "source": "general:a|execution:1,2a,4",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a mission planning phase conducted without any CRM content, briefed the instrument sortie as a list of events without stating crew roles, transfer-of-control wording or the contingency actions for lost communications and approach abnormals. SP did not establish when CRM enhances mission performance and flight safety, and the undefined division of duties carried into the flight. IP had to assign roles verbally in the air and take control during the approach sequence to restore an orderly cockpit. The debriefing produced no CRM analysis of what had occurred.",
+        "1": "SP, due to a briefing that carried only nominal CRM content, stated the roles for the approach phase and the actions for an abnormal in general terms that were not tied to the planned profile. Under airborne workload the briefed division of duties broke down and SP restructured it only after repeated verbal prompting by IP. Departures from the planned sequence were corrected late, with the approach parameters already at the limits of the published tolerances. In the debriefing SP identified the CRM shortfall only after it was pointed out.",
+        "2": "SP, due to an abbreviated contingency section in the briefing, left the transfer-of-control phraseology and the missed approach actions only partly defined. During the sortie the ambiguity produced a brief overlap of duties at the initial approach fix, which SP recognized and resolved on his own initiative with a clear statement of who was flying and who was working the procedure. No IP intervention was required and the profile stayed within the planned parameters. SP raised the point himself in the debriefing.",
+        "3": "SP integrated CRM into the mission planning, briefing and debriefing as required. Crew roles, transfer-of-control wording and the contingency actions for lost communications and approach abnormals were stated clearly and matched the flown profile. The briefed division of duties held through every phase of the instrument sortie without prompting, and the debriefing covered the CRM items with accurate self-assessment.",
+        "4": "SP planned and briefed the instrument sortie with CRM built into every phase, including explicit decision points and the exact wording for transfer of aircraft control. The briefed structure held without adjustment through the highest workload segment of the sortie and the crew functioned exactly as briefed. The debriefing was an accurate, unprompted analysis of the CRM items supported by specific examples from the flight, with negligible departure from the briefed plan.",
+        "marginal": "SP met the standard for CRM integration into the briefing and debriefing, but the coverage of the abnormal and lost communications contingencies was noticeably thinner than that of the normal profile. The briefed structure held in flight, although SP needed a longer pause to restate roles when the approach sequence changed. SP is expected to brief contingency roles with the same detail as the normal profile on subsequent instrument sorties."
+      }
+    },
+    {
+      "id": "instrument-crm-em02",
+      "label": "Communication with ATC and interphone within the crew",
+      "mif_row": null,
+      "source": "execution:2b|general:a",
+      "hf_concept": "hf-non-standard-phraseology",
+      "texts": {
+        "0": "SP, due to non-standard phraseology that left the intention ambiguous to the controller, transmitted read-backs that did not confirm the actual clearance and passed no interphone information on the amended approach clearance. The cockpit and the controller held different pictures of the assigned altitude and routing. IP took the radios and the aircraft to re-establish the cleared profile. SP did not recognize the communication breakdown until it was replayed in the debriefing.",
+        "1": "SP, due to unstandard phraseology on several transmissions, read back clearances in a form that did not confirm the assigned altitude and heading, and passed the required interphone calls to IP late or only when prompted. The confusion over the clearance allowed the aircraft to reach the limits of the published tolerance on the assigned altitude before SP queried the controller. The correction came through repeated verbal direction from IP rather than on SP initiative.",
+        "2": "SP, due to a hurried transmission during the frequency change, gave one read-back in a form that did not clearly confirm the assigned altitude and omitted the interphone call to IP. SP recognized the ambiguity without prompting, requested confirmation from the controller in standard phraseology and passed the information across the cockpit. The clarification was complete before the deviation from the assigned profile became more than momentary, and no IP action was required.",
+        "3": "SP communicated with the controller in standard phraseology and read back every clearance in a form that confirmed the actual instruction. Interphone calls to IP were passed at the briefed points and in plain language when the situation required it. Radio work was fitted around the instrument cross-check so that the flown parameters were held on the assigned values.",
+        "4": "SP handled the radio and interphone workload of the instrument sortie with precise standard phraseology, complete first-pass read-backs and correctly timed calls, including a plain-language statement of the aircraft situation when the clearance changed at short notice. Transmissions were placed in gaps in the scan so that the flown parameters were never affected. Ambiguity in any exchange was negligible.",
+        "marginal": "SP met the communication standard, but phraseology drifted toward informal wording on the busier frequency segments and two read-backs were complete only after a second exchange. No clearance was misunderstood and no flown parameter was affected. SP is expected to hold standard phraseology and first-pass complete read-backs under the higher radio workload of subsequent instrument sorties."
+      }
+    },
+    {
+      "id": "instrument-crm-em03",
+      "label": "Airmanship: workload management and task prioritization",
+      "mif_row": null,
+      "source": "execution:2c|general:a",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to inadequate workload management during the approach phase, attempted the approach checklist, the frequency change and the descent at the same point of the sequence and abandoned the instrument cross-check. Aircraft control was not protected as the first priority and the checklist was left unfinished before the descent. IP intervened to fly the aircraft and re-order the tasks. SP had no awareness of the accumulated task backlog while it was building.",
+        "1": "SP, due to task sequencing that concentrated all cockpit workload inside the turn, ran the checklist, the radio work and the configuration change together. The instrument cross-check thinned under the load and the flown parameters drifted to the limits of the published tolerances before any task was shed. Re-prioritization took place only after IP directed it verbally, and the checklist was completed late in the sequence.",
+        "2": "SP, due to a late start on the approach preparation, concentrated more of the workload than planned into the turn to final and briefly fell behind on the checklist. SP recognized the backlog, deferred the non-essential task and restored the cross-check on his own initiative. The parameters departed only momentarily from the planned profile and were back on the briefed values without any IP action.",
+        "3": "SP distributed the cockpit workload of the instrument sortie so that aircraft control, navigation and communication kept their correct priority in every phase. Checklists were completed before the phase that required them and secondary tasks were deferred when workload increased. The instrument cross-check ran without interruption and the flown parameters were held on the planned values.",
+        "4": "SP managed the workload of the instrument sortie with the tasks worked ahead of the aircraft, so that each phase was entered with the required actions already complete. Secondary tasks were shed without hesitation when the clearance changed, and the cross-check ran unbroken throughout. Task backlog at any point of the sortie was negligible.",
+        "marginal": "SP kept the correct task priorities, but the margin was thin in the approach phase, where the checklist was finished close to the point at which the descent was required. The cross-check was maintained and no parameter was affected. SP is expected to move the approach preparation earlier in the sequence to rebuild the time margin on subsequent instrument sorties."
+      }
+    },
+    {
+      "id": "instrument-crm-em04",
+      "label": "Use of the IFG/CRM matrix chart to highlight applicable items",
+      "mif_row": null,
+      "source": "general:b|execution:2,6",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to no working knowledge of the IFG/CRM matrix chart, did not use it at any point of the briefing or the debriefing and could not identify which CRM items applied to the instrument sortie flown. The gradesheet CRM items were left without supporting analysis and the CRM box could not be completed as intended. IP had to lead the item-by-item review in place of SP. SP offered no self-assessment of the CRM performance.",
+        "1": "SP, due to unfamiliarity with the structure of the IFG/CRM matrix chart, referred to it only after IP called for it and highlighted items that did not correspond to the events of the instrument sortie. The link between the observed performance and the matrix items was made late and only through repeated verbal direction. SP completed the review, but the selection of items stayed superficial and required correction by IP.",
+        "2": "SP, due to a first pass through the matrix chart made in general terms, highlighted CRM items that were not yet tied to the specific events of the approach phase. On reviewing his own notes SP corrected the selection without prompting and matched the highlighted items to what had actually occurred in the flight. The review was completed in time and without IP direction.",
+        "3": "SP used the IFG/CRM matrix chart to highlight the CRM items that applied to the instrument sortie. The items selected corresponded accurately to the events of the flight and supported the gradesheet entries. The review was completed promptly and without direction from IP.",
+        "4": "SP used the IFG/CRM matrix chart with precise selection of the applicable items, tying each one to a specific event of the instrument sortie and to the corresponding gradesheet entry. The analysis was self-generated and required no addition by IP. Mismatch between the highlighted items and the observed performance was negligible.",
+        "marginal": "SP used the matrix chart to the required standard, but the selection leaned on the communication items and gave the airmanship subcategories only brief treatment. The applicable items were nevertheless identified and supported the gradesheet entries. SP is expected to give the airmanship subcategories the same depth of analysis in subsequent debriefings."
+      }
+    },
+    {
+      "id": "instrument-crm-em05",
+      "label": "CRM concept applied to maneuver planning and abnormal situation analysis",
+      "mif_row": null,
+      "source": "general:c|conditions:2",
+      "hf_concept": "hf-role-assignment",
+      "texts": {
+        "0": "SP, due to absent explicit role assignment when the simulated malfunction occurred, worked the procedure and flew the aircraft at the same time and applied no CRM structure to the analysis of the situation. Neither cockpit stated who was flying and who was handling the checklist. The aircraft state degraded until IP took control and completed the procedure. SP made no use of the CRM concept in planning the recovery.",
+        "1": "SP, due to delayed role allocation in the first seconds after the abnormal indication, stated the division of duties once and did not maintain it as the situation developed. The analysis of the malfunction and the choice of recovery profile were reached late and only after repeated verbal prompting from IP. The instrument parameters had reached the limits of the published tolerances before the procedure was under control.",
+        "2": "SP, due to an unstated division of duties at the onset of the simulated abnormal, began the checklist before roles had been assigned. SP recognized the overlap, called out who was flying and who was working the procedure, and completed the analysis of the situation using the CRM concept. The deviation from the planned profile was momentary and the recovery was planned and executed without IP intervention.",
+        "3": "SP applied the CRM concept in planning the maneuvers and in analyzing the simulated abnormal. Roles were assigned explicitly at the onset, the situation was assessed with both cockpits holding the same picture, and the recovery profile was selected against stated criteria. The procedure was completed accurately and on time with the aircraft held within the planned parameters.",
+        "4": "SP applied the CRM concept to the full extent in analyzing the simulated abnormal, assigning roles in the first seconds, stating the assessment aloud and selecting the recovery profile against briefed criteria while the aircraft parameters stayed on the planned values. Both cockpits held the same picture of the aircraft state throughout the sequence. Any lag between recognition and structured response was negligible.",
+        "marginal": "SP applied the CRM concept to the standard required, but the role call at the onset of the abnormal came a step later than the situation warranted and the shared assessment was stated only once. The procedure was completed within parameters and without prompting from IP. SP is expected to make the role call the first action on recognizing an abnormal on subsequent instrument sorties."
+      }
+    },
+    {
+      "id": "instrument-crm-em06",
+      "label": "Assertiveness, inquiry and advocacy across the IP/SP cockpit",
+      "mif_row": null,
+      "source": "general:a,c|execution:4,5",
+      "hf_concept": "hf-lack-of-assertiveness",
+      "texts": {
+        "0": "SP, due to lack of assertiveness in stating \"unable\" when the clearance could not be complied with, accepted a descent and intercept that the aircraft configuration and position did not support and voiced nothing to IP or the controller. The recognized problem was never stated and the approach was continued past the point at which it should have been terminated. IP intervened to break off the approach. SP raised the concern only in the debriefing.",
+        "1": "SP, due to reluctance to challenge an instruction upward across the evaluation relationship, voiced the recognized problem only in indirect terms and after IP had twice invited comment. The request for an amended clearance was made late, with the aircraft already at the limits of the published tolerances for the intercept. SP complied with the correction rather than initiating it.",
+        "2": "SP, due to hesitation over questioning an instruction issued to the crew, hedged the first statement of the concern when the clearance did not match the aircraft position. SP then stated the problem directly to IP and requested an amended clearance from the controller in time for the approach to be re-established within the planned profile. No IP intervention was required.",
+        "3": "SP stated concerns directly and in time, querying the instruction that did not match the aircraft state and using \"unable\" where compliance was not possible. The exchanges with IP and with the controller were clear and unambiguous, and the approach was flown within the planned parameters throughout.",
+        "4": "SP raised every concern at the moment it arose, in direct and unambiguous terms, including a prompt \"unable\" on a clearance the aircraft position did not support, and offered a workable alternative to IP and the controller. The evaluation relationship produced no hesitation in the upward challenge. Delay between recognition of the problem and its statement was negligible.",
+        "marginal": "SP met the standard for stating concerns, but the first challenge on the disputed clearance was phrased as a question rather than a statement and the direct wording came only on the second exchange. The issue was resolved in time and the profile stayed within parameters. SP is expected to state a recognized problem directly on first mention on subsequent instrument sorties."
+      }
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "item_id": "instrument-18",
+  "item_name": "INSTRUMENT DESCENT (PENETRATION)",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [18],
+  "mif_rows": [
+    { "sn": 18, "row_name": "Instrument Descent (Penetration)" }
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-18-em01",
+      "label": "PENETRATION AIRSPEED CONTROL",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a late power reduction and failure to re-trim after establishing the descent, did not stabilize the penetration airspeed on the value published for the procedure. Airspeed accelerated to about 20 knots above the target and stayed there through the descent, well beyond the +15 knot limit. IP intervened with power and speed brake to recover the parameter before the final approach segment.",
+        "1": "SP, due to an incorrect power-to-attitude relationship set at descent entry, allowed the penetration airspeed to reach 15 knots above the target, at the outer limit of the tolerance. The deviation was reduced only after the IP called the airspeed twice, and the correction was applied slowly. No IP control input was required, but the parameter was re-established late in the descent.",
+        "2": "SP, due to a nose-low attitude carried after the descent entry, let the penetration airspeed increase to about 12 knots above the target, outside the +10 knot standard. SP recognized the trend on the next cross-check, reduced power promptly and brought the airspeed back inside tolerance without any prompt from the IP. The remainder of the descent was flown on speed.",
+        "3": "SP set power and attitude accurately at descent entry and held the penetration airspeed within +10/-5 knots throughout the procedure. Corrections were small, early and made with the power lever rather than with attitude excursions. The aircraft was on speed at the transition to the final approach segment.",
+        "4": "SP established the penetration airspeed at descent entry and held it essentially on the published value for the whole descent, with deviations of only a few knots. Power and trim were used with anticipation, so no corrective action of any size became necessary. The aircraft arrived at the final approach segment exactly on speed.",
+        "marginal": "SP kept the penetration airspeed within standards but consistently on the fast side, close to the +10 knot boundary, and each correction was made after the deviation rather than in anticipation of it. The trend was for the speed to increase whenever attention shifted to the navigation tasks. SP is expected to anticipate the power requirement at descent entry and to hold the target speed within a narrower working band."
+      }
+    },
+    {
+      "id": "instrument-18-em02",
+      "label": "COURSE / RADIAL TRACKING",
+      "mif_row": null,
+      "source": "specific:MAINTAINING COURSE (radials)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an uncorrected drift and no wind allowance applied on the inbound radial, did not maintain the published course during the penetration. Course displacement reached about 12 degrees and continued to increase, well beyond the +/- 8 degree limit. IP took control of heading to regain the radial before the aircraft left the protected area of the procedure.",
+        "1": "SP, due to chasing the course needle with large heading changes instead of holding a computed correction, allowed the displacement from the penetration radial to reach 8 degrees, at the limit of tolerance. SP re-centred the needle only after the IP pointed out the displacement, and the correction overshot before settling. The aircraft stayed inside the procedure, but the course was regained late in the descent.",
+        "2": "SP, due to a late recognition of the crosswind component in the descending turn, drifted about 7 degrees off the penetration radial, outside the +/- 5 degree standard. SP identified the displacement on the following cross-check, applied a suitable wind correction angle and re-established the radial without any prompt from the IP. Course was then held for the rest of the descent.",
+        "3": "SP tracked the penetration radial within +/- 5 degrees throughout the descent, applying a wind correction angle from the start of the procedure. Heading corrections were small and made before the needle displacement could grow. The aircraft was established on course at the start of the final approach segment.",
+        "4": "SP flew the penetration radial with the needle essentially centred for the entire descent, using a wind correction angle that was set early and refined by small amounts. No displacement large enough to require a correction developed at any point. The aircraft reached the final approach segment precisely on course.",
+        "marginal": "SP remained within the course tolerance, but the needle was allowed to displace to about 4 to 5 degrees before each correction, and the corrections were made in steps rather than continuously. The pattern showed a repeated drift to the same side of the radial that was reacted to instead of being anticipated. SP is expected to establish an accurate wind correction angle early and to keep the working band well inside the standard."
+      }
+    },
+    {
+      "id": "instrument-18-em03",
+      "label": "ATC COMPLIANCE AND CLEARANCE HANDLING",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-non-standard-phraseology",
+      "texts": {
+        "0": "SP, due to an unstandard read-back that did not confirm the actual clearance, began the penetration on a descent clearance that had not been issued. The ATC instruction was misapplied and the aircraft entered the procedure without approval to descend. IP intervened, stopped the descent and coordinated the correct clearance with the controller.",
+        "1": "SP, due to a read-back that did not confirm the assigned altitude, did not comply with the ATC instruction as issued and set the wrong level for the descent. SP corrected the setting only after the IP repeated the clearance on interphone, and the confirming transmission to ATC was delayed. No IP control input was necessary.",
+        "2": "SP, due to a transmission made while the descent checks were still in progress, acknowledged the ATC descent instruction incompletely and initially set an intermediate altitude. SP re-checked the clearance, corrected the setting and confirmed with the controller on his own initiative, well before the aircraft approached the wrong level. All subsequent instructions were complied with as issued.",
+        "3": "SP complied with every ATC instruction during the penetration, read back the clearances in standard phraseology and set the assigned altitudes correctly. Requests and reports were made in good time and did not interfere with the flying of the procedure. No clarification from the controller or the IP was required.",
+        "4": "SP complied with every ATC instruction promptly and precisely, with concise standard read-backs that confirmed each element of the clearance. Radio work was integrated into the descent with no effect on aircraft control. Coordination with the controller was complete before it was needed at each point of the procedure.",
+        "marginal": "SP complied with all ATC instructions, but the read-backs were slow and on two occasions a second transmission was needed to confirm the assigned altitude. The trend was for radio work to accumulate at the busiest points of the descent instead of being cleared early. SP is expected to use concise standard phraseology and to complete each transmission before entering the next segment of the penetration."
+      }
+    },
+    {
+      "id": "instrument-18-em04",
+      "label": "ROUTING AND ALTITUDE RESTRICTIONS",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to lack of awareness of a published restriction that was available in the briefing material, did not observe the altitude restriction of the penetration as depicted in the Instrument Approach Manual. The aircraft descended below the published segment minimum before reaching the fix. IP intervened to arrest the descent and re-establish the aircraft on the published profile.",
+        "1": "SP, due to an incomplete review of the routing published for the procedure, applied the step-down restriction late and continued down to the segment minimum before the fix. The profile was corrected only after the IP called the restriction, and the level-off was flown at the limiting altitude with no margin. No IP control input was required.",
+        "2": "SP, due to a rate of descent that was not adjusted for the distance remaining, arrived early at the published step-down altitude and began to close on the restriction. SP recognized the developing profile error on the DME cross-check, reduced the rate of descent and met the restriction with margin, without prompting. All remaining restrictions of the procedure were observed.",
+        "3": "SP observed every routing and altitude restriction published in MAIP and the Instrument Approach Manual throughout the penetration. Step-down altitudes were identified in advance and the descent profile was flown against DME so that each restriction was met with margin. No restriction was approached without a deliberate check.",
+        "4": "SP flew the published routing exactly and met every altitude restriction of the procedure with a planned and comfortable margin. Each fix and step-down was identified and called before it was reached, so the profile never required a rate change to remain within the published limits. The aircraft was in the published position and altitude at every point of the descent.",
+        "marginal": "SP did not violate any routing or altitude restriction, but the descent was flown close to the published minima and the step-downs were identified only as they were reached. The trend was a reactive rather than a planned use of the DME and altitude information. SP is expected to build the descent profile before entry and to keep a deliberate margin above each published restriction."
+      }
+    },
+    {
+      "id": "instrument-18-em05",
+      "label": "STANDARD SEQUENCE OF DESCENT PROCEDURES",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to omission of the descent checks before the procedure, did not execute the penetration according to the standardized sequence described in the Techniques and Procedures Manual. The navigation aid was not tuned and identified and the aircraft entered the descent in the wrong configuration. IP intervened to complete the items and re-order the procedure.",
+        "1": "SP, due to an out-of-order execution of the descent checks, did not follow the standardized sequence for the penetration and left the navigation aid identification until after the descent had begun. The outstanding items were completed only after the IP called them, and the procedure was flown one step behind for the rest of the descent. No IP control input was required.",
+        "2": "SP, due to starting the descent checks late, executed two items of the penetration sequence out of the order described in the Techniques and Procedures Manual. SP recognized the discrepancy before the descent point, completed the outstanding items and restored the standard sequence on his own initiative. The remainder of the procedure was flown in order and without mistakes.",
+        "3": "SP executed the penetration according to the standardized procedure, with descent checks, navigation aid tuning and identification and configuration changes completed in the published order and at the correct points. No item was omitted and no correction by the IP was needed. The procedure was flown as described in the Techniques and Procedures Manual and AFMAN 11-202 Vol 3.",
+        "4": "SP executed the whole penetration in the standard sequence, with every item completed ahead of the point at which it was required. Checks, navigation aid selection and configuration changes were positioned so that no task overlapped a critical part of the descent. The procedure was flown without a single departure from the published technique.",
+        "marginal": "SP executed the penetration in the correct sequence and without mistakes, but several items were completed at the last moment before the point at which they were required. The trend was for the checks to compress into the descent entry instead of being finished before it. SP is expected to bring the sequence forward so that each item is complete with margin ahead of its trigger point."
+      }
+    },
+    {
+      "id": "instrument-18-em06",
+      "label": "INSTRUMENT CROSS-CHECK DURING THE DESCENT",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an interrupted instrument cross-check while attention remained on the navigation display, did not monitor attitude, airspeed and altitude during the penetration. Pitch and speed diverged together and the descent went beyond both published tolerances before the deviation was noticed. IP intervened to re-establish the aircraft on the descent parameters.",
+        "1": "SP, due to a cross-check that concentrated on the course needle, did not monitor the altimeter and the airspeed indicator at an adequate rate during the descent. Course displacement reached 8 degrees and airspeed reached 15 knots above target before SP responded to the IP's verbal reminder to scan. The cross-check was re-established late but without any IP control input.",
+        "2": "SP, due to a cross-check that stopped while DME and altitude were being compared, allowed the attitude to change unnoticed for several seconds during the descent. Course displacement grew to about 6 degrees before SP detected it on the next scan cycle and corrected it without any prompt from the IP. The cross-check rate was restored for the remainder of the procedure.",
+        "3": "SP maintained a continuous instrument cross-check throughout the penetration, covering attitude, airspeed, altitude, course and DME at a rate that kept every deviation small. Trends were detected as they began and corrected with minimal control input. No parameter was left unmonitored while attention was on another task.",
+        "4": "SP maintained a fast and complete instrument cross-check for the whole descent, so that no parameter departed from its target long enough to require a correction. Attention moved between the flight instruments and the navigation information without either being neglected. SP knew and reported the aircraft state accurately at every point of the procedure.",
+        "marginal": "SP maintained the cross-check and kept all parameters within standards, but the scan concentrated on the navigation instruments and returned to attitude and airspeed at long intervals. The trend was for corrections to follow a visible deviation rather than the start of a trend. SP is expected to keep a balanced scan so that pitch and power are monitored continuously through the descent."
+      }
+    },
+    {
+      "id": "instrument-18-em07",
+      "label": "LEVEL-OFF AND TRANSITION TO FINAL APPROACH",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to no lead point computed for the level-off, did not arrest the descent at the assigned altitude and continued through it during the transition to final approach. The aircraft went substantially below the assigned level and the airspeed decayed while the recovery was attempted. IP intervened to level the aircraft and establish it for the final approach segment.",
+        "1": "SP, due to a rate of descent that was not reduced approaching the assigned altitude, levelled off late and applied power only after the speed had fallen 10 knots below target, at the limit of the tolerance. The level-off was completed after the IP called the altitude, and the aircraft entered the final approach segment slow and still being corrected. No IP control input was required.",
+        "2": "SP, due to a late power addition at the level-off, allowed the airspeed to fall about 8 knots below the target as the aircraft was established for the final approach, outside the -5 knot standard. SP recognized the decay immediately, added power and regained the target speed before the final approach segment began. The transition was then completed on altitude and on course.",
+        "3": "SP planned the level-off with an appropriate lead, arrested the descent at the assigned altitude and transitioned to the final approach segment on speed and on course. Power was added in time, so no airspeed excursion developed. The aircraft was stable and correctly configured when the final approach began.",
+        "4": "SP levelled off at the assigned altitude with an anticipated lead and no perceptible overshoot, and delivered the aircraft to the final approach segment exactly on altitude, speed and course. Power was set before the speed could change, so the transition required no correction at all. The aircraft was fully stable at the start of the final approach.",
+        "marginal": "SP completed the level-off and the transition to final approach within standards, but the lead was taken late and the aircraft settled onto the assigned altitude after a small overshoot on each occasion. The trend was to correct the profile at the last moment instead of planning the lead from the rate of descent. SP is expected to compute the level-off lead and to arrive at the final approach segment stable and without corrections."
+      }
+    }
+  ]
+}

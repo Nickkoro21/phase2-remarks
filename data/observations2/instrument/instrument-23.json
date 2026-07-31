@@ -1,0 +1,147 @@
+{
+  "item_id": "instrument-23",
+  "item_name": "GCA APPROACH (ASR)",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [23],
+  "mif_rows": [
+    {"sn": 23, "row_name": "GCA Approach (ASR)"}
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-23-em01",
+      "label": "Altitude control on the vectors until established on final",
+      "mif_row": null,
+      "source": "specific:ALTITUDE DEVIATION UNTIL ON FINAL (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a pitch change made for the turn onto the downwind vector without a matching power correction, did not maintain the altitude assigned by the controller before final descent. The aircraft went more than 300 feet low with the deviation still increasing, and the IP took the aircraft to re-establish the assigned level. SP did not reference the altimeter or the VVI at any point during the vectoring turns.",
+        "1": "SP, due to a trim setting left unchanged after the configuration change on the base leg, did not hold the assigned altitude during the vectors to final. Deviation reached the 300 foot limit of the standard and was reduced only after the controller and then the IP verbally prompted a check of the altitude. The aircraft was returned to the assigned level shortly before intercepting final.",
+        "2": "SP, due to attention held on the heading bug during each controller-issued turn, did not keep the pitch and power combination that held the assigned altitude. Deviation opened to about 230 feet, between the 150 and 300 foot values of the standard, before SP detected the trend on the altimeter and recovered the assigned level without IP input. The remaining vectors were flown on altitude.",
+        "3": "SP maintained every altitude assigned by the controller during the vectors to final within 150 feet. Level-offs were anticipated with a lead point and the altitude was held through each turn without a power correction being needed late. Deviations that appeared were removed as soon as they showed on the altimeter.",
+        "4": "SP held the assigned altitudes on the vectors to final essentially exactly, with excursions no greater than about 40 feet through the turns and configuration changes. Each level-off was anticipated and required no correction after roll-out. The altimeter needle stayed effectively motionless while the heading changes were flown.",
+        "marginal": "SP maintained the assigned altitudes within the published tolerance, but the deviation sat near the 150 foot edge of the standard for most of the vectoring phase rather than being held closer to the assigned level. Corrections were applied in single late steps at the end of each turn. SP is expected to anticipate the pitch and power change at the start of each turn so the altitude error stays well inside the standard."
+      }
+    },
+    {
+      "id": "instrument-23-em02",
+      "label": "Heading accuracy on controller-issued headings",
+      "mif_row": null,
+      "source": "specific:HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to roll-outs flown without a computed lead point on the assigned heading, did not fly the headings issued by the controller during the ASR approach. Heading error exceeded 10 degrees on final with no correction started, the controller repeated the correction twice, and the IP intervened to place the aircraft back on the assigned heading. SP did not use the HSI to detect the drift off the issued heading between corrections.",
+        "1": "SP, due to corrections applied in bank angles too large for the small heading changes issued on final, did not settle on the assigned headings. Heading error reached the 10 degree limit of the standard on each correction and was contained only after repeated controller calls and a verbal prompt from the IP. The aircraft was oscillating either side of the assigned heading through most of final.",
+        "2": "SP, due to a delay in starting each turn after the controller issued the new heading, did not track the assigned heading continuously. Error reached about 8 degrees, between the 5 and 10 degree values of the standard, before SP recognized it on the HSI and rolled out on the assigned heading without IP input. The subsequent corrections were taken up promptly.",
+        "3": "SP flew every heading issued by the controller and held it within 5 degrees throughout the approach. Turns were started immediately on receipt of the correction and rolled out on the assigned value with a suitable lead. No repeat of a heading instruction was required.",
+        "4": "SP took up each controller-issued heading at once and held it to within about 2 degrees for the whole of final. Corrections were made in small, damped bank inputs that produced no overshoot on roll-out. The controller issued no repeat and no correcting call for azimuth.",
+        "marginal": "SP flew the assigned headings within the published tolerance, but the error tended toward the 5 degree edge of the standard between corrections and the aircraft wandered slowly off each new heading once established. The trend was arrested only when the controller issued the next instruction. SP is expected to hold the assigned heading actively against drift rather than relying on the next controller call."
+      }
+    },
+    {
+      "id": "instrument-23-em03",
+      "label": "Airspeed control on the ASR final",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to inadequate monitoring of airspeed during the approach, did not maintain the computed final approach airspeed after the descent was started. Airspeed decayed more than 10 knots below the computed value with no power correction applied, and the IP added power and took the aircraft. SP did not identify the decay from the airspeed indicator before the intervention.",
+        "1": "SP, due to an interrupted instrument cross-check while attention stayed on the controller's azimuth calls, did not correct the airspeed as the aircraft descended. Airspeed reached 20 knots above the computed value at the 10 knot limit on the slow side of the following correction, and was contained only after the IP prompted a power check. The approach was flown to MDA with the airspeed still oscillating.",
+        "2": "SP, due to a cross-check interval that lengthened each time the controller transmitted, did not hold a stable power setting on final. Airspeed drifted to about 15 knots above the computed value, between the plus 10 and plus 20 knot values of the standard, before SP saw it on the airspeed indicator and reduced power to recover it without IP input. The remainder of final was flown on speed.",
+        "3": "SP maintained the computed final approach airspeed within 10 knots fast and 5 knots slow throughout the ASR final. Power was set for the descent and adjusted in small increments as the configuration and the descent rate changed. The airspeed indicator was included in the cross-check between every controller transmission.",
+        "4": "SP held the computed final approach airspeed to within about 3 knots for the whole of final, including through the descent and the configuration change. Power corrections were small and anticipatory, and no speed excursion of consequence developed. The airspeed remained stable while every controller call was answered.",
+        "marginal": "SP kept the airspeed within the published tolerance, but it sat close to the 10 knot fast edge of the standard for much of final and was brought back only when the descent rate had to be re-established. Power corrections were reactive rather than anticipatory. SP is expected to shorten the interval between airspeed checks so the speed is held nearer the computed value."
+      }
+    },
+    {
+      "id": "instrument-23-em04",
+      "label": "Altitude control at MDA and the no-descent-below limit",
+      "mif_row": null,
+      "source": "specific:ALTITUDE DEVIATION AT MDA (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a descent rate carried into the level-off without a lead point, did not stop the descent at the published MDA. The aircraft went below MDA on an approach where no descent below that altitude is permitted, and the IP arrested the descent and levelled the aircraft. SP did not recognize the penetration of MDA from the altimeter until the intervention.",
+        "1": "SP, due to a late reduction of the descent rate as MDA was approached, did not level off close to the published minimum. The aircraft stopped 200 feet above MDA at the limit of the standard and was brought down to the correct level-off only after the IP prompted a check of the altitude against the approach plate. The level segment to the missed approach point was flown high.",
+        "2": "SP, due to a level-off started without reference to the descent rate then being flown, did not capture MDA closely. Level-off occurred about 160 feet above MDA, between the plus 100 and plus 200 foot values of the standard, before SP recognized the excess altitude and descended to the correct minimum without IP input, with no descent below MDA at any point. The level segment was then held accurately.",
+        "3": "SP levelled off at the published MDA within 100 feet above it and at no point descended below the minimum. The level-off was anticipated from the descent rate and the altitude was then held to the missed approach point. The altimeter setting and the published minimum were confirmed before the descent was started.",
+        "4": "SP captured MDA within about 30 feet above the published minimum and held it precisely to the missed approach point, with no descent below MDA. The level-off required no correction after the initial power and pitch change. The minimum was flown as briefed and confirmed against the approach plate before the final descent.",
+        "marginal": "SP levelled off within the published tolerance above MDA and did not descend below it, but the capture was about 90 feet high, close to the edge of the standard, and the aircraft settled onto the minimum only part way along the level segment. The lead point for the level-off was short for the descent rate flown. SP is expected to set the lead point from the actual descent rate so MDA is captured closer to the published minimum."
+      }
+    },
+    {
+      "id": "instrument-23-em05",
+      "label": "Compliance with and read-back of controller instructions",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-non-standard-phraseology",
+      "texts": {
+        "0": "SP, due to an unstandard read-back that did not confirm the actual clearance, did not comply with the instructions issued by the approach controller. A heading and a descent clearance were both actioned incorrectly, the controller queried the aircraft twice, and the IP took over the radios and the aircraft to re-establish the approach. SP did not request a repeat of the instruction that had not been understood.",
+        "1": "SP, due to non-standard phraseology that left the intention ambiguous to the controller, did not comply promptly with the instructions given on the ASR. Two instructions had to be repeated by the controller before they were flown, and compliance came only after the IP prompted the response, with the resulting heading error at the 10 degree limit of the standard. The approach was completed with the controller leading the aircraft rather than the aircraft following the vectors.",
+        "2": "SP, due to a read-back given before the instruction had been fully received, did not action one controller instruction at the moment it was issued. The delay produced a deviation of about 8 degrees in azimuth, between the 5 and 10 degree values of the standard, which SP corrected without IP input after re-confirming the assigned heading with the controller. The remaining instructions were read back correctly and flown immediately.",
+        "3": "SP read back every controller instruction in standard phraseology and complied with it without delay. Headings, descent clearances and the approach sequence were actioned as issued, and no instruction required repetition. Radio work did not displace control of the flown parameters.",
+        "4": "SP handled the approach frequency in standard phraseology throughout, read back each instruction accurately and flew it immediately, with no query from the controller at any stage. Transmissions were short and timed so they did not interrupt the instrument cross-check. The controller was able to run the ASR without a single repeat.",
+        "marginal": "SP complied with all controller instructions and remained within the published tolerances, but several read-backs used non-standard wording and compliance followed the instruction by a noticeable pause. No deviation reached the edge of a standard, though the pattern of late responses left little margin on final. SP is expected to use standard phraseology and to begin the correction as the read-back is made."
+      }
+    },
+    {
+      "id": "instrument-23-em06",
+      "label": "Observance of published routing and altitude restrictions",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an approach flown without reference to the published minimum altitudes for the segment, did not observe the routing and altitude restrictions of the MAIP and the approach manual. The aircraft was flown more than 300 feet below the published segment minimum while still being vectored, and the IP intervened to climb back to a safe altitude. SP did not compare the assigned altitude with the published restriction at any point.",
+        "1": "SP, due to a descent started on the controller's advisory before the aircraft was inside the segment where it was published, did not respect the applicable altitude restriction. The aircraft reached the 300 foot limit of the standard below the published segment altitude and was returned to it only after the IP called the restriction. The remainder of the approach was flown with the plate held rather than briefed.",
+        "2": "SP, due to a briefing of the approach that covered the final segment but not the intermediate restrictions, did not apply one published altitude limit at the correct point. The aircraft was about 230 feet low against the segment minimum, between the 150 and 300 foot values of the standard, before SP identified the restriction on the plate and climbed back without IP input. No further restriction was missed.",
+        "3": "SP flew the ASR within the routing and altitude restrictions published in the MAIP and the approach manual. The applicable segment minima were known from the approach briefing and each descent was started only where it was authorized. No restriction had to be recalled by the controller or the IP.",
+        "4": "SP observed every published routing and altitude restriction precisely, with the aircraft never closer than a comfortable margin to a segment minimum before the point at which descent was authorized. The approach plate had been briefed in full and the applicable limits were quoted from memory when queried. The vectors were flown entirely within the published protected area.",
+        "marginal": "SP remained within the published routing and altitude restrictions, but the aircraft was flown close to a segment minimum with the descent started at the earliest point rather than with a working margin. No restriction was violated and no deviation approached the edge of a standard. SP is expected to build a margin against the published minima instead of flying the approach at the limit of what is authorized."
+      }
+    },
+    {
+      "id": "instrument-23-em07",
+      "label": "Sequence, checklist and configuration timing on the approach",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to workload management that left the checklist unfinished before the descent, did not execute the approach sequence as described in the flight manual and AFMAN 11-202 Vol 3. The aircraft was still unconfigured when the descent to MDA was started, airspeed went more than 10 knots below the computed value, and the IP configured the aircraft and took control. SP did not run the before landing items at any point on the approach.",
+        "1": "SP, due to task sequencing that concentrated all cockpit work inside the turn to final, did not complete the required actions in the order and at the points prescribed. The configuration change was made after the descent had begun and the resulting speed excursion reached the 20 knot fast limit of the standard, contained only after the IP prompted the checklist. The approach was completed with the sequence recovered but never fully caught up.",
+        "2": "SP, due to a checklist started later than the briefed point, did not complete the configuration before the final descent was due. Airspeed rose to about 15 knots above the computed value, between the plus 10 and plus 20 knot values of the standard, while the items were completed, and SP restored the correct speed and sequence without IP input. The remaining approach items were run at the briefed points.",
+        "3": "SP executed the approach in the sequence prescribed by the flight manual and the published procedure. Checklists were completed at the briefed points, the aircraft was configured before the descent was started, and the flown parameters stayed inside the standards while the items were run. No item required prompting.",
+        "4": "SP ran the approach sequence exactly as briefed, with each checklist completed ahead of the point at which it was required and the configuration established well before the descent. Cockpit work was distributed so that no phase of the approach carried a peak of tasks, and the flown parameters were unaffected throughout. The whole approach was completed without a single reminder.",
+        "marginal": "SP completed the approach sequence and all required checklist items, but several were run at the latest usable point and the workload was concentrated in the turn to final. The parameters stayed inside the standards, though the margin narrowed each time an item was completed late. SP is expected to move the checklist and configuration actions forward so the workload is spread across the approach."
+      }
+    },
+    {
+      "id": "instrument-23-em08",
+      "label": "Instrument cross-check while flying controller-directed azimuth",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a scan that stopped on the HSI each time the controller transmitted, did not maintain the instrument cross-check required to fly the ASR without mistakes. Attitude, altitude and airspeed all went unmonitored, the altitude deviation passed 300 feet, and the IP took the aircraft. SP was unable to state the aircraft state when asked during the approach.",
+        "1": "SP, due to a cross-check that reduced to the attitude indicator and the heading during the controller's corrections, did not detect the developing deviations on the supporting instruments. Altitude error reached the 300 foot limit of the standard before it was noticed, and the scan was restored only after the IP verbally directed attention to the altimeter. The pattern repeated on the second half of final.",
+        "2": "SP, due to a cross-check interrupted at each controller call and restarted from the same instrument, did not sample the altimeter and the airspeed indicator often enough. Altitude drifted to about 230 feet, between the 150 and 300 foot values of the standard, before SP re-established the full scan and recovered the assigned altitude without IP input. The scan pattern was then maintained to MDA.",
+        "3": "SP maintained a continuous instrument cross-check through the vectoring and the final descent, sampling attitude, heading, altitude and airspeed in a regular pattern. Each controller transmission was answered without the scan being suspended, and every deviation was detected while it was still small. All flown parameters stayed inside the standards.",
+        "4": "SP kept a complete and evenly paced instrument cross-check throughout the ASR, with no instrument left unsampled through the turns, the descent and the level-off at MDA. Deviations were detected and removed before they became measurable, and the radio work never displaced the scan. SP was able to report the full aircraft state at any point on request.",
+        "marginal": "SP maintained the instrument cross-check and stayed inside the published tolerances, but the scan narrowed toward the heading indication whenever the controller transmitted and the altimeter was sampled at longer intervals than the rest. Deviations were caught, though later than the scan should allow. SP is expected to keep the sampling rate of the altimeter and the airspeed indicator constant through the controller's calls."
+      }
+    },
+    {
+      "id": "instrument-23-em09",
+      "label": "Missed approach decision and execution at the missed approach point",
+      "mif_row": null,
+      "source": "general:b,c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a missed approach procedure that had not been briefed before the approach was started, did not execute the published missed approach at the missed approach point. The aircraft was held at MDA past the missed approach point with no climb and no turn initiated, and the IP took the aircraft to fly the published procedure. SP did not identify the missed approach point from the controller's advisories or the timing.",
+        "1": "SP, due to a decision deferred while the runway environment was still being sought, did not start the missed approach at the published point. The climb was begun late and the aircraft drifted to the 10 degree limit of the standard off the published missed approach heading, corrected only after the IP prompted the procedure. The initial climb was flown without the configuration being fully cleaned up.",
+        "2": "SP, due to a slow transition from the level segment to the climb, did not initiate the missed approach as promptly as the procedure requires. Heading error on the initial climb-out reached about 8 degrees, between the 5 and 10 degree values of the standard, before SP recognized it and re-established the published track without IP input. The configuration change and the climb were then completed correctly.",
+        "3": "SP initiated the published missed approach at the missed approach point without delay, established the climb and flew the published track. The procedure had been briefed before the approach and the aircraft was cleaned up in the correct sequence while the climb was maintained. Heading and airspeed stayed inside the standards throughout the transition.",
+        "4": "SP flew the missed approach exactly at the published point, with power, attitude and configuration applied in the correct order and the published track held from the start of the climb. The intention was passed to the controller in standard phraseology as the climb began. No parameter departed from the standard during the transition.",
+        "marginal": "SP executed the published missed approach at the correct point and within the tolerances, but the climb was established a few seconds after the point was reached and the initial track was regained rather than flown from the start. The procedure was correct in content and slightly late in timing. SP is expected to pre-set the missed approach decision so the climb begins as the point is reached."
+      }
+    }
+  ]
+}

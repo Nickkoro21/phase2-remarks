@@ -1,0 +1,147 @@
+{
+  "item_id": "instrument-25",
+  "item_name": "GCA APPROACH (GYRO OUT)",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [25],
+  "mif_rows": [
+    { "sn": 25, "row_name": "GCA Approach (Gyro Out)" }
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-25-em01",
+      "label": "Altitude control until on final",
+      "mif_row": null,
+      "source": "specific:ALTITUDE DEVIATION UNTIL ON FINAL (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a cross-check that stopped on the standby heading source while the no-gyro turn commands were being flown, did not hold the assigned pattern and vectoring altitudes until on final. Altitude excursions passed 300 feet from the assigned level and continued to diverge without recognition. The IP intervened on the controls to re-establish the assigned altitude before the aircraft was turned to final.",
+        "1": "SP, due to a slow altimeter and VVI cross-check between controller transmissions, allowed the aircraft to leave the assigned vectoring altitude. The deviation reached the 300 feet code 1 limit and was arrested only after repeated verbal prompting from the IP, with a delayed return to the assigned altitude. No control input by the IP was required.",
+        "2": "SP, due to a pitch trim setting that was not refined after the configuration change, allowed the assigned vectoring altitude to be lost by approximately 200 to 250 feet. SP detected the trend on the altimeter without prompting and re-established the assigned altitude within 150 feet before the next controller turn instruction. The correction was made with a smooth pitch input and without IP intervention.",
+        "3": "SP held every assigned pattern and vectoring altitude within 150 feet until established on final. Level-offs were anticipated with lead and the altimeter was re-checked immediately after each turn and configuration change. Altitude control was accurate and required no prompting.",
+        "4": "SP held the assigned altitudes essentially on the assigned level, with excursions of only a few tens of feet, throughout the vectoring pattern. Level-offs were anticipated, trimmed and stabilized before each turn command, and altitude control remained unaffected by the gyro-out workload.",
+        "marginal": "SP remained inside the altitude standards until on final, but the deviations were repeatedly on the low side and settled near the 150 feet band rather than on the assigned level. The pattern shows a tendency to trade altitude for heading control whenever a turn command is received. Earlier trim refinement and a faster return of the eyes to the altimeter after each turn are expected to correct this."
+      }
+    },
+    {
+      "id": "instrument-25-em02",
+      "label": "Heading control and no-gyro turn response",
+      "mif_row": null,
+      "source": "specific:HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unstabilized bank in the no-gyro turns and a magnetic compass that was read while still turning, did not fly the headings resulting from the controller turn and stop-turn commands. Heading errors exceeded 10 degrees and the aircraft was left displaced from the final approach course. The IP intervened to stop the turn and align the aircraft with the final approach course.",
+        "1": "SP, due to a delayed response to the stop-turn command and an uncorrected roll-out lead, ended the no-gyro turns with heading errors at the 10 degrees code 1 limit. The heading was recovered only after the IP verbally prompted the correction, and the wings-level check was late in each case. The aircraft remained flyable by SP throughout.",
+        "2": "SP, due to a bank angle that varied between standard and half-standard rate during the turn, rolled out with heading errors of about 7 to 8 degrees. SP identified the error on the magnetic compass after it settled and corrected back within 5 degrees with a small, timely turn before the next controller instruction. No prompting or IP input was needed.",
+        "3": "SP started and stopped every turn promptly on the controller command, held the required rate throughout, and rolled out with heading errors within 5 degrees. Compass readings were taken only in stabilized flight, and the resulting headings were held steady until the next instruction.",
+        "4": "SP responded to each turn and stop-turn command without perceptible delay, held an accurate and constant turn rate, and rolled out on headings that were essentially exact. Heading control remained precise for the whole gyro-out approach with no observed hunting.",
+        "marginal": "SP held the headings within standards, but the roll-outs were consistently a few degrees wide and the corrections lagged the stop-turn commands. The tendency is toward late roll-out lead which will not be tolerable at higher wind or closer to minimums. A firmer, constant turn rate and an earlier roll-out are expected on subsequent rides."
+      }
+    },
+    {
+      "id": "instrument-25-em03",
+      "label": "Airspeed and configuration control on the approach",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power settings applied without reference to the airspeed indicator during the configuration changes, did not hold the required approach speed. Airspeed excursions passed 20 knots fast and 10 knots slow of the required value, including a decaying trend in the turns. The IP intervened on the power lever to restore the required approach airspeed.",
+        "1": "SP, due to a power change that was not adjusted after gear and flap extension, allowed the airspeed to reach the code 1 boundary of 20 knots fast and 10 knots slow. The excursion was corrected only after the IP called the airspeed, and the return to the required speed was slow and made with a large power input. The aircraft was recovered without IP control input.",
+        "2": "SP, due to a late power reduction at the configuration change, allowed the approach speed to build to approximately 12 to 15 knots above the required value. SP recognized the trend and re-established the speed inside 10 knots fast with a measured power adjustment before final. The correction was timely and made without prompting.",
+        "3": "SP established and held the required approach airspeed within 10 knots fast and 5 knots slow for the whole approach. Power was set for each configuration change and refined promptly, so the speed remained steady through the turns and on final.",
+        "4": "SP held the required approach airspeed essentially on value throughout, with excursions of only a few knots at the configuration changes. Power management was anticipatory and the speed was stable from the start of the pattern to minimums.",
+        "marginal": "SP kept the airspeed within standards, but the value sat consistently on the fast side and drifted toward the 10 knots band whenever attention moved to the turn commands. The trend indicates power that is set once and not refined as drag changes. Anticipatory power setting at each configuration change is expected to tighten this axis."
+      }
+    },
+    {
+      "id": "instrument-25-em04",
+      "label": "Glide path maintenance (PAR-flown gyro-out approach)",
+      "mif_row": null,
+      "source": "specific:MAINTAINING GLIDE PATH (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to descent rate corrections applied in large uncorrelated pitch steps, did not maintain the glide path on the controller advisories. The aircraft went further than 300 feet above and more than 150 feet below the glide path, and the low excursion was still increasing when called. The IP intervened on the controls to re-establish the aircraft on the glide path.",
+        "1": "SP, due to a delayed response to the below glide path advisories, allowed the displacement to reach the limits of up to 300 feet high and up to 150 feet low. The corrections were made only after the IP restated the controller advisory, and each return to the glide path was late and overshot in the opposite direction. No IP control input was required.",
+        "2": "SP, due to a rate of descent that was not adjusted after the initial glide path intercept, drifted above the glide path and was called slightly above and then well above by the controller. SP corrected the descent rate promptly, without prompting, and returned to a slightly above position that the controller acknowledged as on the glide path. The remainder of the descent was flown without further significant displacement.",
+        "3": "SP intercepted the glide path on the controller advisory and held it within slightly above and slightly below for the whole final. Rate of descent was adjusted in small increments in response to each advisory, and the aircraft arrived at decision height on the glide path.",
+        "4": "SP flew the glide path with negligible displacement, receiving predominantly on glide path advisories from the controller to decision height. Descent rate was set at intercept and refined with minimal, precise pitch and power inputs.",
+        "marginal": "SP maintained the glide path within the slightly above and slightly below band, but the aircraft consistently sat on the high side and the corrections were made in larger steps than the advisories required. The tendency is toward a descent rate that is chased rather than set. Establishing the required rate of descent at intercept and correcting in small increments is expected on the next event."
+      }
+    },
+    {
+      "id": "instrument-25-em05",
+      "label": "Altitude at MDA (ASR-flown gyro-out approach)",
+      "mif_row": null,
+      "source": "specific:ALTITUDE DEVIATION AT MDA (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a descent rate that was not reduced approaching the published minimum descent altitude, did not level off at MDA. The aircraft descended below MDA, which admits no negative tolerance, and the level-off was more than 200 feet in error. The IP intervened on the controls to arrest the descent and re-establish the aircraft at the minimum descent altitude.",
+        "1": "SP, due to a late start of the level-off and an altimeter that was not re-checked during the final descent, arrived at MDA with an error at the 200 feet high code 1 boundary and momentarily allowed the altitude to sag toward the published value. The level-off was completed only after the IP called the approaching minimum descent altitude. The aircraft was recovered by SP without IP control input.",
+        "2": "SP, due to a level-off lead that was not adjusted for the existing rate of descent, stopped the descent approximately 150 to 180 feet above the minimum descent altitude. SP recognized the error without prompting and re-established the aircraft within 100 feet of MDA in time for the missed approach point. No descent below the published minimum occurred at any stage.",
+        "3": "SP levelled off at the minimum descent altitude within 100 feet high and never descended below the published value. The level-off lead was correct for the rate of descent in use, and the altitude was then held steady to the missed approach point.",
+        "4": "SP arrived at the minimum descent altitude essentially on value, with a level-off error of only a few tens of feet high and no descent below the published minimum. The altitude was held precisely from level-off to the missed approach point.",
+        "marginal": "SP respected the minimum descent altitude and stayed inside the tolerance, but the level-off was consistently high in the band and the altitude was allowed to wander before the missed approach point. The trend suggests a level-off lead applied by habit rather than computed from the rate of descent. A lead matched to the actual descent rate, followed by a positive altitude hold, is expected."
+      }
+    },
+    {
+      "id": "instrument-25-em06",
+      "label": "Compliance with controller instructions and radio discipline",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-non-standard-phraseology",
+      "texts": {
+        "0": "SP, due to non-standard phraseology and readbacks that did not match the instruction issued, did not comply with the final controller instructions during the gyro-out approach. Turn, descent and configuration instructions were actioned incorrectly or not at all, and the controller had to repeat the sequence. The IP intervened on the radio and on the controls to restore compliance with the approach instructions.",
+        "1": "SP, due to transmissions that departed from standard phraseology and readbacks made while the turn was still being flown, actioned several controller instructions late or incompletely. Compliance was achieved only after the IP verbally restated each instruction, and the acknowledgements remained non-standard. No IP control input was required.",
+        "2": "SP, due to a readback given before the instruction had been fully received, initially mis-set one heading assigned by the controller. SP recognized the discrepancy at the controller repeat, corrected the heading and reverted to standard phraseology for the remaining transmissions. All subsequent instructions were complied with in time and without prompting.",
+        "3": "SP complied with all ATC and final controller instructions, using standard phraseology throughout the gyro-out approach. Readbacks were accurate and timely, turn and descent instructions were actioned promptly, and no instruction had to be repeated by the controller.",
+        "4": "SP complied with every ATC and final controller instruction immediately and accurately, with concise standard phraseology maintained under the additional gyro-out workload. Radio work never competed with aircraft control and no clarification was required at any point.",
+        "marginal": "SP complied with all controller instructions, but several acknowledgements were wordy and delivered while the aircraft was manoeuvring, and one readback needed the controller to confirm. Standards were met, yet the trend is toward radio work that follows the aircraft rather than leading it. Shorter standard readbacks made at stabilized points of the approach are expected on the next event."
+      }
+    },
+    {
+      "id": "instrument-25-em07",
+      "label": "Routing and published altitude restrictions",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an approach plate that was not reviewed for the gyro-out pattern in use, violated the routing and altitude restrictions published in MAIP and the Instrument Approach Manuals. The aircraft was flown below a published segment minimum and outside the protected routing while in the pattern. The IP intervened to re-establish the aircraft on a published routing at a legal altitude.",
+        "1": "SP, due to incomplete recall of the published segment minima, descended to the point at which a published restriction was about to be infringed and remained outside the intended routing longer than briefed. The correction was made only after the IP verbally identified the applicable restriction, and the response was delayed. No IP control input was required.",
+        "2": "SP, due to a segment minimum that was read late from the approach plate, started a descent early toward a published restriction. SP checked the plate, recognized the discrepancy before the restriction was infringed and re-established the aircraft at the correct segment altitude on the published routing without prompting. No published restriction was violated.",
+        "3": "SP respected all routing and altitude restrictions published in MAIP and the Instrument Approach Manuals throughout the gyro-out approach. Segment minima were known in advance, descents were started only at the correct points, and the aircraft remained on the assigned routing.",
+        "4": "SP flew the approach with full knowledge of the published routing and restrictions, calling each segment minimum before reaching it and descending exactly at the applicable points. Adherence to MAIP and the Instrument Approach Manuals was maintained without reference difficulty despite the gyro-out condition.",
+        "marginal": "SP did not infringe any published routing or altitude restriction, but the segment minima were consulted on the plate later than they should have been and one descent was started close to the earliest permissible point. The trend indicates restrictions being recalled reactively rather than briefed. Reviewing the applicable minima before the pattern is entered is expected to remove this margin."
+      }
+    },
+    {
+      "id": "instrument-25-em08",
+      "label": "Procedure knowledge and sequencing without IP intervention",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an absent cross-check of aircraft state against the procedure being flown, did not execute the gyro-out GCA sequence according to the standardized procedures of AFMAN 11-202 VOL3 and the Flight Manuals. Checklist and configuration steps were omitted or performed out of order, and the approach was not flyable to minimums as set up. The IP intervened to complete the required steps and to continue the approach.",
+        "1": "SP, due to a cross-check that was not maintained between the flight instruments and the procedure steps, executed the gyro-out approach sequence with errors and omissions. The missing items were completed only after the IP prompted each one verbally, and the sequence remained behind the aircraft. SP retained control of the aircraft throughout.",
+        "2": "SP, due to an interrupted cross-check while the no-gyro turn commands were being flown, performed one configuration step out of the standardized sequence. SP detected the omission on the next scan, completed the step in time and restored the correct order before final without any prompting. The remainder of the procedure was flown as published.",
+        "3": "SP executed the gyro-out GCA sequence in accordance with the standardized procedures of AFMAN 11-202 VOL3 and the Flight Manuals, with an active cross-check maintained between the flight instruments and the procedure. Configuration and checklist steps were completed at the correct points, with no mistakes and no IP intervention.",
+        "4": "SP executed the whole gyro-out approach flawlessly and in the correct order, keeping a continuous cross-check of aircraft state against each procedural step. The sequence stayed ahead of the aircraft to minimums and no assistance of any kind was required.",
+        "marginal": "SP completed the procedure correctly and without IP intervention, but the cross-check between instruments and procedure steps narrowed each time a turn command was received, and two steps were completed at the late end of their window. Standards were met while the sequencing remained reactive. A deliberate scan back to the procedure after each turn is expected on the following ride."
+      }
+    },
+    {
+      "id": "instrument-25-em09",
+      "label": "Partial-panel scan and disorientation management",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-spatial-disorientation",
+      "texts": {
+        "0": "SP, due to spatial disorientation that developed with the primary attitude and heading reference unavailable, did not maintain a usable partial-panel scan during the gyro-out approach. Control inputs followed sensation rather than the standby instruments and the aircraft attitude diverged from the approach profile. The IP intervened on the controls to recover the aircraft and restore instrument flight.",
+        "1": "SP, due to disorientation cues in the turns that were not resolved against the standby instruments, fixated on single indications and lost the partial-panel scan pattern. The scan was restored only after repeated verbal direction from the IP, and control remained coarse in the interim. SP flew the aircraft throughout without IP control input.",
+        "2": "SP, due to a false turn sensation after a prolonged no-gyro turn, briefly weighted sensation over the standby indications and let bank and pitch become uneven. SP recognized the conflict, referred back to the standby instruments and re-established a full partial-panel scan without prompting, before the approach parameters moved outside limits. Control quality returned to normal for the rest of the approach.",
+        "3": "SP maintained a disciplined partial-panel scan for the whole gyro-out approach and resolved every conflicting sensation against the standby instruments. Aircraft control remained smooth and the approach profile was flown on instruments without hesitation.",
+        "4": "SP flew the entire gyro-out approach on a continuous and evenly distributed partial-panel scan, with no evidence of fixation or of sensation influencing control inputs. Instrument discipline was unaffected by the loss of the primary attitude and heading reference.",
+        "marginal": "SP kept the aircraft under control on the standby instruments and met the standards, but the scan dwelled on the compass during turns and the recovery of the full scan afterwards was slow. The trend shows disorientation cues consuming attention that the approach needs elsewhere. A more even scan rhythm and an immediate return to the full partial-panel pattern after each turn are expected."
+      }
+    }
+  ]
+}

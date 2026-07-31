@@ -1,0 +1,132 @@
+{
+  "item_id": "instrument-29",
+  "item_name": "MISSED APPROACH",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [29],
+  "mif_rows": [
+    {"sn": 29, "row_name": "Missed Approach"}
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-29-em01",
+      "label": "Missed approach radial tracking",
+      "mif_row": null,
+      "source": "specific:MISSED APPROACH RADIAL DEVIATION",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to failure to confirm station passage before starting the climbing turn, did not intercept and hold the published missed approach radial. The course indicator was allowed to run full deflection and the deviation exceeded 8 degrees while the aircraft kept diverging from the missed approach course. SP applied no correcting turn and the IP had to take control of heading to regain the radial before the holding fix.",
+        "1": "SP, due to late reference to the approach plate, delayed the turn to the missed approach radial and allowed the deviation to reach the 8 degree limit. SP corrected only after two verbal prompts from the IP indicating the course needle position, and the aircraft remained off the radial through most of the climb segment. No control input was needed from the IP, but the correction was neither self-initiated nor timely.",
+        "2": "SP, due to a slow initial turn rate after the missed approach point, let the aircraft drift off the published radial by more than 5 degrees, peaking short of the 8 degree limit. SP identified the course indicator displacement without prompting and applied a timely intercept turn that reestablished the radial before the level off. The deviation stayed within the 5 to 8 degree band and no IP intervention was required.",
+        "3": "SP tracked the published missed approach radial accurately, keeping the deviation within 5 degrees throughout the climb. The intercept turn was started at the missed approach point and drift corrections were applied promptly, with wind correction refined as the aircraft climbed. Course guidance was cross checked against the approach plate and the aircraft arrived at the holding fix on radial.",
+        "4": "SP flew the missed approach radial with negligible deviation, holding the course indicator essentially centered and within about 2 degrees throughout the segment. The wind correction angle was set on the first correction and required no further adjustment, and the aircraft reached the holding fix precisely on course.",
+        "marginal": "SP kept the missed approach radial within standards, but the deviation stabilized close to the 5 degree limit and consistently on the downwind side, showing that the wind correction angle was set but never refined. Corrections were made in single large increments rather than small anticipatory inputs. SP is expected to reduce the residual radial error by trimming the correction angle early in the climb."
+      }
+    },
+    {
+      "id": "instrument-29-em02",
+      "label": "Airspeed control during the missed approach",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to applying full power without a matching pitch increase, allowed the airspeed to build past the plus 15 knot tolerance during the initial climb, and later let it decay below the minus 10 knot limit while raising the nose to regain altitude. SP did not use the airspeed indicator as a primary reference during the transition and the trend was not arrested. The IP intervened on power and pitch to restore the target climb speed.",
+        "1": "SP, due to delayed power setting after the go around, let the airspeed decay to the minus 10 knot limit during the initial climb. SP restored the target speed only after the IP verbally called the airspeed twice, and the recovery was slow enough that the deviation persisted through the turn. The speed was eventually contained at the tolerance limit without any control input from the IP.",
+        "2": "SP, due to a coarse power advance at the missed approach point, allowed the airspeed to exceed the target by more than 10 knots but remain short of the plus 15 knot limit. SP detected the trend on the airspeed indicator and reduced power and adjusted pitch in time to bring the speed back into the primary band before the level off. No prompting or intervention was required.",
+        "3": "SP maintained the missed approach climb speed within plus 10 and minus 5 knots throughout the maneuver. Power was set promptly at the missed approach point and pitch was adjusted to hold the target speed, with small trim corrections applied as the configuration changed. Airspeed was included in the cross check at every stage of the climb.",
+        "4": "SP held the missed approach airspeed with negligible variation, staying within a few knots of the target from power application to level off. Power and pitch were coordinated so that no speed excursion developed during configuration change, and the aircraft was trimmed hands off at the climb speed.",
+        "marginal": "SP kept the missed approach airspeed within standards, but the speed repeatedly settled near the plus 10 knot edge of the primary band during the clean up, with corrections applied only after the deviation had developed. The pattern shows power being set by feel rather than confirmed against the airspeed indicator. SP is expected to anticipate the speed increase after gear and flap retraction and set the power more precisely."
+      }
+    },
+    {
+      "id": "instrument-29-em03",
+      "label": "Timely initiation of the missed approach",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to continuation bias after a long approach with the runway environment expected at any moment, did not execute the missed approach at the missed approach point and continued the descent below minimums with no visual reference. The decision point was not called and no go around was initiated on SP initiative. The IP directed and then executed the missed approach to arrest the descent.",
+        "1": "SP, due to reluctance to abandon an approach that was nearly complete, held level at minimums past the missed approach point instead of initiating the climb. The missed approach was started only after the IP called the missed approach point, and the resulting delay put the aircraft near the limits of the published protected area with airspeed at the tolerance limit. No control input was required from the IP.",
+        "2": "SP, due to attention remaining outside in search of the runway environment, initiated the missed approach several seconds after the missed approach point. SP recognized the delay without prompting, applied power and established the climb, and the resulting deviations stayed inside the primary tolerances. The maneuver was completed without prompting or intervention.",
+        "3": "SP identified the missed approach point on time and initiated the missed approach without hesitation, applying power and rotating to the climb attitude at the decision point. The decision was announced and the published procedure was flown from the correct point. Deviations remained within the primary tolerances throughout.",
+        "4": "SP executed the missed approach exactly at the published point with no hesitation, announcing the decision and transitioning to the climb in one continuous and correctly sequenced action. The timing was such that no deviation in course or airspeed developed at any stage.",
+        "marginal": "SP initiated the missed approach within standards, but only after a perceptible pause at the decision point that suggests SP was still weighing whether the approach could be salvaged. The procedure that followed was correct and the deviations stayed inside tolerance. SP is expected to treat the missed approach point as a fixed commitment and start the climb without deliberation."
+      }
+    },
+    {
+      "id": "instrument-29-em04",
+      "label": "Knowledge and sequence of the published procedure",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to inadequate preflight review of the published missed approach, did not know the climb altitude, the turn point or the holding fix, and flew a self invented track instead of the charted procedure. The sequence of actions was not executed IAW the Techniques and Procedures Manual and MAIP, and the aircraft departed the protected airspace of the procedure. The IP had to take control and fly the published missed approach.",
+        "1": "SP, due to an incomplete approach briefing, confused the order of the published missed approach steps and started the turn before reaching the charted turn point. The correct sequence was recovered only after the IP prompted with the charted altitude and fix, and the radial deviation reached the tolerance limit before the aircraft was reestablished. No IP control input was required.",
+        "2": "SP, due to hesitation in recalling the published climb altitude, executed the missed approach steps out of the ideal order and had to reread the plate during the climb. SP identified the discrepancy without prompting and reordered the actions in time, keeping course and airspeed inside the secondary band. The procedure was completed correctly and without intervention.",
+        "3": "SP executed the published missed approach procedure in the correct sequence and without misapprehension, flying the charted climb, turn point and holding fix IAW the Techniques and Procedures Manual, MAIP and Local Area Procedures. The steps were recalled from the briefing and confirmed against the plate. All parameters remained within the primary tolerances.",
+        "4": "SP flew the published missed approach flawlessly and from memory, with every step in the correct order and confirmed against the plate without interrupting the instrument cross check. The climb, turn and holding entry were executed as charted with no hesitation and no deviation of consequence.",
+        "marginal": "SP flew the published missed approach correctly, but needed to consult the plate at each step rather than executing from a briefed plan, which slowed the sequence and left little margin before the turn point. No step was omitted or misordered. SP is expected to brief the full missed approach before the approach so the procedure can be flown without reference interruptions."
+      }
+    },
+    {
+      "id": "instrument-29-em05",
+      "label": "Configuration clean up within airspeed limits",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to omitting the standardized clean up sequence, left the aircraft in the approach configuration during the climb and then retracted the gear and flaps out of order and outside the published airspeed limits. The configuration change was not IAW the standardized procedures and the airspeed excursion that followed exceeded the plus 15 knot tolerance. The IP intervened to manage the configuration and restore the climb speed.",
+        "1": "SP, due to fixation on course guidance, delayed the clean up so that the aircraft climbed in the approach configuration and the airspeed fell to the minus 10 knot limit. The gear and flaps were retracted only after the IP called for the configuration change, and the sequence was completed late although within the placard speeds. No control input was needed from the IP.",
+        "2": "SP, due to a rushed power application, called for the clean up slightly out of the standardized order and retracted the flaps before confirming a positive rate of climb. SP recognized the deviation without prompting, verified the climb and completed the configuration change within the published airspeed limits, with the resulting speed excursion contained short of the primary tolerance. No intervention was required.",
+        "3": "SP cleaned up the aircraft configuration according to the standardized procedures, retracting gear and flaps in the correct order after a positive rate of climb was established and within the published airspeed limits. The configuration changes were announced and confirmed by indication. Airspeed remained within the primary tolerance throughout the clean up.",
+        "4": "SP cleaned up the configuration precisely to the standardized sequence, timing each retraction so that no airspeed or pitch excursion developed. Gear and flap indications were confirmed without interrupting the instrument cross check, and the aircraft was trimmed at the climb speed immediately after the clean up.",
+        "marginal": "SP completed the configuration clean up within the standardized procedures and inside the airspeed limits, but each retraction was initiated only after a noticeable pause and the flap limit speed was approached before the flaps came up. The sequence itself was correct and the indications were checked. SP is expected to anticipate the acceleration and start the clean up earlier in the climb."
+      }
+    },
+    {
+      "id": "instrument-29-em06",
+      "label": "Pitch, power and altitude control in the go around transition",
+      "mif_row": null,
+      "source": "general:a,b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to advancing the power without setting the climb attitude on the attitude indicator, did not arrest the descent at the missed approach point and the aircraft continued below minimums before any climb developed. The pitch and power inputs were not coordinated and the airspeed excursion exceeded the tolerance while the aircraft failed to reach the published climb altitude. The IP took control to establish the climb.",
+        "1": "SP, due to an under set climb attitude, established only a shallow climb after the missed approach point and levelled off well below the published missed approach altitude. The correct attitude and altitude were achieved only after repeated verbal direction from the IP, and the airspeed reached the tolerance limit during the correction. No IP control input was required.",
+        "2": "SP, due to a slightly aggressive rotation at the go around, allowed the pitch to overshoot the climb attitude and the aircraft to balloon above the intended climb profile with airspeed above the primary band. SP detected the attitude and speed trend on the instruments and reset pitch and power in time, containing the deviations short of the tolerance limits without prompting or intervention.",
+        "3": "SP transitioned smoothly to the go around, applying power and setting the climb attitude on the attitude indicator in one coordinated action, arresting the descent immediately at the missed approach point. The climb was stabilized and levelled at the published missed approach altitude with all parameters inside the primary tolerances. Trim was used to hold the climb attitude.",
+        "4": "SP executed the go around transition with negligible deviation, arresting the descent at the missed approach point and holding the climb attitude and the published altitude essentially exactly. Pitch, power and trim were coordinated so that no altitude overshoot or speed excursion occurred at any point.",
+        "marginal": "SP arrested the descent and climbed to the published altitude within standards, but the level off was reached with a small overshoot each time and the aircraft was flown to altitude by control pressure rather than by trim. All parameters stayed within tolerance. SP is expected to lead the level off earlier and trim off the residual pressure to steady the climb profile."
+      }
+    },
+    {
+      "id": "instrument-29-em07",
+      "label": "Instrument cross check and situational awareness during the missed approach",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to an attention bottleneck created by the simultaneous demands of power setting, configuration change and navigation, fixated on a single instrument and stopped cross checking the remaining flight instruments. Course, airspeed and altitude were all allowed to diverge beyond the published tolerances without being detected, and SP lost awareness of the aircraft position relative to the missed approach fix. The IP intervened to restore the flight path and the instrument scan.",
+        "1": "SP, due to task saturation at the missed approach point, narrowed the instrument scan to the navigation display and did not include airspeed and altitude until the IP called them out. The deviations reached the tolerance limits before the scan was restored, and awareness of the position relative to the holding fix was regained only through IP prompting. No control input was needed from the IP.",
+        "2": "SP, due to a temporarily narrowed scan while managing power and configuration, omitted the airspeed indicator for several seconds and allowed the speed and course to drift past the primary band. SP recognized the breakdown in the cross check without prompting, resumed a full scan and corrected both parameters before the tolerance limits were reached. No intervention was required.",
+        "3": "SP maintained a complete instrument cross check throughout the missed approach, including attitude, airspeed, altitude and course guidance while managing power and configuration. Position awareness relative to the missed approach fix was continuous and all parameters stayed within the primary tolerances. Deviations were detected and corrected as they developed.",
+        "4": "SP sustained a full and evenly distributed instrument cross check through every phase of the missed approach, so that deviations were caught at the trend stage and never developed into measurable errors. Awareness of the aircraft position relative to the missed approach fix and holding pattern was continuous and correct at all times.",
+        "marginal": "SP kept all parameters within standards, but the cross check visibly slowed during the configuration change, with attention held on the navigation display and corrections applied only after deviations became apparent. No parameter left tolerance. SP is expected to keep the scan rate constant through the clean up so deviations are caught at the trend stage."
+      }
+    },
+    {
+      "id": "instrument-29-em08",
+      "label": "Communication and coordination during the missed approach",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, due to a breakdown in communication under the workload of the go around, did not advise ATC that the missed approach was being executed and did not state the intentions to the IP. The aircraft climbed and turned without a clearance and without the crew sharing a common plan, and the missed approach instructions were neither requested nor read back. The IP took over the radios and the flight path to resolve the resulting conflict with the published procedure.",
+        "1": "SP, due to prioritizing the radio call over flying the aircraft, made a garbled and non standard missed approach transmission and did not read back the instructions received. The correct call and read back were completed only after the IP directed the phraseology, and the delay in coordination left the aircraft near the course tolerance limit. No control input was required from the IP.",
+        "2": "SP, due to a momentary lapse in prioritization, delayed the missed approach call to ATC until after the climb and turn were established, so the aircraft was on the published procedure before the intentions were transmitted. SP identified the omission without prompting and made a complete and standard call with a correct read back, keeping all parameters inside the secondary band. No intervention was required.",
+        "3": "SP advised ATC of the missed approach promptly and in standard phraseology once the aircraft was climbing on the published procedure, read back the instructions correctly and kept the IP informed of the intentions. Aviate, navigate and communicate were prioritized in the correct order. All flight parameters remained within the primary tolerances during the radio work.",
+        "4": "SP integrated the missed approach communications seamlessly with the flying task, making a concise and fully standard call at the first appropriate moment. The instructions were obtained and read back correctly and the plan was confirmed with the IP. The instrument cross check was never interrupted and no measurable deviation developed in any parameter.",
+        "marginal": "SP made the missed approach call and read back within standards, but the transmission was long and partly non standard and was made while the climb was still being stabilized, briefly loading the flying task. Aircraft control never left tolerance. SP is expected to shorten the call to standard phraseology and make it once the climb and clean up are complete."
+      }
+    }
+  ]
+}

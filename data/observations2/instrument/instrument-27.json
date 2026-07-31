@@ -1,0 +1,162 @@
+{
+  "item_id": "instrument-27",
+  "item_name": "CIRCLING APPROACH",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [27],
+  "mif_rows": [
+    { "sn": 27, "row_name": "Circling Approach" }
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-27-em01",
+      "label": "Circling altitude control",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a late transition from the instrument cross-check to the visual segment at the circling minimum descent altitude, did not hold the circling altitude during the downwind and base maneuvering. The aircraft descended more than 300 feet below the published circling altitude before it was in a position from which a normal descent to landing could be made. The IP intervened to arrest the descent and altitude control was not re-established by SP without assistance.",
+        "1": "SP, due to attention held on runway acquisition instead of the altimeter, allowed the circling altitude to erode to the 300 foot deviation limit while maneuvering visually. The deviation was arrested only after repeated verbal prompting from the IP, and the return to the published circling altitude was slow. No intervention on the controls was required.",
+        "2": "SP, due to a coarse power and pitch adjustment when rolling into the downwind turn, did not maintain the circling altitude precisely and the deviation reached the 150 to 300 foot band. SP recognized the trend on the next altimeter check, corrected with a small power change and returned to the published altitude promptly, without any prompting or intervention.",
+        "3": "SP held the circling altitude within 150 feet throughout the downwind, base and final maneuvering. Corrections were small and made early from the altimeter cross-check, and the aircraft remained at the published circling altitude until in a position for a normal descent to landing.",
+        "4": "SP flew the circling altitude with negligible excursions, well inside 150 feet and typically within a few tens of feet. Power and pitch were coordinated in both turns so that no correction was visible on the altimeter, and the published altitude was held precisely until the descent point.",
+        "marginal": "SP kept the circling altitude within standards, but the deviations sat close to the 150 foot band and were consistently low rather than distributed either side. The trend is a slow descent that begins in each turn and is caught late. SP is expected to anticipate the power requirement in the turn and to shorten the altimeter cross-check interval so that deviations stay clearly inside the tighter band."
+      }
+    },
+    {
+      "id": "instrument-27-em02",
+      "label": "Circling airspeed control",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to inadequate monitoring of airspeed during the approach, did not maintain the circling airspeed while maneuvering in the visual segment. Airspeed diverged by more than 20 knots from the target, with the excursion developing towards the low side during the base turn. The IP intervened with power to restore the required airspeed before the aircraft was aligned with the runway.",
+        "1": "SP, due to an interrupted instrument cross-check while attention remained outside on the runway, allowed the circling airspeed to reach the 20 knot deviation limit. Airspeed was recovered only after the IP called the deviation, and the correction was applied late and with an overshoot in the opposite direction. No intervention on the controls was required.",
+        "2": "SP, due to a delayed power reduction after configuring the aircraft, did not hold the circling airspeed exactly and the deviation reached the 10 to 20 knot band. SP detected the trend on the next cross-check, adjusted power smoothly and re-established the target airspeed before the base turn, with no prompting or intervention.",
+        "3": "SP maintained the circling airspeed within 10 knots throughout the maneuvering, including through the configuration change and both turns. Power corrections were small and anticipated, and the aircraft was on speed when established on final.",
+        "4": "SP flew the circling airspeed with negligible variation, well inside 10 knots at all points of the pattern. Airspeed remained stable through the configuration change and both turns and required only minimal power adjustment.",
+        "marginal": "SP remained within the airspeed standard, but the deviations clustered near the 10 knot band and recurred at the same point in the base turn. The trend is a fast entry that is bled off late on final. SP is expected to set the required power earlier in the turn and to keep the airspeed indication in the cross-check so that variation stays clearly inside the tighter band."
+      }
+    },
+    {
+      "id": "instrument-27-em03",
+      "label": "Exit heading from circling turns and final alignment",
+      "mif_row": null,
+      "source": "specific:EXIT HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an early and unassessed rollout from the base turn, did not exit the turn on the required heading for runway alignment. The aircraft rolled out more than 10 degrees off the extended runway centerline heading and the resulting overshoot could not be corrected with a normal turn. The IP intervened to re-align the aircraft with the runway.",
+        "1": "SP, due to an unmonitored bank angle in the turn to final, exited the turn at the 10 degree heading deviation limit. The misalignment was corrected only after the IP pointed out the offset, and the aircraft was re-aligned late in the final segment. No intervention on the controls was required.",
+        "2": "SP, due to a slightly late start of the turn to final, rolled out with a heading deviation in the 5 to 10 degree band from the runway heading. SP recognized the offset immediately, applied a coordinated correcting turn and was aligned with the runway well before the round out, without prompting or intervention.",
+        "3": "SP exited each circling turn within 5 degrees of the required heading and rolled out aligned with the extended runway centerline. Bank was adjusted during the turn so that the rollout required no additional correction.",
+        "4": "SP exited the circling turns with negligible heading error, rolling out essentially on the runway heading. Rate of turn was adjusted continuously so that alignment was achieved at rollout with no subsequent correction.",
+        "marginal": "SP met the heading standard on the exit from the turns, but the rollouts were repeatedly a few degrees to the outside of the runway heading and close to the 5 degree band. The trend is a late turn start compensated with increased bank at the end. SP is expected to select the turn point from a consistent visual reference so that the rollout heading is achieved without a final correction."
+      }
+    },
+    {
+      "id": "instrument-27-em04",
+      "label": "Touch down point after the circling maneuver",
+      "mif_row": null,
+      "source": "specific:TOUCH DOWN POINT (feet from the beginning of the RWY)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a high and fast final segment carried over from the circling maneuvering, did not control the aiming point and floated in the round out. Touch down occurred beyond 1500 feet from the beginning of the runway, the remaining runway was reduced below the briefed figure, and the IP intervened to complete the landing.",
+        "1": "SP, due to a shallow final flown without a fixed aiming point, arrived long and touched down at the 1500 foot limit from the beginning of the runway. The long touchdown was corrected only after the IP directed a power reduction and a positive descent to the runway, and recovery of the aiming point was late.",
+        "2": "SP, due to a slightly delayed power reduction in the round out, touched down in the 1000 to 1500 foot band from the beginning of the runway. SP recognized the developing float, reduced power and established a positive touchdown without prompting or intervention.",
+        "3": "SP controlled the final segment so that the aircraft touched down within 1000 feet of the beginning of the runway. The aiming point was established during the turn to final and the round out was completed without float.",
+        "4": "SP touched down consistently close to the planned aiming point and well inside 1000 feet from the beginning of the runway. Descent path and power were managed so that the round out required no correction and the touchdown occurred at the intended point.",
+        "marginal": "SP touched down within the standard, but the touchdown points were repeatedly near the 1000 foot figure and always on the long side. The trend is a slightly high final following the circling turn, absorbed by a longer float. SP is expected to fix the aiming point earlier and to reduce power at the round out so that touchdown occurs clearly inside the tighter figure."
+      }
+    },
+    {
+      "id": "instrument-27-em05",
+      "label": "Deviation from runway centerline at touchdown",
+      "mif_row": null,
+      "source": "specific:DEVIATION FROM CENTER LINE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an uncorrected crosswind drift carried through the final segment, did not align the aircraft with the runway centerline. Lateral deviation at touchdown exceeded 15 feet with drift still present at contact, and the IP intervened on the controls to correct the alignment during the landing roll.",
+        "1": "SP, due to a wing low correction applied without reference to the centerline, touched down at the 15 foot lateral deviation limit. Alignment was corrected only after the IP called the drift, and the aircraft was returned to the centerline late in the landing roll. No intervention on the controls was required.",
+        "2": "SP, due to a late crosswind correction after rolling out from the circling turn, touched down with a lateral deviation in the 5 to 15 foot band. SP identified the offset before touchdown, applied rudder and aileron to align the aircraft and tracked back to the centerline immediately, with no prompting or intervention.",
+        "3": "SP touched down within 5 feet of the runway centerline with the aircraft aligned with the runway axis. Drift was canceled before touchdown and the landing roll was tracked on the centerline.",
+        "4": "SP touched down essentially on the runway centerline with negligible lateral offset and no drift at contact. Alignment was established during the turn to final and held through the round out and the landing roll.",
+        "marginal": "SP stayed within the lateral standard, but touchdowns were repeatedly on the same side of the centerline and near the 5 foot band. The trend is an incomplete drift correction carried out of the circling turn. SP is expected to establish the crosswind correction immediately at rollout on final and to hold the runway axis so that lateral offset stays clearly inside the tighter band."
+      }
+    },
+    {
+      "id": "instrument-27-em06",
+      "label": "Touch down speed",
+      "mif_row": null,
+      "source": "specific:TOUCH DOWN SPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an uncontrolled airspeed decay in the round out after the circling turn, did not touch down within the required speed band. Touch down speed was more than 5 knots below the computed speed, the resulting sink rate was excessive, and the IP intervened with power and pitch to complete the landing.",
+        "1": "SP, due to excess airspeed carried from the final segment, touched down at the upper limit of the band, 10 knots above the computed touch down speed. The excess speed was reduced only after the IP directed a power reduction, and the round out was extended before the aircraft was placed on the runway.",
+        "2": "SP, due to a slightly late power reduction after rolling out on final, touched down 5 to 10 knots above the computed touch down speed. SP recognized the excess during the round out, reduced power and completed the touchdown without prompting or intervention.",
+        "3": "SP touched down within the required band, between the computed touch down speed and 5 knots above it. Power and pitch were managed through the round out so that the aircraft was placed on the runway at the correct attitude and speed.",
+        "4": "SP touched down essentially at the computed touch down speed with negligible excess. Deceleration through the round out was continuous and the aircraft was placed on the runway in the correct landing attitude.",
+        "marginal": "SP met the touch down speed standard, but the speeds were consistently at the top of the band, close to 5 knots above the computed figure. The trend is a fast final flown after the circling turn and not fully corrected before the round out. SP is expected to stabilize the approach speed before the round out so that touch down occurs closer to the computed speed."
+      }
+    },
+    {
+      "id": "instrument-27-em07",
+      "label": "Standardized circling procedure and sequence of actions",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to incomplete knowledge of the circling procedure described in the Flight Manual and AFMAN 11-202 VOL3, did not execute the standardized sequence; the landing configuration and the associated checks were not completed in the prescribed order. The omission was not detected by SP and the approach was continued in an incorrect configuration. The IP intervened to complete the sequence and to keep the maneuver within the circling limits.",
+        "1": "SP, due to an uncertain recall of the circling sequence, did not carry out the required actions at the prescribed points; landing configuration and the associated checks were completed late in the maneuver. The sequence was completed only after verbal direction from the IP, and the delay compressed the remaining items on the base leg. No intervention on the controls was required.",
+        "2": "SP, due to a task order applied out of sequence when the circling clearance was received, initially omitted one item of the circling procedure. SP detected the omission on the downwind check, completed the item in time and re-established the standard flow without prompting or intervention.",
+        "3": "SP executed the circling approach according to the standardized procedure described in the Flight Manual and AFMAN 11-202 VOL3. Configuration, checks and the transition to the visual segment were completed at the correct points and in the correct order, without mistakes and without IP intervention.",
+        "4": "SP executed the circling procedure with no deviation from the standardized sequence and with the workload distributed evenly through the maneuver. Each action was completed at the correct point, leaving spare capacity for the visual segment and the landing.",
+        "marginal": "SP completed the circling procedure within standards, but several items were carried out at the latest acceptable point and the sequence had to be compressed on base. The trend is a reactive rather than an anticipated flow. SP is expected to complete the configuration and the checks earlier on the downwind so that the final segment is flown without concurrent procedural tasks."
+      }
+    },
+    {
+      "id": "instrument-27-em08",
+      "label": "Circling minimum altitude and visual contact discipline",
+      "mif_row": null,
+      "source": "general:a,b",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to continuation bias in maintaining the approach after visual contact with the runway environment had become intermittent, descended below the published circling minimum altitude before the aircraft was in a position for a normal descent to landing. The minimum altitude was violated by more than 100 feet and the IP intervened to arrest the descent and to initiate the missed approach.",
+        "1": "SP, due to a decision to continue with a marginal visual reference, allowed the aircraft to reach the published circling minimum altitude with the descent still developing. The descent was arrested only after the IP directed a level off, and the decision on the missed approach was made late. No intervention on the controls was required.",
+        "2": "SP, due to an early start of the descent from the circling altitude in the base turn, approached the published minimum before the aircraft was in a position for a normal descent to landing. SP recognized the developing deviation, leveled at the circling altitude and continued the maneuver without prompting or intervention; the minimum was not violated.",
+        "3": "SP did not violate the circling minimum altitude at any point of the maneuver. The descent was initiated only when the aircraft was in a position from which a normal descent to landing could be made, with the runway environment continuously in sight.",
+        "4": "SP maintained the circling altitude precisely until the aircraft was in position for a normal descent to landing and never approached the published minimum. The descent point was identified early and stated, and visual contact with the runway environment was retained throughout the maneuver.",
+        "marginal": "SP did not violate the circling minimum, but the descent was initiated at the earliest defensible point and the margin to the published minimum was consistently small. The trend is an early descent started in the base turn. SP is expected to delay the descent until the normal descent path to landing is available so that a clear margin to the circling minimum is preserved."
+      }
+    },
+    {
+      "id": "instrument-27-em09",
+      "label": "Compliance with ATC directives",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a readback that was not compared with the clearance actually issued, did not follow the ATC circling directive and maneuvered on the opposite side of the runway to the one cleared. The deviation from the clearance was not recognized by SP and the IP intervened, taking control and coordinating the correction with ATC.",
+        "1": "SP, due to an incomplete listening watch while configuring the aircraft, did not comply with the ATC directive at the time given; the required report and the associated maneuver were both made late. Compliance was achieved only after the IP prompted SP and repeated the instruction. No intervention on the controls was required.",
+        "2": "SP, due to a partial readback of the circling clearance, initially began the maneuver in a manner that did not match the ATC directive. SP requested clarification, corrected the ground track and complied with the clearance promptly, without prompting or intervention.",
+        "3": "SP followed the ATC directives with precision, complying with the circling instruction and the assigned side of the runway. Readbacks were complete and accurate and the required reports were made at the correct points.",
+        "4": "SP anticipated and followed every ATC directive without error, with concise and complete readbacks. Reports were made at the correct points and the circling maneuver matched the clearance exactly, with no further instruction required from ATC.",
+        "marginal": "SP complied with all ATC directives, but readbacks were slow and one instruction had to be confirmed before it was actioned. The trend is a listening watch that degrades while cockpit tasks are in progress. SP is expected to keep the radio in the scan during configuration so that clearances are read back and executed without delay."
+      }
+    },
+    {
+      "id": "instrument-27-em10",
+      "label": "MAIP circling pattern geometry and position awareness",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to loss of situational awareness of the aircraft position in the pattern, did not follow the circling pattern published in the MAIP; the downwind was flown wide and the ground track left the protected circling area for the aircraft category. The excursion was not recognized by SP and the IP intervened to return the aircraft inside the published pattern.",
+        "1": "SP, due to a visual reference taken from the wrong runway feature, flew the circling pattern at the outer limit of the track published in the MAIP. The ground track was corrected only after the IP identified the error, and the correction placed the aircraft close in on base with a compressed final. No intervention on the controls was required.",
+        "2": "SP, due to a wide downwind flown after a late visual acquisition of the runway, initially deviated from the circling track published in the MAIP. SP identified the geometry error against the runway sight picture, adjusted the base turn point and re-established the published pattern without prompting or intervention.",
+        "3": "SP flew the circling pattern as published in the MAIP, with the downwind spacing, the turn points and the final segment matching the published procedure. Position awareness relative to the runway was maintained throughout the maneuver.",
+        "4": "SP flew the MAIP circling pattern precisely, with consistent downwind spacing and turn points that produced a stabilized final without correction. SP maintained a clear picture of the aircraft position relative to the runway and to the protected area at all times.",
+        "marginal": "SP flew the published circling pattern within standards, but the downwind spacing was consistently at the outer edge of the published track and the base turn was started late. The trend is a pattern that grows with each circuit. SP is expected to set the downwind spacing from the briefed wingtip reference and to start the base turn at the published point so that the pattern geometry stays clearly inside the published track."
+      }
+    }
+  ]
+}

@@ -1,0 +1,210 @@
+{
+  "item_id": "instrument-30",
+  "item_name": "RADIO COMMUNICATION, AIRMANSHIP, EMERGENCY PROCEDURES, GENERAL KNOWLEDGE.",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [30, 31, 32, 33],
+  "mif_rows": [
+    { "sn": 30, "row_name": "Radio Comm." },
+    { "sn": 31, "row_name": "Airmanship" },
+    { "sn": 32, "row_name": "Emergency Procedures" },
+    { "sn": 33, "row_name": "General Knowledge" }
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-30-em01",
+      "label": "Radio Comm. - standard R/T procedures and phraseology on initial contact",
+      "mif_row": 30,
+      "source": "general:contact-37:a,c,e",
+      "hf_concept": "hf-non-standard-phraseology",
+      "texts": {
+        "0": "SP, due to non-standard phraseology that left the intention ambiguous to the controller, did not obtain contact with the ground station following the standard procedures and phraseology. Three consecutive clearance read-backs were incorrect or omitted, and SP transmitted over an ongoing exchange between the controller and another A/C. IP had to take the radios and re-establish the approach clearance.",
+        "1": "SP, due to non-standard phraseology on the initial contact after each frequency change, did not use the standard format for callsign, level and intentions. Two read-backs were incomplete and were corrected only after the IP prompted on interphone, and one initial contact was made while the controller was still transmitting. R/T procedure remained at the limit of the standard for this axis.",
+        "2": "SP, due to a rushed initial call after the frequency change, transmitted callsign and level in non-standard order. SP recognized the error without any prompt, re-transmitted correctly within the same exchange and used standard phraseology for the remainder of the sortie. No IP intervention was required.",
+        "3": "SP established two-way communication with every station using the standard format and phraseology. Initial contact after each frequency change was made without interrupting ongoing traffic, and all clearances were read back completely and accurately on the first transmission.",
+        "4": "SP transmitted with complete standard phraseology throughout, including the approach clearance, the holding instruction and the missed approach. Calls were concise, correctly sequenced and consistently made in the first available gap in traffic. No transmission required repetition by the controller.",
+        "marginal": "SP used standard phraseology and read back all clearances correctly, but transmissions were consistently long and obliged the controller to wait for a gap. Every call was within the standard, yet the pattern trended toward occupying the frequency during the busiest phase of the approach. SP is expected to shorten the standard calls so that correct phraseology is delivered at a normal transmission rate."
+      }
+    },
+    {
+      "id": "instrument-30-em02",
+      "label": "Radio Comm. - continuous radio watch and response timeliness",
+      "mif_row": 30,
+      "source": "general:contact-37:b,e",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an interrupted radio watch while re-tuning the navigation aid, did not continuously monitor radio communication. Four calls addressed to the aircraft went unanswered and the controller repeated the descent clearance twice. IP answered on behalf of the crew to prevent a loss of separation.",
+        "1": "SP, due to attention held on the approach plate, responded late to calls from the ground station. Three calls required a second transmission by the controller before SP replied, and the reply was made only after the IP prompted on interphone. Radio watch remained at the limit of the standard for this axis.",
+        "2": "SP, due to a cockpit task carried into the descent, missed one call from the ground station. SP recognized the missed call from the traffic on frequency, requested the transmission again on his own initiative and answered all subsequent calls without delay. No IP prompt was required.",
+        "3": "SP continuously monitored the frequency and answered every call addressed to the aircraft on the first transmission. Radio watch was maintained through the approach and through all frequency changes without a single call being missed.",
+        "4": "SP maintained an uninterrupted radio watch for the whole mission, answering every call immediately while continuing to fly the procedure accurately. SP also retained calls addressed to other aircraft that affected the sequence and used them to anticipate the controller's instructions.",
+        "marginal": "SP answered all calls within the required time, but responses during the highest workload segment of the approach were consistently at the slowest end of the acceptable range. No delay ever required a second transmission by the controller, yet the trend showed the radio watch competing with the instrument cross-check. SP is expected to hold the response time constant regardless of the workload phase."
+      }
+    },
+    {
+      "id": "instrument-30-em03",
+      "label": "Radio Comm. - accurate compliance with ATC instructions",
+      "mif_row": 30,
+      "source": "general:contact-37:a,d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a clearance misinterpreted and never verified with the controller, did not precisely follow the instructions given by the ground station. SP descended to a level that had not been cleared and turned opposite to the assigned heading. IP intervened to stop the descent and to obtain a corrected clearance.",
+        "1": "SP, due to a clearance copied incompletely and not verified with the controller, entered the holding pattern on the wrong inbound course. The error was corrected only after two verbal directions from the IP, and the correction was applied late in the turn. Compliance remained at the limit of the standard for this axis.",
+        "2": "SP, due to a partially copied clearance, initially set an incorrect assigned heading. SP detected the discrepancy against his own written copy, requested confirmation from the controller and complied with the correct heading before the deviation became significant. No IP intervention was required.",
+        "3": "SP followed every instruction from the ground station precisely and without misinterpretation. Headings, levels and speed assignments were read back correctly and complied with promptly on each occasion.",
+        "4": "SP complied with every instruction exactly and immediately, including two amended clearances issued during the approach. SP verified each non-standard instruction with the controller before executing it, and no assigned parameter was ever flown incorrectly.",
+        "marginal": "SP complied correctly with all instructions, but on the amended clearances SP needed the full read-back to reconstruct what had been assigned before acting. Compliance stayed within standards, yet the trend showed dependence on the read-back rather than on an accurate first copy. SP is expected to copy clearances accurately at first transmission so that compliance is immediate."
+      }
+    },
+    {
+      "id": "instrument-30-em04",
+      "label": "Airmanship - orientation and instrument cross-check against A/C position",
+      "mif_row": 31,
+      "source": "general:contact-38:a.3,a.5",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an interrupted instrument cross-check while attention remained on the navigation display, did not continuously monitor the control and performance instruments or crosscheck them with the A/C position. SP lost orientation in the holding pattern and allowed the aircraft to leave both the protected area and the assigned level. IP took control to re-establish the aircraft on the published pattern.",
+        "1": "SP, due to inadequate monitoring of the primary flight instruments across the configuration changes, did not crosscheck aircraft performance against position. Heading and level deviations developed on three occasions and were corrected only after verbal directions from the IP, each after a noticeable delay. The cross-check remained at the limit of the standard for this axis.",
+        "2": "SP, due to a temporary fixation on the approach chart, allowed the cross-check to slow during the descent. SP recognized the developing deviation on the control and performance instruments, restored the scan on his own initiative and corrected the aircraft state before it became significant. No IP intervention was required.",
+        "3": "SP continuously monitored the control and performance instruments and crosschecked them with the aircraft position throughout the mission. Orientation was maintained at all times and the required corrections were applied promptly and in the correct priority.",
+        "4": "SP maintained an unbroken and correctly prioritized cross-check for the whole sortie, including through configuration changes and amended clearances. Orientation with respect to the procedure was never in doubt, and corrections were anticipated rather than reactive.",
+        "marginal": "SP maintained orientation and a correct cross-check, but the scan slowed each time a new radio task arrived and corrections were applied at the late end of the acceptable range. Performance stayed within standards, yet the trend indicated that the cross-check was being displaced by secondary tasks. SP is expected to hold the cross-check rate constant while working the radios."
+      }
+    },
+    {
+      "id": "instrument-30-em05",
+      "label": "Airmanship - task prioritization and saturation management",
+      "mif_row": 31,
+      "source": "general:contact-38:c.1,c.2,c.3,e",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to inadequate workload management during the approach phase, did not put the required tasks in order and became saturated. SP omitted the approach checks and the required position report while attempting to reprogram the navigation aid, and channelized attention on the equipment left the aircraft state unmonitored. IP took control and completed the approach.",
+        "1": "SP, due to task sequencing that concentrated the cockpit workload inside the turn, did not handle the tasks in sequence and dropped two of them. The checks and the level-off were completed only after repeated verbal prompting from the IP, each later than required. Task management remained at the limit of the standard for this axis.",
+        "2": "SP, due to an unexpected re-clearance, initially attempted to fly, copy and reconfigure at the same time. SP recognized the developing saturation, deferred the non-essential cockpit task and completed the remaining items in the correct order on his own initiative. No task was dropped and no IP intervention was required.",
+        "3": "SP prioritized the cockpit tasks correctly, without omitting anything significant and without violating any rule. SP handled multiple tasks in sequence throughout the mission and never approached a channelized attention situation.",
+        "4": "SP maintained a correct task order throughout, including through two amended clearances and one simulated system abnormal. SP shed secondary tasks before saturation could develop and completed every required item at or before the point where it was needed.",
+        "marginal": "SP kept all tasks in the correct order and dropped nothing, but the margin before saturation was visibly small during the final segment of the approach. Performance remained within standards, yet the trend showed that one additional task would have displaced a required item. SP is expected to sequence cockpit work earlier so that reserve capacity is retained on the approach."
+      }
+    },
+    {
+      "id": "instrument-30-em06",
+      "label": "Airmanship - risk management, decision making and RTB or divert judgment",
+      "mif_row": 31,
+      "source": "general:contact-38:a.4,a.6,b.1,b.2,b.3,b.4,b.5,d.1,d.2",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to continuation of the plan after the weather information that invalidated it had already been received, did not identify the contingencies or the available alternatives. SP did not adjust the execution of the mission to the available flight time and remaining fuel and continued toward an airfield below minima. IP took the decision and directed the diversion.",
+        "1": "SP, due to incomplete gathering of the available data before deciding, did not state the intended course of action clearly and could not provide the rationale for it. The alternate was selected only after two verbal directions from the IP, and the decision was taken later than the fuel state permitted. Decision making remained at the limit of the standard for this axis.",
+        "2": "SP, due to an initial assessment that did not account for the actual holding fuel, first elected to continue for a second approach. SP re-evaluated the fuel and weather data without prompting, stated the revised decision clearly with its rationale and diverted with an adequate margin. No IP intervention was required.",
+        "3": "SP accurately identified the contingencies and the available alternatives, gathered the relevant data and stated each decision clearly with its rationale. SP adjusted the execution of the mission to the available flight time and the remaining fuel, and the potential hazards were recognized and positively avoided.",
+        "4": "SP identified every contingency in advance, including the deteriorating destination weather, and stated the decision points before they were reached. Each decision was clearly expressed, supported by the actual data and taken early enough that all alternatives remained available.",
+        "marginal": "SP identified the contingencies and reached correct decisions, but each decision was taken at the last point at which it remained valid. The choices were within standards, yet the trend showed reliance on the final decision point rather than on early assessment. SP is expected to reach the same decisions earlier, while the alternatives are still unconstrained."
+      }
+    },
+    {
+      "id": "instrument-30-em07",
+      "label": "Airmanship - flight discipline, operational checks and SOP compliance",
+      "mif_row": 31,
+      "source": "general:contact-38:a.2,f.1,f.2",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an interrupted check sequence that was never resumed at the correct point, did not perform the operational checks according to the Check List, the Techniques and Procedures Manual and the SOPs. Two required check sequences were omitted and one was performed out of order, and SP did not carry out the duties without supervision. IP had to direct and then verify the aircraft configuration.",
+        "1": "SP, due to check items deferred until the workload of the approach had already increased, did not carry out all the required steps of the procedures in the proper order. Three check items were completed only after being called by the IP, and the rules applicable to the approach were applied late. Flight discipline remained at the limit of the standard for this axis.",
+        "2": "SP, due to an interruption caused by a frequency change, started the approach checks out of the published order. SP recognized the deviation, returned to the correct point in the sequence and completed all items without omission before commencing the descent. No IP prompt was required.",
+        "3": "SP performed all operational checks in accordance with the Check List, the Techniques and Procedures Manual and the SOPs. SP demonstrated knowledge of the applicable rules and regulations and carried out all duties with minimum IP supervision.",
+        "4": "SP executed every check and procedure in the published sequence and at the correct point, with complete knowledge of the applicable rules and regulations. SP required no supervision at any stage and absorbed two interruptions without a single item being displaced.",
+        "marginal": "SP completed all checks in the correct order, but consistently started them at the latest acceptable point in the profile. Compliance remained within standards, yet the trend left no margin for an interruption before an item would be missed. SP is expected to initiate the published sequences earlier in each phase."
+      }
+    },
+    {
+      "id": "instrument-30-em08",
+      "label": "Emergency Procedures - BOLD FACE critical action recall and sequence",
+      "mif_row": 32,
+      "source": "general:contact-39:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient study of the critical action procedures, did not state the BOLD FACE steps by heart or in sequence. SP reversed two steps of the simulated emergency and omitted a third, and the sequence as stated would have aggravated the condition. IP stopped the SP and performed the procedure.",
+        "1": "SP, due to incomplete memorization of the critical action steps, stated the BOLD FACE with one step out of sequence and one omission. The sequence was corrected only after the IP prompted the missing item, and the recall was slower than the procedure requires. Knowledge remained at the limit of the standard for this axis.",
+        "2": "SP, due to a hesitation at the transition between the memory items and the printed checklist, initially stated one BOLD FACE step out of order. SP recognized the error immediately, restated the full sequence correctly without prompting and continued from the correct point. No IP intervention was required.",
+        "3": "SP stated the proper steps of the critical action procedures in sequence, by heart and without mistakes. Recall was immediate for each simulated emergency presented during the mission.",
+        "4": "SP stated every BOLD FACE sequence immediately, verbatim and in the correct order, including the procedures presented without warning during the approach. Recall was accurate under workload and did not degrade the aircraft control being flown at the time.",
+        "marginal": "SP stated all BOLD FACE steps correctly and in sequence, but recall was noticeably slower for the procedures presented in the descent than for those asked during the brief. Knowledge was within standards, yet the trend indicated that the memory items were not fully automatic under workload. SP is expected to reach the same accuracy at a uniform recall speed."
+      }
+    },
+    {
+      "id": "instrument-30-em09",
+      "label": "Emergency Procedures - Check List and IFG execution and effective handling",
+      "mif_row": 32,
+      "source": "general:contact-39:c,e",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to an attention bottleneck on a single caution indication at the expense of the instrument cross-check, did not execute the procedures according to the Check List and the IFG. SP worked the malfunction while the aircraft descended below the assigned level, omitted two checklist items and did not handle the emergency effectively. IP took control and completed the procedure.",
+        "1": "SP, due to attention held on the malfunctioning system, did not execute the checklist steps in the standardized sequence or within the required time. Two items were completed only after verbal direction from the IP, and the aircraft was flown with reduced priority throughout the handling. Execution remained at the limit of the standard for this axis.",
+        "2": "SP, due to a delay in moving from the memory items to the printed procedure, started the checklist late. SP recognized the delay, resumed the correct sequence without prompting and completed all steps flawlessly while holding the assigned level and heading. No IP intervention was required.",
+        "3": "SP executed all procedures according to the Check List and the IFG without IP intervention, flawlessly, timely and in the standardized sequence. SP handled each simulated emergency effectively while continuing to fly the aircraft accurately.",
+        "4": "SP handled every simulated emergency effectively and completed the printed procedures in the standardized sequence without delay or error. Aircraft control and the instrument procedure were maintained at full accuracy throughout the handling, and SP kept the controller informed at each stage.",
+        "marginal": "SP executed the procedures in the correct sequence and without error, but the transition from the memory items to the printed checklist was consistently slow. Handling stayed within standards, yet the trend showed the printed procedure competing with aircraft control rather than following it smoothly. SP is expected to achieve the same accuracy with a shorter transition."
+      }
+    },
+    {
+      "id": "instrument-30-em10",
+      "label": "Emergency Procedures - knowledge of A/C limits and relevant systems",
+      "mif_row": 32,
+      "source": "general:contact-39:b,d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to no preparation of the daily assignment on the aircraft systems, did not know or observe the A/C limits reported in Section V of the Flight Manual. SP quoted three limits incorrectly and could not describe the system affected by the simulated malfunction. IP had to state the limits and explain the system before the procedure could continue.",
+        "1": "SP, due to incomplete study of Section V of the Flight Manual, quoted two A/C limits incorrectly and required prompting on the operation of the affected system. The correct values were given only after the IP supplied the reference, and the description of the emergency system remained incomplete. Knowledge remained at the limit of the standard for this axis.",
+        "2": "SP, due to a confusion between two similar limiting values, initially quoted one A/C limit incorrectly. SP recognized the error without prompting, corrected the value and then described the affected system and the associated procedure in detail. No IP correction was required.",
+        "3": "SP knew and observed the A/C limits reported in Section V of the Flight Manual. SP described in detail the emergency procedures and the relevant systems set as daily assignment, answering each question accurately.",
+        "4": "SP quoted every applicable limit accurately and explained the relevant systems in detail, including the reasons behind each procedural step. SP related the limits to the conditions actually being flown and observed them precisely throughout the mission.",
+        "marginal": "SP quoted the A/C limits correctly and described the relevant systems, but the answers on the less frequently used systems required time to assemble. Knowledge was within standards, yet the trend showed uneven depth across the assigned material. SP is expected to reach a uniform level of detail across all the systems set as daily assignment."
+      }
+    },
+    {
+      "id": "instrument-30-em11",
+      "label": "General Knowledge - daily assignment and use of flight publications",
+      "mif_row": 33,
+      "source": "general:contact-40:a,b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to no preparation of the material set as daily assignment, did not know the assigned exercises and could not use the Flight Manual, the Techniques and Procedures Manual, the AFMAN 11-202 VOL3 or the aeronautical publications. SP was unable to locate the applicable approach information in the publications. IP had to supply the required data before the mission could proceed.",
+        "1": "SP, due to superficial preparation of the assigned material, answered fewer than half of the questions on the daily assignment correctly. The relevant references were located only after the IP indicated the publication and the section, and the answers remained incomplete. Knowledge remained at the limit of the standard for this axis.",
+        "2": "SP, due to a confusion between two similar published procedures, initially gave an incorrect answer on the assigned material. SP recognized the error, located the correct reference in the publication without assistance and completed the answer. No IP correction was required.",
+        "3": "SP knew in detail the exercises given as daily assignment and used the Flight Manual, the Techniques and Procedures Manual, the AFMAN 11-202 VOL3 and the aeronautical publications with confidence. Every reference required during the briefings was located and applied correctly.",
+        "4": "SP answered every question on the assigned material accurately and without hesitation, and supported the answers with the exact references from the publications. SP also related the published material to the specific conditions planned for the sortie.",
+        "marginal": "SP knew the assigned material and located the required references, but the search through the publications was slow on the items not covered in the previous briefing. Knowledge was within standards, yet the trend showed familiarity concentrated on recently used sections. SP is expected to maintain the same fluency across the whole assigned publication set."
+      }
+    },
+    {
+      "id": "instrument-30-em12",
+      "label": "General Knowledge - meteorology, aerodynamics and flight planning",
+      "mif_row": 33,
+      "source": "general:contact-40:c,d,e",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to no study of the meteorological and aerodynamic material, could not follow the morning meteorological briefing or explain the conditions to be encountered during the flight. SP was unable to plan the flight or to state the airport traffic procedures for the destination. IP had to complete the planning.",
+        "1": "SP, due to incomplete knowledge of the meteorological principles, could not interpret the forecast presented at the briefing without assistance. The theoretical explanation of the situations to be encountered was produced only after repeated prompting from the IP, and the flight plan required correction on two items. Knowledge remained at the limit of the standard for this axis.",
+        "2": "SP, due to an incorrect reading of one element of the forecast, initially planned the approach for the wrong runway. SP identified the error while reviewing the airport traffic procedures, corrected the plan without prompting and explained the associated aerodynamic considerations correctly. No IP correction was required.",
+        "3": "SP demonstrated the meteorological knowledge required to attend the morning briefing without difficulty and explained theoretically the situations to be encountered during the flight. SP knew the airport traffic procedures and planned the flight accurately.",
+        "4": "SP interpreted the meteorological briefing in full, including the implications of the forecast for the planned approach, and explained the relevant aerodynamics precisely. The flight plan was complete, accurate and built around the actual conditions and the applicable traffic procedures.",
+        "marginal": "SP interpreted the forecast and planned the flight correctly, but the aerodynamic explanation of the conditions to be encountered was given only in general terms. Knowledge was within standards, yet the trend showed application running ahead of the underlying theory. SP is expected to support the same planning decisions with a precise theoretical explanation."
+      }
+    },
+    {
+      "id": "instrument-30-em13",
+      "label": "General Knowledge - flight physiology, survival and SAR rescue procedures",
+      "mif_row": 33,
+      "source": "general:contact-40:f,g",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to no preparation of the air medicine and survival material, could not interpret the physiological conditions and flight effects to be encountered and was unaware of the sea and land survival procedures. SP could not state the rescue procedures from SAR means. IP had to brief the entire subject before the mission.",
+        "1": "SP, due to incomplete study of flight physiology, interpreted two of the physiological effects incorrectly and described the survival procedures only in outline. The correct content was produced only after the IP supplied the key points, and the SAR rescue procedures were stated incompletely. Knowledge remained at the limit of the standard for this axis.",
+        "2": "SP, due to a confusion between two physiological effects with similar symptoms, initially gave an incorrect interpretation. SP recognized the error, corrected the interpretation without prompting and then described the sea and land survival procedures and the SAR rescue procedures accurately. No IP correction was required.",
+        "3": "SP demonstrated knowledge of air medicine and flight physiology and interpreted correctly the physiological conditions and flight effects to be encountered. SP was aware of both sea and land survival procedures and of the rescue procedures from SAR means.",
+        "4": "SP interpreted every physiological condition and flight effect accurately and related them to the profile to be flown. SP described the sea and land survival procedures and the SAR rescue procedures in full detail, including the actions required in each phase.",
+        "marginal": "SP interpreted the physiological effects correctly and knew the survival procedures, but the answers on the SAR rescue sequence had to be assembled step by step. Knowledge was within standards, yet the trend showed the survival material less consolidated than the physiology. SP is expected to reach the same immediacy across both subjects."
+      }
+    }
+  ]
+}

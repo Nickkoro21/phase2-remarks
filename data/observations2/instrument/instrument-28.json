@@ -1,0 +1,162 @@
+{
+  "item_id": "instrument-28",
+  "item_name": "LANDING",
+  "category": "instrument",
+  "schema": "v2-trunk",
+  "mif_numbers": [28],
+  "mif_rows": [
+    {"sn": 28, "row_name": "Landing"}
+  ],
+  "error_modes": [
+    {
+      "id": "instrument-28-em01",
+      "label": "Touch down point control after the instrument-to-visual transition (FLAPS LDG / FLAPS T-O / AOA)",
+      "mif_row": null,
+      "source": "specific:TOUCH DOWN POINT (feet from the beginning of the RWY) [a/ FLAPS LDG - FLAPS T/O - AOA]",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a late and shallow round out flown with residual power after breaking out of the approach, did not fly the aircraft to the projected touch down point. The aircraft floated in ground effect and contacted the runway more than 1500 feet beyond the projected touch down point, well outside the plus/minus 1000 feet limit. IP intervened on power and pitch to stop the landing being extended further into the remaining runway.",
+        "1": "SP, due to an unstabilized final segment after the transition to visual flight, did not adjust power to hold the aim point on the projected touch down point. Touch down occurred approximately 1000 feet long, at the plus/minus 1000 feet limit, and only after repeated verbal prompting from IP to reduce power. The correction was applied so late that the deviation was contained rather than removed.",
+        "2": "SP, due to a slightly high energy state carried into the visual segment, initially tracked above the glidepath toward the projected touch down point. SP recognized the trend, reduced power and re-established the aim point without any intervention from IP. Touch down occurred about 700 feet from the projected touch down point, between the 500 and 1000 feet standards.",
+        "3": "SP transitioned smoothly to visual flight and flew a stabilized aim point onto the projected touch down point. Power and pitch were adjusted in small, timely increments and the aircraft touched down within 500 feet of the projected touch down point. Aim point control on the visual segment required no prompting from IP.",
+        "4": "SP arrived at the visual segment on speed and on glidepath and placed the aircraft on the projected touch down point with negligible error. Touch down occurred within approximately 100 feet of the projected point, with no float and no late power change. Aim point control was equally precise on each repetition of the maneuver.",
+        "marginal": "SP touched down within the 500 feet standard from the projected touch down point, but consistently on the long side of it and after a small float on each attempt. The trend of carrying a few extra knots into the round out is currently absorbed by the runway available, which would not be the case on a shorter or contaminated surface. SP is expected to set the aim point earlier and to reduce power to idle at the correct height so that the touch down point is centered rather than long."
+      }
+    },
+    {
+      "id": "instrument-28-em02",
+      "label": "Touch down point control in the flaps up landing (FLAPS UP)",
+      "mif_row": null,
+      "source": "specific:TOUCH DOWN POINT (feet from the beginning of the RWY) [b/ FLAPS UP]",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to flying the flaps up visual segment with the same power setting used for a flaps landing configuration, did not account for the reduced drag and the flatter deck angle. The aircraft floated well down the runway and touched down more than 1600 feet from the projected touch down point, outside the plus/minus 1000 feet limit. IP took the controls to prevent the landing rollout starting from an unacceptable point on the runway.",
+        "1": "SP, due to an unstabilized final in the flaps up configuration, did not establish a fixed aim point after the transition to visual flight. The aircraft touched down approximately 1000 feet from the projected touch down point, at the plus/minus 1000 feet limit, after IP directed a power reduction on short final. Without that verbal direction the deviation would have continued to develop.",
+        "2": "SP, due to a slightly flat approach path in the flaps up configuration, initially tracked short of the projected touch down point. SP identified the shallow path, added power to regain the glidepath and re-established the aim point without intervention from IP. Touch down occurred about 600 feet from the projected touch down point, between the 500 and 1000 feet standards.",
+        "3": "SP flew the flaps up visual segment with the correct higher approach speed and a stable aim point on the projected touch down point. Power was reduced progressively through the round out and the aircraft touched down within 500 feet of the projected point. The reduced drag of the configuration was correctly anticipated.",
+        "4": "SP compensated precisely for the flaps up configuration and placed the aircraft on the projected touch down point with negligible error. Touch down occurred within approximately 150 feet of the projected point, with no float and no correction required on short final. The result was repeated consistently.",
+        "marginal": "SP touched down within the 500 feet standard, but each flaps up landing developed toward the long side after a noticeable float in ground effect. The trend indicates that the idle selection is being made slightly high and late for this configuration, and the margin is being provided by runway length rather than by technique. SP is expected to anticipate the lower drag of the flaps up configuration and to time the power reduction so that the touch down point is centered on the projected point."
+      }
+    },
+    {
+      "id": "instrument-28-em03",
+      "label": "Runway centerline tracking at touch down (FLAPS LDG / FLAPS T-O / AOA)",
+      "mif_row": null,
+      "source": "specific:DEVIATION FROM CENTER LINE (feet) [a/ FLAPS LDG - FLAPS T/O - AOA]",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incomplete lateral alignment when transitioning from the approach course to the visual runway picture, did not use rudder to place the aircraft on the runway centerline before touch down. The aircraft contacted the runway more than 20 feet from the centerline with residual drift, outside the plus/minus 15 feet limit. IP intervened on rudder and aileron to recover alignment during the initial rollout.",
+        "1": "SP, due to a delayed lateral correction after breaking out of the approach, did not complete the alignment with the runway centerline during the round out. Touch down occurred approximately 15 feet from the centerline, at the limit, and only after IP called for rudder. The lateral trend was stopped by the prompt rather than by SP's own scan of the runway picture.",
+        "2": "SP, due to a small lateral offset carried over from the approach course, initially tracked to one side of the runway centerline in the visual segment. SP recognized the offset, applied rudder and aileron and closed most of it before touch down, contacting the runway about 10 feet from the centerline, between the 5 and 15 feet standards. No prompting or intervention was required.",
+        "3": "SP transitioned to the visual runway picture and aligned the aircraft with the centerline in a single smooth correction. Touch down occurred within 5 feet of the centerline with the longitudinal axis parallel to the runway and no residual drift. Directional control during the initial rollout was positive.",
+        "4": "SP arrived on the visual segment already aligned with the runway centerline and maintained that alignment through the round out. Touch down occurred within approximately 2 feet of the centerline with no lateral correction required at any point. Alignment was maintained throughout the rollout without deviation.",
+        "marginal": "SP touched down within the 5 feet standard from the centerline, but consistently displaced to the same side and with the final alignment correction made low in the round out. The trend shows the lateral correction being deferred until the visual picture is very close rather than being made immediately after breaking out. SP is expected to complete the alignment earlier in the visual segment so that the round out is flown from an already centered position."
+      }
+    },
+    {
+      "id": "instrument-28-em04",
+      "label": "Runway centerline tracking at touch down in the flaps up landing (FLAPS UP)",
+      "mif_row": null,
+      "source": "specific:DEVIATION FROM CENTER LINE (feet) [b/ FLAPS UP]",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to concentrating on the higher approach speed of the flaps up configuration, did not maintain lateral alignment with the runway centerline through the round out. Touch down occurred more than 20 feet from the centerline with the nose displaced from the runway heading, outside the plus/minus 15 feet limit. IP intervened on the controls to recover alignment and to keep the aircraft within the usable runway width.",
+        "1": "SP, due to a late lateral correction in the flaps up visual segment, did not place the aircraft on the runway centerline before contact. The aircraft touched down approximately 15 feet from the centerline, at the limit, after IP directed rudder input on short final. The deviation was arrested by that direction rather than by SP's own correction.",
+        "2": "SP, due to a lateral offset carried into the visual segment from the approach, initially tracked off the runway centerline in the flaps up configuration. SP detected the offset, corrected with rudder and closed most of it before touch down, contacting the runway about 9 feet from the centerline, between the 5 and 15 feet standards. The correction was made in time and without intervention.",
+        "3": "SP flew the flaps up visual segment aligned with the runway centerline and held that alignment through the flatter round out. Touch down occurred within 5 feet of the centerline with the longitudinal axis on the runway heading. Directional control was maintained positively into the rollout.",
+        "4": "SP maintained runway centerline alignment throughout the flaps up visual segment with negligible lateral error. Touch down occurred within approximately 2 feet of the centerline with no correction required in the round out. The alignment was held unchanged through the rollout.",
+        "marginal": "SP touched down within the 5 feet standard from the centerline, but each flaps up landing drifted slowly to the same side during the extended float before contact. The trend indicates that lateral scanning is being reduced while attention is held on the higher touch down speed of this configuration. SP is expected to maintain an equal division of attention between the runway centerline and the speed so that the alignment does not degrade during the float."
+      }
+    },
+    {
+      "id": "instrument-28-em05",
+      "label": "Touch down speed control (FLAPS LDG / FLAPS T-O / AOA)",
+      "mif_row": null,
+      "source": "specific:TOUCH DOWN SPEED (knots) [a/ FLAPS LDG - FLAPS T/O - AOA]",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to holding excess power through the round out after the transition to visual flight, did not decelerate the aircraft to the computed touch down speed. The wheels contacted the runway more than 12 knots above the computed speed, outside the -5 to +10 knots band, after an extended float. IP took the controls to arrest the developing bounce and to stop the resulting drift.",
+        "1": "SP, due to a rushed flare initiated from an unstabilized final, did not complete the deceleration to the computed touch down speed. The aircraft contacted the runway approximately 10 knots fast, at the upper limit of the -5 to +10 knots band, after IP called for the power to be brought to idle. The energy was contained by that call rather than by SP's own timing.",
+        "2": "SP, due to a slightly late idle selection in the round out, carried extra energy into the flare. SP recognized the float, held the landing attitude and allowed the aircraft to decelerate, touching down about 7 knots fast, between the +5 and +10 knots standards. No prompting or intervention from IP was required.",
+        "3": "SP reduced power at the correct height, held the landing attitude and allowed the aircraft to decelerate to the computed touch down speed. The wheels contacted the runway within the 0 to +5 knots band with no float and no bounce. Pitch and power were coordinated throughout the round out.",
+        "4": "SP managed the energy on the visual segment so that the aircraft arrived over the touch down point exactly on the computed speed. Touch down occurred within approximately 1 knot of the computed speed, in the correct landing attitude and with no float. The result was repeated on each landing.",
+        "marginal": "SP touched down within the 0 to +5 knots band, but at the fast end of it on every landing and after a short float each time. The trend of carrying additional speed into the round out consumes runway and reduces the margin available in a crosswind or on a wet surface. SP is expected to select idle at the correct height so that the touch down speed is centered in the band rather than at its upper edge."
+      }
+    },
+    {
+      "id": "instrument-28-em06",
+      "label": "Touch down speed control in the flaps up landing (FLAPS UP)",
+      "mif_row": null,
+      "source": "specific:TOUCH DOWN SPEED (knots) [b/ FLAPS UP]",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to applying the flaps landing sight picture and flare timing to a flaps up landing, did not decelerate the aircraft to the computed flaps up touch down speed. The aircraft touched down more than 13 knots fast, outside the -5 to +10 knots band, after a prolonged float in ground effect. IP intervened on the controls to prevent a bounce and to stabilize the aircraft on the runway.",
+        "1": "SP, due to reducing power too late in the flaps up round out, did not complete the deceleration before contact. The wheels touched approximately 10 knots above the computed speed, at the upper limit of the -5 to +10 knots band, after IP directed the throttle to idle. Without that direction the float would have continued.",
+        "2": "SP, due to the lower drag of the flaps up configuration, initially decelerated more slowly than required in the round out. SP recognized the float, held the attitude and did not force the aircraft onto the runway, touching down about 8 knots fast, between the +5 and +10 knots standards. The correction was timely and required no intervention.",
+        "3": "SP flew the flaps up approach at the correct higher speed and reduced power so that the aircraft decelerated to the computed flaps up touch down speed. Contact occurred within the 0 to +5 knots band in the correct, flatter landing attitude with no float. The different drag characteristics of the configuration were correctly anticipated.",
+        "4": "SP managed the flaps up energy so precisely that the aircraft arrived over the touch down point on the computed speed. Touch down occurred within approximately 2 knots of the computed speed, with no float and no pitch correction in the round out. The technique was consistent across repetitions.",
+        "marginal": "SP touched down within the 0 to +5 knots band, but at the upper edge of it on each flaps up landing and after a longer float than the configuration requires. The trend indicates that the idle selection is being timed on the flaps landing sight picture rather than on the flaps up one. SP is expected to begin the power reduction earlier in the flaps up round out so that the touch down speed is centered in the band."
+      }
+    },
+    {
+      "id": "instrument-28-em07",
+      "label": "Smooth transition from instrument to visual flight without abrupt attitude change",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-spatial-disorientation",
+      "texts": {
+        "0": "SP, due to a somatogravic sensation on looking outside at the end of the approach at night, did not transition smoothly from instrument to visual flight and made an abrupt nose down attitude change. The flight path departed the glidepath sharply and the aircraft arrived at the runway threshold low and fast, with the touch down point deviation exceeding 1000 feet. IP intervened on the controls to re-establish the landing attitude.",
+        "1": "SP, due to a disorienting visual illusion at the transition to visual flight, did not maintain the aircraft attitude while changing the reference from the instruments to the outside picture. The pitch excursion that followed placed the aircraft at the plus/minus 1000 feet limit of the touch down point standard, and it was corrected only after IP called the attitude. The recovery was reactive rather than anticipated.",
+        "2": "SP, due to a brief disorientation at the change of visual reference on breaking out, made a small abrupt pitch input immediately after transitioning to visual flight. SP recognized the excursion at once, returned to the correct attitude by cross-checking the instruments and resumed the flight path, holding the touch down point between the 500 and 1000 feet standards. No intervention from IP was necessary.",
+        "3": "SP transitioned from instrument to visual flight without abrupt changes in aircraft attitude. The scan was expanded progressively from the instruments to the outside picture while pitch, bank and power were held stable, and the aircraft continued on the glidepath to the touch down point within 500 feet of the projected point. No disorientation effect was allowed to influence the control inputs.",
+        "4": "SP made the transition to visual flight so smoothly that no attitude change was discernible at the point of transition. The instrument cross-check was retained as a reference while the outside picture was acquired, and the flight path continued unchanged to a touch down within 500 feet of the projected point. Control of the aircraft was uninterrupted throughout.",
+        "marginal": "SP transitioned from instrument to visual flight within standards, but each transition was accompanied by a small pitch adjustment that indicates the outside picture is being accepted before it is fully resolved. The trend is more evident at night and in reduced visibility, when the illusion potential is highest and the available correction time is shortest. SP is expected to retain the instrument cross-check through the transition so that the attitude remains unchanged while the visual reference is acquired."
+      }
+    },
+    {
+      "id": "instrument-28-em08",
+      "label": "Positive and timely recognition of the runway environment",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to a loss of positional awareness relative to the runway on the final segment of the approach, did not identify the runway environment positively or in time. SP called the runway in sight while looking at another lighting feature and turned the aircraft away from the approach course, and the resulting lateral displacement exceeded 20 feet at the point where alignment should have been established. IP took the controls, identified the runway and continued the landing.",
+        "1": "SP, due to reduced awareness of position relative to the approach end, did not recognize the runway environment until well inside the normal transition point. The late acquisition compressed the visual segment and the landing was completed at the plus/minus 1000 feet limit of the touch down point standard, after IP pointed out the runway. The recognition was produced by the prompt and not by SP's own scan.",
+        "2": "SP, due to an incomplete picture of the aircraft position relative to the runway, initially looked in the wrong sector on breaking out. SP re-established awareness using the approach guidance, identified the runway environment positively and completed the transition in time to land with the touch down point between the 500 and 1000 feet standards. No intervention or prompting was required.",
+        "3": "SP maintained awareness of the aircraft position throughout the approach and recognized the runway environment positively and in time. The runway was identified and called without hesitation and the transition to visual flight was started at the correct point, giving a stabilized visual segment to a touch down within 500 feet of the projected point. No assistance was needed at any stage.",
+        "4": "SP anticipated where the runway environment would appear, identified it immediately and unambiguously, and began the transition to visual flight at exactly the right moment. The visual segment was consequently unhurried, with the aircraft on speed, on glidepath and aligned to a touch down within 500 feet of the projected point. Awareness of position was complete throughout the approach.",
+        "marginal": "SP recognized the runway environment within standards, but the identification was hesitant and confirmed only after a second look on each approach. The trend leaves progressively less time for the visual segment, which would become significant in lower visibility or with a circling maneuver to follow. SP is expected to build a firmer expectation of the runway position from the approach guidance so that the recognition is immediate and positive."
+      }
+    },
+    {
+      "id": "instrument-28-em09",
+      "label": "Round out and float control on the visual segment",
+      "mif_row": null,
+      "source": "general:a|specific:TOUCH DOWN POINT (feet from the beginning of the RWY)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to initiating the round out at an incorrect height and continuing to raise the nose without reducing power, did not stabilize the landing attitude before contact. The aircraft ballooned, floated well past the projected touch down point and touched down more than 1500 feet from it, outside the plus/minus 1000 feet limit. IP took the controls to arrest the ballooning and to complete the landing.",
+        "1": "SP, due to a high round out flown with the throttle still advanced, did not establish and hold the landing attitude. The extended float produced a touch down approximately 1000 feet from the projected touch down point, at the plus/minus 1000 feet limit, and the attitude was stabilized only after IP called for the pitch and the power. The landing was completed on the prompt rather than on SP's own judgment.",
+        "2": "SP, due to a round out started slightly high, allowed the aircraft to float briefly before contact. SP held the landing attitude instead of forcing the aircraft down, allowed the speed to decay and touched down between the 500 and 1000 feet standards from the projected touch down point. The float was managed correctly and without intervention.",
+        "3": "SP began the round out at the correct height, blended the power reduction with the pitch change and established the landing attitude before contact. The aircraft touched down within 500 feet of the projected touch down point with no ballooning and no bounce. The transition from the approach attitude to the landing attitude was continuous and smooth.",
+        "4": "SP flew the round out with no discernible float and placed the aircraft on the runway in the correct landing attitude at the projected touch down point. The pitch change and the power reduction were blended so precisely that the descent rate was arrested exactly at the touch down height. Landings were repeated with the same result.",
+        "marginal": "SP completed the round out within standards, but a short float preceded each touch down and the landing attitude was reached slightly late. The trend indicates that the round out is being started marginally high and that the power reduction is trailing the pitch change. SP is expected to blend the pitch and power inputs so that the landing attitude is established before the aircraft enters ground effect."
+      }
+    },
+    {
+      "id": "instrument-28-em10",
+      "label": "Drift and crosswind correction at touch down",
+      "mif_row": null,
+      "source": "general:a|specific:DEVIATION FROM CENTER LINE (feet)",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to attention being captured entirely by the airspeed indication during the visual segment, did not monitor the lateral picture or remove the crosswind drift before touch down. The aircraft landed with drift, displaced more than 20 feet from the centerline and with the longitudinal axis off the runway heading, outside the plus/minus 15 feet limit. IP took the controls to correct the side load and to keep the aircraft on the runway.",
+        "1": "SP, due to fixation on one parameter during the round out, did not apply the crosswind correction until the point of touch down. The aircraft contacted the runway approximately 15 feet from the centerline with residual drift, at the limit, after IP called for rudder and into-wind aileron. The correction was made on the call and not from SP's own scan of the runway picture.",
+        "2": "SP, due to attention concentrated on the touch down point during the visual segment, initially left the crosswind drift uncorrected. SP recognized the lateral displacement developing, applied into-wind aileron and rudder and removed most of the drift before contact, touching down about 10 feet from the centerline, between the 5 and 15 feet standards. The correction was timely and required no intervention.",
+        "3": "SP divided attention correctly across the visual segment, applied the crosswind correction continuously and removed the drift before contact. Touch down occurred within 5 feet of the centerline with the longitudinal axis on the runway heading and no side load on the landing gear. Directional control was maintained positively through the rollout.",
+        "4": "SP established the crosswind correction early in the visual segment and adjusted it continuously as the wind effect changed near the surface. Touch down occurred within approximately 2 feet of the centerline with zero drift and the wings held level after contact. Scanning was distributed across attitude, alignment and speed without any parameter being neglected.",
+        "marginal": "SP corrected the drift within standards, but the crosswind correction was applied in a single late input rather than being carried through the visual segment. The trend shows attention narrowing onto the speed and the touch down point while the lateral picture is checked only intermittently. SP is expected to maintain a continuous scan of the runway alignment so that the drift is corrected progressively rather than removed at the last moment."
+      }
+    }
+  ]
+}
