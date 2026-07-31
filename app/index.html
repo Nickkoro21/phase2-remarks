@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="el">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,7 @@
     <span class="brand-icon">✈</span>
     <div>
       <h1>Phase 2 Remarks</h1>
-      <p class="tagline">T-6A Gradesheet Observations · ΒαΔ 3-1 §41 · Phase 2 Syllabus MIF</p>
+      <p class="tagline">T-6A Gradesheet Observations · BD 3-1 §41 · Phase 2 Syllabus MIF</p>
     </div>
   </div>
   <div class="databadge" id="databadge">—</div>
@@ -21,34 +21,34 @@
 <main class="layout">
   <!-- STEP 1: Category -->
   <section class="panel" id="panel-category">
-    <h2><span class="step">1</span> Κατηγορία</h2>
+    <h2><span class="step">1</span> Category</h2>
     <div class="cat-grid" id="cat-grid"></div>
   </section>
 
   <!-- STEP 2: Item -->
   <section class="panel" id="panel-item">
     <h2><span class="step">2</span> Item</h2>
-    <input type="search" id="item-search" placeholder="Αναζήτηση item…" autocomplete="off" disabled>
-    <div class="item-list" id="item-list"><p class="hint">Διάλεξε πρώτα κατηγορία.</p></div>
+    <input type="search" id="item-search" placeholder="Search items…" autocomplete="off" disabled>
+    <div class="item-list" id="item-list"><p class="hint">Select a category first.</p></div>
   </section>
 
   <!-- STEP 3: Codes -->
   <section class="panel" id="panel-codes">
-    <h2><span class="step">3</span> Κώδικες</h2>
+    <h2><span class="step">3</span> Codes</h2>
     <div id="row-select-wrap" class="hidden">
-      <label class="lbl">Ελιγμός / MIF γραμμή</label>
+      <label class="lbl">Maneuver / MIF row</label>
       <select id="row-select"></select>
     </div>
-    <label class="lbl">Επιθυμητός (MIF)</label>
+    <label class="lbl">Desired (MIF)</label>
     <div class="chips" id="desired-chips"><p class="hint">—</p></div>
-    <label class="lbl">Κώδικας επίδοσης</label>
+    <label class="lbl">Achieved</label>
     <div class="chips" id="achieved-chips"><p class="hint">—</p></div>
   </section>
 
   <!-- STEP 4: Results -->
   <section class="panel wide" id="panel-results">
-    <h2><span class="step">4</span> Παρατηρήσεις <span id="result-count" class="count"></span></h2>
-    <div id="results"><p class="hint">Διάλεξε κατηγορία, item και κώδικες για να δεις τις διαθέσιμες παρατηρήσεις.</p></div>
+    <h2><span class="step">4</span> Remarks <span id="result-count" class="count"></span></h2>
+    <div id="results"><p class="hint">Pick a category, an item and the codes to see the available remarks.</p></div>
   </section>
 </main>
 

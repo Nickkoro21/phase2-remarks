@@ -1,10 +1,10 @@
 "use strict";
 
 const CAT_LABELS = {
-  contact: { name: "Contact", el: "Προσαρμογή" },
-  instrument: { name: "Instrument", el: "Όργανα" },
-  formation: { name: "Formation", el: "Σχηματισμός" },
-  vfr_navigation: { name: "VFR Navigation", el: "Ναυτιλία" },
+  contact: { name: "Contact" },
+  instrument: { name: "Instrument" },
+  formation: { name: "Formation" },
+  vfr_navigation: { name: "VFR Navigation" },
 };
 const VARIANT_LABELS = {
   technique: "Technique",
@@ -27,7 +27,7 @@ const $ = (id) => document.getElementById(id);
 
 async function init() {
   try {
-    const res = await fetch("/data/observations/master_index.json", { cache: "no-store" });
+    const res = await fetch("../data/observations/master_index.json", { cache: "no-store" });
     state.master = await res.json();
     $("databadge").textContent =
       `${state.master.totals.observations} observations · ${state.master.totals.items} items · index ${state.master.generated_at}`;
@@ -35,7 +35,7 @@ async function init() {
   } catch (e) {
     $("databadge").textContent = "no index";
     $("cat-grid").innerHTML =
-      `<p class="hint">Δεν βρέθηκε το master_index.json.<br>Τρέξε: <code>python tools/build_index.py</code> και κάνε refresh.</p>`;
+      `<p class="hint">master_index.json not found.<br>Run <code>python tools/build_index.py</code> and refresh.</p>`;
   }
 }
 
@@ -48,8 +48,8 @@ function renderCategories() {
     const obs = cat ? cat.observations : 0;
     const btn = document.createElement("button");
     btn.className = "cat-card" + (n === 0 ? " empty" : "");
-    btn.innerHTML = `<strong>${label.name}</strong> · ${label.el}
-      <span class="cat-count">${n ? `${n} items · ${obs} παρατηρήσεις` : "σε παραγωγή…"}</span>`;
+    btn.innerHTML = `<strong>${label.name}</strong>
+      <span class="cat-count">${n ? `${n} items · ${obs} remarks` : "generation pending…"}</span>`;
     btn.onclick = () => selectCategory(key, btn);
     grid.appendChild(btn);
   }
@@ -72,7 +72,7 @@ function renderItems() {
   list.innerHTML = "";
   const cat = state.master.categories[state.category];
   if (!cat || !cat.items.length) {
-    list.innerHTML = `<p class="hint">Η κατηγορία δεν έχει ακόμη παρατηρήσεις — οι γεννήτριες γράφουν. Τρέξε ξανά το build_index.py αργότερα.</p>`;
+    list.innerHTML = `<p class="hint">No remarks generated for this category yet — re-run build_index.py later.</p>`;
     return;
   }
   const q = $("item-search").value.trim().toLowerCase();
@@ -86,7 +86,7 @@ function renderItems() {
     btn.onclick = () => selectItem(it, btn);
     list.appendChild(btn);
   }
-  if (!list.children.length) list.innerHTML = `<p class="hint">Κανένα item δεν ταιριάζει.</p>`;
+  if (!list.children.length) list.innerHTML = `<p class="hint">No items match.</p>`;
 }
 
 async function selectItem(it, btn) {
@@ -98,10 +98,10 @@ async function selectItem(it, btn) {
   renderCodes();
   renderResults();
   try {
-    const res = await fetch(`/data/observations/${it.file}`, { cache: "no-store" });
+    const res = await fetch(`../data/observations/${it.file}`, { cache: "no-store" });
     state.itemData = await res.json();
   } catch (e) {
-    $("results").innerHTML = `<p class="hint">Αποτυχία φόρτωσης του ${it.file}.</p>`;
+    $("results").innerHTML = `<p class="hint">Failed to load ${it.file}.</p>`;
     return;
   }
   // Default row: first with data, or null when single/none
@@ -153,7 +153,7 @@ function renderCodes() {
 
   const aWrap = $("achieved-chips");
   aWrap.innerHTML = "";
-  if (state.desired === null) { aWrap.innerHTML = `<p class="hint">Διάλεξε επιθυμητό κώδικα.</p>`; }
+  if (state.desired === null) { aWrap.innerHTML = `<p class="hint">Select the desired code first.</p>`; }
   else {
     const achievedSet = new Set(pool.filter((o) => o.desired === state.desired).map((o) => o.achieved));
     for (let a = 0; a <= 4; a++) {
@@ -183,16 +183,16 @@ function renderResults() {
   $("result-count").textContent = "";
   if (!state.itemData || state.desired === null || state.achieved === null) {
     box.innerHTML = `<p class="hint">${state.itemData
-      ? "Διάλεξε επιθυμητό κώδικα και κώδικα επίδοσης."
-      : "Διάλεξε κατηγορία, item και κώδικες για να δεις τις διαθέσιμες παρατηρήσεις."}</p>`;
+      ? "Select the desired and the achieved code."
+      : "Pick a category, an item and the codes to see the available remarks."}</p>`;
     return;
   }
   const hits = obsPool().filter((o) => o.desired === state.desired && o.achieved === state.achieved);
   if (!hits.length) {
-    box.innerHTML = `<p class="hint">Δεν υπάρχει παρατήρηση για τον συνδυασμό (${state.desired}) → (${state.achieved}).</p>`;
+    box.innerHTML = `<p class="hint">No remark available for the combination (${state.desired}) → (${state.achieved}).</p>`;
     return;
   }
-  $("result-count").textContent = `${hits.length} διαθέσιμες`;
+  $("result-count").textContent = `${hits.length} available`;
   box.innerHTML = "";
   for (const o of hits) {
     const card = document.createElement("div");
