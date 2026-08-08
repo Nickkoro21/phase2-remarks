@@ -3,9 +3,14 @@
   "item_name": "STRAIGHT AHEAD REJOIN",
   "category": "formation",
   "schema": "v2-trunk",
-  "mif_numbers": [10],
+  "mif_numbers": [
+    10
+  ],
   "mif_rows": [
-    { "sn": 10, "row_name": "Straight Ahead Rejoin" }
+    {
+      "sn": 10,
+      "row_name": "Straight Ahead Rejoin"
+    }
   ],
   "error_modes": [
     {
@@ -141,6 +146,126 @@
         "3": "SP stabilized the aircraft in the route position accurately at the completion of the rejoin, killing the closure at the correct point and establishing a fixed visual reference on No1. The position was then held steadily with small anticipatory power and control inputs. The arrival and the stabilization met the required standard.",
         "4": "SP arrived in the route position with the closure decayed exactly to zero and held the position with no perceptible movement relative to No1 for the remainder of the maneuver. The reference was established immediately and the position was maintained with minimal, continuous inputs. The precision of the arrival and the station keeping was exceptional at this stage.",
         "marginal": "SP stabilized the aircraft in the route position within standards, but the arrival required two power corrections before the position settled and the aircraft continued to move slowly relative to No1 thereafter. The position was acceptable, yet it was maintained by correction rather than by a stable reference. SP is expected to kill the closure at the correct point and hold a steady reference on No1 from the moment the route position is reached."
+      }
+    },
+    {
+      "id": "formation-10-tm10",
+      "label": "Generation of the initial 20 to 30 knot overtake",
+      "mif_row": "Straight Ahead Rejoin",
+      "source": "technique:9.23.3.a STRAIGHT AHEAD REJOIN",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a power application that did not build the initial 20 to 30 knot overtake called for on a straight ahead rejoin, did not generate a usable closure on No1. The overtake was set more than 15 knots away from the briefed band, so the rejoin either stagnated with no range reduction or the aircraft ran in with closure that could no longer be killed. The IP had to take the throttle and reset the overtake before the rejoin could continue.",
+        "1": "SP, due to a hesitant throttle movement after the rejoin signal, did not establish the initial overtake as briefed. The airspeed differential sat at the 15 knot edge of the acceptable band and stayed there while the range hardly changed, and the correction came only after the IP called for the power. The rejoin remained inside limits but was flown on IP prompting.",
+        "2": "SP, due to a power setting selected without reference to the closure actually being produced, did not establish the 20 to 30 knot overtake at the start of the rejoin. The airspeed differential was between 5 and 15 knots off the briefed band and the initial range reduction was slower than planned. SP compared the closure against the sight picture, corrected the power on his own and completed the rejoin within the standards.",
+        "3": "SP generated the initial overtake correctly, setting an airspeed differential inside 5 knots of the briefed 20 to 30 knot band immediately after the rejoin signal. The closure was established at once and produced a steady range reduction toward the bid point. Power handling matched the technique of the manual without further adjustment.",
+        "4": "SP established the initial overtake with negligible error, placing the airspeed differential within the briefed band in one smooth power application. The closure was correct from the first seconds and needed no revision at any point of the run in. The energy management on the rejoin was of an exceptional standard for this stage.",
+        "marginal": "SP produced an initial overtake inside the standards, but it was consistently set at the low end of the band and only after a delay, so the rejoin was slow to develop each time. The closure was legal yet always had to be topped up with a second power addition. SP is expected to set the briefed 20 to 30 knot overtake in one deliberate movement at the rejoin signal."
+      }
+    },
+    {
+      "id": "formation-10-tm11",
+      "label": "Run in position behind and slightly below No1 clear of wake turbulence",
+      "mif_row": "Straight Ahead Rejoin",
+      "source": "technique:9.23.3.a STRAIGHT AHEAD REJOIN",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to a run in flown without establishing the aircraft behind and slightly below No1 with a vector towards the low 6 o'clock, did not keep No1 above the horizon during the closure. The aircraft was allowed to climb more than 100 feet through lead level and entered the wake turbulence behind No1, with an uncommanded roll while the closure was still high. The IP took control to displace the aircraft clear of the wake and re-establish the run in geometry.",
+        "1": "SP, due to a pitch attitude that placed No1 on or below the horizon instead of above it, did not fly the run in slightly below lead level as the technique requires. The vertical position reached the 100 foot limit above No1 and the aircraft rode the edge of the prop wash until the IP verbally directed a descent back below lead. The geometry was recovered but only on instruction.",
+        "2": "SP, due to a slow correction of the vertical reference as the closure developed, did not hold the aircraft clearly below No1 during the run in. The aircraft drifted between 50 and 100 feet high relative to lead level and No1 settled onto the horizon rather than above it. SP identified the shrinking wake clearance, descended back into the low 6 o'clock vector in good time and continued without prompting.",
+        "3": "SP flew the run in behind and slightly below No1 as briefed, keeping No1 visibly above the horizon and the vertical displacement inside 50 feet of the planned offset throughout the closure. The aircraft stayed clear of the wake turbulence for the whole run in. The vector into the low 6 o'clock was maintained until the bid was made.",
+        "4": "SP established the run in geometry with negligible error, holding No1 steady above the horizon and the aircraft precisely in the low 6 o'clock vector from the rejoin signal to the bid. Wake clearance was never in question and no vertical correction was needed at any stage. The positional discipline on the run in was exceptional for this point of the syllabus.",
+        "marginal": "SP kept the run in within the vertical standards, but the offset below No1 was repeatedly allowed to wash out until lead sat on the horizon before being corrected. The wake clearance remained adequate yet it was recovered rather than protected, and at higher closure rates this will place the aircraft in the prop wash. SP is expected to keep No1 above the horizon continuously through the closure."
+      }
+    },
+    {
+      "id": "formation-10-tm12",
+      "label": "Timing of the bid at the approximately 500 foot range cue",
+      "mif_row": "Straight Ahead Rejoin",
+      "source": "technique:9.23.3.a STRAIGHT AHEAD REJOIN",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to an inability to read the range from the sight picture, did not make the bid at approximately 500 feet where details on No1 such as the pitot tubes become distinguishable. The bank away from No1 was never started, so the aircraft continued on the closure vector with the overtake still exceeding 15 knots and the range collapsing. The IP intervened on the controls to bank away and prevent an unsafe convergence.",
+        "1": "SP, due to a range judgement based on the apparent size of the lead aircraft alone, did not begin the bid at the briefed range. The bank away was started well inside 500 feet with the closure still at the 15 knot limit, and it was flown only after the IP called for the bid. The rejoin stayed inside limits but the range cue was not recognized by SP.",
+        "2": "SP, due to attention held on the airspeed indicator instead of on the detail available on No1, did not start the bid at the correct range. The bank away was made late, with the overtake still between 5 and 15 knots above the planned value at the bid point. SP saw the pitot tubes come into definition, banked away without prompting and killed the remaining closure in time.",
+        "3": "SP made the bid at the correct point, banking slightly away from No1 as the range came to approximately 500 feet and the detail on the lead aircraft became distinguishable. The closure at that moment was inside 5 knots of the planned value, so the remaining overtake was manageable with power alone. The range cue of the manual was used as briefed.",
+        "4": "SP judged the bid point with negligible error, initiating the bank away exactly as the pitot tubes on No1 came into definition and with the closure already trimmed to the planned value. The transition from the run in to the bid was continuous and required no adjustment. Range assessment from the sight picture was of an exceptional standard.",
+        "marginal": "SP made the bid inside the standards, but on each rejoin it was started slightly late and only after a glance at the airspeed rather than from the detail on No1. The geometry recovered every time, yet the habit of confirming range on the instruments will fail as closure rates increase. SP is expected to take the bid cue from the visual detail on the lead aircraft at approximately 500 feet."
+      }
+    },
+    {
+      "id": "formation-10-tm13",
+      "label": "Bid displacement to two to four ship widths outside No1 wingtip",
+      "mif_row": "Straight Ahead Rejoin",
+      "source": "technique:9.23.3.a STRAIGHT AHEAD REJOIN",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a bid flown without a defined aim point, did not bank towards a position two to four ship widths out from No1's wingtip and did not angle the velocity vector away from the lead aircraft. The aircraft arrived with the vector still pointing at No1 and closed inside the wingtip line with the overtake more than 15 knots high. The IP took control to displace the aircraft laterally and stop the convergence.",
+        "1": "SP, due to a bid made with insufficient bank for the closure being carried, did not achieve the briefed lateral displacement outside No1's wingtip. The aircraft ended up barely one ship width out with the overtake at the 15 knot limit, and the additional bank was applied only after the IP directed it. Lateral spacing was restored but on instruction.",
+        "2": "SP, due to a bid that was rolled out too early, did not stop the aircraft in the two to four ship width band outside No1's wingtip. The lateral displacement fell short of the briefed band while the closure was still between 5 and 15 knots, so the aim point was not protected. SP recognized the shallow displacement, added bank on his own initiative and re-established the geometry before the route position.",
+        "3": "SP flew the bid to the correct aim point, arriving two to four ship widths out from No1's wingtip with the velocity vector angling away from the lead aircraft. The residual closure at that point was inside 5 knots of the planned value and could be killed with power alone. The lateral geometry matched the technique of the manual.",
+        "4": "SP placed the bid with negligible error, rolling into and out of the bank so that the aircraft tracked precisely to the briefed displacement outside No1's wingtip with the vector clearly diverging. No correction to the aim point was needed between the bid and the route position. The lateral control of the rejoin geometry was exceptional for this stage.",
+        "marginal": "SP achieved a bid displacement inside the standards, but it settled repeatedly at the inner edge of the two to four ship width band and the velocity vector barely diverged from No1. The spacing was legal yet it left no margin if the closure had been higher. SP is expected to bid to a positive displacement with a clearly diverging vector on the following rejoins."
+      }
+    },
+    {
+      "id": "formation-10-tm14",
+      "label": "Killing the overtake with power referenced to No1 line of sight",
+      "mif_row": "Straight Ahead Rejoin",
+      "source": "technique:9.23.3.a STRAIGHT AHEAD REJOIN",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to a failure to recognize excessive overtake as the range closed, did not reduce the power so that the PCL moved aft in step with No1's aft line of sight in the windscreen. The closure was left unarrested with more than 15 knots of overtake at the route position and the aircraft ran forward of No1. The IP took the throttle and the controls to stop the overshoot developing.",
+        "1": "SP, due to power being reduced only when the line of sight had already swept well aft, did not match the throttle movement to the rate of the line of sight on No1. The overtake was still at the 15 knot limit as the aircraft arrived abeam and was killed only after the IP called for idle. The rejoin was completed inside limits but the closure was recognized late.",
+        "2": "SP, due to a power reduction made in one discrete step rather than tracking the aft movement of No1 in the windscreen, did not kill the overtake progressively. Between 5 and 15 knots of closure remained as the aircraft neared the route position, with a visible aft line of sight rate. SP recognized the excess overtake himself, brought the PCL further aft and stopped the aircraft in position without prompting.",
+        "3": "SP killed the overtake correctly, moving the PCL aft in proportion to the aft line of sight of No1 in the windscreen so that the closure decayed as the range reduced. The residual overtake at the route position was inside 5 knots and the aircraft stopped without forward travel. The power technique followed the manual as briefed.",
+        "4": "SP controlled the closure with negligible error, matching the throttle continuously to the line of sight rate on No1 so that the overtake washed out exactly as the route position was reached. No discrete power correction was required and there was no perceptible forward or aft movement on arrival. The energy control was of an exceptional standard for this stage of training.",
+        "marginal": "SP killed the overtake within the standards, but the power reduction always followed the line of sight rather than tracking it, so each arrival needed a late throttle chop. The closure was contained yet the recognition of the overtake was consistently one step behind the sight picture. SP is expected to move the PCL aft in step with No1's aft line of sight rather than in reaction to it."
+      }
+    },
+    {
+      "id": "formation-10-tm15",
+      "label": "Holding separation until closure is controlled before moving to fingertip",
+      "mif_row": "Straight Ahead Rejoin",
+      "source": "technique:9.23.3.a STRAIGHT AHEAD REJOIN",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to a move towards close position started before the closure rates were under control and the aircraft stabilized in route, did not maintain the lateral and vertical separation required during the deceleration. The aircraft was driven inside the fingertip line while still carrying more than 15 knots of overtake and with the vertical position more than 100 feet off lead level. The IP intervened on the controls to restore separation and stop the closure.",
+        "1": "SP, due to an early sideways drive towards No1 while the airspeed was still settling, did not hold the separation until stabilized in route. Lateral spacing was reduced with the overtake still at the 15 knot limit and the movement was arrested only after the IP directed a return to route. Separation was regained without control intervention.",
+        "2": "SP, due to anticipation of the fingertip position before the route position was consolidated, did not keep the full separation through the last part of the deceleration. The aircraft began closing laterally with between 5 and 15 knots of overtake still present. SP recognized that the closure was not yet controlled, stopped the movement in route and completed the transition to close only once stabilized.",
+        "3": "SP maintained lateral and vertical separation until the closure rates were under control, stabilizing in route with the overtake inside 5 knots before starting any movement towards close. The transition to fingertip was made as a separate, deliberate step. The sequence of the manual was respected throughout.",
+        "4": "SP protected the separation with negligible error, arriving in route with the closure already matched and holding the position steady before initiating a smooth, controlled move into fingertip. At no point was spacing traded against an unstabilized closure. The discipline of the rejoin sequence was exceptional for this point of the syllabus.",
+        "marginal": "SP held the separation within the standards, but each transition to close was begun while the airspeed was still settling rather than after a clear stabilization in route. The margins were adequate yet the sequence was compressed on every rejoin. SP is expected to stabilize in route with the closure fully controlled before moving into fingertip."
+      }
+    },
+    {
+      "id": "formation-10-tm16",
+      "label": "Straight ahead overshoot on a parallel or divergent vector with idle and speed brake",
+      "mif_row": "Straight Ahead Rejoin",
+      "source": "technique:9.24 OVERSHOOTS",
+      "hf_concept": "hf-mission-completion-bias",
+      "texts": {
+        "0": "SP, due to an aggressive attempt to save the rejoin instead of accepting the overshoot as soon as the excess overtake was recognized, did not select idle and speed brake and did not maintain lateral spacing on a parallel or divergent vector to No1. The aircraft was flown through the wingtip line with more than 15 knots of closure on a converging vector. The IP took control to establish a divergent vector and dissipate the closure.",
+        "1": "SP, due to a delayed decision to overshoot while the closure was already excessive, did not select idle and the speed brake at the point of recognition. The overtake stayed at the 15 knot limit as the aircraft ran past, and the drag configuration was set only after the IP called for it, although lateral spacing was preserved. The overshoot was safe but IP directed.",
+        "2": "SP, due to a reluctance to accept that the rejoin could not be saved, did not select idle and speed brake at the first indication of excess overtake. The aircraft went past with between 5 and 15 knots of unarrested closure before the configuration was set. SP made the overshoot decision on his own initiative, held a divergent vector clear of No1 and dissipated the energy without prompting.",
+        "3": "SP flew the straight ahead overshoot correctly, selecting idle and speed brake as required as soon as the excess overtake was recognized and holding lateral spacing on a parallel or divergent vector to No1. The residual closure was reduced to within 5 knots of matching airspeed before the slide back began. The overshoot followed the technique of the manual.",
+        "4": "SP recognized the excess overtake immediately and flew an overshoot with negligible error, setting idle and the speed brake without hesitation while tracking a clearly divergent vector away from No1. The closure was dissipated in one controlled action and the geometry never became convergent. The decision making and execution were of an exceptional standard.",
+        "marginal": "SP flew the overshoot within the standards, but the decision to stop trying to save the rejoin came late on each occasion and the drag configuration followed the decision rather than accompanying it. Spacing was preserved yet the margin shrank every time. SP is expected to make an early overshoot decision and select idle and speed brake as soon as the excess overtake is recognized."
+      }
+    },
+    {
+      "id": "formation-10-tm17",
+      "label": "Speed brake retraction and power increase during the slide back into formation",
+      "mif_row": "Straight Ahead Rejoin",
+      "source": "technique:9.24 OVERSHOOTS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the speed brake being left extended and power left at idle while the aircraft slid back into formation, did not increase power prior to achieving matching airspeed with no line of sight on No1. The aircraft decelerated through the route position and fell more than 15 knots below the lead airspeed, ending well aft and out of position. The IP had to advance the power and retract the speed brake to stop the aft movement.",
+        "1": "SP, due to a late recognition that the line of sight on No1 had stopped, did not retract the speed brake and add power before the airspeeds matched. The aircraft dropped to the 15 knot limit below the lead airspeed and continued aft until the IP called for power and clean configuration. The recovery was completed inside limits but on instruction.",
+        "2": "SP, due to a power increase timed to the moment the line of sight stopped rather than in anticipation of it, did not prevent an excessive aft movement during the slide back. The airspeed fell between 5 and 15 knots below No1 and the aircraft went further aft than the briefed position. SP identified the developing aft drift, cleaned up the speed brake and added power in good time to regain route without prompting.",
+        "3": "SP managed the slide back correctly, retracting the speed brake and increasing power before matching airspeed was achieved so that the aircraft stopped in route with no line of sight on No1. The airspeed difference at that moment was inside 5 knots and no aft overshoot developed. The recovery from the overshoot followed the technique of the manual.",
+        "4": "SP flew the slide back with negligible error, anticipating the matching airspeed so precisely that power and configuration were restored before any aft movement could build. The aircraft settled into route position in a single continuous motion with essentially no airspeed split. The recovery was of an exceptional standard for this stage of training.",
+        "marginal": "SP recovered from the overshoot within the standards, but power was added only once the line of sight had already stopped, so the aircraft finished slightly aft on each attempt. The result was acceptable yet the aft trend repeated on every overshoot. SP is expected to retract the speed brake and increase power prior to achieving matching airspeed on the following sorties."
       }
     }
   ]

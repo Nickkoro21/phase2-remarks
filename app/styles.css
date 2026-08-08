@@ -223,3 +223,51 @@ body {
 }
 .req-link:hover { border-color: var(--accent); background: var(--accent-soft); }
 .req-src { color: var(--muted); font-size: 11.5px; margin-top: 7px; font-family: Consolas, monospace; }
+
+/* ── Phase II flowchart ── */
+.fc-view { flex: 1; display: flex; flex-direction: column; padding: 14px 22px; gap: 12px; position: relative; }
+.fc-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.fc-title { font-size: 18px; letter-spacing: 0.4px; }
+.fc-legend { display: flex; flex-wrap: wrap; gap: 8px 14px; max-width: 720px; justify-content: flex-end; }
+.fc-leg { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 11.5px; }
+.fc-leg i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.fc-wrap { position: relative; flex: 1; overflow: auto; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(11, 17, 27, 0.55); }
+#fc-svg { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 2; }
+.fc-lanes { display: flex; gap: 18px; padding: 16px; min-width: max-content; position: relative; z-index: 1; }
+.fc-lane { width: 205px; flex: 0 0 auto; }
+.fc-lane-head {
+  position: sticky; top: 0; z-index: 3;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.5px; color: var(--text);
+  background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+  padding: 8px 10px; margin-bottom: 10px;
+}
+.fc-lane-n { float: right; color: var(--muted); font-weight: 400; }
+.fc-node {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  background: var(--panel-2); color: var(--text);
+  border: 1px solid var(--line); border-left: 4px solid var(--accent);
+  border-radius: 8px; padding: 8px 10px; margin-bottom: 8px;
+  transition: opacity 0.15s, border-color 0.15s, transform 0.1s;
+}
+.fc-node:hover { border-color: var(--accent); }
+.fc-node.fc-sel { outline: 2px solid var(--accent); transform: scale(1.02); }
+.fc-node.fc-dim { opacity: 0.22; }
+.fc-node.fc-checkride { border-style: solid; box-shadow: inset 0 0 0 1px #ffd16655; }
+.fc-node-label { font-family: Consolas, monospace; font-size: 13px; font-weight: 700; margin-right: 6px; }
+.fc-node-name { display: block; font-size: 11.5px; color: var(--muted); line-height: 1.35; margin-top: 2px; }
+.fc-node-hrs { display: block; font-size: 11px; color: var(--muted); margin-top: 3px; font-family: Consolas, monospace; }
+.fc-b {
+  display: inline-block; font-size: 9.5px; font-weight: 700; letter-spacing: 0.6px;
+  padding: 1px 6px; border-radius: 999px; border: 1px solid var(--line);
+  color: var(--muted); vertical-align: middle; margin-right: 4px;
+}
+.fc-b-ckr { color: #ffd166; border-color: #ffd166; }
+.fc-b-solo { color: var(--good); border-color: var(--good); }
+.fc-b-solo-req { color: #06121f; background: #ffd166; border-color: #ffd166; }
+.fc-detail {
+  position: absolute; right: 30px; top: 86px; width: 360px; max-height: 70vh;
+  overflow-y: auto; z-index: 20; box-shadow: 0 14px 44px rgba(0,0,0,0.55);
+}
+.fc-h4 { color: var(--accent); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.7px; margin: 12px 0 6px; }
+.fc-ul { list-style: none; margin: 0; }
+.fc-ul li { margin-bottom: 5px; font-size: 12.5px; }

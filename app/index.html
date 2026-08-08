@@ -18,6 +18,7 @@
   <nav class="viewtabs">
     <button id="tab-remarks" class="viewtab active">Remarks</button>
     <button id="tab-requirements" class="viewtab">Requirements</button>
+    <button id="tab-flowchart" class="viewtab">Phase II Flowchart</button>
   </nav>
   <div class="databadge" id="databadge">—</div>
 </header>
@@ -71,6 +72,21 @@
   </section>
 </main>
 
+<main class="fc-view hidden" id="view-flowchart">
+  <div class="fc-header">
+    <div>
+      <h2 class="fc-title">Phase II flowchart</h2>
+      <p class="hint" id="fc-subtitle">Loading…</p>
+    </div>
+    <div class="fc-legend" id="fc-legend"></div>
+  </div>
+  <div class="fc-wrap" id="fc-wrap">
+    <svg id="fc-svg"></svg>
+    <div class="fc-lanes" id="fc-lanes"></div>
+  </div>
+  <aside class="panel fc-detail hidden" id="fc-detail"></aside>
+</main>
+
 <footer class="credit">
   <span class="credit-line">
     Developed by <strong>Koro</strong> · with <strong>Claude</strong> riding the right seat
@@ -89,5 +105,6 @@
 </div>
 
 <script src="app.js"></script>
+<script src="flowchart.js"></script>
 </body>
 </html>

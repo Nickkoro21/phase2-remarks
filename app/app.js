@@ -472,13 +472,15 @@ const REQ_DOMAINS = [
 const reqState = { domain: null, cache: {} };
 
 function switchView(view) {
-  $("view-remarks").classList.toggle("hidden", view !== "remarks");
-  $("view-requirements").classList.toggle("hidden", view !== "requirements");
-  $("tab-remarks").classList.toggle("active", view === "remarks");
-  $("tab-requirements").classList.toggle("active", view === "requirements");
+  for (const v of ["remarks", "requirements", "flowchart"]) {
+    $(`view-${v}`).classList.toggle("hidden", v !== view);
+    $(`tab-${v}`).classList.toggle("active", v === view);
+  }
+  if (view === "flowchart" && window.fcInit) window.fcInit();
 }
 $("tab-remarks").onclick = () => switchView("remarks");
 $("tab-requirements").onclick = () => switchView("requirements");
+$("tab-flowchart").onclick = () => switchView("flowchart");
 
 function renderReqDomains() {
   const grid = $("req-domain-grid");

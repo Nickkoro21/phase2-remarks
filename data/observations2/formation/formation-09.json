@@ -3,9 +3,14 @@
   "item_name": "TURNING REJOIN",
   "category": "formation",
   "schema": "v2-trunk",
-  "mif_numbers": [9],
+  "mif_numbers": [
+    9
+  ],
   "mif_rows": [
-    {"sn": 9, "row_name": "Turning Rejoin"}
+    {
+      "sn": 9,
+      "row_name": "Turning Rejoin"
+    }
   ],
   "error_modes": [
     {
@@ -141,6 +146,126 @@
         "3": "SP executed the turning tactical rejoin according to the Techniques and Procedures Manual, with the prescribed geometry, lateral separation and sequence. The tactical position was taken under control and with continuous visual on the formation leader.",
         "4": "SP flew the turning tactical rejoin exactly as published, resolving the closure through correct geometry alone and arriving in the tactical position with no intermediate corrections. The procedure was executed without hesitation and with the leader in sight throughout.",
         "marginal": "SP executed the turning tactical rejoin in accordance with the Techniques and Procedures Manual, but the geometry was set with visible hesitation and the tactical position was reached later than the procedure intends. The maneuver was safe and unassisted throughout. SP is expected to apply the published tactical rejoin geometry from the first input so that the position is taken without delay."
+      }
+    },
+    {
+      "id": "formation-09-tm01",
+      "label": "Aspect control with the vertical stabilizer reference and bank angle",
+      "mif_row": 9,
+      "source": "technique:9.23.3.b TURNING REJOIN",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP did not use the vertical stabilizer position relative to the outside wing as the aspect reference, so the 3 aspect / 30 AA picture was never established. Bank angle was held fixed while the stabilizer drove toward the wingtip, aspect built up unchecked and the rejoin angle exceeded 20 degrees with a large line of sight rate on Number 1. The IP took control to unload the aspect and re-establish the rejoin line.",
+        "1": "SP read the aspect reference late, recognizing the stabilizer movement toward the outside wingtip only after aspect had already increased. Bank angle was not shallowed to decrease aspect until the IP called for it, and the rejoin angle reached about 20 degrees before the correction took effect. The line of sight rate was arrested with no IP input on the controls.",
+        "2": "SP allowed the vertical stabilizer to drift off the bisected wing picture without an immediate bank adjustment, so aspect increased and the rejoin angle grew to roughly 15 degrees. SP identified the growing line of sight rate unprompted, shallowed bank to decrease aspect and re-centered the reference line before the critical stage of the rejoin. No IP input was required.",
+        "3": "SP used the vertical stabilizer bisecting the outside wing as the aspect reference and made small bank adjustments to hold it, keeping the rejoin angle within 10 degrees. Movement of the stabilizer toward the wingtip or wing root was answered with the correct bank change before any line of sight rate developed.",
+        "4": "SP set the 3 aspect / 30 AA picture on the first bank input and held the vertical stabilizer on the outside wing throughout, with no perceptible line of sight on Number 1. The rejoin angle stayed within a few degrees of the reference line and no aspect correction was needed at any point.",
+        "marginal": "SP held the aspect reference within standards and kept the rejoin angle inside 10 degrees, but the stabilizer picture was re-centered with repeated bank changes rather than held steady, and a small line of sight rate reappeared twice. SP is expected to answer the first movement of the stabilizer with a single measured bank adjustment so the reference line stays stable."
+      }
+    },
+    {
+      "id": "formation-09-tm02",
+      "label": "Recognition of excessive overtake against the directed rejoin airspeed",
+      "mif_row": 9,
+      "source": "technique:9.23.3.b TURNING REJOIN",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP did not compare actual airspeed with the directed rejoin airspeed of 180 KIAS, so the excessive overtake was never recognized. Closure was carried far above the 20 to 30 KIAS the rejoin is built on and SP was more than 15 knots fast when reaching route, with the closure still increasing. The IP took control to stop the overtake.",
+        "1": "SP cross-checked the airspeed indicator against the directed rejoin airspeed only after Number 1 called out the actual airspeed. The excessive overtake was acknowledged late, and SP arrived at route position about 15 knots fast before the closure was finally arrested. Recovery was completed without IP control input.",
+        "2": "SP was slow to compare actual airspeed with the directed 180 KIAS and let closure build beyond the planned 20 to 30 KIAS during the middle of the rejoin. SP detected the overtake unprompted from the airspeed cross-check, reduced power in time and stabilized in route about 10 knots fast before settling. No IP input was required.",
+        "3": "SP compared actual airspeed with the directed rejoin airspeed throughout the closure and kept overtake near the planned 20 to 30 KIAS. Airspeed at route position was within 5 knots of Number 1 and no callout of actual airspeed was needed.",
+        "4": "SP tracked the airspeed indicator against the directed 180 KIAS continuously and bled the initial overtake progressively, arriving co-airspeed with Number 1 with only slight positive closure. Airspeed in route was within a couple of knots and no overtake correction was ever required.",
+        "marginal": "SP recognized the overtake and stayed within 5 knots at route position, but the airspeed comparison was made in steps rather than continuously and closure twice ran above the planned band before being trimmed back. SP is expected to cross-check actual against directed airspeed early enough that overtake never has to be corrected in a single large power reduction."
+      }
+    },
+    {
+      "id": "formation-09-tm03",
+      "label": "Power and speed brake sequencing to control closure",
+      "mif_row": 9,
+      "source": "technique:9.23.3.b TURNING REJOIN",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP did not sequence power and speed brake as the technique requires, selecting idle before extending the speed brake instead of extending it after power was below 20 percent, with the light in the gear handle, and before idle. With no thrust available to modulate and long spool-up time, closure was not controlled and SP passed route position more than 15 knots fast. The IP took control to stop the closure.",
+        "1": "SP reduced power to idle first and only then extended the speed brake, missing the window below 20 percent indicated by the light in the gear handle. The IP had to direct the power and speed brake sequence verbally, and airspeed in route was about 15 knots off Number 1 while the engine spooled back up. No IP control input was needed.",
+        "2": "SP extended the speed brake at the wrong point in the power reduction, so the deceleration was uneven and airspeed diverged about 10 knots from Number 1. SP recognized the closure trend without prompting, retracted the boards and reset power before route position, and the deviation was contained. The remainder of the rejoin was flown without IP input.",
+        "3": "SP reduced power below 20 percent, confirmed the light in the gear handle and extended the speed brake before selecting idle, so thrust remained available to modulate the closure. Airspeed in route was within 5 knots of Number 1 and no large power change was required.",
+        "4": "SP timed the speed brake extension precisely inside the band below 20 percent and above idle, then retracted the boards and increased power before matching airspeed so no aft movement developed. Airspeed in route matched Number 1 within a couple of knots with slight positive closure preserved.",
+        "marginal": "SP used the correct power and speed brake sequence and held airspeed within 5 knots of Number 1, but the boards were retracted slightly late so a small aft drift began before power was restored. SP is expected to advance power before matching airspeed so the closure is stopped without any rearward movement."
+      }
+    },
+    {
+      "id": "formation-09-tm04",
+      "label": "Bank and overtake monitoring in the critical stage inside 500 feet",
+      "mif_row": 9,
+      "source": "technique:9.23.3.b TURNING REJOIN",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP did not monitor bank and overtake closely during the last few hundred feet, so aspect and closure were not under control when the critical stage of the rejoin began at approximately 500 feet. Lateral and vertical separation were given up before the closure rate was stabilized and the rejoin angle was more than 20 degrees off with Number 1 filling the canopy. The IP took control to arrest the closure.",
+        "1": "SP relaxed the cross-check of bank and overtake inside 500 feet and began moving forward onto the fingertip reference line before the closure rate was under control. The IP verbally directed the bank and power correction, and the rejoin angle reached about 20 degrees before separation was re-established. No IP control input was required.",
+        "2": "SP let attention settle on the fingertip references as they became visible inside 300 to 500 feet and briefly stopped monitoring bank and overtake, allowing the rejoin angle to open to roughly 15 degrees. SP restored the cross-check unprompted, corrected bank and closure and held lateral separation until stabilized in route. No IP input was needed.",
+        "3": "SP monitored bank and overtake throughout the critical stage inside 500 feet and maintained lateral and vertical separation until the closure rate was stabilized in route. The rejoin angle stayed within 10 degrees while the fingertip references were acquired.",
+        "4": "SP kept the bank and overtake cross-check continuous through the critical stage, so the transition from the rejoin line to the fingertip references inside 300 to 500 feet produced no change in aspect or closure. The rejoin angle held within a few degrees and separation was never in question.",
+        "marginal": "SP maintained separation and stayed inside 10 degrees of the rejoin angle, but the bank and overtake cross-check thinned noticeably once the fingertip references appeared and closure had to be trimmed twice in the last few hundred feet. SP is expected to keep monitoring bank and overtake all the way to route position rather than transferring attention to the close references early."
+      }
+    },
+    {
+      "id": "formation-09-tm05",
+      "label": "Unbriefed rejoin to the outside of the turn and nose-tail separation when crossing",
+      "mif_row": 9,
+      "source": "technique:9.23.3.b TURNING REJOIN",
+      "hf_concept": "hf-briefing-and-threat-identification",
+      "texts": {
+        "0": "SP rejoined to the outside of the turn toward the number 3 position without it having been pre-briefed or directed, contrary to the normal two-ship rejoin to the inside. The cross under Number 1 was flown without the required nose-tail separation and with insufficient closure to complete the move outside the turn circle. The IP took control to reposition the aircraft.",
+        "1": "SP began the rejoin toward the outside of the turn although the brief called for a rejoin to the inside, and continued until the IP verbally directed the correction. The initial portion was flown correctly but the cross below and behind Number 1 was started with marginal nose-tail separation, and the rejoin angle reached about 20 degrees during the reposition. No IP control input was required.",
+        "2": "SP set up for the outside of the turn without a brief or a direction from Number 1, then recognized the error unprompted before crossing the 6 o'clock and re-established the rejoin to the inside. The correction opened the rejoin angle to roughly 15 degrees before the line was regained, and the rejoin was completed with no IP input.",
+        "3": "SP rejoined to the inside of the turn as briefed, and when the outside position was directed flew the initial portion identically to an inside rejoin, then crossed below and behind Number 1 with at least nose-tail separation. Positive closure of about 10 to 15 knots was preserved for the move outside and the rejoin angle stayed within 10 degrees.",
+        "4": "SP flew the rejoin exactly as briefed and directed, crossing below and behind Number 1 with clear nose-tail separation and holding the closure needed to get outside the turn circle without a power correction. Route echelon on the outside was taken with the rejoin angle within a few degrees.",
+        "marginal": "SP rejoined to the correct side and held nose-tail separation across Number 1's 6 o'clock, but the decision on which side to rejoin was confirmed late and the cross was started with less margin than the technique intends. Deviations stayed within standards. SP is expected to establish the briefed or directed rejoin side before the first bank input."
+      }
+    },
+    {
+      "id": "formation-09-tm06",
+      "label": "Turning into Number 1 while looking over the shoulder during the overshoot",
+      "mif_row": 9,
+      "source": "technique:9.24 OVERSHOOTS",
+      "hf_concept": "hf-spatial-disorientation",
+      "texts": {
+        "0": "SP turned into Number 1 while looking over the shoulder at the leading aircraft during the overshoot, the common error the technique warns about. The unintended bank produced a vector into Number 1's flight path with convergent flight paths and less than two ship lengths across the 6 o'clock. The IP took control to prevent the convergence and a breakout was required.",
+        "1": "SP allowed a slight turn into Number 1 to develop while looking over the shoulder, so the overshoot vector became convergent rather than parallel. The wings were leveled and the vector re-established only after the IP verbally directed it, and the rejoin angle reached about 20 degrees during the overshoot. No IP control input was required.",
+        "2": "SP began to bank toward Number 1 while tracking the leading aircraft over the shoulder, and the overshoot vector started to converge. SP detected the drift without prompting, corrected the bank and re-established a parallel or divergent vector with the rejoin angle back inside about 15 degrees. Nose-tail separation was preserved and no IP input was needed.",
+        "3": "SP kept the head turned onto Number 1 without letting the bank follow the line of sight, so the overshoot vector remained parallel or divergent. The 6 o'clock was crossed with at least two ship lengths and the rejoin angle stayed within 10 degrees.",
+        "4": "SP maintained continuous visual on Number 1 over the shoulder with no unintended bank at any point, and the overshoot vector stayed exactly as set. Spacing across the 6 o'clock was comfortably beyond two ship lengths and the flight paths never approached convergence.",
+        "marginal": "SP held a non-convergent vector and crossed the 6 o'clock with adequate spacing, but small bank inputs toward Number 1 appeared each time the head was turned and had to be taken out. Deviations stayed within standards. SP is expected to decouple bank from the line of sight so the overshoot vector does not follow the head."
+      }
+    },
+    {
+      "id": "formation-09-tm07",
+      "label": "Back pressure and height control during the turning rejoin overshoot",
+      "mif_row": 9,
+      "source": "technique:9.24 OVERSHOOTS",
+      "hf_concept": "hf-undesired-aircraft-state",
+      "texts": {
+        "0": "SP applied excessive back pressure during the turning rejoin overshoot, which generated closure instead of dissipating it, and flew well above the route echelon position while outside Number 1's turn. The plane of motion was lost, the aircraft ended more than 100 feet off Number 1's level and the excess energy was never arrested. The IP took control to stop the closure and reposition the aircraft.",
+        "1": "SP used more back pressure than the overshoot required, adding closure rather than bleeding it, and drifted above route echelon while outside the turn. The IP verbally directed the unload and the descent back to the plane of motion, and the aircraft was about 100 feet off Number 1's level before stabilizing. No IP control input was needed.",
+        "2": "SP carried extra back pressure into the overshoot and climbed toward route echelon height, so closure stopped decreasing and the aircraft went about 70 feet off Number 1's level. SP recognized the effect unprompted, relaxed the back pressure and re-established the plane of motion below Number 1 before returning to the inside of the turn. No IP input was required.",
+        "3": "SP used only the bank and back stick pressure needed to stabilize in the route echelon position, flying no higher than route echelon and holding the plane of motion about 50 feet below Number 1. Height relative to Number 1 stayed within 50 feet while the excess energy was dissipated.",
+        "4": "SP dissipated the excess overtake with a measured amount of bank and back pressure, staying in the plane of motion below Number 1 throughout and never approaching route echelon height. Height relative to Number 1's level varied by only a few tens of feet before the rejoin was re-established.",
+        "marginal": "SP stayed at or below route echelon and held height within 50 feet of Number 1's level, but back pressure was applied in pulses that briefly checked the deceleration and lifted the aircraft toward route echelon height. SP is expected to set the plane of motion below Number 1 once and hold it so the overshoot bleeds energy continuously."
+      }
+    },
+    {
+      "id": "formation-09-tm08",
+      "label": "Unnecessary breakout for a controllable 3/9 line overshoot",
+      "mif_row": 9,
+      "source": "technique:9.24 OVERSHOOTS",
+      "hf_concept": "hf-startle-effect",
+      "texts": {
+        "0": "SP broke out from a small, controllable 3/9 line overshoot although the flight paths were not convergent and visual contact could be maintained, and the breakout itself was flown without the required separation from Number 1's flight path. The unnecessary manoeuvre placed the aircraft more than 100 feet off Number 1's level with no plan to re-enter. The IP took control to recover the aircraft and terminate the rejoin.",
+        "1": "SP called and started a breakout for a 3/9 line overshoot that was small and controllable, with non-convergent flight paths and Number 1 in sight. The IP verbally directed SP to hold the overshoot and re-establish the rejoin line, and the aircraft went about 100 feet off Number 1's level before the situation was regained. No IP control input was required.",
+        "2": "SP treated a minor 3/9 line overshoot as a breakout situation and began to separate before assessing the flight paths, opening about 70 feet from Number 1's level. SP reassessed unprompted, confirmed the overshoot was controllable with visual contact maintained, stopped the separation and completed the rejoin with no IP input.",
+        "3": "SP assessed the 3/9 line overshoot correctly, confirmed the flight paths were not convergent and visual contact was held, and managed the overshoot without breaking out. Height relative to Number 1 stayed within 50 feet while the aircraft was stabilized and returned to the inside of the turn.",
+        "4": "SP recognized immediately that the small 3/9 line overshoot was controllable, held the plane of motion and re-established the rejoin line without any excursion, keeping height within a few tens of feet of Number 1's level. The decision was made without hesitation and nose-tail separation was never in doubt.",
+        "marginal": "SP kept the aircraft within 50 feet of Number 1's level and completed the rejoin without breaking out, but the breakout decision was weighed audibly and a slight separation was started before the overshoot was judged controllable. SP is expected to assess flight path convergence and visual contact first, so a manageable 3/9 line overshoot is flown out rather than partly abandoned."
       }
     }
   ]
