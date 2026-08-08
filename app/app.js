@@ -604,8 +604,22 @@ document.addEventListener("click", (e) => {
 /* MIF progress chart module (self-contained, injected to avoid index.html churn) */
 {
   const mcs = document.createElement("script");
-  mcs.src = "mifchart.js";
+  mcs.src = "mifchart.js?v=" + Date.now(); // cache-bust: module updates ship often
   document.head.appendChild(mcs);
+}
+
+/* Light / dark theme toggle (persisted) */
+{
+  const btn = $("theme-btn");
+  const apply = (light) => {
+    document.documentElement.classList.toggle("light", light);
+    btn.textContent = light ? "☾" : "☀";
+    try { localStorage.setItem("p2r-theme", light ? "light" : "dark"); } catch (e) {}
+  };
+  let saved = null;
+  try { saved = localStorage.getItem("p2r-theme"); } catch (e) {}
+  apply(saved === "light");
+  btn.onclick = () => apply(!document.documentElement.classList.contains("light"));
 }
 
 $("item-search").addEventListener("input", renderItems);

@@ -21,6 +21,7 @@
   /* ── styles ── */
   const CSS = `
   .mc-modal{position:fixed;inset:0;background:rgba(5,10,18,.78);display:flex;align-items:center;justify-content:center;z-index:60}
+  .mc-modal.hidden{display:none}
   .mc-box{background:var(--panel);border:1px solid var(--line);border-radius:12px;width:min(1240px,96vw);max-height:92vh;display:flex;flex-direction:column;box-shadow:0 18px 60px rgba(0,0,0,.55)}
   .mc-head{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
   .mc-head h3{font-size:15px;margin-right:auto}
@@ -69,6 +70,7 @@
           <div class="mc-svg-wrap" id="mc-svg-wrap"></div>
           <div class="mc-steps" id="mc-steps"></div>
           <div class="mc-legend" id="mc-legend"></div>
+          <div class="mc-legend" id="mc-src"></div>
           <div class="mc-si" id="mc-si"></div>
         </div>
       </div>`;
@@ -132,7 +134,69 @@
     const hit = list.find((m) => m.mif_sn === row.sn ||
       (m.mif_row && String(m.mif_row).toLowerCase() === String(row.name).toLowerCase()) ||
       (m.name && m.name.toLowerCase() === String(row.name).toLowerCase()));
-    return hit ? { n: hit.min_number, verbatim: hit.verbatim } : null;
+    if (hit) return { n: hit.min_number, verbatim: hit.verbatim, shared: false };
+    // Requirement SETS (user ruling): e.g. "ILS or LOC final approach" — either member covers it.
+    const grp = list.find((m) => Array.isArray(m.mif_sn_group) && m.mif_sn_group.includes(row.sn));
+    return grp ? { n: grp.min_number, verbatim: grp.verbatim, shared: true, label: grp.name } : null;
+  }
+
+  async function loadAux() {
+    if (!st.manifest) {
+      const r = await fetch("../data/manifest.json", { cache: "no-store" });
+      st.manifest = await r.json();
+    }
+  }
+  async function loadCrit(cat) {
+    st.crit = st.crit || {};
+    if (!st.crit[cat]) {
+      const r = await fetch(`../data/criteria/${cat}.json`, { cache: "no-store" });
+      st.crit[cat] = await r.json();
+    }
+    return st.crit[cat];
+  }
+  function manifestItems() { return st.manifest?.items || st.manifest?.criteria_items || []; }
+  function itemIdForSn(cat, sn) {
+    const hit = manifestItems().find((i) => i.category === cat && (i.numbers || []).includes(sn));
+    return hit?.id ?? null;
+  }
+  /* Items whose standard originates in another category (e.g. Instrument Landing -> Contact):
+     offer a one-click jump to the source category's line. */
+  async function sourceChips(row) {
+    try {
+      await loadAux();
+      const iid = itemIdForSn(st.category, row.sn);
+      if (!iid) return [];
+      const crit = await loadCrit(st.category);
+      const item = (crit.items || []).find((x) => x.id === iid);
+      if (!item) return [];
+      const ids = new Set();
+      const ep = item.expected_performance || {};
+      for (const sc of ep.resolved?.sources || []) {
+        if (sc?.item && !String(sc.item).startsWith(st.category)) ids.add(sc.item);
+      }
+      const rt = ep.specific_criteria?.reference_target;
+      if (rt && !String(rt).startsWith(st.category)) ids.add(rt);
+      const out = [];
+      for (const id of ids) {
+        const mi = manifestItems().find((i) => i.id === id);
+        if (mi && (mi.numbers || []).length) out.push({ label: mi.name, cat: mi.category, sn: mi.numbers[0] });
+      }
+      return out;
+    } catch (e) { return []; }
+  }
+
+  function renderSourceChips(rows) {
+    const box = $id("mc-src");
+    box.innerHTML = "";
+    if (rows.length !== 1) return;
+    sourceChips(rows[0]).then((chips) => {
+      if (!chips.length) return;
+      box.innerHTML = `<span class="mc-hint">Standard originates from:</span>` + chips.map((c, i) =>
+        `<button class="mc-btn" data-i="${i}">${esc(c.label)} (${esc(c.cat.replace("_", " "))}) →</button>`).join("");
+      box.querySelectorAll("button").forEach((b) => {
+        b.onclick = () => { const c = chips[Number(b.dataset.i)]; window.openMifChart(c.cat, c.sn); };
+      });
+    });
   }
 
   function itemPicker() {
@@ -154,13 +218,16 @@
     const X = (i) => x0 + 40 + i * 90;
     const Y = (li) => H - 62 - li * yStep;
 
+    const cs = getComputedStyle(document.documentElement);
+    const cLine = (cs.getPropertyValue("--line") || "#29405c").trim();
+    const cMuted = (cs.getPropertyValue("--muted") || "#93a7bd").trim();
     let svg = `<svg width="${W}" height="${H}" font-family="Consolas,monospace">`;
     for (let li = 0; li < LEVELS.length; li++) {
-      svg += `<line x1="${x0}" y1="${Y(li)}" x2="${W - 20}" y2="${Y(li)}" stroke="#29405c" stroke-width="1" stroke-dasharray="2 5"/>
-        <text x="${x0 - 16}" y="${Y(li) + 4}" fill="#93a7bd" font-size="12" text-anchor="middle">${LEVELS[li]}</text>`;
+      svg += `<line x1="${x0}" y1="${Y(li)}" x2="${W - 20}" y2="${Y(li)}" stroke="${cLine}" stroke-width="1" stroke-dasharray="2 5"/>
+        <text x="${x0 - 16}" y="${Y(li) + 4}" fill="${cMuted}" font-size="12" text-anchor="middle">${LEVELS[li]}</text>`;
     }
     units.forEach((u, i) => {
-      svg += `<text x="${X(i)}" y="${H - 30}" fill="#93a7bd" font-size="10.5" text-anchor="end" transform="rotate(-28 ${X(i)} ${H - 30})">${esc(u)}</text>`;
+      svg += `<text x="${X(i)}" y="${H - 30}" fill="${cMuted}" font-size="10.5" text-anchor="end" transform="rotate(-28 ${X(i)} ${H - 30})">${esc(u)}</text>`;
     });
 
     rows.forEach((row, ri) => {
@@ -187,27 +254,31 @@
       if (st.minimums === null) {
         stepsTxt = `<span class="mc-hint">Minimum-numbers dataset not available yet.</span>`;
       } else {
-        let cum = 0, hasAny = false;
+        let cum = 0, hasAny = false, sharedSeen = false;
         const stepParts = []; let prevLvl = null, stepSum = 0;
         units.forEach((u, i) => {
           const m = minFor(row, u);
           const n = m?.n;
-          if (n != null) { cum += n; hasAny = true; }
+          if (n != null) { cum += n; hasAny = true; if (m.shared) sharedSeen = true; }
           const li = lvlY(row.codes[u]);
           if (li >= 0 && n != null) {
-            svg += `<text x="${X(i)}" y="${Y(li) - 12}" fill="#ffb454" font-size="10.5" text-anchor="middle">${n} · Σ${cum}</text>`;
+            const star = m.shared ? "*" : "";
+            svg += `<text x="${X(i)}" y="${Y(li) - 12}" fill="#ffb454" font-size="10.5" text-anchor="middle">${n}${star} · Σ${cum}<title>${esc(m.label || "")}</title></text>`;
           }
           if (li >= 0) {
             if (n != null) stepSum += n;
             if (prevLvl !== null && li > prevLvl) {
-              stepParts.push(`${LEVELS[prevLvl]}→${LEVELS[li]}: ${stepSum}`);
+              if (stepSum > 0) stepParts.push(`${LEVELS[prevLvl]}→${LEVELS[li]}: ${stepSum}`);
               svg += `<line x1="${X(i)}" y1="${y0}" x2="${X(i)}" y2="${H - 56}" stroke="#ffd166" stroke-width="1" stroke-dasharray="3 4" opacity="0.6"/>`;
               stepSum = 0;
             }
             prevLvl = li;
           }
         });
-        if (hasAny && stepParts.length) stepsTxt = `Level-up: ${stepParts.join(" · ")} · Total: ${stepParts.reduce((s, p) => s + Number(p.split(": ")[1]), 0)}`;
+        if (hasAny && stepParts.length) {
+          stepsTxt = `Level-up: ${stepParts.join(" · ")} · Total: ${stepParts.reduce((s, p) => s + Number(p.split(": ")[1]), 0)}`;
+          if (sharedSeen) stepsTxt += ` <span class="mc-hint">— * shared requirement set (either member of the pair covers it)</span>`;
+        }
         else if (!hasAny) stepsTxt = `<span class="mc-hint">No measurable minimum numbers for this item.</span>`;
       }
     } else if (rows.length > 1) {
@@ -221,6 +292,7 @@
     $id("mc-legend").innerHTML = rows.map((r, i) =>
       `<span class="mc-leg"><i style="background:${PALETTE[i % PALETTE.length]}"></i>#${esc(String(r.sn ?? "—"))} ${esc(r.name)}</span>`).join("");
     renderSpecial(rows);
+    renderSourceChips(rows);
   }
 
   function renderSpecial(rows) {

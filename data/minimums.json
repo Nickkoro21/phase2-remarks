@@ -2088,7 +2088,12 @@
        "per": "section",
        "verbatim": "- ILS or LOC final approach. (1",
        "mif_sn": null,
-       "mif_row": null
+       "mif_row": null,
+       "mif_sn_group": [
+        21,
+        22
+       ],
+       "group_rule": "shared requirement — executing any member of the set covers it (user ruling 2026-08-08)"
       },
       {
        "name": "GCA (PAR or ASR) final approach",
@@ -2096,7 +2101,12 @@
        "per": "section",
        "verbatim": "- GCA (PAR or ASR) final approach. (2)",
        "mif_sn": null,
-       "mif_row": null
+       "mif_row": null,
+       "mif_sn_group": [
+        23,
+        24
+       ],
+       "group_rule": "shared requirement — executing any member of the set covers it (user ruling 2026-08-08)"
       },
       {
        "name": "GCA (PAR or ASR) no GYRO final approach",
@@ -2254,7 +2264,12 @@
        "per": "section",
        "verbatim": "- ILS or LOC final approach. (1)",
        "mif_sn": null,
-       "mif_row": null
+       "mif_row": null,
+       "mif_sn_group": [
+        21,
+        22
+       ],
+       "group_rule": "shared requirement — executing any member of the set covers it (user ruling 2026-08-08)"
       },
       {
        "name": "GCA (PAR or ASR) final approach",
@@ -2262,7 +2277,12 @@
        "per": "section",
        "verbatim": "- GCA (PAR or ASR) final approach. (2)",
        "mif_sn": null,
-       "mif_row": null
+       "mif_row": null,
+       "mif_sn_group": [
+        23,
+        24
+       ],
+       "group_rule": "shared requirement — executing any member of the set covers it (user ruling 2026-08-08)"
       },
       {
        "name": "GCA (PAR or ASR) no GYRO final approach",
@@ -2316,7 +2336,17 @@
        "per": "sortie",
        "verbatim": "SP will be evaluated at least at one (1) instrument descent and one (1) final approach.",
        "mif_sn": null,
-       "mif_row": null
+       "mif_row": null,
+       "mif_sn_group": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+       ],
+       "group_rule": "shared requirement — executing any member of the set covers it (user ruling 2026-08-08)"
       }
      ]
     },
@@ -2362,7 +2392,12 @@
        "per": "section",
        "verbatim": "- ILS or LOC final approach. (1)",
        "mif_sn": null,
-       "mif_row": null
+       "mif_row": null,
+       "mif_sn_group": [
+        21,
+        22
+       ],
+       "group_rule": "shared requirement — executing any member of the set covers it (user ruling 2026-08-08)"
       },
       {
        "name": "GCA (PAR or ASR) final approach",
@@ -2370,7 +2405,12 @@
        "per": "section",
        "verbatim": "- GCA (PAR or ASR) final approach. (1)",
        "mif_sn": null,
-       "mif_row": null
+       "mif_row": null,
+       "mif_sn_group": [
+        23,
+        24
+       ],
+       "group_rule": "shared requirement — executing any member of the set covers it (user ruling 2026-08-08)"
       },
       {
        "name": "Standby Instrument approach",
@@ -2440,7 +2480,12 @@
        "per": "section",
        "verbatim": "- ILS or LOC final approach. (1)",
        "mif_sn": null,
-       "mif_row": null
+       "mif_row": null,
+       "mif_sn_group": [
+        21,
+        22
+       ],
+       "group_rule": "shared requirement — executing any member of the set covers it (user ruling 2026-08-08)"
       },
       {
        "name": "GCA (PAR or ASR) final approach",
@@ -2448,7 +2493,12 @@
        "per": "section",
        "verbatim": "- GCA (PAR or ASR) final approach. (1)",
        "mif_sn": null,
-       "mif_row": null
+       "mif_row": null,
+       "mif_sn_group": [
+        23,
+        24
+       ],
+       "group_rule": "shared requirement — executing any member of the set covers it (user ruling 2026-08-08)"
       },
       {
        "name": "Standby Instrument approach",
@@ -2708,7 +2758,13 @@
        "per": "section",
        "verbatim": "- Pitch out / Rejoin (5)",
        "mif_sn": null,
-       "mif_row": null
+       "mif_row": null,
+       "mif_sn_group": [
+        16,
+        9,
+        10
+       ],
+       "group_rule": "shared requirement — executing any member of the set covers it (user ruling 2026-08-08)"
       },
       {
        "name": "Overshoot (Wingman)",
@@ -2785,7 +2841,13 @@
        "per": "section",
        "verbatim": "- Pitch out / Rejoin (5)",
        "mif_sn": null,
-       "mif_row": null
+       "mif_row": null,
+       "mif_sn_group": [
+        16,
+        9,
+        10
+       ],
+       "group_rule": "shared requirement — executing any member of the set covers it (user ruling 2026-08-08)"
       },
       {
        "name": "Overshoot (Wingman)",
@@ -2862,7 +2924,13 @@
        "per": "section",
        "verbatim": "- Pitch out / Rejoin (5)",
        "mif_sn": null,
-       "mif_row": null
+       "mif_row": null,
+       "mif_sn_group": [
+        16,
+        9,
+        10
+       ],
+       "group_rule": "shared requirement — executing any member of the set covers it (user ruling 2026-08-08)"
       },
       {
        "name": "Overshoot (Wingman)",
@@ -3742,7 +3810,22 @@
     ],
     "reason": "either/or or composite MIF row — left null deliberately, needs a human ruling"
    }
-  ]
+  ],
+  "grouped": [
+   "instrument/I4201-02: ILS or LOC final approach -> [21, 22]",
+   "instrument/I4301-02: ILS or LOC final approach -> [21, 22]",
+   "instrument/I4501-02: ILS or LOC final approach -> [21, 22]",
+   "instrument/I4601-03: ILS or LOC final approach -> [21, 22]",
+   "instrument/I4201-02: GCA (PAR or ASR) final approach -> [23, 24]",
+   "instrument/I4301-02: GCA (PAR or ASR) final approach -> [23, 24]",
+   "instrument/I4501-02: GCA (PAR or ASR) final approach -> [23, 24]",
+   "instrument/I4601-03: GCA (PAR or ASR) final approach -> [23, 24]",
+   "instrument/I4490: Final approach -> [20, 21, 22, 23, 24, 25, 26]",
+   "formation/F4101-04: Pitch out / Rejoin (Wingman) -> [16, 9, 10]",
+   "formation/F4201-04: Pitch out / Rejoin (Wingman) -> [16, 9, 10]",
+   "formation/F4301-06: Pitch out / Rejoin (Wingman) -> [16, 9, 10]"
+  ],
+  "grouped_ruling": "User ruling 2026-08-08: VOR/TACAN, ILS/LOC and GCA PAR/ASR are requirement SETS — whichever member is flown covers the minimum. Generic checkride \"Final approach\" counts any approach. Formation \"Pitch out / Rejoin (Wingman)\" is a composite covering Pitch Out/Spacing + Rejoins."
  },
  "generated_note": "Ενοποιημένο αρχείο ελαχίστων απαιτήσεων Φάσης ΙΙ (T-6A). Παράχθηκε από τη συγχώνευση των data/minimums/{contact,instrument,formation,vfr_navigation}.json χωρίς καμία μεταβολή περιεχομένου πέραν της κανονικοποίησης του mif_row στην ακριβή ορθογραφία του πίνακα MIF. Κάθε maneuver φέρει mif_sn/mif_row (και προαιρετικά mif_sn_also για συνοδό γραμμή, π.χ. pattern+landing) που επαληθεύτηκαν έναντι των πινάκων data/mif/t6a.json της αντίστοιχης κατηγορίας. Οι εγγραφές με mif_sn=null είναι σκοπίμως αντιστοιχισμένες (either/or ή σύνθετες γραμμές MIF) και παρατίθενται στο unmapped του ελέγχου. Πηγή: Phase_2_Syllabus_2025.pdf."
 }

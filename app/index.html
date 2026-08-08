@@ -20,6 +20,7 @@
     <button id="tab-requirements" class="viewtab">Requirements</button>
     <button id="tab-flowchart" class="viewtab">Phase II Flowchart</button>
   </nav>
+  <button id="theme-btn" class="viewtab" title="Light / dark theme">☀</button>
   <div class="databadge" id="databadge">—</div>
 </header>
 
@@ -72,19 +73,44 @@
   </section>
 </main>
 
-<main class="fc-view hidden" id="view-flowchart">
-  <div class="fc-header">
-    <div>
-      <h2 class="fc-title">Phase II flowchart</h2>
-      <p class="hint" id="fc-subtitle">Loading…</p>
+<main class="fc-view hidden" id="view-flowchart" data-lv="0">
+  <div class="fc-bar">
+    <nav class="fc-crumbs" id="fc-crumbs" aria-label="Navigation levels"></nav>
+    <div class="fc-tools">
+      <div class="fc-q-wrap">
+        <input type="search" id="fc-q" class="fc-q" autocomplete="off" spellcheck="false"
+               placeholder="Search:  section · sortie · exam   ( / )" aria-label="Search training section, sortie or exam">
+        <div class="fc-sug hidden" id="fc-sug" role="listbox" aria-label="Results"></div>
+      </div>
+      <button class="fc-tbtn" id="fc-density" type="button" aria-pressed="false" title="Card density (C)">RICH</button>
+      <button class="fc-tbtn" id="fc-poster" type="button" aria-pressed="false" title="Full 7-column view for print / projector (P)">POSTER</button>
+      <button class="fc-tbtn" id="fc-legend-btn" type="button" aria-expanded="false" title="Symbol legend (L)">LEGEND</button>
     </div>
-    <div class="fc-legend" id="fc-legend"></div>
   </div>
-  <div class="fc-wrap" id="fc-wrap">
-    <svg id="fc-svg"></svg>
-    <div class="fc-lanes" id="fc-lanes"></div>
-  </div>
-  <aside class="panel fc-detail hidden" id="fc-detail"></aside>
+
+  <!-- L0 — ΠΙΝΑΚΑΣ ΣΤΑΔΙΟΥ -->
+  <section class="fc-l0" id="fc-l0" aria-label="Phase dashboard">
+    <div class="fc-vitals" id="fc-vitals"></div>
+    <p class="fc-gate" id="fc-gate"></p>
+    <div class="fc-load" id="fc-load"></div>
+    <div class="fc-tracks" id="fc-tracks"></div>
+    <div class="fc-spine" id="fc-spine"></div>
+  </section>
+
+  <!-- L1 — ΡΑΓΑ ΤΡΟΧΙΑΣ -->
+  <section class="fc-l1 hidden" id="fc-l1" aria-label="Track rail">
+    <div class="fc-trackbar" id="fc-trackbar"></div>
+    <div class="fc-filters" id="fc-filters"></div>
+    <div class="fc-rail-scroll" id="fc-rail-scroll">
+      <svg id="fc-svg" aria-hidden="true"></svg>
+      <div class="fc-bands" id="fc-bands"></div>
+    </div>
+    <aside class="panel fc-detail hidden" id="fc-detail" role="complementary" aria-live="polite"></aside>
+  </section>
+
+  <div class="fc-poster hidden" id="fc-poster-view" aria-label="Full view"></div>
+  <div class="fc-drawer hidden" id="fc-drawer" role="dialog" aria-modal="true" aria-label="Source &amp; verbatim text"></div>
+  <div class="fc-pop hidden" id="fc-legend-pop" role="dialog" aria-label="Legend"></div>
 </main>
 
 <footer class="credit">
