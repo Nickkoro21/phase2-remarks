@@ -142,6 +142,126 @@
         "4": "SP flew the missed approach exactly at the published point, with power, attitude and configuration applied in the correct order and the published track held from the start of the climb. The intention was passed to the controller in standard phraseology as the climb began. No parameter departed from the standard during the transition.",
         "marginal": "SP executed the published missed approach at the correct point and within the tolerances, but the climb was established a few seconds after the point was reached and the initial track was regained rather than flown from the start. The procedure was correct in content and slightly late in timing. SP is expected to pre-set the missed approach decision so the climb begins as the point is reached."
       }
+    },
+    {
+      "id": "instrument-23-tm01",
+      "label": "Overcontrolling heading with corrections larger than 5 degrees",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to course corrections taken with heading changes far larger than the 5 degree limit of the technique, did not damp the azimuth corrections passed by the controller. Every correction was followed by an overshoot in the opposite direction, heading error passed 10 degrees with the oscillation still growing, and the IP took the aircraft to steady the final. SP made no attempt to keep the corrections inside the area beneath the heading bug.",
+        "1": "SP, due to heading corrections applied well outside the area beneath the heading bug, did not stop the tendency to overcorrect once the controller began passing azimuth calls. Heading error reached about 10 degrees, at the limit of the standard, on two successive corrections and came down only after the IP called for the corrections to be halved. The oscillation about the final course continued to the missed approach point.",
+        "2": "SP, due to corrections that exceeded the 5 degree limit each time the controller called a heading change, did not settle the aircraft on the final course at the first attempt. The overshoot reached about 8 degrees, between the 5 and 10 degree values of the standard, before SP reduced the size of the inputs and steadied the heading without IP input. The later calls were flown with small corrections.",
+        "3": "SP kept the azimuth corrections at or below the 5 degree limit of the technique, so only small overshoots appeared on roll-out. Heading error stayed within about 4 degrees of the assigned heading, inside the standard, and each correction was damped on the following one. The final course was regained without an oscillation developing.",
+        "4": "SP made every azimuth correction inside the width of the heading bug, so no correction produced an overshoot. Heading error remained of the order of 1 to 2 degrees and the aircraft followed the controller's azimuth calls smoothly. The controller reported the aircraft on course for the whole of final.",
+        "marginal": "SP kept the heading errors within the published tolerance, but corrections were consistently taken at more than 5 degrees and each was followed by an overshoot that reached the 5 degree edge of the standard. The oscillation was contained but never fully damped. SP is expected to limit heading changes to the area beneath the heading bug so a correction stops the deviation instead of reversing it."
+      }
+    },
+    {
+      "id": "instrument-23-tm02",
+      "label": "Heading bug not marked with the wind corrected final approach heading",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the heading bug being left on the last vector instead of being marked with the wind corrected heading for the final, did not have the additional visual cue of heading deviations that the technique provides. The aircraft drifted more than 10 degrees off the final approach heading with no correction started, and the IP set the bug and took the aircraft back onto the course. SP had not produced a wind corrected heading before the approach.",
+        "1": "SP, due to a heading bug left unset for the final approach course, worked the azimuth calls from the raw heading indication alone. Heading error reached about 10 degrees, at the limit of the standard, and steadied only after the IP called for the bug to be set on the final approach heading. The rest of the approach needed repeated verbal cues on azimuth.",
+        "2": "SP, due to the heading bug being marked only after the turn to final was complete, had no visual reference for the wind corrected heading when the drift first appeared. The error grew to about 7 degrees, between the 5 and 10 degree values of the standard, before SP set the bug and returned the aircraft to the final approach heading without IP input.",
+        "3": "SP set the heading bug to the wind corrected final approach heading before the turn onto final and used it as the reference for the azimuth calls. Deviations stayed within about 4 degrees of the bugged heading, inside the standard, and were seen as soon as the indication moved off the bug. Corrections were kept beneath the bug.",
+        "4": "SP marked the wind corrected heading on the bug during the vectors and flew the whole final against it, with the heading indication effectively pinned to the bug. Any drift was detected the moment it appeared and removed with a correction of a degree or two. The controller passed no azimuth correction.",
+        "marginal": "SP flew against a heading bug set for the final, but the bugged value was the published course with no allowance for the wind, so the aircraft sat near the 5 degree edge of the standard on one side for much of final. The deviation was contained by repeated small corrections rather than removed at its source. SP is expected to bug the wind corrected heading so the bug shows real deviations rather than a constant offset."
+      }
+    },
+    {
+      "id": "instrument-23-tm03",
+      "label": "Drift correction not calculated from the winds or from GPS track",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a drift correction that was never calculated with the 60 to 1 rule and no comparison of GPS track against aircraft heading, did not establish a wind corrected heading for the ASR final. The aircraft was carried steadily off the final course until the heading error exceeded 10 degrees with no correction started, and the IP took the aircraft after the controller reported the aircraft well off centerline. SP could not state the crosswind component when asked.",
+        "1": "SP, due to the crosswind component never being divided by the airspeed in NM per minute to produce a drift figure, flew the final on the published course heading. The aircraft drifted until the required correction reached about 10 degrees, at the limit of the standard, and a wind corrected heading was taken up only after the IP prompted the calculation.",
+        "2": "SP, due to a drift allowance judged by eye rather than computed from the winds or read from the GPS, did not hold a heading that stopped the drift off the final course. Azimuth error grew to about 8 degrees, between the 5 and 10 degree values of the standard, before SP compared track with heading on the GPS, took up a corrected heading and stopped the drift without IP input.",
+        "3": "SP computed the drift from the known winds with the 60 to 1 rule and flew the resulting wind corrected heading down the final. Residual azimuth error stayed within about 4 degrees, inside the standard, and was removed with single small corrections. Track was compared with heading on the GPS once on final to confirm the figure.",
+        "4": "SP calculated the drift before the approach and refined it by comparing GPS track with heading during the vectors, so the final was flown on a heading that held the course with no measurable drift. Corrections were of the order of a degree and the controller reported the aircraft on centerline throughout.",
+        "marginal": "SP applied a drift correction, but the figure was rounded rather than derived from the crosswind component, so the aircraft crept toward the 5 degree edge of the standard on one side of the final course. The deviation was reset by repeated corrections while the drift itself remained. SP is expected to calculate the drift with the 60 to 1 rule so the heading holds the course without repeated resets."
+      }
+    },
+    {
+      "id": "instrument-23-tm04",
+      "label": "Pitch corrections larger than 2 degrees during the descent to MDA",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to pitch corrections far larger than the 2 degree limit of the technique, chased the descent rate with alternating large inputs on the way to MDA. The VSI swung well beyond the 400 feet per minute that 2 degrees of pitch represents, the aircraft went below MDA on an approach where no descent below the minimum is permitted, and the IP arrested the descent and took the aircraft.",
+        "1": "SP, due to pitch changes of several degrees applied each time the descent rate was checked, did not settle the aircraft on a steady rate to the minimum. The oscillation left the level-off about 200 feet above MDA, at the limit of the standard, and the aircraft was brought onto the minimum only after repeated IP calls on rate and altitude.",
+        "2": "SP, due to pitch corrections that exceeded 2 degrees and produced VSI swings well past 400 feet per minute, did not hold the descent rate that would place the aircraft at MDA. Level-off occurred about 160 feet above MDA, between the plus 100 and plus 200 foot values of the standard, before SP reduced the size of the pitch inputs and settled onto the minimum without IP input.",
+        "3": "SP kept pitch corrections at or below 2 degrees on the descent, so the VSI moved in steps of about 400 feet per minute and the rate stayed close to the value required. Level-off was inside 100 feet above MDA, within the standard, with no descent below the minimum. The altitude was then held steady to the missed approach point.",
+        "4": "SP flew the descent with pitch corrections of a degree or less and the rate stayed effectively constant to the minimum. The aircraft levelled about 25 feet above MDA with no descent below it and needed no correction after the level-off. The VSI showed no oscillation at any point on final.",
+        "marginal": "SP kept the level-off inside the published tolerance, but the descent was flown with pitch inputs larger than 2 degrees and the VSI oscillated about the required rate, so the capture finished around 90 feet above MDA at the edge of the standard. No descent below the minimum occurred. SP is expected to limit pitch changes to 2 degrees so the rate stays stable and MDA is captured close to the minimum."
+      }
+    },
+    {
+      "id": "instrument-23-tm05",
+      "label": "Large power corrections instead of small changes on final",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to large power corrections applied instead of the small changes the technique calls for, did not hold the 110 KIAS final approach airspeed. Each correction was reversed by a larger one, airspeed fell more than 10 knots below the approach speed with torque still being moved through wide ranges, and the IP set the power and took the aircraft.",
+        "1": "SP, due to power moved in large steps whenever the airspeed indication changed, did not stabilize the speed on final. Airspeed reached about 20 knots above the approach speed, at the limit of the standard, and was contained only after the IP called for a fixed torque setting with small trims from it.",
+        "2": "SP, due to power corrections much larger than the speed error present required, did not settle on the torque setting for the configured final. Airspeed swung to about 15 knots above 110 KIAS, between the plus 10 and plus 20 knot values of the standard, before SP reduced the size of the power changes and recovered the approach speed without IP input.",
+        "3": "SP made small power corrections around the torque setting for the configured final and held the airspeed inside the standard, no more than about 8 knots fast and 4 knots slow of 110 KIAS. No correction had to be reversed, and each speed trend was stopped rather than overshot.",
+        "4": "SP held 110 KIAS to within about 3 knots for the whole of final on an essentially fixed torque setting, with only trimming changes of a percent or two. Large power corrections were never needed because no speed error was allowed to build. The configuration change was absorbed without an excursion.",
+        "marginal": "SP stayed within the published airspeed tolerance, but the speed was held by a series of oversized power corrections that carried it from one side of the approach speed to the other and touched the 10 knot fast edge of the standard. The aircraft never settled on a steady torque setting. SP is expected to avoid large power corrections unless the airspeed is excessively high or low and to trim from a known setting instead."
+      }
+    },
+    {
+      "id": "instrument-23-tm06",
+      "label": "Configuration completed later than 2 to 3 NM prior to the FAF",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the aircraft being configured well inside the 2 to 3 NM point before the FAF, did not have airspeed and trim stabilized when the descent was due. Gear and flap changes were still taking effect as the descent began, airspeed went more than 10 knots below the approach speed with the aircraft out of trim, and the IP took the aircraft and re-established a stabilized final.",
+        "1": "SP, due to configuration started at the FAF rather than 2 to 3 NM before it, began the descent with the trim still being chased. Airspeed rose to about 20 knots above the approach speed, at the limit of the standard, while the trim was set, and the speed was recovered only under IP direction on power and trim.",
+        "2": "SP, due to gear and flaps being selected later than the 2 to 3 NM point, had no time to stabilize airspeed and trim before descending at the FAF. Airspeed moved to about 14 knots above 110 KIAS, between the plus 10 and plus 20 knot values of the standard, while the trim change was absorbed, and SP recovered the approach speed without IP input.",
+        "3": "SP configured the aircraft close to the 2 to 3 NM point before the FAF, so airspeed and trim were essentially settled when the descent began. Speed stayed inside the standard, no more than about 8 knots fast and 4 knots slow of 110 KIAS, through the configuration change and the start of the descent.",
+        "4": "SP had gear down, flaps TO and the Before-Landing Checklist complete well before the 2 to 3 NM point and the aircraft trimmed for 110 KIAS ahead of the FAF. The descent was started from a fully stabilized state and airspeed varied by no more than about 3 knots. No trim input was needed once the descent began.",
+        "marginal": "SP configured just inside the 2 to 3 NM point and reached the FAF with the trim only just settled, so airspeed sat near the 10 knot fast edge of the standard as the descent began. Nothing exceeded the tolerance, though the descent was started while the last trim change was still being made. SP is expected to configure 2 to 3 NM prior to the FAF so airspeed and trim are stable before the descent."
+      }
+    },
+    {
+      "id": "instrument-23-tm07",
+      "label": "Descent gradient not calculated for step-down fix restrictions inside the FAF",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to descent gradients never being calculated for the step-down fix restrictions inside the FAF, did not plan the descent against the published altitudes. The aircraft passed a step-down altitude more than 300 feet low with the rate unchanged, and the IP arrested the descent and regained the published profile. SP had not identified the step-down fixes during the approach briefing.",
+        "1": "SP, due to no gradient being computed from altitude to lose against distance available, arrived at the step-down fix about 300 feet above the planned profile, at the limit of the standard. The rate then flown to make the following restriction had to be corrected on IP call, and the remaining altitudes were met only with repeated prompts on rate and distance.",
+        "2": "SP, due to descent gradients estimated rather than calculated from altitude to lose and distance available, did not fly a rate that matched the step-down restrictions. The aircraft was about 230 feet high against the planned profile, between the 150 and 300 foot values of the standard, before SP increased the rate and made the restriction without IP input.",
+        "3": "SP calculated the descent gradient for the step-down fixes inside the FAF and flew a rate that met each published altitude. Profile error stayed within about 120 feet, inside the standard, and no restriction was approached from below. The rate required was briefed before the descent.",
+        "4": "SP computed the altitude to lose against the distance available for every step-down fix and flew each segment so the published altitude was reached at the fix with negligible error. Deviation from the planned profile stayed within a few tens of feet and no restriction was missed. The gradients were quoted during the approach briefing.",
+        "marginal": "SP met all step-down fix restrictions, but the rate was set from the altimeter alone rather than from a computed gradient, so the aircraft reached each fix close to the 150 foot edge of the planned profile. Every restriction was satisfied and none was penetrated. SP is expected to calculate the descent gradient for each step-down fix so the profile is flown rather than recovered."
+      }
+    },
+    {
+      "id": "instrument-23-tm08",
+      "label": "Flap setting and airspeed not adjusted for crosswind or gusty conditions",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the final being flown at the standard configuration and speed in reported gusty conditions with none of the airspeed increase the technique allows, did not keep a working margin on the approach. The gusts drove the airspeed more than 10 knots below the approach speed with the aircraft in the full configuration, and the IP added power, adjusted the configuration and took the aircraft.",
+        "1": "SP, due to no allowance being made for the gust factor in the target approach speed, flew the final with the speed swinging on each gust. Airspeed reached about 10 knots below the approach speed, at the limit of the standard, and was contained only after the IP directed an increase in the target speed for the conditions.",
+        "2": "SP, due to the flap setting and target speed being left unadjusted for the crosswind and gusts, did not hold a stable speed on final. Airspeed dropped to about 8 knots below 110 KIAS, between the 5 and 10 knot values of the standard, before SP increased the target speed for the conditions and stabilized the approach without IP input.",
+        "3": "SP allowed for the gusty conditions with an increased target speed and the appropriate flap setting, and the airspeed stayed inside the standard through the gusts, no more than about 4 knots slow and 8 knots fast of the target. Power corrections remained small and the approach stayed stable to MDA.",
+        "4": "SP set the configuration and the target speed for the reported crosswind and gusts before the final and flew the approach with speed variations of about 3 knots despite the conditions. The gusts produced no divergence in speed or attitude and the aircraft was stable throughout the descent to MDA.",
+        "marginal": "SP made an allowance for the conditions, but the increase in target speed was smaller than the reported gust factor called for, so airspeed touched the 5 knot slow edge of the standard on the stronger gusts. The approach stayed inside the tolerance and was stable overall. SP is expected to size the speed increase to the reported gusts so the margin does not depend on the timing of a gust."
+      }
     }
   ]
 }

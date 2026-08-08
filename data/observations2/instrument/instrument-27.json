@@ -157,6 +157,96 @@
         "4": "SP flew the MAIP circling pattern precisely, with consistent downwind spacing and turn points that produced a stabilized final without correction. SP maintained a clear picture of the aircraft position relative to the runway and to the protected area at all times.",
         "marginal": "SP flew the published circling pattern within standards, but the downwind spacing was consistently at the outer edge of the published track and the base turn was started late. The trend is a pattern that grows with each circuit. SP is expected to set the downwind spacing from the briefed wingtip reference and to start the base turn at the published point so that the pattern geometry stays clearly inside the published track."
       }
+    },
+    {
+      "id": "instrument-27-tm11",
+      "label": "Insufficient downwind spacing leading to excessive bank in the turn to final",
+      "mif_row": 27,
+      "source": "technique:7.29 CIRCLING APPROACH",
+      "hf_concept": "hf-undesired-aircraft-state",
+      "texts": {
+        "0": "SP, due to downwind spacing set without using the wingtip on the landing runway at 500 feet AGL as a reference, arrived at the base turn too close in and had to use bank far in excess of the 30 degree turn to final called for by the technique. The final leg was overshot and the aircraft was still more than 10 degrees off runway heading and more than 15 feet from the extended centerline when a normal descent to landing was no longer available. The IP intervened to unload the turn and reposition the aircraft on final.",
+        "1": "SP, due to insufficient lateral spacing on the circling downwind, entered the turn to final with more bank than the 30 degree turn the technique allows and overshot the final leg. Rollout was 10 degrees off runway heading, at the limit, and the aircraft was recovered to the centerline only after the IP called the overshoot. The correction was made with the controls unaided, without IP intervention.",
+        "2": "SP, due to spacing that was set slightly tight for the wingtip reference, needed about 40 degrees of bank in the turn to final and initially overshot the extended centerline. SP recognised the overshoot early, shallowed the turn and re-intercepted the centerline, touching down within 10 feet of it with no prompting or intervention.",
+        "3": "SP set the downwind spacing so that the turn to final was flown with about 30 degrees of bank as the technique specifies. The final was intercepted without overshoot, with rollout within 5 degrees of runway heading and touchdown within 5 feet of the centerline.",
+        "4": "SP set spacing precisely from the wingtip reference and flew the turn to final at the planned bank with no overshoot at all. Rollout was on runway heading and the aircraft tracked the centerline from the roll-out to touchdown with negligible displacement.",
+        "marginal": "SP stayed within standards, but the downwind spacing was consistently tighter than the wingtip reference and each turn to final needed bank close to 40 degrees with a small overshoot. The trend is a pattern that keeps compressing and leaves no margin in the final turn. SP is expected to set the spacing from the wingtip on the landing runway and to start the base turn earlier, so that the turn to final is flown at 30 degrees of bank and the centerline is intercepted without overshoot."
+      }
+    },
+    {
+      "id": "instrument-27-tm12",
+      "label": "Excessive downwind spacing and the 1.5 NM obstacle clearance distance",
+      "mif_row": 27,
+      "source": "technique:7.29 CIRCLING APPROACH",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to a downwind that was extended without reference to the obstacle clearance distance for the aircraft category, allowed the spacing to grow past 1.5 NM from the runway during the circling manoeuvre. Visual cues from the runway environment became unusable and, while the runway was being searched for, the circling altitude was left by more than 300 feet. The IP intervened to arrest the excursion and to bring the aircraft back inside the protected area.",
+        "1": "SP, due to a wide displacement flown to keep the runway comfortably in sight, took the ground track to the 1.5 NM obstacle clearance limit and had to stretch the final. The circling altitude reached the 300 foot deviation limit while the spacing was being closed, and the trend was corrected only after the IP pointed out the distance. No intervention on the controls was required.",
+        "2": "SP, due to a downwind displaced wider than the wingtip reference calls for, extended the ground track towards the 1.5 NM obstacle clearance distance without reaching it. SP recognised the developing spacing on the runway sight picture, tightened the pattern and held the circling altitude inside 300 feet throughout, correcting without prompting or intervention.",
+        "3": "SP kept the circling manoeuvre well inside the 1.5 NM obstacle clearance distance for the aircraft category, with the runway environment in sight throughout. Spacing was close to the wingtip reference and the circling altitude was held within 150 feet.",
+        "4": "SP flew the whole circling manoeuvre at the displacement given by the wingtip reference, with a comfortable margin to the 1.5 NM obstacle clearance distance. The runway environment was never in doubt and the circling altitude varied negligibly.",
+        "marginal": "SP remained inside the protected area, but the downwind displacement grew on each circuit and the ground track ended close to the 1.5 NM obstacle clearance distance. The trend is a pattern that expands whenever visual contact feels uncertain. SP is expected to set the displacement from the wingtip reference and to check the distance from the runway before extending, so that the manoeuvre stays clearly inside the obstacle clearance distance."
+      }
+    },
+    {
+      "id": "instrument-27-tm13",
+      "label": "Misjudging displacement at circling MDA (sight picture at low altitude)",
+      "mif_row": 27,
+      "source": "technique:7.29 CIRCLING APPROACH",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to misjudging displacement at the circling MDA, where the correct spacing appears much wider than in an overhead pattern, flew the downwind far closer in than the sight picture required. The base turn was started from a position that left the aircraft high and hot on a short final, and the aircraft was still not in a position for a normal descent to landing when it passed the point from which the touchdown zone could be reached. The IP intervened and directed the go around.",
+        "1": "SP, due to a spacing judgement carried over from the overhead pattern sight picture rather than from the circling MDA, flew a downwind that was noticeably tight for the altitude. The resulting steep final produced a long float and the touchdown occurred at 1500 feet from the runway threshold, at the limit, after the IP called the high approach. No intervention on the controls was required.",
+        "2": "SP, due to the wider apparent displacement seen at the circling MDA, initially set the downwind closer in than briefed. SP compared the picture with the wingtip reference, corrected the spacing before the base turn and touched down between 1000 and 1500 feet from the threshold, with no prompting or intervention.",
+        "3": "SP judged the displacement correctly for the circling MDA despite the low altitude sight picture, and the base turn was started from the planned position. The final was of normal length and the touchdown was made within 1000 feet of the runway threshold.",
+        "4": "SP flew the displacement at the circling MDA exactly as briefed, unaffected by the wider appearance of the correct spacing at that altitude. The final was of normal length, stabilised early, and touchdown was made in the intended part of the touchdown zone.",
+        "marginal": "SP kept the touchdown point within limits, but the downwind at the circling MDA was consistently closer in than the reference picture and each final was steeper than normal. The trend is a spacing judgement still anchored to the overhead pattern. SP is expected to check the displacement against the wingtip reference at the circling altitude rather than the apparent picture, so that the final length and the touchdown point stay clearly inside the tighter band."
+      }
+    },
+    {
+      "id": "instrument-27-tm14",
+      "label": "Rolling out wings level slower than the targeted final approach speed",
+      "mif_row": 27,
+      "source": "technique:7.29 CIRCLING APPROACH",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to failing to reduce airspeed from 120 KIAS progressively as bank was decreased in the turn to final, arrived at the roll-out with the speed still decaying towards the target for the flap setting. Airspeed passed more than 20 knots below the final approach speed appropriate for the configuration and the aircraft rolled out wings level slow and low on the glide-path. The IP intervened with power to restore the approach speed.",
+        "1": "SP, due to a power reduction made in one step instead of being matched to the decreasing bank, rolled out wings level 20 knots below the targeted final approach speed for the flap setting, at the deviation limit. Airspeed was restored only after the IP called the low speed, and the recovery left the aircraft touching down 5 knots below the touchdown speed band. No intervention on the controls was required.",
+        "2": "SP, due to reducing airspeed from 120 KIAS a little too early in the final turn, rolled out wings level between 10 and 20 knots below the targeted final approach speed. SP recognised the slow roll-out, added power and re-established the approach speed before the descent to landing, without prompting or intervention.",
+        "3": "SP reduced airspeed from 120 KIAS as bank was decreased and rolled out wings level no slower than the final approach speed appropriate for the flap setting, holding it within 10 knots to the flare. Touchdown speed was within the tighter band.",
+        "4": "SP matched the airspeed reduction to the decreasing bank so that the aircraft rolled out wings level exactly on the final approach speed for the flap setting. Airspeed then remained stable to the flare with negligible variation and the touchdown speed was on target.",
+        "marginal": "SP stayed within the airspeed standard, but each roll-out on final was made a few knots below the targeted final approach speed and power was added afterwards to recover. The trend is an airspeed reduction completed before the bank is taken out. SP is expected to bleed the speed off from 120 KIAS in step with the decreasing bank, so that the aircraft rolls out no slower than the target and the deviation stays clearly inside the tighter band."
+      }
+    },
+    {
+      "id": "instrument-27-tm15",
+      "label": "Late request for circling clearance and tower coordination",
+      "mif_row": 27,
+      "source": "technique:7.29 CIRCLING APPROACH",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to requesting clearance for the circling approach too late for coordination with the tower, reached the circling minimum descent altitude without the clearance being issued. SP continued to manoeuvre while transmitting, the circling altitude was left by more than 300 feet and the aircraft was flown towards the runway without an approved circling direction. The IP intervened, took over the radio and directed the missed approach.",
+        "1": "SP, due to a circling request delayed until the aircraft was already established on the instrument approach, obtained the clearance only just before the point at which the manoeuvre had to begin. The rushed sequence that followed took the circling altitude to the 300 foot deviation limit, and the timing of the request was corrected only after the IP prompted. No intervention on the controls was required.",
+        "2": "SP, due to attention held on the instrument approach, initially delayed the circling request beyond the briefed point. SP recognised the delay, transmitted the request in time for the tower to coordinate and held the circling altitude inside 300 feet throughout the manoeuvre, with no prompting or intervention.",
+        "3": "SP requested clearance for the circling approach early enough to allow coordination with the tower, and the manoeuvre was begun with the clearance already in hand. Circling altitude was held within 150 feet during the transition to the visual segment.",
+        "4": "SP requested the circling clearance well ahead of the approach, so that tower coordination was complete before the runway environment was acquired. The visual manoeuvre was then flown without radio workload and with negligible altitude variation.",
+        "marginal": "SP obtained the circling clearance in time, but the request was made later on each approach and left little margin for the tower to coordinate. The trend is a radio task deferred until the instrument segment is finished. SP is expected to make the circling request at the briefed point in the approach, so that the clearance is in hand before the visual manoeuvre and the altitude control is not compressed by radio work."
+      }
+    },
+    {
+      "id": "instrument-27-tm16",
+      "label": "Wind compensation to maintain circling spacing",
+      "mif_row": 27,
+      "source": "technique:7.29 CIRCLING APPROACH",
+      "hf_concept": "hf-threats",
+      "texts": {
+        "0": "SP, due to not compensating for the existing wind while manoeuvring, allowed the ground track to drift so that the spacing on the circling downwind no longer matched the wingtip reference. The base turn was flown from a displaced position, the final was overshot downwind and at touchdown the aircraft was more than 15 feet from the runway centerline with the heading still not aligned. The IP intervened to correct the drift and to salvage the alignment.",
+        "1": "SP, due to a drift correction not applied for the reported wind, let the circling spacing change through the downwind and arrived at the final turn with an unplanned displacement. Rollout was 10 degrees off runway heading, at the deviation limit, and the drift was corrected only after the IP called it. No intervention on the controls was required.",
+        "2": "SP, due to a wind correction that was applied but under-estimated, initially drifted off the planned circling ground track and the spacing began to change. SP detected the drift against the runway, increased the correction and re-established the spacing before the base turn, touching down within 10 feet of the centerline without prompting or intervention.",
+        "3": "SP compensated for the existing wind throughout the circling manoeuvre and held the spacing constant on the downwind. The final turn was started from the planned position and the touchdown was made within 5 feet of the runway centerline.",
+        "4": "SP applied the drift correction required by the wind from the start of the manoeuvre, so that the spacing and the base turn point were unaffected by it. The aircraft tracked the centerline from the roll-out to touchdown with negligible displacement.",
+        "marginal": "SP stayed within limits, but the circling spacing drifted downwind on every circuit and the correction was applied only after the change became visible. The trend is a wind correction reacted to instead of planned. SP is expected to set the drift correction for the known wind before the downwind is established, so that the spacing stays constant and the centerline displacement at touchdown remains clearly inside the tighter band."
+      }
     }
   ]
 }

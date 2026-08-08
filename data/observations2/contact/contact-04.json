@@ -112,6 +112,126 @@
         "4": "SP managed the sortie so that the return to base was initiated with margin against every briefed criterion, and was able to state the current diversion option and the fuel required for it at any point. The area was left with negligible deviation in heading and altitude. The recovery decision was made deliberately and communicated before it was executed.",
         "marginal": "SP returned to base safely and within the criteria, but the decision was taken at the last of the briefed decision points and left little margin against the alternate. The trend shows the recovery being treated as the end of the working phase rather than as a planned event with its own criteria. SP is expected to track fuel and weather against the divert criteria continuously so that the RTB decision is made with margin in hand."
       }
+    },
+    {
+      "id": "contact-04-tm01",
+      "label": "CENTER RADIAL METHOD SETUP AND CDI INTERPRETATION",
+      "mif_row": 4,
+      "source": "technique:6.4 AREA ORIENTATION (Figure 6.1.)",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP set the reciprocal of the center radial in the course selector window, so the course arrow pointed towards the NAVAID when the center radial was intended, and then steered away from the CDI. The rule that the center of the area is always toward the CDI was applied in reverse and the aircraft tracked outside the lateral limits, with altitude also more than 300 feet out of the assigned block. IP intervened to reset the course selector window and turn the aircraft back into the area.",
+        "1": "SP set the center radial in the course selector window but read the CDI as a raw bearing indication rather than as the direction of the area center, so no correction was flown toward the deflected bar. The aircraft drifted onto the edge of the area with altitude sitting at the 300 foot limit of the tolerance. SP turned back toward the center of the area only after the IP called the CDI indication.",
+        "2": "SP set the center radial correctly but was slow to reapply the toward the CDI rule after a reversal turn, so the drift toward the boundary was identified late. The aircraft closed to the edge of the working portion of the area and altitude deviated some 200 feet, between the 150 foot and 300 foot tolerance. SP rechecked the course arrow and CDI without prompting and re-centered the aircraft in the area in good time.",
+        "3": "SP set the center radial of the area in the course selector window so the course arrow pointed away from the NAVAID, and used the CDI deflection to keep the area center identified throughout the sortie. Lateral position was held with a working margin to both boundaries and altitude stayed inside 150 feet of the assigned block. The setup was rechecked after each reversal turn.",
+        "4": "SP set the center radial in the course selector window before entering the area and used the CDI as a continuous lateral reference, keeping every maneuver in the working portion of the area. Altitude was held within a few tens of feet of the assigned block. No re-setting of the reference and no prompting were required at any stage.",
+        "marginal": "SP kept the center radial method set and remained within the area, but the CDI was consulted only after a drift toward one boundary had already developed. The trend is a lateral position that is recovered reactively instead of being maintained, with each reversal starting closer to the edge. SP is expected to read the CDI as part of the routine crosscheck so that the area center is regained before the margin erodes."
+      }
+    },
+    {
+      "id": "contact-04-tm02",
+      "label": "PIE IN THE SKY BOUNDARY SETUP AND BEARING POINTER CONTAINMENT",
+      "mif_row": 4,
+      "source": "technique:6.4 AREA ORIENTATION (Figure 6.1.)",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP marked only one of the two area boundaries, setting the boundary course in the course selector window but leaving the heading marker on the previous heading instead of on the other boundary course. With no second reference the head of the bearing pointer was allowed to fall past the unmarked boundary and the aircraft entered the adjacent area, with altitude also more than 300 feet out of the assigned block. IP intervened to re-establish the aircraft inside the assigned area.",
+        "1": "SP set both boundary courses, one in the course selector window and one under the heading marker, but did not monitor whether the head of the bearing pointer stayed between them. The pointer reached the boundary course while altitude sat at the 300 foot limit of the tolerance. SP reversed toward the center of the wedge only after the IP called the bearing pointer position.",
+        "2": "SP set the pie in the sky references correctly but let the head of the bearing pointer approach the marked boundary during the maneuvering before checking it. The pointer came close to the head of the course arrow and altitude deviated about 200 feet, between the 150 foot and 300 foot tolerance. SP recognized the trend on the EHSI and reversed back into the wedge with no prompting required.",
+        "3": "SP set one boundary course in the course selector window and marked the other with the heading marker, then kept the head of the bearing pointer between the two throughout the area work. Lateral containment was maintained with a usable margin on both sides and altitude was held inside 150 feet. The two references were rechecked whenever the working heading changed.",
+        "4": "SP applied the pie in the sky method with both boundaries marked before entering the area, and the head of the bearing pointer was kept well inside the sector at all times. Altitude deviations from the assigned block were of a few tens of feet only. The boundary references were maintained continuously without any need for reconstruction.",
+        "marginal": "SP kept both boundaries marked and stayed inside the sector, but the bearing pointer was repeatedly allowed to approach one of the two references before a reversal was started. The trend shows the marked boundary being treated as the turning point rather than as a limit. SP is expected to reverse while the pointer is still clear of the boundary course so that the sector is worked from its center."
+      }
+    },
+    {
+      "id": "contact-04-tm03",
+      "label": "CONSTANT HEADING WITH BEARING POINTER ONLY AND DME RANGE",
+      "mif_row": 4,
+      "source": "technique:6.4 AREA ORIENTATION (Figure 6.1.)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP maintained a constant heading and orientated on the bearing pointer alone, without crosschecking DME range. Because the radial position stayed satisfactory the increasing range went unnoticed and the aircraft flew out of the area along its length, with altitude also more than 300 feet out of the assigned block. IP intervened, called the DME and directed the turn back into the area.",
+        "1": "SP relied on the bearing pointer while holding a constant heading and checked DME only occasionally, so the range trend was not being tracked. The aircraft reached the range limit of the area with altitude at the 300 foot limit of the tolerance. SP turned to a heading that decreased DME only after the IP pointed out the range.",
+        "2": "SP held a constant heading for a full maneuver before including DME range in the crosscheck, so the range trend was recognized late. The aircraft closed to the far end of the area and altitude deviated some 200 feet, between the 150 foot and 300 foot tolerance. SP turned toward the course, made the DME decrease and regained the working portion of the area without prompting.",
+        "3": "SP treated bearing and DME as a pair, changing heading as required so that the range stayed inside the area limits rather than holding one heading and watching the pointer alone. Position was maintained inside the boundaries with a working margin and altitude was held inside 150 feet. Range was checked at every maneuver setup.",
+        "4": "SP crosschecked bearing pointer and DME continuously and adjusted heading early so the range never approached the area limits. The aircraft was kept in the middle of the area in both radial and range terms and altitude deviations were of a few tens of feet. No range related correction was ever needed at short notice.",
+        "marginal": "SP included DME in the crosscheck and stayed within the area, but headings were held long enough for the range to build up before a correcting turn was flown. The trend is repeated recovery of range rather than continuous containment. SP is expected to adjust heading as soon as the range starts to trend toward the limit so that the correction remains small."
+      }
+    },
+    {
+      "id": "contact-04-tm04",
+      "label": "GPS FLIGHT PLAN SELECTION FOR THE CLEARED FLIGHT AREA",
+      "mif_row": 4,
+      "source": "technique:6.4 AREA ORIENTATION (Figure 6.1.)",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP selected a GPS flight plan number that did not correspond to the flight area cleared for the sortie and then flew the boundaries depicted on Nav 5 as if they were the assigned ones. The displayed area was offset from the real one, so the aircraft was maneuvered outside the assigned limits with altitude also more than 300 feet out of the block. IP intervened, identified the wrong flight plan and repositioned the aircraft.",
+        "1": "SP loaded the flight plan for the area without verifying the number against the clearance and the IFG, so the displayed boundaries were only partially those of the assigned area. The aircraft was flown to the edge of the assigned area with altitude at the 300 foot limit of the tolerance. SP reselected the correct flight plan after the IP questioned the displayed area.",
+        "2": "SP initially selected the wrong flight plan number and did not select Nav 5 to confirm the depicted area before starting the maneuvering. The aircraft was worked toward one boundary and altitude deviated about 200 feet, between the 150 foot and 300 foot tolerance. SP noticed that the depicted boundaries did not match the briefed area, reselected the correct flight plan and recovered the position unprompted.",
+        "3": "SP selected the flight plan number matching the cleared area in accordance with the IFG and displayed it on Nav 5 before entering the area. The depicted boundaries were verified against the clearance and the aircraft was kept inside them with a working margin, altitude held inside 150 feet.",
+        "4": "SP selected and verified the correct flight plan for the cleared area before area entry and kept the flight area displayed on Super Nav 5 throughout the sortie. Every maneuver was positioned in the working portion of the depicted area and altitude deviations were of a few tens of feet. The selection was confirmed again after any GPS page change.",
+        "marginal": "SP selected the correct flight plan and remained within the depicted area, but the verification against the clearance was done only once and the depicted boundaries were rarely referred to afterwards. The trend is an area picture accepted rather than actively used. SP is expected to keep the flight area displayed and to confirm the selection whenever the GPS display is changed."
+      }
+    },
+    {
+      "id": "contact-04-tm05",
+      "label": "EHSI MAP AND ARC RANGE SELECTION FOR AREA DISPLAY",
+      "mif_row": 4,
+      "source": "technique:6.4 AREA ORIENTATION (Figure 6.1.)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP used the map mode with a range at which the area filled only a small part of the EHSI, so closure toward a boundary could not be resolved on the display. The developing drift was not seen at all and the aircraft crossed the boundary while altitude ran more than 300 feet out of the assigned block. IP intervened, reset the range and returned the aircraft to the assigned area.",
+        "1": "SP did not select a range in EHSI map mode that made the area almost fill the display, so boundary distance was judged from a compressed picture. The aircraft reached the edge of the area with altitude at the 300 foot limit of the tolerance. SP changed the range and turned back into the area after the IP prompted about the display setup.",
+        "2": "SP started the area work at an unsuitable map range and only later set the ARC map at 10 miles with Super Nav 5 at 20 miles, so the early boundary picture was coarse. The aircraft closed toward one boundary and altitude deviated some 200 feet, between the 150 foot and 300 foot tolerance. SP reset the ranges and re-centered the aircraft in the area in good time.",
+        "3": "SP selected a range in EHSI map mode such that the area almost completely filled the display, with a larger range on the GPS control head to keep adjacent areas in view. Boundary distance was read directly off the display and the aircraft was kept inside the area with altitude held within 150 feet.",
+        "4": "SP set the ARC map at the 10 mile range with Super Nav 5 at the 20 mile range and adjusted the scale as the working position changed, so the area picture stayed optimal throughout. Lateral margins were generous at all times and altitude deviations were of a few tens of feet. No display reconfiguration was needed under time pressure.",
+        "marginal": "SP used a workable map range and stayed within the area, but the scale was left unchanged when the working position moved, so boundary distance was read from a less than optimal picture. The trend is a display setup that lags the tactical situation. SP is expected to adjust the map and control head ranges as the working position changes so the area picture remains fully resolved."
+      }
+    },
+    {
+      "id": "contact-04-tm06",
+      "label": "COMPOSITE CROSSCHECK OF GROUND REFERENCES AND INSTRUMENTS",
+      "mif_row": 4,
+      "source": "technique:6.4 AREA ORIENTATION (Figure 6.1.)",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP built area orientation on visual ground references alone and misidentified the road intersection being used as the boundary reference, with no instrument verification of the position. The false picture was maintained through the maneuvering and the aircraft ended up well outside the assigned area with altitude more than 300 feet out of the block. IP intervened to correct the orientation and reposition the aircraft.",
+        "1": "SP worked the area almost entirely head down on the navigation displays and did not verify the picture against cities, lakes and terrain, so the orientation was never confirmed by a composite crosscheck. The aircraft was flown to the edge of the area with altitude at the 300 foot limit of the tolerance. SP re-established the visual picture after the IP prompted for the ground references.",
+        "2": "SP delayed verifying the visual ground references against the GPS and VOR with DME after a reversal turn, so the position picture went briefly unconfirmed. The aircraft drifted toward the boundary and altitude deviated about 200 feet, between the 150 foot and 300 foot tolerance. SP rebuilt the composite crosscheck, confirmed the position and corrected back into the area unprompted.",
+        "3": "SP used cities, lakes, road intersections and terrain as the primary means of area orientation and verified them against the GPS or VOR with DME throughout the sortie. The composite crosscheck kept the position picture continuously confirmed, the aircraft stayed inside the area and altitude was held within 150 feet.",
+        "4": "SP maintained a composite crosscheck in which visual ground references and instrument indications confirmed each other without interruption, so situational awareness was built rather than merely retained. The aircraft was kept in the working portion of the area at all times and altitude deviations were of a few tens of feet. Orientation was never in doubt at any point of the sortie.",
+        "marginal": "SP kept both visual and instrument references in use and stayed inside the area, but the two were checked in sequence with long gaps rather than as a single composite crosscheck. The trend is a position picture that is confirmed occasionally instead of continuously. SP is expected to verify ground references against the instruments as a routine so that any orientation error is caught while it is still small."
+      }
+    },
+    {
+      "id": "contact-04-tm07",
+      "label": "OPTIMUM ENERGY STATE FOR MANEUVERING WITHIN THE AREA BLOCK",
+      "mif_row": null,
+      "source": "technique:6.5 ENERGY MANAGEMENT",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP entered the maneuvering sequence far below the optimum energy state of 180 to 200 KIAS at an altitude midway between the top and bottom area limits, and made no deliberate energy gain before continuing. Entry airspeed was more than 20 knots low and the recovery took the aircraft more than 300 feet outside the assigned block. IP intervened, terminated the maneuver and reset the energy state.",
+        "1": "SP allowed the energy state to decay well away from the optimum band and started the next maneuver from the low side without a repositioning climb. Entry airspeed was about 20 knots below the optimum band and altitude sat at the 300 foot limit of the tolerance on recovery. SP climbed back toward the middle of the block only after the IP called the energy state.",
+        "2": "SP let the working altitude drift below the midpoint between the top and bottom area limits before addressing the energy state. Entry airspeed was some 15 knots below the optimum band and altitude deviated about 200 feet, between the 150 foot and 300 foot tolerance. SP recognized the shortfall, flew a climb at 140 to 160 KIAS with MAX power and restored the working energy in good time.",
+        "3": "SP maintained an energy state close to 180 to 200 KIAS at an altitude midway between the top and bottom area limits, so each maneuver was entered from the intended block position. Airspeed at entry was held within 10 knots of the planned value and altitude within 150 feet of the assigned block.",
+        "4": "SP managed the energy state so that the aircraft was consistently at the optimum airspeed and midway between the area limits at every maneuver entry. Entry airspeeds were within a few knots of the planned values and altitude deviations from the block were of a few tens of feet. No repositioning climb or descent was needed for energy reasons.",
+        "marginal": "SP kept the energy state within acceptable limits, but the working altitude settled progressively toward the lower part of the block and entry airspeeds trended to the low side of the optimum band. The trend is a slow energy bleed that will eventually force a recovery near the bottom limit. SP is expected to restore the midpoint altitude and the optimum airspeed between maneuvers rather than after the margin is used up."
+      }
+    },
+    {
+      "id": "contact-04-tm08",
+      "label": "MANEUVER SEQUENCING BY ENERGY GAINERS AND ENERGY LOSERS",
+      "mif_row": null,
+      "source": "technique:6.5 ENERGY MANAGEMENT",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP sequenced consecutive energy losers, a Split-S followed by a cloverleaf and high G turns at low power, with no energy gainer interleaved and no plan for the exit energy of each maneuver. The aircraft was left so low on energy that trading about 1,000 feet of altitude for roughly 50 KIAS was attempted inside the block, taking it more than 300 feet outside the assigned altitudes and more than 20 knots off the required entry airspeed. IP intervened and stopped the sequence.",
+        "1": "SP flew the profile in the briefed order without accounting for the inherent energy losing properties of the individual maneuvers, so a deliberate energy change was required in the middle of the area work. Entry airspeed for the following maneuver was about 20 knots low and altitude sat at the 300 foot limit of the tolerance. SP reordered the remaining maneuvers only after the IP raised the energy state.",
+        "2": "SP planned the sequence loosely, so the exit airspeed of one maneuver did not match the entry airspeed required by the next. Entry airspeed was some 15 knots off and altitude deviated about 200 feet, between the 150 foot and 300 foot tolerance. SP recognized the mismatch, inserted an energy gainer and restored the profile without prompting.",
+        "3": "SP ordered the maneuvers so that the inherent energy properties of each were used, pairing energy losers with energy gainers and leaving the ELP stalls for the bottom of the area before RTB. Deliberate energy changes were largely unnecessary, entry airspeeds were within 10 knots of the planned values and altitude stayed within 150 feet of the block.",
+        "4": "SP sequenced the profile so that the exit airspeed of each maneuver was very close to the entry airspeed required by the next, and the energy losers were positioned at the end of the area work. Time and fuel spent on repositioning were minimal, entry airspeeds were within a few knots and altitude deviations of a few tens of feet. Energy state awareness was evident in every maneuver selection.",
+        "marginal": "SP flew a workable sequence and stayed within limits, but two energy losers were flown back to back and the resulting shortfall had to be made up with a dedicated climb. The trend is a profile that costs extra time and fuel in energy changes. SP is expected to select the next maneuver from the current energy state so that the sequence carries its own energy rather than requiring repair."
+      }
     }
   ]
 }

@@ -112,6 +112,111 @@
         "4": "SP maintained a complete and evenly distributed cross-check throughout every recovery, with no fixation on any single instrument. Control and performance instruments were used exactly as intended and the recoveries were flown entirely on instrument reference regardless of the entry attitude.",
         "marginal": "SP used the correct instrument references and met the standards, but the cross-check narrowed to the attitude indicator for the first seconds of each recovery before widening again. Nothing was missed, although the performance instruments were brought back in later than ideal. SP is expected to keep the full cross-check running from the moment the entry is recognized."
       }
+    },
+    {
+      "id": "instrument-10-tm01",
+      "label": "Confirm step - EADI validity checked against standby ADI and performance instruments",
+      "mif_row": 10,
+      "source": "technique:7.15 UNUSUAL ATTITUDE RECOVERIES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to recovering on the EADI without first verifying its proper operation, skipped the confirm step and never compared the EADI with the standby attitude indicator and the performance instruments. SP flew a recovery based on an indication that did not agree with the airspeed and altimeter trends and drove the aircraft further from level flight, with altitude off by more than 300 ft and heading off by more than 10 degrees. The IP took the controls to recover the aircraft.",
+        "1": "SP, due to accepting the EADI indication without cross-confirming it against the standby attitude indicator, entered the recovery on an unconfirmed attitude and had to reverse part of the input once the performance instruments were finally read. The IP called for the confirmation step out loud before SP performed it. Level flight was regained about 300 ft from the entry altitude and about 10 degrees off heading, at the tolerance limits, with no control intervention.",
+        "2": "SP, due to a late confirm step, started the recovery on the EADI alone and brought the standby attitude indicator and the performance instruments into the comparison only after the first input. SP detected the mismatch and adjusted the recovery without prompting. The delay cost about 200 ft of altitude and left roughly 7 degrees of heading error before the aircraft was settled.",
+        "3": "SP recognized the unusual attitude, confirmed it by comparing the EADI with the standby attitude indicator and the performance instruments, and only then applied the recovery. The confirmation was completed without measurable delay and the recovery finished within 150 ft of altitude and 5 degrees of heading.",
+        "4": "SP ran recognize, confirm and recover as one continuous sequence on every entry, with the EADI checked against the standby attitude indicator and the performance instruments before any control input. Attitude, altitude and heading were resolved with negligible deviation and no step of the sequence was abbreviated.",
+        "marginal": "SP confirmed the EADI against the standby attitude indicator on every entry and stayed inside the standards, but the confirmation was made after the recovery input had already begun rather than before it. Deviations remained close to the desired values and nothing was misidentified. SP is expected to complete the confirm step before the first control input so the recovery is never based on an unverified indication."
+      }
+    },
+    {
+      "id": "instrument-10-tm02",
+      "label": "Roll toward wings level before pull-up - pitch correction started beyond 90 degrees of bank",
+      "mif_row": 10,
+      "source": "technique:7.15 UNUSUAL ATTITUDE RECOVERIES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to correcting pitch before rolling upright from an inverted diving attitude, started the pull while the bank was still beyond 90 degrees and pointed the nose further below the horizon. The altitude loss passed 300 ft with the airspeed increasing more than 20 kt above the entry value before the aircraft was rolled. The IP took the controls to unload the aircraft and complete the recovery.",
+        "1": "SP, due to beginning the pull-up before the bank was reduced below 90 degrees, converted part of the recovery into additional descent and had to hold the pull far longer than required. The IP called for wings level first, after which SP completed the recovery correctly. The altitude loss reached about 300 ft and the airspeed about 20 kt above the entry value, at the tolerance limits, without control intervention.",
+        "2": "SP, due to overlapping the pull with the roll while the bank was still near 90 degrees, made the first part of the recovery ineffective and needed a second, larger pitch input once the wings were closer to level. SP recognized the priority error and finished the recovery in the correct order without prompting. Altitude loss stayed around 200 ft with airspeed about 15 kt above the entry value.",
+        "3": "SP treated the roll toward wings level as the priority on the nose-low entries and started the pull-up only once the bank was less than 90 degrees. The recovery was completed in one continuous action with altitude loss inside 150 ft and airspeed inside 10 kt of the entry value.",
+        "4": "SP rolled toward wings level and timed the start of the pull-up precisely as the bank passed below 90 degrees on every nose-low entry, including the steepest ones. The pull was applied with the lift vector already usable, so the recovery cost only negligible altitude and airspeed.",
+        "marginal": "SP always rolled before pulling and met the standards, but on the steeper entries the pull was started just as the bank reached 90 degrees rather than clearly below it. Altitude loss stayed within tolerance while trending toward the larger values. SP is expected to establish a clearer margin below 90 degrees of bank before applying the pitch input."
+      }
+    },
+    {
+      "id": "instrument-10-tm03",
+      "label": "Amount of bank used in the recovery - more bank than required",
+      "mif_row": 10,
+      "source": "technique:7.15 UNUSUAL ATTITUDE RECOVERIES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to using more bank than the recovery required, rolled the aircraft close to 90 degrees on an entry that needed only a shallow correction and then had to reverse the roll to stop the resulting turn. The heading ended more than 10 degrees from the recovery heading and the altitude more than 300 ft from the entry value. The IP intervened on the controls to stop the developing excursion.",
+        "1": "SP, due to applying a standard large bank angle on every entry instead of only as much as required, produced an unnecessary turn during the recovery and corrected it only after the IP pointed out the heading trend. The heading error reached about 10 degrees and the altitude excursion about 300 ft, at the maximum tolerances. No control intervention was needed.",
+        "2": "SP, due to rolling with more bank than the attitude called for, added heading change that had to be taken back during the same recovery. SP saw the heading trend on the performance instruments and reduced the bank without prompting. The heading error peaked around 7 degrees and the altitude excursion around 200 ft.",
+        "3": "SP used only as much bank as each entry required and did not apply large bank angles where a shallow roll was sufficient. The recoveries were completed with heading kept inside 5 degrees and altitude inside 150 ft of the target values.",
+        "4": "SP matched the bank to the entry attitude on every repetition, using the minimum roll needed to place the lift vector correctly. Heading and altitude at the completion of each recovery differed only negligibly from the target values.",
+        "marginal": "SP kept the roll inputs inside the standards, but consistently used somewhat more bank than the entry attitude required, so each recovery produced a small unwanted heading change. The corrections were made in time and the tolerances were met. SP is expected to size the bank to the actual attitude rather than defaulting to a large roll on every entry."
+      }
+    },
+    {
+      "id": "instrument-10-tm04",
+      "label": "Nose-low recovery - power reduction and speed brake as required",
+      "mif_row": 10,
+      "source": "technique:7.15 UNUSUAL ATTITUDE RECOVERIES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to omitting the power reduction and the speed brake in the diving recovery, left the aircraft accelerating through the pull and did not control the airspeed at any point of the recovery. The airspeed passed more than 20 kt above the target value while the altitude loss passed 300 ft. The IP took the controls, reduced power and completed the recovery.",
+        "1": "SP, due to reducing power late and not extending the speed brake when it was required, allowed the acceleration in the dive to continue and had to extend the recovery to bleed the excess speed. SP acted on the drag devices only after the IP called for them. The airspeed reached about 20 kt above the target and the altitude excursion about 300 ft, at the tolerance limits, with no control intervention.",
+        "2": "SP, due to a delayed power reduction in the nose-low recovery, entered the pull with more speed than necessary and had to use the speed brake to stop the trend. SP recognized the acceleration on the airspeed indicator and acted without prompting. The airspeed peaked about 15 kt above the target and the altitude excursion stayed around 200 ft.",
+        "3": "SP reduced power at the start of each nose-low recovery and extended the speed brake where it was required, keeping the acceleration in the dive under control. The airspeed at the completion of the recovery was within 10 kt of the target and the altitude loss within 150 ft.",
+        "4": "SP set power and used the speed brake as part of the same action as the roll and the pull on every nose-low entry, so the airspeed never departed noticeably from the target. The drag devices were retracted and power restored as level flight was reached, without any secondary correction.",
+        "marginal": "SP reduced power and used the speed brake correctly on every nose-low entry and stayed within the standards, but the power lever was moved only after the roll was complete rather than together with it. The airspeed excursions were contained yet consistently on the high side. SP is expected to make the power reduction part of the first recovery action so the acceleration is limited from the start."
+      }
+    },
+    {
+      "id": "instrument-10-tm05",
+      "label": "Nose-high recovery - power to maintain airspeed and the nose falling through the horizon",
+      "mif_row": 10,
+      "source": "technique:7.15 UNUSUAL ATTITUDE RECOVERIES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not using power as required to maintain the desired airspeed in the climbing recovery, let the airspeed decay until the nose continued below the horizon on its own. What began as a nose-high entry ended as an uncontrolled nose-low attitude with the altitude more than 300 ft from the entry value and the airspeed more than 20 kt from the target. The IP took the controls to recover the aircraft.",
+        "1": "SP, due to adding power late in the nose-high recovery, allowed the airspeed to decay to the point where the nose fell through the horizon before the roll was complete, and the recovery had to be reflown from a nose-low attitude. SP advanced the power only after the IP called for it. The airspeed reached about 20 kt below the target and the altitude excursion about 300 ft, without control intervention.",
+        "2": "SP, due to a hesitant power application in the climbing recovery, let the airspeed decay further than necessary before the trend was arrested. SP advanced the power without prompting once the airspeed trend was seen and the nose was kept under control through the horizon. The airspeed low point was about 15 kt below the target and the altitude excursion about 200 ft.",
+        "3": "SP used power as required through each nose-high recovery so the airspeed stayed inside 10 kt of the target value and the nose was flown to the horizon rather than allowed to fall through it. The altitude excursion at the completion of the recovery stayed inside 150 ft.",
+        "4": "SP anticipated the airspeed decay on every nose-high entry and set power at the first recovery input, so the airspeed never approached a value at which the nose could fall through the horizon. Airspeed and altitude at the completion of each recovery differed only negligibly from the target values.",
+        "marginal": "SP applied power on every nose-high entry and kept the parameters inside the standards, but the input was made after the pitch and roll actions rather than with them, so each recovery included a period of decaying airspeed. Nothing exceeded the tolerances and the nose was always controlled. SP is expected to set power together with the first recovery input so the airspeed margin is preserved throughout."
+      }
+    },
+    {
+      "id": "instrument-10-tm06",
+      "label": "Use of the EADI presentation - fuselage dot to the horizon bar and the recovery chevrons",
+      "mif_row": 10,
+      "source": "technique:7.15 UNUSUAL ATTITUDE RECOVERIES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not reading the EADI presentation, ignored the recovery chevrons pointing to the horizon in the extreme attitude and never used the fuselage dot of the miniature aircraft in relation to the horizon bar. SP rolled in the wrong direction relative to the shortest way to the horizon and the aircraft ended more than 10 degrees off heading and more than 300 ft from the entry altitude. The IP took the controls.",
+        "1": "SP, due to disregarding the chevrons in the extreme nose-low entry, determined the direction of the horizon by trial rather than from the EADI presentation and rolled the long way round. The IP called the correct roll direction before SP corrected it. The heading ended about 10 degrees off and the altitude about 300 ft from the entry value, at the tolerance limits, with no control intervention.",
+        "2": "SP, due to reading the chevrons late, began the roll in an unclear direction and adjusted it once the fuselage dot and the horizon bar were interpreted correctly. The correction was made without prompting. The extra roll cost about 7 degrees of heading and about 200 ft of altitude.",
+        "3": "SP used the recovery chevrons to determine the attitude in the extreme entries and adjusted bank as the fuselage dot approached the horizon bar to establish a wings-level attitude. Each recovery was completed with heading inside 5 degrees and altitude inside 150 ft of the target values.",
+        "4": "SP interpreted the EADI presentation instantly on every entry, rolling the short way to the horizon indicated by the chevrons and blending the bank out exactly as the fuselage dot met the horizon bar. The aircraft arrived wings level with negligible heading and altitude deviation and no secondary roll input.",
+        "marginal": "SP used the chevrons and the fuselage dot correctly and met the standards, but the bank was blended out slightly after the dot reached the horizon bar, leaving a small overshoot to take back on each recovery. The deviations stayed close to the desired values. SP is expected to start reducing bank as the dot approaches the horizon bar so the aircraft arrives wings level without a correction."
+      }
+    },
+    {
+      "id": "instrument-10-tm07",
+      "label": "Termination of the recovery at normal instrument flight attitude",
+      "mif_row": 10,
+      "source": "technique:7.15 UNUSUAL ATTITUDE RECOVERIES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to continuing the recovery input past the attitude required for normal instrument flight, pulled the nose well above the pitch band used in instrument flight and produced a second unusual attitude out of the first. The aircraft climbed more than 300 ft above the entry altitude with the airspeed more than 20 kt below the target. The IP took the controls to stop the over-recovery.",
+        "1": "SP, due to not identifying the point at which the recovery was complete, held the pull past level and left the aircraft with a pitch and bank outside the values used for normal instrument flight. SP stopped the input only after the IP called level. The altitude overshoot reached about 300 ft and the airspeed about 20 kt from the target, at the tolerance limits, without control intervention.",
+        "2": "SP, due to relaxing the recovery input slightly late, passed the desired attitude for normal instrument flight and had to make a small opposite correction to settle the aircraft. SP recognized the overshoot immediately and corrected it without prompting. The altitude overshoot was about 200 ft with the airspeed about 15 kt from the target.",
+        "3": "SP ended each recovery at the attitude required for normal instrument flight, with bank inside the normal instrument flight limit and pitch inside the normal band, and then held it. The altitude settled within 150 ft and the airspeed within 10 kt of the target values.",
+        "4": "SP stopped every recovery precisely at the normal instrument flight attitude with no overshoot in pitch or bank and no opposite correction afterwards. The aircraft was stabilized immediately with negligible altitude and airspeed deviation and the transition back to normal instrument flight was seamless.",
+        "marginal": "SP terminated each recovery inside the standards, but consistently passed slightly beyond the normal instrument flight attitude before settling, so every recovery contained a small opposite correction. The excursions stayed near the desired values. SP is expected to anticipate the completion point and relax the input so the aircraft stops at the required attitude the first time."
+      }
     }
   ]
 }

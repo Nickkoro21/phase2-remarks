@@ -1,11 +1,16 @@
 {
   "item_id": "contact-06",
-  "item_name": "G –AWARENESS",
+  "item_name": "G \u2013AWARENESS",
   "category": "contact",
   "schema": "v2-trunk",
-  "mif_numbers": [6],
+  "mif_numbers": [
+    6
+  ],
   "mif_rows": [
-    { "sn": 6, "row_name": "G-X Awareness" }
+    {
+      "sn": 6,
+      "row_name": "G-X Awareness"
+    }
   ],
   "error_modes": [
     {
@@ -126,6 +131,126 @@
         "3": "SP exited each high-G maneuver within 5 degrees of the planned heading, leading the rollout appropriately for the bank and G being flown and keeping the heading reference in the cross-check through the recovery. Corrections were coordinated, timely and made without prompting.",
         "4": "SP rolled out on the planned heading with negligible error on every repetition, adjusting the lead point to the actual bank, G and rate of turn of each maneuver. The exits were coordinated and the aircraft was stabilized on heading immediately, with no secondary corrections required.",
         "marginal": "SP exited the maneuvers within the required heading tolerance, but the error was consistently in the direction of an overshoot and was removed with a secondary correction after the rollout. The values stayed inside standards, yet the trend was toward a rollout lead point that was habitually too late. SP is expected to set the lead point from the actual turn rate so that the exit heading is achieved on the primary rollout."
+      }
+    },
+    {
+      "id": "contact-06-tm01",
+      "label": "BREATHING CYCLE INTERVAL AND MAXIMUM STRAIN HOLD DURING AGSM",
+      "mif_row": null,
+      "source": "technique:1.17.1 ANTI-G STRAINING MANOEUVRE (AGSM)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to holding the anti-G strain for more than 3 seconds without breathing, did not keep the prescribed breathing cycle of approximately every 2 to 3 seconds during sustained loading above 3G. The prolonged breath hold reduced G tolerance and SP reported greying of the peripheral vision while still pulling. The IP took the controls to unload the aircraft and terminate the sequence, and the recovery produced deviations beyond 300 feet in altitude and beyond 20 knots in airspeed.",
+        "1": "SP, due to a breath hold that repeatedly exceeded 3 seconds, stretched the breathing cycle well past the prescribed 2 to 3 second interval and lost strain effectiveness toward the end of each loaded turn. SP restored the correct cycle only after the IP called the breathing verbally, and the correction came after several further seconds of loading. Altitude reached 300 feet from the assigned value and airspeed reached 20 knots from the target before the parameters were re-established, with no intervention on the controls.",
+        "2": "SP, due to an initially long breath hold at the first G application, exceeded the 3 second limit on the entry to the first repetition. SP felt the loss of strain effectiveness, resumed the 2 to 3 second breathing cycle without any prompting and flew the remaining repetitions on the prescribed interval. Deviations during the correction stayed between 150 and 300 feet in altitude and between 10 and 20 knots in airspeed.",
+        "3": "SP kept the anti-G strain continuous while breathing approximately every 2 to 3 seconds and never held the strain longer than 3 seconds without breathing. The breathing cycle remained regular through every loaded turn, and altitude was held within 150 feet and airspeed within 10 knots.",
+        "4": "SP maintained a rhythmic strain and breathing cycle at the prescribed 2 to 3 second interval from the first G application to the unload, with no breath hold approaching the 3 second limit even at the highest G of the sequence. Aircraft control was unaffected by the breathing effort and deviations in altitude and airspeed remained negligible throughout.",
+        "marginal": "SP kept the strain and breathing cycle inside the prescribed interval, but the breathing was consistently at the far end of the 2 to 3 second window and lengthened further on the last repetitions of each set. No loss of vision or strain effectiveness appeared and the parameters stayed within standards, yet the trend was toward the 3 second breath hold that reduces G tolerance. SP is expected to shorten the breathing cycle so that a margin remains at the end of the maneuver set."
+      }
+    },
+    {
+      "id": "contact-06-tm02",
+      "label": "STRAIN INTENSITY SCALED TO THE APPLIED G (AGSM CONTINUUM)",
+      "mif_row": null,
+      "source": "technique:1.17.2 AGSM EFFECTIVENESS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to applying a fixed level of strain instead of treating the AGSM as a continuum, did not increase the intensity of the muscle contraction as the G increased through the loaded portion of the maneuver. The strain that was adequate at 2G was left unchanged at the peak of the turn and SP showed loss of peripheral vision and a delayed response to IP calls. The IP intervened on the controls to unload the aircraft, and the excursion exceeded 300 feet in altitude and 10 degrees on the exit heading.",
+        "1": "SP, due to a strain intensity that was not matched to the applied G, kept the leg, abdominal and chest contraction at a low level while the G was still increasing and tightened it only late in the turn. SP raised the intensity after the IP called it verbally, and by then the aircraft had reached 300 feet from the assigned altitude and 10 degrees from the target exit heading. No intervention on the controls was required.",
+        "2": "SP, due to a strain intensity set for the entry G rather than increased with the loading, entered the higher G portion of the first repetition undertightened. SP recognized the first symptoms, increased the contraction of the legs, abdomen and chest without prompting and flew the remaining repetitions with the intensity matched to the G. Deviations during the correction stayed between 150 and 300 feet in altitude and between 5 and 10 degrees on the exit heading.",
+        "3": "SP treated the AGSM as a continuum and increased the intensity of the strain as the G increased, while keeping all elements of the full manoeuvre present at the lower G levels as well. No symptoms appeared at any point of the sequence and altitude was held within 150 feet, airspeed within 10 knots and exit heading within 5 degrees.",
+        "4": "SP modulated the contraction of the legs, abdomen and chest continuously with the applied G, using every element of the AGSM at the lower G levels at reduced effort and full effort at the peak of each turn. The scan and the control inputs were unaffected by the straining, and deviations in altitude, airspeed and exit heading were negligible.",
+        "marginal": "SP increased the strain intensity with the G and remained within standards, but at the lower G levels of the sequence some elements of the full AGSM were dropped rather than simply applied at a lower level of intensity. No symptoms developed and the parameters were met, yet the trend was toward an abbreviated manoeuvre whenever the G was moderate. SP is expected to keep every element of the AGSM present at low G and to vary only the level of effort."
+      }
+    },
+    {
+      "id": "contact-06-tm03",
+      "label": "SUSTAINMENT OF THE STRAIN THROUGHOUT THE PERIOD OF INCREASED G-LOADING",
+      "mif_row": null,
+      "source": "technique:1.17.2 AGSM EFFECTIVENESS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to relaxing the strain before the G loading was removed, did not maintain the AGSM throughout the loaded portion and released the muscle contraction while the aircraft was still above 3G. Symptoms appeared in the last part of the turn and SP did not respond to the first IP call. The IP took the controls to unload the aircraft, and the resulting excursion exceeded 300 feet in altitude and 20 knots in airspeed.",
+        "1": "SP, due to an early release of the strain, stopped the muscle contraction as soon as the target G was reached instead of maintaining it throughout the period of increased G-loading. SP reapplied the strain only after the IP called it verbally, and the delay allowed the deviation to reach 300 feet in altitude and 10 degrees on the exit heading before the parameters were re-established, with no intervention on the controls.",
+        "2": "SP, due to a strain that faded in the second half of the first loaded turn, did not maintain the contraction for the whole period of increased G-loading. SP felt the effectiveness dropping, restored full tension without any prompting and held it to the unload on the remaining repetitions. Deviations during the correction stayed between 150 and 300 feet in altitude and between 5 and 10 degrees on the exit heading.",
+        "3": "SP maintained the strain at full muscle contraction from before the G onset until the loading was removed, with constant breathing cycles for the whole period of increased G-loading. No degradation of vision or aircraft control appeared and altitude was held within 150 feet, airspeed within 10 knots and exit heading within 5 degrees.",
+        "4": "SP sustained the AGSM with unbroken muscle contraction and constant breathing cycles across every repetition, releasing the strain only after the aircraft was unloaded. The strain effort was carried without any effect on the scan or on the smoothness of the control inputs, and deviations in altitude, airspeed and exit heading were negligible.",
+        "marginal": "SP maintained the strain through the loaded portion and stayed within standards, but the contraction was noticeably tapering in the final seconds of each turn and was released a moment before the aircraft was fully unloaded. No symptoms appeared, yet the trend was toward an early end of the strain while G was still applied. SP is expected to hold the full contraction until the G loading is actually removed."
+      }
+    },
+    {
+      "id": "contact-06-tm04",
+      "label": "RECOVERY ACTION AFTER GRAY OUT AT THE ONSET OF G FORCES",
+      "mif_row": null,
+      "source": "technique:1.17.1 ANTI-G STRAINING MANOEUVRE (AGSM)",
+      "hf_concept": "hf-g-loc-and-a-loc",
+      "texts": {
+        "0": "SP, due to continuing to manoeuvre after gray out appeared at the onset of the G forces, did not return to 1 G flight and did not reapply the anti-G strain before continuing. Altitude and airspeed were not critical and an unload was available, but SP pressed on with the turn while the visual symptoms persisted. The IP had to take the controls, unload the aircraft to 1 G and terminate the maneuver, with deviations beyond 300 feet in altitude and beyond 20 knots in airspeed.",
+        "1": "SP, due to a delayed decision after gray out at the G onset, kept the loading applied instead of returning to 1 G flight to reapply the strain. SP unloaded only after the IP directed it verbally and then re-entered the maneuver without re-evaluating the strain. Altitude reached 300 feet from the assigned value and airspeed reached 20 knots from the target during the recovery, with no intervention on the controls.",
+        "2": "SP, due to a late recognition of the gray out at the onset of G, held the loading for a short period before returning to 1 G flight. SP then reapplied the anti-G strain, re-entered the maneuver smoothly and completed the remaining repetitions without symptoms, with no prompting or intervention from the IP. Deviations during the correction stayed between 150 and 300 feet in altitude and between 10 and 20 knots in airspeed.",
+        "3": "SP recognized the gray out at the onset of the G forces, returned to 1 G flight since altitude and airspeed were not critical, reapplied the anti-G strain and then continued manoeuvring. The re-entry was smooth and the remaining repetitions were flown without symptoms, with altitude held within 150 feet and airspeed within 10 knots.",
+        "4": "SP detected the first indication of gray out immediately, unloaded to 1 G with a smooth control input, re-evaluated and reapplied the strain, informed the IP and then re-entered the exercise. The whole sequence was flown without any degradation of aircraft control and the deviations in altitude and airspeed were negligible.",
+        "marginal": "SP applied the correct sequence after gray out, returning to 1 G, reapplying the strain and re-entering, but the unload and the re-entry were made with abrupt control inputs rather than smoothly. The parameters remained within standards and no further symptoms appeared, yet the trend was toward a hurried recovery that adds its own G transients. SP is expected to fly the return to 1 G and the re-entry smoothly."
+      }
+    },
+    {
+      "id": "contact-06-tm05",
+      "label": "G-AWARENESS EXERCISE OR AGSM DEMONSTRATION BEFORE MANOEUVRES OF THREE OR MORE Gs",
+      "mif_row": 6,
+      "source": "technique:6.3 MANOEUVRING AT INCREASED G-LOADING",
+      "hf_concept": "hf-violations-routine-exceptional",
+      "texts": {
+        "0": "SP, due to omitting the required pre-manoeuvre step, did not perform a G-awareness exercise or an AGSM demonstration before accomplishing manoeuvres that could require three or more Gs and entered the sequence directly. The effectiveness of the strain and the personal G-tolerance for the sortie were therefore never evaluated. The IP had to direct a knock-it-off and assume control to reset the profile, and the resulting excursion exceeded 300 feet in altitude and 20 knots in airspeed.",
+        "1": "SP, due to compressing the pre-manoeuvre flow, set up and entered the first maneuver that could require three or more Gs before performing the G-awareness exercise. SP accomplished the exercise only after the IP prompted verbally and the sequence had to be reset, with altitude reaching 300 feet from the assigned value and airspeed 20 knots from the target during the repositioning. No intervention on the controls was required.",
+        "2": "SP, due to an out of sequence pre-manoeuvre flow, began the set-up for the aerobatic portion before accomplishing the G-awareness exercise. SP recognized the omission before applying more than 3G, unloaded, flew the exercise as described in Chapter 1 and then continued, with no prompting or intervention from the IP. Deviations during the correction stayed between 150 and 300 feet in altitude and between 10 and 20 knots in airspeed.",
+        "3": "SP accomplished a G-awareness exercise before any manoeuvre that could require three or more Gs, as described in Chapter 1, and confirmed both the effectiveness of the AGSM and the personal G-tolerance for the sortie. The exercise was flown in the assigned block with altitude held within 150 feet and airspeed within 10 knots.",
+        "4": "SP planned and accomplished the G-awareness exercise as an integral part of the pre-manoeuvre flow, briefed the intent, confirmed strain effectiveness and G-tolerance and moved into the high-G portion without any break in the profile. Altitude, airspeed and exit heading deviations during the exercise were negligible.",
+        "marginal": "SP accomplished the G-awareness exercise before the manoeuvres requiring three or more Gs, but it was flown immediately before the first aerobatic entry rather than early in the working area, leaving no room for a repetition if the strain had proved ineffective. The requirement was met and the parameters stayed within standards, yet the trend was toward treating the exercise as a formality at the entry. SP is expected to accomplish it early enough for the result to be usable."
+      }
+    },
+    {
+      "id": "contact-06-tm06",
+      "label": "G-ONSET RATE DURING THE G-AWARENESS EXERCISE",
+      "mif_row": 6,
+      "source": "technique:1.17.4 G-AWARENESS EXERCISE",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a rapid rather than slow and smooth G-onset rate, reached the target G in a single abrupt pull and left no time to evaluate the effectiveness of the AGSM or to determine G-tolerance. The strain lagged the loading and SP showed visual symptoms at the peak of the pull. The IP took the controls to unload the aircraft, and the excursion exceeded 300 feet in altitude and 20 knots in airspeed.",
+        "1": "SP, due to an onset rate well above the slow and smooth rate required for the exercise, loaded the aircraft too quickly for the strain to be evaluated during the build-up. SP reduced the rate only after the IP called it verbally, and the abrupt entry drove altitude to 300 feet from the assigned value and airspeed to 20 knots from the target. No intervention on the controls was required.",
+        "2": "SP, due to an initially quick pull at the entry to the exercise, applied a G-onset rate that did not allow the strain to be assessed as the loading built. SP recognized the abrupt entry, relaxed the rate to a slow and smooth build-up without any prompting and flew the following repetition correctly. Deviations during the correction stayed between 150 and 300 feet in altitude and between 10 and 20 knots in airspeed.",
+        "3": "SP applied a slow and smooth G-onset rate that gave sufficient time to evaluate the effectiveness of the AGSM and to determine G-tolerance before the target G was reached. The build-up was continuous with no steps in the pull, and altitude was held within 150 feet and airspeed within 10 knots.",
+        "4": "SP built the G at a uniformly slow and smooth rate, matching the strain to the loading at every stage and reporting the assessment of AGSM effectiveness and G-tolerance during the build-up. The entry produced no perceptible transient in pitch or bank, and deviations in altitude and airspeed were negligible.",
+        "marginal": "SP used a slow and smooth G-onset rate that met the requirement, but the build-up became progressively quicker on each successive repetition of the exercise. The rate remained usable for evaluating the strain and the parameters stayed within standards, yet the trend was toward an onset too rapid to assess AGSM effectiveness. SP is expected to keep the same deliberate rate on every repetition."
+      }
+    },
+    {
+      "id": "contact-06-tm07",
+      "label": "ENTRY SET-UP OF THE G-AWARENESS EXERCISE (AIRSPEED, POWER, NOSE POSITION)",
+      "mif_row": 6,
+      "source": "technique:1.17.4 G-AWARENESS EXERCISE",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to entering with airspeed well below the planning figure of approximately 200 to 220 KIAS and with power not set to maximum, did not establish a level or slightly descending turn capable of sustaining 4 Gs. The nose fell far outside 10 degrees of the horizon as SP tried to hold the G and the exercise could not be flown as described. The IP intervened on the controls to recover the attitude, and the excursion exceeded 300 feet in altitude and 20 knots in airspeed.",
+        "1": "SP, due to an entry airspeed below the 200 to 220 KIAS planning range with the power lever short of maximum, could not sustain the target G in a level or slightly descending turn. SP added power and adjusted the pitch only after the IP called it verbally, and by then the aircraft had reached 300 feet from the assigned altitude and 20 knots from the target airspeed. No intervention on the controls was required.",
+        "2": "SP, due to a hurried set-up, entered the exercise a few knots below the 200 to 220 KIAS planning range and with the power not yet at maximum. SP recognized the shortfall at the first G application, unloaded, reset maximum power and airspeed and re-entered with the nose within 10 degrees of the horizon, without prompting or intervention. Deviations during the correction stayed between 150 and 300 feet in altitude and between 10 and 20 knots in airspeed.",
+        "3": "SP set maximum power and entered the exercise with sufficient airspeed to sustain 4 Gs, flying a level to slightly descending turn with the nose kept within 10 degrees of the horizon. The set-up was completed before the G was applied, with altitude held within 150 feet and airspeed within 10 knots.",
+        "4": "SP established maximum power and an entry airspeed in the upper part of the planning range, then flew a level to slightly descending turn with the nose held close to the horizon and never beyond 10 degrees. The energy state supported the target G for the whole exercise and the deviations in altitude and airspeed were negligible.",
+        "marginal": "SP entered the exercise with maximum power and the nose within 10 degrees of the horizon, but the entry airspeed was at the bottom of the 200 to 220 KIAS planning range on every repetition, leaving no energy margin for the sustained turn. The exercise was completed within standards, yet the trend was toward an entry too slow to hold the target G to the end. SP is expected to set the entry airspeed with a margin above the planning minimum."
+      }
+    },
+    {
+      "id": "contact-06-tm08",
+      "label": "TARGET G AND DURATION OF THE EXERCISE FOR FULL CARDIOVASCULAR RESPONSE",
+      "mif_row": 6,
+      "source": "technique:1.17.4 G-AWARENESS EXERCISE",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to releasing the loading after a single breathing cycle, did not maintain approximately 4 Gs for approximately 4 to 5 breathing cycles, so the full cardiovascular response was never allowed and the AGSM could not be evaluated. SP then continued straight into the high-G portion of the profile on the basis of that incomplete exercise. The IP directed a knock-it-off and assumed control to reset the sequence, with deviations beyond 300 feet in altitude and beyond 20 knots in airspeed.",
+        "1": "SP, due to an AGSM cycle far shorter than the 10 to 15 seconds required, held the target G for only two breathing cycles and ended the exercise before a valid assessment could be made. SP repeated the exercise only after the IP prompted verbally, and the repositioning drove altitude to 300 feet from the assigned value and airspeed to 20 knots from the target. No intervention on the controls was required.",
+        "2": "SP, due to an early unload on the first repetition, maintained approximately 4 Gs for fewer than the 4 to 5 breathing cycles required for full cardiovascular response. SP recognized the short duration, re-entered without any prompting and flew the second repetition for the full 10 to 15 second cycle. Deviations during the correction stayed between 150 and 300 feet in altitude and between 10 and 20 knots in airspeed.",
+        "3": "SP increased the loading to approximately 4 Gs and maintained it for approximately 4 to 5 breathing cycles, giving an AGSM cycle of 10 to 15 seconds and allowing the full cardiovascular response. The G level was held steady through the turn, with altitude within 150 feet, airspeed within 10 knots and exit heading within 5 degrees.",
+        "4": "SP held approximately 4 Gs steadily for a full 10 to 15 second cycle with at least 4 to 5 breathing cycles, reporting the assessment of the strain at the end of the exercise. The G level showed no fluctuation during the sustained turn and the deviations in altitude, airspeed and exit heading were negligible.",
+        "marginal": "SP maintained approximately 4 Gs for the required duration, but every repetition was flown at the minimum of 4 breathing cycles and the last one was ended slightly earlier than the previous ones. The full cardiovascular response was still obtained and the parameters remained within standards, yet the trend was toward a cycle too short to evaluate the AGSM. SP is expected to plan the duration toward the upper end of the 10 to 15 second cycle."
       }
     }
   ]

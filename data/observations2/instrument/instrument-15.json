@@ -127,6 +127,81 @@
         "4": "SP kept a fully distributed cross-check for the entire arc, monitoring the aircraft state continuously while working the navigation solution. Deviations were identified at the moment they began and no parameter was allowed to develop a measurable trend.",
         "marginal": "SP kept an adequate cross-check but let it narrow toward the navigation display during each correction turn, catching the flight instruments only after the turn was complete. Performance remains within standards, and SP is expected to keep the primary flight instruments in the scan throughout the turn so no parameter goes unmonitored."
       }
+    },
+    {
+      "id": "instrument-15-tm01",
+      "label": "LEAD POINT NOT REDUCED FOR TURNS OF LESS THAN 90 DEGREES",
+      "mif_row": "Maintaining Arc",
+      "source": "technique:7.22 ARC AND RADIAL INTERCEPTS",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to applying the full lead point computed for a 90 degree turn at 30 degree bank to a 45 degree turn, did not reduce it to one third as the technique requires. The turn was started far too early and the aircraft rolled out 3.0 NM inside the arc, beyond the +/-2 NM limit, with the DME still decreasing. The IP had to direct the recovery heading to re-establish the arc distance.",
+        "1": "SP, due to using the uncorrected 90 degree lead point for a 60 degree turn instead of one half of it, turned early and let the arc error reach 2.0 NM, at the +/-2 NM limit. Only after the IP's verbal prompt to stop the turn and take an outbound heading did the DME move back toward the nominal value, and the arc was regained slowly.",
+        "2": "SP, due to only a partial reduction of the calculated lead point for a turn of less than 90 degrees, rolled out short of the arc and allowed the distance to reach 1.5 NM, between the +/-1 NM and +/-2 NM values. SP recognized the error from the DME trend without prompting and closed back inside 1 NM with a timely correction turn.",
+        "3": "SP reduced the calculated lead point according to the amount of turn, using one half for 60 degrees and one third for 45 degrees, and rolled out on the arc within +/-1 NM. The DME settled at the nominal value with only a small heading adjustment after roll-out.",
+        "4": "SP applied the lead point reduction for the actual amount of turn precisely, so the roll-out finished within a few tenths of a mile of the nominal DME. No corrective turn was required afterwards and the arc distance held from the first moment on the arc.",
+        "marginal": "SP reduced the lead point for the smaller turn but consistently used slightly more lead than the technique gives, so every roll-out finished just inside the arc and on the outer part of the tolerance. The result meets standards, but SP is expected to apply the one half, one third and one sixth reductions as computed so the roll-out lands on the nominal DME."
+      }
+    },
+    {
+      "id": "instrument-15-tm02",
+      "label": "TURN RADIUS COMPUTED FROM THE WRONG GROUNDSPEED",
+      "mif_row": "Maintaining Arc",
+      "source": "technique:7.22 ARC AND RADIAL INTERCEPTS",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to computing the turn radius from indicated airspeed instead of groundspeed in NM per minute, produced a lead point that did not match the actual turn. With the wind component ignored in the NM per minute minus 2 rule, the roll-out finished 2.6 NM outside the arc, past the +/-2 NM limit, and the DME was still opening. The IP had to assign the intercept heading before the trend reversed.",
+        "1": "SP, due to a turn radius derived from a stale groundspeed rather than the current value, used a lead point about a mile short and let the arc error reach 2.0 NM, at the +/-2 NM limit. The correction was started only after the IP prompted a check of the DME, and the arc was re-established with a further wander.",
+        "2": "SP, due to a rounding error in the groundspeed to NM per minute conversion before applying the minus 2 rule, rolled out with 1.5 NM of arc error, between the +/-1 NM and +/-2 NM values. SP rechecked groundspeed on his own initiative, recomputed the radius and closed back inside 1 NM without IP input.",
+        "3": "SP computed the turn radius from the current groundspeed in NM per minute and used it as the lead point, rolling out on the arc within +/-1 NM. The computed value was cross-checked against the DME behaviour during the turn, so no sizeable correction was needed.",
+        "4": "SP converted groundspeed to NM per minute and derived the no-wind turn radius accurately with the squared over ten method, placing the roll-out within a few tenths of a mile of the arc. The computed lead point matched the observed DME movement throughout the turn.",
+        "marginal": "SP used the turn radius formula correctly but worked from a groundspeed figure that was not refreshed as the wind component changed, so the roll-out repeatedly settled on the outer side of the tolerance. Performance remains acceptable, but SP is expected to update groundspeed before each turn so the lead point stays accurate."
+      }
+    },
+    {
+      "id": "instrument-15-tm03",
+      "label": "ARC TO RADIAL LEAD POINT NOT CONVERTED INTO RADIALS (60 TO 1)",
+      "mif_row": "Maintaining Arc",
+      "source": "technique:7.22 ARC AND RADIAL INTERCEPTS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to leaving the lead point in miles and never converting it into radials with the 60 divided by arc distance rule, started the turn off the 20 NM arc at the wrong radial. Instead of the six radials of lead that a 2 NM turn radius gives, the turn was begun practically on the course, and the aircraft went 3.0 NM through the arc before rolling out, exceeding the +/-2 NM limit. The IP directed the reintercept back to the arc.",
+        "1": "SP, due to using a fixed number of radials of lead irrespective of arc distance instead of the 60 divided by arc conversion, began the turn late and let the DME open to 2.0 NM, at the +/-2 NM limit. The IP had to call the radial before SP started back toward the arc, and the recovery was slow.",
+        "2": "SP, due to an inaccurate conversion of the lead point from miles into radials on the arc being flown, started the turn slightly late and reached 1.5 NM of arc error, between the +/-1 NM and +/-2 NM values. SP recomputed the radials per mile without prompting and returned inside 1 NM in good time.",
+        "3": "SP converted the lead point in miles into radials with the 60 divided by arc distance rule before each turn and kept the arc within +/-1 NM. The turns were begun at the computed radial and the DME required only minor adjustment afterwards.",
+        "4": "SP applied the 60 to 1 conversion accurately for the arc distance in use and started every turn at the computed radial, holding the DME within a few tenths of a mile. The relation between radials per mile and arc distance was used without hesitation.",
+        "marginal": "SP made the conversion into radials but used a value carried over from a different arc distance, so the lead was slightly optimistic and the arc error settled on the outer part of the band. The result stays within standards, but SP is expected to recompute the radials per mile for the actual arc rather than reuse a previous figure."
+      }
+    },
+    {
+      "id": "instrument-15-tm04",
+      "label": "CDI RATE OF MOVEMENT NOT USED TO REFINE THE LEAD POINT",
+      "mif_row": "Maintaining Arc",
+      "source": "technique:7.22 ARC AND RADIAL INTERCEPTS",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to reading the CDI as pegged and ignoring its rate of movement, although at normal T-6 airspeeds it stays off the wall within 10 degrees of the desired course, did not refine the computed lead point during the intercept. The turn was flown on the raw calculation alone and the aircraft finished 2.8 NM off the arc, past the +/-2 NM limit, with no correction started. The IP assigned the heading needed to recover the arc.",
+        "1": "SP, due to not using the rate of CDI movement as the cue for the lead point, kept the initial computed value although the needle was already moving quickly, and the arc error reached 2.0 NM, at the +/-2 NM limit. The turn was adjusted only after the IP's verbal prompt to watch the CDI rate, and the arc was regained late.",
+        "2": "SP, due to a late reading of the CDI rate of movement during the intercept, refined the lead point only after the needle had moved appreciably and reached 1.5 NM of arc error, between the +/-1 NM and +/-2 NM values. SP made the adjustment on his own scan and settled back inside 1 NM without IP input.",
+        "3": "SP used the rate of CDI movement to refine the computed lead point during the intercept and held the arc within +/-1 NM. The needle was kept in the cross-check with the DME, so the turn was started and stopped at the right points.",
+        "4": "SP read the CDI rate continuously and adjusted the lead point as the needle rate changed, so the arc was held within a few tenths of a mile. The refinement was made before any DME trend became measurable.",
+        "marginal": "SP did use the CDI rate but only as a confirmation after the turn had been started, rather than as the cue for refining the lead point, so each intercept finished on the outer part of the tolerance. Performance is acceptable, but SP is expected to read the needle rate early enough to correct the lead point before the turn is begun."
+      }
+    },
+    {
+      "id": "instrument-15-tm05",
+      "label": "BANK ANGLE OTHER THAN 30 DEGREES NOT ACCOUNTED FOR IN THE LEAD POINT",
+      "mif_row": "Maintaining Arc",
+      "source": "technique:7.22 ARC AND RADIAL INTERCEPTS",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to flying the turn with about 15 degrees of bank while the lead point had been computed for 30 degrees, did not allow for the larger turn radius that less bank produces. The turn was started at the unadjusted lead point and the aircraft went 2.7 NM through the arc, beyond the +/-2 NM limit, without any correction. The IP had to take the heading assignment to re-establish the arc.",
+        "1": "SP, due to a shallow bank that was never matched by an increase of the computed lead point, overshot and let the arc error reach 2.0 NM, at the +/-2 NM limit. The turn was tightened only after the IP prompted for more bank, and the DME returned toward the nominal value slowly.",
+        "2": "SP, due to a bank angle noticeably below the 30 degrees on which the lead point was based, went slightly through the arc and reached 1.5 NM of error, between the +/-1 NM and +/-2 NM values. SP recognized the shallow bank himself, increased it and closed back inside 1 NM in good time.",
+        "3": "SP flew the turns at the 30 degrees of bank on which the lead point calculation is based and held the arc within +/-1 NM. Where less bank was used the lead point was increased accordingly, so no overshoot developed.",
+        "4": "SP matched bank angle and lead point exactly on every turn, adjusting the lead whenever less than 30 degrees of bank was used, and kept the arc within a few tenths of a mile. Bank was steady through each turn with no drift in the roll-out point.",
+        "marginal": "SP kept the arc inside tolerance but tended to roll into slightly less bank than the 30 degrees assumed by the calculation, then absorb the difference with a correction after roll-out. The result meets standards, but SP is expected to fly the planned bank or adjust the lead point for it, so the roll-out arrives on the arc rather than through it."
+      }
     }
   ]
 }

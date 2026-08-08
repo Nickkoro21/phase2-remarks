@@ -127,6 +127,96 @@
         "4": "SP identified the need for the go around at the earliest point at which it was apparent and executed it immediately and precisely. The power application, the attitude and the configuration changes were correct in sequence and timing, and the aircraft was established in the climb with no loss of altitude or heading control. The decision and the execution required nothing from the front cockpit.",
         "marginal": "SP executed the go around correctly and within standards, but the decision was made later than the situation warranted and the first power application was tentative. The trend is to keep working an approach that has already ceased to meet the criteria. SP is expected to set and honour the decision point so that the go around is initiated as soon as the approach is no longer within the specific criteria."
       }
+    },
+    {
+      "id": "contact-29-tm01",
+      "label": "Descent start point from the aim point visual cue",
+      "mif_row": 29,
+      "source": "technique:5.10 STRAIGHT-IN APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to starting the letdown before the aim point cue of the flown configuration appeared, left 1500 feet AGL early and did not use the threshold in the lower 1/3 of the windscreen for flaps LDG or TO, or the spinner on the threshold for flaps UP, as the reference. The early descent placed the aircraft more than 200 feet below the desired 3-4 degree glide path and the flat profile could no longer be held at the computed final approach speed. IP intervened with power and pitch to regain the glide path before the approach could be continued.",
+        "1": "SP, due to judging the descent point from the general runway picture instead of the prescribed aim point cue, began the descent early and let the aircraft settle to the 200 foot lower boundary of the glide path tolerance. SP added power and levelled off only after the low profile was called from the front cockpit. Distance to the threshold was not cross-checked against the descent point, and the desired glide path was regained late, without IP control input.",
+        "2": "SP, due to an imprecise reading of the aim point cue in the windscreen, started the descent slightly before the correct point and went between 150 and 200 feet below the desired glide path. SP recognized the flat profile from the movement of the aim point, added power and levelled off to intercept the 3-4 degree glide path, containing the deviation inside the code 1 boundary. The correction was made without prompting and without IP intervention.",
+        "3": "SP left 1500 feet AGL only when the aim point cue for the flown configuration was met, the threshold in the lower 1/3 of the windscreen with flaps LDG or TO and the spinner on the threshold with flaps UP. The resulting 3-4 degree profile kept the aircraft within 150 feet of the desired glide path for the whole final. Distance to the threshold was cross-checked against the planned descent point as briefed.",
+        "4": "SP identified the aim point cue for the configuration flown and started the descent exactly at that point, backed up by the distance to the threshold. The 3-4 degree glide path was established from the first moment of the descent and held with negligible vertical deviation. No re-interception of the profile was needed at any stage of the straight-in.",
+        "marginal": "SP started the descent within standards, but consistently a little before the aim point cue appeared in the windscreen, so the aircraft was habitually on the low side and the profile had to be regained by levelling off inside 2 NM. The tendency is to judge the descent point from the runway picture alone without cross-checking the distance to the threshold. SP is expected to hold 1500 feet AGL until the cue for the flown configuration is actually met."
+      }
+    },
+    {
+      "id": "contact-29-tm02",
+      "label": "Recognition and recovery of a low (dragged-in) final",
+      "mif_row": null,
+      "source": "technique:5.17 LOW (DRAGGED-IN) FINAL",
+      "hf_concept": "hf-undesired-aircraft-state",
+      "texts": {
+        "0": "SP, due to not recognizing that the aircraft was below the proper glide path, held the normal power setting on a shallower than normal profile, where that setting is too low to maintain airspeed. Airspeed decayed below the computed final approach speed, which the one-sided tolerance does not permit at all, and the aircraft passed more than 200 feet below the desired glide path with an increasing sink rate. SP neither added power and levelled off nor went around, and the IP intervened with power to recover the approach.",
+        "1": "SP, due to leaving power at the normal setting after the glide path had shallowed, allowed the aircraft to reach the 200 foot lower limit of the tolerance with the airspeed decaying toward the computed value. SP added power and levelled off to intercept the proper glide path only after the low approach was called from the front cockpit. The recovery was completed without IP control input, but the decision to correct came from instruction.",
+        "2": "SP, due to a normal power setting carried onto a slightly flat profile, went between 150 and 200 feet below the desired glide path with the airspeed beginning to decay. SP recognized the dragged-in condition, added power, levelled off and intercepted the proper glide path in time, keeping the deviation inside the code 1 boundary and the speed at the computed value. No prompting or IP intervention was required.",
+        "3": "SP recognized any tendency to go below the proper glide path early and corrected it with a timely power addition and a level-off to intercept the desired profile. Vertical deviation stayed within 150 feet and the computed final approach airspeed was maintained throughout. The aircraft was never allowed to develop a dragged-in final.",
+        "4": "SP matched power to the actual glide path continuously, so the aircraft never settled below the desired profile and no recovery action was needed. Vertical deviation was negligible and the airspeed stayed at the computed value with a stable sink rate. The go around decision point for a too low or too slow approach was set and stated in advance.",
+        "marginal": "SP stayed within the glide path and airspeed standards, but the aircraft repeatedly drifted to the low side of the profile and was recovered by adding power late on the approach. The trend is not to increase power when the glide path shallows, where the normal setting can no longer hold the airspeed. SP is expected to correct power as soon as the profile flattens, so that a dragged-in final never develops."
+      }
+    },
+    {
+      "id": "contact-29-tm03",
+      "label": "Flap configuration selection against landing distance, crosswind and gusts",
+      "mif_row": null,
+      "source": "technique:5.3 A/C CONFIGURATION",
+      "hf_concept": "hf-briefing-and-threat-identification",
+      "texts": {
+        "0": "SP, due to not assessing the crosswind, the gust and the required landing distance against the runway length, selected a configuration the manual excludes for the conditions, planning flaps LDG with a crosswind above the 10 KIAS training limit and in gusty wind. SP did not consider flaps TO, which the manual prescribes for crosswinds of 10 knots or greater. IP directed a change of configuration and the approach had to be re-planned, with the final airspeed outside the criteria while the change was being made.",
+        "1": "SP, due to a superficial assessment of the reported wind, planned the straight-in with flaps LDG although the crosswind was at the 10 KIAS training limit, and changed to flaps TO only after being questioned from the front cockpit. The late change compressed the configuration sequence and the final airspeed reached the +15 knot limit of the tolerance before the correct target was re-established. No IP control input was required.",
+        "2": "SP, due to weighing the landing distance before the crosswind and the gust, hesitated between flaps LDG and flaps TO and fixed the configuration later than briefed. SP reassessed the reported conditions in time, selected the configuration the manual prescribes and flew its final airspeed, containing the deviation within +10 knots. The decision was reached without prompting from the IP.",
+        "3": "SP selected the flap configuration from the actual conditions, using flaps LDG when the landing distance was equal to or greater than 80 percent of the runway length and flaps TO for crosswinds of 10 knots or greater. The base turn and final airspeeds flown were those of the selected configuration and stayed within +10, -0 knots. The choice was briefed and needed no change during the approach.",
+        "4": "SP assessed runway length, required landing distance, crosswind and gust before the approach and selected the configuration the manual prescribes, respecting the 10 KIAS training crosswind limit for flaps LDG. The corresponding final approach speed was established at once and held with negligible deviation. The configuration was fixed early enough that no re-planning was needed at the configuration point.",
+        "marginal": "SP selected an acceptable configuration on each approach, but the choice was made close to the configuration point and only after the wind had been read a second time. The tendency is to default to the configuration flown on the previous approach instead of deriving it from landing distance, crosswind and gust. SP is expected to fix the configuration during the planning to the five NM point."
+      }
+    },
+    {
+      "id": "contact-29-tm04",
+      "label": "Gust correction on final approach and touchdown speeds",
+      "mif_row": null,
+      "source": "technique:5.3 A/C CONFIGURATION",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to omitting the gust correction in gusty wind, did not add one-half of the gust to the final approach and touchdown speeds and flew the plain computed value. Airspeed fell below the computed final approach speed in the lulls, which the one-sided tolerance does not permit at all, and the approach became unstable in pitch and power. IP took control inputs to restore the speed before the threshold.",
+        "1": "SP, due to applying the gust correction from the previous approach instead of the actual reported gust, added more than one-half of the gust and exceeded the 10 KIAS maximum. Final approach speed sat at the +15 knot limit of the tolerance until the IP called for it to be reduced. The corrected target was re-established late on final, without IP control input.",
+        "2": "SP, due to a late reading of the reported gust, applied the correction only after configuring and briefly carried more than +10 knots over the computed final approach speed. SP recomputed one-half of the gust, capped it at 10 KIAS and settled the speed inside the code 1 boundary before short final. The correction was made without prompting and without IP intervention.",
+        "3": "SP added one-half of the gust, up to the maximum of 10 KIAS, to the final approach and touchdown speeds and flew that corrected target throughout. Airspeed stayed within +10, -0 knots of the target and never decayed below it in the lulls. The correction was computed before the configuration point as briefed.",
+        "4": "SP derived the correction from the actual reported gust, applied exactly one-half of it within the 10 KIAS maximum and established the corrected speed immediately after configuring. Deviations from the corrected target were negligible through the gusts and the touchdown speed carried the same correction. No further adjustment was needed after the initial power setting.",
+        "marginal": "SP applied a gust correction that kept the speed within standards, but the amount was rounded upward and the airspeed sat habitually near the top of the tolerance. The trend is to treat the correction as a fixed additive rather than one-half of the actual gust up to 10 KIAS. SP is expected to recompute it from the reported gust on each approach."
+      }
+    },
+    {
+      "id": "contact-29-tm05",
+      "label": "Airspeed cross-check against the ON-SPEED AOA indication",
+      "mif_row": null,
+      "source": "technique:5.3 A/C CONFIGURATION",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to flying the configuration airspeed on the airspeed indicator alone with no AOA cross-check, allowed the aircraft to become slower than the ON-SPEED AOA indication during the approach. Airspeed went below the computed final approach speed, which the criteria do not permit at all, and the aircraft was on the low side of the glide path with a rising sink rate. IP added power and intervened before SP had begun to recover the approach.",
+        "1": "SP, due to dropping the AOA from the cross-check at the configuration change, let the indexer move toward the slow indication and the airspeed fall to the computed value with no margin left. SP added power to re-establish the ON-SPEED indication only after being prompted from the front cockpit. The remainder of the approach was flown at the computed speed without IP control input.",
+        "2": "SP, due to an interrupted AOA cross-check while completing the configuration, diverged from the ON-SPEED indication and the airspeed moved through the upper part of the tolerance before it settled. SP restored the cross-check, matched power to the indexer and held the computed final approach speed within +10 knots for the rest of the approach. No prompting or IP intervention was needed.",
+        "3": "SP cross-checked airspeed against AOA throughout the approach and at no point flew slower than the ON-SPEED AOA indication. The computed final approach airspeed of the selected configuration was maintained within +10, -0 knots. Power was adjusted to keep the indexer on speed at each configuration change.",
+        "4": "SP flew the approach with a continuous airspeed and AOA cross-check and held the ON-SPEED indication with negligible movement of the indexer. The computed final approach speed of the configuration was matched exactly and the slow side was never approached. Power corrections were anticipatory and no divergence between the two references developed.",
+        "marginal": "SP never flew slower than the ON-SPEED AOA indication, but the indexer was habitually allowed to drift toward the slow side before power was added. The trend is to fly the approach on the airspeed indicator and to consult the AOA only once a deviation is felt. SP is expected to keep the AOA in the cross-check so that the ON-SPEED indication is maintained rather than recovered."
+      }
+    },
+    {
+      "id": "contact-29-tm06",
+      "label": "Final airspeed matched to the selected flap setting",
+      "mif_row": null,
+      "source": "technique:5.3 A/C CONFIGURATION",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP, due to carrying over the target of the previously flown configuration, flew the straight-in at a final approach speed that does not belong to the selected flap setting, holding the flaps LDG value of 100 KIAS with flaps UP where 110 KIAS is required. The speed was therefore below the computed value for the configuration flown, which the one-sided tolerance does not permit, and the aircraft was near the slow side with a high pitch attitude. IP directed and then applied the power correction to restore the correct target.",
+        "1": "SP, due to not restating the target after the flap setting was changed, flew the final about ten knots fast for the selected configuration and reached the +15 knot limit of the tolerance. SP set the correct configuration speed, 100 KIAS with flaps LDG, 105 KIAS with flaps TO or 110 KIAS with flaps UP, only after the IP stated the required value. The rest of the final was flown on the correct target, without IP control input.",
+        "2": "SP, due to a delayed recall of the airspeed belonging to the selected flap setting, initially flew a target more than 10 knots above the correct final approach speed. SP corrected the target from the configuration actually flown, reduced power and re-established the correct speed well before short final, keeping the deviation short of the code 1 boundary. No prompting or IP intervention was required.",
+        "3": "SP flew the final approach speed of the selected configuration, 100 KIAS with flaps LDG, 105 KIAS with flaps TO and 110 KIAS with flaps UP, and held it within +10, -0 knots. The target was restated at the configuration change and power was set directly to it. The straight-in was flown on speed for the whole final segment.",
+        "4": "SP identified the final approach speed of the selected flap setting before configuring and established it immediately after the configuration was complete. Deviation from that target was negligible to the threshold and the speed never went below the value for the configuration flown. Successive approaches with different flap settings were flown on their own targets without any prompting.",
+        "marginal": "SP flew the correct target for each flap setting, but the value was recalled late and the first approach after a change of configuration was flown a few knots off before it was trimmed on. The trend is to keep the airspeed of the previous approach until the deviation becomes visible. SP is expected to state the final approach speed of the selected configuration before configuring."
+      }
     }
   ]
 }

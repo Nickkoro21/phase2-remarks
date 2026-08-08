@@ -157,6 +157,126 @@
         "4": "SP identified the erroneous indication at the moment it appeared, cross-referenced it against the remaining instruments, informed IP in clear terms and executed the corresponding procedure without any interruption of aircraft control. All parameters were held precisely throughout the sequence.",
         "marginal": "SP detected the erroneous indication and reported it to IP within standard, but the cross-reference against the other instruments took longer than the situation allowed and the report was made after the maneuver had ended. Aircraft control was maintained and the correct procedure was applied, yet the detection was later than a full scan would have produced. SP is expected to resolve any disagreement between instruments as soon as it appears and to report it immediately in the coming flights."
       }
+    },
+    {
+      "id": "contact-05-tm01",
+      "label": "Rudder use with aileron to counter adverse yaw",
+      "mif_row": null,
+      "source": "technique:2.11 ADVERSE YAW",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to aileron pressure applied without simultaneous rudder in the same direction, let adverse yaw swing the nose opposite the direction of every roll. The ball was hard over through each entry and rollout, the turns started with the nose off the intended arc, exit headings passed the assigned value by more than 10 degrees and altitude broke 300 feet. IP had to take the controls to coordinate the aircraft and re-establish the assigned parameters.",
+        "1": "SP applied rudder only after the bank was already established, so the nose yawed away from the direction of the roll at every entry. The uncoordinated entries drove the exit heading error to 10 degrees, at the limit of the standard, and were corrected only after repeated calls from IP to apply rudder together with aileron. The same omission was repeated on the rollouts, where the aileron drag effect was left uncountered.",
+        "2": "SP applied rudder with the aileron at turn entry but released it before the bank stopped changing, so a residual adverse yaw appeared on each rollout. The nose swung about 8 degrees off the intended heading and the ball came off centre, and SP recognized the yaw, added rudder in the direction of the aileron pressure and finished inside the limits without any IP input. Rudder pressure should have been held for as long as the bank was changing.",
+        "3": "SP applied aileron and rudder simultaneously in the direction of the turn and held rudder pressure for as long as the bank was changing, on entries as well as on rollouts. Adverse yaw was contained, the turn and slip indicator stayed close to centre and exit headings were made within 5 degrees.",
+        "4": "SP coordinated aileron and rudder so precisely that the nose tracked along the intended arc with no perceptible yaw at any roll entry or rollout. The ball remained centred throughout and every exit heading was made within about 1 degree with no follow-up correction.",
+        "marginal": "SP countered adverse yaw within standard, but rudder pressure was consistently lighter on the rollouts than on the entries and the ball drifted slightly off centre each time the wings came level. Headings stayed inside 5 degrees, yet the pattern shows aileron drag being treated as an entry-only effect. SP is expected to use rudder in the same direction as the aileron pressure on the rollout as well as on the entry so that coordination becomes uniform."
+      }
+    },
+    {
+      "id": "contact-05-tm02",
+      "label": "Matching bank angle to turn rate (skid and slip)",
+      "mif_row": null,
+      "source": "technique:2.12 UNCOORDINATED FLIGHT",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to excessive bottom rudder held against insufficient bank angle in relation to the turn rate, kept the aircraft in a continuous skid through the turns and reversed it into a slip whenever the rudder was released. The flight path was no longer a true circle, airspeed varied with every uncoordinated input and exit heading and altitude ran beyond 10 degrees and 300 feet. IP had to take the controls to centre the ball and restore coordinated flight, since the skid was being carried at slow airspeed.",
+        "1": "SP flew the turns with insufficient bank angle in relation to the turn rate and made up the difference with bottom rudder, so the aircraft was skidding for most of each turn. The resulting variation in the flight path drove the exit heading error to 10 degrees, at the limit of the standard, and the ball was centred only after direct instruction from IP. SP did not associate the ball deflection with the mismatch between bank angle and turn rate.",
+        "2": "SP held slightly too much bank angle for the turn rate in the steeper turns, so the aircraft slipped and the ball displaced to the inside of the turn. The uncoordinated flight path cost about 200 feet of altitude before SP stepped on the ball, matched the bank to the turn rate and returned to the assigned altitude without IP intervention. The turn and slip indicator should have been in the crosscheck from the entry.",
+        "3": "SP matched the bank angle to the turn rate in shallow and steep turns alike and kept the ball centred with rudder pressure rather than with bank. No skid or slip developed, the flight path stayed circular, altitude was held within 100 feet and exit headings within 5 degrees.",
+        "4": "SP flew every turn in coordinated flight with the ball centred from entry to rollout and the bank angle matched to the turn rate throughout. The flight path remained a true circle, airspeed was constant and nothing more than a light rudder pressure was ever required.",
+        "marginal": "SP kept the turns coordinated within standard, but a small amount of bottom rudder was carried in the 45 to 60 degree bank turns and the ball sat just outside centre for several seconds at a time. Altitude and heading stayed inside the limits, yet the developing skid was recognized only when it was pointed out on the instrument. SP is expected to set the bank angle for the desired turn rate first and use rudder solely to centre the ball on the coming sorties."
+      }
+    },
+    {
+      "id": "contact-05-tm03",
+      "label": "Rudder compensation for slipstream effect and torque during power changes",
+      "mif_row": null,
+      "source": "technique:2.6.1 SLIPSTREAM EFFECT",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to PCL movements made without the matching rudder input, let the corkscrew slipstream and torque yaw and roll the aircraft left on every power increase and right on every power reduction. The PCL was moved abruptly and through large travel, so the nose swung across the horizon uncontrolled and heading and altitude passed 10 degrees and 300 feet. IP had to take the controls to stop the yaw and re-establish coordinated flight.",
+        "1": "SP moved the right foot forward only after the yaw had already developed, so each power increase started with the nose swinging left across the horizon. The heading error reached 10 degrees, at the limit of the standard, and coordinated flight was restored only after IP called for rudder with every PCL movement. The same omission produced an uncontrolled right swing on the power reductions.",
+        "2": "SP applied right rudder with the power increase but not in proportion to the amount and rate of PCL movement, so the nose swung about 8 degrees left before it was stopped. SP saw the swing against the horizon, added the required rudder and returned to the assigned heading in time and without IP intervention. The rudder input should have been sized to the rate of PCL movement from the start.",
+        "3": "SP moved the right foot forward as the PCL was advanced and applied left rudder on the power reductions, so the nose was kept from swinging in either direction. Heading was held within 5 degrees through the power changes and the ball stayed close to centre.",
+        "4": "SP matched the amount and rate of rudder to the amount and rate of PCL movement so precisely that the nose did not move against the horizon during any power change. Heading was held within about 1 degree, the aircraft stayed coordinated and no secondary correction followed any power adjustment.",
+        "marginal": "SP countered the slipstream and torque effects within standard, but rudder was slightly under-applied on the larger power increases and the nose crept left before being stopped. Heading stayed inside 5 degrees and the corrections were effective, yet the input was sized for an average power change rather than the one being made. SP is expected to scale the rudder to the amount and rate of PCL movement so that the nose stays fixed on the reference point."
+      }
+    },
+    {
+      "id": "contact-05-tm04",
+      "label": "Abrupt corrections coupling into gyroscopic precession",
+      "mif_row": null,
+      "source": "technique:2.6.4 GYROSCOPIC EFFECT",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to deviations in pitch, bank and yaw being corrected abruptly instead of with smooth pressures, fed the propeller gyroscopic precession into every input, so each force acted in a plane 90 degrees from the one in which it was applied. A yaw correction to the left pitched the nose up, the following pitch input yawed the aircraft again and the coupled oscillation carried altitude beyond 300 feet and airspeed beyond 20 knots. IP had to take the controls to damp the oscillation and stabilize the aircraft.",
+        "1": "SP corrected each deviation with a rapid input, so a nose-down pitch correction developed a left yaw and heading and altitude then had to be chased in turn. The excursions reached the 300 foot and 10 degree limits of the standard and settled only after IP repeatedly directed slower and smoother inputs. SP continued to treat each axis as independent of the others.",
+        "2": "SP made two pitch corrections at a higher rate of movement than the deviation required, and the resulting yaw reaction moved the heading about 8 degrees off the assigned value. SP recognized that the abrupt input had produced the secondary reaction, reduced the rate of the following corrections and recovered the parameters without IP intervention. Increased rates of movement about the pitch and yaw axes increase the precession effect.",
+        "3": "SP corrected deviations in pitch, bank and yaw with smooth inputs at a controlled rate, so no secondary precession reaction was generated in the adjacent axis. Altitude stayed within 100 feet and heading within 5 degrees, and no correction had to be followed by a second one in another axis.",
+        "4": "SP applied every correction so smoothly that the large high rpm propeller produced no perceptible precession reaction in any axis. Each deviation was removed with a single input and the aircraft remained steady, with altitude within about 30 feet and heading essentially fixed.",
+        "marginal": "SP kept the aircraft inside the tolerances, but the first correction after each maneuver entry was applied at a rate that produced a small reaction in the adjacent axis and had to be tidied up afterwards. Nothing exceeded the limits, yet the pattern shows the precession effect being absorbed after the fact instead of being avoided. SP is expected to reduce the rate of movement about the pitch and yaw axes so that corrections stop generating work in the other axes."
+      }
+    },
+    {
+      "id": "contact-05-tm05",
+      "label": "Composite flight crosscheck distribution between outside and inside references",
+      "mif_row": null,
+      "source": "technique:2.7 COMPOSITE FLIGHT",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to over-reliance upon instrumentation to maintain aircraft attitude, set and held the attitude inside the cockpit instead of positioning the nose and wings in relation to the horizon. The head-down time far exceeded the twenty per cent that inside references should receive in clear conditions, clearing for other aircraft effectively stopped and the parameters still diverged beyond 300 feet and 20 knots. IP had to take the controls and direct SP back onto outside references.",
+        "1": "SP flew every attitude on the flight instruments and used the horizon only after a deviation had already appeared. The excessive head-down time impeded the ability to observe other aircraft and hazards, and the altitude excursions reached the 300 foot limit of the standard, recovering only after repeated calls from IP to look outside. The eighty per cent outside and twenty per cent inside distribution was not applied at any point of the sortie.",
+        "2": "SP established the attitude against the horizon but then held the crosscheck inside the cockpit while the correction took effect, losing the distribution between outside and inside references for several seconds at a time. Altitude drifted about 200 feet before SP returned to the outside picture, resumed clearing and recovered the parameters without IP intervention. The instruments should have been used to confirm the attitude, not to fly it.",
+        "3": "SP established and maintained each attitude by positioning the nose and wings in relation to the horizon and crosschecked the flight instruments for the small changes not readily noticed outside. The distribution stayed close to eighty per cent outside and twenty per cent inside, clearing was continuous and altitude was held within 100 feet.",
+        "4": "SP flew the whole profile on outside references, with the instruments used only to confirm what the horizon already showed. Clearing was vigilant and uninterrupted, no single cue was allowed to dominate the crosscheck and every parameter was held with deviations of no practical size.",
+        "marginal": "SP kept the composite crosscheck within standard, but the share of time spent inside the cockpit grew during the turns and the horizon was used mainly to verify the instrument picture. All parameters stayed inside the limits and clearing continued, yet the head-down time in the steeper turns was longer than the clear conditions justified. SP is expected to hold the attitude on the horizon and reserve the instruments for confirmation so that the distribution stays near eighty per cent outside."
+      }
+    },
+    {
+      "id": "contact-05-tm06",
+      "label": "Correction of nose-low and nose-high attitudes in steep turns",
+      "mif_row": null,
+      "source": "technique:2.10 TURNS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the steep turn being treated as a different maneuver rather than one in which the same aerodynamic effects are more pronounced, answered the nose dropping in the 60 degree bank turn with back stick pressure alone and left the bank angle untouched. The added back pressure tightened the turn instead of raising the nose, so the descent accelerated beyond 300 feet and airspeed built beyond 20 knots. IP had to take the controls, reduce the angle of bank and recover the aircraft to the assigned altitude.",
+        "1": "SP allowed the nose to go low in the steep turns and attempted to recover it with elevator while holding the bank at 60 degrees. The altitude loss reached the 300 foot limit of the standard and was arrested only after IP called for the angle of bank to be reduced first. The relationship between angle of bank, back pressure and pitch attitude was not applied.",
+        "2": "SP was late in detecting the nose-low attitude in the steep turn because the VSI was not being crosschecked, and about 200 feet were lost before the correction began. SP then reduced the angle of bank with coordinated aileron and rudder, adjusted back pressure to raise the nose and re-established the desired bank without IP intervention. The correction was made in the right order but should have started earlier.",
+        "3": "SP detected nose-low and nose-high attitudes in the steep turns from the VSI and corrected them by adjusting the angle of bank with coordinated aileron and rudder while simultaneously adjusting back pressure. The desired angle of bank was re-established once the attitude was recovered and altitude stayed within 100 feet.",
+        "4": "SP flew shallow and steep turns with the same technique, differing only in the amount of back stick pressure and power required, so the pitch attitude never departed from the desired picture. No nose-low or nose-high correction was needed and altitude and airspeed were held with negligible deviation throughout.",
+        "marginal": "SP corrected the steep turn attitudes within standard, but the first response was always a small increase in back pressure and the angle of bank was adjusted only when that failed to raise the nose. Altitude stayed inside the limits and every turn was recovered, yet the sequence cost more altitude than a bank adjustment would have. SP is expected to reduce the angle of bank and adjust back pressure together, then re-establish the desired bank."
+      }
+    },
+    {
+      "id": "contact-05-tm07",
+      "label": "Control stick grip and inadvertent stick force from the weight of the arm",
+      "mif_row": null,
+      "source": "technique:2.9 STRAIGHT AND LEVEL FLIGHT",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the control stick being gripped with the whole hand and carrying the weight of the arm, applied force to the control stick inadvertently and never felt the out-of-trim condition through the fingertips. The unnoticed pressure held the aircraft off the trimmed attitude, altitude wandered beyond 300 feet and airspeed followed beyond 20 knots without the source being identified. IP had to take the controls and demonstrate a light fingertip touch before the aircraft could be flown on attitude again.",
+        "1": "SP flew with a tight grip and an unsupported arm, so a continuous inadvertent pressure was carried on the control stick during straight and level flight. The altitude deviation reached the 300 foot limit of the standard and the cause was found only after IP instructed SP to rest the forearm on the thigh and release the stick. The aircraft was in fact correctly trimmed and the deviation came from the arm alone.",
+        "2": "SP let the arm rest on the control stick during the level segments and added an unintended nose-down pressure, so altitude decayed about 200 feet. SP noticed that the aircraft would not hold the trimmed attitude, supported the forearm on the thigh, loosened the grip and returned to the assigned altitude without IP intervention. The touch should have been light enough to feel the trim state from the start.",
+        "3": "SP flew with a firm but light touch and a supported forearm, so no inadvertent stick force was applied during straight and level flight. Slight out-of-trim conditions were felt through the fingertips and removed with trim, and altitude was held within 100 feet.",
+        "4": "SP flew the cruise segments on fingertips alone with the forearm supported, so the most minute changes of trim were felt as soon as they appeared. The aircraft held the trimmed attitude essentially hands-off and altitude and airspeed remained steady with negligible deviation.",
+        "marginal": "SP held the parameters within standard, but the grip tightened whenever workload increased and a small unintended pressure appeared on the control stick during the busier segments. Nothing exceeded the tolerances, yet the feedback on trim was lost exactly when it was most needed. SP is expected to keep the forearm supported and the touch light so that out-of-trim conditions continue to be felt under higher workload."
+      }
+    },
+    {
+      "id": "contact-05-tm08",
+      "label": "Level-off lead point taken from the rate of climb",
+      "mif_row": null,
+      "source": "technique:4.9 CLIMBS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the level-off being started at the assigned altitude with no lead point taken from the rate of climb, flew the aircraft through the level-off altitude with the climb attitude still set. The overshoot exceeded 300 feet, the recovery was then made with a large nose-down input and airspeed ran beyond 20 knots as the nose was pushed over. IP had to take the controls to capture the assigned altitude and set the level flight attitude.",
+        "1": "SP used the same lead point regardless of the rate of climb and began the level-off far too late while climbing at about 2000 feet per minute. The overshoot reached 300 feet, at the limit of the standard, and the altitude was recaptured only after IP directed the pitch change and the power reduction. Airspeed was left to chase the attitude throughout the level-off.",
+        "2": "SP started the level-off with a lead point smaller than ten per cent of the rate shown on the VSI, so the aircraft passed about 200 feet above the assigned altitude. SP smoothly lowered the nose, adjusted the PCL to the desired airspeed and returned to the altitude in time and without IP intervention. The lead point should have been read from the VSI rather than assumed.",
+        "3": "SP took a lead point of approximately ten per cent of the rate shown on the VSI, smoothly lowered the nose at that point and adjusted the PCL to obtain the desired airspeed. The level-off was captured within 100 feet of the assigned altitude and the aircraft was trimmed as the airspeed settled.",
+        "4": "SP scaled the level-off lead point to the rate of climb on every level-off, so the aircraft arrived at the assigned altitude with the level flight attitude already set. Altitude was captured within about 30 feet, the airspeed settled on the desired value with a single power adjustment and the aircraft was trimmed immediately.",
+        "marginal": "SP levelled off within standard, but the lead point was slightly short at the higher rates of climb and the aircraft consistently arrived about 120 feet high before settling. Every capture was made and no limit was approached, yet each one required a second nose-down correction. SP is expected to read the VSI before each level-off and use a lead point of approximately ten per cent of the indicated rate."
+      }
     }
   ]
 }

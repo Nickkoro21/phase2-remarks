@@ -127,6 +127,96 @@
         "4": "SP integrated the missed approach communications seamlessly with the flying task, making a concise and fully standard call at the first appropriate moment. The instructions were obtained and read back correctly and the plan was confirmed with the IP. The instrument cross check was never interrupted and no measurable deviation developed in any parameter.",
         "marginal": "SP made the missed approach call and read back within standards, but the transmission was long and partly non standard and was made while the climb was still being stabilized, briefly loading the flying task. Aircraft control never left tolerance. SP is expected to shorten the call to standard phraseology and make it once the climb and clean up are complete."
       }
+    },
+    {
+      "id": "instrument-29-tm01",
+      "label": "Power reduction once at the targeted missed approach pitch",
+      "mif_row": 29,
+      "source": "technique:7.30 MISSED APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to leaving the PCL at MAX after the targeted 10 to 15 degrees Nose-High attitude had been reached, never reduced power as the technique requires and let the pitch run well above the targeted band. The airspeed decayed past the minus 10 knot tolerance while SP flew a steepening attitude in IMC without reference to the EADI. The excessive pitch produced disorientation and the climb was never stabilized, so the IP intervened on the PCL and the stick to reset the missed approach attitude.",
+        "1": "SP, due to not reducing power once at the targeted pitch, allowed the nose to rise above 15 degrees Nose-High and the airspeed to fall to the minus 10 knot limit. Power was retarded only after the IP called the attitude and then the airspeed, and the pitch was reset late in the climb segment. The deviation was contained at the tolerance limit and no control input from the IP was required.",
+        "2": "SP, due to a delayed power reduction after reaching the targeted pitch, let the attitude drift a few degrees above the 10 to 15 degrees Nose-High band and the airspeed fall more than 5 knots below target, short of the minus 10 knot limit. SP recognized the pitch increase on the EADI without prompting and retarded the PCL in time to restore the climb attitude and speed. No intervention was required.",
+        "3": "SP set the missed approach attitude at 10 to 15 degrees Nose-High and reduced power as necessary once at the targeted pitch, so no excessive pitch developed. Attitude was held on the EADI and the airspeed remained within plus 10 and minus 5 knots of the target throughout the climb. The aircraft was trimmed at the climb attitude before the clean up.",
+        "4": "SP reached the targeted 10 to 15 degrees Nose-High attitude and reduced power in the same smooth movement, so the pitch stabilized without any overshoot and the airspeed varied by only a few knots. No disorientation cue was allowed to develop and the attitude was held essentially exactly on the EADI throughout the climb.",
+        "marginal": "SP reduced power after reaching the targeted pitch and kept all parameters within standards, but each reduction came a beat late and the attitude settled at the upper edge of the 10 to 15 degrees Nose-High band with the airspeed near the minus 5 knot edge. The attitude was recovered by control pressure rather than by setting a known power value. SP is expected to anticipate the power reduction as the targeted pitch is reached so the climb stabilizes without an initial pitch excursion."
+      }
+    },
+    {
+      "id": "instrument-29-tm02",
+      "label": "Verifying the climb on VSI and altimeter before raising gear and flaps",
+      "mif_row": 29,
+      "source": "technique:7.30 MISSED APPROACH",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to raising the gear and flaps without first checking the VSI and the altimeter to verify the climb, retracted the configuration while the aircraft was still settling after the missed approach point. The altimeter continued to unwind and the airspeed fell past the minus 10 knot tolerance as the drag was removed with no climb established. The IP intervened on pitch and power to arrest the descent and establish the climb.",
+        "1": "SP, due to calling for the clean up on the sound of the power application rather than on a verified climb, moved the gear handle before the VSI and altimeter had been checked. The IP directed SP twice to confirm the climb indications, and the airspeed reached the minus 10 knot limit before the climb was positively established. No control input from the IP was needed.",
+        "2": "SP, due to a hurried sequence at the missed approach point, started the clean up with only a glance at the VSI and without confirming the altimeter trend. SP interrupted the retraction on its own initiative, verified the climb on both instruments and completed the configuration change, holding the speed excursion short of the primary tolerance. No prompting or intervention was required.",
+        "3": "SP checked the VSI and the altimeter to verify the climb before raising the gear and flaps, so the configuration was changed only with a positive rate established. Both indications were included in the cross check and called before the retraction, and airspeed stayed within plus 10 and minus 5 knots of the target. The clean up followed the standardized sequence.",
+        "4": "SP verified the climb on the VSI and altimeter and only then raised gear and flaps, with the check completed without any interruption of the instrument cross check. The retraction produced no perceptible pitch or airspeed excursion and the climb continued precisely on the target profile.",
+        "marginal": "SP verified the climb before the clean up and stayed within standards, but the VSI was accepted alone on two occasions and the altimeter trend was confirmed only after the gear was already travelling. The indications were correct and the sequence was completed properly. SP is expected to confirm both the VSI and the altimeter before moving the gear handle rather than after."
+      }
+    },
+    {
+      "id": "instrument-29-tm03",
+      "label": "False sensation of climb produced by acceleration",
+      "mif_row": 29,
+      "source": "technique:7.30 MISSED APPROACH",
+      "hf_concept": "hf-spatial-disorientation",
+      "texts": {
+        "0": "SP, due to accepting the false sensation of climb produced by the acceleration at the go around instead of confirming the attitude on the EADI, flew the aircraft on seat of the pants cues and relaxed the back pressure. The nose was lowered while SP believed the aircraft was climbing steeply, and the airspeed exceeded the plus 15 knot tolerance with no climb established. SP did not resolve the conflict between the sensation and the instrument indications and the IP took control to set the missed approach attitude.",
+        "1": "SP, due to the strong climb sensation generated by the acceleration, held a pitch attitude below the targeted band and let the airspeed build to the plus 15 knot limit before the EADI was believed. The attitude was reset only after the IP repeatedly called the pitch and the vertical velocity indication. The deviation was held at the tolerance limit without any control input from the IP.",
+        "2": "SP, due to the acceleration cue at the missed approach point, initially flew a shallower attitude than the targeted 10 to 15 degrees Nose-High and allowed the airspeed to rise more than 10 knots above target, short of the plus 15 knot limit. SP cross checked the EADI and the VSI, rejected the false sensation without prompting and reset the climb attitude in time. No intervention was required.",
+        "3": "SP disregarded the false climb sensation produced by the acceleration and flew the missed approach on the instruments, setting and holding the targeted Nose-High attitude on the EADI. The pitch was confirmed against the VSI and altimeter rather than against physical cues and the airspeed remained within plus 10 and minus 5 knots of target. The climb was stable from the missed approach point.",
+        "4": "SP flew the entire missed approach on instrument indications with no trace of the acceleration illusion in the control inputs. The targeted attitude was set and held on the EADI, cross checked against the VSI and altimeter, and pitch and airspeed showed only negligible variation throughout the climb.",
+        "marginal": "SP flew the missed approach within standards but the pitch was consistently set slightly low at the moment of the power application, with the attitude corrected upward once the VSI was read, showing that the acceleration cue was influencing the initial input. All deviations stayed inside the tolerances. SP is expected to set the attitude directly on the EADI at power application and treat the climb sensation as an unreliable cue."
+      }
+    },
+    {
+      "id": "instrument-29-tm04",
+      "label": "Smooth advance of the PCL to MAX at the missed approach point",
+      "mif_row": 29,
+      "source": "technique:7.30 MISSED APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to slamming the PCL forward to MAX instead of advancing it smoothly, produced a large yaw and roll excursion that was not countered with rudder at the missed approach point. The aircraft departed the published radial by more than 8 degrees while SP chased attitude and heading together, and the airspeed excursion exceeded the tolerance as well. The IP intervened on rudder and stick to stabilize the climb and regain the course.",
+        "1": "SP, due to an abrupt power application at the go around, allowed the yaw to displace the aircraft off the missed approach radial to the 8 degree limit before any rudder correction was made. The correction followed two verbal prompts from the IP on trim and heading, and the aircraft remained off course through the early climb. No IP control input was required.",
+        "2": "SP, due to a rapid rather than smooth advance of the PCL to MAX, generated a yaw excursion that pushed the radial deviation past 5 degrees but short of the 8 degree limit. SP identified the course displacement and applied rudder and rudder trim on its own initiative, reestablishing the radial before the level off. No prompting or intervention was required.",
+        "3": "SP advanced the PCL smoothly to MAX at the missed approach point and countered the yaw with coordinated rudder as the power came up. The aircraft stayed within 5 degrees of the published radial through the power application and the climb, and rudder trim was reset for the new power setting. The transition was made without any heading chase.",
+        "4": "SP advanced the PCL to MAX with a single smooth movement and matched it with rudder so that no yaw excursion was visible on the instruments. The radial deviation stayed close to zero through the power application and the aircraft was trimmed for the climb immediately afterwards.",
+        "marginal": "SP advanced the PCL to MAX and stayed within standards, but the movement was quicker than the technique calls for and the resulting yaw carried the radial deviation close to the 5 degree limit before rudder was applied. The correction was made and the course was regained. SP is expected to lead the power application with rudder and advance the PCL smoothly so no course excursion develops."
+      }
+    },
+    {
+      "id": "instrument-29-tm05",
+      "label": "Setting power and pitch for target climb airspeed at 140 to 180 KIAS",
+      "mif_row": 29,
+      "source": "technique:7.30 MISSED APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to never making the climb speed setting in the 140 to 180 KIAS window, left the PCL at MAX and the climb attitude unchanged after the clean up. The aircraft accelerated through the window unchecked and the airspeed exceeded the plus 15 knot tolerance on the target climb speed, with no power or pitch adjustment attempted. The IP intervened on power and pitch to establish the target climb airspeed.",
+        "1": "SP, due to a late recognition of the 140 to 180 KIAS window, set power and pitch for the climb only after the aircraft had accelerated to the plus 15 knot limit on the target climb speed. The setting was made in response to repeated airspeed calls from the IP and the speed was contained only at the tolerance limit. No control input from the IP was needed.",
+        "2": "SP, due to setting power before adjusting pitch as the aircraft passed through the 140 to 180 KIAS window, allowed the airspeed to rise more than 10 knots above the target climb speed but short of the plus 15 knot limit. SP noted the trend on the airspeed indicator and coordinated pitch with the new power setting in time, returning the speed to the primary band. No intervention was required.",
+        "3": "SP set power and pitch for the target climb airspeed as the aircraft passed 140 to 180 KIAS, so the acceleration after the clean up was captured at the correct point. The resulting speed stayed within plus 10 and minus 5 knots of the target through the climb and the aircraft was trimmed at that setting. The transition from the go around attitude to the climb attitude was smooth.",
+        "4": "SP made the climb setting precisely inside the 140 to 180 KIAS window, coordinating power and pitch so the aircraft settled on the target climb airspeed without overshoot. The speed varied by only a few knots for the rest of the climb and the aircraft was trimmed hands off at the climb attitude.",
+        "marginal": "SP set power and pitch for the target climb airspeed inside the 140 to 180 KIAS window and remained within standards, but the setting was made at the top of the window each time and the speed peaked near the plus 10 knot edge before settling. The setting itself was correct and the climb was stabilized. SP is expected to begin the power and pitch change earlier in the window so the target climb speed is captured without an overshoot."
+      }
+    },
+    {
+      "id": "instrument-29-tm06",
+      "label": "Airspeed schedule on vectors for an additional approach",
+      "mif_row": 29,
+      "source": "technique:7.30 MISSED APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to disregarding the airspeed schedule for vectors after the missed approach, held a speed of its own choosing instead of 150 to 200 KIAS and did not slow to 160 KIAS on radar base. The deviation from the required speed exceeded the plus 15 knot tolerance and the aircraft arrived at the final approach course too fast to configure. The IP intervened on power to bring the aircraft back to the required pattern airspeed.",
+        "1": "SP, due to not planning the deceleration from the 200 KIAS radar downwind speed, entered radar base at the plus 15 knot limit on the required 160 KIAS. The speed was reduced only after the IP twice called for the base leg airspeed, and the aircraft remained fast through the turn to final. No control input from the IP was required.",
+        "2": "SP, due to a late power reduction leaving radar downwind, allowed the speed on radar base to exceed the required 160 KIAS by more than 10 knots but stay short of the plus 15 knot limit. SP recognized the excess on the airspeed indicator and reduced power in time to stabilize at the required speed before the intercept. No prompting or intervention was required.",
+        "3": "SP flew the required airspeed schedule after the missed approach, maintaining 150 to 200 KIAS on vectors, 200 KIAS on radar downwind and slowing to 160 KIAS on radar base. Each speed was held within plus 10 and minus 5 knots and the changes were anticipated so no rushed corrections were needed. The aircraft was stable and in trim at every stage.",
+        "4": "SP flew the post missed approach vectors precisely on the required schedule, holding 200 KIAS on radar downwind and 160 KIAS on radar base with negligible variation. The decelerations were led by an early power reduction so each target speed was captured without overshoot and without any pitch excursion.",
+        "marginal": "SP flew the required airspeed schedule on vectors within standards, but each deceleration was started late and the speed settled near the plus 10 knot edge before stabilizing on the target. The correct speeds were eventually established at every stage. SP is expected to plan the deceleration ahead of the base turn so the required speed is set on entering the leg rather than during it."
+      }
     }
   ]
 }

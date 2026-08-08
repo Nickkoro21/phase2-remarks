@@ -465,6 +465,111 @@
         "4": "SP flew the complete aerobatic sequence on a consistent visual axis, using the horizon and selected ground references for every entry and recovery, while maintaining continuous awareness of the area boundaries and the altitude block.",
         "marginal": "SP used outside references but returned to the attitude indicator as the primary source in the higher-workload portions of each maneuver. SP should build the maneuvers on the outside picture with the instruments as a cross-check, and expect the axis to be held visually throughout the sequence."
       }
+    },
+    {
+      "id": "contact-12-tm01",
+      "label": "Right rudder against P-factor and nose track in the over-the-top maneuvers",
+      "mif_row": null,
+      "source": "technique:2.6.2 P-FACTOR",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not increasing right rudder as the angle of attack rose and the airspeed decayed in the pull-up, did not keep the aircraft coordinated where P-factor is strongest. The nose yawed left off the desired track by about 30 degrees over the top and the aircraft finished more than 20 degrees off the entry line, so the IP took the controls to realign the aircraft and recover.",
+        "1": "SP, due to insufficient right rudder pressure as the airspeed decreased in the vertical, did not use the wingtip, wingtip, ball crosscheck to keep the nose in the desired plane. The nose walked left and the aircraft came out about 20 degrees off the entry track, and rudder was added only after the IP called for it verbally.",
+        "2": "SP, due to late recognition that the ball was out as the airspeed slowed near the top, allowed the nose to yaw left off the desired track. The deviation reached about 15 degrees, SP stepped on the ball, restored coordinated flight and recovered on track without any IP input.",
+        "3": "SP applied right rudder progressively as the airspeed decreased in the pull-up and kept the ball centered over the top. The nose held the desired track and the aircraft recovered within 10 degrees of the entry line in every over-the-top maneuver.",
+        "4": "SP anticipated the left yaw tendency from P-factor and blended right rudder with the decreasing airspeed so the ball never displaced. The nose tracked the selected line through the vertical and the aircraft recovered within a few degrees of the entry heading.",
+        "marginal": "SP kept the nose track within standards but the ball sat slightly left through the slow part of every pull-up, so the aircraft consistently drifted toward the low side of the tolerance. SP should lead the rudder with the airspeed decrease and expect the ball centered and the nose on the reference line all the way over the top."
+      }
+    },
+    {
+      "id": "contact-12-tm02",
+      "label": "Energy management and maneuver sequencing across the aerobatic set",
+      "mif_row": null,
+      "source": "technique:6.5 ENERGY MANAGEMENT",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to no plan for the order of the maneuvers and their inherent energy gaining or losing properties, flew energy losers such as the Cloverleaf and the Split S back to back without a climb at 140 to 160 KIAS with MAX power to rebuild energy. The next maneuver was started more than 10 knots below the briefed entry airspeed and well below the working altitude, and the IP took the controls to climb the aircraft back into the block.",
+        "1": "SP, due to not manipulating power, drag and G-loading to restore the optimum energy of 180 to 200 KIAS between maneuvers, arrived at the following entry gate about 10 knots slow and low in the block. The energy was rebuilt only after the IP verbally directed a repositioning climb before the next maneuver.",
+        "2": "SP, due to a short repositioning after an energy losing maneuver, reached the next entry gate between 5 and 10 knots below the briefed airspeed. SP recognized the shortfall from the total energy state, extended the climb at MAX power and started the maneuver on parameters without IP input.",
+        "3": "SP sequenced the maneuvers so that the exit energy of one supported the entry of the next and repositioned where required. Entry airspeed for each maneuver was established within 10 knots fast and 5 knots slow of the briefed value at an altitude inside the block.",
+        "4": "SP planned the set around the energy gaining and losing properties of each maneuver and kept the aircraft near the optimum 180 to 200 KIAS between them. Every entry gate was met within a few knots of the briefed airspeed with no deliberate energy correction required.",
+        "marginal": "SP met the entry parameters within standards but each successive maneuver started slightly slower and lower than the previous one, leaving the block edge as the limiting factor. SP should plan the order of the maneuvers around their energy properties and expect to arrive at each entry gate on the briefed airspeed rather than at the low edge."
+      }
+    },
+    {
+      "id": "contact-12-tm03",
+      "label": "Lazy Eight - freezing pitch and bank through the horizon",
+      "mif_row": "Lazy Eight",
+      "source": "technique:6.21 LAZY 8 (Figure 6.5.)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to freezing the pitch and the bank as the nose passed through the horizon, did not keep the bank changing at the same rate as during the nose-up portion. The bank stopped near 55 degrees at the horizon crossing against the 80 to 90 degrees required, more than 20 degrees outside the briefed value, and the leaf degenerated into a descending turn until the IP took the controls.",
+        "1": "SP, due to holding the control pressures constant at the horizon instead of blending them continuously, did not develop the maximum bank as the nose passed the reference point. Bank at the crossing was about 20 degrees short of the briefed value and the leaf was reshaped only after the IP directed it verbally.",
+        "2": "SP, due to a brief hesitation in the control pressures as the nose came through the horizon, reached the reference point with the bank some 15 degrees short of the required value. SP resumed the blended pitch and bank change immediately and flew the second leaf with the correct maximum bank without IP input.",
+        "3": "SP kept pitch and bank changing continuously through the horizon crossing and pointed the aircraft at the reference point with the maximum bank inside 10 degrees of the briefed value. Both leaves were flown with the bank varying at the same rate in the nose-up and nose-down portions.",
+        "4": "SP blended aileron, rudder and elevator pressures so that neither pitch nor bank was ever held constant through the horizon. Maximum bank arrived exactly as the nose passed the reference point and both leaves were symmetric with negligible deviation.",
+        "marginal": "SP kept the bank within standards but the control pressures were momentarily static at each horizon crossing, so the maximum bank arrived slightly after the reference point. SP should keep pitch and bank changing continuously through the horizon and expect the maximum bank exactly on the reference point."
+      }
+    },
+    {
+      "id": "contact-12-tm04",
+      "label": "Barrel Roll - back pressure schedule past 90 degrees of bank",
+      "mif_row": "Barrel Roll",
+      "source": "technique:6.22 BARREL ROLL (Figure 6.6.)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to holding excessive back pressure past 90 degrees of bank, did not relax the elevator where gravity acts in the same direction as the lift vector. The nose was pulled inside the circle around the reference point, the roll finished nose-low and more than 20 degrees off the entry heading, and the IP took the controls to recover the aircraft.",
+        "1": "SP, due to not reducing the back pressure after 90 degrees of bank and not increasing aileron deflection at the reduced airspeed, did not reach the inverted attitude displaced from the reference point as at the beginning. The aircraft rolled out about 20 degrees off the entry heading and the nose track was corrected only after the IP called it verbally.",
+        "2": "SP, due to back pressure held slightly long approaching the inverted point, let the nose cut inside the circle and the recovery develop some 15 degrees off the entry heading. SP relaxed the elevator, increased aileron in the last quarter of the roll and completed the maneuver on the reference point without IP input.",
+        "3": "SP relaxed the back pressure passing 90 degrees of bank and increased it again in the last quarter of the roll, keeping positive seat pressure throughout. The nose described the circle around the reference point and the aircraft rolled out wings level within 10 degrees of the entry heading.",
+        "4": "SP scheduled the elevator pressure against the changing direction of the lift vector so that the distance from the reference point stayed constant through the whole roll. The aircraft finished wings level abeam the reference point on the entry heading with negligible deviation.",
+        "marginal": "SP completed the roll within standards but the back pressure was reduced late each time past 90 degrees of bank, so the nose tracked slightly inside the reference circle. SP should relax the elevator as soon as the bank passes 90 degrees and expect the distance from the reference point to stay constant."
+      }
+    },
+    {
+      "id": "contact-12-tm05",
+      "label": "Cuban Eight - roll direction on the second half of the maneuver",
+      "mif_row": "Cuban Eight",
+      "source": "technique:6.26 CUBAN-8 (Figure 6.10.)",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP, due to not verbalizing the roll direction on the first half of the maneuver, executed the half roll on the 45-degree down line of the second half in the wrong direction. The figure no longer closed on itself, the aircraft finished more than 20 degrees off the entry heading in an unplanned attitude, and the IP took the controls.",
+        "1": "SP, due to uncertainty about the roll direction required on the second half, delayed the coordinated half roll while descending on the 45-degree line. The second leaf was displaced from the first and the aircraft completed about 20 degrees off the entry heading, with the direction confirmed only after the IP called it verbally.",
+        "2": "SP, due to a momentary hesitation over the roll direction at the 45-degree nose-low point, started the half roll late on the second half. The completion heading was some 15 degrees off the entry heading, and SP identified the error, corrected the nose track and closed the figure without IP input.",
+        "3": "SP verbalized the roll direction on the first half and executed the half roll of the second half in the opposite direction as briefed. Both leaves were flown in the same vertical plane and the maneuver was completed within 10 degrees of the entry heading.",
+        "4": "SP called the roll direction aloud on the first leaf and reversed it exactly on the second, freezing the stick momentarily at 45 degrees nose-low before each coordinated roll. The figure closed on itself and the aircraft finished on the entry heading with negligible deviation.",
+        "marginal": "SP flew both halves within standards but the roll direction was never verbalized, so the second half was started only after a visual check of the ground reference. SP should call the roll direction on the first leaf and expect the reversal on the second leaf to be immediate at the 45-degree nose-low point."
+      }
+    },
+    {
+      "id": "contact-12-tm06",
+      "label": "Chandelle - uniform nose track rate and rollout from the 135-degree point",
+      "mif_row": "Chandelle",
+      "source": "technique:6.28 CHANDELLE (Figure 6.12.)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a rate of climb too fast for the airspeed available, did not keep the nose rising at a uniform rate and approached the stall before completing 180 degrees of turn. The bank washed off more than 20 degrees from the briefed 60 degrees as the aircraft buffeted short of the completion point, and the IP took the controls instead of the maneuver being discontinued by SP.",
+        "1": "SP, due to a rate of pitch change too slow to match the turn, reached the 180-degree point before attaining the maximum pitch attitude and did not start the rollout at the 135-degree point. About 20 degrees of bank were still applied at the completion point, and the wings were leveled only after the IP directed it verbally.",
+        "2": "SP, due to back pressure not increased as the vertical component of lift decreased above the horizon, let the nose track rate fall off in the second half of the turn. The rollout was started late and some 15 degrees of bank remained at the 180-degree point, which SP recognized and removed at once without IP input.",
+        "3": "SP kept the nose rising at a uniform rate with 60 degrees of bank, started the rollout at the 135-degree point and timed it so the wings came level as the nose reached the highest pitch attitude. Bank at the completion point was within 10 degrees of level with the nose 40 to 45 degrees nose-high.",
+        "4": "SP blended the increasing back pressure with the rollout so the nose tracked a straight diagonal line to the horizon at a constant rate. The wings became level exactly at the 180-degree point with 40 to 45 degrees of pitch and negligible residual bank.",
+        "marginal": "SP completed the turn within standards but the rollout was begun slightly after the 135-degree point each time, leaving a small amount of bank at the completion point. SP should start the rollout at the 135-degree point while keeping the nose rising and expect the wings level exactly as the maximum pitch attitude is reached."
+      }
+    },
+    {
+      "id": "contact-12-tm07",
+      "label": "Split S - angle of attack in the pull-through for maximum nose track",
+      "mif_row": "Split S",
+      "source": "technique:6.25 SPLIT-S (Figure 6.9.)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not pulling up to 15,5 units as the aircraft passed the horizon inverted, did not achieve the maximum nose track available and let the aircraft accelerate in the dive. Recovery airspeed was more than 15 knots above the briefed value with altitude loss well beyond the expected figure for the power set, and the IP took the controls to complete the pull-out.",
+        "1": "SP, due to a shallow pull that kept the angle of attack far below 15,5 units, did not shorten the nose track in the pull-through and did not perform an adequate anti-G strain as the loading built. The aircraft returned to level flight about 15 knots fast, and the pull was increased only after the IP called for it verbally.",
+        "2": "SP, due to back pressure relaxed early in the pull-through, allowed the angle of attack to drop below the value required for maximum nose track. Airspeed at recovery was between 10 and 15 knots fast, and SP restored the pull toward 15,5 units and completed the recovery on parameters without IP input.",
+        "3": "SP pulled the aircraft toward 15,5 units without stalling through the pull-through and held a proper anti-G strain as the loading increased. The aircraft returned to level flight within 10 knots fast and 5 knots slow of the briefed airspeed with the expected altitude loss.",
+        "4": "SP flew the pull-through at the maximum angle of attack available without approaching the stall, keeping the nose track as tight as the aircraft allowed. Recovery was completed within a few knots of the briefed airspeed and with the altitude loss matching the briefed figure for the power setting.",
+        "marginal": "SP recovered within standards but the angle of attack in the pull-through stayed consistently below the 15,5 units available, so the airspeed sat at the fast edge of the band at the horizon. SP should build the pull toward maximum angle of attack without stalling and expect the recovery airspeed on the briefed value rather than at the upper tolerance."
+      }
     }
   ]
 }

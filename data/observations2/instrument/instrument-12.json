@@ -112,6 +112,111 @@
         "4": "SP flew the intercepts with altitude, airspeed and heading effectively constant, with deviations not exceeding 50 ft and 5 KIAS. Trim was used so that the aircraft held the parameters while attention was given to the course, and the cross-check remained continuous through every turn.",
         "marginal": "SP held the Basic A/C Control Criteria inside the standards, but altitude drifted to about 120 ft during each intercept turn and was recovered only after the turn was completed. The scan narrows towards the navigation display whenever the intercept problem is being solved. SP is expected to keep the cross-check running through the turn so that altitude does not move more than 50 ft."
       }
+    },
+    {
+      "id": "instrument-12-tm01",
+      "label": "INBOUND INTERCEPT ANGLE AT OR BEYOND THE 90 DEG INDEX",
+      "mif_row": null,
+      "source": "technique:7.21 COURSE INTERCEPTS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an inbound intercept heading built with the course arrow below the 90 deg index, did not keep the intercept angle less than 90 deg as the technique requires. The aircraft closed the course almost perpendicular to it, the CDI swung across the case faster than the rollout could absorb and the deviation opened beyond 8 deg on the far side. IP intervened and directed the heading required to regain the assigned radial.",
+        "1": "SP, due to an intercept angle taken up to the 90 deg index for a displacement that did not call for it, did not limit the inbound intercept angle as the technique requires. Closure could not be judged from the needle rate and the overshoot settled at 8 deg on the opposite side of the course. SP reduced the angle and re-intercepted only after the IP called the excessive intercept angle.",
+        "2": "SP, due to an inbound intercept angle selected close to the 90 deg index for a small displacement, did not keep the course arrow in the upper half of the case as the technique requires. Closure was faster than the lead allowed and the deviation reached 7 deg past the course. SP recognized the geometry, reduced the intercept angle and settled within 5 deg without IP intervention.",
+        "3": "SP kept every inbound intercept angle less than 90 deg, with the course arrow above the 90 deg index, and sized the angle to the number of degrees off the selected course. Closure stayed controllable and the assigned radial was joined within 5 deg on each intercept.",
+        "4": "SP selected inbound intercept angles well inside the 90 deg limit and varied them with both the displacement and the rate of intercept desired. The course arrow stayed high in the case on every intercept, closure was uniform and the radial was joined with deviations not exceeding 1 to 2 deg.",
+        "marginal": "SP kept the inbound intercept angles below 90 deg, but the course arrow was worked close to the 90 deg index whenever the displacement was large, and the resulting closure left about 4 deg of overshoot before the course settled. The deviation stayed inside the standard, yet the angle is being chosen at the edge of the limit rather than for the rate of intercept desired. SP is expected to keep the course arrow clearly above the 90 deg index so that closure remains controllable at rollout."
+      }
+    },
+    {
+      "id": "instrument-12-tm02",
+      "label": "TURN IN THE SHORTER DIRECTION TOWARD THE CDI",
+      "mif_row": null,
+      "source": "technique:7.21 COURSE INTERCEPTS",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP, due to a turn started the longer way round instead of in the shorter direction toward the CDI, did not place the head of the course arrow in the top half of the instrument case. The aircraft turned away from the assigned course through more than 180 deg of heading change and the deviation opened past 8 deg while the turn continued. IP intervened and reversed the turn onto a usable intercept heading.",
+        "1": "SP, due to a direction of turn taken from the heading difference alone instead of from the position of the CDI, did not turn the shorter way toward the needle. The intercept was set up from the wrong side, the deviation stood at 8 deg and showed no closure on the course. SP reversed the turn only after the IP identified the wrong direction verbally.",
+        "2": "SP, due to a turn begun before the side of the CDI was checked, did not turn in the shorter direction toward the course on the first intercept. The deviation grew to 7 deg during the reversal of the turn. SP identified the error when the head of the course arrow left the top half of the case, reversed the turn and regained the course within 5 deg without IP intervention.",
+        "3": "SP turned in the shorter direction toward the CDI on every intercept, placing the head of the course arrow in the top half of the instrument case before rolling out on the intercept heading. The direction of turn was correct throughout and the assigned course was joined within 5 deg.",
+        "4": "SP established the direction of turn from the side of the CDI immediately on each clearance, with no hesitation and no reversal at any point. The head of the course arrow was in the top half of the case from the start of every turn and the course was joined with deviations not exceeding 1 to 2 deg.",
+        "marginal": "SP turned the shorter way toward the CDI on each intercept, but the direction was confirmed after the bank was already established rather than before it, and one intercept was flown out to about 4 deg while the geometry was checked. Deviations stayed inside the standard while the direction of turn is still being verified late. SP is expected to read the side of the CDI and place the head of the course arrow in the top half of the case before starting the turn."
+      }
+    },
+    {
+      "id": "instrument-12-tm03",
+      "label": "TO INDICATION CHECK AFTER SETTING THE INBOUND COURSE",
+      "mif_row": null,
+      "source": "technique:7.21 COURSE INTERCEPTS",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an omitted check for a TO indication after setting the inbound course, did not confirm that the radial had been converted into an inbound course before starting the intercept. The reciprocal was left in the course window, corrections were flown in the direction opposite to the needle and the deviation ran beyond 8 deg. IP intervened, reset the inbound course and directed the intercept.",
+        "1": "SP, due to a course set from the radial without checking the TO or FROM indication, did not verify the course reference before the intercept. The CDI was displaced with a FROM indication on an inbound leg, the corrections did not close the course and the deviation held at 8 deg. SP reset the inbound course only after the IP called for the TO check.",
+        "2": "SP, due to the TO indication being read only after the intercept turn had begun, did not check the course window before starting the intercept. The first correction was applied against a reversed sense and the deviation reached 7 deg. SP caught the FROM indication, reset the inbound course and regained the radial within 5 deg without IP intervention.",
+        "3": "SP set the inbound course, converting the assigned radial where required, and checked for a TO indication before every intercept. Sensing was correct throughout, corrections closed the course and the deviation stayed within 5 deg.",
+        "4": "SP converted each assigned radial to the inbound course and confirmed the TO indication as part of the setup, before any turn was started. Sensing was verified on every intercept without prompting and the course was flown with deviations not exceeding 1 to 2 deg.",
+        "marginal": "SP checked the TO indication on each inbound course, but the check was made only as the turn was rolling in, and on one intercept the sense was confirmed with the CDI already about 4 deg out. The deviations remained inside the standard while verification is still being done after the turn is committed. SP is expected to check for the TO indication immediately after setting the inbound course and before the intercept turn."
+      }
+    },
+    {
+      "id": "instrument-12-tm04",
+      "label": "CONSTRUCTION OF THE INBOUND INTERCEPT HEADING FROM THE BEARING POINTER",
+      "mif_row": null,
+      "source": "technique:7.21 COURSE INTERCEPTS",
+      "hf_concept": "hf-lack-of-knowledge",
+      "texts": {
+        "0": "SP, due to an inbound intercept heading that was estimated instead of being built from the course arrow to the bearing pointer and 30 deg beyond it, did not determine a heading that would close the assigned course. The heading flown fell short of the bearing pointer, the aircraft paralleled the radial and the deviation stayed beyond 8 deg with no closure. IP intervened and set the correct intercept heading.",
+        "1": "SP, due to an intercept heading taken to the bearing pointer without continuing 30 deg past it, did not establish an angle that would bring the aircraft onto the assigned course. Closure was negligible and the deviation remained at the 8 deg limit for the whole leg. SP added the required intercept angle only after the IP prompted with the heading to fly.",
+        "2": "SP, due to the 30 deg increment being applied from the course arrow instead of from the bearing pointer, did not build the inbound intercept heading as the technique describes. The resulting angle was too small for the displacement and the deviation reached 7 deg before closure began. SP rebuilt the heading from the bearing pointer and joined the course within 5 deg without IP intervention.",
+        "3": "SP built each inbound intercept heading from the course arrow, up the case to the bearing pointer and 30 deg beyond it, and flew that heading until the rollout. The angle produced steady closure and the assigned course was joined within 5 deg on every intercept.",
+        "4": "SP produced the inbound intercept heading immediately on each clearance, moving from the course arrow to the bearing pointer and adding the intercept increment without hesitation. Closure was uniform, no heading required revision and the course was joined with deviations not exceeding 1 to 2 deg.",
+        "marginal": "SP built the inbound intercept headings from the bearing pointer correctly, but the increment was worked out only after the turn had started and one heading was refined in flight, leaving the deviation at about 4 deg when closure finally began. Accuracy is inside the standard while the heading is being produced late. SP is expected to read the course arrow, the bearing pointer and the intercept increment as one step before the turn."
+      }
+    },
+    {
+      "id": "instrument-12-tm05",
+      "label": "OUTBOUND INTERCEPT HEADING AND THE 45 DEG INTERCEPT ANGLE",
+      "mif_row": null,
+      "source": "technique:7.21 COURSE INTERCEPTS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an outbound intercept heading that was not built from the tail of the bearing pointer to the course arrow and 45 deg beyond it, did not establish an angle capable of intercepting the outbound course. The heading flown diverged from the desired outbound course and the deviation ran beyond 8 deg and continued to grow. IP intervened and set the outbound intercept heading.",
+        "1": "SP, due to an outbound intercept angle reduced well below the 45 deg the technique recommends, did not obtain a usable rate of intercept on the outbound course. The CDI moved so slowly that the deviation held at 8 deg for the whole leg. SP increased the intercept angle only after the IP directed the heading to fly.",
+        "2": "SP, due to the 45 deg increment being applied from the tail of the bearing pointer instead of from the course arrow, did not build the outbound intercept heading as the technique describes. The angle was in error and the deviation reached 7 deg before the course began to close. SP rebuilt the heading from the course arrow and joined the outbound course within 5 deg without IP intervention.",
+        "3": "SP built each outbound intercept heading from the tail of the bearing pointer, up the case to the course arrow and 45 deg beyond it, having first set the desired outbound course. The rate of intercept was suitable and the outbound course was joined within 5 deg.",
+        "4": "SP set the desired outbound course and produced the intercept heading with the standard 45 deg angle without hesitation, adjusting it only where the rate of intercept desired called for it. Every outbound course was joined smoothly with deviations not exceeding 1 to 2 deg.",
+        "marginal": "SP used the standard 45 deg outbound intercept angle and joined the course inside the standard, but the angle was applied without regard to the displacement, so the small intercepts were flown at an unnecessarily high rate and closed with about 4 deg of overshoot. The result meets the standard while the angle is being used as a fixed value. SP is expected to start from 45 deg and adjust it to the rate of intercept desired."
+      }
+    },
+    {
+      "id": "instrument-12-tm06",
+      "label": "DRIFT CORRECTION COMPUTED FROM CROSSWIND AND TRUE AIRSPEED",
+      "mif_row": null,
+      "source": "technique:7.21 COURSE INTERCEPTS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a drift correction that was never computed from the crosswind component and the true airspeed in NM per minute, did not correct for winds while maintaining the assigned course. The heading was held equal to the course, drift was allowed to run unopposed and the deviation passed 8 deg and continued to open. IP intervened and set the heading required to hold the course.",
+        "1": "SP, due to a drift correction guessed instead of derived from the crosswind component divided by the true airspeed in NM per minute, did not apply a correction that matched the wind. The correction was several degrees short of the drift and the deviation stabilized at the 8 deg limit. SP recomputed and applied an adequate correction only after the IP called the drift.",
+        "2": "SP, due to a crosswind component estimated from the forecast rather than from the wind actually observed, did not compute a drift correction adequate for the leg. The correction was undersized and the deviation reached 7 deg before it was noticed. SP recomputed the correction from the crosswind and the airspeed in NM per minute and regained the course inside 5 deg without IP intervention.",
+        "3": "SP computed the drift correction by dividing the crosswind component by the true airspeed in NM per minute and applied it as soon as the course was joined. The wind correction angle held the deviation within 5 deg on both the inbound and the outbound legs.",
+        "4": "SP computed the drift correction from the crosswind component and the true airspeed before joining the course and applied it at rollout, so that the CDI stayed centred from the start of the leg. The correction was refined by no more than 1 to 2 deg and the course was held with no visible needle movement.",
+        "marginal": "SP computed a drift correction from the crosswind component and the airspeed, but rounded it down and held the reduced value, so the course was maintained with a slow drift that reached about 4 deg before each additional correction. Accuracy stays inside the standard while the computed correction is not being applied in full. SP is expected to apply the correction obtained from the crosswind divided by the true airspeed in NM per minute and to refine it from the observed drift."
+      }
+    },
+    {
+      "id": "instrument-12-tm07",
+      "label": "MARKING THE INTERCEPT HEADING WITH THE HEADING BUG",
+      "mif_row": null,
+      "source": "technique:7.21 COURSE INTERCEPTS",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to an intercept heading that was never marked with the heading bug and was then lost while the navigation display was being worked, did not fly the heading computed for the intercept. The rollout was made on a heading far from the one required, the course was not closed and the deviation exceeded 8 deg. IP intervened and directed the intercept heading.",
+        "1": "SP, due to the heading bug being left where the previous leg had set it, did not have the computed intercept heading marked during the turn. The rollout was 10 deg off the required heading and the deviation remained at the 8 deg limit until the IP called the heading error. SP then flew the computed heading, but only after the prompt.",
+        "2": "SP, due to the heading bug being set only after the turn had been started, did not have the intercept heading marked at the moment of rollout. The rollout was about 8 deg off the computed heading and the deviation reached 7 deg before the error was seen. SP set the bug, corrected onto the computed heading and joined the course within 5 deg without IP intervention.",
+        "3": "SP marked the computed intercept heading with the heading bug before each turn and rolled out within 5 deg of it. The bug was reset for the next leg as the course was joined and no intercept heading had to be recalled from memory.",
+        "4": "SP set the heading bug on the computed intercept heading as part of the solution and rolled out on it within 2 deg on every intercept. The bug was moved to the wind corrected heading once the course was joined, so the reference on the case always matched the heading being flown.",
+        "marginal": "SP marked the intercept headings with the heading bug and held them inside the standard, but the bug was set as the bank was going in rather than before the turn, and one rollout finished about 4 deg off the computed heading. Performance meets the standard while the reference is still being set under time pressure. SP is expected to mark the intercept heading with the bug as soon as it is computed and before the turn is started."
+      }
     }
   ]
 }

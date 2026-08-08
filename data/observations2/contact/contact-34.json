@@ -3,9 +3,14 @@
   "item_name": "GO AROUND",
   "category": "contact",
   "schema": "v2-trunk",
-  "mif_numbers": [34],
+  "mif_numbers": [
+    34
+  ],
   "mif_rows": [
-    {"sn": 34, "row_name": "Go Around"}
+    {
+      "sn": 34,
+      "row_name": "Go Around"
+    }
   ],
   "error_modes": [
     {
@@ -141,6 +146,126 @@
         "3": "SP levelled off at the landing pattern altitude reported in LAP within 150 feet and held it around the pattern. The climb was arrested at the correct point with the power reduced in anticipation.",
         "4": "SP captured and held the landing pattern altitude reported in LAP with negligible deviation, arresting the climb exactly at the published value. The level off required no subsequent correction.",
         "marginal": "SP remained within the tolerance around the landing pattern altitude reported in LAP, but the level off was consistently completed above the published value before being brought back. The corrections were made by SP without prompting. SP is expected to begin the level off earlier and reduce power in anticipation so the altitude is captured directly."
+      }
+    },
+    {
+      "id": "contact-34-tm01",
+      "label": "Power application to MAX at or below 500 feet AGL",
+      "mif_row": 34,
+      "source": "technique:5.15 GO-AROUND",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, having initiated the go around at or below 500 feet AGL, did not advance the PCL to MAX as the technique requires and set only an intermediate power position. The aircraft did not establish a climb, the descent continued and the airspeed decayed more than 20 knots below the go around target while the altitude fell more than 300 feet below the initiation point. IP took the throttle to MAX and rotated the aircraft to stop the sink.",
+        "1": "SP, treating a low altitude go around as if it were made above 500 feet AGL, did not advance the PCL to MAX and used power as required instead. The climb was late by several seconds and the aircraft sank to the limit of about 300 feet below the initiation altitude with the airspeed about 20 knots low. Full power was set only after IP called for MAX twice, without any control input by IP.",
+        "2": "SP, hesitating on the throttle at the go around gate, did not reach MAX power in one continuous movement and left the PCL short of the stop for a few seconds. The delayed acceleration allowed a sink between 150 and 300 feet and an airspeed loss between 10 and 20 knots. SP recognized the shortfall on the torque and airspeed indications and completed the advance to MAX without prompting.",
+        "3": "SP advanced the PCL to MAX in a single positive movement at the go around gate at or below 500 feet AGL and arrested the sink immediately. Altitude loss stayed within 150 feet of the initiation point and the airspeed remained within 10 knots of the target throughout the transition.",
+        "4": "SP applied MAX power exactly at the moment of the go around decision, with the PCL reaching the stop before any further descent developed. The sink was arrested with negligible altitude loss and the airspeed never varied by more than a few knots from the go around target.",
+        "marginal": "SP did reach MAX power at the low altitude go around, but the advance was made in two stages and the aircraft settled close to the acceptable sink before the climb was established. All parameters stayed within standards and no prompting was needed. SP is expected to move the PCL to the stop in one continuous action at or below 500 feet AGL rather than modulating power."
+      }
+    },
+    {
+      "id": "contact-34-tm02",
+      "label": "Landing gear retraction with a second touchdown still possible",
+      "mif_row": 34,
+      "source": "technique:5.15 GO-AROUND",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP, reacting to the go around by running the clean up flow from memory, raised the landing gear while the aircraft was still settling after a balloon and a second touchdown was possible. SP did not wait to be certain the aircraft would not touch down and did not confirm a positive climb indication, and the aircraft was left below 300 feet of the initiation altitude in a transient configuration. IP blocked the gear handle and took the controls to secure the climb.",
+        "1": "SP selected the gear up immediately after the power advance, without confirming that the aircraft would not touch down again following the bounce. The aircraft was still within a few feet of the runway and the positive climb indication appeared only afterwards, with the altitude at the limit of the acceptable band. The selection was corrected after IP called for the gear to stay down, with no control intervention.",
+        "2": "SP moved the hand to the gear handle before a positive rate was indicated after the bounce, delaying the pitch attention required at that moment. SP stopped the selection, verified that the aircraft was climbing and only then retracted the gear, with the altitude excursion contained between 150 and 300 feet. The recognition and correction were made by SP without prompting.",
+        "3": "SP retracted the landing gear only after being certain that the aircraft would not touch down and after a positive climb indication was confirmed. The sequence kept the altitude within 150 feet of the initiation point and no configuration change was made while a second touchdown remained possible.",
+        "4": "SP held the gear down through the bounce, called the positive climb indication and then retracted it at exactly the right moment. The decision was faultless and the aircraft climbed away with negligible altitude and airspeed deviation.",
+        "marginal": "SP kept the gear down until a climb was indicated, but the selection was made at the earliest possible instant with only marginal separation from the runway. Nothing was outside standards and the judgement was independent. SP is expected to confirm the positive climb indication deliberately before touching the gear handle, especially after a balloon or a bounce."
+      }
+    },
+    {
+      "id": "contact-34-tm03",
+      "label": "Pitch compensation for the sink as the flaps retract",
+      "mif_row": 34,
+      "source": "technique:5.15 GO-AROUND",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, during the clean up, did not raise the nose slightly as the flaps retracted and did not counteract the tendency of the aircraft to sink. The aircraft dropped more than 300 feet from the go around profile and the airspeed diverged by more than 20 knots from the target while the flaps traveled. IP applied back pressure and reset the attitude to recover the climb.",
+        "1": "SP left the pitch attitude unchanged through the flap retraction and did not compensate for the loss of lift. The resulting sink reached about 300 feet and was arrested only after IP called for back pressure, with the airspeed at the edge of the acceptable band. The correction came from SP after prompting and no control intervention was needed.",
+        "2": "SP applied the compensating back pressure late in the flap travel and did not match the pitch change to the configuration change. The sink developed to between 150 and 300 feet and the airspeed varied between 10 and 20 knots before SP detected the trend on the vertical speed indication and restored the climb attitude without assistance.",
+        "3": "SP raised the nose slightly as the flaps retracted and countered the sink tendency as it developed, holding the flight path within 150 feet and the airspeed within 10 knots. The configuration change produced no noticeable change of the climb profile.",
+        "4": "SP blended the pitch change with the flap retraction so precisely that no sink was perceptible on the instruments. Altitude and airspeed remained within a few units of the go around targets throughout the clean up.",
+        "marginal": "SP did counteract the sink during flap retraction, but the back pressure was reactive rather than anticipatory and the flight path dipped close to the acceptable deviation each time. All corrections were made by SP and remained inside standards. SP is expected to lead the flap travel with a small pitch increase so the sink never appears."
+      }
+    },
+    {
+      "id": "contact-34-tm04",
+      "label": "Offset turn away from the runway and bank control",
+      "mif_row": 34,
+      "source": "technique:5.15 GO-AROUND",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, in order to clear the runway, over banked the offset turn instead of rolling smoothly into a shallow banked coordinated turn at safe airspeed and altitude. The aircraft turned well past the approximately 20 degrees required, the heading error exceeded 10 degrees when parallel flight was resumed and the increased load factor drove the aircraft toward the onset of stall characteristics. IP leveled the wings and took the controls to restore a safe flight path.",
+        "1": "SP established the offset with an aggressive roll before the aircraft had attained safe airspeed and altitude, and did not keep the turn shallow and coordinated. The offset overshot the briefed value and the heading when paralleling the runway was off by about 10 degrees, with the ball displaced through the turn. The wings were leveled after repeated calls by IP and no control intervention followed.",
+        "2": "SP used more bank than the shallow banked technique requires when offsetting and did not turn back to parallel the runway at the planned point. The heading deviation reached between 5 and 10 degrees before SP recognized the overshoot, reduced the bank and returned to a track parallel to the runway without prompting.",
+        "3": "SP offset approximately 20 degrees away from the runway with a shallow banked coordinated turn made only after safe airspeed and altitude were attained, then turned back to parallel the runway when well clear. The heading was held within 5 degrees of the intended track and the turn was flown in balance.",
+        "4": "SP flew the offset exactly as described, rolling smoothly into a shallow coordinated turn and paralleling the runway with negligible heading error. The maneuver was completed with no perceptible variation of bank, balance or climb rate.",
+        "marginal": "SP kept the offset within standards but used slightly more bank than the shallow banked technique intends and began the turn early in the acceleration. The track parallel to the runway was re-established without prompting and the deviations stayed inside limits. SP is expected to attain safe airspeed and altitude first and to hold the bank clearly shallow when clearing the runway."
+      }
+    },
+    {
+      "id": "contact-34-tm05",
+      "label": "Acceleration band and level off at 500 to 700 feet above the terrain",
+      "mif_row": 34,
+      "source": "technique:5.15 GO-AROUND",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, after the clean up, did not allow the aircraft to accelerate between 140 and 200 KIAS before changing the flight path and did not stabilize at 500 to 700 feet above the terrain. The aircraft climbed away from the intended band by more than 300 feet with the airspeed more than 20 knots outside the acceleration range, and the request for closed pattern or the report to the North or South point was not made. IP took the controls to set the correct profile and made the radio call.",
+        "1": "SP began the climb before the aircraft had accelerated into the 140 to 200 KIAS band and did not level at the height above the terrain that the technique requires. The height error reached about 300 feet and the airspeed about 20 knots outside the band, and the correction followed only after IP prompted for both the speed and the level off. The subsequent request was delayed but no intervention on the controls occurred.",
+        "2": "SP anticipated the level off and did not hold the acceleration long enough for the aircraft to settle inside the 140 to 200 KIAS band. The height varied between 150 and 300 feet from the intended 500 to 700 feet above the terrain and the airspeed sat between 10 and 20 knots outside the band before SP corrected power and attitude without prompting and then made the required request.",
+        "3": "SP allowed the aircraft to accelerate between 140 and 200 KIAS and then established 500 to 700 feet above the terrain, holding the height within 150 feet and the airspeed within 10 knots of the planned value. The request for closed pattern was made promptly and correctly.",
+        "4": "SP managed the acceleration and the level off so accurately that the aircraft settled in the middle of the required band with negligible deviation in both height and airspeed. The radio request followed immediately, with the profile fully stabilized.",
+        "marginal": "SP reached the required height above the terrain and stayed inside the acceleration band, but the level off was captured from above each time and the airspeed hovered at the upper edge of the band. No deviation exceeded the standards and no prompting was required. SP is expected to plan the level off earlier and hold the acceleration in the middle of the 140 to 200 KIAS range."
+      }
+    },
+    {
+      "id": "contact-34-tm06",
+      "label": "Recognition of the abnormal pattern situation and query of the tower",
+      "mif_row": null,
+      "source": "technique:5.14 ABNORMAL PATTERN PROCEDURES",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP did not recognize the abnormal situation developing in the traffic pattern and, being in doubt about the location of the preceding traffic, did not query the tower controller and did not go around. The approach was continued into a conflicting geometry, with the pattern altitude broken by more than 300 feet and the spacing reduced to an unsafe value. IP terminated the approach and initiated the go around.",
+        "1": "SP perceived that the pattern was abnormal but did not query the tower about the location of the traffic and delayed the go around while trying to sight the other aircraft. The deviation from the pattern profile reached the limit of about 300 feet before the maneuver was started, and the decision came after IP pointed out the conflict twice. No control intervention was required.",
+        "2": "SP was slow to interpret the developing traffic conflict and did not immediately ask the tower for the position of the preceding aircraft. Once the doubt was recognized, SP queried the controller, discontinued the approach and kept the resulting deviations between 150 and 300 feet, correcting them without any prompting.",
+        "3": "SP recognized the abnormal pattern situation early, queried the tower controller about the location of the traffic and executed the go around before the geometry deteriorated. Pattern parameters remained within 150 feet and the spacing was restored without further action.",
+        "4": "SP identified the developing conflict at the first indication, obtained the traffic position from the tower and discontinued the approach so early that no deviation of consequence was ever produced. Awareness of the pattern and of the other aircraft was complete throughout.",
+        "marginal": "SP handled the abnormal pattern situation within standards but the query to the tower and the decision to discontinue came at the last useful moment. The deviations stayed inside the limits and no assistance was needed. SP is expected to resolve doubt about traffic location by asking the controller as soon as it arises rather than after attempting to sight the aircraft."
+      }
+    },
+    {
+      "id": "contact-34-tm07",
+      "label": "Stall indications in the pattern with ground track disregarded",
+      "mif_row": null,
+      "source": "technique:5.14 ABNORMAL PATTERN PROCEDURES",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, on receiving stall indications during the go around, continued to fly the ground track instead of executing the stall recovery procedures and disregarding the ground track as the manual directs. The recovery was not initiated, the buffet persisted and the aircraft lost more than 300 feet with the airspeed more than 20 knots below the target. IP took the controls, unloaded the aircraft and completed the recovery.",
+        "1": "SP recognized the stall indications but kept correcting toward the runway track before applying the recovery, so the required actions were not given priority. The recovery was completed only after IP directed it, with the height loss at the limit of about 300 feet and the airspeed about 20 knots low. No control input by IP was necessary.",
+        "2": "SP hesitated briefly between holding the intended track and executing the stall recovery when the indications appeared, and did not disregard the ground track immediately. SP then unloaded the aircraft and recovered correctly, containing the height loss between 150 and 300 feet and returning the airspeed to the target without prompting.",
+        "3": "SP responded to the stall indications by executing the stall recovery procedures at once and disregarding the ground track until the aircraft was flying again. Height loss stayed within 150 feet and the airspeed was restored within 10 knots of the target before the track was reacquired.",
+        "4": "SP reacted to the first stall indication with an immediate and correct recovery, giving the ground track no consideration until the aircraft was clean of the buffet. The height and airspeed excursions were negligible and the pattern was rejoined smoothly afterwards.",
+        "marginal": "SP gave priority to the stall recovery and disregarded the ground track as required, but the reaction followed a perceptible pause after the first indication. All parameters remained within standards and the recovery was correct. SP is expected to convert the first stall indication into an immediate recovery without weighing the ground track at all."
+      }
+    },
+    {
+      "id": "contact-34-tm08",
+      "label": "Go around from a balloon or bounce in the flare",
+      "mif_row": null,
+      "source": "technique:5.20 LANDING IRREGULARITIES",
+      "hf_concept": "hf-startle-effect",
+      "texts": {
+        "0": "SP, after an abrupt change in pitch in the flare produced a balloon, did not apply MAX power and did not adjust the pitch attitude, and tried to hold the aircraft off by raising the nose above the landing attitude while it continued to settle. The aircraft approached the onset of stall characteristics with the airspeed more than 20 knots below the target and no go around was initiated although it was unsafe to continue the landing. IP applied MAX power, set the landing attitude and took the aircraft away from the runway.",
+        "1": "SP responded to the bounce with power but not with MAX power, and raised the nose slightly above the landing attitude instead of holding it. The airspeed fell about 20 knots below the target and the aircraft was in a high sink condition at the limit of what remained safe, and the go around was started only after IP called for it. The recovery was flown by SP with no intervention on the controls.",
+        "2": "SP recognized the balloon late and applied power and pitch correction in an imprecise sequence, so the landing attitude was not held steady while the aircraft settled. The airspeed excursion reached between 10 and 20 knots before SP applied MAX power, stabilized the attitude and decided to go around without any prompting.",
+        "3": "SP recognized the balloon at once, applied MAX power, adjusted the pitch attitude and went around because it was unsafe to continue the landing. The airspeed stayed within 10 knots of the target and the aircraft never departed from the landing attitude during the transition.",
+        "4": "SP handled the flare irregularity faultlessly, applying MAX power and setting the correct pitch attitude in one coordinated action, and the aircraft flew away from the runway with negligible airspeed and attitude excursion. The decision to go around was made immediately and communicated clearly.",
+        "marginal": "SP dealt with the balloon within standards, applying MAX power and holding the landing attitude, but the pitch correction was slightly coarse and the airspeed approached the low end of the acceptable band before the go around was established. No prompting was required and the outcome was safe. SP is expected to make smaller and smoother pitch inputs in the flare so that a balloon does not develop in the first place."
       }
     }
   ]

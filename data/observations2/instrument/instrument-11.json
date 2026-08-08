@@ -3,9 +3,14 @@
   "item_name": "CONFIDENCE MANEUVERS",
   "category": "instrument",
   "schema": "v2-trunk",
-  "mif_numbers": [11],
+  "mif_numbers": [
+    11
+  ],
   "mif_rows": [
-    { "sn": 11, "row_name": "Confidence Maneuvers" }
+    {
+      "sn": 11,
+      "row_name": "Confidence Maneuvers"
+    }
   ],
   "error_modes": [
     {
@@ -126,6 +131,111 @@
         "3": "SP maintained an effective instrument cross-check throughout both confidence maneuvers, sampling attitude, altitude, airspeed and heading at a rate that kept every deviation small. Corrections were made from the instruments as trends appeared rather than after they developed, and all parameters stayed within 150 ft, 10 KIAS and 5 degrees. No parameter call was required from IP.",
         "4": "SP maintained a complete and continuous instrument cross-check through every stage of the aileron roll and the wingover, including the inverted and high-pitch portions. Deviations were identified at the trend stage and removed before they were measurable. SP was also able to report the exact parameters at the apex and at recovery on request.",
         "marginal": "SP maintained the cross-check within standards, but the scan concentrated on the attitude indicator during each maneuver and the other parameters were checked only after the recovery was complete. The trend is toward deviations that would be detected too late if the maneuver were flown at a higher entry speed or repeated in sequence. SP is expected to keep altitude, airspeed and heading inside the scan during the maneuver on the next sortie."
+      }
+    },
+    {
+      "id": "instrument-11-tm01",
+      "label": "ENTRY CONDITION BEFORE THE CONFIDENCE MANEUVER (220 KIAS AND 80 PERCENT TORQUE)",
+      "mif_row": null,
+      "source": "technique:7.14 CONFIDENCE MANOEUVRES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a roll begun from a descending attitude without first establishing straight and level flight at 220 KIAS and 80 percent torque, did not set the briefed entry condition for either confidence maneuver. Entry airspeed was more than 20 KIAS from the briefed value and the maneuver finished more than 300 ft from the entry altitude. IP took control, re-established straight and level flight at the entry parameters and set the maneuver up again.",
+        "1": "SP, due to torque left short of 80 percent while the nose was being raised, did not reach the 220 KIAS entry airspeed and began the maneuver 20 KIAS slow, at the outer limit of the standard. The entry condition was reset only after IP called both the airspeed and the power setting. The same low energy entry was repeated until IP prompted the power check on each attempt.",
+        "2": "SP, due to the power lever set to the entry value late in the level off, entered the first aileron roll about 15 KIAS below 220 KIAS. SP recognized the low energy on the airspeed indicator, discontinued the entry and re-established straight and level flight at 220 KIAS and 80 percent torque before the next repetition, without IP intervention. Deviations stayed between 10 and 20 KIAS and between 150 and 300 ft of the briefed values.",
+        "3": "SP established straight and level flight at 220 KIAS and 80 percent torque before each confidence maneuver, confirming the power setting before the nose was raised. Entry airspeed was inside 10 KIAS and entry altitude inside 150 ft of the briefed values on every repetition.",
+        "4": "SP stabilized the aircraft at 220 KIAS and 80 percent torque before every entry, with entry airspeed and altitude repeatable to within a few knots and a few tens of feet. The entry condition was set early enough that no adjustment was needed once the maneuver had begun.",
+        "marginal": "SP entered both maneuvers within standards, but airspeed was still settling toward 220 KIAS as the nose was raised and the torque was confirmed only after the entry had begun. The trend is toward accepting whatever energy state exists at the moment of entry. SP is expected to stabilize straight and level at 220 KIAS and 80 percent torque before starting the maneuver."
+      }
+    },
+    {
+      "id": "instrument-11-tm02",
+      "label": "AILERON ROLL PITCH REFERENCE AT ROLL INITIATION (25 DEGREES NOSE-HIGH ON THE EADI)",
+      "mif_row": null,
+      "source": "technique:7.14 CONFIDENCE MANOEUVRES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a roll started with the nose barely above the horizon instead of raised to 25 degrees nose-high on the EADI, did not build the pitch reserve the aileron roll requires and the nose fell through the inverted portion. The recovery finished more than 300 ft below the entry altitude and more than 20 KIAS fast. IP took control and recovered the aircraft to level flight.",
+        "1": "SP, due to backpressure released as soon as the nose started up, established only about half of the 25 degrees nose-high indication on the EADI before applying aileron. The pitch reference was set correctly only after IP called the EADI value, and the resulting recovery reached 300 ft low and 20 KIAS fast, at the limit of the standard.",
+        "2": "SP, due to the pitch attitude checked on the EADI after the roll input rather than before it, began the first roll at roughly 15 degrees nose-high. SP stopped the input, reset the nose to 25 degrees nose-high with wings level and rolled from the correct reference on the following repetitions, without IP intervention. Recovery deviations stayed between 150 and 300 ft and between 10 and 20 KIAS.",
+        "3": "SP maintained wings level and raised the nose to 25 degrees nose-high on the EADI before each aileron roll, confirming the indication before applying aileron. Recovery altitude and airspeed stayed within 150 ft and 10 KIAS of the entry values on every repetition.",
+        "4": "SP set the 25 degrees nose-high EADI indication precisely and repeatably before each aileron roll, with wings level and no heading displacement at the moment of the roll input. The pitch reserve was sufficient every time for the nose to pass the horizon inverted without additional elevator, and deviations from the entry parameters were negligible.",
+        "marginal": "SP raised the nose toward 25 degrees nose-high on the EADI but applied aileron slightly before the indication was reached, leaving each recovery on the low side of the standard. Deviations remained inside limits and required no call from IP. SP is expected to confirm 25 degrees nose-high with wings level before applying aileron."
+      }
+    },
+    {
+      "id": "instrument-11-tm03",
+      "label": "UNLOADING WHEN INVERTED DURING THE AILERON ROLL",
+      "mif_row": null,
+      "source": "technique:7.14 CONFIDENCE MANOEUVRES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to forward stick applied when inverted in an attempt to hit the horizon, unloaded the aircraft through the top of the aileron roll instead of continuing the coordinated roll. The nose then tracked well below the recovery attitude and the aircraft finished more than 300 ft low and more than 20 KIAS above the entry airspeed, with negative G felt in the cockpit. IP took control and recovered to level flight.",
+        "1": "SP, due to a push applied while inverted to place the nose on the horizon, did not keep the aircraft loaded through the top of the roll and arrived wings level upright far more nose-low than the briefed 25 degrees. The recovery was flown only after IP directed it, and altitude and airspeed reached 300 ft and 20 KIAS from the entry values. The same unloading appeared on the following repetition.",
+        "2": "SP, due to a small forward pressure introduced approaching the inverted position to hold the nose up on the EADI, initially unloaded the aircraft in the second quarter of the roll. SP removed the push, completed the roll with the aircraft loaded and returned to level flight on his own initiative, finishing between 150 and 300 ft and between 10 and 20 KIAS of the entry values.",
+        "3": "SP flew both aileron rolls without unloading when inverted, keeping the aircraft loaded through the top of the roll rather than pushing to place the nose on the horizon. Recovery was made from approximately 25 degrees nose-low and altitude and airspeed stayed within 150 ft and 10 KIAS of the entry values.",
+        "4": "SP kept the aircraft loaded throughout every aileron roll, with no forward stick at any point of the inverted portion and no float felt in the straps. The nose position when inverted was accepted as the roll rate produced it, and recovery parameters returned to the entry values with negligible deviation.",
+        "marginal": "SP completed the aileron rolls within standards, but a slight forward pressure appeared each time the aircraft approached the inverted position in an attempt to hold the nose on the horizon. Altitude and airspeed stayed inside limits and IP made no call. SP is expected not to unload when inverted and to let the roll rate, rather than the elevator, place the nose."
+      }
+    },
+    {
+      "id": "instrument-11-tm04",
+      "label": "CONSTANT ROLL RATE CARRIED OVER FROM THE CONTACT AILERON ROLL",
+      "mif_row": null,
+      "source": "technique:7.14 CONFIDENCE MANOEUVRES",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to the instrument aileron roll flown with the constant roll rate of the contact aileron roll, did not adjust the roll rate to pass through the horizon in a wings level and inverted attitude. The nose was well below the horizon at the inverted point and the roll finished more than 300 ft low and more than 20 KIAS fast. IP took control and demonstrated the varied roll rate before the next attempt.",
+        "1": "SP, due to a roll rate held constant as in the contact maneuver, arrived at the inverted position with the nose displaced from the horizon and the wings not level. The roll rate was varied only after IP explained that a constant roll rate is not the goal on instruments, and the recovery deviations reached 300 ft and 20 KIAS, at the limit of the standard.",
+        "2": "SP, due to the contact aileron roll technique applied to the first instrument repetition, initially used an unvaried roll rate and passed the inverted point about 10 degrees off the horizon. SP adjusted the roll rate on the following repetitions so the aircraft crossed the horizon wings level and inverted, without IP intervention, with deviations between 150 and 300 ft and between 10 and 20 KIAS.",
+        "3": "SP started each aileron roll with a moderate roll rate and then adjusted it so the aircraft passed through the horizon in a wings level and inverted attitude, rather than holding the constant rate used in the contact maneuver. Aileron and rudder remained coordinated throughout and recovery parameters stayed within 150 ft and 10 KIAS of the entry values.",
+        "4": "SP varied the roll rate precisely through each instrument aileron roll, arriving wings level and inverted exactly at the horizon on every repetition. The distinction from the constant rate contact aileron roll was explained on request and demonstrated in flight, with deviations from the entry parameters negligible.",
+        "marginal": "SP passed through the horizon close to wings level and inverted, but the roll rate was adjusted late and the maneuver still carried the constant rate feel of the contact aileron roll. Parameters remained within standards throughout and IP made no call. SP is expected to plan the roll rate change from the start so the horizon is crossed wings level and inverted."
+      }
+    },
+    {
+      "id": "instrument-11-tm05",
+      "label": "AILERON ROLL RECOVERY FROM APPROXIMATELY 25 DEGREES NOSE-LOW",
+      "mif_row": null,
+      "source": "technique:7.14 CONFIDENCE MANOEUVRES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to backpressure applied with bank still on rather than after rolling to wings level upright, did not recover from the approximately 25 degrees nose-low attitude along the briefed path and allowed the nose to track further down. Airspeed passed the 220 KIAS recovery value by more than 20 KIAS and the aircraft finished more than 300 ft below the entry altitude. IP took control and returned the aircraft to level flight.",
+        "1": "SP, due to a recovery pull delayed past the wings level upright point, held the approximately 25 degrees nose-low attitude longer than the maneuver allows and reached 300 ft below the entry altitude with airspeed 20 KIAS high. Level flight was re-established only after IP called for the recovery. The delayed recovery was repeated on the following roll.",
+        "2": "SP, due to an abrupt rather than smooth return to level flight from the nose-low attitude, initially overshot the entry altitude and left airspeed about 15 KIAS high. SP recognized the coarse input, flew the next recovery smoothly from wings level upright and re-established the entry parameters without IP intervention, with deviations between 150 and 300 ft and between 10 and 20 KIAS.",
+        "3": "SP continued the roll to wings level upright as the nose dropped to approximately 25 degrees nose-low at about 220 KIAS, then returned smoothly to level flight. Altitude and airspeed at the completion of each roll were within 150 ft and 10 KIAS of the entry values.",
+        "4": "SP recovered from every aileron roll wings level upright at approximately 25 degrees nose-low and about 220 KIAS, converting the nose-low attitude to level flight in one smooth movement. The aircraft was stabilized on the entry altitude, airspeed and heading with negligible deviation before the next entry.",
+        "marginal": "SP recovered from the nose-low attitude inside the standards, but the pull was consistently started a little before wings level and each roll finished with a small altitude undershoot. No correction was required from IP. SP is expected to complete the roll to wings level upright first and then return smoothly to level flight."
+      }
+    },
+    {
+      "id": "instrument-11-tm06",
+      "label": "WINGOVER PITCH AND BANK SCHEDULE (10 AND 20 DEGREES NOSE-HIGH AT 30 AND 60 DEGREES BANK)",
+      "mif_row": null,
+      "source": "technique:7.14 CONFIDENCE MANOEUVRES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to backpressure that did not increase as bank increased, did not fly the wingover pitch and bank schedule and reached 60 degrees of bank with the nose barely above the horizon instead of approximately 20 degrees nose-high. The nose then fell with bank far short of 90 degrees at the horizon, and the maneuver finished more than 300 ft low, more than 20 KIAS fast and more than 10 degrees off the recovery heading. IP took control and re-established level flight.",
+        "1": "SP, due to a roll rate that ran ahead of the pitch change, passed 30 degrees of bank with only a few degrees of nose-high pitch instead of approximately 10 degrees. The schedule was recovered only after IP called each bank and pitch value in turn, bank at the horizon was well short of 90 degrees and the recovery reached the 300 ft, 20 KIAS and 10 degree limits of the standard.",
+        "2": "SP, due to backpressure increased slightly late through the first half of the climb, initially showed about 15 degrees nose-high at 60 degrees of bank instead of approximately 20 degrees. SP recognized the shallow pitch on the EADI, increased backpressure and arrived at the horizon with bank close to 90 degrees, without IP intervention, keeping deviations between 150 and 300 ft, 10 and 20 KIAS and 5 and 10 degrees.",
+        "3": "SP flew the wingover to the briefed schedule, with approximately 10 degrees nose-high at 30 degrees of bank, approximately 20 degrees nose-high at 60 degrees of bank and 90 degrees of bank as the nose passed the horizon. Backpressure was increased progressively with bank and altitude, airspeed and heading stayed within 150 ft, 10 KIAS and 5 degrees of the entry values.",
+        "4": "SP matched pitch to bank throughout the wingover, meeting approximately 10 degrees nose-high at 30 degrees of bank, approximately 20 degrees nose-high at 60 degrees of bank and exactly 90 degrees of bank at the horizon on each repetition. The maneuver remained slow and precise from entry to recovery and deviations from the entry parameters were negligible.",
+        "marginal": "SP flew the wingover within standards, but pitch lagged bank through the climbing portion and bank at the horizon was a little under 90 degrees. Recovery parameters stayed inside limits without prompting from IP. SP is expected to increase backpressure in step with bank so the schedule of 10 and 20 degrees nose-high is met at 30 and 60 degrees of bank."
+      }
+    },
+    {
+      "id": "instrument-11-tm07",
+      "label": "WINGTIP HELD ON THE HORIZON BAR THROUGH THE WINGOVER",
+      "mif_row": null,
+      "source": "technique:7.14 CONFIDENCE MANOEUVRES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a roll rate not matched to the pitch change, did not keep the low wingtip of the EADI fixed aircraft symbol on the horizon bar during the climbing portion and lost the high wingtip off the bar entirely in the recovery. The wingover finished with bank still on, more than 300 ft below the entry altitude and more than 10 degrees off the recovery heading. IP took control and rolled the aircraft wings level.",
+        "1": "SP, due to roll applied in steps rather than at the constant rate the wingover requires, allowed the low wingtip to drift off the horizon bar repeatedly through the first half of the maneuver. The wingtip was placed back on the bar only after IP called the reference, and the recovery finished at the 300 ft and 10 degree limits of the standard.",
+        "2": "SP, due to backpressure that briefly outpaced the roll, lost the high wingtip above the horizon bar approaching 60 degrees of bank in the recovery. SP caught the wingtip on the bar again on his own initiative and held it there until wings level, finishing between 150 and 300 ft and between 5 and 10 degrees of the entry values.",
+        "3": "SP kept the low wingtip of the EADI fixed aircraft symbol on the horizon bar through the climbing portion and caught the high wingtip on the bar approaching 60 degrees of bank in the recovery, holding it there until wings level. Altitude and heading at completion were within 150 ft and 5 degrees of the entry values.",
+        "4": "SP held the appropriate wingtip on the horizon bar continuously from entry to wings level, with roll rate and pitch change matched at every stage of the wingover. Pitch on recovery was about 20 degrees nose-low as briefed and the aircraft was stabilized in level flight on the entry parameters with negligible deviation.",
+        "marginal": "SP kept the wingover inside standards, but the wingtip came off the horizon bar briefly at the steepest bank on each repetition and was replaced with a small correction. No prompting was required from IP. SP is expected to match the roll rate to the pitch change so the wingtip stays on the horizon bar until wings level."
       }
     }
   ]

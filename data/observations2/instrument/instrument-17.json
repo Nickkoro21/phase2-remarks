@@ -127,6 +127,81 @@
         "4": "SP flew the holding pattern with negligible altitude and bank variation, the aircraft trimmed hands-off on both legs and the turns entered and rolled out at a consistent standard rate. The cross-check remained complete while the timing, tracking and radio tasks were carried out, and the flight path was reproduced on every circuit.",
         "marginal": "SP kept aircraft control within the Basic Aircraft Control standards, but altitude was maintained by repeated corrections rather than by trim and the bank angle varied between the two turns of each circuit. The trend is a cross-check that lengthens whenever the timing or radio task is active. SP is expected to trim the aircraft for the holding condition and keep the turn entries consistent while task loaded."
       }
+    },
+    {
+      "id": "instrument-17-tm01",
+      "label": "Holding below 120 KIAS / below MAX endurance AOA",
+      "mif_row": 17,
+      "source": "technique:7.25 HOLDING",
+      "hf_concept": "hf-lack-of-knowledge",
+      "texts": {
+        "0": "SP, treating the hold as a fuel saving orbit, let the airspeed decay well below the 120 KIAS floor and below MAX endurance AOA instead of holding at the normal 150 KIAS. The indicated airspeed reached about 118 KIAS, some 32 knots slow and beyond the code 1 airspeed tolerance, with the turn rate degrading in the same time. IP took the controls and restored holding airspeed.",
+        "1": "SP reduced power towards a slower hold without reference to the 120 KIAS / MAX endurance AOA limit stated for holding. The airspeed stabilized near 130 KIAS, exactly 20 knots below the normal holding speed and at the code 1 limit, and only after IP called for holding airspeed did SP restore 150 KIAS.",
+        "2": "SP let the airspeed drift low after levelling in the hold because power was set by feel rather than to the holding value. The indication settled around 136 KIAS, between the code 3 and code 1 limits but still above the 120 KIAS floor, and SP recognized the trend and returned to 150 KIAS without prompting.",
+        "3": "SP held at the normal holding airspeed and used the 120 KIAS / MAX endurance AOA floor as the lower limit when asked to slow. Airspeed excursions during the pattern stayed inside 8 knots of the target, within the code 3 tolerance, with no approach to the minimum holding speed.",
+        "4": "SP set holding airspeed at 150 KIAS and kept it there through both turns and both legs, with any slower holding speed deliberately checked against the 120 KIAS / MAX endurance AOA limit. Airspeed variation remained within a few knots and the aircraft was never allowed near the minimum holding speed.",
+        "marginal": "SP maintained holding airspeed inside standards but repeatedly allowed it to settle towards the low side, close to 141 KIAS, before adding power. No excursion reached the code 1 limit and the 120 KIAS floor was never approached. SP is expected to hold 150 KIAS with small anticipatory power corrections rather than letting speed bleed first."
+      }
+    },
+    {
+      "id": "instrument-17-tm02",
+      "label": "Heading compared to actual track not used to determine crosswind correction",
+      "mif_row": 17,
+      "source": "technique:7.25 HOLDING",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP never compared aircraft heading to the actual track shown by the GPS, so the crosswind correction required in the hold was guessed rather than determined. The drift was left uncorrected and the aircraft diverged more than 10 degrees from the holding radial, past the code 1 limit and outside protected airspace. IP intervened with a heading to regain the pattern.",
+        "1": "SP used the GPS only for position and did not compare heading with actual track to establish the crosswind correction. The resulting drift opened the pattern to about 8 degrees from the assigned radial, at the code 1 limit, and the correction was applied only after IP pointed out the track error.",
+        "2": "SP checked heading against actual track late, after the drift had already built during the outbound leg. Displacement from the radial reached roughly 6 degrees, between the code 3 and code 1 limits, and SP derived the crosswind correction from the GPS track and closed the error back inside standards on his own initiative.",
+        "3": "SP compared aircraft heading to actual GPS track on each leg and set the crosswind correction from that difference. Deviation from the holding radial stayed inside 4 degrees, within the code 3 tolerance, through the whole pattern.",
+        "4": "SP determined the wind from the GPS and continuously compared heading to actual track, refining the correction leg by leg. Displacement from the assigned radial never exceeded about 1 degree and the pattern remained stable in shape.",
+        "marginal": "SP did compare heading with actual track, but only once per circuit, so the crosswind correction lagged the changing wind. Deviations from the radial stayed inside the code 3 tolerance, near 5 degrees at worst, with a repeated drift to the downwind side. SP is expected to cross-check heading against GPS track continuously so the correction leads the drift."
+      }
+    },
+    {
+      "id": "instrument-17-tm03",
+      "label": "Holding configuration and power not set to the published holding values",
+      "mif_row": 17,
+      "source": "technique:7.25 HOLDING",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP entered the hold without setting the published holding configuration and power of gear up, flaps up, 2 NH and about 35 percent torque, leaving the previous climb setting in place. Airspeed accelerated to roughly 178 KIAS, more than 25 knots above the 150 KIAS holding speed and outside the code 1 tolerance, and the leg timing was ruined. IP directed the power reduction and the reconfiguration.",
+        "1": "SP set the aircraft for the hold but left the torque well above the holding value, with the propeller not placed at 2 NH. Airspeed stabilized near 170 KIAS, 20 knots fast and at the code 1 limit, and the setting was corrected only after IP called for holding power.",
+        "2": "SP reconfigured for the hold late, after the first turn was already established, so the power was still above the holding value for part of the leg. Airspeed peaked around 163 KIAS, between the code 3 and code 1 limits, and SP set the holding power and rechecked the configuration without prompting.",
+        "3": "SP set gear up, flaps up, 2 NH and holding torque on entry, so the aircraft stabilized at the holding condition early. Airspeed remained inside 8 knots of 150 KIAS, within the code 3 tolerance, and the legs were flown at a constant setting.",
+        "4": "SP established the published holding configuration and power before crossing the fix and made only small trim and torque adjustments afterwards. Airspeed stayed within a few knots of 150 KIAS and the pattern required no further configuration changes.",
+        "marginal": "SP used the correct holding configuration and power but arrived at the setting by trial, adjusting torque several times after entry. Airspeed excursions stayed inside the code 3 tolerance, around 8 knots at the widest. SP is expected to set the published holding power directly so the aircraft is stabilized before the entry turn is complete."
+      }
+    },
+    {
+      "id": "instrument-17-tm04",
+      "label": "Vertical-S technique not applied when changing altitude in the holding pattern",
+      "mif_row": 17,
+      "source": "technique:7.25 HOLDING",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, cleared to a new altitude inside the hold, flew the climb as an isolated task instead of applying the Vertical-S technique that combines the vertical change with the turn and the timing. Attention went to the vertical velocity indicator, the pattern was abandoned and the aircraft departed the holding radial by more than 10 degrees, beyond the code 1 limit. IP took over to re-establish the pattern.",
+        "1": "SP changed altitude in the hold without the Vertical-S cross-check, so bank and timing were left unattended during the descent. The inbound radial was missed by about 8 degrees, at the code 1 limit, and the estimated time over the IAF slipped close to 2 minutes; SP corrected only after IP prompted a return to the pattern scan.",
+        "2": "SP applied part of the Vertical-S technique but let the scan stop on the altimeter during the level off inside the hold. Deviation from the holding radial grew to roughly 6 degrees, between the code 3 and code 1 limits, and the timing error stayed near 1.5 minutes before SP re-established the pattern scan on his own.",
+        "3": "SP used the Vertical-S technique for the altitude change in the hold, integrating the vertical rate with the turn and the leg timing. The holding radial was held inside 4 degrees, within the code 3 tolerance, and the estimated time over the IAF was met inside 1 minute.",
+        "4": "SP flew the climb and the following descent in the hold with a full Vertical-S cross-check, so the vertical change never interrupted pattern control. Radial deviation remained about 1 degree and the time over the IAF matched the estimate within seconds.",
+        "marginal": "SP applied the Vertical-S technique in the hold, but the pattern scan narrowed briefly each time the vertical rate was set. Radial and timing errors stayed inside the code 3 tolerances, with the largest excursion near 5 degrees. SP is expected to keep the turn and the timing inside the cross-check throughout the altitude change, not only after it stabilizes."
+      }
+    },
+    {
+      "id": "instrument-17-tm05",
+      "label": "Published pattern flown instead of the assigned holding pattern",
+      "mif_row": 17,
+      "source": "technique:7.25 HOLDING",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP turned at entry into the pattern depicted on the plate although a different holding pattern had been assigned, so the turn direction and the leg orientation were both wrong. The aircraft was flown on the opposite side of the fix and the assigned radial was missed by more than 10 degrees, past the code 1 limit and outside the protected airspace of the assigned pattern. IP took the controls to recover the aircraft to the assigned hold.",
+        "1": "SP built the mental picture from the published pattern and only later reconciled it with the assigned one, so the first circuit was flown with the published turn direction. Deviation from the assigned holding radial reached about 8 degrees, at the code 1 limit, and the pattern was corrected after IP identified the assigned pattern.",
+        "2": "SP started the entry towards the published pattern, then recognized during the turn that the assigned pattern differed. The excursion from the assigned radial reached roughly 6 degrees, between the code 3 and code 1 limits, and SP reversed to the assigned turn direction and re-established the pattern without IP input.",
+        "3": "SP identified the assigned holding pattern before the fix and disregarded the published one where the two differed, turning at entry into the correct pattern. Tracking of the assigned radial stayed inside 4 degrees, within the code 3 tolerance.",
+        "4": "SP compared the published and the assigned holding patterns during the setup, briefed the assigned turn direction and leg lengths, and flew that pattern from the entry turn onwards. Deviation from the assigned radial stayed about 1 degree and the aircraft remained centered in the protected airspace.",
+        "marginal": "SP flew the assigned pattern correctly but reached the correct picture slowly, still referring to the published depiction while approaching the fix. Deviations remained inside the code 3 tolerance, near 5 degrees at the entry turn. SP is expected to resolve the difference between published and assigned pattern before the fix so the entry turn is made without hesitation."
+      }
     }
   ]
 }

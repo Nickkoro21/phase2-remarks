@@ -501,7 +501,7 @@
       "procedure_steps": [
         "Control the position of the lift vector by using ailerons to set the wing position; control its magnitude by adjusting back stick pressure to vary G-load. In the T-6, use the CFS chord as a reference to indicate where the lift vector is pointed.",
         "Assess LOS rate visually as forward-LOS (other A/C moving forward on canopy towards the nose) or aft-LOS (moving aft towards the tail).",
-        "Recognize the pursuit curve summary: Lead - HCA down, closure up, angle off down; Pure - closure up only; Lag - HCA up, closure down, angle off down (Table 9.1)."
+        "Recognize the pursuit curve summary as printed in Table 9.1: Lead - HCA up, closure up, angle off down; Pure - closure up only (the other two cells are blank); Lag - HCA down, closure up, angle off down (Table 9.1). See the note below: Table 9.1 conflicts with the prose of 9.17.11 and 9.17.15."
       ],
       "common_errors": [
         "Number 2 moving forward of Number 1's 3/9 line during manoeuvres - \"Number 2 should normally remain aft of Number 1's 3/9 line during manoeuvres.\"",
@@ -513,7 +513,7 @@
         "Number 2 must stabilize in route position before continuing to close (fingertip) formation during a rejoin.",
         "In the T-6, turning room is mostly used aft of the 3/9 line."
       ],
-      "notes": "Figure 9.1 (HCA/AA) contains a broken cross-reference in the source PDF (\"Sfalma! Lanthasmeni syndesi\") where the 30 degrees value appears; the 30 and 45 degree pair is confirmed by Figure 9.3 (\"30 and 45 AA\")."
+      "notes": "Figure 9.1 (HCA/AA) contains a broken cross-reference in the source PDF (\"Sfalma! Lanthasmeni syndesi\") where the 30 degrees value appears; the 30 and 45 degree pair is confirmed by Figure 9.3 (\"30 and 45 AA\"). Table 9.1 (PDF page 217, printed page 207) as actually printed reads - columns ITEM | Pursuit Curve | HCA | Closure | Angle Off - Lead: HCA up, closure up, angle off down; Pure: closure up only; Lag: HCA down, closure up, angle off down. The procedure step above quotes the table as printed. This CONFLICTS with the prose of the same section: 9.17.11 states that on a lead pursuit curve aspect increases, LOS is aft and HCA decreases, and 9.17.15 states that on a lag pursuit curve aspect decreases, HCA increases and closure decreases and becomes negative (and 9.17.15 explicitly cites Table 9.1 while contradicting it). Since 9.17.3 makes HCA synonymous with angle off, column B of Table 9.1 is most likely mislabelled \"HCA\" where \"Aspect\" is meant. Where the two disagree, use the prose of 9.17.10-9.17.15 (as summarised in technique_summary above)."
     },
     {
       "section": "9.17.21-9.17.23",
@@ -574,7 +574,7 @@
         "When a deviation is recognized, initially correct one reference at a time: (1) vertical/stack, (2) fore and aft, (3) lateral spacing.",
         "One technique to minimize over correction of power is to change power with small movements of the wrist, not the whole arm."
       ],
-      "notes": "Close (fingertip) formation is primarily used for weather penetration, airfield arrival, departure, and flyovers and/or aerial demonstration formations."
+      "notes": "Close (fingertip) formation is primarily used for weather penetration, airfield arrival, departure, and flyovers and/or aerial demonstration formations. The parameter \"signal to fingertip from route\" is verbatim from 9.19.2, but 9.20.6.c (PDF page 225) gives a different reading of the same signal: \"Number 1 executes a shallow wing rock to direct Number 2 to move closer in route position. A wing rock with no other signal from Number 1 directs Number 2 to close (fingertip) position.\" The manual is inconsistent here; section 9.20 of this file records the 9.20.6.c version as a procedure step. Treat a shallow wing rock as \"move closer within route\" and a plain wing rock with no other signal as \"go to close (fingertip)\", and brief the meaning of the signal."
     },
     {
       "section": "9.20",
@@ -953,7 +953,11 @@
         {"name": "complete WW Ex", "value": "minimum of two leaves, one in each direction on each side of Number 1", "verbatim": "A complete WW Ex is considered a minimum of two leaves, one in each direction (a turn towards and a turn away) on each side of Number 1."},
         {"name": "target energy level", "value": "approximately 180-200 KIAS, middle of the area altitude block", "verbatim": "Target energy level is the middle of the area altitude block between approximately 180-200 KIAS."},
         {"name": "power - low area", "value": "approximately 50-55 % torque (~6.000-13.000 feet MSL)", "verbatim": "use approximately 50-55% torque in a low area (~6.000-13.000 feet MSL)"},
-        {"name": "power - high area", "value": "approximately 60-65 % torque (~15.000-24.000 feet MSL)", "verbatim": "approximately 60-65 % torque in a high area (~15.000-24.000 feet MSL)"}
+        {"name": "power - high area", "value": "approximately 60-65 % torque (~15.000-24.000 feet MSL)", "verbatim": "approximately 60-65 % torque in a high area (~15.000-24.000 feet MSL)"},
+        {"name": "Level I parameters (Table 9.2)", "value": "bank angle ~0-30 degrees, pitch ~+/-10 degrees, ~1-2 G, proficiency description \"Initial\"", "verbatim": "1 I ~ 0 - 30 ~ +/- 10 ~ 1 - 2 G Initial"},
+        {"name": "Level II parameters (Table 9.2)", "value": "bank angle ~0-60 degrees, pitch ~+/-25 degrees, ~1-2 G, proficiency description \"Limited\"", "verbatim": "2 II ~0 - 60 ~ +/- 25 ~ 1 - 2 G Limited"},
+        {"name": "Level III parameters (Table 9.2)", "value": "bank angle ~0-90 degrees, pitch ~+/-35 degrees, ~1-3 G, proficiency description \"Desired\"", "verbatim": "3 III ~ 0 - 90 ~ +/- 35 ~ 1 - 3 G Desired"},
+        {"name": "airspeed - all levels (Table 9.2)", "value": "80-100 KIAS speed change, 120 KIAS minimum", "verbatim": "80-100 KIAS Speed Change 120 KIAS minimum"}
       ],
       "procedure_steps": [
         "Number 1 sets power to maintain the desired energy level and uses a building-block approach through Levels I, II and III.",
@@ -980,7 +984,7 @@
         "Should a breakout become necessary, use flight controls, power and speed brake as the situation dictates; break out in the direction that most quickly ensures separation.",
         "Consider environmental conditions such as sun angle and cloud layers, and plan formation manoeuvring to avoid them."
       ],
-      "notes": "Table 9.2 (T-6 WW Ex Training Levels and Parameters) is embedded as a graphic on PDF page 236 and its cell values could not be extracted from the text layer; only the prose parameters above are captured. Note under Table 9.2: \"Depending from the wingman's proficiency ET Exercise can be initiated from Level II or Level III.\" A leaf of the Level 3 WW Ex is a vertical pull-up with both an apex and bottom of a lazy eight-type manoeuvre."
+      "notes": "Table 9.2 (T-6 WW Ex Training Levels and Parameters) is embedded as a graphic on PDF page 236; its cell values are captured in the parameters above (columns ITEM | Level | Bank Angle | Pitch | G-Loading | Airspeed | Proficiency Description, with the airspeed cell spanning all three levels). Note under Table 9.2: \"Depending from the wingman's proficiency ET Exercise can be initiated from Level II or Level III.\" A leaf of the Level 3 WW Ex is a vertical pull-up with both an apex and bottom of a lazy eight-type manoeuvre."
     },
     {
       "section": "9.30",

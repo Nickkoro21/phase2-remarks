@@ -127,6 +127,96 @@
         "4": "SP flew the entire maneuver from the flight instruments with complete acceptance of the indicated attitude, showing no hesitation at either bank angle and no reference to the outside horizon. Control inputs followed the instrument indications smoothly from entry to roll-out.",
         "marginal": "SP flew the turns within the standards but showed a brief hesitation in accepting the indicated attitude at roll-in to 60 degrees of bank, with a short glance outside before returning to the instruments. The tendency is an incomplete commitment to the instrument references under increased bank. SP is expected to control the aircraft from the attitude indicator alone and to disregard conflicting sensations without interruption of the scan."
       }
+    },
+    {
+      "id": "instrument-05-tm09",
+      "label": "Anticipation of the power addition passing 30 degrees of bank",
+      "mif_row": 5,
+      "source": "technique:7.12 STEEP TURNS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP did not anticipate the addition of power required for the steep turn and left the power at the level flight setting through the whole roll-in to 60 degrees of bank. With the load factor increasing and no torque added, the airspeed decayed more than 20 knots below the 150 KIAS entry value and the nose was pulled up to hold altitude, which accelerated the loss. IP intervened with power and a bank reduction to restore the entry parameters.",
+        "1": "SP added the power only after the bank was fully established rather than passing 30 degrees of bank, so the airspeed loss in the turn reached the 20 knot limit of the standard. The power was advanced only after IP called the airspeed, and the entry value was regained late in the turn. The known torque setting for the bank angle was not anticipated at any point of the roll-in.",
+        "2": "SP started the power increase a few degrees after passing 30 degrees of bank, so the airspeed dropped between 10 and 20 knots below the entry value during the roll-in. SP saw the trend on the airspeed indicator, advanced the torque to the setting required for the bank angle and recovered the entry speed before reaching 180 degrees of heading change, without IP intervention. The rest of the turn was flown on speed.",
+        "3": "SP anticipated the power addition and advanced the torque passing 30 degrees of bank on both turns, so the airspeed stayed within 10 knots of the 150 KIAS entry value. The power was matched to the bank angle rather than chased after the deceleration appeared, and it was reduced again during the roll-out. No airspeed loss developed in either turn.",
+        "4": "SP led the power with the bank on every entry, applying the increase exactly as the aircraft passed 30 degrees of bank and holding the torque required for 45 and for 60 degrees respectively. Airspeed variation was negligible through roll-in, sustained turn and roll-out, and the power reduction at roll-out prevented any overshoot of the entry speed.",
+        "marginal": "SP kept the airspeed inside the standards but the power was added at or slightly after the bank was established rather than passing 30 degrees, so every turn began with a small deceleration that had to be recovered. The tendency is a power input that reacts to the airspeed indication instead of anticipating the increase in load factor. SP is expected to advance the power passing 30 degrees of bank so that the entry speed is held rather than regained."
+      }
+    },
+    {
+      "id": "instrument-05-tm10",
+      "label": "Bug, Turn, Talk habit pattern and use of the known pitch and power settings",
+      "mif_row": 5,
+      "source": "technique:7.12 STEEP TURNS",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP did not apply the Bug, Turn, Talk sequence and rolled into the steep turn without bugging the exit heading and without setting the known pitch and power values for the bank angle. The turn was then flown by hunting the settings, and altitude and airspeed left the code 1 tolerances together while SP searched for the exit heading on the HSI. IP took the controls, re-established the entry parameters and directed the maneuver to be set up again.",
+        "1": "SP omitted the heading bug before the entry and set neither the pitch nor the torque known for the bank angle, so the whole turn was flown by trial and error. Altitude reached the 300 foot limit of the standard while the settings were still being hunted, and the exit heading was identified only after IP prompted for it. The habit pattern was completed only on IP direction.",
+        "2": "SP set the heading bug late and reached for the known pitch and power settings only after the bank was established, so the parameters were unsettled for the first quarter of the turn and altitude deviated between 150 and 300 feet. SP then applied the known values, stabilized the turn and used the bug for the roll-out without IP intervention. The remainder of the maneuver was flown on parameters.",
+        "3": "SP applied Bug, Turn, Talk before each entry, bugging the exit heading first and then rolling in directly to the known pitch and torque for the bank angle. The turn stabilized immediately on the briefed parameters and all deviations stayed inside the code 3 tolerances. The bugged heading was used as the reference for the roll-out.",
+        "4": "SP used the full Bug, Turn, Talk habit pattern on both turns, so the exit heading was bugged, the known pitch and power values were set at the entry and the radio call was made without disturbing the maneuver. The aircraft was on parameters from the first seconds of the turn and deviations were negligible throughout the 360 degrees of heading change.",
+        "marginal": "SP completed the Bug, Turn, Talk sequence and stayed within the standards, but the heading bug was set after the roll-in had begun and the known pitch and power values were approached progressively rather than set at once. The tendency is a habit pattern executed inside the maneuver instead of before it. SP is expected to bug the exit heading and set the known values as part of the entry so that the turn starts already stabilized."
+      }
+    },
+    {
+      "id": "instrument-05-tm11",
+      "label": "Chasing the VSI instead of anticipating its lag",
+      "mif_row": 5,
+      "source": "technique:7.12 STEEP TURNS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP chased the VSI in the steep turn, making a pitch input for every movement of the needle without anticipating that the indication lags the actual aircraft performance. Each correction was reversed by the next indication and the pitch oscillation grew until the altitude excursion passed 300 feet and the bank could no longer be held. IP took the controls to stop the oscillation and recover the aircraft to the entry altitude.",
+        "1": "SP flew the pitch attitude off the VSI needle alone and failed to anticipate the lag of the indication, so every correction was made after the fact and in the wrong sense. The resulting pitch chasing brought the altitude to the 300 foot limit of the standard and IP had to call for the attitude indicator to be used as the primary pitch reference. The oscillation stopped only when the correction rate was reduced on IP direction.",
+        "2": "SP reacted to the VSI faster than the indication could settle and applied successive pitch inputs that produced an altitude excursion between 150 and 300 feet. SP recognized the chasing, returned to the attitude indicator for the pitch attitude and used the VSI only as a trend indication, correcting the deviation in time and without IP intervention. The pitch was stable for the remainder of the turn.",
+        "3": "SP set the pitch attitude required for the bank angle on the attitude indicator and used the VSI as a supporting trend instrument, allowing for its lag before making any further input. Altitude stayed within 150 feet in both turns and no pitch oscillation developed. Corrections were single and small rather than repeated.",
+        "4": "SP anticipated the pitch change required in the turn and read the VSI as a lagging trend rather than a command, so no correction was made on the movement of the needle alone. Pitch remained steady on the attitude indicator throughout both bank angles and altitude deviations were negligible.",
+        "marginal": "SP held the altitude within the standards but each pitch correction was made on the first movement of the VSI and was followed by a smaller opposite input, producing a low amplitude oscillation around the entry altitude. The tendency is a pitch control driven by the lagging indication rather than by the attitude indicator. SP is expected to set the pitch attitude first and to allow the VSI to settle before making any further input."
+      }
+    },
+    {
+      "id": "instrument-05-tm12",
+      "label": "Adjustment of the lead point between the 45 and the 60 degree turn",
+      "mif_row": 5,
+      "source": "technique:7.12 STEEP TURNS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP used no differentiated lead point and started the roll-out at the exit heading itself in both turns, so the aircraft continued to turn while the wings were still returning to level. The exit heading was missed by more than 10 degrees on both attempts and no lead correction was made after the first one. IP had to direct the roll-out and establish the aircraft on the determined heading.",
+        "1": "SP applied the same small lead at 45 and at 60 degrees of bank instead of approximately 15 and 20 degrees respectively, and rolled out past the determined heading by the 10 degree limit of the standard. The lead point was not adjusted after the first turn and the second turn repeated the same overshoot until IP called for a larger lead. The exit heading was established only after a correcting turn on IP direction.",
+        "2": "SP led the roll-out with the value used for the 45 degree turn while flying at 60 degrees of bank, and rolled out between 5 and 10 degrees past the determined heading. SP identified the pattern, increased the lead for the following turn and rolled out on heading without IP intervention. The correcting turn after the first roll-out was small and prompt.",
+        "3": "SP used approximately 15 degrees of lead for the 45 degree bank turn and approximately 20 degrees for the 60 degree bank turn, and rolled out within 5 degrees of the determined heading each time. The lead was adjusted to the bank angle before the roll-out rather than after the result was seen. No follow-up correction was needed.",
+        "4": "SP applied the lead point appropriate to each bank angle and refined it from the observed rate of turn, so both roll-outs terminated on the determined heading with the wings arriving level exactly as the heading was reached. No correcting turn was required after either maneuver.",
+        "marginal": "SP rolled out within the standards but consistently a few degrees short at 60 degrees of bank, using a lead closer to the 45 degree value, and the lead was not adjusted between the two turns. The tendency is a fixed lead point applied regardless of bank angle. SP is expected to use approximately 15 degrees for the 45 degree turn and 20 degrees for the 60 degree turn and to refine the lead when the roll-out is repeatedly short or long."
+      }
+    },
+    {
+      "id": "instrument-05-tm13",
+      "label": "Rapid and abrupt control inputs at roll-in",
+      "mif_row": null,
+      "source": "technique:2.10 TURNS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP applied rapid and abrupt aileron and elevator inputs at the roll-in instead of a constant control pressure held until the desired angle of bank, so the back pressure was excessive and the aircraft ballooned away from the entry altitude. The climb passed 300 feet while the bank overshot the briefed value and the entry was never stabilized. IP took the controls to level the aircraft and re-establish the entry conditions.",
+        "1": "SP rolled into the steep turn with an abrupt input and applied insufficient back pressure to compensate for the loss of vertical lift, so the aircraft dived and the altitude loss reached the 300 foot limit of the standard. The pitch was corrected only after repeated calls from IP and the bank had to be reduced to stop the descent. The entry was flown as a snatch input rather than as a steady pressure held to the desired bank.",
+        "2": "SP used a faster roll rate than required and the back pressure lagged the bank change, producing an altitude excursion between 150 and 300 feet at the entry. SP recognized the abrupt input, smoothed the control pressure and recovered the entry altitude before the turn passed 180 degrees of heading change, without IP intervention. The second entry was flown with a steady roll rate.",
+        "3": "SP applied aileron and rudder pressure simultaneously and held it constant until the desired angle of bank, increasing back pressure progressively with the bank. Neither ballooning nor a dive developed at the entry and altitude stayed within 150 feet during both roll-ins. The controls were returned to neutral at the target bank without overshoot.",
+        "4": "SP rolled into both steep turns with a smooth and constant control pressure, matching the increase in back pressure to the increase in bank so that the pitch attitude changed without any altitude excursion. The entries were indistinguishable in technique from a normal turn except for the amount of back stick pressure and power used.",
+        "marginal": "SP stayed within the standards but the roll-ins were faster than necessary and the back pressure was applied in steps behind the bank, producing a small balloon at 45 degrees and a small sink at 60 degrees. The tendency is an abrupt control input at the entry that the pitch then has to catch up with. SP is expected to apply a constant and moderate control pressure to the desired bank and to increase back pressure together with it."
+      }
+    },
+    {
+      "id": "instrument-05-tm14",
+      "label": "Correction of altitude with pitch attitude and use of bank only when the deviation is excessive",
+      "mif_row": 5,
+      "source": "technique:7.12 STEEP TURNS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP answered the altitude loss in the 60 degree bank turn with back stick pressure alone and held the bank unchanged, so the added back pressure tightened the turn instead of raising the nose. The descent continued past 300 feet and the airspeed built while the bank was never reduced although the deviation had become excessive. IP took the controls, reduced the angle of bank and recovered the aircraft to the entry altitude.",
+        "1": "SP attempted to correct an excessive altitude loss with pitch alone at 60 degrees of bank and did not reduce the bank to help recover the pitch attitude, so the deviation reached the 300 foot limit of the standard. The bank was decreased only after IP called for it and the entry altitude was regained late in the turn. The relationship between angle of bank, back pressure and altitude was not applied.",
+        "2": "SP adjusted the pitch attitude to correct the developing altitude loss but held it too long before accepting that the deviation had become excessive, and the altitude moved between 150 and 300 feet below the entry value. SP then decreased the angle of bank to help recover the pitch attitude, re-established the briefed bank once the altitude was regained and completed the turn without IP intervention.",
+        "3": "SP corrected the altitude deviations of both turns by adjusting the pitch attitude, keeping the angle of bank constant, and all excursions remained within 150 feet. The corrections were applied early enough that no bank change was required. The briefed bank angle was treated as a fixed reference throughout.",
+        "4": "SP held a constant angle of bank in both steep turns and controlled altitude entirely with the pitch attitude, so no deviation ever grew large enough to require a bank adjustment. Altitude excursions were negligible and the bank angle was never used as a substitute for pitch control.",
+        "marginal": "SP stayed within the standards but the first response to an altitude change at 60 degrees of bank was a small variation of the bank angle, with pitch adjusted afterwards. The tendency is a correction technique that varies the bank instead of holding it constant and adjusting pitch. SP is expected to correct altitude with the pitch attitude and to use a decrease or increase in bank only when the altitude gain or loss has become excessive."
+      }
     }
   ]
 }

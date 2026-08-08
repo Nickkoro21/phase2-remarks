@@ -142,6 +142,111 @@
         "4": "SP kept the aircraft accurately trimmed across the full airspeed range of the descent, retrimming immediately after each power or attitude change. The aircraft was flown almost entirely on trim with negligible control pressures and negligible parameter excursions. Trim handling was of a very high standard.",
         "marginal": "SP trimmed the aircraft and kept all parameters within tolerance, but the retrimming followed each power change later than it should and residual control pressures were evident during the level-off. SP required no prompting and corrected the condition unaided. SP is expected to retrim promptly with every power and airspeed change so that the aircraft is flown on trim rather than held on the controls."
       }
+    },
+    {
+      "id": "instrument-19-tm01",
+      "label": "Start-down point computation for the en-route descent",
+      "mif_row": null,
+      "source": "technique:8.12 ENROUTE (IFR)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not applying the 2:1 descent planning ratio with the extra 10 miles added for the instrument approach, did not determine a start-down point and requested the descent well inside the distance required. The descent that followed was steep and compressed, and at the point the aircraft was required to be level it was more than 300 feet from the cleared altitude with airspeed more than 20 KIAS from the planned figure. IP took control of pitch and power to salvage the profile.",
+        "1": "SP, due to a start-down point estimated without the technique of twice the altitude to lose in thousands of feet plus 10 miles, began the descent later than the profile allowed. The gradient had to be steepened, and at the level-off the altitude error reached the 300 feet limit while airspeed sat at the 20 KIAS limit. SP re-planned the descent only after repeated verbal prompting by IP.",
+        "2": "SP, due to a start-down point judged by feel rather than by the 2:1 ratio with 10 miles added, entered the descent slightly late. SP recognized the compression early, increased the gradient in good time and held the altitude error between 150 and 300 feet with airspeed between 10 and 20 KIAS of the planned value. No IP intervention was required.",
+        "3": "SP computed the start-down point with the 2:1 ratio plus the 10 miles allowed for the approach and requested the descent at the appropriate distance. The profile ran without compression, altitude was held within 150 feet and airspeed within 10 KIAS at every check point. The few adjustments required were smooth and timely.",
+        "4": "SP determined the start-down point precisely with the 2:1 planning ratio and the additional 10 miles, and obtained a clearance that matched the desired descent profile. The descent was flown without a single significant correction, with altitude and airspeed essentially on the planned values throughout. Descent planning was of an exemplary standard.",
+        "marginal": "SP applied the 2:1 planning ratio but did so late, so the descent was started close to the last usable point and the gradient had to be flown at the steep end. All deviations remained inside tolerance, with altitude running consistently on the high side in the first part of the descent. SP is expected to compute the start-down point earlier and request the descent so that the profile is flown at a comfortable gradient."
+      }
+    },
+    {
+      "id": "instrument-19-tm02",
+      "label": "Pitch selection by the 60-to-1 rule for the required descent gradient",
+      "mif_row": null,
+      "source": "technique:7.26 PENETRATIONS AND DESCENTS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to selecting a nose-low attitude without computing the pitch change from altitude to lose in hundreds of feet divided by the miles available, set a gradient unrelated to the one required. The vertical profile diverged progressively and altitude was more than 300 feet from the required value at the restriction, with airspeed more than 20 KIAS from the planned figure. IP intervened on the controls to re-establish the profile.",
+        "1": "SP, due to a descent attitude chosen without the 60-to-1 computation, flew a gradient that did not match the distance remaining. IP called the divergence twice before SP adjusted pitch, and altitude at the check point reached the 300 feet limit. The correction was coarse and airspeed drifted to the 20 KIAS limit while it was made.",
+        "2": "SP, due to an initial pitch set one to two degrees away from the value given by the 60-to-1 rule, flew a shallow gradient in the first part of the descent. SP compared the profile with the requirement, corrected pitch in good time and kept the altitude error between 150 and 300 feet. Airspeed stayed between 10 and 20 KIAS of the planned value and no IP input was needed.",
+        "3": "SP computed the pitch change from altitude to lose in hundreds of feet divided by the miles to go and set that attitude at descent entry. The gradient matched the requirement, altitude was held within 150 feet of the profile and airspeed within 10 KIAS. Pitch refinements were small and made before any divergence developed.",
+        "4": "SP applied the 60-to-1 relationship accurately, working from the fact that every degree of pitch gives 100 feet per nautical mile, and flew the computed attitude with negligible error. Altitude tracked the intended profile essentially exactly and airspeed remained on the planned value. Vertical navigation was well above the standard expected at this stage.",
+        "marginal": "SP used the 60-to-1 rule but rounded the computation coarsely, so the initial attitude needed two further adjustments before the required gradient was held. Altitude and airspeed remained within tolerance, with the errors sitting toward the outer part of the acceptable band. SP is expected to compute the pitch change accurately at descent entry so the attitude is set once and thereafter only refined."
+      }
+    },
+    {
+      "id": "instrument-19-tm03",
+      "label": "Verification of the descent gradient by VSI cross-check",
+      "mif_row": null,
+      "source": "technique:7.26 PENETRATIONS AND DESCENTS",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to not verifying the descent gradient by cross-checking the VSI against groundspeed in miles per minute and the selected gradient, flew a rate of descent that did not correspond to the profile believed to be set. The error went undetected for the whole descent and the aircraft reached the level-off more than 300 feet from the cleared altitude. IP intervened with pitch and power inputs to arrest the descent.",
+        "1": "SP, due to omitting the VSI cross-check that converts groundspeed and descent gradient into an expected rate, did not confirm the profile at any point of the descent. The discrepancy grew until altitude reached the 300 feet limit, and SP corrected only after IP called for a rate check. The return to the profile was slow and required a marked pitch change.",
+        "2": "SP, due to a VSI cross-check made well after descent entry rather than at it, flew several thousand feet before confirming that the rate matched the computed figure. By then the altitude error had grown to between 150 and 300 feet, after which SP corrected in good time and unassisted. The remainder of the descent tracked the profile.",
+        "3": "SP verified the descent gradient by cross-checking the VSI against groundspeed and the selected gradient shortly after descent entry. The profile was held with altitude within 150 feet at every check point and airspeed within 10 KIAS. Corrections were small and made before any divergence could develop.",
+        "4": "SP computed the expected rate of descent from groundspeed and gradient and verified it on the VSI without prompting, repeating the check as the descent progressed. The aircraft tracked the intended profile with negligible error and required no significant correction. Cross-check of the vertical profile was of an exemplary standard.",
+        "marginal": "SP did cross-check the VSI against the computed rate, but only some way into the descent, so the first part of the profile was flown unverified. Deviations stayed within tolerance while sitting toward the outer part of the band. SP is expected to confirm the rate of descent against groundspeed and gradient immediately after descent entry."
+      }
+    },
+    {
+      "id": "instrument-19-tm04",
+      "label": "Updating the descent profile for the effect of wind on rate of descent",
+      "mif_row": null,
+      "source": "technique:7.26 PENETRATIONS AND DESCENTS",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to computing the required rate of descent from planned airspeed without allowing for the wind, held a rate suited to no-wind conditions while a substantial tailwind raised the groundspeed. The gradient flattened, the descent fell behind the profile and the aircraft was more than 300 feet high at the point the restriction applied, with airspeed more than 20 KIAS from the planned figure during the hurried deceleration. IP intervened to correct the profile.",
+        "1": "SP, due to not updating the descent profile for the reported wind, did not adjust the target rate when the headwind reduced groundspeed. The descent ran ahead of the intended profile, altitude deviation reached the 300 feet limit and SP corrected only after repeated IP prompting. The deceleration and configuration that followed were rushed.",
+        "2": "SP, due to a rate of descent computed from the planned groundspeed rather than the actual one, allowed a wind-induced error to build in the vertical profile. SP noticed the drift when comparing distance against altitude to lose, adjusted the rate in good time and kept the altitude error between 150 and 300 feet. Airspeed stayed between 10 and 20 KIAS of the planned value throughout.",
+        "3": "SP accounted for the effect of the wind on groundspeed and adjusted the target rate of descent accordingly, holding the selected gradient. Altitude was kept within 150 feet of the profile and airspeed within 10 KIAS, and the deceleration was unhurried. Updates to the rate were smooth and timely.",
+        "4": "SP anticipated the wind effect on groundspeed, adjusted the target rate of descent before any divergence appeared and held the planned gradient exactly. Altitude and airspeed tracked the profile with negligible error and the deceleration was entirely unhurried. Allowance for wind in the descent was of a standard well above that expected at this stage.",
+        "marginal": "SP allowed for the wind but used a groundspeed figure that was not refreshed during the descent, so the rate had to be corrected twice as the profile progressed. All deviations remained within tolerance, consistently on the high side of the intended altitudes. SP is expected to update groundspeed during the descent and adjust the rate accordingly rather than correcting after the error has appeared."
+      }
+    },
+    {
+      "id": "instrument-19-tm05",
+      "label": "Use of the known pitch and power settings for the 200 KIAS descent",
+      "mif_row": null,
+      "source": "technique:7.26 PENETRATIONS AND DESCENTS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not using the known descent settings that pair degrees nose-low with torque to hold 200 KIAS, set an arbitrary attitude and power combination at descent entry. Airspeed diverged and settled more than 20 KIAS from the descent speed while altitude ran more than 300 feet from the intended profile. IP intervened on the power lever and stick to restore the descent.",
+        "1": "SP, due to a pitch and power combination not taken from the known descent settings, chased airspeed with repeated power changes through the descent. Airspeed deviation reached the 20 KIAS limit and altitude reached the 300 feet limit before SP acted on IP prompting. The whole descent was flown with coarse and continuous corrections.",
+        "2": "SP, due to a torque setting that did not match the nose-low attitude selected for the descent, allowed airspeed to move away from 200 KIAS. SP recalled the correct pitch and power pairing, reset it in good time and held the airspeed error between 10 and 20 KIAS with altitude between 150 and 300 feet of the profile. No IP intervention was required.",
+        "3": "SP set the known combination of nose-low attitude and torque for a 200 KIAS descent at entry and held it through the descent. Airspeed remained within 10 KIAS and altitude within 150 feet of the profile, with only minor refinements to power. The descent was smooth and efficient.",
+        "4": "SP applied the known pitch and power settings for the descent immediately and accurately, so that 200 KIAS was established without any chasing of the airspeed indicator. Airspeed and altitude tracked the profile with negligible deviation for the whole descent. Use of the standard settings was of an exemplary standard.",
+        "marginal": "SP used the known pitch and power pairing but set the torque only approximately, so airspeed needed three separate power adjustments before it settled at the descent speed. Deviations remained within tolerance while sitting toward the outer part of the band. SP is expected to set the exact torque for the nose-low attitude chosen so that airspeed stabilizes at the first attempt."
+      }
+    },
+    {
+      "id": "instrument-19-tm06",
+      "label": "Airspeed restriction below 10,000 feet MSL during the descent",
+      "mif_row": null,
+      "source": "technique:7.26 PENETRATIONS AND DESCENTS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to steepening the gradient to make a published altitude restriction without adjusting airspeed for it, exceeded 250 KIAS below 10,000 feet MSL and made no power reduction to recover the limit. The excursion continued and airspeed reached more than 20 KIAS above the descent speed while the profile was flown steeply. IP intervened on the power lever and speed brake to bring the aircraft back within limits.",
+        "1": "SP, due to a steepened descent gradient flown without a matching power reduction, accelerated toward 250 KIAS below 10,000 feet MSL. SP retarded the power only after IP called the speed, and the airspeed excursion reached the 20 KIAS limit from the descent speed. The recovery required speed brake and a marked pitch change.",
+        "2": "SP, due to increasing the descent gradient without anticipating the acceleration that follows, allowed airspeed to rise as the aircraft approached 10,000 feet MSL. SP detected the trend before the restriction applied, used power and speed brake in good time and kept the airspeed error between 10 and 20 KIAS. The 250 KIAS limit was not exceeded and no IP input was needed.",
+        "3": "SP managed airspeed against the 250 KIAS restriction below 10,000 feet MSL, adjusting power and speed brake as the gradient was changed to meet the published restrictions. Airspeed stayed within 10 KIAS of the descent speed and the limit was respected with margin. Adjustments were smooth and anticipatory.",
+        "4": "SP anticipated the acceleration associated with each gradient change and kept airspeed comfortably clear of the 250 KIAS restriction below 10,000 feet MSL. Airspeed held essentially on the descent value with negligible variation and speed brake was used sparingly and precisely. Speed control against the published restriction was well above the standard expected.",
+        "marginal": "SP remained below 250 KIAS through the lower part of the descent, but airspeed was allowed to sit close to the restriction and speed brake had to be held to contain it. All values remained within tolerance with a clear tendency toward the fast side. SP is expected to set the gradient and power so that the margin below the restriction is kept without continuous speed brake use."
+      }
+    },
+    {
+      "id": "instrument-19-tm07",
+      "label": "Planning the descent to allow unhurried deceleration and configuration before the FAF",
+      "mif_row": null,
+      "source": "technique:7.26 PENETRATIONS AND DESCENTS",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to not planning the descent so the aircraft could be configured before the FAF, arrived at the approach segment high and fast with the whole deceleration still to be made. The attempt to lose altitude and speed together left the aircraft more than 300 feet from the required altitude and more than 20 KIAS from the required speed. IP intervened to configure the aircraft and stabilize the approach.",
+        "1": "SP, due to a descent profile that left no allowance for deceleration before the FAF, delayed the speed reduction until the final part of the descent. The deceleration was hurried, altitude deviation reached the 300 feet limit and airspeed reached the 20 KIAS limit before SP acted on IP prompting. Configuration was completed late.",
+        "2": "SP, due to starting the deceleration later than the planned profile allowed, compressed the transition from descent speed to approach speed. SP recognized the compression, reduced power in good time and completed the configuration with altitude between 150 and 300 feet and airspeed between 10 and 20 KIAS of the required values. The approach was flown without IP intervention.",
+        "3": "SP planned the descent so that deceleration and configuration were completed before the FAF without haste. Altitude was within 150 feet and airspeed within 10 KIAS at the point of configuration, and the power reduction was smooth. The transition into the approach was orderly.",
+        "4": "SP planned the descent so that the aircraft was decelerated and configured well before the FAF with no compression at any stage. Altitude and airspeed at configuration were essentially on the required values and the transition into the approach was seamless. Descent planning for the approach was of an exemplary standard.",
+        "marginal": "SP was configured before the FAF, but the deceleration was begun late and had to be completed with a rapid power reduction. All parameters stayed within tolerance, with airspeed on the fast side until shortly before configuration. SP is expected to plan the descent so that the speed reduction begins early enough for an unhurried configuration."
+      }
     }
   ]
 }

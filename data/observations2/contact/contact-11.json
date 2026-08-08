@@ -157,6 +157,126 @@
         "4": "SP applied control inputs that were precisely proportional to each attitude, smooth in onset and removal, with no correction of the correction on any presentation. The aircraft arrived at level flight on the intended heading in one continuous movement.",
         "marginal": "SP kept all parameters inside standards but applied roll inputs slightly larger than the bank required, needing a small damping input at wings level on most attitudes. No oscillation developed and the exit parameters were met. SP is expected to size the initial input to the actual bank so that no damping correction is needed."
       }
+    },
+    {
+      "id": "contact-11-tm01",
+      "label": "MAX POWER AS THE FIRST ACTION OF THE NOSE-HIGH RECOVERY",
+      "mif_row": null,
+      "source": "technique:6.16 NOSE-HIGH RECOVERY (Figure 6.2.)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to omitting the power to MAX that starts the nose-high recovery, entered the coordinated roll towards the nearest horizon with the energy still decaying and no thrust available to support it. Airspeed fell more than 20 knots below the level-flight reference and the altitude ran beyond 300 feet from the entry reference before the attitude was resolved. IP took the controls, advanced the PCL and completed the recovery.",
+        "1": "SP, due to advancing the PCL only after the roll had already been started, flew the most critical part of the nose-high recovery without MAX power set. Airspeed reached the 20 knot limit below the level-flight reference and power was brought to MAX only after the IP called for it. The energy state was restored, but through verbal intervention rather than by SP.",
+        "2": "SP, due to a short delay between assuming control and setting power to MAX, lost more energy in the nose-high attitude than the recovery required. SP recognized the decaying airspeed without prompting, advanced the PCL fully and completed the recovery with the airspeed between 10 and 20 knots of the reference. Power was set as the first action on the following nose-high presentations.",
+        "3": "SP set power to MAX as the first action of every nose-high recovery, in the same movement as the coordinated roll with backpressure towards the nearest horizon. Airspeed was held within 10 knots of the reference throughout and no energy shortfall developed during any recovery.",
+        "4": "SP applied MAX power the instant control was assumed on every nose-high attitude, so that thrust was already available as the roll towards the nearest horizon developed. Energy was managed with negligible airspeed deviation and each attitude was resolved at the first opportunity.",
+        "marginal": "SP set power to MAX on every nose-high recovery and kept all parameters inside standards, but the PCL was advanced a moment after the roll had started rather than together with it. No energy shortfall developed at any point. SP is expected to treat MAX power as the first action of the nose-high recovery."
+      }
+    },
+    {
+      "id": "contact-11-tm02",
+      "label": "POWER REDUCTION BELOW 60 PERCENT TORQUE IN LOW-AIRSPEED NOSE-HIGH ATTITUDES",
+      "mif_row": null,
+      "source": "technique:6.16 NOSE-HIGH RECOVERY (Figure 6.2.)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to holding high power in a nose-high attitude where the aircraft was responding slowly to inputs, let torque effect oppose the roll instead of reducing power below 60 percent torque. The roll towards the nearest horizon stagnated, the altitude ran beyond 300 feet from the reference and the airspeed beyond the 20 knot band. IP took control, reduced the power and returned the aircraft to level flight.",
+        "1": "SP, due to not recognizing that the sluggish response came from low airspeed combined with torque effect, kept the power high while all available control authority was already being applied. Power was reduced below 60 percent torque only after the IP called for it, and by then the altitude had reached the 300 foot limit. The recovery was then completed smoothly.",
+        "2": "SP, due to a late reading of the slow roll response in a low-airspeed nose-high attitude, held the power high longer than the situation allowed. SP reduced power below 60 percent torque and applied full control authority without prompting, completing the recovery with the altitude between 150 and 300 feet of the reference. The remaining low-airspeed attitudes were flown with the power reduction applied on time.",
+        "3": "SP identified the nose-high attitudes in which the aircraft responded slowly at low airspeed and reduced power below 60 percent torque while applying the control authority required. Each recovery was smooth, with altitude held within 150 feet and airspeed within 10 knots of the reference.",
+        "4": "SP matched the power setting to the actual response of the aircraft on every nose-high attitude, reducing below 60 percent torque as soon as torque effect began to oppose the roll. The recoveries were smooth and continuous, with negligible deviation in altitude and airspeed.",
+        "marginal": "SP handled the low-airspeed nose-high attitudes within standards but tended to hold the power high until the slow response was unmistakable before reducing below 60 percent torque. The recoveries remained smooth and inside tolerances. SP is expected to anticipate torque effect at low airspeed rather than react to it."
+      }
+    },
+    {
+      "id": "contact-11-tm03",
+      "label": "ROLLOUT TIMING RELATIVE TO THE HORIZON AT LOW AIRSPEED",
+      "mif_row": null,
+      "source": "technique:6.16 NOSE-HIGH RECOVERY (Figure 6.2.)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to rolling upright while the nose was still near the horizon at low airspeed, completed the rollout before positive pressure on the controls had returned. The aircraft was left slow and nose-high a second time, with the airspeed beyond 20 knots below the reference and the altitude beyond 300 feet from it. IP took control to lower the nose and regain flying airspeed.",
+        "1": "SP, due to not delaying the rollout until the nose was definitely below the horizon, raised the nose before enough airspeed had been regained to feel positive pressure on the controls. Airspeed reached the 20 knot limit below the reference and the IP had to call for the nose to be lowered again. Level flight was regained only after that prompting.",
+        "2": "SP, due to starting the rollout slightly before the nose was clearly below the horizon, had to hold the nose down a second time to regain flying airspeed. SP recognized the light control pressures without prompting and completed the recovery with the airspeed between 10 and 20 knots of the reference. Rollout timing on the following low-airspeed attitudes was correct.",
+        "3": "SP delayed the rollout on the low-airspeed attitudes until the nose was definitely below the horizon and positive pressure was felt on the controls, then rolled wings level and raised the nose. Airspeed stayed within 10 knots of the reference and no recovery required a second attempt.",
+        "4": "SP flew the nose well below the horizon whenever the energy state called for it and timed the rollout precisely to the return of positive control pressure. Level flight was regained in one continuous recovery with negligible airspeed and altitude deviation.",
+        "marginal": "SP kept every recovery inside standards but tended to roll wings level as soon as the nose passed the horizon rather than waiting for positive control pressure. Control pressures were light at rollout, although no second recovery was needed. SP is expected to hold the nose below the horizon until flying airspeed is clearly regained."
+      }
+    },
+    {
+      "id": "contact-11-tm04",
+      "label": "MAXIMUM ALLOWABLE AIRSPEED IN THE NOSE-LOW PULL-UP",
+      "mif_row": null,
+      "source": "technique:6.17 NOSE-LOW RECOVERY (Figure 6.3.)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to raising the nose out of the nose-low attitude with the power still set and no attention to the airspeed trend, did not account for the airspeed continuing to increase up to the moment level flight was attained. The airspeed ran beyond the 20 knot band towards the 316 KIAS maximum allowable and the altitude beyond 300 feet below the reference. IP took control to reduce power and contain the airspeed.",
+        "1": "SP, due to treating the airspeed as settled once the pull-up had been started, was late in managing the peak that occurs just before level flight. Airspeed reached the 20 knot limit above the reference and was contained short of the maximum allowable only after the IP called it. The recovery was completed with no further increase.",
+        "2": "SP, due to a late scan of the airspeed as the nose came up, allowed it to build more than the recovery required before the power was reduced. SP recognized the trend without prompting and completed the pull-up with the airspeed between 10 and 20 knots of the reference and a clear margin to the maximum allowable. The following nose-low attitudes were flown with the airspeed anticipated.",
+        "3": "SP anticipated that the airspeed would peak just before level flight and managed the power and the pull accordingly on every nose-low attitude. Airspeed was held within 10 knots of the reference and stayed well clear of the 316 KIAS maximum allowable.",
+        "4": "SP controlled the airspeed through every nose-low pull-up so that the peak just before level flight was planned for rather than discovered. Deviations were negligible and a wide margin to the maximum allowable airspeed was maintained throughout.",
+        "marginal": "SP stayed inside standards on every nose-low recovery but consistently let the airspeed build close to the top of the band before reducing power. The maximum allowable airspeed was never approached. SP is expected to act on the airspeed trend early, since the peak occurs just before level flight is attained."
+      }
+    },
+    {
+      "id": "contact-11-tm05",
+      "label": "IDLE AND SPEED BRAKE IN THE NOSE-LOW RECOVERY",
+      "mif_row": null,
+      "source": "technique:6.17 NOSE-LOW RECOVERY (Figure 6.3.)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to leaving the PCL and the speed brake untouched as the airspeed passed 200 KIAS in the dive, attempted to control the nose-low recovery with pitch alone. Without idle and speed brake the airspeed ran beyond the 20 knot band and the altitude loss exceeded 300 feet. IP took the controls, selected idle, extended the speed brake and completed the recovery.",
+        "1": "SP, due to not associating the increasing airspeed with the requirement to select idle and extend the speed brake approaching 200 KIAS, flew the pull-up with the power still set. The airspeed reached the 20 knot limit and the drag devices were used only after the IP called for them. Altitude loss was contained once the configuration was corrected.",
+        "2": "SP, due to a delayed decision on the power and drag configuration, passed 200 KIAS before selecting idle and extending the speed brake. SP made the selection without prompting and completed the recovery with the airspeed between 10 and 20 knots of the reference and altitude loss between 150 and 300 feet. The configuration was set on time on the following nose-low attitudes.",
+        "3": "SP selected idle and extended the speed brake as the airspeed approached 200 KIAS on the nose-low attitudes, then flew the pull-up to level flight. Airspeed remained within 10 knots of the reference and altitude loss was held within 150 feet.",
+        "4": "SP configured power and speed brake ahead of the airspeed on every nose-low recovery, so that the drag was already available as the pull-up began. Airspeed and altitude deviations were negligible and the recoveries were completed with the aircraft fully under control.",
+        "marginal": "SP used idle and the speed brake on every nose-low recovery and kept all parameters inside standards, but the selections were made only once 200 KIAS had already been passed. Airspeed was contained without difficulty. SP is expected to configure approaching 200 KIAS rather than after the airspeed has built."
+      }
+    },
+    {
+      "id": "contact-11-tm06",
+      "label": "AGSM AS G INCREASES DURING THE NOSE-LOW PULL-UP",
+      "mif_row": null,
+      "source": "technique:6.17 NOSE-LOW RECOVERY (Figure 6.3.)",
+      "hf_concept": "hf-g-loc-and-a-loc",
+      "texts": {
+        "0": "SP, due to omitting the AGSM as G-loading increased through the nose-low pull-up, allowed vision and awareness to degrade at the point where the recovery demanded the most precision. The pull became irregular, the altitude ran beyond 300 feet below the reference and the exit heading beyond 10 degrees. IP took control to complete the recovery and unload the aircraft.",
+        "1": "SP, due to starting the AGSM only after the G was already established in the pull-up, was slow to counter its effects and had to relax the pull to stay comfortable. Altitude loss reached the 300 foot limit and the strain was applied properly only after the IP called for it. The remaining recoveries needed the same prompting.",
+        "2": "SP, due to a late start of the AGSM relative to the onset of G, applied the strain after the pull had begun rather than with it. SP corrected the timing without prompting and completed the recovery with altitude loss between 150 and 300 feet and the exit heading between 5 and 10 degrees. The AGSM was anticipated on the following nose-low attitudes.",
+        "3": "SP accomplished a proper AGSM as G-loading increased on every nose-low recovery, so the pull could be flown steadily up to the G required. Altitude loss was held within 150 feet and the exit heading within 5 degrees.",
+        "4": "SP anticipated the G onset on every nose-low pull-up and had the AGSM established before the load built, allowing an uninterrupted pull to level flight. Exit parameters were achieved with negligible deviation on all presentations.",
+        "marginal": "SP performed the AGSM on every nose-low recovery and kept all parameters inside standards, but the strain was started as the G was felt rather than as the pull was initiated. The pull itself remained steady. SP is expected to have the AGSM established before the G-loading builds."
+      }
+    },
+    {
+      "id": "contact-11-tm07",
+      "label": "OCF RECOVERY WHEN THE AIRCRAFT DOES NOT RESPOND NORMALLY",
+      "mif_row": null,
+      "source": "technique:6.12 INADVERTENT DEPARTURE FROM CONTROLLED FLIGHT (OCF)",
+      "hf_concept": "hf-startle-effect",
+      "texts": {
+        "0": "SP, due to startle at an attitude in which the aircraft did not respond immediately and normally to control inputs, continued to fight the controls instead of accomplishing the OCF recovery of PCL to idle, controls neutralized and altitude check. The aircraft remained out of controlled flight, the altitude ran beyond 300 feet from the reference and continued to decrease. IP took control, applied the recovery and returned the aircraft to level flight.",
+        "1": "SP, due to a startled reaction that delayed the recognition of abnormal control response, held recovery inputs in for several seconds before reducing the PCL to idle and neutralizing the controls. The altitude reached the 300 foot limit before the sequence was applied, and the altitude check was made only after the IP called for it. Controlled flight was regained once the procedure was flown.",
+        "2": "SP, due to a brief hesitation on recognizing that the aircraft was not responding normally, was slow to move from recovery inputs to the OCF recovery. SP reduced the PCL to idle, neutralized the controls and checked the altitude without prompting, and the excursion was contained between 150 and 300 feet of the reference. The nose was then allowed to lower until positive control pressure returned.",
+        "3": "SP recognized abnormal control response promptly and accomplished the OCF recovery simultaneously, with PCL to idle, controls neutralized and an altitude check made against the recovery floor. The nose was allowed to lower until positive control pressure was felt and level flight was regained within 150 feet of the reference.",
+        "4": "SP applied the OCF recovery immediately whenever the aircraft did not respond normally or situational awareness was in doubt, treating it as a predictable method of regaining level flight rather than a last resort. The altitude check was included every time and the aircraft was recovered with negligible deviation and a wide margin above the recovery floor.",
+        "marginal": "SP applied the OCF recovery correctly and kept every parameter inside standards, but the decision to abandon normal recovery inputs was made only after two attempts had failed to produce a response. The altitude check was included each time. SP is expected to commit to the OCF recovery as soon as the aircraft response is abnormal."
+      }
+    },
+    {
+      "id": "contact-11-tm08",
+      "label": "ZERO-G SYSTEM LIMITATIONS AND THE UNLOADED RECOVERY",
+      "mif_row": null,
+      "source": "technique:6.16 NOSE-HIGH RECOVERY (Figure 6.2.)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to unloading to near zero-G through the nose-high recovery without regard for the system limitations in that regime, held the unloaded condition through the roll and did not check for normal oil pressure indications once level flight was regained. The unloaded recovery cost more than 300 feet of altitude and the airspeed ran beyond the 20 knot band. IP took control, re-established positive G and completed the checks.",
+        "1": "SP, due to treating the unload as the whole of the recovery, maintained a near zero-G condition longer than the system limitations allow before rolling and raising the nose. Altitude loss reached the 300 foot limit and the oil pressure indications were checked only after the IP called for it. Positive G was restored on the same prompting.",
+        "2": "SP, due to holding the unload slightly longer than the attitude required, operated near zero-G for longer than intended during the nose-high recovery. SP restored positive G and checked the oil pressure indications without prompting, ending the recovery with the altitude between 150 and 300 feet of the reference. The following recoveries were flown with a shorter unload.",
+        "3": "SP unloaded only as far and as long as the nose-high attitude required, respecting the system limitations near zero-G, and checked for normal oil pressure indications on regaining level flight. Altitude loss was held within 150 feet and airspeed within 10 knots of the reference.",
+        "4": "SP managed the unload precisely on every nose-high recovery, keeping the aircraft clear of prolonged near zero-G operation while still reducing angle of attack as required. Oil pressure indications were checked on each return to level flight and the deviations in altitude and airspeed were negligible.",
+        "marginal": "SP kept every recovery inside standards but held the unloaded condition close to zero-G slightly longer than the attitude called for, and the oil pressure check came late in the sequence. No system limitation was exceeded. SP is expected to limit the duration of the unload and to include the oil pressure check as part of the return to level flight."
+      }
     }
   ]
 }

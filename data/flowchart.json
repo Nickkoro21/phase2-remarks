@@ -70,7 +70,10 @@
     },
     "notes": [
       "No node carries kind='solo': the syllabus marks SOLO with a green frame on individual sorties inside a Training Section, so SOLO is expressed with solo_allowed / solo_required / sorties_solo / solo_candidate_sorties.",
-      "solo_required=true only where SOLO is structural to the Section (C4790-91 = checkride for SOLO + 1st SOLO). §9.c nevertheless makes every SOLO sortie mandatory — see totals.solo_mandatory_verbatim."
+      "solo_required=true only where SOLO is structural to the Section (C4790-91 = checkride for SOLO + 1st SOLO). §9.c nevertheless makes every SOLO sortie mandatory — see totals.minimum_hours_verbatim.",
+      "Ground exams live in two places: 8 as nodes with kind=='ground_exam', the other 6 as entries of the 'exams' array on their theory node. Read both to get the syllabus' full set of 14.",
+      "duration_verbatim = literal text from the single cited page, or null. duration_summary = editorially composed multi-row text, present only on the 9 theory nodes whose figures span several table rows / pages. Quote duration_verbatim, never duration_summary.",
+      "name on the sim / flight / checkride nodes is the MISSION line printed in the PART IV (or PART III) Training Section header. Where two Sections print the identical MISSION they carry the identical name (F4401-04 and F4501-03); mission_verbatim / objective_verbatim are recorded on those two nodes."
     ]
   },
   "totals": {
@@ -138,8 +141,11 @@
     "C 2501 / C 2502 are drawn twice in the Flow Chart: on the CONTACT page (C 2502 → C 4602) and again on the FORMATION page (C 2502 → F 4303). The MIF gives section C2501-03 only 3 sorties, so the second depiction is a cross-reference, not extra sorties. Both edges are kept, marked in their notes.",
     "PART II text (PDF 105) states '524 (282 for the foreign SPs) training periods', while the foreign-SP table (PDF 107) totals 279. The Greek total of 524 reconciles exactly with the node periods; the foreign figure is recorded as printed in totals.ground_training_periods_foreign_sps = 279 with the 282 discrepancy left unresolved.",
     "Lesson-code differences between the Flow Chart boxes and the PART II table: 'OP 101-115' vs 'OP 101-15', 'FF 101-108' vs 'FF 101-107', 'CO 106-108' vs 'CO 106-107', 'SOPs 101-104' vs 'SOP 101-104', 'IPR PL2' vs 'OPR PL2', 'NA 101-103' vs 'NA 101-3'. Flow-Chart labels were used for node labels; PART II codes are quoted in duration_verbatim.",
-    "Ground academics are grouped: 41 ground boxes of the Flow Chart are condensed into 12 theory nodes; only the 8 exams that gate an F/S or A/C sortie (CO 190, JP 190, IN 190, IN 290, FO 190, TACFOR 590, NA 190, LNAV 790) are kept as separate ground_exam nodes. FF 190, PT 190, AE 190, JX 190-191 and NA 191 gate only further ground lessons and stay inside their theory node (recorded in duration_verbatim).",
-    "Node count 73 exceeds the 45-65 guidance: the 34 T-6A Training Sections plus the 19 F/S Training Sections (both required as individual nodes) already occupy 53, and the ground side cannot go below 20 nodes without dropping the exam gates.",
+    "Ground academics are grouped: 41 ground boxes of the Flow Chart are condensed into 12 theory nodes; only the 8 exams that gate an F/S or A/C sortie (CO 190, JP 190, IN 190, IN 290, FO 190, TACFOR 590, NA 190, LNAV 790) are kept as separate ground_exam nodes. The other 6 exams (FF 190, PT 190, AE 190, JX 190, JX 191, NA 191) gate only further ground lessons and stay inside their theory node, where they are listed in that node's 'exams' array (code / name / periods / periods_foreign / gates); every gate was verified against the Training Flow Chart: FF 190 → CO 101-105, PT 190 → BB 101-102, AE 190 → CR 201-202*, JX 190-191 → JP 190*, NA 191 → GPS.",
+    "FULL EXAM SET = the 8 nodes with kind=='ground_exam' PLUS the 'exams' entries of GT-FLYPRIN (FF 190, PT 190), GT-AERO-CRM (AE 190), GT-METEO-BA (JX 190, JX 191) and GT-IFRNAV-GPS (NA 191) = the 14 exams the syllabus defines. Filtering on kind=='ground_exam' alone returns 8 and under-counts.",
+    "duration_verbatim vs duration_summary: duration_verbatim holds literal text from the ONE cited page — all 53 sim/flight nodes, the 8 ground_exam nodes and the 3 single-row theory nodes (GT-WSGES, GT-CO110, GT-CO109); ground rows are quoted as 'group heading: row | code | periods'. The 9 theory nodes that condense several table rows — some spanning PDF 105-106, two splicing in the PDF-109 supplementary lessons under a '[suppl.]' marker — carry duration_verbatim=null and hold the composed text in duration_summary. No figure was dropped in the split; duration_summary must not be quoted as source text.",
+    "periods_foreign holds the foreign-SP training periods from the separate PART II §11.b(6) table (PDF 107; JP 190 from §11.c(1)(c), PDF 109). It is present on every ground_exam node and on every entry of the theory nodes' 'exams' arrays. These counts were previously spliced into the duration_verbatim of CO 190 / IN 190 / IN 290 as '(foreign SPs: 1)'. JX 191 has no foreign row (that table has no 'Meteorology II' section) → null. Theory nodes carry no periods_foreign: their totals would have to be summed across rows, which the syllabus does not print — the printed foreign total is in totals.ground_training_periods_foreign_sps.",
+    "Node count 73 exceeds the 45-65 guidance: the 34 T-6A Training Sections plus the 19 F/S Training Sections (both required as individual nodes) already occupy 53, and the ground side cannot go below 20 nodes without dropping the exam gates. Merging the small gate nodes into their category theory blocks was considered and rejected: folding GT-CO109 into GT-INSTR turns the graph from a DAG into one containing 5 directed cycles (GT-INSTR → IN 190 → I 3101-02 → … → I 4501-02 → GT-INSTR), because the Flow Chart feeds CO 109 from I 4501. GT-CO110 and GT-WSGES could be merged without creating a cycle, but each is drawn as its own box / programme line, so all three are kept.",
     "hours_per_sortie is populated only where a Section contains a single sortie (there the printed total IS the per-sortie figure). For multi-sortie Sections the syllabus prints only the Section total, so hours_per_sortie is null — no per-sortie value was computed.",
     "The A/C Systems (WSGES) block and the General Briefing block (125 periods) are in the PART II programme but have no box in the Training Flow Chart. GT-GENBRIEF therefore has no edges (continuous briefings throughout the phase).",
     "solo_required=true only on C4790-91 (the Section IS 'Contact checkride for SOLO (C4790) and 1st SOLO (C4791)'). §9.c ('All the SOLO sorties are mandatory to be executed') makes every SOLO mandatory in practice — recorded in totals.minimum_hours_verbatim, not duplicated per node.",
@@ -261,7 +267,8 @@
         "JP 101-110": 18,
         "reason": "foreign SPs who have not covered Flight Physiology in their Air Force Academy"
       },
-      "duration_verbatim": "2. Orientation to training. | OP 101-15 | 2 · 3. Introduction to CAI (Computer Assisted Instruction) | IC 101 | 1 · 9. Flight Safety – Local Area Procedures (LAP) | LP 101-108 | 10 · 8. Normal and Emergency procedures | PR 101-113 | 21 · [suppl.] Flight physiology | JP 101-110 | 18",
+      "duration_verbatim": null,
+      "duration_summary": "2. Orientation to training. | OP 101-15 | 2 · 3. Introduction to CAI (Computer Assisted Instruction) | IC 101 | 1 · 9. Flight Safety – Local Area Procedures (LAP) | LP 101-108 | 10 · 8. Normal and Emergency procedures | PR 101-113 | 21 · [suppl.] Flight physiology | JP 101-110 | 18",
       "source": {
         "file": "Phase_2_Syllabus_2025.pdf",
         "page_pdf": 105,
@@ -285,15 +292,36 @@
       "solo_allowed": false,
       "checkride": false,
       "night": false,
-      "duration_verbatim": "6. Flying Principles: Basic principles of flying | FF 101-107 | 17 · Exams on Basic principles of flying | FF 190 | 2 · Basic Contact maneuvers | CO 101-105 | 8 · Advanced Contact maneuvers | CO 106-107 | 6 · OJT (On the Job Training) | 11 · 14. A/C’s Performance Tables | PT 101-104 | 4 · Exams on A/C’s Performance Tables | PT 190 | 2 · 13. Ejection – Survival procedures | BB 101-102 | 2 · 11. Standard Operation Procedures (SOP) | SOP 101-104 | 8 · 12. In Flight Guide (IFG) analysis | IFG 101-102 | 4",
+      "duration_verbatim": null,
+      "duration_summary": "6. Flying Principles: Basic principles of flying | FF 101-107 | 17 · Exams on Basic principles of flying | FF 190 | 2 · Basic Contact maneuvers | CO 101-105 | 8 · Advanced Contact maneuvers | CO 106-107 | 6 · OJT (On the Job Training) | 11 · 14. A/C’s Performance Tables | PT 101-104 | 4 · Exams on A/C’s Performance Tables | PT 190 | 2 · 13. Ejection – Survival procedures | BB 101-102 | 2 · 11. Standard Operation Procedures (SOP) | SOP 101-104 | 8 · 12. In Flight Guide (IFG) analysis | IFG 101-102 | 4",
+      "exams": [
+        {
+          "code": "FF 190",
+          "name": "Exams on Basic principles of flying",
+          "periods": 2,
+          "periods_foreign": 1,
+          "gates": [
+            "CO 101-105"
+          ]
+        },
+        {
+          "code": "PT 190",
+          "name": "Exams on A/C’s Performance Tables",
+          "periods": 2,
+          "periods_foreign": 2,
+          "gates": [
+            "BB 101-102"
+          ]
+        }
+      ],
       "source": {
         "file": "Phase_2_Syllabus_2025.pdf",
         "page_pdf": 105,
-        "ref": "PART II, §11.b(5) TRAINING PROGRAM (Greek SPs)"
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM (Greek SPs), rows 6/11/12/13/14 — spans PDF 105-106; foreign-SP periods from PART II, §11.b(6) (PDF 107)"
       },
       "flags": [
         "flow_chart boxes read 'FF 101-108' and 'CO 106-108'; PART II table reads 'FF 101-107' and 'CO 106-107'",
-        "grouping: the FF 190 and PT 190 exams are internal to this block (they gate only ground lessons); CO 190 is modelled as a separate ground_exam node because it gates F/S sortie C1101"
+        "grouping: the FF 190 and PT 190 exams are internal to this block (they gate only ground lessons — FF 190 → CO 101-105, PT 190 → BB 101-102 in the Training Flow Chart) and are listed in 'exams'; CO 190 is modelled as a separate ground_exam node because it gates F/S sortie C1101"
       ]
     },
     {
@@ -314,12 +342,27 @@
         "CR 101-4/201-2": 8,
         "reason": "foreign SPs who have not covered CRM in their Air Force Academy"
       },
-      "duration_verbatim": "5. Aerodynamics: Aerodynamics | AΕ 101-108 | 17 · Exams on Aerodynamics | AΕ 190 | 2 · OJT (On the Job Training) | 11 · [suppl.] Crew Resource Management (CRM) | CR 101- 4/201-2 | 8",
+      "duration_verbatim": null,
+      "duration_summary": "5. Aerodynamics: Aerodynamics | AΕ 101-108 | 17 · Exams on Aerodynamics | AΕ 190 | 2 · OJT (On the Job Training) | 11 · [suppl.] Crew Resource Management (CRM) | CR 101- 4/201-2 | 8",
+      "exams": [
+        {
+          "code": "AE 190",
+          "name": "Exams on Aerodynamics",
+          "periods": 2,
+          "periods_foreign": 1,
+          "gates": [
+            "CR 201-202*"
+          ]
+        }
+      ],
       "source": {
         "file": "Phase_2_Syllabus_2025.pdf",
         "page_pdf": 105,
-        "ref": "PART II, §11.b(5) TRAINING PROGRAM (Greek SPs) + PART II, §11.c(1)(c) supplementary lessons (PDF 109)"
-      }
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM (Greek SPs) + PART II, §11.c(1)(c) supplementary lessons (PDF 109); foreign-SP periods from PART II, §11.b(6) (PDF 107)"
+      },
+      "flags": [
+        "grouping: the AE 190 exam is internal to this block (in the Training Flow Chart AE 101-108 → AE 190 → CR 201-202* → C 4101, so it gates a ground lesson, not a sortie) and is listed in 'exams'"
+      ]
     },
     {
       "id": "GT-METEO-BA",
@@ -335,12 +378,37 @@
       "solo_allowed": false,
       "checkride": false,
       "night": false,
-      "duration_verbatim": "4. Meteorology I: Meteorology | JX 101-109 | 12 · Exams on Meteorology | JX 190 | 3 · OJT (On the Job Training) | 15 · 18. Meteorology II: Meteo Briefing | 29 · Exams on Meteorology | JX 191 | 1 · 10. Briefing Analysis | BA 101-103 | 2",
+      "duration_verbatim": null,
+      "duration_summary": "4. Meteorology I: Meteorology | JX 101-109 | 12 · Exams on Meteorology | JX 190 | 3 · OJT (On the Job Training) | 15 · 18. Meteorology II: Meteo Briefing | 29 · Exams on Meteorology | JX 191 | 1 · 10. Briefing Analysis | BA 101-103 | 2",
+      "exams": [
+        {
+          "code": "JX 190",
+          "name": "Exams on Meteorology (Meteorology I)",
+          "periods": 3,
+          "periods_foreign": 1,
+          "gates": [
+            "JP 190*"
+          ]
+        },
+        {
+          "code": "JX 191",
+          "name": "Exams on Meteorology (Meteorology II)",
+          "periods": 1,
+          "periods_foreign": null,
+          "gates": [
+            "JP 190*"
+          ]
+        }
+      ],
       "source": {
         "file": "Phase_2_Syllabus_2025.pdf",
         "page_pdf": 105,
-        "ref": "PART II, §11.b(5) TRAINING PROGRAM (Greek SPs)"
-      }
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM (Greek SPs), rows 4/10/18 — spans PDF 105-106; foreign-SP periods from PART II, §11.b(6) (PDF 107)"
+      },
+      "flags": [
+        "grouping: JX 190 and JX 191 are internal to this block and are listed in 'exams'; the Training Flow Chart draws them as ONE orange box labelled 'JX 190-191' (JX 101-109 → JX 190-191 → JP 190* → C 4905), so neither gates a sortie directly",
+        "JX 191 has no row in the foreign-SP table (PDF 107 has no 'Meteorology II' section), hence periods_foreign=null"
+      ]
     },
     {
       "id": "GT-INSTR",
@@ -356,7 +424,8 @@
       "solo_allowed": false,
       "checkride": false,
       "night": false,
-      "duration_verbatim": "7. IFR Navigation: Basic Instruments | IN 101-105 | 8 · Advanced Instruments | ΙΝ 201-210 | 23",
+      "duration_verbatim": null,
+      "duration_summary": "7. IFR Navigation: Basic Instruments | IN 101-105 | 8 · Advanced Instruments | ΙΝ 201-210 | 23",
       "source": {
         "file": "Phase_2_Syllabus_2025.pdf",
         "page_pdf": 105,
@@ -380,15 +449,27 @@
       "solo_allowed": false,
       "checkride": false,
       "night": false,
-      "duration_verbatim": "7. IFR Navigation: Navigation IFR | NA 101-3 | 8 · Air Traffic Rules | 2 · IFR Navigation Examination | NA 191 | 1 · Planning Procedure | OPR PL2 | 7 · OJT (On the Job Training) | 25 · 15. Use of GPS in flight | GPS | 2",
+      "duration_verbatim": null,
+      "duration_summary": "7. IFR Navigation: Navigation IFR | NA 101-3 | 8 · Air Traffic Rules | 2 · IFR Navigation Examination | NA 191 | 1 · Planning Procedure | OPR PL2 | 7 · OJT (On the Job Training) | 25 · 15. Use of GPS in flight | GPS | 2",
+      "exams": [
+        {
+          "code": "NA 191",
+          "name": "IFR Navigation Examination",
+          "periods": 1,
+          "periods_foreign": 1,
+          "gates": [
+            "GPS"
+          ]
+        }
+      ],
       "source": {
         "file": "Phase_2_Syllabus_2025.pdf",
         "page_pdf": 105,
-        "ref": "PART II, §11.b(5) TRAINING PROGRAM (Greek SPs)"
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM (Greek SPs), rows 7/15 — spans PDF 105-106; foreign-SP periods from PART II, §11.b(6) (PDF 107)"
       },
       "flags": [
         "flow_chart box reads 'IPR PL2'; PART II table reads 'OPR PL2' (Planning Procedure)",
-        "NA 191 kept inside this block: it gates only the GPS ground lesson, not a sortie"
+        "grouping: NA 191 is internal to this block and is listed in 'exams'; in the Training Flow Chart NA 101-103 → IPR PL2 → NA 191 → GPS → I 4501, so it gates the GPS ground lesson, not a sortie"
       ]
     },
     {
@@ -447,7 +528,8 @@
       "solo_allowed": false,
       "checkride": false,
       "night": false,
-      "duration_verbatim": "16. Applied Aerodynamics: Formation | FO 101-4 | 11 · Extended Trail | FO 201 | 2 · Tactical Formation | TACFOR 501-6 | 6 · OJT (On the Job Training) | 20",
+      "duration_verbatim": null,
+      "duration_summary": "16. Applied Aerodynamics: Formation | FO 101-4 | 11 · Extended Trail | FO 201 | 2 · Tactical Formation | TACFOR 501-6 | 6 · OJT (On the Job Training) | 20",
       "source": {
         "file": "Phase_2_Syllabus_2025.pdf",
         "page_pdf": 106,
@@ -468,7 +550,8 @@
       "solo_allowed": false,
       "checkride": false,
       "night": false,
-      "duration_verbatim": "17. Navigation: VFR Navigation | NA 104-11 | 15 · Low Altitude Navigation | LNAV 701-5 | 5",
+      "duration_verbatim": null,
+      "duration_summary": "17. Navigation: VFR Navigation | NA 104-11 | 15 · Low Altitude Navigation | LNAV 701-5 | 5",
       "source": {
         "file": "Phase_2_Syllabus_2025.pdf",
         "page_pdf": 106,
@@ -489,7 +572,8 @@
       "solo_allowed": false,
       "checkride": false,
       "night": false,
-      "duration_verbatim": "19. General Briefing: Flying Technique | 25 · Airmanship Basics Analysis | 20 · Flying Procedures | 25 · Emergency Procedures | 30 · Flight Safety | 25",
+      "duration_verbatim": null,
+      "duration_summary": "19. General Briefing: Flying Technique | 25 · Airmanship Basics Analysis | 20 · Flying Procedures | 25 · Emergency Procedures | 30 · Flight Safety | 25",
       "source": {
         "file": "Phase_2_Syllabus_2025.pdf",
         "page_pdf": 106,
@@ -509,15 +593,16 @@
       "hours_per_sortie": null,
       "hours_total": null,
       "periods": 2,
+      "periods_foreign": 1,
       "solo_required": false,
       "solo_allowed": false,
       "checkride": false,
       "night": false,
-      "duration_verbatim": "6. Flying Principles: Exams on Basic Contact maneuvers | CO 190 | 2 (foreign SPs: 1)",
+      "duration_verbatim": "6. Flying Principles: Exams on Basic Contact maneuvers | CO 190 | 2",
       "source": {
         "file": "Phase_2_Syllabus_2025.pdf",
         "page_pdf": 105,
-        "ref": "PART II, §11.b(5) TRAINING PROGRAM + PART I, §3 TRAINING FLOW CHART"
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM + PART I, §3 TRAINING FLOW CHART; periods_foreign from PART II, §11.b(6) (PDF 107)"
       }
     },
     {
@@ -530,6 +615,7 @@
       "hours_per_sortie": null,
       "hours_total": null,
       "periods": 1,
+      "periods_foreign": 1,
       "solo_required": false,
       "solo_allowed": false,
       "checkride": false,
@@ -537,7 +623,7 @@
       "conditional": {
         "reason": "foreign SPs who have not covered Flight Physiology in their Air Force Academy"
       },
-      "duration_verbatim": "[suppl.] Exams on Flight physiology | JP 190 | 1",
+      "duration_verbatim": "Flight Physiology: Exams on Flight physiology | JP 190 | 1",
       "source": {
         "file": "Phase_2_Syllabus_2025.pdf",
         "page_pdf": 109,
@@ -554,15 +640,16 @@
       "hours_per_sortie": null,
       "hours_total": null,
       "periods": 2,
+      "periods_foreign": 1,
       "solo_required": false,
       "solo_allowed": false,
       "checkride": false,
       "night": false,
-      "duration_verbatim": "7. IFR Navigation: Exams on Basic Instruments | IN 190 | 2 (foreign SPs: 1)",
+      "duration_verbatim": "7. IFR Navigation: Exams on Basic Instruments | IN 190 | 2",
       "source": {
         "file": "Phase_2_Syllabus_2025.pdf",
         "page_pdf": 105,
-        "ref": "PART II, §11.b(5) TRAINING PROGRAM + PART I, §3 TRAINING FLOW CHART"
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM + PART I, §3 TRAINING FLOW CHART; periods_foreign from PART II, §11.b(6) (PDF 107)"
       }
     },
     {
@@ -575,15 +662,16 @@
       "hours_per_sortie": null,
       "hours_total": null,
       "periods": 2,
+      "periods_foreign": 1,
       "solo_required": false,
       "solo_allowed": false,
       "checkride": false,
       "night": false,
-      "duration_verbatim": "7. IFR Navigation: Exams on Advanced Instruments | ΙΝ 290 | 2 (foreign SPs: 1)",
+      "duration_verbatim": "7. IFR Navigation: Exams on Advanced Instruments | ΙΝ 290 | 2",
       "source": {
         "file": "Phase_2_Syllabus_2025.pdf",
         "page_pdf": 105,
-        "ref": "PART II, §11.b(5) TRAINING PROGRAM + PART I, §3 TRAINING FLOW CHART"
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM + PART I, §3 TRAINING FLOW CHART; periods_foreign from PART II, §11.b(6) (PDF 107)"
       }
     },
     {
@@ -596,6 +684,7 @@
       "hours_per_sortie": null,
       "hours_total": null,
       "periods": 1,
+      "periods_foreign": 1,
       "solo_required": false,
       "solo_allowed": false,
       "checkride": false,
@@ -617,6 +706,7 @@
       "hours_per_sortie": null,
       "hours_total": null,
       "periods": 1,
+      "periods_foreign": 1,
       "solo_required": false,
       "solo_allowed": false,
       "checkride": false,
@@ -638,6 +728,7 @@
       "hours_per_sortie": null,
       "hours_total": null,
       "periods": 1,
+      "periods_foreign": 1,
       "solo_required": false,
       "solo_allowed": false,
       "checkride": false,
@@ -659,6 +750,7 @@
       "hours_per_sortie": null,
       "hours_total": null,
       "periods": 1,
+      "periods_foreign": 1,
       "solo_required": false,
       "solo_allowed": false,
       "checkride": false,
@@ -1715,6 +1807,7 @@
       "sorties_total": 2,
       "hours_per_sortie": null,
       "hours_total": null,
+      "hours_dual": null,
       "hours_solo": 0.0,
       "solo_required": false,
       "solo_allowed": false,
@@ -2043,7 +2136,7 @@
     {
       "id": "F4401-04",
       "label": "F4401-04",
-      "name": "Tactical Formation",
+      "name": "Two-ship Formation (Closed and Tactical)",
       "kind": "flight",
       "category": "formation",
       "phase": "p6",
@@ -2069,12 +2162,17 @@
         "file": "Phase_2_Syllabus_2025.pdf",
         "page_pdf": 215,
         "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
-      }
+      },
+      "mission_verbatim": "MISSION: Two-ship Formation.",
+      "objective_verbatim": "OBJECTIVE: Familiarization of SP with Closed and Tactical Formation Maneuvers.",
+      "flags": [
+        "F44ΧΧ (PDF 215) and F45ΧΧ (PDF 217) print the identical MISSION and OBJECTIVE, so the two nodes carry the same name; they differ only in sorties (4 dual / 0 solo vs 2 dual / 1 solo)."
+      ]
     },
     {
       "id": "F4501-03",
       "label": "F4501-03",
-      "name": "Formation",
+      "name": "Two-ship Formation (Closed and Tactical)",
       "kind": "flight",
       "category": "formation",
       "phase": "p6",
@@ -2103,7 +2201,12 @@
         "file": "Phase_2_Syllabus_2025.pdf",
         "page_pdf": 217,
         "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
-      }
+      },
+      "mission_verbatim": "MISSION: Two-ship Formation.",
+      "objective_verbatim": "OBJECTIVE: Familiarization of SP with Closed and Tactical Formation Maneuvers.",
+      "flags": [
+        "F44ΧΧ (PDF 215) and F45ΧΧ (PDF 217) print the identical MISSION and OBJECTIVE, so the two nodes carry the same name; they differ only in sorties (4 dual / 0 solo vs 2 dual / 1 solo)."
+      ]
     },
     {
       "id": "F4690",
@@ -2136,7 +2239,7 @@
     {
       "id": "N4101-02",
       "label": "N4101-02",
-      "name": "VFR Navigation",
+      "name": "VFR Navigation (Medium Altitude)",
       "kind": "flight",
       "category": "vfr_navigation",
       "phase": "p7",
@@ -2165,7 +2268,7 @@
     {
       "id": "N4201-02",
       "label": "N4201-02",
-      "name": "VFR Navigation",
+      "name": "VFR Navigation (Low Altitude)",
       "kind": "flight",
       "category": "vfr_navigation",
       "phase": "p7",
@@ -2194,7 +2297,7 @@
     {
       "id": "N4301-02",
       "label": "N4301-02",
-      "name": "VFR Navigation",
+      "name": "VFR Navigation (Low Altitude)",
       "kind": "flight",
       "category": "vfr_navigation",
       "phase": "p7",
@@ -2223,7 +2326,7 @@
     {
       "id": "N4401-03",
       "label": "N4401-03",
-      "name": "VFR Navigation",
+      "name": "Medium Level VFR Navigation (Two Ship Formation)",
       "kind": "flight",
       "category": "vfr_navigation",
       "phase": "p7",
@@ -2253,7 +2356,7 @@
     {
       "id": "N4501-03",
       "label": "N4501-03",
-      "name": "VFR Navigation",
+      "name": "Low Level VFR Navigation (Two Ship Formation)",
       "kind": "flight",
       "category": "vfr_navigation",
       "phase": "p7",

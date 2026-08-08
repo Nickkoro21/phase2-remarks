@@ -142,6 +142,96 @@
         "4": "SP maintained a fast and complete instrument cross-check under the continuous radio load of the PAR final, so that no parameter was left unmonitored at any time. Deviations were anticipated from the rate of change of the instruments rather than from their values. Aircraft state was known at every point of the approach.",
         "marginal": "SP kept a cross-check adequate to hold the standards, but it narrowed noticeably each time the controller transmitted, with altitude and airspeed checked less often than attitude. Deviations were detected as values rather than as trends. SP is expected to keep the scan rate constant under radio load and to detect trends earlier."
       }
+    },
+    {
+      "id": "instrument-24-tm01",
+      "label": "Course corrections larger than the heading bug band",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to answering each course deviation with heading changes well beyond 5 deg and outside the area beneath the heading bug, over-corrected on every call from the controller. The resulting swings exceeded 10 deg either side of the heading required for the final approach course and the aircraft oscillated across the centerline until the IP took over the corrections. SP did not damp the oscillation on his own.",
+        "1": "SP, due to correcting with heading changes larger than the 5 deg limit instead of keeping the correction beneath the heading bug, produced overshoots reaching about 10 deg either side of the final approach heading. SP reduced the size of the inputs and damped the oscillation only after repeated verbal prompting. No IP control input was required.",
+        "2": "SP, due to a first correction slightly larger than the 5 deg limit, swung between 5 deg and 10 deg through the final approach heading before settling. SP recognized the overcorrection, kept the following inputs inside the width of the heading bug and stopped the oscillation in good time. No prompting and no intervention were needed.",
+        "3": "SP made every course correction with heading changes of 5 deg or less, keeping each input inside the area beneath the heading bug. Heading deviations stayed within 5 deg and every correction was removed once the course was regained. No overcorrection developed during the final.",
+        "4": "SP corrected course deviations with heading changes so small that the swings around the final approach heading were barely readable on the indicator. Each correction was set beneath the heading bug and taken out as soon as the trend reversed. The aircraft tracked the centerline with no perceptible oscillation.",
+        "marginal": "SP held heading within the standards, but the first correction after each controller call was noticeably larger than 5 deg and had to be reduced afterwards. The correct-and-recorrect pattern repeated through the second half of the final. SP is expected to limit course corrections to the width of the heading bug and to remove them before the course is fully regained."
+      }
+    },
+    {
+      "id": "instrument-24-tm02",
+      "label": "Pitch corrections larger than 2 degrees on the glide path",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to correcting glide path deviations with pitch changes far larger than 2 deg, moved the vertical speed well beyond 400 feet/min from the value required for the descent on each input. The aircraft went past 300 ft above and then past 150 ft below the glide path and the IP intervened to stabilize the rate of descent. SP never established a steady descent on the glide path.",
+        "1": "SP, due to using pitch inputs well over the 2 deg limit for glide path corrections, alternated to about 300 ft above and about 150 ft below the glide path as each correction overshot. SP reduced the size of the pitch inputs only after verbal prompting. No IP control input was required.",
+        "2": "SP, due to a first pitch correction slightly larger than 2 deg, moved from the high side toward the low side of the glide path with deviations reaching well beyond the slightly high and slightly low band. SP saw the vertical speed exceeding roughly 400 feet/min from the required descent rate, reduced the input and recaptured the glide path in good time. No prompting and no intervention were needed.",
+        "3": "SP corrected glide path deviations with pitch changes of about 2 deg or less, keeping vertical speed excursions near 400 feet/min from the required descent rate. The aircraft stayed only slightly above or slightly below the glide path throughout the final. Each correction was removed as the glide path was regained.",
+        "4": "SP held the glide path with pitch inputs so small that the controller reported the deviations as negligible. Vertical speed changes remained well inside 400 feet/min and the descent rate was smooth from intercept to minima. No correction required a follow-up input.",
+        "marginal": "SP kept the glide path inside the standards, but several corrections used pitch changes beyond 2 deg and produced vertical speed swings of more than 400 feet/min that then had to be taken out. This showed up as a repeated high-then-low pattern in the controller calls. SP is expected to limit glide path corrections to 2 deg of pitch and to accept a slower, steadier return to the glide path."
+      }
+    },
+    {
+      "id": "instrument-24-tm03",
+      "label": "Large power corrections instead of small throttle changes",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to answering every airspeed indication with a large power correction rather than a small throttle change, produced excursions beyond 20 kt fast and later beyond 10 kt slow. Torque was moved well outside the value required for the configuration, the approach speed was never stabilized and the IP intervened on the throttle. SP did not reduce the size of the inputs at any stage.",
+        "1": "SP, due to large throttle movements where small corrections were sufficient, let the airspeed swing to about 20 kt above and about 10 kt below the approach speed. SP reduced the size of the power changes only after verbal prompting and the speed stabilized late on final. No IP control input was required.",
+        "2": "SP, due to one power correction larger than the deviation demanded, allowed the airspeed to move between 10 kt and 20 kt fast and then between 5 kt and 10 kt slow. SP recognized the overshoot, reset the torque appropriate to the configuration and held the approach speed without further chasing. No prompting and no intervention were needed.",
+        "3": "SP held the approach speed within 10 kt fast and 5 kt slow using small throttle changes around the torque set for the configuration. Large power corrections were not used, so no speed overshoot developed. Airspeed remained stable through the final.",
+        "4": "SP flew the whole final with negligible airspeed deviations, adjusting torque in very small increments about the value required for the configuration. No power correction produced a noticeable excursion in the opposite direction. Approach speed was maintained to the transition to landing.",
+        "marginal": "SP kept the airspeed inside the standards, but each correction was made with more power than the deviation required and then had to be taken back out. The speed hunted around the approach speed instead of settling. SP is expected to correct small deviations with small throttle changes and to reserve large power corrections for excessively high or low airspeed."
+      }
+    },
+    {
+      "id": "instrument-24-tm04",
+      "label": "Late configuration before glide path intercept",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to configuring the aircraft well after the point 2-3 NM prior to final, selected gear and take-off flaps with the glide path already being intercepted. Airspeed and trim were not stabilized, so the aircraft went more than 20 kt fast and more than 300 ft above the glide path while SP was still retrimming, and the IP intervened. The final was started from an unstabilized condition.",
+        "1": "SP, due to leaving the configuration change until close to glide path intercept, began the descent before airspeed and trim were stable, reaching about 20 kt above the approach speed and roughly 300 ft above the glide path. SP recovered the parameters after verbal prompting from the IP. No IP control input was required.",
+        "2": "SP, due to configuring slightly later than the 2-3 NM prior to final recommended for stabilization, was still trimming as the descent began and the speed moved between 10 kt and 20 kt fast. SP set gear, take-off flaps and the torque required for the configuration and stabilized on the approach speed shortly after intercept. No prompting and no intervention were needed.",
+        "3": "SP configured 2-3 NM prior to final with gear down, flaps in the take-off setting and 110 KIAS, so airspeed and trim were stable before the descent began. Airspeed at intercept was within 10 kt fast and 5 kt slow and the aircraft was only slightly displaced from the glide path. The descent was started from a stabilized condition.",
+        "4": "SP configured early enough that the aircraft was fully trimmed and steady at the approach speed well before glide path intercept. The descent began with no residual trim change and no perceptible speed excursion. The approach was stabilized from intercept to minima.",
+        "marginal": "SP configured inside the acceptable window but consistently at its late edge, so trim was still being adjusted as the descent began. Airspeed stayed on the fast side for the first part of the final before settling. SP is expected to configure 2-3 NM prior to final so that airspeed and trim are stable before descending."
+      }
+    },
+    {
+      "id": "instrument-24-tm05",
+      "label": "Drift correction and heading bug for the final approach course",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not determining the wind and not calculating the estimated drift with the 60 to 1 rule, flew an uncorrected heading on final and marked no wind corrected heading with the heading bug. The aircraft drifted steadily downwind, heading deviations from the value required to hold the centerline exceeded 10 deg once corrections were started, and the IP took over the re-intercept. Track was never compared with heading on the GPS.",
+        "1": "SP, due to not marking the wind corrected heading with the heading bug, corrected drift only by reacting to the course calls of the controller and reached heading deviations of about 10 deg from the value required to track the centerline. SP established a workable drift correction only after verbal prompting. No IP control input was required.",
+        "2": "SP, due to an initial drift estimate that was not refined against the GPS track, held a wind corrected heading between 5 deg and 10 deg away from what the crosswind component required. SP compared track with heading, reset the heading bug and settled on the correct drift correction before the controller repeated the deviation. No prompting and no intervention were needed.",
+        "3": "SP determined the wind, calculated the drift correction and set the heading bug on the wind corrected final approach heading. Heading was held within 5 deg of the value required to track the centerline, with the correction refined by comparing GPS track against heading. Course deviations reported by the controller remained minor.",
+        "4": "SP flew the final on a wind corrected heading that held the centerline with negligible course deviations. The heading bug was used as a continuous cue and the drift correction was adjusted in very small steps as the crosswind changed. The controller reported the aircraft on course throughout.",
+        "marginal": "SP tracked the final approach course within the standards, but the drift correction was found by trial and error rather than calculated, and the heading bug was set late. Every change in wind therefore produced another small correction. SP is expected to compute the drift before intercept, mark the wind corrected heading with the heading bug and use GPS track as a cross-check."
+      }
+    },
+    {
+      "id": "instrument-24-tm06",
+      "label": "Configuration and approach speed in gusty crosswind",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not increasing the airspeed and not using the appropriate flap setting for the reported gusty crosswind, flew the final at the basic approach speed and let the gusts drive the airspeed beyond 20 kt fast and beyond 10 kt slow. The speed excursions were coupled with heading and glide path deviations SP could not contain and the IP intervened. The configuration was never adjusted to the conditions.",
+        "1": "SP, due to leaving the flap setting and the target airspeed unchanged in gusty conditions, allowed the gusts to take the speed to about 20 kt above and about 10 kt below the target. SP increased the approach speed only after verbal prompting from the IP. No IP control input was required.",
+        "2": "SP, due to an airspeed increment smaller than the reported gust factor required, let the speed vary between 10 kt and 20 kt fast and between 5 kt and 10 kt slow through the gusts. SP added the appropriate increment and held the corrected approach speed for the rest of the final. No prompting and no intervention were needed.",
+        "3": "SP used the appropriate flap setting and increased the approach speed as required for the reported gusty crosswind. Airspeed stayed within 10 kt fast and 5 kt slow despite the gusts and the aircraft remained stabilized on the final. The increment applied was consistent with the conditions.",
+        "4": "SP selected the configuration and the increased approach speed appropriate to the gusty crosswind before intercept and held that speed with negligible variation. Gusts produced no significant excursion because power was adjusted in anticipation. The approach stayed stable to the transition to landing.",
+        "marginal": "SP kept the airspeed inside the standards in the gusty crosswind, but the increment added to the approach speed was decided late and was smaller than the conditions warranted. The speed dipped toward the slow limit during the lulls. SP is expected to set the appropriate flap setting and the increased approach speed before glide path intercept."
+      }
     }
   ]
 }

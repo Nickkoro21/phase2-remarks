@@ -127,6 +127,111 @@
         "4": "SP maintained an even and continuous cross-check in which the course display was one element among the flight instruments and never the focus. Deviations were detected at the first movement of the needle, so displacement stayed effectively centered on both legs. The scan pattern remained unchanged even while corrections were being flown.",
         "marginal": "SP kept course and flight parameters within standards, but the cross-check slowed noticeably each time a correction was being computed, leaving attitude and altitude unmonitored for short periods. Performance stayed inside the tolerance, yet the scan is still interrupted by the navigation task. SP is expected to keep the cross-check running at a constant rate and to compute course corrections without pausing on the display."
       }
+    },
+    {
+      "id": "instrument-13-tm01",
+      "label": "Inbound re-intercept angle kept below 90 degrees (course arrow above the 90 degree index)",
+      "mif_row": 13,
+      "source": "technique:7.21 COURSE INTERCEPTS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a re-intercept flown with the course arrow below the 90 degree index, that is an inbound intercept angle of 90 degrees or more, did not convert the displacement into a controlled closure back onto the radial. The closure rate was far higher than the turn could absorb, the CDI swept through center and the aircraft ended up more than 8 degrees off the selected course on the opposite side, still turning away. IP took the controls, reduced the angle to the course and re-established the aircraft on the radial.",
+        "1": "SP, due to an inbound re-intercept heading taken right at the 90 degree index instead of the angle given by the course arrow to bearing pointer plus 30 degrees construction, did not regain the radial without swinging through it. The overshoot carried the displacement to the 8 degrees limit on the far side and stayed there until IP called for a smaller intercept angle. SP reduced the angle and joined the course, but only after the verbal correction.",
+        "2": "SP, due to an intercept angle chosen larger than the displacement justified when the needle began to move off center, did not roll out on the radial at the first attempt. The closure was too fast for the remaining deflection and the aircraft passed the course to approximately 6 to 7 degrees on the other side. SP recognized the overshoot, reduced the angle to a value well under 90 degrees and settled on the radial with no assistance.",
+        "3": "SP re-intercepted the course with the head of the course arrow kept in the top half of the instrument case and every intercept angle comfortably below 90 degrees. The angle was scaled to the deflection so that the needle closed at a workable rate, and the displacement never exceeded 5 degrees. Both the inbound and the outbound legs were regained without swinging through the radial.",
+        "4": "SP built each inbound intercept heading from the course arrow to the bearing pointer plus 30 degrees construction and never allowed the arrow to approach the 90 degree index. Closure was matched to the deflection so precisely that the needle came to center and stayed there, with deviations remaining negligible throughout. No re-intercept required a second attempt.",
+        "marginal": "SP regained the course inside the tolerance, but the intercept angles were habitually taken close to the 90 degree index even for small deflections, so the needle arrived at center much faster than the roll-out could handle. The deviations stayed within standards only because the corrections that followed were quick. SP is expected to size the inbound intercept angle to the displacement and to keep the course arrow well above the 90 degree index."
+      }
+    },
+    {
+      "id": "instrument-13-tm02",
+      "label": "Turning in the shorter direction toward the CDI when regaining the course",
+      "mif_row": 13,
+      "source": "technique:7.21 COURSE INTERCEPTS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a turn started the longer way round instead of turning in the shorter direction toward the CDI, did not begin closing on the radial and increased the displacement for the whole of the turn. By the time the aircraft was pointing back at the course the deviation had grown beyond 8 degrees from the selected radial. IP took the controls, turned the shorter way to the needle and re-established the aircraft on course.",
+        "1": "SP, due to reading the deflection without relating it to which side of the case the CDI was displayed, did not turn in the shorter direction toward the CDI when the aircraft came off the radial. The reversed turn added to the displacement until it reached the 8 degrees limit, and the direction was corrected only after IP pointed at the needle. SP then turned the shorter way and recovered the course.",
+        "2": "SP, due to a moment of hesitation over the sense of the turn required to close on the needle, did not start back toward the course as soon as the displacement appeared. A short turn was begun away from the CDI before it was reversed, and the deviation reached approximately 6 degrees. SP identified the error, turned in the shorter direction toward the needle and regained the radial without intervention.",
+        "3": "SP turned in the shorter direction toward the CDI on every correction, so each turn began to reduce the displacement from the moment it was started. The deviation from the selected radial stayed within 5 degrees on both the inbound and the outbound legs. The direction of correction was never in doubt at any point of the exercise.",
+        "4": "SP took the shorter way to the needle immediately on each occasion, with the turn direction established before the bank was applied. Displacements were removed while they were still negligible and the CDI never left the centered area. Turn sense was correct on every single correction of the exercise.",
+        "marginal": "SP always ended up turning toward the CDI and stayed within the tolerance, but on several corrections the direction was confirmed after the bank had already been started rather than before. Course keeping remained inside standards, yet the sense of the turn is still being worked out during the turn. SP is expected to establish the shorter direction toward the needle before applying any bank."
+      }
+    },
+    {
+      "id": "instrument-13-tm03",
+      "label": "TO indication checked after the inbound course is set (avoiding reverse sensing while tracking)",
+      "mif_row": 13,
+      "source": "technique:7.21 COURSE INTERCEPTS",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to omitting the check for a TO indication after setting the inbound course, did not detect that the display was presenting the reciprocal and flew the needle with reverse sensing. Every correction was applied away from the course, and the aircraft was carried well beyond 8 degrees from the assigned radial with the displacement still opening. IP identified the reversed sense, took control and re-established the aircraft on the correct inbound course.",
+        "1": "SP, due to accepting the course setting without confirming the TO indication, did not realize that the corrections being made were driving the needle further out. The displacement reached the 8 degrees limit before IP asked what the TO-FROM indicator was showing. SP then reset the inbound course, obtained a TO indication and recovered the radial after the prompt.",
+        "2": "SP, due to a TO-FROM check made only after tracking had already been started, did not begin the inbound leg on a verified indication. Two corrections were flown in the wrong sense before the error was found and the deviation opened past 5 degrees to approximately 7 degrees. SP re-set the course, confirmed TO and returned to the radial without any intervention.",
+        "3": "SP set the inbound course, converted the radial where required and confirmed a TO indication before starting to track. Corrections were then applied in the correct sense throughout and the deviation stayed within 5 degrees on the inbound leg. The TO-FROM indication was re-checked at each course change.",
+        "4": "SP checked the TO indication as an integral part of setting the inbound course and re-confirmed the sense after station passage without being reminded. Needle sense was therefore never in question and the deviation from the radial remained negligible. Every correction closed the displacement at the first attempt.",
+        "marginal": "SP obtained a correct TO indication and kept the course within standards, but the check was made as a glance during the first correction rather than as a step of setting the course. The tracking was accurate, yet the sense of the display is being confirmed by the behaviour of the aircraft rather than by the indicator. SP is expected to check for the TO indication immediately after the inbound course is set and before the first correction."
+      }
+    },
+    {
+      "id": "instrument-13-tm04",
+      "label": "Roll-out reference: bearing pointer between the upper lubber line and the course arrow",
+      "mif_row": 13,
+      "source": "technique:7.21 COURSE INTERCEPTS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to rolling out without any reference to the position of the bearing pointer relative to the upper lubber line and the course arrow, did not stop the turn where the aircraft would settle on the radial. The turn was continued far past the point at which the pointer had moved between the lubber line and the arrow, and the aircraft crossed the course and diverged beyond 8 degrees on the other side. IP took the controls and stopped the aircraft on the selected radial.",
+        "1": "SP, due to using the CDI alone as the roll-out cue instead of the bearing pointer position between the upper lubber line and the course arrow, did not roll out at the correct moment. The turn ran on until the displacement had reached the 8 degrees limit on the opposite side, and the roll-out was made only after IP called it. SP then flew back to the radial and stabilized on it.",
+        "2": "SP, due to a roll-out started before the bearing pointer had moved between the upper lubber line and the course arrow, did not close the remaining displacement and left the aircraft short of the course. The deviation stayed outside 5 degrees and was still about 6 degrees when SP recognized that the needle had stopped moving. SP re-applied a small intercept angle and joined the radial on its own initiative.",
+        "3": "SP used the bearing pointer between the upper lubber line and the course arrow as the roll-out reference on every intercept and rejoin, so the aircraft arrived on the radial with the needle centering as the wings came level. The displacement from the course stayed within 5 degrees throughout. The roll-out reference was applied consistently on both legs.",
+        "4": "SP rolled out exactly as the bearing pointer passed between the upper lubber line and the course arrow, and rolled out on the wind-corrected heading, so the CDI centered and stayed centered. Deviations from the radial remained negligible for the whole exercise. No adjustment of the roll-out heading was needed on any rejoin.",
+        "marginal": "SP rolled out inside the tolerance, but the reference used was the needle beginning to move rather than the bearing pointer position between the upper lubber line and the course arrow, so most roll-outs needed a small further adjustment. The result stayed within standards, yet the roll-out is still being judged late. SP is expected to fly the pointer to the reference band and to roll out on it without waiting for the CDI to react."
+      }
+    },
+    {
+      "id": "instrument-13-tm05",
+      "label": "Lead point for the rejoin taken from the CDI rate of movement and the turn radius",
+      "mif_row": 13,
+      "source": "technique:7.21 COURSE INTERCEPTS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a rejoin flown with no lead point, without relating the rate of movement of the CDI to the turn radius of the aircraft, did not begin the turn onto the course until the needle was already centered. The aircraft rolled out well past the radial and continued to open, exceeding 8 degrees on the other side with no correction in progress. IP took the controls and returned the aircraft to the selected course.",
+        "1": "SP, due to a fixed lead point applied regardless of how fast the CDI was moving, did not anticipate a fast closure and started the turn onto the course too late. The overshoot reached the 8 degrees limit and SP began the correction back only after IP prompted. SP recovered the radial, but the lead was still not derived from the needle rate.",
+        "2": "SP, due to a lead point that did not allow for the turn radius at the speed being flown, did not roll out on the radial and carried the aircraft through it. The displacement on the far side grew past 5 degrees to approximately 6 degrees before the trend was noticed. SP turned back, took a smaller angle and settled on the course without any assistance.",
+        "3": "SP started each turn onto the course at a lead point judged from the rate of movement of the CDI and the turn radius of the aircraft, and rolled out on the radial with the needle close to center. The deviation remained within 5 degrees on both the inbound and the outbound rejoins. Lead was adjusted when the closure rate changed.",
+        "4": "SP read the CDI rate of movement early on every rejoin and began the turn at a lead point that placed the aircraft on the radial as the wings came level, with the needle already centered. Deviations stayed negligible and no rejoin required a second correction. Lead points were re-assessed without prompting whenever the closure rate changed.",
+        "marginal": "SP rejoined the course within the tolerance, but the same lead point was used for fast and slow needle movement alike, so some rejoins finished slightly through the radial and others slightly short. Deviations stayed inside standards, yet the lead is not yet being derived from the CDI rate and the turn radius. SP is expected to read the needle rate before the turn and to set the lead point accordingly."
+      }
+    },
+    {
+      "id": "instrument-13-tm06",
+      "label": "Outbound rejoin at the standard 45 degrees angle with the course arrow in the top half of the case",
+      "mif_row": 13,
+      "source": "technique:7.21 COURSE INTERCEPTS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an outbound rejoin heading built without the tail of the bearing pointer to course arrow plus 45 degrees construction, did not establish any workable angle back to the outbound radial. The heading flown was so close to the course that the CDI kept moving out, and the displacement passed 8 degrees with the aircraft still tracking away. IP took the controls, established a 45 degrees intercept and re-joined the outbound course.",
+        "1": "SP, due to an outbound intercept angle taken far larger than the usual 45 degrees, did not stop the aircraft on the radial and swung it through to the other side. The displacement reached the 8 degrees limit and was contained only after IP specified the heading to fly. SP flew the directed heading and rejoined the outbound course.",
+        "2": "SP, due to an outbound rejoin started with the head of the course arrow left in the bottom half of the instrument case, did not fly an angle that closed the displacement at the intended rate. The deviation from the outbound radial opened past 5 degrees to approximately 7 degrees before the geometry was reassessed. SP re-set the presentation, took an angle near 45 degrees and regained the course unaided.",
+        "3": "SP rejoined the outbound radial using an angle near the standard 45 degrees, with the head of the course arrow in the top half of the instrument case throughout. Closure was at a suitable rate and the deviation stayed within 5 degrees on the outbound leg. The same technique was applied on each outbound correction.",
+        "4": "SP constructed each outbound heading from the tail of the bearing pointer to the course arrow plus 45 degrees and flew it precisely, so the needle closed steadily and centered on roll-out. Deviations from the outbound radial were negligible for the whole leg. The geometry of the presentation was correct on every rejoin without any reassessment.",
+        "marginal": "SP rejoined the outbound radial within the tolerance, but the intercept angle varied widely from one correction to the next instead of starting from the usual 45 degrees, so closure rates were inconsistent. Performance stayed inside standards, yet the outbound geometry is being improvised. SP is expected to build the outbound heading from the standard 45 degrees angle and to adjust it only when the rate of intercept requires it."
+      }
+    },
+    {
+      "id": "instrument-13-tm07",
+      "label": "Heading bug marked with the intercept and wind-corrected heading as a tracking reference",
+      "mif_row": 13,
+      "source": "technique:7.21 COURSE INTERCEPTS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to leaving the heading bug where it had been set for a previous leg instead of marking the intercept heading with it, did not have any heading reference for the course being flown and steered back to the old bug. The aircraft was taken onto a heading unrelated to the radial and the displacement grew beyond 8 degrees with the error unrecognized. IP took the controls, re-marked the required heading and re-established the aircraft on the course.",
+        "1": "SP, due to omitting to mark the intercept heading with the heading bug, did not hold a stable reference after the roll-out and allowed the heading to wander several degrees off the wind-corrected value. The resulting displacement built to the 8 degrees limit and was addressed only after IP asked what heading was being flown. SP set the bug and returned to the radial after the prompt.",
+        "2": "SP, due to a heading bug left on the raw course value rather than on the wind-corrected heading actually required, did not fly a reference that held the aircraft on the radial. The deviation opened past 5 degrees and reached approximately 6 degrees on the downwind side. SP moved the bug onto the corrected heading, regained the course and held it without intervention.",
+        "3": "SP marked the intercept heading with the heading bug before each turn and moved it onto the wind-corrected heading once the drift had been assessed. Heading was then held against the bug and the deviation from the radial stayed within 5 degrees. The reference was updated at every course change.",
+        "4": "SP set the heading bug on the intercept heading before starting each turn and re-marked it on the drift-corrected heading immediately after roll-out. Heading was flown against that reference so closely that the CDI showed no perceptible movement and deviations remained negligible. The bug reflected the required heading at every stage of both legs.",
+        "marginal": "SP kept the course within standards, but the heading bug was updated after the aircraft had already been established rather than before the turn, so for short periods the bug indicated a heading no longer being flown. Course keeping remained inside the tolerance, yet the reference lags the aircraft. SP is expected to mark the intercept heading with the bug before the turn and to move it onto the wind-corrected heading as soon as it is established."
+      }
     }
   ]
 }

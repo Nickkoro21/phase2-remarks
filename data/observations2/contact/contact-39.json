@@ -112,6 +112,126 @@
         "4": "SP identified every malfunction presented within a second of the indication appearing, confirmed it against the associated instruments and named the applicable procedure before beginning the memory items. SP remained composed on the unannounced failures and distinguished correctly between two similar indications that call for different procedures.",
         "marginal": "SP identified the malfunctions correctly and inside the required time, but the response to the first unannounced indication began with a visible pause before the diagnosis was stated. The tendency is toward a startle reaction that consumes the first seconds of a procedure in which those seconds matter. SP is expected to practise the recognition and confirmation sequence so the response becomes immediate regardless of when the malfunction is introduced."
       }
+    },
+    {
+      "id": "contact-39-tm01",
+      "label": "CWS PANEL SCAN BEFORE RESETTING THE MASTER WARNING / CAUTION LIGHT",
+      "mif_row": null,
+      "source": "technique:1.20 EMERGENCY PROCEDURES",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP, due to a reflex push of the MASTER WARNING / CAUTION light before the CWS panel had been looked at, extinguished the indication without reading which capsule was illuminated. The failed system was then named from the tone alone, no confirmation was requested from the other crewmember and the wrong system was worked for about forty seconds. IP had to reconstruct which capsule had illuminated and identify the malfunction before the correct procedure could be started.",
+        "1": "SP, due to resetting the light after only a partial look at the CWS panel, read one illuminated capsule and missed the second one that was already on. The malfunction was identified about fifteen seconds after the indication and only after IP asked which capsules had been seen. All indications were then considered and the correct procedure was run, but the diagnosis was completed at the limit of the acceptable delay and with verbal prompting.",
+        "2": "SP, due to reaching for the reset before completing the scan, started to silence the indication with the CWS panel still unread. SP stopped the movement before pressing, read both illuminated capsules, confirmed them with the other crewmember and only then reset the light. The interruption cost about five seconds and no input from IP was required.",
+        "3": "SP looked at the CWS panel before pushing the MASTER WARNING / CAUTION light on every indication presented. The illuminated capsules were read aloud and confirmed with the other crewmember, and all indications were considered in the diagnosis before any capsule was extinguished.",
+        "4": "SP read the complete CWS panel on each activation, called the illuminated capsules and the order in which they came on, obtained confirmation from the other crewmember and reset the light only afterwards. SP also cross-checked the associated engine and system instruments before naming the malfunction, and detected a second capsule that illuminated later in the sequence without losing track of the first.",
+        "marginal": "SP scanned the CWS panel before every reset and named the capsules correctly, but on two occasions the scan stopped at the first illuminated capsule and was extended only on a second look. The tendency is to reset in order to silence the indication rather than to complete the diagnosis first, which will cost information whenever more than one system is affected. SP is expected to read the whole panel and confirm it with the other crewmember before the reset is pressed."
+      }
+    },
+    {
+      "id": "contact-39-tm02",
+      "label": "ANALYZE BEFORE BOLDFACE - TIME STANDS STILL AND FEVER CHECK",
+      "mif_row": null,
+      "source": "technique:1.21 TABLETOP AND STAND-UP EMERGENCY PROCEDURES (EPS)",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to going directly to the memory items without analyzing the situation, executed a critical action procedure before the problem had been positively identified. No FEVER check was made, so fluctuating fuel flow, ITT, visual indications, erratic operation and roughness were never queried, and the PCL was moved on the basis of a single unconfirmed indication. IP had to stop the actions, run the analysis and direct the procedure that actually applied.",
+        "1": "SP, due to compressing the analysis to the first indication seen, began the boldface without confirming the remaining items of the FEVER check. Fuel flow was never checked against the ten pounds per hour criterion and roughness was reported only after IP asked for it, about twenty seconds into the procedure. The diagnosis eventually proved correct, but the analysis was completed at the lower limit of the standard and only with prompting.",
+        "2": "SP, due to an initial move toward the memory items before the situation had been analyzed, started the procedure with the FEVER check incomplete. SP recognized this within about five seconds, held the actions, queried fluctuating fuel flow, ITT, visual indications, erratic operation and roughness in turn, and then executed the correct boldface with no input from IP.",
+        "3": "SP used the analysis step before any memory item was actioned, treating the flight condition as stable enough to allow it. The FEVER check was run in full, the indications were confirmed with the other crewmember and the boldface was started only after the malfunction had been positively identified.",
+        "4": "SP stabilized the aircraft, then analyzed the situation with a complete FEVER check, comparing fuel flow against the ten pounds per hour criterion and checking ITT, visual indications, erratic operation and roughness before naming the malfunction. The applicable boldface was stated and only then executed, and SP kept the analysis to the time actually needed rather than extending it.",
+        "marginal": "SP analyzed the situation before every boldface and reached the correct diagnosis, but the analysis was extended well past the point at which the malfunction was already evident. The tendency is to keep collecting indications in order to gain thinking time, and time does not stand still in the aircraft as it does in the flight room. SP is expected to close the analysis and act once the failure has been identified."
+      }
+    },
+    {
+      "id": "contact-39-tm03",
+      "label": "POST-BOLDFACE VERIFICATION LOOP AND RETURN TO A/C CONTROL",
+      "mif_row": null,
+      "source": "technique:1.21 TABLETOP AND STAND-UP EMERGENCY PROCEDURES (EPS)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to treating the memory items as the end of the procedure, did not verify whether the boldface had done what it was intended to do and never asked whether a further boldface applied. No second FEVER check was made and the PCL was brought below 60 % without any compensation on stick, rudder and PCL, so the aircraft ended about 600 feet low with 20 degrees of heading change. IP had to recover the aircraft state and direct the follow-on procedure that had been missed.",
+        "1": "SP, due to moving straight from the boldface into the cleanup items, did not re-analyze the effect of the actions taken. The second FEVER check was made about twenty seconds late and only after IP asked whether the malfunction had responded, and by then the aircraft had drifted some 250 feet low with airspeed 15 knots below the briefed value. The loop was then closed correctly, but at the limit of the acceptable standard and with verbal prompting.",
+        "2": "SP, due to a short omission at the end of the memory items, initially went on without checking the result of the boldface. SP caught this within about five seconds, re-checked the engine indications, confirmed that the action had produced the intended effect, asked whether another boldface applied and re-trimmed the aircraft after the power change, with no input from IP.",
+        "3": "SP closed the loop after every critical action procedure: the aircraft state was checked first, the indications were re-analyzed to confirm the boldface had worked, and the question of whether another boldface applied was raised before moving on. Power and trim were reset after each configuration change so control was maintained throughout.",
+        "4": "SP returned to aircraft control after every boldface and every checklist, re-ran the FEVER check to confirm the action had produced the intended effect and explicitly stated when no further boldface applied. When the PCL was reduced, SP compensated on stick, rudder and PCL and re-trimmed before continuing, with no measurable change in altitude, airspeed or heading.",
+        "marginal": "SP verified the effect of each boldface and re-checked aircraft control, but the verification was made after the whole sequence rather than after each individual action. The tendency is to run the memory items as one block and audit the result at the end, which will hide a step that did not achieve its purpose. SP is expected to close the analyze - act - verify loop after each single action in the coming sorties."
+      }
+    },
+    {
+      "id": "contact-39-tm04",
+      "label": "PEL INITIAL ACTIONS - TURN, CLIMB, CLEAN, CHECK, BIP",
+      "mif_row": null,
+      "source": "technique:5.32 INITIAL ACTIONS",
+      "hf_concept": "hf-divert-criteria-and-decision-points",
+      "texts": {
+        "0": "SP, due to delaying the turn to the nearest suitable field while the indication was still being discussed, held the original heading for more than a minute after the malfunction appeared. Gear, flaps and speed brake were left extended, so the glide ratio stayed near 1.5:1 instead of 2:1 and the aircraft ended well below the altitude required for High Key. IP had to take control, turn toward the field and clean up the aircraft.",
+        "1": "SP, due to a late start of the initial actions, turned toward the nearest suitable field about thirty seconds after the malfunction and left the speed brake extended through the first part of the climb. The cleanup and the BIP step were completed only after IP called them, and the profile was intercepted about 200 feet below High Key, at the lower limit of the standard.",
+        "2": "SP, due to a short hesitation over field selection, held the heading for about ten seconds before turning. SP then applied the sequence in order, raised gear, flaps and speed brake, cross-checked the indications and set the boost pump and ignition switches as required, intercepting the profile at High Key with no input from IP.",
+        "3": "SP turned immediately toward the nearest suitable field, climbed as the energy state allowed, cleaned up the aircraft, cross-checked all indications and set the boost pump and ignition switches as required. The profile was intercepted at High Key with the aircraft clean and on the glide speed.",
+        "4": "SP turned toward the selected field within a few seconds of the malfunction, stating the reason for the choice, and completed the cleanup before the climb had ended so no excess drag remained. All indications were cross-checked while the profile was being intercepted, the BIP step was set as required, and SP arrived at High Key with altitude in hand and a stated plan for the pattern.",
+        "marginal": "SP applied all the initial actions in the correct order and reached the profile within standards, but the memory aid was recited some way ahead of the actions themselves and the cleanup lagged the turn by several seconds each time. The tendency is to run the sequence as a spoken list rather than as immediate actions, and in a real power loss the delay comes straight out of the glide range. SP is expected to fly the sequence as it is called in the coming sorties."
+      }
+    },
+    {
+      "id": "contact-39-tm05",
+      "label": "ZOOM CLIMB ENERGY TRADE AND GLIDE PROFILE TRIM",
+      "mif_row": null,
+      "source": "technique:5.32 INITIAL ACTIONS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to omitting the trade of excess airspeed for altitude, kept the aircraft at more than 150 KIAS after the power loss and made no zoom climb. About 500 feet of available altitude were given away and the airspeed was then allowed to decay below the 125 knot glide speed with the power never set to the 4 - 6 % torque of the profile. IP had to take control to restore the glide speed and the profile.",
+        "1": "SP, due to a shallow and late zoom, pulled to about 10 degrees of climb instead of 20 and lowered the nose some 35 KIAS above the desired glide airspeed. The aircraft ended about 200 feet below the profile and the trim was set for the glide only after IP called the airspeed twice, leaving the manoeuvre at the limit of the acceptable standard.",
+        "2": "SP, due to an initial pull of about 1.5 G, converted less of the excess airspeed than the technique allows and reached roughly 15 degrees of climb angle. SP recognized the shallow profile before the airspeed had decayed, corrected the attitude, lowered the nose approaching 20 KIAS above the glide speed and trimmed for 125 knots with 4 - 6 % torque, ending within about 100 feet of the profile and with no input from IP.",
+        "3": "SP initiated the zoom climb above 150 KIAS with a 2-G pull to a 20 degree climb angle, lowered the nose approaching 20 KIAS above the desired glide airspeed and trimmed for a 125 knot minimum descent with 4 - 6 % torque. The profile was intercepted on speed and on altitude.",
+        "4": "SP traded the excess airspeed exactly as briefed, holding 2 G to a 20 degree climb angle and starting the recovery within a few knots of 20 KIAS above the glide speed. Power was reduced to 4 - 6 % torque and the aircraft was trimmed hands-off at the glide airspeed, with the resulting altitude matching the ten knots for one hundred feet trade within a negligible margin.",
+        "marginal": "SP flew the zoom climb and reached the glide profile inside the required parameters, but the aircraft was held on the glide speed by continuous stick pressure rather than trimmed for it. The tendency is to leave the trim unfinished after the energy trade, and the airspeed starts to drift as soon as attention moves to the checklist. SP is expected to complete the trim for the glide speed before turning to the next step."
+      }
+    },
+    {
+      "id": "contact-39-tm06",
+      "label": "ORM 3-2-1 DESCENT GATES AND CONTINUE OR EJECT DECISION",
+      "mif_row": null,
+      "source": "technique:5.30 EMERGENCY LANDING PATTERNS (ELP)",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to pressing on with a recovery that was no longer supported by the energy state, descended below 2000 feet AGL while off profile and without the runway in sight. No minimum ejection altitude had been set, the continue or eject decision was never made at 300 feet AGL and the aircraft was still displaced from the centerline passing 100 feet AGL. IP had to take control and terminate the pattern.",
+        "1": "SP, due to accepting a profile that was marginally low, passed 2000 feet AGL only just on profile and with the runway acquired late. The continue decision at 300 feet AGL was stated after the altitude had been passed and the gear was confirmed and reported at about 150 feet AGL, both after IP called for them, leaving the gates met only at the limit of the standard.",
+        "2": "SP, due to a slightly steep intercept, approached 2000 feet AGL marginally off profile with the runway in sight. SP recognized the deviation before the gate, adjusted the pattern back onto profile and then made the continue decision at 300 feet AGL, confirmed and reported the gear at 200 feet AGL and was aligned with the centerline by 100 feet AGL, with no input from IP.",
+        "3": "SP applied the ORM 3-2-1 gates as briefed, descending below 2000 feet AGL only when on profile, with the runway in sight and in a position to manoeuvre safely to land. The continue or eject decision was made at 300 feet AGL, the gear was confirmed and reported at 200 feet AGL and the aircraft was aligned with the centerline at 100 feet AGL.",
+        "4": "SP stated the criteria for each gate as it was reached and met all three with margin, arriving on profile with the runway in sight well before 2000 feet AGL. The continue decision at 300 feet AGL was made against explicit criteria rather than as a call, the gear was confirmed and reported at 200 feet AGL and the alignment at 100 feet AGL required no correction on final.",
+        "marginal": "SP met every ORM 3-2-1 gate and reported them on altitude, but the 300 foot decision was voiced as a routine call with no reference to the energy state or the position relative to the runway. The tendency is to treat the gates as reporting points rather than as decision points, and that is what removes the ejection option when the profile actually deteriorates. SP is expected to state the criteria being assessed at each gate in the coming sorties."
+      }
+    },
+    {
+      "id": "contact-39-tm07",
+      "label": "TAKEOFF ABORT DECISION AND PNF WARNING CALL",
+      "mif_row": null,
+      "source": "technique:4.7.1 ABNORMAL PROCEDURES - TAKEOFF ABORTS",
+      "hf_concept": "hf-mission-completion-bias",
+      "texts": {
+        "0": "SP, due to hesitating when there was a clear reason to abort, kept the PCL advanced for more than five seconds after the malfunction appeared on the takeoff roll. No abort was called, the hazardous indication seen from the rear cockpit was never passed to the other pilot and the aircraft continued to accelerate toward the rotation speed. IP had to take control, call the abort and carry out the procedure.",
+        "1": "SP, due to weighing whether the takeoff could still be continued, called the abort about three seconds after the reason to abort was evident. The indication was passed to the other cockpit only after IP asked what had been seen, and the decision was made at the limit of the acceptable delay for the runway remaining.",
+        "2": "SP, due to a brief hesitation at the onset of the indication, delayed the decision by about one second before calling the abort. SP then stated the abort clearly, informed the other cockpit of what had been seen and executed the procedure without any prompting from IP, with the aircraft stopped well inside the runway remaining.",
+        "3": "SP did not hesitate when there was reason to abort: the decision was made immediately, the abort was called clearly and the hazardous indication was passed to the other pilot as it was seen. The procedure was then executed according to the Check List.",
+        "4": "SP called and executed the abort as soon as the reason to abort appeared, passing the indication to the other cockpit in the same transmission. SP also stated the stopping plan and the follow-on intentions - clearing the runway or stopping in place for a ground inspection - without being asked, and remained ready to hand over or take control as the situation required.",
+        "marginal": "SP aborted inside the time and distance available and passed the indication to the other cockpit, but the decision was visibly weighed against completing the takeoff before it was made. The tendency is to look for a reason to continue when the criteria to abort have already been met, and on a shorter runway that pause would be decisive. SP is expected to make the abort call the moment the criteria are met, without further consideration."
+      }
+    },
+    {
+      "id": "contact-39-tm08",
+      "label": "EMERGENCY GROUND EGRESS SEQUENCE AND GROUND CREW COORDINATION",
+      "mif_row": null,
+      "source": "technique:3.15 ABNORMAL PROCEDURES (INCL. 3.15.1 EMERGENCY GROUND EGRESS, 3.15.2 RETURN TO APRON)",
+      "hf_concept": "hf-crew-resource-management",
+      "texts": {
+        "0": "SP, due to reacting to the ground emergency without following the systematic and deliberate sequence, began the egress before the aircraft had been brought to a complete stop and with the parking brake unset. The battery and generator were turned OFF at the start, so the intercom with the other cockpit was lost, the ISS was left out of SOLO and no seat pin was installed. IP had to stop the sequence and complete the egress items in order.",
+        "1": "SP, due to running the egress items out of the printed order, moved the battery and generator to OFF before the seat pins had been installed and lost the intercom with the other cockpit at the last step. The controlling agency was informed about thirty seconds late and only after IP directed the call, leaving the sequence complete but at the limit of the standard.",
+        "2": "SP, due to the pace of the first actions, reached for the battery switch before the ISS had been placed in SOLO. SP stopped, set the parking brake, shut down the engine, placed the ISS in SOLO, installed both seat pins and only then turned the battery and generator OFF, keeping the intercom available up to the egress and requiring no input from IP.",
+        "3": "SP performed the emergency ground egress in a systematic and deliberate manner: complete stop, parking brake set, engine shut down, ISS in SOLO, both seat pins installed and battery and generator OFF just before egress. The controlling agency was informed and no switch was actuated without the ground crew being told.",
+        "4": "SP ran the egress in order and at a controlled pace, keeping the intercom with the other cockpit alive until the last action and announcing each step as it was completed. SP notified the controlling agency that assistance was required, set the parking brake and raised both hands to signal hands clear for the inspection, and confirmed that both seat pins were installed before leaving the cockpit.",
+        "marginal": "SP completed every egress item in the printed order and coordinated with the other cockpit, but the pace was hurried and two switches were selected before the corresponding call had been answered. The tendency is toward speed at the expense of the deliberate sequence, which is where the seat pins and the ISS position get missed. SP is expected to hold the announced pace and confirm each item with the other cockpit before moving on."
+      }
     }
   ]
 }

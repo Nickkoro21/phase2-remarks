@@ -3,9 +3,14 @@
   "item_name": "POINT TO POINT",
   "category": "instrument",
   "schema": "v2-trunk",
-  "mif_numbers": [16],
+  "mif_numbers": [
+    16
+  ],
   "mif_rows": [
-    { "sn": 16, "row_name": "Point to Point" }
+    {
+      "sn": 16,
+      "row_name": "Point to Point"
+    }
   ],
   "error_modes": [
     {
@@ -126,6 +131,126 @@
         "3": "SP set up the direct-to-fix navigation for the assigned point correctly and confirmed it against the VOR/DME or TACAN raw data before turning. The selected mode and the displayed track were identified before they were used to fly the aircraft. The fix was made inside the code 3 values of the standard.",
         "4": "SP configured the RNAV direct-to fix immediately and verified the entry, the active mode and the raw-data picture as one check. The transition heading was flown from a solution that the GPS and the ground-based aids both supported. No reselection or re-entry was needed at any point in the leg.",
         "marginal": "SP set up the direct-to-fix navigation correctly and remained within the published values, but the entry was verified against the raw data only after the turn had been started. The cross-check confirmed rather than preceded the action. SP is expected to confirm the selected fix and mode against the raw data before flying the computed heading."
+      }
+    },
+    {
+      "id": "instrument-16-tm01",
+      "label": "Reading present position and target fix on the EHSI",
+      "mif_row": 16,
+      "source": "technique:7.23 FIX TO FIX",
+      "hf_concept": "mental model",
+      "texts": {
+        "0": "SP, due to an incorrect mental model of the EHSI picture, did not place the present position between the tail of the bearing pointer and the centre of the display and the target fix between the centre and the head of the course arrow. The two positions were interchanged, so the heading taken was on the wrong side of the geometry and the aircraft tracked away from the fix. The distance error passed 4 DME and the IP took over the navigation to re-establish the leg.",
+        "1": "SP, due to confusing which side of the EHSI centre held the present position and which held the target fix, did not build the fix-to-fix picture as the manual describes. The first heading was taken from the reversed picture and only the IP prompt about the tail of the bearing pointer led SP to rebuild it. Arrival on the target radial was at the 4 DME limit of the standard.",
+        "2": "SP, due to a momentary reversal of the tail of the bearing pointer and the head of the course arrow when building the EHSI picture, did not select the correct side of the geometry on the first attempt. The wrong-sided heading was flown briefly and produced an error between 2 and 4 DME. SP rechecked the display, identified the present position correctly and corrected in good time without IP input.",
+        "3": "SP identified the present position between the tail of the bearing pointer and the centre of the EHSI, and the target fix between the centre and the head of the course arrow, before selecting any heading. The picture was built correctly the first time and the fix was made within 2 DME of the target. No reversal of the two positions occurred during the leg.",
+        "4": "SP read the EHSI picture without hesitation, placing present position and target fix on their correct sides of the display each time the geometry was reassessed. Every heading came from a correct picture and the arrival deviation stayed at a fraction of a mile. The interpretation was consistent from the first construction to the fix.",
+        "marginal": "SP placed the present position and the target fix correctly on the EHSI, but needed a second look at the tail of the bearing pointer before committing to a heading on more than one update. Arrival remained inside 2 DME. SP is expected to fix the relative positions on the display at first glance so no distance is lost re-reading the picture."
+      }
+    },
+    {
+      "id": "instrument-16-tm02",
+      "label": "Tune, identify and monitor of the NAVAID before the fix-to-fix",
+      "mif_row": 16,
+      "source": "technique:7.23 FIX TO FIX",
+      "hf_concept": "monitoring/cross-check",
+      "texts": {
+        "0": "SP, due to omitting the tune, identify and monitor sequence on the NAVAID, did not double check that the correct frequency was selected before starting the fix-to-fix. The radial and DME used in the solution came from a different station, the whole geometry was therefore false and the aircraft was flown outside the 4 DME limit of the standard. The IP identified the station and reset the frequency.",
+        "1": "SP, due to selecting the frequency without identifying and monitoring the station, did not confirm that the displayed radial and DME belonged to the intended NAVAID. The wrong selection was found only after the IP asked for the identifier, and the distance lost while verifying it left the arrival at the 4 DME limit of the standard.",
+        "2": "SP, due to a late identification of the NAVAID, did not have the raw data confirmed at the moment the point-to-point was directed. The first part of the leg was flown on unverified information and the arrival error stayed between 2 and 4 DME. SP identified and monitored the station in time to rebuild the solution and closed the fix without IP intervention.",
+        "3": "SP tuned, identified and monitored the NAVAID and double checked the selected frequency before setting up the fix-to-fix. All radial and DME information used in the solution came from the confirmed station and the fix was made within 2 DME. The identifier was left monitored for the whole leg.",
+        "4": "SP completed the tune, identify and monitor sequence and the frequency double check as part of the normal flow, with no interruption to the navigation problem. The solution was built entirely on verified raw data and the arrival deviation was negligible. Station identification was rechecked without prompting when the leg was extended.",
+        "marginal": "SP tuned, identified and monitored the correct NAVAID, but the frequency double check was completed after the first heading had already been taken. No information from a wrong station was used and arrival stayed inside 2 DME. SP is expected to finish the identification and the double check before any part of the fix-to-fix solution is flown."
+      }
+    },
+    {
+      "id": "instrument-16-tm03",
+      "label": "Setting the target radial in the course selector window",
+      "mif_row": 16,
+      "source": "technique:7.23 FIX TO FIX",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to setting the reciprocal of the target radial in the course selector window, did not place the course arrow where the fix-to-fix picture requires. The heading was then taken toward a point on the opposite side of the station and the distance error grew past 4 DME before the IP corrected the CSW setting. The error was not caught by any comparison with the assigned fix.",
+        "1": "SP, due to setting the course selector window from memory instead of from the assigned fix, did not have the correct radial displayed when the initial heading was taken. The course arrow was several degrees off the target radial and the setting was corrected only after the IP pointed at the CSW, leaving arrival on the radial at the 4 degree limit of the standard.",
+        "2": "SP, due to a hurried entry in the course selector window, did not check the set value against the assigned radial before turning. The small mis-set of the course arrow biased the first heading and produced an error between 2 and 4 degrees on the target radial. SP noticed the discrepancy against the raw data, reset the CSW and corrected the heading in good time.",
+        "3": "SP set the radial of the desired fix in the course selector window and confirmed it against the assignment before turning. The course arrow gave the correct reference for the whole solution and the target radial was crossed within 2 degrees of the assigned value.",
+        "4": "SP set the course selector window to the target radial immediately after the fix was assigned and confirmed the displayed value without prompting. The reference used for every heading update was exactly the assigned radial and the arrival deviation was negligible.",
+        "marginal": "SP set the correct radial in the course selector window, but only after the initial turn had begun, using the bearing pointer alone for the first heading. Arrival stayed within 2 degrees of the target radial. SP is expected to set and confirm the CSW before taking any heading toward the fix."
+      }
+    },
+    {
+      "id": "instrument-16-tm04",
+      "label": "Initial heading between the pointer heads and the DME favouring rule",
+      "mif_row": 16,
+      "source": "technique:7.23 FIX TO FIX",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to disregarding the rule that the initial heading lies between the head of the bearing pointer and the head of the course arrow, did not turn to a heading inside that sector. The turn was also made in the longer direction, so the aircraft pointed outside the geometry for a large part of the leg and the distance error exceeded 4 DME before the IP directed a new heading.",
+        "1": "SP, due to taking the plain midpoint heading with no allowance for the destination DME being smaller than the present DME, did not favour the head of the bearing pointer as the technique requires. The aircraft reached the target radial well outside the required distance, at the 4 DME limit of the standard, and only after the IP had prompted for a correction.",
+        "2": "SP, due to applying the favouring rule only in part, did not bias the initial heading far enough toward the head of the course arrow with the destination DME greater than the present DME. The under-biased heading produced an arrival error between 2 and 4 DME. SP recognized the trend at the first update and applied the correct bias in good time.",
+        "3": "SP turned in the shorter direction to a heading between the head of the bearing pointer and the head of the course arrow, favouring the correct one for the DME relationship. The initial heading put the aircraft on a usable track from the start and the fix was made within 2 DME.",
+        "4": "SP selected the initial heading inside the sector between the two pointer heads with the bias sized exactly as the DME relationship required, and rolled out in the shorter direction. Only minor refinement was needed afterwards and the arrival deviation was negligible.",
+        "marginal": "SP turned in the shorter direction to a heading between the two pointer heads, but the bias toward the favoured head was smaller than the DME difference called for. Arrival stayed inside 2 DME because the later updates absorbed the difference. SP is expected to size the initial bias to the DME relationship so the first heading needs less refinement."
+      }
+    },
+    {
+      "id": "instrument-16-tm05",
+      "label": "Ratio construction for a target DME different from the present DME",
+      "mif_row": 16,
+      "source": "technique:7.23 FIX TO FIX",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to using only the no-wind midpoint heading, did not apply the construction that places arrival at twice or at one half of the present DME. With the target fix at half the present distance the aircraft reached the target radial more than 4 DME from the required distance and the IP had to re-solve the problem. SP could not state the midway construction when questioned.",
+        "1": "SP, due to a misapplied ratio, did not take the heading midway between the midpoint and the head of the course arrow with the target DME about twice the present DME. The heading taken fell close to the plain midpoint, and after IP prompting the arrival was at the 4 DME limit of the standard.",
+        "2": "SP, due to an approximate reading of the heading midway between the midpoint and the head of the bearing pointer, did not aim accurately at a target at half the present DME. The arrival error was between 2 and 4 DME. SP rebuilt the construction at the next update and corrected before reaching the radial.",
+        "3": "SP applied the ratio construction correctly, taking a heading midway between the midpoint and the appropriate pointer head for the required DME relationship. Arrival on the target radial was within 2 DME of the assigned distance.",
+        "4": "SP used the ratio construction fluently, moving the heading inside the sector as the required DME ratio changed along the leg. The arrival deviation was negligible in both distance and radial.",
+        "marginal": "SP used the ratio construction and arrived within 2 DME, but the midway heading was estimated rather than referenced to the two pointer heads, and it moved noticeably between updates. SP is expected to build the ratio heading from the displayed pointer positions so successive solutions agree."
+      }
+    },
+    {
+      "id": "instrument-16-tm06",
+      "label": "Anticipating the DME decrease before the increase (cutting the arc)",
+      "mif_row": 16,
+      "source": "technique:7.23 FIX TO FIX",
+      "hf_concept": "situational awareness",
+      "texts": {
+        "0": "SP, due to not anticipating that with both the head of the bearing pointer and the head of the course arrow in the upper half of the EHSI the DME first decreases before increasing to the target, did not hold the computed heading while the track was cutting the arc. Repeated turns were made against the falling DME, the aircraft was driven off the solution and the arrival error exceeded 4 DME before the IP intervened.",
+        "1": "SP, due to reading the initial DME decrease as an error in the solution, did not keep the computed heading through the part of the leg where the track cuts inside the arc. The heading was changed twice toward the station and the original solution was restored only after IP prompting, leaving arrival at the 4 DME limit of the standard.",
+        "2": "SP, due to surprise at the DME decreasing after the turn, did not immediately recognize the geometry the manual describes for two pointer heads in the upper half of the display. One unnecessary heading change was made and produced an error between 2 and 4 DME, before SP identified the arc-cutting effect and returned to the computed heading in good time.",
+        "3": "SP anticipated that the DME would decrease before increasing toward the target and held the computed heading through that part of the leg. No correction was made against the falling distance and the fix was made within 2 DME.",
+        "4": "SP stated the expected DME decrease before the turn and treated the falling distance as confirmation that the solution was working. The heading was refined only for the changing geometry and the arrival deviation was negligible.",
+        "marginal": "SP held the computed heading while the DME decreased, but questioned the trend aloud and started to reach for a correction before accepting the geometry. Arrival stayed inside 2 DME. SP is expected to anticipate the arc-cutting effect before the turn so the falling DME is expected rather than explained afterwards."
+      }
+    },
+    {
+      "id": "instrument-16-tm07",
+      "label": "Scaling the EHSI as a map for the fix-to-fix construction",
+      "mif_row": 16,
+      "source": "technique:7.23 FIX TO FIX",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to visualizing the EHSI without using the DME of the position furthest from the station as the distance to the outer bezel ring, did not plot the present position and the target fix at the correct radii. Both points were placed at arbitrary distances from the centre, the line construction produced a heading unrelated to the real geometry and the arrival error passed 4 DME before the IP re-solved the problem.",
+        "1": "SP, due to scaling the display to the present DME instead of to the greater of the two distances, did not keep the more distant point inside the compass card. The construction was compressed and the heading taken from it was in error, and after IP prompting the arrival was at the 4 DME limit of the standard.",
+        "2": "SP, due to a rough estimate of the two radii on the EHSI, did not place the points accurately enough for the parallel line through the centre of the compass card. The heading obtained was slightly off and the arrival error was between 2 and 4 DME, which SP identified at the next update and corrected in time.",
+        "3": "SP scaled the EHSI with the ground station at the centre and the furthest position on the outer ring, then took the heading from the line joining the two points transferred through the centre of the compass card. The construction was accurate and the fix was made within 2 DME.",
+        "4": "SP built the map picture on the EHSI at the correct scale at every update and used the parallel-line and the vertical-alignment constructions interchangeably without hesitation. The headings produced agreed with the raw data throughout and the arrival deviation was negligible.",
+        "marginal": "SP scaled the EHSI correctly and used the construction, but placed the two points by eye with enough spread between attempts that each update produced a slightly different heading. Arrival stayed inside 2 DME. SP is expected to hold the scale to the furthest DME so consecutive constructions agree."
+      }
+    },
+    {
+      "id": "instrument-16-tm08",
+      "label": "Updates built on current DME at scheduled ratio distances",
+      "mif_row": 16,
+      "source": "technique:7.23 FIX TO FIX",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to repeating the solution with the DME held from the start of the leg instead of the current DME, did not obtain a valid heading from any of the updates made. Each recomputation reproduced the original geometry, the aircraft was flown on a track that no longer applied and the arrival error exceeded 4 DME before the IP intervened.",
+        "1": "SP, due to updating at arbitrary distances that formed no simple ratio with the target DME, did not have a usable construction ready where the geometry was changing fastest. The updates that were made used stale distances, the IP prompted for a recomputation and arrival was at the 4 DME limit of the standard.",
+        "2": "SP, due to entering the current DME late into the second construction, did not take the update at the planned ratio distance. The heading was refreshed after the planned point and the resulting error stayed between 2 and 4 DME, which SP removed in good time with a further solution built on current DME.",
+        "3": "SP planned the updates at distances forming simple ratios with the target DME and rebuilt each solution on the current DME. The heading was refreshed at the planned points and arrival stayed within 2 DME.",
+        "4": "SP named the planned update distances before the turn and rebuilt the solution on current DME at each of them, so every correction was small. The heading changes required were minor throughout and the arrival deviation was negligible.",
+        "marginal": "SP rebuilt the solution on current DME and arrived inside 2 DME, but the updates were taken when time allowed rather than at the planned ratio distances, and the last one was left close to the fix. SP is expected to schedule the updates at distances that form simple ratios with the target DME."
       }
     }
   ]

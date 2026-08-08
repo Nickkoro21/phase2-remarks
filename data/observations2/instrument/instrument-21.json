@@ -142,6 +142,111 @@
         "4": "SP made an unhesitating and correct decision at the decision height and flew the published missed approach precisely in sequence. The transition to the climb was smooth and the aircraft was configured and on the missed approach routing without any deviation. The decision was clearly pre-briefed rather than improvised.",
         "marginal": "SP made the correct decision at the decision height and flew the missed approach as published, but the decision was taken at the last moment and the initial actions were compressed as a result. Standards were met, yet the decision point was treated as a limit rather than as a planned event. SP is expected to brief and commit to the DH decision in advance so that the missed approach is initiated without compression."
       }
+    },
+    {
+      "id": "instrument-21-tm10",
+      "label": "Size of heading corrections beyond the 5 degree limit on final",
+      "mif_row": "ILS Approach",
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to overcontrolling in heading with corrections far larger than the 5 degree limit taught for course corrections, drove the localizer through centerline on every attempt to recapture it. CDI displacement exceeded 2 dots in both directions and each oversized heading change produced a larger excursion than the one it was meant to remove. IP intervention was required to stop the divergent heading oscillation and stabilize the final approach course.",
+        "1": "SP, due to heading changes well outside the area beneath the heading bug rather than the 5 degree corrections called for, converted small course errors into repeated overshoots. Localizer displacement reached the 2 dot limit after each recapture and the oscillation was damped only after the IP prompted SP to halve the heading corrections. The aircraft was steady on course only in the last part of the approach.",
+        "2": "SP, due to a first correction of roughly 10 degrees instead of the 5 degree limit, overshot centerline and allowed CDI displacement to open to between 1 and 2 dots on the opposite side. SP recognized the overcontrol unprompted, reduced the following corrections to within the width of the heading bug and settled the needle well before DH. No IP intervention was required.",
+        "3": "SP limited heading changes to about 5 degrees, keeping each correction inside the area beneath the heading bug. Localizer displacement stayed within 1 dot and no correction produced an overshoot through centerline. Course control remained stable to DH.",
+        "4": "SP corrected course exclusively with heading changes of a few degrees taken from beneath the heading bug, so that every correction removed the deviation without generating a new one. Localizer displacement remained negligible throughout the final approach segment. There was no visible overshoot at any point.",
+        "marginal": "SP held the localizer within tolerance but corrections were consistently sized at the upper end of what the deviation required, occasionally reaching the edge of the heading bug band. Each correction still produced a small overshoot that had to be taken out again. SP is expected to limit heading changes to 5 degrees so that a single correction settles the course instead of starting the next one."
+      }
+    },
+    {
+      "id": "instrument-21-tm11",
+      "label": "Drift correction not computed and heading bug not set for final",
+      "mif_row": "ILS Approach",
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not determining the wind from the GPS and not calculating the estimated drift with the 60 to 1 rule, flew the final approach course without any wind corrected heading reference and with no heading bug set. Localizer displacement built past 2 dots downwind and continued to increase because the correction was being searched for rather than applied. IP intervention was required to establish a drift corrected heading on the final approach course.",
+        "1": "SP, due to leaving the heading bug on the last radar vector heading instead of marking the wind corrected heading for final, had no additional visual cue of heading deviations. Localizer displacement drifted out to the 2 dot limit before the trend was recognized, and the drift correction was set only after the IP called the wind. The needle was recentered late on the approach.",
+        "2": "SP, due to setting the heading bug on the published final approach course without applying the calculated drift, allowed CDI displacement to open to between 1 and 2 dots on the downwind side. SP compared aircraft track on the GPS with aircraft heading, unprompted, moved the bug to the wind corrected heading and reduced the deviation well before DH. No IP intervention was required.",
+        "3": "SP calculated drift from the known winds before the FAF and marked the wind corrected heading with the heading bug. Localizer displacement remained within 1 dot and heading deviations were visible against the bug as soon as they appeared. Course was maintained to DH.",
+        "4": "SP computed drift with the 60 to 1 rule, cross checked it against GPS track versus heading and set the heading bug to the wind corrected heading before glide path intercept. The localizer stayed essentially centered and the bugged heading required only single degree refinement. Every deviation was identified against the bug before the CDI moved.",
+        "marginal": "SP set a wind corrected heading on the bug and remained within tolerance, but the value was arrived at by successive adjustment rather than from a calculated drift, and the bug lagged the heading actually being flown. Localizer displacement stayed inside limits while the reference remained approximate. SP is expected to calculate drift before the FAF and keep the heading bug on the flown wind corrected heading so it works as a deviation cue."
+      }
+    },
+    {
+      "id": "instrument-21-tm12",
+      "label": "Pitch corrections beyond 2 degrees for glide path corrections",
+      "mif_row": "ILS Approach",
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to glide slope corrections made with pitch changes much larger than the 2 degree limit, produced vertical rate excursions far beyond the 400 feet per minute that a 2 degree change represents on the VSI. The GSI passed through center on each correction and displacement exceeded 2 dots high and then low. IP intervention was required to stop the vertical oscillation and re-establish the aircraft on the glide path.",
+        "1": "SP, due to correcting glide path deviations with pitch changes of about twice the 2 degree limit, drove the rate of descent between roughly 200 and 1,000 feet per minute instead of holding near 600. GSI displacement reached the 2 dot limit after each overcorrection and the oscillation was reduced only after the IP directed smaller pitch inputs.",
+        "2": "SP, due to an initial pitch correction of roughly 4 degrees rather than the 2 degree limit, overshot the glide path and allowed GSI displacement to open to between 1 and 2 dots on the opposite side. SP recognized the overcontrol without prompting, returned to corrections of about half a bar width and stabilized the descent near 600 feet per minute before DH. No IP intervention was required.",
+        "3": "SP corrected glide path deviations with pitch changes limited to 2 degrees, equivalent to about 400 feet per minute on the VSI. GSI displacement stayed within 1 dot and the rate of descent remained close to the 600 feet per minute of the precision final. The glide path was tracked without oscillation to DH.",
+        "4": "SP flew the glide path with pitch corrections well inside the 2 degree limit, taken as soon as a trend appeared on the GSI rather than after a displacement developed. Displacement remained negligible and the vertical speed stayed within a few tens of feet per minute of 600. No correction was large enough to be visible as a rate change.",
+        "marginal": "SP kept the GSI within tolerance but corrections repeatedly approached the 2 degree limit for deviations that needed far less, producing small rate excursions either side of 600 feet per minute. No displacement exceeded standards, yet the glide path was being held by a sequence of corrections rather than by a stable descent. SP is expected to scale pitch corrections to the size of the deviation so the rate of descent settles instead of cycling."
+      }
+    },
+    {
+      "id": "instrument-21-tm13",
+      "label": "Large power corrections in place of small torque adjustments",
+      "mif_row": "ILS Approach",
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to large power corrections used for airspeed errors that did not require them, cycled torque well away from the 21 percent of the precision final in both directions. Airspeed excursions went beyond 15 knots fast and 10 knots slow of the computed final approach airspeed, and each power change also disturbed pitch and glide path. IP intervention was required to set an appropriate power and restore the approach profile.",
+        "1": "SP, due to answering every small airspeed indication with a large throttle movement instead of a small torque adjustment, kept the aircraft at the limit of the airspeed tolerance, reaching 15 knots fast and 10 knots slow of the computed final approach airspeed. The power was stabilized near the required setting only after repeated verbal prompting from the IP. Trim was reworked after each excursion.",
+        "2": "SP, due to a single oversized power reduction taken for an airspeed that was only slightly high, allowed airspeed to fall to between 5 and 10 knots below the computed final approach airspeed. SP recognized the overcorrection without prompting, restored torque toward the 21 percent required on the precision final and regained the target airspeed before DH. No IP intervention was required.",
+        "3": "SP controlled airspeed with small torque adjustments about the setting required for the precision final, reserving larger power changes for excessively high or low airspeed. Airspeed stayed within 10 knots fast and 5 knots slow of the computed final approach airspeed. Glide path tracking was not disturbed by the power handling.",
+        "4": "SP held the power essentially at the setting required for the precision final and made only marginal torque adjustments as the descent developed. Airspeed varied by no more than a few knots about the computed final approach airspeed and the aircraft stayed in trim. No power change was large enough to require a pitch correction.",
+        "marginal": "SP kept airspeed inside the required tolerance but the power was moved in larger steps than the deviations warranted, so torque was seldom left settled at the value for the precision final. Airspeed remained within limits while requiring continuous throttle activity to keep it there. SP is expected to use small torque adjustments and reserve large power corrections for airspeed that is genuinely excessive."
+      }
+    },
+    {
+      "id": "instrument-21-tm14",
+      "label": "Late configuration and unstabilized airspeed and trim at glide path intercept",
+      "mif_row": "ILS Approach",
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to configuring far later than the 2 to 3 NM prior to the FAF that allows airspeed and trim to stabilize, was still lowering gear and flaps and running the Before-Landing Checklist as the glide path was intercepted. The out of trim aircraft with changing drag left airspeed beyond 15 knots fast and then more than 10 knots slow of the computed final approach airspeed, with GSI displacement passing 2 dots. IP intervention was required to configure the aircraft and re-establish the approach.",
+        "1": "SP, due to delaying gear and flaps until the FAF instead of configuring 2 to 3 NM before it, began the descent with the aircraft still accelerating or decelerating and out of trim. Airspeed sat at the limit of 15 knots fast and 10 knots slow of the computed final approach airspeed and the glide path opened to 2 dots while the checklist was completed. Both were brought back only after IP prompting.",
+        "2": "SP, due to configuring closer to the FAF than the 2 to 3 NM required for stabilization, entered the descent with trim not yet reset for the approach speed. Airspeed opened to between 5 and 10 knots off the computed final approach airspeed and the GSI moved between 1 and 2 dots during the retrim. SP completed the Before-Landing Checklist and settled speed and trim without prompting before DH.",
+        "3": "SP configured the aircraft with gear down and flaps TO and completed the Before-Landing Checklist 2 to 3 NM prior to the FAF, so airspeed and trim were stable before the descent began. Airspeed stayed within 10 knots fast and 5 knots slow of the computed final approach airspeed at glide path intercept, with GSI displacement inside 1 dot.",
+        "4": "SP configured and completed the Before-Landing Checklist well within the 2 to 3 NM prior to the FAF and had the aircraft in trim at approach speed before the glide path moved. Airspeed at intercept was within a few knots of the computed final approach airspeed and the descent was entered without any change of control forces. No configuration task remained after the FAF.",
+        "marginal": "SP configured just inside the 2 to 3 NM point and completed the Before-Landing Checklist in time, but the trim was still being refined as the glide path came in and airspeed was steady only in the last part of the intercept. Deviations remained within tolerance and the checklist was not rushed. SP is expected to configure early enough that airspeed and trim are settled before the descent, rather than during it."
+      }
+    },
+    {
+      "id": "instrument-21-tm15",
+      "label": "Descent gradient not calculated for altitude restrictions inside the FAF",
+      "mif_row": "ILS Approach",
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to not calculating the descent gradient required by the published altitude restrictions between the FAF and the runway, flew a rate of descent unrelated to the crossing altitudes on the approach plate. The profile was recovered by successive large changes and the aircraft arrived at decision height more than 200 feet above it with the runway environment not usable. IP intervention was required to correct the descent profile.",
+        "1": "SP, due to not computing the gradient for the step-down altitudes inside the FAF, held a rate of descent that had to be revised at each fix. The aircraft reached decision height 200 feet high, at the limit of tolerance, and the profile was adjusted only after the IP called the next crossing altitude.",
+        "2": "SP, due to calculating the descent gradient only after passing the FAF instead of during the approach preparation, entered the segment with a rate of descent that did not match the next altitude restriction. The aircraft was between 100 and 200 feet above the profile before SP recognized the discrepancy, computed the required gradient and corrected the descent unprompted well before decision height.",
+        "3": "SP calculated the descent gradients for the altitude restrictions inside the FAF and set a rate of descent that satisfied each crossing altitude. The aircraft remained within 100 feet of the required profile and reached decision height within tolerance and never below a published minimum.",
+        "4": "SP derived the required descent gradient for every restriction inside the FAF before the approach and flew the profile so that each crossing altitude was met without any rate change. The aircraft arrived at decision height with a negligible altitude deviation and with the profile continuous throughout the final segment. No fix required a corrective descent.",
+        "marginal": "SP met the altitude restrictions inside the FAF and stayed within tolerance, but the descent rate was set from the general profile rather than from a computed gradient and needed a small revision at each fix. No crossing altitude was missed and decision height was reached within limits. SP is expected to calculate the descent gradients during the approach preparation so the profile is flown rather than repeatedly rebuilt."
+      }
+    },
+    {
+      "id": "instrument-21-tm16",
+      "label": "Configuration and approach speed not adjusted for crosswind or gusty conditions",
+      "mif_row": "ILS Approach",
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to configuring with the standard flap setting and holding the nominal approach speed in gusty conditions, did not increase airspeed as required for the reported gust factor. Airspeed excursions in the gusts exceeded 15 knots fast and 10 knots slow of the computed final approach airspeed, with pitch and glide path disturbed at each one. IP intervention was required to adjust the configuration and stabilize the approach.",
+        "1": "SP, due to not increasing airspeed for the gusty wind and correcting the resulting slow indications with pitch, allowed airspeed to reach the limit of 15 knots fast and 10 knots slow of the computed final approach airspeed on successive gusts. The margin was restored only after the IP directed an appropriate speed for the conditions. Glide path tracking was ragged during the same period.",
+        "2": "SP, due to selecting the approach speed without accounting for the gust factor, saw airspeed swing between 5 and 10 knots either side of the computed final approach airspeed in the turbulence. SP recognized that the conditions required a higher speed, adjusted it unprompted and held the remainder of the approach steady. No IP intervention was required.",
+        "3": "SP configured with the appropriate flap setting for the conditions and increased airspeed as required for the crosswind and gusts. Airspeed stayed within 10 knots fast and 5 knots slow of the computed final approach airspeed despite the turbulence, and localizer and glide path remained within 1 dot.",
+        "4": "SP assessed the crosswind and gust factor before configuring, selected the appropriate flap setting and set an approach speed that absorbed the gusts. Airspeed variation stayed within a few knots of the selected value and course and glide path deviations remained negligible. The added speed was carried without disturbing the descent profile.",
+        "marginal": "SP added speed for the gusty conditions but did so only after the first significant fluctuation, and the value chosen barely covered the gust factor being experienced. Airspeed stayed within tolerance while the margin above the low end was small on each gust. SP is expected to set the configuration and approach speed for the reported conditions before the FAF rather than in response to the first excursion."
+      }
     }
   ]
 }

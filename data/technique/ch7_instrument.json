@@ -106,7 +106,7 @@
     {
       "section": "7.6",
       "title": "CONTROL AND PERFORMANCE CONCEPT",
-      "pages_pdf": [138, 140],
+      "pages_pdf": [138, 140, 141],
       "item_mapping": ["instrument-04"],
       "category_hint": ["instrument"],
       "technique_summary": "Proper use of the control and performance concept (described in AFMAN 11-217, Volume 1) makes basic A/C control much easier and frees attention for other tasks. T-6 control instruments are the EADI and the primary engine data display (specifically, engine torque). Performance instruments are the altimeter, airspeed indicator, VSI, AOA, and EHSI (heading). When possible, start with the known pitch and power settings of Table 7.1. Use of known pitch and power settings helps to minimize power changes.",
@@ -117,15 +117,14 @@
         {"name": "Table 7.1 - Vertical-S down", "value": "150 KIAS, gear UP, flaps UP, 2 NL, 15 % torque, 1.000 fpm", "verbatim": "2 Vertical-S down | 150 | UP | UP | 2 NL | 15% | 1.000 fpm"},
         {"name": "Table 7.1 - 45° steep turn", "value": "150 KIAS, gear UP, flaps UP, 3 NH, 45 % torque", "verbatim": "3 45° steep turn | 150 | UP | UP | 3 NH | 45%"},
         {"name": "Table 7.1 - 60° steep turn", "value": "150 KIAS, gear UP, flaps UP, 4 NH, 60 % torque", "verbatim": "4 60° steep turn | 150 | UP | UP | 4 NH | 60%"},
-        {"name": "Table 7.1 - Wingover", "value": "220 KIAS, 25 NH / 25 NL, 80 % torque", "verbatim": "5 Wingover | 220 | 25 ΝΗ / 25 NL | 80%"},
-        {"name": "Table 7.1 - Aileron roll", "value": "220 KIAS, 25 NH / 25 NL, 80 % torque", "verbatim": "6 Aileron roll | 220 | 25 ΝΗ / 25 NL | 80%"},
+        {"name": "Table 7.1 - Wingover", "value": "220 KIAS, gear UP, flaps UP, 80 % torque (the Pitch cell is empty in Table 7.1)", "verbatim": "5 Wingover | 220 | UP | UP | — | 80%"},
+        {"name": "Table 7.1 - Aileron roll", "value": "220 KIAS, gear UP, flaps UP, 25 NH / 25 NL, 80 % torque", "verbatim": "6 Aileron roll | 220 | UP | UP | 25 ΝΗ / 25 NL | 80%"},
         {"name": "Table 7.1 - Penetration", "value": "200 KIAS, gear UP, flaps UP, 10 NL with 10 % torque or 5 NL with 20 % torque", "verbatim": "8 Penetration | 200 | UP | UP | 10 NL  5 NL | 10%  20%"},
-        {"name": "Table 7.1 - unlabelled row after Penetration (item 9)", "value": "5 NL, 20 % torque", "verbatim": "5 NL | 20%"},
-        {"name": "Table 7.1 - Enroute descent", "value": "200 KIAS, gear UP, flaps UP, 7.5 NL, 8 % torque", "verbatim": "10 Enroute descent | 200 | UP | UP | 7.5 NL | 8%"},
+        {"name": "Table 7.1 - Enroute descent", "value": "200 KIAS, gear UP, flaps UP, 5 NL with 20 % torque or 7.5 NL with 8 % torque", "verbatim": "10 Enroute descent | 200 | UP | UP | 5 NL  7.5 NL | 20%  8%"},
         {"name": "Table 7.1 - Final approach (level/configured)", "value": "110 KIAS, gear DOWN, flaps TO, 3 NH, 35 % torque", "verbatim": "11 Final approach (level/ configured) | 110 | DOWN | TO | 3 NH | 35%"},
         {"name": "Table 7.1 - Precision final", "value": "110 KIAS, gear DOWN, flaps TO, LOL (line-on-line), 21 % torque, 600 fpm", "verbatim": "12 Precision final | 110 | DOWN | TO | LOL | 21% | 600 fpm"},
         {"name": "Table 7.1 - Non-precision final", "value": "110 KIAS, gear DOWN, flaps TO, 1 NL, 16 % torque, 1.000 fpm", "verbatim": "13 Non-precision final | 110 | DOWN | TO | 1 NL | 16% | 1.000 fpm"},
-        {"name": "Table 7.1 - Circling (Note 2)", "value": "gear DOWN, flaps TO, pitch AR, torque AR", "verbatim": "14 Circling (Note 2) | DOWN | TO | AR | AR"},
+        {"name": "Table 7.1 - Circling (Note 2)", "value": "110 KIAS (see Note 2: 120 KIAS until rolling out of bank to transition to a visual final), gear DOWN, flaps TO, pitch AR, torque AR", "verbatim": "14 Circling (Note 2) | 110 | DOWN | TO | AR | AR"},
         {"name": "Table 7.1 - Visual final", "value": "110 KIAS, gear DOWN, flaps TO, pitch AR, torque AR", "verbatim": "15 Visual final | 110 | DOWN | TO | AR | AR"},
         {"name": "Table 7.1 - Holding", "value": "150 KIAS, gear UP, flaps UP, 2 NH, 35 % torque", "verbatim": "16 Holding | 150 | UP | UP | 2 NH | 35%"},
         {"name": "Table 7.1 legend", "value": "AR: As required; LOL: Line-on-line; NH: Nose-high; NL: Nose-low", "verbatim": "LEGEND: AR: As required / LOL: Line-on-line / NH: Nose-high / NL: Nose-low"},
@@ -144,7 +143,7 @@
       "corrections": [
         "Use of known pitch and power settings helps to minimize power changes."
       ],
-      "notes": "Table 7.1 is on printed page 130 (PDF 140); Note 2 continues on printed page 131 (PDF 141). Item numbers 7 and 9 are not printed in the table; the row following 'Penetration' carries only '5 NL / 20%'."
+      "notes": "Table 7.1 is on printed page 130 (PDF 140); Note 2 continues on printed page 131 (PDF 141). Item numbers 7 and 9 are not printed in the table - there is no row between 'Aileron roll' (6) and 'Penetration' (8), and no row between 'Penetration' (8) and 'Enroute descent' (10). Merged cells verified against the printed table rules: Gear (UP) and Flaps (UP) are merged over rows 1-6; Airspeed is merged over rows 1-4 (150) and separately over rows 5-6 (220), where Torque (80%) is also merged - but the Pitch column is NOT merged between rows 5 and 6, so the Pitch cell of row 5 (Wingover) is empty and '25 NH / 25 NL' belongs to row 6 (Aileron roll) alone. Row 10 (Enroute descent) has its ITEM/Maneuver/Airspeed/Gear/Flaps cells merged across two pitch/torque sub-rows: 5 NL with 20 % torque, and 7.5 NL with 8 % torque. Airspeed is merged over rows 11-14 (110) and Gear/Flaps over rows 11-15 (DOWN/TO), so row 14 (Circling) carries 110 KIAS in the table, with Note 2 specifying 120 KIAS until roll-out on visual final."
     },
     {
       "section": "7.7",
@@ -273,7 +272,7 @@
         {"name": "practice vertical speed band", "value": "500-6.000 fpm", "verbatim": "Such climbs or descends are usually practiced between 110-250 KIAS and 500-6.000 fpm."},
         {"name": "60-to-1 rule", "value": "1 degree of pitch change = 100 fpm per NM", "verbatim": "1 degree of pitch change = 100 fpm per NM."},
         {"name": "60-to-1 example", "value": "at 240 KTAS (4 NM/min), 2° pitch = 800 fpm", "verbatim": "For example: at 240 KTAS (4 NM/min), 2° of pitch change (4 NM/ min multiplied by 200 ft/NM) results in 800 fpm vertical speed."},
-        {"name": "pitch change formula", "value": "VVI / NM per minute / 100 = pitch change", "verbatim": "VVI divided by NM per minute multiplied by 100 = pitch change."},
+        {"name": "pitch change formula", "value": "VVI divided by NM per minute multiplied by 100 = pitch change", "verbatim": "VVI divided by NM per minute multiplied by 100 = pitch change."},
         {"name": "pitch change formula example", "value": "1000 fpm at 150 KTAS (2.5 NM/min) = 4° pitch change", "verbatim": "For example: target vertical speed 1000 fpm at 150 KTAS (2.5 NM/ min) = 4° pitch change."}
       ],
       "procedure_steps": [
@@ -283,13 +282,13 @@
         "Use the 60-to-1 rule to calculate the pitch change required for the target vertical speed."
       ],
       "common_errors": [
-        "Chasing the VSI instead of setting known pitch and power first and fine tuning after the vertical speed stabilizes."
+        "Not initially using the known pitch and power settings, and not deferring fine tuning until the vertical speed stabilizes (paragraph 7.11.4.)."
       ],
       "corrections": [
         "Use the 60-to-1 rule: 1 degree of pitch change = 100 fpm per NM.",
         "If airspeed and target vertical speed are fixed, solve for pitch change: VVI divided by NM per minute multiplied by 100."
       ],
-      "notes": "The formula is printed as 'VVI divided by NM per minute multiplied by 100 = pitch change' - reproduced verbatim."
+      "notes": "The formula is printed as 'VVI divided by NM per minute multiplied by 100 = pitch change' and is reproduced verbatim here. Known typographical error in the source: the manual's own example (target vertical speed 1000 fpm at 150 KTAS, i.e. 2.5 NM/min, giving 4° of pitch change) only works if the VVI is DIVIDED by 100 - (1000 / 2.5) / 100 = 4. The wording of the manual is retained as printed; the arithmetic discrepancy is noted here and must not be silently corrected in the quoted text."
     },
     {
       "section": "7.12",
@@ -762,7 +761,7 @@
         {"name": "wind effect on VSI", "value": "60 kt headwind (180 KGS) = 1500 fpm; 60 kt tailwind (300 KGS) = 2500 fpm for a 5° gradient", "verbatim": "Descent above calculated with 240 TAS; expected VSI is 2000 fpm; to maintain 5° descent gradient with a 60 knot headwind (180 KGS), VSI is 1500 fpm. Likewise, with a 60 knot tailwind (300 KGS), VSI is 2500 fpm."},
         {"name": "Rule of 100 (200 KIAS)", "value": "degrees nose-low x torque = 100", "verbatim": "To maintain 200 KIAS in the T-6 use degrees nose-low multiplied by torque = 100. For example: Use 10° pitch and 10 % torque, 5° pitch and 20 % torque, etc."},
         {"name": "Table 7.1 - Penetration", "value": "200 KIAS, gear UP, flaps UP, 10 NL / 10 % torque or 5 NL / 20 % torque", "verbatim": "8 Penetration | 200 | UP | UP | 10 NL  5 NL | 10%  20%"},
-        {"name": "Table 7.1 - Enroute descent", "value": "200 KIAS, gear UP, flaps UP, 7.5 NL, 8 % torque", "verbatim": "10 Enroute descent | 200 | UP | UP | 7.5 NL | 8%"}
+        {"name": "Table 7.1 - Enroute descent", "value": "200 KIAS, gear UP, flaps UP, 5 NL with 20 % torque or 7.5 NL with 8 % torque", "verbatim": "10 Enroute descent | 200 | UP | UP | 5 NL  7.5 NL | 20%  8%"}
       ],
       "procedure_steps": [
         "Penetrations: lower nose and set power to maintain 200 KIAS.",
@@ -878,7 +877,7 @@
         {"name": "final approach speeds by flap setting", "value": "110 KIAS flaps UP; 105 KIAS flaps TO; 100 KIAS flaps LDG", "verbatim": "When visual on final, slow to final approach speed appropriate for flap setting (110 KIAS flaps UP; 105 KIAS flaps TO; 100 KIAS flaps LDG)."},
         {"name": "downwind spacing reference", "value": "wingtip on the landing runway at 500 feet AGL", "verbatim": "A good visual reference for proper downwind spacing at 500 feet AGL is wingtip on the landing runway."},
         {"name": "practice altitude", "value": "at the MDA (up to normal overhead pattern altitude 1.000 feet AGL under actual conditions)", "verbatim": "Practice circling approaches at the MDA. However, under actual conditions, increase altitude above the MDA, as weather conditions permit, up to normal overhead pattern altitude (1.000 feet AGL)."},
-        {"name": "Table 7.1 - Circling (Note 2)", "value": "gear DOWN, flaps TO, pitch AR, torque AR", "verbatim": "14 Circling (Note 2) | DOWN | TO | AR | AR"}
+        {"name": "Table 7.1 - Circling (Note 2)", "value": "110 KIAS (see Note 2: 120 KIAS until rolling out of bank to transition to a visual final), gear DOWN, flaps TO, pitch AR, torque AR", "verbatim": "14 Circling (Note 2) | 110 | DOWN | TO | AR | AR"}
       ],
       "procedure_steps": [
         "Keep the runway environment in sight at all times.",
@@ -948,7 +947,7 @@
       "section": "7.31",
       "title": "CLIMBOUT",
       "pages_pdf": [164],
-      "item_mapping": ["instrument-02"],
+      "item_mapping": ["instrument-02", "instrument-03"],
       "category_hint": ["instrument"],
       "technique_summary": "Objective is a safe transition from VMC on the departure leg to the pattern, multiple instrument approaches, or to a departure procedure - a climb on departure similar to instrument takeoff. Follow departure procedures if departing to the enroute structure. Power may be reduced to control acceleration and climb rate if entering the radar pattern for multiple instrument approaches; maintain 160-200 KIAS (or in accordance with local directives).",
       "parameters": [
@@ -968,7 +967,7 @@
       "corrections": [
         "Power may be reduced to control acceleration and climb rate if entering the radar pattern for multiple instrument approaches."
       ],
-      "notes": null
+      "notes": "Mapped to instrument-02 (TAKE OFF) because paragraph 7.31.3. states 'See instrument takeoff', and to instrument-03 (SID) because the same paragraph adds 'Follow departure procedures if departing to the enroute structure'. Not mapped to instrument-29 (MISSED APPROACH): paragraph 7.31 describes the climbout from the VMC departure leg and never mentions a missed approach; the missed approach and the associated radar-pattern re-entry are covered by section 7.30, which already carries instrument-29."
     }
   ]
 }

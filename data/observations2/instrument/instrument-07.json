@@ -159,6 +159,126 @@
         "4": "SP handled the aircraft smoothly throughout, with corrections so small and so well anticipated that no attitude change was perceptible on the instruments. Trim was used continuously and the aircraft was never displaced by a correction.",
         "marginal": "SP kept all parameters inside standards, but corrections were made with inputs larger than the deviation required, so each one had to be taken out again. The handling is safe but not yet smooth or continuous. SP is expected to reduce the size of the inputs and trim after each correction."
       }
+    },
+    {
+      "id": "instrument-07-tm01",
+      "label": "Aircraft not trimmed hands-off before entry to the Vertical S",
+      "mif_row": 9,
+      "source": "technique:7.13 VERTICAL-S",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP, due to starting the Vertical S without the aircraft completely trimmed hands-off for level flight at 150 knots, did not have a stable datum from which to set the target pitch and power. Residual control forces were carried into the climb segment, the rate departed the briefed value by more than 300 feet per minute and the altitude at the reversal was more than 300 feet in error. The IP intervened on the controls to retrim and re-establish the maneuver.",
+        "1": "SP, due to entering the Vertical S with the aircraft still out of trim in level flight at 150 knots, had to hold stick force while setting the target pitch and power. The rate reached the 300 feet per minute limit and the reversal altitude was held only after repeated verbal indications from the IP to trim the aircraft.",
+        "2": "SP, due to accepting a level flight trim state that was close but not hands-off before the entry, allowed the climb segment of the Vertical S to sit between 150 and 300 feet per minute off the briefed rate. SP recognized the residual stick force, trimmed the aircraft and re-established the briefed rate in good time without IP intervention.",
+        "3": "SP trimmed the aircraft hands-off for level flight at 150 knots before starting the Vertical S, then set power and pitch attitude to the target values together. The briefed rate was held within 150 feet per minute and the reference altitudes within 150 feet throughout the maneuver.",
+        "4": "SP established the aircraft completely trimmed hands-off at 150 knots before entry, so the target pitch and power were set from a stable datum with no control force to hold. Rate and altitude deviations through the whole Vertical S were hardly discernible on the instruments.",
+        "marginal": "SP flew the Vertical S inside standards, but the entry was made with the aircraft not yet trimmed hands-off, so every segment began with a stick force that had to be trimmed out in the climb. The deviations sit toward the limit at the first reversal and settle only later in the maneuver. SP is expected to complete the level flight trim at 150 knots before the entry so the profile starts from a stable datum."
+      }
+    },
+    {
+      "id": "instrument-07-tm02",
+      "label": "Trim not reset for the power change in the constant airspeed climb / descent",
+      "mif_row": 7,
+      "source": "technique:7.10 CONSTANT AIRSPEED CLIMBS AND DESCENTS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to treating the constant airspeed climb as a constant trim condition, did not trim for the power change on the assumption that no trim was required while the airspeed stayed the same. The held stick force was released progressively during the cross-check and the airspeed diverged past 20 knots from the briefed value. The IP intervened on the controls to retrim and re-establish the profile.",
+        "1": "SP, due to omitting the trim change that follows the power reduction at the descent entry, flew the constant airspeed descent against a continuous stick force. Airspeed reached the 20 knot limit and was brought back only after the IP called for the aircraft to be trimmed.",
+        "2": "SP, due to trimming only partially after the power was set for the constant airspeed climb, allowed the airspeed to move between 10 and 20 knots from the briefed value as the residual force was relaxed. SP identified the drift, completed the trim and restored the briefed airspeed in good time without IP intervention.",
+        "3": "SP trimmed the aircraft for each power change even though the airspeed was to remain constant, and held the briefed airspeed within 10 knots through both the climb and the descent. No control force was carried while the cross-check moved between instruments.",
+        "4": "SP trimmed immediately after every power change so the aircraft flew the constant airspeed climb and descent hands-off at the briefed value. Airspeed deviations were barely perceptible on the indicator throughout.",
+        "marginal": "SP held the constant airspeed climb and descent inside standards, but trim was applied late after each power change and the airspeed drifted while the stick force was still being held. The link between power change and trim change is not yet automatic. SP is expected to trim as part of every power change so the airspeed no longer wanders during the cross-check."
+      }
+    },
+    {
+      "id": "instrument-07-tm03",
+      "label": "Speed brake used without allowing for the larger pitch change required",
+      "mif_row": 7,
+      "source": "technique:7.10 CONSTANT AIRSPEED CLIMBS AND DESCENTS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to extending the speed brake to expedite the constant airspeed descent without allowing for the larger pitch change then required to hold the airspeed, left the pitch attitude at the clean configuration value. The airspeed decayed more than 20 knots below the briefed value and the descent rate collapsed with it. The IP intervened on the controls to reset the attitude and recover the profile.",
+        "1": "SP, due to extending and retracting the speed brake without an accompanying pitch adjustment, allowed the airspeed of the constant airspeed descent to reach the 20 knot limit at each configuration change. The attitude was corrected only after verbal indications from the IP and the briefed airspeed was slow to return.",
+        "2": "SP, due to a pitch change sized for the clean aircraft when the speed brake was extended, allowed the airspeed to sit between 10 and 20 knots off the briefed value during the descent. SP recognized the trend, increased the pitch change to suit the configuration and regained the briefed airspeed in good time without IP intervention.",
+        "3": "SP applied the larger pitch change required with the speed brake extended and held the constant airspeed descent within 10 knots of the briefed value. The airspeed was maintained through both the extension and the retraction without a rate excursion beyond 150 feet per minute.",
+        "4": "SP anticipated the pitch change needed for the speed brake at both extension and retraction, so the briefed airspeed was held with deviations that were hardly discernible. The descent rate remained steady through each configuration change.",
+        "marginal": "SP kept the airspeed inside standards with the speed brake extended, but each configuration change produced a visible excursion toward the slow side before the pitch was reset. The pitch change is still being sized for the clean aircraft. SP is expected to anticipate the larger pitch change with the speed brake so the airspeed is undisturbed by the configuration change."
+      }
+    },
+    {
+      "id": "instrument-07-tm04",
+      "label": "Pitch reversal not led with power at the top and bottom of the Vertical S",
+      "mif_row": 9,
+      "source": "technique:7.13 VERTICAL-S",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to reversing the pitch attitude before moving the power lever instead of leading the pitch reversal with power, changed from climb to descent with the climb torque still set. The airspeed diverged past 20 knots from 150 knots and the new rate was more than 300 feet per minute from the briefed value. The IP intervened on the controls to reset power and pitch and recover the maneuver.",
+        "1": "SP, due to a power change applied after the pitch had already been reversed, allowed the airspeed at each reversal of the Vertical S to reach the 20 knot limit. The power was corrected only after the IP called for it and the briefed rate in the new direction was slow to settle.",
+        "2": "SP, due to power and pitch being moved almost together rather than the power leading the pitch, allowed the airspeed at the reversals to move between 10 and 20 knots from 150 knots. SP identified the excursion, adjusted the power and re-established the briefed rate and airspeed in good time without IP intervention.",
+        "3": "SP led each pitch reversal with the power change, so the Vertical S changed direction with the airspeed within 10 knots of 150 knots and the new rate established within 150 feet per minute. The sequence was repeated in the same way at every top and bottom of the maneuver.",
+        "4": "SP led the pitch reversal with power at every top and bottom, so the new rate was established immediately with no perceptible airspeed change through the reversal. The maneuver ran continuously without any recovery input.",
+        "marginal": "SP flew the Vertical S reversals inside standards, but the power lever consistently followed the pitch change rather than leading it, so airspeed moved toward the fast side after each top reversal. The sequence is correct in content but not in order. SP is expected to lead the pitch reversal with power so the airspeed stays on 150 knots through the change of direction."
+      }
+    },
+    {
+      "id": "instrument-07-tm05",
+      "label": "Entry pitch and power not set from known values before fine tuning the rate",
+      "mif_row": 8,
+      "source": "technique:7.11 CONSTANT RATE CLIMBS AND DESCENTS",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to entering the constant rate descent without the known pitch and power settings for the briefed rate and without applying the sixty-to-one relationship to derive the pitch change, searched for the attitude with successive guesses. The indicated rate never stabilized and stayed more than 300 feet per minute from the briefed value with the airspeed diverging with it. The IP intervened on the controls to set the known pitch and power for the maneuver.",
+        "1": "SP, due to fine tuning the attitude before the vertical speed had stabilized, prevented the constant rate climb from settling on the briefed value. The rate reached the 300 feet per minute limit and the known pitch and power settings were applied only after the IP prompted for them.",
+        "2": "SP, due to an entry attitude estimated rather than derived for the briefed rate, allowed the indicated rate to sit between 150 and 300 feet per minute off target after entry. SP waited for the vertical speed to stabilize, then applied the small pitch change required and settled on the briefed rate in good time without IP intervention.",
+        "3": "SP set the known pitch and power settings at entry, waited for the vertical speed to stabilize and only then fine tuned, holding the briefed rate within 150 feet per minute and the airspeed within 10 knots. The pitch change applied was consistent with the rate and true airspeed being flown.",
+        "4": "SP entered on the known pitch and power settings so the briefed rate was achieved almost immediately, and the fine tuning after stabilization amounted to a barely perceptible pitch change. Rate and airspeed remained steady for the whole segment.",
+        "marginal": "SP held the briefed rates inside standards, but each entry began with an estimated attitude that was then corrected several times before the vertical speed stabilized. The known pitch and power settings are not being used as the starting point. SP is expected to enter on the known values, let the rate stabilize and confine the fine tuning to a single small pitch change."
+      }
+    },
+    {
+      "id": "instrument-07-tm06",
+      "label": "Airspeed corrections not scaled through small vertical speed changes",
+      "mif_row": 7,
+      "source": "technique:7.10 CONSTANT AIRSPEED CLIMBS AND DESCENTS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to correcting a small airspeed error with a large pitch input instead of adjusting the vertical speed by about 100 feet per minute for each 2 knots to be regained, drove the aircraft between opposite excursions. The rate departed the briefed value by more than 300 feet per minute and the airspeed error was not removed. The IP intervened on the controls to steady the attitude and re-establish the profile.",
+        "1": "SP, due to airspeed corrections applied as large vertical speed changes, allowed the rate in the constant airspeed climb to reach the 300 feet per minute limit while chasing a few knots of error. The oscillation stopped only after the IP called for smaller pitch corrections.",
+        "2": "SP, due to a correction sized for a larger error than the one indicated, allowed the vertical speed to move between 150 and 300 feet per minute from the briefed value while the airspeed was regained. SP recognized the oversized correction, reduced the pitch input and restored both parameters in good time without IP intervention.",
+        "3": "SP regained small airspeed errors with correspondingly small vertical speed changes, of the order of 100 feet per minute for 2 knots, and kept the airspeed within 10 knots and the rate within 150 feet per minute. No correction had to be taken out again.",
+        "4": "SP corrected the few knots of airspeed error with pitch changes so small that the vertical speed excursion was hardly discernible on the indicator. Airspeed and rate were both held essentially on the briefed values throughout.",
+        "marginal": "SP kept airspeed and rate inside standards, but every small airspeed error was answered with a vertical speed change far larger than the error required, producing a second deviation to correct. The scaling between airspeed error and pitch correction is not yet established. SP is expected to size the vertical speed change to the knots to be regained so one correction settles the parameter."
+      }
+    },
+    {
+      "id": "instrument-07-tm07",
+      "label": "Descent pitch and torque combination not set for the briefed airspeed",
+      "mif_row": 7,
+      "source": "technique:7.10 CONSTANT AIRSPEED CLIMBS AND DESCENTS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to entering the constant airspeed descent with a nose-low attitude and a torque setting that did not form a valid combination for the briefed airspeed, produced an attitude and power pairing that could not hold 200 knots. Airspeed diverged past 20 knots from the briefed value and continued to build as the descent progressed. The IP intervened on the controls to set a matched pitch and torque combination.",
+        "1": "SP, due to setting the nose-low attitude first and adjusting torque only afterwards, allowed the airspeed in the constant airspeed descent to reach the 20 knot limit. The matched pitch and torque combination was established only after verbal indications from the IP.",
+        "2": "SP, due to a torque setting slightly high for the nose-low attitude selected, allowed the descent airspeed to sit between 10 and 20 knots above the briefed value. SP identified the mismatch, reduced torque to suit the attitude being flown and regained the briefed airspeed in good time without IP intervention.",
+        "3": "SP set a pitch and torque combination consistent with the briefed descent airspeed and held it within 10 knots throughout the segment. The rate produced by the combination was steady and required no repeated adjustment.",
+        "4": "SP selected the nose-low attitude and matching torque together at entry, so the briefed descent airspeed was achieved at once and held with deviations that were hardly discernible. No further power adjustment was needed during the descent.",
+        "marginal": "SP held the descent airspeed inside standards, but the attitude and torque were selected independently and then reconciled by trial, so the airspeed sat toward the fast side of the band for most of the segment. The pitch and power pairing for the briefed airspeed is not yet known from memory. SP is expected to set a matched attitude and torque combination at entry rather than arriving at it by successive corrections."
+      }
+    },
+    {
+      "id": "instrument-07-tm08",
+      "label": "Nose not lowered after the climb airspeed is reached",
+      "mif_row": 7,
+      "source": "technique:4.9 CLIMBS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to holding the entry pitch attitude after the desired climb airspeed had been reached, did not lower the nose to keep the airspeed constant as the altitude increased. Airspeed decayed more than 20 knots below the briefed value as performance fell off with altitude and the climb could not be continued as briefed. The IP intervened on the controls to lower the nose and restore the climb airspeed.",
+        "1": "SP, due to leaving the pitch attitude unchanged while the aircraft climbed, allowed the constant airspeed climb to reach the 20 knot limit on the slow side. The nose was lowered only after repeated verbal indications from the IP and the briefed airspeed was slow to return.",
+        "2": "SP, due to lowering the nose later than the airspeed trend required as altitude increased, allowed the climb airspeed to sit between 10 and 20 knots below the briefed value. SP recognized the decay, adjusted the pitch attitude and re-established the briefed airspeed in good time without IP intervention.",
+        "3": "SP set the pitch attitude to achieve the desired climb airspeed and then lowered the nose progressively as the altitude increased, keeping the airspeed within 10 knots throughout the climb. The attitude changes were small and each one was trimmed off.",
+        "4": "SP adjusted the pitch attitude continuously as the aircraft climbed, so the briefed climb airspeed was held with deviations that were hardly discernible on the indicator. The rate of climb changed with altitude without any airspeed excursion.",
+        "marginal": "SP held the climb airspeed inside standards, but the airspeed decayed toward the slow side of the band at each stage of the climb before the nose was lowered. The pitch attitude is being set once rather than adjusted continuously as altitude increases. SP is expected to lower the nose against the airspeed trend so the briefed speed is held without repeated recoveries."
+      }
     }
   ]
 }

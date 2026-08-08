@@ -127,6 +127,126 @@
         "4": "SP checked aircraft performance against the calculated T/O data at the briefed point without any interruption to directional control or the airspeed scan. The expected values were known before brake release, the comparison was immediate, and the continuation decision was stated with the runway remaining clearly established.",
         "marginal": "SP performed the A/C performance check against the calculated T/O data on every takeoff, but the comparison was made close to the rotation speed rather than at the briefed acceleration check point. The check was complete and the conclusion correct each time. SP is expected to move the comparison earlier in the ground roll so that a decision remains available with useful runway remaining."
       }
+    },
+    {
+      "id": "contact-02-tm09",
+      "label": "Elevator position during the takeoff roll (nose gear loading)",
+      "mif_row": null,
+      "source": "technique:4.3 TAKEOFF",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to backstick pressure applied from brake release instead of holding the elevator approximately neutral, loaded the nose gear during the takeoff roll and allowed it to dig in as speed built. Directional control degraded with the nose gear loaded and the track wandered more than 10 feet from the centerline, so the rotation was made from an unstable ground path. IP took the controls to unload the nose gear and re-establish the takeoff roll.",
+        "1": "SP, due to a stick position held aft of approximately neutral during the takeoff roll, did not prevent the nose gear from digging in. Directional control then required continuous large rudder corrections and the track reached about 10 feet from the centerline, at the limit of the allowed deviation. SP relaxed the backstick pressure only after IP called for neutral elevator.",
+        "2": "SP, due to backstick pressure introduced slightly early in the acceleration, left the nose gear loaded through the middle of the takeoff roll. The track drifted roughly 8 feet from the centerline, between the code 3 and code 1 limits, before SP recognized the stick position and returned the elevator to approximately neutral on his own initiative, well before rotation speed.",
+        "3": "SP positioned the elevator approximately neutral during the takeoff roll so that the nose gear did not dig in, and held the ground track inside 5 feet of the centerline. The backstick pressure was introduced only at rotation speed and produced a single smooth pitch change to the takeoff attitude.",
+        "4": "SP held the elevator approximately neutral throughout the takeoff roll, with no perceptible loading of the nose gear and no wander of the ground track. The change from neutral elevator to the rotation input was made at the computed speed in one smooth movement, with deviations negligible against the published tolerance.",
+        "marginal": "SP kept the elevator close to the approximately neutral position but with a slight aft bias that loaded the nose gear for part of every takeoff roll. The ground track stayed inside standards and no correction was required from IP. SP is expected to hold the stick at the approximately neutral reference until rotation speed, so that the nose gear is not loaded during the acceleration."
+      }
+    },
+    {
+      "id": "contact-02-tm10",
+      "label": "Control input size as the flight controls become more effective",
+      "mif_row": null,
+      "source": "technique:4.3 TAKEOFF",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to control inputs kept at the same size while the flight controls became more effective with increasing airspeed, did not progressively reduce the size of the inputs during the takeoff roll and lift-off. The aircraft over-responded in roll and yaw, the track exceeded 10 feet from the centerline and the pitch attitude oscillated through the transition to the climb. IP intervened on the controls to damp the oscillation and stabilize the departure.",
+        "1": "SP, due to rudder and aileron inputs that were not reduced as airspeed increased, over-controlled the aircraft in the second half of the takeoff roll. Deviations from the centerline reached about 10 feet, at the limit of the allowed value, and the climbing attitude was settled only after a series of corrections. The inputs were reduced only after IP prompted for smaller control movements.",
+        "2": "SP, due to control inputs that stayed large after the controls had become more effective, produced a short overshoot in roll shortly before rotation. The resulting displacement was roughly 8 feet from the centerline, between the code 3 and code 1 limits, and SP reduced the input size on his own initiative and steadied the aircraft before lift-off.",
+        "3": "SP progressively used smaller control inputs as airspeed increased, so the aircraft response stayed matched to the controls becoming more effective. Centerline deviation remained inside 5 feet and the takeoff attitude was set once at rotation with no overshoot.",
+        "4": "SP scaled the control inputs continuously to the increasing airspeed, with no over-control in roll, yaw or pitch at any point of the takeoff roll or the transition. Deviations were negligible against the published tolerance and the aircraft tracked as if on one line from brake release to the climbing attitude.",
+        "marginal": "SP held the aircraft within standards but continued to use inputs larger than the increasing airspeed required, producing small visible corrections near rotation. No deviation approached the limits and no prompting was needed. SP is expected to reduce the size of the control inputs as the controls become more effective, so that the takeoff roll and the transition are flown with fewer corrections."
+      }
+    },
+    {
+      "id": "contact-02-tm11",
+      "label": "Aileron into the wind during the crosswind takeoff roll (skipping)",
+      "mif_row": null,
+      "source": "technique:4.4 CROSSWIND TAKEOFF",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to aileron not held into the wind while the upwind wing was developing more lift, did not keep the wings level during the crosswind takeoff roll. The upwind wing rose and the aircraft began skipping, moving sideways off the centerline by more than 10 feet with increased stress on the landing gear. IP took the controls to re-establish wings level and the runway track.",
+        "1": "SP, due to aileron applied into the wind late rather than prepositioned or fed in as required, allowed the upwind wing to rise during the crosswind takeoff roll. The aircraft displaced about 10 feet from the centerline, at the limit of the allowed deviation, and one small skip occurred before wings level was restored. The correction was made only after IP called for aileron into the wind.",
+        "2": "SP, due to an aileron input that did not keep pace with the crosswind component as speed built, let the upwind wing start to rise in the middle of the takeoff roll. The lateral displacement was roughly 8 feet, between the code 3 and code 1 limits, and SP added aileron into the wind on his own initiative before any skipping developed.",
+        "3": "SP anticipated the aileron requirement due to the crosswind and prepositioned the control stick into the wind, keeping the wings level throughout the takeoff roll. No skipping occurred and lateral deviation stayed inside 5 feet of the centerline.",
+        "4": "SP held aileron into the wind from before brake release and adjusted it continuously as airspeed increased, so the upwind wing never began to rise. The takeoff roll produced no sideways movement and no skipping, with deviations negligible against the published tolerance.",
+        "marginal": "SP kept the wings level in the crosswind but applied the aileron into the wind reactively, after the upwind wing had already started to lift. Deviations stayed inside standards on every takeoff and no skipping developed. SP is expected to preposition aileron into the wind so that the correction leads the crosswind instead of following it."
+      }
+    },
+    {
+      "id": "contact-02-tm12",
+      "label": "Release of the crosswind controls after lift-off and crab into the wind",
+      "mif_row": null,
+      "source": "technique:4.6 AFTER BECOMING AIRBORNE (CROSSWIND)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to holding the crosswind controls after lift-off instead of releasing them so the aircraft could crab into the wind, did not climb in coordinated flight. The upwind wing dipped towards the ground, the ball stayed out of center and the aircraft drifted off the extended runway centerline well beyond anything the takeoff leg tolerates. IP took the controls to level the wings and re-establish coordinated flight.",
+        "1": "SP, due to the crosswind aileron and rudder being held after the wheels left the ground, did not allow the aircraft to crab into the wind. The upwind wing dipped and runway alignment on the takeoff leg was lost to the limit of the allowed deviation, with the ball off center. SP released the crosswind controls only after IP called for wings level and coordinated flight.",
+        "2": "SP, due to a delayed release of the crosswind controls as the wheels left the ground, entered the initial climb slightly uncoordinated and with the wings not level. The drift off the extended centerline stayed between the code 3 and code 1 values, and SP released the inputs, centered the ball and re-established runway alignment on his own initiative.",
+        "3": "SP released the crosswind controls after takeoff and allowed the aircraft to crab into the wind, climbing in coordinated flight with the wings level. Rudder was readjusted as the wheels left the ground and airspeed increased, and runway alignment on the takeoff leg was held inside the code 3 tolerances.",
+        "4": "SP transitioned from crosswind controls on the ground to a crab into the wind as the wheels left the ground, with no wing dip and the ball centered throughout. Runway alignment on the takeoff leg was maintained with negligible deviation while airspeed increased.",
+        "marginal": "SP released the crosswind controls and crabbed into the wind, but the release was made in one late movement that produced a brief roll before the aircraft settled. Alignment and coordination stayed inside standards on every takeoff. SP is expected to release the crosswind inputs progressively as the wheels leave the ground, so that no roll transient appears in the initial climb."
+      }
+    },
+    {
+      "id": "contact-02-tm13",
+      "label": "Rudder and elevator trim after safe gear retraction",
+      "mif_row": null,
+      "source": "technique:4.3 TAKEOFF",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to right rudder trim not applied after takeoff and safe gear retraction, left the adverse yaw untrimmed and the ball off center for the whole departure. Combined with the stick pressure left untrimmed as airspeed increased, the uncoordinated climb produced airspeed and attitude excursions beyond the values the criteria allow. IP intervened to trim the aircraft and restore a stable climb.",
+        "1": "SP, due to omitting the right rudder trim called for immediately after safe gear retraction, flew the initial climb with the ball displaced and constant foot pressure held on the rudder. The climb airspeed drifted to the limit of the allowed deviation while SP fought the out-of-trim condition, and the trim was set only after IP prompted for it.",
+        "2": "SP, due to right rudder trim applied later than the point immediately after safe gear retraction, climbed briefly with the ball off center and the stick pressure held by hand. The airspeed excursion reached values between the code 3 and code 1 limits before SP recognized the out-of-trim condition, trimmed rudder and elevator and returned the aircraft to a trimmed climb without prompting.",
+        "3": "SP applied some right rudder trim immediately after takeoff and safe gear retraction to counteract adverse yaw and center the ball, and used nose-down trim as airspeed increased to relieve the pressure on the control stick. The climb was flown trimmed, with airspeed and attitude inside the code 3 tolerances.",
+        "4": "SP trimmed rudder and elevator continuously through the transition, so the ball stayed centered and no residual stick pressure was carried at any airspeed. The trimmed condition kept the climbing attitude and the airspeed stable with negligible deviation.",
+        "marginal": "SP trimmed the aircraft after gear retraction but re-trimmed only once as airspeed increased, so a small residual stick pressure was carried through most of the climb. Airspeed and coordination remained inside standards. SP is expected to keep trimming as airspeed changes, so that the aircraft is flown with no held control pressure."
+      }
+    },
+    {
+      "id": "contact-02-tm14",
+      "label": "Gear clear call and deliberate retraction after becoming airborne",
+      "mif_row": null,
+      "source": "technique:4.5 AFTER BECOMING AIRBORNE",
+      "hf_concept": "hf-two-seat-training-cockpit",
+      "texts": {
+        "0": "SP, due to moving the gear handle without the intercockpit gear clear call and the momentary pause, raised the landing gear before IP had acknowledged the call on a presolo contact sortie. The retraction was a reflex action rather than the conscious, deliberate act the technique requires, made without confirming a positive climb rate or the engine instruments within limits. IP intervened to take control and verify the aircraft state.",
+        "1": "SP, due to omitting the gear clear call before moving the gear handle, retracted the gear without the acknowledgement required on a presolo contact sortie. The climb rate on the altimeter and VSI and the engine instruments were verified only afterwards, and the sequence was completed correctly only after IP prompted for the call and the checks.",
+        "2": "SP, due to a call made simultaneously with the movement of the gear handle rather than before it, did not leave the momentary pause the technique requires. SP recognized this, stopped, confirmed the climb by altimeter and VSI and the engine instruments within limits, and repeated the call properly before completing the cleanup. No prompting and no IP action were needed.",
+        "3": "SP verbalized the climbing, good engine, gear clear call before raising the gear and flaps, paused momentarily for the acknowledgement, and treated the retraction as a conscious, deliberate act. The climb was confirmed on the altimeter and VSI and the engine instruments were checked within limits beforehand.",
+        "4": "SP made the gear clear call with the climb already confirmed on the altimeter and VSI, waited for the acknowledgement, then completed the retraction and the confirmation of the clean configuration with no interruption to aircraft control. The sequence was unhurried and left the departure profile unchanged.",
+        "marginal": "SP made the gear clear call and waited for the acknowledgement on every takeoff, but the call came so quickly after lift-off that the confirmation of the climb rate and the engine instruments overlapped with it. The sequence was complete and correct each time. SP is expected to confirm the climb and the engine indications first, so that the call reflects checks already made."
+      }
+    },
+    {
+      "id": "contact-02-tm15",
+      "label": "Minimum airspeed and altitude before the first turn after takeoff",
+      "mif_row": null,
+      "source": "technique:4.8 TURNS AFTER TAKEOFF",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to starting the first turn after takeoff before passing the departure end of the runway, did not climb straight ahead as the technique requires. The turn was begun clearly below the minimum of 140 KIAS and below 700 feet AGL, so both gates were missed by a wide margin. IP intervened to roll the aircraft wings level and continue the climb until the minima were attained.",
+        "1": "SP, due to anticipating the departure instruction, began the first turn after takeoff with the airspeed and the altitude only just reaching 140 KIAS and 700 feet AGL. The gates were met at the limit and the aircraft was rolled wings level again only after IP called for the climb to be continued straight ahead.",
+        "2": "SP, due to a scan concentrated on the turn point rather than on airspeed and altitude, started to bank before 140 KIAS and 700 feet AGL had been confirmed. SP recognized the anticipation, rolled wings level and continued straight ahead until both values were attained, correcting without prompting and losing only a short segment of the departure track.",
+        "3": "SP climbed straight ahead until past the departure end of the runway and attained a minimum of 140 KIAS and 700 feet AGL before the first turn after takeoff. Airspeed and altitude were confirmed before the bank was applied and the departure was flown as directed.",
+        "4": "SP flew the takeoff leg straight ahead past the departure end with 140 KIAS and 700 feet AGL clearly attained and cross-checked before the first turn. The roll into the turn was smooth and coordinated and was made exactly at the point directed.",
+        "marginal": "SP met the 140 KIAS and 700 feet AGL minima before every turn after takeoff, but each turn was begun within a few knots and a few tens of feet of those minima. The gates were never violated and no prompting was required. SP is expected to let the acceleration and the climb develop further before the first turn, so that both minima are met with margin."
+      }
+    },
+    {
+      "id": "contact-02-tm16",
+      "label": "Wake turbulence anticipation and selection of the takeoff point",
+      "mif_row": null,
+      "source": "technique:4.7.2 ABNORMAL PROCEDURES - WAKE TURBULENCE",
+      "hf_concept": "hf-briefing-and-threat-identification",
+      "texts": {
+        "0": "SP, due to failing to anticipate wake turbulence when taking off behind another aircraft on the same runway with the wind straight down the runway, did not plan the takeoff point. The takeoff was made past the preceding aircraft's takeoff point and before their point of touchdown, and the aircraft rolled uncommanded in the initial climb with deviations beyond anything the criteria allow. IP took the controls to recover wings level and clear the wake.",
+        "1": "SP, due to not accounting for the preceding aircraft's takeoff point with the wind calm, planned a takeoff point that left no margin against wake turbulence. The initial climb was flown through disturbed air with attitude and alignment deviations at the limit of the allowed values, and the flight path was moved away from the wake only after IP prompted for it.",
+        "2": "SP, due to identifying the preceding aircraft late in the pattern, initially set up for a takeoff point close to the wake of that aircraft. SP re-evaluated the wind and the preceding takeoff point on his own initiative and adjusted the plan before brake release, so the exposure produced only intermediate deviations, corrected in time and without prompting.",
+        "3": "SP anticipated wake turbulence behind the preceding aircraft on the same runway and planned to take off at a point prior to that aircraft's takeoff point. The initial climb stayed clear of the wake and the departure was flown within the code 3 tolerances.",
+        "4": "SP identified the wake turbulence threat before line up, stated the wind and the preceding aircraft's takeoff point, and selected a takeoff point that kept the flight path clear of the wake. The departure was flown with negligible deviations and no wake encounter.",
+        "marginal": "SP anticipated the wake turbulence and chose an acceptable takeoff point, but the plan relied on the preceding aircraft rotating where it usually does rather than on what was observed. The takeoff was flown clear of the wake and within standards. SP is expected to base the takeoff point on the observed rotation point of the preceding aircraft and on the actual wind."
+      }
     }
   ]
 }

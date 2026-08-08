@@ -127,6 +127,126 @@
         "4": "SP recovers with fully coordinated control, no perceptible roll off at the break and immediate re-establishment of the briefed heading and attitude, with negligible loss of altitude. Basic aircraft control is maintained continuously through entry, stall and recovery in all four traffic pattern stalls.",
         "marginal": "SP applies the Basic A/C Control criteria during the recovery and stays within the standards, but a small heading excursion recurs at the break before the rudder input takes effect. Each excursion is corrected without prompting and the altitude criteria are met. SP is expected to anticipate the rudder requirement so the recoveries are flown with tighter heading control on the next sorties."
       }
+    },
+    {
+      "id": "contact-09-tm01",
+      "label": "MAX, Relax, Roll executed sequentially instead of simultaneously",
+      "mif_row": null,
+      "source": "technique:6.9 TRAFFIC PATTERN STALLS",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP, due to executing the MAX, Relax, Roll recovery steps one after the other instead of simultaneously, did not advance the PCL, unload out of the stick shaker and roll the wings level as a single action. The aircraft stayed banked in the stall regime while power was still spooling and the altitude loss exceeded the 300 feet allowed by the criteria. The IP took the controls to complete the recovery and re-establish the aircraft at the briefed pattern altitude.",
+        "1": "SP, due to treating MAX, Relax, Roll as a sequence, advanced the PCL first and did not relax the back pressure or roll the wings level until the IP called the remaining steps verbally. The recovery was therefore stretched over several seconds and the altitude loss reached the 300 feet limit of the criteria. The aircraft was returned to the briefed altitude only after repeated prompting.",
+        "2": "SP, due to a short lag between the power application and the roll to wings level, did not perform the MAX, Relax, Roll steps fully together and lost roughly 200 to 250 feet, between the 150 and 300 feet criteria. SP recognized that the wings were still banked while unloading and closed the gap between the actions on his own, with no IP intervention on the controls.",
+        "3": "SP applies MAX, Relax, Roll simultaneously at the stall indication, so power, the unload out of the stick shaker and the roll to wings level occur as one action. The recovery is completed within the 150 feet tolerance of the criteria and the aircraft is re-established in the briefed condition without hesitation between the steps.",
+        "4": "SP executes MAX, Relax, Roll as a single coordinated action on every repetition, with the PCL, the unload and the roll starting together at the first indication. The altitude loss is held to a few tens of feet, negligible against the criteria, and the recovery pattern is identical on all stalls of the item.",
+        "marginal": "SP executes MAX, Relax, Roll within the standards, but the roll to wings level consistently trails the power application by a fraction of a second, leaving the altitude loss close to the 150 feet band. The lag is recognized and reduced without prompting on the later repetitions. SP is expected to initiate all three actions together so the recovery is compressed further on the next sorties."
+      }
+    },
+    {
+      "id": "contact-09-tm02",
+      "label": "Propeller and gyroscopic yaw not countered with right rudder at spool up",
+      "mif_row": null,
+      "source": "technique:6.9 TRAFFIC PATTERN STALLS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not anticipating the left nose up movement that starts approximately two seconds after moving the PCL to MAX, did not apply right rudder to counter the propeller and gyroscopic effects at slow airspeed. The nose swung left uncontrolled at engine spool up, the recovery became uncoordinated and the altitude loss exceeded the 300 feet allowed by the criteria. The IP took the controls to stop the yaw and complete the recovery.",
+        "1": "SP, due to not selecting a point far in front of the aircraft to hold with right rudder, did not counter the torque yaw as power increased from idle to MAX and let the nose track left. Rudder was applied only after the IP called the yaw, and the resulting altitude loss reached the 300 feet limit of the criteria. The aircraft was re-established on the briefed heading late in the recovery.",
+        "2": "SP, due to applying right rudder slightly after the torque had already built, did not fully counter the propeller and gyroscopic effects and allowed a small left yaw at spool up, with an altitude loss of roughly 200 to 250 feet, between the 150 and 300 feet criteria. SP felt the yaw immediately, added the required rudder and completed the recovery unassisted.",
+        "3": "SP anticipates the left nose up tendency at spool up and leads the power application with right rudder, keeping the nose on the selected reference point ahead of the aircraft. The recovery stays coordinated at the low recovery airspeed and the altitude loss remains within the 150 feet tolerance of the criteria.",
+        "4": "SP counters the propeller and gyroscopic effects precisely as the PCL reaches MAX, with rudder pressure matched to the torque build up so the nose does not move off the reference point at all. The recovery is coordinated on every stall, including the slowest entries, and the altitude loss is negligible against the criteria.",
+        "marginal": "SP keeps the recovery within the standards, but the right rudder is applied reactively rather than with the power, so a slight left yaw appears at spool up on the slower entries. The deviation is caught and corrected each time without prompting. SP is expected to lead the PCL movement with rudder so the nose stays fixed on the reference point on subsequent sorties."
+      }
+    },
+    {
+      "id": "contact-09-tm03",
+      "label": "Recovery AOA not maintained until fire light on the horizon",
+      "mif_row": null,
+      "source": "technique:6.9 TRAFFIC PATTERN STALLS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not maintaining recovery AOA of 15.5 to 18 units until the fire light was on the horizon, did not hold the pitch that converts the recovery into a climb and let the nose fall well below the required attitude. The aircraft continued to descend after the wing was flying again and the altitude loss exceeded the 300 feet allowed by the criteria. The IP took the controls to set the recovery attitude and stop the descent.",
+        "1": "SP, due to releasing the back pressure once the stick shaker stopped instead of flying the 15.5 to 18 units recovery AOA, did not raise the nose to put the fire light on the horizon until the IP called for it. The descent continued through the recovery and the altitude loss reached the 300 feet limit of the criteria.",
+        "2": "SP, due to not increasing back pressure as power and airspeed built up, let the recovery AOA drop below the 15.5 to 18 units band for a short period and lost roughly 200 to 250 feet, between the 150 and 300 feet criteria. SP saw the AOA trend, re-established the recovery attitude in time and completed the manoeuvre without IP intervention.",
+        "3": "SP holds recovery AOA between 15.5 and 18 units until the fire light is on the horizon, increasing back pressure progressively as power and airspeed build up. The descent is arrested promptly and the altitude loss stays within the 150 feet tolerance of the criteria on each repetition.",
+        "4": "SP flies the recovery AOA accurately in the middle of the 15.5 to 18 units band and holds it until the fire light is on the horizon, with back pressure blended smoothly against the increasing airspeed. The transition from recovery to climb is continuous and the altitude loss is negligible against the criteria.",
+        "marginal": "SP maintains recovery AOA within the standards, but the units drift toward the low end of the 15.5 to 18 band before the fire light reaches the horizon, leaving the altitude loss near the 150 feet limit. The trend is detected on the AOA indexer and corrected without prompting. SP is expected to add back pressure earlier as the airspeed builds on the next sorties."
+      }
+    },
+    {
+      "id": "contact-09-tm04",
+      "label": "Break stall entry parameters and bank increase to 75 to 90 degrees",
+      "mif_row": null,
+      "source": "technique:6.9 TRAFFIC PATTERN STALLS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to entering the BREAK stall without retarding the PCL to approximately 15 to 20 percent torque at 200 KIAS and without increasing bank to 75 to 90 degrees midway through the 60 degrees turn, did not produce a controlled approach to stall from the briefed entry. The manoeuvre was forced with abrupt back stick and the altitude excursion exceeded the plus or minus 300 feet tolerance of the criteria. The IP intervened on the controls to reposition the aircraft for a correct entry.",
+        "1": "SP, due to entering above the 200 KIAS setup speed and leaving the torque high, did not obtain a stall indication at the briefed bank and increased back pressure instead, reaching the plus or minus 300 feet limit of the criteria. The entry parameters were corrected only after repeated verbal direction from the IP, and the 180 degrees heading change was completed off the briefed altitude.",
+        "2": "SP, due to an imprecise setup that left torque slightly above the 15 to 20 percent band, did not increase bank cleanly to the 75 to 90 degrees required midway through the turn and deviated by roughly 200 to 250 feet, between the 150 and 300 feet criteria. SP recognized the entry error, adjusted power and bank in time and completed the recovery by reducing back stick pressure while continuing the turn at 60 degrees bank, without IP intervention.",
+        "3": "SP aligns the aircraft with a good ground reference line, checks altitude and enters at 200 KIAS with the PCL at approximately 15 to 20 percent torque and 60 degrees of bank. Bank is increased to 75 to 90 degrees with back stick pressure midway through the turn until the stall indication, and the altitude excursion stays within the 150 feet tolerance of the criteria.",
+        "4": "SP sets every BREAK stall entry parameter accurately, with the ground reference line established, 200 KIAS at the roll in, torque in the 15 to 20 percent band and bank increased precisely to 75 to 90 degrees midway through the turn. The stall indication comes at the planned point and the altitude excursion is limited to a few tens of feet, negligible against the criteria.",
+        "marginal": "SP flies the BREAK stall entry within the standards, but the bank increase to 75 to 90 degrees is applied slightly late in the turn, so the altitude excursion sits close to the 150 feet band. The entry parameters are re-checked and corrected without prompting on each repetition. SP is expected to set torque and airspeed earlier so the bank increase can be flown on schedule in subsequent sorties."
+      }
+    },
+    {
+      "id": "contact-09-tm05",
+      "label": "Final turn stall induced before airspeed stabilised at 110 KIAS minimum",
+      "mif_row": null,
+      "source": "technique:6.9 TRAFFIC PATTERN STALLS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to increasing bank and back pressure before the final turn was established and airspeed stabilised at 110 KIAS minimum, did not build the overshooting or undershooting condition from a stable turn and let the airspeed decay below the on speed AOA indication. The stall developed early and deep and the altitude loss exceeded the 300 feet allowed by the criteria. The IP took the controls to recover the aircraft.",
+        "1": "SP, due to rolling into the final turn below the 120 KIAS minimum flown on the simulated downwind, did not stabilise the turn at 110 KIAS before inducing the stall and had to be prompted verbally by the IP to correct the setup. The recovery was flown from an unstable entry and the altitude loss reached the 300 feet limit of the criteria.",
+        "2": "SP, due to a slightly rushed transition from the simulated perch point, did not allow the airspeed to settle at 110 KIAS minimum before steadily increasing bank toward 40 to 45 degrees for the overshooting entry, and lost roughly 200 to 250 feet, between the 150 and 300 feet criteria. SP identified the unstable setup, re-established the turn and completed the recovery unassisted.",
+        "3": "SP maintains 120 KIAS minimum on the simulated downwind, initiates the final turn at the simulated perch point and stabilises airspeed at 110 KIAS minimum before inducing the stall. Bank and back pressure are then increased steadily for the overshooting entry, or the nose is raised and the bank shallowed for the undershooting entry, with the altitude loss inside the 150 feet tolerance.",
+        "4": "SP establishes the final turn precisely, with power at the briefed setting and airspeed stabilised at 110 KIAS minimum and no less than the on speed AOA indication before the stall is induced. The overshooting and undershooting entries are built smoothly and distinctly, and the altitude loss is negligible against the criteria on both.",
+        "marginal": "SP stabilises the final turn within the standards, but bank and back pressure begin to increase just as the airspeed settles at 110 KIAS, leaving the altitude loss close to the 150 feet band. The setup is recognized as rushed and improved without prompting on the following repetition. SP is expected to allow the turn to stabilise fully before inducing the stall on the next sorties."
+      }
+    },
+    {
+      "id": "contact-09-tm06",
+      "label": "Landing attitude stall roundout and constant attitude technique",
+      "mif_row": null,
+      "source": "technique:6.9 TRAFFIC PATTERN STALLS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not retarding the PCL to idle and not holding the landing attitude constant during the simulated roundout, did not allow the approach to stall indication to develop from a stable landing attitude and continued to raise the nose. The entry became an accelerating pitch up and the altitude loss exceeded the 300 feet allowed by the criteria. The IP took the controls to recover the aircraft to a safe flight condition.",
+        "1": "SP, due to leaving power set during the simulated roundout, did not establish the landing attitude at the airspeed appropriate to the selected flap setting and adjusted the setup only after the IP directed it verbally. The stall indication came from an unstable attitude and the resulting altitude loss reached the 300 feet limit of the criteria.",
+        "2": "SP, due to a small progressive pitch increase after the roundout, did not hold the landing attitude fully constant until the approach to stall indication and lost roughly 200 to 250 feet, between the 150 and 300 feet criteria. SP recognized the drifting attitude, stabilised the pitch and completed the recovery in time without IP intervention.",
+        "3": "SP establishes the simulated final approach at the airspeed appropriate to the flap setting, retards the PCL to idle and executes the simulated roundout, then holds the landing attitude constant until the approach to stall indication. The recovery follows the final turn stall technique and the altitude loss remains within the 150 feet tolerance.",
+        "4": "SP flies the landing attitude stall with an accurate simulated roundout, idle power and a landing attitude that does not vary until the indication occurs, at each of the flap settings practised. The recovery is immediate and the altitude loss is negligible against the criteria on every repetition.",
+        "marginal": "SP holds the landing attitude within the standards, but the pitch creeps slightly upward while the indication is awaited, leaving the altitude loss near the 150 feet band. The trend is noticed and stopped without prompting each time. SP is expected to freeze the attitude at the end of the roundout and let the indication develop on its own in subsequent sorties."
+      }
+    },
+    {
+      "id": "contact-09-tm07",
+      "label": "Fixation on the AOA indicator during the relax step",
+      "mif_row": null,
+      "source": "technique:6.9 TRAFFIC PATTERN STALLS",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to staring at the AOA indicator during the relax step instead of flying the aircraft, did not use the reverse altimeter and the VVI to confirm that the aircraft was safely climbing. The attention channel remained on a single instrument, the descent went unnoticed and the altitude loss exceeded the 300 feet allowed by the criteria. The IP took the controls to arrest the descent and complete the recovery.",
+        "1": "SP, due to fixation on the AOA indicator through the relax and roll steps, did not check the reverse altimeter or the VVI until the IP called the sink rate. The climb was established late and the altitude loss reached the 300 feet limit of the criteria on the repetitions flown at the lowest entry airspeed.",
+        "2": "SP, due to a prolonged look at the AOA indicator during the relax step, did not maintain the outside reference and the altimeter cross-check continuously and lost roughly 200 to 250 feet, between the 150 and 300 feet criteria. SP broke the fixation on his own, confirmed the climb on the reverse altimeter and VVI and completed the recovery without IP intervention.",
+        "3": "SP relaxes out of the stick shaker while keeping the scan moving, using the AOA indexer for reference only and confirming a safe climb on the reverse altimeter and the VVI. The recovery is monitored across the full instrument scan and the altitude loss stays within the 150 feet tolerance of the criteria.",
+        "4": "SP maintains an even scan throughout the recovery, sampling the AOA indexer briefly and confirming the climb continuously on the reverse altimeter and VVI without ever dwelling on a single instrument. The altitude loss is limited to a few tens of feet, negligible against the criteria.",
+        "marginal": "SP keeps the recovery within the standards, but the scan narrows onto the AOA indicator for a noticeable interval during the relax step, leaving the altitude loss near the 150 feet band. The fixation is self-detected and broken without prompting. SP is expected to sample the AOA indexer briefly and confirm the climb on the reverse altimeter and VVI on the next sorties."
+      }
+    },
+    {
+      "id": "contact-09-tm08",
+      "label": "Ground track preserved instead of immediate recovery at the indication",
+      "mif_row": null,
+      "source": "technique:6.9 TRAFFIC PATTERN STALLS",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to attempting to preserve ground track and pattern alignment rather than disregarding ground track and recovering, did not act at the activation of the stick shaker and continued the turn toward the simulated final. The recovery was started only after the sink rate had developed and the altitude loss exceeded the 300 feet allowed by the criteria. The IP took the controls to recover the aircraft.",
+        "1": "SP, due to continuing to fly the simulated pattern geometry after the buffet appeared, did not disregard ground track and recover until the IP directed it verbally. The delay in accepting the displacement from the pattern cost the recovery its margin and the altitude loss reached the 300 feet limit of the criteria.",
+        "2": "SP, due to a brief attempt to hold the simulated final turn geometry at the first indication, did not initiate the recovery immediately and lost roughly 200 to 250 feet, between the 150 and 300 feet criteria. SP abandoned the ground track, completed the recovery in time and re-established the aircraft unassisted, with no IP input on the controls.",
+        "3": "SP disregards ground track at the approach to stall indication and recovers immediately, accepting the displacement from the simulated pattern without hesitation. The recovery is flown to the technique of the manual and the altitude loss remains within the 150 feet tolerance of the criteria.",
+        "4": "SP treats the stall indication as the only priority on every repetition, recovering at once with no attempt to protect the simulated ground track, and re-enters the pattern geometry only after a safe climb is established. The altitude loss is negligible against the criteria throughout.",
+        "marginal": "SP recovers within the standards, but a short pause to assess the simulated pattern position precedes the recovery, leaving the altitude loss close to the 150 feet band. The hesitation shortens across the repetitions without prompting. SP is expected to disregard ground track and recover at the indication with no assessment delay on subsequent sorties."
+      }
     }
   ]
 }

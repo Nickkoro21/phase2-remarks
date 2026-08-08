@@ -127,6 +127,126 @@
         "4": "SP distributed the departure workload so effectively that the checks, the radio calls and the navigation to the assigned area were completed with no perceptible effect on aircraft control. SP had spare capacity available and used it to anticipate the area entry and to monitor traffic. The transition was flown in a calm and correctly ordered sequence throughout.",
         "marginal": "SP completed the departure tasks within standards, but the checks and the radio work were performed sequentially with visible spare capacity consumed, and each interruption produced a small excursion that had to be corrected afterwards. The parameters remained inside the tolerances, yet there is little margin for an additional task or an unexpected instruction. SP is expected to stabilize and trim the aircraft first and to interleave the secondary actions so that aircraft control is continuous."
       }
+    },
+    {
+      "id": "contact-03-tm01",
+      "label": "Gear and flap retraction as a conscious, deliberate act after becoming airborne",
+      "mif_row": null,
+      "source": "technique:4.5 AFTER BECOMING AIRBORNE",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP treated the cleanup as a reflex rather than as a conscious, deliberate act and moved the gear handle without the intercockpit gear clear call and momentary pause, and without confirming a positive climb rate with the engine instruments within limits. Attention stayed on the handle, the climb attitude was allowed to flatten and the aircraft was left more than 300 feet below the departure climb profile abeam the departure end. IP took the controls, re-established the climb attitude and completed the gear and flap retraction in the correct sequence.",
+        "1": "SP, due to a rushed cleanup flow immediately after lift off, did not pause after the gear clear call and did not check the engine instruments within limits before selecting the gear up. Pitch was not held during the handle movement and the departure climb profile was lost by the full 300 feet before IP prompted verbally for the climb attitude and for the engine instrument check. SP then recovered the profile and completed the flap retraction as briefed.",
+        "2": "SP made the gear clear call but retracted the gear before confirming a positive climb rate on the altimeter and VVI, so the cleanup began earlier than the deliberate sequence requires. Pitch dropped during the handle movement and the aircraft went about 200 feet below the intended climb profile before SP recognized the trend. SP restored the climb attitude, checked the engine instruments and finished the cleanup without any intervention.",
+        "3": "SP retracted the gear and flaps as a conscious, deliberate act, with the intercockpit gear clear call, a momentary pause and confirmation of a positive climb rate with the engine instruments within limits. The climb attitude was held through both handle movements and the departure profile was maintained within 150 feet. No step of the sequence was taken out of order.",
+        "4": "SP flew the cleanup exactly as the technique describes, verbalizing climbing, good engine, gear clear, pausing for the acknowledgement and then retracting gear and flaps with no perceptible change in pitch. Deviations from the departure climb profile were negligible throughout. The cleanup interrupted neither aircraft control nor the lookout at any moment.",
+        "marginal": "SP completed the gear and flap retraction within standards, but the gear clear call was made with the hand already on the handle and the engine instrument check was a glance rather than a deliberate confirmation. Profile deviations stayed well inside the tolerance, yet the retraction is still a hurried block of actions instead of the deliberate sequence required. SP is expected to confirm positive climb rate and engine instruments first, then call, pause and only afterwards move the handle."
+      }
+    },
+    {
+      "id": "contact-03-tm02",
+      "label": "Confirmation of a clean aircraft before the 147 KIAS gear and flap limit",
+      "mif_row": null,
+      "source": "technique:4.5 AFTER BECOMING AIRBORNE",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, with the scan locked outside after lift off, did not confirm that the landing gear warning lights were extinguished and the flaps were up before the 147 KIAS gear and flap airspeed limit. The aircraft was accelerated more than 20 knots past 147 KIAS with the configuration still unverified and with no cleanup call made. IP intervened, reduced the acceleration and directed the gear and flap indications to be checked before the climb was continued.",
+        "1": "SP delayed the cleanup confirmation because the flap gauge was not included in the cross-check after the handle movements, so the gear lights and flap position were still unverified at the limiting airspeed. The aircraft was about 20 knots above 147 KIAS when IP prompted verbally for the configuration check. SP then read the flap gauge, confirmed the three green and three red lights out and made the cleanup call.",
+        "2": "SP started the cleanup confirmation but read the airspeed before crosschecking the flap gauge, so the call was not complete at the 147 KIAS limit. The aircraft passed the limit by about 10 to 15 knots before SP recognized the omission and verified the flap gauge and the extinguished warning lights. The confirmation was completed by SP without any prompting.",
+        "3": "SP confirmed the landing gear warning lights extinguished and the flaps up before the 147 KIAS gear and flap airspeed limit and made the cleanup call with the airspeed read directly after the flap gauge was crosschecked. Climb airspeed at the time of the call was held within 10 knots of the intended value. The configuration was verified, not assumed.",
+        "4": "SP timed the cleanup confirmation so that the gear lights, the flap gauge and the airspeed were read as one deliberate crosscheck well before 147 KIAS. The call was made with the aircraft stabilized in the climb and with negligible airspeed and profile deviations. The limiting airspeed was never a factor.",
+        "marginal": "SP confirmed the clean configuration before 147 KIAS, but with only a few knots of margin and with the flap gauge read after the call rather than before it. The limit was respected, yet the confirmation depends on the acceleration being slow rather than on a timed crosscheck. SP is expected to begin the cleanup confirmation immediately after the handle movements so that the margin to 147 KIAS does not depend on the rate of acceleration."
+      }
+    },
+    {
+      "id": "contact-03-tm03",
+      "label": "Trimming as a continuous process through the departure climb and level off",
+      "mif_row": null,
+      "source": "technique:4.9 CLIMBS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP did not apply nose-down trim as airspeed increased after becoming airborne and did not trim after power was set and the climbing attitude was established, so the aircraft was flown against a steady stick force for the whole departure. Pitch wandered with every distraction and the level off was overshot by more than 300 feet with the trim still set for the climb, and the trim used in the climbing turn was not taken out during the rollout. IP took the controls, trimmed the aircraft and re-established the assigned altitude.",
+        "1": "SP, due to trimming being treated as a single action rather than a continuous process, did not retrim as the aircraft accelerated through the climb and did not remove the trim used in the climbing turn during the rollout. The residual stick force produced a pitch and heading wander that reached the 300 feet and 10 degree limits before IP prompted verbally to trim off the pressures. SP then trimmed and the deviations were removed.",
+        "2": "SP trimmed after the initial acceleration but did not continue trimming as airspeed increased in the climb, so control pressures built again before the level off. Altitude went about 200 feet above the assigned altitude and heading drifted some 7 degrees before SP recognized the pressure on the stick, trimmed and recaptured the profile. The correction was made in time and without intervention.",
+        "3": "SP applied nose-down trim as airspeed increased, trimmed once power was set and the climbing attitude was established, and took out the trim used in the climbing turn during the rollout. Control pressures stayed off the stick and the departure profile was held within 150 feet and 5 degrees through the level off. Trimming was carried out as a continuous process, including after the level off power adjustment.",
+        "4": "SP trimmed continuously and in small increments throughout the acceleration, the climb, the climbing turn and the level off, so that the aircraft was effectively hands-off at every stage. Altitude, airspeed and heading deviations were negligible and no control pressure was ever visible on the stick. Trim was never allowed to become a correction rather than a technique.",
+        "marginal": "SP held the departure profile within standards, but the aircraft was flown with residual stick pressure and trim was applied only when the pressure became uncomfortable rather than after each power or attitude change. Deviations stayed inside the tolerance because of continuous manual input, not because the aircraft was in trim. SP is expected to trim immediately after each power setting and attitude change so that altitude and heading are maintained without holding force."
+      }
+    },
+    {
+      "id": "contact-03-tm04",
+      "label": "Climb-out airspeed and pitch attitude in relation to forward visibility",
+      "mif_row": null,
+      "source": "technique:4.9 CLIMBS",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP held a nose-high attitude well above the normal 10 to 15 degrees, close to the maximum climb rate attitude of 12 degrees above the horizon, and did not accelerate to the normal 160 to 180 KIAS climb-out band. Airspeed decayed more than 20 knots below the band, forward visibility over the nose was lost and the departure references and the traffic ahead could not be seen from either cockpit. IP took the controls, lowered the nose to the normal climb attitude and restored the climb-out airspeed.",
+        "1": "SP, having set pitch for maximum rate of climb rather than for the normal climb-out, did not lower the nose to accelerate into the 160 to 180 KIAS band during the transition to the flight areas. Airspeed stabilized at the full 20 knots below the band with the nose high enough to mask the departure references, and the correction was made only after IP prompted verbally. SP then lowered the nose and accelerated to the briefed climb-out speed.",
+        "2": "SP set the initial climb pitch correctly but did not lower the nose once the desired airspeed was reached, so airspeed did not stay constant as altitude increased. Climb-out speed decayed about 15 knots below the 160 to 180 KIAS band and the nose remained high enough to reduce forward visibility before SP recognized the trend, lowered the nose and re-established the band. No intervention was required.",
+        "3": "SP accelerated to the normal 160 to 180 KIAS climb-out and adjusted pitch as required to fly that airspeed, normally within the 10 to 15 degree band. Airspeed was held within 10 knots and the nose was kept low enough for forward visibility and clearing during the transition to the flight areas. Pitch was lowered progressively as altitude increased so that airspeed remained constant.",
+        "4": "SP flew the climb-out at the briefed airspeed inside the 160 to 180 KIAS band with negligible variation, lowering the nose smoothly as altitude increased to keep the airspeed constant. The pitch attitude selected kept the horizon and the departure references visible over the nose throughout. Airspeed and visibility were managed together and required no comment.",
+        "marginal": "SP flew the departure climb inside the permitted airspeed band, but at its low end and with a pitch attitude that repeatedly restricted forward visibility until the nose was consciously lowered. The airspeed remained within standards, yet the tendency is to select pitch for rate of climb rather than for the normal climb-out. SP is expected to fly the 160 to 180 KIAS climb-out as the standard, using the lower nose attitude to preserve forward visibility and clearing."
+      }
+    },
+    {
+      "id": "contact-03-tm05",
+      "label": "Gates for the first turn after takeoff: departure end, 140 KIAS and 700 feet AGL",
+      "mif_row": null,
+      "source": "technique:4.8 TURNS AFTER TAKEOFF",
+      "hf_concept": "hf-at-risk-behavior",
+      "texts": {
+        "0": "SP, anticipating the departure routing instead of climbing straight ahead until past the departure end of the runway, began the first turn after takeoff below both gates, at about 100 feet below 700 feet AGL and below 140 KIAS. The bank reduced the rate of climb further and the aircraft diverged more than 10 degrees from the published departure track while still low and slow. IP took the controls, rolled the wings level and re-established the straight ahead climb before the turn was flown.",
+        "1": "SP, due to the departure turn being flown from memory of the routing rather than from the published gates, began the roll into the first turn as the airspeed was only just reaching 140 KIAS and before the aircraft was clear of the departure end. The resulting track error reached the 10 degree limit before IP prompted verbally to roll out and re-establish the climb straight ahead. SP then reflew the turn once both gates were met.",
+        "2": "SP waited for 140 KIAS and 700 feet AGL but started the departure turn slightly before passing the departure end of the runway, so the turn was begun earlier than the technique allows. Track error passed 5 degrees and reached about 8 degrees before SP recognized the early turn point and corrected back onto the published departure track. The correction was timely and no intervention was needed.",
+        "3": "SP climbed straight ahead until past the departure end of the runway and attained a minimum of 140 KIAS and 700 feet AGL before starting the first turn after takeoff. The turn was flown onto the published departure track with the heading held within 5 degrees. Both gates were checked deliberately rather than assumed.",
+        "4": "SP confirmed the departure end, 140 KIAS and 700 feet AGL as distinct gates and rolled into the first turn at the exact point required, with heading and track deviations that were negligible. The climb rate was preserved through the turn and the departure routing was joined without any repositioning. The gates were met without any delay to the departure.",
+        "marginal": "SP met the departure end, 140 KIAS and 700 feet AGL gates before the first turn, but by the smallest of margins and with the turn begun at the moment the last gate was reached rather than after the aircraft was established. Performance stayed within standards, yet the pattern shows the turn being driven by the routing rather than by the gates. SP is expected to be comfortably established past the departure end and above the minimum airspeed and altitude before initiating the first turn after takeoff."
+      }
+    },
+    {
+      "id": "contact-03-tm06",
+      "label": "Release of crosswind controls, crab and runway alignment on the takeoff leg",
+      "mif_row": null,
+      "source": "technique:4.6 AFTER BECOMING AIRBORNE (CROSSWIND)",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP carried the takeoff roll control inputs into the air and did not release the crosswind controls after becoming airborne, so the aircraft was not allowed to crab into the wind. The upwind wing dipped towards the ground, the climb was flown uncoordinated and the aircraft drifted downwind with a track error of more than 10 degrees from the runway alignment on the takeoff leg. IP took the controls, levelled the wings, established the crab and restored the runway alignment.",
+        "1": "SP, due to the into-wind aileron being held as a habit from the takeoff roll, did not release the crosswind controls after lift off and did not adjust the rudder as the wheels left the ground and airspeed increased. The wing stayed low, the ball was out of centre and the deviation from runway alignment reached the 10 degree limit before IP prompted verbally to release the controls and crab into the wind. SP then established a coordinated crabbed climb.",
+        "2": "SP released the crosswind controls late after becoming airborne and made the rudder adjustment only after the drift became visible, so the crab was established behind the aircraft. Track error passed 5 degrees and reached about 8 degrees from the runway alignment before SP recognized the drift, levelled the wings and crabbed into the wind. Coordination was restored by SP without intervention.",
+        "3": "SP released the crosswind controls after takeoff and allowed the aircraft to crab into the wind, adjusting the rudder as the wheels left the ground and airspeed increased. The climb was flown in coordinated flight and runway alignment on the takeoff leg was maintained within 5 degrees. The upwind wing was never allowed to dip towards the ground.",
+        "4": "SP transitioned from crosswind takeoff controls to a coordinated crabbed climb with no perceptible wing drop and no yaw excursion as the wheels left the ground. Runway alignment on the takeoff leg was held with negligible drift and the ball stayed centred throughout the climb. The crosswind was compensated as a matter of technique rather than by correction.",
+        "marginal": "SP maintained runway alignment on the takeoff leg within standards, but the alignment was held by repeated corrections and a small amount of into-wind aileron was still carried into the climb. The deviations stayed inside the tolerance, yet the drift downwind reappeared each time attention moved to the cleanup. SP is expected to release the crosswind controls fully after takeoff and to hold a single stable crab angle in coordinated flight."
+      }
+    },
+    {
+      "id": "contact-03-tm07",
+      "label": "Use of outside references for pitch, heading and bank, crosschecked with the instruments",
+      "mif_row": null,
+      "source": "technique:4.9 CLIMBS",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP made all pitch and bank changes on the attitude indicator with a usable horizon and outside references available, and did not use section lines, a prominent point near the horizon or other outside references for heading. The scan stayed inside the cockpit, each indication was chased in turn and the departure profile diverged by more than 300 feet in altitude and more than 10 degrees in heading, with no lookout maintained during the transition. IP took the controls, directed the scan outside and re-established the profile.",
+        "1": "SP, having reverted to an instrument scan during the transition to the flight areas, did not select an outside reference near the horizon for heading and did not fly the climb attitude against the horizon. The corrections lagged the indications and the deviations reached the 300 feet and 10 degree limits before IP prompted verbally to look outside and to use the instruments only as a crosscheck. SP then flew the remainder of the departure on outside references.",
+        "2": "SP established the climb on outside references but returned to the attitude indicator for each correction, so the pitch changes became small chased inputs rather than a single attitude adjustment. Altitude drifted about 200 feet and heading some 7 degrees before SP recognized the closed scan, moved the reference outside and stabilized the climb. The correction was made in good time without intervention.",
+        "3": "SP made pitch and bank changes using outside references and crosschecked heading on the EHSI and wings level on the attitude indicator, rather than flying the instruments directly. The departure profile was held within 150 feet and 5 degrees while the lookout was maintained. The instruments confirmed the picture instead of driving it.",
+        "4": "SP flew the departure climb primarily on outside references, selecting a prominent point near the horizon for heading and holding the climb attitude against the horizon, with the EHSI and attitude indicator used only as periodic confirmation. Altitude and heading deviations were negligible and the lookout was continuous. The balance between outside references and instruments was exactly as the technique describes.",
+        "marginal": "SP held the departure profile within standards, but the corrections were initiated from the instruments and the outside references were used mainly to confirm what had already been read inside. The deviations remained inside the tolerance, yet the scan spends more time in the cockpit than the visual departure requires. SP is expected to fly pitch, bank and heading on outside references when they are available and to crosscheck the EHSI and attitude indicator rather than lead with them."
+      }
+    },
+    {
+      "id": "contact-03-tm08",
+      "label": "Climb check passing 10.000 feet MSL and operations check at initial level off",
+      "mif_row": null,
+      "source": "technique:4.9 CLIMBS",
+      "hf_concept": "hf-complacency",
+      "texts": {
+        "0": "SP did not initiate the climb check passing 10.000 feet MSL and did not carry out the operations check at initial level off, so neither the climb nor the level off was supported by the required checks. When the omission was raised, both checks were started together at the top of the climb while the aircraft was left unattended in pitch and power and the assigned altitude was exceeded by more than 300 feet. IP took the controls, recovered the altitude and directed the checks to be completed in the correct order.",
+        "1": "SP, due to the checks being treated as time permitting items rather than as fixed points in the departure, passed 10.000 feet MSL without initiating the climb check and reached the assigned altitude without an operations check. Attention shifted to the checks after the level off and the altitude deviation reached the 300 feet limit before IP prompted verbally to fly the aircraft first and then complete the checks. SP then stabilized the aircraft and completed both checks.",
+        "2": "SP initiated the climb check several thousand feet after passing 10.000 feet MSL and started the operations check before the aircraft was stabilized on the assigned altitude. Altitude drifted about 200 feet during the check before SP recognized the priority, returned to aircraft control and then finished the check. The recovery was made by SP without intervention.",
+        "3": "SP initiated the climb check passing 10.000 feet MSL and conducted the operations check at initial level off, interleaving both with aircraft control so that the assigned altitude was held within 150 feet. Each item was read and acted on rather than recited. Neither check displaced the flying task.",
+        "4": "SP initiated the climb check exactly passing 10.000 feet MSL and completed the operations check once stabilized at initial level off, with negligible altitude and airspeed variation during either check. The checks were integrated with the cross-check and the lookout so that nothing was interrupted. Timing and execution were as required by the flight manual.",
+        "marginal": "SP completed the climb check and the operations check within standards, but both were started slightly late and were run as a rapid recitation while the aircraft was still being stabilized. The parameters stayed inside the tolerance, yet the checks are still fitted around the flying rather than anticipated at their trigger points. SP is expected to anticipate 10.000 feet MSL and the initial level off as fixed triggers and to complete each check with the aircraft trimmed and stable."
+      }
     }
   ]
 }

@@ -127,6 +127,96 @@
         "4": "SP kept continuous awareness of the aircraft position relative to the assigned and the adjacent flight areas, with negligible track deviations during the descent. The route out of the area was flown so that a generous margin to every boundary was preserved. Position was confirmed by both visual references and the navigation aids without interrupting aircraft control.",
         "marginal": "SP did not violate any adjacent flight area, but the exit track was flown close to the boundary and position was confirmed only once during the descent. The margin depended on the accuracy of a single heading rather than on a planned route. SP is expected to plan the exit track with a defined margin and to confirm position against the boundaries at regular intervals."
       }
+    },
+    {
+      "id": "contact-21-tm01",
+      "label": "RADIO CALLS AT THE PROPER LOCATION DURING THE LETDOWN",
+      "mif_row": null,
+      "source": "technique:5.2 LETDOWN AND TRAFFIC ENTRY",
+      "hf_concept": "hf-non-standard-phraseology",
+      "texts": {
+        "0": "SP, due to making the letdown and entry calls at other than the proper location, passed the controller a position the aircraft had not reached and did not report the actual location. The radio problem was worked head down, so the track to the entry point was abandoned and the heading opened more than 10 degrees from the planned exit track. The IP took the radios, transmitted the actual location and turned the aircraft back onto the entry route.",
+        "1": "SP, due to transmitting the entry call short of the published reporting point, did not amend the report with the actual location of the aircraft. Attention held on the radio let the track to the entry point open to about 10 degrees before the IP prompted both the corrected position report and the heading. SP then reported the actual location, but the sequencing information reached the controller only at the limit of the standard.",
+        "2": "SP, due to an early call made before reaching the published reporting point, initially reported a location the aircraft had not yet passed. SP recognized the discrepancy without any prompting, transmitted the actual location and returned to the entry track with the heading no more than 7 degrees off. The content of the radio work was correct, although the sequencing picture reached the controller late.",
+        "3": "SP made the letdown and entry calls at the proper locations and, where a call could not be made exactly over the reporting point, reported the actual location of the aircraft. Heading toward the entry point was held within 5 degrees while the transmissions were made. Radio work was integrated with the descent without any loss of aircraft control.",
+        "4": "SP transmitted every letdown and pattern entry call precisely at the proper location, with correct content and standard phraseology. Aircraft control was unaffected, with negligible heading and altitude excursions during each transmission. The position picture available to the controller matched the aircraft at all times.",
+        "marginal": "SP made the required calls close to the proper locations and reported the actual location when one call slipped, keeping the heading just within 5 degrees while transmitting. Radio and flying tasks were still handled one after the other, so every transmission produced a small track excursion. SP is expected to plan the calls against the reporting points so that transmitting does not interrupt the scan on the way to the entry point."
+      }
+    },
+    {
+      "id": "contact-21-tm02",
+      "label": "PATTERN WINDS ASSUMED EQUAL TO SURFACE WINDS",
+      "mif_row": null,
+      "source": "technique:5.2 LETDOWN AND TRAFFIC ENTRY",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to assuming that the surface winds were the same as the winds at pattern altitude, did not estimate the crosswind component with the 60 to 1 rule and did not compare GPS groundspeed with indicated airspeed. No drift correction was applied, so the aircraft was blown well off the entry route and the ground track diverged with the heading more than 10 degrees from the planned track. The IP took control, established the required crab and returned the aircraft to the entry point.",
+        "1": "SP, due to carrying the surface wind report as the wind at pattern altitude, applied no drift correction and did not check GPS groundspeed against indicated airspeed to identify the headwind component. The ground track drifted downwind until the correction needed reached about 10 degrees of crab, at which point the IP prompted the wind assessment verbally. SP then applied the correction, but the descent to the entry point had already been flown off track.",
+        "2": "SP, due to an initial estimate of the pattern winds based on the surface report, applied insufficient drift correction on the letdown route. SP noticed the developing drift on the ground track, used the difference between GPS groundspeed and indicated airspeed to reassess the wind and re-established the crab without prompting, with the track error kept near 7 degrees. The correction was effective but arrived later than the profile allowed.",
+        "3": "SP treated the surface wind as an indication only and estimated the wind at pattern altitude from drift correction and GPS groundspeed against indicated airspeed. The crab applied held the planned ground track within 5 degrees of the required correction for the whole letdown. Crosswind control requirements for the pattern were anticipated before the entry point.",
+        "4": "SP established the wind at pattern altitude with the 60 to 1 rule and the groundspeed to airspeed comparison, and set the crab needed to hold a constant ground track with negligible error. The letdown route was flown effectively on track and the crosswind component expected in the pattern was called before entry. Drift correction required practically no further adjustment.",
+        "marginal": "SP maintained the planned ground track within standards, but the wind picture was still built from the surface report and refined only by trial corrections. Each leg needed a further increase of crab as the drift became visible, and the correction was never quantified against GPS groundspeed. SP is expected to estimate the wind at pattern altitude before the letdown so that the crab is set once rather than chased."
+      }
+    },
+    {
+      "id": "contact-21-tm03",
+      "label": "CLEARING TURNS AND CLEARING OF THE ENTRY ROUTE IN VMC LETDOWN",
+      "mif_row": null,
+      "source": "technique:5.2 LETDOWN AND TRAFFIC ENTRY",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to descending straight ahead in VMC without any clearing turn, did not clear the pattern entry route and kept the scan inside the cockpit instead of on outside visual references. With no cross-check of the descent rate against the outside picture, the aircraft went through the entry altitude by more than 300 feet with the area below and ahead uncleared. The IP took control, cleared the route with a turn and re-established the aircraft at the entry altitude.",
+        "1": "SP, due to omitting the clearing turns during the VMC letdown, left the pattern entry route unchecked and controlled the descent purely on instruments. The unmonitored descent rate carried the aircraft about 300 feet through the assigned entry altitude before the IP prompted both the clearing and the level-off. SP recovered the altitude and cleared the route only after the verbal prompt.",
+        "2": "SP, due to a late and shallow clearing turn during the letdown, cleared only part of the pattern entry route and returned to an inside scan for the rest of the descent. SP detected the increasing rate of descent on the outside picture, corrected without prompting and limited the excursion through the entry altitude to about 200 feet. Clearing of the route was completed before the entry point, although later than the profile intended.",
+        "3": "SP used clearing turns during the VMC letdown to clear the pattern entry route and to keep the scan on outside visual references. The descent rate was controlled against that outside picture and the entry altitude was held within 150 feet. Traffic in the entry sector was seen and reported before the entry point.",
+        "4": "SP cleared the pattern entry route with well placed clearing turns that also gave positive control of the descent rate and kept the attention outside. The entry altitude was reached with negligible deviation and no need for a late correction. The traffic picture on the entry route was complete and passed clearly to the IP.",
+        "marginal": "SP cleared the entry route and held the letdown parameters within standards, but the clearing turns were made as a formality with the scan returning inside immediately afterwards. Descent rate control depended on the vertical speed indicator rather than on outside visual references, and the level-off was progressively later on each attempt. SP is expected to use the clearing turns to clear the route and to control the descent rate from the outside picture at the same time."
+      }
+    },
+    {
+      "id": "contact-21-tm04",
+      "label": "LETDOWN AIRSPEED BAND AND USE OF POWER AND SPEED BRAKE",
+      "mif_row": null,
+      "source": "technique:5.2 LETDOWN AND TRAFFIC ENTRY",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to leaving the power set and not using the speed brake as required, allowed the letdown to run outside the 200 to 250 KIAS band called for by local directives. Airspeed accelerated more than 20 knots past the briefed letdown speed while the pitch needed to meet the altitude restriction was held. The IP reduced power, extended the speed brake and re-established the aircraft inside the letdown speed band.",
+        "1": "SP, due to a delayed power reduction and no use of the speed brake, let the descent airspeed build to the limit of the standard, about 20 knots above the briefed letdown speed. The deviation persisted until the IP prompted the power and speed brake verbally. SP then contained the speed inside the band, but only after the aircraft was already close to the entry point.",
+        "2": "SP, due to a late recognition that pitch alone would not meet the altitude restriction, allowed the letdown speed to increase by about 15 knots above the briefed value. SP set the power back and used the speed brake without any prompting, returning the airspeed inside the standard before the entry point. Energy management was correct in principle but coarse in execution.",
+        "3": "SP flew the letdown inside the 200 to 250 KIAS band, holding the briefed speed within 10 knots with power and speed brake used as required. Pitch was adjusted to meet the altitude restrictions while the speed brake absorbed the excess energy. Airspeed at the entry point was as briefed and stable.",
+        "4": "SP planned the letdown energy so that power and speed brake were used before the speed diverged, holding the briefed letdown speed with negligible variation inside the band. Altitude restrictions were met with pitch alone because the speed was never allowed to run away. The aircraft arrived at the entry point exactly at the briefed airspeed and configuration.",
+        "marginal": "SP kept the letdown speed inside the standard, but each correction came after the speed had already built toward the top of the 200 to 250 KIAS band. The speed brake was used as a recovery device rather than as a planned part of the descent. SP is expected to anticipate the power setting and the speed brake so that the letdown speed is held without repeated large corrections."
+      }
+    },
+    {
+      "id": "contact-21-tm05",
+      "label": "MONITORING ATIS BEFORE PATTERN ENTRY",
+      "mif_row": null,
+      "source": "technique:5.2 LETDOWN AND TRAFFIC ENTRY",
+      "hf_concept": "hf-complacency",
+      "texts": {
+        "0": "SP, due to not monitoring the ATIS when it was available, arrived at the letdown without the current altimeter setting, runway and field information. Flying on an out of date altimeter setting, SP was more than 300 feet from the assigned entry altitude and had no expectation of the runway in use for the pattern entry. The IP obtained the information, corrected the altimeter setting and re-established the aircraft at the entry altitude.",
+        "1": "SP, due to postponing the ATIS until the descent was already established, entered the letdown without the current field information and altimeter setting. The altitude flown against the old setting was at the limit of the standard, about 300 feet from the assigned entry altitude, until the IP prompted the ATIS and the altimeter check. SP then updated both, with the runway in use confirmed only near the entry point.",
+        "2": "SP, due to a late start on the ATIS, ran the information gathering into the descent and applied the altimeter setting behind the profile. SP recognized the omission without prompting, set the current altimeter and corrected an altitude error of about 200 feet before the entry point. The field information was complete but obtained under compressed workload.",
+        "3": "SP monitored the ATIS while it was available, applied the current altimeter setting and noted the runway, winds and field conditions before starting the letdown. The assigned entry altitude was held within 150 feet on the correct setting. Pattern entry expectations were briefed against the information received.",
+        "4": "SP obtained the ATIS with time in hand, set the current altimeter and integrated the runway, wind and field information into the plan for the entry. Altitude was flown on the correct reference with negligible deviation throughout the letdown. The information was passed to the IP concisely and without interrupting aircraft control.",
+        "marginal": "SP monitored the ATIS and held the entry altitude within standards, but the information was collected at the last usable moment and only partly retained. The altimeter setting was applied correctly while the runway and wind details had to be recalled a second time before entry. SP is expected to obtain the ATIS early enough in the profile that the letdown is flown with the field picture already complete."
+      }
+    },
+    {
+      "id": "contact-21-tm06",
+      "label": "SETTING UHF AND VHF FREQUENCIES FOR THE LETDOWN",
+      "mif_row": null,
+      "source": "technique:5.2 LETDOWN AND TRAFFIC ENTRY",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP, due to not setting the UHF and VHF radios to the proper frequencies for the letdown, called on the wrong frequency and missed the sequencing instructions for pattern entry. The prolonged head down search for the correct frequency left the descent unmonitored and the aircraft passed the assigned entry altitude by more than 300 feet. The IP set the correct frequencies, re-established communications and recovered the entry altitude.",
+        "1": "SP, due to leaving the frequency change until the entry point, did not have the proper UHF and VHF frequencies set when the letdown began. Attention diverted to the radios allowed the altitude to reach the limit of the standard, about 300 feet from the assigned entry altitude, before the IP prompted the frequency change and the correction. SP established communications only after the prompt.",
+        "2": "SP, due to a late set up of the letdown frequencies, changed radios after the descent was already established. SP detected the altitude drifting during the head down period, corrected an excursion of about 200 feet without prompting and completed the frequency change before the entry point. Communications were established correctly, but the workload in the last part of the descent was compressed.",
+        "3": "SP set the UHF and VHF radios to the proper frequencies before the letdown, keeping the frequency change short and integrated with the scan. The assigned entry altitude was held within 150 feet throughout the transition. Communications for pattern entry were established at the correct point in the profile.",
+        "4": "SP set both radios to the proper frequencies with time in hand, including the standby frequencies needed for the pattern entry. The frequency management required no head down time of significance and altitude deviations remained negligible. Every call for the letdown and entry was made on the correct frequency at the first attempt.",
+        "marginal": "SP had the proper frequencies set and held the letdown parameters within standards, but the radio set up was completed only just before it was needed. Each frequency change still took the eyes inside long enough for a small altitude excursion to develop. SP is expected to prepare the letdown and pattern frequencies early so that the changes are made with a single head down glance."
+      }
     }
   ]
 }

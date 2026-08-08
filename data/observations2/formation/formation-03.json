@@ -3,9 +3,14 @@
   "item_name": "DEPARTURE",
   "category": "formation",
   "schema": "v2-trunk",
-  "mif_numbers": [3],
+  "mif_numbers": [
+    3
+  ],
   "mif_rows": [
-    {"sn": 3, "row_name": "Departure"}
+    {
+      "sn": 3,
+      "row_name": "Departure"
+    }
   ],
   "error_modes": [
     {
@@ -126,6 +131,126 @@
         "3": "SP passed every ATC clearance and configuration change to the wingman with standard phraseology and the briefed visual signals. Radio work with ATC was concise and correct and the wingman was never left guessing.",
         "4": "SP kept the wingman fully informed throughout the departure, giving each change with the correct signal or call before it was flown. Radio work with ATC was accurate and economical and the whole departure was completed without a single request for a repeat.",
         "marginal": "SP communicated all the required items, but several calls were made while the change was being flown rather than before it, and the phraseology drifted from the standard on two transmissions. The wingman kept position and no prompting was needed. SP is expected to make the call first and fly the change second so that the wingman has time to respond."
+      }
+    },
+    {
+      "id": "formation-03-tm01",
+      "label": "Power and airspeed stabilization after the interval takeoff",
+      "mif_row": 3,
+      "source": "technique:9.28.3.b DEPARTURE OPTION 2 - INTERVAL TAKEOFF",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to leaving MAX power set after becoming airborne instead of reducing to 85 percent at 160 knots, let the departure speed run about 30 knots above the briefed value. The wingman, who had started his roll 10 seconds later, could not generate the closure the rejoin needed and fell further behind along the departure route. IP had to reduce power and reset the rejoin airspeed.",
+        "1": "SP delayed the reduction to 85 percent well past the 160 knot point and the speed settled 20 knots fast, at the limit of the standard. The power came back only after IP called the airspeed twice, and the wingman had to hold MAX power far longer than planned to close. The briefed departure speed was re-established late in the climb.",
+        "2": "SP set the power by feel rather than to the briefed 85 percent and the departure speed reached about 15 knots fast. SP checked the airspeed indicator, refined the setting and stabilized on the briefed value with no intervention by IP, so the wingman's overtake stayed workable. The deviation sat between the two bands, but the setting should have been made at the level off from the takeoff.",
+        "3": "SP reduced power to 85 percent as the aircraft accelerated through 160 knots and held the departure speed within 10 knots of the briefed value. The wingman closed with a normal overtake and no airspeed information had to be passed.",
+        "4": "SP made a single smooth reduction to 85 percent as the airspeed passed 160 knots and held the departure speed within about 3 knots for the whole climb out. The wingman built a textbook overtake and arrived in route with almost no throttle work.",
+        "marginal": "SP stayed inside the airspeed standard, but the reduction to 85 percent came several seconds after 160 knots and left the speed around 17 knots fast until the first turn. Nothing was needed from IP and the wingman still closed, although with more power than planned. SP is expected to make the reduction as the airspeed passes 160 knots so the platform is stable before the rejoin begins."
+      }
+    },
+    {
+      "id": "formation-03-tm02",
+      "label": "Holding a stable platform for the straight ahead rejoin",
+      "mif_row": null,
+      "source": "technique:9.23.3.a STRAIGHT AHEAD REJOIN",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to continuing to work pitch and power after directing a straight ahead rejoin instead of freezing a stable platform, let the profile wander more than 400 feet. The wingman, closing from the low 6 o'clock with the briefed overtake, lost the vector he had established and had to break off the rejoin. IP steadied the aircraft and re-established the platform.",
+        "1": "SP treated the rejoin as ordinary climb flying and kept chasing the altimeter, so the platform moved about 300 feet, at the limit of the standard. The corrections stopped only after IP called for a steady platform, and the wingman had to make his bid against a moving reference. The rejoin was completed well behind the planned point.",
+        "2": "SP made an unnecessary pitch correction after directing the rejoin and the platform drifted about 200 feet before it was recognized. SP stopped correcting, held attitude and power steady, and the wingman completed the bid towards the wingtip position without any intervention by IP. The deviation stayed between the two bands, but the platform should have been frozen the moment the rejoin was directed.",
+        "3": "SP established a stable platform as the rejoin was directed and held the profile within 100 feet with attitude and power unchanged. The wingman closed from behind and slightly below and arrived in route with the same airspeed as the leader.",
+        "4": "SP froze the platform on the first attitude and power setting and the profile stayed within about 40 feet for the whole rejoin. The wingman flew his closure and his bid against a completely stationary reference and stabilized in route without a correction from the leader.",
+        "marginal": "SP kept the platform inside the standard, but small pitch corrections continued through the rejoin and the profile moved close to 140 feet each way. The wingman still closed and stabilized and IP said nothing. SP is expected to set the platform once when the rejoin is directed and then leave it alone until the wingman is stabilized in route."
+      }
+    },
+    {
+      "id": "formation-03-tm03",
+      "label": "Rejoin airspeed and the call when it differs from the briefed value",
+      "mif_row": null,
+      "source": "technique:9.23.3.b TURNING REJOIN",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, having briefed the standard 180 knot rejoin, flew the departure turn about 25 knots away from that value and never called the actual airspeed. The wingman set his closure against the briefed number, arrived with excessive overtake and had to fly out to the outside of the turn. IP called the airspeed and directed the correction.",
+        "1": "SP allowed the rejoin airspeed to sit 20 knots away from the briefed value and passed the actual figure only after IP asked for it. Because the wingman was working against the wrong reference, his overtake was uncontrolled through the last few hundred feet. The airspeed was reset late and the rejoin needed a second attempt.",
+        "2": "SP let the rejoin airspeed drift about 15 knots from the briefed value, past the 10 knot difference at which the call is required. SP recognized it, transmitted the actual airspeed and returned to the briefed value with a small power change, so the wingman could reset his closure with no intervention by IP.",
+        "3": "SP held the rejoin airspeed within 10 knots of the briefed value throughout the turn, so no callout was required. The wingman's overtake matched the plan and he stabilized in route approximately co-airspeed.",
+        "4": "SP flew the rejoin within about 3 knots of the briefed value from roll in to route position. The wingman needed no airspeed information at all and moved into close on the first pass.",
+        "marginal": "SP remained inside the airspeed standard, but the rejoin was flown around 17 knots off the briefed value and the required call came only when the wingman was already inside 500 feet. Nothing was needed from IP and the wingman absorbed the extra overtake. SP is expected to hold the briefed rejoin airspeed and to call any difference of more than 10 knots before the wingman commits to his closure."
+      }
+    },
+    {
+      "id": "formation-03-tm04",
+      "label": "Bank angle discipline during the turning rejoin on the departure",
+      "mif_row": null,
+      "source": "technique:9.23.3.b TURNING REJOIN",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP varied the bank between shallow and steep instead of holding the briefed 30 degrees, so the aspect the wingman was flying changed continuously. The wingman was driven into a high aspect picture he could not manage and closed with the vertical stabilizer running out towards the wingtip. IP directed a knock it off and re-established the rejoin turn.",
+        "1": "SP held the bank only loosely and let it swing well past the briefed 30 degrees on every correction, so the wingman had to work aspect for the whole rejoin. The turn was steadied only after IP called for a constant bank, and the wingman arrived in route with more overtake than planned. The formation stayed together but the reference line was never stable.",
+        "2": "SP rolled into the rejoin turn with more than the briefed bank and the wingman's aspect built faster than expected. SP saw the vertical stabilizer moving out along the wing, returned to 30 degrees and held it, so the wingman regained the reference line without any intervention by IP.",
+        "3": "SP established the rejoin turn in level flight at the briefed 30 degrees and held the bank constant until the wingman was stabilized in route. The aspect reference stayed steady and the wingman had no line of sight to work against.",
+        "4": "SP rolled to the briefed bank in one movement and held it within a couple of degrees for the entire rejoin. The wingman flew a single aspect picture from roll in to route and moved into close without a bank correction of his own.",
+        "marginal": "SP kept the rejoin turn within the briefed parameters, but the bank drifted a few degrees either side of 30 for most of the turn and the wingman was adjusting aspect continuously. The rejoin was completed safely and IP said nothing. SP is expected to set the bank once and hold it so the wingman flies one aspect picture all the way to route."
+      }
+    },
+    {
+      "id": "formation-03-tm05",
+      "label": "Delay after the pitchout before establishing the rejoin turn",
+      "mif_row": null,
+      "source": "technique:9.23.3.b TURNING REJOIN",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP started the rejoin turn almost immediately after the pitchout, before the wingman had rolled out in trail. The wingman was left with no trail position to work from, ended up close to abeam with angles he could not solve and the rejoin geometry was unrecoverable. IP rolled out and set the rejoin up again.",
+        "1": "SP gave the wingman only a token delay after the pitchout, so the turn was established while he was still rolling out. The wingman had to fly a large lead pursuit correction to find the reference line and did so only after IP called the geometry. The rejoin closed, but the aspect was outside the briefed picture for most of it.",
+        "2": "SP began the rejoin turn slightly early and the wingman entered it from a wide trail position. SP recognized the geometry, eased the turn until the wingman settled behind, and the rejoin then developed normally with no intervention by IP.",
+        "3": "SP delayed after the pitchout until the wingman was rolled out in trail, then established the turn in level flight at the briefed bank. The wingman entered with the briefed closure and the aspect built at the expected rate.",
+        "4": "SP timed the delay so that the turn began the moment the wingman's wings were level in trail. The rejoin developed on the reference line from the start and the wingman flew straight to route without an aspect correction.",
+        "marginal": "SP allowed enough delay for the rejoin to work, but the turn was established while the wingman was still stabilizing in trail and he began with more aspect than briefed. The rejoin was completed without prompting from IP. SP is expected to wait until the wingman is rolled out in trail before establishing the turn."
+      }
+    },
+    {
+      "id": "formation-03-tm06",
+      "label": "Monitoring the wingman's aspect and closure through the rejoin",
+      "mif_row": null,
+      "source": "technique:9.23.3.b TURNING REJOIN",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP directed the rejoin and then turned his attention elsewhere, so the wingman's excessive overtake was never recognized. Actual airspeed was not compared with the directed value and no evasive action was ready as the wingman closed through the last few hundred feet. IP called the overtake and maneuvered the aircraft to open the geometry.",
+        "1": "SP monitored the wingman only intermittently and missed the build up of overtake until he was already inside 500 feet. The prompt to check the closure came from IP and the wingman had to fly an overshoot to the outside. Separation was preserved, but the leader was never in a position to take evasive action.",
+        "2": "SP lost the wingman during the straight ahead rejoin, where he is difficult to see behind and below, and did not read the closure for several seconds. SP re-acquired him, compared actual airspeed with the directed value and monitored the final stage of the rejoin without any intervention by IP.",
+        "3": "SP kept the wingman in sight throughout the rejoin, monitored aspect and closure and compared actual airspeed with the directed value. The overtake stayed under control through the critical last few hundred feet and no correction was needed.",
+        "4": "SP tracked the wingman's aspect and closure continuously, called the picture as it developed and stayed ready to maneuver if the overtake grew. The rejoin was monitored from the direction to the route position and the leader was ahead of every stage of it.",
+        "marginal": "SP monitored the wingman and the rejoin was safe, but attention went inside to the instruments during the final closure and the overtake was assessed late. Nothing was required from IP. SP is expected to hold the monitoring through the critical last few hundred feet, where the closure has to be judged."
+      }
+    },
+    {
+      "id": "formation-03-tm07",
+      "label": "Announcing and clearing a change of rejoin type on the departure route",
+      "mif_row": null,
+      "source": "technique:9.23.3.a STRAIGHT AHEAD REJOIN",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP began a departure turn in the middle of a straight ahead rejoin without informing the wingman and without clearing in the direction of the turn. The wingman, set up for pure airspeed closure from the low 6 o'clock, was turned into and ended in an overshoot he could not control. IP rolled out and directed the rejoin again.",
+        "1": "SP turned the formation onto the next departure leg during the rejoin and told the wingman only after the bank was in. The wingman had to convert to a turning rejoin with no warning and was late recognizing the overshoot, which he corrected after IP called it. The formation stayed safe but the transition was unmanaged.",
+        "2": "SP started the turn a moment before the call was made, so the wingman began the transition a couple of seconds behind. SP completed the call, cleared into the turn and eased the bank until the wingman was established, with no intervention by IP.",
+        "3": "SP informed the wingman before every change of rejoin type, cleared in the direction of the turn and kept the bank inside the wingman's capability. The wingman converted from airspeed closure to a turning rejoin without losing the geometry.",
+        "4": "SP briefed each transition before it was needed, so the wingman was anticipating the change of rejoin type at every turn point on the departure route. Clearing was completed before each turn and the wingman flew one continuous closure to route position.",
+        "marginal": "SP kept the wingman informed and the transitions worked, but the calls were made as the bank went in rather than before it and the wingman was always reacting. No prompting from IP was needed. SP is expected to call and clear the turn first and roll second, so the wingman can convert to a turning rejoin without losing his closure."
+      }
+    },
+    {
+      "id": "formation-03-tm08",
+      "label": "Choosing the wingman's side from the wind and the turn out of traffic",
+      "mif_row": 3,
+      "source": "technique:9.28 FORMATION DEPARTURES - GENERAL",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP selected the side for the wingman without considering the wind or the direction of the turn out of traffic, leaving him on the inside of the first departure turn. The wingman was forced under the leader with no room as the turn began and could not hold a safe position. IP reversed the turn and repositioned the formation.",
+        "1": "SP placed the wingman on the wrong side for the briefed turn out of traffic and recognized it only after IP pointed it out. The turn had to be flown with reduced bank to keep the wingman clear and the departure heading was reached about 10 degrees off before it was corrected. The formation stayed safe but the geometry worked against the wingman throughout.",
+        "2": "SP weighed the wind but not the direction of the turn out of traffic when choosing the side, so the wingman was awkwardly placed for the first departure turn. SP reworked the plan before the turn point and flew the turn so the wingman held position, with no intervention by IP.",
+        "3": "SP chose the wingman's side from the wind, the weather and the direction of the turn out of traffic, so the wingman was on the outside of the first departure turn. The turn was flown as briefed and the assigned heading was made within 5 degrees.",
+        "4": "SP worked out the side from the wind and the departure routing before taxi and briefed it clearly, so every turn out of traffic favored the wingman. The formation flew the whole departure with no geometry problem and rolled out on the assigned heading within 2 degrees.",
+        "marginal": "SP placed the wingman correctly and the departure worked, but the reasoning rested on the wind alone and the direction of the turn out of traffic was considered only at the turn point. Nothing was required from IP. SP is expected to weigh wind, weather and the turn out of traffic together when deciding which side the wingman takes."
       }
     }
   ]

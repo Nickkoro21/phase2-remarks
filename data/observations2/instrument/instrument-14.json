@@ -142,6 +142,81 @@
         "4": "SP planned the arc intercept well ahead, distributing the navigation, radio and flying tasks so that no phase was rushed. Every task was completed at the appropriate moment, the arc was held within about 0.3 DME and SP retained spare capacity to answer IP questions during the intercept.",
         "marginal": "SP completed all intercept tasks within tolerance, but the navigation setup and the lead computation were consistently finished only just before the turn, leaving no margin for an unexpected clearance change. Radio calls were answered at the expense of a brief interruption in the scan. SP is expected to complete the intercept preparation earlier so that spare capacity remains available during the turn onto the arc."
       }
+    },
+    {
+      "id": "instrument-14-tm01",
+      "label": "LEAD POINT NOT REDUCED FOR AN INTERCEPT TURN OF LESS THAN 90 DEGREES",
+      "mif_row": "Arc Intercept",
+      "source": "technique:7.22 ARC AND RADIAL INTERCEPTS",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP, due to applying the full lead point computed for a 90 degree turn at 30 degrees of bank to an intercept turn of only 45 degrees, did not reduce it to one third as the technique requires. The turn onto the arc was started far too early and the aircraft rolled out more than 2 DME inside the arc with the DME still decreasing. IP had to intervene and direct the turn back out to the published arc distance.",
+        "1": "SP, due to using the whole calculated lead point on a 60 degree intercept turn instead of one half of it, did not place the roll-out on the published arc. The aircraft finished 2 DME inside the arc, at the tolerance limit, and was turned back out only after repeated verbal instruction from IP. The same unreduced lead point was used again on the following intercept.",
+        "2": "SP, due to only a partial reduction of the lead point for a turn of less than 90 degrees, did not roll out exactly on the published arc. The aircraft passed about 1.5 DME inside the arc, between the 1 DME and 2 DME limits, before the trend was stopped. SP saw the DME trend, corrected outward and re-established the arc in time without IP input.",
+        "3": "SP reduced the calculated lead point according to the amount of turn, using one half for a 60 degree turn, one third for 45 degrees and one sixth for 30 degrees, and rolled out on the published arc within 1 DME. The reduction was applied before the turn was started, so no re-intercept was required.",
+        "4": "SP scaled the lead point to the actual amount of turn on every intercept and rolled out on the published arc with deviations no greater than about 0.3 DME. Each intercept was flown as a single continuous turn, with the DME stopping on the nominal arc distance.",
+        "marginal": "SP stayed within the required tolerance, but the reduction of the lead point for turns of less than 90 degrees was estimated by feel instead of the fractions given by the technique. Every roll-out therefore finished about 0.9 DME inside the arc and needed a small outward correction. SP is expected to apply the standard one half, one third and one sixth reductions for 60, 45 and 30 degree turns so that the roll-out arrives on the arc."
+      }
+    },
+    {
+      "id": "instrument-14-tm02",
+      "label": "NO-WIND TURN RADIUS USED AS THE LEAD POINT WITH NO ALLOWANCE FOR THE WIND",
+      "mif_row": "Arc Intercept",
+      "source": "technique:7.22 ARC AND RADIAL INTERCEPTS",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to taking the calculated turn radius as the lead point without recognizing that the formula gives a no-wind value, did not allow for the tailwind component in the intercept turn. Groundspeed through the turn was well above the value used in the computation, the actual radius was much larger and the aircraft went more than 2 DME through the arc with the deviation still increasing. IP had to intervene and set the turn required to regain the published arc.",
+        "1": "SP, due to using the no-wind turn radius unchanged as the lead point, did not increase it for the wind component along the intercept. The aircraft rolled out 2 DME outside the arc, at the tolerance limit, and closed back onto the arc only after IP verbally directed the correction. The same unadjusted lead point was carried into the next intercept.",
+        "2": "SP, due to a lead point corrected for the wind only after the turn had been started, did not roll out on the published arc distance. The aircraft finished about 1.5 DME outside the arc, between the 1 DME and 2 DME limits. SP recognized the overshoot on the DME readout, tightened the turn and returned to the arc without IP intervention.",
+        "3": "SP treated the calculated turn radius as a no-wind lead point and adjusted it for the wind component before starting the intercept turn, rolling out on the published arc within 1 DME. The adjustment was made in the direction of the actual groundspeed through the turn.",
+        "4": "SP corrected the computed turn radius for the wind on every intercept and rolled out on the published arc with deviations of about 0.3 DME at most. The arc was captured in a single turn, with no follow-up correction needed after roll-out.",
+        "marginal": "SP held the arc inside the required tolerance, but the no-wind turn radius was used as the lead point on all intercepts regardless of the wind. On the downwind intercepts each roll-out finished about 0.9 DME outside the arc and had to be closed with an extra turn. SP is expected to correct the computed turn radius for the wind so that the roll-out arrives on the arc."
+      }
+    },
+    {
+      "id": "instrument-14-tm03",
+      "label": "RADIALS PER NM NOT RECOMPUTED FOR THE ARC ACTUALLY FLOWN (60 DIVIDED BY ARC)",
+      "mif_row": "Arc Intercept",
+      "source": "technique:7.22 ARC AND RADIAL INTERCEPTS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to reusing the six radials of lead learned on a 20 NM arc while flying a 10 NM arc, did not recompute the radials per NM with 60 divided by the arc distance, which gives 6 radials per NM on a 10 NM arc. The turn off the arc was therefore started with half the lead required and the aircraft flew through the desired radial by more than 10 degrees with no correction started. IP had to intervene and assign the heading to re-intercept the radial.",
+        "1": "SP, due to carrying a lead in radials over from a previous arc, did not convert the turn radius into radials for the arc being flown. The turn off the arc was begun late and the roll-out finished 10 degrees off the desired radial, at the tolerance limit, and the course was re-established only after IP verbally provided the intercept heading.",
+        "2": "SP, due to an approximate figure for radials per NM instead of the 60 divided by arc computation, started the turn off the arc slightly late. The aircraft crossed about 8 degrees through the desired radial, between the 5 degree and 10 degree limits. SP recognized the overshoot on the CDI and re-intercepted the radial promptly without IP input.",
+        "3": "SP converted the turn radius into radials with the 60 divided by arc rule for the arc actually flown and rolled out on the desired radial within 5 degrees. The lead in radials was recomputed whenever the arc distance changed.",
+        "4": "SP computed the radials per NM for the arc being flown and started the turn off the arc at exactly that radial, rolling out on the desired course within about 2 degrees. No re-intercept of the radial was required.",
+        "marginal": "SP rolled out on the desired radial inside tolerance, but the lead in radials was carried over from the previous arc and only trimmed by feel, so each turn off the arc finished about 4-5 degrees through the course. The course was recovered every time, yet the same pattern repeated. SP is expected to recompute 60 divided by the arc distance for each arc so that the turn off the arc is started at the correct radial."
+      }
+    },
+    {
+      "id": "instrument-14-tm04",
+      "label": "OFF-THE-WALL CDI READ AS DISTANCE STILL TO GO DURING THE RADIAL INTERCEPT",
+      "mif_row": "Arc Intercept",
+      "source": "technique:7.22 ARC AND RADIAL INTERCEPTS",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to waiting for the CDI to come off full deflection before turning, did not accept that at normal T-6 airspeeds the needle stays off the wall within 10 degrees of the desired course throughout the intercept. The turn was started only when the needle began to center, long past the small lead point required, and the aircraft flew through the course by more than 10 degrees with the deviation still growing. IP had to intervene and assign the re-intercept heading.",
+        "1": "SP, due to reading the off the wall CDI as if the course were still far ahead, did not start the intercept turn at the computed lead point. The roll-out finished 10 degrees off the desired course, at the tolerance limit, and the course was regained only after repeated verbal instruction from IP.",
+        "2": "SP, due to a late interpretation of the off the wall CDI presentation, started the intercept turn shortly after the lead point had passed. The aircraft crossed about 8 degrees through the desired course, between the 5 degree and 10 degree limits. SP read the needle rate, stopped the overshoot and settled on course in time without IP intervention.",
+        "3": "SP interpreted the CDI as an off the wall indication within 10 degrees of the desired course and used it together with the computed lead point, rolling out on course within 5 degrees. The needle was watched from the beginning of the intercept rather than after it had started to move.",
+        "4": "SP used the off the wall CDI presentation correctly throughout the intercept and rolled out on the desired course within about 2 degrees. The small lead point required at normal T-6 airspeeds was applied exactly, so the needle centered as the wings came level.",
+        "marginal": "SP rolled out on course inside tolerance, but every intercept turn was started once the CDI had visibly begun to move rather than at the computed lead point, because the off the wall needle was read as spare distance. Each roll-out finished about 4-5 degrees off course and required a further correction. SP is expected to treat the CDI as off the wall from the start of the intercept and turn at the computed lead point."
+      }
+    },
+    {
+      "id": "instrument-14-tm05",
+      "label": "ALTITUDE RESTRICTION AT THE ARC OR RADIAL INTERSECTION NOT APPLIED",
+      "mif_row": "Arc Intercept",
+      "source": "technique:7.22 ARC AND RADIAL INTERCEPTS",
+      "hf_concept": "hf-lack-of-knowledge",
+      "texts": {
+        "0": "SP, due to lack of knowledge of the rules for altitude restrictions at arc and radial intersections, did not hold the assigned altitude until the intersection defining the step down was crossed. The descent was started while still established on the arc and the aircraft was more than 300 feet below the restriction before the fix, still descending. IP had to intervene and stop the descent to restore the required altitude.",
+        "1": "SP, due to accepting the clearance without checking where the altitude restriction at the arc and radial intersection applied, did not delay the descent until the fix. The aircraft was 300 feet below the restriction altitude before the intersection, at the tolerance limit, and leveled off only after IP verbally called the restriction.",
+        "2": "SP, due to a late review of the altitude restriction at the intersection of the arc and the radial, started the descent slightly before the fix. The aircraft was about 200 feet below the restriction altitude, between the 150 foot and 300 foot limits, as the intersection was crossed. SP recognized the error, arrested the descent and returned to the required altitude without IP intervention.",
+        "3": "SP identified the altitude restriction applying at the arc and radial intersection and held the assigned altitude within 150 feet until the intersection was crossed. The descent was started only once the restriction no longer applied.",
+        "4": "SP had the altitude restriction at the arc and radial intersection established before the intercept and crossed the fix at the required altitude with deviations no greater than about 40 feet. The descent was initiated at the intersection itself, with no anticipation.",
+        "marginal": "SP respected the altitude restriction at the arc and radial intersection, but the descent was started just before the fix on each intercept, leaving the aircraft 130-150 feet low as the intersection was crossed. The restriction was met every time, yet the same anticipation repeated. SP is expected to hold the assigned altitude until the intersection is actually crossed."
+      }
     }
   ]
 }

@@ -127,6 +127,126 @@
         "4": "SP raised every point of the (BOTH) procedures that required confirmation, asked precisely and waited for the IP's answer each time before acting. SP's questions anticipated the ambiguity rather than following it, so the sequence was agreed in advance and never had to be interrupted. Coordination between the cockpits remained complete throughout the ground phase.",
         "marginal": "SP asked about the (BOTH) procedures and waited for the IP's answer, so the standard was met. However, the question was raised late in the sequence and phrased tentatively, and SP had already begun reaching for the control before the answer was given. SP is expected to state the doubt as soon as it arises and to keep hands clear until the IP's answer has been received."
       }
+    },
+    {
+      "id": "instrument-01-tm01",
+      "label": "IFR CLEARANCE COPY AND CHADS ORGANIZATION",
+      "mif_row": null,
+      "source": "technique:8.10 GROUND OPS (IFR)",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to expecting the ATC clearance to mirror exactly what was filed on the flight plan form, did not copy the clearance in an organized CHADS format and did not detect the elements ATC had changed. SP left the departure frequency and the squawk blank and read back the filed routing after ATC had amended it. The IP intervened, took the radio, requested a full re-read of the clearance and had it copied again before the taxi request.",
+        "1": "SP, due to expecting the clearance to mirror the filed flight plan, did not organize the copy under the CHADS headings and lost two of the five elements while writing. SP asked ATC for a full repetition twice and still needed three verbal indications from the IP to enter the assigned altitude and squawk in the right places. The clearance was finally complete and read back correctly, but only under continuous IP direction.",
+        "2": "SP, due to writing the clearance as continuous text instead of filling the CHADS blocks, did not have the departure frequency and the squawk separated when the read back was due. SP recognized the gap before keying the transmitter, requested one repetition on own initiative and completed the CHADS blocks. The read back was accepted by ATC at the first attempt and no IP input was required.",
+        "3": "SP copied the ATC clearance under the CHADS headings, filling clearance limit, heading, altitude, departure frequency and squawk as each was passed. SP compared the copied clearance against the filed route, identified the amended routing and read the whole clearance back correctly at the first attempt. The airfield diagram was reviewed before the taxi request without IP input.",
+        "4": "SP copied the ATC clearance directly into the CHADS blocks with no gaps and no request for repetition, and read it back verbatim at the first attempt. SP stated aloud which element differed from the filed flight plan and confirmed the amended routing against the approach plate before the taxi request. The whole clearance sequence was completed with no correction and no IP involvement of any kind.",
+        "marginal": "SP copied the clearance completely and the read back was accepted by ATC at the first attempt, so the standard was met. However SP filled the CHADS blocks out of sequence and needed a few seconds to locate the assigned squawk when the IP asked for it, which shows the format is not yet automatic under radio pace. SP is expected to fill each CHADS block as the element is passed and to be able to state any of them immediately on request."
+      }
+    },
+    {
+      "id": "instrument-01-tm02",
+      "label": "INSTRUMENT COCKPIT ORGANIZATION: CHARTS, PLATES AND RMU STANDBY FREQUENCY",
+      "mif_row": null,
+      "source": "technique:7.5 COCKPIT ORGANIZATION",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to leaving the additional instrument publications unprepared instead of prefolding them and storing them in the order of use, did not have an organized cockpit setup for the planned instrument sortie. SP boarded with unfolded charts, no tabs on the approach plates and the departure plate buried under the IFR supplement. The IP intervened, stopped the flow before start and had the publications refolded, tabbed and re-stowed in order of use.",
+        "1": "SP, due to prefolding only part of the instrument publications, did not store the charts and approach plates in the order in which they would be used. SP could not produce the departure plate when it was called for and needed three verbal indications from the IP to tab the required pages and to write down the frequencies as they were assigned. The cockpit was eventually organized, but every step was directed by the IP.",
+        "2": "SP, due to stowing the approach plates by airfield rather than in the order of use, did not have the departure plate on top when the clearance was copied. SP recognized the disorder while still in uncongested parking, re-sequenced the plates, tabbed the required pages and wrote down the assigned frequencies. The cockpit was organized in time for taxi and no IP input was required.",
+        "3": "SP prefolded all charts before strap in and stored the publications in the order in which they would be used, with the required pages of the IFR supplement and the approach plates marked by tabs. SP wrote down each radio frequency as it was assigned and used the RMU standby frequency function to anticipate the next change. The instrument cockpit setup was completed without IP input.",
+        "4": "SP arrived with every chart prefolded, every required plate tabbed and the whole set stowed in exact order of use, with the mission card annotated with the information likely to be needed in flight. SP wrote down each frequency as assigned and preset the next one in the RMU standby window before it was requested. The setup required no rearrangement, no search and no IP involvement of any kind.",
+        "marginal": "SP had the publications prefolded, tabbed and stowed in order of use and the required pages were available, so the standard was met. However SP loaded the RMU standby frequency only after the change was passed rather than in anticipation, and needed a second look to find the marked page in the IFR supplement. SP is expected to preset the standby frequency ahead of the change and to reach any tabbed page at the first attempt."
+      }
+    },
+    {
+      "id": "instrument-01-tm03",
+      "label": "CHECKLIST INTERRUPTION RECOVERY AND (BOTH) CHALLENGE AND RESPONSE",
+      "mif_row": null,
+      "source": "technique:1.6 Checklist Discipline",
+      "hf_concept": "hf-distraction",
+      "texts": {
+        "0": "SP, due to an interruption during the flow and a failure to restart the checklist at the prescribed point, did not positively confirm completion of the checklist after the break. SP resumed several steps beyond the interrupted item, gave lip service to a standardized phrase without performing the check behind it and treated a (BOTH) item as complete with no response from the rear cockpit. The IP intervened, stopped the flow and had the checklist re-run from the top before the next checklist was started.",
+        "1": "SP, due to an interruption on the intercom during the flow, did not restart at the first step of the checklist nor two to three steps prior to the interrupted step. SP resumed from memory at the wrong point and needed three verbal indications from the IP to identify the omitted item and to obtain the proper response to the (BOTH) challenge. The checklist was finally confirmed complete, but the recovery was entirely directed by the IP.",
+        "2": "SP, due to a radio call cutting into the flow, did not resume the checklist at the correct recovery point and initially picked up beyond the interrupted step. SP recognized the break in the sequence, went back two to three steps prior to the interrupted item and reissued the (BOTH) challenge until a proper response was received. The checklist was positively confirmed complete before the next one was started, with no IP intervention.",
+        "3": "SP handled the interruption by restarting the checklist two to three steps prior to the interrupted step and positively confirmed completion of every item before starting the next checklist. SP challenged each (BOTH) item and treated it as complete only after a proper response from the other cockpit. No item was omitted and no IP input was required.",
+        "4": "SP protected the checklist flow from interruptions, deferred the intercom exchange to a break point and, where an interruption was unavoidable, resumed exactly two to three steps prior to the interrupted item. SP verified every item against the printed page after completing the flow and obtained a proper response to each (BOTH) challenge without prompting. No omission, no repetition and no IP involvement of any kind occurred.",
+        "marginal": "SP recovered from the interruption at an acceptable point and positively confirmed completion of the checklist, so the standard was met. However SP allowed the intercom exchange to cut into the flow rather than holding it to a break point, and issued the (BOTH) challenge a second time only after the IP paused, which shows the discipline is not yet consolidated. SP is expected to protect the flow from avoidable interruptions and to hold each (BOTH) item open until the response is received."
+      }
+    },
+    {
+      "id": "instrument-01-tm04",
+      "label": "USE OF UNCONGESTED TAXI TIME FOR DEPARTURE AND NAVAID PREPARATION",
+      "mif_row": null,
+      "source": "technique:3.9 TAXI",
+      "hf_concept": "hf-workload-distribution",
+      "texts": {
+        "0": "SP, due to not using uncongested taxi time to prepare for takeoff and departure, did not review the weather, the winds, the departure routing, the NAVAID setup and the takeoff emergencies before reaching the holding point. SP arrived at the runway with the navigation aids untuned for the assigned departure and with no review of the takeoff emergency actions. The IP intervened, held the aircraft at the holding point and had the whole preparation completed there before line up was requested.",
+        "1": "SP, due to leaving the departure preparation until the holding point instead of using the uncongested taxi segments, did not complete the NAVAID setup and the takeoff emergency review in time. SP worked through the items only after three verbal indications from the IP naming each element of the acronym in turn. The preparation was completed before line up, but entirely under IP direction.",
+        "2": "SP, due to concentrating on the taxi path during the uncongested segment, did not begin the departure preparation until after the first turn out of parking. SP recognized the delay, used the remaining straight segment to tune and identify the departure aids, confirm the routing and review the takeoff emergencies. All items were covered before the holding point with no IP intervention.",
+        "3": "SP used the uncongested taxi segments to prepare for takeoff and departure, covering weather, winds, departure routing, NAVAID setup and takeoff emergencies in the order given by the SOP acronym. SP kept the taxi path and the clearing scan unaffected while working the items. The preparation was complete before the holding point without IP input.",
+        "4": "SP distributed the departure preparation across the uncongested taxi segments so that every item of the SOP acronym was covered well before the holding point, with each departure aid tuned and identified. SP interrupted the preparation cleanly at every turn and congested area and resumed it afterwards, with no effect on taxi path or clearing. Nothing remained to be done at the holding point and no IP involvement of any kind was required.",
+        "marginal": "SP covered weather, winds, routing, NAVAID setup and takeoff emergencies before the holding point, so the standard was met. However SP worked two of the items while approaching a turn instead of reserving them for the uncongested straight segment, and the last aid was identified only as the aircraft stopped at the holding point. SP is expected to front-load the preparation into the uncongested segments and to suspend it whenever the taxi situation demands full attention."
+      }
+    },
+    {
+      "id": "instrument-01-tm05",
+      "label": "BEFORE TAKEOFF CHECKS, LINE UP CHAIN OF ACTIONS AND TOLD REVIEW",
+      "mif_row": null,
+      "source": "technique:3.11 BEFORE TAKEOFF AND LINEUP CHECKS",
+      "hf_concept": "hf-norms",
+      "texts": {
+        "0": "SP, due to following a personal habit instead of the prescribed chain of Before Takeoff Checks, request line up and line up, inserted other checks and procedures between the Before Takeoff Checks and line up. SP also accepted the briefed TOLD unchanged although the reported conditions differed significantly from the forecast, so the takeoff data used no longer matched the actual wind and temperature. The IP intervened, stopped the line up request and had the TOLD recomputed and the Before Takeoff Checks re-run immediately before line up.",
+        "1": "SP, due to a habitual sequence that placed avionics work after the Before Takeoff Checks, did not execute those checks last, right before line up. SP started the TOLD review only after three verbal indications from the IP that the reported conditions differed significantly from the forecast. The chain was eventually flown in the correct order and the TOLD was recomputed, but every step required IP direction.",
+        "2": "SP, due to treating the Before Takeoff Checks as just another checklist in the flow, began an unrelated avionics setup after completing them. SP recognized the break in the chain before transmitting, finished the avionics item, re-ran the Before Takeoff Checks and only then requested line up. The TOLD was reviewed against the reported conditions and no IP intervention was required.",
+        "3": "SP reviewed the TOLD against the reported conditions and executed the Before Takeoff Checks last, with no other checks or procedures between them and line up. SP followed the chain of Before Takeoff Checks, request line up and line up in that order. The sequence was completed correctly without IP input.",
+        "4": "SP recomputed the TOLD with the actual reported conditions as soon as they were passed, then held the Before Takeoff Checks until everything else was finished so that they were the last action before the line up request. SP flew the chain of Before Takeoff Checks, request line up and line up with nothing inserted between them and stated the recomputed abort speed and distance before rolling. No repetition and no IP involvement of any kind were required.",
+        "marginal": "SP reviewed the TOLD and executed the Before Takeoff Checks immediately before line up with nothing inserted in between, so the standard was met. However SP began the TOLD comparison only after the IP asked whether the reported wind matched the forecast, and completed the checks with the aircraft already rolling toward the holding point. SP is expected to trigger the TOLD comparison on the reported conditions themselves and to complete the Before Takeoff Checks stopped, immediately before requesting line up."
+      }
+    },
+    {
+      "id": "instrument-01-tm06",
+      "label": "OVER SPEED GOVERNOR CHECK CLEARING, POWER APPLICATION AND BRAKE GUARDING",
+      "mif_row": null,
+      "source": "technique:3.10 OVER SPEED GOVERNOR CHECK",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to remaining head down on the instruments instead of clearing outside the aircraft, did not ensure that the area immediately in front of and behind the aircraft was clear before the over speed governor check. SP advanced the power abruptly and higher than required to verify proper function, with the control stick forward, and the aircraft crept forward on compressed nose gear. The IP intervened, took the power lever and the brakes and stopped the check before it was completed.",
+        "1": "SP, due to an incomplete outside scan before the run up, did not confirm that the area behind the aircraft was clear and did not announce the check to the other cockpit. SP advanced the power in one coarse movement and needed three verbal indications from the IP to reduce it, to hold the stick neutral to slightly aft and to clear outside during the check. The check was completed correctly, but only under IP direction.",
+        "2": "SP, due to concentrating on the engine indications, did not clear outside the aircraft at the start of the power advance and let the control stick go slightly forward. SP recognized the omission, brought the stick back to the neutral to slightly aft position and resumed the outside scan while advancing the power smoothly to the value required. The check was verified correctly with no IP intervention.",
+        "3": "SP ensured the area immediately in front of and behind the aircraft was clear, advanced the power smoothly and slowly only as high as required to verify proper function of the over speed governor, and cleared outside the aircraft during the check. SP kept the control stick neutral to slightly aft so the nose gear strut did not compress, and the aircraft stayed stationary. The check was completed without IP input.",
+        "4": "SP cleared the area in front of and behind the aircraft, announced the check, then advanced the power smoothly and slowly to exactly the setting required to verify proper function of the over speed governor. SP held the control stick neutral to slightly aft, kept a continuous outside scan through the whole run up and confirmed that the pilot not flying was guarding the brakes. The aircraft did not move, no repetition was needed and no IP involvement of any kind occurred.",
+        "marginal": "SP cleared the area, advanced the power smoothly and verified the over speed governor with the aircraft stationary, so the standard was met. However SP carried the power slightly higher than needed to obtain the indication and let the outside scan lapse for a moment while reading the gauges, which shows the division of attention is not yet settled. SP is expected to stop the power advance at the minimum setting that verifies proper function and to keep clearing outside throughout the check."
+      }
+    },
+    {
+      "id": "instrument-01-tm07",
+      "label": "READ BACK OF ATC CLEARANCE AND TAXI INSTRUCTIONS",
+      "mif_row": null,
+      "source": "technique:3.8 RADIO PROCEDURES",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, due to not listening carefully to the taxi instructions and treating the read back as optional, did not read back the ATC clearance, which is always required because it ensures understanding. SP acknowledged an instruction that contained a hold short element without repeating it and started to move toward the wrong taxiway. The IP intervened, stopped the aircraft, transmitted the correct read back and had the instruction confirmed before taxi continued.",
+        "1": "SP, due to not listening carefully to the taxi instructions, did not read back the routing and omitted the hold short element from the acknowledgement. SP produced a complete and correct read back only after three verbal indications from the IP and one request for repetition to the controller. The instruction was finally understood, but the whole exchange was carried by the IP.",
+        "2": "SP, due to writing while the controller was still transmitting, did not capture the full taxi routing and read back only the first two elements. SP recognized the gap immediately, requested one repetition on own initiative and transmitted a complete read back including the hold short instruction before releasing the brakes. No IP intervention was required.",
+        "3": "SP listened carefully to the taxi instructions and read back the ATC clearance completely and correctly, including the hold short element. SP also read back an instruction that differed from the standard routing to confirm understanding before acting on it. The whole radio exchange was handled without IP input.",
+        "4": "SP read back every clearance and taxi instruction completely and correctly at the first attempt, with standard phraseology and no request for repetition. SP identified an instruction that differed from the standard routing, read it back specifically to confirm understanding and stated the intended path to the other cockpit before moving. No correction and no IP involvement of any kind were required.",
+        "marginal": "SP read back the ATC clearance and the taxi instructions completely, including the hold short element, so the standard was met. However SP began the read back before the controller had finished and had to append the last element after a pause, and did not query an instruction that differed from the standard routing until the IP mentioned it. SP is expected to let the transmission finish before answering and to read back on own initiative anything that appears different than standard."
+      }
+    },
+    {
+      "id": "instrument-01-tm08",
+      "label": "AFTER LANDING CLEARANCE, SHUTDOWN VIGILANCE AND OVER THE RAIL CHECK",
+      "mif_row": null,
+      "source": "technique:3.12 AFTER LANDING",
+      "hf_concept": "hf-complacency",
+      "texts": {
+        "0": "SP, due to complacency after landing and treating the sortie as complete at touchdown, did not obtain clearance before crossing the active runway on the way back to the ramp. During shutdown SP lost sight of the ground personnel and left the aircraft without the over the rail check, so the ejection pin and CFS pin state was never confirmed. The IP intervened, stopped the aircraft short of the runway, obtained the clearance and had the shutdown items completed before the aircraft was left.",
+        "1": "SP, due to complacency after landing, did not request clearance before proceeding back to the ramp and did not keep the ground personnel in sight during shutdown. SP completed the after landing and shutdown items only after three verbal indications from the IP, including the reminder to do the over the rail check before stepping down from the wing. Everything was eventually completed, but under continuous IP direction.",
+        "2": "SP, due to relaxing attention after clearing the runway, did not request the crossing clearance at the first opportunity and stopped short only when the holding position was reached. SP recognized the omission, obtained the clearance before crossing, kept the ground personnel in sight during shutdown and did the over the rail check before stepping down. No IP intervention was required.",
+        "3": "SP obtained clearance before crossing the active runway and before proceeding back to the ramp, taxied with caution and stayed alert until the aircraft was parked. SP kept the ground personnel in sight during shutdown and did the over the rail check, confirming ejection pin and CFS pin in, ISS in SOLO, battery switch off, OBOGS lever off and parking brake as required. All items were completed without IP input.",
+        "4": "SP requested each clearance before crossing the active runway and before proceeding to the ramp without prompting, and maintained the same attention level as before takeoff until the engine was shut down. SP kept the ground personnel in sight throughout, was ready to shut down immediately if the propeller safety zone was violated, and completed the over the rail check item by item before stepping down from the wing. The post flight walk around followed and no IP involvement of any kind was required.",
+        "marginal": "SP obtained the required clearances, kept the ground personnel in sight and completed the over the rail check before stepping down, so the standard was met. However SP called for the crossing clearance late enough to require a stop at the holding position, and ran the over the rail items as a quick sweep rather than confirming each one, which shows attention is already dropping before the sortie is complete. SP is expected to request the clearance early enough to keep the aircraft rolling and to confirm each over the rail item individually."
+      }
     }
   ]
 }

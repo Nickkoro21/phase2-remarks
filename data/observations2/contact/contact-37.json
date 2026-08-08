@@ -97,6 +97,111 @@
         "4": "SP handled the R/T and the aircraft together with no measurable cost to either. Every required contact was established at the planned point and the flight parameters were held precisely while transmitting, including in the highest-workload phases. Radio work was sequenced ahead of the aircraft rather than in reaction to it.",
         "marginal": "SP combined the radio work with the flying task within standards, but transmissions during the manoeuvring segments came at the expense of a visible pause in the scan. The trend is toward serialising the two tasks instead of interleaving them. SP is expected to plan the timing of the calls so that the flying task carries no pause when the microphone is keyed."
       }
+    },
+    {
+      "id": "contact-37-tm01",
+      "label": "BREVITY AND UNREQUIRED VERBIAGE ON THE FREQUENCY",
+      "mif_row": null,
+      "source": "technique:1.18 Radio Procedures",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to adding verbiage that is not required to nearly every transmission, did not keep the calls to the information the controller needed in the format expected, with the result that meaningless phrases such as 'with you' and 'be advised' extended six calls on a congested frequency and two of them were cut off by the controller. Airtime lost to the padding delayed the clearance to another aircraft. The IP took the radios and rebuilt the outstanding requests in the standard format.",
+        "1": "SP, due to adding verbiage that is not required to the routine calls, did not keep the transmissions to the information needed and nothing more, with the result that four calls carried meaningless phrases and the padding was dropped only after the IP directed it twice. Call content was correct once the extra wording was removed and no transmission had to be repeated by the controller. Brevity remained at the limit of the acceptable standard for the rest of the sortie.",
+        "2": "SP, due to habitual use of 'checking in' when establishing on a new frequency, did not open the exchange with the information needed and nothing more, with the result that the first two calls carried unrequired verbiage before SP dropped the phrase unaided. The remaining initial calls were transmitted in the standard format. No prompting from the IP was required and no airtime was lost on the busier frequencies.",
+        "3": "SP transmitted only the information the controllers needed, nothing more and nothing less, in the format expected. No call carried meaningless phrases such as 'with you', 'at this time' or 'be advised'. Frequency airtime was used efficiently in every phase of the sortie.",
+        "4": "SP kept every transmission to the minimum content that carried the message, with no unrequired verbiage in any call including the non-routine requests. Even on the most congested frequency each call was tight enough to be accepted by the controller on first transmission. Brevity was achieved without the loss of any required element.",
+        "marginal": "SP kept the transmissions brief within standards, but on the busier frequencies a filler phrase reappeared at the start of the longer requests. The trend is toward padding whenever the call takes more than a few seconds to build. SP is expected to compose the request before keying the microphone so that no filler is needed."
+      }
+    },
+    {
+      "id": "contact-37-tm02",
+      "label": "COMPLETENESS OF REQUESTS AND CONTROLLER QUERIES",
+      "mif_row": null,
+      "source": "technique:1.18 Radio Procedures",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, due to omitting information the controller needed from the request, did not provide the elements in the format expected, with the result that four transmissions were followed by a controller query for the missing position or intention and one request was denied for lack of detail. Three repeat exchanges consumed airtime on a busy frequency. The IP took the radios to complete the request.",
+        "1": "SP, due to omitting needed information from the requests, did not give the controller the elements expected on the first transmission, with the result that two requests were completed only after a controller query and the missing element was supplied by the IP from the rear cockpit. No request was denied and each exchange was closed on the second transmission. Completeness of the calls remained at the limit of the acceptable standard.",
+        "2": "SP, due to omitting the location element from the request for return to base, did not give the controller the information needed on the first transmission, with the result that one query was generated and SP supplied the area and altitude within about 5 seconds. SP recognized the omission before the controller had finished the query. The later requests carried agency, call sign, location and request without prompting.",
+        "3": "SP provided the controllers with the information needed on every request, nothing missing and nothing surplus. No transmission generated a query for information that should have been included. Each exchange was closed on the first transmission.",
+        "4": "SP built every request complete on the first transmission, including the non-routine ones, so that no controller query for missing information was generated at any point in the sortie. Location, intention and any restriction were carried in the call as required. The exchanges consumed the minimum airtime the traffic allowed.",
+        "marginal": "SP supplied complete requests within standards, but on the non-routine calls one element was recovered only after a pause inside the transmission. The trend is toward assembling the content while transmitting rather than before. SP is expected to fix all four elements of the call before keying so that no controller query is invited."
+      }
+    },
+    {
+      "id": "contact-37-tm03",
+      "label": "ATTENTION-GETTING CALL BEFORE A DETAILED REQUEST",
+      "mif_row": null,
+      "source": "technique:1.18 Radio Procedures",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to making a long detailed request without first getting the controller's attention, did not split the exchange into an attention call and the request that follows the acknowledgement, with the result that the full request was repeated three times on a congested frequency and the controller twice replied that the transmission had not been received. Confusion over which aircraft was requesting delayed the clearance by about two minutes. The IP took the radios and re-established the exchange in two steps.",
+        "1": "SP, due to transmitting the full detail before the controller had acknowledged the call sign, did not get the controller's attention first, with the result that two long requests had to be repeated in full and the two-step format was adopted only after the IP directed it. Both requests were then accepted on the first attempt. Handling of the detailed requests remained at the limit of the acceptable standard.",
+        "2": "SP, due to starting the detail in the same transmission as the initial call, did not wait for the controller to acknowledge before stating the request, with the result that the first request was repeated once and SP reverted to the two-step format unaided within about 10 seconds. No prompting from the IP was required. Every later detailed request was passed in two steps.",
+        "3": "SP obtained the controller's attention with a short call giving the agency and call sign, then stated the request after the acknowledgement. Every detailed request was passed in two steps and was accepted on the first attempt. No request generated confusion or a repetition on the frequency.",
+        "4": "SP separated the attention call from the detail on every non-routine request, including a multi-part request on a congested frequency, and no exchange required a repetition. The detail was stated only after the acknowledgement and at a rate the controller took on the first pass. Frequency congestion was not increased by any transmission SP made.",
+        "marginal": "SP used the two-step format within standards, but the detail occasionally began before the controller's acknowledgement was complete. The trend is toward compressing the two steps into one whenever the frequency sounds quiet. SP is expected to hold the detail until the acknowledgement has finished on every detailed request."
+      }
+    },
+    {
+      "id": "contact-37-tm04",
+      "label": "TRANSMISSION TIMING AGAINST OTHER AIRCRAFT AND CRITICAL PHASES",
+      "mif_row": null,
+      "source": "technique:1.18 Radio Procedures",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to keying the microphone while another aircraft was in a critical phase of flight, did not anticipate the replies to the controller's transmissions, with the result that an aircraft in the flare was transmitted over and a read-back from a third aircraft was blocked twice. The controller directed all stations to stand by. The IP took the radios for the following exchanges.",
+        "1": "SP, due to failure to anticipate the other party's reply to the controller, did not withhold the transmission until the exchange had closed, with the result that one call was keyed across an aircraft on short final and SP transmitted again only after the IP directed that the exchange be allowed to finish. No clearance had to be reissued. Transmission timing remained at the limit of the acceptable standard.",
+        "2": "SP, due to treating the pause after the controller's instruction as the end of the exchange, did not allow for the read-back that was still to come, with the result that one transmission overlapped the start of another aircraft's read-back and the microphone was released within about 2 seconds. SP then waited for the exchange to close before transmitting again. No further overlap occurred in the sortie.",
+        "3": "SP timed every transmission so that no other aircraft was transmitted over. Calls were withheld while another aircraft was in a critical phase of flight and while a reply to the controller was still outstanding. No exchange on the frequency was interrupted by SP.",
+        "4": "SP anticipated the reply to every controller transmission and used only the gaps that remained, so that no aircraft was blocked at any point in the sortie. Calls were deliberately withheld while other aircraft were in the flare or on short final. The timing of the transmissions matched the traffic picture throughout.",
+        "marginal": "SP timed the transmissions within standards, but the interval left after another aircraft's call was shorter whenever SP had a request pending. The trend is toward keying as soon as the frequency sounds clear rather than after the exchange has closed. SP is expected to allow for the reply that follows every instruction before transmitting."
+      }
+    },
+    {
+      "id": "contact-37-tm05",
+      "label": "PF AND PNF RESPONSIBILITY FOR RADIO CALLS",
+      "mif_row": null,
+      "source": "technique:1.18 Radio Procedures",
+      "hf_concept": "hf-role-assignment",
+      "texts": {
+        "0": "SP, due to transmitting as pilot not flying without notifying the pilot flying, did not observe the division of radio responsibility, with the result that three exchanges were completed unannounced and one of them accepted a runway change the pilot flying was unaware of. The aircraft continued toward the original runway until the IP queried the exchange and intervened. Two calls that belonged to the pilot flying were left for the IP to make.",
+        "1": "SP, due to transmitting as pilot not flying without first notifying the pilot flying, did not keep the other cockpit informed of what had been passed, with the result that two exchanges went unannounced and were reconstructed only after the IP asked what had been agreed. No clearance that conflicted with the briefed profile was accepted. Coordination of the radio work remained at the limit of the acceptable standard.",
+        "2": "SP, due to answering a call as pilot not flying before announcing the intention, did not notify the pilot flying prior to the transmission, with the result that one short exchange went unannounced and SP passed the content across within about 5 seconds of releasing the microphone. Aircraft control was not transferred at any point. Every later transmission was announced before it was made.",
+        "3": "SP kept the radio calls with the pilot flying and, when transmitting as pilot not flying, notified the pilot flying beforehand and passed the content afterwards. No transmission was made without the other cockpit knowing. Aircraft control was never transferred for the sake of a radio call.",
+        "4": "SP applied the pilot flying and pilot not flying division of the radio work precisely for the whole sortie, notifying the other cockpit before every transmission made as pilot not flying and confirming the content immediately afterwards. No call was left unaccounted for between the two cockpits. No transfer of aircraft control was needed for any transmission.",
+        "marginal": "SP observed the division of radio responsibility within standards, but on the shorter replies the notification to the pilot flying came after the microphone had been keyed. The trend is toward announcing the transmission only once it is already under way. SP is expected to notify the pilot flying before keying, whatever the length of the call."
+      }
+    },
+    {
+      "id": "contact-37-tm06",
+      "label": "CLARIFICATION OF UNCERTAIN PHRASEOLOGY IN PLAIN LANGUAGE",
+      "mif_row": null,
+      "source": "technique:1.18 Radio Procedures",
+      "hf_concept": "hf-plain-language-communication",
+      "texts": {
+        "0": "SP, due to acknowledging a standard phrase whose meaning was not understood instead of clarifying it in plain language, did not establish what had been required before acting, with the result that a conditional instruction was flown as an unconditional one and the aircraft left the assigned area before the IP intervened. The controller reissued the instruction and queried the aircraft's intentions. Two further phrases were acknowledged without comprehension in the same exchange.",
+        "1": "SP, due to reluctance to ask the controller for clarification of an unfamiliar standard phrase, did not use plain language to establish its meaning, with the result that the exchange stalled for about 20 seconds and the meaning was supplied by the IP rather than requested from the controller. No incorrect action was taken on the aircraft. Handling of the unfamiliar phraseology remained at the limit of the acceptable standard.",
+        "2": "SP, due to hesitation over an unfamiliar term in a traffic advisory, did not query it as soon as the doubt arose, with the result that the acknowledgement was delayed by about 10 seconds before SP requested clarification in plain language unaided. The controller restated the advisory and SP complied correctly. No further phrase was left unresolved.",
+        "3": "SP acted only on instructions whose meaning was clear. Where a standard phrase was not certain, SP requested clarification from the controller in plain language and confirmed the meaning before complying. No instruction was acted on from assumption.",
+        "4": "SP resolved every uncertainty over the controllers' phraseology at the moment it arose, using plain language that closed the point in a single exchange. No instruction was acknowledged before its meaning had been established and no phrase had to be queried twice. Comprehension was verified without adding avoidable airtime to the frequency.",
+        "marginal": "SP verified the meaning of the controllers' instructions within standards, but on one non-routine phrase the clarification was requested only after a long pause. The trend is toward waiting to see whether the meaning becomes clear rather than asking for it. SP is expected to ask in plain language as soon as a phrase is in doubt."
+      }
+    },
+    {
+      "id": "contact-37-tm07",
+      "label": "TAXI INSTRUCTIONS ON THE ASSIGNED GROUND CHANNEL",
+      "mif_row": null,
+      "source": "technique:3.8 RADIO PROCEDURES",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to not listening carefully to the taxi instructions passed on Ch-2, did not take in the routing as it was transmitted, with the result that the instruction had to be requested from the controller twice and one hold short element was missed altogether. The aircraft was turned toward the wrong taxiway before the IP intervened. The IP took the radios for the remainder of the ground phase.",
+        "1": "SP, due to a divided listening watch while the taxi instructions were being passed on Ch-2, did not take in the full routing as transmitted, with the result that one element had to be requested from the controller again after the IP pointed out that the instruction had not been captured. The aircraft was not moved until the routing was complete. Handling of the ground frequency remained at the limit of the acceptable standard.",
+        "2": "SP, due to selecting Ch-2 after the cockpit checks rather than before requesting taxi, did not have the ground frequency established when the instructions were expected, with the result that the request was made about 15 seconds later than planned and SP corrected the channel selection unaided. The instructions were then taken complete on the first transmission. No prompting from the IP was required.",
+        "3": "SP contacted the ground station on Ch-2 for the taxi instructions and listened carefully to the transmission. The routing was taken complete on the first pass and no element had to be requested again. The exchange on the ground frequency was closed without repetition.",
+        "4": "SP had Ch-2 selected and the listening watch established before the taxi request was made, and took the complete routing from a single transmission including the conditional elements. No part of the instruction was requested again and none was queried by the controller. The ground exchange consumed the minimum airtime.",
+        "marginal": "SP handled the taxi instructions within standards, but attention shifted to the cockpit checks while the routing was still being transmitted. The trend is toward listening only to the first elements of a long ground instruction. SP is expected to hold the cockpit tasks until the taxi instruction has been passed in full."
+      }
     }
   ]
 }

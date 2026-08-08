@@ -3,9 +3,14 @@
   "item_name": "AIRSPEED CHANGES",
   "category": "instrument",
   "schema": "v2-trunk",
-  "mif_numbers": [6],
+  "mif_numbers": [
+    6
+  ],
   "mif_rows": [
-    { "sn": 6, "row_name": "Airspeed Changes" }
+    {
+      "sn": 6,
+      "row_name": "Airspeed Changes"
+    }
   ],
   "error_modes": [
     {
@@ -156,6 +161,96 @@
         "3": "SP executed the airspeed changes with full regard to the limiting speeds of the Flight Manual and kept an adequate margin to every limit. Rates of acceleration and deceleration were controlled so that no target was approached from an unsafe condition. All operating limits were respected throughout.",
         "4": "SP managed each transition with a clear margin to every published limit and stated the relevant limiting speed when the profile approached it. Rates of change were selected so that the aircraft could be stabilized at the commanded airspeed under complete control. Operating limits were never a factor at any point in the sortie.",
         "marginal": "SP respected every operating limit, but the decelerations were allowed to run close to the commanded airspeed before power was added, leaving a smaller margin than the technique intends. The same pattern appeared on each deceleration. SP is expected to arrest the rate of change earlier so that the margin to the lower speeds is preserved."
+      }
+    },
+    {
+      "id": "instrument-06-tm01",
+      "label": "Power lead beyond the required setting and the reverse power schedule",
+      "mif_row": 6,
+      "source": "technique:7.9 AIRSPEED CHANGES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the power being advanced only to the setting estimated to maintain the new airspeed instead of beyond it, did not produce a positive acceleration and then tried to save the change with one large late throttle movement. The airspeed ran about 28 knots past the target, beyond the 20 knot limit, and continued to diverge. IP had to take the throttle and stabilize the aircraft on the commanded airspeed.",
+        "1": "SP never advanced the power beyond the setting required for the new airspeed, so every acceleration was drawn out and finished with a rushed correction. The airspeed error reached 20 knots, at the limit of the standard, before the target was captured, and the power lead was used only after IP called for it. The same flat power schedule was repeated on the decelerations, with an opposite but equally late throttle movement.",
+        "2": "SP applied a power lead that was too small for the size of the commanded change, so the acceleration was slow and the speed hung about 14 knots below the target. SP recognized the shortfall on the airspeed indicator, added the further power and then reduced it to the estimated setting as the target came up, without IP intervention. The deviation stayed between the 10 and 20 knot bands, but the first throttle movement should already have gone beyond the final setting.",
+        "3": "SP advanced the power beyond the setting required for the new airspeed and reduced it to the estimated setting as the target was approached, using the opposite schedule for the decelerations. Every commanded airspeed was captured and held within 10 knots. The changes were positive and deliberate, with no chasing of the airspeed indicator.",
+        "4": "SP flew each change with one lead beyond the final setting and one reduction to the estimated setting, and the airspeed settled within about 3 knots of the target. The decelerations were flown with the mirror image of the same schedule and needed no further throttle movement. No transition showed any overshoot or hesitation.",
+        "marginal": "SP used the power lead on every change but returned the throttle to the estimated setting slightly late, so each capture was reached from about 8 knots past the target before the speed settled. The changes stayed inside the standard, yet the pattern was identical on every acceleration and deceleration. SP is expected to start reducing toward the estimated setting earlier so that the airspeed arrives on target instead of through it."
+      }
+    },
+    {
+      "id": "instrument-06-tm02",
+      "label": "Sense and size of rudder trim as torque changes",
+      "mif_row": 6,
+      "source": "technique:7.9 AIRSPEED CHANGES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to rudder trim being wound in the wrong sense for the torque change, applied nose left rudder trim as power was advanced and did not balance the aircraft. The out of balance condition was reinforced rather than removed, the heading diverged about 17 degrees past the 10 degree limit and the ball remained fully displaced. IP had to intervene on the rudder and re-set the trim correctly.",
+        "1": "SP wound the rudder trim in the correct sense but far short of what the torque change required, so a heavy foot pressure was carried through every acceleration. Heading errors reached 10 degrees, at the limit of the standard, and were reduced only after IP called for nose right rudder trim with the power increase. The ball was never fully centered at any point in the sequence.",
+        "2": "SP applied nose right rudder trim only after the acceleration was complete, so the aircraft flew the transition out of balance and the heading drifted about 7 degrees. SP noticed the displaced ball, wound the trim in the correct sense and regained the assigned heading with no IP intervention. The trim should have moved with the throttle rather than after the new airspeed had settled.",
+        "3": "SP wound nose right rudder trim as torque increased and nose left rudder trim as torque reduced, keeping the ball centered through each change. Heading was held within 5 degrees on every acceleration and deceleration. No rudder pressure remained when the feet were relaxed.",
+        "4": "SP matched the rudder trim exactly to each torque change, in the correct sense and in the correct amount, so the ball never left center. Heading held within about 1 degree throughout the sequence. At no stage was any residual pedal force required to keep the aircraft in balance.",
+        "marginal": "SP always trimmed the rudder in the correct sense but consistently stopped short of the amount the torque change required, so a light pedal force was carried in the stabilized condition. Heading stayed inside the standard, with errors near 3 degrees held by foot pressure rather than by trim. SP is expected to complete the rudder trim so that the aircraft is in balance with the feet off the pedals."
+      }
+    },
+    {
+      "id": "instrument-06-tm03",
+      "label": "Use of the speed brake for rapid airspeed reductions",
+      "mif_row": 6,
+      "source": "technique:7.9 AIRSPEED CHANGES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the speed brake not being used for a rapid airspeed reduction, attempted to lose a large amount of speed on power alone and did not achieve the commanded value. The aircraft was still about 26 knots fast, beyond the 20 knot limit, with the power already at the bottom of the range and the deceleration flat. IP had to extend the speed brake and take over the change.",
+        "1": "SP left the speed brake stowed for a reduction that was too large for a power change alone and traded the excess speed against altitude instead. The airspeed was still 20 knots high, at the limit of the standard, when the target should have been captured, and the speed brake was extended only after IP directed it. No large reduction in the sequence was planned with the speed brake in mind.",
+        "2": "SP delayed extending the speed brake until it was clear that the deceleration on power alone had stalled, so the airspeed hung about 13 knots above the commanded value. SP then extended the board, captured the target and stowed it again without IP intervention. The decision to use the speed brake should have been taken when the size of the reduction was commanded, not after the attempt had failed.",
+        "3": "SP used the speed brake whenever the commanded reduction was too large to be flown on power alone and stowed it once the rate of deceleration was correct. Every commanded airspeed was captured within 10 knots and the aircraft remained stable through the change. Power and speed brake were used together rather than one after the other.",
+        "4": "SP judged the size of every reduction correctly and extended the speed brake only where the technique calls for it, with the power reduced at the same moment. Each commanded airspeed was captured within about 3 knots and held. No reduction required a second attempt or an unplanned board extension.",
+        "marginal": "SP reached every commanded airspeed inside the standard, but the speed brake was extended a little later than the size of the reduction warranted, so the deceleration rate had to be made up at the end of the change. Captures were consistently reached from about 8 knots high after a rushed final phase. SP is expected to decide on the speed brake as the change is commanded so that the deceleration is even from the start."
+      }
+    },
+    {
+      "id": "instrument-06-tm04",
+      "label": "Speed brake retraction timing near the target airspeed",
+      "mif_row": 6,
+      "source": "technique:7.9 AIRSPEED CHANGES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to late speed brake retraction near the target airspeed, did not arrest the deceleration and ran about 30 knots through the commanded value, beyond the 20 knot limit. The board was still extended and the power still low while the airspeed continued to decay. IP had to retract the speed brake and add power to recover the commanded airspeed.",
+        "1": "SP began retracting the speed brake only after the airspeed indicator had already reached the commanded value, so the deceleration continued past it. The overshoot reached 20 knots, at the limit of the standard, and the target was regained only after IP called for the board and the power. The same late retraction was repeated on the following reduction.",
+        "2": "SP started the retraction at the target rather than in anticipation of it, and the airspeed ran about 14 knots through the commanded value. SP recognized the overshoot at once, stowed the board fully and re-set the power to regain the target with no IP intervention. The retraction should have been led so that the deceleration stopped on the commanded airspeed.",
+        "3": "SP retracted the speed brake before reaching the commanded airspeed so that the deceleration was arrested on the target. Any overshoot stayed within 10 knots and the power was set to the value estimated to hold the new speed as the board came in. The transition from decelerating to stabilized flight was smooth.",
+        "4": "SP led the speed brake retraction so precisely that the airspeed settled on the commanded value with an overshoot of about 2 knots. Board retraction and power setting were coordinated as a single action. The airspeed indicator stopped on the target without any recovery being needed.",
+        "marginal": "SP kept every overshoot inside the standard, but each retraction was a fraction late and the airspeed ran about 8 knots through the target before being brought back. The pattern was the same on every reduction flown with the board. SP is expected to lead the retraction ahead of the target so that the deceleration stops on the commanded airspeed rather than past it."
+      }
+    },
+    {
+      "id": "instrument-06-tm05",
+      "label": "Trim change and disorientation potential with speed brake use",
+      "mif_row": 6,
+      "source": "technique:7.9 AIRSPEED CHANGES",
+      "hf_concept": "hf-spatial-disorientation",
+      "texts": {
+        "0": "SP, due to the trim change produced by the speed brake not being anticipated, did not re-trim as the board was extended and let the resulting pitch change develop. The altitude excursion reached about 380 feet, beyond the 300 foot limit, and SP began to fly the sensations of the deceleration instead of the attitude indicator. IP had to take the controls and re-establish level flight.",
+        "1": "SP made no trim input at all with the extension and retraction of the speed brake, so every board movement started a pitch change and a growing control force. Altitude reached the 300 foot limit and was recovered only after IP directed SP back to the attitude indicator. The false sensations produced by the rapid deceleration were not countered by a disciplined instrument scan.",
+        "2": "SP re-trimmed only after the speed brake was fully extended, so the pitch change went uncorrected for several seconds and altitude drifted about 190 feet. SP returned to the attitude indicator, corrected the pitch and trimmed out the force without IP intervention. The trim should have been applied while the board was moving, when the change of force is largest.",
+        "3": "SP anticipated the trim change caused by the speed brake and applied it as the board was extended and retracted. Altitude stayed within 150 feet and the attitude indicator remained the centre of the cross-check through every deceleration. No disorientation developed at any point.",
+        "4": "SP trimmed through every board movement so accurately that no pitch excursion was visible and altitude held within about 30 feet. The attitude indicator was believed and flown throughout the decelerations. SP remained fully oriented and control forces stayed neutral in every configuration.",
+        "marginal": "SP stayed inside the standards, but the trim was applied only after each pitch change had begun, leaving deviations near 130 feet whenever the speed brake was used. The cross-check also narrowed toward the airspeed indicator during the rapid decelerations. SP is expected to trim with the board and keep the attitude indicator central to the cross-check, since both trim demand and disorientation potential increase with speed brake use."
+      }
+    },
+    {
+      "id": "instrument-06-tm06",
+      "label": "Coarse trim through the change and fine trim at the target airspeed",
+      "mif_row": 6,
+      "source": "technique:7.9 AIRSPEED CHANGES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an attempt to fine tune the trim while the airspeed was still changing, did not use the coarse trim the technique calls for and chased the trim continuously through the transition. Attention stayed on the trim switch, the aircraft was never in trim and altitude departed by about 350 feet, beyond the 300 foot limit. IP had to take the controls and re-trim the aircraft.",
+        "1": "SP left the aircraft on the coarse trim set at the start of the change and never fine tuned it for the target airspeed, so a steady out of trim force was carried into the stabilized condition. Altitude wandered to the 300 foot limit and was corrected only after IP prompted SP to trim. The aircraft could not be released at any commanded airspeed without an immediate change of parameters.",
+        "2": "SP trimmed once at the beginning of the change and then left the trim alone, so the residual force grew as the speed built and altitude drifted about 220 feet. SP detected the drift, trimmed coarsely again and fine tuned at the target airspeed without IP intervention. Trim should have been worked through the whole transition rather than set once at the start.",
+        "3": "SP trimmed coarsely while the airspeed was changing and fine tuned once the target airspeed was reached. Altitude was held within 150 feet through every change and the aircraft was in trim on stabilization. Control pressures were relieved rather than used to fly the aircraft.",
+        "4": "SP used coarse trim through each transition and a precise fine adjustment at the target, so the aircraft was in trim in every axis on reaching the commanded airspeed. Altitude varied by no more than about 30 feet across the sequence. The stick could be released at any stabilized point with no change of parameters.",
+        "marginal": "SP held every parameter inside the standard, but the fine adjustment at the target airspeed was consistently left until the next change was commanded, so a small residual force was carried in each stabilized condition. Altitude errors clustered near 130 feet and always appeared just after the target was captured. SP is expected to complete the fine trim as soon as the target airspeed is reached so that the aircraft is left fully in trim."
       }
     }
   ]

@@ -3,9 +3,14 @@
   "item_name": "LOCALIZER APPROACH",
   "category": "instrument",
   "schema": "v2-trunk",
-  "mif_numbers": [22],
+  "mif_numbers": [
+    22
+  ],
   "mif_rows": [
-    {"sn": 22, "row_name": "Localizer Approach"}
+    {
+      "sn": 22,
+      "row_name": "Localizer Approach"
+    }
   ],
   "error_modes": [
     {
@@ -126,6 +131,111 @@
         "3": "SP made a timely decision at the MAP, initiated the missed approach at the published point with the correct pitch, power and configuration sequence, and did not descend below MDA. The published missed approach routing and altitude were followed accurately. No prompting was required.",
         "4": "SP identified the MAP precisely and transitioned to the missed approach with negligible delay, establishing the climb and configuration in one smooth sequence. The published missed approach was flown accurately with the aircraft never below MDA. The decision and execution were consistently sound.",
         "marginal": "SP decided at the MAP within standards, but the decision was consistently made at the last available moment and the go-around initiation was abrupt. The trend is a bias toward continuing rather than an unwillingness to go around. SP is expected to assess the references earlier and commit to the missed approach decision at the MAP without hesitation."
+      }
+    },
+    {
+      "id": "instrument-22-tm01",
+      "label": "Over-controlling in heading (corrections outside the heading bug width)",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to course corrections made well outside the area beneath the heading bug, over-controlled the localizer instead of damping each deviation. The corrections were reversed late and a divergent S-turn developed, taking CDI displacement past 2 dots with the trend still increasing. IP took the controls to re-establish the final approach course before the aircraft was returned to SP.",
+        "1": "SP, due to heading changes larger than the 5 degree limit taught for course corrections, answered every localizer deviation with an over-correction. CDI oscillated out to the 2 dot limit and remained there through two reversals until IP verbally called a specific heading to fly. SP flew the called heading and the needle recentred, with no IP control input required.",
+        "2": "SP, due to an initial correction taken outside the width of the heading bug, over-shot the final approach course and had to reverse the correction. CDI reached about 1.5 dots before SP reduced the input to a small specific heading change and recentred the needle. The correction was recognized and applied in time, without prompting.",
+        "3": "SP kept each course correction inside the 5 degree band beneath the heading bug and damped every localizer deviation on the first attempt. CDI stayed within 1 dot from the intercept to the MAP, with no reversal of correction and no oscillation. Course control required no prompting.",
+        "4": "SP corrected the localizer with heading changes of two to three degrees, well inside the heading bug width, removing each input before the needle passed centre. CDI remained essentially centred for the whole final segment and the aircraft tracked the course with negligible displacement. Heading control was precise and entirely unprompted.",
+        "marginal": "SP used corrections at the upper edge of the 5 degree band and removed them slightly late, so each deviation was answered by a small over-shoot. CDI stayed just inside 1 dot, but the reversals were growing in size as the aircraft approached MDA. Tolerance was held with a developing tendency to over-control."
+      }
+    },
+    {
+      "id": "instrument-22-tm02",
+      "label": "Drift correction not calculated and heading bug not set for the final",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to a wind corrected heading that was never calculated with the 60 to 1 rule and a heading bug left off the final approach course, flew the inbound course with no allowance for drift. The aircraft was carried downwind past 2 dots of CDI displacement and the trend continued unchecked to the MDA segment. IP intervened on the controls to regain the localizer course.",
+        "1": "SP, due to drift that was not determined either from the known winds or by comparing GPS track with aircraft heading, did not apply a wind correction on the final. CDI displacement built steadily downwind and stabilized at the 2 dot limit until IP verbally passed the correction to apply. The heading was then flown by SP without IP control input.",
+        "2": "SP, due to a drift calculation completed only after the intercept, initially flew the final on the raw inbound course. CDI opened to about 1.5 dots downwind before SP compared GPS track with heading, set the corrected value on the heading bug and recentred the needle. The correction was self-initiated and completed in time.",
+        "3": "SP calculated the estimated drift from the known winds and marked the wind corrected heading on the heading bug before the final approach course intercept. The bug was then used as a reference for the small corrections required and CDI stayed within 1 dot to the MAP. No prompting was required.",
+        "4": "SP determined the drift correction before the intercept, set the wind corrected heading on the bug and flew it as the primary heading reference. The localizer needle showed only momentary displacement in the gusts and returned to centre without a heading change. Drift management was accurate and unprompted.",
+        "marginal": "SP calculated the drift but applied slightly less correction than the wind required, so the aircraft drifted slowly to one side of the course. CDI remained just inside 1 dot but was moving consistently in the same direction with each mile flown. Tolerance was maintained with a trend that would have opened further beyond the MDA point."
+      }
+    },
+    {
+      "id": "instrument-22-tm03",
+      "label": "Pitch changes larger than 2 degrees for descent corrections",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to pitch inputs well beyond the 2 degree limit taught for descent corrections, chased the required profile with vertical rates far above the 400 feet per minute reference. The aircraft went through the published MDA during one of the corrections and the recovery was not initiated by SP. IP intervened on the controls to arrest the descent and re-establish the aircraft at MDA.",
+        "1": "SP, due to descent corrections made with pitch changes greater than 2 degrees, produced vertical rates well above the 400 feet per minute reference and over-shot each correction. Altitude oscillated and the aircraft settled 200 feet above the published MDA until IP verbally called the pitch and power required. SP flew the correction with no IP control input.",
+        "2": "SP, due to a first descent correction taken with more than 2 degrees of pitch, generated a rate that over-shot the intended profile. The aircraft passed about 150 feet above the target altitude before SP reduced the pitch input to the taught limit and stabilized the descent. The correction was recognized and applied without prompting.",
+        "3": "SP limited every descent correction to approximately 2 degrees of pitch, keeping the resulting rate near the 400 feet per minute reference. The profile was flown smoothly and the aircraft was levelled within 100 feet above the published MDA with no descent below it. No prompting was required.",
+        "4": "SP made only small pitch corrections, each well inside the 2 degree limit, so the descent rate changed gradually and the profile was flown without over-shoot. The level-off at MDA was accurate with negligible altitude excursion and no oscillation. Vertical control was precise and unprompted.",
+        "marginal": "SP corrected the descent with pitch inputs at the top of the 2 degree band and held them slightly long, so each correction over-shot marginally. Altitude remained within 100 feet above MDA but the excursions grew with every correction cycle. Tolerance was held with a developing tendency to chase the profile."
+      }
+    },
+    {
+      "id": "instrument-22-tm04",
+      "label": "Large power corrections on the final approach",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to large power corrections applied when only small adjustments from the final approach setting were required, drove the airspeed through repeated over-shoots in both directions. Airspeed excursions exceeded plus 15 and minus 10 knots from the computed final approach airspeed and the aircraft was not stabilized before MDA. IP intervened on the power lever to re-establish the approach airspeed.",
+        "1": "SP, due to power corrections far larger than the deviation required, allowed the airspeed to over-shoot each time the throttle was moved. Airspeed reached the plus 15 knot limit from the computed final approach airspeed and stayed there until IP verbally called the torque setting for the non-precision final. The setting was made by SP with no IP control input.",
+        "2": "SP, due to a single oversized power correction after the FAF, over-shot the computed final approach airspeed. The excursion reached about 12 knots before SP returned to the reference torque for the configuration and allowed the speed to settle. The correction was self-initiated and completed before the profile was affected.",
+        "3": "SP set the power for the configured non-precision final and used only small increments to hold the computed final approach airspeed. Airspeed remained within plus 10 and minus 5 knots from the FAF to the MAP with no over-shoot after any adjustment. No prompting was required.",
+        "4": "SP established the reference torque for the final approach configuration and thereafter used barely perceptible power adjustments. Airspeed held the computed final approach value with negligible variation through the descent and level segment. Power management was smooth and unprompted.",
+        "marginal": "SP used power corrections slightly larger than the deviation called for, so the airspeed over-shot marginally after each adjustment. The speed remained within plus 10 and minus 5 knots of the computed final approach airspeed but the swings increased with every correction. Tolerance was maintained with a trend towards over-controlling the power."
+      }
+    },
+    {
+      "id": "instrument-22-tm05",
+      "label": "Airspeed and trim not stabilized before the FAF descent",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to configuration completed inside the 2 to 3 NM point before the FAF, began the descent with the airspeed still decaying and the aircraft out of trim. The residual control forces were not held and both airspeed and altitude diverged, with the speed passing the minus 10 knot limit while the descent profile was lost. IP intervened on the controls to re-trim and stabilize the aircraft.",
+        "1": "SP, due to gear and flap selection made too late to allow stabilization of airspeed and trim before the FAF, started the descent out of trim. The control forces were fought rather than trimmed out and the airspeed settled at the plus 15 knot limit of the computed final approach airspeed until IP verbally called for the aircraft to be trimmed. SP re-trimmed with no IP control input.",
+        "2": "SP, due to a configuration change completed close to the FAF, entered the descent with the trim not fully re-set. Airspeed wandered by about 12 knots from the computed final approach airspeed before SP trimmed off the control forces and re-established the reference speed. The correction was made in time and without prompting.",
+        "3": "SP configured the aircraft two to three miles before the FAF so that airspeed and trim were stabilized prior to the descent. The final was flown with the aircraft in trim and airspeed held within plus 10 and minus 5 knots of the computed final approach airspeed. No prompting was required.",
+        "4": "SP completed the configuration and the Before-Landing Checklist early, trimmed the aircraft at the final approach airspeed and entered the descent hands-light. Airspeed and altitude showed negligible variation through the segment to MDA. Stabilization was accurate and entirely unprompted.",
+        "marginal": "SP configured only just before the 2 to 3 NM reference point and entered the descent with the trim not quite complete. Airspeed stayed within plus 10 and minus 5 knots of the computed final approach airspeed but required continuous stick pressure to hold, and the deviations grew towards MDA. Tolerance was held with a trend driven by the residual out-of-trim condition."
+      }
+    },
+    {
+      "id": "instrument-22-tm06",
+      "label": "Descent gradient and rate from the FAF to MDA",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a descent gradient that was not calculated for the segment from the FAF to MDA, used a rate unrelated to the distance available. The aircraft was still descending when the reference rate for the non-precision final was exceeded and it went through the published MDA before the MAP. IP intervened on the controls to stop the descent and re-establish the aircraft at the minimum altitude.",
+        "1": "SP, due to the descent gradient not being computed before the FAF, set a rate well below the reference for the non-precision final and arrived late on profile. The aircraft was still 200 feet above the published MDA approaching the MAP and levelled only after IP verbally called the rate required. The correction was flown by SP with no IP control input.",
+        "2": "SP, due to a descent rate selected without reference to the calculated gradient, descended shallower than the profile required after the FAF. The aircraft was about 150 feet high on profile before SP increased the rate towards the non-precision final reference and regained the intended descent. The correction was recognized and made in time.",
+        "3": "SP calculated the descent gradient for the segment inside the FAF and flew a rate close to the non-precision final reference at the torque setting for the configuration. MDA was reached in time to identify the MAP and the aircraft was levelled within 100 feet above the published minimum. No prompting was required.",
+        "4": "SP planned the descent gradient before the FAF and flew the profile so that the aircraft arrived at MDA with adequate margin before the MAP. The rate was steady, the level-off was accurate and altitude excursions were negligible. Descent management was precise and unprompted.",
+        "marginal": "SP flew a rate marginally shallower than the calculated gradient required, so the profile was regained only close to the MAP. Altitude stayed within 100 feet above the published MDA but the aircraft was consistently high on the intended descent path. Tolerance was held with a trend towards arriving late at the minimum altitude."
+      }
+    },
+    {
+      "id": "instrument-22-tm07",
+      "label": "Configuration and airspeed not adjusted for crosswind or gusty conditions",
+      "mif_row": null,
+      "source": "technique:7.27 FINAL APPROACH",
+      "hf_concept": "hf-environmental-factors",
+      "texts": {
+        "0": "SP, due to the reported gusty crosswind not being answered with the appropriate flap setting and an increased approach airspeed, flew the final at the basic configuration speed. The gusts produced excursions beyond plus 15 and minus 10 knots of the computed final approach airspeed together with course displacement past 2 dots. IP intervened on the controls to stabilize the approach.",
+        "1": "SP, due to the approach airspeed not being increased as required for the gusty conditions, allowed the speed to be driven by the gusts rather than by the power setting. Airspeed reached the minus 10 knot limit of the computed final approach airspeed on one gust cycle and was recovered only after IP verbally called for a higher target speed. No IP control input was required.",
+        "2": "SP, due to a gust allowance added late in the final segment, initially flew the basic approach airspeed in shifting wind. The speed varied by about 12 knots from the computed final approach airspeed before SP increased the target value and set the power accordingly. The adjustment was self-initiated and stabilized the approach.",
+        "3": "SP selected the appropriate flap setting for the reported crosswind and flew the final with the airspeed increased as required for the gusts. Airspeed stayed within plus 10 and minus 5 knots of the computed final approach airspeed and CDI within 1 dot to the MAP. No prompting was required.",
+        "4": "SP briefed the gusty crosswind, configured with the appropriate flap setting and added the required increment to the approach airspeed before the FAF. Speed and course excursions in the gusts were negligible and the aircraft remained stable to MDA. The adjustment was made accurately and without prompting.",
+        "marginal": "SP applied a gust allowance slightly smaller than the reported conditions justified, so each gust cycle produced a noticeable speed decay. Airspeed remained within plus 10 and minus 5 knots of the computed final approach airspeed but the excursions increased as the aircraft descended. Tolerance was maintained with a trend towards the lower limit."
       }
     }
   ]
