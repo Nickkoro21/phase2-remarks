@@ -1,0 +1,206 @@
+{
+  "category": "vfr_navigation",
+  "sections": {
+    "N4101-02": {
+      "page_pdf": 225,
+      "maneuvers": [
+        {
+          "name": "Instrument Approach during RTB (conditional: «If it is feasible»)",
+          "min_number": 1,
+          "per": "section",
+          "verbatim": "If it is feasible, one instrument approach will be flown during RTB at least in one sortie in N41XX Section.",
+          "mif_sn": 15,
+          "mif_row": "Instrument Procedures"
+        }
+      ]
+    },
+    "N4201-02": {
+      "page_pdf": 226,
+      "maneuvers": [
+        {
+          "name": "Instrument Approach during RTB (conditional: «If it is feasible»)",
+          "min_number": 1,
+          "per": "section",
+          "verbatim": "If it is feasible, one instrument approach will be flown during RTB at least in one sortie in N42XX Section.",
+          "mif_sn": 15,
+          "mif_row": "Instrument Procedures"
+        }
+      ]
+    },
+    "N4301-02": {
+      "page_pdf": 227,
+      "maneuvers": [
+        {
+          "name": "Special Requirement SRN-01 — IP demonstration of one leg at 500΄ AGL",
+          "min_number": 1,
+          "per": "section",
+          "verbatim": "Special Requirements:  IP will demonstrate one leg at 500΄ AGL once in N43XX Section (SRN-01).",
+          "mif_sn": 26,
+          "mif_row": "Special Requirements"
+        },
+        {
+          "name": "Instrument Approach during RTB (conditional: «If it is feasible»)",
+          "min_number": 1,
+          "per": "section",
+          "verbatim": "If it is feasible, one instrument approach will be flown during RTB at least in one sortie in N43XX Section.",
+          "mif_sn": 15,
+          "mif_row": "Instrument Procedures"
+        }
+      ]
+    },
+    "N4401-03": {
+      "page_pdf": 228,
+      "maneuvers": []
+    },
+    "N4501-03": {
+      "page_pdf": 229,
+      "maneuvers": [
+        {
+          "name": "Special Requirement SRN-01 — one leg at 500΄ AGL",
+          "min_number": 1,
+          "per": "section",
+          "verbatim": "Special requirements:  IP will practice one leg at 500΄ AGL once in N45XX Section. (SRN-01).",
+          "mif_sn": 26,
+          "mif_row": "Special Requirements"
+        }
+      ]
+    },
+    "N4690": {
+      "page_pdf": 231,
+      "maneuvers": []
+    }
+  },
+  "special_instructions": [
+    {
+      "verbatim": "(1) Low Level Navigation sorties can be flown after C5201.",
+      "page_pdf": 223,
+      "maneuvers": [],
+      "numbers": {},
+      "scope": "category",
+      "measurable": false
+    },
+    {
+      "verbatim": "(2) Flight time as lead or wingman will be divided equal in every sortie.",
+      "page_pdf": 223,
+      "maneuvers": [
+        "Fingertip",
+        "Tactical Formation",
+        "Tactical Turns",
+        "Formation Approach"
+      ],
+      "numbers": {},
+      "scope": "category",
+      "measurable": false
+    },
+    {
+      "verbatim": "(3) All Medium Level Navigation sorties will be flown equal or above MSA of the legs.",
+      "page_pdf": 223,
+      "maneuvers": [
+        "Maintaining Course"
+      ],
+      "numbers": {},
+      "scope": "category",
+      "measurable": false
+    },
+    {
+      "verbatim": "(4) IP will demonstrate one leg at 500΄ AGL in N43XX and N45XX Section.",
+      "page_pdf": 223,
+      "maneuvers": [
+        "Special Requirements"
+      ],
+      "numbers": {
+        "legs_at_500ft_agl_per_section": 1,
+        "agl_ft": 500
+      },
+      "scope": "category",
+      "measurable": true
+    },
+    {
+      "verbatim": "(5) VFR Navigation sorties must have at least 5 legs with 10 to 30 NM distance per leg.",
+      "page_pdf": 223,
+      "maneuvers": [
+        "Mission Planning/ Briefing - Debriefing",
+        "Maintaining Course",
+        "Map Reading"
+      ],
+      "numbers": {
+        "legs_min_per_sortie": 5,
+        "leg_distance_nm_min": 10,
+        "leg_distance_nm_max": 30
+      },
+      "scope": "category",
+      "measurable": true
+    },
+    {
+      "verbatim": "(6) If conditions permit, SP could execute navigation sorties and land at strange airfield as long as he/she flies back on the same day (Out and Back), as soon as restrictions and minimums are not violated IAW B.O. 3-1/ATC (minimum fuels, weather minima, training flight restrictions above Ground – Sea, etc.).",
+      "page_pdf": 223,
+      "maneuvers": [],
+      "numbers": {},
+      "scope": "category",
+      "measurable": false
+    },
+    {
+      "verbatim": "(7) SP will occupy front seat in all navigation sorties.",
+      "page_pdf": 223,
+      "maneuvers": [],
+      "numbers": {},
+      "scope": "category",
+      "measurable": false
+    },
+    {
+      "verbatim": "(8) VFR Navigation Table. | DUAL SOLO | NAVIGATION CATEGORY / SECTION / SORTIES HOURS SORTIES HOURS | MEDIUM LEVEL VFR NAVIGATION Ν41ΧΧ 2 2,2 | LOW LEVEL VFR NAVIGATION Ν42ΧΧ 2 2,2 | LOW LEVEL VFR NAVIGATION Ν43ΧΧ 2 2,2 | LOW LEVEL VFR NAVIGATION (FORMATION) Ν44ΧΧ 3 3,3 | LOW LEVEL VFR NAVIGATION (FORMATION) Ν45ΧΧ 3 3,3 | FINAL CHECKRIDE Ν4690 1 1,2 | TOTAL 13 14,4",
+      "page_pdf": 223,
+      "maneuvers": [],
+      "numbers": {
+        "N4101-02_sorties_dual": 2,
+        "N4101-02_hours_dual": 2.2,
+        "N4201-02_sorties_dual": 2,
+        "N4201-02_hours_dual": 2.2,
+        "N4301-02_sorties_dual": 2,
+        "N4301-02_hours_dual": 2.2,
+        "N4401-03_sorties_dual": 3,
+        "N4401-03_hours_dual": 3.3,
+        "N4501-03_sorties_dual": 3,
+        "N4501-03_hours_dual": 3.3,
+        "N4690_sorties_dual": 1,
+        "N4690_hours_dual": 1.2,
+        "total_sorties": 13,
+        "total_hours": 14.4
+      },
+      "scope": "category",
+      "measurable": true
+    },
+    {
+      "verbatim": "(9) In the program analysis of Training Units (“Analytical description of Section exercise”) and next to each maneuver, in parenthesis, the MINIMUM NUMBER of maneuvers that SP must practice until the end of a Training Section, appear. In case that the minimum number is not achieved SP will be granted an extra sortie or he/she will cover the required items in the next Section according to Squadron Commander’s judgment.",
+      "page_pdf": 164,
+      "maneuvers": [],
+      "numbers": {},
+      "scope": "phase",
+      "measurable": false
+    },
+    {
+      "verbatim": "(10) Whenever there is no minimum number next to a maneuver in the Program Analysis, but the MIF for this maneuver is bigger in this Training Section than the previous one, then the maneuver should be practiced as much as required for the MIF to be achieved.",
+      "page_pdf": 164,
+      "maneuvers": [],
+      "numbers": {},
+      "scope": "phase",
+      "measurable": false
+    }
+  ],
+  "flags": [
+    "ΚΕΝΟ ΠΑΡΕΝΘΕΣΕΩΝ: σΕ ΚΑΜΙΑ από τις 6 ενότητες της κατηγορίας VFR Navigation (σελ. PDF 225-231) ΔΕΝ υπάρχει αριθμός σε παρένθεση δίπλα σε ελιγμό στο «ANALYTICAL DESCRIPTION OF SECTION EXERCISES». Ολοκληρωμένος έλεγχος κάθε bullet: μηδέν αριθμητικές ενδείξεις. Όλα τα maneuver entries που καταγράφηκαν προέρχονται αποκλειστικά από το τμήμα «SPECIAL DIRECTIVES – AIDS» της ίδιας ενότητας, όπου τυπώνεται ρητός αριθμός εκτελέσεων («one… once» / «one… at least in one sortie»).",
+    "ΥΠΟ-ΚΑΤΗΓΟΡΙΑ ΕΓΓΡΑΦΩΝ — ΥΠΟ ΣΥΝΘΗΚΗ: τα 3 entries «Instrument Approach during RTB» (N4101-02, N4201-02, N4301-02) εισάγονται στο πρωτότυπο με τον όρο «If it is feasible». Ο αριθμός («one instrument approach … at least in one sortie») είναι τυπωμένος, αλλά Η ΑΠΑΙΤΗΣΗ ΔΕΝ ΕΙΝΑΙ ΑΠΟΛΥΤΗ — να μην αντιμετωπιστεί ως ακλόνητο minimum. Η συνθήκη διατηρείται αυτούσια στο verbatim.",
+    "ΔΕΝ ΚΑΤΑΓΡΑΦΗΚΕ (χωρίς τυπωμένο αριθμό): N4690 σελ.231 «3. During RTB, SP will execute an instrument approach, if it is possible.» — χρησιμοποιεί άρθρο («an»), όχι αριθμητικό προσδιορισμό «one» όπως οι N41XX/N42XX/N43XX, και είναι επίσης υπό συνθήκη. Αν η εφαρμογή το θέλει ως min_number=1, απαιτείται απόφαση χρήστη.",
+    "ΔΕΝ ΚΑΤΑΓΡΑΦΗΚΕ (μέγιστο, όχι ελάχιστο, και απαιτεί υπολογισμό): οι ενότητες N4201-02 (σελ.226 παρ.4), N4301-02 (σελ.227 παρ.3), N4501-03 (σελ.229 παρ.4) ορίζουν: «At briefing, IP will determine legs in which SP can use GPS. Those legs will not exceed half of total legs and should/will be flown above sea.» (κλάσμα «half», όχι ακέραιος αριθμός εκτελέσεων). Η ίδια οδηγία υπάρχει και στην N4401-03 (σελ.228 παρ.3) και σε συντομότερη μορφή στην N4690 (σελ.231 παρ.4).",
+    "SRN-01 vs SRN-1: στις ενότητες (σελ.227, 229) ο κωδικός τυπώνεται «SRN-01», ενώ στον πίνακα κωδικών Special Requirements (σελ.103) ως «SRN-1 Οne leg in a Navigation sortie will be flown at 500’ AGL» (με ΕΛΛΗΝΙΚΟ κεφαλαίο Ομικρόν U+039F στο «Οne» — προσοχή σε string matching).",
+    "MIF sn 26 «Special Requirements» (D:\\\\FDMS\\\\data\\\\mif\\\\t6a.json, vfr_navigation_t6a): έχει τιμή σε ΔΥΟ στήλες — N4301-02 = «E» και N4501-03 = «1» — δηλαδή αμφότερες οι ενότητες με τυπωμένο SRN-01 έχουν οριζόμενο MIF. Δεν υπάρχει ασυμφωνία κάλυψης· εκκρεμεί μόνο ότι ο κώδικας «E» δεν ορίζεται πουθενά στο PDF (η παρ.7a σελ.24 ορίζει 0, 1, 2, 3, 4 και D). Διατηρήθηκε mif_sn=26 και για τις δύο ενότητες.",
+    "ΑΜΦΙΣΗΜΙΑ MIF ROW: ο πίνακας vfr_navigation_t6a έχει ΔΥΟ γραμμές με ταυτόσημο όνομα «Instrument Procedures» (sn 15 και sn 20). Επιλέχθηκε mif_sn=15 γιατί στις στήλες N4101-02/N4201-02/N4301-02 μόνο το sn 15 έχει τιμή («*») ενώ το sn 20 είναι κενό. Το έγγραφο ΔΕΝ διαφοροποιεί τις δύο γραμμές.",
+    "ΚΛΕΙΔΙΑ ΕΝΟΤΗΤΩΝ: χρησιμοποιήθηκαν οι κωδικοί στηλών του MIF (N4101-02 κ.λπ., ΛΑΤΙΝΙΚΟ N). Στο PDF οι επικεφαλίδες των ενοτήτων και ο πίνακας (8) τυπώνονται με ΕΛΛΗΝΙΚΑ γράμματα («Ν41ΧΧ»: U+039D + U+03A7), ενώ μέσα στο κείμενο των οδηγιών χρησιμοποιείται ΛΑΤΙΝΙΚΟ «N43XX». Το verbatim διατηρεί τους χαρακτήρες του πρωτοτύπου.",
+    "Το σύμβολο ποδιών στο «500΄ AGL» είναι U+0384 (GREEK TONOS), ΟΧΙ απόστροφος/prime — διατηρήθηκε αυτούσιο. Στη σελ.103 (ορισμός SRN-1) τυπώνεται διαφορετικά: «500’ AGL» (U+2019).",
+    "ΕΛΑΧΙΣΤΗ ΑΣΑΦΕΙΑ ΔΙΑΤΥΠΩΣΗΣ: στην N4301-02 γράφεται «IP will demonstrate» ενώ στην N4501-03 «IP will practice» (και στην κατηγοριακή οδηγία (4) «IP will demonstrate» και για τις δύο). Η έννοια του ποιος εκτελεί (IP και όχι SP) διατηρείται αυτούσια — δεν πρόκειται για εκτέλεση του μαθητή.",
+    "ΣΕΛΙΔΕΣ ΧΩΡΙΣ ΚΕΙΜΕΝΟ: οι PDF σελίδες 224 (τυπ. -216-) και 232 (τυπ. -224-) είναι κενές (0 chars με PyMuPDF και με το MCP extractor) — σελίδες διαχωρισμού. ΔΕΝ κατέστη δυνατόν να επαληθευτεί οπτικά (το render_pdf_page απέτυχε: λείπει το native canvas binding), όμως η ροή των τυπωμένων αριθμών σελίδας (-215- → -217-) και η συνέχεια των ενοτήτων δεν αφήνει κενό περιεχομένου.",
+    "Η ενότητα N4501-03 ξεκινά στη σελ. PDF 229 και τα RESTRICTIONS/FUEL CONSUMPTION της συνεχίζουν στη σελ. 230.",
+    "ΤΟ ΠΕΔΙΟ numbers ΤΗΣ ΟΔΗΓΙΑΣ (8): οι ώρες τυπώνονται με ΕΛΛΗΝΙΚΗ υποδιαστολή («2,2») και αποδόθηκαν ως δεκαδικοί με τελεία (2.2). Καμία στήλη SOLO δεν έχει τιμή (όλες οι εξόδοι της κατηγορίας είναι DUAL). Τα 13/14,4 είναι ΤΥΠΩΜΕΝΑ (TOTAL), δεν υπολογίστηκαν.",
+    "ΟΙ ΦΡΑΣΕΙΣ (9) και (10) της σελ. PDF 164 (τυπ. -156-) ΔΕΝ ανήκουν στις Special Instructions της κατηγορίας — είναι γενικοί κανόνες του σταδίου (scope=phase) και περιλήφθηκαν γιατί εξηγούν το κενό παρενθέσεων σε αυτή την κατηγορία (κανόνας 10: όπου δεν υπάρχει αριθμός, ο ελιγμός εκτελείται όσες φορές χρειάζεται για να επιτευχθεί το MIF)."
+  ]
+}
