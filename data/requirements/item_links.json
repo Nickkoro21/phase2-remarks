@@ -1,0 +1,2532 @@
+{
+  "schema": "item-links-v1",
+  "generated_from": [
+    "manifest.json",
+    "requirements/ground_training.json",
+    "requirements/simulator_training.json",
+    "requirements/flight_training.json",
+    "requirements/failure_procedures.json"
+  ],
+  "counts": {
+    "items_linked": 113,
+    "item_links": 355,
+    "category_links": 60,
+    "global_links": 40,
+    "total_links": 455
+  },
+  "links": {
+    "contact-01": [
+      {
+        "req": "st-12",
+        "topic": "EX 1001 external inspection",
+        "why": "Familiarization period covering survival-equipment check, external inspection, entry, strap-in and seat/pedal adjustment."
+      },
+      {
+        "req": "st-13",
+        "topic": "EX 1002 cockpit familiarization",
+        "why": "Switch/lever handling without powering systems, fuel checks, safety measures, cross-check and clearing."
+      },
+      {
+        "req": "st-14",
+        "topic": "EX 1003 normal procedures / start",
+        "why": "SP performs every procedure up to engine start, start, all normal procedures to line-up and all after-flight procedures."
+      },
+      {
+        "req": "st-21",
+        "topic": "B10XX F/S normal procedures",
+        "why": "Front-seat section for switches, levers, controls and normal procedures; PR 113 ground training required first."
+      },
+      {
+        "req": "gt-12",
+        "topic": "PR 101-106 Normal Procedures",
+        "why": "Ground-training lesson block (7 periods) that underpins the ground-procedures item."
+      },
+      {
+        "req": "st-11",
+        "topic": "Familiarization grade sheet",
+        "why": "After each familiarization sortie Ground Procedures is graded on a Contact grade sheet with B1001/B1002 MIF standards."
+      },
+      {
+        "req": "gt-25",
+        "topic": "Blind cockpit recognition list",
+        "why": "Minimum controls the SP must identify beyond doubt: OBOGS regulator, flaps, landing-gear and emergency L/G, battery/generator, R/T, landing/taxi lights, caution/warning switches."
+      },
+      {
+        "req": "ft-46",
+        "topic": "C41XX prerequisites",
+        "why": "CR 202 and C2101 ground training must be complete before the first familiarization sortie."
+      },
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Ground procedures\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Ground Procedures\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Ground Procedures\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-02": [
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"T/O\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"T/O\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"T/O\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-03": [
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Departure / Transition to flight Areas\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Departure / Transition\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Departure / Transition\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-04": [
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"In-flight planning / Orientation\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Inflight planning / Orientation\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Inflight planning / Orientation\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-05": [
+      {
+        "req": "fail-53",
+        "topic": "Air sickness entry",
+        "why": "When a serious air-sickness event occurs, code \"0\" is entered in the Basic A/C Control column because the SP lost control of the aircraft."
+      },
+      {
+        "req": "ft-147",
+        "topic": "Fallback criteria",
+        "why": "Where a maneuver has no specific criteria, the Basic A/C Control standards are applied as well."
+      },
+      {
+        "req": "st-11",
+        "topic": "Familiarization grade sheet",
+        "why": "Basic A/C Control (including flight checks) is graded after each familiarization sortie with C1101/C2101 MIF standards."
+      },
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Basic A/C control\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Basic A/C control\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Basic A/C control\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-06": [
+      {
+        "req": "ft-32",
+        "topic": "AGSM warm-up",
+        "why": "AGSM must be executed for warm-up and body preparation on any flight whose pre-planned maneuvering loads the aircraft above 3 G."
+      },
+      {
+        "req": "ft-24",
+        "topic": "SRC-1 AGSM",
+        "why": "Special Requirement SRC-1 is practice in the Anti-G Straining Maneuver."
+      },
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"G-X awareness\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"G-X awareness\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"G-X awareness\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-07": [
+      {
+        "req": "ft-31",
+        "topic": "Forbidden in SOLO",
+        "why": "Slow Flight is on the list of maneuvers forbidden in SOLO flights."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Slow flight\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Slow flight\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-08": [
+      {
+        "req": "ft-31",
+        "topic": "Forbidden in SOLO",
+        "why": "All kinds of stalls are forbidden in SOLO flights."
+      },
+      {
+        "req": "ft-24",
+        "topic": "SRC-10 stalls with AOA out",
+        "why": "Special Requirement SRC-10 is practice in stalls with the AOA system inoperative."
+      },
+      {
+        "req": "ft-53",
+        "topic": "C51XX SRC-10",
+        "why": "In Section C51XX the SP practices stalls with the AOA system out."
+      },
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Power on / ELP Stalls\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Power on / ELP Stalls\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Power on / ELP Stalls\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-09": [
+      {
+        "req": "ft-31",
+        "topic": "Forbidden in SOLO",
+        "why": "All kinds of stalls, traffic pattern stalls included, are forbidden in SOLO flights."
+      },
+      {
+        "req": "ft-24",
+        "topic": "SRC-2 no-flap TP stalls",
+        "why": "Special Requirement SRC-2 is practice in No Flap Traffic Pattern Stalls."
+      },
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"TP Stalls\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"TP stalls\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"TP stalls\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-10": [
+      {
+        "req": "ft-31",
+        "topic": "Forbidden in SOLO",
+        "why": "Spins, spin prevention included, are forbidden in SOLO flights."
+      },
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Spin Prevention / Recovery\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Spin Prevention / Recovery\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Spin Prevention / Recovery\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-11": [
+      {
+        "req": "ft-31",
+        "topic": "Forbidden in SOLO",
+        "why": "Unusual attitudes are forbidden in SOLO flights."
+      },
+      {
+        "req": "ft-42",
+        "topic": "Nose-high UA progression",
+        "why": "Nose-high recovery is first taught pre-planned; once the SP reaches MIF \"1\" it is practised from different attitudes without prior planning."
+      },
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Unusual attitude Recoveries\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Unusual attitude Recoveries\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Unusual attitude Recoveries\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-12": [
+      {
+        "req": "ft-51",
+        "topic": "C49XX SOLO aerobatics",
+        "why": "In the C49XX SOLO the SP may practise Aileron Roll, Chandelle and Lazy \"8\" only if MIF \"2\" was achieved on the previous dual Contact sortie."
+      },
+      {
+        "req": "ft-54",
+        "topic": "C52XX SOLO condition",
+        "why": "In the C52XX SOLO only maneuvers permitted for SOLO in which MIF \"2\" was reached on the previous dual Contact sortie may be flown."
+      },
+      {
+        "req": "ft-55",
+        "topic": "C53XX SOLO condition",
+        "why": "Same MIF \"2\" precondition applies to the SOLO maneuvers of Section C53XX."
+      },
+      {
+        "req": "ft-30",
+        "topic": "Energy management",
+        "why": "Planning and execution of every mission must achieve the best aircraft energy management."
+      },
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Chandelle - Lazy 8, Aileron Roll - Loop\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Chandelle - Lazy 8, Aileron Roll - Barrel Roll, Loop - Cuban Eight, Immelman - Split S, Cloverleaf\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Chandelle - Lazy 8, Aileron Roll - Barrel Roll, Loop - Cuban Eight, Immelman - Split S, Cloverleaf\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-21": [
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Descent - Airport traffic pattern entry\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Descent / Traffic pattern entry\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Descent / Traffic pattern entry\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-22": [
+      {
+        "req": "ft-49",
+        "topic": "First SOLO profile",
+        "why": "On the C4791 SOLO the SP flies one airport traffic pattern inside the airport ATZ."
+      },
+      {
+        "req": "ft-50",
+        "topic": "C48XX SOLO profile",
+        "why": "The C48XX SOLO is flown in the airport traffic pattern practising normal overhead pattern, go around, closed patterns and normal landings."
+      },
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Airport traffic pattern\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Traffic pattern entry\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Traffic pattern entry\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-23": [
+      {
+        "req": "ft-31",
+        "topic": "No-flap patterns forbidden in SOLO",
+        "why": "No Flap Overhead Patterns / Landings are forbidden in SOLO flights."
+      },
+      {
+        "req": "ft-24",
+        "topic": "SRC-4 / SRC-6",
+        "why": "SRC-4 is practice in flight and landing patterns with TAD-OFF; SRC-6 is a No Flap overhead pattern and landing with more than 750 lbs fuel."
+      },
+      {
+        "req": "ft-48",
+        "topic": "C46XX landing patterns",
+        "why": "Section C46XX sets the minimum numbers per pattern type (normal 8, no flap 2, flaps T/O 3) and carries SRC-6."
+      },
+      {
+        "req": "ft-51",
+        "topic": "C49XX SRC-6",
+        "why": "Section C49XX repeats SRC-6, the no-flap overhead pattern with more than 750 lbs of fuel."
+      },
+      {
+        "req": "ft-53",
+        "topic": "AOA pattern in C51XX",
+        "why": "Section C51XX introduces the AOA overhead traffic pattern and landing with a minimum of 3."
+      },
+      {
+        "req": "ft-49",
+        "topic": "C4790 / C4791",
+        "why": "The pre-SOLO checkride block requires 3 normal and 1 flaps-T/O overhead patterns and landings."
+      },
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Normal / No flap / Flaps T/O overhead traffic pattern and landing\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Normal / No flap / Flaps T/O overhead traffic pattern and landing\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Normal / No flap / Flaps T/O / AOA overhead traffic pattern and landing\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-24": [
+      {
+        "req": "ft-29",
+        "topic": "SOLO prerequisite MIF 2 in normal landing",
+        "why": "No SOLO is flown past four calendar days from the last dual VFR front-seat flight and only if at least MIF \"2\" was achieved in normal landing."
+      },
+      {
+        "req": "ft-91",
+        "topic": "SOLO capability annotation",
+        "why": "The previous dual grade sheet of the same category must state that the SP is fit for SOLO and list the maneuvers graded at least code \"2\"."
+      },
+      {
+        "req": "ft-49",
+        "topic": "First SOLO landing",
+        "why": "On the C4791 SOLO the SP performs one normal landing; minimum fuel for the first SOLO is 550 lbs."
+      },
+      {
+        "req": "ft-41",
+        "topic": "Contact Car grading",
+        "why": "The C4790 evaluator supervises and grades the SP landing from the Contact Car."
+      },
+      {
+        "req": "ft-31",
+        "topic": "Forbidden landing types in SOLO",
+        "why": "ELP and No Flap landings are forbidden in SOLO flights."
+      },
+      {
+        "req": "ft-61",
+        "topic": "Foreign airport landing",
+        "why": "If the SP lands at a foreign airport the landing performance code becomes \"2\"."
+      },
+      {
+        "req": "ft-48",
+        "topic": "C46XX minimum numbers",
+        "why": "Section C46XX fixes the minimum landings per configuration and requires one landing with more than 750 lbs of fuel (SRC-6)."
+      },
+      {
+        "req": "st-27",
+        "topic": "Crosswind landings in C2501",
+        "why": "The F/S section C2501 requires at least two landings with 10-20 knots crosswind."
+      },
+      {
+        "req": "ft-50",
+        "topic": "C48XX SOLO landings",
+        "why": "Normal landings are part of the C48XX SOLO profile."
+      },
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Normal / No flap / Flaps T/O overhead traffic pattern and landing\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Normal / No flap / Flaps T/O landing, ELP landing\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Normal / No flap / Flaps T/O / AOA landing, ELP landing\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-29": [
+      {
+        "req": "ft-31",
+        "topic": "Forbidden in SOLO",
+        "why": "Straight-in approach is forbidden in SOLO flights."
+      },
+      {
+        "req": "st-27",
+        "topic": "C2501 device choice",
+        "why": "At least one C2501 sortie is flown in OFT/FTD so that the ELP, Straight-In and Landing requirements can be met."
+      },
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Straight-in\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Straight-in\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Straight-In\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-30": [
+      {
+        "req": "ft-44",
+        "topic": "Day and VMC only",
+        "why": "ELPs are performed daytime and under VMC conditions only."
+      },
+      {
+        "req": "ft-31",
+        "topic": "Forbidden in SOLO",
+        "why": "ELP is on the list of maneuvers forbidden in SOLO flights."
+      },
+      {
+        "req": "ft-24",
+        "topic": "SRC-11 ELP with IDLE",
+        "why": "Special Requirement SRC-11 is practice in ELP with IDLE power."
+      },
+      {
+        "req": "ft-55",
+        "topic": "C53XX SRC-11",
+        "why": "Section C53XX is where the SP practises the ELP with IDLE power."
+      },
+      {
+        "req": "ft-48",
+        "topic": "C46XX minimum numbers",
+        "why": "Section C46XX requires 3 ELPs and 2 ELP landing touch-and-go."
+      },
+      {
+        "req": "st-27",
+        "topic": "C2501 ELP coverage",
+        "why": "One C2501 sortie must be flown in OFT/FTD to cover the ELP requirement."
+      },
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"ELP and ELP landing (touch n' go)\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"ELP, ELP landing\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"ELP, ELP landing\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-34": [
+      {
+        "req": "ft-49",
+        "topic": "Pre-SOLO block",
+        "why": "The C4790/C4791 block requires at least one Go Around."
+      },
+      {
+        "req": "ft-50",
+        "topic": "C48XX SOLO profile",
+        "why": "Go Around is one of the four items practised on the C48XX SOLO."
+      },
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Go Around\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Go Around\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Go Around\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-35": [
+      {
+        "req": "ft-24",
+        "topic": "SRC-7 closed pattern with L/G down",
+        "why": "Special Requirement SRC-7 is practice in a Closed Pattern with landing gear down."
+      },
+      {
+        "req": "ft-48",
+        "topic": "C46XX SRC-7",
+        "why": "Section C46XX carries SRC-7 (closed pattern in landing configuration) with a minimum of 6 closed patterns."
+      },
+      {
+        "req": "ft-50",
+        "topic": "C48XX SOLO profile",
+        "why": "Closed patterns are part of the C48XX SOLO profile."
+      },
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Closed Pattern\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Closed Pattern\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Closed Pattern\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-36": [
+      {
+        "req": "st-13",
+        "topic": "EX 1002 cross-check and clearing",
+        "why": "Clearing and cross-check technique are taught in the second familiarization period."
+      },
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Clearing\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Clearing\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Clearing\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-37": [
+      {
+        "req": "st-14",
+        "topic": "EX 1003 R/T practice",
+        "why": "Use of R/T is practised during the normal procedures / start-up familiarization period."
+      },
+      {
+        "req": "gt-25",
+        "topic": "Blind cockpit R/T switches",
+        "why": "The blind control check requires unmistakable identification of the R/T switches."
+      },
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Radio procedures - use of IFF\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Radio procedures - IFF\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Radio procedures - IFF\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-38": [
+      {
+        "req": "st-21",
+        "topic": "B10XX airmanship briefing",
+        "why": "In Section B10XX the IP discusses airmanship with the SP, analysed from the performance standards."
+      }
+    ],
+    "contact-39": [
+      {
+        "req": "st-15",
+        "topic": "EX 1004 emergency procedures",
+        "why": "Fourth familiarization period covers Bold Face by heart, all airstart procedures (PMU NORMAL, PMU OFF, IMMEDIATE), other EPs with checklist and manual fuel balancing."
+      },
+      {
+        "req": "st-23",
+        "topic": "C21XX F/S emergency procedures",
+        "why": "Dedicated F/S section for emergency procedures; by its end the SP knows the Bold Face by heart and can do blind check procedures in the front seat."
+      },
+      {
+        "req": "st-25",
+        "topic": "C23XX EPs in a mission profile",
+        "why": "Emergency procedures trained inside a mission profile with emphasis on the airstart procedures."
+      },
+      {
+        "req": "st-27",
+        "topic": "C2501 EPs in a mission profile",
+        "why": "Three-sortie F/S section emphasising flight engine restart (PMU NORMAL / PMU OFF / IMMEDIATE AIRSTART)."
+      },
+      {
+        "req": "gt-59",
+        "topic": "Bold Face by heart",
+        "why": "Exit criterion of Section C23XX: the SP must know the critical (Bold Face) procedures by heart and run the rest with the checklist."
+      },
+      {
+        "req": "gt-12",
+        "topic": "PR 107-113 lesson block",
+        "why": "Ground training gives 12 periods of Emergency Procedures, 1 of A/C limitations and the Boldface examination PR 113."
+      },
+      {
+        "req": "st-17",
+        "topic": "EPs in every F/S sortie",
+        "why": "Emergency procedures may be given in any F/S sortie beyond the pre-planned ones once the section criteria are met."
+      },
+      {
+        "req": "fail-28",
+        "topic": "100 percent pass mark",
+        "why": "Bold Face procedures and aircraft limits must be answered at 100 percent, against 80 percent for the other questionnaires."
+      },
+      {
+        "req": "gt-31",
+        "topic": "Bold Face inside the EETh",
+        "why": "Every professional-subjects questionnaire also examines five Bold Face procedures and the aircraft limits in writing."
+      },
+      {
+        "req": "gt-32",
+        "topic": "Monthly egress / ejection / survival exam",
+        "why": "Students of all phases are examined in writing every month on emergency ground egress, ejection and the low/high post-ejection checklist."
+      },
+      {
+        "req": "ft-47",
+        "topic": "C4590 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Emergency procedures on the ground or in flight (briefing or debriefing)\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Emergency procedures / General Knowledge\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Emergency procedures / General Knowledge\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-40": [
+      {
+        "req": "gt-23",
+        "topic": "General Knowledge prerequisites",
+        "why": "Lists what the SP must know: T-6A systems ground training, aircraft manuals, flying techniques, meteorology, aerodynamics, ATC rules, navigation, aviation medicine and survival."
+      },
+      {
+        "req": "gt-25",
+        "topic": "Familiarization knowledge check 90 percent",
+        "why": "Knowledge is checked in the first Contact sorties and in the blind control examination before C4790, pass mark 90 percent."
+      },
+      {
+        "req": "fail-35",
+        "topic": "Blind control examination",
+        "why": "Failure of the blind control check before C4790 is repeated the following day; the pass mark is 90 percent."
+      },
+      {
+        "req": "gt-11",
+        "topic": "Phase II written examinations",
+        "why": "Written exams include Basic Maneuvers of Contact Category, Boldface and the A/C Performance Tables examination."
+      },
+      {
+        "req": "gt-30",
+        "topic": "EETh frequency",
+        "why": "Professional-subject questionnaires are written weekly in the pre-SOLO phase and every 15 days afterwards."
+      },
+      {
+        "req": "fail-28",
+        "topic": "Ground pass marks",
+        "why": "80 percent is the minimum pass mark for questionnaires, 100 percent for Bold Face and aircraft limits."
+      },
+      {
+        "req": "gt-41",
+        "topic": "Oral examination threshold for KEPE",
+        "why": "Two consecutive or four non-consecutive failed pre-flight oral examinations put the SP in KEPE."
+      },
+      {
+        "req": "fail-36",
+        "topic": "Oral examination referral threshold",
+        "why": "Four consecutive or eight non-consecutive failed pre-flight oral examinations trigger referral under PD 29/2020."
+      },
+      {
+        "req": "gt-46",
+        "topic": "Written test after oral failures",
+        "why": "After the oral-examination threshold the Squadron Commander or Ops Officer tests professional knowledge in writing (50 closed book, 25 open book, 5 Bold Face)."
+      },
+      {
+        "req": "gt-22",
+        "topic": "Ground training before each Section",
+        "why": "No SP starts a Training Section or Exercise without having attended and been successfully evaluated on its ground-training objects."
+      },
+      {
+        "req": "ft-52",
+        "topic": "C5090 Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Emergency procedures / General Knowledge\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-56",
+        "topic": "C5490 Final Contact checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Emergency procedures / General Knowledge\"; performance must meet the MIF table codes."
+      }
+    ],
+    "contact-41": [
+      {
+        "req": "ft-20",
+        "topic": "Definition of Special Requirements",
+        "why": "SRs are maneuvers or procedures that must be demonstrated or practised so the SP is introduced to special flight situations."
+      },
+      {
+        "req": "ft-21",
+        "topic": "SR as prerequisite",
+        "why": "Executing an SR is a prerequisite for promotion to the next Training Section, or for the SOLO when the SR relates to it."
+      },
+      {
+        "req": "ft-22",
+        "topic": "SR coding",
+        "why": "SR codes are SR + category letter (C, I, F, N) + the number of the special exercise, e.g. SRC-2."
+      },
+      {
+        "req": "ft-23",
+        "topic": "SR timing and repetition",
+        "why": "SRs should be met in the first sorties of each Section so repetition is possible when a performance level, not just attendance, is required."
+      },
+      {
+        "req": "ft-24",
+        "topic": "Full SR table",
+        "why": "SRC-1 to SRC-11 list every Contact special requirement, from AGSM to ELP with IDLE power."
+      },
+      {
+        "req": "ft-33",
+        "topic": "SR annotation",
+        "why": "Special requirements are annotated separately in the grade sheet together with the performance levels achieved."
+      }
+    ],
+    "contact-crm": [
+      {
+        "req": "gt-18",
+        "topic": "CRM ground lessons",
+        "why": "CRM 101-04 / 201-2 are taught in ground training, at the end of it for foreign SPs who did not cover them at their academy."
+      },
+      {
+        "req": "ft-01",
+        "topic": "Phase objective",
+        "why": "The phase aims to develop leadership, cultivate team-work spirit and improve information management and situational awareness."
+      }
+    ],
+    "instrument-01": [
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Ground Procedures\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 Final Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Ground Procedures\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-03": [
+      {
+        "req": "ft-64",
+        "topic": "I41XX minimum numbers",
+        "why": "Basic Instrument Section I41XX requires at least 2 SID departures."
+      },
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"SID Departure\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 Final Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"SID Departure\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-04": [
+      {
+        "req": "ft-64",
+        "topic": "I41XX familiarization aim",
+        "why": "Section I41XX aims at familiarizing the SP with instrument flight; prerequisites are IN290, C4791 and I3201."
+      },
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Basic A/C Control\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 Final Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Basic A/C Control\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-05": [
+      {
+        "req": "ft-64",
+        "topic": "I41XX minimum numbers",
+        "why": "Section I41XX requires at least 3 steep turns."
+      },
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Steep turns\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-06": [
+      {
+        "req": "ft-64",
+        "topic": "I41XX minimum numbers",
+        "why": "Section I41XX requires at least 6 airspeed changes."
+      },
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Airspeed Changes\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-07": [
+      {
+        "req": "ft-64",
+        "topic": "I41XX minimum numbers",
+        "why": "Section I41XX requires 3 constant-airspeed climbs/descents, 3 constant-rate climbs/descents and 3 Vertical S."
+      },
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Constant Airspeed and Constant rate Climb/Descent, Vertical S\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-10": [
+      {
+        "req": "ft-64",
+        "topic": "I41XX minimum numbers",
+        "why": "Section I41XX requires at least 3 unusual attitude recoveries."
+      },
+      {
+        "req": "ft-42",
+        "topic": "Nose-high UA progression",
+        "why": "After MIF \"1\" nose-high recoveries are practised from different attitudes without previous planning."
+      },
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Unusual Attitude Recoveries\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-11": [
+      {
+        "req": "ft-24",
+        "topic": "SRI-1 spatial disorientation",
+        "why": "Special Requirement SRI-1 is practice in spatial disorientation avoidance maneuvers."
+      },
+      {
+        "req": "ft-64",
+        "topic": "I41XX SRI-1 and minimums",
+        "why": "Section I41XX carries SRI-1 and requires 3 Aileron Rolls and 3 Wingovers."
+      },
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Aileron Roll - Wingover\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-12": [
+      {
+        "req": "ft-64",
+        "topic": "I41XX minimum numbers",
+        "why": "Section I41XX requires 3 inbound and outbound course intercepts with track maintenance."
+      },
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Course intercepts\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 Final Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Course intercepts\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-13": [
+      {
+        "req": "ft-64",
+        "topic": "I41XX minimum numbers",
+        "why": "Track maintenance is trained together with the course intercepts of Section I41XX."
+      },
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Maintaining track\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 Final Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Maintaining track\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-14": [
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Arc intercept\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 Final Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Arc intercept\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-15": [
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Maintain Arc\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 Final Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Maintain Arc\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-16": [
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Point to Point\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 Final Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Point to Point\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-17": [
+      {
+        "req": "ft-64",
+        "topic": "I41XX minimum numbers",
+        "why": "Section I41XX requires 2 VOR or TACAN holdings with descent."
+      },
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Holding - Instrument Approach Procedure\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 Final Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Holding - Instrument Approach Procedure\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-18": [
+      {
+        "req": "ft-64",
+        "topic": "I41XX minimum numbers",
+        "why": "The 2 VOR/TACAN holding-descent events of Section I41XX introduce the instrument descent."
+      },
+      {
+        "req": "ft-65",
+        "topic": "I4490 mandatory descent",
+        "why": "The Instrument checkride grades at least one instrument descent and one final approach."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 Final Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Holding - Instrument Approach Procedure\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-20": [
+      {
+        "req": "ft-58",
+        "topic": "Approach at a strange airfield",
+        "why": "Sections I45XX and I46XX require at least one IFR navigation and one instrument approach procedure at a strange airfield per SP."
+      },
+      {
+        "req": "ft-65",
+        "topic": "I4490 mandatory final approach",
+        "why": "The Instrument checkride grades at least one final approach; VOR/DME or TACAN final approach is in the profile."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 Final Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"VOR/DME or TACAN final approach\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-21": [
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"ILS or LOC final approach\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 Final Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"ILS or LOC final approach\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-22": [
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"ILS or LOC final approach\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 Final Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"ILS or LOC final approach\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-23": [
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"GCA (PAR or ASR) final approach\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 Final Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"GCA (PAR or ASR) final approach\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-24": [
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"GCA (PAR or ASR) final approach\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 Final Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"GCA (PAR or ASR) final approach\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-25": [
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"GCA (PAR or ASR) no GYRO final approach\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-26": [
+      {
+        "req": "ft-24",
+        "topic": "SRI-2 time and compass turns",
+        "why": "Special Requirement SRI-2 is practice in time and magnetic compass turns."
+      },
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Standby Instrument approach\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 Final Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Standby Instrument approach\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-27": [
+      {
+        "req": "ft-64",
+        "topic": "I41XX minimum numbers",
+        "why": "Section I41XX requires at least 1 circling approach."
+      },
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Circling Approach\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 Final Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Circling Approach\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-28": [
+      {
+        "req": "ft-61",
+        "topic": "Foreign airport landing",
+        "why": "A landing at a foreign airport is graded with performance code \"2\"."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 strange airport",
+        "why": "The final Instrument checkride is flown as an IFR navigation with an instrument approach at a strange airport."
+      },
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Landing\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-29": [
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Missed approach\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 Final Instrument checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Missed Approach\"; performance must meet the MIF table codes."
+      }
+    ],
+    "instrument-30": [
+      {
+        "req": "ft-65",
+        "topic": "I4490 oral examination",
+        "why": "The Instrument checkride examines the SP in emergency procedures under IMC conditions during briefing or debriefing."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 profile",
+        "why": "Radio Procedures and Emergency Procedures / General Knowledge are part of the final Instrument checkride profile."
+      },
+      {
+        "req": "gt-11",
+        "topic": "Instrument written examinations",
+        "why": "Phase II includes written examinations in Basic Instruments, Advanced Instruments and IFR Navigation."
+      },
+      {
+        "req": "fail-28",
+        "topic": "Ground pass marks",
+        "why": "80 percent is the minimum pass mark for questionnaires, 100 percent for Bold Face and aircraft limits."
+      },
+      {
+        "req": "gt-31",
+        "topic": "Bold Face inside the EETh",
+        "why": "The professional-subjects questionnaires also examine five Bold Face procedures and the aircraft limits."
+      },
+      {
+        "req": "gt-32",
+        "topic": "Monthly egress / ejection / survival exam",
+        "why": "Students of all phases are examined in writing every month on emergency ground egress, ejection and the low/high post-ejection checklist."
+      },
+      {
+        "req": "gt-23",
+        "topic": "General Knowledge prerequisites",
+        "why": "Lists what the SP must know: T-6A systems ground training, aircraft manuals, flying techniques, meteorology, aerodynamics, ATC rules, navigation, aviation medicine and survival."
+      },
+      {
+        "req": "gt-30",
+        "topic": "EETh frequency",
+        "why": "Professional-subject questionnaires are written weekly in the pre-SOLO phase and every 15 days afterwards."
+      },
+      {
+        "req": "gt-41",
+        "topic": "Oral examination threshold for KEPE",
+        "why": "Two consecutive or four non-consecutive failed pre-flight oral examinations put the SP in KEPE."
+      },
+      {
+        "req": "fail-36",
+        "topic": "Oral examination referral threshold",
+        "why": "Four consecutive or eight non-consecutive failed pre-flight oral examinations trigger referral under PD 29/2020."
+      },
+      {
+        "req": "gt-46",
+        "topic": "Written test after oral failures",
+        "why": "After the oral-examination threshold the Squadron Commander or Ops Officer tests professional knowledge in writing (50 closed book, 25 open book, 5 Bold Face)."
+      }
+    ],
+    "instrument-34": [
+      {
+        "req": "ft-20",
+        "topic": "Definition of Special Requirements",
+        "why": "SRs are maneuvers or procedures that must be demonstrated or practised to introduce the SP to special flight situations."
+      },
+      {
+        "req": "ft-21",
+        "topic": "SR as prerequisite",
+        "why": "Execution of an SR is a prerequisite for promotion to the next Training Section."
+      },
+      {
+        "req": "ft-22",
+        "topic": "SR coding",
+        "why": "Instrument special requirements carry the SRI prefix."
+      },
+      {
+        "req": "ft-24",
+        "topic": "Full SR table",
+        "why": "SRI-1 is spatial disorientation avoidance and SRI-2 is time and magnetic compass turns."
+      },
+      {
+        "req": "ft-33",
+        "topic": "SR annotation",
+        "why": "Special requirements are annotated separately in the grade sheet with the performance levels achieved."
+      },
+      {
+        "req": "ft-64",
+        "topic": "SRI-1 in I41XX",
+        "why": "Section I41XX is where SRI-1 is practised."
+      }
+    ],
+    "instrument-crm": [
+      {
+        "req": "gt-18",
+        "topic": "CRM ground lessons",
+        "why": "CRM 101-04 / 201-2 are taught in ground training, at the end of it for foreign SPs who did not cover them at their academy."
+      }
+    ],
+    "formation-01": [
+      {
+        "req": "ft-68",
+        "topic": "Wingman T/O forbidden in SOLO",
+        "why": "Take-off as Wingman is prohibited in formation SOLO flights."
+      },
+      {
+        "req": "ft-72",
+        "topic": "Interval T/O demonstration",
+        "why": "Interval T/O, as Leader or as Wingman, need not be demonstrated by the IP first."
+      },
+      {
+        "req": "ft-69",
+        "topic": "First formation SOLO",
+        "why": "On the F4301 SOLO the SP executes an interval T/O as Leader from the centre of the runway."
+      },
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Interval and Formation T/O (Leader and Wingman)\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-03": [
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Departure / Transition (Leader)\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-04": [
+      {
+        "req": "ft-67",
+        "topic": "Leader / Wingman split",
+        "why": "Flight time is distributed equally as Leader and as Wingman according to fuel and time availability."
+      },
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"In flight planning (Leader)\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-05": [
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Descend / Traffic pattern entry (Leader)\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-06": [
+      {
+        "req": "ft-73",
+        "topic": "Six instrument approaches",
+        "why": "The SP must execute at least six instrument approaches through the Formation category, three as Leader and three as Wingman."
+      },
+      {
+        "req": "ft-75",
+        "topic": "Approach as Leader and Wingman",
+        "why": "In Sections F43XX, F44XX and F45XX the SP flies a VOR/DME or TACAN approach with or without GCA in both roles."
+      },
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Formation approach\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-07": [
+      {
+        "req": "ft-68",
+        "topic": "Wingman T/O forbidden in SOLO",
+        "why": "Take-off as Wingman is prohibited in formation SOLO flights."
+      },
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Formation T/O\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-08": [
+      {
+        "req": "ft-72",
+        "topic": "Interval T/O demonstration",
+        "why": "Interval T/O need not be demonstrated by the IP before the SP flies it."
+      },
+      {
+        "req": "ft-69",
+        "topic": "First formation SOLO",
+        "why": "The F4301 SOLO starts with an interval T/O as Leader from the centre of the runway."
+      },
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Interval T/O\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-09": [
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Pitch out / Turning Rejoin\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-10": [
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Straight Ahead Rejoin\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-11": [
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Overshoot (Wingman)\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-12": [
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Breakout (Wingman)\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-13": [
+      {
+        "req": "ft-73",
+        "topic": "Six instrument approaches",
+        "why": "At least six instrument approaches are required across the Formation category, three as Leader and three as Wingman."
+      },
+      {
+        "req": "ft-75",
+        "topic": "Approach in both roles",
+        "why": "Sections F43XX, F44XX and F45XX require the VOR/DME or TACAN approach as leader and as wingman, Closed GCA accepted instead."
+      },
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Formation approach\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-14": [
+      {
+        "req": "ft-67",
+        "topic": "Leader / Wingman split",
+        "why": "Planning must distribute flight time equally between the Leader and Wingman roles."
+      },
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Briefing (General)\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-15": [
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Ground Procedures (General)\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-16": [
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Pitch out / Rejoin (Leader)\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-17": [
+      {
+        "req": "ft-70",
+        "topic": "Minimum altitudes",
+        "why": "Formation maneuvers are flown at or above 2.000 ft AGL dual and above 5.000 ft AGL on SOLO flights."
+      },
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Fingertip (Leader and Wingman)\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-18": [
+      {
+        "req": "ft-70",
+        "topic": "Minimum altitudes",
+        "why": "Formation maneuvers are flown at or above 2.000 ft AGL dual and above 5.000 ft AGL on SOLO flights."
+      },
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Route, Closed Trail / Fighting Wing\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-19": [
+      {
+        "req": "ft-68",
+        "topic": "Forbidden in SOLO",
+        "why": "Echelon turns as Wingman are prohibited in formation SOLO flights."
+      },
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Echelon turns (Wingman)\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-20": [
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Position Changes (Wingman)\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-21": [
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Lead change (General)\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-22": [
+      {
+        "req": "ft-68",
+        "topic": "Forbidden in SOLO",
+        "why": "Close trail as Wingman is prohibited in formation SOLO flights."
+      },
+      {
+        "req": "ft-70",
+        "topic": "Minimum altitudes",
+        "why": "Dual formation maneuvers are flown at or above 2.000 ft AGL."
+      },
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Closed Trail / Fighting Wing\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-23": [
+      {
+        "req": "ft-68",
+        "topic": "Forbidden in SOLO",
+        "why": "Extended trail as Wingman is prohibited in formation SOLO flights."
+      },
+      {
+        "req": "ft-70",
+        "topic": "Extended trail floor",
+        "why": "The minimum execution altitude for extended trail is 6.000 ft AGL, higher than the 2.000 ft AGL of the other formation maneuvers."
+      }
+    ],
+    "formation-24": [
+      {
+        "req": "ft-71",
+        "topic": "Tactical formation altitudes",
+        "why": "Tactical formation is flown at or above 3.000 ft AGL in F43XX, 1000-3000 ft AGL in F45XX and above 5.000 ft AGL on the SOLO."
+      },
+      {
+        "req": "ft-76",
+        "topic": "F43XX / F45XX SOLO",
+        "why": "The first SOLO of each of these sections may be flown at F4301 and F4501 under the BD 3-1/HATC restrictions."
+      },
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Tactical Formation (Wingman)\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-24b": [
+      {
+        "req": "ft-68",
+        "topic": "Cross Turns forbidden in SOLO",
+        "why": "Cross Turns are prohibited in formation SOLO flights."
+      },
+      {
+        "req": "ft-71",
+        "topic": "Tactical formation altitudes",
+        "why": "Tactical turns are flown at or above 3.000 ft AGL in F43XX and between 1000 and 3000 ft AGL in F45XX."
+      },
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Tactical Turns, Delay 90, Delay 45, Hook Turns, Cross Turns and weave, Check Turns\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-29": [
+      {
+        "req": "ft-30",
+        "topic": "Energy management",
+        "why": "Planning and execution of every mission must achieve the best aircraft energy management."
+      },
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Basic A/C control and G/Fuel Energy Awareness\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-30": [
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Overhead Landing Patterns (General)\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-31": [
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Landing (General)\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-32": [
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Visual signals (General)\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-33": [
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"In-flight Checks - Clearing\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-34": [
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Radio comm (General)\"; performance must meet the MIF table codes."
+      }
+    ],
+    "formation-36": [
+      {
+        "req": "ft-24",
+        "topic": "SRF-1 lost wingman",
+        "why": "Special Requirement SRF-1 is practice in simulated lost wingman procedures."
+      },
+      {
+        "req": "ft-31",
+        "topic": "Lost wingman forbidden in SOLO",
+        "why": "Simulated Lost Wingman Procedures are forbidden in SOLO flights."
+      },
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "The SP is examined in emergency procedures during briefing or debriefing with emphasis on formation procedures."
+      },
+      {
+        "req": "fail-28",
+        "topic": "100 percent pass mark",
+        "why": "Bold Face procedures and aircraft limits must be answered at 100 percent, against 80 percent for the other questionnaires."
+      },
+      {
+        "req": "gt-31",
+        "topic": "Bold Face inside the EETh",
+        "why": "Every professional-subjects questionnaire also examines five Bold Face procedures and the aircraft limits in writing."
+      },
+      {
+        "req": "gt-32",
+        "topic": "Monthly egress / ejection / survival exam",
+        "why": "Students of all phases are examined in writing every month on emergency ground egress, ejection and the low/high post-ejection checklist."
+      }
+    ],
+    "formation-37": [
+      {
+        "req": "gt-11",
+        "topic": "Formation written examinations",
+        "why": "Phase II includes a written examination in Formation and one in Tactical Formation."
+      },
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Emergency Procedures - General knowledge\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "gt-23",
+        "topic": "General Knowledge prerequisites",
+        "why": "Lists what the SP must know: T-6A systems ground training, aircraft manuals, flying techniques, meteorology, aerodynamics, ATC rules, navigation, aviation medicine and survival."
+      },
+      {
+        "req": "gt-30",
+        "topic": "EETh frequency",
+        "why": "Professional-subject questionnaires are written weekly in the pre-SOLO phase and every 15 days afterwards."
+      },
+      {
+        "req": "fail-28",
+        "topic": "Ground pass marks",
+        "why": "80 percent is the minimum pass mark for questionnaires, 100 percent for Bold Face and aircraft limits."
+      },
+      {
+        "req": "gt-41",
+        "topic": "Oral examination threshold for KEPE",
+        "why": "Two consecutive or four non-consecutive failed pre-flight oral examinations put the SP in KEPE."
+      },
+      {
+        "req": "fail-36",
+        "topic": "Oral examination referral threshold",
+        "why": "Four consecutive or eight non-consecutive failed pre-flight oral examinations trigger referral under PD 29/2020."
+      },
+      {
+        "req": "gt-46",
+        "topic": "Written test after oral failures",
+        "why": "After the oral-examination threshold the Squadron Commander or Ops Officer tests professional knowledge in writing (50 closed book, 25 open book, 5 Bold Face)."
+      }
+    ],
+    "formation-crm": [
+      {
+        "req": "gt-18",
+        "topic": "CRM ground lessons",
+        "why": "CRM 101-04 / 201-2 are taught in ground training, at the end of it for foreign SPs who did not cover them at their academy."
+      },
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"CRM (General)\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-01": [
+      {
+        "req": "ft-82",
+        "topic": "Leg count and length",
+        "why": "VFR navigation sorties must have at least 5 legs of 10 to 30 NM each, which the mission plan has to satisfy."
+      },
+      {
+        "req": "ft-86",
+        "topic": "GPS legs decided at briefing",
+        "why": "At briefing the IP determines the legs on which GPS may be used; they may not exceed half the total and should be over sea."
+      },
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Mission Planning / Briefing - Debriefing\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-02": [
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Ground Procedures\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-03": [
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Takeoff - Departure\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-04": [
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Takeoff - Departure\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-05": [
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Basic Aircraft Control / Wingman Consideration\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-06": [
+      {
+        "req": "ft-79",
+        "topic": "Lead / wingman split per sortie",
+        "why": "Flight time as lead or wingman is divided equally in every navigation sortie."
+      },
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Inflight Planning / Flight Integrity\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-07": [
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Fingertip\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-08": [
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Tactical Formation\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-09": [
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Tactical Turns\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-10": [
+      {
+        "req": "ft-80",
+        "topic": "Medium level floor",
+        "why": "All Medium Level Navigation sorties are flown at or above the MSA of the legs."
+      },
+      {
+        "req": "ft-81",
+        "topic": "SRN-1 low leg demonstration",
+        "why": "The IP demonstrates one leg at 500 ft AGL in Sections N43XX and N45XX."
+      },
+      {
+        "req": "ft-82",
+        "topic": "Leg count and length",
+        "why": "Sorties must contain at least 5 legs of 10 to 30 NM each."
+      },
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Maintaining Track\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-11": [
+      {
+        "req": "ft-86",
+        "topic": "GPS legs capped",
+        "why": "GPS legs may not exceed half of the total legs, so the remaining legs are flown on map reading."
+      },
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Map Reading\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-12": [
+      {
+        "req": "ft-86",
+        "topic": "GPS legs capped",
+        "why": "GPS is allowed only on the legs the IP nominates at briefing, up to half the total, so pilotage carries the rest."
+      },
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Pilotage\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-13": [
+      {
+        "req": "ft-86",
+        "topic": "GPS use restriction",
+        "why": "The IP determines at briefing on which legs GPS may be used; they may not exceed half the total legs and should be over sea."
+      },
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Navigation with GPS\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-14": [
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"VFR Arrival - Airport Pattern procedures\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-15": [
+      {
+        "req": "ft-87",
+        "topic": "Instrument approach on RTB",
+        "why": "An instrument approach is flown during RTB in at least one sortie of Sections N41XX, N42XX and N43XX."
+      },
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Instrument approach\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-16": [
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Formation approach\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-17": [
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Airport Pattern procedures\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-18": [
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Overhead pattern\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-19": [
+      {
+        "req": "ft-83",
+        "topic": "Out and back landing",
+        "why": "Navigation sorties may land at a strange airfield provided the SP flies back the same day within the BD 3-1/HATC minima."
+      },
+      {
+        "req": "ft-61",
+        "topic": "Foreign airport landing",
+        "why": "A landing at a foreign airport is graded with performance code \"2\"."
+      },
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Overhead pattern and Landing\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-20": [
+      {
+        "req": "ft-87",
+        "topic": "Instrument approach on RTB",
+        "why": "During RTB of the N4690 checkride the SP executes an instrument approach if possible."
+      },
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Instrument approach\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-21": [
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Clearing / Visual Lookout\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-22": [
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"Communication\"; performance must meet the MIF table codes."
+      }
+    ],
+    "vfr_navigation-24": [
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "The SP is examined in emergency procedures during briefing or debriefing with emphasis on VFR navigation procedures."
+      },
+      {
+        "req": "fail-28",
+        "topic": "100 percent pass mark",
+        "why": "Bold Face procedures and aircraft limits must be answered at 100 percent, against 80 percent for the other questionnaires."
+      },
+      {
+        "req": "gt-31",
+        "topic": "Bold Face inside the EETh",
+        "why": "Every professional-subjects questionnaire also examines five Bold Face procedures and the aircraft limits in writing."
+      },
+      {
+        "req": "gt-32",
+        "topic": "Monthly egress / ejection / survival exam",
+        "why": "Students of all phases are examined in writing every month on emergency ground egress, ejection and the low/high post-ejection checklist."
+      }
+    ],
+    "vfr_navigation-25": [
+      {
+        "req": "fail-28",
+        "topic": "Ground pass marks",
+        "why": "80 percent is the minimum pass mark for questionnaires, 100 percent for Bold Face and aircraft limits."
+      },
+      {
+        "req": "gt-31",
+        "topic": "Bold Face inside the EETh",
+        "why": "The professional-subjects questionnaires also examine five Bold Face procedures and the aircraft limits."
+      },
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Graded profile of this checkride explicitly lists \"General Knowledge\"; performance must meet the MIF table codes."
+      },
+      {
+        "req": "gt-11",
+        "topic": "Navigation written examinations",
+        "why": "Phase II includes NA 190 written examination in VFR Navigation and LNAV 790 written examination in Low Level Navigation."
+      },
+      {
+        "req": "gt-23",
+        "topic": "General Knowledge prerequisites",
+        "why": "Lists what the SP must know: T-6A systems ground training, aircraft manuals, flying techniques, meteorology, aerodynamics, ATC rules, navigation, aviation medicine and survival."
+      },
+      {
+        "req": "gt-30",
+        "topic": "EETh frequency",
+        "why": "Professional-subject questionnaires are written weekly in the pre-SOLO phase and every 15 days afterwards."
+      },
+      {
+        "req": "gt-41",
+        "topic": "Oral examination threshold for KEPE",
+        "why": "Two consecutive or four non-consecutive failed pre-flight oral examinations put the SP in KEPE."
+      },
+      {
+        "req": "fail-36",
+        "topic": "Oral examination referral threshold",
+        "why": "Four consecutive or eight non-consecutive failed pre-flight oral examinations trigger referral under PD 29/2020."
+      },
+      {
+        "req": "gt-46",
+        "topic": "Written test after oral failures",
+        "why": "After the oral-examination threshold the Squadron Commander or Ops Officer tests professional knowledge in writing (50 closed book, 25 open book, 5 Bold Face)."
+      }
+    ],
+    "vfr_navigation-crm": [
+      {
+        "req": "gt-18",
+        "topic": "CRM ground lessons",
+        "why": "CRM 101-04 / 201-2 are taught in ground training, at the end of it for foreign SPs who did not cover them at their academy."
+      }
+    ]
+  },
+  "category_links": {
+    "contact": [
+      {
+        "req": "ft-39",
+        "topic": "Contact evaluations",
+        "why": "C4590, C4790, C5090 and C5490 (final checkride) are the Contact evaluations, flown by IP evaluators per BD 3-1/HATC."
+      },
+      {
+        "req": "ft-18",
+        "topic": "Final category examination",
+        "why": "The last sortie of the Contact category, C5490, stands as the final examination for the category."
+      },
+      {
+        "req": "ft-28",
+        "topic": "No SOLO after 59 percent or less",
+        "why": "An SP graded 59 percent or less on the previous flight, of any category, may not fly SOLO and continues dual in the category where he was graded ALMOST GOOD or FAIL."
+      },
+      {
+        "req": "ft-29",
+        "topic": "SOLO time and MIF preconditions",
+        "why": "SOLO is not flown more than four calendar days after the last front-seat dual VFR flight and requires at least MIF \"2\" in normal landing."
+      },
+      {
+        "req": "ft-31",
+        "topic": "Maneuvers forbidden in SOLO",
+        "why": "Stalls, spins and spin prevention, unusual attitudes, ELP, straight-in, slow flight, no-flap patterns/landings and simulated lost wingman may not be flown SOLO."
+      },
+      {
+        "req": "ft-91",
+        "topic": "SOLO capability annotation",
+        "why": "The previous dual grade sheet must record whether the SP is fit for SOLO and which maneuvers he was graded at least code \"2\" on."
+      },
+      {
+        "req": "ft-93",
+        "topic": "Last sortie of a Section",
+        "why": "The last flight of a Training Section may not be a SOLO."
+      },
+      {
+        "req": "ft-98",
+        "topic": "Consecutive SOLO ban",
+        "why": "An SP is not scheduled for two consecutive SOLO flights."
+      },
+      {
+        "req": "ft-96",
+        "topic": "SOLO landing time limit",
+        "why": "SOLO flights must land at the latest 30 minutes before sunset."
+      },
+      {
+        "req": "ft-95",
+        "topic": "Dual aircraft cover",
+        "why": "While a student is SOLO in the flight area or the airport circuit, a dual aircraft of the same type must be inside the KALAMATA MTMA."
+      },
+      {
+        "req": "ft-38",
+        "topic": "Daily sorties up to PRE-SOLO",
+        "why": "Up to the PRE-SOLO phase the SP flies at most one aircraft and one F/S sortie per day."
+      },
+      {
+        "req": "ft-37",
+        "topic": "C4101 grading",
+        "why": "C4101 is not graded in general performance unless air sickness occurs, in which case it is graded FAIR (59 percent) with no FCJ."
+      },
+      {
+        "req": "ft-40",
+        "topic": "C4790 / C4791 same day",
+        "why": "Both sorties are flown the same day with the same aircraft."
+      },
+      {
+        "req": "ft-123",
+        "topic": "First SOLO counted as one sortie",
+        "why": "The pre-SOLO evaluation and the first SOLO count as a single sortie for maximum daily employment; if the SOLO cannot be flown the evaluation is repeated."
+      },
+      {
+        "req": "fail-19",
+        "topic": "Fail on the first SOLO",
+        "why": "A DEFICIENCY or FAIL on the first SOLO leads to a Proficiency Examination with the same profile, because the first SOLO counts as the last flight of the Section."
+      },
+      {
+        "req": "ft-44",
+        "topic": "ELP conditions",
+        "why": "ELPs are performed daytime and under VMC only."
+      },
+      {
+        "req": "gt-11",
+        "topic": "Contact written examination",
+        "why": "Phase II ground training includes a written examination in the Basic Maneuvers of the Contact category."
+      },
+      {
+        "req": "fail-35",
+        "topic": "Blind control before C4790",
+        "why": "The blind control examination precedes the C4790 checkride with a 90 percent pass mark, repeated the next day on failure."
+      },
+      {
+        "req": "ft-24",
+        "topic": "Contact Special Requirements",
+        "why": "SRC-1 to SRC-11 define the Contact special requirements from AGSM to ELP with IDLE power."
+      }
+    ],
+    "instrument": [
+      {
+        "req": "ft-18",
+        "topic": "Final category examination",
+        "why": "The last sortie of the Instrument category, I4890, stands as the final examination for the category."
+      },
+      {
+        "req": "ft-57",
+        "topic": "Clearing responsibility",
+        "why": "In Instrument sorties the IP keeps responsibility for clearing and for remaining inside the assigned area."
+      },
+      {
+        "req": "ft-58",
+        "topic": "Strange airfield requirement",
+        "why": "Sections I45XX and I46XX require at least one IFR navigation and one instrument approach at a strange airfield per SP."
+      },
+      {
+        "req": "ft-59",
+        "topic": "Missions abroad",
+        "why": "Sections I45XX and I46XX may be flown to Italian airfields or Cyprus under the BD 3-1/HATC fuel, weather and over-water restrictions."
+      },
+      {
+        "req": "ft-60",
+        "topic": "I4701 prerequisites",
+        "why": "Night IFR navigation I4701 requires I4501 and I3601 flown in night conditions and must precede I4603."
+      },
+      {
+        "req": "ft-61",
+        "topic": "Foreign airport landing code",
+        "why": "A landing at a foreign airport is graded with performance code \"2\"."
+      },
+      {
+        "req": "ft-62",
+        "topic": "EFT familiarization",
+        "why": "At least one IFR navigation is flown with two external fuel tanks; the requirement may also be met in VFR navigation."
+      },
+      {
+        "req": "ft-65",
+        "topic": "I4490 Instrument checkride",
+        "why": "Mid-category evaluation grading at least one instrument descent and one final approach, plus IMC emergency procedures orally."
+      },
+      {
+        "req": "ft-66",
+        "topic": "I4890 Final Instrument checkride",
+        "why": "Flown as an IFR navigation with an instrument approach at a strange airport, optionally with two EFTs."
+      },
+      {
+        "req": "st-19",
+        "topic": "Instrument flow chart",
+        "why": "For the Instrument category the Squadron follows the F/S flow chart so performance improves gradually before the air sorties."
+      },
+      {
+        "req": "st-04",
+        "topic": "IMC optical stimuli",
+        "why": "Where a section calls for IMC stimuli the simulator must present IMC optical elements, with cloud base and visibility criteria on approach and landing."
+      },
+      {
+        "req": "gt-11",
+        "topic": "Instrument written examinations",
+        "why": "Written examinations in Basic Instruments, Advanced Instruments and IFR Navigation are part of Phase II ground training."
+      },
+      {
+        "req": "ft-24",
+        "topic": "Instrument Special Requirements",
+        "why": "SRI-1 is spatial disorientation avoidance and SRI-2 is time and magnetic compass turns."
+      }
+    ],
+    "formation": [
+      {
+        "req": "ft-18",
+        "topic": "Final category examination",
+        "why": "The last sortie of the Formation category, F4690, stands as the final examination for the category."
+      },
+      {
+        "req": "ft-67",
+        "topic": "Equal Leader / Wingman time",
+        "why": "Flight time is distributed equally between the Leader and Wingman roles subject to fuel and time."
+      },
+      {
+        "req": "ft-68",
+        "topic": "Maneuvers forbidden in formation SOLO",
+        "why": "T/O, echelon turns, close trail and extended trail as Wingman, and Cross Turns, are prohibited on SOLO flights."
+      },
+      {
+        "req": "ft-69",
+        "topic": "Formation SOLO timing",
+        "why": "The F43XX SOLO may be flown at F4301 on the same or next day as the last dual, the second within four calendar days; the F45XX SOLO the same or next day."
+      },
+      {
+        "req": "ft-70",
+        "topic": "Formation altitude floors",
+        "why": "2.000 ft AGL for dual formation maneuvers, 6.000 ft AGL for extended trail, above 5.000 ft AGL for SOLO practice."
+      },
+      {
+        "req": "ft-71",
+        "topic": "Tactical formation altitude floors",
+        "why": "3.000 ft AGL for F43XX, 1000-3000 ft AGL for F45XX and above 5.000 ft AGL for the tactical formation SOLO."
+      },
+      {
+        "req": "ft-72",
+        "topic": "Interval T/O demonstration",
+        "why": "Interval T/O, as Leader or Wingman, need not be demonstrated by the IP."
+      },
+      {
+        "req": "ft-73",
+        "topic": "Six instrument approaches",
+        "why": "At least six instrument approaches across the category, three as Leader and three as Wingman; Closed GCA may replace one."
+      },
+      {
+        "req": "ft-75",
+        "topic": "Approach in both roles",
+        "why": "Sections F43XX, F44XX and F45XX require a VOR/DME or TACAN approach with or without GCA in both roles."
+      },
+      {
+        "req": "ft-76",
+        "topic": "F43XX / F45XX SOLO",
+        "why": "The first SOLO of each section may be flown at F4301 and F4501 respectively, under BD 3-1/HATC restrictions."
+      },
+      {
+        "req": "ft-77",
+        "topic": "F4690 Final Formation checkride",
+        "why": "Two-ship final evaluation covering general, Leader and Wingman profiles plus oral emergency procedures with formation emphasis."
+      },
+      {
+        "req": "ft-94",
+        "topic": "Escort qualification",
+        "why": "Formation SOLO flights must be escorted by an IP holding a category \"B\" or higher instructor licence."
+      },
+      {
+        "req": "gt-11",
+        "topic": "Formation written examinations",
+        "why": "Phase II includes written examinations in Formation and in Tactical Formation."
+      },
+      {
+        "req": "ft-24",
+        "topic": "Formation Special Requirement",
+        "why": "SRF-1 is practice in simulated lost wingman procedures."
+      }
+    ],
+    "vfr_navigation": [
+      {
+        "req": "ft-18",
+        "topic": "Final category examination",
+        "why": "The last sortie of the Navigation category, N4690, stands as the final examination for the category."
+      },
+      {
+        "req": "ft-78",
+        "topic": "Low level prerequisite",
+        "why": "Low Level Navigation sorties may be flown only after C5201."
+      },
+      {
+        "req": "ft-79",
+        "topic": "Equal lead / wingman time",
+        "why": "Flight time as lead or wingman is divided equally in every navigation sortie."
+      },
+      {
+        "req": "ft-80",
+        "topic": "Medium level floor",
+        "why": "All Medium Level Navigation sorties are flown at or above the MSA of the legs."
+      },
+      {
+        "req": "ft-81",
+        "topic": "SRN-1 demonstration",
+        "why": "The IP demonstrates one leg at 500 ft AGL in Sections N43XX and N45XX."
+      },
+      {
+        "req": "ft-82",
+        "topic": "Leg count and length",
+        "why": "VFR navigation sorties must have at least 5 legs of 10 to 30 NM each."
+      },
+      {
+        "req": "ft-83",
+        "topic": "Out and back",
+        "why": "Navigation sorties may land at a strange airfield if the SP returns the same day within BD 3-1/HATC minima."
+      },
+      {
+        "req": "ft-84",
+        "topic": "Front seat",
+        "why": "The SP occupies the front seat in all navigation sorties."
+      },
+      {
+        "req": "ft-86",
+        "topic": "GPS restriction",
+        "why": "The IP nominates the GPS legs at briefing; they may not exceed half the total legs and should be flown over sea."
+      },
+      {
+        "req": "ft-87",
+        "topic": "Instrument approach on RTB",
+        "why": "An instrument approach is flown during RTB in at least one sortie of N41XX, N42XX and N43XX and, if possible, on N4690."
+      },
+      {
+        "req": "ft-88",
+        "topic": "N4690 Final VFR Navigation checkride",
+        "why": "Final evaluation over low level navigation and two-ship formation, with oral emergency procedures and IP-nominated GPS legs."
+      },
+      {
+        "req": "ft-62",
+        "topic": "EFT familiarization",
+        "why": "The requirement for one navigation flown with two external fuel tanks may also be met in VFR navigation."
+      },
+      {
+        "req": "ft-24",
+        "topic": "Navigation Special Requirement",
+        "why": "SRN-1 requires one leg of a navigation sortie to be flown at 500 ft AGL."
+      },
+      {
+        "req": "gt-11",
+        "topic": "Navigation written examinations",
+        "why": "Phase II includes NA 190 written examination in VFR Navigation and LNAV 790 written examination in Low Level Navigation."
+      }
+    ]
+  },
+  "global_links": [
+    {
+      "req": "ft-89",
+      "topic": "75 percent rule",
+      "why": "A flight counts as executed only if at least 75 percent of the syllabus requirements and more than 75 percent of the planned flight time were covered."
+    },
+    {
+      "req": "st-57",
+      "topic": "Regression table",
+      "why": "Table 3 turns a shortfall against the planned MIF code into DEFICIENCY or FAILURE: expected \"2\" graded \"1\" is DEFICIENCY, graded \"0\" or \"E\" is FAILURE."
+    },
+    {
+      "req": "fail-03",
+      "topic": "What is not regression",
+      "why": "Exceeding the planned code and later returning to the planned level is not regression."
+    },
+    {
+      "req": "st-58",
+      "topic": "MIF rules per Section",
+      "why": "Planned codes must be reached by the last sortie of the Section; the code achieved on that last sortie becomes the minimum for the first sortie of the next one."
+    },
+    {
+      "req": "st-59",
+      "topic": "Code 2 as the safety threshold",
+      "why": "Code \"2\" is defined as the minimum performance code for safe execution, because it is what allows the maneuver to be flown SOLO."
+    },
+    {
+      "req": "ft-12",
+      "topic": "IP intervention",
+      "why": "Whenever the IP must intervene to complete a maneuver, the SP is graded \"0\" or \"D\" (dangerous handling)."
+    },
+    {
+      "req": "ft-13",
+      "topic": "Deviation scale",
+      "why": "Specific criteria define codes \"1\" and \"3\", intermediate deviations give \"2\", smaller deviations give \"4\" and larger ones give \"0\" or \"D\"."
+    },
+    {
+      "req": "fail-01",
+      "topic": "General performance scale",
+      "why": "General performance is graded on the percentage scale: 90-100 excellent, 75-89 very good, 60-74 good, 50-59 almost good (DEFICIENCY), 0-49 FAIL."
+    },
+    {
+      "req": "ft-149",
+      "topic": "Two grades per sortie",
+      "why": "Each flight carries two grades: an absolute code per maneuver and a relative grade for general performance."
+    },
+    {
+      "req": "ft-34",
+      "topic": "Minimum number of maneuvers",
+      "why": "The minimum number in parentheses next to each maneuver must be practised by the end of the Section, otherwise an extra sortie or carry-over is granted."
+    },
+    {
+      "req": "ft-35",
+      "topic": "No minimum but higher MIF",
+      "why": "Where no minimum number is given but the Section MIF is higher than the previous one, the maneuver is practised as much as needed to reach it."
+    },
+    {
+      "req": "ft-36",
+      "topic": "Maneuvers with no Section grading",
+      "why": "A maneuver with no grading in the current Section is graded against the criteria of the Section actually being flown, provided it was analysed and briefed."
+    },
+    {
+      "req": "ft-11",
+      "topic": "Criteria by end of phase",
+      "why": "The SP must have met the performance criteria by the end of the Training Phase."
+    },
+    {
+      "req": "fail-05",
+      "topic": "The last sortie of a Section",
+      "why": "The last sortie of each Section is decisive because the Section performance levels must be reached by then."
+    },
+    {
+      "req": "fail-12",
+      "topic": "Failure on the last sortie of a Section",
+      "why": "Missing the planned codes on the last sortie of a Section sends the SP to a Proficiency Examination with a Squadron evaluator; a second shortfall applies PD 29/2020."
+    },
+    {
+      "req": "fail-15",
+      "topic": "Codes at evaluations",
+      "why": "At evaluations and final examinations the SP must reach the codes printed in the MIF tables; otherwise general performance is DEFICIENCY or FAIL and PD 29/2020 applies."
+    },
+    {
+      "req": "fail-16",
+      "topic": "Checkride below 60 percent",
+      "why": "A grade of 0-59 percent on an evaluation or final examination flight is itself a referral criterion for flying aptitude review."
+    },
+    {
+      "req": "fail-27",
+      "topic": "Progress Check standards",
+      "why": "In Progress Checks and Proficiency Examinations the SP must reach the codes of his last flight before the check."
+    },
+    {
+      "req": "fail-23",
+      "topic": "Progress Check by the Ops Officer",
+      "why": "First rung of the ladder: 60 percent or above continues training with another IP, 0-59 percent moves to the Squadron Commander."
+    },
+    {
+      "req": "fail-25",
+      "topic": "Progress Check by the Squadron Commander",
+      "why": "Second rung: 60 percent or above continues with another IP, 0-59 percent refers the SP to the Flying Ability Board."
+    },
+    {
+      "req": "fail-26",
+      "topic": "Progress Check ladder limits",
+      "why": "The Ops Officer may judge once per phase and the Squadron Commander once, or twice if the previous Ops Officer check was below 60 percent."
+    },
+    {
+      "req": "fail-43",
+      "topic": "KEPE purpose",
+      "why": "KEPE is a short-term progress supervision program applied to students showing reduced performance."
+    },
+    {
+      "req": "fail-44",
+      "topic": "KEPE entry thresholds",
+      "why": "Any sortie at 59 percent or less, two consecutive flights at 63 percent or less, two consecutive air-sickness events, or ground exam failures put the SP into KEPE."
+    },
+    {
+      "req": "fail-45",
+      "topic": "KEPE entry limits",
+      "why": "Maximum entries per phase: twice for ground examination failures, twice for the Adaptation category, once per other air or F/S category."
+    },
+    {
+      "req": "fail-47",
+      "topic": "KEPE measures",
+      "why": "Measures include one sortie per day, fewer instructors, additional ground training and non-graded F/S repetition flights."
+    },
+    {
+      "req": "fail-48",
+      "topic": "KEPE exit goals",
+      "why": "Exit goals may be a specific code on given maneuvers, a specific general grade, success in a questionnaire or in consecutive oral examinations."
+    },
+    {
+      "req": "fail-04",
+      "topic": "Acting before the last sortie",
+      "why": "If progress is not as planned the IP must propose KEPE, propose a day off flying, or grade the flight 0-59 percent for unacceptable progress."
+    },
+    {
+      "req": "fail-88",
+      "topic": "Non-graded flight categories",
+      "why": "Repetitions, non-executed flights, reassignment and habituation flights are not graded in general performance, but the grade sheet is filled in with codes and detailed remarks."
+    },
+    {
+      "req": "fail-74",
+      "topic": "Basis of evaluation",
+      "why": "Air and ground evaluations are made against the performance criteria (STANDARDS) set by the training order in force for each phase."
+    },
+    {
+      "req": "ft-17",
+      "topic": "Phase completion minimums",
+      "why": "No SP finishes the phase with less than 77,0 dual and 6,0 SOLO flight hours; all SOLO sorties are mandatory."
+    },
+    {
+      "req": "ft-27",
+      "topic": "Demonstration before execution",
+      "why": "Every maneuver not practised in the F/S is demonstrated in the air at least once by the IP before the SP is asked to fly it."
+    },
+    {
+      "req": "st-03",
+      "topic": "UTD optical stimuli exemption",
+      "why": "Codes for maneuvers that need optical stimuli are not taken into account when the exercise is flown in the UTD."
+    },
+    {
+      "req": "gt-22",
+      "topic": "Ground training prerequisite",
+      "why": "No SP begins a Training Section or Exercise without having attended and been successfully evaluated on its ground-training objects."
+    },
+    {
+      "req": "ft-33",
+      "topic": "Special Requirements annotation",
+      "why": "Special requirements are annotated separately in the grade sheet with their corresponding performance levels."
+    },
+    {
+      "req": "ft-148",
+      "topic": "General vs Specific criteria",
+      "why": "Performance criteria split into General and Specific; the IP grades the General ones against SP experience and the current Training Section."
+    },
+    {
+      "req": "ft-144",
+      "topic": "Smooth and solid control",
+      "why": "An SP may be within the published limits and still fail for instability, imprecision or hesitation."
+    },
+    {
+      "req": "ft-145",
+      "topic": "Instantaneous vs constant deviations",
+      "why": "Momentary excursions beyond PLUS/MINUS limits are acceptable only if corrected at once, without IP prompting or intervention."
+    },
+    {
+      "req": "ft-146",
+      "topic": "Standardization",
+      "why": "Knowledge and procedures must follow the standardization of the Manuals and Squadron instructions."
+    },
+    {
+      "req": "ft-147",
+      "topic": "Demo-only maneuvers and missing specific criteria",
+      "why": "Maneuvers only demonstrated are cited in the grade-sheet remarks; where no specific criteria exist, general and Basic A/C Control criteria apply."
+    },
+    {
+      "req": "ft-14",
+      "topic": "Execution conditions",
+      "why": "Maneuvers are graded by day in VMC or IMC unless the criteria say otherwise, and VMC criteria must be met together with spatial awareness."
+    }
+  ]
+}
