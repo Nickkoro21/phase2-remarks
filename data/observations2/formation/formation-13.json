@@ -1,0 +1,132 @@
+{
+  "item_id": "formation-13",
+  "item_name": "FORMATION APPROACH.",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [13],
+  "mif_rows": [
+    {"sn": 13, "row_name": "Formation Approach"}
+  ],
+  "error_modes": [
+    {
+      "id": "formation-13-em01",
+      "label": "Lateral separation (fingertip reference)",
+      "mif_row": null,
+      "source": "specific:LATERAL SEPARATION *(feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to lateral stick and throttle inputs that were not coordinated while tracking the Leader in landing configuration, did not hold the fingertip lateral separation about the 10 ft reference point. Spacing opened well beyond the 20 ft allowance and at one point closed inside the reference point, and the IP had to intervene on the controls to restore safe wingtip clearance. The excursion was not recognized by SP before the intervention.",
+        "1": "SP, due to a coarse correction technique that chased the Leader's wing instead of stabilizing on the briefed sight picture, worked the approach with lateral spacing at the 20 ft outer limit. Position was brought back toward the reference point only after repeated verbal prompts from the IP, and each correction was delayed. Spacing was not reduced inside the 10 ft reference point.",
+        "2": "SP, due to a small lag in matching the Leader's roll inputs, allowed lateral spacing to open to roughly 15 ft, between the 10 ft and 20 ft tolerances. The deviation was recognized promptly and closed back onto the fingertip reference with a smooth aileron and power correction, with no prompting and no IP input.",
+        "3": "SP held fingertip lateral separation within 10 ft of the reference point throughout the approach. Corrections were small, early, and taken off the briefed sight picture rather than by chasing the Leader's wing. Lateral position remained stable through the configuration change and the descent.",
+        "4": "SP flew lateral separation essentially on the reference point, with deviations barely perceptible from the lead cockpit. The sight picture was held with continuous, near-imperceptible aileron and power inputs from the roll-out to the break-off. Position quality did not degrade at any stage of the approach.",
+        "marginal": "SP kept lateral separation inside the fingertip standard, but the working position sat consistently toward the outer edge of the band and the corrections were larger than the situation required. The trend was toward opening rather than holding the reference point, particularly in the turns. SP is expected to tighten the sight picture and apply smaller, earlier lateral inputs."
+      }
+    },
+    {
+      "id": "formation-13-em02",
+      "label": "Vertical position on the Leader's wing line",
+      "mif_row": null,
+      "source": "specific:VERTICAL SEPARATION *(feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unstable pitch reference and incomplete trim technique in the landing configuration, did not maintain the wing-level relationship with the Leader. Vertical displacement went well above the 10 ft high limit and then below the 5 ft low limit, placing the aircraft under the Leader's wing line, and the IP intervened to reposition the aircraft. The vertical excursion continued to develop before SP recognized it.",
+        "1": "SP, due to pitch corrections applied late and without a supporting power change, sat at the 10 ft high edge of the permitted band for extended segments of the approach. The wing-level relationship was re-established only after verbal direction from the IP, and each recovery was slow. The low side of the band was not exceeded.",
+        "2": "SP, due to a delayed pitch response as the Leader adjusted descent rate, allowed vertical position to move into the upper part of the permitted band, approaching but not exceeding the 10 ft high tolerance. SP recognized the drift immediately and re-established the Leader's wing line with a coordinated pitch and power input, unprompted.",
+        "3": "SP maintained position on the Leader's wing level inside the permitted 10 ft high and 5 ft low band for the whole approach. Pitch and power were coordinated so that descent rate matched the Leader and vertical position stayed stable. No stepping above or below the wing line was observed.",
+        "4": "SP flew the vertical relationship essentially on the Leader's wing line, with departures from that line negligible. Descent rate matching was continuous, so no corrective pitch step was required at any point. Vertical position quality was unchanged from the roll-out to the break-off.",
+        "marginal": "SP stayed inside the vertical band but worked habitually on the high side, using the 10 ft allowance as the normal position rather than the wing line. The tendency became more pronounced as the descent rate changed. SP is expected to fly the Leader's wing line as the target and reserve the tolerance for corrections."
+      }
+    },
+    {
+      "id": "formation-13-em03",
+      "label": "Observance angle / longitudinal position",
+      "mif_row": null,
+      "source": "specific:OBSERVANCE ANGLE (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power lag that was left uncorrected against the Leader's speed changes, did not hold the observance angle that defines the fingertip longitudinal position. The angle went well aft of the 55 deg boundary during the deceleration and then swung forward of the Leader's wing line in the recovery, and the IP took control to re-establish the position. The sweep of the angle was not arrested by SP's own inputs.",
+        "1": "SP, due to throttle inputs made in large steps rather than anticipated against the Leader, worked the approach at an observance angle of about 50 deg, at the outer allowance. The angle was brought forward only when the IP called it, and the tighter position was not sustained. The 55 deg boundary was not exceeded.",
+        "2": "SP, due to a slightly late power reduction as the Leader stabilized on final, allowed the observance angle to move aft to about 40 deg, between the 35 deg and 45 deg tolerances. The aft drift was identified quickly and corrected back toward the 30 deg reference with a measured power addition, with no prompting required.",
+        "3": "SP maintained the observance angle within 5 deg of the 30 deg reference throughout the approach. Longitudinal position was held with anticipated throttle inputs matched to the Leader's speed changes rather than reactive corrections. The angle stayed steady through the configuration change and the descent.",
+        "4": "SP held the observance angle effectively on the 30 deg reference, with variation barely detectable from the lead cockpit. Power was modulated continuously so that no visible fore-and-aft motion developed against the Leader. Longitudinal position quality was maintained to the point of break-off.",
+        "marginal": "SP kept the observance angle inside the standard but consistently toward the aft edge, and the recoveries to the reference angle were slow. The tendency to sit aft was more pronounced whenever the Leader changed airspeed. SP is expected to anticipate the power requirement so that the reference angle, not the tolerance, becomes the working position."
+      }
+    },
+    {
+      "id": "formation-13-em04",
+      "label": "Station keeping through Leader's turns up to 30 deg bank",
+      "mif_row": null,
+      "source": "general:null (fingertip criteria applied); conditions:1/ No1 executes maneuvers up to 30 deg of bank",
+      "hf_concept": "hf-acts-errors",
+      "texts": {
+        "0": "SP, due to a skill-based error in control input as the Leader rolled into the turn, did not maintain the fingertip geometry through the maneuvering. The aircraft went acute and high on the inside of the turn and then fell aft and wide on the roll-out, outside the fingertip tolerances in both axes, and the IP intervened to re-establish the position. No recovery was initiated by SP before the intervention.",
+        "1": "SP, due to bank matching applied after the Leader's roll rather than with it, held the position at the outer fingertip tolerances through each turn up to 30 deg of bank. Corrections followed only after the IP called the geometry, and the position was regained slowly on the roll-out. The outer tolerances were not exceeded.",
+        "2": "SP, due to a slightly late bank input on entry to the turn, allowed the geometry to move outside the tighter fingertip band while remaining within the outer allowance. SP recognized the developing angle and re-matched bank and power on the roll-out, restoring the sight picture without prompting and without IP input.",
+        "3": "SP maintained the fingertip position through the Leader's maneuvering up to 30 deg of bank. Bank was matched with the Leader's roll and power was adjusted for the change in required thrust, so the position held on entry, in the turn and on the roll-out.",
+        "4": "SP flew the turns with the sight picture essentially locked, showing no visible change in geometry between wings level and 30 deg of bank. Roll inputs were matched to the Leader's initiation and the roll-out was anticipated. Position through maneuvering was indistinguishable from position in level flight.",
+        "marginal": "SP held the fingertip position through the turns, but the geometry loosened on every entry and was recovered only during the roll-out. The pattern repeated rather than improving through the approach. SP is expected to match the Leader's roll rate at initiation so that position does not have to be regained afterwards."
+      }
+    },
+    {
+      "id": "formation-13-em05",
+      "label": "Landing configuration management while holding position",
+      "mif_row": null,
+      "source": "execution:landing configuration into the flight area / instrument or straight-in approach; general:null",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to configuration changes made without the accompanying power and pitch compensation, did not maintain the wingman position while establishing the landing configuration. Gear and flap selection produced pitch and drag changes that took the aircraft outside the fingertip tolerances, and the IP intervened to re-establish the position before the approach continued. Selections were also made out of step with the Leader.",
+        "1": "SP, due to a slow response to the trim change with gear and flaps extended, allowed the position to reach the outer fingertip tolerance at each configuration change. Position was regained only after the IP directed the correction, and the same degradation repeated at the next selection. The tolerances were not exceeded.",
+        "2": "SP, due to a small lag in adding power as the landing configuration was completed, drifted outside the tighter tolerance during the configuration change while remaining inside the outer allowance. The deviation was recognized straight away and the position was restored with a coordinated power and pitch input, without prompting.",
+        "3": "SP established and maintained the landing configuration while holding the wingman position inside the fingertip tolerances. Gear and flap selections were made in step with the Leader and the pitch and drag changes were compensated as they occurred. Position quality was unaffected by the configuration change.",
+        "4": "SP configured for landing with no detectable movement in the sight picture. Power was led into each selection so that the drag change produced no position excursion, and the selections stayed in step with the Leader without a call. Position remained constant throughout the configuration sequence.",
+        "marginal": "SP completed the landing configuration within standards, but each selection produced a visible loosening of the position that then had to be corrected. The pattern indicates power is being applied after, rather than with, the configuration change. SP is expected to anticipate the drag and trim change so that the sight picture stays constant."
+      }
+    },
+    {
+      "id": "formation-13-em06",
+      "label": "Closure and power control on the approach",
+      "mif_row": null,
+      "source": "general:null (fingertip criteria, longitudinal and lateral separation)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to throttle inputs made in large uncoordinated steps, did not control closure on the Leader during the approach. Overtake developed to a rate that could not be stopped with power alone and separation reduced inside the reference point, so the IP took control and repositioned the aircraft. The closure trend was not identified by SP in time to be corrected.",
+        "1": "SP, due to throttle corrections that were consistently one step behind the Leader's power changes, produced repeated overtake and fall-back cycles that carried the position to the outer tolerances. Each cycle was arrested only after a verbal call, and the oscillation persisted for the length of the approach. Separation was not reduced inside the reference point.",
+        "2": "SP, due to late recognition of a small overtake as the Leader stabilized on final, allowed closure to develop beyond the tighter tolerance while remaining inside the outer allowance. SP identified the rate early enough to stop it with a smooth power reduction and re-established the position unassisted.",
+        "3": "SP controlled closure on the Leader accurately throughout the approach. Power was modulated in small anticipatory inputs so that overtake and fall-back rates were stopped before they became apparent in the sight picture. No large throttle excursions were required.",
+        "4": "SP flew the approach with closure rates that never became visible in the sight picture. Throttle work was continuous and fine, matched to the Leader's changes as they were initiated rather than after they took effect. No corrective power excursion was needed at any stage.",
+        "marginal": "SP controlled closure inside the standards, but the corrections were larger than required and produced a low-amplitude oscillation that persisted through the approach. The technique remains reactive rather than anticipatory. SP is expected to use smaller and earlier power inputs to damp the closure rather than reverse it."
+      }
+    },
+    {
+      "id": "formation-13-em07",
+      "label": "Visual reference priority between Leader and cockpit",
+      "mif_row": null,
+      "source": "general:null; conditions:3/ Day only (VFR - VMC)",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to an attention bottleneck on the cockpit instruments during the approach, did not keep the sight picture on the Leader as the primary reference. Position degraded outside the fingertip tolerances in both lateral and vertical axes while attention was inside the cockpit, and the IP intervened before SP recognized the trend. The deviations went undetected as they developed.",
+        "1": "SP, due to prolonged attention on the instrument panel while in formation, allowed the position to reach the outer tolerances each time the scan went inside. The Leader was reacquired and the position corrected only after verbal prompting, and the pattern repeated at every check. The tolerances were not exceeded.",
+        "2": "SP, due to a scan that dwelt too long on the airspeed indication during the configuration change, allowed the position to move beyond the tighter tolerance while staying inside the outer allowance. SP returned to the Leader as the primary reference promptly and corrected the position without any prompting.",
+        "3": "SP kept the Leader as the primary visual reference throughout the approach, taking instrument checks in short glances that did not degrade the position. The required cockpit checks were completed with no measurable movement in the sight picture.",
+        "4": "SP maintained the sight picture continuously, integrating the required cockpit checks into short peripheral glances with no effect on position. Attention priority between the Leader and the cockpit was managed with no visible cost to the formation geometry.",
+        "marginal": "SP held the position within standards, but glances inside the cockpit were longer than necessary and each return to the Leader required a small correction. The pattern was consistent rather than isolated. SP is expected to shorten instrument checks and use peripheral cues so that the sight picture is not interrupted."
+      }
+    },
+    {
+      "id": "formation-13-em08",
+      "label": "Approach discipline and coordination with Leader and IP",
+      "mif_row": null,
+      "source": "general:null; conditions:2/ Dual-flight only",
+      "hf_concept": "hf-lack-of-assertiveness",
+      "texts": {
+        "0": "SP, due to a lack of assertiveness in stating that the position could not be regained, continued the formation approach after the wingman position had broken down. The approach was flown to a point where safe separation from the Leader was no longer assured, and the IP directed the break-off and took control. No call to move out or go around was made by SP.",
+        "1": "SP, due to reluctance to voice a position that was no longer sustainable, continued the approach at the outer fingertip tolerances instead of moving out and rejoining. Corrective action followed only after the IP stated the requirement, and the intention was never passed to the Leader. Safe separation was preserved throughout.",
+        "2": "SP, due to hesitation in making the call as the position loosened, was late in advising the intention to correct, but recognized without prompting that the position had moved outside the tighter tolerance. SP re-established the fingertip position and passed the required call with no IP input, and the approach continued within the standards.",
+        "3": "SP flew the formation approach with the required discipline, holding the wingman position stable and stating intentions to the Leader whenever a correction was required. The briefed decision points for continuing or breaking off were applied as briefed.",
+        "4": "SP managed the approach with clear and timely communication to the Leader and no ambiguity about position or intention. The wingman position was never in doubt and the briefed decision points were applied without hesitation. Coordination remained effective through the whole approach.",
+        "marginal": "SP met the discipline standard, but calls to the Leader were made later than the developing situation warranted and intentions were stated tentatively. Under increasing workload the tendency was to fly the correction silently. SP is expected to state position and intent early and unambiguously."
+      }
+    }
+  ]
+}

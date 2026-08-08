@@ -1,0 +1,165 @@
+{
+  "item_id": "vfr_navigation-16",
+  "item_name": "FORMATION APPROACH",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [16],
+  "mif_rows": [
+    {
+      "sn": 16,
+      "row_name": "Formation Approach"
+    }
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-16-em01",
+      "label": "ALTITUDE CONTROL ON THE FORMATION APPROACH (AS LEADER)",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a power setting left unchanged after the recovery descent from the navigation route, did not maintain the briefed approach altitude while leading the two-ship and allowed the flight to sink more than 400 feet below the assigned level. The developing trend was not identified on the altimeter and the wingman was carried down with the lead aircraft. IP had to intervene on the controls to arrest the descent and re-establish the formation at the correct altitude.",
+        "1": "SP, due to attention held on the wingman in the mirror instead of a cycled instrument cross-check, did not hold the briefed approach altitude within tolerance and reached 300 feet above the assigned level while leading the approach. The deviation was corrected only after IP called the altitude twice, and level flight was regained late on the inbound leg. SP did not detect the error from the altimeter without prompting.",
+        "2": "SP, due to a late level-off following the descent out of the working area, did not stabilize the formation at the briefed approach altitude and allowed the deviation to reach about 200 feet. SP identified the error on the altimeter on the next cross-check cycle and returned the flight to the assigned level before the final turn. The correction was made in good time and without IP intervention.",
+        "3": "SP maintained the briefed approach altitude within 150 feet throughout the formation approach, with prompt and smooth corrections at each level-off. The altimeter cross-check was sustained while the wingman was monitored, and the deviations at the configuration change stayed inside tolerance. Altitude control was not disturbed by the lead workload.",
+        "4": "SP flew the whole formation approach with the altitude held to within a few tens of feet of the briefed level, including through the configuration change and the turn to final. Level-offs were anticipated and flown without overshoot, giving the wingman a steady reference throughout. The altitude error at every point of the approach was negligible.",
+        "marginal": "SP kept the approach altitude within standards, but the deviations were consistently on the low side of the assigned level and each correction started only after the altimeter had already moved appreciably. The trend is a cross-check that reaches the altimeter late while the wingman is being monitored, so errors are caught near the outer part of the tolerance rather than at onset. SP is expected to tighten the altimeter cross-check interval and to correct at the first indication of a trend on the next formation recovery."
+      }
+    },
+    {
+      "id": "vfr_navigation-16-em02",
+      "label": "AIRSPEED CONTROL ON THE FORMATION APPROACH (AS LEADER)",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to inadequate monitoring of airspeed during the approach, did not hold the briefed formation approach speed and allowed the indicated airspeed to decay more than 25 knots below the planned figure after the landing configuration was selected. The wingman was left without a usable power reference and began to fall aft of position. IP had to intervene on the throttle and call the airspeed before the flight could be re-stabilized.",
+        "1": "SP, due to an interrupted instrument cross-check while the wingman was being checked visually, did not maintain the briefed approach speed and reached 20 knots fast on the inbound leg. The excess speed was reduced only after IP called the airspeed and directed a power reduction, and the flight stabilized late on final. SP did not recognize the deviation from the airspeed indicator without prompting.",
+        "2": "SP, due to a power reduction applied later than the briefed configuration point, did not hold the approach speed and allowed the indication to reach about 15 knots above the planned figure. SP detected the deviation on the airspeed indicator during the next cross-check cycle and set the correct power before the turn to final. The correction was timely and required no IP intervention.",
+        "3": "SP maintained the briefed formation approach speed within 10 knots throughout the approach, with power corrections that were small and applied early. The airspeed indicator was included in every cross-check cycle while the wingman was monitored. Speed stability gave the wingman a steady reference through the configuration change.",
+        "4": "SP flew the formation approach with the airspeed held to within a few knots of the briefed figure from the recovery leg to the roll-out on final. Power changes were anticipated at each configuration step and applied so smoothly that the wingman required no corrective power inputs. The airspeed error at every stage of the approach was negligible.",
+        "marginal": "SP held the approach speed within standards, but the indication sat repeatedly at the fast end of the tolerance and the reductions were made in single large throttle movements rather than in anticipation. The trend is a speed control that is corrected reactively, which compresses the wingman's power margin during the approach. SP is expected to anticipate the power change at each configuration point and to keep the airspeed centred on the briefed figure on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-16-em03",
+      "label": "EXIT HEADING AND FINAL COURSE TRACKING (AS LEADER)",
+      "mif_row": null,
+      "source": "specific:EXIT HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a roll-out started without reference to the lead point computed for the recovery heading, did not exit the turn on the briefed heading and settled more than 15 degrees off the inbound course. The formation was left displaced from the extended centerline and no correcting turn was initiated. IP had to take control and re-establish the flight on the approach course.",
+        "1": "SP, due to the bank being held past the computed roll-out point while the wingman was checked visually, did not roll out on the briefed exit heading and stopped 10 degrees off the inbound course. The heading was corrected only after IP pointed out the error and directed the correcting turn. The formation reached the approach course late on the inbound leg.",
+        "2": "SP, due to an anticipation of the roll-out that did not account for the drift on the recovery leg, did not stop the turn exactly on the briefed heading and settled about 8 degrees off the inbound course. SP identified the error on the heading indicator immediately after roll-out and flew a shallow correcting turn back onto course. The correction was made without prompting and without IP intervention.",
+        "3": "SP rolled out on the briefed exit heading within 5 degrees on each turn of the formation approach and held the inbound course accurately thereafter. Roll-outs were anticipated so that no reversal was required after the turn. Heading control gave the wingman a predictable geometry through the turn to final.",
+        "4": "SP flew every turn of the formation approach with roll-out on the briefed heading within a degree or two, and the inbound course was tracked without any correcting turn being needed. The lead point for each roll-out was judged accurately with the wingman's position taken into account. Heading errors throughout the approach were negligible.",
+        "marginal": "SP rolled out on the briefed headings within standards, but each roll-out consistently stopped short of the exit heading and the residual error was removed by a second small turn rather than by an accurate first roll-out. The trend is a roll-out anticipation that is set by feel instead of by the computed lead point, which produces avoidable heading corrections on final. SP is expected to compute the roll-out lead for the bank being flown and to place the formation on the exit heading in one turn on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-16-em04",
+      "label": "LATERAL SEPARATION ON THE FORMATION APPROACH (AS WINGMAN)",
+      "mif_row": null,
+      "source": "specific:LATERAL SEPARATION *(feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an aileron input made without reference to the fingertip line-up on the Leader's wing, did not maintain the required lateral separation and closed inside the 10 feet minimum reference point during the inbound leg. On the following correction SP over-controlled outward and opened to more than 35 feet, losing the formation reference. IP had to take control and re-establish the aircraft in position.",
+        "1": "SP, due to a lateral reference taken from the Leader's fuselage rather than from the briefed fingertip line-up, did not hold the lateral separation and opened to 30 feet from the reference point on the approach. The position was restored only after the Leader made a repeat radio call and IP prompted the correction in the cockpit. SP did not recognize the widening from the visual picture without being told.",
+        "2": "SP, due to a small bank input made during the Leader's turn that was not immediately taken out, did not hold the lateral separation and opened to about 25 feet from the reference point. SP recognized the change in the fingertip picture and closed smoothly back to the briefed line-up before the turn to final. The correction was made in good time and required no intervention.",
+        "3": "SP maintained the lateral separation within 10 feet of the reference point throughout the formation approach, holding the fingertip line-up through the turns and the configuration change. Corrections were small, made with coordinated inputs and stopped without overshoot. The minimum lateral separation was never encroached.",
+        "4": "SP held the lateral separation essentially on the reference point for the whole formation approach, with the fingertip line-up unchanged through the turns, the configuration change and the roll-out on final. Corrections were made so early and so small that no lateral movement was discernible from the Leader's cockpit. Lateral deviations throughout were negligible.",
+        "marginal": "SP kept the lateral separation within standards, but the aircraft was consistently flown at the wide end of the tolerance and the line-up was allowed to drift before each correction was started. The trend is a lateral position held by intermittent glances instead of a continuous fingertip reference, which leaves little margin if the Leader manoeuvres. SP is expected to fly the briefed line-up continuously and to correct at the first movement of the picture on the next formation recovery."
+      }
+    },
+    {
+      "id": "vfr_navigation-16-em05",
+      "label": "VERTICAL POSITION ON THE LEADER'S WING LINE (AS WINGMAN)",
+      "mif_row": null,
+      "source": "specific:VERTICAL SEPARATION *(feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a pitch reference taken from the horizon instead of from the Leader's wing level, did not hold the vertical position and settled more than 12 feet below the Leader's wing line during the approach. The low position was allowed to persist through the configuration change without any correcting input. IP had to intervene on the controls to bring the aircraft back onto the wing line.",
+        "1": "SP, due to a delayed power response after the Leader reduced speed for the approach, did not maintain the vertical position and reached the limits of the permitted window, sitting 10 feet high and then 5 feet low on the wing line. The position was recovered only after repeated verbal calls from the Leader and IP. SP did not correct from the visual picture without prompting.",
+        "2": "SP, due to a small pitch input carried through the Leader's turn, did not hold the vertical position and touched the upper edge of the permitted window at about 10 feet high on the wing line. SP recognized the change in the sight picture at once and returned the aircraft to the Leader's wing level before the turn to final. The correction was immediate and required no prompting or intervention.",
+        "3": "SP held the vertical position on the Leader's wing line throughout the formation approach, remaining comfortably inside the permitted window through the turns and the configuration change. Pitch and power corrections were small and applied as soon as the sight picture began to change. The vertical reference was maintained without any call from the Leader.",
+        "4": "SP flew the whole formation approach with the aircraft essentially on the Leader's wing level, the vertical picture unchanged from the recovery leg to the roll-out on final. Power and pitch were coordinated so precisely that neither high nor low excursions became visible. Vertical deviations throughout the approach were negligible.",
+        "marginal": "SP held the vertical position within the permitted window, but the aircraft was flown habitually toward the high side and the corrections back to the wing line were started only when the sight picture had clearly changed. The trend is a vertical reference that is monitored rather than actively flown, which erodes the small margin available below the wing level. SP is expected to fly the wing line as the primary reference and to correct at the first movement of the picture on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-16-em06",
+      "label": "OBSERVANCE ANGLE AND LONGITUDINAL POSITION (AS WINGMAN)",
+      "mif_row": null,
+      "source": "specific:OBSERVANCE ANGLE (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a power reduction made in response to closure without any subsequent power restoration, did not hold the briefed observance angle and fell aft beyond 60 degrees, losing the fingertip picture on the inbound leg. The recovery attempt was made with a large power increase that produced overshoot toward the Leader. IP had to take control to stop the closure and reposition the aircraft.",
+        "1": "SP, due to a longitudinal reference judged from the Leader's nose rather than from the briefed observance line, did not hold the observance angle and stabilized at about 52 degrees aft of the reference. The position was corrected only after the Leader called the wingman aft and IP repeated the correction in the cockpit. SP regained the briefed angle late in the approach.",
+        "2": "SP, due to a slow throttle response after the Leader's configuration change, did not hold the briefed observance angle and drifted aft to approximately 42 degrees. SP recognized the change in the fingertip picture and applied a measured power correction that restored the briefed angle before the turn to final. The correction was made in good time and without any call from the Leader.",
+        "3": "SP maintained the briefed observance angle within 5 degrees throughout the formation approach, holding the longitudinal reference through the turns and the configuration change. Power corrections were anticipated and applied in small increments, so no closure or aft drift developed. The fingertip picture remained stable from the recovery leg to final.",
+        "4": "SP held the observance angle essentially on the briefed reference for the entire formation approach, with the longitudinal picture unchanged through the Leader's turns, the speed reduction and the roll-out on final. Power was set in anticipation of each change rather than in response to it. Longitudinal deviations throughout were negligible.",
+        "marginal": "SP kept the observance angle within standards, but the aircraft was consistently flown at the aft edge of the tolerance and each correction was made with a larger power change than the deviation required. The trend is a longitudinal position recovered by reaction rather than held by anticipation, which produces small closure oscillations behind the Leader. SP is expected to anticipate the power requirement at each configuration change and to hold the briefed angle continuously on the next formation recovery."
+      }
+    },
+    {
+      "id": "vfr_navigation-16-em07",
+      "label": "TIMELY AND CORRECT LANDING CONFIGURATION FOR THE FORMATION APPROACH",
+      "mif_row": null,
+      "source": "general:formation-06/a; execution:formation-13 (landing configuration into the flight area or on the approach)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the recovery checklist being started after the flight had already passed the briefed configuration point, did not bring the aircraft into landing configuration timely or correctly and arrived on the inbound leg with the gear still up and the speed above the configuration figure. The omission was not detected from the indications in the cockpit. IP had to direct the configuration and take control while the formation was repositioned for the approach.",
+        "1": "SP, due to a configuration sequence carried out from memory instead of from the checklist, did not select the landing configuration at the briefed point and completed it late, out of order, on the inbound leg. Each remaining item was selected only after IP called for it in turn. The formation reached the approach in the correct configuration but at the limit of the available time.",
+        "2": "SP, due to the configuration point being judged visually rather than from the briefed range and speed, did not begin the configuration on time and started the sequence noticeably late. SP recognized the delay, completed the checklist in the correct order and had the aircraft fully configured with the speed stabilized before the turn to final. No prompting or intervention by IP was required.",
+        "3": "SP brought the aircraft into landing configuration timely and correctly, with each item selected at the briefed point, in sequence and confirmed against the indications. The speed was stabilized at the approach figure before the turn to final. The configuration change was made without disturbing the formation geometry.",
+        "4": "SP configured the aircraft for the formation approach exactly at the briefed point, in sequence and with every indication confirmed, while the flight path and the formation picture remained entirely undisturbed. The speed reduction was anticipated so that the aircraft was stable at the approach figure well before final. No item of the configuration required any correction.",
+        "marginal": "SP configured the aircraft within standards, but the sequence was begun at the latest acceptable point and the confirmation of the indications was made only after the checklist had been completed. The trend is a configuration driven by the arrival of the approach rather than by the briefed point, which leaves no margin if a call or a turn intervenes. SP is expected to begin the configuration at the briefed range and speed and to confirm each indication as it is selected on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-16-em08",
+      "label": "CHECKING AND MONITORING THE WINGMAN INTO POSITION FOR THE APPROACH",
+      "mif_row": null,
+      "source": "general:formation-06/b,c",
+      "hf_concept": "hf-distributed-situational-awareness",
+      "texts": {
+        "0": "SP, due to an unshared assessment of the aircraft state between the two cockpits of the formation, did not check the proper configuration of the wingman and did not monitor whether the wingman had reached the position required for the approach. The flight was taken onto the inbound leg with the wingman still repositioning and unconfigured. IP had to stop the approach, obtain the wingman's state by radio and direct the reposition before the recovery could continue.",
+        "1": "SP, due to absent plain-language cross-talk on the changing aircraft state, did not obtain confirmation of the wingman's configuration and formed an incomplete picture of the wingman's position for the approach. The configuration check and the position call were made only after IP directed each of them in turn. The flight was established for the approach with the wingman confirmed in position late on the inbound leg.",
+        "2": "SP, due to a cross-check of the wingman that was interrupted by the lead aircraft's own configuration sequence, did not confirm the wingman's state at the briefed point and continued briefly without that information. SP recognized the omission, called for the configuration check and confirmed the wingman in position in good time before the turn to final. The recovery was made without IP prompting or intervention.",
+        "3": "SP checked the proper configuration of the wingman and monitored the wingman continuously, asserting that the required position had been reached in time for the approach being flown. The state of both aircraft was confirmed by clear radio calls at the briefed points. The formation entered the approach with both cockpits holding the same picture.",
+        "4": "SP maintained a complete and shared picture of the wingman throughout the recovery, confirming configuration and position before each briefed point and adjusting the approach to the wingman's actual state where required. Every call was concise, in plain language and answered, so that both cockpits held identical information at all times. Nothing about the wingman's state was left to assumption.",
+        "marginal": "SP checked and monitored the wingman within standards, but the confirmation was obtained by a single call at the end of the sequence rather than progressively as the state of the flight changed. The trend is a shared picture that is verified once instead of maintained, which leaves the lead relying on assumption between calls. SP is expected to cross-talk the configuration and position of the wingman at each briefed point on the next formation recovery."
+      }
+    },
+    {
+      "id": "vfr_navigation-16-em09",
+      "label": "SEQUENCE AND CLARITY OF THE FORMATION APPROACH AT RECOVERY",
+      "mif_row": null,
+      "source": "general:formation-06/a,b,c; execution:formation approach at recovery from the navigation route",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a recovery plan that was not reconstructed after the approach type was changed on the radio, did not execute the formation approach in the briefed sequence and gave directive calls that did not match the profile being flown. The wingman received contradictory instructions on configuration and position during the inbound leg. IP had to take over the radio and the aircraft to restore an orderly recovery.",
+        "1": "SP, due to directive calls made without reference to the sequence agreed in the mission brief, did not order the elements of the formation approach in the correct order and left the wingman uncertain of the intended profile. The sequence was restored only after IP dictated each call and its timing. The approach was completed but the flight reached final behind the planned recovery timing.",
+        "2": "SP, due to a call for the approach configuration passed before the flight had reached the briefed point, did not follow the planned sequence exactly and had to reorder two of the directive calls. SP recognized the discrepancy, restated the intended profile in plain language and re-established the briefed sequence before the turn to final. The recovery continued without IP prompting or intervention.",
+        "3": "SP executed the formation approach in the briefed sequence, with directive calls passed at the correct points, in standard phraseology and acknowledged by the wingman. The transition from the navigation route to the recovery profile followed the plan agreed in the mission brief. Both aircraft were established for the approach without any reordering of the sequence.",
+        "4": "SP conducted the formation approach exactly as briefed, with each directive call anticipated, concise and passed at the point where it was needed, so that the recovery from the navigation route flowed without a single correction. The wingman was given every element of the profile before it was required. The sequence and the phraseology were of a standard that required no comment.",
+        "marginal": "SP executed the formation approach in the briefed sequence, but the directive calls were passed at the latest usable moment and two of them required a repeat before they were acknowledged. The trend is a recovery run reactively rather than to the briefed timeline, which compresses the wingman's time to comply. SP is expected to pass each directive call at the planned point and to confirm acknowledgement before continuing on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-16-em10",
+      "label": "BASIC AIRCRAFT CONTROL AND CROSS-CHECK DURING THE FORMATION APPROACH",
+      "mif_row": null,
+      "source": "general:formation-06/d (Basic A/C Control General Criteria of Contact and Instrument categories)",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to attention captured by the other aircraft of the formation while the aircraft state went unmonitored, did not apply the basic aircraft control cross-check required during the formation approach and allowed altitude, airspeed and heading to diverge simultaneously beyond the approach tolerances. The instruments were not referred to at any stage of the inbound leg. IP had to take control and re-establish the aircraft on the approach parameters.",
+        "1": "SP, due to absorption in the formation picture that left the descent rate unmonitored, did not sustain the instrument cross-check during the formation approach and reached the outer limit of tolerance on altitude and airspeed together. Both parameters were recovered only after IP called each of them in turn. SP did not re-establish an independent scan until the deviations had already been pointed out.",
+        "2": "SP, due to a scan that dwelt on the formation reference for longer than the briefed interval, did not keep the approach parameters centred and allowed a combined altitude and airspeed error to develop within tolerance. SP recognized the drift on the next cross-check cycle, re-established the scan pattern and corrected both parameters before the turn to final. No prompting or IP intervention was required.",
+        "3": "SP maintained basic aircraft control throughout the formation approach, alternating between the formation reference and the flight instruments so that altitude, airspeed and heading remained inside the approach tolerances. Corrections were small, smooth and applied at the first indication of a trend. The formation task did not degrade the aircraft control cross-check.",
+        "4": "SP sustained an accurate and unbroken cross-check throughout the formation approach, so that the flight parameters and the formation reference were both held without either task displacing the other. Control inputs were minimal and the aircraft state was known at every point of the recovery. Deviations from the approach parameters were negligible.",
+        "marginal": "SP maintained basic aircraft control within standards, but the instrument cross-check was interrupted for noticeably long periods while the formation reference was flown, and the corrections were made once the errors had already accumulated. The trend is a scan weighted almost entirely toward the formation picture, which leaves the approach parameters unmonitored between glances. SP is expected to keep a fixed cross-check interval between the formation reference and the flight instruments on the next formation recovery."
+      }
+    }
+  ]
+}

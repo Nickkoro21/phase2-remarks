@@ -1,0 +1,163 @@
+{
+  "item_id": "formation-01",
+  "item_name": "TAKE OFF (FORMATION - INTERVAL)",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [1, 2],
+  "mif_rows": [
+    { "sn": 1, "row_name": "Formation T/O" },
+    { "sn": 2, "row_name": "Interval T/O" }
+  ],
+  "error_modes": [
+    {
+      "id": "formation-01-em01",
+      "label": "Formation T/O - takeoff airspeed at rotation and lift-off",
+      "mif_row": "Formation T/O",
+      "source": "specific:Take off Airspeed (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a rotation input made on the runway picture rather than on the airspeed indication, did not execute the formation T/O with the standard takeoff airspeed. The aircraft was rotated below the computed speed, against a criterion that allows no tolerance on the low side, and the airspeed then overshot the standard by more than 10 knots while SP chased the attitude. IP intervened on the controls to set the takeoff attitude and to restore the standard airspeed before the departure turn.",
+        "1": "SP, due to a scan that remained on the runway and on No2 and reached the airspeed indication late, did not hold the standard takeoff airspeed during the formation T/O. The excess settled at about 10 knots, at the outer limit of the allowed one-sided tolerance, and was reduced only after two verbal calls from IP. The fast condition was carried into the initial climb and obliged No2 to add power to hold position.",
+        "2": "SP, due to a rotation input applied slightly later than the computed speed required, allowed the takeoff airspeed to build past the standard by roughly 7 knots, between the code 3 and code 1 limits. SP identified the excess on the indicator and reset the takeoff attitude on his own initiative before the first turn. No prompting and no IP control input were required and No2 held position throughout.",
+        "3": "SP executed the formation T/O with the standard takeoff airspeed, rotating on the computed speed with no deviation on the low side and holding the excess inside 5 knots. The scan alternated continuously between the runway, the airspeed indication and No2, and the pitch corrections were small and immediate.",
+        "4": "SP rotated precisely at the computed takeoff speed and held the standard airspeed through lift-off and the transition to the climb, with deviations that were negligible against the published tolerance. The speed was stabilized so smoothly that No2 needed only minimal power changes to remain in position.",
+        "marginal": "SP kept the takeoff airspeed within standards but consistently on the fast side of the target, with the excess sitting close to the code 3 figure for most of the initial climb. The trend did not exceed tolerance and did not displace No2, but it left little margin for a power correction on the wing. SP is expected to set the computed speed exactly at rotation and to hold it during the next formation takeoffs."
+      }
+    },
+    {
+      "id": "formation-01-em02",
+      "label": "Formation T/O - runway line tracking during the takeoff roll",
+      "mif_row": "Formation T/O",
+      "source": "specific:Maintain in the center line of RWY (ft)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to rudder input insufficient for the yaw produced at power application and for the reported crosswind, did not maintain the assigned takeoff line during the formation T/O roll. Lateral displacement passed 10 feet and continued to diverge toward the half of the runway occupied by No2, reducing the lateral separation of the pair. IP took the controls to re-establish the takeoff track before rotation.",
+        "1": "SP, due to directional corrections applied in discrete steps instead of continuously, did not maintain the assigned takeoff line during the formation T/O roll. Displacement reached about 10 feet, at the limit of the allowed deviation, and the aircraft was re-centered only after IP called for rudder. The pair lifted off with the track still offset and with No2 correcting to preserve spacing.",
+        "2": "SP, due to a slow initial response to the swing at power application, drifted off the assigned takeoff line by roughly 8 feet. The deviation stayed between the code 3 and code 1 limits and SP corrected it with coordinated rudder well before rotation, without prompting and without IP action. Lateral separation from No2 was never in question.",
+        "3": "SP maintained the aircraft on the assigned takeoff line during the formation T/O with lateral deviation held inside 5 feet. Rudder inputs were continuous and matched to the yaw produced by power application and by the crosswind, and the same track was carried through rotation and lift-off.",
+        "4": "SP held the aircraft on the assigned takeoff line with deviations barely perceptible against the runway markings, anticipating the yaw rather than reacting to it. The track was preserved unchanged into the initial climb and gave No2 a stable reference for the whole roll.",
+        "marginal": "SP kept the aircraft inside the lateral tolerance but with a persistent offset to one side that was held rather than removed for most of the ground roll. The offset stayed within standards and did not grow, but it consumed part of the lateral margin toward No2. SP is expected to re-center the aircraft as soon as the offset is recognized instead of accepting it for the remainder of the roll."
+      }
+    },
+    {
+      "id": "formation-01-em03",
+      "label": "Formation T/O - factors considered in placing No2 on the correct side",
+      "mif_row": "Formation T/O",
+      "source": "general:b",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to retention of the briefed mental model after the active runway and the direction of the departure turn had changed, did not take into consideration the essential factors for placing No2 on the correct side. No2 was assigned the side inside the departure turn and downwind of the reported crosswind, which put him low and closing on the leader during the initial turn. IP directed a change of formation position and assumed the lead of the departure.",
+        "1": "SP, due to a mental model of the departure that was not updated when the takeoff data changed, assigned No2 a side that did not account for the crosswind and for the first turn. The error was recognized and stated only after IP questioned the takeoff briefing on the ground, and the assignment was changed on IP prompting rather than on SP initiative. The correction was made in time but left the pair rushed at the line up.",
+        "2": "SP, due to a mental model of the departure that was reassessed only after the clearance was read back, initially named No2 on the side away from the wind. SP re-evaluated the crosswind, the direction of the first turn and the obstacle situation before line up and corrected the assignment on his own, so No2 was in fact placed on the correct side. The late reassessment cost part of the time available for the line up checks.",
+        "3": "SP took into consideration all the essential factors and placed No2 on the correct side, weighing the crosswind, the direction of the departure turn, the sun and the obstacle situation. The assignment was stated clearly in the takeoff briefing and required no change once the clearance was received.",
+        "4": "SP placed No2 on the correct side after an assessment that covered the crosswind, the departure turn, the terrain and the traffic, and stated the reasoning in the briefing so No2 shared the same picture. The assignment remained valid through the clearance and the takeoff without any adjustment.",
+        "marginal": "SP placed No2 on the correct side, but the decision rested mainly on the habitual side used in previous sorties and the supporting factors were named only when asked. The choice was appropriate for the conditions of the day, yet the reasoning behind it was not demonstrated. SP is expected to derive the side from wind, departure turn and obstacles on every takeoff briefing."
+      }
+    },
+    {
+      "id": "formation-01-em04",
+      "label": "Formation T/O - monitoring of No2 through the roll and lift-off",
+      "mif_row": "Formation T/O",
+      "source": "general:c",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an interrupted cross-check that stayed on his own instruments through the takeoff roll, did not effectively monitor No2 during the maneuver. The acceleration deficit and the lateral drift of No2 went unobserved, and at the same time the leader's own displacement from the assigned line passed 10 feet toward the wingman. IP called the deviation and took the controls to move the flight path away from No2.",
+        "1": "SP, due to a cross-check divided between the instruments and the runway with no place left for the wingman, did not effectively monitor No2 during the formation T/O. Scan of the wingman resumed only after two calls from IP, by which time the leader's own lateral deviation had reached about 10 feet at the limit of the allowed tolerance. The pair became airborne with the relative position corrected by No2 alone.",
+        "2": "SP, due to a cross-check that reached the wingman late in the acceleration, monitored No2 only intermittently in the first part of the takeoff roll. The lapse allowed the leader's own line deviation to grow to roughly 8 feet, between the code 3 and code 1 limits, before SP re-established the scan, re-centered the aircraft and resumed continuous monitoring of No2 without prompting.",
+        "3": "SP effectively monitored No2 during the maneuver, keeping the wingman inside a scan that also covered the runway, the airspeed and the engine indications. Deviations of No2 in acceleration and position were seen as they developed and were answered with small power and track adjustments by the leader.",
+        "4": "SP monitored No2 continuously from brake release to the establishment of the climb, integrating the wingman into the scan without any loss of precision on the leader's own parameters. Every deviation of No2 was recognized at onset and addressed with a leader input before it required any correction from the wingman.",
+        "marginal": "SP monitored No2 during the maneuver, but the checks on the wingman were spaced widely enough that the position was confirmed only at brake release and again at lift-off. Nothing was missed on this takeoff and all parameters stayed within standards, yet a deviation developing between those two points would not have been seen early. SP is expected to keep the wingman inside a continuous scan for the whole roll."
+      }
+    },
+    {
+      "id": "formation-01-em05",
+      "label": "Formation T/O - gear retraction command after No2 is confirmed airborne",
+      "mif_row": "Formation T/O",
+      "source": "general:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a command sequence run on the leader's own lift-off instead of on the state of the wingman, gave the command for landing gear retraction without confirming that No2 was safely airborne. No2 was still in the rotation and accepted the call with the aircraft in ground effect, and the leader's own airspeed was at the same time more than 10 knots above the standard. IP countermanded the call on the radio and took the controls to stabilize the departure.",
+        "1": "SP, due to a fixed cadence carried over from single-ship departures, gave the command for landing gear retraction before positively confirming that No2 was safely airborne. The call was corrected only after IP prompted for the wingman's state, and the leader's airspeed sat at about 10 knots above the standard while the exchange took place. The formation was reconfigured late and the departure turn was begun with the pair still settling.",
+        "2": "SP, due to attention held on the leader's own climb parameters, began the gear retraction call slightly before the check on No2 was complete. SP interrupted the call on his own initiative, confirmed visually that No2 was safely airborne and then passed the command, with the leader's airspeed excess reaching roughly 7 knots between the code 3 and code 1 limits during the pause. No prompting and no IP input were needed.",
+        "3": "SP confirmed that No2 was safely airborne before giving the command for landing gear retraction, checking the wingman's climb and position and only then passing the call. The command was clear, standard and timed so that the formation was clean before the departure turn.",
+        "4": "SP confirmed No2 safely airborne with a positive visual check and passed the gear retraction command at the exact point required, without interrupting the leader's own climb parameters. The formation was configured as a pair, on a stable flight path, and the departure turn was entered clean.",
+        "marginal": "SP confirmed that No2 was airborne before commanding gear retraction, but the confirmation was a quick glance rather than a positive check of the wingman's climb, and the call followed almost immediately. Nothing was missed on this takeoff, yet the margin between the check and the command was very small. SP is expected to complete the check on No2 deliberately before passing the command."
+      }
+    },
+    {
+      "id": "formation-01-em06",
+      "label": "Interval T/O - takeoff airspeed at rotation and lift-off",
+      "mif_row": "Interval T/O",
+      "source": "specific:Take off Airspeed (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an aft stick input applied without reference to the airspeed indication, did not execute the interval T/O with the standard takeoff airspeed. The aircraft was rotated below the computed speed, where the criterion allows no tolerance, and the airspeed then exceeded the standard by more than 10 knots in the initial climb, so the planned spacing for the join-up was lost. IP intervened on the controls to set the takeoff attitude and to recover the standard airspeed.",
+        "1": "SP, due to a late transition of the scan from the runway to the airspeed indication, did not hold the standard takeoff airspeed on the interval T/O. The excess settled at about 10 knots, at the outer limit of the one-sided tolerance, and was removed only after two verbal prompts from IP. The fast climb increased the separation from No2 and delayed the join-up.",
+        "2": "SP, due to a rotation input made slightly after the computed speed, allowed the takeoff airspeed to build past the standard by roughly 7 knots, between the code 3 and code 1 limits. SP saw the excess on the indicator and reset the takeoff attitude on his own initiative, restoring the planned climb speed before the departure turn. No prompting and no IP control input were required.",
+        "3": "SP executed the interval T/O with the standard takeoff airspeed, rotating on the computed speed with no deviation on the low side and holding the excess inside 5 knots. The airspeed was flown to the value that supported the planned interval and the join-up geometry.",
+        "4": "SP rotated precisely at the computed takeoff speed and held the standard airspeed through lift-off and the climb, with deviations negligible against the published tolerance. The precision of the speed gave No2 a predictable closure for the join-up without any power change by the leader.",
+        "marginal": "SP held the takeoff airspeed within standards but consistently on the fast side of the target, with the excess close to the code 3 figure through the initial climb. The deviation stayed inside tolerance, yet it slowly stretched the interval and left No2 with more closure work than planned. SP is expected to fly the exact climb speed so that the briefed spacing is preserved."
+      }
+    },
+    {
+      "id": "formation-01-em07",
+      "label": "Interval T/O - runway centerline tracking during the takeoff roll",
+      "mif_row": "Interval T/O",
+      "source": "specific:Maintain in the center line of RWY (ft)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to rudder input insufficient for the yaw at power application and for the reported crosswind, did not maintain the aircraft at the centerline during the interval T/O. Lateral displacement passed 10 feet and continued to diverge toward the runway edge as the aircraft accelerated. IP took the controls to re-establish the takeoff track before rotation.",
+        "1": "SP, due to directional corrections applied in discrete steps rather than continuously, did not maintain the aircraft at the centerline during the interval T/O. Displacement reached about 10 feet, at the limit of the allowed deviation, and the aircraft was re-centered only after IP called for rudder. Lift-off was made with the track still offset from the centerline.",
+        "2": "SP, due to a slow initial response to the swing at power application, drifted off the runway centerline by roughly 8 feet. The deviation remained between the code 3 and code 1 limits and SP corrected it with coordinated rudder well before rotation, with no prompting and no IP action.",
+        "3": "SP maintained the aircraft at the centerline during the interval T/O with lateral deviation held inside 5 feet. Rudder inputs were continuous and matched to the yaw produced by power application and by the wind, and the track was carried unchanged through rotation.",
+        "4": "SP held the aircraft on the runway centerline with deviations that were barely perceptible against the runway markings, anticipating the yaw instead of reacting to it. The takeoff track was preserved into the initial climb and supported the briefed departure path for the join-up.",
+        "marginal": "SP kept the aircraft inside the centerline tolerance but with a persistent offset to one side that was held rather than removed for most of the ground roll. The offset stayed within standards and did not grow, yet it left less margin than the runway permitted. SP is expected to re-center the aircraft as soon as the offset is recognized."
+      }
+    },
+    {
+      "id": "formation-01-em08",
+      "label": "Interval T/O - spacing and timing of brake release for the briefed interval",
+      "mif_row": "Interval T/O",
+      "source": "general:b",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to task sequencing that concentrated all cockpit work into the last seconds before line up, did not take into consideration the essential factors that set the interval for No2. Brake release was made without regard to the crosswind side, the departure turn or the spacing briefed, and No2 was left with closure that could not be resolved on the departure path. IP directed a delay to No2 on the radio and took the aircraft to open the geometry.",
+        "1": "SP, due to workload management that left the line up checks unfinished until after the takeoff clearance, did not apply the briefed timing for the interval. Brake release was taken well outside the briefed spacing and was adjusted only after IP called for the correct interval, while the leader's own airspeed then ran about 10 knots above the standard in the climb. The join-up was flown with a geometry that No2 had to correct.",
+        "2": "SP, due to workload concentrated in the last part of the line up, initially set a brake release that did not match the briefed interval. SP recognized the discrepancy against the takeoff briefing, adjusted the timing on his own initiative and rolled with the planned spacing, with the resulting airspeed excess in the climb reaching roughly 7 knots between the code 3 and code 1 limits. No prompting and no IP action were needed.",
+        "3": "SP took into consideration the essential factors for the interval, weighing the crosswind side, the direction of the departure turn and the briefed spacing, and released brakes at the planned point. The interval produced by the takeoff matched the briefing and gave No2 a straightforward join-up.",
+        "4": "SP set the interval from a complete assessment of wind, departure turn and traffic, and released brakes exactly at the briefed point with the line up checks already complete. The spacing produced was precise enough that No2 joined with minimal power changes and no correction from the leader.",
+        "marginal": "SP released brakes within the briefed interval, but the line up work was completed so close to that point that the timing was set with little margin. The spacing achieved was correct and No2 joined without difficulty, yet a further delay in the checks would have moved the release outside the plan. SP is expected to complete the pre-takeoff work earlier so that the interval is chosen rather than accepted."
+      }
+    },
+    {
+      "id": "formation-01-em09",
+      "label": "Interval T/O - monitoring of No2 and leader climb management for the join-up",
+      "mif_row": "Interval T/O",
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to attention held entirely on the leader's own departure profile, did not effectively monitor No2 during the interval T/O. The wingman's late roll and slow acceleration went unobserved, no power or track adjustment was made by the leader, and the leader's own climb speed was at the same time more than 10 knots above the standard. IP intervened on the controls and on the radio to re-establish a workable join-up geometry.",
+        "1": "SP, due to a departure flown without any allocation of scan to the wingman, did not effectively monitor No2 after lift-off. The developing spacing problem was recognized only after two calls from IP, by which time the leader's climb speed sat about 10 knots above the standard at the limit of the allowed tolerance. The join-up was completed with the whole correction carried out by No2.",
+        "2": "SP, due to a scan that reached the wingman late in the initial climb, monitored No2 only intermittently after lift-off. The lapse allowed the leader's own climb speed to run roughly 7 knots above the standard, between the code 3 and code 1 limits, before SP re-established the check on No2, reset the power and stabilized the profile without prompting.",
+        "3": "SP effectively monitored No2 during the interval T/O, checking the wingman's roll, lift-off and closure while holding the leader's own parameters within standards. Small power and heading adjustments were made in time to keep the join-up on the briefed geometry.",
+        "4": "SP monitored No2 continuously from brake release through the join-up, integrating the wingman into the scan with no loss of precision on the leader's own parameters. The climb was flown so that the closure remained comfortable for the wingman at every stage.",
+        "marginal": "SP monitored No2 during the interval T/O, but the checks were spaced widely and the wingman's position was confirmed mainly at lift-off and again at the start of the join-up. All parameters stayed within standards on this departure, yet a change in the closure between those points would have been seen late. SP is expected to keep the wingman inside a continuous scan through the whole join-up."
+      }
+    },
+    {
+      "id": "formation-01-em10",
+      "label": "Interval T/O - gear retraction command after No2 is confirmed airborne",
+      "mif_row": "Interval T/O",
+      "source": "general:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a configuration call driven by the leader's own climb rather than by the state of the wingman, gave the command for landing gear retraction without confirming that No2 was safely airborne. No2 was still on the runway in the takeoff roll when the call was passed, and the leader's own airspeed was more than 10 knots above the standard. IP cancelled the command on the radio and took the controls to stabilize the departure.",
+        "1": "SP, due to a fixed cadence carried over from single-ship departures, passed the gear retraction command before the state of No2 had been confirmed. The call was corrected only after IP prompted for the wingman, and during the exchange the leader's airspeed sat at about 10 knots above the standard at the limit of the allowed tolerance. The formation was reconfigured late and the join-up started from a degraded geometry.",
+        "2": "SP, due to attention concentrated on the leader's own climb parameters, started the gear retraction call before the check on No2 was complete. SP stopped the call on his own initiative, confirmed that No2 was safely airborne and then passed the command, with the leader's airspeed excess reaching roughly 7 knots between the code 3 and code 1 limits during the pause. No prompting and no IP input were required.",
+        "3": "SP confirmed that No2 was safely airborne before giving the command for landing gear retraction, checking the wingman's lift-off and climb and only then passing the call. The command was standard and timed so that both aircraft were clean before the departure turn.",
+        "4": "SP confirmed No2 safely airborne with a positive check and passed the gear retraction command at exactly the required point, without any degradation of the leader's own climb parameters. Both aircraft were configured on a stable flight path and the join-up was begun clean.",
+        "marginal": "SP confirmed that No2 was airborne before commanding gear retraction, but the check was brief and the command followed almost at once. Nothing was omitted on this departure, yet the margin between the check and the call was minimal for an interval takeoff where the wingman is well behind. SP is expected to make the confirmation of No2 deliberate before passing the command."
+      }
+    }
+  ]
+}

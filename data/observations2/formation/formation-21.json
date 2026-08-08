@@ -1,0 +1,132 @@
+{
+  "item_id": "formation-21",
+  "item_name": "LEAD CHANGE",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [21],
+  "mif_rows": [
+    {"sn": 21, "row_name": "Lead Change"}
+  ],
+  "error_modes": [
+    {
+      "id": "formation-21-em01",
+      "label": "Altitude control through the lead change",
+      "mif_row": "Lead Change",
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a scan that stayed outside the cockpit on the other aircraft throughout the position swap, did not maintain the briefed formation altitude during the lead change. The aircraft departed the briefed altitude by more than 300 feet and the trend continued unchecked while the new position was being taken. The IP had to direct the correction and assist on the controls to re-establish the formation on the assigned altitude.",
+        "1": "SP, due to a delayed return of the instrument cross-check after acknowledging the lead change, allowed the aircraft to climb away from the briefed altitude. The deviation reached the 300 feet limit before it was arrested and was reduced only after repeated verbal prompting from the IP. Altitude was re-established late, after the new lead position had already been taken.",
+        "2": "SP, due to unintentional back pressure applied while accelerating into the lead position, allowed the aircraft to leave the briefed altitude. The excursion reached approximately 200 feet, between the 150 and 300 feet bands, before SP recognized the trend on the altimeter. The correction was made without prompting and the aircraft was re-established on altitude with no IP intervention.",
+        "3": "SP maintained the briefed formation altitude throughout the lead change, keeping excursions inside 150 feet. Pitch inputs were small and were applied as soon as the trend appeared on the altimeter and the vertical speed indication. The transfer of the lead was completed with no degradation of altitude control.",
+        "4": "SP flew the lead change with altitude excursions of only a few tens of feet, well inside the 150 feet band. The instrument cross-check continued uninterrupted through the signal, the acknowledgement and the position swap. Altitude control was precise and no re-establishment was needed after the change.",
+        "marginal": "SP kept altitude within standards during the lead change, but the excursions repeatedly approached the 150 feet band and always in the same direction as power was increased to move forward. The corrections were correct in sense but were started only after the trend had developed. SP is expected to anticipate the pitch change associated with the power increase so that excursions remain clearly inside the band."
+      }
+    },
+    {
+      "id": "formation-21-em02",
+      "label": "Airspeed control during the position exchange",
+      "mif_row": "Lead Change",
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an uncontrolled power application used to move into the lead position, did not hold the briefed formation airspeed during the lead change. Airspeed varied by more than 20 knots from the briefed value and the closure with the other aircraft was not controlled. The IP had to intervene on the throttle and direct the re-establishment of the briefed airspeed.",
+        "1": "SP, due to power changes made in large steps instead of small anticipated inputs, allowed airspeed to diverge from the briefed value while taking the lead. The deviation reached the 20 knots limit and was contained only after verbal prompting from the IP. Airspeed was stabilized late, after the formation had already settled in the new arrangement.",
+        "2": "SP, due to a power reduction applied late when the overtake was completed, allowed airspeed to build above the briefed value. The excursion reached about 15 knots, between the 10 and 20 knots bands, and was recognized by SP without prompting. Airspeed was returned to the briefed value promptly and no IP intervention was required.",
+        "3": "SP controlled airspeed throughout the lead change and kept the deviation inside 10 knots of the briefed value. Power was set in small anticipated increments for the overtake and reduced in time to stop the acceleration in the new position. Closure with the other aircraft was managed without any airspeed excursion outside the band.",
+        "4": "SP flew the whole lead change with airspeed held within a few knots of the briefed value. Power was moved smoothly and led the required speed change rather than following it, so no correction was needed once the new position was taken. Closure and stabilization were both accomplished without any airspeed overshoot.",
+        "marginal": "SP kept airspeed within standards during the lead change, but each overtake ended close to the 10 knots band before the power reduction took effect. The technique met the criteria and the corrections were made without prompting, yet the margin available was consistently small. SP is expected to lead the power reduction so that the acceleration stops well inside the band."
+      }
+    },
+    {
+      "id": "formation-21-em03",
+      "label": "Exit heading on completion of the lead change",
+      "mif_row": "Lead Change",
+      "source": "specific:EXIT HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an uncoordinated roll input applied while stabilizing in the new position, did not establish the formation on the briefed heading on completion of the lead change. The heading error exceeded 10 degrees and the formation was left tracking away from the briefed direction with no correction started. The IP had to direct the turn back and supervise the recapture of the briefed heading.",
+        "1": "SP, due to a lookout that remained locked on the other aircraft after the swap, allowed the heading to drift away from the briefed exit heading. The error reached the 10 degrees limit and was corrected only after verbal prompting from the IP. The formation was re-established on the briefed heading well after the change was complete.",
+        "2": "SP, due to a small residual bank held while checking the position of the other aircraft, allowed the heading to move off the briefed exit heading. The error reached about 8 degrees, between the 5 and 10 degrees bands, and was identified by SP on the heading indication without prompting. SP corrected in time and no IP intervention was required.",
+        "3": "SP established the formation on the briefed exit heading on completion of the lead change, with the error kept inside 5 degrees. The roll-out was coordinated and the heading was checked against the heading indication as soon as the new position was stable. No further correction was needed once the change was complete.",
+        "4": "SP rolled out of the lead change on the briefed exit heading with an error of one to two degrees. The heading was cross-checked during the swap rather than after it, so no recapture was required. The formation was stabilized on the briefed direction immediately after the exchange of positions.",
+        "marginal": "SP met the exit heading criteria after the lead change, but the roll-out consistently finished 4 to 5 degrees off the briefed heading before being trimmed back. The corrections were made without prompting and the standards were satisfied, however the initial accuracy of the roll-out was low. SP is expected to anticipate the roll-out point so that the heading is captured directly rather than recovered afterwards."
+      }
+    },
+    {
+      "id": "formation-21-em04",
+      "label": "Interpretation and acknowledgement of the lead change signal",
+      "mif_row": "Lead Change",
+      "source": "general:a",
+      "hf_concept": "hf-non-standard-phraseology",
+      "texts": {
+        "0": "SP, due to non-standard phraseology that left the intention ambiguous, acted on the lead change signal without establishing what had actually been directed. The change was started in the wrong sense, neither aircraft was established as lead for several seconds and the briefed parameters were exceeded past the 20 knots and 10 degrees limits. The IP had to intervene, cancel the change and restore the briefed formation.",
+        "1": "SP, due to an acknowledgement that did not confirm the actual signal that had been passed, remained uncertain of the leader's intention after the visual signal was given. The change was started only after the signal had been repeated and after direct verbal prompting from the IP, with airspeed reaching the 20 knots limit during the delay. The correct sense of the change was finally established, but outside the briefed timing.",
+        "2": "SP, due to an initial misreading of the visual signal against the sun, hesitated at the start of the lead change. SP requested confirmation on the radio without any prompting, obtained it and executed the change in the correct sense, with the parameters staying between the code 3 and code 1 bands. No IP intervention was required.",
+        "3": "SP identified the leader's verbal and visual signal for the lead change immediately and acknowledged it with standard phraseology. The change was executed in the correct sense and without misinterpretation, and the formation parameters remained inside the code 3 bands throughout the exchange.",
+        "4": "SP anticipated the lead change signal from the briefed sequence and recognized it at the moment it was passed, replying with concise standard phraseology. The exchange left no ambiguity between the two cockpits and the change followed immediately in the correct sense. Formation parameters showed negligible deviation across the whole exchange.",
+        "marginal": "SP interpreted the lead change signal correctly and executed it within standards, but the acknowledgement came after a noticeable pause and the first reply did not use the briefed wording. The criteria were met and the sense of the change was never in doubt. SP is expected to pre-arm the expected signal from the briefed sequence and to reply at once with standard phraseology."
+      }
+    },
+    {
+      "id": "formation-21-em05",
+      "label": "Assumption of formation leadership after the command",
+      "mif_row": "Lead Change",
+      "source": "general:b",
+      "hf_concept": "hf-leadership-and-followership",
+      "texts": {
+        "0": "SP, due to failure to exercise formation lead responsibilities after the lead change, did not assume leadership of the formation once the command had been received. No aircraft was setting the formation parameters or the navigation for a prolonged period, and airspeed and heading moved beyond the 20 knots and 10 degrees limits. The IP had to take the lead role and direct the recovery of the formation.",
+        "1": "SP, due to hesitation in taking up the lead responsibilities that had just been handed over, continued to fly as the wingman after receiving the command. The lead was assumed only after a second instruction and repeated verbal prompting, with heading reaching the 10 degrees limit while no aircraft was setting the direction. The formation was re-established late and only under the IP's direction.",
+        "2": "SP, due to an incomplete transfer of attention from wingman duties to lead duties, was slow to start setting the formation parameters after taking the lead. Airspeed and heading drifted to values between the code 3 and code 1 bands before SP recognized the omission. SP then set and held the briefed parameters without any IP intervention.",
+        "3": "SP assumed formation leadership without uncertainty as soon as the command was received. The briefed airspeed, altitude and heading were set and held from the moment of the transfer, and the wingman was given a stable platform to fly on. Parameters remained inside the code 3 bands throughout.",
+        "4": "SP took over formation leadership the instant the command was received and flew the formation with parameters that were both stable and smooth from the first seconds. Power and attitude changes were small enough to keep the wingman comfortably in position. Deviations from the briefed parameters were negligible for the whole period in the lead.",
+        "marginal": "SP assumed formation leadership within standards after the command, but for the first seconds the parameters were set reactively rather than deliberately and drifted toward the middle of the band. Leadership was never in doubt and no prompting was required. SP is expected to establish and announce the briefed parameters immediately on taking the lead so that the wingman has a stable reference from the outset."
+      }
+    },
+    {
+      "id": "formation-21-em06",
+      "label": "Safe separation and mutual visual contact during the swap",
+      "mif_row": "Lead Change",
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an excessive rate of closure while moving forward into the lead position, did not execute the lead change safely. Lateral separation reduced below the briefed value and the other aircraft passed out of sight in the forward hemisphere for part of the movement. The IP had to intervene on the controls to restore separation and stop the maneuver.",
+        "1": "SP, due to a movement started before the lateral displacement had been established, executed the lead change with the two aircraft closer than the briefed separation. The geometry was opened out only after the IP called for more spacing, and airspeed reached the 20 knots limit while the correction was made. Visual contact with the other aircraft was maintained, but the margins used were the minimum acceptable.",
+        "2": "SP, due to a lateral displacement that was slightly less than briefed at the start of the swap, allowed the separation to reduce during the overtake. SP recognized the closure early, stopped the forward movement and re-opened the geometry, with the parameters remaining between the code 3 and code 1 bands. Visual contact was continuous and no IP intervention was required.",
+        "3": "SP executed the lead change safely, establishing the briefed lateral displacement before starting the forward movement and keeping the other aircraft in sight throughout. Closure was controlled and the separation never reduced below the briefed value. The exchange of positions was completed with all parameters inside the code 3 bands.",
+        "4": "SP set up the lead change with clear lateral displacement, maintained uninterrupted visual contact with the other aircraft and controlled the closure so that the swap looked deliberate at every stage. Separation stayed comfortably above the briefed minimum from start to finish. The whole maneuver was flown with negligible deviation from the briefed parameters.",
+        "marginal": "SP executed the lead change with safe separation, but the lateral displacement established before the forward movement was consistently at the low end of the briefed spacing. Visual contact was maintained and no correction was needed from the IP. SP is expected to build in a larger initial displacement so that the safety margin does not depend on precise closure control."
+      }
+    },
+    {
+      "id": "formation-21-em07",
+      "label": "Compliance with the published and ATC restrictions for lead change",
+      "mif_row": "Lead Change",
+      "source": "general:c",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to lack of awareness of a published restriction that was available in the briefing material, carried out the lead change outside the conditions permitted by B.O 3-1 and the ATC clearance in force. The change was made in an area and at a level where it was not authorized, and altitude was allowed to deviate by more than 300 feet while the geometry was sorted out. The IP had to stop the maneuver, restore the cleared profile and coordinate with ATC.",
+        "1": "SP, due to an incomplete review of the restrictions applicable to the lead change, started the exchange before the conditions required by B.O 3-1 and by the ATC clearance were satisfied. The maneuver was suspended and repositioned only after the IP pointed out the restriction, and altitude reached the 300 feet limit during the interruption. Compliance was finally achieved, but only after direct prompting.",
+        "2": "SP, due to a late check of the clearance limits against the planned lead change point, began setting up the exchange slightly early with respect to the applicable restriction. SP recognized the discrepancy without prompting, delayed the change until the restriction was satisfied and kept the parameters between the code 3 and code 1 bands during the delay. No IP intervention was required.",
+        "3": "SP complied with the restrictions of B.O 3-1 and with the ATC clearance for the lead change. The applicable conditions were checked before the exchange was set up and the maneuver was carried out only inside the authorized area and level block. Formation parameters were held inside the code 3 bands during the whole sequence.",
+        "4": "SP had the applicable B.O 3-1 and ATC restrictions identified before the exchange and confirmed the clearance limits without any interruption of the formation task. The lead change was executed inside the authorized boundaries with no doubt at any moment about its legality. Parameter deviations during the sequence were negligible.",
+        "marginal": "SP complied with the B.O 3-1 and ATC restrictions for the lead change, but the applicable limits were confirmed only shortly before the exchange rather than during the planning of the sequence. No restriction was infringed and no prompting was needed. SP is expected to confirm the applicable restrictions early enough that the decision to change lead is never made under time pressure."
+      }
+    },
+    {
+      "id": "formation-21-em08",
+      "label": "Execution of the lead change at the briefed point and per SOP",
+      "mif_row": "Lead Change",
+      "source": "general:a|general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unmonitored position relative to the sequence agreed at the pre-flight briefing, did not perform the lead change at the point determined in the briefing or in the manner set out in the Techniques and Procedures Manual and the SOPs. The exchange was started at an arbitrary point in the profile and the sequence of actions did not follow the briefed pattern, with heading and airspeed diverging past the 10 degrees and 20 knots limits. The IP had to stop the maneuver and re-brief the sequence in flight.",
+        "1": "SP, due to a mental picture of the sortie that had not been updated after the previous turn, arrived at the briefed lead change point without being ready to execute. The exchange was carried out well past the briefed point and only after the IP prompted for it, with airspeed at the 20 knots limit while SP caught up with the sequence. The steps of the procedure were completed, but out of the briefed order.",
+        "2": "SP, due to attention held on the geometry of the formation, was late in recognizing the arrival at the briefed lead change point. SP identified the omission without prompting, executed the exchange shortly after the briefed point and followed the sequence of the Techniques and Procedures Manual, with parameters staying between the code 3 and code 1 bands. No IP intervention was required.",
+        "3": "SP performed the lead change at the point determined during the pre-flight briefing and in accordance with the Techniques and Procedures Manual and the SOPs. The signal, the acknowledgement and the exchange of positions followed the briefed order without omissions. Formation parameters remained inside the code 3 bands for the whole sequence.",
+        "4": "SP arrived at the briefed lead change point already configured and positioned for the exchange, and executed it exactly as set out in the Techniques and Procedures Manual and the SOPs. The sequence ran without hesitation or repeated actions and the timing matched the pre-flight briefing precisely. Deviations from the briefed parameters were negligible throughout.",
+        "marginal": "SP executed the lead change at the briefed point and in the briefed order, but the preparation for it began only at the point itself rather than in advance, so the first actions were rushed. The procedure was completed correctly and within standards. SP is expected to anticipate the arrival at the briefed point so that the exchange is set up before it is reached."
+      }
+    }
+  ]
+}

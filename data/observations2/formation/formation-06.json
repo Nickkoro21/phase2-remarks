@@ -1,0 +1,150 @@
+{
+  "item_id": "formation-06",
+  "item_name": "FORMATION APPROACH",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [6],
+  "mif_rows": [
+    {
+      "sn": 6,
+      "row_name": "Formation Approach"
+    }
+  ],
+  "error_modes": [
+    {
+      "id": "formation-06-em01",
+      "label": "Altitude control on the formation approach as leader",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a pitch attitude reset after the gear and flaps came down without any reference back to the altimeter, did not hold the assigned approach altitude while leading the two-ship. The aircraft settled progressively below profile and the deviation built past 400 feet, beyond the 300 foot limit, with the wingman forced to follow the sinking flight path. IP had to take the controls to arrest the descent and re-establish the briefed approach altitude.",
+        "1": "SP allowed the nose to drop as the landing configuration was selected and did not add the power and back pressure needed to hold the assigned altitude. The excursion reached 300 feet, at the limit of the standard, and was corrected only after repeated verbal prompting from IP. The recovery to profile was slow and the formation was still low when the approach segment ended.",
+        "2": "SP was late in trimming after the configuration change, so the assigned approach altitude was lost by about 220 feet. SP detected the deviation on the altimeter and VSI and flew the aircraft back onto profile with no intervention by IP. The excursion stayed between the 150 and 300 foot bands, but the correction should have been initiated before the trend developed.",
+        "3": "SP held the assigned approach altitude within about 100 feet throughout the formation approach, including through the configuration changes. Pitch and power were adjusted together, so corrections were small and completed without over-controlling. Each deviation was seen on the altimeter and removed at once, giving the wingman a steady reference.",
+        "4": "SP maintained the assigned approach altitude within about 40 feet from level-off to the end of the approach segment, with the altimeter essentially steady through gear and flap extension. Power was led into each configuration change, so no more than light control pressure was ever needed and the formation flew a visibly flat, stable profile.",
+        "marginal": "SP stayed inside the altitude standard, but the deviations clustered near 140 feet and were consistently low after each configuration change. The corrections worked, yet they began later than required and needed larger power changes than a timely input would have. SP is expected to anticipate the pitch and power requirement of the configuration change so that the altitude trace tightens over the next sorties."
+      }
+    },
+    {
+      "id": "formation-06-em02",
+      "label": "Airspeed control on the formation approach as leader",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots) / AIRSPEED (KIAS)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to inadequate monitoring of airspeed during the approach while attention stayed outside on the wingman, did not fly the briefed approach speed. Speed decayed more than 25 knots below the briefed value and remained low, exceeding the 20 knot limit and leaving the wingman with insufficient power margin to hold position. IP had to direct and then apply the power correction to restore the approach speed.",
+        "1": "SP did not re-establish the airspeed cross-check after the landing configuration was selected and let the speed drift 20 knots off the briefed value, at the limit of the standard. The power correction came only after IP called the speed twice, and it was then applied in a single large movement that the wingman had to chase. Speed was still oscillating when the approach segment ended.",
+        "2": "SP allowed an interrupted airspeed cross-check while the wingman was being monitored, and the approach speed fell about 15 knots below the briefed figure. SP returned to the airspeed indicator, made a smooth power correction and restored the briefed speed without any intervention by IP. The deviation stayed between the 10 and 20 knot bands, but the cross-check should not have lapsed for that long.",
+        "3": "SP held the briefed approach speed within about 7 knots throughout, cross-checking the airspeed indicator between looks at the wingman. Power was adjusted in small, early increments at each configuration change, so no chasing was required. The steady speed gave the wingman a predictable base from which to fly formation.",
+        "4": "SP flew the briefed approach speed within about 3 knots from configuration change to the end of the approach, with no visible power hunting. The airspeed cross-check was maintained continuously alongside the lookout on the wingman, so every trend was caught at onset. The result was an approach the wingman could fly on trim alone.",
+        "marginal": "SP kept the airspeed inside the standard, but the deviations sat close to 9 knots and were always on the slow side after flap extension. Each correction restored the briefed speed, yet it followed the deviation instead of preventing it, and the power inputs were larger than necessary. SP is expected to keep the airspeed cross-check running through the configuration changes so that the speed trace tightens over the next sorties."
+      }
+    },
+    {
+      "id": "formation-06-em03",
+      "label": "Heading and final course tracking as leader",
+      "mif_row": null,
+      "source": "specific:HEADING (degrees) / EXIT HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a bank angle held after the turn to final without any reference to the heading indicator, did not roll out on the assigned inbound heading. The formation ended up more than 15 degrees off course, beyond the 10 degree limit, and drifted further before any correction was attempted. IP had to intervene on the controls to regain the assigned heading and place the two-ship back on the approach course.",
+        "1": "SP used an imprecise lead point for the roll-out and finished 10 degrees off the assigned heading, at the limit of the standard. The correction was made only after IP prompted verbally, and it was then flown with a bank change large enough to unsettle the wingman. The heading error was reduced but a residual offset was carried through the rest of the approach.",
+        "2": "SP rolled out late from the turn to final and settled about 8 degrees off the assigned heading. SP identified the error on the heading indicator and flew a shallow correcting turn back onto course without any intervention by IP. The deviation remained between the 5 and 10 degree bands, but the roll-out should have been anticipated earlier.",
+        "3": "SP rolled out on the assigned heading within about 3 degrees and tracked the approach course accurately, using bank angles well inside the 30 degree limit. The lead point for the roll-out was correctly judged, so no secondary correction was needed. Course keeping was steady enough for the wingman to maintain position without repositioning.",
+        "4": "SP established the assigned inbound heading within about 1 degree and held it through the whole approach segment with no detectable wander. Turns were entered and stopped on precise lead points, and the wings stayed level once on course. The wingman had a completely stable reference for the entire approach.",
+        "marginal": "SP remained inside the heading standard, but the roll-outs finished consistently near 4 degrees off and always on the same side. Each error was recognized and removed, yet only after the roll-out was complete rather than during it. SP is expected to refine the roll-out lead point so that the heading is captured on the first attempt over the next sorties."
+      }
+    },
+    {
+      "id": "formation-06-em04",
+      "label": "Timely and correct landing configuration of the lead aircraft",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incomplete approach sequence flown from memory instead of the checklist, did not bring the aircraft into landing configuration timely and correctly. Gear and flaps were selected out of the briefed order and outside the speed window, and one configuration item was still incomplete late in the approach. IP had to intervene to complete the configuration and stabilize the aircraft before the approach could continue.",
+        "1": "SP started the landing configuration well after the briefed point and selected the flaps before the speed had reduced sufficiently. The configuration was completed only after IP prompted item by item, and the resulting pitch and power changes disturbed the approach profile. The aircraft reached the correct configuration but far later than the approach required.",
+        "2": "SP was slightly late in calling for the landing configuration and the gear went down after the briefed point in the approach. SP recognized the delay, completed the remaining items in the correct order and re-stabilized the aircraft without any intervention by IP. The configuration was correct in the end, but the sequence should have started at the briefed point.",
+        "3": "SP brought the aircraft into landing configuration timely and correctly, selecting gear and flaps at the briefed points and within the applicable speed limits. Each selection was confirmed by indication and the aircraft was re-trimmed immediately afterwards. The approach profile was not disturbed by any of the configuration changes.",
+        "4": "SP configured the lead aircraft exactly on the briefed points with the speed already positioned for each selection, so the transitions were invisible in the flight path. Every item was confirmed by indication and announced clearly for the formation. The aircraft was fully configured and stable well before the approach required it.",
+        "marginal": "SP completed the landing configuration correctly and inside the required window, but each selection came at the late edge of that window. The items were all made and confirmed, yet the compression left little margin for the re-trim before the next task. SP is expected to begin the configuration sequence earlier so that the approach is stabilized with more margin over the next sorties."
+      }
+    },
+    {
+      "id": "formation-06-em05",
+      "label": "Checking the configuration of the wingman",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": "hf-complacency",
+      "texts": {
+        "0": "SP, due to complacency on a maneuver flown repeatedly without incident, did not check the proper configuration of the wingman at any point during the approach. No visual check and no configuration call were made, and the wingman continued the approach with a configuration that did not match lead. IP had to intervene, direct the check and have the discrepancy resolved before the approach could be continued.",
+        "1": "SP treated the wingman configuration check as routine and made only a general call without looking across to verify it. The check was performed properly only after IP prompted, by which time the formation was well into the approach. The discrepancy was found and corrected, but entirely on IP initiative rather than SP action.",
+        "2": "SP delayed the check of the wingman configuration, having assumed the wingman would mirror lead automatically. SP then looked across, identified that the flap setting did not match and had it corrected without any intervention by IP. The check achieved its purpose, but it should have been made at the briefed point in the approach.",
+        "3": "SP checked the proper configuration of the wingman at the briefed point, verifying gear and flaps visually and confirming by radio. The check was made without interrupting the flight path or the instrument cross-check. Any mismatch would have been caught early enough to correct without disturbing the approach.",
+        "4": "SP verified the wingman configuration visually and by call as soon as lead was configured, and repeated the confirmation before the final segment. The checks were brief, deliberate and cost nothing in aircraft control. The formation entered the approach with the configuration of both aircraft positively established.",
+        "marginal": "SP checked the wingman configuration and confirmed it, but the check was made late in the approach and with a single quick glance. Nothing was missed on this sortie, yet the margin to correct a mismatch would have been small. SP is expected to make the configuration check earlier and more deliberately so that any discrepancy can be resolved without pressure over the next sorties."
+      }
+    },
+    {
+      "id": "formation-06-em06",
+      "label": "Monitoring the wingman and assuring position in time for the approach",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-distributed-situational-awareness",
+      "texts": {
+        "0": "SP, due to a failure to keep the IP and SP mental models consolidated by cross-talk about the wingman position, did not monitor the wingman or assert that the proper position had been reached for the approach being flown. The approach was commenced with the wingman still out of the required position and no directive call was made. IP had to intervene, stop the approach and have the formation repositioned before it could continue.",
+        "1": "SP monitored the wingman only intermittently and did not confirm that the position required by the approach had been reached in time. The repositioning call was made only after IP pointed out the spacing, and by then the formation was already established on the approach out of position. The wingman recovered position late and with a large closure correction.",
+        "2": "SP was slow to check the wingman and noticed only after some delay that the position for the briefed approach had not been reached. SP made a clear directive call, allowed time for the wingman to reposition and continued the approach without any intervention by IP. The formation ended up correctly positioned, but the monitoring should have detected the lag earlier.",
+        "3": "SP monitored the wingman continuously and confirmed the position required by the approach being flown at the correct point. A directive call was made in time for the wingman to establish position without a rushed correction. The approach was commenced with the formation properly positioned and both mental models aligned.",
+        "4": "SP tracked the wingman throughout the approach, anticipated the position required for the type of approach being flown and called for it before it became necessary. The wingman reached the required position smoothly and well ahead of the approach segment. The whole sequence was managed by clear, brief cross-talk with no repetition needed.",
+        "marginal": "SP monitored the wingman and the required position was reached in time, but the confirmation came close to the point where it was needed. The directive call was correct, yet it left the wingman with a brisk correction rather than a comfortable one. SP is expected to anticipate the positioning requirement earlier so that the wingman has more margin over the next sorties."
+      }
+    },
+    {
+      "id": "formation-06-em07",
+      "label": "Smoothness and predictability of lead maneuvering during the approach",
+      "mif_row": null,
+      "source": "general:c,d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to abrupt control and power inputs made in response to each deviation rather than anticipated corrections, did not fly the formation approach in a way the wingman could follow. Bank changes were applied and removed sharply and power was moved in large steps, forcing the wingman out of position repeatedly. IP had to take the controls to steady the flight path and allow the formation to be re-established.",
+        "1": "SP made corrections with control inputs that were too large for a leader, so bank and power changed in visible steps through the approach. The technique was moderated only after IP called for smoother inputs, and the wingman had to work continuously to remain in position. The approach was completed but the formation was never settled.",
+        "2": "SP applied one bank change more rapidly than was appropriate for the wingman and the formation position broke down briefly. SP recognized the effect, reduced the rate of subsequent inputs and flew the remainder of the approach smoothly without any intervention by IP. The wingman regained position quickly, but the input rate should have been controlled from the start.",
+        "3": "SP flew the approach with smooth, gradual control and power inputs well inside the 30 degree bank limit, so the wingman could hold position throughout. Corrections were anticipated and applied early, which kept them small. The flight path was predictable from the leader seat and easy to follow from the wing.",
+        "4": "SP led the approach with inputs so measured that the wingman held position on trim alone from configuration change to the end of the segment. Every correction was anticipated and made before it became visible in the flight path. The formation remained visually rigid throughout.",
+        "marginal": "SP flew the approach within standards, but several corrections were applied more rapidly than a leader should, and the wingman visibly worked to stay in position. The flight path stayed acceptable and no position was lost, yet the ride was firmer than a two-ship approach requires. SP is expected to anticipate corrections earlier and reduce the rate of control inputs over the next sorties."
+      }
+    },
+    {
+      "id": "formation-06-em08",
+      "label": "Sequence and clarity of directive calls for the approach",
+      "mif_row": null,
+      "source": "general:a,b,c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an approach sequence that was not organized before it was flown, did not issue the configuration and positioning calls in the order the approach required. Calls were missed, made out of sequence or worded so ambiguously that the wingman acted on the wrong one. IP had to intervene, take over the direction of the formation and re-establish the sequence before the approach could continue.",
+        "1": "SP made the approach calls in a disordered sequence and had to repeat two of them after the wingman queried the intention. The sequence was corrected only after IP prompted the missing items, and the resulting delays compressed the remainder of the approach. The formation completed the approach late and behind the briefed profile.",
+        "2": "SP transposed two calls in the approach sequence and the wingman began the configuration change ahead of the intended point. SP recognized the error at once, restated the intention clearly and restored the briefed sequence without any intervention by IP. The approach continued correctly, but the sequence should have been followed as briefed.",
+        "3": "SP issued the configuration and positioning calls in the briefed sequence, each one clear, brief and made at the correct point in the approach. No call had to be repeated and the wingman acted on every one without query. The direction of the formation matched the profile that had been briefed.",
+        "4": "SP directed the entire approach with a call sequence that was concise, correctly timed and unambiguous, leaving the wingman nothing to interpret. Each transmission arrived slightly ahead of the point it applied to, so the wingman was never rushed. The formation flew the approach exactly as briefed with no additional transmissions required.",
+        "marginal": "SP followed the briefed call sequence and every item was covered, but several calls arrived just as the action was needed rather than before it. Nothing was missed and the wingman complied correctly, yet the timing left no buffer in the sequence. SP is expected to make the directive calls slightly earlier so that the wingman has reaction time over the next sorties."
+      }
+    },
+    {
+      "id": "formation-06-em09",
+      "label": "Basic aircraft control cross-check while leading the approach",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to attention held almost entirely on the wingman, did not maintain the basic aircraft control cross-check required of the Contact and Instrument standards while leading the approach. Altitude, airspeed and heading were left unmonitored simultaneously and the aircraft state diverged on more than one parameter at once, beyond the applicable limits. IP had to intervene on the controls to recover the aircraft state and restore the approach.",
+        "1": "SP allowed the instrument cross-check to stop whenever the wingman was being monitored, so deviations were only ever discovered after they had reached the limits of the standards. The scan was reinstated only after IP directed it, and the corrections that followed were reactive rather than anticipated. Aircraft control on the approach never became stable.",
+        "2": "SP let the cross-check slow while managing the wingman and the aircraft state drifted on two parameters at once, though both stayed inside the outer limits. SP re-established the scan, prioritized flying the aircraft and corrected both deviations without any intervention by IP. Control was restored properly, but the scan should not have been suspended in the first place.",
+        "3": "SP maintained a continuous cross-check of altitude, airspeed and heading while leading the formation, interleaving the lookout on the wingman with the instrument scan. Deviations were detected while they were small and corrected before they affected the formation. Flying the aircraft clearly retained priority over the leadership tasks.",
+        "4": "SP integrated the instrument cross-check and the formation lookout so completely that neither task degraded the other throughout the approach. Every parameter was captured at the onset of any trend, and the aircraft state was never in question while the formation was being directed. The standard of basic aircraft control was well above what the SP experience level requires.",
+        "marginal": "SP kept every parameter within the applicable standards, but the cross-check visibly slowed each time the wingman was checked, and the corrections that followed were reactive. Nothing exceeded the limits and control was retained throughout, yet the scan rate was the weak point of the approach. SP is expected to interleave the lookout with the instrument scan more evenly so that deviations are caught at onset over the next sorties."
+      }
+    }
+  ]
+}

@@ -194,3 +194,31 @@ body {
 .fb-btn:hover { color: var(--warn); border-color: var(--warn); }
 .fb-btn + .copy-btn { margin-left: 8px; }
 .badge.mode { color: var(--accent); border-color: var(--accent); }
+
+/* ── View tabs & requirements ── */
+.viewtabs { display: flex; gap: 6px; }
+.viewtab {
+  background: transparent; border: 1px solid var(--line); color: var(--muted);
+  border-radius: 999px; padding: 6px 16px; font-size: 13px; cursor: pointer;
+}
+.viewtab:hover { border-color: var(--accent); color: var(--text); }
+.viewtab.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.req-layout { grid-template-columns: 260px 1fr; }
+#req-results { display: flex; flex-direction: column; gap: 10px; max-height: 74vh; overflow-y: auto; }
+.req-card { border-left-color: var(--accent); }
+.kv-row { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.badge.kv { text-transform: none; letter-spacing: 0; font-family: Consolas, monospace; font-size: 11px; }
+.req-card details { margin-top: 8px; }
+.req-card summary { color: var(--muted); font-size: 12px; cursor: pointer; }
+.verbatim {
+  font-size: 12.5px; color: var(--muted); border-left: 3px solid var(--line);
+  padding: 6px 10px; margin-top: 6px; line-height: 1.55; white-space: pre-wrap;
+}
+.mif-tbl-title { color: var(--muted); font-size: 12px; margin: 10px 0 4px; }
+.mif-scroll { overflow-x: auto; }
+.mif-prog td, .mif-prog th { white-space: nowrap; }
+.req-link {
+  background: transparent; border: 1px solid var(--line); color: var(--accent);
+  border-radius: 6px; padding: 1px 8px; font-size: 12px; font-family: Consolas, monospace; cursor: pointer;
+}
+.req-link:hover { border-color: var(--accent); background: var(--accent-soft); }

@@ -1,0 +1,132 @@
+{
+  "item_id": "vfr_navigation-04",
+  "item_name": "VFR DEPARTURE / SID",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [4],
+  "mif_rows": [
+    {"sn": 4, "row_name": "VFR / SID Departure"}
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-04-em01",
+      "label": "Altitude control during the VFR departure / SID climb",
+      "mif_row": null,
+      "source": "specific:ALTITUDE* (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a pitch attitude set without reference to the departure altitude restriction, did not arrest the climb at the assigned altitude and did not level off at the published segment limit. The excursion passed 300 feet from the assigned altitude and continued to increase. The IP intervened to establish level flight before the next segment of the departure.",
+        "1": "SP, due to delayed recognition of the level-off point, did not lead the capture of the assigned departure altitude and allowed the deviation to reach 300 feet, the outer limit of the standard. The correction was applied only after the IP verbally prompted an altitude check. Level flight was regained late, after the departure turn had already been started.",
+        "2": "SP, due to a power setting left unadjusted through the departure turn, did not hold the assigned altitude and drifted 200 feet from it. SP detected the trend on the altimeter and returned the aircraft inside 150 feet without any prompt. The remaining segments of the departure were flown at the assigned altitudes.",
+        "3": "SP maintained the assigned departure altitudes within 150 feet throughout the VFR departure and the SID. Each level-off was led early enough that no overshoot developed at any altitude restriction. Altitude was cross-checked at every segment change of the departure.",
+        "4": "SP held every assigned altitude of the departure with deviations that remained negligible on the altimeter. Each level-off was anticipated and flown with no measurable overshoot at any restriction. Altitude control was preserved through the climbing turns and the configuration changes without degradation.",
+        "marginal": "SP kept the departure altitudes inside the standard, but the deviations repeatedly reached the upper part of the acceptable band during the climbing turns. The corrections were technically correct yet consistently reactive rather than anticipated. SP is expected to lead the level-offs earlier so that altitude keeping does not depend on late corrections."
+      }
+    },
+    {
+      "id": "vfr_navigation-04-em02",
+      "label": "Airspeed control on the departure climb schedule",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a power lever position not matched to the briefed climb schedule, did not maintain the departure climb airspeed and allowed the deviation to exceed 20 knots. The airspeed continued to diverge while SP worked the navigation display. The IP took over the power setting to re-establish the briefed departure speed.",
+        "1": "SP, due to attention held on the course indication during the initial climb, did not monitor the airspeed and let it reach 20 knots from the briefed departure speed, at the limit of the standard. The trend was reversed only after repeated verbal reminders from the IP. The briefed speed was re-established late in the departure segment.",
+        "2": "SP, due to a late power reduction at the level-off, did not hold the briefed departure speed and accelerated 15 knots above it. SP identified the trend on the airspeed indicator and restored the speed inside 10 knots without prompting. Airspeed control remained stable for the rest of the departure.",
+        "3": "SP flew the VFR departure and the SID climb at the briefed airspeed within 10 knots. Power changes at the level-offs and at the configuration changes were made early enough to prevent any speed excursion. Airspeed was included in the cross-check at every segment of the departure.",
+        "4": "SP held the briefed departure airspeed with deviations that were negligible throughout the profile. Power was set precisely at each transition, so no speed trend was ever allowed to develop. Airspeed accuracy was maintained while SP simultaneously managed the navigation and the radio.",
+        "marginal": "SP kept the departure airspeed within the standard, but the excursions repeatedly approached the outer part of the tolerance after each power change. Speed was recovered correctly, yet only after the deviation had become visible on the indicator. SP is expected to set power to the known climb values so that speed is held rather than chased."
+      }
+    },
+    {
+      "id": "vfr_navigation-04-em03",
+      "label": "Heading and departure track keeping",
+      "mif_row": null,
+      "source": "specific:HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a departure heading taken from the wrong segment of the plan, did not fly the assigned departure track and allowed the heading error to grow beyond 10 degrees. The aircraft diverged from the published ground track with no correction applied. The IP intervened to re-establish the aircraft on the departure course.",
+        "1": "SP, due to a rollout flown without reference to the target heading, did not stop the turn on the assigned departure heading and settled 10 degrees off it, at the limit of the standard. The correction was made only after the IP identified the error verbally. The assigned track was regained after a delay.",
+        "2": "SP, due to an uncompensated crosswind on the initial departure leg, did not hold the assigned heading and drifted 8 degrees from it. SP recognized the drift against the heading indicator and re-established the assigned heading within 5 degrees without prompting. The remaining legs of the departure were flown on the planned track.",
+        "3": "SP maintained the assigned departure headings within 5 degrees throughout the VFR departure and the SID. Turns were rolled out on the target heading without overshoot. Drift correction was applied so that the published ground track was preserved.",
+        "4": "SP flew every assigned departure heading with negligible deviation. Rollouts were anticipated so that no secondary correction was required after any turn. The ground track matched the published departure throughout, including on the crosswind legs.",
+        "marginal": "SP held the departure headings inside the standard, but each rollout required a secondary correction before the target heading was captured. The track was maintained, yet with a repeated pattern of small overshoots. SP is expected to lead the rollout so that the assigned heading is captured on the first attempt."
+      }
+    },
+    {
+      "id": "vfr_navigation-04-em04",
+      "label": "Completion of required procedures before Zero Point",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to inadequate workload management during the departure phase, did not complete the required procedures before Zero Point and arrived over it with the checks and the navigation setup unfinished. The aircraft was not established at the planned parameters at the point where the route timing had to start. The IP intervened to close the outstanding items and to establish the aircraft on the first leg.",
+        "1": "SP, due to task sequencing that concentrated all cockpit work inside the departure turn, did not finish the required procedures before Zero Point and completed them only after crossing it. The items were actioned only after the IP called for them. The first leg was begun with the departure setup still in progress and the timing reference taken late.",
+        "2": "SP, due to a late start of the pre-Zero Point sequence, did not have all required procedures complete on first reaching the point, but recognized the shortfall and closed them within seconds of it. No item was omitted and the timing was started correctly. The first leg was then flown as planned without further disruption.",
+        "3": "SP arrived over Zero Point with all required procedures already complete and the aircraft established at the planned altitude, airspeed and heading. The navigation setup, the checks and the timing reference were in place before the point. The transition from the departure to the first leg required no additional action.",
+        "4": "SP had every required procedure complete well before Zero Point and crossed it exactly at the planned parameters. Cockpit work was sequenced so that the final segment of the departure was flown with full capacity available for flying the aircraft. The transition to the route was made without any interruption of the profile.",
+        "marginal": "SP completed the required procedures before Zero Point, but the last items were closed only in the final seconds of the departure segment. Nothing was omitted, yet the margin left no room to absorb any interruption. SP is expected to begin the sequence earlier so that Zero Point is reached with the cockpit work already closed."
+      }
+    },
+    {
+      "id": "vfr_navigation-04-em05",
+      "label": "Compliance with the published departure sequence and restrictions",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a departure procedure that had not been reviewed against the published plate, did not fly the prescribed sequence of the SID and did not turn at a required point. The aircraft continued past the segment limit with no correcting action. The IP intervened to re-establish the aircraft on the published departure.",
+        "1": "SP, due to an incomplete review of the departure sequence, did not initiate the next segment at the published point and continued straight beyond it. The turn was started only after the IP prompted the segment change. The published track was rejoined late, with the heading error at the 10 degree limit of the standard.",
+        "2": "SP, due to late identification of the segment change point, did not begin the turn exactly at the published position and overshot the following track. SP recognized the error against the navigation display and regained the published departure track without prompting. The remaining segments were flown in the correct sequence and within the restrictions.",
+        "3": "SP flew the VFR departure and the SID in the published sequence, initiating each segment at the correct point. The altitude and speed restrictions of the departure were met at each fix. The published ground track was maintained throughout the procedure.",
+        "4": "SP executed the departure exactly as published, initiating each segment at the correct point and meeting every restriction with margin. Anticipation of the turn points kept the aircraft on the published track with no corrections required. The complete departure was flown without any input from the IP.",
+        "marginal": "SP flew the departure in the correct sequence, but each segment change was initiated at the latest acceptable moment. The restrictions were met, yet with little margin at the fixes. SP is expected to anticipate the turn points so that the published track is flown without late corrections."
+      }
+    },
+    {
+      "id": "vfr_navigation-04-em06",
+      "label": "Departure clearance handling and radio communication",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-non-standard-phraseology",
+      "texts": {
+        "0": "SP, due to non-standard phraseology that left the intention ambiguous to the controller, did not read back the departure clearance correctly and flew a route other than the one issued. The discrepancy was not detected in the cockpit and the aircraft continued off the cleared departure. The IP intervened to clarify with the controller and to correct the aircraft track.",
+        "1": "SP, due to a read-back that did not confirm the actual clearance, did not act on the departure instruction as issued and began the wrong segment. The discrepancy was resolved only after the IP prompted a query to the controller. Compliance was restored after a delay during which the aircraft remained off the cleared route.",
+        "2": "SP, due to a read-back made before the transmission had been fully received, did not initially confirm the correct departure instruction. SP requested a repeat, corrected the read-back and complied with the clearance without any intervention. The remainder of the departure was flown as cleared.",
+        "3": "SP read back the departure clearance completely and in standard phraseology, and complied with it as issued. The required calls were made at the briefed points without blocking other transmissions. Changes to the clearance were acknowledged and translated into the flown profile correctly.",
+        "4": "SP handled all departure communications in standard phraseology with complete and accurate read-backs. Clearances and amendments were acknowledged immediately and reflected in the flight path without delay. Radio work was managed with no effect on the accuracy of the flown parameters.",
+        "marginal": "SP complied with the departure clearance and made the required calls, but several transmissions were incomplete and had to be prompted by the controller. Comprehension was correct, yet the phraseology was not consistently standard. SP is expected to use complete standard read-backs so that intent is unambiguous to the controller."
+      }
+    },
+    {
+      "id": "vfr_navigation-04-em07",
+      "label": "After-takeoff configuration changes, trim and power management",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an omitted step in the after-takeoff sequence, did not retract the gear and flaps at the scheduled points and entered the departure climb with the aircraft still configured. The additional drag was compensated with pitch instead of with the correct configuration and the climb schedule was not achieved. The IP intervened to complete the configuration change.",
+        "1": "SP, due to attention concentrated on capturing the departure heading, did not complete the after-takeoff configuration changes at the scheduled points and left the aircraft out of trim through the initial climb. The items were completed only after the IP called for them. The aircraft was flown with continuous control pressure until the trim was finally set.",
+        "2": "SP, due to a delayed trim input after flap retraction, did not relieve the control pressure immediately and allowed a small pitch excursion to develop in the climb. SP recognized the condition, trimmed the aircraft and re-established the climb attitude without prompting. The rest of the departure was flown in trim.",
+        "3": "SP completed the after-takeoff configuration changes at the scheduled points and trimmed the aircraft for the departure climb. Power was set to the briefed climb value and no residual control pressure was carried into the turns. Aircraft handling supported accurate parameter keeping throughout the departure.",
+        "4": "SP sequenced the configuration changes, power and trim so precisely that the departure climb showed no transient at any point. The aircraft was in trim at every stage, leaving full capacity for the navigation and radio tasks. Power management matched the briefed profile exactly.",
+        "marginal": "SP completed the configuration changes and trimmed the aircraft, but each trim input followed its configuration change later than it should have. Control of the aircraft was never in question, yet residual pressures were carried briefly into each segment. SP is expected to trim immediately after each configuration change."
+      }
+    },
+    {
+      "id": "vfr_navigation-04-em08",
+      "label": "Outside lookout and position awareness in the VFR departure corridor",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to loss of situational awareness of the aircraft position relative to the departure corridor, did not maintain the outside lookout required in VMC and did not identify the lateral limits of the departure area. The aircraft approached the corridor boundary with no correcting action. The IP intervened to turn the aircraft back inside the published area.",
+        "1": "SP, due to attention fixed inside the cockpit on the navigation display, did not sustain the outside scan during the VFR departure and did not confirm the planned visual references. Position awareness was restored only after the IP pointed out the reference. The planned track was regained after a delay, with the heading error at the 10 degree limit of the standard.",
+        "2": "SP, due to a scan biased toward the instruments during the initial climb, did not identify the first visual reference at the expected time. SP re-established the outside scan, positively identified the reference and confirmed the aircraft position against the plan without prompting. Terrain and airspace clearance were maintained throughout.",
+        "3": "SP maintained an effective outside scan during the VFR departure while sustaining the instrument cross-check. Visual references were identified at the planned points and the aircraft was kept clear of terrain and of the airspace limits. Traffic in the departure area was seen and called.",
+        "4": "SP divided attention between the outside scan and the cockpit tasks with no degradation to either. Every visual reference was identified early and the aircraft position was known continuously relative to the airspace and the terrain. Traffic was acquired and deconflicted with no effect on the flown parameters.",
+        "marginal": "SP kept the aircraft clear of terrain and of the airspace limits, but the outside scan was interrupted for long periods while cockpit tasks were worked. The visual references were identified, though later than planned. SP is expected to shorten the head-down periods so that the outside picture is maintained continuously."
+      }
+    }
+  ]
+}

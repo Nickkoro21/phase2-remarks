@@ -1,0 +1,162 @@
+{
+  "item_id": "vfr_navigation-03",
+  "item_name": "TAKEOFF",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [3],
+  "mif_rows": [
+    {"sn": 3, "row_name": "T/O"}
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-03-em01",
+      "label": "Takeoff airspeed at rotation",
+      "mif_row": null,
+      "source": "specific:Take off Airspeed (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a rushed rotation input that was not referenced to the calculated takeoff data, did not execute the T/O with the standard airspeed. On one attempt the aircraft was held on the runway to more than 10 kt above the computed rotation speed and on another it was unstuck below that speed, where no tolerance exists. IP intervened on the stick and the power lever to re-establish the lift-off airspeed.",
+        "1": "SP, due to an interrupted scan of the airspeed indicator during the ground roll, held the aircraft on the runway until the airspeed had built to about 10 kt above the computed rotation speed, at the outer boundary of the takeoff band. The rotation was started only after IP called the speed, and the excess was carried into the initial climb. No control intervention was required, but the correction depended entirely on the verbal prompt.",
+        "2": "SP, due to a late transition of the scan from the runway to the airspeed indicator, allowed the speed at rotation to reach roughly 8 kt above the computed value, outside the 5 kt band but inside the outer limit. SP recognized the excess without prompting and rotated smoothly, so the deviation was not carried into the initial climb.",
+        "3": "SP executed the T/O with the standard airspeed, rotating within 5 kt of the computed rotation speed taken from the calculated takeoff data. Lift-off was smooth and the airspeed trend was controlled through the transition to the climb.",
+        "4": "SP rotated at the computed takeoff speed with a deviation of no more than 1-2 kt, using a single continuous back-pressure input. The airspeed trend at lift-off was controlled so precisely that no further correction was needed in the transition to the climb.",
+        "marginal": "SP kept the takeoff airspeed within the standard, but the rotation consistently occurred at the upper edge of the band, close to 5 kt above the computed speed. The trend indicates that SP is waiting for the aircraft to feel ready instead of flying to the computed number. SP is expected to anchor the rotation on the calculated takeoff data and reduce the scatter on the following sorties."
+      }
+    },
+    {
+      "id": "vfr_navigation-03-em02",
+      "label": "Runway centerline maintenance during takeoff roll",
+      "mif_row": null,
+      "source": "specific:Maintain in the center line of RWY (ft)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient and late rudder input against the swing that developed with power application, did not maintain the A/C at the centerline during T/O. Lateral displacement exceeded 10 ft and continued to diverge toward the runway edge as speed increased. IP took over the rudder to re-establish the takeoff path.",
+        "1": "SP, due to coarse and alternating rudder inputs, allowed lateral displacement from the centerline to reach about 10 ft, at the outer limit for the ground roll. The aircraft was brought back toward the centerline only after IP called for rudder, and the correction lagged the deviation. Directional control was recovered without any intervention on the controls.",
+        "2": "SP, due to delayed recognition of the initial drift after brake release, allowed the aircraft to displace some 7-8 ft from the centerline during the acceleration phase. SP identified the drift without prompting and applied progressive rudder that returned the aircraft to the centerline well before rotation.",
+        "3": "SP maintained the A/C at the centerline throughout the takeoff roll, keeping lateral displacement inside 5 ft with small and timely rudder corrections. Directional control remained positive from brake release to lift-off.",
+        "4": "SP tracked the centerline with a displacement that was barely perceptible, of the order of 1-2 ft, using anticipatory rather than corrective rudder. The same precision was retained through the power application and the rotation.",
+        "marginal": "SP maintained the runway centerline within the standard, but the aircraft settled on a constant 4-5 ft offset for most of the roll instead of tracking the line. The trend indicates that SP accepts a stabilized offset rather than correcting back to zero. SP is expected to fly the centerline as the reference and keep the residual displacement close to nil."
+      }
+    },
+    {
+      "id": "vfr_navigation-03-em03",
+      "label": "LINE UP checks completeness",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP, due to a lapse in which briefed items were omitted under the workload of the runway entry, did not execute the LINE UP checks without omissions. More than one item of the check was left unaddressed and the aircraft was lined up for takeoff in that state. IP stopped the sequence and required the check to be repeated before power was applied.",
+        "1": "SP, due to an inadvertent slip in the flow of the LINE UP checks, passed over one item and did not detect the omission. The check was completed only after IP named the missing item on the runway. The takeoff itself was normal, but the trap came entirely from the verbal prompt.",
+        "2": "SP, due to interruption of the LINE UP flow by the tower transmission, initially skipped one item of the check. SP recognized the gap without prompting, went back over the flow and completed the check before brake release, with only a short delay to the takeoff.",
+        "3": "SP executed the LINE UP checks without omissions and in the published sequence, completing them before the takeoff clearance was accepted. The flow was uninterrupted and the aircraft was correctly configured for T/O.",
+        "4": "SP executed the LINE UP checks without omissions and at a pace that absorbed the tower transmission without breaking the flow. Each item was verified against the corresponding indication rather than recited, and the aircraft was ready for takeoff with nothing left outstanding.",
+        "marginal": "SP executed the LINE UP checks without omissions, but the flow was slow enough that the last items were completed after the aircraft was already aligned and holding on the runway. The trend indicates that the check is run reactively rather than in step with the runway entry. SP is expected to complete the flow without extending runway occupancy time."
+      }
+    },
+    {
+      "id": "vfr_navigation-03-em04",
+      "label": "Aircraft held stationary during engine run-up",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient brake pressure held while power was advanced, allowed the A/C to creep forward during the engine run-up. The movement continued while the engine indications were being read and the run-up position was lost. IP applied the brakes and required the run-up to be repeated from a stopped position.",
+        "1": "SP, due to relaxation of the toe brakes when attention shifted to the engine instruments, allowed a clearly perceptible forward movement of the A/C during the run-up. Braking was reapplied only after IP called the movement, and the checks were finished from a displaced position on the runway.",
+        "2": "SP, due to an uneven brake application as the power lever was advanced, allowed a small forward movement at the start of the run-up. SP detected the movement immediately, restored full brake pressure and completed the engine checks with the aircraft stationary.",
+        "3": "SP did not allow any movement of the A/C during the engine run-up, holding firm and symmetric brake pressure while power was advanced. The engine indications were checked with the aircraft completely stopped.",
+        "4": "SP held the A/C stationary throughout the run-up, with brake pressure set before power application and maintained without variation. The engine checks were completed within the normal time and the aircraft did not move at any point.",
+        "marginal": "SP prevented any movement of the A/C during the run-up, but only by increasing brake pressure after the power had already been advanced. The trend indicates that the braking is reacting to the thrust instead of preceding it. SP is expected to set the brakes fully before advancing power on the following sorties."
+      }
+    },
+    {
+      "id": "vfr_navigation-03-em05",
+      "label": "Takeoff attitude at rotation and lift-off",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an over-controlled pitch input at rotation, did not bring the A/C to the proper T/O attitude nor maintain it. The pitch oscillated after lift-off and the resulting airspeed departed the takeoff band by more than 10 kt. IP took the controls to stabilize the attitude and the initial climb.",
+        "1": "SP, due to an abrupt back-pressure input followed by an immediate relaxation, set a takeoff attitude that was not held, and the resulting airspeed excursion reached the 10 kt outer boundary. The attitude was stabilized only after IP called for a fixed pitch reference. No intervention on the controls was needed, but the correction was late.",
+        "2": "SP, due to a pitch input made without a firm external reference, initially set a takeoff attitude slightly higher than required and the airspeed fell outside the 5 kt band. SP read the discrepancy from the airspeed trend and re-established the proper attitude without prompting, before the departure path was affected.",
+        "3": "SP brought the A/C to the proper T/O attitude with a single smooth input and maintained it through the lift-off. Pitch was held against a defined reference and the airspeed stayed inside the 5 kt band.",
+        "4": "SP established the proper T/O attitude at the exact rotation point and held it with no perceptible pitch variation. The transition from ground roll to flight was continuous, with airspeed deviations of only 1-2 kt.",
+        "marginal": "SP brought the A/C to the proper T/O attitude and kept the parameters inside the standard, but the attitude needed two small corrections before it settled. The trend indicates that the initial pitch input is set approximately and then adjusted by feel. SP is expected to set the attitude once against the external reference and hold it."
+      }
+    },
+    {
+      "id": "vfr_navigation-03-em06",
+      "label": "Climb attitude establishment and maintenance",
+      "mif_row": null,
+      "source": "general:f",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a climb attitude chased on the airspeed indicator instead of being set against the horizon, did not bring the A/C to the proper climbing attitude nor maintain it. Pitch wandered continuously and the climb airspeed diverged beyond the 10 kt outer limit. IP intervened to establish and hold the correct climb attitude.",
+        "1": "SP, due to trimming the aircraft before the climb attitude had been stabilized, allowed the pitch to drift and the climb airspeed to reach the 10 kt outer boundary. The attitude was corrected only after IP gave repeated verbal references for pitch. The deviation persisted through the first part of the departure.",
+        "2": "SP, due to a climb attitude initially set low for the configuration, allowed the airspeed to move some 7 kt outside the computed climb value, past the 5 kt band. SP recognized the trend without prompting and re-set the pitch attitude, returning the airspeed inside the standard before the first turn.",
+        "3": "SP brought the A/C to the proper climbing attitude immediately after lift-off and maintained it, keeping the climb airspeed inside 5 kt of the standard value. Pitch and trim were stabilized without further corrections.",
+        "4": "SP set the proper climbing attitude in one movement and held it with variations of no more than 1-2 kt in airspeed. The aircraft was trimmed as soon as the attitude was established, and the climb required no further pitch input.",
+        "marginal": "SP established and maintained the proper climbing attitude inside the standard, but the pitch was allowed to settle over several seconds before it stabilized. The trend indicates that the target attitude is being approached gradually instead of being set directly. SP is expected to place the aircraft on the climb attitude at once and trim from there."
+      }
+    },
+    {
+      "id": "vfr_navigation-03-em07",
+      "label": "Configuration cleanup within speed limits (L/G and flaps)",
+      "mif_row": null,
+      "source": "general:g|execution:1d",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an absent cross-check of the aircraft state against the primary flight instruments after lift-off, selected L/G and flaps up without reference to the airspeed and did not clean the A/C configuration without violating the speed limit. The published limiting speed was exceeded while the aircraft was still accelerating. IP intervened on the power lever and the pitch attitude to bring the airspeed back inside the limit.",
+        "1": "SP, due to an interrupted instrument cross-check while attention stayed outside the cockpit, delayed the retraction of L/G and flaps until the airspeed was at the published limit for the configuration. The selections were made only after IP called the speed, and no margin remained. Cleaning of the configuration was completed without any intervention on the controls.",
+        "2": "SP, due to a scan that returned late to the airspeed indicator after lift-off, allowed the acceleration to run further than planned before the retraction was selected. SP detected the trend without prompting and completed the cleanup with a small margin to the limiting speed, holding pitch to arrest the acceleration.",
+        "3": "SP cleaned the A/C configuration without violating any speed limit, selecting L/G and flaps up at the correct points with a clear margin to the limiting speeds. The airspeed was cross-checked before each selection and the indications were confirmed.",
+        "4": "SP retracted L/G and flaps at precisely the correct points with a comfortable margin to the limiting speeds, each selection preceded by a positive airspeed cross-check and followed by confirmation of the indications. The cleanup did not disturb the climb attitude or the airspeed trend.",
+        "marginal": "SP cleaned the A/C configuration inside the speed limits, but each selection was made with only a small margin remaining to the limiting speed. The trend indicates that the retractions are being timed on aircraft feel rather than on the indicated airspeed. SP is expected to cross-check the speed earlier and restore a comfortable margin on the following sorties."
+      }
+    },
+    {
+      "id": "vfr_navigation-03-em08",
+      "label": "Acceleration to and maintenance of standard climb airspeed",
+      "mif_row": null,
+      "source": "general:h|execution:1b,1e",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a pitch attitude that was not adjusted as the configuration changed, did not accelerate the A/C to the standard climb airspeed nor maintain it. The airspeed diverged by more than 10 kt from the standard value and continued to drift as the departure progressed. IP took the controls to set the attitude and stabilize the climb airspeed.",
+        "1": "SP, due to an untrimmed aircraft after the cleanup, allowed the climb airspeed to move out to the 10 kt outer boundary of the standard value. The airspeed was recovered only after repeated verbal references from the IP, and the aircraft was still not trimmed at the end of the departure segment. No intervention on the controls was required.",
+        "2": "SP, due to a delayed trim input following flap retraction, allowed the climb airspeed to deviate by some 7 kt from the standard value, outside the 5 kt band. SP recognized the deviation without prompting, corrected the pitch attitude and re-trimmed, restoring the standard climb airspeed promptly.",
+        "3": "SP accelerated the A/C to the standard climb airspeed and maintained it inside 5 kt, trimming the aircraft as soon as the configuration was clean. The acceleration from brake release to the climb speed was continuous and controlled.",
+        "4": "SP accelerated the A/C to the standard climb airspeed and held it with deviations of no more than 1-2 kt, with the aircraft trimmed hands-off. The acceleration profile matched the calculated takeoff data throughout.",
+        "marginal": "SP accelerated to and maintained the standard climb airspeed within the standard, but the speed was held consistently at the upper edge of the allowed band. The trend indicates that the pitch attitude is being set slightly low and then accepted. SP is expected to fly the standard climb airspeed as the target rather than as a boundary."
+      }
+    },
+    {
+      "id": "vfr_navigation-03-em09",
+      "label": "Drift and crosswind correction on the takeoff path",
+      "mif_row": null,
+      "source": "general:c,d|conditions:1,2",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, with wind parameters within limits, did not apply the aileron into wind during the roll nor the required correction after lift-off, and did not keep the A/C on the takeoff path. The aircraft displaced beyond 10 ft from the centerline on the ground and drifted further off the extended centerline after lift-off. IP intervened on the controls to re-establish the departure track.",
+        "1": "SP, due to aileron into wind that was removed as soon as the aircraft became airborne, allowed the drift to take the aircraft to the outer limit of the lateral tolerance and then off the extended centerline. The correction was applied only after IP called the drift, and the track was regained late in the initial climb. No intervention on the controls was needed.",
+        "2": "SP, due to a crosswind correction that was set slightly late during the acceleration, allowed the aircraft to displace some 7 ft from the centerline before lift-off. SP identified the drift without prompting, established the correct wind correction and rejoined the extended centerline early in the climb.",
+        "3": "SP applied the correct crosswind technique during the roll and after lift-off, keeping the aircraft inside 5 ft of the centerline on the ground and on the extended centerline in the climb. The transition from ground to air correction was made without a lateral excursion.",
+        "4": "SP set the crosswind correction before brake release and adjusted it continuously as the speed built, so that lateral displacement never exceeded 1-2 ft and the aircraft tracked the extended centerline exactly after lift-off. The wind correction at lift-off was made in a single seamless transition.",
+        "marginal": "SP kept the aircraft on the takeoff path within the standard, but the drift was corrected only after it became visible rather than being anticipated from the reported wind. The trend indicates that the crosswind technique is reactive. SP is expected to set the correction from the briefed wind before brake release on the following sorties."
+      }
+    },
+    {
+      "id": "vfr_navigation-03-em10",
+      "label": "Sequence of takeoff procedures and IP coordination",
+      "mif_row": null,
+      "source": "general:a,g,h|execution:1a",
+      "hf_concept": "hf-crew-resource-management",
+      "texts": {
+        "0": "SP, due to inadequate crew coordination between front and rear cockpit, did not execute the departure sequence as briefed and left the After Takeoff Checklist unstarted well past its normal point. Calls were not passed, the IP's queries on the aircraft configuration went unanswered and the workload was not shed. IP assumed control of the sequence and completed the outstanding items.",
+        "1": "SP, due to crew coordination that did not survive the increase in workload after lift-off, executed the departure items out of the briefed order and began the After Takeoff Checklist only when IP called for it. The required calls were made late and the aircraft was flown ahead of the checklist. No intervention on the controls was required.",
+        "2": "SP, due to a transmission that arrived in the middle of the departure flow, momentarily lost the sequence of the After Takeoff Checklist. SP re-established the flow without prompting, confirmed the configuration to the IP and completed the checklist in the correct order before the departure turn.",
+        "3": "SP executed the departure in the briefed sequence, performing the After Takeoff Checklist at the correct point and passing the required calls to the IP and to the tower. Cockpit coordination remained clear throughout the takeoff and initial climb.",
+        "4": "SP executed the departure in the briefed sequence with the checklist and radio work fitted around the flying without any degradation of the flight parameters. The configuration state was confirmed to the IP unprompted and the workload stayed balanced across the whole segment.",
+        "marginal": "SP kept the departure sequence and the checklist within the standard, but the flying degraded slightly whenever a radio call or a checklist item arrived. The trend indicates that SP is task-loading serially instead of integrating the secondary tasks with flying the aircraft. SP is expected to prioritize aircraft control and fit the remaining tasks around it."
+      }
+    }
+  ]
+}

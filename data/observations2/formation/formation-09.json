@@ -1,0 +1,147 @@
+{
+  "item_id": "formation-09",
+  "item_name": "TURNING REJOIN",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [9],
+  "mif_rows": [
+    {"sn": 9, "row_name": "Turning Rejoin"}
+  ],
+  "error_modes": [
+    {
+      "id": "formation-09-em01",
+      "label": "Rejoin angle control",
+      "mif_row": null,
+      "source": "specific:DEVIATION FROM REJOIN ANGLE",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a late reading of the leader's turn geometry after the pitch out, did not establish and hold the briefed rejoin angle. The deviation from the rejoin angle exceeded 20 degrees and kept increasing as the range closed, so the rejoin line was never regained. The IP took control to reposition the aircraft and prevent an uncontrolled overshoot inside the turn.",
+        "1": "SP, due to a fixation on closure rather than on the rejoin geometry, allowed the deviation from the rejoin angle to reach the 20 degree limit. The angle was brought back toward the briefed line only after repeated verbal directions from the IP, and the correction was applied late in the rejoin. No physical intervention on the controls was required, but the rejoin was completed at the edge of the standard.",
+        "2": "SP, due to an initial bank that was set slightly outside the required rejoin line, allowed the deviation from the rejoin angle to grow to approximately 15 degrees, between the 10 and 20 degree band. SP recognized the widening angle without prompting and re-established the briefed rejoin line before closure became a factor. The remainder of the rejoin was flown on angle and no IP input was required.",
+        "3": "SP established the briefed rejoin angle immediately after the leader's turn was assessed and held it within 10 degrees throughout the closure. Corrections to bank were small, promptly applied and stopped on the required line, so the rejoin geometry remained stable all the way to the route position.",
+        "4": "SP set the rejoin line on the first bank input and held the rejoin angle with deviations of only a few degrees from entry to the route position. The geometry required no visible re-correction at any point of the closure, and the aircraft tracked the leader's turn as briefed.",
+        "marginal": "SP remained within standards on the rejoin angle but flew consistently close to the 10 degree edge, with the angle drifting outside the briefed line before each correction was applied. The corrections were adequate and no assistance was needed, yet the trend was toward late recognition of the geometry. SP is expected to set the rejoin line earlier and hold it with smaller residual deviations on subsequent sorties."
+      }
+    },
+    {
+      "id": "formation-09-em02",
+      "label": "Airspeed control in route position",
+      "mif_row": null,
+      "source": "specific:AIRSPEED IN ROUTE POSITION (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a delayed power reduction after the closure rate was established, arrived in route position with an airspeed deviation of more than 15 knots from the leader's speed. The overtake was not arrested and the aircraft moved forward of the briefed route position with lateral separation reducing. The IP took control to arrest the overtake and re-establish the wing position.",
+        "1": "SP, due to an incorrect assessment of the closure rate during the final part of the rejoin, allowed the airspeed in route position to reach 15 knots away from the leader's speed. The power correction was made only after the IP called the overtake, and stabilization in route came late in the maneuver. The deviation was contained at the limit of the standard without any control input from the IP.",
+        "2": "SP, due to a power reduction applied slightly later than the closure required, showed an airspeed deviation of about 10 knots in route position, between the 5 and 15 knot band. SP identified the excess closure without prompting and returned the airspeed to the leader's speed with a single smooth power correction. Stabilization in route was achieved with no IP input.",
+        "3": "SP matched the leader's airspeed in route position within 5 knots, adjusting power early enough that the closure was arrested exactly at the wing line. The rejoin was stabilized without an overtake and the route position was held at a constant speed.",
+        "4": "SP controlled the closure so precisely that the airspeed in route position remained within a very few knots of the leader's speed throughout. Power was set once and required no further adjustment, and the aircraft settled into route position with no residual overtake or fall back.",
+        "marginal": "SP stayed within standards on airspeed in route position but repeatedly stabilized near the 5 knot edge, correcting the residual overtake only after reaching the wing line. Formation safety was never in question, yet the pattern indicated that closure was being judged late. SP is expected to reduce power earlier so that the leader's speed is matched at arrival in route rather than after it."
+      }
+    },
+    {
+      "id": "formation-09-em03",
+      "label": "Altitude relative to No1 level",
+      "mif_row": null,
+      "source": "specific:ALTITUDE FROM No1 LEVEL (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unmonitored descent rate while the attention remained on the closure, deviated more than 100 feet from the No1 level during the turning rejoin. The aircraft went low and aft of the leader's plane of motion with the flight path no longer under control against the No1 reference. The IP took control to re-establish the aircraft on the leader's level.",
+        "1": "SP, due to a lag in referencing the leader's plane of motion during the turn, allowed the altitude deviation from the No1 level to reach 100 feet. The correction back to the leader's level was initiated only after the IP called the deviation, and it was completed late in the rejoin. The maneuver was contained at the limit of the standard with no IP control input.",
+        "2": "SP, due to a bank change made without a matching pitch adjustment, deviated approximately 75 feet from the No1 level, between the 50 and 100 foot band. SP detected the split from the leader's plane of motion and returned to the No1 level with a timely and smooth correction. No prompting or IP input was required.",
+        "3": "SP maintained the aircraft within 50 feet of the No1 level throughout the turning rejoin. The plane of motion was matched to the leader's during each bank change, and the small altitude corrections that were required were applied promptly and stopped on the leader's level.",
+        "4": "SP flew the entire rejoin on the leader's plane of motion with altitude deviations from the No1 level of only a few tens of feet. No correction was visible from outside the aircraft, and the vertical position was maintained through every bank change up to the route position.",
+        "marginal": "SP remained within standards on altitude from the No1 level but was consistently at the low side of the band, correcting back only after the split from the leader's plane of motion had developed. The deviations were recovered without assistance, yet the trend was a repeated sink during bank changes. SP is expected to coordinate pitch with bank so that the No1 level is held with smaller residual deviations."
+      }
+    },
+    {
+      "id": "formation-09-em04",
+      "label": "Velocity vector, aspect angle and pursuit curve management",
+      "mif_row": null,
+      "source": "general:a,b",
+      "hf_concept": "hf-acts-errors",
+      "texts": {
+        "0": "SP, due to a perceptual error in judging closure and lateral separation, pointed the velocity vector at the leading aircraft before the leader had stabilized in route. The pursuit curve was flown with an aspect angle and an angle off that produced closure directly toward the leader instead of toward the rejoin line. The IP took control to break the closure and restore lateral separation.",
+        "1": "SP, due to a perceptual error in reading the angle off during the closure, allowed the velocity vector to remain on the leading aircraft while the leader was still turning. The pursuit curve was corrected toward the rejoin line only after the IP verbally directed the reposition, and the correction came late in the closure. Separation was preserved throughout without any IP input on the controls.",
+        "2": "SP, due to a lag in interpreting the aspect angle during the first part of the rejoin, briefly flew a pursuit curve that placed the velocity vector inside the required rejoin line. SP recognized the developing angle off without prompting and repositioned the velocity vector ahead of the leader's flight path in time. The remainder of the rejoin was flown on the correct pursuit curve with no IP input.",
+        "3": "SP kept the velocity vector clear of the leading aircraft until the leader stabilized in route, and flew a pursuit curve consistent with the observed aspect angle and angle off. Closure was controlled by geometry rather than by late power changes, and the rejoin line was maintained throughout.",
+        "4": "SP read the aspect angle and angle off accurately from the start of the rejoin and flew a pursuit curve that placed the aircraft on the route line with no repositioning required. The velocity vector was never directed at the leading aircraft, and closure was resolved entirely through correct geometry.",
+        "marginal": "SP kept the velocity vector clear of the leading aircraft and stayed within standards, but the pursuit curve was set slightly inside the required line on more than one occasion and needed adjustment as the aspect angle changed. Separation was never reduced below what the maneuver required. SP is expected to assess angle off earlier so that the pursuit curve is correct from the first bank input."
+      }
+    },
+    {
+      "id": "formation-09-em05",
+      "label": "Smoothness and solidity of aircraft control during the rejoin",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to over-controlling in both pitch and bank while chasing the rejoin line, did not control the aircraft in a smooth and solid manner. The corrections were large and reversed repeatedly, so the aircraft oscillated about the rejoin line and the closure could no longer be predicted from the wing position. The IP took control to steady the aircraft and complete the rejoin.",
+        "1": "SP, due to abrupt control inputs applied in response to each perceived deviation, flew the rejoin with repeated corrections that were larger than the errors required. The control technique became smooth only after the IP verbally directed slower and smaller inputs, and the aircraft settled late in the maneuver. No IP control input was necessary.",
+        "2": "SP, due to a tendency to correct in single large inputs early in the rejoin, produced noticeable pitch and bank excursions about the rejoin line. SP recognized the over-control without prompting, reduced the size of the inputs and completed the closure with smooth and solid handling. The route position was reached under full control with no IP input.",
+        "3": "SP controlled the aircraft in a smooth and solid manner throughout the rejoin, applying small, deliberate pitch and bank inputs and holding each correction until the desired result was achieved. The closure remained predictable to the leader from the start of the maneuver to the route position.",
+        "4": "SP flew the rejoin with control inputs that were barely perceptible from outside the aircraft, with no over-control and no reversals at any point. The aircraft tracked the rejoin line and settled into route position as a single continuous, stable movement.",
+        "marginal": "SP kept the aircraft under control within standards but used inputs larger than the corrections called for, particularly in bank during the last part of the closure. The technique remained safe and no assistance was needed, yet the handling was more abrupt than the maneuver required. SP is expected to correct with smaller, held inputs so that the closure appears smooth and solid from the leader's position."
+      }
+    },
+    {
+      "id": "formation-09-em06",
+      "label": "Approach at leader's altitude and descent to the wing line",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incorrect sequencing of the rejoin, did not initially approach the leading aircraft at the same altitude and instead began the descent toward the wing line while still well out of position. The aircraft closed from below the leader's plane of motion, where the leader's cross-check of the wingman was degraded and the closure could not be assessed. The IP took control to re-establish the aircraft at the leader's altitude before continuing the rejoin.",
+        "1": "SP, due to an early commitment to the wing line, started the descent from the leader's altitude before the closure was established. The correct sequence, approach at the same altitude first and descent at the wing's level afterwards, was restored only after the IP directed it verbally, and the rejoin was completed late. No IP control input was required.",
+        "2": "SP, due to an anticipation of the final position, began to move below the leader's altitude slightly before the wing line was reached. SP identified the premature descent on his/her own, returned to the leader's altitude and then descended at the wing's level as required. The sequence was corrected in time and no IP input was needed.",
+        "3": "SP approached the leading aircraft at the same altitude, completed the closure in that plane and only then descended at the wing's level to take the route position. The sequence was flown as briefed and the wingman remained visible to the leader throughout the rejoin.",
+        "4": "SP held the leader's altitude exactly through the entire closure and transitioned to the wing's level with a single unhurried descent at the correct point. The sequence was executed with no intermediate corrections and the route position was taken directly from the wing line.",
+        "marginal": "SP flew the correct sequence and remained within standards, but the descent at the wing's level was initiated slightly before the closure had fully stabilized on more than one rejoin. The leader's altitude was regained each time without assistance. SP is expected to complete the closure in the leader's plane of motion before starting the descent to the wing line."
+      }
+    },
+    {
+      "id": "formation-09-em07",
+      "label": "Continuous visual contact with the formation leader",
+      "mif_row": null,
+      "source": "general:e",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to an attention bottleneck on the cockpit instruments at the expense of the outside scan, did not continuously keep visual on the formation leader during the turning rejoin. Visual contact was lost while the aircraft was still closing, and the rejoin was continued without the leader in sight. The IP took control and directed the reposition required to regain visual and separation.",
+        "1": "SP, due to attention captured by the airspeed indication while the aircraft state outside went unmonitored, allowed visual contact with the formation leader to become intermittent during the closure. The outside scan was restored only after the IP prompted for a visual call, and the rejoin continued late and with reduced awareness of the leader's turn. No IP control input was required.",
+        "2": "SP, due to a short absorption in a cockpit indication during the first part of the rejoin, briefly interrupted the visual on the formation leader. SP recognized the interruption without prompting, re-established continuous visual contact and reassessed the leader's turn before closure developed further. The remainder of the rejoin was flown with the leader in sight at all times.",
+        "3": "SP kept continuous visual on the formation leader throughout the turning rejoin, using instrument references only in short glances that did not interrupt the outside scan. The leader's bank and plane of motion were assessed visually at every stage of the closure.",
+        "4": "SP maintained an uninterrupted visual on the formation leader from the start of the rejoin to the route position and read every change in the leader's turn as it occurred. The outside scan was never displaced by cockpit tasks at any point of the maneuver.",
+        "marginal": "SP kept visual on the formation leader within standards but the outside scan was displaced by cockpit references more often than the maneuver required, particularly while setting power. Visual contact was never actually lost. SP is expected to keep the leader in sight continuously and to limit instrument references to brief glances during the closure."
+      }
+    },
+    {
+      "id": "formation-09-em08",
+      "label": "Overshoot recognition, timely call and safe execution",
+      "mif_row": null,
+      "source": "general:f",
+      "hf_concept": "hf-lack-of-assertiveness",
+      "texts": {
+        "0": "SP, due to a lack of assertiveness in voicing a recognized unsafe condition, did not inform the formation leader that an overshoot had become unavoidable and did not execute the Overshoot. The aircraft continued to close on the rejoin line with excess overtake and no separating maneuver was initiated. The IP took control to execute the overshoot safely and restore separation.",
+        "1": "SP, due to a reluctance to state that the rejoin could not be completed as flown, delayed the overshoot call to the formation leader until the overtake was already excessive. The Overshoot was executed only after the IP directed it verbally and the separation achieved was less than the maneuver required. No IP control input was necessary.",
+        "2": "SP, due to a late recognition that the closure could no longer be arrested on the rejoin line, initiated the overshoot sequence later than ideal. SP nevertheless informed the formation leader on his/her own initiative and executed the Overshoot safely with correct lateral separation and no IP input.",
+        "3": "SP recognized that the overshoot was unavoidable while there was still room to act, informed the formation leader timely and executed the Overshoot safely with the briefed lateral separation. The reposition for the subsequent rejoin was made without further prompting.",
+        "4": "SP identified the developing overtake at the earliest point, passed a clear and timely call to the formation leader and executed the Overshoot with correct separation and no loss of visual. The subsequent rejoin was set up immediately and completed as briefed.",
+        "marginal": "SP made the overshoot call and executed the Overshoot within standards, but the recognition came close to the point where the maneuver would have been forced rather than chosen. Separation was maintained and no assistance was needed. SP is expected to assess the closure earlier and to call the overshoot as soon as it becomes unavoidable."
+      }
+    },
+    {
+      "id": "formation-09-em09",
+      "label": "Turning tactical rejoin per Techniques and Procedures Manual",
+      "mif_row": null,
+      "source": "general:g",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient knowledge of the published procedure for the tactical rejoin, did not execute the turning tactical rejoin according to the Techniques and Procedures Manual. The closure was flown into the leader's turn without the prescribed geometry or the required lateral separation for the tactical position. The IP took control to reposition the aircraft and terminate the rejoin.",
+        "1": "SP, due to an incomplete recall of the tactical rejoin sequence, flew the turning tactical rejoin with the steps of the Techniques and Procedures Manual out of order. The correct procedure was restored only after the IP verbally directed each step, and the tactical position was taken late. No IP control input was required.",
+        "2": "SP, due to a hesitation in selecting the correct tactical geometry at the start of the maneuver, began the turning tactical rejoin with a line other than the one prescribed by the Techniques and Procedures Manual. SP recognized the error without prompting, re-established the published geometry and completed the rejoin into the correct tactical position with no IP input.",
+        "3": "SP executed the turning tactical rejoin according to the Techniques and Procedures Manual, with the prescribed geometry, lateral separation and sequence. The tactical position was taken under control and with continuous visual on the formation leader.",
+        "4": "SP flew the turning tactical rejoin exactly as published, resolving the closure through correct geometry alone and arriving in the tactical position with no intermediate corrections. The procedure was executed without hesitation and with the leader in sight throughout.",
+        "marginal": "SP executed the turning tactical rejoin in accordance with the Techniques and Procedures Manual, but the geometry was set with visible hesitation and the tactical position was reached later than the procedure intends. The maneuver was safe and unassisted throughout. SP is expected to apply the published tactical rejoin geometry from the first input so that the position is taken without delay."
+      }
+    }
+  ]
+}

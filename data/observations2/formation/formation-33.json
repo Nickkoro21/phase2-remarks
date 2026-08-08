@@ -1,0 +1,132 @@
+{
+  "item_id": "formation-33",
+  "item_name": "CLEARING",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [33],
+  "mif_rows": [
+    {"sn": 33, "row_name": "Clearing"}
+  ],
+  "error_modes": [
+    {
+      "id": "formation-33-em01",
+      "label": "Continuous airspace check while leading the formation",
+      "mif_row": null,
+      "source": "general:a.1",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an inside-cockpit fixation on the navigation display while leading, did not continuously check the airspace for the period he/she was in charge of the formation, leaving the sector ahead and above unscanned through the turn to initial. The lookout lapse persisted into the landing pattern, where the requirement is highest, and the IP had to take the aircraft and direct the deconfliction turn. The outside scan was re-established only after the IP intervention.",
+        "1": "SP, due to prolonged head-down time on the fuel and engine indications, did not maintain a continuous check of the airspace while leading, and the outside scan stopped for several seconds at a time on downwind. The pattern lookout was restored only after two verbal prompts from the IP, and the delay left the base turn started without a clearing check. No control input by the IP was required.",
+        "2": "SP, due to task loading from the formation position calls, allowed the outside scan to break during the level-off, and for a short period the airspace ahead of the formation went unchecked. SP recognized the lapse and re-established the continuous check before entering the pattern, without any prompting. Separation from the reported traffic was never in question.",
+        "3": "SP continuously checked the airspace for the full period he/she was in charge of the formation, interrupting the outside scan only briefly for essential cockpit references. The lookout was tightened in the landing pattern as required and every leg was entered with the airspace checked. No prompting was necessary at any stage.",
+        "4": "SP kept an uninterrupted airspace check throughout the lead period, integrating the required cockpit references without any measurable break in the outside scan. In the landing pattern the coverage was extended to the extended centerline and to the opposite base with time in hand. Deviations from the required lookout were negligible.",
+        "marginal": "SP checked the airspace continuously and within standard for the whole lead period, but the coverage was consistently weighted to the front quadrant and the high check was thin on the crosswind leg. Head-down periods lengthened noticeably as the sortie progressed. The standard was met on this sortie; SP is expected to even out the scan pattern and hold the same coverage late in the profile."
+      }
+    },
+    {
+      "id": "formation-33-em02",
+      "label": "Timely detection of nearby aircraft and maintenance of proper separation",
+      "mif_row": null,
+      "source": "general:a.2",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a scan restricted to the formation and to the ground references, did not locate the nearby aircraft in time, and the traffic was called first by the IP inside the turn. Proper separation was not maintained and the IP took the aircraft to open the geometry. Post-flight reconstruction showed the target had been in the unscanned sector for the whole of its approach.",
+        "1": "SP, due to a slow sector-by-sector scan pattern, located the converging aircraft late and did not initiate the separation manoeuvre on his/her own assessment. The turn away was flown only after the IP called the traffic and directed the correction, and separation ended at the minimum acceptable margin. No control input by the IP was required.",
+        "2": "SP, due to attention held on the wingman's position during the rejoin, detected the crossing traffic later than the available cues allowed, but located it without prompting and adjusted heading in time. Separation was reduced from the planned margin yet remained comfortable throughout. The correction was unaided and early enough to avoid any abrupt manoeuvring.",
+        "3": "SP located nearby flying aircraft in good time in every case, using a full sector scan, and maintained proper separation with small planned heading adjustments. Traffic was called before the IP had any reason to intervene. Separation was never allowed to compress.",
+        "4": "SP located all nearby aircraft at long range, including a target crossing well above the formation, and maintained separation with early minimal adjustments that preserved the profile. Traffic assessments were passed to the wingman with accurate position and relative motion. Any shortfall in timeliness was negligible.",
+        "marginal": "SP located nearby aircraft within standard, but detection was consistently at close range rather than early, so separation was preserved through larger corrections than necessary. The pattern was most evident against traffic on a low-relative-motion track. Performance met the standard; SP is expected to detect earlier and correct sooner."
+      }
+    },
+    {
+      "id": "formation-33-em03",
+      "label": "Conception of active and potential hazards and regulation of flight parameters",
+      "mif_row": null,
+      "source": "general:a.3",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to continuation bias in maintaining the planned profile after the build-up over the working area had already been observed, did not conceive the developing hazard and did not regulate the flight parameters to avoid it. The formation was held on the briefed heading and altitude until the IP took the aircraft and turned the flight clear. The hazard had been visible and reportable well before that point.",
+        "1": "SP, due to continuation bias after the conditions at the recovery point had deteriorated, treated the hazard as a present problem rather than a potential one and did not adjust altitude or heading on his/her own initiative. The avoidance turn and descent were flown after repeated verbal direction from the IP, and the margin at the moment of correction was the minimum acceptable. Control of the aircraft remained with SP.",
+        "2": "SP, due to continuation bias in holding the briefed track, was late in conceiving the potential conflict with traffic recovering from the adjacent area, but reassessed the situation without prompting and regulated speed and heading to open the geometry. The avoidance was flown early enough to keep the profile intact. No direction from the IP was needed.",
+        "3": "SP conceived both the active and the potential hazards in the working area and regulated the flight parameters accordingly, adjusting the entry altitude before the conflicting traffic became a factor. The reasoning was passed to the wingman and to the IP as it was formed. The profile was preserved and every avoidance was unhurried.",
+        "4": "SP identified the potential hazards ahead of the flight, including a developing build-up and the recovery flow from the adjacent area, and regulated altitude, heading and speed in advance so that no avoidance manoeuvre was ever required. Contingency options were passed to the wingman before they were needed. Departures from the intended profile were negligible.",
+        "marginal": "SP conceived the hazards and regulated the parameters within standard, but the corrections were made once the hazard was already active rather than while it was still potential. The adjustments were therefore larger than the situation required. The standard was met; SP is expected to act on the potential hazard rather than wait for it to become present."
+      }
+    },
+    {
+      "id": "formation-33-em04",
+      "label": "Use of admissible clearing techniques for mid-air collision avoidance",
+      "mif_row": null,
+      "source": "general:a.4",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an abbreviated and unbriefed clearing technique, did not use admissible clearing methods before the manoeuvre, omitting both the clearing turn and the check under the nose prior to the reversal. The airspace below and behind the formation was never covered and the IP took the aircraft to clear it before the manoeuvre could proceed. The correct sequence was reconstructed only in the debrief.",
+        "1": "SP, due to an incomplete application of the briefed clearing sequence, did not use the full admissible technique, cutting the clearing turn short and omitting the check under the nose before the descent. The complete sequence was flown only after the IP called for it, and the manoeuvre entry was delayed accordingly. SP retained control of the aircraft throughout.",
+        "2": "SP, due to the compressed timeline after the rejoin, started the manoeuvre entry with the clearing turn flown at less than the required displacement, but recognized the shortfall and repeated the clearing sequence in full before proceeding. The airspace was cleared before any energy was committed. The correction was self-initiated and timely.",
+        "3": "SP used admissible clearing techniques throughout, flying the clearing turns to the required displacement and checking under the nose and behind the formation before each manoeuvre. The sequence was applied consistently from the first manoeuvre to the last. No omission was identified.",
+        "4": "SP applied the clearing techniques with full coverage and no wasted time, adapting the pattern to the sun position and to the terrain background so that the difficult sectors received the longest look. The sequence was integrated into the manoeuvre flow without disturbing the formation. Any shortfall was negligible.",
+        "marginal": "SP used admissible clearing techniques within standard, but the coverage was routine in shape and the check under the nose was brief on the later manoeuvres. The technique held up while workload was low and thinned as it rose. The standard was met; SP is expected to hold the same coverage across the whole sortie."
+      }
+    },
+    {
+      "id": "formation-33-em05",
+      "label": "Use of R/T to create safe separation from air traffic",
+      "mif_row": null,
+      "source": "general:a.5",
+      "hf_concept": "hf-non-standard-phraseology",
+      "texts": {
+        "0": "SP, due to non-standard phraseology that left the intention ambiguous to the controller, did not use the R/T to create safe separation from the air traffic, and the position report gave neither the formation's level nor its intentions. No traffic information was issued in response and the IP had to transmit and obtain the separation instruction. Separation was established by the IP rather than by SP.",
+        "1": "SP, due to an unstandard read-back that did not confirm the actual clearance, did not use the R/T effectively to separate the formation from the reported traffic, and the request for a level change was made too late to be useful. The correct call was made only after the IP prompted it twice, by which time the separation available was the minimum acceptable. SP kept the aircraft.",
+        "2": "SP, due to phraseology that did not identify the formation as a flight, did not obtain the required traffic information at the first call, but recognized the ambiguity and re-transmitted with the correct call sign and intentions. The traffic was passed in time and separation was arranged without any manoeuvre. The correction was made without prompting.",
+        "3": "SP used the R/T effectively to create safe separation, reporting position, level and intentions in standard phraseology and requesting traffic information before entering the confined sectors. Read-backs were complete and accurate. No transmission required clarification.",
+        "4": "SP used the R/T to shape the traffic picture in advance, coordinating the formation's area entry and recovery so that separation existed before it ever had to be manoeuvred for. Transmissions were concise, standard and correctly timed against the frequency loading. Any deviation from standard phraseology was negligible.",
+        "marginal": "SP's R/T met the standard and produced the required separation, but transmissions were long and on two occasions were made while another station was replying. The intention was conveyed correctly each time, though not always on the first call. The standard was met; SP is expected to shorten the calls and improve frequency discipline."
+      }
+    },
+    {
+      "id": "formation-33-em06",
+      "label": "Position-dependent clearing as Wingman, towards the Leader in fingertip",
+      "mif_row": null,
+      "source": "general:b.1",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a lookout habit carried over from the lead position, did not execute clearing according to his/her position within the formation and in fingertip cleared away from the Leader instead of towards him/her. The sector across the formation was left uncovered for the whole leg and the IP took the aircraft to clear it before the turn. The clearing responsibility for the position was not applied at any point of the leg.",
+        "1": "SP, due to attention consumed by holding the fingertip position, cleared only intermittently and did not consistently clear towards the Leader as the position requires. The correct clearing responsibility was applied only after the IP stated it on the intercom, and the coverage remained thin through the following turn. No control input by the IP was needed.",
+        "2": "SP, due to the increased station-keeping workload after the position change, initially cleared the sector appropriate to the previous position, but identified the error and resumed clearing towards the Leader within the same leg. The uncovered period was short and no traffic was a factor. The correction was self-initiated.",
+        "3": "SP executed clearing appropriate to his/her position within the formation, clearing towards the Leader in fingertip and shifting the coverage correctly at each position change. Station keeping was maintained while the lookout was carried out. The sector split was applied consistently.",
+        "4": "SP executed position-dependent clearing without any gap through route, fingertip and echelon, adjusting the coverage immediately on each position change and calling detected traffic with accurate relative position. Formation position was held throughout the lookout. Any shortfall in coverage was negligible.",
+        "marginal": "SP cleared towards the Leader as the fingertip position requires and met the standard, but the looks away from the Leader were short and were often traded for station keeping when the formation manoeuvred. Coverage was adequate in level flight and thinned in the turns. The standard was met; SP is expected to sustain the clearing scan through manoeuvring."
+      }
+    },
+    {
+      "id": "formation-33-em07",
+      "label": "Wingman monitoring of radio transmissions and explicit perception of the situation",
+      "mif_row": null,
+      "source": "general:b.2",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to loss of situational awareness of the formation's position in the recovery, did not monitor the radio transmissions and had no explicit perception of the situation, missing both the frequency change and the traffic passed to the flight. The aircraft was left on the previous frequency until the IP transmitted and reset it. SP was unable to state the flight's clearance when asked.",
+        "1": "SP, due to degraded situational awareness after the unplanned change of sequence, monitored the transmissions only partially and could not state the traffic that had been passed to the formation. The picture was rebuilt only after the IP recapitulated the clearance on the intercom, and the delay left SP behind the flight through the next leg. Control of the aircraft was retained by SP.",
+        "2": "SP, due to situational awareness limited to the instrument in use during the fuel check, missed one transmission made to the formation, but recognized the gap and requested confirmation from the Leader without prompting. The picture was restored before the recovery point. No IP action was required.",
+        "3": "SP monitored the radio transmissions throughout and held an explicit perception of the situation, being able to state the formation's clearance, the reported traffic and the next expected event at any time. Frequency changes were followed without prompting. The picture was maintained through the busy phases.",
+        "4": "SP monitored all transmissions and maintained an explicit and forward-looking perception of the situation, anticipating the recovery instructions and having the next frequency and the traffic picture ready before they were required. The awareness was shared with the Leader in short accurate calls. Any lapse in monitoring was negligible.",
+        "marginal": "SP monitored the transmissions and held an adequate picture of the situation, meeting the standard, but on two occasions the picture was rebuilt by asking the Leader rather than by continuous listening. Awareness lagged the flight slightly during the recovery. The standard was met; SP is expected to keep the picture current from the monitoring itself."
+      }
+    },
+    {
+      "id": "formation-33-em08",
+      "label": "Division of attention inside and outside the cockpit against mid-air and CFIT",
+      "mif_row": null,
+      "source": "general:a.1,a.3;execution:1",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to an attention bottleneck on a single caution indication at the expense of the outside scan, did not divide attention appropriately between the work inside and outside the cockpit, and neither the airspace nor the terrain clearance was monitored during the low segment. The descent was continued towards rising ground until the IP took the aircraft and climbed the formation. The division of attention was not restored on SP's own initiative.",
+        "1": "SP, due to absorption in a cockpit indication that left the descent rate unmonitored, did not divide attention appropriately between the visual and R/T stimuli and the flight path, and terrain clearance reduced steadily through the turn. The scan was restored only after the IP called the altitude twice, and the recovery to the briefed floor was late. SP kept control of the aircraft.",
+        "2": "SP, due to attention captured by a minor system indication while the aircraft state went unmonitored, allowed the outside scan to lapse during the working phase, but detected the altitude drift and re-established the inside and outside division without prompting. Terrain and traffic margins were preserved throughout. The correction was made early.",
+        "3": "SP divided attention appropriately between the work inside and outside the cockpit, handling the visual and R/T stimuli without leaving either the airspace or the terrain clearance unmonitored. Cockpit tasks were deferred or shed when the workload rose. No prompting was required.",
+        "4": "SP distributed attention between cockpit tasks, the R/T and the outside scan with clear priority to collision and terrain avoidance, sequencing the inside work into the low-workload segments so that neither hazard was ever unmonitored. The sequencing was deliberate and had been briefed. Any imbalance was negligible.",
+        "marginal": "SP divided attention within standard, but the inside-cockpit blocks were long enough that the outside scan was carried in short bursts during the busiest part of the working phase. Both hazards remained monitored, though with less margin than the technique allows. The standard was met; SP is expected to break the cockpit tasks into shorter blocks."
+      }
+    }
+  ]
+}

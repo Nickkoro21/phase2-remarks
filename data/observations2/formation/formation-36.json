@@ -1,0 +1,147 @@
+{
+  "item_id": "formation-36",
+  "item_name": "EMERGENCY PROCEDURES",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [36],
+  "mif_rows": [
+    {"sn": 36, "row_name": "Emergency Procedures"}
+  ],
+  "error_modes": [
+    {
+      "id": "formation-36-em01",
+      "label": "Immediate action items and checklist discipline in the formation environment",
+      "mif_row": null,
+      "source": "general:a|execution:1",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to unrehearsed recall of the memory items for the malfunction encountered, did not complete the immediate action items before moving to the checklist and reversed two critical steps of the sequence. The wrong item was worked while the abnormal indication remained unaddressed. IP intervened to stop the incorrect selection, took the aircraft and re-started the procedure from the beginning.",
+        "1": "SP, due to unrehearsed recall of the memory items, did not initiate the immediate action items on recognition of the malfunction and started only after two verbal prompts from IP, completing the sequence at the limit of the acceptable interval. The remaining checklist steps were performed in the correct order only after verbal direction on each item. No control input by IP was required, but every step depended on prompting.",
+        "2": "SP, due to an interrupted cockpit flow after the abnormal indication, did not start the immediate action items at the first opportunity and lost several seconds before the first selection. SP recognized the omission unaided, restated the indication and completed the remaining steps in the published order. Timing remained inside standards and no prompting or IP input was needed.",
+        "3": "SP identified the abnormal indication, called it to the Leader and completed the immediate action items in the published order without hesitation. Checklist steps were accomplished with correct switch identification, confirmed aloud before actuation. Aircraft control and formation position were maintained throughout the procedure.",
+        "4": "SP identified the abnormal indication at its onset, completed the immediate action items in the published order with no mis-selection and continued into the checklist without any break in the instrument scan. Every step was verified and confirmed aloud before actuation. Aircraft control, formation position and radio work were carried on simultaneously with no degradation of any of the three.",
+        "marginal": "SP completed the immediate action items within standards, but on both occasions in this sortie the first selection followed the indication only after a noticeable pause. The pattern indicates the memory items are being reconstructed rather than known cold. SP is expected to achieve immediate, unprompted initiation on the next sorties."
+      }
+    },
+    {
+      "id": "formation-36-em02",
+      "label": "Lost wingman procedure flown from the Wingman position (VMC and IMC)",
+      "mif_row": null,
+      "source": "general:b|execution:4",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unrehearsed lost wingman procedure, did not execute the briefed turn away from the Leader on losing visual contact and remained on the formation heading while the aircraft drifted toward the Leader's flight path. Separation was never established by SP and the divergence had to be commanded and then flown by IP. The subsequent altitude change and heading were performed entirely under IP direction.",
+        "1": "SP, due to hesitation in accepting that visual contact was actually lost, did not initiate the lost wingman turn on recognition and began the divergence only after direction, at the latest acceptable point. Turn direction, bank and altitude change were then flown correctly, but each element required a separate verbal cue. Separation was achieved without control input by IP.",
+        "2": "SP, due to a delayed decision on the loss of visual contact, did not begin the divergence at the first opportunity and held the formation heading for a few seconds longer than briefed. SP then recognized the situation unaided, turned away from the Leader and established the briefed altitude change without prompting. Separation was built up well inside the standards and the procedure was flown to completion.",
+        "3": "SP recognized the loss of visual contact without delay, announced it and flew the briefed lost wingman turn away from the Leader with correct bank and timing. The associated altitude change was made as briefed and the divergence heading was held for the full required interval. Transition to instruments was made without any attitude excursion.",
+        "4": "SP announced the loss of visual contact at the moment it occurred and flew the lost wingman procedure with turn direction, bank, timing and altitude change matching the briefed values exactly. The instrument transition produced no attitude or airspeed excursion and the divergence heading was held for the full interval without deviation. SP kept the Leader informed throughout and had the subsequent recovery plan ready before being asked for it.",
+        "marginal": "SP flew the lost wingman procedure within standards, but the turn away was started at the late end of the acceptable window on both repetitions and the bank was consistently shallower than briefed. The trend shows the decision to accept loss of visual contact is being deferred. SP is expected to commit to the procedure at the first indication on subsequent sorties."
+      }
+    },
+    {
+      "id": "formation-36-em03",
+      "label": "Lost wingman deconfliction and predictable flight path as Leader",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, as Leader, due to an incomplete picture of the wingman's last known position, did not maintain the briefed heading, altitude and airspeed after the lost wingman call and started a turn toward the side the wingman was diverging to. The predictable flight path required for deconfliction was not provided and lateral separation was not assured. IP intervened, took the aircraft and restored the briefed parameters.",
+        "1": "SP, as Leader, due to task saturation after the lost wingman call, did not hold the briefed parameters and allowed heading and airspeed to wander until directed to freeze them, recovering the required flight path at the limit of the acceptable interval. Deconfliction was preserved only because IP prompted the parameter to be held on each occasion. No control input by IP was required.",
+        "2": "SP, as Leader, due to attention shifting to the radio call, did not hold the briefed airspeed immediately after the lost wingman call and allowed it to drift from the formation value. SP detected the drift unaided, restored the briefed heading, altitude and airspeed and stated them to the wingman. Deconfliction was never in question and no prompting was needed.",
+        "3": "SP, as Leader, acknowledged the lost wingman call at once and held the briefed heading, altitude and airspeed to provide a predictable flight path for the deconfliction. The wingman was given the parameters being flown and the intentions for the recovery. Separation responsibilities were discharged without any prompting.",
+        "4": "SP, as Leader, acknowledged the lost wingman call immediately, froze the briefed heading, altitude and airspeed with no measurable drift and stated them to the wingman in one concise transmission. Intentions for the subsequent recovery and rejoin were passed before they were requested. The deconfliction was managed while the SP continued to fly the profile and to work the radios without degradation.",
+        "marginal": "SP held the briefed parameters after the lost wingman call within standards, but airspeed was allowed to creep on each repetition before being restored. The trend indicates that the priority of a frozen flight path is not yet automatic when the radio workload rises. SP is expected to hold the deconfliction parameters without drift on the next sorties."
+      }
+    },
+    {
+      "id": "formation-36-em04",
+      "label": "Timely notification of the Leader and transition to IFR flight from the Wingman position",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-lack-of-assertiveness",
+      "texts": {
+        "0": "SP, due to lack of assertiveness in voicing a recognized unsafe condition, did not inform the Leader that the formation position could no longer be safely maintained and stayed in position after the visual references were lost. The transition to IFR flight was not initiated and the aircraft was flown on outside references that were no longer usable. IP took the aircraft to establish separation and instrument flight.",
+        "1": "SP, due to lack of assertiveness in stating an inability to comply, did not inform the Leader at the point the condition was recognized and transmitted only after being prompted twice, at the limit of the acceptable interval. The transition to instrument flight followed the call correctly but was initiated on IP direction. No control input by IP was required.",
+        "2": "SP, due to reluctance to interrupt the Leader on the radio, did not pass the required information at the first opportunity and delayed the call by a few seconds. SP then made the transmission unaided, stated the condition clearly and completed the transition to instrument flight without further delay. The delay stayed inside the standards and no prompting was needed.",
+        "3": "SP informed the Leader as soon as the condition was recognized, using a clear and complete statement of the problem and the intention. The transition to IFR flight was made promptly, with the instrument scan established before the outside references were lost. Aircraft control and separation from the Leader were maintained throughout.",
+        "4": "SP informed the Leader at the instant the condition was recognized, in one unambiguous transmission that carried both the problem and the intended action. The transition to IFR flight was made with the instrument scan already established and produced no attitude, heading or airspeed excursion. SP then confirmed the plan with the Leader and had the alternative course of action ready if the first was refused.",
+        "marginal": "SP informed the Leader and transitioned to instrument flight within standards, but each transmission was made after a visible pause and was phrased as a question rather than a statement. The trend shows a reluctance to assert a recognized condition upward. SP is expected to make the call at the moment of recognition, in a direct form, on subsequent sorties."
+      }
+    },
+    {
+      "id": "formation-36-em05",
+      "label": "Notification of ATC and obtaining IFR clearance in an actual situation",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": "hf-plain-language-communication",
+      "texts": {
+        "0": "SP, due to a technically worded transmission where plain language was required to convey the emergency, did not inform ATC of the actual condition and did not request the IFR clearance. The controller was left without the aircraft's status, position or intentions, and no clearance was obtained before entering controlled airspace in instrument conditions. IP took the radios and made the declaration.",
+        "1": "SP, due to jargon that obscured the aircraft's actual condition, did not state the emergency in terms the controller could act upon and reworded the transmission only after two prompts, obtaining the IFR clearance at the limit of the acceptable interval. Aircraft type, position, condition and intentions were passed only when each item was requested. No control input by IP was required.",
+        "2": "SP, due to an initial transmission that omitted the intentions, did not give ATC the complete picture at the first call and had to amplify it in a second transmission. SP recognized the omission unaided, restated the condition in plain language and obtained the IFR clearance without further delay. The exchange stayed inside the standards and no prompting was required.",
+        "3": "SP informed ATC promptly, stated the nature of the emergency in plain language with position, intentions and persons on board, and obtained the IFR clearance before it was needed. The read-back confirmed the actual clearance issued. Aircraft control and formation deconfliction were maintained while the radio work was carried out.",
+        "4": "SP informed ATC at the first opportunity with a single complete transmission covering the nature of the emergency, position, intentions, fuel and persons on board in plain language. The IFR clearance was obtained and read back accurately well before the aircraft required it, and the subsequent amendment was accepted without hesitation. Radio workload was absorbed with no effect on aircraft control or on the formation deconfliction.",
+        "marginal": "SP notified ATC and obtained the IFR clearance within standards, but the first transmission on each occasion omitted the intentions and had to be amplified. The trend indicates the report format is not yet consolidated under the radio workload of an actual situation. SP is expected to pass a complete first call on subsequent sorties."
+      }
+    },
+    {
+      "id": "formation-36-em06",
+      "label": "Assistance to the formation member suffering the emergency",
+      "mif_row": null,
+      "source": "general:e|execution:2",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unassigned division of responsibilities within the formation, did not provide assistance to the member declaring the emergency and neither took nor offered the lead for the recovery. No visual assessment of the affected aircraft was carried out and the required calls were left unmade. IP intervened, directed the assistance and assigned the roles.",
+        "1": "SP, due to an unassigned division of responsibilities, did not offer assistance on the declaration and acted only after being told, taking up the escort position at the limit of the acceptable interval. The visual assessment of the affected aircraft and the calls to the emergency aircraft were made item by item on direction. No control input by IP was required.",
+        "2": "SP, due to attention held by the SP's own cockpit checks, did not begin the assessment of the affected aircraft at the first opportunity and delayed taking up the escort position. SP then recognized the requirement unaided, moved to a safe observation position and passed the assessment to the affected aircraft. The delay stayed inside the standards and no prompting was needed.",
+        "3": "SP acknowledged the emergency declaration at once, took up a safe observation position and passed a complete external assessment of the affected aircraft. The recovery was organized with a clear division of responsibilities and the affected aircraft was kept informed. Safe separation from the affected aircraft was maintained throughout.",
+        "4": "SP acknowledged the declaration immediately, moved to a safe observation position with correct closure and passed a complete and accurate external assessment without being asked. The recovery was organized with roles stated aloud, the affected aircraft was relieved of the navigation and radio workload, and the plan was updated as the condition changed. Separation, position and radio work were managed simultaneously with no degradation.",
+        "marginal": "SP provided the required assistance within standards, but the external assessment was passed only after the affected aircraft asked for it on both occasions. The trend shows the escort role is being executed reactively rather than taken up on the declaration. SP is expected to initiate the assessment unprompted on subsequent sorties."
+      }
+    },
+    {
+      "id": "formation-36-em07",
+      "label": "Contacting ground stations for an emergency aircraft that has lost R/T",
+      "mif_row": null,
+      "source": "general:e|execution:3",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to no plan for the loss of the emergency aircraft's R/T, did not contact the ground stations on behalf of the affected aircraft and made no attempt to establish an alternative means of communication. The controlling agency was left without the emergency aircraft's status and intentions for the whole recovery. IP took the radios and passed the required information.",
+        "1": "SP, due to no plan for the loss of R/T, did not assume the relay function on recognition and started transmitting for the affected aircraft only after being directed, at the limit of the acceptable interval. Each element of the relay was passed on prompting rather than as a complete report. No control input by IP was required.",
+        "2": "SP, due to time spent on repeated attempts on the primary frequency, did not begin the relay at the first opportunity and delayed the first transmission to the ground station. SP then recognized the requirement unaided, established contact and relayed the affected aircraft's condition and intentions. The delay stayed inside the standards and no prompting was needed.",
+        "3": "SP recognized the loss of the emergency aircraft's R/T, assumed the relay function without delay and contacted the ground station with the affected aircraft's identification, condition and intentions. Visual signals were used to confirm the information with the affected aircraft before it was passed. The relay was maintained accurately for the remainder of the recovery.",
+        "4": "SP recognized the R/T failure at once, assumed the relay function without being asked and contacted the ground station with a complete, accurate report of the affected aircraft's identification, condition, position and intentions. Every subsequent instruction was relayed and confirmed with the affected aircraft by visual signals with no loss of content. The relay was carried on together with the escort position and the SP's own cockpit workload without degrading either.",
+        "marginal": "SP performed the radio relay within standards, but the reports omitted the affected aircraft's intentions until the ground station requested them. The trend indicates the relay format is not yet consolidated. SP is expected to pass complete, unprompted relay reports on subsequent sorties."
+      }
+    },
+    {
+      "id": "formation-36-em08",
+      "label": "Aircraft control and formation deconfliction while working the emergency",
+      "mif_row": null,
+      "source": "general:a|general:e",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to an attention bottleneck on a single caution indication at the expense of the instrument cross-check, did not continue to fly the aircraft while working the procedure and allowed altitude and heading to depart the briefed values without recognition. Separation from the other formation member was reduced without being noticed. IP intervened with control inputs to restore the flight path and the separation.",
+        "1": "SP, due to absorption in the cockpit indication, did not maintain the instrument cross-check during the procedure and allowed altitude and airspeed to reach the limit of the acceptable band before correcting. The deviation was reversed only after IP called each parameter aloud. No control input by IP was required, but the recovery depended entirely on the prompting.",
+        "2": "SP, due to attention held briefly by the caution indication, did not maintain the full instrument cross-check while running the checklist and allowed a small altitude and heading deviation to develop. SP detected the deviation unaided, returned to the briefed values and completed the procedure with the scan re-established. Separation from the other formation member was never in question and no prompting was needed.",
+        "3": "SP kept flying the aircraft as the first priority while working the emergency, holding the briefed altitude, heading and airspeed throughout the procedure. The instrument cross-check was maintained between checklist steps and the separation from the other formation member was continuously assessed. The procedure was completed without any parameter leaving the standards.",
+        "4": "SP kept flying the aircraft as the first priority throughout the emergency, with altitude, heading and airspeed showing no perceptible deviation while the checklist was run. The instrument cross-check was never interrupted and the position of the other formation member was known at every point of the procedure. Aircraft control, procedure and radio work were carried out concurrently with no degradation of any of them.",
+        "marginal": "SP maintained aircraft control while working the emergency within standards, but altitude was allowed to drift each time a checklist step required head-down attention. The trend shows the cross-check is being suspended rather than shared while the procedure is run. SP is expected to keep the scan running between steps on subsequent sorties."
+      }
+    },
+    {
+      "id": "formation-36-em09",
+      "label": "Knowledge of the applicable emergency procedures in briefing and in flight",
+      "mif_row": null,
+      "source": "general:a|conditions:1,2",
+      "hf_concept": "hf-lack-of-knowledge",
+      "texts": {
+        "0": "SP, due to lack of knowledge of the published procedure for the condition encountered, did not state the applicable emergency procedure in the briefing and applied a procedure that did not cover the malfunction when it was presented in flight. The relevant limitations and the boldface content could not be recalled when questioned. IP had to provide the procedure before the sortie could continue.",
+        "1": "SP, due to incomplete knowledge of the limits applicable to the procedure, did not state the required steps in the correct order and produced them at the limit of the acceptable interval only after successive cues. The applicable limitations were recalled only when each was named. The knowledge was sufficient to continue, but every item required prompting.",
+        "2": "SP, due to reliance on the checklist rather than on consolidated recall, did not state two steps of the procedure without a pause during the briefing. SP corrected the omission unaided within the same discussion and applied the procedure correctly and in the published order when it was presented in flight. No prompting was needed and the knowledge remained inside the standards.",
+        "3": "SP stated the applicable emergency procedures accurately in the briefing, including the boldface content, the associated limitations and the formation-specific requirements. The same procedures were applied correctly and in the published order when required in flight. Questions on the reasoning behind each step were answered without hesitation.",
+        "4": "SP stated the applicable emergency procedures accurately and completely in the briefing, including boldface content, limitations, formation-specific requirements and the conditions that distinguish similar malfunctions. The procedures were applied in flight in the published order with no reference to the checklist for the memory items. SP also identified the follow-on considerations for the recovery before they were raised by IP.",
+        "marginal": "SP demonstrated knowledge of the applicable emergency procedures within standards, but the formation-specific requirements were produced only after a pause on each occasion. The trend suggests the formation content is less consolidated than the corresponding Contact material. SP is expected to recall both to the same standard on subsequent sorties."
+      }
+    }
+  ]
+}

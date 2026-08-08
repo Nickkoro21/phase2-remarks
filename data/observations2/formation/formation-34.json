@@ -1,0 +1,102 @@
+{
+  "item_id": "formation-34",
+  "item_name": "RADIO COMMUNICATION",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [34],
+  "mif_rows": [
+    {"sn": 34, "row_name": "Radio Comm."}
+  ],
+  "error_modes": [
+    {
+      "id": "formation-34-em01",
+      "label": "TWO-WAY CONTACT AND FREQUENCY MANAGEMENT WITHIN THE FORMATION",
+      "mif_row": null,
+      "source": "execution:1|general:a.1",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unrehearsed frequency plan for the departure and area phases, did not maintain R/T contact with the ground station and with the other formation member, with the result that the aircraft stayed on the previous frequency for more than one minute after the briefed change and missed two directive calls from the formation. The IP selected the correct frequency and re-established two-way contact for the SP. Contact with the ground station was regained only after the controller called the formation three times.",
+        "1": "SP, due to an unrehearsed frequency plan for the departure phase, did not establish two-way contact on the new frequency at the briefed point, with the result that the check-in was transmitted about 20 seconds late and only after the IP pointed out that the formation had already changed frequency. SP then checked in with the correct call and no further prompting was needed. Frequency management stayed at the limit of the acceptable standard for the remainder of the sortie.",
+        "2": "SP, due to a delayed selection of the preset for the area frequency, did not check in with the formation on the first call, with the result that the check-in was made about 5 seconds after the lead and was corrected on SP's own initiative. SP identified the wrong preset without prompting and re-established contact with both the ground station and the formation before the area entry. No IP intervention was required.",
+        "3": "SP maintained two-way R/T contact with the ground stations, with the other aircraft concerned and with the other formation member throughout the sortie. Every briefed frequency change was made at the correct point and the check-in followed immediately and in the correct order. No call from the formation or from the ground station went unanswered.",
+        "4": "SP managed the complete radio plan of the formation sortie without a single late or missed frequency change, including the unbriefed change issued in the recovery phase. Check-ins were transmitted in the correct order and with the correct content on the first attempt in every phase. SP kept simultaneous awareness of the ground station and the intra-formation frequency for the whole mission.",
+        "marginal": "SP maintained two-way contact within standards, but each frequency change required a visible pause before the check-in and the intra-formation frequency was selected last on every occasion. The trend is toward handling the radios sequentially rather than as a planned set of actions. SP is expected to rehearse the frequency plan during mission preparation so that the changes and check-ins are made without hesitation."
+      }
+    },
+    {
+      "id": "formation-34-em02",
+      "label": "FORMAL POSITION REPORTS TO GROUND STATIONS",
+      "mif_row": null,
+      "source": "execution:2|general:a.1",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unlearned format for the formation position report, did not give the formal position reports to the ground station, with the result that two reports required at published points were omitted and a third was transmitted with the wrong number of aircraft and the wrong level. The IP dictated the content of the report and finally transmitted it from the rear cockpit. The controller had to request the formation position twice before an accurate report was received.",
+        "1": "SP, due to an unlearned format for the formation position report, did not transmit the report in the required form at the reporting point, with the result that the call was made about 30 seconds past the point and was completed only after the IP prompted for the missing elements. SP corrected the content after the prompt and the following report was made correctly. Report accuracy remained at the limit of the acceptable standard.",
+        "2": "SP, due to an incomplete recall of the report elements for the area entry, did not include the formation composition in the first transmission, with the result that the report was incomplete for about 5 seconds until SP amended it unaided. SP identified the omission before the controller asked for it and passed the complete report at the correct point. No prompting from the IP was required.",
+        "3": "SP contacted the ground stations at every required point and gave the formal position reports in the prescribed form. Position, level, formation composition and intentions were correct and complete in each report. All reports were transmitted at the published points without delay.",
+        "4": "SP gave every formal position report at the correct point with complete and accurate content on the first transmission, including the report requested off-schedule by the controller. The wording followed the standard format exactly in each case and required no amendment or repetition. SP kept the reported position consistent with the actual position of the formation throughout the sortie.",
+        "marginal": "SP gave the formal position reports within standards, but the composition and intentions elements were assembled slowly and the reports were transmitted close to the reporting points rather than at them. The trend is toward building the report only when the point is reached. SP is expected to prepare the content of each report in advance so that the transmission is made at the point and without delay."
+      }
+    },
+    {
+      "id": "formation-34-em03",
+      "label": "ACCURACY OF THE INFORMATION PASSED TO THE WINGMAN AS LEADER",
+      "mif_row": null,
+      "source": "general:a.2",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, as formation Leader and due to a plan that was not updated after the change of the area allocation, did not provide accurate information to the Wingman, with the result that the direction passed for the area entry contained an incorrect heading and level and was not corrected before the Wingman had followed it. Two further directive calls conflicted with what had been briefed. The IP took the radios and passed the correct information to the Wingman.",
+        "1": "SP, as formation Leader and due to a plan that was not updated after the change of the area allocation, did not pass accurate information to the Wingman on the first call, with the result that the level given was wrong by 1000 feet and was corrected about 15 seconds later only after the IP pointed out the error. The subsequent directive calls were correct. Accuracy of the information passed to the Wingman remained at the limit of the acceptable standard.",
+        "2": "SP, as formation Leader and due to reading the sortie card while manoeuvring, did not state the correct turning point in the first directive call, with the result that the information was inaccurate for about 5 seconds before SP amended it unaided. SP corrected the call before the Wingman acted on it and passed all following information accurately. No intervention by the IP was required.",
+        "3": "SP, as formation Leader, provided the Wingman with accurate information for every phase of the sortie. Headings, levels, speeds and manoeuvre intentions passed by R/T matched the actual plan and the briefed profile. Each directive call was made early enough for the Wingman to act on it.",
+        "4": "SP, as formation Leader, passed accurate and complete information to the Wingman on the first transmission in every phase, including the two changes issued by the ground station in flight. Every directive call was timed so that the Wingman could comply without any additional manoeuvre. No information passed by SP had to be amended or repeated at any point in the sortie.",
+        "marginal": "SP passed accurate information to the Wingman within standards, but the directive calls were made late in each case and left the Wingman little time to prepare for the manoeuvre. The trend is toward transmitting the intention at the moment of execution rather than ahead of it. SP is expected to pass the information early enough for the Wingman to comply without a rushed correction."
+      }
+    },
+    {
+      "id": "formation-34-em04",
+      "label": "LEADER REMINDERS FOR FUNCTIONAL AIRCRAFT CHECKS AND FUEL CHECK",
+      "mif_row": null,
+      "source": "general:a.2",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, as formation Leader and due to inadequate workload management during the approach phase, did not remind the Wingman of the functional aircraft checks and of the fuel check, with the result that no fuel check was called at any point of the sortie and the formation fuel state was established only when the IP directed the call. The functional checks before the working phase were also omitted. The IP had to run both checks by R/T on SP's behalf.",
+        "1": "SP, as formation Leader and due to task sequencing that concentrated all cockpit workload inside the turn, did not call the fuel check at the briefed point, with the result that the check was transmitted more than two minutes late and only after the IP prompted for it. SP then obtained the Wingman's fuel state correctly and called the functional checks. Prompting of the formation checks remained at the limit of the acceptable standard.",
+        "2": "SP, as formation Leader and due to workload concentrated on rejoining the formation, did not call the functional aircraft checks at the planned point, with the result that the call was made about 30 seconds late on SP's own initiative. SP recognised the omission unaided and completed both the functional checks and the fuel check before the working phase. No IP prompting was required.",
+        "3": "SP, as formation Leader, reminded the Wingman of the functional aircraft checks and of the fuel check at every planned point of the sortie. Each check was called clearly, and SP obtained and acknowledged the Wingman's reply before continuing. The fuel state of the formation was known and current in every phase.",
+        "4": "SP, as formation Leader, called the functional aircraft checks and the fuel checks at every planned point and additionally before the unbriefed profile change, without any prompting. The replies of the Wingman were obtained, compared with SP's own state and used in the decision on the remaining profile. The formation fuel picture was accurate and shared at all times.",
+        "marginal": "SP called the functional aircraft and fuel checks within standards, but each call came at the end of a manoeuvre rather than at the planned point of the profile. The trend is toward postponing the formation checks whenever the cockpit workload rises. SP is expected to protect the check calls as fixed points of the profile and to make them regardless of the workload at the time."
+      }
+    },
+    {
+      "id": "formation-34-em05",
+      "label": "WINGMAN CONFIRMATION OF LEADER INFORMATION AND DIRECTIONS",
+      "mif_row": null,
+      "source": "general:b.1",
+      "hf_concept": "hf-non-standard-phraseology",
+      "texts": {
+        "0": "SP, as Wingman and due to non-standard phraseology that left the intention ambiguous, did not confirm the information and directions given by the formation Leader, with the result that three directive calls, including one change of level, received no acknowledgement and the Leader had to repeat each of them. One acknowledgement given did not match the direction actually issued. The IP transmitted the confirmations for the SP.",
+        "1": "SP, as Wingman and due to an unstandard read-back that did not confirm the actual clearance, did not confirm the Leader's direction in the required form, with the result that the acknowledgement was transmitted about 15 seconds after the call and only after the IP pointed out that a reply was owed. SP then read back the direction correctly and the Leader continued the profile. Confirmation of the Leader's calls remained at the limit of the acceptable standard.",
+        "2": "SP, as Wingman and due to an abbreviated acknowledgement that omitted the new level, did not confirm the full content of the Leader's direction on the first reply, with the result that the read-back was incomplete for about 5 seconds until SP amended it unaided. SP restated the direction in the correct form before complying with it. No prompting or intervention by the IP was required.",
+        "3": "SP, as Wingman, confirmed every piece of information and every direction given by the formation Leader. Each acknowledgement was transmitted immediately, in standard phraseology, and reproduced the content of the Leader's call exactly. No direction had to be repeated by the Leader at any point.",
+        "4": "SP, as Wingman, acknowledged every call from the formation Leader on the first transmission, with a read-back that reproduced the content exactly and identified the aircraft correctly. The confirmations were transmitted without interrupting the Leader's exchanges with the ground station. The Leader never had to repeat or clarify a direction throughout the sortie.",
+        "marginal": "SP confirmed the Leader's information and directions within standards, but the acknowledgements were reduced to the call sign alone whenever the intra-formation traffic increased. The trend is toward abbreviating the read-back to the point where the received content cannot be verified. SP is expected to keep the confirmation complete and in standard phraseology regardless of the R/T traffic at the time."
+      }
+    },
+    {
+      "id": "formation-34-em06",
+      "label": "WINGMAN MONITORING OF THE LEADER EXTERNAL COMM AND SAFETY INTERJECTION",
+      "mif_row": null,
+      "source": "general:b.2|execution:1",
+      "hf_concept": "hf-lack-of-assertiveness",
+      "texts": {
+        "0": "SP, as Wingman and due to lack of assertiveness in voicing a recognized unsafe condition, did not monitor the Leader's radio communication with the ground station and did not interfere when flight safety demanded it, with the result that an instruction to the formation to descend into conflicting traffic went unchallenged and a traffic advisory addressed to the formation was missed. SP also failed to answer when the ground station called the Wingman directly. The IP made the safety call in place of the SP.",
+        "1": "SP, as Wingman and due to an unstated request for a repeat of the instruction that was not understood, did not interfere at the point where the Leader had read back a level other than the one issued, with the result that the correction was transmitted about 20 seconds later and only after the IP prompted for it. SP then stated the discrepancy clearly and the formation was re-cleared. Monitoring of the Leader's external communication remained at the limit of the acceptable standard.",
+        "2": "SP, as Wingman and due to attention held on the formation position during the turn, did not detect the incorrect read-back by the Leader on the first transmission, with the result that the discrepancy stood for about 5 seconds until SP called it unaided. SP stated the correct clearance without prompting and the Leader amended the read-back. No intervention by the IP was required.",
+        "3": "SP, as Wingman, monitored the Leader's radio communication with the ground stations and with the other aircraft throughout the sortie. SP maintained the clearance picture independently and interfered on R/T only when asked by the Leader or when flight safety required it. Each interjection was correct, brief and made at the right moment.",
+        "4": "SP, as Wingman, kept an independent and accurate picture of every clearance issued to the formation and identified two discrepancies in the Leader's read-back before the ground station did. Each interjection was made in standard phraseology, at the first opportunity and without blocking any other transmission. SP interfered only where flight safety or the Leader's request justified it, and stayed silent on the frequency otherwise.",
+        "marginal": "SP monitored the Leader's external communication within standards, but the independent clearance picture was maintained only while the formation was in level flight. The trend is toward dropping the listening watch on the ground station frequency whenever the formation manoeuvres. SP is expected to keep monitoring the Leader's exchanges continuously so that a safety-related discrepancy is detected in any phase of the sortie."
+      }
+    }
+  ]
+}

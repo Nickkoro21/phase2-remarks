@@ -1,0 +1,132 @@
+{
+  "item_id": "vfr_navigation-21",
+  "item_name": "CLEARING",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [21],
+  "mif_rows": [
+    {"sn": 21, "row_name": "Clearing"}
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-21-em01",
+      "label": "Continuous outside visual scan",
+      "mif_row": null,
+      "source": "general:contact-36.a (via reference), execution",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to extended head-down time on the navigation log and the GPS page, did not check the surrounding space uninterruptedly and left whole sectors unscanned for the length of a full pattern leg. The outside scan stopped completely while route work was in progress and was not resumed on SP initiative. The IP took control and cleared the turn before SP re-established any lookout.",
+        "1": "SP, due to a scan pattern that stayed locked on the nose sector, checked the surrounding space only intermittently and omitted the sectors abeam and behind the aircraft. Coverage stayed at the lowest acceptable limit for most of the navigation legs. A continuous scan was restored only after repeated verbal reminders from the IP, without control intervention being required.",
+        "2": "SP, due to task loading during turning point identification, allowed the outside scan to lapse for a short interval on the crosswind leg and left the rear quadrant unchecked. SP recognized the omission without prompting and restored full sector coverage before initiating the next turn. The lapse stayed short of the limit and had no effect on separation.",
+        "3": "SP checked the surrounding space uninterruptedly throughout the sortie, sequencing the forward, abeam and rear sectors so that no quadrant was left unchecked. Head-down periods for navigation work were kept short and were each followed by a complete outside sweep. Scan coverage was maintained on every leg of the airport traffic pattern.",
+        "4": "SP maintained an uninterrupted and systematic outside scan for the entire sortie, fitting cockpit tasks between scan sweeps rather than allowing them to interrupt the lookout. Every turn was cleared through the full arc before it was initiated, including in the traffic pattern where scan rate was highest. Sector coverage was complete and evenly distributed from taxi to shutdown.",
+        "marginal": "SP checked the surrounding space within standards, but scan coverage was uneven and biased toward the forward sector, with the rear quadrant swept noticeably less often as route work increased. The standard was met on every leg, with the margin narrowing in the busiest navigation segments. SP is expected to distribute scan time evenly across all sectors regardless of cockpit workload."
+      }
+    },
+    {
+      "id": "vfr_navigation-21-em02",
+      "label": "Timely detection of traffic and separation action",
+      "mif_row": null,
+      "source": "general:contact-36.b (via reference)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a scan that was not sequenced to the geometry of the traffic pattern, did not detect nearby moving aircraft in time and allowed the range to close to a point where a normal avoidance maneuver was no longer available. No separation action was initiated by SP at any stage. The IP took control and maneuvered the aircraft to re-establish separation and prevent a midair conflict.",
+        "1": "SP, due to a lookout concentrated on the intended track, detected the converging traffic only after the IP called it and reduced separation to the minimum still acceptable. The avoidance turn was made, but late and with an abrupt input rather than an early measured one. No control intervention by the IP was needed once the traffic had been pointed out.",
+        "2": "SP, due to a delayed transition of the scan to the sector where the traffic was developing, acquired the other aircraft later than required and closed inside the separation planned for the leg. SP detected the conflict unaided and initiated an early, smooth turn that restored appropriate separation well before it became critical. No prompting or intervention was required.",
+        "3": "SP detected nearby flying aircraft early, called each contact and maintained appropriate separation throughout. Where geometry required it, SP maneuvered in good time and with measured control inputs to keep the situation from developing into a hazard. Traffic in the pattern and along the route was acquired visually before it became a factor.",
+        "4": "SP acquired every nearby aircraft at long range, called it with position and relative motion, and adjusted track to preserve separation before any conflict geometry could form. Avoidance action, where taken, was anticipatory rather than reactive and cost nothing in navigation accuracy. Detection performance was well ahead of the requirement for this phase of training.",
+        "marginal": "SP detected nearby aircraft and maintained appropriate separation within standards, but acquisitions came consistently at the later end of the usable range and left less time than desirable for a measured response. The trend was most evident on the legs with the highest cockpit workload. SP is expected to move detection earlier so that separation is preserved by track adjustment rather than by a corrective turn."
+      }
+    },
+    {
+      "id": "vfr_navigation-21-em03",
+      "label": "R/T monitoring for situational awareness",
+      "mif_row": null,
+      "source": "general:contact-36.c, formation-33.b.2 (via reference)",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to a loss of situational awareness after falling behind the route plan, stopped monitoring the R/T effectively and missed the position reports of the traffic sharing the working area and the pattern. No mental picture of the surrounding traffic was built at any point on the leg. The IP had to take over the radio picture and direct the aircraft clear of the reported traffic.",
+        "1": "SP, due to a loss of situational awareness while reconstructing position over the route, monitored the R/T only in fragments and missed calls that were relevant to the airspace being flown. The traffic picture reached the minimum acceptable level only after the IP repeated the missed calls verbally. SP flew the aircraft correctly, but the awareness was borrowed rather than built.",
+        "2": "SP, due to attention held on the turning point identification, missed a position report from traffic entering the same sector and briefly held an incomplete picture of the airspace. SP identified the gap unprompted, requested a repeat on the frequency and rebuilt the traffic picture before the conflict geometry could develop. Awareness was restored without any intervention.",
+        "3": "SP monitored the R/T effectively and continuously, using the reported positions to build situational awareness and to anticipate where conflicting traffic would appear. Calls relevant to the route and to the pattern were interpreted correctly and translated into an outside scan of the appropriate sector. No airborne threat developed without SP being aware of it first.",
+        "4": "SP monitored the frequency continuously and converted the radio picture into a precise, running model of who was where, using it to pre-position the visual scan before each contact became visible. Traffic entering the working area was anticipated from its first call and cleared visually without delay. Radio-derived awareness was complete and consistently ahead of events.",
+        "marginal": "SP monitored the R/T and built an adequate traffic picture within standards, but the picture thinned whenever navigation workload peaked and had to be reconstructed afterwards from later calls. Awareness stayed acceptable on every leg, with the margin at its narrowest around the turning points. SP is expected to sustain continuous R/T monitoring so that the traffic picture is maintained rather than rebuilt."
+      }
+    },
+    {
+      "id": "vfr_navigation-21-em04",
+      "label": "VFR distance from clouds",
+      "mif_row": null,
+      "source": "general:contact-36.d (via reference)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to holding the planned track and altitude without assessing the developing cloud along the route, did not maintain appropriate VFR distance from clouds and flew into a position from which the visual references and the lookout were lost. No deviation or descent was initiated to preserve VMC. The IP took control and repositioned the aircraft clear of cloud.",
+        "1": "SP, due to a late assessment of the cloud base ahead, closed to a distance from cloud that left only the minimum acceptable VFR margin and reduced the useful field of view for clearing. SP deviated only after the IP verbally directed a heading and altitude change. The aircraft remained VFR, but the correction was reactive and late.",
+        "2": "SP, due to a slow read of the cloud development ahead on the leg, allowed the distance from cloud to reduce below what had been planned for the route. SP recognized the trend without prompting and offset the track early, restoring a comfortable VFR margin well before the standard was at risk. No prompting or intervention was required.",
+        "3": "SP maintained appropriate VFR distance from clouds throughout the route, adjusting track and altitude in good time as the cloud pattern changed. The lookout arc was never restricted by proximity to cloud on any leg. Deviations for weather were planned ahead and cost nothing in navigation accuracy.",
+        "4": "SP read the cloud development well ahead of the aircraft and routed around it early, holding a generous VFR margin at every point without any late or abrupt correction. Clearing coverage was preserved unrestricted throughout, and the deviations were flown back onto track with the plan intact. Weather management supported the lookout instead of competing with it.",
+        "marginal": "SP maintained VFR distance from clouds within standards, but the margins were repeatedly taken up before a deviation was flown and were smaller than the conditions warranted. Standards were met on every leg, with the closest margins occurring where the cloud was building fastest. SP is expected to assess the cloud pattern earlier and build the offset before the margin has to be defended."
+      }
+    },
+    {
+      "id": "vfr_navigation-21-em05",
+      "label": "Attention allocation inside versus outside the cockpit",
+      "mif_row": null,
+      "source": "execution, general:formation-33 execution 1/ (via reference)",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to an attention bottleneck created by a single unresolved GPS indication, allocated essentially all attention inside the cockpit and abandoned both the visual and the verbal clearing task. Aircraft control degraded at the same time, with heading and altitude left unattended while the indication was being worked. The IP took control to restore the flight path and the lookout.",
+        "1": "SP, due to an attention bottleneck around one navigation discrepancy, allocated attention heavily inside the cockpit and left the outside and R/T clearing at the minimum acceptable level. Aircraft control was retained but the division of attention was restored only after the IP verbally directed SP to look out and fly the aircraft. The correction came late in the leg.",
+        "2": "SP, due to attention being captured briefly by an unexpected cockpit indication, let the balance between inside and outside work shift and reduced the clearing effort for a short period. SP recognized the imbalance unprompted, set the indication aside and returned to a correct division of attention between visual scan, R/T and aircraft control. Control of the aircraft was never in question.",
+        "3": "SP allocated attention correctly between work inside and outside the cockpit, taking in the visual and verbal cues needed to avoid a midair conflict or a CFIT situation while keeping the aircraft under control. Navigation tasks were broken into short segments that never displaced the clearing task. The division of attention held through the busiest phases of the route.",
+        "4": "SP divided attention between cockpit work and the outside picture with no observable cost to either, interleaving navigation tasks, R/T and the visual scan so that all three ran continuously. Unexpected indications were parked and handled at the next low-workload point rather than absorbing the scan. Aircraft control remained precise throughout.",
+        "marginal": "SP allocated attention between inside and outside work within standards, but the balance shifted inward whenever a navigation task did not resolve immediately, and the outside picture thinned for those periods. Standards were met on every leg, with the least margin around the turning points and the GPS work. SP is expected to cap the time spent on any single cockpit task so the clearing effort stays constant."
+      }
+    },
+    {
+      "id": "vfr_navigation-21-em06",
+      "label": "Clearing as Leader - hazard recognition and clearing technique",
+      "mif_row": null,
+      "source": "general:formation-33.a.1, a.2, a.3, a.4 (via reference)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, while in charge of the formation and due to a lookout that was not extended to the sectors into which the formation was turning, did not conceive the developing hazard and did not regulate the flight parameters to avoid it. Admissible clearing techniques were not applied before the turns, leaving the wingman's side unchecked. The IP took control of the lead aircraft to clear the formation from the conflict.",
+        "1": "SP, while leading, checked the airspace only intermittently and located the nearby aircraft late, allowing the formation to close to the minimum acceptable separation. The heading and altitude adjustment needed to avoid the traffic was made only after the IP verbally directed it. Clearing technique before the turns was applied, but incompletely and behind events.",
+        "2": "SP, while leading and due to attention held on the navigation plan, was slow to recognize a developing conflict with traffic in the working area. SP identified the hazard unaided and regulated heading and altitude early enough to open the separation before it became a factor for the formation. Clearing technique before subsequent turns was applied correctly without prompting.",
+        "3": "SP checked the airspace continuously for the whole period in charge of the formation, including in the landing pattern, and located nearby aircraft in time to keep proper separation for both aircraft. Active and potential hazards were recognized and the flight parameters were regulated in good time to avoid them. Admissible clearing techniques were applied before every turn.",
+        "4": "SP led with a clearing effort that covered the full arc into which the formation was maneuvering, acquiring traffic early and adjusting the formation flight path before any conflict geometry could form. Clearing technique before each turn was complete and unhurried, and the wingman was never placed in an unclear sector. Separation management in the landing pattern was of check-ride standard.",
+        "marginal": "SP checked the airspace and maintained proper separation for the formation within standards, but hazard recognition came late enough that the avoiding adjustments were larger than they needed to be. The standard was met throughout the period in charge, with the margin narrowest in the landing pattern. SP is expected to clear further ahead into the turn so that flight parameters can be regulated in small, early increments."
+      }
+    },
+    {
+      "id": "vfr_navigation-21-em07",
+      "label": "Clearing as Wingman - position-dependent lookout",
+      "mif_row": null,
+      "source": "general:formation-33.b.1, execution 2/ (via reference)",
+      "hf_concept": "hf-lack-of-teamwork",
+      "texts": {
+        "0": "SP, due to an unagreed division of lookout responsibility within the formation, did not execute clearing appropriate to the No2 position and did not clear towards the Leader while in fingertip. The sector that only the wingman could cover was left unchecked for the whole leg, and no support was provided to No1. The IP intervened to restore the lookout and re-establish the formation's coverage.",
+        "1": "SP, due to an uncoordinated split of lookout duties with the lead aircraft, executed clearing that was not matched to the relative position in the formation and covered the Leader's side only intermittently in fingertip. Coverage reached the minimum acceptable level after the IP verbally directed where to look. Support to No1 was present but late and incomplete.",
+        "2": "SP, due to attention held on the fingertip position references, was slow to extend the lookout towards the Leader and briefly left that sector uncovered. SP recognized the gap unprompted and resumed clearing appropriate to the No2 position, supporting No1 for the remainder of the leg. No prompting or intervention was needed after the initial lapse.",
+        "3": "SP executed clearing according to the relative position within the formation and cleared towards the Leader throughout fingertip, supporting No1 while recognizing that the main responsibility remained with the lead aircraft. Traffic in the sector covered by the wingman was called in good time. Formation position was maintained while the lookout was carried out.",
+        "4": "SP cleared the wingman's sector continuously and to the full extent of the position, calling traffic to the Leader early and with an accurate relative description. Lookout towards the Leader in fingertip was sustained without any degradation of formation position. The support provided to No1 measurably improved the formation's overall coverage.",
+        "marginal": "SP executed position-dependent clearing within standards, but coverage towards the Leader in fingertip thinned whenever formation position required larger corrections. The standard was met on every leg, with the narrowest margin during the closest fingertip work. SP is expected to hold the wingman's lookout at a constant level so that the formation's coverage does not depend on how much position correction is being flown."
+      }
+    },
+    {
+      "id": "vfr_navigation-21-em08",
+      "label": "Use of R/T to create safe separation from traffic",
+      "mif_row": null,
+      "source": "general:formation-33.a.5, contact-36.c (via reference)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a position report that was neither made nor updated as the route was flown, did not use the R/T to create safe separation from the surrounding air traffic and left other aircraft without any knowledge of the flight's position or intentions. Calls that would have deconflicted the working area and the pattern entry were omitted entirely. The IP made the required transmissions and directed the aircraft clear of the traffic.",
+        "1": "SP, due to transmissions being deferred until the aircraft was already established on the leg, used the R/T for separation only at the minimum acceptable level, with position reports that were late and lacked intentions. The missing calls were made only after the IP prompted each one verbally. Separation was preserved, but by the other traffic rather than by SP.",
+        "2": "SP, due to workload around the turning point, made the position report later than planned and initially omitted the intended routing. SP identified the omission unaided and transmitted a complete, accurate report with intentions in time for the surrounding traffic to deconflict. No prompting or intervention was required.",
+        "3": "SP used the R/T effectively to create safe separation from the air traffic, transmitting accurate and timely position reports with intentions at the planned points along the route and on pattern entry. Calls were phrased clearly and matched what the aircraft actually did. Other traffic was able to deconflict from SP's transmissions without further coordination.",
+        "4": "SP used the R/T as an active separation tool, transmitting complete position and intentions ahead of each point where a conflict could form and coordinating directly with the traffic sharing the area. Every call was concise, standard and precisely timed to the phase of flight. Radio work removed potential conflicts before they required any maneuvering.",
+        "marginal": "SP used the R/T to create separation within standards, but position reports were consistently at the late end of the useful window and intentions were sometimes stated only when questioned. The standard was met at every reporting point, with the least margin on the busiest frequency segments. SP is expected to transmit position and intentions earlier so that separation is established by the call rather than confirmed after it."
+      }
+    }
+  ]
+}

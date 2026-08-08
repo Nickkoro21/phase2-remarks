@@ -1,0 +1,162 @@
+{
+  "item_id": "vfr_navigation-19",
+  "item_name": "LANDING",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [19],
+  "mif_rows": [
+    {"sn": 19, "row_name": "Landing"}
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-19-em01",
+      "label": "Touch down point control - FLAPS LDG / FLAPS T-O / AOA",
+      "mif_row": "Landing",
+      "source": "specific:TOUCH DOWN POINT (feet from the beginning of the RWY) [a/ FLAPS LDG - FLAPS T/O - AOA]",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a shallow final flown well beyond the briefed aim point, did not place the touch down point within the required distance from the beginning of the runway, with the result of contact beyond 1500 ft from the threshold. SP carried approach power into the round out and held the aircraft off in a prolonged float without any glidepath correction. IP directed the go-around and took the aircraft for the following landing.",
+        "1": "SP, due to a flare started late and with excess energy, did not arrest the float over the touchdown zone, with the result that the touch down point reached the 1500 ft limit from the beginning of the runway. SP adjusted aim point and power only after repeated verbal prompting from IP on final and in the flare. The landing stayed inside the tolerance but with no margin remaining.",
+        "2": "SP, due to an aim point set long on final, did not keep the touch down point inside 1000 ft from the beginning of the runway, with the result of contact between 1000 ft and 1500 ft from the threshold. SP recognized the long trend during the round out, reduced power promptly and completed the landing with no IP input.",
+        "3": "SP flew a stabilized final on the briefed aim point and touched down within 1000 ft of the beginning of the runway on each landing. Power reduction and flare timing were accurate, so the float was short and predictable. No prompting was required at any point of the approach.",
+        "4": "SP placed the touch down point within a few aircraft lengths of the briefed aim point on every landing, well inside 1000 ft from the beginning of the runway. Glidepath, power and flare timing were matched so that the landing distance was repeatable from pass to pass.",
+        "marginal": "SP touched down inside 1000 ft from the beginning of the runway, but consistently in the far part of that band and long of the briefed aim point. The trend comes from a flare begun slightly early followed by a float that is allowed to run. SP is expected to tighten aim point selection and power reduction so that the touch down point is centered in the touchdown zone."
+      }
+    },
+    {
+      "id": "vfr_navigation-19-em02",
+      "label": "Centerline tracking at touchdown - FLAPS LDG / FLAPS T-O / AOA",
+      "mif_row": "Landing",
+      "source": "specific:DEVIATION FROM CENTER LINE (feet) [a/ FLAPS LDG - FLAPS T/O - AOA]",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a drift carried uncorrected through the round out, did not track the runway centerline, with the result of a lateral deviation beyond 15 ft at touchdown that continued to increase during the landing roll. SP applied neither the wing-low correction nor the rudder alignment before contact. IP took the controls to recenter the aircraft on the runway.",
+        "1": "SP, due to a lateral correction applied only inside the flare, did not hold the runway centerline, with the result of a deviation of about 15 ft at touchdown. SP started recentering the aircraft only after IP called the displacement twice during the landing roll. The deviation stopped at the limit of the tolerance.",
+        "2": "SP, due to a small lateral offset left uncorrected after the rollout from the final turn, did not keep the deviation from the centerline within 5 ft, with the result of a displacement between 5 ft and 15 ft at touchdown. SP identified the offset during the round out, applied rudder and aileron and returned to the centerline during the landing roll without assistance.",
+        "3": "SP tracked the runway centerline through final, flare and landing roll, keeping the deviation within 5 ft. Alignment was maintained with small continuous corrections rather than late large inputs.",
+        "4": "SP touched down with the main wheels on the runway centerline and a deviation barely perceptible from the cockpit, and held the aircraft aligned for the full landing roll. Directional control was achieved with minimal and precise rudder inputs.",
+        "marginal": "SP kept the deviation from the centerline within 5 ft, but repeatedly on the same side of the runway and with the correction made late in the flare. The pattern is a fixed lateral offset carried down final rather than active alignment. SP is expected to establish centerline tracking earlier on final so that the touchdown position is not left to the flare."
+      }
+    },
+    {
+      "id": "vfr_navigation-19-em03",
+      "label": "Touch down speed control - FLAPS LDG / FLAPS T-O / AOA",
+      "mif_row": "Landing",
+      "source": "specific:TOUCH DOWN SPEED (knots) [a/ FLAPS LDG - FLAPS T/O - AOA]",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to inadequate monitoring of airspeed during the approach, did not touch down inside the required speed band, with the result of contact more than 10 kt above the computed touchdown speed and a landing roll extended well past the planned turn-off. SP carried approach power into the flare and did not cross-check indicated airspeed after the round out. IP called for the power reduction and then took the aircraft.",
+        "1": "SP, due to an interrupted airspeed cross-check while attention stayed on the aim point, did not control the touch down speed to the computed value, with the result of contact at the +10 kt limit of the tolerance. SP retarded the power lever only after IP called the airspeed on short final. The touchdown remained inside the limit but the float consumed most of the touchdown zone.",
+        "2": "SP, due to a delayed cross-check of airspeed after the landing configuration change, did not hold the touch down speed within 5 kt of the computed value, with the result of contact between 5 kt and 10 kt fast. SP recognized the excess energy in the round out, reduced power in time and landed without IP intervention.",
+        "3": "SP flew the final at the computed airspeed and touched down between the computed speed and 5 kt above it. The airspeed cross-check was maintained through the round out and the power reduction was timed to the flare.",
+        "4": "SP reached the touchdown attitude with the airspeed essentially at the computed value on each landing, with no float and no late power correction. Energy management from the final turn to touchdown was consistent and needed no adjustment.",
+        "marginal": "SP touched down inside the speed tolerance, but always in the upper part of the band and after a noticeable float. The trend comes from a power reduction started later than the round out. SP is expected to sequence the power reduction with the flare so that the touch down speed sits closer to the computed value."
+      }
+    },
+    {
+      "id": "vfr_navigation-19-em04",
+      "label": "Touch down point control - FLAPS UP landing",
+      "mif_row": "Landing",
+      "source": "specific:TOUCH DOWN POINT (feet from the beginning of the RWY) [b/ FLAPS UP]",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a flaps-up approach flown with excess airspeed and no adjustment of the aim point for the flatter no-flap profile, did not place the touch down point within the required distance, with the result of contact beyond 2000 ft from the beginning of the runway. SP allowed a long float in ground effect at the higher no-flap speed and made no attempt to reset the approach. IP directed a go-around before the remaining runway became limiting.",
+        "1": "SP, due to a round out started high for the flaps-up profile, did not arrest the float, with the result that the touch down point reached the 2000 ft limit from the beginning of the runway. SP corrected the pitch attitude and power only after IP prompted twice on remaining runway. The landing stayed inside the tolerance without margin.",
+        "2": "SP, due to an aim point kept at the normal flaps-down position on a flaps-up landing, did not hold the touch down point inside 1500 ft from the beginning of the runway, with the result of contact between 1500 ft and 2000 ft. SP recognized the long trend during the round out, adjusted power in time and completed the landing without IP intervention.",
+        "3": "SP adjusted the aim point for the flaps-up profile and touched down within 1500 ft of the beginning of the runway. The flare was flown at the correct height for the higher approach speed and the float remained short.",
+        "4": "SP touched down close to the briefed flaps-up aim point on every attempt, well inside 1500 ft from the beginning of the runway. The higher approach speed was managed so that the landing distance matched the flaps-down consistency.",
+        "marginal": "SP touched down inside 1500 ft from the beginning of the runway, but repeatedly at the far end of that band on the flaps-up landings. The tendency is an aim point selection carried over from the flaps-down pattern without compensation for the flatter profile. SP is expected to set the flaps-up aim point earlier so the touch down point is not left to the float."
+      }
+    },
+    {
+      "id": "vfr_navigation-19-em05",
+      "label": "Centerline tracking at touchdown - FLAPS UP landing",
+      "mif_row": "Landing",
+      "source": "specific:DEVIATION FROM CENTER LINE (feet) [b/ FLAPS UP]",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to rudder inputs not scaled to the higher groundspeed of the flaps-up landing, did not track the runway centerline, with the result of a deviation beyond 15 ft at touchdown and a divergent track during the landing roll. SP made no aileron correction into the wind after contact. IP took the controls to recenter the aircraft.",
+        "1": "SP, due to alignment left to the flare on the flaps-up approach, did not hold the runway centerline, with the result of a lateral deviation of about 15 ft at touchdown. SP started the correction only after IP called the displacement during the roll. The deviation stopped at the limit of the tolerance.",
+        "2": "SP, due to a lateral offset that developed after the rollout from final at the higher no-flap speed, did not keep the deviation from the centerline within 5 ft, with the result of a displacement between 5 ft and 15 ft at touchdown. SP detected the offset before the flare, corrected with rudder and returned to the centerline during the roll without assistance.",
+        "3": "SP tracked the runway centerline through the flaps-up approach, flare and landing roll, keeping the deviation within 5 ft. Directional corrections were made with small continuous rudder inputs matched to the higher groundspeed.",
+        "4": "SP touched down on the runway centerline on the flaps-up landings with deviation barely perceptible, and held the alignment for the full roll with minimal control input. Directional control showed no difference from the flaps-down landings.",
+        "marginal": "SP kept the deviation from the centerline within 5 ft on the flaps-up landings, but with corrections made noticeably later than on the flaps-down landings. The trend comes from rudder inputs sized for the lower flaps-down groundspeed. SP is expected to anticipate the reduced reaction time so that alignment is established before the round out."
+      }
+    },
+    {
+      "id": "vfr_navigation-19-em06",
+      "label": "Touch down speed control - FLAPS UP landing",
+      "mif_row": "Landing",
+      "source": "specific:TOUCH DOWN SPEED (knots) [b/ FLAPS UP]",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to use of the flaps-down speed schedule on a flaps-up approach, did not touch down within the required speed band, with the result of contact more than 10 kt above the computed no-flap touchdown speed and a marked increase in landing roll. SP made no power reduction during the round out and did not reassess the computed speed for the configuration. IP took the aircraft after the extended float.",
+        "1": "SP, due to a power reduction delayed past the round out on the flaps-up landing, did not control the touch down speed to the computed value, with the result of contact at the +10 kt limit of the tolerance. SP acted only after IP called the airspeed in the flare. The touchdown remained inside the limit but with a float that used most of the touchdown zone.",
+        "2": "SP, due to the no-flap speed additive not being fully removed before the flare, did not keep the touch down speed within 5 kt of the computed value, with the result of contact between 5 kt and 10 kt fast. SP recognized the excess energy in the round out, reduced power in time and landed with no IP input.",
+        "3": "SP applied the flaps-up speed schedule correctly and touched down between the computed speed and 5 kt above it. Power was reduced in step with the round out, so the float stayed short despite the higher approach speed.",
+        "4": "SP arrived in the touchdown attitude with the airspeed at the computed flaps-up value on each landing, with negligible float and no late power correction. Energy management on the no-flap profile matched the standard achieved with flaps down.",
+        "marginal": "SP stayed inside the speed tolerance on the flaps-up landings, but consistently in the upper half of the band. The tendency is an extra margin of airspeed retained down final because of the flatter no-flap profile. SP is expected to fly the published flaps-up speed exactly so that the touchdown speed is not set by a self-added buffer."
+      }
+    },
+    {
+      "id": "vfr_navigation-19-em07",
+      "label": "Round out and float control technique",
+      "mif_row": "Landing",
+      "source": "general:contact-24_landing_technique",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a round out initiated high above the runway followed by a released back pressure, did not establish and hold the landing attitude, with the result of a ballooned flare and a hard contact that required an IP recovery. The aircraft was allowed to settle from height with power at idle and no attitude correction. IP took the controls and flew the following pattern as a demonstration.",
+        "1": "SP, due to a flare rate not matched to the sink rate, did not hold a constant landing attitude through the round out, with the result of two distinct pitch corrections before contact and a touchdown at the edge of the accepted tolerances. SP stabilized the attitude only after IP called for back pressure in the flare. The technique corrected but the touchdown remained firm.",
+        "2": "SP, due to back pressure applied slightly early in the round out, did not maintain the intended flare profile, with the result of a short balloon before the aircraft settled onto the runway inside the tolerances. SP recognized the balloon at once, held the attitude with a small power addition and completed the landing without IP intervention.",
+        "3": "SP began the round out at the correct height, held the landing attitude with a smooth increase of back pressure and touched down on the main wheels in the correct attitude. Float was short and controlled and the pitch attitude was held after touchdown.",
+        "4": "SP flew each round out with the flare rate matched to the sink rate, producing consistent touchdowns on the main wheels with no balloon and no discernible float. Aerodynamic braking after touchdown was held at the correct attitude without prompting.",
+        "marginal": "SP flew acceptable round outs, but with a flare that varies in height between patterns and a float that runs longer than briefed. The trend suggests judgment of height above the runway that is still developing rather than a control problem. SP is expected to standardize the round out height so the flare produces the same result on each pattern."
+      }
+    },
+    {
+      "id": "vfr_navigation-19-em08",
+      "label": "Crosswind drift correction and runway alignment technique",
+      "mif_row": "Landing",
+      "source": "general:contact-24_landing_technique",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a crab held into the flare without transition to the wing-low correction, did not align the aircraft with the runway before contact, with the result of a touchdown with drift and side load and a departure from the centerline during the roll. SP applied no aileron into the wind after touchdown. IP took the controls to stop the drift.",
+        "1": "SP, due to a wing-low correction established only in the last part of the flare, did not maintain runway alignment through the round out, with the result of a touchdown with residual drift and a deviation at the limit of the accepted tolerance. SP applied the correction after IP called the drift twice. Aileron into the wind was held only after prompting.",
+        "2": "SP, due to a drift correction sized below the actual crosswind on final, did not keep the aircraft aligned with the runway, with the result of a lateral displacement that developed before the flare and remained inside the tolerance. SP increased the wing-low correction during the round out, touched down on the upwind main wheel and held the correction through the roll without assistance.",
+        "3": "SP established the drift correction on final, transitioned to the wing-low technique before the flare and touched down on the upwind main wheel with the aircraft aligned with the runway. Aileron into the wind was increased progressively during the landing roll.",
+        "4": "SP matched the drift correction to the crosswind continuously from final to touchdown, landing on the upwind main wheel with the longitudinal axis on the runway heading and no side load. The correction was carried through the entire roll with no perceptible lateral movement.",
+        "marginal": "SP corrected for the crosswind within standards, but the transition from crab to wing-low is made later than briefed and the initial correction is usually undersized. The trend shows a reactive rather than anticipated response to the crosswind component. SP is expected to set the drift correction on final and adjust it continuously rather than resolving it in the flare."
+      }
+    },
+    {
+      "id": "vfr_navigation-19-em09",
+      "label": "Stabilized final approach and glidepath discipline",
+      "mif_row": "Landing",
+      "source": "general:contact-24_landing_technique",
+      "hf_concept": "hf-undesired-aircraft-state",
+      "texts": {
+        "0": "SP, due to an unstable approach that was continued instead of being terminated, did not establish the briefed approach parameters before the round out, with the result of a final flown with airspeed, glidepath and alignment all outside limits into the flare. SP made no assessment of the approach against the stabilized criteria at any point. IP directed the go-around.",
+        "1": "SP, due to failure to recognize the undesired aircraft state before it developed further, did not re-establish the briefed glidepath after the final turn, with the result of a low and slow condition corrected only at the limit of the accepted tolerance. SP added power and corrected the profile after IP called the deviation. The approach was continued but the correction absorbed the whole of short final.",
+        "2": "SP, due to a final turn rolled out inside the briefed track, did not intercept the glidepath at the planned point, with the result of a short period high on profile that was corrected before the round out. SP identified the deviation, reduced power and returned to the briefed glidepath in time to land inside all tolerances without IP input.",
+        "3": "SP arrived on final on the briefed glidepath, at the computed airspeed and aligned with the runway, and maintained those parameters to the round out. Corrections were small and made as soon as the deviation appeared.",
+        "4": "SP flew every final in the stabilized condition from the rollout to the round out, with glidepath, airspeed and alignment held so tightly that no correction was visible on short final. The consistency allowed the landing itself to be flown with attention entirely on the touchdown zone.",
+        "marginal": "SP met the stabilized approach criteria on each pattern, but the parameters are usually consolidated late, in the last part of final. The trend comes from a final turn flown to different tracks between patterns. SP is expected to roll out on the briefed track so the approach is stabilized earlier and the flare is not flown from a correcting profile."
+      }
+    },
+    {
+      "id": "vfr_navigation-19-em10",
+      "label": "Go-around decision and coordination with IP and tower",
+      "mif_row": "Landing",
+      "source": "general:contact-24_landing_technique",
+      "hf_concept": "hf-lack-of-assertiveness",
+      "texts": {
+        "0": "SP, due to failure to call the go-around once the approach was no longer stable, did not initiate the published go-around procedure at the point where the landing was no longer assured, with the result that the aircraft was flown into the flare from an unstable condition and the tower call was never made. SP continued the landing with the runway environment already degraded by the deviation. IP called and flew the go-around.",
+        "1": "SP, due to reluctance to state the intention to go around while committed to the landing, did not announce and start the go-around at the briefed decision point, with the result of a delayed initiation at the limit of the usable runway. SP applied power and reconfigured only after IP directed the maneuver. The tower call followed the action instead of accompanying it.",
+        "2": "SP, due to a decision to go around taken later than the briefed gate, did not sequence the go-around actions with the required promptness, with the result of a power application and configuration change made slightly out of order but completed without IP input. SP recovered the sequence, made the tower call and rejoined the pattern correctly.",
+        "3": "SP assessed each approach against the briefed criteria and, when the landing was not assured, announced and flew the go-around promptly with the correct power, configuration and pattern rejoin. The tower call was made without delay and the intentions were clear to IP.",
+        "4": "SP made the land or go-around decision at the briefed gate on every pattern, stated the decision aloud and executed the chosen course of action without hesitation. Coordination with IP and tower was clear, timely and required no clarification.",
+        "marginal": "SP made correct land or go-around decisions, but announced them only after the action had already begun and close to the briefed gate. The tendency is to defer the decision until it becomes unavoidable rather than making it at the gate. SP is expected to voice the decision at the briefed point so that IP and tower are informed before the maneuver starts."
+      }
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "item_id": "formation-07",
+  "item_name": "FORMATION TAKE OFF",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [7],
+  "mif_rows": [
+    {"sn": 7, "row_name": "Formation T/O"}
+  ],
+  "error_modes": [
+    {
+      "id": "formation-07-em01",
+      "label": "Airspeed matching with the leader during roll and initial climb",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to coarse and delayed throttle handling after the leader advanced power, did not stabilize the airspeed on the leader's flown value during the roll and the initial climb. Airspeed diverged by up to 28 knots, the aircraft accelerated forward of the leader's wing line and the fore-aft position could no longer be regained with power alone. IP took the throttle and repositioned the aircraft aft of the leader to prevent an overshoot ahead of lead.",
+        "1": "SP, due to power changes applied in large steps instead of small anticipated corrections, did not hold the airspeed matched to the leader through the acceleration and the initial climb. The divergence reached about 20 knots, at the limit of the tolerance, and was arrested only after two verbal prompts from the IP on the throttle position. The aircraft returned to the briefed airspeed with a noticeable delay after each prompt.",
+        "2": "SP, due to a slightly late power reduction once the leader stabilized the climb speed, did not match the leader's airspeed immediately after the gear and flap retraction. Airspeed diverged by about 14 knots and the aircraft crept forward of the briefed fore-aft position. SP recognized the trend on the leader's wing line, reduced power in small increments and re-established the matched airspeed within a few seconds, without any intervention.",
+        "3": "SP anticipated the leader's power settings and matched the airspeed accurately through the roll, the acceleration and the initial climb. Airspeed remained within 10 knots of the leader's flown value at all times and the fore-aft position stayed on the briefed reference. Power corrections were small, early and applied in the correct direction.",
+        "4": "SP matched the leader's airspeed with negligible deviations throughout the take off roll and the departure, holding the fore-aft reference essentially fixed. Power corrections were anticipatory and so small that no airspeed excursion developed at any point, including the configuration change. The matched airspeed was maintained without any prompting or assistance.",
+        "marginal": "SP kept the airspeed matched to the leader within standards, but consistently on the fast side, with deviations repeatedly reaching 9 to 10 knots after each power change. The pattern shows a tendency to add power before assessing the leader's acceleration and then to chase the resulting overshoot. SP is expected to reduce the size of the power corrections and to anticipate the leader's setting so that the airspeed spread stays well inside the tolerance."
+      }
+    },
+    {
+      "id": "formation-07-em02",
+      "label": "Vertical position and altitude control during the departure segment",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an interrupted cross-check between the leader's wing line and the altimeter after the configuration change, did not maintain the briefed vertical position during the initial climb. The aircraft ended up more than 350 feet off the leader's altitude, well outside the tolerance, and the vertical stack became irrecoverable from that geometry. IP took control and repositioned the aircraft into the briefed vertical reference before continuing the departure.",
+        "1": "SP, due to attention held on the leader's fuselage without any reference to the vertical stack cues, did not maintain the vertical position during the climb out. The altitude split reached about 300 feet, at the limit of the tolerance, and was reduced only after repeated verbal directions from the IP. Each correction was initiated late and the vertical reference was regained slowly.",
+        "2": "SP, due to a cross-check that lapsed briefly while the gear and flaps were being retracted, did not hold the briefed vertical position immediately after the configuration change. The altitude split grew to about 200 feet above the leader. SP re-established the reference on the leader's canopy line, corrected with a small pitch adjustment and returned to the briefed stack within a few seconds, with no intervention.",
+        "3": "SP maintained an accurate vertical position on the leader through the lift off, the configuration change and the initial climb. The altitude split remained within 150 feet at all times and the briefed stack was held without oscillation. Pitch corrections were small, timely and referenced to the correct visual cues on the leader.",
+        "4": "SP held the vertical position on the leader with negligible deviations from lift off through the departure, keeping the stack visually fixed. The altitude split remained within a few tens of feet even during the configuration change, when the vertical reference is most easily lost. Corrections were anticipatory and no vertical excursion developed at any stage.",
+        "marginal": "SP maintained the vertical position within standards, but with a repeated tendency to settle low on the leader, with the split reaching 130 to 150 feet after each pitch change. The pattern indicates that the cross-check returns to the leader's line later than required once a cockpit task is introduced. SP is expected to re-establish the visual reference immediately after each configuration action so that the vertical stack stays close to the briefed value."
+      }
+    },
+    {
+      "id": "formation-07-em03",
+      "label": "Runway and departure heading tracking as number two",
+      "mif_row": null,
+      "source": "specific:EXIT HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to rudder inputs applied late and in the wrong direction during the acceleration, did not track the leader's heading through the roll and the initial turn out. The heading split exceeded 12 deg, the aircraft diverged laterally from the briefed line and the lateral spacing opened well beyond the briefed distance. IP took control to re-establish the heading and to close the aircraft back onto the leader's departure track.",
+        "1": "SP, due to insufficient anticipation of the swing during the power application, did not hold the leader's heading through the roll and the initial climb out. The heading split reached about 10 deg, at the limit of the tolerance, and was corrected only after verbal heading calls from the IP. The aircraft was returned to the leader's track late and with an overshoot in the opposite direction.",
+        "2": "SP, due to a slightly delayed rudder correction as the aircraft accelerated, did not track the leader's heading precisely during the take off roll. The heading split grew to about 7 deg with a visible lateral drift away from the leader. SP identified the divergence, applied a coordinated rudder correction and re-established the leader's track promptly, without prompting.",
+        "3": "SP tracked the leader's heading accurately from brake release through the initial climb, holding the heading split within 5 deg at all times. The lateral line on the leader remained on the briefed reference through the acceleration and the turn out. Rudder inputs were small, coordinated and applied without delay.",
+        "4": "SP tracked the leader's heading with negligible deviations throughout the roll and the departure, holding the lateral reference visually fixed. The heading split stayed within a couple of degrees even during the power application and the turn out. Directional control was continuous and required no correction beyond minimal rudder pressure.",
+        "marginal": "SP tracked the leader's heading within standards, but the split repeatedly grew to 4 to 5 deg before being corrected, always toward the same side. The trend shows that the directional correction is applied after the divergence has become visible rather than at its onset. SP is expected to anticipate the directional tendency during the power application so that the heading split remains well inside the tolerance."
+      }
+    },
+    {
+      "id": "formation-07-em04",
+      "label": "Line up checks and notification to the formation leader",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-hfacs-act-nanocodes",
+      "texts": {
+        "0": "SP, due to a checklist not followed correctly (AE102) before brake release, did not complete the line up checks and did not inform the formation leader that the aircraft was ready. Two items of the check remained unactioned and the omission was still present when the leader signalled the power application, so the aircraft entered the roll in an incorrect configuration. IP stopped the sequence, directed the checks to be completed on the runway and informed the leader before the take off could proceed.",
+        "1": "SP, due to an item of the line up checks omitted under the workload of taxiing into position, did not execute the checks without mistakes and did not report ready to the leader in time. The omission was identified and corrected only after the IP prompted the item by name, and the ready call reached the leader after the leader had already queried the flight. The sequence continued only once the check was completed on verbal direction.",
+        "2": "SP, due to the attention required to establish the line up position on the leader, did not complete the line up checks in the briefed order and delayed the ready call. SP identified the omitted item without being told, actioned it and passed the ready call to the leader with a delay of only a few seconds, before the leader initiated the take off signal. No intervention was required.",
+        "3": "SP executed the line up checks accurately and in the briefed order, with no omitted or mis-set item, and informed the formation leader promptly that the aircraft was ready. The checks were completed while the correct line up position on the leader was maintained. The ready call was made with standard phraseology and at the correct moment in the sequence.",
+        "4": "SP completed the line up checks without a single error and with time in hand, while holding an accurate line up position on the leader. The ready call was passed to the leader immediately on completion, using standard phraseology and without any dead time in the sequence. Cockpit tasks and the visual reference on the leader were managed in parallel with no degradation of either.",
+        "marginal": "SP executed the line up checks without errors and informed the leader, but the checks were completed close to the point at which the leader expected the ready call, leaving no margin in the sequence. The pattern shows that cockpit actions are started only after the line up position has been fully stabilized rather than in parallel with it. SP is expected to begin the checks earlier so that the ready call is passed to the leader with a comfortable margin."
+      }
+    },
+    {
+      "id": "formation-07-em05",
+      "label": "Position keeping relative to the leader during the take off roll",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power set well above the setting required to hold the briefed position, did not keep the proper position relative to the leader during the take off roll. The aircraft moved forward of the leader's wing line by more than a full fuselage length and the lateral spacing closed at the same time. IP took control on the runway to arrest the closure and to re-establish safe spacing from the leader before lift off.",
+        "1": "SP, due to power corrections made in large steps rather than by small continuous adjustments, did not keep the proper position during the take off roll. The aircraft oscillated fore and aft around the briefed reference through most of the roll and reached the limit of the acceptable position band. Position was recovered on each occasion only after verbal corrections from the IP, and the reference was never fully stabilized before rotation.",
+        "2": "SP, due to a slightly late power adjustment as the leader accelerated, did not hold the briefed position during the first part of the take off roll. The aircraft drifted aft of the leader's wing line by about half a fuselage length. SP recognized the divergence against the leader's canopy reference, corrected with a measured power increase and re-established the position well before rotation, without any assistance.",
+        "3": "SP kept the proper position relative to the leader throughout the take off roll, holding the briefed fore-aft and lateral references from brake release to lift off. Power was managed continuously in small increments so that no position excursion developed during the acceleration. The transition to flight was made with the position reference unchanged.",
+        "4": "SP held the briefed position on the leader through the entire take off roll with negligible variation, keeping the visual references essentially locked. Power was anticipated rather than chased, so the acceleration and the lift off produced no perceptible movement in the formation geometry. The position was maintained with no prompting of any kind.",
+        "marginal": "SP kept the proper position during the take off roll within acceptable limits, but tended to sit consistently aft of the briefed reference and to close the gap only in the final part of the roll. The trend suggests that power is set conservatively at brake release and adjusted only once the divergence has become obvious. SP is expected to match the leader's acceleration from the start so that the position reference is held steady throughout the roll."
+      }
+    },
+    {
+      "id": "formation-07-em06",
+      "label": "Timely notification to the leader when the position cannot be held",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": "hf-lack-of-assertiveness",
+      "texts": {
+        "0": "SP, due to lack of assertiveness in stating unable when the briefed position could no longer be held, did not inform the leader timely that the aircraft was out of position. The aircraft continued the roll well outside the position band with no transmission, and the leader remained unaware of the wingman's state through rotation. IP made the call to the leader and took control to re-establish safe spacing.",
+        "1": "SP, due to hesitation in transmitting a deviation that could be read as an admission of poor performance, did not inform the leader timely when the position degraded during the roll. The call was made only after the IP directed it, by which time the aircraft had reached the limit of the acceptable position band. The leader's response was consequently late relative to the developing geometry.",
+        "2": "SP, due to a brief hesitation over the wording of the transmission, did not inform the leader immediately when the position began to degrade during the roll. The aircraft was displaced from the briefed reference for several seconds before the call was made. SP then transmitted a clear and correct statement of the position on his own initiative, in time for the leader to act, with no intervention required.",
+        "3": "SP informed the leader timely and in plain language as soon as the briefed position could not be held, stating the actual position of the aircraft. The transmission was made without hesitation and allowed the leader to adjust the sequence in good time. Standard phraseology was used throughout.",
+        "4": "SP monitored the developing position continuously and informed the leader at the first indication that the briefed reference was at risk, before any significant displacement occurred. The transmission was concise, unambiguous and gave the leader the full picture of the wingman's state. The exchange did not interrupt the SP's control of the aircraft or of the visual reference.",
+        "marginal": "SP informed the leader when the position could not be held, and the call was made within an acceptable time, but only after the displacement had become clearly visible rather than at its onset. The pattern indicates a reluctance to transmit until the deviation is beyond doubt. SP is expected to make the call at the first recognized trend, so that the leader has the maximum time available to respond."
+      }
+    },
+    {
+      "id": "formation-07-em07",
+      "label": "Response to the leader's signals and cleaning up the aircraft configuration",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a visual scan concentrated on the leader's wing tip rather than on the signalling area, did not follow the leader's signals and did not clean up the aircraft configuration as directed. The gear remained extended well past the leader's signal and the flap selection was made only after a direct order from the rear cockpit. IP took control of the configuration to bring the aircraft into the formation state before the departure turn.",
+        "1": "SP, due to the signal being read late while the aircraft was being repositioned, did not follow the leader's signals and did not clean the configuration in the briefed sequence. Gear and flap retraction lagged the leader's signal by several seconds and were completed only after verbal prompting from the IP. The formation reached the departure turn with the configuration change still being finalized.",
+        "2": "SP, due to a momentary delay in reacquiring the leader's signalling reference after lift off, did not action the configuration change at the moment of the signal. Gear retraction was initiated about two seconds late and the flaps followed shortly after. SP identified the lag without prompting, completed the sequence correctly and had the aircraft clean well before the departure turn.",
+        "3": "SP followed the leader's signals accurately and cleaned the aircraft configuration in the briefed sequence and at the correct moment. Gear and flaps were retracted immediately on the leader's signal, with the visual reference on the leader maintained throughout the action. No signal was missed or misread.",
+        "4": "SP read every signal from the leader immediately and cleaned the configuration in the briefed sequence with no perceptible lag, while holding the formation position unchanged. The cockpit actions were completed without any degradation of the visual reference or of the aircraft path. The whole configuration change was completed as a single continuous and unhurried sequence.",
+        "marginal": "SP followed the leader's signals and cleaned the configuration within acceptable limits, but each action was initiated only after a visible pause to confirm the signal. The trend shows that the signalling reference is being reacquired rather than continuously monitored. SP is expected to keep the signalling area within the scan so that the configuration change follows the leader's signal without delay."
+      }
+    },
+    {
+      "id": "formation-07-em08",
+      "label": "Smoothness of control inputs and formation stability",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to control inputs made in large corrective movements instead of continuous small pressures, did not have smooth control of the aircraft during the roll and the initial climb. The aircraft oscillated in roll and pitch against the leader with an increasing amplitude, and the closure rate toward the leader became unpredictable. IP took control to damp the oscillation and to re-establish a stable formation geometry.",
+        "1": "SP, due to overcontrolling in roll while chasing the lateral reference, did not fly the aircraft smoothly during the departure. Each correction produced an overshoot in the opposite direction and the formation position was never stabilized without further input. The oscillation was damped only after repeated verbal direction on control pressures from the IP.",
+        "2": "SP, due to corrections applied slightly larger than required after the configuration change, did not hold fully smooth control through the initial climb. Small pitch and roll oscillations developed against the leader's reference for a few seconds. SP reduced the size of the inputs on his own initiative, damped the oscillation and flew the remainder of the departure smoothly, without intervention.",
+        "3": "SP had smooth control of the aircraft throughout the formation take off, correcting with small continuous pressures rather than discrete inputs. The formation geometry remained stable through the acceleration, the lift off and the configuration change. No oscillation developed at any point in the sequence.",
+        "4": "SP flew the aircraft with consistently smooth and anticipatory control inputs, so that the formation position appeared static to the leader throughout the take off and departure. Corrections were made at the onset of each trend and were small enough to be imperceptible in the formation geometry. The aircraft was flown with no oscillation and no overcorrection at any stage.",
+        "marginal": "SP had smooth control of the aircraft within standards, but the corrections were slightly larger than required and produced a low-amplitude oscillation after each configuration change. The trend shows that inputs are made in response to a visible displacement rather than to the initial rate. SP is expected to correct earlier and with smaller pressures so that the formation position remains steady without any residual oscillation."
+      }
+    },
+    {
+      "id": "formation-07-em09",
+      "label": "Drift, crosswind correction and lateral clearance from the leader",
+      "mif_row": null,
+      "source": "general:b,d",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to attention captured entirely by the leader's wing tip at the expense of the lateral drift picture, did not apply the correction required for the crosswind during the take off roll. The aircraft drifted toward the leader and the lateral spacing reduced to less than the briefed minimum while the closure continued unchecked. IP took control to arrest the drift and to restore lateral clearance from the leader.",
+        "1": "SP, due to a scan locked on a single point of the leader's airframe, did not correct the drift produced by the crosswind during the roll and the initial climb. Lateral spacing degraded to the minimum acceptable value and was restored only after direct verbal direction from the IP. The correction was applied late and the aircraft required a further input to stabilize the lateral reference.",
+        "2": "SP, due to the scan remaining on the leader's canopy for longer than required after lift off, did not correct the developing drift immediately. The lateral spacing reduced noticeably below the briefed reference before the trend was recognized. SP widened the scan, applied a coordinated correction into the wind and restored the briefed lateral spacing without prompting or intervention.",
+        "3": "SP applied the drift correction required by the crosswind from brake release onward and maintained the briefed lateral spacing from the leader throughout the take off and the initial climb. The scan covered the leader's reference, the runway environment and the aircraft path without fixation. Lateral clearance was never in question at any point.",
+        "4": "SP anticipated the crosswind effect and held the briefed lateral spacing from the leader with negligible variation through the roll, the lift off and the departure. The scan was distributed continuously across the leader's reference and the external picture, so no drift was allowed to develop. Lateral clearance remained constant and required no corrective action.",
+        "marginal": "SP corrected for the crosswind and maintained lateral spacing within standards, but the spacing repeatedly reduced toward the lower end of the briefed band before the correction was applied. The pattern shows a scan that dwells on the leader longer than necessary before returning to the drift cues. SP is expected to distribute the scan more evenly so that the lateral spacing is held steady rather than recovered."
+      }
+    }
+  ]
+}

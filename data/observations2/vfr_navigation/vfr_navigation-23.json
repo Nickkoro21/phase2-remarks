@@ -1,0 +1,117 @@
+{
+  "item_id": "vfr_navigation-23",
+  "item_name": "AIRMANSHIP",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [23],
+  "mif_rows": [
+    {"sn": 23, "row_name": "Airmanship"}
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-23-em01",
+      "label": "EMERGENCY AIRFIELD SELECTION AND HEADING/TIME/FUEL PLANNING FROM TURNING POINTS",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incomplete study of the route during mission planning, did not choose emergency airfields for the legs of the navigation and produced no heading, time or fuel figures from the turning points to the nearest suitable field. When asked in flight for the nearest emergency airfield and the fuel required to reach it, SP had no answer and no method to derive one. The IP had to supply the field, the heading and the fuel figure and to direct the aircraft, and the emergency airfield portion of the sortie was flown by the IP.",
+        "1": "SP, due to planning that covered only the departure and destination fields, carried emergency airfield data for part of the route only and the heading, time and fuel figures from the remaining turning points were missing. The gaps were filled in flight only after repeated verbal prompting by the IP and the figures were produced late, with errors at the limit of what remains acceptable. SP arrived at a usable answer for each turning point, but only under direct questioning rather than as part of the plan.",
+        "2": "SP, due to a hurried final check of the flight plan, initially quoted the heading and fuel to the emergency airfield from the wrong turning point. SP recognized the discrepancy from the elapsed time and the fuel remaining, reworked the figures without any prompting and passed the corrected heading, time and fuel for the correct field. The error stayed within minor limits and no IP input was required.",
+        "3": "SP chose appropriate emergency airfields for every leg of the route and planned correctly, with minor errors only, the heading, time and fuel from each turning point to the nearest emergency airfield. The figures were available immediately on request in flight and were consistent with the actual fuel state and winds. SP updated them as the sortie progressed.",
+        "4": "SP selected emergency airfields that matched the route, the weather and the aircraft performance, and had accurate heading, time and fuel from every turning point ready without reference to notes. The figures were revised in flight against actual groundspeed and fuel flow, so the divert picture stayed current at all times. Every answer given to the IP matched the aircraft state precisely.",
+        "marginal": "SP planned emergency airfields and had heading, time and fuel available for each turning point within the required standards, but the figures were static and were not revised as actual winds and fuel flow diverged from the plan. The trend was toward quoting planned numbers rather than current ones. SP is expected to keep the divert figures updated in flight so that they remain valid at the moment they are needed."
+      }
+    },
+    {
+      "id": "vfr_navigation-23-em02",
+      "label": "USE OF AIRCRAFT PERFORMANCE CHARTS FROM THE CHECK LIST",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient familiarity with the performance section of the Check List, was unable to extract the required performance data for the planned profile and used remembered figures instead of the charts. The fuel and range values applied to the route were not supported by any chart entry and did not match the aircraft configuration or the ambient conditions. The IP had to work the charts and provide the correct figures before the navigation could be flown as planned.",
+        "1": "SP, due to entering the performance charts with the wrong pressure altitude and temperature, derived fuel flow and range figures that did not match the actual conditions. The error was identified and reworked only after the IP pointed out the mismatch between the planned and the observed fuel consumption. The corrected figures were obtained at the limit of the time available and were accepted with errors at the edge of the acceptable standard.",
+        "2": "SP, due to reading the wrong column of the cruise performance chart, initially set a power setting that gave a fuel flow higher than planned. SP noticed the discrepancy at the first turning point fuel check, returned to the Check List, re-entered the chart correctly and reset the cruise parameters. The excursion in fuel used stayed short of the planned reserve margin and no IP input was needed.",
+        "3": "SP used the aircraft performance charts from the Check List correctly, entering them with the actual pressure altitude, temperature and weight, and applied the resulting cruise, range and fuel figures to the navigation. Chart extraction was quick and the values were consistent with the observed fuel flow in flight.",
+        "4": "SP moved through the Check List performance charts without hesitation, interpolated correctly between chart entries and produced cruise, range and endurance figures that matched the observed aircraft performance almost exactly. SP re-entered the charts when conditions changed and confirmed the fuel plan against them before each leg.",
+        "marginal": "SP extracted the correct figures from the Check List performance charts and stayed within the required standards, but chart entry was slow and required more than one attempt when interpolation was involved. The trend was toward the chart work absorbing capacity that the navigation task also demanded. SP is expected to practice chart extraction until the figures can be produced accurately at first attempt."
+      }
+    },
+    {
+      "id": "vfr_navigation-23-em03",
+      "label": "USE OF AERONAUTICAL CHARTS AND MAPS FOR ORIENTATION",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an inability to relate the aeronautical chart to the terrain, could not identify the planned checkpoints and could not fix the aircraft position on the map at any point of the leg. Chart handling in the cockpit was disorganized, with the wrong sheet and the wrong scale in use for the segment being flown. Orientation was lost, the aircraft tracked well outside the planned route, and the IP took control to re-establish position and recover the navigation.",
+        "1": "SP, due to reading the chart in isolation from the terrain features actually visible, misidentified a checkpoint and continued on a track that did not correspond to the planned leg. Position was re-established on the chart only after the IP directed attention to the correct feature, and the resulting track error reached the limit of the acceptable standard. SP was able to use the chart, but only with verbal guidance on what to look for.",
+        "2": "SP, due to folding the chart so that the next segment was not immediately visible, was slow to confirm the second checkpoint and allowed a small track offset to develop. SP refolded the chart, re-identified the feature against the terrain and corrected back to the planned track without any prompting. The offset remained well inside the standard and no IP input was required.",
+        "3": "SP used the aeronautical charts and maps correctly throughout, keeping the appropriate sheet and scale available for the segment in use and identifying every planned checkpoint against the terrain. Position was fixed on the chart continuously and the chart work did not interfere with aircraft control or lookout.",
+        "4": "SP handled the aeronautical charts with complete fluency, anticipating each checkpoint from the chart before it appeared and confirming it against the terrain as it did. Position on the chart was known at every moment of the route, including during turns and configuration changes, and chart management consumed no measurable capacity from flying the aircraft.",
+        "marginal": "SP used the aeronautical charts and identified all checkpoints within the required standards, but chart handling in the cockpit was cumbersome and each fix required a prolonged head-down period. The trend was toward the map work competing with the lookout and the instrument scan. SP is expected to organize the chart before flight so that each segment can be confirmed with a short, deliberate reference."
+      }
+    },
+    {
+      "id": "vfr_navigation-23-em04",
+      "label": "ANTICIPATION OF No1 INTENTIONS AS WINGMAN WITHOUT ASSUMING",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to an incomplete mental model of the navigation sequence that was not updated when No1 changed the plan, acted on an assumed intention instead of the briefed and transmitted one. SP initiated a turn and a descent that No1 had not called and that did not correspond to the route being flown, and did not query No1 at any point. Formation integrity and separation were compromised and the IP took control to reposition the aircraft and restore the correct sequence.",
+        "1": "SP, due to retaining the briefed mental model after No1 had amended the leg, anticipated the wrong action and was late in following the actual maneuver. The correct intention was established only after No1 and the IP prompted verbally, and the resulting position error reached the limit of the acceptable standard. SP followed No1 correctly thereafter, but only after being told what was intended rather than by confirming it.",
+        "2": "SP, due to a mental model that briefly lagged the change of turning point, began to anticipate the previously briefed heading. SP recognized the mismatch against the chart and the formation geometry, asked No1 to confirm the intention rather than assuming it, and repositioned in time. The deviation stayed short of the standard limit and required no IP input.",
+        "3": "SP anticipated No1's intentions correctly throughout the navigation, positioning early for turns, descents and configuration changes, and never acted on an assumption. Where the intention was not clear, SP asked and confirmed before acting, and the formation sequence was maintained without prompting.",
+        "4": "SP read No1's intentions accurately in advance at every stage of the route, so each turn, speed change and descent was anticipated and matched without delay. SP verified rather than assumed on every occasion of ambiguity, using short and precise cross-talk, and the formation flowed through the navigation without a single corrective call from No1 or the IP.",
+        "marginal": "SP anticipated No1's intentions and stayed within the required standards, but anticipation was based more on the expected pattern than on the calls actually made and was not confirmed when the sequence changed. The trend was toward assuming rather than verifying. SP is expected to keep the mental model aligned with No1 by confirming the intention whenever the plan departs from the brief."
+      }
+    },
+    {
+      "id": "vfr_navigation-23-em05",
+      "label": "ORIENTATION AND CONTROL/PERFORMANCE CROSS-CHECK DURING THE ROUTE",
+      "mif_row": null,
+      "source": "general:reference(contact-38 a.3,a.5)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to a breakdown of the cross-check between the control and performance instruments and the outside references, stopped correlating the aircraft position with the planned route and lost orientation on the leg. Heading, altitude and timing were left unmonitored for an extended period and no correction was attempted. The aircraft tracked outside the planned corridor and below the briefed minimum altitude, and the IP took control to re-establish the route.",
+        "1": "SP, due to an interrupted instrument cross-check while attention stayed on the map, failed to detect a developing heading and altitude trend on the leg. Orientation with respect to the planned track was restored only after repeated verbal prompting by the IP, and the resulting track and altitude excursion reached the limit of the acceptable standard. The correction, once applied, was in the right sense but late.",
+        "2": "SP, due to a scan that narrowed onto the outside references while identifying a checkpoint, delayed detection of a developing heading and altitude trend. SP recognized the deviation without prompting, restored the full cross-check and corrected back onto the planned track and altitude. The excursion stayed between the acceptable and the limiting values and required no IP input.",
+        "3": "SP maintained a continuous cross-check of the control and performance instruments against the outside references and kept accurate orientation with respect to the planned route throughout. Deviations in heading, altitude and timing were identified as trends and corrected promptly, with tasks prioritized correctly during map work and radio calls.",
+        "4": "SP kept an uninterrupted scan across the control instruments, the performance instruments and the terrain, and correlated aircraft position with the planned route continuously. Trends were recognized before they became deviations, so corrections were small and the aircraft stayed on the planned track, altitude and timing for the whole route.",
+        "marginal": "SP kept orientation and held the route parameters within the required standards, but the cross-check narrowed noticeably each time map work or a radio call was added. The trend was toward detecting deviations only after they were established rather than as trends. SP is expected to keep the scan open under load and to act on the trend rather than on the resulting error."
+      }
+    },
+    {
+      "id": "vfr_navigation-23-em06",
+      "label": "TASK PRIORITIZATION AND SATURATION IN THE NAVIGATION COCKPIT",
+      "mif_row": null,
+      "source": "general:reference(contact-38 c.1,c.2,c.3,e)",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to task sequencing that concentrated map reading, log keeping, radio work and the fuel check inside the same turning point, saturated and stopped flying the aircraft as the first priority. Tasks were dropped rather than shed in a deliberate order, the turn was flown without reference to heading and the required calls were missed. The aircraft state deteriorated beyond the acceptable limits and the IP took control to unload the cockpit and restore the profile.",
+        "1": "SP, due to attempting the fuel check, the log entry and the position report simultaneously at the turning point, allowed attention to channelize on the log and left the aircraft state unmonitored. The task order was restored only after the IP intervened verbally and directed which task to complete first, and the resulting deviations reached the limit of the acceptable standard. SP completed all tasks, but the sequence had to be imposed from outside.",
+        "2": "SP, due to starting the log entry before the turn was established, briefly allowed the workload at the turning point to compress. SP recognized the saturation, deferred the log entry, flew the turn accurately and then completed the remaining tasks in order without prompting. All required actions were completed and the aircraft state stayed inside the acceptable limits.",
+        "3": "SP put the cockpit tasks in order without missing anything significant, sequencing the turn, the fuel check, the log entry and the radio calls so that flying the aircraft was never displaced. Multiple tasks were handled in sequence rather than in parallel, and no channelized attention developed at any point of the route.",
+        "4": "SP managed the navigation workload so that each turning point was flown with the tasks already sequenced and spread before it arrived, leaving spare capacity at every stage. Additional demands from the IP and from ATC were absorbed without any degradation of aircraft control, and SP never approached the limit of available capacity.",
+        "marginal": "SP completed all required tasks within the standards, but the workload was consistently allowed to accumulate at the turning points instead of being spread before them. The trend was toward working at the edge of available capacity whenever an unplanned demand appeared. SP is expected to sequence and advance cockpit tasks so that spare capacity remains available at the busiest points of the route."
+      }
+    },
+    {
+      "id": "vfr_navigation-23-em07",
+      "label": "FUEL, TIME AND RTB/DIVERT DECISION MAKING",
+      "mif_row": null,
+      "source": "general:reference(contact-38 a.4,a.6,b.1,b.5)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to failing to monitor fuel and elapsed time against the flight plan, arrived at the last turning point without any assessment of whether the route could be completed. No contingency or alternative was identified, no divert decision was stated and the aircraft continued toward the destination with the reserve already committed. The IP had to make and execute the recovery decision and to direct the return to base.",
+        "1": "SP, due to fuel and time checks made only at the destination leg rather than at each turning point, recognized the shortfall against the plan late. The decision to shorten the route and return to base was taken only after the IP prompted and stated the fuel position, and the aircraft landed with the reserve at the limit of the acceptable standard. The decision itself was correct once made, but it was neither timely nor self-initiated.",
+        "2": "SP, due to an initially optimistic estimate of the groundspeed on the first leg, planned to complete the full route with less margin than the conditions supported. SP identified the discrepancy at the fuel check on the second turning point, stated the revised assessment, shortened the last leg and returned to base with the planned reserve intact. The decision was made in time and required no IP input.",
+        "3": "SP monitored fuel and elapsed time against the plan at every turning point, identified contingencies and alternatives correctly and adjusted the execution of the navigation to make the best use of the remaining fuel and flight time. The decision to continue, shorten or divert was stated clearly with the rationale, and the aircraft returned to base with the planned reserve.",
+        "4": "SP kept a running comparison of fuel and time against the plan and revised the recovery picture continuously as actual winds and groundspeed became known. Alternatives and decision points were identified and stated before they were needed, the profile was adjusted to extract maximum training value from the available fuel and time, and the aircraft recovered with the reserve exactly as planned.",
+        "marginal": "SP monitored fuel and time and made a correct recovery decision within the required standards, but the assessment was made only when the figures were requested rather than as a continuous part of the navigation. The trend was toward reacting to the fuel state instead of anticipating it. SP is expected to state the recovery and divert picture at each turning point, before the situation forces the decision."
+      }
+    }
+  ]
+}

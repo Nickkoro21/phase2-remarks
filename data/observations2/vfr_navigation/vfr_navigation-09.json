@@ -1,0 +1,162 @@
+{
+  "item_id": "vfr_navigation-09",
+  "item_name": "TACTICAL TURNS",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [9],
+  "mif_rows": [
+    { "sn": 9, "row_name": "Tactical Turns" }
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-09-em01",
+      "label": "Altitude control through the tactical turn",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an uncompensated pitch input while the lead was tracked visually across the canopy, did not hold the briefed tactical altitude through the turn. Altitude diverged to about 1300 feet high on the reversal and about 700 feet low on the rollout, outside the +1000 / -500 feet limit. The IP took control to re-establish the assigned altitude before the next turn.",
+        "1": "SP, due to a late pitch correction while attention stayed on the lateral geometry, allowed altitude to reach the +1000 / -500 feet limit during the turn. The deviation persisted through most of the turn and was recovered only after the IP prompted verbally. No further excursion developed after the prompt.",
+        "2": "SP, due to an under-anticipated nose drop as bank was increased, drifted to about 800 feet above the briefed tactical altitude before checking the trend. The excursion stayed between the +500 / -300 and +1000 / -500 feet bands and was corrected in time without any input from the IP. Rollout was completed back on the assigned altitude.",
+        "3": "SP held the briefed tactical altitude within +500 / -300 feet through entry, turn and rollout. Pitch was compensated as bank was applied, so no altitude trend developed across successive turns. Energy was managed without trading altitude for position.",
+        "4": "SP flew the full sequence of tactical turns with altitude excursions of about 100 feet. Pitch compensation was applied with the bank input rather than after it, and every rollout arrived on the briefed altitude with no correction required.",
+        "marginal": "SP remained inside the +500 / -300 feet band, but finished each turn about 400 to 450 feet high, with the trend growing over successive turns. Corrections were reactive instead of being anticipated as bank increased. Improvement is expected toward a stable altitude that does not depend on late recovery."
+      }
+    },
+    {
+      "id": "vfr_navigation-09-em02",
+      "label": "Entry and exit airspeed control",
+      "mif_row": null,
+      "source": "specific:SPEED ENTRY/EXIT (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power being left at the cruise setting while G was applied in the turn, did not maintain the briefed entry and exit airspeed. Speed decayed about 45 knots below the briefed value at the reversal and overshot about 40 knots on the rollout, outside the +/-30 knots limit. The IP took control of the throttle to restore the formation speed.",
+        "1": "SP, due to a delayed power addition as bank was increased, let the entry and exit airspeed reach the +/-30 knots limit. The speed was returned toward the briefed value only after repeated verbal prompting from the IP, and the recovery was slow enough that the next turn was entered off speed. No excursion beyond the limit occurred.",
+        "2": "SP, due to a power setting selected slightly late for the applied G, allowed entry speed to fall about 22 knots below the briefed value. The deviation stayed between the +/-15 and +/-30 knots bands and was recognized and corrected before the rollout without IP input. Exit speed was re-established for the following turn.",
+        "3": "SP maintained entry and exit airspeed within +/-15 knots of the briefed value throughout the tactical turns. Power was led against the G application so that speed was stable at each rollout. Corrections were small and applied without overshoot.",
+        "4": "SP held entry and exit airspeed within about 5 knots of the briefed value for every turn. Throttle was moved in anticipation of the G loading rather than in response to a speed trend, so no speed correction was needed after rollout.",
+        "marginal": "SP stayed within the +/-15 knots band, but was consistently 12 to 14 knots slow at the exit of each turn, and the shortfall increased through the sequence. Power was added after the speed trend appeared rather than with the bank input. Improvement is expected toward speed control that does not require catching up on the following leg."
+      }
+    },
+    {
+      "id": "vfr_navigation-09-em03",
+      "label": "Rollout on the recovery heading",
+      "mif_row": null,
+      "source": "specific:RECOVERY HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to rate of turn not being assessed against the required heading change, did not roll out on the briefed recovery heading. The rollout was about 45 degrees past the required heading on the delay turn and required a reversal to regain the formation axis, outside the +/-30 degrees limit. The IP took control to recover the briefed course.",
+        "1": "SP, due to a late start of the rollout on the tactical turn, arrived on a recovery heading at the +/-30 degrees limit. The heading was corrected only after the IP called the error, and the correction took the whole following leg. No further overshoot occurred after the call.",
+        "2": "SP, due to a rollout rate that did not match the applied bank, passed the briefed recovery heading by about 20 degrees. The error stayed between the +/-10 and +/-30 degrees bands and was recognized and corrected promptly without IP input. The formation axis was re-established before the next turn was called.",
+        "3": "SP rolled out within +/-10 degrees of the briefed recovery heading on each tactical turn. The rollout was started at a point consistent with the turn rate, so no reversal was needed afterwards. Heading was then held steady through the following leg.",
+        "4": "SP arrived on the briefed recovery heading within about 3 degrees on every turn of the sequence. The rollout point was anticipated from the turn rate, and no heading correction was required after wings level.",
+        "marginal": "SP stayed within the +/-10 degrees band, but rolled out 8 to 9 degrees past the briefed heading on each turn, always in the same direction. The rollout was started slightly late and the error was absorbed on the following leg. Improvement is expected toward a rollout point that removes the repeated overshoot."
+      }
+    },
+    {
+      "id": "vfr_navigation-09-em04",
+      "label": "Continuous G control during the turn",
+      "mif_row": null,
+      "source": "specific:Gs (continous)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to stick inputs made in steps while the lead was reacquired visually, did not sustain the briefed continuous G through the turn. Loading varied by about 1.5 G either side of the briefed value, outside the +/-1,0 G limit, and the resulting geometry could not be flown back to position. The IP took control to stabilize the turn.",
+        "1": "SP, due to G being relaxed each time the lead moved in the canopy, allowed the loading to reach the +/-1,0 G limit during the turn. The briefed G was re-established only after the IP prompted verbally, and the variation continued through the first part of the turn. No excursion beyond the limit occurred.",
+        "2": "SP, due to an uneven pull as bank was set, varied the continuous G by about 0,8 G from the briefed value. The variation stayed between the +/-0,5 and +/-1,0 G bands and was smoothed out during the same turn without IP input. The turn was completed with the briefed loading.",
+        "3": "SP sustained the briefed continuous G within +/-0,5 G through each tactical turn. Stick inputs were smooth and the loading was set with the bank rather than adjusted after it. Energy was converted as briefed without unloading in the middle of the turn.",
+        "4": "SP flew the tactical turns with continuous G held within about 0,2 G of the briefed value. Loading was applied smoothly at entry and released only at the rollout, so the turn geometry stayed exactly as planned.",
+        "marginal": "SP kept the loading inside the +/-0,5 G band, but the G trace varied by 0,4 G within each turn, with a relaxation every time attention moved to the lead. The turn was completed as briefed, but the geometry had to be corrected on the following leg. Improvement is expected toward a steady pull that does not vary with visual acquisition of the lead."
+      }
+    },
+    {
+      "id": "vfr_navigation-09-em05",
+      "label": "Line abreast position after the turn",
+      "mif_row": null,
+      "source": "specific:LINE ABREAST DEVIATION (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the turn being started without assessing the lead's relative position, did not roll out in the tactical formation position. The aircraft settled about 45 degrees aft of the line abreast reference, outside the +/-30 degrees limit, and the position could not be regained with the available energy. The IP took control and repositioned the aircraft.",
+        "1": "SP, due to a turn started late relative to the lead, rolled out at the +/-30 degrees limit from the line abreast reference. The position was closed up only after the IP prompted verbally, and the correction was still running when the next turn was called. No deviation beyond the limit developed.",
+        "2": "SP, due to a rate of turn that did not match the lead's, rolled out about 20 degrees aft of the line abreast reference. The deviation stayed between the +/-10 and +/-30 degrees bands and was corrected with a timely energy adjustment without IP input. The line abreast position was regained before the next turn.",
+        "3": "SP rolled out within +/-10 degrees of the line abreast reference on each tactical turn. The turn was started at the correct point relative to the lead and the aircraft energy was converted to hold the position. No repositioning was needed on the following leg.",
+        "4": "SP maintained the line abreast position within about 5 degrees on every turn of the sequence. The correction technique was applied continuously through the turn, so the formation position never had to be regained after rollout.",
+        "marginal": "SP stayed within the +/-10 degrees band, but rolled out 8 to 9 degrees aft of the line abreast reference on each turn and closed the gap on the following leg. The correction was applied after the rollout rather than inside the turn. Improvement is expected toward holding the position through the turn instead of regaining it afterwards."
+      }
+    },
+    {
+      "id": "vfr_navigation-09-em06",
+      "label": "Lateral separation from the lead",
+      "mif_row": null,
+      "source": "specific:LATERAL SEPARATION (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the briefed spread not being re-established after the reversal, did not maintain the required lateral separation. The distance opened to about 2500 feet more than briefed on one turn and closed inside the safe spread on the next, outside the +/- 1000 feet limit. The IP took control to restore separation.",
+        "1": "SP, due to a delayed adjustment of the turn geometry, allowed lateral separation to reach the +/- 1000 feet limit after the rollout. The spread was corrected only after the IP prompted verbally, and the aircraft flew the following leg while still closing. No excursion beyond the limit occurred.",
+        "2": "SP, due to a rollout heading slightly divergent from the lead's, allowed lateral separation to open by about 750 feet from the briefed spread. The deviation stayed between the +/- 500 and +/- 1000 feet bands and was recognized and corrected without IP input. Separation was back inside the briefed spread before the next turn.",
+        "3": "SP maintained lateral separation within +/- 500 feet of the briefed spread through the tactical turns. The turn geometry was flown so that the spread was preserved at rollout rather than rebuilt afterwards. Separation stayed safe and workable for the next turn at all times.",
+        "4": "SP held lateral separation within about 150 feet of the briefed spread throughout the sequence. Each rollout placed the aircraft at the planned distance from the lead, with no closing or opening trend on any leg.",
+        "marginal": "SP remained inside the +/- 500 feet band, but the spread opened by 400 to 450 feet after every turn and had to be closed on the following leg. The correction was applied after separation had already grown rather than during the turn. Improvement is expected toward a turn geometry that preserves the briefed spread at rollout."
+      }
+    },
+    {
+      "id": "vfr_navigation-09-em07",
+      "label": "Clearing of the responsibility airspace and terrain awareness",
+      "mif_row": null,
+      "source": "general:a,g",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to loss of situational awareness of the aircraft's position relative to the terrain and the flight, did not check the corresponding responsibility airspace during the turn and did not ensure safe altitude for maneuvering over mountains. The turn was flown with the scan fixed on the lead and with the ridge line inside the turn radius, and the flight path went below the briefed terrain clearance. The IP took control and repositioned the aircraft away from the high ground.",
+        "1": "SP, due to degraded situational awareness after the direction of turn was changed, cleared only the sector the lead occupied and left the assigned responsibility airspace unchecked. Clearing and terrain assessment were carried out only after repeated verbal direction from the IP, and the delay left the turn established before the sector was cleared. Safe altitude over the terrain was never actually lost.",
+        "2": "SP, due to situational awareness limited to the lead's position at the start of the turn, began the reversal before completing the clearing of the responsibility airspace. The omission was recognized within the first part of the turn and the sector and terrain clearance were checked in time without IP input. The remaining turns were entered with the airspace cleared.",
+        "3": "SP checked the corresponding responsibility airspace before and during each turn and confirmed safe altitude for maneuvering over the terrain. Clearing was carried out without losing the lead's position, and the assessment covered the sector into which the flight was turning. No prompting was required at any point.",
+        "4": "SP cleared the assigned responsibility airspace continuously through the sequence and kept terrain clearance assessed ahead of each turn. Traffic and high ground in the turn sector were identified and called before the turn was initiated, with the lead kept in sight throughout.",
+        "marginal": "SP cleared the responsibility airspace and maintained safe terrain clearance, but the sweep of the sector was brief and was completed just as the turn was being initiated. Terrain was assessed once at the start rather than reassessed as the flight moved over the ridge. Improvement is expected toward clearing that is completed before turn entry and updated during the turn."
+      }
+    },
+    {
+      "id": "vfr_navigation-09-em08",
+      "label": "Energy exploitation and correction technique to regain tactical position",
+      "mif_row": null,
+      "source": "general:b,c,f",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to bank and power being used without any plan for the aircraft energy, did not exploit and convert the energy in order to maintain the tactical position. Airspeed was allowed to bleed in the turn and then recovered with full power on the leg, so the correction technique for returning to tactical formation position was never established and fuel was consumed well beyond the briefed reserve planning. The IP took control to restore the formation geometry.",
+        "1": "SP, due to a correction attempted only with power instead of turn geometry, did not convert the aircraft energy to hold the tactical position. The technique was applied correctly only after the IP described it verbally, and the position was regained late enough that the following turn was entered out of position. Fuel state remained inside the briefed reserve.",
+        "2": "SP, due to an early power reduction that removed the energy needed for the correction, drifted out of the tactical position after the rollout. The correction technique was then applied in time, converting turn geometry rather than power alone, and the position was regained without IP input. Engine handling stayed consistent with the briefed fuel reserve.",
+        "3": "SP exploited and converted the aircraft energy to hold the tactical formation position through the turns. The correction technique was applied with turn geometry first and power as a supplement, so the position was maintained rather than rebuilt. Engine handling remained consistent with the briefed fuel reserve.",
+        "4": "SP managed the aircraft energy so that the tactical position was preserved through every turn without any large correction being needed. Power changes were small and anticipatory, the correction technique was applied continuously, and fuel consumption stayed well within the planned reserve.",
+        "marginal": "SP maintained the tactical position and stayed inside the briefed fuel reserve, but the corrections relied mainly on power, with several excursions to a high power setting on each leg. Turn geometry was used only after the power correction proved insufficient. Improvement is expected toward energy conversion as the primary correction technique."
+      }
+    },
+    {
+      "id": "vfr_navigation-09-em09",
+      "label": "Comm-out visual signals and turn communication",
+      "mif_row": null,
+      "source": "general:e,h",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, due to failure to pass the required call at the briefed point, did not execute the visual signals for the comm-out turn as described in the Techniques and Procedures Manual. The signal was neither given as leader nor acknowledged as wingman, the turn was started with the flight unsynchronized, and the two aircraft turned in opposite directions. The IP took control and re-established the flight integrity.",
+        "1": "SP, due to an indirect indication instead of the briefed visual signal, left the intention of the turn ambiguous to the other aircraft. The correct signal was given only after the IP directed it verbally, and the turn was delayed until the flight was synchronized. The turn was then executed as described in the manual.",
+        "2": "SP, due to a visual signal given late and with limited amplitude for the range, was not immediately understood by the other aircraft. The signal was recognized as inadequate and repeated correctly before the turn was initiated, without IP input. The remaining comm-out turns were signalled and acknowledged at the correct points.",
+        "3": "SP knew and executed the visual signals for the comm-out turns and acknowledged the signals received as briefed. Each turn was initiated only after the flight was synchronized, and the maneuver was flown as described in the Techniques and Procedures Manual. No verbal backup was required.",
+        "4": "SP gave and acknowledged every comm-out visual signal clearly and at the correct point in the sequence. The signals were sized for the actual range, each turn was initiated with the flight fully synchronized, and the execution matched the Techniques and Procedures Manual throughout.",
+        "marginal": "SP executed the comm-out visual signals correctly, but they were given close to the turn point, leaving the other aircraft little time to acknowledge before the turn started. Acknowledgements were confirmed only once, without a check that the signal had been read. Improvement is expected toward signals given early enough to confirm synchronization before the turn."
+      }
+    },
+    {
+      "id": "vfr_navigation-09-em10",
+      "label": "Initiative for safe separation during the turns",
+      "mif_row": null,
+      "source": "general:d,h",
+      "hf_concept": "hf-lack-of-assertiveness",
+      "texts": {
+        "0": "SP, due to lack of assertiveness in voicing a recognized unsafe condition, did not take the initiative for safe separation during the tactical turns. The closure with the other aircraft was seen and not called, the turn was continued as briefed, and the flight paths converged inside the briefed spread. The IP took control and called a knock-it-off to separate the aircraft.",
+        "1": "SP, due to hesitation to state that the geometry was no longer workable, delayed taking the initiative for safe separation after the reversal. The corrective turn and the call were made only after the IP directed them, and the separation had already reduced to the minimum briefed value. Separation was then re-established without further closure.",
+        "2": "SP, due to an initial reluctance to break the briefed sequence, was slow to react to the converging geometry after the turn. The condition was then called and the turn adjusted in time, restoring safe separation without IP input. The remaining turns were flown with separation assessed before each entry.",
+        "3": "SP took the initiative for safe separation during the tactical turns and adjusted the geometry whenever the closure rate required it. The condition was stated clearly to the other aircraft, and each turn was executed as described in the Techniques and Procedures Manual with the rollout in tactical formation position. No IP direction was needed.",
+        "4": "SP anticipated the closure geometry ahead of each turn and acted for safe separation before the situation developed. The intentions were stated clearly and early, the adjustments were small, and every turn was completed as described in the Techniques and Procedures Manual with the rollout in tactical formation position.",
+        "marginal": "SP maintained safe separation throughout, but the initiative was taken only once the closure had become obvious, and the calls were made with a questioning rather than a directive tone. The turns were still completed as briefed and separation was never at risk. Improvement is expected toward earlier recognition and a clear statement of the required action."
+      }
+    }
+  ]
+}

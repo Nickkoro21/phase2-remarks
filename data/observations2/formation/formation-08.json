@@ -1,0 +1,132 @@
+{
+ "item_id": "formation-08",
+ "item_name": "INTERVAL TAKE OFF",
+ "category": "formation",
+ "schema": "v2-trunk",
+ "mif_numbers": [8],
+ "mif_rows": [
+  {"sn": 8, "row_name": "Interval T/O"}
+ ],
+ "error_modes": [
+  {
+   "id": "formation-08-em01",
+   "label": "Takeoff airspeed on the interval takeoff",
+   "mif_row": null,
+   "source": "specific:Take off Airspeed (knots)",
+   "hf_concept": null,
+   "texts": {
+    "0": "SP, due to a rotation input made off the runway picture while attention stayed on the departing lead, did not execute the takeoff with the standard airspeed. The aircraft was rotated below the computed rotation speed, where the criterion allows no tolerance at all on the low side, and the airspeed then overshot the standard by more than 10 knots as the aircraft accelerated in the climb. IP intervened on the controls to set the takeoff attitude and to bring the airspeed back to the standard value.",
+    "1": "SP, due to a scan that remained outside on lead instead of alternating to the airspeed indication during the ground roll, did not execute the takeoff with the standard airspeed. The airspeed stabilized about 10 knots above standard, at the outer limit of the one-sided tolerance, and SP reduced the excess only after two verbal prompts from IP. The fast condition was carried unchanged into the initial climb behind lead.",
+    "2": "SP, due to power and pitch handling aimed at closing the interval rather than at the published takeoff speed, allowed the takeoff airspeed to build past the standard. The excess reached roughly 7 knots, between the code 3 and code 1 limits, and SP identified it on the indicator and reset the takeoff attitude without prompting. No IP control input was required at any point of the takeoff.",
+    "3": "SP executed the interval takeoff with the standard airspeed, rotating at the computed speed with no deviation on the low side and holding the excess inside 5 knots. The scan alternated between the runway, lead and the airspeed indication, and pitch corrections were small and applied immediately.",
+    "4": "SP rotated exactly at the computed takeoff speed and held the standard airspeed through lift-off and the initial climb, with deviations that were negligible against the published tolerance. The presence of lead ahead produced no distortion of the speed schedule, and the airspeed never trended toward the low side where no tolerance exists.",
+    "marginal": "SP kept the takeoff airspeed inside standards but consistently on the fast side, with the excess sitting in the upper part of the acceptable band on each interval takeoff of the sortie. The trend came from accelerating early to reduce the spacing on lead rather than from control technique, and it repeated without further degradation. SP is expected to fly the published takeoff speed first and to manage the interval after the aircraft is clean and climbing."
+   }
+  },
+  {
+   "id": "formation-08-em02",
+   "label": "Runway centerline tracking during the interval takeoff roll",
+   "mif_row": null,
+   "source": "specific:Maintain in the center line of RWY (ft)",
+   "hf_concept": null,
+   "texts": {
+    "0": "SP, due to rudder input insufficient for the yaw produced at power application and for the reported crosswind, did not maintain the A/C at the centerline during the takeoff roll. Lateral displacement passed 10 feet and continued to diverge toward the runway edge as the aircraft accelerated behind lead. IP took the controls to re-establish the takeoff track before rotation.",
+    "1": "SP, due to directional corrections applied in discrete steps while attention was divided between the runway and lead ahead, did not maintain the A/C at the centerline during the takeoff roll. Displacement reached about 10 feet, at the limit of the allowed deviation, and SP re-centered the aircraft only after IP called for rudder. The aircraft lifted off with the track still offset from the assigned side of the runway.",
+    "2": "SP, due to a slow initial response to the swing at power application, drifted off the runway centerline by roughly 8 feet during the interval takeoff. The deviation stayed between the code 3 and code 1 limits and SP corrected it with coordinated rudder well before rotation, with no prompting and no IP action. The takeoff track was then held for the rest of the ground roll.",
+    "3": "SP maintained the A/C at the centerline during the interval takeoff with lateral deviation held inside 5 feet. Rudder inputs were continuous and matched to the yaw from power application and to the crosswind, and the same track was carried through rotation and lift-off.",
+    "4": "SP held the aircraft on the runway centerline with deviations barely perceptible against the runway markings, from brake release to lift-off. Directional inputs anticipated the yaw rather than reacting to it, and the takeoff track was preserved unchanged into the initial climb behind lead.",
+    "marginal": "SP kept the aircraft inside the centerline tolerance but with a persistent offset toward lead that was held rather than removed for most of the ground roll. The offset stayed within standards and did not grow, but it reduced the lateral margin available if lead had aborted. SP is expected to re-center the aircraft as soon as the offset is detected instead of tracking parallel to the centerline."
+   }
+  },
+  {
+   "id": "formation-08-em03",
+   "label": "Brake release timing and takeoff interval behind lead",
+   "mif_row": null,
+   "source": "general:execution-sequence",
+   "hf_concept": null,
+   "texts": {
+    "0": "SP, due to brake release made on the sight of lead moving rather than on the briefed timing reference, did not establish the briefed takeoff interval. The spacing at lift-off was less than half the briefed interval and the aircraft was closing on lead inside the wake region while still accelerating. IP intervened with power and lateral displacement to open the spacing to a safe value.",
+    "1": "SP, due to a start of the timing count taken at the wrong point of lead's roll, did not establish the briefed takeoff interval. The spacing at brake release was short of the briefed value by a margin that placed the aircraft at the limit of the acceptable band, and SP opened it only after IP directed a power reduction. The correction was made late, with the aircraft already airborne.",
+    "2": "SP, due to a hesitation in advancing the power after the timing count was complete, released brakes later than the briefed interval required. The spacing opened beyond the briefed value but stayed inside the band that still allows a normal rejoin, and SP recognized the excess and closed it with a controlled power setting on his own initiative. No prompting and no IP input were needed.",
+    "3": "SP released brakes at the briefed interval behind lead, timed from the correct reference point of lead's takeoff roll. The spacing at lift-off matched the briefed value and required no power change beyond the normal takeoff setting to maintain it.",
+    "4": "SP established the briefed takeoff interval exactly, with brake release timed to the second and power applied in one continuous movement. The spacing was held constant through lift-off and gear retraction, so that the rejoin geometry was set up without any corrective action.",
+    "marginal": "SP established the briefed takeoff interval within acceptable limits, but consistently at the short end of the band on every interval takeoff of the sortie. The spacing remained legal and no closure problem developed, yet it left little margin for a slow acceleration by lead. SP is expected to time brake release so that the interval is centered on the briefed value rather than set at its minimum."
+   }
+  },
+  {
+   "id": "formation-08-em04",
+   "label": "Line up position and Line Up checks as wingman",
+   "mif_row": null,
+   "source": "general:a",
+   "hf_concept": null,
+   "texts": {
+    "0": "SP, due to a line up flown to the runway centerline instead of to the briefed wingman position, did not take the assigned line up position and did not complete the Line Up checks without omissions. The aircraft was placed on the wrong side of lead and items bearing on the takeoff configuration were left unverified when the takeoff clearance was received. IP directed the repositioning of the aircraft and confirmed the configuration before brake release.",
+    "1": "SP, due to workload accumulated during the formation line up, did not execute the Line Up checks without omissions. One configuration item was left unchecked and was picked up only after IP prompted for it, while the aircraft sat displaced from the briefed wingman position by an amount that had to be corrected before power application. The omissions were recovered only through IP prompting.",
+    "2": "SP, due to a line up flow started later than the taxi sequence allowed, initially skipped one item of the Line Up checks and stopped short of the briefed wingman position. SP detected both on his own back-check, completed the item and adjusted the position before brake release, with no prompting and no IP input. The takeoff was then begun from the correct geometry.",
+    "3": "SP took the briefed wingman line up position relative to lead and executed the Line Up checks without omissions. Each item was verified against the actual switch position or indication, and the aircraft was ready for brake release when lead began the takeoff roll.",
+    "4": "SP established the wingman line up position precisely as briefed and completed the Line Up checks with a settled flow that left capacity for the takeoff clearance and the traffic picture. Everything was set and confirmed before lead started the roll, so the interval could be timed without any residual cockpit task.",
+    "marginal": "SP took the correct line up position and completed the Line Up checks without omissions, but the checks were run so close to lead's brake release that any interruption would have displaced an item. The standard was met on every interval takeoff of the sortie, with no item missed. SP is expected to complete the checks earlier in the line up flow so that the sequence retains margin for an interruption."
+   }
+  },
+  {
+   "id": "formation-08-em05",
+   "label": "Takeoff attitude, configuration cleanup and climb profile matched to lead",
+   "mif_row": null,
+   "source": "general:d,f,g,h",
+   "hf_concept": null,
+   "texts": {
+    "0": "SP, due to a rotation made at a rate the pitch reference could not be tracked at while lead was kept in sight, did not bring and maintain the A/C to the proper takeoff attitude. The pitch then oscillated through the transition, the gear and flaps were retracted outside the sequence used by lead, and the airspeed deviation exceeded 10 knots against a standard that allows no low-side tolerance. IP intervened on the controls to set the attitude and to restore the climb profile.",
+    "1": "SP, due to pitch corrections made against the outside picture alone without reference to the attitude indication, did not maintain the proper takeoff and climbing attitude. The airspeed deviation reached the limit of the allowed tolerance and the configuration was cleaned late relative to lead, corrected only after repeated verbal direction from IP. The climb was established out of step with the leader's profile.",
+    "2": "SP, due to a stick input released before the takeoff attitude was fully set, allowed the pitch to settle below the proper attitude and the cleanup to begin later than planned. The resulting airspeed deviation stayed between the code 3 and code 1 limits, and SP reset the attitude, cleaned the aircraft and stabilized the climb without prompting or IP control input.",
+    "3": "SP brought the A/C to the proper takeoff attitude with a smooth rotation, cleaned the configuration without violating the speed limit and established the climbing attitude promptly. The climb airspeed was held inside 5 knots of standard, keeping the profile aligned with the leader's.",
+    "4": "SP set the takeoff attitude in one continuous input, held it with no perceptible excursion through lift-off, and retracted gear and flaps at the correct points of the profile. The climb airspeed was maintained with negligible deviation, so the geometry on lead developed exactly as briefed.",
+    "marginal": "SP established the takeoff and climbing attitudes and cleaned the configuration within standards, but each attitude was reached through a small overshoot followed by a correction rather than being captured directly. The airspeed excursions stayed inside tolerance and did not repeat in the same direction. SP is expected to capture the attitude on the first input, so that attention can move to lead rather than to a pitch correction."
+   }
+  },
+  {
+   "id": "formation-08-em06",
+   "label": "Visual contact with lead and avoidance of wake and jet wash",
+   "mif_row": null,
+   "source": "general:formation-safety",
+   "hf_concept": "hf-situational-awareness",
+   "texts": {
+    "0": "SP, due to situational awareness limited to the cockpit instruments during the acceleration, lost visual contact with lead and did not stay clear of the wake behind him. The aircraft was flown into the disturbed air on lead's extended track and was displaced in roll while still low and accelerating, with no lateral offset established. IP took the controls to move the aircraft out of the wake and to re-establish visual contact with lead.",
+    "1": "SP, due to degraded situational awareness of lead's position after lift-off, did not establish the briefed lateral offset from lead's track. The aircraft remained on the leader's extended centerline at spacing near the minimum of the acceptable band, and SP displaced only after IP called the wake hazard. Visual contact was regained late and through IP direction rather than by SP's own lookout.",
+    "2": "SP, due to attention held on the airspeed indication during the initial climb, allowed the aircraft to drift back toward lead's track after lift-off. The offset reduced but stayed inside the acceptable band, and SP recognized the geometry, re-established the briefed displacement and kept lead in sight throughout, without prompting or IP input.",
+    "3": "SP maintained visual contact with lead from brake release through the departure and held the briefed lateral offset from the leader's track. The aircraft stayed clear of the wake at all times, with the offset set early rather than corrected later.",
+    "4": "SP kept lead in sight continuously and established the lateral offset as the aircraft became airborne, with the wake region avoided by a comfortable margin throughout the climb. The lookout was maintained without any loss of accuracy on the takeoff parameters.",
+    "marginal": "SP kept lead in sight and remained clear of the wake, but the lateral offset was set at the minimum acceptable value and only after the gear was up. The standard was met and no wake encounter occurred on any takeoff of the sortie. SP is expected to establish the offset as the aircraft lifts off, so that the clearance from the wake does not depend on lead's exact track."
+   }
+  },
+  {
+   "id": "formation-08-em07",
+   "label": "Closure control and power management during the post-takeoff rejoin",
+   "mif_row": null,
+   "source": "general:formation-technique",
+   "hf_concept": "hf-acts-errors",
+   "texts": {
+    "0": "SP, due to a perceptual error in judging closure and lateral separation on lead, did not control the overtake during the post-takeoff rejoin. The aircraft closed with excess airspeed well above the briefed rejoin differential and arrived inside the briefed minimum separation with the geometry still developing. IP took the controls to reduce power and to stop the overtake before the aircraft passed the leader's line.",
+    "1": "SP, due to a perceptual error in judging closure rate against lead, did not reduce power at the point the rejoin required. The overtake persisted with the airspeed differential at the limit of the acceptable band, and SP stabilized the closure only after IP called for a power reduction. The rejoin was completed late and with the position corrected under direction.",
+    "2": "SP, due to a decision to hold rejoin power slightly longer than the closure supported, allowed the overtake on lead to build past the briefed differential. The excess remained between the code 3 and code 1 limits, and SP recognized the closure against the leader's wingspan and reduced power to stabilize the rejoin without prompting or IP input.",
+    "3": "SP controlled the closure on lead throughout the rejoin, holding the briefed airspeed differential and reducing power at the point that produced a stabilized arrival. The aircraft stopped in the briefed position with no overshoot and no corrective input required.",
+    "4": "SP managed the rejoin with power and geometry adjusted continuously to the observed closure, arriving in the briefed position with a differential that decayed exactly to zero. There was no overshoot, no oscillation on the position and no need to reset the geometry.",
+    "marginal": "SP controlled the closure within standards but arrived at the rejoin position with the airspeed differential still at the high end of the acceptable band, requiring a firm power reduction at the end. No overshoot occurred and the position was stabilized on each rejoin of the sortie. SP is expected to start the power reduction earlier, so that the closure is bled off progressively rather than in one late input."
+   }
+  },
+  {
+   "id": "formation-08-em08",
+   "label": "Radio and visual signal compliance with lead on the interval takeoff",
+   "mif_row": null,
+   "source": "general:formation-communication",
+   "hf_concept": "hf-lack-of-communication",
+   "texts": {
+    "0": "SP, due to failure to pass a required call at the point the formation procedure specified, did not respond to the leader's takeoff signals. The run-up and brake release signals were acknowledged neither by radio nor visually, so lead began the takeoff roll without confirmation that the wingman was ready, and the aircraft followed out of sequence. IP made the required calls and directed the sequence for the remainder of the takeoff.",
+    "1": "SP, due to an indirect acknowledgement instead of a direct statement of readiness, did not respond to the leader's signals in the briefed form. The response came after a delay that put the sequence at the limit of what the interval allowed, and SP transmitted the correct call only after IP prompted for it. The takeoff proceeded with the coordination re-established by IP rather than by SP.",
+    "2": "SP, due to attention held on the line up checks while the leader's signal was given, answered the run-up signal later than the briefed sequence required. The delay stayed inside the band that still allowed the briefed interval to be flown, and SP recognized the omission, passed the correct call and re-synchronized with lead without prompting.",
+    "3": "SP answered every radio and visual signal from lead in the briefed form and at the briefed point of the sequence. The readiness call, the run-up signal and the brake release reference were all acknowledged clearly, so the takeoff proceeded exactly as briefed.",
+    "4": "SP acknowledged the leader's signals promptly and unambiguously throughout the takeoff sequence, with standard phraseology and no repetition required. The coordination between the two aircraft was continuous, and the interval was flown without a single clarifying transmission.",
+    "marginal": "SP answered the leader's radio and visual signals correctly, but each acknowledgement came at the end of the time the sequence allowed rather than immediately on the signal. Nothing was missed and the interval was flown as briefed on every takeoff of the sortie. SP is expected to answer as soon as the signal is given, so that lead is not left waiting for confirmation before starting the roll."
+   }
+  }
+ ]
+}

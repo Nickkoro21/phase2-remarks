@@ -1,0 +1,132 @@
+{
+  "item_id": "vfr_navigation-07",
+  "item_name": "FINGERTIP",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [7],
+  "mif_rows": [
+    {"sn": 7, "row_name": "Fingertip"}
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-07-em01",
+      "label": "Lateral separation in fingertip on the route legs",
+      "mif_row": null,
+      "source": "specific:LATERAL SEPARATION *(feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to lateral inputs applied only after the sight picture had completely changed, did not preserve the 10 ft minimum lateral separation reference while flying fingertip on the navigation legs. Spacing opened past 30 ft in the turns at the turning points and on one roll out closed inside the 10 ft reference, which the criteria do not permit in either direction. IP intervened on the controls to re-establish a safe lateral distance before the next leg was flown.",
+        "1": "SP, due to aileron and rudder corrections started only after the leader had already rolled out, allowed lateral separation to reach about 28 to 30 ft on the outbound legs, at the outer edge of the tolerance. The spacing was brought back toward the reference only after repeated verbal prompts from IP. No control intervention was needed, but no correction was initiated by SP without prompting.",
+        "2": "SP, due to a lateral correction begun after the widening had already developed, let separation grow to roughly 20 to 25 ft in the turns onto the second and third legs. SP recognized the wider sight picture, applied a small coordinated input toward the leader and re-established the reference within a few seconds. No prompting and no intervention by IP were required.",
+        "3": "SP held lateral separation inside the plus 10 ft tolerance for the whole formation portion of the navigation, working between 10 and 20 ft from the reference through the level legs, the en route climb and the turns at the turning points. Corrections were small, early and made with coordinated aileron and rudder. The 10 ft minimum was never eroded on either side of the leader.",
+        "4": "SP flew lateral separation within a couple of feet of the 10 ft reference for the entire route, including every turning point and the en route descent. Lateral inputs were made as the leader's bank developed rather than after the picture had changed. The spacing appeared visually constant from the rear cockpit throughout the formation legs.",
+        "marginal": "SP kept lateral separation within standards, but worked continuously near the plus 10 ft edge, most consistently on the right side and in the second half of each turn. The tendency was toward widening rather than closing, so no safety margin was lost, but the position flown was not the briefed one. SP is expected to bring the working band back toward the reference line on the next navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-07-em02",
+      "label": "Vertical separation and stack position as wingman",
+      "mif_row": null,
+      "source": "specific:VERTICAL SEPARATION *(feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power corrections made without a matching pitch reference on the leader's canopy line, did not maintain the fingertip stack and allowed vertical separation to wander throughout the formation legs. Deviations exceeded 10 ft low during the en route climb and reached more than 6 ft high after the second turning point, outside the limits in both directions. IP intervened on the controls to restore the stack when SP settled low and behind the leader's wing line.",
+        "1": "SP, due to a vertical reference taken from the leader's wing tip instead of the briefed canopy line, held the stack about 9 to 10 ft low through the second leg, at the limit of the tolerance. The position was raised only after IP called the deviation twice. The correction was late but was completed without any control intervention.",
+        "2": "SP, due to a pitch input delayed after the leader's power reduction, let vertical separation reach about 6 to 8 ft low during the en route descent. SP identified the change in the sight picture, added a small amount of back pressure together with power and returned the stack toward the reference before the next turning point. No prompting or intervention by IP was needed.",
+        "3": "SP held vertical separation within plus or minus 4 ft of the briefed stack for the whole formation portion of the route. The level legs, the en route climb and the descent were all flown with the leader's reference line in the same place on the canopy. Pitch and power inputs were small and were made as the leader's attitude changed.",
+        "4": "SP kept the stack essentially fixed, with vertical deviations of a foot or two through the entire route including the turns at each turning point. The reference line on the leader's aircraft stayed in the same position on the canopy in level flight, in the climb and in the descent. Vertical deviations were negligible.",
+        "marginal": "SP stayed inside the plus or minus 4 ft tolerance, but flew consistently on the low side of the stack and recovered the reference only slowly after each power change. The trend is toward a position that becomes progressively lower as the leader changes speed and altitude on the later legs. SP is expected to fly the briefed reference line rather than a habitual low stack on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-07-em03",
+      "label": "Observance angle and fore-aft geometry as wingman",
+      "mif_row": null,
+      "source": "specific:OBSERVANCE ANGLE (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power handling that lagged the leader's speed changes on the route, did not hold the 30 deg observance angle and lost the fore-aft geometry of the fingertip position. SP fell aft beyond 55 deg approaching the second turning point and then closed with excess overtake toward line abreast, well outside the permitted band. IP intervened on the throttle and the controls to re-establish the position.",
+        "1": "SP, due to throttle movement applied only after the leader had already accelerated on the outbound leg, allowed the observance angle to open to about 50 deg, at the limit of the tolerance. The geometry was recovered toward the reference only after IP called the aft drift and directed the power increase. The angle remained near the outer limit for most of that leg.",
+        "2": "SP, due to a small power reduction held slightly too long after the turn onto the third leg, let the observance angle open to roughly 40 deg. SP recognized the aft movement in the sight picture, added power in a single measured step and returned to the reference geometry without generating overtake. No verbal prompting or IP intervention was required.",
+        "3": "SP maintained the 30 deg observance angle within plus or minus 5 deg for the formation portion of the route. The fore-aft geometry was held through the en route climb, the level legs and the turns at each turning point, with power used in small anticipatory steps. Overtake was contained at all times and the position was never allowed to slide aft.",
+        "4": "SP held the observance angle within a degree or two of 30 deg for the whole route, with no visible fore-aft movement even during the leader's speed changes at the turning points. Power was set ahead of the leader's changes rather than in response to them. Geometry deviations were negligible.",
+        "marginal": "SP kept the observance angle inside the plus or minus 5 deg tolerance, but flew habitually toward the aft edge of the band and recovered slowly whenever the leader accelerated. The trend is toward a position that will move outside tolerance as soon as the speed changes on the route become larger. SP is expected to anticipate the power requirement and fly the nominal 30 deg reference on the next navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-07-em04",
+      "label": "Control smoothness, power handling and trim as wingman",
+      "mif_row": null,
+      "source": "general:b.1",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to control inputs made in large discrete steps rather than as continuous pressures, did not control the aircraft in a smooth and solid way and used abrupt corrections throughout the formation legs. Power was swung between very low and very high settings and the aircraft was left out of trim for the whole en route climb, so each correction produced a further deviation. IP had to take control to stabilize the aircraft in position.",
+        "1": "SP, due to a cross-check locked onto a single point on the leader, flew the position with a series of abrupt corrections and did not trim the aircraft after the en route climb. The technique improved only after IP described the required continuous control pressures and prompted for trim on two occasions. The aircraft stayed in position, but the corrections were still coarse at the end of the leg.",
+        "2": "SP, due to control pressures released too early after each correction, produced several noticeable step inputs on the first formation leg. SP recognized the pattern, moved to continuous small pressures and trimmed the aircraft before the turning point, after which the corrections were smooth. No prompting or intervention by IP was needed.",
+        "3": "SP controlled the aircraft in a smooth and solid way, without abrupt corrections, during the whole formation portion of the navigation. Engine power was used properly in small anticipatory changes and the aircraft was trimmed continuously through the climb, the level legs and the descent. Position corrections were made with pressures rather than with displacements.",
+        "4": "SP flew the fingertip position with continuous, almost imperceptible control pressures for the entire route. Power and trim were adjusted ahead of every change of speed and altitude, so no recovery input was ever required. The handling technique was well above the level expected at this stage of training.",
+        "marginal": "SP flew within standards, but the corrections were still made as small discrete inputs rather than as continuous pressures, and the aircraft was retrimmed late after each change of speed. The trend is toward rising workload and fatigue on longer formation legs, which will show up as larger deviations later in the sortie. SP is expected to fly the position on pressures and to trim continuously on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-07-em05",
+      "label": "Speed brake use and overtake control from both sides",
+      "mif_row": null,
+      "source": "general:b.2",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to overtake being recognized only at close range, did not use the speed brake when required and was left with no effective means of controlling closure on the leader. Closure continued from the aft position until the aircraft was inside the briefed geometry on the right side, and the speed brake was extended only on the IP's command. IP intervened on the controls to open the position and restore separation.",
+        "1": "SP, due to a power reduction judged sufficient without the speed brake, allowed overtake to develop until the position could only be held by a large lateral displacement. The speed brake was extended after IP directed it, and only from the left side; the same correction was not made when in the right position. Closure was contained without control intervention, but not on SP's own initiative.",
+        "2": "SP, due to a power reduction made late after the leader decelerated at the turning point, developed a noticeable overtake on the outside of the turn. SP extended the speed brake without prompting, retracted it once the closure had stopped and re-established the position from the right side with no further correction. No IP intervention was required.",
+        "3": "SP used the speed brake correctly following the leader's command and whenever it was needed to keep overtake under control, from both the left and the right side. Extension and retraction were timed so that closure was stopped without opening the position. Power and speed brake were used together rather than one after the other.",
+        "4": "SP anticipated every closure situation on the route and used short, small speed brake extensions before overtake became visible, working equally well from both sides. Each extension was matched with a power change so that the position never moved more than a few feet from the reference. The control of overtake was well above the level expected at this stage of training.",
+        "marginal": "SP kept overtake under control within standards, but used the speed brake almost exclusively from the left side and reverted to power alone when flying in the right position. The trend is toward a technique that will not contain closure during the larger speed changes required on later navigation profiles. SP is expected to practise speed brake use from both sides on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-07-em06",
+      "label": "Preservation of the briefed fingertip position through turning points and side changes",
+      "mif_row": null,
+      "source": "general:b.3",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to task sequencing that left the change of side and the turning point work to be done at the same moment, did not preserve the fingertip position determined in the Techniques and Procedures Manual. The position was flown from a self-selected reference instead of the briefed one, and after the crossunder SP stabilized where none of the specified separations or the observance angle were met. IP intervened to place the aircraft back in the briefed position before the next leg.",
+        "1": "SP, due to a workload plan that treated route timing and position keeping as tasks to be done one after the other, did not re-establish the briefed sight picture after the change to the left side and held a position visibly wide and aft of it. The correct references were adopted again only after IP described the required picture. The position was then held at the outer edge of the stated deviations for the rest of the leg.",
+        "2": "SP, due to attention given to the turning point timing during the change of side, initially stabilized outside the briefed picture after the crossunder. SP compared the actual sight picture with the briefed references, corrected in one step and settled inside the specified deviations before the leg was established. No prompting or intervention by IP was needed.",
+        "3": "SP preserved the fingertip position determined in the Techniques and Procedures Manual throughout the formation portion of the navigation, within the deviations stated in the specific criteria. The briefed references were used on both sides of the leader and were re-established immediately after each change of side. Route duties and position keeping were carried out without either task degrading the other.",
+        "4": "SP held the briefed fingertip position on both sides of the leader with no perceptible change of picture across the turning points, the changes of side and the en route climb and descent. All route duties were completed without the aircraft moving out of position at any stage. Deviations from the briefed references were negligible.",
+        "marginal": "SP held the briefed position within the stated deviations, but the picture was re-established noticeably more slowly after each change of side and drifted while the route timing was being checked. The trend is toward position keeping that degrades whenever a second task is added, which will not be sustainable on longer formation legs. SP is expected to fly the briefed references continuously while completing route duties on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-07-em07",
+      "label": "Division of attention between formation position and navigation and lookout duties",
+      "mif_row": null,
+      "source": "general:b.1,b.3",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to an attention bottleneck in which the fingertip sight picture absorbed the entire scan, did not carry out any navigation or lookout duty during the formation legs. Turning points were overflown, route timing was not maintained and no clearing was performed for the formation while the position was being flown. IP had to take over the navigation and then direct SP back onto the route.",
+        "1": "SP, due to attention held on the leader to the exclusion of everything else, did not check the route timing or clear the formation until IP called for each item in turn. The navigation tasks were completed only after prompting and one turning point was reached about a minute late. Position keeping itself stayed inside the deviations, but no capacity was left for anything else.",
+        "2": "SP, due to the scan narrowing onto the leader after the first turning point, initially fell behind the route timing and stopped clearing outside the formation. SP recognized the omission, re-established the alternation between position keeping and the route and lookout tasks, and reached the next turning point on time. No prompting or intervention by IP was required.",
+        "3": "SP divided attention between the fingertip position and the navigation and lookout duties throughout the formation legs. Turning points, timing and clearing were completed while the position was held inside the specified deviations. Neither the position nor the route work degraded while the other task was in progress.",
+        "4": "SP kept the route running, the timing accurate and the lookout continuous while holding a fingertip position that did not visibly move. Fuel checks and turning point calls were made on schedule with no interruption to position keeping. The division of attention was well above the level expected at this stage of training.",
+        "marginal": "SP kept both the position and the route work within standards, but the navigation tasks were compressed into short bursts and each one was followed by a small excursion in position. The trend is toward a scan that can serve only one task at a time, which will show as missed timing or lost position on a longer or busier route. SP is expected to alternate attention more evenly on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-07-em08",
+      "label": "Leading the formation on the route with regard to the wingman",
+      "mif_row": null,
+      "source": "general:a.1,a.2,a.3",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to lack of awareness of the wingman's position with regard to the sun and the route boundaries, did not execute the planned maneuvers smoothly as leader and did not maintain positive pressure on the flying controls. The turns at the turning points were entered with abrupt bank changes that placed No2 into the sun twice, and one turn was started too late for the airspace boundary. IP took control to reposition the formation.",
+        "1": "SP, due to attention limited to own navigation while leading, entered the turns at the turning points with roll rates the wingman could not comfortably follow and gave no consideration to where No2 would end up relative to the sun. The maneuvers were flown more smoothly and the direction of turn was changed only after IP described the effect on the wingman. Nothing beyond verbal direction was required, but no allowance was made by SP alone.",
+        "2": "SP, due to a first turn initiated at a roll rate higher than briefed, made position keeping difficult for No2 on the second leg. SP noticed the size of the wingman's corrections, reduced the roll rate, maintained positive pressure on the flying controls through the remaining maneuvers and planned the following turns away from the sun. No IP prompting or intervention was needed.",
+        "3": "SP led the navigation smoothly, executing and completing each planned maneuver with steady bank and pitch rates and maintaining positive pressure on the flying controls. The wingman's position with regard to the sun and the route and area boundaries was taken into consideration when each turn was planned. No2 was able to hold the fingertip position throughout without large corrections.",
+        "4": "SP led the route with maneuver entries so smooth and so well planned that No2 held position with no visible correction. Every turn was set up to keep the wingman clear of the sun and inside the route and area boundaries, and control pressures stayed positive through the whole profile. The standard of leadership was well above the level expected at this stage of training.",
+        "marginal": "SP led within standards, but the roll rates at the turning points were at the upper end of what No2 could follow and the sun position was considered only after the turn had been started. The trend is toward maneuvering that will push the wingman outside tolerance as soon as bank angles increase. SP is expected to plan the turns around the wingman's position and to hold steadier control pressures on the next sortie."
+      }
+    }
+  ]
+}

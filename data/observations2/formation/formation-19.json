@@ -1,0 +1,132 @@
+{
+  "item_id": "formation-19",
+  "item_name": "ECHELON TURN (AS WINGMAN)",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [19],
+  "mif_rows": [
+    { "sn": 19, "row_name": "Echelon Turn" }
+  ],
+  "error_modes": [
+    {
+      "id": "formation-19-em01",
+      "label": "Lateral separation from the leading aircraft",
+      "mif_row": "Echelon Turn",
+      "source": "specific:LATERAL SEPARATION *(feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unstabilized aileron and rudder input on the roll-in, did not hold the 10 ft reference of lateral separation required in the echelon position. Wingtip spacing opened beyond 60 ft on the first turn and, on the reversal, closed inside the 10 ft reference so that the minimum safe distance was no longer protected. The excursion also exceeded the 1.5 wing span limit set by the general criteria. IP took control to re-establish lateral spacing before the maneuver was continued.",
+        "1": "SP, due to a delayed lateral correction as the leader increased bank, allowed the wingtip spacing to reach approximately 60 ft, at the outer edge of the acceptable band. The wide position was held through most of the turn and was reduced only after repeated verbal prompting from the IP. SP did not return to the 10 ft reference before the leader rolled out.",
+        "2": "SP, due to an over-controlled initial correction on the roll-in, opened lateral separation to approximately 35 ft from the 10 ft reference. SP recognized the widening sight picture without prompting and closed back toward the reference with a smooth aileron and power input before the leader rolled out. The deviation stayed inside the acceptable band throughout and no intervention was required.",
+        "3": "SP held lateral separation between 10 and 18 ft from the leading aircraft throughout the turn, keeping the wingtip spacing well inside 1.5 wing spans. Corrections were made with small aileron inputs as soon as the sight picture changed, so the position was re-established quickly. The reference distance was protected at every bank angle flown by the leader.",
+        "4": "SP maintained lateral separation within a few feet of the 10 ft reference for the whole turn, with no closure inside the reference at any point. Changes in the leader's bank produced only momentary spacing changes that SP removed immediately. The echelon geometry remained visibly constant from roll-in to roll-out.",
+        "marginal": "SP kept lateral separation inside the required limits, but worked consistently at the wide side of the band, around 18 to 20 ft, rather than at the 10 ft reference. The tendency to drift wide appeared each time the leader increased bank and was corrected late. SP is expected to fly closer to the reference distance and to remove the drift as it develops."
+      }
+    },
+    {
+      "id": "formation-19-em02",
+      "label": "Vertical separation / wing midpoint reference",
+      "mif_row": "Echelon Turn",
+      "source": "specific:VERTICAL SEPARATION (feet)|general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient back pressure as bank was increased toward 60 degrees, did not hold the vertical position on the leading aircraft. SP descended more than 10 ft below the reference line and, after an abrupt recovery input, climbed above it by a similar amount, flying well outside the midpoint of the leader's wing. The vertical excursion exceeded the acceptable band in both directions. IP intervened to stop the climb toward the leader's flight path.",
+        "1": "SP, due to a late back pressure input on the roll-in, sank to approximately 10 ft below the reference, at the limit of the acceptable band. SP remained low on the leader's wing for most of the turn and started to recover only after the IP called the low position. The correct vertical reference was regained only near roll-out.",
+        "2": "SP, due to a slow pitch response to the leader's increasing bank, dropped approximately 7 ft below the reference line during the roll-in. SP saw the change against the leader's wing and restored the vertical position with a smooth back pressure input before the turn was established. The deviation remained inside the acceptable band and required no intervention.",
+        "3": "SP maintained vertical separation within 4 ft of the reference throughout the echelon turn, staying level with the midpoint of the leader's wing. Pitch corrections were small and applied as soon as the sight picture changed, so no vertical drift was allowed to build. The position was held through both the roll-in and the roll-out.",
+        "4": "SP held the vertical reference almost exactly on the midpoint of the leader's wing for the whole turn, with deviations barely perceptible from the cockpit. Increases in the leader's bank produced no visible sink or climb. The vertical geometry of the echelon was preserved without any noticeable correction.",
+        "marginal": "SP kept vertical separation within standards but showed a repeated tendency to settle low on the leader's wing, close to 4 ft below the reference, each time bank was increased. The corrections that followed were correct but late, so the low position persisted for several seconds per turn. SP is expected to anticipate the required back pressure and hold the midpoint reference more consistently."
+      }
+    },
+    {
+      "id": "formation-19-em03",
+      "label": "Longitudinal separation / fore-aft line on the leader",
+      "mif_row": "Echelon Turn",
+      "source": "specific:LONGITUDINAL SEPARATION (feet)|general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to uncoordinated power management through the turn, did not hold the fore-aft line on the leading aircraft. SP moved forward past the leading edge of the leader's wing by more than 10 ft, then fell aft of the trailing edge of the stabilator after a large power reduction. Both excursions were outside the acceptable band and outside the reference points defined by the criteria. IP took control to stop the forward movement toward the leader.",
+        "1": "SP, due to a late throttle response as the leader rolled into the turn, went aft to approximately 10 ft, at the limit of the acceptable band, and remained sucked behind the reference line for most of the turn. The position was corrected only after the IP called for power. SP had not re-established the correct fore-aft line by roll-out.",
+        "2": "SP, due to a slightly excessive power reduction on the roll-in, moved approximately 7 ft aft of the reference line on the leader. SP recognized the changing sight picture without prompting, added power early and returned to the correct fore-aft position before the turn was established. The deviation stayed inside the acceptable band and no intervention was needed.",
+        "3": "SP held longitudinal separation within 4 ft of the reference line throughout the turn, remaining between the leading edge of the wing and the trailing edge of the stabilator at all times. Power was adjusted promptly as the leader's bank changed, so no forward or aft drift was allowed to develop. The fore-aft position was stable through roll-in and roll-out.",
+        "4": "SP maintained the fore-aft line on the leading aircraft with deviations that were barely detectable against the reference points. Throttle inputs were anticipatory and continuous, so the echelon position showed no fore-aft movement even at the highest bank flown. The line was preserved throughout the maneuver.",
+        "marginal": "SP kept longitudinal separation within standards but sat repeatedly toward the aft side of the band, around 4 ft behind the reference, whenever the leader increased bank. The recovery to the correct line was made with a single large power input rather than a continuous adjustment. SP is expected to anticipate the power requirement and hold the fore-aft line with smaller inputs."
+      }
+    },
+    {
+      "id": "formation-19-em04",
+      "label": "Smooth and solid aircraft control in the echelon position",
+      "mif_row": "Echelon Turn",
+      "source": "general:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to overcontrol in roll and pitch while attempting to hold position, did not control the aircraft in a smooth and solid way as No2. Inputs were large and alternating, producing an oscillation in all three axes that made the echelon position divergent rather than convergent. The oscillation carried the aircraft outside the acceptable separation band in more than one axis. IP took control to stabilize the aircraft.",
+        "1": "SP, due to a stiff grip and stepped control inputs, flew the echelon turn with visible oscillation about the reference position and reached the limit of the acceptable band on each swing. The technique was changed to smaller, continuous inputs only after repeated verbal instruction from the IP. The aircraft was still not solidly stabilized in position by the end of the maneuver.",
+        "2": "SP, due to control inputs that were initially larger than required, produced a noticeable wallowing about the reference position during the roll-in. SP recognized the overcontrol without prompting, reduced the size of the inputs and settled the aircraft inside the acceptable band before the turn was established. The remainder of the turn was flown without intervention.",
+        "3": "SP controlled the aircraft in a smooth and solid way throughout the echelon turn, using small continuous inputs in roll, pitch and power. Corrections were applied in time and stopped on reaching the reference, with no overshoot, and all separations stayed inside the tightest band. The position looked stable from entry to recovery.",
+        "4": "SP flew the echelon turn with control inputs that were continuous and almost imperceptible, holding the position as if the aircraft were mechanically fixed to the leader. No overshoot or hunting was present in any axis at any bank angle. The aircraft remained solid in position from roll-in to roll-out.",
+        "marginal": "SP controlled the aircraft within standards, but the inputs were still made in discrete steps rather than as continuous pressures, which produced a small hunting motion about the reference position. The technique held the deviations inside limits without ever settling the aircraft fully. SP is expected to fly with smaller, blended inputs so that the position stops moving between corrections."
+      }
+    },
+    {
+      "id": "formation-19-em05",
+      "label": "Timeliness of corrections and arrest of developing drift",
+      "mif_row": "Echelon Turn",
+      "source": "general:d",
+      "hf_concept": "hf-detect-trap-mitigate",
+      "texts": {
+        "0": "SP, due to failure to trap a deviation that had already been detected, did not make the appropriate corrections in time as No2. A drift that started small was allowed to run until the aircraft was outside the acceptable band in lateral and vertical separation at the same time. The correction, when finally applied, was large enough to produce a second excursion in the opposite direction. IP intervened to recover the echelon position.",
+        "1": "SP, due to no mitigation applied after the deviation was recognized, allowed the position error to grow to the limit of the acceptable band before acting. The correction was started only after the IP prompted it verbally, and it was completed after the leader had already rolled out. SP treated each deviation as an event to be fixed later rather than immediately.",
+        "2": "SP, due to a short delay between recognizing the changed sight picture and acting on it, allowed the position to move to the middle of the acceptable band. SP then applied the correction without prompting and stopped the drift before it developed further. Recovery to the reference position was completed inside the turn and required no intervention.",
+        "3": "SP made the appropriate corrections in time throughout the echelon turn, acting on the first visible change in the sight picture rather than on an established error. Deviations were arrested while still inside the tightest band and were removed with a single input. No error was allowed to accumulate across the turn.",
+        "4": "SP anticipated the position changes associated with the leader's bank and applied the corrections before any deviation became measurable. Each input was matched to the requirement, so nothing had to be corrected twice. The echelon position never departed from the reference to a visible degree.",
+        "marginal": "SP corrected all deviations within standards, but the corrections were consistently started one or two seconds after the position had already moved, so the error was chased rather than prevented. The result stayed inside limits only because the initial deviations were small. SP is expected to act on the first change in the sight picture rather than on the established deviation."
+      }
+    },
+    {
+      "id": "formation-19-em06",
+      "label": "Visual cross-check on the leader and use of the sight picture",
+      "mif_row": "Echelon Turn",
+      "source": "general:a|general:b|general:c",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an interrupted visual cross-check on the leading aircraft while attention shifted inside the cockpit, lost the reference points that define the echelon position. Without the wing and stabilator references, SP flew on bank angle alone and drifted outside the acceptable band in more than one axis. The deviation was not recognized until the geometry had changed substantially. IP intervened to re-establish the position and the outside reference.",
+        "1": "SP, due to a cross-check limited to one reference point on the leader, did not detect the developing vertical and fore-aft errors and reached the limit of the acceptable band. The full sight picture was resumed only after the IP described the reference points verbally. SP did not recover a stable scan of the leader before roll-out.",
+        "2": "SP, due to attention concentrated on lateral spacing at the expense of the other references, allowed the vertical position to move to the middle of the acceptable band. SP re-established the complete sight picture without prompting, identified the error against the leader's wing and corrected it inside the turn. No intervention was required.",
+        "3": "SP maintained a continuous visual cross-check on the leading aircraft, using the wing midpoint, the wing leading edge and the stabilator trailing edge as references. All three separations were assessed against the sight picture rather than against instruments, and deviations were kept inside the tightest band. The scan remained on the leader through the whole turn.",
+        "4": "SP used the full sight picture on the leading aircraft continuously and read every reference simultaneously, so any change in geometry was identified at the moment it began. The echelon position was flown entirely on outside references with negligible deviation in all three axes. The scan did not break at any point of the maneuver.",
+        "marginal": "SP kept the visual cross-check on the leader within acceptable standards, but the scan settled on the lateral reference and returned to the vertical and fore-aft references only intermittently. This produced late detection of small errors that remained inside limits. SP is expected to read all three references as a single sight picture rather than in sequence."
+      }
+    },
+    {
+      "id": "formation-19-em07",
+      "label": "Safe distance and closure control at high bank",
+      "mif_row": "Echelon Turn",
+      "source": "general:a|conditions:pre-planned turns up to 60 degrees of bank",
+      "hf_concept": "hf-acts-errors",
+      "texts": {
+        "0": "SP, due to a perceptual error in judging closure and lateral separation as the leader rolled toward 60 degrees of bank, did not keep the required safe distance. Closure was allowed to develop toward the leading aircraft and the position came inside the 10 ft reference, with no margin remaining. SP did not call for separation or move away from the leader. IP took control to open the distance immediately.",
+        "1": "SP, due to a misjudged closure rate on the roll-in to the steepest turn, allowed the lateral position to move to the limit of the acceptable band and started to close toward the leader. The movement was stopped only after the IP called it, and no separation call was made by SP. Safe distance was preserved but with no margin created by SP.",
+        "2": "SP, due to a slightly late assessment of closure as bank increased, allowed the lateral position to move within the acceptable band toward the leading aircraft. SP recognized the closure from the sight picture, stopped it with a positive input and re-established the reference distance without prompting. Safe distance was never in question and no intervention was required.",
+        "3": "SP kept a safe distance from the leading aircraft at every bank angle flown, holding the position inside the tightest band and never allowing closure inside the 10 ft reference. Closure rates were identified early from the sight picture and removed with small inputs. The wingtip spacing stayed well inside 1.5 wing spans throughout.",
+        "4": "SP controlled closure so precisely that the lateral spacing showed no perceptible change even during the roll into and out of the steepest turn. The reference distance was protected at all times with a clear margin and without any abrupt input. Safe separation from the leading aircraft was never approached.",
+        "marginal": "SP maintained safe distance within standards, but closure toward the leading aircraft was identified late on each roll-in and was stopped closer to the reference than intended. The margin remaining was small although the limits were respected. SP is expected to identify closure earlier and to build the correction before the spacing narrows."
+      }
+    },
+    {
+      "id": "formation-19-em08",
+      "label": "Power and lift management through the turn",
+      "mif_row": "Echelon Turn",
+      "source": "general:d|specific:LONGITUDINAL SEPARATION (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power and back pressure applied out of sequence with the leader's roll-in, did not hold the echelon position through the turn. Excess power drove SP forward past the reference line while insufficient lift allowed a simultaneous sink below the leader's wing, taking both separations outside the acceptable band. The subsequent large power reduction produced an aft excursion of the same size. IP intervened to re-establish the position.",
+        "1": "SP, due to power changes made after the position had already moved rather than with the leader's bank, reached the limit of the acceptable band in the fore-aft axis on each turn. The throttle technique was adjusted only after specific verbal direction from the IP. SP had not established a stable power setting for the turn by the end of the maneuver.",
+        "2": "SP, due to a power addition that lagged the increase in bank, allowed the aircraft to move within the acceptable band aft of the reference line and slightly low. SP identified the trend from the sight picture, added power and back pressure together and restored the position before the leader rolled out. No intervention was required.",
+        "3": "SP managed power and back pressure together with the leader's bank changes, so the echelon position was held inside the tightest band in both the vertical and fore-aft axes. Throttle movements were small and continuous rather than stepped. Energy state remained matched to the leader throughout the turn.",
+        "4": "SP matched power and lift to the leader's turn so precisely that no fore-aft or vertical movement was visible at any point of the maneuver. Throttle and pitch inputs were anticipatory and blended, keeping the aircraft in position through both the roll-in and the roll-out. The energy state of the formation was never disturbed.",
+        "marginal": "SP managed power within standards, but the throttle was moved in discrete steps that produced a small fore-aft oscillation about the reference line on every turn. The deviations stayed inside limits and were corrected each time. SP is expected to lead the power change with the leader's bank and to use continuous rather than stepped throttle inputs."
+      }
+    }
+  ]
+}

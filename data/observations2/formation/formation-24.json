@@ -1,0 +1,162 @@
+{
+  "item_id": "formation-24",
+  "item_name": "TACTICAL FORMATION",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [24],
+  "mif_rows": [
+    {"sn": 24, "row_name": "Tactical Formation"}
+  ],
+  "error_modes": [
+    {
+      "id": "formation-24-em01",
+      "label": "Altitude control in the tactical block",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a scan that stayed locked on the leader with no interleaved altimeter check, did not hold the briefed tactical altitude while maintaining position as No2, with the result of excursions beyond +1000 ft and down to 700 ft low. The trend was not arrested and the IP took the aircraft to level off and re-establish the element. The same vertical breakdown recurred on the following area pass.",
+        "1": "SP, due to an interrupted altimeter cross-check during the repositioning maneuvers, did not contain the vertical deviation within the tactical formation tolerance, with the result of excursions at the +1000 ft and -500 ft limits. Return to the briefed block started only after repeated verbal prompts from the IP. No independent correction was initiated before the prompt.",
+        "2": "SP, due to a late power reduction after the energy gain in the descending part of the turn, did not hold the altitude band as required, with the result of deviations of about 700 ft high and 400 ft low. SP recognized the trend at the next cross-check and returned to the briefed altitude without assistance. No IP input was required.",
+        "3": "SP maintained the tactical formation altitude within +500 / -300 ft throughout the sortie, correcting the climb tendency in the outside of each turn as it appeared. The altimeter check remained interleaved with the visual scan on the leader. The vertical stack matched the briefed profile on every re-entry to line abreast.",
+        "4": "SP held the tactical block within approximately 100 ft in both directions across all turns and reversals. Pitch and power corrections were applied at the first indication of a trend, before any visible change in relative position. The vertical picture on the leader stayed constant for the whole engagement.",
+        "marginal": "SP kept altitude inside the required band, but the excursions repeatedly approached the +500 ft edge on the exit of each tactical turn and were held there instead of being driven back toward the briefed altitude. The tendency is a late unload after the recovery. SP is expected to anticipate the energy gain and return to the center of the block on the next sortie."
+      }
+    },
+    {
+      "id": "formation-24-em02",
+      "label": "Entry and exit airspeed control",
+      "mif_row": null,
+      "source": "specific:SPEED ENTRY/EXIT (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to coarse and reversed throttle inputs at each repositioning, did not establish the briefed entry and exit airspeed of the tactical maneuvers, with the result of excursions greater than 30 kt on both sides, including a decay that left the aircraft unable to regain line abreast. Airspeed was not recovered by SP and the IP assumed control to reset the energy state. The formation had to be re-formed in route before the exercise continued.",
+        "1": "SP, due to a throttle setting selected without reference to the airspeed trend, did not maintain the entry and exit airspeed of the tactical maneuvers, with the result of deviations at the +/-30 kt limit that persisted through two consecutive turns. Correction to the briefed airspeed was made only after the IP called the value verbally. SP did not detect the deviation independently.",
+        "2": "SP, due to a delayed power addition on the exit from the turn, did not regain the briefed airspeed at the required point, with the result of deviations of about 25 kt low at exit and 20 kt high at the following entry. SP identified the error on the next scan cycle and set the power to recover the briefed value in time for the next maneuver. No prompting was needed.",
+        "3": "SP established and maintained entry and exit airspeed within +/-15 kt on every tactical maneuver, adjusting power before the airspeed trend became visible. The energy state at each exit supported an immediate re-entry into position as No2. No re-attack of the airspeed was required at any point.",
+        "4": "SP flew all entries and exits within a few knots of the briefed airspeed, using small anticipatory power changes rather than corrections after the fact. The energy state was matched to the leader at every reversal. Airspeed control did not degrade under the higher workload of the later turns.",
+        "marginal": "SP kept entry and exit airspeed inside standards, but the values sat consistently near the low edge of the band on the exits and were rebuilt slowly. The tendency is a power addition applied after the unload rather than during it. SP is expected to lead the power with the recovery on the next sortie so that the airspeed is at briefed value before the next entry."
+      }
+    },
+    {
+      "id": "formation-24-em03",
+      "label": "Recovery heading accuracy",
+      "mif_row": null,
+      "source": "specific:RECOVERY HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a roll-out started without reference to the briefed recovery heading, did not roll out on the required heading after the tactical maneuver, with the result of errors greater than 30 deg that placed the aircraft on a diverging track from the leader. The heading error was not corrected and the geometry of the element was lost. The IP directed the recovery heading and the re-form.",
+        "1": "SP, due to a lead point taken visually off the leader instead of the heading indicator, did not recover on the briefed heading, with the result of errors at the +/-30 deg limit on consecutive recoveries. The heading was corrected only after the IP stated the value to fly. SP did not initiate the correction independently.",
+        "2": "SP, due to a late roll-out initiation at the high bank angle used in the turn, did not stop on the briefed recovery heading, with the result of overshoots of about 20 deg. SP recognized the error immediately after roll-out and corrected back to the required heading before the next repositioning. No IP input was required.",
+        "3": "SP rolled out within +/-10 deg of the briefed recovery heading on every tactical maneuver, leading the roll-out in proportion to the bank angle flown. The resulting geometry allowed an immediate return to the briefed tactical position. Heading was held steady after each recovery.",
+        "4": "SP recovered on the briefed heading with errors of only a few degrees throughout, with roll-out lead adjusted correctly for each bank angle and rate of turn. No secondary heading correction was needed after any recovery. The element geometry was preserved without further adjustment.",
+        "marginal": "SP recovered within the required heading tolerance, but the errors were consistently on the overshoot side and close to the +/-10 deg edge. The tendency is a roll-out started late at the higher bank angles. SP is expected to increase the roll-out lead so that recovery headings are centered rather than at the limit."
+      }
+    },
+    {
+      "id": "formation-24-em04",
+      "label": "Continuous G control during repositioning",
+      "mif_row": null,
+      "source": "specific:Gs (continous)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to abrupt and pulsing aft stick inputs while trying to close on the briefed position, did not fly the continuous G value required for the tactical maneuvers, with the result of variations beyond +/-1.0 G, including an unloading that stopped the turn rate completely. The G schedule was not re-established and the IP took the aircraft to stabilize the turn. The element geometry could not be rebuilt from that state.",
+        "1": "SP, due to a G application driven by the sight picture rather than by a set value, did not maintain the continuous G through the tactical turn, with the result of variations at the +/-1.0 G limit across the maneuver. The G loading was steadied only after the IP called the required value. SP made no independent correction beforehand.",
+        "2": "SP, due to a relaxation of aft stick pressure at mid-turn as the airspeed decayed, did not hold the continuous G steady, with the result of variations of about 0.8 G. SP detected the change in turn rate and reset the required loading before the recovery. No IP intervention was needed.",
+        "3": "SP flew the tactical maneuvers with continuous G held within +/-0.5 G, applying a smooth onset and holding the value through the turn. Turn rate matched what the geometry required with the leader. No G-driven overshoot or undershoot of position resulted.",
+        "4": "SP held G within a fraction of the briefed value throughout every turn, with smooth onset and release and no pulsing of the input. The turn performance was repeatable from one maneuver to the next. Position relative to the leader developed exactly as the geometry predicted.",
+        "marginal": "SP held continuous G inside standards, but the value drifted toward the low edge of the band in the second half of each turn as airspeed decayed. The tendency is a relaxation of aft stick pressure rather than a deliberate hold. SP is expected to maintain the briefed loading to the recovery point on the next sortie."
+      }
+    },
+    {
+      "id": "formation-24-em05",
+      "label": "Line abreast bearing maintenance",
+      "mif_row": null,
+      "source": "specific:LINE ABREAST DEVIATION (degrees)",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to loss of situational awareness of the aircraft's position relative to the leader after the second reversal, did not maintain the line abreast bearing required for tactical formation, with the result of deviations beyond 30 deg that put the aircraft well aft of the briefed position. Visual contact with the leader was degraded and the correction was not made. The IP took the aircraft and directed a re-form in route.",
+        "1": "SP, due to degraded situational awareness of the relative bearing after the unplanned change of turn direction, did not hold the line abreast position, with the result of deviations at the 30 deg limit maintained through the following turn. The bearing was corrected only after the IP passed verbal corrections. SP did not act on the sight picture alone.",
+        "2": "SP, due to an incorrect lead point taken at the start of the turn, did not hold the briefed line abreast bearing, with the result of deviations of about 20 deg aft of position. SP recognized the developing bearing error and used a power and turn correction to regain line abreast before the next maneuver. No prompting was required.",
+        "3": "SP maintained the line abreast bearing within +/-10 deg through all tactical maneuvers, applying small corrections as soon as the sight picture began to change. The relative position was rebuilt promptly after each turn. Visual contact with the leader was continuous.",
+        "4": "SP held the line abreast bearing within a few degrees for the entire engagement, anticipating the geometry of each turn rather than reacting to it. Corrections were small enough that the sight picture appeared static. Formation position never required rebuilding.",
+        "marginal": "SP kept the line abreast bearing within tolerance, but the position sat persistently on the aft side of the band and was allowed to remain there through several turns. The tendency is late recognition of the developing bearing error. SP is expected to correct at the first change in sight picture so that the position is centered on the briefed bearing."
+      }
+    },
+    {
+      "id": "formation-24-em06",
+      "label": "Lateral separation from the leader",
+      "mif_row": null,
+      "source": "specific:LATERAL SEPARATION (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a closure rate judged from the leader's apparent size rather than from a measured reference, did not maintain the briefed lateral separation, with the result of errors beyond 1000 ft, including a closure inside the briefed spacing that reduced maneuvering room for both aircraft. The separation was not restored by SP. The IP took the aircraft and directed a repositioning to safe spacing.",
+        "1": "SP, due to a turn started without accounting for the lateral geometry of the maneuver, did not hold the briefed lateral separation, with the result of errors at the 1000 ft limit on consecutive turns. Separation was rebuilt only after the IP called the spacing verbally. SP did not initiate a correction beforehand.",
+        "2": "SP, due to a shallow turn at the reversal that failed to preserve the spacing, did not maintain the briefed lateral separation, with the result of errors of about 800 ft. SP recognized the change in spacing and adjusted bank and heading to restore the briefed separation before the next maneuver. No IP input was required.",
+        "3": "SP maintained lateral separation within +/-500 ft of the briefed value throughout the exercise, adjusting turn geometry to preserve spacing through each reversal. Separation supported both mutual support and clear maneuvering room. No corrective repositioning was needed.",
+        "4": "SP held lateral separation essentially at the briefed value throughout, with the spacing preserved automatically by correct turn geometry rather than by after-the-fact corrections. Spacing did not vary noticeably between maneuvers. Mutual support was maintained at all times.",
+        "marginal": "SP kept lateral separation inside standards, but the spacing trended toward the wide edge of the band after each reversal and was rebuilt slowly. The tendency is an over-shallow turn at the reversal point. SP is expected to set the turn geometry so that separation stays near the briefed value rather than at the outer limit."
+      }
+    },
+    {
+      "id": "formation-24-em07",
+      "label": "Clearing responsibility within the element",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-lack-of-teamwork",
+      "texts": {
+        "0": "SP, due to an unagreed division of lookout responsibility within the formation, did not execute clearing of the proper area for the relative position held in the formation, with the result that the sector behind the element was left uncleared through two complete turns and traffic in the working area went unseen until called by the IP. The clearing pattern was not corrected after the call. The IP took the aircraft and stopped the exercise to re-brief lookout duties.",
+        "1": "SP, due to a lookout split that was never confirmed with the other aircraft, did not clear the area assigned to the position held in the formation, with the result of clearing limited to the leader's side only and no coverage of the outside sector before each turn. SP began the required clearing sweep only after verbal reminders from the IP on each maneuver. The pattern was not sustained without prompting.",
+        "2": "SP, due to attention concentrated on rebuilding position after the reversal, did not maintain the clearing pattern appropriate to the position in the formation, with the result of two turns entered without a completed sweep of the outside sector. SP recognized the omission and restored the full clearing pattern for the remainder of the exercise. No IP intervention was required.",
+        "3": "SP executed clearing at the proper area for the position held in the formation, sweeping the assigned sector before each turn and reversal. The lookout split was consistent with what was briefed for No2. Clearing continued while position was being maintained rather than being displaced by it.",
+        "4": "SP maintained a complete and continuous clearing pattern appropriate to the relative position throughout the exercise, calling traffic and terrain features to the leader as they appeared. Lookout was never interrupted by the demands of position keeping. The assigned sector was covered before every maneuver.",
+        "marginal": "SP cleared the assigned sector as required, but the sweep became short and hurried whenever position keeping demanded attention, particularly on the turns into the leader. The tendency is a lookout that contracts under workload. SP is expected to preserve the full clearing pattern regardless of the effort needed to hold position."
+      }
+    },
+    {
+      "id": "formation-24-em08",
+      "label": "Energy management and timeliness of position corrections",
+      "mif_row": null,
+      "source": "general:b,c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to corrections applied only after the deviation had become large, did not exploit and convert the aircraft energy in order to maintain position, with the result of a repeated cycle of overshoot and undershoot in which the aircraft arrived either fast and forward or slow and aft on every reversal. The technique was not adjusted after the first occurrence. The IP took the aircraft to restore the energy state and reposition the element.",
+        "1": "SP, due to a technique that traded altitude and airspeed without reference to the resulting position, did not timely apply the proper corrections to alleviate the deviations from the tactical formation position, with the result that each correction arrived after the deviation had reached the outer edge of the band. Corrections were made only in response to IP direction. SP showed no independent anticipation of the developing geometry.",
+        "2": "SP, due to a late start on the energy trade at the reversal, did not apply the position correction at the first indication of the deviation, with the result of moderate excursions from the briefed position that required a second correction to resolve. SP identified the pattern during the exercise and began leading the corrections on the later turns. No IP assistance was needed.",
+        "3": "SP exploited and converted the aircraft energy to maintain the tactical position, using altitude and airspeed trades at the right point in each maneuver. Corrections to deviations from the briefed position were applied promptly and in the correct sense. Position was regained without a second correction in every case.",
+        "4": "SP anticipated the energy requirement of each maneuver and set power and geometry before the deviation could develop, so that corrections were small and rarely visible in the sight picture. The energy state at every exit supported the next repositioning immediately. Formation position was held without any rebuilding phase.",
+        "marginal": "SP applied the correct energy management and position corrections, but consistently one step behind the geometry, so that each correction was reactive rather than anticipatory. The tendency is to wait for the sight picture to change before acting. SP is expected to lead the energy trade at the reversal point on the next sortie."
+      }
+    },
+    {
+      "id": "formation-24-em09",
+      "label": "Recognition and execution of the leader's visual signals",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a scan fixed on the leader's wingline rather than on the area where visual signals are given, did not know and execute the visual signals given by the Leader, with the result that two signals were missed entirely and one was actioned in the wrong sense, breaking the coordination of the element. The error was not recognized after the leader repeated the signal. The IP took the aircraft and directed the required action.",
+        "1": "SP, due to an incomplete review of the signal set before the sortie, did not execute the visual signals given by the Leader as required, with the result of delayed responses on each signal and one action started only after the signal had been repeated. Execution followed the IP's verbal explanation of the signal rather than SP's own recognition. No signal was actioned independently.",
+        "2": "SP, due to attention held on position keeping at the moment the signal was given, did not respond to a visual signal at the point it was passed, with the result of a delayed but correct execution on one maneuver. SP re-established the visual scan on the leader's cockpit area and actioned all subsequent signals correctly and on time. No IP input was required.",
+        "3": "SP recognized and executed all visual signals given by the Leader correctly and at the point they were passed, maintaining a scan that covered both the wingline and the signal area. Acknowledgement was given as briefed on each occasion. Element coordination was preserved throughout.",
+        "4": "SP identified every visual signal at the moment it was given and executed the required action without hesitation or acknowledgement delay, including the signals passed during the higher workload phases of the exercise. The response was correct in both sense and timing on all occasions. Coordination with the leader was continuous.",
+        "marginal": "SP knew and executed the visual signals correctly, but recognition depended on the signal being held rather than being caught as it was given. The tendency is a scan that dwells on the wingline at the expense of the signal area. SP is expected to include the leader's cockpit area in the routine scan so that signals are caught at first presentation."
+      }
+    },
+    {
+      "id": "formation-24-em10",
+      "label": "Engine use with consideration to fuel reserve",
+      "mif_row": null,
+      "source": "general:e",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to lack of awareness of the fuel state during the working phase of the sortie, did not use the engine with consideration to the fuel reserve, with the result of sustained high power settings through every repositioning and a fuel state at the briefed bingo point below the planned reserve. The consumption trend was not checked at any stage of the exercise. The IP terminated the tactical work and directed the recovery.",
+        "1": "SP, due to a fuel check omitted at the briefed intervals, did not manage engine use against the fuel reserve, with the result that power was held high through the repositioning phases and the remaining fuel reached the briefed minimum earlier than planned. The situation was addressed only after the IP called the fuel state. SP made no independent assessment before the call.",
+        "2": "SP, due to an over-use of power in rebuilding position after the early reversals, did not manage engine use economically at the start of the exercise, with the result of a consumption rate above the planned figure for the first part of the working phase. SP noted the fuel state at the next check, moderated power use and finished the exercise on the planned reserve. No IP input was required.",
+        "3": "SP used the engine with consideration to the fuel reserve, setting power to what the geometry actually required and checking the fuel state at the briefed intervals. Consumption stayed on the planned figure through the working phase. The exercise was terminated at the briefed fuel state.",
+        "4": "SP managed power and fuel throughout so that position was maintained with the minimum power change necessary, keeping consumption below the planned rate and leaving margin above the briefed reserve at recovery. Fuel checks were made at every interval without prompting. Engine handling was economical without any loss of formation position.",
+        "marginal": "SP used the engine with regard to the fuel reserve and remained within the planned figures, but power was set higher than the geometry required on several repositionings and fuel checks were made only at the wider intervals. The tendency is to solve position errors with power. SP is expected to correct with geometry first and to hold to the briefed fuel check intervals."
+      }
+    }
+  ]
+}

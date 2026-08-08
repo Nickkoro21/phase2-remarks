@@ -1,0 +1,162 @@
+{
+  "item_id": "vfr_navigation-18",
+  "item_name": "OVERHEAD PATTERN",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [18],
+  "mif_rows": [
+    { "sn": 18, "row_name": "Landing Pattern" }
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-18-em01",
+      "label": "Break altitude control",
+      "mif_row": null,
+      "source": "specific:BREAK / ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to joining the initial straight off the navigation route without levelling at the briefed pattern altitude, arrived at the break point with an uncontrolled vertical trend. Break altitude deviated beyond 300 feet and the trend continued through the roll. The IP intervened on the controls to reposition the aircraft in the break zone at the correct altitude.",
+        "1": "SP, due to a late power reduction during the recovery to the field, allowed the aircraft to leave the briefed pattern altitude before the break point. Break altitude reached the 300 feet limit and was corrected only after repeated verbal prompting from the IP. The briefed altitude was regained late, well into the turn to downwind.",
+        "2": "SP, due to changing pitch attitude before the power was set on the initial, allowed break altitude to leave the 150 feet band. The deviation reached approximately 250 feet before SP identified it on the altimeter and re-established the briefed altitude unaided. The correction was complete before roll-out on downwind.",
+        "3": "SP levelled off from the navigation recovery and flew the break at the briefed pattern altitude, with deviations held inside 150 feet through the roll and the deceleration. Power and pitch were set before the break point, so no vertical excursion developed. Altitude control required no prompting at any stage.",
+        "4": "SP arrived at the initial already stabilized and completed the break with altitude deviations barely readable on the altimeter. Pitch, power and trim were set ahead of the break point, so the roll was flown with no correction required at all.",
+        "marginal": "SP held break altitude within the required standard, but the deviations sat near the outer edge of the 150 feet band on each pattern and always in the climbing sense. The tendency is to let the nose rise as bank is applied at the break point. SP is expected to complete the level-off and trim the aircraft earlier on the initial so that altitude is captured before the break."
+      }
+    },
+    {
+      "id": "vfr_navigation-18-em02",
+      "label": "Break bank angle",
+      "mif_row": null,
+      "source": "specific:BREAK / BANK (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an aggressive roll input made without reference to the attitude indicator, exceeded the briefed break bank by more than 15 degrees. The excessive bank was not reduced as the turn progressed and produced downwind spacing that could not be recovered. The IP took control to unload the aircraft and re-establish the briefed bank.",
+        "1": "SP, due to an unmonitored roll rate at the break point, applied a bank that reached the 15 degrees deviation limit from the briefed value. The bank was reduced only after the IP called the attitude, and the correct value was re-established late in the turn. Downwind spacing had to be adjusted as a result.",
+        "2": "SP, due to a roll input applied faster than briefed, allowed break bank to deviate past the 10 degrees band. The deviation reached approximately 13 degrees before SP cross-checked the attitude indicator and set the briefed bank without assistance. Downwind spacing was unaffected.",
+        "3": "SP established the briefed break bank promptly and held it within 10 degrees throughout the turn. The roll rate was smooth and the bank was cross-checked against the attitude indicator, producing the planned downwind spacing.",
+        "4": "SP set the briefed break bank in a single smooth input and held it with deviations not measurable on the attitude indicator. The resulting downwind spacing matched the briefed value with no adjustment.",
+        "marginal": "SP kept break bank within the required standard, but the values sat consistently at the shallow edge of the 10 degrees band. The tendency is to under-bank at the break and then add a second correcting input. SP is expected to establish the briefed bank in one deliberate roll and confirm it on the attitude indicator."
+      }
+    },
+    {
+      "id": "vfr_navigation-18-em03",
+      "label": "Downwind altitude control",
+      "mif_row": null,
+      "source": "specific:DOWN WIND / ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to trimming the aircraft only after the gear and flaps were selected, allowed downwind altitude to deviate beyond 300 feet from the briefed pattern altitude. The deviation persisted to the abeam position without being recognized. The IP intervened on the controls to re-establish the pattern altitude before the turn to base.",
+        "1": "SP, due to attention held on the configuration changes instead of the altimeter, let downwind altitude reach the 300 feet deviation limit. The altitude was corrected only after the IP prompted twice, and the pattern altitude was regained just before the turn to base.",
+        "2": "SP, due to an incomplete trim change after gear extension, allowed downwind altitude to leave the 150 feet band. The deviation reached approximately 240 feet before SP recognized it on the altimeter and re-established the briefed altitude without assistance, well before the abeam position.",
+        "3": "SP established the briefed downwind altitude after the break and held it within 150 feet through the configuration changes. Trim was reset with each change, so the level flight path was maintained to the abeam position without correction.",
+        "4": "SP flew the whole downwind leg with altitude deviations that were barely readable on the altimeter, including through gear and flap extension. The aircraft was trimmed after each configuration change and required no altitude correction at any point.",
+        "marginal": "SP held downwind altitude inside the required standard, but the deviations reached the edge of the 150 feet band every time the configuration was changed. The tendency is to accept a descent during gear extension and then climb back. SP is expected to anticipate the trim change and hold altitude through the configuration change rather than correcting after it."
+      }
+    },
+    {
+      "id": "vfr_navigation-18-em04",
+      "label": "Downwind airspeed and minimum speed compliance",
+      "mif_row": null,
+      "source": "specific:DOWN WIND / AIRSPEED (knots) + general:b",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to inadequate monitoring of airspeed after the navigation recovery, allowed downwind speed to fall below the 120 KIAS minimum and to exceed the tolerance by more than 20 knots high earlier in the leg. Neither excursion was recognized from the airspeed indicator. The IP intervened on the throttle to restore the briefed downwind speed.",
+        "1": "SP, due to an interrupted cross-check while the landing checks were being run, allowed downwind airspeed to reach the plus 20 knots limit of the tolerance. The speed was reduced only after the IP called it, and the briefed value was regained late in the leg. The minimum of 120 KIAS was maintained throughout.",
+        "2": "SP, due to a delayed power reduction after the break, allowed downwind airspeed to leave the plus 10 knots band. The excess reached approximately 17 knots before SP cross-checked the airspeed indicator and set the briefed speed unaided, with the minimum of 120 KIAS never approached.",
+        "3": "SP placed the aircraft on downwind at the briefed speed with no value below the 120 KIAS minimum and no excess beyond 10 knots. The airspeed indicator was included in a continuous cross-check while the checks were run, so power adjustments were small and timely.",
+        "4": "SP set downwind airspeed at the briefed value immediately after the break and held it with excursions that were not measurable on the indicator. Speed remained clear of the 120 KIAS minimum at all times and no power correction was needed after the initial setting.",
+        "marginal": "SP kept downwind airspeed within the required standard, but the values sat at the top of the plus 10 knots band for most of the leg. The tendency is to carry surplus energy from the recovery into the pattern and bleed it off late. SP is expected to cross-check airspeed at fixed points on downwind and set the briefed value before the abeam position."
+      }
+    },
+    {
+      "id": "vfr_navigation-18-em05",
+      "label": "Base leg airspeed control",
+      "mif_row": null,
+      "source": "specific:BASE LEG / AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to leaving power set for downwind while the descending turn was established, allowed base leg airspeed to exceed the tolerance by more than 20 knots. The excess was carried through the turn and left the aircraft high and fast at the roll-out point. The IP intervened on the throttle and controls to salvage the approach.",
+        "1": "SP, due to a late power reduction entering base, allowed base leg airspeed to reach the plus 20 knots limit. The speed was reduced only after repeated calls from the IP, and the briefed value was not regained until the aircraft was almost on final.",
+        "2": "SP, due to an increased descent rate in the turn without a matching power change, allowed base leg airspeed to leave the plus 10 knots band. The excess reached approximately 16 knots before SP identified it and set the briefed speed unaided, with the correction complete before roll-out on final.",
+        "3": "SP established the briefed base leg speed at the start of the turn and held it within 10 knots to roll-out. Power and pitch were coordinated through the descending turn, so no speed excursion developed and the speed never fell below the briefed value.",
+        "4": "SP flew the base leg at the briefed speed with excursions that were not readable on the airspeed indicator. Power was set once at the start of the turn and the descending turn required no further speed correction.",
+        "marginal": "SP held base leg airspeed within the required standard, but the values sat at the upper edge of the plus 10 knots band throughout the turn. The tendency is to enter base with surplus speed and rely on the turn to bleed it off. SP is expected to set the briefed base leg power before starting the turn so the speed is stable from the beginning of the descent."
+      }
+    },
+    {
+      "id": "vfr_navigation-18-em06",
+      "label": "Final altitude and glidepath",
+      "mif_row": null,
+      "source": "specific:FINAL / ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a roll-out point selected without reference to the planned final profile, arrived on final displaced beyond 200 feet high and later allowed the aircraft to sink more than 100 feet below the correct glidepath. Neither excursion was corrected as the runway was approached. The IP took control to re-establish the aircraft on the correct profile.",
+        "1": "SP, due to a descent started late on base, rolled out on final at the plus 200 feet deviation limit. The profile was corrected only after continuous verbal guidance from the IP, and the aircraft reached the correct glidepath late on final.",
+        "2": "SP, due to an under-planned roll-out point, arrived on final above the plus 100 feet band by approximately 160 feet. SP recognized the high profile on the visual references, adjusted power and pitch and re-established the correct glidepath before the aircraft reached the threshold area, without any assistance.",
+        "3": "SP rolled out on final on profile and held the glidepath within 100 feet high and 50 feet low to the threshold. The roll-out point was planned so that no large correction was required, and small power adjustments kept the aircraft on the correct descent path.",
+        "4": "SP arrived on final exactly on profile and flew the glidepath with deviations that were barely readable. The descent path was held with minimal power adjustments and the aircraft crossed the threshold area precisely on profile.",
+        "marginal": "SP kept final altitude within the required standard, but the profile sat near the plus 100 feet edge of the band on every pattern. The tendency is to plan the roll-out point slightly late and remain high to the threshold. SP is expected to start the base descent earlier so that the aircraft is on profile at roll-out rather than correcting down the final."
+      }
+    },
+    {
+      "id": "vfr_navigation-18-em07",
+      "label": "Final airspeed control",
+      "mif_row": null,
+      "source": "specific:FINAL / AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to carrying surplus power into the roll-out and not re-setting it on final, exceeded the final airspeed tolerance by more than 15 knots. The excess speed was not reduced as the threshold was approached and the approach was no longer flyable to a landing. The IP intervened on the controls and throttle.",
+        "1": "SP, due to a late power reduction after roll-out on final, allowed final airspeed to reach the plus 15 knots limit. The speed was reduced only after repeated calls from the IP, and the briefed final speed was reached very close to the threshold.",
+        "2": "SP, due to a pitch change made before power was adjusted on final, allowed airspeed to leave the plus 10 knots band. The excess reached approximately 13 knots before SP cross-checked the airspeed indicator, set the briefed value unaided and had the speed stable well before the threshold.",
+        "3": "SP set the briefed final airspeed at roll-out and held it within 10 knots to the threshold, with no value below the briefed speed. Power adjustments were small and continuous, and the airspeed was stable through the last part of the approach.",
+        "4": "SP held final airspeed at the briefed value with excursions that were not measurable on the indicator. Power was trimmed once after roll-out and the approach required no further speed correction to the threshold.",
+        "marginal": "SP kept final airspeed within the required standard, but the values sat at the top of the plus 10 knots band for most of the final. The tendency is to fly the approach slightly fast and correct near the threshold. SP is expected to set the briefed final speed immediately at roll-out and hold it with small continuous power adjustments."
+      }
+    },
+    {
+      "id": "vfr_navigation-18-em08",
+      "label": "AOA units on downwind, base and final (AOA pattern)",
+      "mif_row": null,
+      "source": "specific:DOWN WIND - BASE - FINAL / AOA UNITS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to flying the AOA pattern on airspeed alone without referring to the AOA indexer, allowed AOA to deviate beyond 3 units from the briefed value on base and final. The high AOA excursion was allowed to develop into the onset of buffet. The IP intervened on the controls to reduce the angle of attack.",
+        "1": "SP, due to an intermittent scan of the AOA indexer, allowed AOA to reach the 3 units deviation limit on the base leg. The correct AOA was re-established only after the IP called the indexer indication, and the excursion was repeated on final.",
+        "2": "SP, due to a pitch change made without a matching power adjustment, allowed AOA to leave the 1.5 units band on downwind. The deviation reached approximately 2.5 units before SP referred to the indexer and re-established the briefed AOA unaided before the turn to base.",
+        "3": "SP flew the AOA pattern with the indexer within 1.5 units of the briefed value on downwind, base and final. AOA was cross-checked continuously against airspeed and attitude, so pitch and power corrections were small and timely throughout.",
+        "4": "SP held the briefed AOA on downwind, base and final with deviations that were barely perceptible on the indexer. The correct angle of attack was maintained through both the configuration changes and the descending turn without any correction.",
+        "marginal": "SP kept AOA inside the required standard, but the indications sat at the high edge of the 1.5 units band through the base turn. The tendency is to add back pressure in the turn and then reduce it on final. SP is expected to keep the AOA indexer in the primary scan through the turn and to control angle of attack with power rather than pitch alone."
+      }
+    },
+    {
+      "id": "vfr_navigation-18-em09",
+      "label": "Pattern entry, break zone, clearance, required checks and standardized reports",
+      "mif_row": null,
+      "source": "general:a,c,d,e",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to loss of situational awareness of the aircraft's position in the pattern after the navigation recovery, executed the break outside the break zone and without clearing the downwind. The landing checks were not completed and the standardized reports were not given. The IP intervened, took control and directed the pattern from the front cockpit.",
+        "1": "SP, due to degraded situational awareness on arrival at the field, entered the break zone without confirming ATC clearance and started the required checks late. The checks were completed and the standardized reports were passed only after the IP prompted for each of them, leaving the aircraft configured very late on downwind.",
+        "2": "SP, due to an attention split between the navigation recovery and the pattern entry, initially misidentified the break point and omitted one standardized report. SP recognized the error, cleared the downwind, repositioned into the break zone and passed the missing report and the required checks unprompted, before the turn to base.",
+        "3": "SP entered the pattern with ATC clearance, cleared the downwind and executed the break inside the break zone. The required checks were completed at the briefed points and within gear and flap limitations, and all standardized reports were passed correctly and on time.",
+        "4": "SP transitioned from the navigation recovery to the pattern without any loss of position awareness, breaking precisely in the break zone with clearance confirmed and the downwind cleared. Checks and standardized reports were completed exactly at the briefed points with no prompting and no interference with aircraft control.",
+        "marginal": "SP met the required standard for pattern entry, checks and reports, but the checks were consistently started at the late end of the acceptable window and one report needed a pause before transmission. The tendency is to begin the pattern tasks only after the aircraft is fully established rather than in parallel. SP is expected to build the pattern sequence into the recovery so that clearance, break zone identification, checks and reports are all completed on schedule."
+      }
+    },
+    {
+      "id": "vfr_navigation-18-em10",
+      "label": "Base leg bank, final track and centerline alignment, go-around decision and stall avoidance",
+      "mif_row": null,
+      "source": "general:f,g,h,i,j",
+      "hf_concept": "hf-lack-of-assertiveness",
+      "texts": {
+        "0": "SP, due to failure to call the go-around once the approach was no longer stable, continued an approach that was diverging from the final and was not aligned with the runway centerline inside 1/2 NM from the threshold. Bank on base exceeded 45 degrees during the attempt to correct back and stall characteristics began to appear. The IP took control, unloaded the aircraft and executed the go-around.",
+        "1": "SP, due to reluctance to state that the approach could not be continued, held a final track that converged on the centerline and reached alignment only very close to the threshold. Bank on base reached the 45 degrees limit during the correction, and the go-around was initiated only after the IP directed it, with a noticeable delay.",
+        "2": "SP, due to a roll-out point planned slightly inside the briefed one, initially converged on the final track and rolled out with the aircraft off the centerline. SP recognized the geometry early, corrected with bank well inside 45 degrees and was aligned with the runway centerline before 1/2 NM from the threshold, without prompting and without any approach to stall.",
+        "3": "SP planned the roll-out point as described in the Techniques and Procedures Manual, kept bank on base inside 45 degrees and neither deviated from nor converged on the final. The aircraft was aligned with the runway centerline well before 1/2 NM from the threshold and no stall characteristics were allowed to develop at any point.",
+        "4": "SP flew the base to final transition exactly on the planned roll-out point, arriving aligned on the runway centerline with no correction required. Bank remained comfortably inside the limit, the aircraft was flown clear of any approach to stall, and when a go-around was required it was initiated immediately and flown correctly without hesitation.",
+        "marginal": "SP met the required standard on final track and bank, but the roll-out consistently placed the aircraft slightly outside the centerline and alignment was achieved only just before 1/2 NM from the threshold. The tendency is to delay the assessment of whether the approach is still acceptable rather than stating it early. SP is expected to plan the roll-out point more precisely and to call a go-around promptly whenever the approach parameters are no longer being met."
+      }
+    }
+  ]
+}

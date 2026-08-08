@@ -1,0 +1,100 @@
+{
+  "item_id": "formation-crm",
+  "item_name": "CRM",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [],
+  "mif_rows": [],
+  "error_modes": [
+    {
+      "id": "formation-crm-em01",
+      "label": "Recognition of when CRM enhances formation mission performance and flight safety",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-lack-of-teamwork",
+      "texts": {
+        "0": "SP, due to failure to work the problem as a crew rather than individually, did not recognize any point at which CRM affected formation mission performance or flight safety. SP flew the sortie as an isolated aircraft and produced no coordination input toward the other cockpit or the other formation member at the briefing, in flight or at the debriefing. The IP had to stop the profile and direct the required crew and formation actions before it could continue.",
+        "1": "SP, due to an unagreed division of lookout responsibility within the formation, recognized CRM only where flight safety was already compromised and not where coordination would have improved formation mission performance. SP acted on the point only after the IP had raised it verbally more than once, and the coordination that followed came after the phase of flight in which it was useful. No IP control input was required.",
+        "2": "SP, due to an initially aircraft-centered focus during the rejoin phase, missed the first opportunity where crew and formation coordination would have improved mission performance. SP recognized the omission without prompting, stated the coordination requirement to the other cockpit and applied it for the remainder of the sortie. No IP prompting or intervention was needed.",
+        "3": "SP recognized accurately and without delay when CRM enhanced formation mission performance and flight safety, and stated it in the briefing, in flight and in the debriefing. Coordination was applied at the point where it produced an effect on formation integrity rather than after the event. All CRM items applicable to the formation sortie were covered without IP prompting.",
+        "4": "SP identified crew and formation coordination opportunities before they became necessary and used them consistently across briefing, flight and debriefing. SP linked each specific CRM behavior to the resulting gain in formation mission performance and flight safety. Deviations from the expected standard on this axis were negligible.",
+        "marginal": "SP met the standard on recognizing when CRM enhances formation mission performance and flight safety, but did so almost only in the safety-related cases and rarely in the mission-performance ones. The trend across the sortie was toward recognition after the IP raised the subject rather than on SP initiative. SP is expected to state the CRM benefit unprompted during the formation phases of the next sortie."
+      }
+    },
+    {
+      "id": "formation-crm-em02",
+      "label": "Use of the IFG/CRM matrix chart to highlight applicable formation items",
+      "mif_row": null,
+      "source": "general:b|execution:2",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not having reviewed the IFG/CRM matrix chart before the briefing, did not use it to highlight any of the CRM items applicable to the formation sortie. Mission planning and briefing, communication and airmanship were left unaddressed as gradeable CRM items. The IP had to introduce the matrix chart and identify the applicable items in place of SP for the sortie to be briefed at all.",
+        "1": "SP, due to treating the matrix chart as a debriefing formality rather than a planning tool, opened it but highlighted only the communication item and left mission planning and briefing and the airmanship subcategories unmarked. SP added the missing items only after repeated verbal direction from the IP, and after the briefing had already moved to the flight profile. No IP intervention beyond verbal prompting was required.",
+        "2": "SP, due to an incomplete first pass through the IFG/CRM matrix chart, initially highlighted the CRM items relevant to the wingman phases only and omitted those relevant to the lead phases. SP identified the gap without prompting and completed the matrix before the briefing closed. No IP prompting or intervention was needed.",
+        "3": "SP used the IFG/CRM matrix chart accurately and without delay to highlight every CRM item applicable to the formation sortie, covering mission planning and briefing, communication and the airmanship subcategories. Each highlighted item was tied to the specific formation phase in which it applied. The selection required no IP correction.",
+        "4": "SP used the IFG/CRM matrix chart to highlight the applicable CRM items and, in addition, showed how each item mapped to the lead and wingman tasks of the specific profile. The selection anticipated the CRM demands of the rejoin and lead change phases before they were flown. Deviations from the expected standard on this axis were negligible.",
+        "marginal": "SP met the standard in using the IFG/CRM matrix chart, but the highlighting stayed at the level of naming the items without connecting them to the formation phases in which they applied. The trend was toward reproducing the same item selection from the previous sortie regardless of the profile. SP is expected to tailor the matrix selection to the specific formation profile on the next sortie."
+      }
+    },
+    {
+      "id": "formation-crm-em03",
+      "label": "Application of the CRM concept when planning formation maneuvers",
+      "mif_row": null,
+      "source": "general:c|execution:1",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to planning the formation maneuvers as a sequence of individual handling tasks, did not apply the CRM concept when planning them and briefed no crew or formation coordination for the rejoin, lead change and breakout sequences. No responsibilities were allocated between the cockpits or between lead and wingman for any phase of the profile. The IP had to rebrief the coordination requirements before the sortie could be flown as planned.",
+        "1": "SP, due to a briefing built around maneuver mechanics only, applied the CRM concept when planning the formation maneuvers only where the profile made it unavoidable, and left the position change and lead change sequences without any stated coordination. SP added the missing coordination after being directed verbally by the IP more than once, and by then the briefing time available for it had passed. No IP intervention beyond verbal direction was required.",
+        "2": "SP, due to an initial focus on the fingertip and echelon portions of the profile, planned those with full crew coordination but omitted the coordination for the breakout sequence. SP recognized the gap without prompting and briefed the breakout responsibilities before the briefing closed. No IP prompting or intervention was needed.",
+        "3": "SP applied the CRM concept accurately and without delay when planning the formation maneuvers, allocating cockpit and formation responsibilities for each phase of the profile including rejoin, position change, lead change and breakout. Each maneuver was briefed with the coordination that would be used to fly it. The plan required no IP correction.",
+        "4": "SP applied the CRM concept across the whole formation profile at the planning stage and built the coordination for each maneuver around the specific experience level of the formation members. SP briefed contingency coordination for the phases most likely to require it before they were flown. Deviations from the expected standard on this axis were negligible.",
+        "marginal": "SP met the standard in applying the CRM concept when planning the formation maneuvers, but the coordination briefed for the later phases of the profile was noticeably less developed than for the early phases. The trend was toward planning coordination only for the maneuvers SP found technically demanding. SP is expected to brief coordination to the same depth across the whole formation profile on the next sortie."
+      }
+    },
+    {
+      "id": "formation-crm-em04",
+      "label": "Application of the CRM concept when analyzing abnormal and emergency situations in formation",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-role-assignment",
+      "texts": {
+        "0": "SP, due to absent explicit role assignment when the malfunction occurred, did not apply the CRM concept in analyzing the abnormal situation and left it ambiguous who was flying the aircraft, who was working the procedure and who was holding formation deconfliction. No knock-it-off call and no request for lead responsibilities were made while the condition developed. The IP had to take the aircraft and direct both the procedure and the separation from the other formation member.",
+        "1": "SP, due to delayed role allocation in the first seconds after the abnormal indication, applied the CRM concept to the emergency only partially, working the procedure without first stating who was flying and without informing the other formation member of the aircraft state. SP allocated the roles only after the IP had stated the requirement verbally more than once, by which time the analysis had fallen behind the situation. No IP control input was required.",
+        "2": "SP, due to an initially procedure-first response to the abnormal indication, began the analysis without stating the role allocation between the cockpits. SP recognized this without prompting, stated who was flying and who was working the procedure, and passed the aircraft condition to the other formation member. The analysis was then completed on time and without IP intervention.",
+        "3": "SP applied the CRM concept accurately and without delay in analyzing the abnormal situation, stating role allocation between the cockpits, passing the aircraft state to the other formation member and structuring the analysis before acting on it. Formation deconfliction was addressed as part of the analysis rather than after it. No IP prompting was required at any stage.",
+        "4": "SP applied the CRM concept to the abnormal situation with role allocation stated before the analysis began and with the formation implications addressed in the same sequence as the aircraft procedure. SP kept both cockpits and the other formation member working from the same assessment throughout. Deviations from the expected standard on this axis were negligible.",
+        "marginal": "SP met the standard in applying the CRM concept when analyzing the abnormal situation, but the role allocation was stated late in the sequence rather than at its start. The trend was toward resolving the aircraft procedure first and addressing the formation implications afterwards. SP is expected to state role allocation as the first action of the analysis on the next sortie."
+      }
+    },
+    {
+      "id": "formation-crm-em05",
+      "label": "Communication and upward inquiry between cockpits and formation members",
+      "mif_row": null,
+      "source": "general:c|execution:2b",
+      "hf_concept": "hf-authority-gradient",
+      "texts": {
+        "0": "SP, due to an authority gradient in the IP/SP cockpit that suppressed the upward challenge, did not communicate a recognized closure and lateral separation problem during the rejoin and did not question the flown solution. The information required to resolve the geometry stayed inside one cockpit while the condition developed. The IP had to intervene on the controls and terminate the rejoin.",
+        "1": "SP, due to reluctance to challenge a decision perceived as the instructor prerogative, raised the recognized discrepancy only as an indirect remark rather than as a direct statement of the aircraft state and the required action. SP stated the concern clearly only after the IP had invited it verbally more than once, and by then the formation geometry had already been corrected by other means. No IP control input was required.",
+        "2": "SP, due to an initial hesitation across the evaluation relationship, delayed the first call on the developing overtake in the rejoin. SP corrected this without prompting, stated the closure problem in plain language to the front cockpit and passed the required call to the other formation member. The correction was made early enough that no IP intervention was needed.",
+        "3": "SP communicated accurately and without delay between cockpits and to the other formation member, stating aircraft state, intentions and any discrepancy at the point it was recognized. SP questioned the flown solution directly where the observed formation geometry did not match the briefed one. All required calls were made without IP prompting.",
+        "4": "SP maintained communication that kept both cockpits and the other formation member working from the same picture throughout the profile, and raised each discrepancy as a direct statement with a proposed alternative. SP made upward inquiry a routine part of the sortie rather than an exception. Deviations from the expected standard on this axis were negligible.",
+        "marginal": "SP met the standard on communication and upward inquiry, but the direct statements were confined to the phases in which the formation geometry was already visibly degrading. The trend was toward voicing concerns only once they had become unmistakable rather than at first recognition. SP is expected to raise discrepancies at the point of first recognition on the next sortie."
+      }
+    },
+    {
+      "id": "formation-crm-em06",
+      "label": "Debriefing self-assessment, CRM development areas and completion of the CRM box",
+      "mif_row": null,
+      "source": "general:a,d|execution:4,5,6",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to treating the debriefing as an account of maneuver results only, did not discuss any area for CRM development or improvement and offered no comment on where CRM had enhanced mission effectiveness and safety. The gradesheet CRM box was left uncompleted after the debriefing. The IP had to conduct the CRM portion of the debriefing and identify the development areas in place of SP.",
+        "1": "SP, due to a self-assessment limited to the flown parameters, discussed CRM only for the phases in which the IP had already intervened and identified no development area of his/her own. SP produced the required discussion only after repeated verbal direction from the IP and after the technical debriefing had closed. The CRM box was completed, but the content behind it came from the IP rather than from SP.",
+        "2": "SP, due to an initially maneuver-by-maneuver structure to the debriefing, omitted CRM from the review of the rejoin and lead change phases. SP recognized the omission without prompting, returned to those phases, identified a specific coordination area for improvement and completed the CRM box after the debriefing. No IP prompting or intervention was needed.",
+        "3": "SP discussed the CRM development areas accurately and without delay in the debriefing, naming the specific behaviors rather than general impressions, and commented on the points where CRM enhanced formation mission effectiveness and safety. The self-assessment was consistent with what was observed in flight. SP completed the CRM box on the gradesheet after the debriefing without prompting.",
+        "4": "SP led the CRM portion of the debriefing, identified specific development areas with the corrective behavior for each and related them to the formation phases in which they had appeared. SP also identified where CRM had produced a measurable gain in mission effectiveness and safety. Deviations from the expected standard on this axis were negligible.",
+        "marginal": "SP met the standard on the debriefing self-assessment and completed the CRM box, but the development areas identified were stated in general terms rather than as specific behaviors tied to a formation phase. The trend was toward repeating the same generic item across consecutive debriefings. SP is expected to name a specific behavior and its corrective action on the next debriefing."
+      }
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "item_id": "formation-03",
+  "item_name": "DEPARTURE",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [3],
+  "mif_rows": [
+    {"sn": 3, "row_name": "Departure"}
+  ],
+  "error_modes": [
+    {
+      "id": "formation-03-em01",
+      "label": "Altitude control during climb out and level off on the departure",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a climb attitude flown by outside reference alone with no altimeter cross-check, did not level the formation off at the altitude assigned for the departure. The aircraft went about 500 feet above the assigned level with the trend still developing while the wingman was struggling to stay in position. IP had to take the controls to recover the assigned altitude and re-stabilize the formation.",
+        "1": "SP set a climb attitude that was not adjusted as the airspeed built, so the level off was started late and the altitude excursion reached 300 feet, exactly at the limit of the standard. SP corrected only after repeated verbal calls from IP, and the recovery was abrupt enough to force the wingman into a large power reduction. The formation was returned to the assigned altitude but a residual error was carried into the transit.",
+        "2": "SP began the level off slightly late and the formation climbed about 220 feet above the assigned departure altitude. SP identified the deviation on the altimeter and flew the formation smoothly back to the cleared level with no intervention by IP. The excursion stayed between the 150 and 300 foot bands, but the lead point for the level off should have been anticipated earlier.",
+        "3": "SP flew the climb and the level off within 100 feet of the assigned departure altitude throughout. Pitch changes were led early enough for the wingman to hold position without large power changes. Every deviation was detected on the altimeter and removed immediately.",
+        "4": "SP held the departure altitudes within about 40 feet, with each level off anticipated so precisely that the altimeter needle simply stopped on the assigned value. Rates were gentle and predictable, so the formation stayed locked together and nothing more than light control pressure was ever required.",
+        "marginal": "SP remained inside the altitude standard, but the deviations clustered near 140 feet and were consistently high after each level off. The corrections were effective yet started later than required and were larger than the wingman could absorb comfortably. SP is expected to anticipate the level off lead point so that the altitude trace tightens over the next sorties."
+      }
+    },
+    {
+      "id": "formation-03-em02",
+      "label": "Airspeed control in the climb and the transit to the flight area",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power left at the climb setting after the level off and no scan of the airspeed indicator, allowed the speed to run about 35 knots above the briefed transit value. The wingman could not hold the briefed position from the outside of the turn and fell behind the formation. IP had to reduce power and reset the transit speed.",
+        "1": "SP made power changes without reference to the airspeed indicator, so the speed drifted 20 knots off the briefed value, at the limit of the standard. The correction was started only after IP called the deviation twice, and the throttle movement was large enough to displace the wingman from position. The briefed speed was regained late in the transit.",
+        "2": "SP was slow to reset power after the level off and the airspeed reached about 15 knots above the briefed value. SP detected the deviation, made a small power correction and re-established the briefed transit speed without any intervention by IP. The deviation stayed between the 10 and 20 knot bands, but the power reset should have been made together with the level off.",
+        "3": "SP maintained the climb and transit speeds within 10 knots of the briefed values. Power was set at each phase change and refined with small corrections, so the wingman held position with modest throttle activity.",
+        "4": "SP held the briefed airspeeds within about 4 knots for the whole departure and transit, setting power in a single movement at each phase change. The speed was so stable that the wingman flew the transit with almost no throttle correction.",
+        "marginal": "SP remained within the airspeed standard, but the values sat near 18 knots fast during the transit and were reduced only after the wingman asked for a slower speed. Each correction worked, yet it was reactive rather than planned. SP is expected to set the transit power at the level off so the speed stabilizes without prompting."
+      }
+    },
+    {
+      "id": "formation-03-em03",
+      "label": "Accuracy of the assigned departure heading on rollout",
+      "mif_row": null,
+      "source": "specific:EXIT HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a rollout flown by outside reference without checking the heading indicator, steadied the formation about 18 degrees off the departure heading assigned by ATC. The error was not recognized and the formation continued to diverge from the published departure track. IP had to take over to regain the assigned heading before the airspace boundary.",
+        "1": "SP rolled out of the departure turn 10 degrees off the assigned heading, exactly at the limit of the standard. The correction was made only after IP pointed out the error, and the second turn was large enough to force the wingman to correct with bank and power. The assigned heading was regained late.",
+        "2": "SP anticipated the rollout late and steadied about 8 degrees off the assigned departure heading. SP checked the heading indicator, corrected with a shallow turn that the wingman could easily follow and settled on the assigned heading with no intervention by IP. The error stayed between the 5 and 10 degree bands, but the lead into the rollout should have been taken earlier.",
+        "3": "SP rolled out on the assigned departure headings within 5 degrees on every turn. The lead into the rollout matched the bank used, and the heading indicator was checked to confirm the value rather than assumed.",
+        "4": "SP steadied on each assigned heading within about 2 degrees, with the rollout anticipated so that no secondary correction was needed. The formation tracked the published departure route with no visible wander.",
+        "marginal": "SP held the heading standard, but the rollouts settled near 9 degrees off and were tidied up only after a second look at the heading indicator. The final values were acceptable while the technique remained a two stage correction. SP is expected to lead the rollout by the correct amount so that the first rollout is the final one."
+      }
+    },
+    {
+      "id": "formation-03-em04",
+      "label": "Leading the formation at a rate the wingman can hold",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to bank and power changes made without regard to the wingman's position, applied a rollout and a large power reduction together that the wingman could not match. The wingman was left well outside the briefed position with an overtake he could not control and formation integrity was lost. IP had to direct a rejoin and take over the maneuvering.",
+        "1": "SP used abrupt control inputs during the departure turns and the wingman was displaced from the briefed position on each one. SP moderated the inputs only after IP called for smoother leading, and the wingman remained unstable for most of the climb. The formation stayed together only through the wingman's own corrections.",
+        "2": "SP started the departure turns with more bank than briefed, so the wingman went momentarily wide. SP recognized the effect, reduced the bank and flew the remaining turns at a rate the wingman could hold, with no intervention by IP. Formation safety was never in doubt, but the first input should have been sized for the wingman.",
+        "3": "SP led the formation with smooth and predictable inputs throughout the departure. Bank, pitch and power changes were made at a rate the wingman could match, and the briefed position was held through every turn and the level off.",
+        "4": "SP flew the whole departure as if from the wingman's cockpit, starting every input gently and holding it steady until completion. The wingman remained locked in the briefed position with no visible correction and the formation moved as a single aircraft.",
+        "marginal": "SP kept the formation safe and together, but the inputs were sized for the leader rather than for the wingman, who was working hard to hold position. No intervention was necessary and the standard was met. SP is expected to smooth the entry and the exit of each turn so the wingman can hold position with minimal effort."
+      }
+    },
+    {
+      "id": "formation-03-em05",
+      "label": "Clearing and traffic deconfliction while leaving the pattern",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to attention held inside the cockpit on the departure instruments with no cross-check of the outside picture, did not clear the airspace ahead and into the turns during the climb out of the pattern. Traffic in the air traffic pattern was never seen and the formation was turned across its track. IP had to take control and maneuver the formation clear.",
+        "1": "SP performed only a cursory lookout before each departure turn and did not clear the airspace into which the formation was turning. The conflicting aircraft was acquired only after IP called it out twice and the avoiding action was late. Separation was preserved, but the clearing remained reactive for the whole departure.",
+        "2": "SP was slow in clearing the airspace into the first departure turn and acquired the pattern traffic later than it should have been seen. SP then re-established a proper lookout, called the traffic to the wingman and kept it visually acquired for the rest of the climb without any intervention by IP.",
+        "3": "SP cleared the airspace before and during every departure turn and kept the pattern traffic visually acquired. Attention was divided correctly between the outside lookout, the wingman and the departure instruments.",
+        "4": "SP maintained a continuous and disciplined lookout throughout the departure, acquiring each conflicting aircraft well before it became a factor and calling it to the wingman. The instrument cross-check was interleaved with the lookout with no loss on either side.",
+        "marginal": "SP cleared the airspace adequately, but the scan was weighted toward the instruments and the pattern traffic was acquired later than comfortable on two occasions. Separation was never in question and no prompting was required. SP is expected to lead the lookout into each turn so that traffic is seen before it becomes a factor."
+      }
+    },
+    {
+      "id": "formation-03-em06",
+      "label": "Compliance with the local departure procedure out of the traffic pattern",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a departure procedure that had not been studied before the sortie, did not fly the published route out of the air traffic pattern. The formation was turned on course before the departure point and climbed through the pattern altitude inside the traffic circuit, contrary to the Local Area Procedures. IP had to intervene and re-establish the formation on the published departure.",
+        "1": "SP flew the correct departure route but arrived at the turning point without having reached the climb profile required by the Local Area Procedures. The sequence was corrected only after IP prompted for the published profile and the formation rejoined the procedure late. Nothing further was omitted after the prompt.",
+        "2": "SP began the departure turn slightly before the published point and the formation was momentarily off the local departure track. SP recognized the error against the visual references, regained the published route and flew the remainder of the procedure as written with no intervention by IP.",
+        "3": "SP flew the local departure procedure as published, with the pattern exit, the climb profile and the turn on course in the correct sequence. The procedural requirements were applied without prompting and the formation stayed on the published track.",
+        "4": "SP flew the local departure exactly as published and anticipated every step, so the pattern exit, the climb and the turn on course flowed without a single correction. Departures from the published track were not measurable and the wingman had no extra work to do.",
+        "marginal": "SP complied with the local departure procedure, but the turn points were identified late and the profile altitudes were reached at the last moment. Nothing was omitted and no prompting was required. SP is expected to fix the sequence of the procedure before the sortie so that the departure steps are anticipated rather than recognized."
+      }
+    },
+    {
+      "id": "formation-03-em07",
+      "label": "Orientation and transit to the assigned flight area",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to a loss of situational awareness after the departure turn, did not identify the boundaries of the assigned flight area and led the formation past them. The position relative to the area and to the adjacent airspace was not maintained and SP could not state where the formation was when asked. IP had to take over the navigation and return the formation into the assigned area.",
+        "1": "SP lost track of the position relative to the assigned flight area during the transit and was heading toward the wrong sector. Orientation was restored only after IP gave the visual references twice, and entry into the area was delayed. The formation stayed clear of the adjacent airspace only because of the prompting.",
+        "2": "SP misidentified a ground reference during the transit and drifted toward the edge of the assigned area. SP rebuilt the position picture from heading, time and known landmarks, corrected the track and entered the assigned area correctly with no input from IP.",
+        "3": "SP kept the formation oriented throughout the transit and entered the assigned flight area on the briefed track and at the briefed altitude. Position was cross-checked continuously against ground references and the heading indicator.",
+        "4": "SP was oriented at every moment of the transit, able to state position, distance and time to the area boundary without hesitation. Entry into the assigned area was made exactly on the briefed track, altitude and timing, with the working area identified before arrival.",
+        "marginal": "SP maintained orientation and entered the assigned area correctly, but the position picture was rebuilt from landmarks rather than carried continuously and one reference was confirmed late. The result met the standard with no prompting from IP. SP is expected to keep a running position estimate so that the area boundary is anticipated rather than searched for."
+      }
+    },
+    {
+      "id": "formation-03-em08",
+      "label": "Radio calls and visual signals with the wingman and ATC",
+      "mif_row": null,
+      "source": "general:a,b",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, due to a lack of communication with the wingman during the departure, changed power and heading without any radio call or visual signal. The wingman had no notice of the changes and fell out of the briefed position, and one ATC clearance accepted for the formation was never passed on. IP had to make the calls and re-establish the coordination between the two cockpits.",
+        "1": "SP used non-standard phraseology and passed the changes to the wingman late, so the formation reacted a step behind each ATC instruction. The calls were corrected only after IP prompted for the standard format, and one visual signal had to be repeated before the wingman acknowledged it. The departure was completed with the formation intact.",
+        "2": "SP passed one clearance change to the wingman later than briefed, so the wingman had to correct to stay in position. SP recognized the omission, returned to the briefed calls and visual signals and kept the wingman informed for the rest of the departure with no intervention by IP.",
+        "3": "SP passed every ATC clearance and configuration change to the wingman with standard phraseology and the briefed visual signals. Radio work with ATC was concise and correct and the wingman was never left guessing.",
+        "4": "SP kept the wingman fully informed throughout the departure, giving each change with the correct signal or call before it was flown. Radio work with ATC was accurate and economical and the whole departure was completed without a single request for a repeat.",
+        "marginal": "SP communicated all the required items, but several calls were made while the change was being flown rather than before it, and the phraseology drifted from the standard on two transmissions. The wingman kept position and no prompting was needed. SP is expected to make the call first and fly the change second so that the wingman has time to respond."
+      }
+    }
+  ]
+}

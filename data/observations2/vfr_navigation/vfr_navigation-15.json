@@ -1,0 +1,147 @@
+{
+  "item_id": "vfr_navigation-15",
+  "item_name": "INSTRUMET PROCEDURES",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [15],
+  "mif_rows": [
+    {"sn": 15, "row_name": "Instrument Procedures"}
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-15-em01",
+      "label": "Altitude control during instrument procedures",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an instrument cross-check that remained fixed on the attitude indicator, did not maintain the assigned altitude during the instrument segment of the navigation leg. Altitude diverged beyond 300 feet from the assigned value and the divergence continued without any correcting input. IP intervened to arrest the deviation and re-establish the assigned altitude.",
+        "1": "SP, due to a trim setting left uncorrected after the power change, did not hold the assigned altitude in level flight. The deviation reached 300 feet, at the tolerance limit, and was corrected only after verbal prompting from the IP. The correcting input was late and the aircraft remained off the assigned altitude through the following turn.",
+        "2": "SP, due to a delayed return of the scan to the altimeter after tuning the navigation aid, allowed the assigned altitude to drift. The deviation reached approximately 200 feet, between 150 and 300 feet, and SP recognized it without prompting. Correction was applied promptly and the aircraft was returned to the assigned altitude with no IP intervention.",
+        "3": "SP maintained the assigned altitude within 150 feet throughout the instrument segment of the navigation leg. Corrections were small, promptly applied and made with reference to the primary flight instruments. Altitude control remained stable through level-offs, turns and the transitions between them.",
+        "4": "SP held the assigned altitude with deviations that remained negligible in every phase of the instrument segment. Altitude was recaptured immediately whenever power or configuration changed, by anticipation rather than by reaction. The instrument cross-check supported altitude control without degradation during radio work and navigation aid management.",
+        "marginal": "SP maintained the assigned altitude inside the required tolerance, but the deviations repeatedly approached the outer part of the acceptable band before being corrected. The trend was a consistent altitude gain in turns, corrected late rather than anticipated. SP is expected to tighten the altimeter portion of the cross-check so that corrections begin at the first indication of a trend."
+      }
+    },
+    {
+      "id": "vfr_navigation-15-em02",
+      "label": "Airspeed control during instrument procedures",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (KIAS)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power settings applied without reference to the airspeed indicator, did not maintain the required airspeed during the instrument procedure. Airspeed departed by more than 20 KIAS from the target value and was not restored by SP's own inputs. IP intervened with power and pitch to return the aircraft to the required airspeed.",
+        "1": "SP, due to a late power reduction at level-off, did not hold the required airspeed. The deviation reached 20 KIAS, at the tolerance limit, and was reduced only after the IP called the airspeed. The correction was applied slowly and the airspeed remained at the edge of tolerance for a large part of the segment.",
+        "2": "SP, due to a power setting selected without confirmation of the resulting airspeed, allowed the airspeed to move away from the target. The deviation reached approximately 15 KIAS, between 10 and 20 KIAS, and SP identified it on the airspeed indicator without prompting. Power was adjusted in time and the target airspeed was re-established without IP intervention.",
+        "3": "SP maintained the required airspeed within 10 KIAS throughout the instrument procedure. Power changes were made in anticipation of the configuration and pitch changes and were confirmed on the airspeed indicator. Airspeed remained steady in climb, descent, level flight and turns.",
+        "4": "SP held the required airspeed with deviations that were negligible in all phases of the instrument procedure. Power was set accurately for each phase and only small refinements were needed after each change. Airspeed control was not affected by the concurrent navigation and communication workload.",
+        "marginal": "SP kept the airspeed within the required tolerance, but the values consistently sat toward one side of the target rather than on it. The trend was a slow airspeed after each level-off, corrected only when it approached the outer part of the band. SP is expected to set the known power values for each phase so that airspeed is held on target instead of being recovered."
+      }
+    },
+    {
+      "id": "vfr_navigation-15-em03",
+      "label": "Heading and course control during instrument procedures",
+      "mif_row": null,
+      "source": "specific:HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to rollout references taken from outside the cockpit instead of the heading indicator, did not maintain the assigned heading during the instrument segment. Heading error exceeded 10 degrees and increased as the aircraft continued off course. IP intervened to stop the divergence and re-establish the assigned heading.",
+        "1": "SP, due to a rate of turn that was not reduced approaching the rollout heading, did not maintain the assigned heading. The error reached 10 degrees, at the tolerance limit, and was corrected only after verbal indications from the IP. The correction was made in a single large input rather than by a controlled recapture.",
+        "2": "SP, due to an unbalanced turn entry that displaced the aircraft from the assigned heading, drifted off the required value. The error reached approximately 8 degrees, between 5 and 10 degrees, and was recognized by SP on the heading indicator. A timely correction returned the aircraft to the assigned heading without IP intervention.",
+        "3": "SP maintained the assigned heading within 5 degrees during the instrument procedure. Turns were rolled out on the required heading with anticipation proportional to the bank used. Heading was held steadily between turns and during the changes of configuration.",
+        "4": "SP held the assigned heading with negligible error in all phases of the instrument segment. Rollouts were accurate on the first attempt and no corrective turns were required after them. Heading control remained accurate while SP managed navigation aids and radio calls.",
+        "marginal": "SP held the assigned heading within tolerance, but heading errors were allowed to build before each correction. The trend was an overshoot on rollout followed by a recapture, repeated on successive turns. SP is expected to lead the rollout and to check the heading indicator earlier in the turn so that the assigned heading is captured directly."
+      }
+    },
+    {
+      "id": "vfr_navigation-15-em04",
+      "label": "Instrument cross-check on transition from visual to instrument flight",
+      "mif_row": null,
+      "source": "general:basic_ac_control_execution;instrument_transition",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an interrupted instrument cross-check while attention remained outside the cockpit, did not transfer control references to the primary flight instruments when the instrument procedure began. Aircraft control was maintained on external cues that were no longer usable, and altitude, airspeed and heading all departed their tolerances at the same time. IP intervened and flew the aircraft until the instrument scan was re-established.",
+        "1": "SP, due to absent cross-check of aircraft state against the primary flight instruments, delayed the transition to instrument references at the start of the procedure. Parameters reached the outer tolerance limits and were brought back only after the IP directed attention to the instruments. The scan was re-established slowly and remained incomplete for the rest of the segment.",
+        "2": "SP, due to a cross-check that omitted the performance instruments for several seconds during the navigation aid setup, allowed the aircraft state to move away from the required values. Deviations remained between the inner and outer tolerances and SP restored the full scan without prompting. Aircraft state was recovered in time and no IP intervention was required.",
+        "3": "SP transitioned to the primary flight instruments promptly at the start of the instrument procedure and maintained a continuous cross-check. Attitude, performance and navigation instruments were all included in the scan and the aircraft state was verified after each change. All controlled parameters were kept within the inner tolerances during the transition.",
+        "4": "SP moved to instrument references without any interruption of aircraft control and maintained an unbroken cross-check throughout the procedure. The scan was reprioritized correctly for each phase, with the required emphasis during level-offs and turns. Deviations remained negligible even while navigation aids were being set and radio calls were being made.",
+        "marginal": "SP maintained an instrument cross-check adequate to keep all parameters within standards, but the scan narrowed noticeably whenever a secondary cockpit task was introduced. The trend was a short lapse of the performance instruments during navigation aid tuning, recovered before any tolerance was reached. SP is expected to keep the cross-check running through secondary tasks so that scan quality does not depend on workload."
+      }
+    },
+    {
+      "id": "vfr_navigation-15-em05",
+      "label": "Climb, descent and level-off control",
+      "mif_row": null,
+      "source": "general:basic_ac_control_execution;phases_of_flight",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a lead point for level-off that was not computed from the vertical velocity, did not control the transition between climb or descent and level flight. The aircraft passed through the assigned altitude by more than 300 feet and the subsequent pitch inputs did not arrest the excursion. IP intervened to level the aircraft at the assigned altitude.",
+        "1": "SP, due to pitch and power changes made in the wrong order at level-off, did not achieve the required altitude and airspeed together. Altitude overshoot reached the outer tolerance and was corrected only after prompting by the IP. The aircraft was stabilized late and the following segment began with parameters still being recaptured.",
+        "2": "SP, due to a level-off initiated without sufficient lead for the rate of descent, overshot the assigned altitude. The excursion stayed between the inner and outer tolerances and SP recognized and stopped it without prompting. Pitch and power were adjusted promptly and the aircraft was stabilized at the assigned altitude with no IP intervention.",
+        "3": "SP controlled climbs, descents and level-offs with the required pitch and power coordination. The lead point for each level-off was appropriate to the rate of climb or descent and the aircraft was stabilized on the assigned altitude and airspeed. All parameters remained within the inner tolerances through each transition.",
+        "4": "SP flew the vertical transitions accurately, capturing each assigned altitude directly with no overshoot and with airspeed and trim already set for the new phase. Rates of climb and descent were selected to suit the procedure and were held steady. Deviations at each level-off were negligible.",
+        "marginal": "SP completed the climbs, descents and level-offs within standards, but each transition required corrective inputs after the initial capture. The trend was a small overshoot at level-off followed by a recovery, repeated at successive altitudes. SP is expected to compute the lead from the actual vertical velocity so that the assigned altitude is captured on the first attempt."
+      }
+    },
+    {
+      "id": "vfr_navigation-15-em06",
+      "label": "Bank control and coordination in turns up to 30 degrees",
+      "mif_row": null,
+      "source": "general:basic_ac_control_execution;turns_up_to_30_bank",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to bank angle applied without reference to the attitude indicator, did not control the turn within the limits of the procedure. Bank exceeded the value required for the turn and the resulting heading and altitude errors both went past the outer tolerances. IP intervened to reduce the bank and restore controlled flight on instruments.",
+        "1": "SP, due to uncoordinated rudder and aileron inputs, did not maintain a steady bank during the instrument turns. Altitude and heading were driven to the outer tolerance limits and were restored only after verbal indications from the IP. Bank remained variable for the remainder of the turn.",
+        "2": "SP, due to a bank angle allowed to increase after the turn was established, produced a heading and altitude drift during the instrument turn. The deviations stayed between the inner and outer tolerances and SP identified the increasing bank on the attitude indicator. Bank was reset and the parameters were restored in time, without IP intervention.",
+        "3": "SP held a steady, coordinated bank not exceeding 30 degrees in the instrument turns and adjusted pitch and power to match. Altitude and airspeed were maintained inside the inner tolerances throughout each turn. Rollouts were made on the required heading with correct anticipation.",
+        "4": "SP flew the instrument turns with the bank held precisely at the selected value and with coordination maintained throughout. Pitch and power compensation was applied as the bank was established, so altitude and airspeed changes were negligible. Entry, sustained turn and rollout were flown as a single controlled sequence.",
+        "marginal": "SP kept the instrument turns within the required standards, but bank angle varied around the selected value instead of being held. The trend was a slow altitude loss in the turn, recovered before the tolerance was reached. SP is expected to set the bank on the attitude indicator and apply the pitch and power compensation at entry so the turn stays stable without repeated corrections."
+      }
+    },
+    {
+      "id": "vfr_navigation-15-em07",
+      "label": "Trim and power management for steady instrument flight",
+      "mif_row": null,
+      "source": "general:basic_ac_control_execution;level_flight",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an aircraft flown out of trim after the configuration change, did not maintain steady flight on instruments during the procedure. Continuous control pressure was required, the scan broke down and altitude and airspeed both left their tolerances. IP intervened to trim the aircraft and restore stabilized flight.",
+        "1": "SP, due to trim inputs made in large steps that were not followed by a check of the resulting state, did not achieve stabilized instrument flight. Altitude and airspeed reached the outer tolerance limits and were corrected only after the IP prompted the trim. The aircraft was not left trimmed for the following phase of the procedure.",
+        "2": "SP, due to trim not being refined after the power change, held the aircraft with residual control pressure during the instrument segment. Altitude and airspeed drifted between the inner and outer tolerances and SP recognized the cause without prompting. Trim was reset in time and stabilized flight was restored without IP intervention.",
+        "3": "SP trimmed the aircraft after each change of power or configuration and maintained steady flight on instruments. Control pressures were relieved before the next task was started, which kept the cross-check available. Altitude and airspeed were held inside the inner tolerances between changes.",
+        "4": "SP kept the aircraft trimmed continuously through every phase of the instrument procedure, so that parameters held with minimal control input. Trim was adjusted in small increments and confirmed against the instruments each time. Deviations arising from configuration or power changes were negligible.",
+        "marginal": "SP kept the aircraft within standards but consistently flew with residual control pressure rather than trimming it out. The trend was a delayed trim adjustment after each power change, which forced repeated small corrections. SP is expected to complete the trim immediately after each change so that attention can be released to the cross-check."
+      }
+    },
+    {
+      "id": "vfr_navigation-15-em08",
+      "label": "Sequencing and execution of the instrument procedure within the route",
+      "mif_row": null,
+      "source": "general:instrument_category_procedures;sequence_of_procedures",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to task sequencing that concentrated the navigation aid setup and the procedure entry into the same few seconds, did not execute the instrument procedure in the required order. Required steps of the procedure were omitted and the aircraft was not established on the intended course or profile. IP intervened, took the required actions and directed the aircraft back onto the procedure.",
+        "1": "SP, due to workload management that left the procedure setup unfinished before the entry point, did not complete the steps of the instrument procedure in time. The aircraft reached the outer tolerances of the applicable parameters and the sequence was completed only after step by step direction from the IP. Recovery of the correct sequence was slow and the following steps stayed behind the aircraft.",
+        "2": "SP, due to a setup started late for the phase of flight, executed the steps of the instrument procedure out of the intended order. Parameter deviations remained between the inner and outer tolerances and SP identified the omitted step without prompting. The sequence was reordered in time and the procedure was completed correctly without IP intervention.",
+        "3": "SP executed the instrument procedure in the correct sequence, with each setup action completed before the point at which it was required. Navigation aids, courses and altitudes were set and verified ahead of the aircraft. The controlled parameters remained inside the inner tolerances throughout the procedure.",
+        "4": "SP planned and executed the instrument procedure with the sequence fully anticipated, so that every action was complete well before it was needed. Workload was distributed evenly across the segment and no step competed with aircraft control. The procedure was flown with negligible deviations and without any reordering of tasks.",
+        "marginal": "SP completed the instrument procedure in the correct order and within standards, but the setup actions were finished close to the point at which they were required. The trend was a compressed workload immediately before each transition, absorbed without error but with no margin. SP is expected to move the setup actions earlier in each segment so that the procedure is flown ahead of the aircraft."
+      }
+    },
+    {
+      "id": "vfr_navigation-15-em09",
+      "label": "Crew and ATC coordination during instrument procedures",
+      "mif_row": null,
+      "source": "general:coordination_with_ip_and_atc;communication",
+      "hf_concept": "hf-crew-resource-management",
+      "texts": {
+        "0": "SP, due to inadequate crew coordination between front and rear cockpit, did not state the intended instrument procedure or the clearance being flown. The aircraft was flown on an assumed clearance that was not the one issued and the assigned parameters were exceeded beyond their outer tolerances. IP intervened, took control and coordinated the correction with ATC.",
+        "1": "SP, due to a read-back that did not confirm the actual clearance, applied altitude and heading values that had not been assigned. Parameters reached the outer tolerance limits and were corrected only after the IP identified the error and prompted the correct values. Subsequent transmissions remained incomplete for the rest of the segment.",
+        "2": "SP, due to a transmission made at the same time as the procedure entry, delayed the required call and briefly diverted attention from aircraft control. Deviations stayed between the inner and outer tolerances and SP re-established the scan and completed the call without prompting. Coordination with the IP and ATC was restored in time and no intervention was needed.",
+        "3": "SP communicated the intended instrument procedure clearly to the IP and used standard phraseology with ATC. Clearances were read back correctly and the values applied matched those assigned. Radio work was integrated with the cross-check and did not affect the controlled parameters.",
+        "4": "SP kept the IP fully informed of the intended procedure and of any change to the plan, using concise and unambiguous phrasing. Clearances were correctly read back, set and verified on the instruments before being flown. Communication was timed to protect the cross-check, and parameter deviations during radio work were negligible.",
+        "marginal": "SP coordinated adequately with the IP and ATC and kept all parameters within standards, but calls were made without regard to the phase of the procedure. The trend was a transmission started at a high workload point, followed by a short lapse in the cross-check. SP is expected to time the communication so that it does not compete with the aircraft control task."
+      }
+    }
+  ]
+}

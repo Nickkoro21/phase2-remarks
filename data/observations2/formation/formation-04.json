@@ -1,0 +1,162 @@
+{
+  "item_id": "formation-04",
+  "item_name": "IN FLIGHT PLANNING / FORMATION CONSISTENCY",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [4],
+  "mif_rows": [
+    {"sn": 4, "row_name": "In flight Planning/ Formation Consistency"}
+  ],
+  "error_modes": [
+    {
+      "id": "formation-04-em01",
+      "label": "Altitude holding while re-planning the profile",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an instrument cross-check that stopped while he re-sequenced the maneuvers of the profile, did not hold the planned altitude of the working block. The deviation passed 300 feet with a continuing trend and the formation approached the lower vertical limit of the assigned area. The IP intervened and returned the flight inside the block before the exercise was resumed.",
+        "1": "SP, due to a slow scan between the outside picture of the wingman and the altimeter, let the altitude drift while he adjusted the maneuver sequence. The deviation stopped exactly at the 300 feet limit and was recognized only after the IP prompted verbally. The correction back to the planned altitude was made late and with an overshoot in the opposite direction.",
+        "2": "SP, due to a delayed pitch correction while he decided on the next maneuver, allowed the altitude to move to about 200 to 250 feet from the planned value. He detected the deviation himself, applied a smooth correction and re-established the flight inside 150 feet in good time. No intervention was required from the IP.",
+        "3": "SP planned the profile in flight while holding the planned altitude within 150 feet throughout. Every altitude change he ordered was flown to the new value accurately and the working block limits were respected at all times. Corrections were small, prompt and made without disturbing the wingman.",
+        "4": "SP held the planned altitude with deviations of the order of 50 feet during the whole in flight planning task. Level changes were anticipated, flown precisely and terminated on the assigned value. The vertical limits of the area were used with a clear margin at every stage of the profile.",
+        "marginal": "SP remained inside the altitude standard but worked repeatedly near the 150 feet edge, mostly on the high side, whenever he was re-planning the maneuver sequence. The corrections were correct but always started late and were larger than the deviation required. He is expected to protect the altitude cross-check while thinking ahead, so that the working deviation returns to the middle of the tolerance."
+      }
+    },
+    {
+      "id": "formation-04-em02",
+      "label": "Airspeed and energy management as leader",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power changes made without reference to the airspeed indicator while he adapted the profile, did not conserve the energy planned for the maneuver. The airspeed error passed 20 knots and left the wingman unable to hold his position without large throttle excursions. The IP took over the energy management and re-established the entry parameters of the exercise.",
+        "1": "SP, due to a power setting selected late for the maneuver he had just decided to fly, allowed the airspeed to reach the 20 knots limit from the planned entry speed. He restored the speed only after the IP called it, and the entry to the next maneuver was flown with the formation still accelerating. The energy loss forced an unplanned repositioning before the profile could continue.",
+        "2": "SP, due to a small delay in the power correction while he revised the maneuver sequence, let the airspeed move about 12 to 18 knots from the planned value. He identified the trend on his own, corrected with a smooth throttle input and returned inside 10 knots before the entry of the maneuver. The wingman held position throughout without an excessive power demand.",
+        "3": "SP managed the energy of the formation so that the airspeed stayed within 10 knots of the planned value at every entry and exit of the profile. Power changes were made early, progressively and in a size that the wingman could match. Fuel was conserved as briefed while the sequence was adapted in flight.",
+        "4": "SP flew the whole revised profile with airspeed deviations of a few knots only, and every maneuver was entered at the planned energy state. Power was applied ahead of the demand so that the wingman never had to use large throttle corrections. The energy plan of the sortie was preserved without any loss of maneuver quality.",
+        "marginal": "SP kept the airspeed inside the 10 knots standard but consistently on the low side at the entry of each maneuver, so the margin for the wingman was thin. Each correction was adequate but was applied only when the deviation had already become visible in the formation. He is expected to lead the power change rather than follow the speed error, so that entry speeds sit on the planned value."
+      }
+    },
+    {
+      "id": "formation-04-em03",
+      "label": "Exit heading accuracy on the re-planned sequence",
+      "mif_row": null,
+      "source": "specific:EXIT HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to rolling out on an outside reference instead of the planned heading, did not exit the turn on the heading required by the revised sequence. The error passed 10 degrees and pointed the formation towards the lateral limit of the assigned area. The IP directed the correcting turn and re-established the axis of the next maneuver.",
+        "1": "SP, due to a roll out started after the planned heading had already passed, finished the maneuver with an exit heading error at the 10 degrees limit. The heading was corrected only after the IP pointed it out, and the wingman had to follow a second unbriefed turn. The next maneuver was entered displaced from the planned axis.",
+        "2": "SP, due to a late anticipation of the roll out while he was selecting the next maneuver, exited the turn about 7 degrees from the planned heading. He recognized the error immediately, corrected with a shallow and predictable turn and re-established the heading within 5 degrees. The wingman remained in position during the correction.",
+        "3": "SP exited every turn of the adapted profile within 5 degrees of the planned heading. The roll out was anticipated so that each maneuver started on the intended axis inside the assigned area. The wingman was able to hold position without any additional correcting turn.",
+        "4": "SP established the exit heading of each maneuver on the planned value with a negligible error and without any secondary correction. The axis of the profile remained exactly as re-planned, well inside the lateral limits of the area. Every turn was terminated smoothly and predictably for the wingman.",
+        "marginal": "SP held the exit headings inside the 5 degrees standard but always with the same bias, rolling out slightly past the planned value on turns in one direction. The errors were small and corrected, yet they accumulated over the sequence and moved the working axis towards one side of the area. He is expected to anticipate the roll out earlier so that the exit heading is achieved without a follow up correction."
+      }
+    },
+    {
+      "id": "formation-04-em04",
+      "label": "Adaptation of the mission profile to weather, fuel and time",
+      "mif_row": null,
+      "source": "general:a,b",
+      "hf_concept": "hf-mission-completion-bias",
+      "texts": {
+        "0": "SP, due to mission completion bias in pressing on with the briefed profile after the working area had become unusable, did not adjust the mission profile to the meteorological conditions, the fuel and the time constraints. The formation entered the maneuver with insufficient vertical room and the resulting altitude error passed 300 feet. The IP terminated the maneuver, re-planned the remaining profile and recovered the flight.",
+        "1": "SP, due to a decision to continue the planned sequence despite a cloud base that no longer supported it, adapted the profile only after the IP stated that the maneuver could not be flown. The delayed decision left the altitude at the 300 feet limit at the entry and the maneuver had to be repeated. The time and fuel spent on the correction were taken from the remaining objectives of the mission.",
+        "2": "SP, due to a late assessment of the weather and fuel picture, started the change of the maneuver sequence later than required. He recognized the constraint himself, selected an alternative maneuver appropriate to the conditions and flew the entry with an altitude error of about 200 feet, corrected in good time. The mission objectives were achieved without any intervention from the IP.",
+        "3": "SP adjusted the mission profile in flight in accordance with the meteorological conditions, the remaining fuel and the time available. The alternative maneuvers he selected served the mission objectives and were flown within 150 feet and 10 knots of the planned values. The decision was taken early enough for the wingman to be briefed before the change.",
+        "4": "SP anticipated the effect of the deteriorating conditions on the profile and re-planned the sequence before the constraint became limiting. The revised profile met every mission objective with precise parameters and an orderly use of the remaining fuel and time. No maneuver had to be repeated and the wingman was never surprised by a change.",
+        "marginal": "SP adapted the profile correctly to the conditions and the fuel state, but each decision was taken at the last usable moment and left little margin for the wingman. The parameters remained inside standards, although the entries were flown closer to the limits of the area than the situation required. He is expected to take the re-planning decision one maneuver earlier, so that the change is executed with a comfortable margin."
+      }
+    },
+    {
+      "id": "formation-04-em05",
+      "label": "Timing, fuel allocation and use of the assigned area",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a sequence flown without reference to the timing agreed at the briefing, did not use the allocated fuel in accordance with the plan. The formation was still in the area with the fuel below the planned figure and the recovery had to be started immediately. The IP took the decision to leave the area and led the flight out of the vertical and lateral limits in a controlled manner.",
+        "1": "SP, due to repeating a maneuver rather than moving on with the time line, consumed the fuel margin planned for the remaining profile. The reallocation of the sequence was made only after the IP indicated the fuel and time state, and the last exercise was flown with the formation drifting to the 300 feet limit of the block. The mission was completed but without the reserve planned at the briefing.",
+        "2": "SP, due to a repositioning turn flown wider than necessary, lost part of the time allocated to the sequence. He noticed the deviation from the briefed time line, shortened the following repositioning and completed the profile inside the assigned area with parameters within 150 feet and 10 knots. The fuel state at the end of the exercise matched the plan without any intervention.",
+        "3": "SP executed the profile on the time specified at the briefing and used the allocated fuel as planned. The maneuvers were positioned so that the formation remained inside the vertical and lateral limits of the assigned area at all times. The sequence was completed with the fuel state and the time line as briefed.",
+        "4": "SP conducted the sequence so that every maneuver was flown at its planned time with the fuel consumption matching the briefed profile. Repositioning was minimal and the area was used efficiently, with wide margins to the vertical and lateral limits. The formation left the area exactly on the planned time and fuel state.",
+        "marginal": "SP respected the time line and the fuel plan but with a working position close to one boundary of the assigned area for most of the sortie. Nothing exceeded the limits, although each repositioning had to be flown tighter than briefed to keep the sequence inside the area. He is expected to plan the geometry of the sequence at the start, so that timing and fuel are met from a central position in the block."
+      }
+    },
+    {
+      "id": "formation-04-em06",
+      "label": "Monitoring and control of the wingman position",
+      "mif_row": null,
+      "source": "general:c,h",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an absent monitoring and cross-check of the wingman while he was concentrating on his own maneuver, did not control and take into account No2 during the re-planned sequence. He continued the maneuver without knowing the position of the wingman in space and the formation geometry broke down. The IP intervened, called the wingman clear and re-established the formation before the profile continued.",
+        "1": "SP, due to a check of No2 made only at the end of each maneuver, lost track of how the wingman was moving in space during the turns. He corrected the geometry only after the IP called the position of No2, and the airspeed reached the 20 knots limit while he was re-establishing the formation. The wingman had to use large corrections to remain in place.",
+        "2": "SP, due to a scan that gave priority to his own parameters at the entry of each maneuver, checked the wingman later than required. He detected the developing spread himself, moderated the maneuver and re-established a workable geometry with the speed back inside 10 knots. The wingman remained in position and no intervention was needed.",
+        "3": "SP checked the position of No2 continuously and had a clear understanding of how the wingman was moving in space. He controlled the maneuvers so that the wingman could hold position with parameters inside 150 feet and 10 knots. Every change of the profile took account of the state of the wingman before it was flown.",
+        "4": "SP maintained an accurate picture of the wingman throughout the profile and adjusted each maneuver to what No2 could fly comfortably. The formation stayed consistent through every change of the sequence, with negligible parameter deviations on both aircraft. The wingman was never required to make a large correction to remain in place.",
+        "marginal": "SP monitored the wingman adequately but the checks were concentrated at the entries and exits, with long gaps during the body of each maneuver. The formation stayed consistent, although the geometry had to be recovered at the end of two maneuvers rather than being protected during them. He is expected to distribute the check of No2 through the whole maneuver, so that corrections are made while they are still small."
+      }
+    },
+    {
+      "id": "formation-04-em07",
+      "label": "Formation consistency and break out decision",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a decision to keep the formation together in conditions that no longer allowed visual contact to be maintained, did not break out when required by the manuals and the briefing. The wingman lost visual contact inside cloud with the flight still turning and the altitude error passed 300 feet. The IP ordered the break out and separated the aircraft in accordance with the procedure.",
+        "1": "SP, due to a break out ordered after the visual contact had already become marginal, executed the separation late and without the geometry described in the briefing. The break out was initiated only on the prompt of the IP and the exit heading was left at the 10 degrees limit from the briefed separation heading. The rejoin afterwards consumed time and fuel that had been allocated to the profile.",
+        "2": "SP, due to a slightly delayed recognition of the deteriorating visibility, held the formation together longer than the situation justified. He then ordered the break out on his own initiative, flew the briefed separation heading within 7 degrees and kept the deconfliction as described in the manuals. The rejoin was completed without any intervention from the IP.",
+        "3": "SP kept the formation flexible and consistent through the changing external conditions and ordered the break out when the criteria of the briefing were met. The separation was flown on the briefed headings within 5 degrees and with the altitude split respected. The formation was rejoined in a controlled manner once conditions allowed.",
+        "4": "SP judged the changing conditions accurately, held a consistent formation while it was safe to do so and initiated the break out at exactly the point defined in the briefing. The separation was executed with precise headings and altitudes and no ambiguity for the wingman. The subsequent rejoin was smooth and cost nothing in time or fuel.",
+        "marginal": "SP maintained a consistent formation and made a correct break out decision, but the call was made at the last point where the manuals still permitted it. The execution met the standard, although the wingman had very little time to react to the separation. He is expected to set his break out trigger earlier against the deteriorating condition, so that the decision is taken with margin rather than at the limit."
+      }
+    },
+    {
+      "id": "formation-04-em08",
+      "label": "Positioning of No2 relative to the sun and the local area",
+      "mif_row": null,
+      "source": "general:e",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a maneuver selected without considering the position of No2 in relation to the sun, placed the wingman looking directly into the sun during the turn. The wingman lost sight of the lead aircraft and the formation geometry was no longer controlled. The IP intervened, directed the lost wingman procedure and re-established the flight.",
+        "1": "SP, due to a turn direction chosen without reference to the sun and the local area, forced the wingman to hold position against a saturated visual background. He reversed the direction only after the IP identified the problem, and during the reversal the airspeed reached the 20 knots limit. The wingman held his position with difficulty and with large corrections.",
+        "2": "SP, due to a late assessment of the sun line relative to the working area, started the maneuver with the wingman in an unfavourable visual position. He recognized the problem within the first part of the turn, adjusted the direction of the maneuver and restored a workable visual picture with parameters back inside 10 knots. No intervention was required.",
+        "3": "SP took the position of No2 in relation to the sun and the local area into account and selected the appropriate maneuver each time. The wingman kept a clear visual reference throughout the profile and held position with deviations inside 150 feet and 10 knots. The geometry of the sequence was arranged so that no turn placed the wingman against the sun.",
+        "4": "SP planned the direction of every maneuver so that the wingman always had a favourable visual background against the sun and the terrain features of the area. The visual task of No2 remained easy through the whole revised profile and the formation stayed precise. No repositioning was ever needed for visual reasons.",
+        "marginal": "SP considered the sun position and selected acceptable maneuver directions, but on two turns the wingman was left with a marginal visual background for part of the arc. The formation was maintained and no correction was needed from the IP. He is expected to include the sun line in the planning of each maneuver rather than in the assessment after it has started."
+      }
+    },
+    {
+      "id": "formation-04-em09",
+      "label": "Advance information to the wingman on flight data changes",
+      "mif_row": null,
+      "source": "general:f,i",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, due to a lack of communication of the change he had decided in the sequence, altered major flight data without informing the wingman by visual signals or radio. The wingman was left following an unannounced maneuver and could not stay in place, and the airspeed split passed 20 knots. The IP intervened, transmitted the required instructions and re-established the formation.",
+        "1": "SP, due to information passed to the wingman after the change had already started, gave the required instructions late for the new profile. The wingman applied a large correction to remain in place and the resulting deviation reached the 20 knots limit. The information was completed only after the IP prompted the transmission.",
+        "2": "SP, due to a briefing call made just before rather than ahead of the change, gave the wingman limited time to prepare for the new flight data. He completed the required information on his own initiative, moderated the rate of the change and the wingman remained in place with deviations back inside 10 knots. No intervention was necessary.",
+        "3": "SP informed the wingman by visual signal or radio of every upcoming change of major flight data before it was executed. The instructions and information he provided were complete and the wingman was able to stay in place without any problem. Parameters on both aircraft remained inside 150 feet and 10 knots through the changes.",
+        "4": "SP passed clear and timely information for every change of the profile, so that the wingman knew what was coming and prepared for it. Instructions were complete, unambiguous and given far enough ahead for the change to be flown without any correction demand on No2. The formation remained precise through the whole revised sequence.",
+        "marginal": "SP informed the wingman of every change but the calls were made with the minimum lead time and with more words than the situation needed. The formation stayed consistent and the wingman held position without difficulty. He is expected to shorten and standardize the calls and to make them earlier, so that the wingman prepares for the change rather than reacts to it."
+      }
+    },
+    {
+      "id": "formation-04-em10",
+      "label": "Predictability and smoothness of control inputs as leader",
+      "mif_row": null,
+      "source": "general:f,g,j",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to abrupt and reversed inputs on the flight controls while he was correcting the profile, did not remain predictable for the wingman. The maneuver was flown with rate changes that No2 could not follow and the altitude deviation passed 300 feet during the recovery. The IP took control inputs over and re-established a formation that the wingman could fly.",
+        "1": "SP, due to control inputs applied in steps rather than progressively, produced a maneuver that was hard for the wingman to anticipate. The rate was moderated only after the IP asked for a smoother input and the airspeed remained at the 20 knots limit through the correction. The execution of the exercise was affected and the maneuver had to be repeated.",
+        "2": "SP, due to an input rate slightly higher than the maneuver required at the entry, made the first part of the turn less predictable for the wingman. He recognized this himself, softened the input and completed the maneuver progressively with the parameters back inside 150 feet and 10 knots. The wingman held position and no intervention was required.",
+        "3": "SP remained predictable throughout the profile and his effect on the flight controls was smooth and progressive. The maneuvers were executed without affecting the quality of the exercises and the wingman stayed in place comfortably. The task was completed smoothly with parameters inside 150 feet, 10 knots and 5 degrees.",
+        "4": "SP flew every maneuver of the revised sequence with control inputs so smooth and predictable that the wingman required almost no correction to remain in place. Rates were constant, entries and exits were anticipated and the quality of each exercise was preserved. The whole task was completed smoothly and with negligible parameter deviations.",
+        "marginal": "SP was predictable overall and completed the task smoothly, but the entries to two maneuvers were made with a first input sharper than the rest of the maneuver. The wingman stayed in place and the parameters remained inside standards. He is expected to make the initial input the same rate as the body of the maneuver, so that the whole exercise is equally predictable for No2."
+      }
+    }
+  ]
+}

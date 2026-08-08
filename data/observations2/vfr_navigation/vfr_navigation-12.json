@@ -1,0 +1,132 @@
+{
+  "item_id": "vfr_navigation-12",
+  "item_name": "PILOTAGE",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [12],
+  "mif_rows": [
+    { "sn": 12, "row_name": "Turning Points Recognition" }
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-12-em01",
+      "label": "DEVIATION FROM TURNING POINTS (radius)",
+      "mif_row": null,
+      "source": "specific:DEVIATION FROM TURNING POINTS* (radius in NM)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to map reading based on a single ground feature instead of a pattern of features, did not overfly the turning points within the required radius. SP passed the second turning point about 4 NM abeam and the third about 5 NM abeam, well beyond the 2 NM radius, and the ground track diverged progressively from the planned leg. IP had to take over the navigation and direct SP back onto the planned track before the next leg could be flown.",
+        "1": "SP, due to an early acceptance of a road junction that resembled the briefed feature, did not overfly the turning points within the tighter radius. SP passed the turning points about 2 NM abeam, at the outer limit of the standard, and repositioned onto the planned track only after IP pointed out the correct feature over the intercom. Each subsequent turning point required the same verbal prompting to keep the deviation from growing further.",
+        "2": "SP, due to a heading held without allowance for the reported wind on the first leg, initially tracked about 1.7 NM to the right of the planned turning point. SP compared the terrain with the chart, identified the offset while still inbound and applied a correction that placed the aircraft over the following turning points inside the radius. No IP input was required at any stage of the correction.",
+        "3": "SP overflew every turning point within a radius of 1 NM, positively identifying each one against the chart before commencing the turn. Track corrections were small and applied early, so no leg required a repositioning maneuver. Navigation continued from each turning point without any regain of track.",
+        "4": "SP overflew each turning point practically overhead, with the aircraft crossing the selected features rather than passing abeam of them. Wind corrections were computed and applied on every leg, so the lateral deviation remained negligible throughout the route. Chart and terrain agreed at every point of the navigation.",
+        "marginal": "SP overflew the turning points within standards, but the offset was consistently on the same side of track and grew toward 1 NM by the final legs. The trend is a wind correction that is applied once at the start of the navigation and is not revised as the actual drift becomes apparent. SP is expected to reassess drift on each leg and keep the turning points overhead rather than at the edge of the acceptable radius."
+      }
+    },
+    {
+      "id": "vfr_navigation-12-em02",
+      "label": "ARRIVAL TIME AT TURNING POINTS",
+      "mif_row": null,
+      "source": "specific:ARRIVAL TIME AT TURNING POINTS (seconds)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a leg flown at an airspeed well below the planned one without any recomputation, did not arrive at the turning points at the calculated times. Arrival at the second turning point was about 2 minutes late and at the third about 2 minutes 30 seconds late, far beyond the 60 second tolerance. IP had to compute the required groundspeed and direct the power setting in order to restore the timing of the remaining legs.",
+        "1": "SP, due to a delayed start of the leg timing after the turn was completed, arrived at the turning points about 60 seconds outside the calculated times, at the limit of the standard. SP adjusted the airspeed only after IP asked for the running time on the leg, and the same delay reappeared on the following leg. The timing was contained within the standard solely through repeated verbal prompting.",
+        "2": "SP, due to a groundspeed check made late in the first leg, initially built an error of about 50 seconds against the calculated arrival time. SP identified the discrepancy at the midpoint of the leg, computed the required correction and adjusted the airspeed so that the following turning points were crossed within 30 seconds of the plan. No IP intervention was needed to recover the timing.",
+        "3": "SP arrived at each turning point within 30 seconds of the calculated time, starting and stopping the leg timing at the correct points. Groundspeed was checked early on every leg and small airspeed adjustments were applied before the error could accumulate. Timing on all turning points remained inside the tighter criterion.",
+        "4": "SP arrived at every turning point within a few seconds of the calculated time, with the timing error never allowed to build on any leg. Groundspeed was recomputed at each half-leg checkpoint and the airspeed corrections applied were small and anticipatory. Deviations from the planned arrival times were negligible.",
+        "marginal": "SP arrived at the turning points within standards, but the arrival times were consistently early and the error grew from leg to leg toward the 30 second figure. The trend is an airspeed flown above the planned one without an accompanying check of the effect on leg timing. SP is expected to check groundspeed against the plan early in each leg and to correct the airspeed while the timing error is still small."
+      }
+    },
+    {
+      "id": "vfr_navigation-12-em03",
+      "label": "TOTAL NAVIGATION TIME",
+      "mif_row": null,
+      "source": "specific:TOTAL TIME (seconds)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to timing errors on successive legs that were never corrected once identified, did not control the total duration of the navigation flight. The route was completed about 3 minutes later than the planned total time, well beyond the 90 second tolerance, and the recovery time no longer matched the flight plan. IP had to reassign the airspeed and delete a portion of the final leg in order to recover the sortie within the fuel available.",
+        "1": "SP, due to individual leg errors that were treated in isolation rather than against the running total, completed the navigation about 90 seconds off the planned total time, at the limit of the standard. SP began adjusting the airspeed only after IP asked for the accumulated time against the plan. The total time was kept inside the standard only because of that prompting on the last leg.",
+        "2": "SP, due to a slower than planned groundspeed on the first two legs, accumulated an error of about 70 seconds against the planned total time. SP recognized the accumulation while abeam the third turning point, increased the airspeed for the remaining legs and completed the navigation within 45 seconds of the plan. The correction was computed and applied without IP input.",
+        "3": "SP completed the navigation within 45 seconds of the planned total time, monitoring the accumulated time against the plan at each turning point. Where a leg produced a small error, SP absorbed it on the following leg rather than carrying it forward. The total duration of the flight matched the mission plan.",
+        "4": "SP completed the navigation within a few seconds of the planned total time, with the running total kept aligned with the plan throughout the route. Every leg error was identified at the turning point and absorbed immediately, so nothing accumulated toward the end of the navigation. The deviation on total time was negligible.",
+        "marginal": "SP completed the navigation within standards, but the accumulated error reached the 45 second figure and was only absorbed on the last leg. The trend is a total time that is checked at the end of the route rather than maintained at each turning point. SP is expected to compare the running total against the plan at every turning point and to spread the correction over the remaining legs."
+      }
+    },
+    {
+      "id": "vfr_navigation-12-em04",
+      "label": "IDENTIFICATION OF TURNING POINTS AGAINST THE CHART",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to lack of awareness of the aircraft position relative to the planned route, did not recognize the turning points confidently. SP misidentified the second turning point, called a lake that was not the briefed feature and continued on a heading that belonged to a different leg. IP had to identify the correct feature, state the aircraft position and reestablish the navigation for SP.",
+        "1": "SP, due to lack of awareness of a terrain feature that was available in the mission planning material, recognized the turning points only with hesitation. SP overflew the feature without calling it and identified it as the turning point only after IP asked what was below the aircraft. Recognition of the remaining points continued to depend on the same prompting.",
+        "2": "SP, due to an initial fixation on a single linear feature instead of the briefed pattern of features, was slow to recognize the third turning point. SP widened the visual search, cross-checked two secondary features against the chart and identified the point positively while still able to turn on the planned track. The remaining turning points were recognized without hesitation and without IP assistance.",
+        "3": "SP recognized all turning points confidently, identifying each one against the chart before reaching it and announcing it in good time. The visual search was based on a pattern of features rather than a single object, so no point was confused with a similar one. Navigation proceeded from each recognized point without doubt about the aircraft position.",
+        "4": "SP recognized every turning point well in advance, calling each feature and its confirming secondary features while still inbound on the leg. Position awareness along the route was continuous and SP was able to state the aircraft position relative to the plan at any moment. Recognition was immediate and unambiguous at every point.",
+        "marginal": "SP recognized the turning points within standards, but the identification was made only overhead the feature and rested on one object at a time. The trend is a visual search that starts too late to allow a confirmation before the turn. SP is expected to begin identifying the next turning point early in the leg and to confirm it with secondary features before reaching it."
+      }
+    },
+    {
+      "id": "vfr_navigation-12-em05",
+      "label": "TIMELY TURN AND ROLLOUT ON THE NEXT HEADING",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a turn started only after the turning point had been left well behind, did not turn to the next heading timely. SP rolled out about 20 degrees off the planned heading and did not correct it, so the following leg was flown displaced from the planned track from the start. IP had to command the corrected heading and supervise the regain of the planned track.",
+        "1": "SP, due to a turn commenced without the next heading having been selected in advance, turned late toward the next heading and rolled out about 12 degrees off. SP corrected the heading only after IP stated the planned figure over the intercom. The same late selection and prompted correction were repeated at the following turning point.",
+        "2": "SP, due to a bank angle chosen without allowance for the size of the heading change, initially rolled out about 8 degrees short of the planned heading. SP compared the heading with the planned one immediately after rollout, applied the correction within a few seconds and continued the leg on track. Subsequent turns were flown onto the planned heading without deviation and without IP input.",
+        "3": "SP turned to the next heading timely at each turning point, with the next heading already known before the turn was commenced. Rollout was on the planned heading and the new leg was flown on track from the outset. No heading correction was required after any of the turns.",
+        "4": "SP commenced each turn precisely at the turning point and rolled out exactly on the planned heading, with the bank angle selected to suit the size of every heading change. The next heading and leg time were set up before the point was reached, so the transition between legs was seamless. Heading deviations after rollout were negligible.",
+        "marginal": "SP turned to the next headings within standards, but the turns were commenced slightly late and the rollouts were consistently a few degrees short of the planned figure. The trend is a turn that begins as a reaction to passing the feature rather than as a planned action. SP is expected to preset the next heading and to anticipate the turn so that rollout occurs on the planned heading."
+      }
+    },
+    {
+      "id": "vfr_navigation-12-em06",
+      "label": "TURNING POINT OBSCURED BY CLOUD - TIMED TURN",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to retention of the briefed mental model after the actual conditions had changed, did not turn to the next point at the completion of the leg time when the turning point was covered by clouds. SP continued straight ahead searching visually for the obscured feature and overflew the point by more than 3 minutes of flight. IP had to command the turn and reconstruct the remaining route timing.",
+        "1": "SP, due to an aircraft position that had diverged from the mental model without being reassessed, did not turn at the completion of the leg time over the cloud covered turning point. SP started the turn about 60 seconds late, after IP asked what the leg time was showing. The dependence on that prompting persisted when the following point was also obscured.",
+        "2": "SP, due to an initial decision to continue searching for the obscured feature through a gap in the cloud, allowed about 40 seconds to pass beyond the completion of the leg time. SP then referred to the leg timing, accepted it as the primary reference and turned onto the next heading before the error could affect the following leg. The decision and the turn were made without IP intervention.",
+        "3": "SP turned to the next point at the completion of the leg time whenever the turning point was covered by clouds, without waiting for a visual identification that was not available. The turn was flown onto the preplanned heading and the timing of the following leg was started correctly. Navigation continued unaffected by the cloud cover.",
+        "4": "SP anticipated the cloud covered turning point, briefed the transition to timed navigation before reaching it and turned exactly at the completion of the leg time. The following leg was flown on the planned heading and the visual navigation was resumed at the first feature that became available. The interruption of the visual navigation produced negligible error.",
+        "marginal": "SP turned at the completion of the leg time as required, but the decision to abandon the visual search was taken only in the last seconds before the leg time expired. The trend is a late acceptance of timing as the primary reference when the feature is not visible. SP is expected to decide on the timed turn as soon as the turning point is assessed as obscured, rather than at the expiry of the leg time."
+      }
+    },
+    {
+      "id": "vfr_navigation-12-em07",
+      "label": "LEG TIME AND GROUNDSPEED MONITORING",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a clock that was never started at the departure point of the leg, did not monitor or control the determined leg durations. SP was unable to state the elapsed or remaining time on any leg and had no groundspeed figure with which to assess the navigation. IP had to run the timing for the remainder of the route and pass the required airspeed corrections.",
+        "1": "SP, due to leg timings written on the chart but not compared with the clock in flight, monitored the leg durations only when asked. SP produced the elapsed time and the required correction each time after IP requested it, and no independent check was made between prompts. Control of the leg durations existed only through that repeated questioning.",
+        "2": "SP, due to a groundspeed check omitted at the first half-leg checkpoint, initially had no assessment of the developing timing error. SP reinstated the check at the following checkpoint, computed the groundspeed against the elapsed time and adjusted the airspeed to restore the planned leg duration. Timing control was recovered without any IP input.",
+        "3": "SP monitored and controlled the determined durations of each leg, starting and stopping the timing at the correct points and checking groundspeed at the planned checkpoints. Airspeed corrections were computed from the elapsed time and applied while the errors were still small. Every leg was completed within the planned duration.",
+        "4": "SP maintained a continuous picture of elapsed time, remaining time and groundspeed for every leg and could state all three on request at any point of the route. Corrections were computed in advance of the checkpoints and applied smoothly, so no leg duration required a late adjustment. Control of the leg timings was precise throughout the navigation.",
+        "marginal": "SP monitored the leg durations within standards, but the timing was checked only at the turning points and no intermediate groundspeed check was made. The trend is a timing error that becomes known only when the leg is already complete and can no longer be corrected within that leg. SP is expected to check groundspeed at the half-leg checkpoint so that corrections are applied inside the leg concerned."
+      }
+    },
+    {
+      "id": "vfr_navigation-12-em08",
+      "label": "COCKPIT WORKLOAD AND CHART MANAGEMENT DURING NAVIGATION",
+      "mif_row": null,
+      "source": "general:a,c",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to task sequencing that concentrated map reading, timing and radio work inside the turn, did not sustain the navigation task. The chart was folded incorrectly for the leg in use, SP lost the position on it during the second turn and the aircraft altitude and heading were left unmonitored while SP searched the chart. IP had to take control of the aircraft while SP reorganized the cockpit.",
+        "1": "SP, due to workload management that left the chart and the leg data unprepared before the turning point, fell behind the aircraft on the busier legs. SP completed the map reading and the timing only after IP prompted each task in turn, and the aircraft heading drifted while SP worked head down. Recovery of the navigation task on each leg depended on that prompting.",
+        "2": "SP, due to an attempt to complete the position report and the chart update at the same moment, initially fell behind on the third leg and allowed the heading to drift by about 10 degrees. SP shed the secondary task, restored the heading and altitude, then completed the chart work once the aircraft was stable. The remaining legs were flown with the tasks correctly sequenced and without IP assistance.",
+        "3": "SP managed the cockpit workload so that map reading, timing and radio calls were sequenced without interrupting the control of the aircraft. The chart was prepared for the next leg before each turning point and the aircraft heading and altitude were maintained throughout the head down work. Navigation and aircraft control were both sustained without prompting.",
+        "4": "SP organized the cockpit so that every leg was set up in advance, with the chart, the heading and the leg time ready before the turning point was reached. Aircraft control, lookout and navigation tasks were interleaved smoothly even on the shortest legs, and spare capacity remained available for the radio work. No task was ever left uncompleted or performed at the wrong moment.",
+        "marginal": "SP managed the navigation workload within standards, but the chart and the next leg data were prepared only after the turn was completed. The trend is a cockpit that catches up with the aircraft at the start of each leg instead of being set up before the turning point. SP is expected to prepare the next leg while still inbound so that head down time after the turn is minimized."
+      }
+    }
+  ]
+}

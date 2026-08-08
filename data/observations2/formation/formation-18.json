@@ -1,0 +1,165 @@
+{
+  "item_id": "formation-18",
+  "item_name": "ROUTE / FIGHTING WING FORMATION",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [18],
+  "mif_rows": [
+    {
+      "sn": 18,
+      "row_name": "Route / Fighting Wing"
+    }
+  ],
+  "error_modes": [
+    {
+      "id": "formation-18-em01",
+      "label": "ROUTE POSITION - FORE AND AFT DISTANCE FROM LINE ABREAST",
+      "mif_row": null,
+      "source": "specific:a/ ROUTE POSITION - DISTANCE (span)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to late and oversized power corrections against the leader's acceleration, did not maintain the fore and aft placement of the Route position. SP overshot to about 300 ft in front of the line abreast position and then fell back to a full span behind it, exceeding the +200 ft and -1/2 span limits in both directions on the same leg. The aircraft was still moving fore and aft when IP took the controls and re-established the position.",
+        "1": "SP, due to a power setting selected once and not adjusted to the leader's changing airspeed, did not hold the briefed fore and aft placement and stabilized about 200 ft in front of the line abreast position, then about half a span behind it. Both excursions sat exactly on the +200 ft and -1/2 span limits and were reduced only after IP called the position twice. The correction was late enough that the sortie continued a full leg with SP at the edge of the standard.",
+        "2": "SP, due to an anticipation error on the leader's power reduction entering the turn, initially moved to about 150 ft in front of the line abreast position and then about a quarter of a span behind it. SP recognized the fore and aft drift against the leader's wingtip reference and returned the aircraft inside +100 ft and to the line abreast reference with a single measured power change, without IP intervention. The rest of the leg was flown inside the code 3 band.",
+        "3": "SP maintained the Route position within +100 ft of the line abreast position and never allowed the aircraft to fall behind that reference. Fore and aft corrections were made with small, early power changes referenced to the leader's wingtip, and each deviation was arrested before it became visible as a closure rate. Position was re-established immediately after every turn reversal and power change by the leader.",
+        "4": "SP held the fore and aft placement of the Route position to within a few tens of feet of line abreast throughout the whole profile, including the turns and the airspeed changes commanded by the leader. Power corrections were so small and so early that no closure or fall-back was discernible from the leader's cockpit. Deviations from the nominal fore and aft reference were negligible.",
+        "marginal": "SP maintained the fore and aft placement within standards, but flew the whole profile parked at the forward edge of the band, at about 90 ft in front of the line abreast position, and used repeated small power reductions to stop the closure. The trend is toward a position that is inside the standard only because it is corrected continuously, and that will exceed +100 ft on the first unannounced acceleration by the leader. SP is expected to stabilize on the line abreast reference itself and to correct the power earlier, on the next formation event."
+      }
+    },
+    {
+      "id": "formation-18-em02",
+      "label": "ROUTE POSITION - HEIGHT RELATIVE TO THE LEADER",
+      "mif_row": null,
+      "source": "specific:a/ ROUTE POSITION - HEIGHT (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a pitch reference taken from the horizon instead of from the leader's canopy line, did not maintain the height element of the Route position. SP stepped up to about 90 ft above the leader and then descended to about 80 ft below him, well outside the 50 ft tolerance, and closed toward the leader's flight path while low. IP took the controls to restore vertical separation and repositioned the aircraft in Route.",
+        "1": "SP, due to a delayed pitch response during the leader's climbing turn, did not maintain the height element and settled about 50 ft below the leader for most of the leg. The deviation stood exactly on the 50 ft limit and was corrected only after IP pointed out the vertical displacement in the cockpit. Height was recovered late enough that the aircraft crossed the leader's wake before stabilizing.",
+        "2": "SP, due to a trim change that was not re-established after the airspeed increase, initially drifted about 35 ft above the leader's plane of flight. SP identified the displacement against the leader's canopy rail, applied a small pitch and trim correction and returned inside 20 ft without IP intervention. The height reference was then held stable for the remainder of the leg.",
+        "3": "SP maintained the Route position within 20 ft of the leader's height throughout the leg, using the leader's canopy line as the vertical reference. Pitch corrections were small, early and made without changing the fore and aft placement. The height reference was re-established immediately after each turn and airspeed change.",
+        "4": "SP held the height element of the Route position to within a handful of feet of the leader's plane of flight through level flight, turns and airspeed changes. The vertical reference was maintained so precisely that no step up or step down was apparent from the leader's cockpit at any point in the profile. Deviations from the nominal height were negligible.",
+        "marginal": "SP maintained the height element within standards, but flew consistently 18 to 20 ft below the leader's plane of flight and recovered the reference only when the leader levelled off. The trend is toward a position that sits on the code 3 boundary and will move outside it during the next climbing or descending turn. SP is expected to fly on the leader's canopy line rather than below it, and to correct pitch as the leader initiates the change, on the next event."
+      }
+    },
+    {
+      "id": "formation-18-em03",
+      "label": "ROUTE POSITION - LATERAL SWEEP ANGLE FROM LINE ABREAST",
+      "mif_row": null,
+      "source": "specific:a/ ROUTE POSITION - LATERAL* (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to bank inputs applied after the leader's roll rather than with it, did not maintain the lateral sweep angle of the Route position. SP swept back to about 70 degrees behind the line abreast position in the turn away and then came forward to about 25 degrees in front of it in the turn into, outside both the +15 and -60 degree limits. IP took the controls to stop the forward movement and re-establish the correct sweep.",
+        "1": "SP, due to a bank angle held constant while the leader tightened the turn, did not maintain the lateral sweep and remained at about 60 degrees aft of the line abreast position for the whole turn. The angle sat exactly on the -60 degree limit and was reduced only after IP called for the aircraft to be moved forward. Position was regained late, after the leader had already rolled out.",
+        "2": "SP, due to an initial underestimation of the leader's roll rate, allowed the sweep angle to increase to about 55 degrees aft of the line abreast position on the turn away. SP recognized the aft displacement, added bank and power in a single coordinated correction and re-established the aircraft inside 50 degrees before the rollout, without IP intervention. The sweep angle stayed inside the code 3 band for the remainder of the profile.",
+        "3": "SP maintained the lateral sweep angle between the line abreast position and 50 degrees aft of it, and never moved in front of the +5 degree reference. Bank was matched to the leader's roll as it was initiated, so the angle changed smoothly and predictably through each turn. The briefed sweep was re-established immediately at every rollout.",
+        "4": "SP held the lateral sweep angle of the Route position within a few degrees of the briefed value through turns in both directions and through the leader's reversals. The angle was so stable that the aircraft appeared fixed relative to the leader's wingline for the whole profile. Departures from the nominal sweep were negligible.",
+        "marginal": "SP maintained the lateral sweep within standards, but flew every turn away from the leader at 48 to 50 degrees aft and recovered forward only after the rollout. The trend is toward a sweep that reaches the code 3 boundary on every turn and will exceed it as soon as the leader increases bank. SP is expected to lead the leader's roll with bank and power so the angle is held nearer the middle of the band, on the next formation event."
+      }
+    },
+    {
+      "id": "formation-18-em04",
+      "label": "FIGHTING WING - DISTANCE FROM THE LEADER",
+      "mif_row": null,
+      "source": "specific:b/ FIGHTING WING POSITION - DISTANCE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to closure that was neither recognized nor countered with power and a lag correction, did not maintain the Fighting Wing distance. SP closed to about 300 ft behind the leader during the reversal and then, after an abrupt power reduction, opened to about 1800 ft, outside the 500 to 1500 ft band in both directions. IP took the controls at the close range to stop the overtake and re-established the correct distance.",
+        "1": "SP, due to power left at the cruise setting while the leader accelerated, did not maintain the Fighting Wing distance and stabilized at about 1500 ft. The distance stood on the outer limit of the band and was reduced only after IP directed the aircraft back in. The aircraft remained at the edge of the standard for most of the maneuvering set.",
+        "2": "SP, due to a late power addition at the start of the leader's turn, allowed the distance to increase to about 1200 ft. SP recognized the opening against the apparent size of the leader, added power and cut across the turn to regain the position inside 1000 ft, without IP intervention. Distance was then held inside the code 3 band for the remaining maneuvers.",
+        "3": "SP maintained the Fighting Wing distance between 500 and 1000 ft throughout the maneuvering set. Power was added and reduced early enough that the closure and opening rates were both kept small and predictable. Distance was re-established inside the band immediately after each reversal by the leader.",
+        "4": "SP held the Fighting Wing distance in the middle of the band, around 700 to 800 ft, through reversals, climbing turns and airspeed changes by the leader. Range control was achieved with small anticipatory power corrections, with no visible closure or opening at any point in the set. Deviations from the ideal distance were negligible.",
+        "marginal": "SP maintained the Fighting Wing distance within standards, but flew close to 1000 ft for the whole set and regained the position only by cutting hard across the leader's turn each time. The trend is toward a range that sits on the code 3 boundary and will exceed it on the first hard reversal. SP is expected to hold the position nearer the middle of the band and to add power as the leader begins the turn, on the next event."
+      }
+    },
+    {
+      "id": "formation-18-em05",
+      "label": "FIGHTING WING - POSITION WITHIN THE CONE",
+      "mif_row": null,
+      "source": "specific:b/ FIGHTING WING POSITION - POSITION (cone)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a lag pursuit correction that was applied too late and then over-corrected into lead, did not maintain the position within the Fighting Wing cone. SP drifted to about 15 degrees, close to the leader's line astern, and then out past 65 degrees toward the line abreast position, outside the 20 to 60 degree cone in both directions. IP took the controls to move the aircraft back inside the cone and restore the correct angular position.",
+        "1": "SP, due to bank held constant while the leader increased his turn rate, did not maintain the cone position and remained at about 60 degrees for the whole turn, near the line abreast side of the cone. The angle sat on the outer limit and was corrected only after IP called for a lag correction. Position was recovered after the leader had already reversed.",
+        "2": "SP, due to a slow initial lag correction entering the second reversal, allowed the angular position to move to about 52 degrees within the cone. SP identified the movement against the leader's plan form, applied lag and re-entered the 30 to 45 degree band before the next reversal, without IP intervention. The cone position was then held inside the code 3 band for the rest of the set.",
+        "3": "SP maintained the position between 30 and 45 degrees within the Fighting Wing cone throughout the maneuvering set. Lag and lead corrections were applied as the leader initiated each turn, so the angular position moved smoothly and remained inside the band. The correct cone position was re-established immediately after every reversal.",
+        "4": "SP held the position around the middle of the Fighting Wing cone, near 35 to 40 degrees, through the whole set of turns and reversals. The angular position was controlled so precisely that the aspect on the leader appeared constant to the other cockpit. Departures from the nominal cone position were negligible.",
+        "marginal": "SP maintained the cone position within standards, but flew the whole set at 44 to 45 degrees, at the outer edge of the code 3 band, and used large late bank corrections to stay there. The trend is toward an angular position that reaches the boundary on every turn and will move outside it on the first hard reversal. SP is expected to work the middle of the cone and to apply lag as the leader rolls, on the next formation event."
+      }
+    },
+    {
+      "id": "formation-18-em06",
+      "label": "TIMELY ASSUMPTION OF ROUTE OR FIGHTING WING POSITION ON COMMAND",
+      "mif_row": null,
+      "source": "general:gc-1 (assumes position timely when given the corresponding command)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the command being acknowledged without being converted into a control input, did not assume the position ordered by the leader. SP remained in the previous formation position through two further calls and then began moving toward the wrong side of the leader. IP took the controls, established the commanded Route position and directed the profile to be restarted.",
+        "1": "SP, due to hesitation over which position had been commanded, did not assume the Fighting Wing position on the leader's call and remained in Route for about a minute. The move was started only after the leader repeated the command and IP prompted from the rear cockpit. The position was eventually established, but so late that the first maneuver of the set was flown from outside it.",
+        "2": "SP, due to an initial misreading of the leader's command, started moving toward the Route position when Fighting Wing had been ordered. SP recognized the error within a few seconds, stopped the movement and established the commanded Fighting Wing position without IP intervention. The remaining position changes in the sortie were assumed correctly on the first call.",
+        "3": "SP assumed the commanded position promptly on each call from the leader, moving within a few seconds and establishing Route or Fighting Wing without further prompting. The transitions were made with a single smooth control input and the new position was stabilized before the leader began the next maneuver. The same response was given when the position change was required to carry out the in flight checks.",
+        "4": "SP assumed each commanded position immediately and had it fully stabilized before the leader's next input, both for the ordered position changes and for the moves required to carry out the in flight checks. The transitions were flown with such precise power and bank control that no overshoot or hesitation was visible from the other cockpit. Any delay in taking up the position was negligible.",
+        "marginal": "SP assumed the commanded positions within standards, but each change was started only after a noticeable pause and the position was stabilized just as the leader began the next maneuver. The trend is toward a response that is inside the requirement only when the leader allows extra time, and that will place SP out of position on a compressed maneuvering sequence. SP is expected to begin the move on the command and to stabilize the position with time in hand, on the next event."
+      }
+    },
+    {
+      "id": "formation-18-em07",
+      "label": "POSITION KEEPING WHILE CARRYING OUT IN FLIGHT CHECKS",
+      "mif_row": null,
+      "source": "general:gc-1 (or has to execute in flight checks) + execution:2/ As wingman",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to attention captured by a cockpit indication while the aircraft state went unmonitored, went head down to run the in flight checks and stopped flying the formation position. The aircraft closed on the leader and drifted through the height and lateral limits of the Route position while SP continued reading the checklist. IP took the controls, separated from the leader and completed the checks himself.",
+        "1": "SP, due to absorption in the fuel and systems items of the in flight checks, did not divide attention between the checks and the formation position and allowed the aircraft to reach the outer edge of the Route tolerances while head down. SP returned to the leader's reference only after IP called the deviation from the rear cockpit. The checks were completed, but the position was held at the limit of the standard throughout.",
+        "2": "SP, due to a short lock onto one checklist item, allowed the position to degrade toward the code 1 band while running the in flight checks. SP recognized the drift on the next look at the leader, stopped the checklist, re-established the Route position and then resumed the checks from the item that had been interrupted, without IP intervention. The remainder of the checks were run in short blocks with the position maintained throughout.",
+        "3": "SP carried out the in flight checks while maintaining the Route position inside the code 3 tolerances, breaking the checklist into short blocks and returning to the leader's reference between them. No item of the checks was omitted and no deviation in height, lateral angle or fore and aft placement developed while SP was head down. The checks were completed in the time available before the next maneuver.",
+        "4": "SP carried out the complete set of in flight checks with the formation position held to within a few feet and a few degrees of the nominal reference throughout. The division of attention between the cockpit and the leader was so well managed that neither the checklist flow nor the position showed any interruption. Deviations during the head down periods were negligible.",
+        "marginal": "SP carried out the in flight checks within standards, but each head down period produced a visible step out toward the edge of the tolerances that was recovered only after the block was finished. The trend is toward a scan that stops on the checklist rather than alternating with the leader's reference, and that will produce a deviation outside the standard on a longer check sequence. SP is expected to split the checks into shorter blocks and to return to the leader between items, on the next formation event."
+      }
+    },
+    {
+      "id": "formation-18-em08",
+      "label": "SMOOTH AND PREDICTABLE MANEUVERING AS LEADER",
+      "mif_row": null,
+      "source": "execution:1/ As leader (smooth movements, without complicating or surprising No2)",
+      "hf_concept": "hf-lack-of-teamwork",
+      "texts": {
+        "0": "SP, due to an uncoordinated response between the two cockpits during the maneuvering set, did not execute the maneuvers as leader according to the handbooks and made abrupt bank and power changes with no warning to No2. Two reversals were initiated at a roll rate that No2 could not match, and No2 fell outside the Fighting Wing cone and called blind. IP took over the lead and reformed the flight before the profile was continued.",
+        "1": "SP, due to a maneuvering sequence flown as briefed without regard to the wingman's actual position, did not keep the movements smooth and initiated each turn before No2 had stabilized. No2 was forced to the outer edge of the tolerances on every reversal and the flight held together only because IP directed SP to reduce the bank and the rate of change. The lead was maintained at the lower limit of the standard for the remainder of the set.",
+        "2": "SP, due to an initial power reduction that was larger than the maneuver required, produced a closure on No2 that was not briefed. SP recognized the effect on the wingman, restored the power smoothly and flew the following maneuvers with the bank and airspeed changes introduced progressively, without IP intervention. No2 held position inside the standard for the rest of the set.",
+        "3": "SP executed the maneuvers as leader according to the handbooks, with smooth bank, pitch and power changes that did not complicate or surprise No2. Each turn and reversal was initiated at a rate the wingman could follow and the airspeed was kept within the briefed range throughout. No2 was able to maintain the commanded position without any additional call.",
+        "4": "SP led the profile with control inputs so smooth and so consistent with the briefed sequence that No2 held the commanded position throughout without a single corrective call. Airspeed, bank and power were managed to leave the wingman continuous margin on both the inside and the outside of every turn. Any element that could have surprised No2 was negligible.",
+        "marginal": "SP led the flight within standards, but the reversals were initiated at close to the maximum briefed bank and No2 was regularly driven to the edge of the tolerances before recovering. The trend is toward a lead that is flyable only for a wingman already at the required standard, and that will push a less experienced No2 outside the limits. SP is expected to introduce bank and power changes more progressively and to check the wingman's position before each reversal, on the next event."
+      }
+    },
+    {
+      "id": "formation-18-em09",
+      "label": "CORRECTION TECHNIQUE - POWER, BANK AND CLOSURE CONTROL",
+      "mif_row": null,
+      "source": "execution:2/ As wingman (Techniques and Procedures Manual) + general:gc-1",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to corrections applied against the visual picture instead of against the rate of change, did not use the correction technique of the Techniques and Procedures Manual and over-controlled the aircraft in both power and bank. Each correction produced an equal and opposite deviation, and the resulting oscillation grew until the aircraft was outside the limits in fore and aft placement and in height at the same time. IP took the controls to stop the oscillation and re-establish the position.",
+        "1": "SP, due to large power inputs made after the deviation had fully developed, did not correct with the small early inputs required and drove the aircraft between the forward and aft limits of the position several times. The oscillation was damped only after IP talked SP through the size and timing of the correction. The position was held at the edge of the standard for the remainder of the leg.",
+        "2": "SP, due to a first correction that was larger than the deviation required, started an overshoot back through the nominal position. SP recognized the over-control, reduced the size of the subsequent inputs and damped the movement inside the code 3 tolerances within two corrections, without IP intervention. The remaining corrections in the sortie were small, early and made against the closure rate.",
+        "3": "SP corrected deviations with the technique of the Techniques and Procedures Manual, using small and early power and bank inputs made against the rate of change rather than against the displacement. Each deviation was arrested before it reached the code 3 tolerance and returned to the nominal position without overshoot. The formation position remained stable through turns and airspeed changes.",
+        "4": "SP corrected every deviation with inputs so small and so early that the movement of the aircraft relative to the leader was barely perceptible. Power and bank were used together in the correct proportion, so no correction in one axis produced a deviation in another. Residual movement after each correction was negligible.",
+        "marginal": "SP corrected within standards, but each correction was made after the deviation had become visible rather than against the developing rate, so the position was continuously being recovered rather than held. The trend is toward a technique that stays inside the tolerances only while the leader flies gently and that will not damp a deviation set up by a hard reversal. SP is expected to correct on the rate of change with smaller and earlier inputs, on the next formation event."
+      }
+    },
+    {
+      "id": "formation-18-em10",
+      "label": "VISUAL CONTACT WITH THE LEADER, LOOKOUT AND BLIND CALLS",
+      "mif_row": null,
+      "source": "execution:2/ As wingman + general:gc-1 (conditions: Day only VFR - VMC)",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to loss of situational awareness of the aircraft's position relative to the leader, lost visual contact during a reversal in the Fighting Wing set and did not make the blind call. SP continued to maneuver toward the leader's last known position without a deconfliction plan and closed inside the minimum distance of the band. IP took the controls, called blind on the formation frequency and executed the briefed deconfliction.",
+        "1": "SP, due to attention held on the cockpit references rather than on the leader through the turn, lost visual contact in the Fighting Wing set and made the blind call only after IP directed it from the rear cockpit. The deconfliction was flown correctly once initiated, but visual contact was regained late and the position was re-established outside the code 3 band. The lookout for the remainder of the set was maintained only under continuous prompting.",
+        "2": "SP, due to a momentary loss of the leader against the ground background in a descending turn, briefly lost the visual reference required for the position. SP made the blind call on his own, stopped the turn toward the leader's last known position and regained visual contact within a few seconds, then re-established the commanded position without IP intervention. The reference was maintained for the rest of the profile.",
+        "3": "SP maintained continuous visual contact with the leader through every turn, reversal and airspeed change in both Route and Fighting Wing, and cleared the flight path outside the formation between corrections. The correct calls were made at each position change and no blind call was required. The visual reference used for the position matched the one briefed.",
+        "4": "SP maintained visual contact with the leader without interruption through the whole profile, including the reversals flown against a poorly contrasting background, while still clearing the flight path ahead of the formation. The lookout was distributed so effectively that SP identified conflicting traffic and passed it to the leader before it was seen from the lead cockpit. Any break in the visual reference was negligible.",
+        "marginal": "SP maintained visual contact within standards, but the reference was held by staring at the leader alone, with no lookout outside the formation and with the leader briefly lost on two occasions in the turns. The trend is toward a scan that keeps the position while leaving the flight path uncleared, and that will produce a blind call as soon as the background contrast degrades. SP is expected to alternate between the leader's reference and a clearing scan, and to call blind immediately if contact is lost, on the next event."
+      }
+    }
+  ]
+}

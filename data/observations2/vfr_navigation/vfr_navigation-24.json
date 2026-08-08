@@ -1,0 +1,133 @@
+{
+  "item_id": "vfr_navigation-24",
+  "item_name": "EMERGENCY PROCEDURES",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [24],
+  "mif_rows": [
+    { "sn": 24, "row_name": "Emergency Procedures" }
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-24-em01",
+      "label": "BOLD FACE CRITICAL ACTION RECALL EN ROUTE",
+      "mif_row": null,
+      "source": "general:null-text|ref:contact-39:general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to unconsolidated study of the critical action procedures before the navigation sortie, did not state the BOLD FACE steps by heart in sequence when the simulated malfunction was introduced at the second turning point. SP omitted the first two memorized items, reversed the order of the remaining ones and reached for the Check List before any critical action had been taken. IP had to stop the exercise, state the sequence and take the aircraft while SP recovered the procedure from the publication.",
+        "1": "SP, due to critical action items rehearsed only as isolated steps and not as a sequence, did not state the BOLD FACE procedure without mistakes when the malfunction was called en route. SP produced the correct steps only after IP prompted each item verbally, and the sequence was completed roughly twenty seconds after the malfunction was announced. Recall reached the lower limit of the standard solely through verbal prompting by IP.",
+        "2": "SP, due to the workload of the navigation leg being carried into the first seconds of the abnormal, initially stated the critical action items out of sequence. SP stopped, restated the procedure from the first item and completed all memorized steps correctly before any further prompting, without IP intervention. Total time from the announcement to the completed sequence remained inside the working standard for the sortie.",
+        "3": "SP stated the proper steps of the critical action procedure in sequence, by heart and without mistakes, while maintaining the navigation leg. Recall was immediate and the wording matched the Check List. No item required correction or prompting by IP.",
+        "4": "SP recalled the critical action items instantly and flawlessly under the added workload of the navigation task, stating each step in the published sequence and identifying the associated system indications while doing so. SP additionally stated the follow-on non-memorized items that the condition would require. Deviations from the published sequence were negligible."
+      ,
+        "marginal": "SP stated the BOLD FACE steps within standards, but recall was slow at the transition between the memorized items and the Check List items and depended on visualizing the printed page rather than on consolidated memory. The trend is toward a recall that will not hold once the workload of the navigation task and an actual malfunction are combined. SP is expected to rehearse the critical action procedures to immediate, sequence-correct recall before the next navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-24-em02",
+      "label": "CHECK LIST / IFG EXECUTION AND STANDARDIZED SEQUENCE DURING THE NAVIGATION LEG",
+      "mif_row": null,
+      "source": "general:null-text|ref:contact-39:general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the Check List being stowed and unreachable once the navigation kneeboard and chart were in use, did not execute the procedure according to Check List and IFG after the critical action items. SP worked from memory, skipped the system isolation items entirely and did not complete the associated pages before the aircraft reached the next turning point. IP had to direct the procedure item by item and complete it himself.",
+        "1": "SP, due to poor cockpit management that left the chart, the log and the Check List competing for the same hand, did not execute the procedure in the standardized sequence. SP performed the items out of order, omitted one page and completed the procedure only after IP identified each remaining item verbally. Execution was brought to the lower limit of the standard by that prompting, and the leg timing was lost in the process.",
+        "2": "SP, due to the Check List being opened at the wrong section on first reference, started the procedure at an incorrect page. SP recognized the discrepancy against the indications displayed, returned to the correct page and completed all items in the standardized sequence without IP intervention. The procedure was finished before the aircraft reached the next turning point.",
+        "3": "SP executed all procedures according to Check List and IFG, without IP intervention, flawlessly, timely and in the standardized sequence, while keeping the aircraft on the navigation leg. Cockpit management allowed chart, log and Check List to be handled without any item being dropped. No page or item required completion by IP.",
+        "4": "SP executed the full procedure from the Check List and IFG with no wasted motion, completing every page in the standardized sequence while the navigation leg continued to be flown accurately. SP also verified the items that the condition made conditional and stated why the remaining pages did not apply. Deviations from the published execution were negligible.",
+        "marginal": "SP executed the Check List and IFG items within standards, but cockpit management was the limiting factor: the chart had to be stowed before each reference and the procedure stopped every time a turning point approached. The trend is toward a sequence that will break the first time an actual malfunction arrives inside a busy leg. SP is expected to organize the cockpit so that the Check List can be worked continuously without abandoning the navigation task."
+      }
+    },
+    {
+      "id": "vfr_navigation-24-em03",
+      "label": "OBSERVANCE OF FLIGHT MANUAL SECTION V LIMITS WHILE HANDLING THE EMERGENCY",
+      "mif_row": null,
+      "source": "general:null-text|ref:contact-39:general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a fixation on regaining the planned track after the simulated malfunction, did not observe the aircraft limits reported in Section V of the Flight Manual. SP accelerated past the limit applicable to the assumed configuration and held it there while working the procedure, and did not identify the exceedance when the indications showed it. IP had to intervene on the controls to bring the aircraft back inside the published limits.",
+        "1": "SP, due to attention held on the navigation solution rather than on the engine and airspeed indications, did not keep the aircraft inside the applicable limits during the procedure. Parameters were at the published limit and returned inside it only after IP stated the limit and directed the correction. SP knew the figure when asked but had not been monitoring against it.",
+        "2": "SP, due to a power setting left unchanged after the descent was initiated, allowed the airspeed to increase toward the limit applicable to the condition. SP detected the trend on the cross-check, reduced power and stabilized the aircraft well inside the published limit without IP intervention. The remainder of the procedure was flown with the parameters controlled.",
+        "3": "SP knew and observed the aircraft limits reported in Section V of the Flight Manual throughout the handling of the emergency. Airspeed, power and configuration were kept inside the applicable figures while the procedure was executed and the recovery was planned. No limit was approached without a deliberate correction.",
+        "4": "SP handled the emergency entirely inside the Section V limits, quoting the applicable figure for the condition before setting the parameters and holding the aircraft comfortably clear of every boundary. SP also identified the limit that the intended descent profile would have challenged and adjusted the profile in advance. Deviations from the published limits were negligible.",
+        "marginal": "SP observed the Flight Manual limits within standards, but the airspeed was flown close to the applicable limit for a large part of the procedure and left no margin for a further change of configuration. The trend is toward operating on the boundary rather than inside it, which removes the buffer an actual emergency requires. SP is expected to select parameters with a deliberate margin below the published limits on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-24-em04",
+      "label": "PROCEDURES WHEN UNABLE TO BE ORIENTED (LOST PROCEDURES)",
+      "mif_row": null,
+      "source": "general:null-text",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to lack of awareness of the aircraft's position relative to the area boundary after the weather deviation, did not know how to execute the appropriate procedures when unable to be oriented. SP continued on the last heading with no time check, no climb for radio and radar coverage and no attempt to use the available navigation aids or to request assistance. IP had to take the aircraft, establish the position and direct the recovery.",
+        "1": "SP, due to lack of awareness of the aircraft's position after two consecutive turning points were not identified, did not initiate the lost procedures on his own. SP maintained heading and continued the search of the chart, and began the climb, the aid tuning and the request for assistance only after IP prompted each action in turn. The procedure was brought to the lower limit of the standard by that prompting, and several minutes of fuel were consumed before the position was fixed.",
+        "2": "SP, due to a turning point misidentified against a similar ground feature, initially continued on a track that did not match the planned leg. SP recognized within about a minute that he was unable to confirm position, noted the time, climbed for coverage, tuned the available aid and re-established the position without IP intervention. The sortie continued on the planned route with the fuel plan intact.",
+        "3": "SP knew and executed the appropriate procedures when unable to be oriented, without IP intervention. SP noted the time and the last known position, held a suitable heading, climbed as required for radio and radar coverage, used the available navigation aids and requested assistance at the correct point. The position was re-established quickly and the recovery was planned with the fuel available.",
+        "4": "SP recognized at once that position could no longer be confirmed and executed the lost procedures with exceptional order, fixing the last known position and time, climbing for coverage, cross-checking two independent aids and stating the fuel available and the recovery options before requesting any assistance. The position was resolved with no loss of the planned timing. Deviations from the ideal procedure were negligible.",
+        "marginal": "SP applied the lost procedures within standards, but the decision to admit that position could not be confirmed came late and rested on continued map study rather than on the published sequence. The trend is toward accepting uncertainty for longer than the fuel state or the weather would allow. SP is expected to set a personal time limit for resolving position and to start the lost procedures at that point on the next navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-24-em05",
+      "label": "DIVERSION DECISION AND SELECTION OF A SUITABLE AIRFIELD WITH THE AVAILABLE FUEL",
+      "mif_row": null,
+      "source": "general:null-text|ref:contact-39:general:e",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the alternate airfields not having been extracted from the planning material before the sortie, did not handle the emergency effectively in the diversion phase. SP had no distance, heading or fuel requirement available for any alternate and elected to continue toward the planned destination past the point where the fuel remaining supported it. IP had to select the diversion field, compute the requirement and direct the recovery.",
+        "1": "SP, due to fuel figures for the alternates being carried only as rough estimates, did not decide the diversion in time. SP recognized the need to divert but produced a field selection and a fuel computation only after IP asked for the remaining fuel and the distance to each option. The decision reached the lower limit of the standard through that prompting and the aircraft landed with a reduced margin over the minimum.",
+        "2": "SP, due to a first selection based on distance alone, initially chose an alternate whose runway and approach did not suit the aircraft condition. SP reconsidered against the field data carried on the kneeboard, changed to a suitable airfield and recomputed the fuel required, all without IP intervention. The revised diversion was flown with the planned reserve preserved.",
+        "3": "SP handled the emergency effectively in the diversion phase, selecting a suitable airfield for the aircraft condition and computing heading, distance, time and fuel required against the fuel remaining. The decision was made at a point that preserved the reserve and the diversion was flown as computed. No element of the selection required correction by IP.",
+        "4": "SP identified the need to divert immediately, selected the most suitable airfield for the aircraft condition and the weather, and presented heading, distance, time, fuel required and expected reserve in a single organized statement. SP had already refreshed the alternate data at each turning point, so the figures needed no computation under pressure. Deviations from the optimum diversion solution were negligible.",
+        "marginal": "SP selected a suitable diversion field within standards, but the fuel computation was made once and never revised as the situation developed, and the reserve at the estimated landing time was only just above the minimum. The trend is toward a diversion plan that is correct at the moment it is made and stale thereafter. SP is expected to update the alternate figures at each turning point so the diversion decision rests on current fuel and distance data."
+      }
+    },
+    {
+      "id": "vfr_navigation-24-em06",
+      "label": "AIRCRAFT CONTROL AND TERRAIN CLEARANCE PRIORITY WHILE WORKING THE PROBLEM",
+      "mif_row": null,
+      "source": "general:null-text|ref:contact-39:general:e",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to locking onto one malfunction instead of continuing to fly the aircraft, did not maintain aircraft control while the procedure was being worked. Heading, altitude and airspeed were left unmonitored, the aircraft entered a descending turn toward rising terrain and the deviation was still increasing when it was called. IP had to take the aircraft and re-establish safe terrain clearance before the procedure could be resumed.",
+        "1": "SP, due to attention captured by a caution indication while the aircraft state went unmonitored, did not keep the flight parameters under control during the procedure. The aircraft drifted off the leg heading and lost altitude progressively, and the parameters were restored only after IP called the deviations one by one. Control was returned to the limit of the standard through those calls, without IP touching the controls.",
+        "2": "SP, due to absorption in the Check List page during the first part of the procedure, allowed heading and altitude to begin drifting from the assigned values. SP interrupted the procedure on his own, re-established the flight parameters and the terrain clearance margin, and only then resumed the Check List, without IP intervention. The deviation was corrected before it developed further.",
+        "3": "SP handled the emergency effectively while flying the aircraft first, maintaining heading, altitude, airspeed and terrain clearance throughout the procedure. The Check List work was interleaved with an active instrument cross-check and no flight parameter was allowed to drift. IP made no calls on aircraft state.",
+        "4": "SP flew the aircraft with complete stability throughout the emergency, holding heading, altitude and airspeed and keeping a deliberate terrain clearance margin while working the procedure without interruption. SP verbalized the aircraft state at each break in the Check List so that control priority was never in doubt. Deviations in the flight parameters were negligible.",
+        "marginal": "SP kept the aircraft under control within standards, but the flight parameters were maintained by returning to them in bursts after each block of Check List work rather than by a continuous cross-check. The trend is toward periods with no monitoring at all, which over terrain removes the margin the profile depends on. SP is expected to keep an uninterrupted cross-check running while the procedure is worked on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-24-em07",
+      "label": "DECLARATION OF THE EMERGENCY AND COORDINATION WITH ATC AND IP",
+      "mif_row": null,
+      "source": "general:null-text|ref:contact-39:general:c,e",
+      "hf_concept": "hf-plain-language-communication",
+      "texts": {
+        "0": "SP, due to a technically worded transmission where plain language was required to convey the emergency, did not declare the situation to ATC or state the aircraft condition to IP. The transmission described a system indication with no distress prefix, no intentions, no fuel and no souls on board, and the controller continued to handle the aircraft as routine traffic. IP had to take the radios, declare the emergency and obtain the priority handling required.",
+        "1": "SP, due to jargon that obscured the aircraft's actual condition, did not make the required declaration in a form ATC could act on. SP transmitted the malfunction by its cockpit indication and stated intentions only after IP directed the format and content of the call. The coordination reached the lower limit of the standard through that direction, and the priority handling was delayed by about a minute.",
+        "2": "SP, due to a first call that stated the problem without the intentions and the fuel remaining, did not give ATC a complete picture at the first transmission. SP recognized the omission, made a second call in plain language with condition, intentions, fuel and persons on board, and confirmed the clearance received, without IP intervention. The coordination was complete before the diversion turn was started.",
+        "3": "SP declared the emergency to ATC in plain language, stating the aircraft condition, intentions, fuel remaining and persons on board, and obtained the handling required. SP kept IP informed of the assessment and the intended course of action at each step. No transmission required correction or repetition.",
+        "4": "SP declared the emergency in a single clear transmission that gave ATC everything needed to act, kept subsequent calls short and unambiguous, and maintained a running plain-language assessment with IP so that both cockpits held the same picture. SP also confirmed the assistance available at the diversion field before it was offered. Deviations from standard emergency phraseology were negligible.",
+        "marginal": "SP declared the emergency and coordinated within standards, but the calls carried more system detail than ATC required and the intentions were stated last, so the controller had to ask for them. The trend is toward transmissions that describe the malfunction rather than the assistance needed. SP is expected to lead with condition and intentions in plain language on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-24-em08",
+      "label": "SYSTEMS KNOWLEDGE AND SELECTION OF THE CORRECT PROCEDURE FOR THE CONDITION",
+      "mif_row": null,
+      "source": "general:null-text|ref:contact-39:general:a,d,e",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the daily assignment on the affected system not having been prepared, did not know the emergency procedure or the system in detail and selected a procedure that did not apply to the indications presented. SP could not explain what the indication meant, what the system had done or what the procedure was intended to achieve, and persisted with the wrong procedure after it produced no change. IP had to identify the condition and direct the correct procedure.",
+        "1": "SP, due to incomplete study of the system logic set as daily assignment, did not identify the condition from the indications without help. SP named two candidate procedures and selected the correct one only after IP pointed out the distinguishing indication. Knowledge was demonstrated at the lower limit of the standard and the questioning in the debrief showed the system operation was known only in outline.",
+        "2": "SP, due to two similar indications not having been separated during preparation, initially started the procedure for the adjacent condition. SP compared the remaining indications against the expected picture, recognized the mismatch and changed to the correct procedure without IP intervention. SP then explained the system operation and the reason for each step accurately.",
+        "3": "SP knew in detail the emergency procedures and the relevant systems set as daily assignment, identified the condition correctly from the indications presented and selected the applicable procedure without hesitation. SP explained the purpose of each step and the system behaviour behind it when questioned. No part of the identification required assistance from IP.",
+        "4": "SP identified the condition immediately, selected the correct procedure and explained the system logic, the reason for each step and the consequences of the failure for the remainder of the navigation profile. SP also described how the indications would differ for the adjacent conditions that could be confused with it. Deviations from complete systems knowledge were negligible.",
+        "marginal": "SP demonstrated the required systems knowledge within standards, but the identification of the condition rested on recognizing a familiar indication pattern rather than on understanding the system logic, and the explanation broke down when the questioning moved past the memorized steps. The trend is toward knowledge that will not transfer to a condition presented in an unfamiliar form. SP is expected to prepare the system operation, not only the procedure text, for the next daily assignment."
+      }
+    }
+  ]
+}

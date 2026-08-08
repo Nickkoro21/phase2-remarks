@@ -1,0 +1,162 @@
+{
+  "item_id": "vfr_navigation-08",
+  "item_name": "TACTICAL FORMATION",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [8],
+  "mif_rows": [
+    { "sn": 8, "row_name": "Tactical Formation" }
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-08-em01",
+      "label": "Altitude control in the tactical block",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a lookout that stayed locked on No1 with no altimeter sample during the tactical turns, did not maintain the briefed tactical altitude. The aircraft climbed more than 1000 feet above and later descended more than 500 feet below the briefed block, exceeding the code 1 tolerance in both directions. The IP had to direct the climb back into the block and take control of the power setting to stop the descent.",
+        "1": "SP, due to an altitude cross-check that was resumed only after each rollout, did not hold the briefed tactical altitude while converting energy in the turns. Deviation reached +1000 feet on the energy-gaining side and -500 feet after the reversal, exactly at the code 1 tolerance. Return to the block came only after repeated verbal prompting from the IP and with noticeable delay.",
+        "2": "SP, due to a late power reduction as the nose came down through the horizon in the tactical turn, did not keep altitude within the tight tolerance. Deviation grew to about +700 feet and, on the following reversal, to about -400 feet, that is between the code 3 and code 1 values. SP recognized the trend on the altimeter and re-established the block within a few seconds without any prompt or intervention.",
+        "3": "SP maintained the briefed tactical altitude throughout the navigation legs and the tactical turns, holding within +500 / -300 feet, that is inside the code 3 tolerance. Power and pitch were adjusted before the deviation developed, so corrections stayed small and continuous. Altitude sampling was interleaved with the lookout on No1 without either being dropped.",
+        "4": "SP held the briefed tactical altitude within approximately 100 feet through every turn and reversal, with negligible excursions even during the energy exchange. Pitch and power were pre-empted rather than corrected, so the altitude trace remained flat. The altimeter sample was fitted into the lookout cycle without any pause in visual contact with No1.",
+        "marginal": "SP remained inside the altitude tolerance but used nearly the full allowance on the low side, settling toward -300 feet each time bank was increased. The deviation was always caught and corrected, yet the same downward trend repeated on successive turns. SP is expected to anticipate the pitch requirement at the roll-in and hold the block within 200 feet."
+      }
+    },
+    {
+      "id": "vfr_navigation-08-em02",
+      "label": "Entry and exit airspeed control",
+      "mif_row": null,
+      "source": "specific:SPEED ENTRY/EXIT (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power handling that lagged the flight-path change at entry and exit of the tactical turns, did not maintain the briefed entry and exit airspeed. Airspeed varied by more than 30 knots from the briefed value, exceeding the code 1 tolerance, and decayed low enough to leave no energy for the following reversal. The IP had to command the power setting and unload the aircraft to restore the briefed speed.",
+        "1": "SP, due to a fixed power setting carried through the entry regardless of the bank applied, did not hold the briefed entry and exit airspeed. Deviation reached 30 knots from the briefed value, that is the code 1 tolerance, on both the entry and the exit. SP restored speed only after the IP called it out, and the correction was applied late in the turn.",
+        "2": "SP, due to a power increase begun after the bank was already established rather than with it, did not keep airspeed tight at the entry of the tactical turns. Deviation reached about 20 knots below the briefed value, that is between the code 3 and code 1 values. SP identified the shortfall from the airspeed indicator and restored the briefed speed before the rollout without prompting.",
+        "3": "SP maintained the briefed entry and exit airspeed within 15 knots throughout the tactical turns, inside the code 3 tolerance. Power was matched to the bank and the pitch attitude as the turn was entered, so no large corrections were required. Exit speed was set early enough to support the next maneuver.",
+        "4": "SP held entry and exit airspeed within a few knots of the briefed value on every turn, with negligible variation across the sortie. Power was led into the maneuver so the airspeed indicator stayed essentially steady through the reversal. Energy at each rollout was exactly what the following maneuver required.",
+        "marginal": "SP stayed within the airspeed tolerance but consistently exited the tactical turns on the slow side of the briefed value, using most of the allowance each time. Speed was always recovered on the following leg, yet the same slow bias reappeared at every exit. SP is expected to add power earlier at the roll-in and hold the exit speed within 10 knots."
+      }
+    },
+    {
+      "id": "vfr_navigation-08-em03",
+      "label": "Rollout on the recovery heading",
+      "mif_row": null,
+      "source": "specific:RECOVERY HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a rollout started from the aircraft attitude alone with no reference to the required recovery heading, did not roll out in the tactical formation position. The heading error exceeded 30 degrees from the briefed recovery heading, beyond the code 1 tolerance, and the formation geometry could not be rebuilt from that position. The IP had to give the heading to steer and direct the correction back toward line abreast.",
+        "1": "SP, due to a lead point for the rollout that was not computed for the bank being flown, did not roll out on the required recovery heading. The error reached 30 degrees, that is the code 1 tolerance, and the resulting geometry left No2 well out of position. SP corrected only after the IP stated the heading, and the correction was slow enough that the next turn was entered off-heading.",
+        "2": "SP, due to a rollout begun slightly late for the rate of turn being flown, did not roll out precisely on the recovery heading. The error was about 20 degrees, that is between the code 3 and code 1 values. SP saw the discrepancy on the HSI, adjusted heading promptly and re-established the tactical position without any intervention.",
+        "3": "SP rolled out on the required recovery heading within 10 degrees after each tactical turn, inside the code 3 tolerance. The lead point was adjusted for the bank flown, so the rollout arrived on heading rather than being corrected after it. The formation position was re-established directly from the rollout.",
+        "4": "SP rolled out within a couple of degrees of the required recovery heading on every tactical turn, with negligible correction after the wings were level. The lead point was anticipated for each rate of turn, so no post-rollout heading chasing was needed. The tactical position was regained as the rollout completed.",
+        "marginal": "SP rolled out inside the heading tolerance but consistently overshot in the same direction, using most of the allowance on every turn in that direction. The error was recognized and taken out each time, though only after the wings were level. SP is expected to lead the rollout earlier and arrive on the recovery heading within 5 degrees."
+      }
+    },
+    {
+      "id": "vfr_navigation-08-em04",
+      "label": "Continuous G control during maneuvering",
+      "mif_row": null,
+      "source": "specific:Gs (continous)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to abrupt stick inputs used to chase the leader instead of a steady pull, did not maintain the briefed continuous G during the tactical turns. G varied by more than 1.0 from the briefed value, exceeding the code 1 tolerance, with a light-G excursion followed by a rapid pull that produced buffet. The IP had to take control of the pull to stabilize the maneuver.",
+        "1": "SP, due to a pull that was relaxed each time visual contact with No1 was regained, did not hold continuous G through the turn. The variation reached 1.0 G from the briefed value, that is the code 1 tolerance, and the turn rate changed noticeably within the maneuver. SP steadied the pull only after the IP called for a constant G, and the correction was applied late in the turn.",
+        "2": "SP, due to a pull applied progressively rather than set at the roll-in, did not keep the G steady through the first part of the tactical turn. The variation was about 0.7 G from the briefed value, that is between the code 3 and code 1 values. SP felt the change in turn rate, stabilized the pull and completed the remainder of the turn at the briefed G without intervention.",
+        "3": "SP maintained continuous G within 0.5 of the briefed value throughout the tactical turns, inside the code 3 tolerance. The pull was set at the roll-in and held steady, so turn rate and radius stayed predictable for No1. Energy was converted at the planned rate with no unloading during the turn.",
+        "4": "SP held the briefed continuous G with negligible variation across every turn, the stick force staying essentially constant from roll-in to rollout. Turn rate and radius were repeatable, which kept the formation geometry stable without further correction. No unloading or abrupt reloading occurred while the lookout shifted between No1 and the horizon.",
+        "marginal": "SP stayed within the G tolerance but the pull drifted low in the second half of each turn, using most of the allowance before being restored. The G was always brought back to the briefed value, yet the same relaxation repeated turn after turn. SP is expected to hold the set stick force throughout the maneuver and keep the variation within 0.3 G."
+      }
+    },
+    {
+      "id": "vfr_navigation-08-em05",
+      "label": "Line abreast bearing maintenance",
+      "mif_row": null,
+      "source": "specific:LINE ABREAST DEVIATION (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a position assessment based on the size of No1 rather than on the bearing line, did not maintain the tactical line abreast position. The bearing deviation exceeded 30 degrees, beyond the code 1 tolerance, with the aircraft sustained well aft of line abreast and unable to support the formation. The IP had to direct the power and heading corrections needed to rebuild the position.",
+        "1": "SP, due to corrections that were applied only after the bearing error had become obvious, did not hold the tactical line abreast position. The deviation reached 30 degrees aft of the briefed bearing, that is the code 1 tolerance. SP moved back up the bearing line only after the IP prompted the correction, and the recovery took most of the following leg.",
+        "2": "SP, due to a power correction that was smaller than the closure required, did not keep the bearing tight after the tactical turn. The deviation reached about 20 degrees from line abreast, that is between the code 3 and code 1 values. SP recognized the aft position against the canopy reference, applied the required power and re-established the bearing before the next turn without intervention.",
+        "3": "SP maintained the tactical line abreast position within 10 degrees of the briefed bearing, inside the code 3 tolerance. Small power and heading corrections were applied as soon as the bearing started to change, so the position never developed a large error. The formation stayed mutually supporting throughout the navigation route.",
+        "4": "SP held the line abreast bearing within a few degrees for the whole sortie, including through the reversals, with negligible excursions. Corrections were anticipated from the leader's turn rate rather than applied after the error appeared. The bearing line was maintained without any visible power chasing.",
+        "marginal": "SP remained inside the bearing tolerance but sat persistently on the aft side of line abreast, using most of the allowance on each leg. The position was recoverable and was corrected when called for, though the same aft bias returned after every turn. SP is expected to correct the bearing at first indication and hold the position within 5 degrees."
+      }
+    },
+    {
+      "id": "vfr_navigation-08-em06",
+      "label": "Lateral separation from the leader",
+      "mif_row": null,
+      "source": "specific:LATERAL SEPARATION (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a lateral spacing judged only from the apparent size of No1 with no cross-check against ground references, did not maintain the briefed lateral separation. The error exceeded 1000 feet, beyond the code 1 tolerance, closing to a spacing that removed the maneuvering room required for the tactical turns. The IP had to direct a heading change away from the leader to restore safe separation.",
+        "1": "SP, due to heading corrections toward No1 that were not removed once the bearing was regained, did not hold the briefed lateral separation. The error reached 1000 feet, that is the code 1 tolerance, with the formation alternately compressed and stretched between turns. SP re-established the briefed spacing only after the IP called it, and the correction was delayed into the following turn.",
+        "2": "SP, due to a slightly excessive heading correction applied to regain the bearing, did not keep lateral separation tight after the reversal. The error grew to about 700 feet, that is between the code 3 and code 1 values. SP identified the change in spacing against the ground background, took out the excess heading and restored the briefed separation without any prompting.",
+        "3": "SP maintained the briefed lateral separation within 500 feet throughout the tactical legs and the turns, inside the code 3 tolerance. Heading corrections were small and were removed as soon as the spacing was regained, so the formation width stayed constant. Separation supported both the lookout responsibilities and the maneuvering room needed for the turns.",
+        "4": "SP held the briefed lateral separation with negligible variation across the whole route, including through the tactical turns. Spacing was assessed against ground references as well as the leader, so the formation width was maintained without cyclic compression. The geometry gave full maneuvering room at every reversal.",
+        "marginal": "SP stayed within the lateral separation tolerance but flew consistently on the close side, using most of the allowance during and after each turn. The spacing was safe and was opened when required, yet the tendency to close reappeared at every reversal. SP is expected to set the correction earlier in the turn and hold separation within 300 feet."
+      }
+    },
+    {
+      "id": "vfr_navigation-08-em07",
+      "label": "Clearing and responsibility airspace as No2",
+      "mif_row": null,
+      "source": "general:a,g",
+      "hf_concept": "hf-lack-of-teamwork",
+      "texts": {
+        "0": "SP, due to an unagreed division of lookout responsibility within the formation, did not execute clearing of the assigned responsibility airspace as No2 during the tactical turns. The area into which the formation turned was left uncleared and terrain clearance over the high ground was not assessed, so the safe maneuvering altitude was not ensured. The IP had to clear the turn and direct a climb before the maneuver could continue.",
+        "1": "SP, due to a lookout scan that remained on No1 with no coverage of the assigned sector, did not clear the responsibility airspace before the tactical turns. Clearing was performed only after the IP called for it, and terrain clearance for maneuvering over the ridge was confirmed late. The formation entered the turn before the check of the assigned sector was complete.",
+        "2": "SP, due to a scan cycle that gave too much time to the leader, did not clear the full responsibility airspace at the start of each turn. The sector away from No1 received only a partial check on the first reversal. SP noticed the omission, extended the scan to cover the assigned airspace and confirmed safe maneuvering altitude over the high ground before the following turn, without prompting.",
+        "3": "SP executed clearing of the assigned responsibility airspace as No2 before and during each tactical turn, according to the relative position in the formation. The scan was cycled between No1, the sector of responsibility and the terrain ahead, so both traffic and safe maneuvering altitude over the high ground were confirmed. No clearing call had to be prompted.",
+        "4": "SP cleared the assigned responsibility airspace completely on every turn, with an unbroken scan cycle that covered No1, the sector and the terrain without any of them lapsing. Safe maneuvering altitude over the mountainous section was assessed ahead of the turn rather than at the roll-in. Clearing calls were made in time for the leader to use them.",
+        "marginal": "SP cleared the assigned responsibility airspace on every turn but the sector check was brief and came late in the scan cycle, leaving little margin before the roll-in. Terrain clearance over the high ground was confirmed correctly, though only after the turn had been initiated. SP is expected to complete the sector clearing before the maneuver starts and to keep the scan share balanced with the lookout on No1."
+      }
+    },
+    {
+      "id": "vfr_navigation-08-em08",
+      "label": "Energy management and correction technique to hold position",
+      "mif_row": null,
+      "source": "general:b,c,f",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to corrections applied with bank alone and no conversion of altitude into airspeed, did not exploit the aircraft energy in order to maintain the tactical position. The aircraft ended up slow and aft with no energy available to close, and engine handling ignored the fuel reserve while attempting to catch up at maximum power. The IP had to take control of the correction and rebuild the position.",
+        "1": "SP, due to an incorrect choice of correction technique, did not alleviate the deviations from the tactical formation position in a timely manner. Corrections were made with power only where a geometry correction was required, so the position error persisted through the leg and was resolved only after the IP described the technique. Engine use during the catch-up left less fuel reserve than the profile allowed.",
+        "2": "SP, due to a correction started later than the first indication of the deviation, did not apply the position correction promptly at the first reversal. The correct combination of geometry and power was then selected and the tactical position was recovered before the next turn without intervention. Engine handling stayed consistent with the required fuel reserve.",
+        "3": "SP exploited and converted the aircraft energy to maintain the tactical formation position, using altitude and airspeed against each other rather than power alone. Deviations were identified early and the appropriate correction technique was applied in time to prevent them from developing. Engine use remained consistent with the fuel reserve required for the route.",
+        "4": "SP managed the aircraft energy so precisely that position corrections were anticipated rather than reactive, with altitude and airspeed traded smoothly through every reversal. The technique selected matched each deviation and removed it before it became visible in the formation geometry. Power was used economically and the fuel reserve stayed well ahead of the plan.",
+        "marginal": "SP maintained the tactical position and applied correct techniques, but corrections were initiated only once the deviation was clearly established rather than at the first indication. The energy trades worked, though several required more power than a timely correction would have needed. SP is expected to recognize the developing deviation earlier and to correct with the smaller energy penalty."
+      }
+    },
+    {
+      "id": "vfr_navigation-08-em09",
+      "label": "Visual signals and comm-out execution",
+      "mif_row": null,
+      "source": "general:d,e",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, due to lack of communication of a signal that had not been understood, did not execute the visual signals given by the leader during the comm-out tactical turns. A turn signal was misread and SP maneuvered in the opposite direction to the formation, breaking the tactical geometry. The IP had to intervene, call the intended maneuver and re-establish the formation.",
+        "1": "SP, due to a delayed acknowledgement of the visual signals, did not execute the leader's signals in time during the comm-out phase. The turn was started only after the leader repeated the signal and the IP prompted the response, leaving No2 well behind the formation geometry. Two further signals required confirmation before they were acted upon.",
+        "2": "SP, due to a lookout that was momentarily inside the cockpit, did not pick up one of the leader's visual signals immediately. The signal was recognized on the second presentation and the corresponding maneuver was executed correctly without any intervention. All remaining comm-out signals were read and executed on first presentation.",
+        "3": "SP knew and executed all the visual signals given by the leader, including those used in the comm-out tactical turns. Each signal was acknowledged and the corresponding maneuver was started at the correct point in the formation. No signal had to be repeated or clarified.",
+        "4": "SP read and executed every visual signal on first presentation, with acknowledgement and initiation so prompt that the formation moved as one aircraft. Signals were anticipated from the leader's position and the mission plan, and the comm-out phase ran without a single clarification. Cross-cockpit information on what had been signalled was passed clearly to the IP.",
+        "marginal": "SP executed all the leader's visual signals correctly, but acknowledgement and initiation were slower than the formation required, leaving a visible lag at each signal. No signal was misread and no maneuver was wrong, though the delay repeated through the comm-out phase. SP is expected to acknowledge and act on the signal as it is presented, keeping the formation response immediate."
+      }
+    },
+    {
+      "id": "vfr_navigation-08-em10",
+      "label": "Initiative for safe separation and turn execution per the manual",
+      "mif_row": null,
+      "source": "general:d,h",
+      "hf_concept": "hf-knock-it-off-and-unable-discipline",
+      "texts": {
+        "0": "SP, due to a failure to make the knock-it-off call when the briefed parameters were exceeded, did not take the initiative for safe separation during the tactical turns. The turn was continued toward a converging flight path with closure that the geometry could not absorb, and it was not executed as described in the Techniques and Procedures Manual. The IP had to call the knock-it-off and take control to open the separation.",
+        "1": "SP, due to reluctance to state the deconfliction call while the maneuver was still developing, did not take timely initiative for safe separation. The tactical turn was flown with a sequence that departed from the Techniques and Procedures Manual and the rollout was not in tactical formation position. Separation was restored only after the IP directed the correction and the call.",
+        "2": "SP, due to hesitation at the point where the closure first became apparent, did not make the deconfliction call at the earliest opportunity. The call was made shortly afterwards, the turn was completed as described in the manual and the rollout re-established the tactical position without intervention. Separation was never allowed to reduce beyond the briefed minimum.",
+        "3": "SP took the initiative for safe separation during the tactical turns and executed them as described in the Techniques and Procedures Manual, rolling out in tactical formation position. Deconfliction calls were made in time to be useful to the leader and the flight path was adjusted before closure developed. The sequence of each turn matched the briefed procedure.",
+        "4": "SP anticipated every deconfliction requirement, calling and adjusting before closure could develop, and executed each tactical turn exactly as described in the Techniques and Procedures Manual. The rollouts placed the aircraft directly in tactical formation position with no further correction. Safety of separation was maintained without any reduction in the accuracy of the maneuver.",
+        "marginal": "SP maintained safe separation and flew the tactical turns to the published procedure, but the deconfliction calls came later than the developing geometry warranted. Separation was never reduced below the briefed minimum, though the margin used was consistently the smallest acceptable. SP is expected to make the call at the first indication of closure rather than after confirming it."
+      }
+    }
+  ]
+}

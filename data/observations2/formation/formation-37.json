@@ -1,0 +1,117 @@
+{
+ "item_id": "formation-37",
+ "item_name": "GENERAL KNOWLEDGE",
+ "category": "formation",
+ "schema": "v2-trunk",
+ "mif_numbers": [37],
+ "mif_rows": [
+  {"sn": 37, "row_name": "General Knowledge"}
+ ],
+ "error_modes": [
+  {
+   "id": "formation-37-em01",
+   "label": "Knowledge of the daily formation assignment",
+   "mif_row": null,
+   "source": "general:a",
+   "hf_concept": "hf-lack-of-knowledge",
+   "texts": {
+    "0": "SP, due to lack of knowledge of the published procedure for the condition encountered, could not state the sequence of the formation exercises assigned for the sortie, nor their entry parameters and completion criteria. SP did not know in detail all exercises given as daily assignment, so the IP had to teach the complete formation profile from the beginning at the pre-flight briefing. Two rejoins and one station change had to be demonstrated by the IP in flight before SP could attempt them, and the last two exercises of the assignment were not flown.",
+    "1": "SP, due to incomplete knowledge of the limits applicable to the maneuver, recalled the assigned formation exercises only in outline and stated the entry parameters only after repeated verbal prompting by the IP. Knowledge of the daily assignment stayed at the minimum acceptable limit and the sequence of each exercise had to be restated on the ground and again on the radio before every setup. SP flew the whole profile, but the delay in recall left no time for the planned repetitions of the last rejoin.",
+    "2": "SP, due to studying the daily assignment late in the preparation, hesitated on the entry parameters of two formation exercises at the pre-flight briefing. SP recognized the gap without IP input, returned to the assignment sheet and restated the correct sequence, entry parameters and completion criteria before stepping to the aircraft. The profile was then flown as briefed and no exercise had to be re-briefed on the radio in flight.",
+    "3": "SP knew in detail all exercises given as daily assignment and stated their sequence, entry parameters and completion criteria without hesitation. Answers at the pre-flight briefing were prompt and accurate, and the same knowledge was applied in the air with no prompting from the IP or the flight lead. The post-flight briefing confirmed correct understanding of every assigned formation exercise.",
+    "4": "SP knew every exercise of the daily assignment in exceptional detail, including the reason behind each parameter and the errors most commonly associated with it in the formation environment. SP briefed the complete profile without notes, covering both the lead and the wing responsibilities for each exercise. Every question at the post-flight briefing was answered accurately and referred back to the correct published source.",
+    "marginal": "SP knew all exercises given as daily assignment to the required standard, but the answers on the later exercises of the formation profile were slower and less detailed than on the first ones. The trend indicates that preparation is concentrated on the opening part of the assignment. SP is expected to study the whole assignment with the same depth so that recall is uniform across the complete profile."
+   }
+  },
+  {
+   "id": "formation-37-em02",
+   "label": "Knowledge of the manuals and aeronautical publications applicable to formation",
+   "mif_row": null,
+   "source": "general:b",
+   "hf_concept": "hf-norms",
+   "texts": {
+    "0": "SP, due to reliance on how the maneuver is habitually flown rather than on the published criteria, quoted formation positions and visual signals that were not those of the Techniques and Procedures Manual. SP did not know in detail the Flight Manual, the A/C Techniques and Procedures Manual, the AFMAN 11-202 VOL3 and the aeronautical publications, and could not locate the formation section when asked to do so at the briefing. The IP had to read out the correct signals and the applicable weather minima, and the sortie was reduced to the exercises that had been re-taught on the ground.",
+    "1": "SP, due to an unwritten local practice followed in place of the published procedure, described two visual signals and the formation weather minima from habit and corrected them only after the IP pointed to the manual. Knowledge of the Flight Manual, the Techniques and Procedures Manual, the AFMAN 11-202 VOL3 and the aeronautical publications remained at the minimum acceptable limit, with the correct reference found only under verbal direction. The briefing overran and the formation departure had to be re-briefed on the ground before taxi.",
+    "2": "SP, due to a squadron norm applied where the manual specified otherwise, first described the rejoin signal in non-standard terms at the pre-flight briefing. SP identified the discrepancy without IP input, opened the Techniques and Procedures Manual and restated the signal and the associated wing responsibilities in published wording before the flight. All remaining references to the manuals during the briefing were accurate and no correction was required in flight.",
+    "3": "SP knew in detail the Flight Manual, the A/C Techniques and Procedures Manual, the AFMAN 11-202 VOL3 and the aeronautical publications, and applied them with confidence to the formation exercises briefed. SP located every requested formation reference quickly and quoted the visual signals and the applicable limits in published wording. No item of the briefing had to be corrected against the source documents.",
+    "4": "SP used the Flight Manual, the Techniques and Procedures Manual, the AFMAN 11-202 VOL3 and the aeronautical publications with exceptional command, citing the exact paragraph for each formation limit and signal without searching. SP also explained how the wing responsibilities in the manual change between fingertip, route and echelon and supported each statement with the correct reference. Every question at the post-flight briefing was answered directly from the publications.",
+    "marginal": "SP knew the Flight Manual and the Techniques and Procedures Manual to the required standard, but the answers on the AFMAN 11-202 VOL3 formation paragraphs and on the aeronautical publications were slower and needed more searching. The trend indicates that study is concentrated on the aircraft manuals and less on the regulatory and navigation publications. SP is expected to cover all four sources with the same depth so that any formation reference can be produced without delay."
+   }
+  },
+  {
+   "id": "formation-37-em03",
+   "label": "Meteorological knowledge for formation operations",
+   "mif_row": null,
+   "source": "general:c",
+   "hf_concept": null,
+   "texts": {
+    "0": "SP, due to not having studied the meteorological material before the morning briefing, could not interpret the forecast wind, the cloud bases or the turbulence forecast for the working area. SP did not show knowledge of meteorological principles and was unable to attend the morning meteorological briefing without problem, so the IP had to explain the sequence of the weather systems and decide on the suitability of the area for formation work. The planned area was found unusable after departure and the profile was flown at a lower level with two exercises deleted.",
+    "1": "SP, due to a superficial reading of the forecast, restated the ceiling and the visibility for the formation recovery only after the IP repeated the question twice. Knowledge of meteorological principles remained at the minimum acceptable limit, and the implication of the forecast crosswind on the formation takeoff was produced only with verbal guidance. The weather section of the briefing had to be repeated and the step time was delayed.",
+    "2": "SP, due to reading the area forecast in a hurry, first quoted the wrong freezing level for the working area at the morning meteorological briefing. SP noticed the error without prompting, went back to the forecast chart and corrected the freezing level and the associated turbulence expectation before the briefing ended. The formation sortie was planned in the correct block and no weather item had to be revised in flight.",
+    "3": "SP showed knowledge of meteorological principles and attended the morning meteorological briefing without problem, interpreting the wind, cloud and visibility forecast for the departure, the working area and the recovery. SP related the forecast turbulence and crosswind directly to the formation exercises planned for the sortie. Every weather question at the briefing was answered accurately and no clarification was required.",
+    "4": "SP interpreted the meteorological material in exceptional detail, explaining the origin of the forecast conditions and the expected trend over the sortie window. SP identified in advance the effect of the forecast wind gradient on the rejoins and proposed a working block that avoided the layer of reported turbulence. The IP confirmed the assessment in flight and no adjustment to the plan was needed.",
+    "marginal": "SP met the standard on meteorological knowledge and attended the morning briefing without problem, but the answers stayed close to the reported values and did not extend to their effect on the formation exercises. The trend indicates that the weather is read as data rather than applied to the planned profile. SP is expected to link each forecast element to the specific exercises of the sortie so that the assessment is complete before the briefing."
+   }
+  },
+  {
+   "id": "formation-37-em04",
+   "label": "Aerodynamics knowledge applied to formation flight",
+   "mif_row": null,
+   "source": "general:d",
+   "hf_concept": "hf-mental-model",
+   "texts": {
+    "0": "SP, due to an incomplete mental model of the closure geometry that was not updated when the lead changed bank, could not explain the relationship between angle off, closure rate and power required during a turning rejoin. SP did not show aerodynamics knowledge sufficient to explain, theoretically, situations to be encountered during flight, and could not describe the effect of the lead wake and downwash on the wing position. The IP had to teach the geometry on the ground and demonstrate two rejoins in flight before SP attempted one.",
+    "1": "SP, due to retention of the briefed mental model after the formation configuration had changed, explained the turn geometry only in general terms and gave the reason for the increased power requirement in the inside position only after the IP led the answer step by step. Aerodynamics knowledge remained at the minimum acceptable limit, and the effect of increasing bank on turn radius and closure was described only under verbal prompting. The theoretical part of the briefing had to be repeated after the flight.",
+    "2": "SP, due to an initially incorrect assumption about the power required in the outside position of a turning rejoin, gave an explanation that did not match the observed performance. SP identified the inconsistency without IP input, reworked the geometry using the correct turn radius relationship and restated the answer correctly before the debrief moved on. No further explanation was required from the IP on that subject.",
+    "3": "SP showed aerodynamics knowledge sufficient to explain, theoretically, the situations encountered during the formation sortie, including closure control, the power required in the inside and outside positions and the effect of the lead wake. Each explanation matched the aircraft behaviour observed in flight and was given without hesitation. No theoretical point had to be corrected at the post-flight briefing.",
+    "4": "SP explained the aerodynamics of the formation exercises in exceptional depth, linking bank angle, turn radius, closure rate and the position of the wing aircraft relative to the lead wake into one consistent picture. SP predicted the control and power response before each exercise and the prediction matched what was flown. The post-flight briefing required no correction and SP supported every point with the correct theoretical reasoning.",
+    "marginal": "SP met the standard on aerodynamics knowledge and explained the formation situations correctly, but the answers on the wake and downwash effects were less complete than those on turn geometry. The trend indicates that study has focused on the geometrical side of the rejoin and less on the flow interaction between the aircraft. SP is expected to cover both aspects to the same depth so that any formation situation can be explained fully."
+   }
+  },
+  {
+   "id": "formation-37-em05",
+   "label": "Knowledge of airfield traffic procedures and formation flight planning",
+   "mif_row": null,
+   "source": "general:e",
+   "hf_concept": null,
+   "texts": {
+    "0": "SP, due to not having prepared the departure and recovery procedures for a two-ship, could not state the formation departure route, the initial point for the recovery or the spacing required in the pattern. SP did not know airport traffic procedures and did not have sufficient knowledge in order to plan a flight, so the IP had to build the plan and the fuel figures at the briefing table. The formation recovery had to be directed in full on the radio and the planned second pattern was not flown.",
+    "1": "SP, due to an incomplete review of the local procedures, produced the formation departure and recovery sequence only after repeated verbal prompting and quoted the pattern spacing on the second attempt. Knowledge of the airport traffic procedures and of formation flight planning remained at the minimum acceptable limit, and the fuel plan was completed with IP guidance. The briefing overran and the recovery had to be restated on the radio before the initial point.",
+    "2": "SP, due to using an outdated note for the local pattern altitudes, first briefed the formation recovery with the wrong altitude at the initial point. SP identified the discrepancy without IP input, checked the current publication and corrected the altitude and the associated spacing before the flight. The departure, the working area transit and the recovery were then flown as planned with no further clarification.",
+    "3": "SP knew the airport traffic procedures and had sufficient knowledge in order to plan the flight, stating the formation departure, the transit to the area, the recovery and the pattern spacing without hesitation. The fuel plan and the timings were consistent with the profile and with the published local procedures. The sortie was flown as planned with no procedural clarification required on the radio.",
+    "4": "SP planned the formation sortie in exceptional detail, including the departure and recovery alternatives, the spacing required in each case and the fuel figures for the diversion. SP briefed the traffic sequence and the point at which the formation would be broken up for recovery, and the plan was executed exactly as briefed. The IP had to add nothing to the plan at any stage of the sortie.",
+    "marginal": "SP met the standard on airport traffic procedures and on the planning of the sortie, but the alternatives for a changed recovery were thinner than the primary plan. The trend indicates that planning stops at the expected case. SP is expected to prepare the recovery alternatives and the associated spacing to the same standard as the primary plan."
+   }
+  },
+  {
+   "id": "formation-37-em06",
+   "label": "Knowledge of flight physiology and aviation medicine in the formation environment",
+   "mif_row": null,
+   "source": "general:f",
+   "hf_concept": null,
+   "texts": {
+    "0": "SP, due to not having studied the physiology material of the syllabus, could not describe the anti-G straining manoeuvre, the symptoms preceding loss of consciousness or the visual illusions associated with prolonged fixation on the lead aircraft. SP did not show knowledge of air medicine and flight physiology and could not interpret the physiology conditions and flight effects encountered during the sortie. The IP had to teach the subject at the post-flight briefing and the sortie was terminated one exercise early after SP reported symptoms that were not recognized in time.",
+    "1": "SP, due to a superficial review of the physiology material, described the anti-G straining manoeuvre incompletely and named the early symptoms of hypoxia only after the IP listed the categories. Knowledge of air medicine and flight physiology remained at the minimum acceptable limit and the connection between fixation on the lead and the loss of the outside references was made only under verbal prompting. The subject had to be re-briefed on the ground before the next sortie was authorized.",
+    "2": "SP, due to relying on memory rather than on the syllabus material, first described the visual illusions of close formation incompletely at the pre-flight briefing. SP recognized the gap without IP input, referred to the physiology material and completed the answer, including the countermeasure of periodically shifting the scan away from the lead. The subject required no further correction at the post-flight briefing.",
+    "3": "SP showed knowledge of air medicine and flight physiology and interpreted correctly the physiology conditions and flight effects encountered during the formation sortie, including the G tolerance requirements and the visual illusions of sustained fixation on the lead. Each answer was given without hesitation and matched what SP reported having experienced in flight. No correction was required at the post-flight briefing.",
+    "4": "SP explained the physiology of the formation sortie in exceptional detail, linking the G levels flown during the rejoins, the effectiveness of the straining manoeuvre and the visual effects of prolonged fixation on the lead aircraft. SP described the countermeasures for each condition and reported the sensations experienced in flight against the expected pattern. The post-flight briefing confirmed a complete and accurate understanding of the subject.",
+    "marginal": "SP met the standard on air medicine and flight physiology, but the answers on the visual illusions of close formation were less developed than those on G tolerance. The trend indicates that study has followed the physical rather than the perceptual side of the subject. SP is expected to cover the visual and orientation effects of formation flight to the same depth."
+   }
+  },
+  {
+   "id": "formation-37-em07",
+   "label": "Knowledge of survival and SAR procedures",
+   "mif_row": null,
+   "source": "general:g",
+   "hf_concept": null,
+   "texts": {
+    "0": "SP, due to not having reviewed the survival material, could not state the land and sea survival actions after ejection, the equipment carried or the signalling procedure to the SAR means. SP was not aware of both sea and land survival procedures and of the rescue procedures from SAR means, and could not describe the actions of the wing aircraft when the lead is lost. The IP had to teach the whole subject at the briefing and the sortie was not authorized until the survival items had been covered on the ground.",
+    "1": "SP, due to an incomplete review of the survival material, listed the sea survival actions only in outline and produced the SAR signalling sequence after the IP prompted for each step. Awareness of the sea and land survival procedures and of the rescue procedures from SAR means remained at the minimum acceptable limit, and the emergency responsibilities of the wing aircraft were stated only under verbal guidance. The briefing was extended and the survival section had to be repeated after the flight.",
+    "2": "SP, due to confusing the sequence of two SAR signalling steps, first described the recovery procedure out of order at the pre-flight briefing. SP identified the error without IP input, checked the survival material and restated the full sequence, including the actions of the remaining formation member, before the briefing ended. The subject required no further correction.",
+    "3": "SP was aware of both sea and land survival procedures and of the rescue procedures from SAR means, and stated the post-ejection actions, the use of the survival equipment and the signalling sequence without hesitation. SP also described correctly the responsibilities of the remaining formation member during the search and rescue phase. No item of the subject had to be corrected at the briefing.",
+    "4": "SP covered the sea and land survival procedures and the SAR recovery procedures in exceptional detail, including the priorities in the first minutes after landing, the use of each item of survival equipment and the communication plan with the rescue means. SP integrated the subject with the formation environment by describing how the remaining aircraft supports the search while managing its own fuel state. Every question at the post-flight briefing was answered accurately and in the correct order.",
+    "marginal": "SP met the standard on the survival and SAR procedures, but the land survival part was answered with less detail than the sea survival part. The trend indicates that preparation followed the profile flown most often rather than the whole subject. SP is expected to know the land survival and rescue procedures to the same level of detail as the sea procedures."
+   }
+  }
+ ]
+}

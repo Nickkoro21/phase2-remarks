@@ -1,0 +1,132 @@
+{
+  "item_id": "vfr_navigation-22",
+  "item_name": "COMMUNICATION",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [22],
+  "mif_rows": [
+    {"sn": 22, "row_name": "Radio Comm."}
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-22-em01",
+      "label": "Positive contact with radar control stations before entering their control areas",
+      "mif_row": null,
+      "source": "general:null(item-specific)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to route planning that did not identify the boundary of the radar control area, did not establish positive contact with the controlling agency before entering it. The aircraft crossed the boundary with no two-way communication established and with the previous en route frequency still selected. The IP took the radios and made the entry call after the boundary had been passed by more than two minutes of flight. SP did not recognize the omission at any point before the intervention.",
+        "1": "SP, due to late identification of the control area boundary on the navigation chart, established contact with the radar control station only at the boundary itself. The frequency was changed only after the IP called for it, and the entry clearance was obtained with the aircraft already at the edge of the controlled airspace. SP built the initial call correctly once prompted and no transfer of the radios was necessary.",
+        "2": "SP, due to a delayed frequency selection while completing the turning point checks, was late in calling the radar control station, but recognized it unaided approximately one minute before the boundary. SP made the initial call, obtained positive contact and passed the entry point in time, so the control area was entered with two-way communication already established. No prompting and no intervention by the IP were required.",
+        "3": "SP established positive contact with each radar control station before entering its control area. The frequency was selected at the planned point, each initial call contained the required content, and the entry clearance was obtained ahead of the boundary in every case.",
+        "4": "SP established positive contact with every controlling agency along the route at the planned point, with each initial call complete and correctly formatted on the first attempt. Contact was in place before each boundary with a clear margin, including after the unplanned re-route, and the transition between agencies left no gap in coverage.",
+        "marginal": "SP established positive contact with the radar control stations within standards, but each initial call was made close to the boundary rather than at the planned point, and the available margin decreased as the sortie progressed. The trend is toward reacting to the approaching boundary instead of working to the planned frequency-change points. SP is expected to mark the control area boundaries and the associated frequencies on the navigation log so that contact is established with a consistent margin on the following sorties."
+      }
+    },
+    {
+      "id": "vfr_navigation-22-em02",
+      "label": "Use of brevity words and standard phraseology on the navigation route",
+      "mif_row": null,
+      "source": "general:null(item-specific)|contact-37:c",
+      "hf_concept": "hf-non-standard-phraseology",
+      "texts": {
+        "0": "SP, due to non-standard phraseology that left the intention ambiguous to the controller, did not obtain contact with the ground station following the standard procedures and phraseology. Three transmissions had to be repeated after the controller queried the intentions, one of them at the entry to the control area, and brevity words were replaced by long free-text descriptions of the position. The IP took the radios to re-establish a usable exchange with the station. SP did not correct the format at any point of the route.",
+        "1": "SP, due to non-standard phraseology that did not follow the published format, transmitted position and intentions in a way that required the controller to ask for clarification twice. SP reformatted the calls only after the IP dictated the correct wording, and brevity words were used only where prompted. The remaining transmissions of the route stayed at the limit of the acceptable standard for content and length.",
+        "2": "SP, due to an unstandard read-back format on the first exchange with the en route agency, did not use the correct phraseology for the initial call, but recognized it unaided after the controller's reply. SP reverted to the standard format and to the appropriate brevity words on the next transmission, without any prompting from the IP. No further clarification was requested by any station for the rest of the route.",
+        "3": "SP obtained contact with every station following the standard procedures and phraseology of the published format. Transmissions were short, correctly ordered and used the appropriate brevity words where they were required, so that no station requested a repeat or a clarification.",
+        "4": "SP used precise standard phraseology on every transmission of the route, including the non-routine exchanges with the radar control stations. Brevity words were applied exactly where they were required and never where they would have been ambiguous, and every call was understood and answered on the first attempt.",
+        "marginal": "SP communicated within standards, but the transmissions were consistently longer than the published format requires and brevity words were used only in the calls that had been rehearsed in the brief. The trend is toward free-text phrasing whenever the exchange departs from the briefed sequence. SP is expected to study the standard phraseology so that the non-routine calls are as concise as the routine ones."
+      }
+    },
+    {
+      "id": "vfr_navigation-22-em03",
+      "label": "Continuous monitoring of the assigned frequency and response to calls en route",
+      "mif_row": null,
+      "source": "contact-37:b",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to an attention bottleneck on the navigation solution at the expense of monitoring the assigned frequency, did not respond to calls from the ground station. Three consecutive calls from the controlling agency went unanswered and the station repeated the call on the guard frequency before the IP answered from the rear cockpit. Radio monitoring stayed dependent on the IP for the remainder of the leg.",
+        "1": "SP, due to absorption in the navigation chart while the aircraft was tracking to the turning point, did not continuously monitor the assigned frequency and answered the station only after the call had been repeated. The response was made only after the IP prompted that the aircraft had been called, and the delay was more than 15 seconds on two occasions. No radio was taken by the IP.",
+        "2": "SP, due to attention held on the turning point identification, was late in answering the first call from the en route agency, but detected the call unaided within about 10 seconds and answered before the station repeated it. SP restored the listening watch immediately and every subsequent call was answered without delay. No prompting was required.",
+        "3": "SP continuously monitored the radio communication throughout the route and responded to every call from the ground stations as soon as it was made. The listening watch was maintained across the turning points and during the workload of the navigation checks, with no call left unanswered.",
+        "4": "SP maintained an uninterrupted listening watch for the whole sortie and answered every call immediately, including the calls received during the turning point checks and the re-route. SP also identified two calls addressed to other aircraft on the same frequency and used them to build the traffic picture without any effect on the response to own calls.",
+        "marginal": "SP monitored the radio communication within standards, but the responses given while the navigation workload was highest were consistently slower than those given in level cruise. The trend is toward a listening watch that degrades whenever the chart work increases. SP is expected to distribute the navigation tasks over the leg so that the response time to the ground stations remains uniform."
+      }
+    },
+    {
+      "id": "vfr_navigation-22-em04",
+      "label": "Read-back accuracy and compliance with instructions from ground stations",
+      "mif_row": null,
+      "source": "contact-37:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a read-back built from the expected clearance rather than from the one actually received, did not follow the instructions given by the ground station and misinterpreted the assigned altitude and the routing. The aircraft was flown toward the previously planned turning point after the agency had issued an amended one, and the incorrect read-back was not detected. The IP intervened, corrected the read-back and flew the assigned routing. SP did not identify the discrepancy before the intervention.",
+        "1": "SP, due to a read-back that omitted part of the instruction received from the en route agency, did not confirm the assigned level and initially applied an incorrect one. SP amended the read-back and complied with the correct instruction only after the IP repeated what the station had transmitted. The correction was completed before any deviation from the assigned routing developed and no control input was required from the IP.",
+        "2": "SP, due to an incomplete first read-back of the amended routing, did not confirm the whole instruction at the first attempt, but recognized the omission unaided within a few seconds. SP requested no repeat, transmitted the complete read-back and complied with the instruction as issued. No prompting and no intervention by the IP were required.",
+        "3": "SP read back every instruction received from the ground stations completely and accurately and complied with it precisely, with no misinterpretation on any leg of the route. Where an instruction was not fully understood, SP requested a repeat before acting on it.",
+        "4": "SP read back every clearance and instruction of the sortie in full and without a single error, including the amended routing issued during the transit. Compliance was immediate and exact in every case, and one ambiguous instruction was resolved by a precisely worded request for clarification before any action was taken.",
+        "marginal": "SP read back and complied with the instructions within standards, but the read-backs of the longer clearances were assembled slowly and twice needed a second transmission to become complete. The trend is toward retaining only part of a multi-element instruction. SP is expected to write down the elements of the longer clearances so that the read-back is complete at the first attempt."
+      }
+    },
+    {
+      "id": "vfr_navigation-22-em05",
+      "label": "Frequency change discipline and non-interference on handover",
+      "mif_row": null,
+      "source": "contact-37:e",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an initial call transmitted immediately after the frequency change without listening out first, interrupted the communication between the ground station and another aircraft. The transmission blocked a clearance being issued to the other aircraft and had to be repeated twice, and on a later handover SP omitted the initial contact altogether so the aircraft flew a full leg unannounced on the new frequency. The IP made the required initial call and directed the frequency management for the rest of the route.",
+        "1": "SP, due to a frequency change made without a listening period, transmitted over an exchange in progress on the new frequency on one occasion. SP waited for the frequency to be clear only after the IP pointed out the blocked transmission, and the required initial call was then made with a delay of more than 20 seconds. No radio was taken by the IP.",
+        "2": "SP, due to a rushed frequency change at the turning point, began the initial call while the previous exchange on the new frequency was still ending, but stopped the transmission unaided before it blocked the station. SP waited for the frequency to become clear and executed the initial contact correctly a few seconds later. No prompting and no intervention by the IP were required.",
+        "3": "SP changed frequency at the correct points, listened out before transmitting and executed the initial contact where it was required. No transmission of the sortie interfered with communication between the ground stations and other aircraft.",
+        "4": "SP managed every frequency change of the route precisely, listening out before each first transmission and executing the initial contact immediately once the frequency was clear. No exchange was blocked at any handover, and one busy frequency was joined at the first available gap without any loss of contact continuity.",
+        "marginal": "SP handled the frequency changes within standards, but on the busier frequencies the initial contact was delayed while SP waited longer than necessary for a gap that had already been available. The trend is toward hesitation in joining an active frequency. SP is expected to identify the gap earlier so that the initial contact follows the frequency change promptly."
+      }
+    },
+    {
+      "id": "vfr_navigation-22-em06",
+      "label": "Required en route calls and position reports at the briefed points",
+      "mif_row": null,
+      "source": "contact-37:a|execution:1",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a navigation log that was not annotated with the reporting points, did not make the required position reports and did not establish the reporting sequence agreed in the brief. Two turning point reports and the area entry report were omitted, and the agency requested the aircraft position before any report had been passed. The IP made the outstanding reports and prompted every subsequent one. SP remained dependent on the rear cockpit for the reporting sequence up to the recovery.",
+        "1": "SP, due to reporting points that were recalled from memory instead of the navigation log, did not pass the position reports at the briefed points and made them only after verbal prompting by the IP on two legs. Each report was then correctly formatted, but was transmitted more than a minute after the point had been passed. No transfer of the radios was necessary.",
+        "2": "SP, due to attention held on the ground features at the turning point, was late in passing one position report, but identified the omission unaided while the following leg was being established. SP transmitted the report with the correct content and the correct position within about half a minute of the point. All the remaining reports were made at the briefed points without prompting.",
+        "3": "SP made every required en route call and position report at the briefed point and with the correct content. The reporting sequence agreed in the brief was followed on all legs, so that the controlling agencies had the aircraft position without having to request it.",
+        "4": "SP passed every required report exactly at the briefed point, with complete and correctly ordered content, on the first transmission and without exception. When the routing was amended, SP re-established the reporting sequence for the new track immediately and passed the first report of the amended leg at the correct position.",
+        "marginal": "SP made the required reports within standards, but they were consistently transmitted after the turning point had been passed rather than at it, and the delay grew on the later legs. The trend is toward reporting once the new heading has been settled instead of at the point itself. SP is expected to prepare the content of each report before reaching the point so that the transmission coincides with it."
+      }
+    },
+    {
+      "id": "vfr_navigation-22-em07",
+      "label": "Integration of R/T with navigation and aircraft control workload",
+      "mif_row": null,
+      "source": "general:null(item-specific)|contact-37:a,b|conditions",
+      "hf_concept": "hf-workload-distribution",
+      "texts": {
+        "0": "SP, due to workload distribution that left the SP flying, navigating and transmitting at the same time, did not maintain the radio watch and the aircraft state together. During two extended transmissions the heading drifted off the planned track and the assigned altitude was left unmonitored, and one call from the agency was neither heard nor answered. The IP took control of the aircraft so that the radio exchange could be completed. SP did not shed any secondary task at any stage.",
+        "1": "SP, due to a failure to shed the chart work when the radio workload increased, did not keep the transmissions separate from the navigation tasks and allowed the track and the level to be neglected during the exchanges. SP re-established the aircraft state only after the IP called the deviation, and the same pattern was repeated on the following leg. The radio content itself remained correct and no control input was required from the IP.",
+        "2": "SP, due to a transmission started at the same moment as the turning point check, briefly divided attention between the two tasks and allowed the heading to wander from the planned track. SP recognized it unaided, completed the transmission and returned to the track before the deviation developed further. The remaining calls of the leg were sequenced clear of the navigation checks without prompting.",
+        "3": "SP integrated the R/T with the navigation and the aircraft handling throughout the sortie. Transmissions were sequenced so that they did not compete with the turning point checks, and the assigned level, the planned track and the listening watch were maintained together on every leg.",
+        "4": "SP sequenced every radio task around the navigation workload so that neither degraded at any point of the route. Track keeping, level keeping and the listening watch were maintained without interruption through the busiest phases, including the coordination of the amended routing while the turning point checks were in progress.",
+        "marginal": "SP combined the radio work with the navigation tasks within standards, but on the busiest leg the transmissions and the turning point checks were attempted together and both were completed more slowly than on the earlier legs. The trend is toward saturation when the calls coincide with the chart work. SP is expected to plan the sequence of calls against the turning points so that the two tasks are separated in time."
+      }
+    },
+    {
+      "id": "vfr_navigation-22-em08",
+      "label": "Formation radio duties as Leader and as Wingman on the navigation sortie",
+      "mif_row": null,
+      "source": "formation-34:a.1,a.2,b.1,b.2|execution:1,2",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to formation radio duties that were not applied to the navigation profile, did not maintain R/T contact with the other formation member as the role required. As Leader, SP passed no information on the routing change and did not remind the Wingman of the functional aircraft checks and the fuel check; as Wingman, SP confirmed none of the directions given by the Leader and did not monitor the Leader's exchanges with the ground stations. The formation entered the control area without a common understanding of the clearance and the IP intervened to restore the internal communication. SP did not detect the breakdown before the intervention.",
+        "1": "SP, due to internal formation calls that were left until after the ground station exchanges, did not pass the required information to the other formation member in time for the turning point. As Leader, SP reminded the Wingman of the fuel check only after the IP prompted it; as Wingman, SP confirmed the Leader's directions only when they were repeated. The information was correct once passed and no transfer of the radios was necessary.",
+        "2": "SP, due to attention held on the ground station frequency during the handover, was late with one internal formation call, but recognized it unaided before the turning point. As Leader, SP passed the accurate routing information and the reminder for the functional checks in time; as Wingman, SP confirmed every subsequent direction from the Leader on the first transmission. No prompting and no intervention by the IP were required.",
+        "3": "SP performed the formation radio duties of the assigned role throughout the navigation sortie. As Leader, SP passed accurate information to the Wingman and reminded the functional aircraft checks and the fuel check at the briefed points; as Wingman, SP confirmed every direction received and monitored the Leader's communication with the ground stations.",
+        "4": "SP performed the formation radio duties of the role precisely and without omission for the whole route. As Leader, every item of information passed to the Wingman was accurate, timely and complete, including the reminders for the functional and fuel checks after the routing change; as Wingman, SP confirmed each direction immediately, monitored every exchange between the Leader and the ground stations and interposed once for flight safety exactly when it was required.",
+        "marginal": "SP carried out the formation radio duties within standards, but the internal calls were consistently passed later than the external ones and the Wingman's confirmations were the last element of each exchange. The trend is toward treating the formation communication as secondary to the ground station communication. SP is expected to plan the internal calls against the route points so that both cockpits share the same information before each turning point."
+      }
+    }
+  ]
+}

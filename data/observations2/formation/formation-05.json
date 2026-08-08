@@ -1,0 +1,132 @@
+{
+  "item_id": "formation-05",
+  "item_name": "RETURN / DESCENT / TRAFFIC PATTERN ENTRY",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [5],
+  "mif_rows": [
+    {"sn": 5, "row_name": "Descent - Traffic Pattern Entry"}
+  ],
+  "error_modes": [
+    {
+      "id": "formation-05-em01",
+      "label": "Altitude control during descent and pattern entry",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a late start of the descent out of the assigned flight area, did not achieve the altitude cleared by ATC before the VFR entry point. The formation arrived at the entry point more than 300 feet off the cleared altitude and the deviation was still increasing at the pattern entry. The IP intervened on the controls and re-established the formation on the cleared altitude before the break.",
+        "1": "SP, due to an unmonitored descent rate while handling lead duties, allowed the altitude to diverge from the cleared value up to the 300 feet limit. The divergence was arrested only after repeated verbal prompting by the IP, and the level-off was completed after the entry point instead of before it. SP did not use a lead point for the level-off and let the altimeter drive the correction.",
+        "2": "SP, due to a descent rate held slightly higher than required, let the altitude deviate about 200 feet from the value assigned by ATC, between the 150 and 300 feet limits. SP recognized the trend on the altimeter, reduced the rate and regained the cleared altitude in time for the entry point. No IP intervention was required and the deviation did not repeat.",
+        "3": "SP planned the descent from the flight area and held the cleared altitude within 150 feet throughout the return and the level-off, reaching the assigned altitude before the VFR entry point. Corrections were small, applied promptly and did not force power changes on the wingman.",
+        "4": "SP flew the descent and the level-off with altitude deviations that remained negligible against the cleared value, with the assigned altitude established well before the VFR entry point. The vertical profile was stable enough for the wingman to hold position with minimal corrections throughout the pattern entry.",
+        "marginal": "SP kept the altitude inside the required limits, but the deviations were consistently close to the upper part of the acceptable band and were corrected only after they had developed. The tendency was to chase the altimeter rather than to control the descent rate against a planned level-off point. SP is expected to anticipate the level-off and to reduce the size of the corrections in the next sorties."
+      }
+    },
+    {
+      "id": "formation-05-em02",
+      "label": "Airspeed control on the return and descent profile",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unadjusted power setting when the nose was lowered for the descent, allowed the airspeed to build beyond the briefed return speed by more than 20 knots. The excess speed compressed the time available for the pre-descent checks and left the wingman unable to hold position without excessive power. The IP took the controls and re-established the formation on the correct speed for the pattern entry.",
+        "1": "SP, due to a delayed power reduction during the descent, let the airspeed deviate up to 20 knots from the value briefed for the return. The speed was restored only after verbal direction from the IP and the correction was applied abruptly, producing a further overshoot on the low side. SP did not cross-check the airspeed indicator against the descent rate.",
+        "2": "SP, due to a power setting left slightly high at the top of the descent, allowed the airspeed to deviate about 15 knots, between the 10 and 20 knots limits. SP identified the deviation on the airspeed indicator, adjusted power smoothly and returned to the briefed speed before the entry point, without IP intervention.",
+        "3": "SP held the airspeed within 10 knots of the value briefed for the return and descent, adjusting power in advance of the pitch changes. The speed was stable at the VFR entry point and gave the wingman a steady reference for the pattern entry.",
+        "4": "SP flew the whole return, descent and pattern entry with airspeed deviations that remained negligible, with power set ahead of every pitch change. The formation arrived at the entry point on the exact briefed speed and required no correction from the wingman.",
+        "marginal": "SP kept the airspeed inside the required limits, but the value drifted continuously around the briefed figure and each correction produced a small overshoot in the opposite direction. The tendency was to react to the airspeed indicator rather than to set and trim a known power setting. SP is expected to stabilize the speed with a planned power setting and to reduce the frequency of the corrections."
+      }
+    },
+    {
+      "id": "formation-05-em03",
+      "label": "Heading accuracy to the VFR entry point",
+      "mif_row": null,
+      "source": "specific:EXIT HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an inaccurate roll-out from the turn out of the flight area, established the formation on a heading more than 10 degrees off the one required for the authorized VFR entry point. The error was not detected on the heading indicator and the formation was displaced from the published entry track. The IP corrected the heading and repositioned the formation towards the entry point.",
+        "1": "SP, due to an anticipated roll-out combined with an incomplete heading cross-check, settled on a heading 10 degrees off the value required for the entry point. The heading was corrected only after the IP pointed out the error, and the roll back onto the correct track was late and abrupt for the wingman. SP did not confirm the roll-out heading before returning attention outside.",
+        "2": "SP, due to a slightly late roll-out from the turn towards the entry point, rolled out about 8 degrees off the required heading, between the 5 and 10 degrees limits. SP detected the error on the heading indicator immediately after roll-out and corrected it with a small smooth turn, without IP intervention and without disturbing the wingman.",
+        "3": "SP rolled out on the heading required for the authorized VFR entry point within 5 degrees on each turn of the return and pattern entry. Roll-outs were anticipated correctly, checked against the heading indicator and flown at a rate the wingman could follow.",
+        "4": "SP flew every turn of the return and pattern entry with heading errors that remained negligible at roll-out, tracking precisely towards the authorized VFR entry point. No corrective turns were needed after roll-out and the formation remained stable throughout.",
+        "marginal": "SP held the required headings inside the limits, but roll-outs were repeatedly a few degrees wide and were then closed with a second small turn. The tendency was to roll out late and correct afterwards rather than to anticipate the lead point. SP is expected to plan the roll-out and to arrive on the entry heading in one turn."
+      }
+    },
+    {
+      "id": "formation-05-em04",
+      "label": "Descent planning, pre-descent procedures and checks before the entry point",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to workload management that left the checklist unfinished before the descent, did not carry out the pre-descent procedures and checks and did not direct the formation in time towards the entry point. The formation arrived at the entry point without the required configuration and outside the cleared altitude by more than 300 feet. The IP took over the sequencing and completed the outstanding actions before the pattern entry.",
+        "1": "SP, due to task sequencing that concentrated all cockpit workload inside the turn towards the entry point, started the pre-descent procedures late and completed them only after prompting from the IP. The formation reached the assigned altitude at the limit of the 300 feet band and the checks were finished after the entry point instead of before it.",
+        "2": "SP, due to a slightly compressed descent plan, started the pre-descent checks later than briefed but reorganized the task sequence without prompting. The checks were completed before the entry point and the altitude deviation stayed between 150 and 300 feet, corrected in time and without IP intervention.",
+        "3": "SP directed the formation in time towards the entry point, carried out the pre-descent procedures and checks in the briefed sequence, and achieved the assigned altitude within 150 feet before the entry point. Radio, checks and formation direction were separated so that no task was left unfinished.",
+        "4": "SP planned and executed the return so that the pre-descent procedures and checks were complete well before the entry point, with the assigned altitude established early and the formation correctly positioned. Cockpit tasks were distributed across the descent with clear spare capacity for the ATC exchange and for the wingman.",
+        "marginal": "SP completed the pre-descent procedures and checks before the entry point, but with little margin and with the tasks bunched into the final part of the descent. The tendency was to begin the sequence only when the entry point became visible rather than at the planned point. SP is expected to start the descent sequence earlier and to spread the workload across the return."
+      }
+    },
+    {
+      "id": "formation-05-em05",
+      "label": "Use of VOR/DME, TACAN or GPS for orientation and return",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to navigation aids left unselected and unidentified after departure from the flight area, could not establish the position of the formation relative to the airport environment. The return track was flown on estimation only, the formation did not arrive at an authorized VFR entry point and the resulting heading error exceeded 10 degrees. The IP set up the navigation aid and directed the formation back towards the correct entry point.",
+        "1": "SP, due to an incomplete set-up of the VOR/DME, TACAN or GPS, used the available information only partially and remained uncertain about the distance to the entry point. Orientation with the airport environment was restored only after the IP identified the aid and pointed out the position, and the resulting heading error reached the 10 degrees limit.",
+        "2": "SP, due to a late selection of the required navigation aid, initially returned on visual reference alone and was slow to confirm the position of the formation. SP then identified the aid, cross-checked the bearing and distance and corrected the return track in time, with a heading error between 5 and 10 degrees and no IP intervention.",
+        "3": "SP selected and identified the VOR/DME, TACAN or GPS as required, remained oriented with the airport environment throughout the return and used the information to track towards the authorized VFR entry point within 5 degrees. Position and distance were cross-checked against the visual picture at each stage of the descent.",
+        "4": "SP used the navigation aids and the visual references together throughout the return, with position, distance and time to the entry point known at all stages and reported without hesitation. The orientation with the airport environment was continuous and the formation was placed exactly on the authorized entry point.",
+        "marginal": "SP used the navigation aids and remained oriented, but the information was consulted only at discrete moments and the position relative to the entry point was known with a delay. The tendency was to rely on the visual picture first and to confirm with the aid afterwards. SP is expected to keep a continuous cross-check between the aid and the visual references during the return."
+      }
+    },
+    {
+      "id": "formation-05-em06",
+      "label": "ATC compliance, read-back and awareness of entry points and approach procedure",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": "hf-non-standard-phraseology",
+      "texts": {
+        "0": "SP, due to an unstandard read-back that did not confirm the actual clearance, misapprehended the ATC directive for the return and flew the formation towards an entry point that had not been assigned. The error was not detected from the subsequent transmissions and the approach procedure was started from the wrong position. The IP took the radio and the controls and re-established the formation on the cleared routing.",
+        "1": "SP, due to non-standard phraseology that left the intention ambiguous to the controller, received a clearance that was understood only in part and applied it late. The misapprehension about the assigned entry point was resolved only after the IP repeated the directive on the intercom, and the formation reached the entry point off the cleared parameters at the limits.",
+        "2": "SP, due to a read-back that omitted one element of the clearance, initially set an incorrect altitude for the entry, but requested confirmation from ATC on his own initiative. The clearance was clarified and complied with in time, the deviation stayed between the 150 and 300 feet limits and no IP intervention was needed.",
+        "3": "SP followed the ATC directives without misapprehension, read back the clearances in standard phraseology and remained cognizant of the assigned entry point and of the approach procedure in use. Every instruction was applied promptly and passed on to the wingman.",
+        "4": "SP handled the ATC exchange in standard phraseology with accurate and immediate read-backs, anticipated the routing to the assigned entry point and briefed the wingman on the approach procedure before it was required. Radio work remained concise and never competed with the flying task.",
+        "marginal": "SP complied with the ATC directives and remained cognizant of the entry point, but the read-backs were occasionally incomplete and one clearance required a second transmission to be confirmed. The tendency was to answer quickly rather than accurately under the workload of the descent. SP is expected to use standard phraseology and to read back the full clearance on every exchange."
+      }
+    },
+    {
+      "id": "formation-05-em07",
+      "label": "Wingman positioning for the BREAK and direction of the formation to the active runway",
+      "mif_row": null,
+      "source": "general:e",
+      "hf_concept": "hf-lack-of-teamwork",
+      "texts": {
+        "0": "SP, due to an uncoordinated response between the two cockpits during the procedure, did not place the wingman on the side required for the BREAK and gave no direction towards the break of the active runway. The formation arrived at the initial with the wingman on the wrong side and outside the parameters for the pattern entry. The IP intervened, repositioned the formation and issued the required directions.",
+        "1": "SP, due to an unagreed division of duties within the formation, called the wingman to the BREAK side late and without confirming the new position. The wingman was still repositioning at the initial and the direction to the break of the active runway was given only after the IP prompted for it, with the entry parameters at their limits.",
+        "2": "SP, due to a signal to the wingman given later than briefed, started the repositioning for the BREAK behind the planned point, but recognized the delay and completed the change of side in time. The wingman was correctly placed and directed towards the break of the active runway before the initial, without IP intervention.",
+        "3": "SP placed the wingman on the correct side for the BREAK at the planned point and directed the formation to the break of the active runway with clear and timely calls. The repositioning was flown steadily and the formation arrived at the initial correctly configured.",
+        "4": "SP placed the wingman on the BREAK side early and without ambiguity, kept the formation stable during the repositioning and directed it to the break of the active runway with concise calls that required no repetition. The whole sequence was flown so that the wingman needed no corrections at the initial.",
+        "marginal": "SP placed the wingman correctly for the BREAK and directed the formation to the active runway, but the calls came later than briefed and the repositioning was completed close to the initial. The tendency was to wait for the runway to become visible before acting rather than to use the briefed point. SP is expected to anticipate the repositioning and to give the direction calls earlier."
+      }
+    },
+    {
+      "id": "formation-05-em08",
+      "label": "Compliance with landing pattern procedures as described in LAPs",
+      "mif_row": null,
+      "source": "general:f",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incomplete study of the Local Area Procedures, entered the traffic pattern from a point that is not a standard entry point and flew the pattern with altitudes and tracks that did not correspond to the published procedure. The deviations from the pattern altitude exceeded 300 feet and conflicted with the traffic sequence. The IP took the controls and re-established the formation on the published pattern.",
+        "1": "SP, due to an uncertain recall of the pattern altitudes and entry points described in the LAPs, entered the pattern at the correct point but with parameters at the 300 feet and 20 knots limits. The published profile was regained only after verbal direction from the IP and the pattern legs remained displaced from the described tracks.",
+        "2": "SP, due to a late identification of the standard entry point, joined the pattern slightly off the described track with an altitude deviation between the 150 and 300 feet limits. SP recognized the discrepancy against the LAP profile and corrected the entry in time, completing the pattern within the published procedure and without IP intervention.",
+        "3": "SP entered the pattern from a standard entry point and followed the landing pattern procedures described in the LAPs, holding the pattern altitude within 150 feet and the pattern speed within 10 knots. The formation was integrated into the traffic sequence without any correction being required.",
+        "4": "SP flew the entry and the pattern exactly as described in the LAPs, with negligible deviations in altitude and speed and with the formation positioned correctly relative to the other traffic at every stage. The whole entry required no adjustment and left full capacity for lookout and radio.",
+        "marginal": "SP followed the landing pattern procedures within the published limits, but the tracks were flown wide of the described profile and the altitude was regained only after the entry point. The tendency was to reconstruct the procedure in flight rather than to fly it from prior preparation. SP is expected to review the LAP entry profile before the sortie and to fly the published tracks more precisely."
+      }
+    }
+  ]
+}

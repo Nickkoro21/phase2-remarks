@@ -1,0 +1,147 @@
+{
+  "item_id": "vfr_navigation-20",
+  "item_name": "INSTRUMENT PROCEDURES",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [20],
+  "mif_rows": [
+    { "sn": 20, "row_name": "Instrument Procedures" }
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-20-em01",
+      "label": "Altitude control during the instrument procedure",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unstabilized power and pitch relationship during the instrument segment, failed to hold the assigned altitude within the published tolerance. Deviations reached 400 to 500 feet and the trend continued unchecked through the level-off. IP intervened on the controls to re-establish the assigned altitude.",
+        "1": "SP, due to late recognition of the vertical velocity trend approaching level-off, allowed altitude to reach the 300 feet limit. The correction was started only after verbal prompting from the IP and was slow to arrest the trend. Altitude was regained, but the SP remained at the limit for the remainder of the segment.",
+        "2": "SP, due to a coarse power reduction at level-off, allowed altitude to drift about 220 feet below the assigned value. SP detected the deviation on the altimeter and vertical velocity indicator and corrected back inside 150 feet without IP input. The rest of the segment was held within tolerance.",
+        "3": "SP maintained the assigned altitude within 150 feet throughout the instrument procedure. Level-offs were anticipated with a timely lead point and a matching power change. The few small excursions were detected by cross-check and corrected promptly.",
+        "4": "SP held the assigned altitude with excursions of no more than a few tens of feet, including through configuration and heading changes. Level-offs were anticipated and trimmed off, so no correction was needed after capture. Vertical control stayed precise for the whole procedure.",
+        "marginal": "SP kept altitude within standards, but the deviations clustered in the outer half of the band, particularly after configuration changes. The corrections were correct in direction yet repeatedly reactive rather than anticipatory. SP is expected to tighten vertical control by leading each level-off with power and trim."
+      }
+    },
+    {
+      "id": "vfr_navigation-20-em02",
+      "label": "Airspeed control during the instrument procedure",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (KIAS)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power settings applied without reference to the resulting airspeed, failed to hold the procedural airspeed. Deviations exceeded 20 KIAS on the descent and again in the level segment, with speed decaying further as configuration changed. IP directed and then set the required power to recover the profile.",
+        "1": "SP, due to delayed power correction after the descent was established, allowed airspeed to reach the 20 KIAS limit. The correction was applied only after the IP called the deviation and then overshot in the opposite direction. Airspeed control stayed at the tolerance limit for the rest of the segment.",
+        "2": "SP, due to a slow power adjustment when configuration was changed, allowed airspeed to vary by about 15 KIAS. SP identified the trend on the airspeed indicator and restored the procedural speed inside 10 KIAS without prompting. No further excursion followed.",
+        "3": "SP maintained the procedural airspeed within 10 KIAS through level flight, descent and configuration changes. Power was adjusted in anticipation of each change rather than in reaction to it. Small excursions were trapped early by cross-check.",
+        "4": "SP held the procedural airspeed with variations of only a few knots for the entire procedure. Power and configuration changes were coordinated so that speed remained essentially constant. Speed control was accurate and required no follow-up correction.",
+        "marginal": "SP stayed within airspeed standards, but the excursions ran consistently to the fast side after descent entry. Corrections were adequate yet late enough to need a second adjustment each time. SP is expected to set and hold known power settings so that speed stays close to the target value."
+      }
+    },
+    {
+      "id": "vfr_navigation-20-em03",
+      "label": "Heading control during the instrument procedure",
+      "mif_row": null,
+      "source": "specific:HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to uncoordinated bank inputs and an abandoned heading reference, failed to hold the assigned heading. Deviations exceeded 10 degrees and the aircraft continued to diverge from the intended course without correction. IP intervened to return the aircraft to the assigned heading.",
+        "1": "SP, due to failure to check the roll-out heading against the assigned value, drifted out to the 10 degrees limit. The correction began only after the IP prompted verbally and was applied as a single large bank input. Heading remained at the limit until the next turn.",
+        "2": "SP, due to an undershot roll-out from the turn, settled about 8 degrees off the assigned heading. SP cross-checked the HSI, applied a measured correction and re-established the heading inside 5 degrees unprompted. The following turns were rolled out on heading.",
+        "3": "SP maintained the assigned heading within 5 degrees and rolled out on the briefed headings. Turns were flown with a steady bank and adequate lead was taken for roll-out. Small excursions were corrected before they could develop.",
+        "4": "SP flew the assigned headings with excursions of a degree or two and rolled out on the target value on every turn. Bank was steady and coordinated, with no wandering between corrections. Directional control was consistently precise.",
+        "marginal": "SP held heading within standards, but drifted repeatedly to the same side between corrections instead of holding a stable reference. The corrections were correct in direction yet delivered in noticeable steps. SP is expected to keep a steady heading reference and correct in small, early increments."
+      }
+    },
+    {
+      "id": "vfr_navigation-20-em04",
+      "label": "Instrument cross-check and attention distribution",
+      "mif_row": null,
+      "source": "general:cross_check_scan",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an interrupted instrument cross-check while attention remained fixed on a single indication, lost awareness of the aircraft state during the procedure. Pitch, bank and airspeed trends developed at the same time and none was detected by the SP. IP intervened to recover the aircraft and re-establish the required cross-check.",
+        "1": "SP, due to a cross-check that stalled on one display, detected the developing deviations only after they had reached the tolerance limits. Scan was restored after IP prompting but narrowed again later in the procedure. Aircraft control was recovered without intervention on the controls, but only after repeated verbal cues.",
+        "2": "SP, due to a cross-check that slowed during a workload peak, allowed two parameters to drift toward the middle of the tolerance band. SP recognized the narrowing scan, redistributed attention across the flight and navigation instruments and corrected in good time. No further lapse occurred and no IP input was needed.",
+        "3": "SP maintained an active cross-check across the flight and navigation instruments throughout the procedure. Deviations were detected while still small and were corrected immediately. Scan rate was sustained through configuration changes and radio work.",
+        "4": "SP sustained a disciplined and evenly distributed cross-check for the whole procedure, including the highest workload segments. Trends were identified before they became deviations, so the corrections needed were minimal. Attention was shared between aircraft control and navigation with no loss on either.",
+        "marginal": "SP kept an adequate cross-check overall, but it narrowed noticeably whenever radio or navigation tasks were added. Parameters were still contained within standards, although detection was slightly late each time. SP is expected to protect scan rate under task loading so that deviations are caught earlier."
+      }
+    },
+    {
+      "id": "vfr_navigation-20-em05",
+      "label": "Navigation aid set-up, identification and course tracking",
+      "mif_row": null,
+      "source": "general:navaid_setup_identification_tracking",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to omitting identification of the navigation aid and selecting an incorrect course, flew the procedure on unverified guidance. The course indications were misinterpreted and the aircraft tracked away from the intended path. IP stopped the procedure and directed the correct set-up and course interception.",
+        "1": "SP, due to tuning the navigation receiver and selecting the course late, entered the segment without confirmed identification. The omission was corrected only after the IP prompted, and course interception was delayed as a result. Guidance was eventually valid, but the set-up stayed behind the aircraft.",
+        "2": "SP, due to a rushed sequence, tuned the correct frequency but confirmed identification after starting the turn toward course. SP noticed the omission, completed identification and verified course selection before the intercept. Tracking then remained on the published course without IP input.",
+        "3": "SP tuned, identified and verified the navigation aid and course before each segment of the procedure. Bearing and course indications were interpreted correctly and cross-checked against the published procedure. Tracking was re-established promptly after each intercept.",
+        "4": "SP completed navigation set-up, identification and course verification well ahead of every segment and cross-checked a backup indication each time. Interpretation of the indications was immediate and correct throughout. Course tracking was maintained with no measurable displacement.",
+        "marginal": "SP completed navigation set-up, identification and course selection correctly, but consistently close to the point where the guidance was needed. Nothing was missed, yet no margin was left to absorb a set-up error. SP is expected to complete tuning, identification and course selection earlier in each segment."
+      }
+    },
+    {
+      "id": "vfr_navigation-20-em06",
+      "label": "Sequence of procedural steps, checks and configuration",
+      "mif_row": null,
+      "source": "general:procedure_sequence_configuration",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to working the procedure out of sequence, failed to complete the required checks and configuration changes at the published points. The descent was started with the aircraft unconfigured and required items were left undone. IP had to sequence the procedure and direct the configuration.",
+        "1": "SP, due to falling behind the aircraft, reached the descent point with the approach checks still pending. The sequence was completed only after IP prompting, and the delay compressed the remainder of the procedure. All items were eventually accomplished, but not at the published points.",
+        "2": "SP, due to a delayed start of the approach checks, was slightly behind the profile in the initial segment. SP recognized the compression, re-sequenced the remaining actions and had the aircraft configured before the descent point. The rest of the procedure was flown in the correct order and unaided.",
+        "3": "SP accomplished the procedural steps and configuration changes in the correct order and at the published points. Checks were completed before each transition and did not interfere with aircraft control. The SP stayed ahead of the aircraft throughout.",
+        "4": "SP ran the procedure with checks and configuration changes completed early at every point, leaving full capacity for aircraft control. Sequencing stayed smooth and unhurried even where the segments were short. At no stage was the SP behind the aircraft.",
+        "marginal": "SP kept the procedure in the correct sequence, but each step was accomplished close to its published point with little margin. Aircraft control was maintained, although workload peaked at every transition. SP is expected to move the checks and configuration changes earlier so that margin is built into each segment."
+      }
+    },
+    {
+      "id": "vfr_navigation-20-em07",
+      "label": "Holding entry, pattern and drift correction",
+      "mif_row": null,
+      "source": "general:holding_entry_pattern",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to failure to determine the entry from the inbound course, entered holding on an incorrect pattern and did not fly the published leg orientation. Leg timing was never started and the pattern drifted well off the protected side. IP took control of the entry and re-established the correct pattern.",
+        "1": "SP, due to a late entry decision at the fix, flew an entry that only marginally matched the published pattern. Leg timing and drift correction were applied after the IP pointed out the displacement. The following circuit was flown correctly, but the first one was not usable.",
+        "2": "SP, due to under-applied drift correction outbound, arrived at the inbound turn displaced from the pattern. SP identified the error from the course indication and the leg timing, adjusted the outbound correction and stabilized the next circuit. No IP input was required.",
+        "3": "SP determined the correct entry, flew the published pattern and applied drift correction so that the inbound legs rolled out on course. Timing was started and adjusted at the correct points. The circuits were flown consistently.",
+        "4": "SP flew the entry and the holding pattern with the inbound course captured precisely and leg timing corrected to the target value from the first circuit. Drift was assessed early and applied accurately on the outbound leg. The pattern was repeatable and needed no further adjustment.",
+        "marginal": "SP flew an acceptable holding pattern, but drift correction was refined over successive circuits instead of being assessed at entry. The legs stayed within standards although the inbound intercepts were not consistent. SP is expected to evaluate drift on the first inbound leg and apply it immediately."
+      }
+    },
+    {
+      "id": "vfr_navigation-20-em08",
+      "label": "Decision point discipline and missed approach execution",
+      "mif_row": null,
+      "source": "general:decision_point_missed_approach",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to continuation bias after the profile had already degraded, pressed on past the point at which the missed approach was required. The published missed approach actions were not initiated and the aircraft remained in an unsuitable state. IP directed and then flew the go-around.",
+        "1": "SP, due to reluctance to abandon a procedure already begun, delayed the missed approach decision beyond the briefed point. The action was initiated only after the IP called for it, and the climb and configuration sequence lagged behind. The procedure was completed, but the decision was not the SP's own.",
+        "2": "SP, due to a slow assessment against the briefed decision criteria, hesitated briefly at the decision point. SP then made the decision independently, initiated the missed approach and flew the published climb and course. The hesitation did not affect the outcome and no IP input was needed.",
+        "3": "SP applied the briefed decision criteria at the correct point and executed the missed approach promptly. Power, attitude and configuration were sequenced correctly and the published track was flown. The decision was made without hesitation.",
+        "4": "SP evaluated the decision criteria ahead of the point and executed the missed approach immediately and cleanly. The climb, configuration change and navigation transition were flown as one continuous, unhurried sequence. The published track and altitude were captured precisely.",
+        "marginal": "SP made the correct decision inside the required window, but only after visibly weighing the option to continue. Execution after the decision met standards. SP is expected to commit to the briefed decision criteria the moment they are met."
+      }
+    },
+    {
+      "id": "vfr_navigation-20-em09",
+      "label": "Transition from outside references to instrument flight",
+      "mif_row": null,
+      "source": "general:visual_to_instrument_transition",
+      "hf_concept": "hf-spatial-disorientation",
+      "texts": {
+        "0": "SP, due to spatial disorientation on transitioning from outside references to the instruments, made control inputs against the indications rather than with them. Attitude, altitude and heading diverged at the same time and the SP did not accept the instrument picture. IP took control and re-established stable instrument flight.",
+        "1": "SP, due to conflicting vestibular cues after the transition to instruments, resisted the attitude indicator and held a sustained bank input. The SP returned to the instrument reference only after the IP verbally directed it. Control was recovered without intervention on the controls, but the transition was not managed independently.",
+        "2": "SP, due to a brief false sensation of bank on entering the instrument segment, allowed the attitude to deviate inside the tolerance band. SP recognized the conflict, deliberately transferred control to the attitude indicator and re-established the flight path. The recovery was made in good time and unaided.",
+        "3": "SP transitioned to instrument references cleanly and continued to fly attitude, altitude and heading from the instruments. Any sensory conflict was disregarded in favor of the indications. Aircraft control remained stable through each transition.",
+        "4": "SP moved between outside and instrument references with no disturbance at all to aircraft control. The instrument picture was accepted immediately and flown with confidence throughout the procedure. No sensory conflict was allowed to reach the control inputs.",
+        "marginal": "SP transitioned to instrument flight within standards, but the first seconds after each transition showed small control inputs that did not follow the indications. The resulting deviations stayed inside tolerance. SP is expected to establish the instrument scan before the transition so that control is continuous."
+      }
+    }
+  ]
+}

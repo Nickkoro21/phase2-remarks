@@ -1,0 +1,270 @@
+{
+  "item_id": "formation-24b",
+  "item_name": "TACTICAL TURNS DELAY 90°, DELAY 45°, IN PLACE, CROSS / HOOK / SHACKLE/ CHECK TURNS",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [24, 25, 26, 27, 28],
+  "mif_rows": [
+    { "sn": 25, "row_name": "Delay 90°" },
+    { "sn": 26, "row_name": "Delay 45°" },
+    { "sn": 27, "row_name": "In Place" },
+    { "sn": 28, "row_name": "Cross/ Hook/ Shackle/ Check turns" }
+  ],
+  "error_modes": [
+    {
+      "id": "formation-24b-em01",
+      "label": "Delay 90 turn - recovery heading and roll-out on the new formation axis",
+      "mif_row": 25,
+      "source": "specific:RECOVERY HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a roll-out flown by reference to the other aircraft instead of to the briefed formation heading, did not roll out on the new axis at the completion of the delay 90 turn. Recovery heading was in error by more than 30 degrees and the flight was left pointing away from the briefed axis with no correction attempted. IP took the controls, re-established the formation heading and terminated the turn set for a rebrief.",
+        "1": "SP, due to bank held past the computed lead point, did not begin the roll-out at the correct point of the delay 90 turn. Recovery heading settled about 30 degrees from the briefed value, at the limit of the standard, and was brought back toward the axis only after IP called the heading twice. The correction was late enough that the flight entered the following turn still re-aligning.",
+        "2": "SP, due to an initially shallow bank in the first part of the delay 90 turn, rolled out about 20 degrees off the briefed formation heading. SP recognized the error against the HSI, applied a positive heading correction and re-established the briefed axis before the next turn was called, without IP intervention. Recovery heading was back inside the standard within a few seconds.",
+        "3": "SP executed the delay 90 turn and rolled out on the new formation heading within 10 degrees of the briefed value. The lead point was judged correctly, the roll-out was positive, and the flight was established on the briefed axis at completion of the turn. No correction was required from the other aircraft or from IP.",
+        "4": "SP rolled out of the delay 90 turn essentially on the briefed formation heading, with the lead point anticipated and the roll rate matched to the closure on that heading. The new axis was established at the same moment as the other aircraft, so the formation was steady on heading with no follow-up correction. Heading error at completion was negligible.",
+        "marginal": "SP rolled out of the delay 90 turn within standards, but recovery heading fell consistently on the same side of the briefed axis and needed a further small heading change once the formation was steady. The trend is toward a lead point chosen by habit rather than computed from bank angle and rate of turn. SP is expected to roll out directly on the briefed heading, without a follow-up correction, on the next set of tactical turns."
+      }
+    },
+    {
+      "id": "formation-24b-em02",
+      "label": "Delay 90 turn - line abreast deviation at roll-out",
+      "mif_row": 25,
+      "source": "specific:LINE ABREAST DEVIATION (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a delay timed on a count rather than on the other aircraft reaching the wing line, did not roll out in tactical formation position at the end of the delay 90 turn. Line abreast deviation exceeded 30 degrees, leaving the formation in a trail geometry with no mutual support, and SP offered no correction. IP directed and then flew the rejoin to line abreast before the next turn.",
+        "1": "SP, due to a turn started before the correct delay point, did not re-establish the line abreast position at roll-out of the delay 90 turn. Line abreast deviation stabilized around 30 degrees forward of the wing line, at the limit of the standard, and was reduced only after IP called for a correction and then repeated the call. Formation position remained at the edge of the standard for the remainder of the turn set.",
+        "2": "SP, due to a slightly early delay initiation, rolled out of the delay 90 turn about 20 degrees aft of the line abreast position. SP recognized the geometry against the other aircraft, adjusted power and heading to close the bearing, and re-established the tactical position before the next turn, without IP intervention. Line abreast deviation was back inside the standard before the next call.",
+        "3": "SP timed the delay correctly and rolled out of the delay 90 turn in tactical formation position, with line abreast deviation within 10 degrees of the wing line. The correction technique used to close the residual bearing error was appropriate and applied immediately at roll-out. No prompting was required from the other aircraft or from IP.",
+        "4": "SP rolled out of the delay 90 turn essentially on the wing line, with line abreast deviation reduced to a negligible bearing error. The delay point was judged from the other aircraft rather than from a fixed count, so the tactical position was correct at the instant of roll-out and needed no closing correction. Formation geometry was maintained throughout the turn.",
+        "marginal": "SP held line abreast deviation within standards through the delay 90 turn, but position at roll-out was habitually a few degrees aft of the wing line and was closed by a power increase rather than by the delay timing. The trend is toward a formation that is technically in position but always trailing, which erodes mutual support and costs fuel. SP is expected to correct the delay point itself on the next tactical turn set."
+      }
+    },
+    {
+      "id": "formation-24b-em03",
+      "label": "Delay 90 turn - lateral separation through the turn",
+      "mif_row": 25,
+      "source": "specific:LATERAL SEPARATION (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a bank angle set without reference to the briefed spacing, did not maintain the briefed lateral separation through the delay 90 turn. Separation collapsed by more than 1000 feet from the briefed value during the turn and continued to reduce toward the other aircraft. IP took the controls and reversed the turn to restore separation.",
+        "1": "SP, due to a turn flown at a bank angle greater than the one briefed for the maneuver, did not preserve the briefed lateral separation in the delay 90 turn. Separation reached about 1000 feet less than briefed, at the limit of the standard, and was opened again only after IP called for spacing and then instructed a shallower bank. Separation remained at the limit until the turn set was completed.",
+        "2": "SP, due to a late bank reduction after the initial roll-in, allowed lateral separation in the delay 90 turn to reduce by about 700 feet from the briefed value. SP recognized the closure against the other aircraft, shallowed the bank and re-established the briefed spacing before roll-out, without IP intervention. Separation stayed inside the standard for the rest of the turn.",
+        "3": "SP maintained lateral separation within 500 feet of the briefed value throughout the delay 90 turn. Bank angle was selected to preserve the spacing while still meeting the delay timing, and separation at roll-out matched the value briefed for the tactical formation. No correction was required from the other aircraft or from IP.",
+        "4": "SP held lateral separation essentially at the briefed value through the whole delay 90 turn, adjusting bank in anticipation of the geometry rather than in reaction to it. Spacing at roll-out was the same as at entry, so the formation was immediately usable for the next turn. Variation in separation was negligible.",
+        "marginal": "SP kept lateral separation within standards during the delay 90 turn, but the spacing was consistently held at the close end of the tolerance and was recovered only after roll-out. The trend is toward a turn geometry that leaves no margin if the other aircraft is slow to turn. SP is expected to select the bank angle from the briefed separation, so that spacing is preserved during the turn and not restored afterwards, on the next event."
+      }
+    },
+    {
+      "id": "formation-24b-em04",
+      "label": "Delay 45 turn - delay timing and recovery heading",
+      "mif_row": 26,
+      "source": "specific:RECOVERY HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to confusion between the delay 45 and the delay 90 geometry, did not roll out on the briefed heading at either stage of the delay 45 turn. Recovery heading was in error by more than 30 degrees after the second turn, and the flight was left on an axis that had not been briefed. IP took the controls and re-established the formation heading.",
+        "1": "SP, due to a lead point taken from the first turn and applied unchanged to the second, did not roll out on the briefed heading at the completion of the delay 45 turn. Recovery heading stabilized about 30 degrees off the briefed value, at the limit of the standard, and was corrected only after IP called the heading and then directed the correction. The flight was still settling on heading when the next turn was called.",
+        "2": "SP, due to an over-banked second turn, rolled out of the delay 45 turn about 20 degrees off the briefed heading. SP identified the error immediately on the HSI, corrected with a positive heading change and established the briefed axis before the next maneuver, without IP intervention. Recovery heading returned inside the standard promptly.",
+        "3": "SP flew both segments of the delay 45 turn and rolled out on the briefed heading within 10 degrees. The delay was timed to the correct point for a 45 degree change, the roll-out was positive and the formation was established on the new axis at completion. No correction was required from IP.",
+        "4": "SP rolled out of the delay 45 turn essentially on the briefed heading at both stages, with the lead point computed for the smaller heading change rather than carried over from the 90 degree case. The formation was aligned on the new axis with no residual correction and was ready for the next turn immediately. Heading error was negligible.",
+        "marginal": "SP recovered on the briefed heading within standards after the delay 45 turn, but the roll-out was consistently late and required a small closing turn each time. The trend is toward a lead point that suits a 90 degree change being reused for a 45 degree change. SP is expected to compute the lead point for the actual heading change on the next tactical turn set."
+      }
+    },
+    {
+      "id": "formation-24b-em05",
+      "label": "Delay 45 turn - line abreast deviation after the second turn",
+      "mif_row": 26,
+      "source": "specific:LINE ABREAST DEVIATION (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a delay applied without recognizing that the smaller heading change needs a shorter delay, did not re-establish the tactical formation position after the delay 45 turn. Line abreast deviation exceeded 30 degrees and the formation ended the maneuver in a stepped trail rather than line abreast. IP directed the rejoin and then flew it before the next turn was accepted.",
+        "1": "SP, due to a delay timed from the radio call instead of from the other aircraft passing the wing line, did not roll out in tactical formation position after the delay 45 turn. Line abreast deviation stayed near 30 degrees, at the limit of the standard, and was reduced only after IP called for the correction twice. Position remained at the edge of the standard through the rest of the sequence.",
+        "2": "SP, due to a delay held slightly too long, rolled out of the delay 45 turn about 20 degrees forward of the line abreast position. SP recognized the geometry, reduced power and adjusted heading to allow the other aircraft to regain the wing line, and re-established the tactical position before the next call, without IP intervention. Line abreast deviation was back inside the standard within the turn.",
+        "3": "SP timed the delay for the 45 degree heading change correctly and rolled out with line abreast deviation within 10 degrees of the wing line. The tactical formation position was restored without a separate closing maneuver and the flight was in position for the next turn. No prompting was required from IP.",
+        "4": "SP rolled out of the delay 45 turn essentially on the wing line, having judged the delay from the other aircraft rather than from a fixed count. Tactical position was correct at the instant of roll-out and no closing correction was needed, so mutual support was continuous through the maneuver. Bearing error was negligible.",
+        "marginal": "SP kept line abreast deviation within standards through the delay 45 turn, but rolled out habitually a few degrees forward of the wing line and closed the error by reducing power afterwards. The trend is toward a correct-looking position achieved by energy loss rather than by correct delay timing. SP is expected to fix the delay point itself and preserve airspeed on the next event."
+      }
+    },
+    {
+      "id": "formation-24b-em06",
+      "label": "Delay 45 turn - entry and exit airspeed control",
+      "mif_row": 26,
+      "source": "specific:SPEED ENTRY/EXIT (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power left unchanged while bank and back pressure were increased, did not exploit and convert the aircraft energy in order to maintain position during the delay 45 turn. Airspeed at exit was more than 30 knots away from the briefed value, so SP could not regain the tactical position and the formation had to stop maneuvering. IP took the controls, reset power and re-established the briefed airspeed.",
+        "1": "SP, due to a power increase applied only after the second turn was established, did not maintain the briefed entry and exit airspeed in the delay 45 turn. Airspeed reached about 30 knots below the briefed value, at the limit of the standard, and was recovered only after IP called for power and then repeated the call. The low energy state persisted into the following turn.",
+        "2": "SP, due to a late power addition at roll-in, allowed airspeed in the delay 45 turn to fall about 25 knots below the briefed value. SP recognized the trend on the airspeed indicator, added power promptly and had the briefed airspeed restored by roll-out, without IP intervention. Airspeed at exit was inside the standard.",
+        "3": "SP controlled entry and exit airspeed in the delay 45 turn within 15 knots of the briefed value. Power was matched to the bank angle at roll-in and reduced at roll-out, so the aircraft energy was converted to turn performance without a lasting speed loss. No intervention was required from IP.",
+        "4": "SP held entry and exit airspeed essentially at the briefed value through the delay 45 turn, anticipating the power requirement at each roll-in and roll-out. Energy was exploited for the turn and recovered immediately afterwards, so the aircraft was ready for the next turn at the briefed speed. Airspeed variation was negligible.",
+        "marginal": "SP kept entry and exit airspeed within standards during the delay 45 turn, but each turn ended near the low limit of the tolerance and the speed was regained only in the straight segment. The trend is toward an accumulating energy deficit across a long turn set. SP is expected to lead the power with the bank so that airspeed is preserved inside the turn on the next event."
+      }
+    },
+    {
+      "id": "formation-24b-em07",
+      "label": "In Place turn - simultaneous roll-in and recovery heading",
+      "mif_row": 27,
+      "source": "specific:RECOVERY HEADING (degrees)|general:h",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a roll-in started only after seeing the other aircraft bank, did not execute the in place turn as described in the Techniques and Procedures Manual and did not roll out in tactical formation position. Recovery heading was more than 30 degrees from the briefed value and the two aircraft finished on visibly different axes. IP took the controls, matched the heading and stopped the turn set.",
+        "1": "SP, due to a hesitation between the executive call and the roll-in, did not turn simultaneously with the other aircraft in the in place turn. Recovery heading settled about 30 degrees from the briefed value, at the limit of the standard, and was corrected only after IP called the heading and then directed the correction. The formation was still converging on a common heading when the next call was made.",
+        "2": "SP, due to a roll rate slower than the one used by the other aircraft, rolled out of the in place turn about 20 degrees off the briefed heading. SP recognized the split immediately, corrected with a positive heading change and matched the formation axis before the next turn, without IP intervention. Recovery heading was inside the standard within a few seconds.",
+        "3": "SP executed the in place turn simultaneously with the other aircraft and rolled out on the briefed heading within 10 degrees. Roll-in, bank angle and roll-out were flown as described in the Techniques and Procedures Manual, so both aircraft steadied on the same axis together. No correction was required from IP.",
+        "4": "SP rolled into and out of the in place turn essentially in unison with the other aircraft, matching roll rate and bank angle so that both aircraft steadied on the briefed heading at the same instant. The formation axis was established without any closing correction and the flight was immediately ready for the next turn. Heading error was negligible.",
+        "marginal": "SP flew the in place turn within standards, but the roll-in was consistently a moment behind the other aircraft and the resulting heading split was closed after roll-out. The trend is toward a turn executed in reaction rather than on the executive call, which grows into a formation split as heading changes get larger. SP is expected to roll in on the call and match the briefed bank angle on the next tactical turn set."
+      }
+    },
+    {
+      "id": "formation-24b-em08",
+      "label": "In Place turn - lateral separation preserved through the simultaneous turn",
+      "mif_row": 27,
+      "source": "specific:LATERAL SEPARATION (feet)|general:c",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an absent cross-check of the other aircraft during the roll, did not apply the correction technique required to remain in tactical formation position through the in place turn. Lateral separation changed by more than 1000 feet from the briefed value and the two aircraft converged with the geometry unmonitored. IP took the controls, opened the separation and terminated the turn set.",
+        "1": "SP, due to attention held on the cockpit instruments instead of on the other aircraft through the turn, did not maintain the briefed lateral separation in the in place turn. Separation reached about 1000 feet away from the briefed value, at the limit of the standard, and was restored only after IP called the spacing twice. Separation stayed at the limit for the remainder of the sequence.",
+        "2": "SP, due to an interrupted cross-check while setting power at roll-in, allowed lateral separation in the in place turn to change by about 700 feet from the briefed value. SP resumed monitoring the other aircraft, adjusted bank to correct the geometry and re-established the briefed spacing before roll-out, without IP intervention. Separation remained inside the standard afterwards.",
+        "3": "SP maintained lateral separation within 500 feet of the briefed value throughout the in place turn, cross-checking the other aircraft continuously during roll-in, turn and roll-out. The correction technique used to hold the tactical position was appropriate and applied early. No correction was required from IP.",
+        "4": "SP held lateral separation essentially constant through the in place turn, monitoring the other aircraft continuously and correcting bank before the geometry could change. Spacing at roll-out matched the value at entry, so the formation stayed usable for the next call without any adjustment. Variation in separation was negligible.",
+        "marginal": "SP kept lateral separation within standards through the in place turn, but the cross-check of the other aircraft lapsed during roll-in and the geometry was checked only once the turn was established. The trend is toward separation errors that are detected late rather than prevented. SP is expected to keep the other aircraft in the cross-check throughout the roll on the next event."
+      }
+    },
+    {
+      "id": "formation-24b-em09",
+      "label": "In Place turn - altitude control during the turn",
+      "mif_row": 27,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to back pressure applied without trimming or adding power at roll-in, did not maintain the briefed altitude during the in place turn. The aircraft descended more than 500 feet below the briefed altitude with the descent unarrested and the terrain clearance margin reducing. IP took the controls, recovered the altitude and terminated the maneuver.",
+        "1": "SP, due to attention concentrated on the other aircraft with no reference to the altimeter, did not hold the briefed altitude in the in place turn. The aircraft climbed to about 1000 feet above the briefed altitude, at the limit of the standard, and returned toward it only after IP called the altitude and then directed the correction. Altitude remained at the limit into the following turn.",
+        "2": "SP, due to a late pitch correction at roll-in, allowed the aircraft to descend about 400 feet below the briefed altitude during the in place turn. SP identified the deviation on the altimeter, corrected with power and pitch, and re-established the briefed altitude before roll-out, without IP intervention. Altitude was inside the standard for the rest of the maneuver.",
+        "3": "SP held altitude within 500 feet above and 300 feet below the briefed value throughout the in place turn. Pitch and power were coordinated with the bank angle so that the altitude was maintained without interrupting the lookout of the other aircraft. No correction was required from IP.",
+        "4": "SP maintained the briefed altitude through the in place turn with essentially no deviation, coordinating pitch, power and bank so that the aircraft stayed level while the turn was flown. Altitude at roll-out was the same as at entry and the vertical geometry of the formation was unchanged. Deviations were negligible.",
+        "marginal": "SP held altitude within standards during the in place turn, but the aircraft settled toward the lower end of the tolerance in each turn and the altitude was regained only in the straight segment. The trend is toward a cumulative altitude loss over a long turn set. SP is expected to coordinate the pitch and power input with the roll-in so that altitude is held inside the turn on the next event."
+      }
+    },
+    {
+      "id": "formation-24b-em10",
+      "label": "Cross turn - deconfliction and altitude control at the pass",
+      "mif_row": 28,
+      "source": "specific:ALTITUDE (feet)|general:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a cross turn started without confirming the briefed altitude split, did not take the initiative for safe separation as the two aircraft converged. SP deviated more than 500 feet below the assigned altitude during the pass, eroding the vertical deconfliction at the point of closest approach. IP took the controls, climbed the aircraft and stopped the turn set.",
+        "1": "SP, due to back pressure increased in the turn without a matching power addition, did not maintain the assigned altitude through the cross turn. The aircraft was about 500 feet below the briefed altitude at the pass, at the limit of the standard, and was recovered only after IP called the altitude and then directed the climb. The deviation left the vertical split smaller than briefed at the merge.",
+        "2": "SP, due to a late pitch correction after roll-in, allowed the aircraft to climb about 700 feet above the assigned altitude in the cross turn. SP recognized the deviation before the merge, reduced power and pitch and re-established the assigned altitude ahead of the pass, without IP intervention. The briefed vertical split was preserved.",
+        "3": "SP flew the cross turn on the assigned altitude within 500 feet above and 300 feet below the briefed value, so the briefed vertical split was intact at the pass. SP confirmed the deconfliction before starting the turn and kept the other aircraft in sight throughout the merge. No correction was required from IP.",
+        "4": "SP held the assigned altitude through the cross turn with essentially no deviation, so the vertical split at the pass was exactly as briefed. Deconfliction was confirmed before the turn and the other aircraft was in sight continuously from roll-in to roll-out. Altitude error at the merge was negligible.",
+        "marginal": "SP maintained the assigned altitude in the cross turn within standards, but the aircraft drifted toward the other aircraft's side of the split before each pass and was corrected only when the merge became imminent. The trend is toward a vertical deconfliction that depends on a late correction rather than on holding the assigned altitude. SP is expected to establish and hold the assigned altitude before the turn is called on the next event."
+      }
+    },
+    {
+      "id": "formation-24b-em11",
+      "label": "Shackle and Hook turns - re-established line abreast and lateral separation",
+      "mif_row": 28,
+      "source": "specific:LINE ABREAST DEVIATION (degrees)|specific:LATERAL SEPARATION (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a shackle flown as a single continuous turn instead of the two turns described in the Techniques and Procedures Manual, did not roll out in tactical formation position. Line abreast deviation exceeded 30 degrees and lateral separation ended more than 1000 feet away from the briefed value, so the formation had neither the correct side nor the correct spacing. IP directed and then flew the correction to restore the tactical formation.",
+        "1": "SP, due to a second turn started before the aircraft had passed the other aircraft, did not re-establish the tactical position after the shackle. Line abreast deviation remained near 30 degrees and separation near 1000 feet from the briefed value, at the limit of the standard, and the geometry was corrected only after IP called for it twice. The formation stayed at the edge of the standard into the next maneuver.",
+        "2": "SP, due to a slightly early reversal in the hook turn, rolled out about 20 degrees off the wing line with lateral separation about 700 feet from the briefed value. SP recognized the error, adjusted heading and power to close the bearing and open the spacing, and re-established the tactical formation before the next call, without IP intervention. Both parameters were inside the standard within the maneuver.",
+        "3": "SP flew the shackle and hook turns as described in the Techniques and Procedures Manual and rolled out in tactical formation position, with line abreast deviation within 10 degrees of the wing line and lateral separation within 500 feet of the briefed value. The side change was completed cleanly and mutual support was retained through the crossing. No correction was required from IP.",
+        "4": "SP flew the shackle and hook turns with the reversal points judged from the other aircraft, rolling out essentially on the wing line at the briefed lateral separation. The side change was completed without any closing correction and the formation was immediately ready for the next turn. Deviations in bearing and spacing were negligible.",
+        "marginal": "SP re-established the tactical formation after the shackle and hook turns within standards, but the roll-out was habitually wide in separation and slightly aft on the wing line, and was closed afterwards with power. The trend is toward a crossing geometry corrected after the fact instead of flown correctly. SP is expected to select the reversal point from the other aircraft's position so that spacing and bearing are correct at roll-out on the next event."
+      }
+    },
+    {
+      "id": "formation-24b-em12",
+      "label": "Check turn - sustained G and airspeed control during the turn",
+      "mif_row": 28,
+      "source": "specific:Gs (continous)|specific:SPEED ENTRY/EXIT (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an abrupt pull applied at roll-in without setting the power required for the turn, did not exploit and convert the aircraft energy in order to maintain position during the check turn. Sustained G varied by more than 1.0 G from the briefed loading and airspeed ended more than 30 knots away from the briefed value, leaving the aircraft unable to hold the tactical position. IP took the controls, unloaded the aircraft and reset the energy state.",
+        "1": "SP, due to a pull made in steps rather than as a steady loading, did not hold the briefed sustained G through the check turn. G varied by about 1.0 G from the briefed loading, at the limit of the standard, and airspeed decayed toward 30 knots below the briefed value before IP called for power and then directed the correction. The low energy state carried into the next turn.",
+        "2": "SP, due to a slightly heavy initial pull, allowed sustained G in the check turn to depart the briefed loading by about 0.8 G, with airspeed falling around 25 knots below the briefed value. SP recognized the loading and the speed trend, eased the pull and added power, and re-established both parameters before roll-out, without IP intervention. G and airspeed were inside the standard by the end of the turn.",
+        "3": "SP flew the check turn with sustained G within 0.5 G of the briefed loading and airspeed within 15 knots of the briefed value. The pull was steady, power was matched to the loading and the aircraft energy was converted into the heading change without a lasting speed loss. No correction was required from IP.",
+        "4": "SP flew the check turn with sustained G essentially at the briefed loading and airspeed essentially at the briefed value, applying and releasing the pull smoothly and leading the power with the bank. The heading change was achieved with no measurable energy penalty and the formation position was preserved throughout. Variation in G and airspeed was negligible.",
+        "marginal": "SP held sustained G and airspeed in the check turn within standards, but the loading was applied in a short initial pull that was then relaxed, and airspeed finished each turn near the low limit. The trend is toward a turn that meets the tolerance on average while costing energy that is needed for the next maneuver. SP is expected to apply a steady loading with the power set for it on the next tactical turn set."
+      }
+    },
+    {
+      "id": "formation-24b-em13",
+      "label": "Lookout of the responsibility airspace during tactical turns",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-distributed-situational-awareness",
+      "texts": {
+        "0": "SP, due to an unshared mental model of which sector each aircraft was covering, did not check the corresponding responsibility airspace during the tactical turns. SP looked only at the other aircraft through the whole turn set, so the assigned sector was never cleared and a converging aircraft reported by the other pilot was not acquired. IP took the controls and directed a turn away from the traffic.",
+        "1": "SP, due to a division of lookout that was never confirmed between the two cockpits, did not cover the assigned responsibility airspace during the tactical turns. The sector was scanned only after IP prompted for it before each turn, and traffic in the sector was called late enough that the formation had to be repositioned. Coverage of the airspace remained dependent on prompting for the rest of the sortie.",
+        "2": "SP, due to a lookout plan that was briefed but not restated after the formation changed sides, initially scanned the wrong sector after the first tactical turn. SP recognized the mismatch, re-established the correct responsibility airspace and reported the sector clear before the next turn, without IP intervention. Coverage of the assigned airspace was continuous for the remainder of the turn set.",
+        "3": "SP checked the corresponding responsibility airspace during every tactical turn, alternating the scan between the assigned sector and the other aircraft. Sector coverage was reported clearly enough that both cockpits knew which airspace had been cleared and when. No prompting was required from IP.",
+        "4": "SP maintained coverage of the assigned responsibility airspace throughout the tactical turns, with the scan pattern adjusted immediately whenever the formation changed side or heading. Sector calls were made in plain, unambiguous language, so both cockpits held a consolidated picture of the cleared airspace at all times. Gaps in coverage were negligible.",
+        "marginal": "SP checked the responsibility airspace within standards during the tactical turns, but the scan was concentrated near the formation and the outer part of the assigned sector was covered only occasionally. The trend is toward a lookout that satisfies the requirement in form while leaving the far edge of the sector uncleared. SP is expected to scan the full depth of the assigned airspace between turns on the next formation sortie."
+      }
+    },
+    {
+      "id": "formation-24b-em14",
+      "label": "Energy exploitation and conversion to maintain tactical position, with fuel consideration",
+      "mif_row": null,
+      "source": "general:b|general:f",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to corrections made with large power changes instead of by converting the available energy, did not exploit and convert the aircraft energy in order to maintain position, and did not use the engine with consideration to the fuel reserve. Airspeed ended more than 30 knots away from the briefed value with the aircraft repeatedly at maximum power, and the fuel state fell below the level planned for the remaining turn set. IP took the controls, set a sustaining power and terminated the tactical work.",
+        "1": "SP, due to position corrections attempted with power alone rather than with a combination of turn geometry and power, did not manage the aircraft energy through the turn set. Airspeed reached about 30 knots away from the briefed value, at the limit of the standard, and the power setting was moderated only after IP pointed out the fuel flow and then directed a reduction. The excess fuel burn shortened the tactical portion of the sortie.",
+        "2": "SP, due to an early correction made with more power than the geometry required, allowed airspeed to reach about 25 knots above the briefed value with a corresponding rise in fuel flow. SP recognized the excess, reduced power and used the turn geometry to hold the tactical position, without IP intervention. Airspeed and fuel flow returned inside the planned values before the next turn.",
+        "3": "SP exploited and converted the aircraft energy in order to maintain the tactical position, keeping airspeed within 15 knots of the briefed value throughout the turn set. Corrections were made primarily with turn geometry and small power changes, so the engine was used with consideration to the fuel reserve. No intervention was required from IP.",
+        "4": "SP managed the aircraft energy through the whole turn set so that airspeed stayed essentially at the briefed value and the tactical position was held with minimal power change. Fuel consumption remained at or below the planned figure, leaving the reserve intact and the full sequence of turns available. Energy and fuel deviations from the plan were negligible.",
+        "marginal": "SP maintained the tactical position within standards, but each correction was made with a power increase and the airspeed was allowed to run to the high end of the tolerance before being reduced. The trend is toward a position held by fuel rather than by geometry, which shortens the tactical portion of the sortie. SP is expected to correct with lead and bank first, and power second, on the next event."
+      }
+    },
+    {
+      "id": "formation-24b-em15",
+      "label": "Visual signals in comm-out tactical turns",
+      "mif_row": null,
+      "source": "general:e",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, due to a comm-out plan that was not confirmed between the aircraft before the tactical work started, did not know or execute the visual signals for the comm-out turns. A signal given by the other aircraft was not acknowledged and no turn followed, so the formation continued past the briefed turn point on divergent intentions. IP took the controls, restored the radio and terminated the comm-out portion.",
+        "1": "SP, due to visual signals learned by name but not practiced in the aircraft, did not execute the comm-out signals correctly during the tactical turns. Signals were given late and in a form the other aircraft had to query, and the intended turn started only after IP identified the correct signal and directed its use. Each subsequent comm-out turn still required prompting.",
+        "2": "SP, due to a signal given with the aircraft in a position where it was partly masked from the other cockpit, initially failed to pass the intention for the comm-out turn. SP recognized that the signal had not been acknowledged, repositioned slightly and repeated it clearly, and the turn was executed on the briefed geometry without IP intervention. Later signals were given and acknowledged without difficulty.",
+        "3": "SP knew and executed the visual signals for the comm-out tactical turns, giving each signal clearly, at a position where it was visible, and awaiting acknowledgement before executing. The intended turns were understood by the other aircraft at the first attempt throughout the sortie. No prompting was required from IP.",
+        "4": "SP executed the comm-out visual signals with exceptional clarity, selecting the moment and the relative position so that every signal was seen and acknowledged immediately. Intentions were passed for the whole turn sequence without any radio use and without a single repetition. Ambiguity in the signals was negligible.",
+        "marginal": "SP knew and executed the comm-out visual signals within standards, but several signals had to be held for longer than usual before they were acknowledged, and the acknowledgement was not always checked before execution. The trend is toward a turn started on the assumption that the signal was seen. SP is expected to confirm acknowledgement before executing each comm-out turn on the next formation sortie."
+      }
+    },
+    {
+      "id": "formation-24b-em16",
+      "label": "Initiative for safe separation, clearing and safe maneuvering altitude over mountains",
+      "mif_row": null,
+      "source": "general:d|general:g",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a turn accepted without clearing the direction of turn or checking the terrain below, did not take the initiative for safe separation during the tactical turns and did not ensure a safe altitude for maneuvering over mountains. SP allowed the aircraft to descend more than 500 feet below the briefed minimum maneuvering altitude while converging with the other aircraft. IP took the controls, climbed away from the terrain and terminated the turn set.",
+        "1": "SP, due to a clearing turn omitted before the maneuver, did not confirm the airspace and the terrain clearance before the tactical turns. The aircraft was about 500 feet below the briefed minimum maneuvering altitude at the lowest point, at the limit of the standard, and the climb was made only after IP called the terrain and then directed it. SP took no independent action for separation for the remainder of the sequence.",
+        "2": "SP, due to a clearing check made before the heading change rather than immediately before the turn, initially entered the tactical turn with the terrain below unverified and descended about 400 feet below the briefed maneuvering altitude. SP recognized the deviation, climbed back above the briefed altitude and cleared the turn direction before continuing, without IP intervention. Separation from the other aircraft was maintained throughout.",
+        "3": "SP took the initiative for safe separation during the tactical turns, clearing the direction of turn before each maneuver and keeping the aircraft at or above the briefed minimum maneuvering altitude over the terrain. Where the geometry became tight, SP called for and flew the deconfliction without waiting to be told. No intervention was required from IP.",
+        "4": "SP cleared each tactical turn thoroughly and maintained a maneuvering altitude comfortably above the briefed minimum for the terrain, adjusting the plan when the ground rose along the track. Separation from the other aircraft was managed in anticipation, with deconfliction proposed before the geometry closed. Margins to terrain and to the other aircraft were preserved at all times.",
+        "marginal": "SP maintained safe separation and terrain clearance within standards during the tactical turns, but the clearing check was brief and the maneuvering altitude was held close to the briefed minimum over the higher ground. The trend is toward margins that meet the standard while leaving nothing available if the terrain or the other aircraft forces a change. SP is expected to build a working margin above the minimum and to clear the turn direction fully on the next event."
+      }
+    },
+    {
+      "id": "formation-24b-em17",
+      "label": "Correction technique and conformity with the Techniques and Procedures Manual",
+      "mif_row": null,
+      "source": "general:c|general:h",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a knowledge of the tactical turns that did not extend beyond their names, was not familiar with the correction technique required to remain in tactical formation position and did not execute the turns as described in the Techniques and Procedures Manual. Turn direction and reversal points were repeatedly wrong, and the roll-outs left the formation more than 30 degrees off the wing line with no usable correction attempted. IP flew each turn as a demonstration and stopped the sequence.",
+        "1": "SP, due to procedures reviewed only in the brief and not rehearsed, did not execute the tactical turns as described in the Techniques and Procedures Manual. The correct sequence for each turn was flown only after IP named the maneuver steps in the cockpit, and the resulting tactical positions were at the limit of the standard, about 30 degrees off the wing line. Every turn in the set required the same prompting.",
+        "2": "SP, due to an initially incorrect application of the correction technique after a wide roll-out, used bank alone where a combination of lead and power was required and finished about 20 degrees off the wing line. SP recognized that the correction was not closing the geometry, changed to the technique described in the Techniques and Procedures Manual and re-established the tactical position, without IP intervention. Subsequent turns were flown to the published procedure.",
+        "3": "SP executed the tactical turns as described in the Techniques and Procedures Manual and rolled out in tactical formation position, applying the correct correction technique for each residual error. Turn direction, reversal points and roll-out references were correct throughout the sequence and the resulting positions were within 10 degrees of the wing line. No prompting was required from IP.",
+        "4": "SP executed the full range of tactical turns exactly as described in the Techniques and Procedures Manual, selecting the correction technique appropriate to each geometry before the error had developed. Every turn ended in tactical formation position with no closing correction required, and the sequence was flown without a single procedural query. Departures from the published technique were negligible.",
+        "marginal": "SP executed the tactical turns to the published procedure within standards, but the corrections after each roll-out were made by trial rather than by selecting the technique the geometry called for. The trend is toward positions that are eventually correct at the cost of time and energy. SP is expected to name and apply the correct correction technique from the first observation of the error on the next formation sortie."
+      }
+    }
+  ]
+}

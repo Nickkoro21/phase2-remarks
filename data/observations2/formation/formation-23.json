@@ -1,0 +1,162 @@
+{
+  "item_id": "formation-23",
+  "item_name": "EXTENDED TRAIL",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [23],
+  "mif_rows": [
+    {"sn": 23, "row_name": "Extended Trail (Leader/ Wingman)"}
+  ],
+  "error_modes": [
+    {
+      "id": "formation-23-em01",
+      "label": "DISTANCE FROM THE LEADER IN THE EXTENDED TRAIL CONE (AS WINGMAN)",
+      "mif_row": null,
+      "source": "specific:DISTANCE (feet) [formation-18 b/ FIGHTING WING POSITION]",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power never being matched to the leader's energy at the start of each maneuver, did not maintain the distance from the leader inside the extended trail band. Spacing opened beyond 1500 ft during the Cloverleaf, leaving the leader too small to work as a reference, and on the following reversal SP closed inside 500 ft with unchecked overtake. IP took the controls to stop the closure and re-establish the position.",
+        "1": "SP, due to a single power setting carried through the whole set instead of being adjusted to the leader's pull and unload, did not hold the distance inside the standard band and stabilized at about 1500 ft, the outer limit of the criterion. Spacing was brought back only after the leader called for a closer position and IP repeated the correction on two occasions. Distance remained at the limit of the standard for the rest of the exercise.",
+        "2": "SP, due to a late power addition after the leader's pull into the modified Lazy 8, initially allowed the distance to open past 1000 ft and to reach approximately 1400 ft. SP recognized the opening, added power and cut inside the leader's turn circle, and re-established spacing within the 500-1000 ft band before the next maneuver, without IP intervention. Distance remained inside the standard for the remainder of the set.",
+        "3": "SP maintained the distance from the leader within 500-1000 ft throughout the extended trail set, adjusting power and the pursuit curve as the leader's energy changed through each pull and unload. Corrections were small, applied early and completed before the following maneuver. No spacing call was required from the leader or from IP.",
+        "4": "SP held the distance essentially constant near the middle of the 500-1000 ft band through turns, Chandelle, modified Barrel Roll and Cloverleaves. Spacing was controlled in anticipation of the leader's energy changes rather than in reaction to them, so the range never varied enough to change the visual size of the leader. Deviations from the briefed position were negligible.",
+        "marginal": "SP kept the distance from the leader within standards, but the position was held consistently at the 950-1000 ft end of the band and was recovered with large power changes after each unload. The trend is toward a range at which the leader's control inputs become difficult to read and any further opening leaves the standard. SP is expected to fly nearer the middle of the 500-1000 ft band and to anticipate the power requirement on the next event."
+      }
+    },
+    {
+      "id": "formation-23-em02",
+      "label": "ANGULAR POSITION IN THE CONE BEHIND THE LEADER (AS WINGMAN)",
+      "mif_row": null,
+      "source": "specific:POSITION (cone) [formation-18 b/ FIGHTING WING POSITION]",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the pursuit curve being flown without reference to the leader's plane of motion, did not maintain the angular position inside the cone. SP drifted outside 60 deg on the outside of the turn during the Chandelle and then fell inside 20 deg, close to the extended line of the leader's tail, during the recovery. IP intervened on the controls to reposition the aircraft inside the cone.",
+        "1": "SP, due to lag pursuit held long after the leader had already stopped the turn, did not keep the angular position inside the standard cone and settled at about 60 deg, the outer limit of the criterion. The position was corrected only after repeated verbal direction from the leader and IP, and each correction was applied late in the maneuver. Angle remained at the limit of the standard for the rest of the set.",
+        "2": "SP, due to an early reversal on the modified Barrel Roll, initially allowed the angular position to open past 45 deg toward approximately 55 deg. SP identified the excess angle, relaxed the pull and repositioned along the leader's plane of motion, restoring 30-45 deg before the next maneuver, without IP intervention. Angular position stayed inside the standard cone for the remainder of the exercise.",
+        "3": "SP maintained the angular position between 30 and 45 deg in the cone behind the leader throughout the extended trail set. The position was held by early adjustment of the pursuit curve as the leader changed the plane of motion, and the angle was re-established quickly after every reversal. No correction was required from the leader or from IP.",
+        "4": "SP held the angular position close to the centre of the 30-45 deg cone through every turn, precision maneuver and reversal of the set. Changes of the leader's plane of motion were matched as they developed, so the angle remained effectively steady even at the highest rate of turn. Departures from the briefed position were negligible.",
+        "marginal": "SP kept the angular position within standards, but the aircraft rode consistently at the 43-45 deg edge of the cone and was recovered toward it only after the leader had already rolled out. The trend is toward an angle at which any further widening leaves the standard cone and the closure geometry becomes hard to judge. SP is expected to work the pursuit curve nearer 35 deg and to lead the plane change on the next event."
+      }
+    },
+    {
+      "id": "formation-23-em03",
+      "label": "500 FT SAFETY DISTANCE (BUBBLE) AROUND THE LEADER",
+      "mif_row": null,
+      "source": "specific:reference_text b/ 500 ft safety distance (bubble)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to closure that was neither assessed nor arrested during the descending part of the Cloverleaf, violated the 500 ft safety distance around the leader. The aircraft passed well inside the bubble with an overtake that was still increasing and no correcting action had been started. IP took the controls, unloaded and turned away from the leader to restore separation.",
+        "1": "SP, due to an unrecognized overtake built up while regaining the position after the modified Lazy 8, entered the 500 ft bubble and did not take immediate correcting action. Separation was restored only after the leader transmitted a spacing call and IP directed the power reduction and the turn out of plane. Separation returned to the safety distance late and with margin at the minimum acceptable value.",
+        "2": "SP, due to a slightly high closure rate on the recovery from the modified Barrel Roll, momentarily approached the 500 ft safety distance from the leader. SP recognized the closure immediately, reduced power and displaced out of the leader's plane of motion, and re-established comfortable separation without IP intervention. The remainder of the set was flown with the bubble intact.",
+        "3": "SP preserved the 500 ft safety distance from the leader throughout the extended trail set. Closure was assessed before each reversal and controlled with power and pursuit so that separation was never reduced toward the bubble. No spacing call or intervention was required from the leader or from IP.",
+        "4": "SP maintained separation from the leader with a margin that never approached the 500 ft safety distance in any part of the set, including the reversals with the highest closure geometry. Closure was recognized at its onset and cancelled with small, timely inputs. The safety margin was preserved without any reduction worth recording.",
+        "marginal": "SP kept the 500 ft safety distance intact, but separation was reduced toward the bubble on two reversals and recovered only with a late power reduction. The trend is toward a technique in which closure is corrected after it is visible rather than at its onset, which leaves no reserve if the leader tightens the maneuver. SP is expected to assess the closure before each reversal and to control it with anticipation on the next event."
+      }
+    },
+    {
+      "id": "formation-23-em04",
+      "label": "AVOIDING STAGNATION IN THE LEADER'S 6 O'CLOCK (AS WINGMAN)",
+      "mif_row": null,
+      "source": "general:b.1",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a pursuit curve flown with no lateral displacement from the leader's flight path, stagnated directly in the leader's 6 o'clock. The aircraft remained on the extended line of the leader's tail across two consecutive maneuvers, inside the 20 deg limit of the cone and with closure that could not be judged from that geometry. IP took the controls to move the aircraft off the leader's line and back into the cone.",
+        "1": "SP, due to control inputs made only in the vertical while the leader was changing the plane of motion, allowed the aircraft to sit at the leader's 6 o'clock at the 20 deg limit of the cone. SP moved off the line only after the leader called for lateral displacement and IP repeated the instruction. The position was regained late and the same tendency reappeared on the following maneuver.",
+        "2": "SP, due to a delayed roll input at the entry to the Cloverleaf, initially allowed the aircraft to move toward the leader's 6 o'clock and toward the inner edge of the cone. SP recognized the developing stagnation, displaced laterally and re-established an angular position inside 30-45 deg before the next reversal, without IP intervention. No further tendency toward the leader's dead astern position appeared.",
+        "3": "SP avoided stagnation in the leader's 6 o'clock throughout the set, keeping the aircraft displaced off the extended line of the leader's tail at all times. Lateral displacement was re-established at every reversal, so the geometry always allowed closure and angle-off to be assessed visually. No prompting was required from the leader or from IP.",
+        "4": "SP kept the aircraft clear of the leader's 6 o'clock with exceptional consistency, working the pursuit curve so that angle-off was preserved even through the reversals of the modified Barrel Roll and the Cloverleaves. The position was never allowed to approach the leader's extended tail line, and closure remained readable at every stage. Any drift toward the leader's dead astern position was negligible.",
+        "marginal": "SP avoided stagnation in the leader's 6 o'clock within standards, but the aircraft drifted toward the leader's extended tail line at each reversal and was displaced back only after the leader had already established the new turn. The trend is toward a geometry with insufficient angle-off to judge closure. SP is expected to establish lateral displacement as the leader changes the plane of motion rather than after it on the next event."
+      }
+    },
+    {
+      "id": "formation-23-em05",
+      "label": "CLOSURE CONTROL AND OVERSHOOT PREVENTION AS A THREAT TO THE FORMATION",
+      "mif_row": null,
+      "source": "general:b.2",
+      "hf_concept": "hf-acts-errors",
+      "texts": {
+        "0": "SP, due to a perceptual error in judging closure and lateral separation against a leader seen against an empty sky, constituted a threat to the formation during the maneuver. The aircraft developed an uncontrolled overtake in the descending part of the Cloverleaf and crossed the leader's flight path ahead of the nose with separation reducing throughout. IP took the controls, unloaded and turned away to remove the conflict.",
+        "1": "SP, due to closure assessed from the leader's apparent size alone rather than from the changing angle-off, arrived at the reversal with an overtake that was not being corrected. The developing overshoot was arrested only after the leader called for a lateral move and IP directed the power reduction and the out-of-plane displacement. Separation was preserved at the minimum acceptable value and the same misjudgement recurred once more in the set.",
+        "2": "SP, due to a misjudged closure rate at the entry to the modified Lazy 8, initially built an overtake that would have produced an overshoot in front of the leader. SP recognized the closure from the increasing angle-off, reduced power, extended the pursuit curve and passed behind the leader's flight path, without IP intervention. The remaining maneuvers were flown with closure controlled at each entry.",
+        "3": "SP presented no threat to the formation at any point of the maneuver, controlling closure at each entry and reversal so that no overshoot of the leader's flight path developed. Overtake was cancelled with power and pursuit before it became a factor, and every crossing of the leader's turn circle was made behind the flight path. No intervention or spacing call was required.",
+        "4": "SP managed closure with exceptional accuracy across the whole set, recognizing overtake at its onset from angle-off and range cues together and cancelling it with minimal input. The aircraft never approached the leader's flight path in a way that could compromise the formation, even in the highest-closure reversals. The margin available at every stage was unquestionable.",
+        "marginal": "SP presented no threat to the formation, but closure was corrected only after the overtake had become visible as a rapid change in the leader's apparent size on two entries. The trend is toward a technique that relies on late, large corrections to prevent an overshoot rather than on early recognition. SP is expected to assess closure from angle-off and range together at every entry on the next event."
+      }
+    },
+    {
+      "id": "formation-23-em06",
+      "label": "EXTENDED TRAIL POSITION TECHNIQUE PER TECHNIQUES AND PROCEDURES MANUAL (AS WINGMAN)",
+      "mif_row": null,
+      "source": "general:b.3",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to lead, pure and lag pursuit being applied without reference to the leader's plane of motion, did not maintain the Extended Trail position as described in the Techniques and Procedures Manual. The aircraft was flown in a plane of its own through the Chandelle and the modified Barrel Roll, so both range and angle-off left the prescribed position and the maneuvering geometry became unpredictable. IP took the controls to re-establish the briefed position.",
+        "1": "SP, due to the pursuit curve being selected after the leader's turn had developed instead of as it started, did not fly the Extended Trail position by the technique described in the Techniques and Procedures Manual. Position was held only at the limits of the prescribed range and cone and was corrected each time on verbal direction from the leader and IP. The technique did not improve during the remainder of the set.",
+        "2": "SP, due to an initially incorrect choice of lag pursuit at the entry to the Cloverleaf, departed from the position described in the Techniques and Procedures Manual. SP recognized the error from the changing angle-off, transitioned to lead pursuit and re-established the prescribed range and cone before the following maneuver, without IP intervention. The remaining maneuvers were flown by the published technique.",
+        "3": "SP maintained the Extended Trail position as described in the Techniques and Procedures Manual throughout the set, selecting lead, pure or lag pursuit according to the leader's plane of motion and energy. Range and angle-off were controlled together rather than separately, and the position was re-established quickly after every reversal. No correction of technique was required from IP.",
+        "4": "SP flew the Extended Trail position exactly as described in the Techniques and Procedures Manual, with the pursuit curve changed in anticipation of each plane change and with power used to hold the energy state required by the geometry. The prescribed range and cone were maintained without visible workload through all the precision maneuvers of the set. Departures from the published technique were negligible.",
+        "marginal": "SP maintained the Extended Trail position within standards, but pursuit was changed reactively after each of the leader's plane changes and the position was rebuilt rather than held. The trend is toward a technique that works while the leader maneuvers gently and degrades as soon as the rate increases. SP is expected to anticipate the plane change and select the pursuit curve accordingly on the next event."
+      }
+    },
+    {
+      "id": "formation-23-em07",
+      "label": "VISUAL CONTACT WITH THE LEADER AND LOST-SIGHT PROCEDURE",
+      "mif_row": null,
+      "source": "general:b.2,b.3",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, due to failure to pass the required call at the point where the leader was lost from sight, continued to maneuver without visual contact and without informing the flight. The aircraft was flown blind through the reversal of the modified Barrel Roll with the leader's position unknown and separation unassessed. IP took the controls, made the call and executed the lost-sight separation procedure.",
+        "1": "SP, due to an indirect statement of the problem instead of a direct call, delayed reporting the loss of visual contact with the leader during the Cloverleaf. The briefed lost-sight actions were carried out only after IP demanded the standard call and directed the separation maneuver. Visual contact was regained late, after the leader had already begun a level-off to assist.",
+        "2": "SP, due to the leader passing briefly through the canopy bow during the pull, momentarily lost visual contact at the top of the modified Lazy 8. SP made the required call immediately, maintained the last known plane of motion and regained visual contact within the same maneuver, without IP intervention. Separation was preserved throughout and the set continued as briefed.",
+        "3": "SP maintained visual contact with the leader through every maneuver of the extended trail set, repositioning the head and the aircraft before the leader could pass behind a canopy structure. Where sight was at risk, the intention was stated on the radio before the position was lost. No lost-sight action or prompting by IP was required.",
+        "4": "SP held visual contact with the leader without interruption throughout the set, including the highest-rate reversals of the Cloverleaves, by anticipating where the leader would appear rather than searching for it. Radio calls were standard, brief and made at exactly the points required. No degradation of visual contact worth recording occurred.",
+        "marginal": "SP maintained visual contact within standards, but on two occasions the leader was reacquired only after passing behind the canopy bow, and no call was made while the position was uncertain. The trend is toward continued maneuvering with an unstated doubt about the leader's position. SP is expected to state the loss of visual contact immediately and to preposition the head before the pull on the next event."
+      }
+    },
+    {
+      "id": "formation-23-em08",
+      "label": "AS LEADER: SMOOTHNESS AND ENERGY CONTROL WITHIN 120-250 KIAS AND 4 G",
+      "mif_row": null,
+      "source": "general:a.1 (execution 1/, conditions 1/b)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to pull and power applied in abrupt steps without any energy plan for the sequence, did not carry out the maneuvers smoothly as leader. Airspeed fell below 120 KIAS at the top of the Chandelle and exceeded 250 KIAS on the recovery from the Cloverleaf, and the pull passed 4 G with the wingman still in trail. IP took the controls to unload the aircraft and restore the briefed speed range.",
+        "1": "SP, due to the entry parameters for each maneuver not being reset after the preceding recovery, led the sequence at the limits of the briefed envelope. Airspeed reached the 250 KIAS boundary on two recoveries and G approached 4 in the pull, and the parameters were brought back only after IP called for a reduction on each occasion. The maneuvers were flown roughly enough that the wingman had to work at the edge of the cone throughout.",
+        "2": "SP, due to a slightly late power reduction at the recovery from the modified Barrel Roll, initially allowed the airspeed to increase past the briefed working speed toward 240 KIAS. SP recognized the trend, reduced power and adjusted the pull to contain G below 4, and re-entered the next maneuver within the 120-250 KIAS band, without IP intervention. The remaining sequence was flown smoothly and within limits.",
+        "3": "SP led the sequence smoothly, holding entry and recovery parameters inside the 120-250 KIAS range and the pull within 4 G on every maneuver. Control inputs were progressive, so the modified Lazy 8, Chandelle, modified Barrel Roll and Cloverleaves were flown as a continuous energy plan rather than as separate events. No parameter required correction by IP.",
+        "4": "SP led the extended trail sequence with exceptional smoothness, arriving at every entry with the airspeed and G exactly where the following maneuver required them and never approaching the 120 or 250 KIAS boundaries or the 4 G limit. Energy was traded between maneuvers so precisely that the wingman could hold position with minimal power changes. Variations from the ideal profile were negligible.",
+        "marginal": "SP led the sequence within standards, but recovery airspeeds repeatedly settled near 240 KIAS and the pull was applied in one rapid input at each entry. The trend is toward an energy profile that leaves little margin below the 250 KIAS boundary and makes the maneuver harder than necessary to follow. SP is expected to set the entry parameters deliberately and to apply G progressively on the next event."
+      }
+    },
+    {
+      "id": "formation-23-em09",
+      "label": "AS LEADER: ORIENTATION AND CONTAINMENT WITHIN THE ASSIGNED FLIGHT AREA",
+      "mif_row": null,
+      "source": "general:a.1 (conditions 1/a)",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to lack of awareness of the aircraft's position relative to the area boundary while leading the sequence, did not maintain orientation within the assigned flight area. Three consecutive maneuvers were flown in the same direction and the flight crossed the working area boundary with the wingman in trail. IP took the controls, made the position report and returned the formation to the assigned area.",
+        "1": "SP, due to position kept from memory of the entry heading rather than from an active check against the area limits, led the sequence out to the edge of the assigned area. The flight was turned back only after IP pointed out the boundary and directed the reversal, and no ground reference had been re-established in the meantime. The formation remained close to the limit for the rest of the working period.",
+        "2": "SP, due to attention held on the wingman's position during the first Cloverleaf, initially lost the ground reference used to orient the sequence within the area. SP re-established orientation using the visual reference and the navigation display, and reversed the direction of the next maneuver to keep the flight well inside the area, without IP intervention. Containment was assured for the remainder of the sortie.",
+        "3": "SP maintained orientation within the assigned flight area throughout the sequence, alternating the direction of the maneuvers so that the flight remained comfortably inside the boundaries. Position was checked against ground references and the navigation display between maneuvers without interrupting the lead of the wingman. No prompting by IP was required.",
+        "4": "SP held the whole extended trail sequence in the centre of the assigned area, planning the direction of each maneuver in advance so that the flight never approached a boundary. Orientation was maintained continuously and altitude blocks and area limits were respected without any interruption of the lead task. No containment issue of any kind arose.",
+        "marginal": "SP kept the flight inside the assigned area, but the sequence drifted steadily toward one boundary and the reversal was made only when the limit became visible on the navigation display. The trend is toward orientation maintained by correction rather than by planning. SP is expected to alternate the direction of the maneuvers and to check position between entries on the next event."
+      }
+    },
+    {
+      "id": "formation-23-em10",
+      "label": "AS LEADER: CONTROL OF THE WINGMAN AND KNOCK-IT-OFF DISCIPLINE",
+      "mif_row": null,
+      "source": "general:a.1 (execution 1/)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the sequence being flown to a fixed plan without any assessment of what the wingman could follow, did not control the wingman during the maneuvers. Maneuvers were continued while the wingman was already outside the cone and out of position, no directive call was made and no knock-it-off was given when the parameters were clearly exceeded. IP took the controls, terminated the engagement and reformed the flight.",
+        "1": "SP, due to the wingman's position being checked only between maneuvers instead of continuously, led the sequence without effective control of the flight. Directive calls to reposition the wingman were made only after IP prompted for them, and the knock-it-off was given late, after the position had already been lost for several seconds. The rate of the maneuvers was reduced only on IP direction.",
+        "2": "SP, due to a first maneuver selected without accounting for the wingman's energy at the entry, initially left the wingman unable to hold the cone. SP recognized the difficulty from the wingman's position, eased the pull, called the correction and adjusted the following maneuvers to the wingman's capability, without IP intervention. The rest of the sequence was flown with the wingman in position.",
+        "3": "SP controlled the wingman effectively throughout the sequence, monitoring the position continuously and adjusting the rate and type of maneuver to what the wingman could follow. Directive calls were clear and timely, and the criteria for a knock-it-off were stated and applied without hesitation when required. No intervention by IP was necessary.",
+        "4": "SP led the flight with exceptional control of the wingman, sequencing the maneuvers so that the wingman's energy was always sufficient to hold the cone and pre-empting difficulty before it appeared. Calls were concise, standard and made at exactly the right moment, and the flight was kept safe and predictable throughout. Nothing in the lead of the wingman required comment.",
+        "marginal": "SP controlled the wingman within standards, but the assessment of the wingman's position was made mainly at the end of each maneuver and the rate was reduced only after difficulty was evident. The trend is toward a lead that is reactive and leaves little margin before a knock-it-off becomes necessary. SP is expected to monitor the wingman continuously and to adapt the sequence in advance on the next event."
+      }
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "item_id": "vfr_navigation-05",
+  "item_name": "BASIC A/C CONTROL / WINGMAN CONSIDERATION",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [5],
+  "mif_rows": [
+    {"sn": 5, "row_name": "Basic A/C control"}
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-05-em01",
+      "label": "ALTITUDE CONTROL ON THE ROUTE",
+      "mif_row": null,
+      "source": "specific:ALTITUDE* (feet)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an instrument cross-check that stopped at the navigation display while the leg was flown, did not maintain the briefed cruising altitude and allowed the aircraft to drift more than 400 feet below the planned level. The trend was not recognized on the altimeter or on the vertical speed indicator at any point. IP had to intervene on the controls to arrest the descent and re-establish the aircraft at the assigned altitude.",
+        "1": "SP, due to head-down time spent on the chart and the stopwatch approaching the turning point, did not hold the briefed altitude within tolerance and reached 300 feet above the planned level. The deviation was corrected only after IP called the altitude twice, and level flight was re-established late in the following leg. SP did not detect the developing error from the altimeter on his own.",
+        "2": "SP, due to a power setting left unchanged after the climb to the en route altitude, did not level off promptly and allowed the altitude to reach about 200 feet above the planned level. SP identified the deviation on the altimeter during the next cross-check cycle and returned to the briefed altitude within the same leg. The correction was made without prompting and no IP intervention was required.",
+        "3": "SP maintained the briefed cruising altitude within 150 feet throughout the route, with prompt and smooth corrections at each level-off. The altimeter cross-check was continuous and the deviations through the turning points remained inside tolerance. Altitude control was not disturbed by the navigation workload.",
+        "4": "SP flew the entire route with the altitude held to within a few tens of feet of the briefed level, including through the turning points and the deliberate altitude changes. Level-offs were anticipated and flown without overshoot. The altitude error at every checkpoint was negligible.",
+        "marginal": "SP kept the altitude within standards, but the deviations were consistently on the low side of the briefed level and each correction began only after the altimeter had already moved appreciably. The trend is a cross-check that reaches the altimeter late, so errors are caught near the outer part of the tolerance rather than at onset. SP is expected to tighten the altimeter cross-check interval and to correct at the first indication of a trend on the next navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-05-em02",
+      "label": "AIRSPEED CONTROL AND POWER SETTING PER LEG",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a power setting that was never adjusted after the change of altitude, did not hold the briefed leg IAS and allowed the airspeed to fall more than 25 knots below the planned value. The timing over the turning point was lost as a result and the remaining route had to be recomputed in flight. IP had to set the power and dictate the airspeed to recover the profile.",
+        "1": "SP, due to a power setting selected from memory rather than computed for the altitude and wind of the leg, did not maintain the briefed IAS and reached 20 knots off the planned value. The airspeed was returned to the briefed figure only after IP pointed out the discrepancy on the airspeed indicator. The correction was delayed to the extent that the turning point was crossed off the calculated time.",
+        "2": "SP, due to a late power reduction after a deliberate airspeed change, did not stabilize on the briefed leg IAS immediately and the airspeed remained about 15 knots off the planned value for part of the leg. SP identified the error against the flight plan card and reset the power without prompting, re-establishing the briefed IAS well before the turning point. Timing over the turning point was preserved.",
+        "3": "SP set the appropriate power settings for the altitude and wind of each leg and held the briefed IAS within 10 knots throughout the route. Deliberate airspeed changes were executed in accordance with the Techniques and Procedures Manual and stabilized on the new value without overshoot.",
+        "4": "SP held the leg IAS essentially on the briefed value throughout the route, with power set for the altitude and wind of each leg before any deviation could develop. Deliberate airspeed changes were flown in accordance with the Techniques and Procedures Manual and stabilized on the first attempt. The airspeed error at every checkpoint was negligible.",
+        "marginal": "SP maintained the leg IAS within standards, but the airspeed was held by frequent small power changes rather than by a power setting computed for the altitude and wind of the leg. The trend is a working airspeed that drifts toward the tolerance limit between corrections and demands continuous attention. SP is expected to compute and set the leg power setting immediately after roll-out on each heading during the next navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-05-em03",
+      "label": "HEADING CONTROL AND TRACK KEEPING",
+      "mif_row": null,
+      "source": "specific:HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the wind correction angle never being applied to the planned heading, did not maintain the briefed heading and flew more than 15 degrees off the computed value for the whole leg. The accumulated track error placed the aircraft outside the intended corridor and the turning point could not be identified visually. IP had to assume the navigation and issue headings to regain the planned route.",
+        "1": "SP, due to an incomplete transition back to the instruments after the turn, did not roll out on the briefed heading and settled 10 degrees off the computed value. The heading was corrected only after IP called the discrepancy, and the aircraft remained off the planned track long enough to displace the turning point. SP did not cross-check the heading indicator against the flight plan card after roll-out.",
+        "2": "SP, due to an over-banked turn at the first turning point, did not roll out exactly on the briefed heading and stabilized about 8 degrees off the computed value. SP cross-checked the heading indicator against the flight plan card immediately after roll-out and re-established the briefed heading within a few seconds, without prompting. The track error was contained and the checkpoint was crossed as planned.",
+        "3": "SP held the briefed heading within 5 degrees on every leg, rolling out of each turn on the computed value with the wind correction angle applied for the leg. The heading was cross-checked against the flight plan card after every turn and the planned track was maintained between checkpoints.",
+        "4": "SP flew each leg essentially on the computed heading, with roll-outs on the exact value and the wind correction angle applied from the start of the leg. Track error at the checkpoints was negligible and no heading correction beyond one or two degrees was required at any point on the route.",
+        "marginal": "SP held the heading within standards, but the roll-outs were consistently a few degrees to one side and the error was left uncorrected until the checkpoint made it evident. The trend is a heading flown approximately rather than to the computed value, so track error accumulates over the length of the leg. SP is expected to roll out on the computed heading and verify it against the flight plan card immediately after every turn."
+      }
+    },
+    {
+      "id": "vfr_navigation-05-em04",
+      "label": "IN-FLIGHT FUEL COMPUTATION AND PROFILE MANAGEMENT",
+      "mif_row": null,
+      "source": "general:1,2",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to lack of awareness of the fuel state during the working phase of the sortie, was not able to calculate the in-flight fuel accurately against time and distance and did not modify the mission profile in order not to violate the fuel restrictions. The fuel checks at the turning points were omitted and the remaining fuel was stated only when IP asked for it. IP had to terminate the route early and direct the recovery to keep the aircraft above the minimum fuel.",
+        "1": "SP, due to fuel checks made without reference to the time and distance remaining, calculated the in-flight fuel only to the lower limit of an acceptable figure and reached the briefed bingo fuel at the last turning point. The decision to shorten the profile was taken only after IP raised the fuel state twice. The recovery was flown on the minimum reserve, with no margin left for a delay.",
+        "2": "SP, due to an initial fuel calculation based on the planned rather than the actual ground speed, first produced a consumption figure that did not match the route remaining. SP recomputed the fuel against time and distance at the following checkpoint, recognized the shortfall unaided and dropped one leg from the profile to stay clear of the fuel restrictions. No prompting was required and the recovery was flown with the planned reserve intact.",
+        "3": "SP calculated the in-flight fuel accurately against time and distance at every checkpoint and compared it with the planned figures on the flight plan card. The profile was adjusted where required so that the fuel restrictions were not approached, and the recovery was commenced with the briefed reserve intact.",
+        "4": "SP maintained a continuous and accurate fuel picture throughout the sortie, computing the fuel against time and distance ahead of each checkpoint and stating the projected recovery fuel before it was requested. The profile was managed so that the fuel remained above the planned figures at every point of the route. The difference between the computed and the actual reserve at landing was negligible.",
+        "marginal": "SP calculated the in-flight fuel within standards, but the checks were made at the checkpoints only and the figure was never projected forward to the recovery. The trend is a fuel picture that is correct for the present position while giving no early warning of a developing shortfall. SP is expected to project the fuel to the recovery point at every check and to name in advance the leg that would be dropped first on the next navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-05-em05",
+      "label": "TIMING CONTROL OVER TURNING POINTS",
+      "mif_row": null,
+      "source": "general:3,4",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the ground speed never being recomputed after the actual winds differed from the forecast, did not execute the deliberate airspeed changes required to be exactly above the turning points at the calculated time. The second turning point was crossed more than two minutes off the planned time and the error continued to grow along the route. IP had to compute the required airspeed and direct the changes to recover the timeline.",
+        "1": "SP, due to timing checks made only after each turning point had been passed, did not initiate the deliberate airspeed changes in time and arrived over the turning points at the limit of an acceptable timing error. The airspeed adjustments were made only after IP pointed out the accumulated delay. The timeline was restored late and only after successive corrections.",
+        "2": "SP, due to an initial ground speed check taken over too short a segment, first selected an airspeed change insufficient for the timing error. SP re-checked the elapsed time at the next visual checkpoint, computed the corrected airspeed in accordance with the Techniques and Procedures Manual and arrived over the following turning point at the calculated time. The correction was made without prompting.",
+        "3": "SP checked the elapsed time and ground speed at each checkpoint and executed deliberate airspeed changes in accordance with the Techniques and Procedures Manual in order to be exactly above the turning points at the calculated time. The timing error at each turning point remained within a few seconds of the plan.",
+        "4": "SP managed the timeline with anticipation throughout the route, computing the required ground speed early in each leg and executing deliberate airspeed changes in accordance with the Techniques and Procedures Manual before the timing error became apparent. Every turning point was crossed within seconds of the calculated time and the time over the terminal point was met exactly.",
+        "marginal": "SP arrived over the turning points within the required timing, but the corrections were large and applied close to the point rather than early in the leg. The trend is a timeline recovered by reacting at the checkpoint instead of by an airspeed change computed at the start of the leg. SP is expected to compute the required ground speed immediately after each turn and to apply the airspeed change at that point on the next navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-05-em06",
+      "label": "ALTITUDE CHANGE TECHNIQUE AND IN-FLIGHT PROCEDURES",
+      "mif_row": null,
+      "source": "general:5,6",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to incomplete knowledge of the flight altitude change procedures of the Techniques and Procedures Manual, did not execute the planned altitude changes with the prescribed technique and did not execute all required in-flight procedures. The climb was initiated without the power and attitude called for by the manual, and the fuel, systems and position checks for the leg were left undone. IP had to direct the profile and complete the in-flight procedures himself.",
+        "1": "SP, due to the in-flight procedures being recalled item by item instead of being flown as a flow, executed the altitude changes with a technique that only just met the requirement and completed the checks at the limit of an acceptable standard. Each remaining procedure was carried out after IP prompted for it. The checks for one leg were finished only after the following turning point had been crossed.",
+        "2": "SP, due to a climb initiated before the power was set for the new altitude, first executed an altitude change that did not follow the technique of the Techniques and Procedures Manual. SP recognized the deviation, reset power and attitude and completed the level-off correctly, then carried out the remaining in-flight procedures for the leg on his own initiative and in the correct order. No IP prompting was required.",
+        "3": "SP executed the flight altitude changes in accordance with the Techniques and Procedures Manual, with power and attitude set for the climb or descent and a controlled level-off at the new altitude. All required in-flight procedures were executed at the planned points and in the correct sequence.",
+        "4": "SP executed every altitude change exactly as prescribed by the Techniques and Procedures Manual, with the level-offs anticipated and flown without overshoot. All required in-flight procedures were completed ahead of the planned points and integrated into the navigation task without any disturbance to aircraft control. Deviations from the prescribed technique were negligible.",
+        "marginal": "SP executed the altitude changes and the in-flight procedures within standards, but the procedures were completed at the end of each leg rather than at the planned points, so several tasks accumulated near the turning points. The trend is a workload pushed into the busiest part of the route, where the aircraft control task is already highest. SP is expected to distribute the in-flight procedures across the leg and complete each one at its planned point on the next navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-05-em07",
+      "label": "WINGMAN CONSIDERATION - FORMATION POSITION WHILE NAVIGATING",
+      "mif_row": null,
+      "source": "general:intro (Contact and Formation cross-reference)",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to attention captured by the chart and the stopwatch while the aircraft state went unmonitored, did not maintain the briefed formation position while flying the route and allowed the aircraft to close inside the briefed lateral limit. The corresponding Formation criteria applied to this sortie were not met and the position error was not recognized by SP at any stage. IP had to take control and move the aircraft back out to a safe position.",
+        "1": "SP, due to the navigation task being worked head-down for extended periods, did not hold the briefed formation position while flying the route and reached the outer limit of the position acceptable under the Formation criteria applied to this sortie. Line, spacing and step-down were corrected only after successive radio calls from lead. The position was restored slowly and drifted again as soon as the next navigation check was started.",
+        "2": "SP, due to a power correction applied late after lead's turn at the first turning point, did not hold the briefed spacing and opened outside the planned position for part of the leg. SP detected the error visually, corrected line and spacing with smooth power and bank inputs and re-established the briefed position without any call from lead or IP. Aircraft control remained steady throughout the correction.",
+        "3": "SP maintained the briefed formation position throughout the route while carrying out the navigation task, holding line, spacing and step-down in accordance with the corresponding Formation criteria applied to this sortie. Position corrections were small and smooth and were made without any call from lead.",
+        "4": "SP held the briefed formation position throughout the route with negligible variation, dividing attention between lead and the navigation task without either being neglected. Line, spacing and step-down were maintained through the turns and the altitude changes. Every correction was anticipated from lead's aircraft rather than made in reaction to it.",
+        "marginal": "SP held the formation position within standards, but the position was maintained in bursts, tightening each time SP looked out and drifting while the navigation task was worked head-down. The trend is a visual scan that leaves lead unmonitored for too long at a time, so the position is recovered rather than held. SP is expected to break the navigation task into shorter head-down periods and to keep a continuous reference on lead during the next formation navigation sortie."
+      }
+    }
+  ]
+}

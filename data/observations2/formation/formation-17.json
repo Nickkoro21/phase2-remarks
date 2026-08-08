@@ -1,0 +1,132 @@
+{
+  "item_id": "formation-17",
+  "item_name": "FINGERTIP",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [17],
+  "mif_rows": [
+    {"sn": 17, "row_name": "Fingertip"}
+  ],
+  "error_modes": [
+    {
+      "id": "formation-17-em01",
+      "label": "Lateral separation control as wingman",
+      "mif_row": null,
+      "source": "specific:LATERAL SEPARATION *(feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to late recognition of lateral movement while flying fingertip, did not hold the 10 ft minimum lateral separation reference and let the spacing vary without any stabilizing correction. Separation opened past 30 ft on the outside of the turns and on one occasion closed inside the 10 ft reference, which the criteria do not permit in any direction. The IP intervened on the controls to re-establish a safe lateral distance before the next maneuver.",
+        "1": "SP, due to a lateral correction applied with aileron and rudder only after the sight picture had fully widened, allowed lateral separation to reach about 28 to 30 ft, at the outer edge of the tolerance. The deviation was reduced only after verbal prompts from the IP and after the wings had already been rolled level. No control intervention was required, but no correction was initiated by SP alone.",
+        "2": "SP, due to a lateral correction started after the widening had already begun, let separation grow to roughly 20 to 25 ft during the descending turns. SP recognized the change in the sight picture, applied a small coordinated input toward the leader and re-established the reference within a few seconds. No prompting and no intervention from the IP were needed.",
+        "3": "SP held lateral separation inside the plus 10 ft tolerance throughout climbs, descents and turns, keeping the working range between 10 and 20 ft from the reference. Corrections were small, early and made with coordinated aileron and rudder. The 10 ft minimum was never eroded on either side of the leader.",
+        "4": "SP kept lateral separation within a couple of feet of the 10 ft reference through the full profile, including the modified Lazy Eights. Lateral corrections were anticipated from the leader's roll input rather than applied after the picture had changed. The spacing appeared visually constant from the rear cockpit throughout the formation phase.",
+        "marginal": "SP kept lateral separation inside standards, but worked consistently near the plus 10 ft edge, particularly on the right side and in the second half of each turn. The tendency was toward widening rather than closing, so no safety margin was lost, but the position flown was not the briefed one. SP is expected to narrow the working band back toward the reference line on the next sortie."
+      }
+    },
+    {
+      "id": "formation-17-em02",
+      "label": "Vertical separation and stack position as wingman",
+      "mif_row": null,
+      "source": "specific:VERTICAL SEPARATION *(feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to unarrested vertical movement in the stack during the pull-up of the Lazy Eight, did not maintain the briefed level of the sight picture. Vertical displacement exceeded 6 ft high and, in the descending portion, more than 10 ft low, beyond the permitted band in both directions. The IP took the controls to reposition the aircraft in the stack.",
+        "1": "SP, due to a late power reduction combined with a nose-high pitch input, went about 6 ft high over the top and reached the 10 ft low limit during the descending segment. Return to the briefed level came only after repeated verbal calls from the IP. The control combination used was correct, but every correction was made after the displacement had fully developed.",
+        "2": "SP, due to a slow pitch response to the leader's climb entry, allowed the stack to vary by roughly 5 to 6 ft high and 6 to 8 ft low. SP identified the displacement against the reference on the leader's aircraft and returned to level with a smooth pitch and power correction. No IP prompting or intervention was required.",
+        "3": "SP maintained the vertical position within 4 ft of the briefed stack through climbs, descents, turns and Lazy Eights. Pitch and power corrections were small and made as the leader's attitude changed rather than after the displacement had built up. The sight picture remained stable in the vertical on both sides.",
+        "4": "SP held the stack within about 1 to 2 ft of the briefed level for the whole formation phase, including the 2 to 3 G loading and the airspeed variation between 80 and 100 KIAS. Vertical corrections were continuous and small enough to leave the sight picture visually unchanged.",
+        "marginal": "SP remained inside the vertical standards, but settled slightly low in the stack during every descending segment and returned to level only near the wings-level point. The displacement stayed inside 4 ft, so the criteria were met, but the pattern repeated on each maneuver. SP is expected to lead the pitch correction with the leader's nose movement on the next sortie."
+      }
+    },
+    {
+      "id": "formation-17-em03",
+      "label": "Observance angle and fore-aft geometry as wingman",
+      "mif_row": null,
+      "source": "specific:OBSERVANCE ANGLE (degrees)",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to an attention bottleneck on the wingtip reference at the expense of the complete sight picture, did not hold the briefed observance angle. The angle swept past 55 deg aft during the turns into the wingman and moved forward of the acute limit on rollout, outside any permitted band. The IP directed the reposition and assisted on the controls to restore the fingertip geometry.",
+        "1": "SP, due to attention held on lateral spacing alone, let the observance angle sweep to about 50 deg, at the widest permitted band. The aft position was reduced only after the IP called the sweep, and SP then over-corrected forward before stabilizing. Power was applied late in each of these corrections.",
+        "2": "SP, due to a delayed power addition as the leader rolled into the turn, allowed the observance angle to open to roughly 40 to 45 deg. SP recognized the aft drift from the changing sight picture and used power with a small nose position change to return toward the briefed geometry. The correction was completed without prompting.",
+        "3": "SP maintained the observance angle within 5 deg of the briefed 30 deg through the full maneuver set. Fore and aft corrections were made with power alone, in small increments, and the geometry was preserved on both sides of the leader.",
+        "4": "SP held the observance angle essentially constant at the briefed 30 deg, with no visible fore or aft movement during climbs, descents, turns and modified Lazy Eights. Power changes were anticipated from the leader's attitude rather than applied after the sight picture had already moved.",
+        "marginal": "SP kept the observance angle inside the standard, but worked steadily toward the aft side of the band, near 35 deg, whenever the formation was loaded to 2 to 3 G. The geometry stayed legal and no closure developed, but the position was not the briefed one. SP is expected to hold the nominal angle under G on the next sortie."
+      }
+    },
+    {
+      "id": "formation-17-em04",
+      "label": "Leader smoothness and completion of the planned maneuvers",
+      "mif_row": null,
+      "source": "general:a.1",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, as leader, due to abrupt entries into the planned maneuvers, did not execute or complete them smoothly. Roll and pitch inputs were applied at rates the wingman could not follow, the wingman fell out of the fingertip position and one modified Lazy Eight was abandoned. The IP assumed the lead role to re-form the flight.",
+        "1": "SP, as leader, due to uneven roll rates at the entry of each turn, completed the planned maneuvers but not smoothly. The wingman had to make large corrections to stay in position, and SP moderated the inputs only after the IP called for a smoother lead. Two maneuvers were flown at a bank and rate other than briefed.",
+        "2": "SP, as leader, due to an initially rapid roll into the first turn, produced one entry that the wingman had to chase. SP recognized the effect on the wingman's position and flew the remaining climbs, descents and turns at steady, predictable rates. All planned maneuvers were completed as briefed without IP input.",
+        "3": "SP, as leader, executed and completed all planned maneuvers - climbs, descents, turns and modified Lazy Eights - with smooth and predictable control inputs. Entries and exits were flown at constant rates that allowed the wingman to hold the fingertip position. The briefed profile was completed in full.",
+        "4": "SP, as leader, flew the whole maneuver set with continuous, low-rate inputs that kept the flight path predictable from the wingman's cockpit. Bank up to 90 deg and airspeed variation between 80 and 100 KIAS were introduced progressively, with no abrupt transition at any point. The wingman remained in fingertip throughout.",
+        "marginal": "SP, as leader, kept every maneuver within the briefed parameters, but the entries were consistently firmer than the exits, so the wingman worked hardest in the first seconds of each turn. No maneuver had to be repeated and no parameter was exceeded. SP is expected to match entry and exit rates more evenly on the next sortie."
+      }
+    },
+    {
+      "id": "formation-17-em05",
+      "label": "Leader positive control pressure during Lazy Eight type maneuvers",
+      "mif_row": null,
+      "source": "general:a.2",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, as leader, due to relaxation of back pressure over the top of the modified Lazy Eight, did not maintain positive pressure on the flying controls. The unloading took the loading below the briefed 2 to 3 G range and made the flight path unpredictable, and the wingman lost the fingertip position. The IP intervened to stabilize the maneuver.",
+        "1": "SP, as leader, due to inconsistent stick pressure through the apex of the Lazy Eights, allowed the loading to fall to the lower edge of the briefed range and the flight path to float. Positive pressure was re-established only after the IP called for it, by which time the wingman was already correcting. The remainder of the profile was flown as briefed.",
+        "2": "SP, as leader, due to a brief relaxation of back pressure at the first Lazy Eight apex, produced a short unloaded segment that the wingman had to absorb. SP recognized it and maintained continuous positive pressure through the remaining maneuvers, keeping the loading inside the briefed 2 to 3 G band. No IP prompting was required.",
+        "3": "SP, as leader, maintained positive pressure on the flying controls throughout the Lazy Eight type maneuvers, keeping the loading inside the briefed 2 to 3 G range across each apex. The flight path stayed predictable and the wingman held the fingertip position without large corrections.",
+        "4": "SP, as leader, held continuous and even control pressure through every Lazy Eight, with no unloaded segment at any apex and airspeed varied smoothly between 80 and 100 KIAS. The resulting flight path allowed the wingman to fly the maneuvers with minimal power changes.",
+        "marginal": "SP, as leader, kept positive pressure applied through the Lazy Eights, but the loading drifted toward the lower end of the briefed range at each apex. The maneuvers stayed inside the standard and the wingman remained in position. SP is expected to hold the loading more centrally in the 2 to 3 G band on the next sortie."
+      }
+    },
+    {
+      "id": "formation-17-em06",
+      "label": "Leader account of wingman position relative to sun and area borders",
+      "mif_row": null,
+      "source": "general:a.3",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, as leader, due to lack of awareness of the aircraft's position relative to the area boundary, selected the maneuver sequence without regard for the wingman's position. Turns were initiated into the sun with the wingman on the sun side and one maneuver was set up toward the area limit. The IP directed a reversal of the maneuver to keep the flight inside the working area.",
+        "1": "SP, as leader, due to attention held on own flight parameters, took the wingman's position with respect to the sun and the area borders into account only after the IP prompted. One turn was started with the wingman looking directly into the sun and had to be reversed on call. No area boundary was exceeded.",
+        "2": "SP, as leader, due to a late assessment of the area geometry, set up one maneuver in a direction that would have placed the wingman on the sun side. SP recognized it before the roll-in, reversed the direction of turn and continued the sequence away from the area border. The correction was made without IP prompting.",
+        "3": "SP, as leader, considered the wingman's position relative to the sun and the flight area borders before each maneuver and selected the turn directions accordingly. The sequence was flown well inside the area and the wingman was never placed into the sun during a maneuver.",
+        "4": "SP, as leader, planned the whole sequence around the wingman's position, alternating turn directions to keep the sun behind the formation and using the available area without approaching its limits. Each maneuver was set up before the previous one had been completed.",
+        "marginal": "SP, as leader, kept the flight inside the area and out of the sun, but the direction of turn was decided close to the roll-in point rather than planned in advance. Nothing was exceeded and the wingman was not placed into the sun. SP is expected to plan the maneuver sequence one maneuver ahead on the next sortie."
+      }
+    },
+    {
+      "id": "formation-17-em07",
+      "label": "Wingman control smoothness, power handling and trim",
+      "mif_row": null,
+      "source": "general:b.1,b.3",
+      "hf_concept": "hf-stress",
+      "texts": {
+        "0": "SP, due to stress that produced a tight grip and continuous input in the close position, did not control the aircraft in a smooth and solid way. Corrections were abrupt in all three axes, power was moved in large steps and the aircraft was flown out of trim for the whole formation phase. The resulting oscillation reached the point where the IP had to take control.",
+        "1": "SP, due to tension on the controls in the close position, made corrections that were larger and later than the deviations called for. Power was used in coarse steps and trim was reset only after the IP called for it, so the position was held with continuous stick force. The position limits were met, but the aircraft was not flown in a solid way.",
+        "2": "SP, due to an initially firm grip on the stick during the first turns, produced corrections larger than needed and left the aircraft out of trim in pitch. SP recognized the effort required, relaxed the inputs, retrimmed and flew the remaining maneuvers with smooth power and small corrections. No IP prompting was required.",
+        "3": "SP controlled the aircraft in a smooth and solid way with no abrupt corrections, used engine power in small proportional increments and trimmed continuously as airspeed changed. The fingertip position determined in the Techniques and Procedures Manual was preserved throughout the maneuver set.",
+        "4": "SP flew the close position with inputs small enough to be imperceptible from the leader's cockpit, matching power to the leader's changes as they developed and keeping the aircraft trimmed through the 80 to 100 KIAS variation. The fingertip position was preserved with no visible correction at any point.",
+        "marginal": "SP flew smoothly and kept the position within standards, but retrimmed only after each airspeed change rather than during it, so part of the profile was flown against residual stick force. Corrections stayed small and no parameter was exceeded. SP is expected to trim continuously with the airspeed change on the next sortie."
+      }
+    },
+    {
+      "id": "formation-17-em08",
+      "label": "Speed brake use and overtake control from both sides",
+      "mif_row": null,
+      "source": "general:b.2",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to failure to recognize developing overtake, did not use the speed brake when it was required to keep closure under control. The speed brake was left retracted through an accelerating closure from the left side and was then extended fully with the leader's aircraft already filling the sight picture. The IP intervened with power and speed brake to stop the closure.",
+        "1": "SP, due to a late assessment of the closure rate, extended the speed brake only after the IP called for it and, on one occasion, left it extended after the overtake had been stopped, producing an aft drift. The leader's speed brake command was actioned with a noticeable delay. Closure was regained without intervention on the controls.",
+        "2": "SP, due to a delayed power reduction as the leader decelerated, developed a moderate overtake from the right side. SP recognized the closure, extended the speed brake, retracted it as the geometry stabilized and returned to position with power. No prompting or intervention from the IP was required.",
+        "3": "SP used the speed brake from both sides on the leader's command and whenever it was needed to keep overtake under control. Extension and retraction were timed to the closure rate and combined with proportional power changes, so the position was regained without overshoot.",
+        "4": "SP anticipated closure from the leader's attitude and power changes and used the speed brake only where power alone would not have been sufficient, on both the left and the right side. Every extension was matched by a timely retraction and no overtake was allowed to develop.",
+        "marginal": "SP used the speed brake correctly on command and stopped every overtake inside the position limits, but on the right side the extension was consistently later than on the left. No closure became significant and the position was preserved. SP is expected to apply the same timing from both sides on the next sortie."
+      }
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "item_id": "vfr_navigation-13",
+  "item_name": "NAVIGATION WITH GPS",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [13],
+  "mif_rows": [
+    {"sn": 13, "row_name": "GPS Use"}
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-13-em01",
+      "label": "Altitude control during GPS operation",
+      "mif_row": null,
+      "source": "specific:ALTITUDE* (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to prolonged head-down time on the GPS control panel, interrupted the instrument and outside crosscheck and did not hold the briefed navigation altitude. The excursion exceeded 300 feet and continued to develop unnoticed while data entry went on. The IP had to direct the return to the assigned altitude before the next turning point.",
+        "1": "SP, due to task saturation while sequencing the GPS flight plan, released altitude control and allowed the aircraft to settle. The deviation reached about 300 feet and stabilized only at the limit of tolerance. Recovery followed repeated verbal prompting from the IP rather than SP's own crosscheck.",
+        "2": "SP, due to a slow scan pattern while selecting GPS pages, allowed the navigation altitude to drift between 150 and 300 feet. SP detected the trend on the altimeter and returned to the briefed altitude in good time without IP input. The excursion was contained, although the pitch correction was larger than required.",
+        "3": "SP maintained the briefed navigation altitude within 150 feet throughout GPS programming and monitoring. Head-down periods were kept short and each one was closed with an immediate altimeter check. Corrections were small, prompt and made with smooth pitch and power inputs.",
+        "4": "SP held the briefed navigation altitude with negligible deviation while working the GPS. Altimeter checks were interleaved with every page selection, so no drift was allowed to build. Aircraft control remained precise and entirely unaffected by the equipment workload.",
+        "marginal": "SP remained within altitude standards, but every GPS entry produced a repeatable sag of about 100 feet that was corrected only after several seconds. The trend was consistent and grew with the length of the head-down period. SP is expected to shorten the interruption of the altimeter crosscheck so that altitude holding does not depend on the GPS workload."
+      }
+    },
+    {
+      "id": "vfr_navigation-13-em02",
+      "label": "Airspeed control during GPS operation",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to inattention to power setting while entering GPS waypoint data, did not maintain the briefed navigation airspeed. The excursion passed 20 knots and left the aircraft off the planned timing to the next turning point. The IP had to call for the power correction to restore the profile.",
+        "1": "SP, due to failure to reset power after a GPS-driven turn, allowed the airspeed to decay to the 20 knot limit. The value settled at the edge of tolerance and was corrected only after direct verbal cueing. SP's own crosscheck did not capture the error.",
+        "2": "SP, due to delayed power adjustment during GPS page management, allowed airspeed to vary between 10 and 20 knots from the briefed figure. SP identified the deviation and restored the target speed without IP intervention. Timing to the next turning point was preserved.",
+        "3": "SP maintained the briefed navigation airspeed within 10 knots while operating the GPS. Power was set and trimmed before each head-down task, so the speed stayed stable. Ground speed and estimated times to the turning points remained consistent with the plan.",
+        "4": "SP held the briefed navigation airspeed with negligible variation across the whole GPS workload. Power management was anticipatory, with adjustments made before the speed could move. Timing accuracy at each turning point matched the flight plan exactly.",
+        "marginal": "SP stayed inside airspeed standards but consistently ran near the low end of the tolerance while head-down on the GPS. Each correction was late and required a noticeable power increase. SP is expected to set and verify power before starting any GPS entry so that airspeed control stops trailing the equipment task."
+      }
+    },
+    {
+      "id": "vfr_navigation-13-em03",
+      "label": "Heading and course tracking to the active waypoint",
+      "mif_row": null,
+      "source": "specific:HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to uncoordinated inputs while reading the GPS course window, did not fly the computed course to the active waypoint. Heading error exceeded 10 degrees and the track offset kept increasing toward the turning point. The IP had to take corrective action to regain the planned route.",
+        "1": "SP, due to chasing the GPS course deviation indicator instead of flying a steady heading, oscillated on either side of the computed course and reached the 10 degree limit. The heading was stabilized only after IP prompting. Cross-track error at the turning point was clearly visible.",
+        "2": "SP, due to a late response to a small drift, allowed heading error to grow to between 5 and 10 degrees from the computed course. SP recognized the divergence on the HSI and re-established the course promptly without IP input. The turning point was still made on the planned track.",
+        "3": "SP flew the GPS computed course within 5 degrees on every leg. Heading corrections were small, coordinated and applied as soon as the course deviation moved. Each turning point was crossed on the planned track.",
+        "4": "SP tracked the GPS computed course with negligible heading error throughout the route. Drift corrections were anticipated rather than reactive, so the deviation indicator stayed centered. Turning point crossings required no late corrections.",
+        "marginal": "SP held heading within standards, but corrections to the computed course were repeatedly made as a series of small overshoots rather than a single input. The pattern appeared on every leg and cost track accuracy near the turning points. SP is expected to establish a drift-corrected heading and hold it instead of chasing the indicator."
+      }
+    },
+    {
+      "id": "vfr_navigation-13-em04",
+      "label": "Programming of preplanned turning points and mission parameters",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to incomplete preflight preparation, did not program all preplanned turning points and the parameters necessary for mission execution into the GPS. Waypoints were missing or loaded out of sequence, and the displayed route did not match the briefed plan. The IP had to stop the sequence and rebuild the flight plan for the mission to continue.",
+        "1": "SP, due to rushed data entry on the ground, loaded the turning points with errors that surfaced only after engine start. The flight plan was corrected at the limit of the available time and only after the IP pointed out the discrepancies. SP did not verify the entries against the mission planning material.",
+        "2": "SP, due to omitting the readback of entered coordinates, loaded one turning point incorrectly. SP found the error during the self-check of the route legs and corrected it before taxi without IP involvement. Leg headings and total distance were then verified against the plan.",
+        "3": "SP programmed all preplanned turning points and the required parameters accurately and in the correct sequence. Each entry was verified against the planning material by leg course and distance. The loaded route matched the briefed plan with no further correction.",
+        "4": "SP loaded the complete route into the GPS quickly and without a single entry error. Verification was systematic, covering waypoint identifiers, leg courses, distances and total route length. The programmed plan was ready well before it was needed.",
+        "marginal": "SP produced a correct GPS flight plan but needed several attempts and more time than expected to complete the entries. Verification was performed once and covered distances but not leg courses. SP is expected to build a repeatable entry and check routine so that programming is complete and verified within normal planning time."
+      }
+    },
+    {
+      "id": "vfr_navigation-13-em05",
+      "label": "Crosscheck of GPS data with other available navaids and map",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to a lapse in monitoring and crosschecking, accepted the GPS picture without comparing it with the VOR-DME/TACAN indications and the map. A gross position error went unrecognized and the aircraft was flown well off the planned route, holding a heading error beyond 10 degrees toward a wrong turning point. The IP had to intervene to re-establish the correct navigation.",
+        "1": "SP, due to weak monitoring of the other available navaids, made only one comparison of GPS data with the TACAN and the map during the whole leg. The mismatch was identified at the limit of usable time and only after the IP prompted the crosscheck. The route was regained, but the turning point was reached with a significant track offset.",
+        "2": "SP, due to concentrating on the GPS display, delayed the comparison with the TACAN and the map until midway through the leg. SP then detected the disagreement, resolved it against visual checkpoints and corrected a heading error of less than 10 degrees on its own initiative. The plan was maintained without IP input.",
+        "3": "SP crosschecked GPS data with the available navaids and the map on every leg. Position, bearing and distance were compared and agreed, and each small discrepancy was resolved immediately. Navigation stayed accurate with heading within 5 degrees of the computed course.",
+        "4": "SP maintained a continuous and disciplined comparison of GPS information with TACAN, DME and visual map references. Each turning point was confirmed by at least two independent sources before the turn was started. No discrepancy was allowed to develop into a navigation error.",
+        "marginal": "SP performed the required crosscheck with the other navaids, but the comparison was routinely made after the turn rather than before it. The habit left little margin to catch a position error in time. SP is expected to complete the navaid and map comparison prior to each turning point, so that GPS data is confirmed rather than assumed."
+      }
+    },
+    {
+      "id": "vfr_navigation-13-em06",
+      "label": "Knowledge and efficient use of GPS capabilities",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient knowledge of the GPS pages and functions, did not use the capabilities required by the mission. Basic operations such as direct-to routing, waypoint sequencing and data retrieval were attempted incorrectly or abandoned. The IP had to operate the equipment for the navigation task to be completed.",
+        "1": "SP, due to shallow familiarity with the menu structure, needed several attempts to reach the required GPS functions. The correct page was found only after the IP described the sequence. Navigation continued, but the delay disturbed the timing of the following leg.",
+        "2": "SP, due to hesitation with a less frequently used GPS function, initially selected the wrong page. SP recognized the error, worked back through the menu and completed the intended operation in good time and without assistance. Mission timing was preserved.",
+        "3": "SP demonstrated good knowledge of the GPS and used its capabilities correctly and efficiently. Page selection, direct-to routing and data extraction were performed without hesitation. The equipment was used as a navigation aid at the pace the mission required.",
+        "4": "SP used the full range of GPS capabilities fluently and to the advantage of the mission. Functions were selected with no search time, including those beyond routine use. The equipment was handled as a well-understood tool rather than as an additional task.",
+        "marginal": "SP used the GPS correctly for routine functions but was noticeably slower whenever a less common capability was required. Knowledge was adequate without being consolidated across the full menu structure. SP is expected to practice the complete set of GPS functions so that all capabilities are available at operational speed."
+      }
+    },
+    {
+      "id": "vfr_navigation-13-em07",
+      "label": "Airborne GPS workload versus aircraft control priority",
+      "mif_row": null,
+      "source": "general:a,b",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to an attention bottleneck on a single GPS entry problem, allowed the equipment task to capture the entire scan while airborne. Aircraft control and lookout lapsed, altitude departed by more than 300 feet and the aircraft continued past the turning point. The IP had to take over the navigation task to restore the flight profile.",
+        "1": "SP, due to fixation on the GPS while airborne, did not divide attention between the equipment and aircraft control. Altitude and heading deviations reached the limits of tolerance and were corrected only after the IP called for a return to the instruments. SP did not break the fixation without prompting.",
+        "2": "SP, due to an extended head-down period spent correcting a waypoint, briefly lost the priority of aircraft control. SP recognized the fixation, returned to the scan and corrected deviations that had stayed between the code 3 and code 1 zones. The GPS entry was then completed without further loss of control priority.",
+        "3": "SP kept the GPS workload subordinate to flying the aircraft. Head-down periods were short and deliberately broken by returns to the scan, so all parameters remained within the tighter limits. Equipment tasks were placed at points in the leg where workload allowed them.",
+        "4": "SP managed the airborne GPS workload with clear task prioritization. Entries were split into short blocks, each separated by a full instrument and outside scan, and no parameter moved appreciably. Aircraft control was never traded for equipment management.",
+        "marginal": "SP maintained control priority overall, but one unexpected GPS response held SP's attention longer than briefed before the scan was resumed. Standards were kept, although the margin narrowed during that period. SP is expected to set a fixed limit on head-down time and return to the scan before working the problem further."
+      }
+    },
+    {
+      "id": "vfr_navigation-13-em08",
+      "label": "Independent navigation picture versus reliance on GPS",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-over-reliance-on-automation",
+      "texts": {
+        "0": "SP, due to over-reliance on the GPS, navigated solely by the moving map and abandoned map reading and dead reckoning. When the displayed information did not match the ground picture, SP had no independent means of fixing position and continued toward a wrong feature. The IP had to intervene to re-establish orientation and regain the planned route.",
+        "1": "SP, due to accepting the GPS as the only navigation reference, could not confirm position by ground features when required. The independent check was produced only after the IP directed it and after a delay that left the aircraft at the limit of the planned track. SP's confidence in the display was not supported by verification.",
+        "2": "SP, due to a preference for the GPS display, initially disregarded the visual checkpoints of the leg. SP recognized the omission, re-established the ground picture against the map and confirmed position independently in good time. Navigation continued on plan without IP input.",
+        "3": "SP used the GPS as one navigation source among several and kept an independent picture from map reading and timing. Position was confirmed by ground features at each checkpoint. Awareness of the route did not depend on the equipment.",
+        "4": "SP integrated GPS information with map reading, timing and visual features so that each source reinforced the others. SP could state position, time and distance to the next turning point at any moment without reference to the display. Navigation would have continued unaffected had the equipment failed.",
+        "marginal": "SP kept an independent navigation picture but turned to the GPS first whenever position was in question. Map and timing checks were carried out, though only to confirm what the display had already shown. SP is expected to establish position from the ground picture first and use the GPS to verify it."
+      }
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "item_id": "formation-11",
+  "item_name": "OVERSHOOT",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [11],
+  "mif_rows": [
+    { "sn": 11, "row_name": "Overshoot" }
+  ],
+  "error_modes": [
+    {
+      "id": "formation-11-em01",
+      "label": "Longitudinal spacing behind No1 during the pass",
+      "mif_row": null,
+      "source": "specific:DISTANCE BEHIND No1 (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a late decision to overshoot with an overtake that was never arrested by power or drag, did not cross No1 6 o'clock at a controlled spacing. The distance behind No1 opened past 200 feet, beyond the maximum permitted for the maneuver, and on one pass closed inside the two ship length minimum before opening again. The IP took the aircraft to re-establish a usable position for the rejoin.",
+        "1": "SP, due to an early power reduction that was not followed by a return to a rejoin power setting, did not stabilize the longitudinal spacing while crossing No1 6 o'clock. The distance behind No1 reached 200 feet, at the outer limit of the standard. The spacing was reduced only after verbal prompting from the IP, and the correct position was regained late in the maneuver.",
+        "2": "SP, due to delayed recognition of the closure rate, applied the drag device later than the overtake required and crossed No1 6 o'clock with the distance behind No1 between 80 and 200 feet. SP saw the spacing opening without any prompting and corrected it with power before starting the reposition. No intervention was required and the pass was completed within standards.",
+        "3": "SP identified the excessive overtake early and coordinated power and drag so that closure was controlled before reaching No1 6 o'clock. The distance behind No1 was held within 80 feet through the crossing and never went inside the two ship length minimum. The spacing remained stable for the whole pass.",
+        "4": "SP anticipated the overtake before it developed and contained it with small, timely power inputs rather than a large late correction. The distance behind No1 through the 6 o'clock crossing stayed essentially at the briefed value with negligible variation, well inside 80 feet while always clear of the two ship length minimum. The pass required no further adjustment.",
+        "marginal": "SP kept the distance behind No1 inside the standard, but on each overshoot the spacing settled toward the wide side of the 80 foot value and needed a late power addition to contain it. The trend was consistently toward opening rather than holding, which shows closure being controlled reactively instead of anticipated. SP is expected to set the power and drag combination earlier so that spacing is contained without a late correction."
+      }
+    },
+    {
+      "id": "formation-11-em02",
+      "label": "Vertical separation from No1 during the pass",
+      "mif_row": null,
+      "source": "specific:ALTITUDE FROM No1 (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to fixation on the lateral geometry of the pass, did not control the vertical displacement from the leading aircraft while crossing No1 6 o'clock. The altitude from No1 exceeded 200 feet low, outside the maximum permitted, and at one point SP arrived at the leader's level in the leader's blind area rather than clearly below it. The IP intervened on the controls to restore a safe vertical position.",
+        "1": "SP, due to a nose-low input used to kill overtake instead of a power and drag correction, did not hold the briefed vertical displacement below No1. The altitude from No1 reached 200 feet, at the limit of the standard, and the aircraft was left low and long for the reposition. SP returned to the correct level only after being told by the IP.",
+        "2": "SP, due to a late start of the descent below the leader's flight path, crossed No1 6 o'clock with the altitude from No1 between 80 and 200 feet. SP recognized the excess vertical displacement and recovered toward the briefed value before the reposition began, with no intervention required.",
+        "3": "SP established the aircraft below the leader's flight path before reaching No1 6 o'clock and held the altitude from No1 within 80 feet throughout the pass. The aircraft remained clearly lower than the leading aircraft at all times and never passed directly above or below it.",
+        "4": "SP set the vertical displacement early with a single smooth input and held it with negligible variation, well inside 80 feet from No1 for the whole crossing. The aircraft stayed continuously visible from the lead cockpit, clear of the leader's flight path, and needed no further vertical correction before the rejoin.",
+        "marginal": "SP kept the altitude from No1 inside the standard, but the vertical displacement drifted repeatedly toward the low side of the 80 foot value and was held there by small corrective inputs rather than by a set attitude and power. The trend on each pass was toward increasing separation as the crossing progressed. SP is expected to establish the vertical position before the 6 o'clock crossing and hold it with a stable attitude."
+      }
+    },
+    {
+      "id": "formation-11-em03",
+      "label": "Timeliness of the overshoot decision and the call to the leader",
+      "mif_row": null,
+      "source": "general:intro (Timely informs the formation leader)",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to continuation of the plan after the information that invalidated it had already been received, pressed the rejoin with an overtake and bank angle that could not be saved. SP did not inform the formation leader in a timely manner, so the leader had no basis to maintain attitude, and the overshoot was begun only when the closure had already removed the option of a safe pass behind. The IP directed the overshoot and then flew it.",
+        "1": "SP, due to continuation of the rejoin after the closure had clearly become excessive, delayed both the decision and the report to the formation leader until the last usable point. The call was made only after the IP prompted it, leaving the leader no margin to stabilize his attitude, and the pass was flown at the limit of the permitted spacing behind and below No1.",
+        "2": "SP, due to a late assessment of the overtake against the remaining distance, decided to overshoot later than the geometry allowed but did so on his own initiative and passed the call to the formation leader before starting the maneuver. The delay cost part of the available margin, yet the pass was completed within the permitted spacing without any intervention.",
+        "3": "SP assessed the overtake, bank and angle against the remaining distance early, decided to overshoot while the option was still unconstrained, and informed the formation leader immediately. The leader was able to maintain attitude throughout, and the pass was flown at the briefed spacing.",
+        "4": "SP recognized that the rejoin would not be saved at the first sign of excess overtake and called the overshoot with the leader still well ahead of the decision point. The report was concise and standard, the leader held attitude without any further exchange, and the entire maneuver was flown from a position of choice rather than necessity.",
+        "marginal": "SP made the overshoot decision on his own and passed the call to the leader, but on each repetition the decision came at the late edge of the usable window and left little margin for the pass. The pattern suggests SP is waiting for the geometry to prove itself unsalvageable rather than assessing overtake against distance as the rejoin develops. SP is expected to make the assessment earlier so the call is made with margin in hand."
+      }
+    },
+    {
+      "id": "formation-11-em04",
+      "label": "Safe pass behind and below No1 6 o'clock",
+      "mif_row": null,
+      "source": "general:in_turn a,b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an abrupt nose-low pull used to arrest closure instead of a coordinated power and drag correction, did not pass safely behind and lower than No1 6 o'clock. The aircraft crossed inside the two ship length minimum spacing and was momentarily directly under the leading aircraft, where it could not be seen from the lead cockpit. The IP took the controls and repositioned the aircraft clear.",
+        "1": "SP, due to an insufficient initial bank reduction as the overshoot was started, did not build the crossing geometry before arriving at No1 6 o'clock. Spacing at the crossing was reduced to about the two ship length minimum and the aircraft was only marginally below the leader's flight path. SP opened the pass only after the IP called the position, and the correction was late.",
+        "2": "SP, due to a delayed reduction of angle-off, arrived at No1 6 o'clock with the crossing geometry still developing and passed behind and below the leading aircraft with less clearance than briefed but still outside the two ship length minimum. SP recognized the closing spacing and adjusted before the crossing, so no intervention was required.",
+        "3": "SP reduced bank and angle-off before reaching No1 6 o'clock and passed safely behind and lower than the leading aircraft. The crossing was made with a spacing clearly greater than two ship lengths, and the aircraft was never above or in the plane of the leading aircraft.",
+        "4": "SP built the crossing geometry well before the 6 o'clock line so the pass required no correction as it was flown. Clearance behind was comfortably above the two ship length minimum with the aircraft steadily below the leader's flight path, and the leading aircraft remained in view from the pass through to the reposition.",
+        "marginal": "SP passed behind and below No1 6 o'clock within standards, but the clearance at the crossing was consistently just above the two ship length minimum and depended on a correction made close to the 6 o'clock line. The margin available if the leader adjusted attitude was small. SP is expected to establish the crossing geometry earlier so the pass is flown with clearance already built in."
+      }
+    },
+    {
+      "id": "formation-11-em05",
+      "label": "Reposition to rejoin from inside the leader's turn",
+      "mif_row": null,
+      "source": "general:in_turn c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unarrested drift to the outside after crossing No1 6 o'clock, did not reposition to rejoin from inside the leader's turn. The aircraft remained outside the turn with the distance behind No1 opening past 200 feet, and no closure could be generated from that position. The IP took the aircraft and repositioned it for the rejoin.",
+        "1": "SP, due to a late roll into the turn after the crossing, did not move to the inside of the leader's turn in a timely manner and allowed the distance behind No1 to reach 200 feet before starting the reposition. The move to the inside was made only after the IP directed it, and the rejoin was correspondingly late.",
+        "2": "SP, due to a delayed power addition after the pass, started the reposition later than required and the distance behind No1 opened to between 80 and 200 feet before the aircraft was established inside the leader's turn. SP recognized the delay and recovered the position without prompting, completing the reposition inside the turn as required.",
+        "3": "SP crossed behind No1 and moved directly to the inside of the leader's turn in a timely manner, adding power as the geometry allowed. The distance behind No1 was contained within 80 feet during the reposition and the aircraft was set up for a controlled rejoin.",
+        "4": "SP flowed from the pass into the reposition without a pause, staying inside the leader's turn and using the turn geometry to generate closure. The distance behind No1 varied negligibly during the reposition and the aircraft arrived at the rejoin position with the correct closure already established.",
+        "marginal": "SP repositioned inside the leader's turn within standards, but the move was started late enough on each repetition that a noticeably larger power addition was needed to recover the position. The reposition is being flown as a recovery from the pass rather than as a planned continuation of it. SP is expected to begin the move to the inside as the crossing completes, so closure is generated by geometry rather than by power."
+      }
+    },
+    {
+      "id": "formation-11-em06",
+      "label": "Straight-ahead overshoot: break out and 3/9 line control",
+      "mif_row": null,
+      "source": "general:straight_ahead a,b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an overshoot begun after the closure had already been allowed to build, did not execute the break out clear of the leader's flight path. The aircraft went forward of the leader's 3/9 line while still inside the permitted lateral spacing, and the leader had to adjust attitude in response. The IP intervened to arrest the overtake and separate the aircraft.",
+        "1": "SP, due to a late and insufficient use of the drag device in the straight-ahead case, did not contain the overtake during the break out. The aircraft reached the leader's 3/9 line with the vertical displacement at the 200 foot limit and the spacing at the outer edge of the standard. SP arrested the movement forward only after the IP called it.",
+        "2": "SP, due to a delayed power reduction after the break out was started, allowed the aircraft to approach but not pass the leader's 3/9 line, with vertical displacement between 80 and 200 feet. SP recognized the residual overtake, applied drag and power, and stopped the forward movement without any intervention and without affecting the leader's flight path.",
+        "3": "SP executed the break out with a clear lateral displacement that did not affect the leader's flight path and used power and drag together to arrest the overtake. The aircraft remained aft of the leader's 3/9 line with the vertical displacement held within 80 feet throughout.",
+        "4": "SP initiated the break out early enough that the overtake was contained with a single coordinated power and drag input. The aircraft stayed well aft of the leader's 3/9 line with negligible vertical variation, and the leader flew through unaffected with no adjustment of flight path required.",
+        "marginal": "SP completed the straight-ahead overshoot within standards, but on each repetition the aircraft stabilized only just aft of the leader's 3/9 line and needed the drag device held longer than briefed to stop the forward movement. The margin against passing the 3/9 line is thinner than the maneuver should allow. SP is expected to start the break out and the power reduction earlier so the overtake is arrested with margin remaining."
+      }
+    },
+    {
+      "id": "formation-11-em07",
+      "label": "Smoothness of control and power during the rejoin",
+      "mif_row": null,
+      "source": "general:straight_ahead c",
+      "hf_concept": "hf-acts-errors",
+      "texts": {
+        "0": "SP, due to a skill-based error in control input during the recovery from the overshoot, did not rejoin without abrupt maneuvers. Large alternating bank and pitch corrections with full power changes drove the distance behind No1 past 200 feet and then produced an unsafe closure toward the leader. The IP took the aircraft to stop the oscillation.",
+        "1": "SP, due to an over-controlled response to the residual overtake, rejoined with abrupt bank and power reversals rather than a stabilized closure. The distance behind No1 oscillated to the 200 foot limit before settling and the vertical position moved with each correction. SP damped the inputs only after repeated verbal direction from the IP.",
+        "2": "SP, due to corrections applied later than the closure rate required, made the rejoin with inputs larger than briefed and the distance behind No1 varied between 80 and 200 feet during the closure. SP recognized the over-control, reduced the size of the inputs and stabilized the aircraft in the rejoin position without any intervention.",
+        "3": "SP rejoined without abrupt maneuvers, using smooth and progressively smaller bank and power corrections as the position closed. Both the distance behind No1 and the vertical displacement stayed within 80 feet during the closure, and the aircraft arrived stabilized in position.",
+        "4": "SP flew the rejoin with continuous, low-amplitude inputs that never disturbed the aircraft attitude, arriving in position with closure already reduced to zero. Variation in distance behind and altitude from No1 was negligible throughout, and no correction was needed once the position was reached.",
+        "marginal": "SP rejoined within standards without abrupt maneuvers, but the closure was stopped with a single large power reduction near the position rather than progressively, and a small overshoot of the final position followed each time. The technique works but leaves no margin if the leader changes attitude during the closure. SP is expected to reduce closure progressively so the aircraft settles into position without a final large input."
+      }
+    },
+    {
+      "id": "formation-11-em08",
+      "label": "Visual contact on No1 through the overshoot",
+      "mif_row": null,
+      "source": "general:in_turn a; intro",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to degraded situational awareness after the unplanned change of sequence, did not maintain visual contact on the leading aircraft while crossing No1 6 o'clock. The pass was continued blind, with the aircraft placed under the leader at less than the two ship length minimum and the vertical displacement uncontrolled past 200 feet. The IP took the aircraft and called the lost visual to the leader.",
+        "1": "SP, due to attention held on the airspeed and power management of the overshoot, lost the sight picture on No1 during the crossing and did not report it. The aircraft continued with the spacing behind at the 200 foot limit until the IP directed a correction, after which visual contact was re-acquired and the reposition was flown late.",
+        "2": "SP, due to a scan concentrated on the closure problem, briefly lost the sight picture on No1 at the 6 o'clock crossing but recognized it immediately, adjusted the pass to keep the leading aircraft in view and continued with the distance behind between 80 and 200 feet. No intervention was required and the leader was kept informed.",
+        "3": "SP kept the leading aircraft in sight continuously from the decision to overshoot through the crossing and the reposition, and used the sight picture rather than instruments alone to judge the geometry. Distance behind and altitude from No1 were held within 80 feet, and the aircraft remained visible from the lead cockpit.",
+        "4": "SP maintained an uninterrupted visual on No1 and used the changing sight picture to anticipate closure and displacement before either developed. Spacing and vertical position varied negligibly through the pass, the leading aircraft was never allowed into a blind area, and the reposition was flown entirely on visual references.",
+        "marginal": "SP kept visual contact on No1 throughout the overshoot, but the sight picture was recovered by a deliberate head movement at the crossing on each repetition rather than being held continuously. Any further increase in workload would likely break the visual at the most critical point of the pass. SP is expected to set the pass geometry earlier so the leading aircraft stays in the natural field of view throughout."
+      }
+    }
+  ]
+}

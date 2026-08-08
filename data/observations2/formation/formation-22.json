@@ -1,0 +1,132 @@
+{
+  "item_id": "formation-22",
+  "item_name": "CLOSE TRAIL",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [22],
+  "mif_rows": [
+    { "sn": 22, "row_name": "Close Trail" }
+  ],
+  "error_modes": [
+    {
+      "id": "formation-22-em01",
+      "label": "Vertical separation below the leader's exhaust",
+      "mif_row": null,
+      "source": "specific:VERTICAL SEPARATION (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a pitch reference taken from the leader's wingtip instead of the exhaust line, did not stack the aircraft in the prescribed close trail position slightly below the leader's exhaust. The vertical separation sank past 15 feet below the exhaust line during the pull of the modified Lazy 8 and on the following reversal the aircraft climbed above the exhaust plane into the leader's flight path. The IP took control and repositioned the aircraft in the cone.",
+        "1": "SP, due to a delayed pitch correction each time the leader unloaded, did not hold the stack slightly below the exhaust. Vertical separation opened to approximately 15 feet below the exhaust line, at the code 1 limit, and stayed there through the maneuver. The position was recovered only after repeated verbal direction from the IP to reduce the sink and re-acquire the exhaust reference.",
+        "2": "SP, due to a coarse pitch input at the entry of the Chandelle, did not keep the stack tight under the leader's exhaust. Vertical separation increased to roughly 10 feet below the exhaust line, between the code 3 and code 1 values, and the aircraft was never allowed above the exhaust plane. SP recognized the sink and returned to the prescribed stack without any IP input.",
+        "3": "SP maintained the close trail stack slightly below the leader's exhaust throughout the turns and precision maneuvers. Vertical separation stayed within 5 feet under the exhaust line and the aircraft was never flown above that plane. Pitch corrections were small, promptly applied and immediately stabilized.",
+        "4": "SP held the aircraft on the exhaust reference with negligible vertical excursion through every maneuver flown. Deviations below the exhaust line remained a small fraction of the permitted 5 feet and no correction was ever visible as a discrete input. The stack was reproduced identically on each repetition of the profile.",
+        "marginal": "SP kept the vertical stack inside standards but consistently worked the low edge, holding close to 5 feet below the leader's exhaust rather than tight under it. The trend was a slow sink through every sustained pull, absorbed by a late catch each time. SP is expected to set the exhaust reference earlier in the pull so the stack is held without the recurring recovery."
+      }
+    },
+    {
+      "id": "formation-22-em02",
+      "label": "Longitudinal nose-tail separation in ship lengths",
+      "mif_row": null,
+      "source": "specific:LONGITUDINAL SEPARATION (ship length)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power reductions timed after the leader had already unloaded, did not maintain the prescribed 1 to 2 ship lengths of nose-tail separation. Longitudinal separation opened beyond 4 ship lengths in the vertical portion of the modified Barrel Roll and the close trail position was effectively lost. The IP took control to reposition the aircraft on the leader before the maneuver could be continued.",
+        "1": "SP, due to a fixed power setting carried through the maneuver, did not adjust nose-tail separation to the leader's changing energy state. Longitudinal separation stabilized in the 3 to 4 ship length band, outside the prescribed position, and SP corrected it only after the IP called the aft drift twice. The closure back to position was slow and the correct spacing was not held for the rest of the maneuver.",
+        "2": "SP, due to a late power addition over the top of the modified Lazy 8, allowed the nose-tail spacing to grow to about 3 ship lengths, beyond the prescribed band but short of the code 1 limit. SP identified the aft drift on the descending line and closed back to 2 ship lengths with a timely throttle input. No IP intervention or verbal prompt was required.",
+        "3": "SP held nose-tail separation between 1 and 2 ship lengths throughout the turns and precision maneuvers, as required for close trail. Spacing never opened past 2 ship lengths and never closed inside 1. Throttle inputs were anticipated so that the position was maintained rather than repeatedly regained.",
+        "4": "SP held the aircraft essentially fixed at about 1.5 ship lengths of nose-tail separation for the whole sequence. Spacing excursions were barely perceptible and were arrested before they developed into a closure or an opening rate. The same spacing was reproduced across turns, the modified Lazy 8 and the modified Barrel Roll without variation.",
+        "marginal": "SP stayed inside the 1 to 2 ship length band but consistently sat at the aft edge, close to 2 ship lengths, particularly in the second half of each maneuver. The tendency was to lose ground during the pull and regain it on the unload rather than hold a steady spacing. SP is expected to anticipate the power requirement at maneuver entry so the aft edge is not used as the working position."
+      }
+    },
+    {
+      "id": "formation-22-em03",
+      "label": "Minimum separation and closure control toward the leader",
+      "mif_row": null,
+      "source": "general:b.1",
+      "hf_concept": "hf-acts-errors",
+      "texts": {
+        "0": "SP, due to a perceptual error in judging closure against the leader's planform, did not respect the minimum of 1 ship length that must never be flown inside. Nose-tail separation reduced below 1 ship length with a positive closure rate as the leader unloaded at the top of the Chandelle. The IP took control and moved the aircraft out of the cone to stop the overtake.",
+        "1": "SP, due to a perceptual error in reading closure rate at high nose attitude, did not arrest the overtake toward the leader in time. Nose-tail separation reduced to about 1 ship length, on the minimum that must never be flown inside, and remained there while the closure was only slowly checked. Separation was re-established after the IP directed a power reduction and a lateral displacement out of the exhaust.",
+        "2": "SP, due to a misjudged closure cue as the leader's bank increased, allowed a noticeable overtake to develop toward the minimum separation. The gap reduced toward 1 ship length but SP recognized the closure rate early, reduced power and displaced slightly out of plane to stop the overtake. Separation was restored inside the prescribed band without IP intervention.",
+        "3": "SP controlled closure toward the leader accurately throughout the sortie and never flew inside 1 ship length. Overtake tendencies were recognized at onset and stopped with small power and out-of-plane corrections. The minimum separation was protected at every energy change of the leader.",
+        "4": "SP kept closure under precise control at all times, with no perceptible overtake toward the minimum separation on any maneuver. Corrections were anticipatory rather than reactive, so the gap never trended toward 1 ship length. Separation discipline was maintained equally in the turns and in the vertical portions of the profile.",
+        "marginal": "SP never flew inside 1 ship length but repeatedly closed to just outside it before checking the overtake. Corrections were made in time yet consistently at the last available point, leaving little margin at the leader's unload. SP is expected to recognize the closure cue earlier so the minimum separation is protected with a working margin rather than by a late catch."
+      }
+    },
+    {
+      "id": "formation-22-em04",
+      "label": "As Leader: smoothness and positive-G through the maneuvers",
+      "mif_row": null,
+      "source": "general:a.1",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an abrupt stick reversal at the apex of the modified Barrel Roll, did not carry out the maneuver smoothly with positive G maintained at all times. The aircraft was unloaded to zero and below while flown as leader, which is not permitted with No 2 in close trail, and the resulting flight path change was unpredictable for the wingman. The IP took control to restore a positive-G flight path and stop the maneuver.",
+        "1": "SP, due to uncoordinated pitch and roll inputs, did not fly the precision maneuvers with the smoothness required of the leader. G loading was allowed to fall to near zero over the top of the modified Lazy 8 and the flight path became step-shaped rather than continuous. Smooth positive-G flight was restored only after the IP verbally directed a continuous pull, and the same input pattern reappeared on the next repetition.",
+        "2": "SP, due to a rushed roll input at the entry, did not maintain a fully smooth positive-G flight path as leader. G loading dropped noticeably in the first third of the modified Barrel Roll, though it stayed positive throughout. SP recognized the discontinuity, blended the pull and completed the remainder of the maneuver smoothly without any IP input.",
+        "3": "SP flew the turns, the modified Lazy 8, the Chandelle and the modified Barrel Rolls smoothly as leader, with positive G maintained at all times. Pitch and roll inputs were blended so the flight path remained continuous and predictable for the aircraft in close trail. No abrupt reversals or unloading occurred at any point of the profile.",
+        "4": "SP produced a flight path of consistently high quality as leader, with G loading held smoothly positive and free of any perceptible step. Entries, apexes and recoveries were blended so that the wingman's position requirement never changed abruptly. The quality of the flight path was identical on every repetition of the profile.",
+        "marginal": "SP kept the flight path smooth and positive-G within standards but allowed the loading to become light at each apex before the pull was re-established. The maneuvers were acceptable yet the transitions were the weakest part of each one. SP is expected to carry a more continuous pull through the apex so the flight path presented to the wingman does not soften at the top."
+      }
+    },
+    {
+      "id": "formation-22-em05",
+      "label": "As Leader: airspeed, G and bank limits during the maneuvers",
+      "mif_row": null,
+      "source": "general:a.1|execution:1/|conditions:2/b,2/c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an entry flown with excess energy and no compensating power reduction, did not keep the maneuvers inside the airspeed range of 120 to 250 KIAS and the applicable limits. Airspeed exceeded 250 KIAS on the recovery from the modified Lazy 8 and the pull was carried past 3 G with the wingman in close trail. The IP took control to unload the aircraft and reset the parameters.",
+        "1": "SP, due to power not being repositioned before the descending line, did not hold the airspeed inside the range required as leader. Airspeed reached approximately 250 KIAS at the recovery and bank was carried to the 90 degree maximum with no margin. Both parameters were brought back only after the IP called them, and the entry parameters for the next maneuver were again not set.",
+        "2": "SP, due to a late power reduction on the descending line, allowed airspeed to increase toward the upper end of the permitted range. The value stabilized in the low 200s KIAS, above the intended entry parameter but well inside 250 KIAS. SP recognized the trend, reduced power and re-established the briefed entry airspeed without any IP input.",
+        "3": "SP flew the turns and precision maneuvers as leader within the airspeed range of 120 to 250 KIAS and within the maneuver limits of 3 G and 90 degrees of bank. Power was repositioned ahead of each energy change so the parameters were set rather than recovered. Entry and recovery airspeeds were repeatable across the profile.",
+        "4": "SP controlled energy so precisely that airspeed remained well inside the 120 to 250 KIAS range on every entry, apex and recovery. G and bank were held comfortably below the applicable maxima with margin retained throughout. The same entry parameters were reproduced on each maneuver without visible correction.",
+        "marginal": "SP remained inside the airspeed range and maneuver limits but repeatedly used the upper part of the band, arriving near 240 KIAS at each recovery. The margin to 250 KIAS was thin and was preserved by a late power reduction rather than by planned energy management. SP is expected to set the recovery power earlier so the upper limit is approached with a deliberate margin."
+      }
+    },
+    {
+      "id": "formation-22-em06",
+      "label": "As Leader: orientation within the assigned flight area",
+      "mif_row": null,
+      "source": "general:a.1|conditions:1/a",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to lack of awareness of the aircraft's position relative to the area boundary, did not maintain orientation within the assigned flight area while leading the maneuvers. Successive modified Barrel Rolls were flown in the same direction without any repositioning turn and the formation left the working area. The IP took control to return the formation inside the assigned airspace.",
+        "1": "SP, due to lack of awareness of the ground reference used for area orientation, did not manage the position of the formation within the assigned flight area. The aircraft arrived within a very short distance of the boundary with no repositioning planned, and the turn back was flown only after the IP stated the position. Area orientation for the following maneuver was again not established before entry.",
+        "2": "SP, due to attention concentrated on the maneuver parameters at the expense of area orientation, allowed the formation to work toward one side of the assigned flight area. SP identified the drift on the recovery from the Chandelle and repositioned with a turn back toward the center of the area before the boundary became a factor. No IP prompting was required.",
+        "3": "SP maintained orientation within the assigned flight area throughout the sortie while leading the maneuvers. Entry headings were selected so that each maneuver kept the formation inside the working airspace and repositioning turns were flown when required. Area position was known at all times and never became a limiting factor.",
+        "4": "SP managed the geometry of the working area precisely, keeping the formation centered in the assigned airspace for the whole sequence. Maneuver entry headings were planned in advance so that no corrective repositioning was ever needed. Awareness of the boundaries was evident without any interruption to the quality of the maneuvers.",
+        "marginal": "SP kept the formation inside the assigned flight area but used the outer third of it, repositioning only when the boundary was already close. Area management was correct in outcome yet reactive in method. SP is expected to plan entry headings so the maneuvers are flown from the center of the area rather than toward its edge."
+      }
+    },
+    {
+      "id": "formation-22-em07",
+      "label": "As Wingman: power anticipation and energy management in the cone",
+      "mif_row": null,
+      "source": "general:b.1|execution:2/",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to throttle inputs made only after the position had already changed, did not maintain the close trail position through the leader's energy changes. Power was repeatedly moved to the stops, producing alternating overtake and aft drift that left the aircraft outside the cone for most of the maneuver. The IP took control and re-established the position on the leader.",
+        "1": "SP, due to reliance on visual size cues alone with no anticipation of the leader's pull, did not manage energy to hold the close trail position. Power lagged each entry and recovery, so the aircraft arrived at the limit of the permitted position on every maneuver and was held there. Correct energy management was applied only after the IP directed the power to be set before the entry, and the technique was not carried into the next repetition.",
+        "2": "SP, due to a power addition applied at the apex rather than during the pull, did not hold the close trail position steadily through the vertical portion of the modified Lazy 8. The aircraft drifted noticeably aft and low before the correction took effect, remaining short of the code 1 values. SP recognized the pattern, moved the power earlier on the following maneuver and held position without IP input.",
+        "3": "SP anticipated the leader's energy changes and set power before each entry, apex and recovery. The close trail position was maintained through the turns and precision maneuvers with small, early throttle corrections rather than large late ones. Position was held rather than repeatedly regained.",
+        "4": "SP managed energy so accurately that the close trail position appeared static through the whole profile. Power was repositioned continuously and in small increments in step with the leader, and no corrective excursion in spacing or stack was observable. The technique was applied identically in the turns and in the modified Barrel Rolls.",
+        "marginal": "SP held the close trail position within standards but with power corrections that were consistently larger and later than necessary. Position was maintained by a series of catches rather than by anticipation, which left the technique dependent on a quick recovery. SP is expected to move the power at the leader's input rather than at the first visible change of position."
+      }
+    },
+    {
+      "id": "formation-22-em08",
+      "label": "As Wingman: visual reference on the leader and knock-it-off discipline",
+      "mif_row": null,
+      "source": "general:b.1|conditions:2/a",
+      "hf_concept": "hf-knock-it-off-and-unable-discipline",
+      "texts": {
+        "0": "SP, due to failure to make the knock-it-off call when the briefed parameters were exceeded, continued the maneuver after visual contact with the leader had been lost over the top of the modified Barrel Roll. The aircraft was flown in the trail cone without the required visual reference and with an unknown closure situation. The IP took control, made the knock-it-off call and separated the formation.",
+        "1": "SP, due to a delayed knock-it-off decision after visual contact with the leader had degraded, did not terminate the maneuver at the point the conditions required. Sight of the leader was momentarily reduced to the exhaust area only and the position was flown on an incomplete reference. The knock-it-off was made and the formation separated only after the IP prompted the call.",
+        "2": "SP, due to a canopy position that briefly obscured the leader in the steep portion of the Chandelle, did not keep an uninterrupted visual reference on the leader. SP repositioned the head and re-acquired the full planform of the leader within a few seconds and elected to continue with the position stabilized. The situation was resolved without IP intervention and the reference was retained for the remainder of the sortie.",
+        "3": "SP maintained an uninterrupted visual reference on the leader throughout the close trail work and used the exhaust and planform correctly to judge position. Head position was adjusted ahead of each high-bank portion so the reference was never lost. The criteria for a knock-it-off call were understood and no condition requiring one developed.",
+        "4": "SP held the visual reference on the leader with complete continuity through every maneuver of the profile, including the vertical portions. Head and eye position were managed in advance of each attitude change so that the full planform of the leader remained available at all times. Knock-it-off criteria were carried actively and stated clearly in the debrief.",
+        "marginal": "SP kept sight of the leader at all times but relied heavily on the exhaust as the sole reference during the high-bank portions, with the planform only intermittently in view. The reference was adequate for position but left little margin if the leader's flight path changed. SP is expected to reposition the head before the bank is applied so the full visual reference on the leader is retained throughout."
+      }
+    }
+  ]
+}

@@ -364,13 +364,194 @@ async function showInfo() {
     html += `<h4>Expected performance — Specific criteria</h4>
       <p class="hint">Qualitative item — graded against the General criteria (no numeric standards).</p>`;
   }
+  html += await mifProgressionHtml();
+  html += await relatedReqHtml();
   body.innerHTML = html;
+  body.querySelectorAll("[data-req]").forEach((el) => {
+    el.onclick = () => {
+      $("info-modal").classList.add("hidden");
+      openRequirements(el.dataset.req);
+    };
+  });
+}
+
+/* ── MIF progression (desired code per Training Section) ── */
+
+const mifCache = {};
+async function loadMif(name) {
+  if (mifCache[name]) return mifCache[name];
+  const res = await fetch(`../data/mif/${name}.json`, { cache: "no-store" });
+  mifCache[name] = await res.json();
+  return mifCache[name];
+}
+
+async function mifProgressionHtml() {
+  const it = state.item;
+  if (!it || !it.mif_numbers?.length) return "";
+  let html = "";
+  try {
+    for (const src of ["t6a", "fs"]) {
+      const data = await loadMif(src);
+      for (const t of data.tables || []) {
+        if (t.category !== state.category) continue;
+        const rows = (t.items || []).filter((r) => it.mif_numbers.includes(r.sn));
+        if (!rows.length) continue;
+        const units = (t.columns || []).map((c) => c.unit);
+        const head = units.map((u) => `<th>${esc(u)}</th>`).join("");
+        const body = rows.map((r) => `<tr><td>${esc(r.name)}</td>${units.map((u) =>
+          `<td class="num">${esc(r.codes?.[u] ?? "–")}</td>`).join("")}</tr>`).join("");
+        html += `<p class="mif-tbl-title">${esc(t.title_verbatim || t.table_id)}</p>
+          <div class="mif-scroll"><table class="spec-table mif-prog">
+          <thead><tr><th>Item</th>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
+      }
+    }
+  } catch (e) { /* mif data unavailable — skip section */ }
+  return html ? `<h4>MIF progression — desired code per Training Section</h4>${html}` : "";
+}
+
+/* ── Related requirements (item_links.json, optional) ── */
+
+let linksCache;
+async function loadLinks() {
+  if (linksCache !== undefined) return linksCache;
+  try {
+    const res = await fetch("../data/requirements/item_links.json", { cache: "no-store" });
+    linksCache = res.ok ? await res.json() : null;
+  } catch (e) { linksCache = null; }
+  return linksCache;
+}
+
+async function relatedReqHtml() {
+  const links = await loadLinks();
+  if (!links) return "";
+  const own = links.links?.[state.item.item_id] || [];
+  const cat = links.category_links?.[state.category] || [];
+  if (!own.length && !cat.length) return "";
+  const li = (l) => `<li><button class="req-link" data-req="${esc(l.req)}">${esc(l.req)}</button> ${esc(l.topic)}</li>`;
+  let html = "";
+  if (own.length) html += `<ul>${own.map(li).join("")}</ul>`;
+  if (cat.length) html += `<p class="hint" style="margin-top:6px">Category-level:</p><ul>${cat.map(li).join("")}</ul>`;
+  return `<h4>Related requirements</h4>${html}`;
 }
 
 $("item-info-btn").onclick = showInfo;
 $("info-close").onclick = () => $("info-modal").classList.add("hidden");
 $("info-modal").onclick = (e) => { if (e.target === $("info-modal")) $("info-modal").classList.add("hidden"); };
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("info-modal").classList.add("hidden"); });
+
+/* ── Requirements view ─────────────────────────────────── */
+
+const REQ_DOMAINS = [
+  { id: "ground_training", file: "ground_training.json", label: "Ground Training" },
+  { id: "simulator_training", file: "simulator_training.json", label: "Simulator (F/S)" },
+  { id: "flight_training", file: "flight_training.json", label: "Flight Training" },
+  { id: "failure_procedures", file: "failure_procedures.json", label: "Failures & Procedures" },
+  { id: "board_matrix", file: "board_tolerance_matrix.json", label: "Board Tolerance Matrix" },
+];
+const reqState = { domain: null, cache: {} };
+
+function switchView(view) {
+  $("view-remarks").classList.toggle("hidden", view !== "remarks");
+  $("view-requirements").classList.toggle("hidden", view !== "requirements");
+  $("tab-remarks").classList.toggle("active", view === "remarks");
+  $("tab-requirements").classList.toggle("active", view === "requirements");
+}
+$("tab-remarks").onclick = () => switchView("remarks");
+$("tab-requirements").onclick = () => switchView("requirements");
+
+function renderReqDomains() {
+  const grid = $("req-domain-grid");
+  grid.innerHTML = "";
+  for (const d of REQ_DOMAINS) {
+    const btn = document.createElement("button");
+    btn.className = "cat-card" + (reqState.domain === d.id ? " active" : "");
+    btn.innerHTML = `<strong>${d.label}</strong>`;
+    btn.onclick = () => { reqState.domain = d.id; renderReqDomains(); renderReqList(); };
+    grid.appendChild(btn);
+  }
+}
+
+async function loadReqDomain(id) {
+  if (reqState.cache[id]) return reqState.cache[id];
+  const d = REQ_DOMAINS.find((x) => x.id === id);
+  const res = await fetch(`../data/requirements/${d.file}`, { cache: "no-store" });
+  reqState.cache[id] = await res.json();
+  return reqState.cache[id];
+}
+
+function openRequirements(reqId) {
+  switchView("requirements");
+  const prefix = reqId.split("-")[0];
+  const domain = { gt: "ground_training", st: "simulator_training", ft: "flight_training", fail: "failure_procedures" }[prefix];
+  if (domain) {
+    reqState.domain = domain;
+    $("req-search").value = reqId;
+    renderReqDomains();
+    renderReqList();
+  }
+}
+
+function kvChips(values) {
+  if (!values || typeof values !== "object") return "";
+  const parts = Object.entries(values).slice(0, 8).map(([k, v]) =>
+    `<span class="badge kv">${esc(k)}: ${esc(typeof v === "object" ? JSON.stringify(v) : String(v))}</span>`);
+  return parts.length ? `<div class="kv-row">${parts.join("")}</div>` : "";
+}
+
+async function renderReqList() {
+  const box = $("req-results");
+  $("req-count").textContent = "";
+  if (!reqState.domain) { box.innerHTML = `<p class="hint">Pick a domain to browse the Phase II requirements.</p>`; return; }
+  box.innerHTML = `<p class="hint">Loading…</p>`;
+  let data;
+  try { data = await loadReqDomain(reqState.domain); }
+  catch (e) { box.innerHTML = `<p class="hint">Failed to load ${reqState.domain}.</p>`; return; }
+
+  const q = $("req-search").value.trim().toLowerCase();
+  box.innerHTML = "";
+  let shown = 0;
+
+  if (reqState.domain === "board_matrix") {
+    const rows = (data.entries || data.cases || data.matrix || data.rows || (Array.isArray(data) ? data : [])).filter((e) =>
+      !q || JSON.stringify(e).toLowerCase().includes(q));
+    const trs = rows.map((e) => `
+      <tr>
+        <td>${esc(e.failure_kind ?? "")}</td>
+        <td>${esc(e.domain ?? "")}</td>
+        <td>${esc(e.allowed_before_board ?? "")}</td>
+        <td>${esc(Array.isArray(e.ladder) ? e.ladder.join(" → ") : (e.ladder ?? ""))}</td>
+      </tr>`).join("");
+    box.innerHTML = `<div class="mif-scroll"><table class="spec-table">
+      <thead><tr><th>Failure kind</th><th>Domain</th><th>Allowed before Board</th><th>Ladder</th></tr></thead>
+      <tbody>${trs}</tbody></table></div>`;
+    $("req-count").textContent = `${rows.length} entries`;
+    return;
+  }
+
+  for (const r of data.requirements || []) {
+    const hay = `${r.id} ${r.topic} ${r.requirement} ${r.verbatim ?? ""}`.toLowerCase();
+    if (q && !hay.includes(q)) continue;
+    shown++;
+    if (shown > 120) break;
+    const card = document.createElement("div");
+    card.className = "obs-card req-card";
+    card.innerHTML = `
+      <div class="obs-head">
+        <span class="obs-prefix">${esc(r.id)}</span>
+        <span class="badge">${esc(r.topic ?? "")}</span>
+      </div>
+      <p class="obs-text">${esc(r.requirement ?? "")}</p>
+      ${kvChips(r.values)}
+      ${r.verbatim ? `<details><summary>Source text</summary><p class="verbatim">${esc(r.verbatim)}</p>
+        <p class="hint">${esc(r.source ? `${r.source.file ?? ""} · p.${r.source.page_pdf ?? "?"} · ${r.source.ref ?? ""}` : "")}</p></details>` : ""}`;
+    box.appendChild(card);
+  }
+  $("req-count").textContent = shown ? `${shown} shown` : "no matches";
+  if (!shown) box.innerHTML = `<p class="hint">No requirements match.</p>`;
+}
+
+$("req-search").addEventListener("input", renderReqList);
+renderReqDomains();
 
 $("item-search").addEventListener("input", renderItems);
 init();

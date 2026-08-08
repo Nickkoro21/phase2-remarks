@@ -1,0 +1,132 @@
+{
+  "item_id": "vfr_navigation-14",
+  "item_name": "VFR ARRIVAL / TRAFFIC PATTERN ENTRY",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [14],
+  "mif_rows": [
+    { "sn": 14, "row_name": "VFR Arrival / Traffic Pattern Entry" }
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-14-em01",
+      "label": "Altitude control during the arrival and pattern entry",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a descent rate that was never adjusted after the arrival was approved, did not level off at the assigned traffic pattern altitude. The altitude deviation exceeded 300 feet and the aircraft continued through pattern altitude toward the entry point. The IP took control to re-establish the aircraft at the published pattern altitude. SP did not stabilize the altitude at any stage of the entry.",
+        "1": "SP, due to a late power reduction in the descent toward the traffic pattern, allowed the deviation from the assigned pattern altitude to reach the 300 foot limit. SP began the correction only after the IP called the altitude, and the aircraft was returned to pattern altitude only after the pattern entry point had been passed. No control input was required from the IP.",
+        "2": "SP, due to an interrupted altimeter cross-check while setting up the arrival, allowed the altitude to deviate approximately 200 feet from the assigned traffic pattern altitude, between the 150 foot and the 300 foot limits. SP recognized the deviation without any prompting and re-established pattern altitude before reaching the entry point.",
+        "3": "SP flew the arrival with an accurate altitude cross-check and levelled off at the assigned traffic pattern altitude with deviations kept inside 150 feet. Corrections were small, promptly applied and completed before the entry point, so the aircraft was stabilized at pattern altitude throughout the entry.",
+        "4": "SP levelled off exactly at the assigned traffic pattern altitude and held it with negligible excursions, well inside 150 feet, throughout the descent, the entry and the initial leg. Power and pitch were coordinated so that the level-off required no visible correction.",
+        "marginal": "SP entered the traffic pattern within standards, but the altitude deviations were repeatedly close to the 150 foot value, all of them in the low sense, and each correction was applied only after the trend had developed. The tendency to descend below the assigned pattern altitude while the attention is on the entry geometry is expected to be removed by an earlier power adjustment and a more regular altimeter cross-check in the following sorties."
+      }
+    },
+    {
+      "id": "vfr_navigation-14-em02",
+      "label": "Airspeed control during the arrival and pattern entry",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unplanned energy profile in which the descent was started with high power and no deceleration point, arrived at the pattern entry with an airspeed deviation of more than 20 knots from the briefed arrival speed. The aircraft could not be decelerated to the pattern airspeed before the entry point and the IP intervened on the power lever to recover the speed schedule.",
+        "1": "SP, due to a deceleration begun too late in the descent, reached the traffic pattern entry with an airspeed deviation at the 20 knot limit from the briefed arrival speed. The speed was brought back only after repeated verbal indications from the IP, and the aircraft was stabilized at pattern airspeed well after the entry point.",
+        "2": "SP, due to a power setting that was not reduced when the descent angle increased, allowed the airspeed to deviate approximately 15 knots from the briefed arrival speed, between the 10 knot and the 20 knot limits. SP identified the trend on the airspeed indicator without prompting and re-established the pattern airspeed before the entry point.",
+        "3": "SP planned the deceleration so that the airspeed was held within 10 knots of the briefed arrival speed through the descent and the pattern entry. Power changes were anticipated and small, and the aircraft arrived at the entry point already at the pattern airspeed.",
+        "4": "SP flew the arrival on speed throughout, with airspeed excursions negligible and well inside 10 knots from the briefed value. The deceleration was planned early enough that the pattern airspeed was reached before the entry point without any late or large power correction.",
+        "marginal": "SP kept the airspeed within standards, but the deviations remained close to the 10 knot value and were consistently in the fast sense at the pattern entry. The tendency to carry excess energy into the pattern is expected to be corrected by selecting an earlier deceleration point during the descent planning in the following sorties."
+      }
+    },
+    {
+      "id": "vfr_navigation-14-em03",
+      "label": "Heading accuracy on the arrival and entry legs",
+      "mif_row": null,
+      "source": "specific:EXIT HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a roll-out that was started without any reference to the target heading, exceeded 10 degrees of deviation from the required entry heading and continued to diverge from the traffic pattern axis. The aircraft was not aligned with the pattern leg and the IP took control to re-establish the correct heading before the entry.",
+        "1": "SP, due to an unmonitored roll-out rate at the end of the turn toward the field, stopped the turn with a heading deviation at the 10 degree limit from the required entry heading. The heading was corrected only after the IP pointed out the divergence, and the aircraft was aligned with the pattern leg late in the entry.",
+        "2": "SP, due to an anticipation of the roll-out that was not matched to the bank angle used, rolled out approximately 8 degrees off the required entry heading, between the 5 degree and the 10 degree limits. SP recognized the error immediately and corrected the heading with a prompt, measured turn before reaching the entry point.",
+        "3": "SP rolled out on the required entry heading with deviations kept inside 5 degrees and maintained it accurately along the arrival and entry legs. Roll-out was anticipated correctly for the bank angle used and no repeated heading corrections were needed.",
+        "4": "SP rolled out precisely on the required entry heading with negligible deviation and held the pattern axis exactly for the whole entry. The turn was planned with the correct lead point so the aircraft settled on heading without any subsequent correction.",
+        "marginal": "SP maintained the entry heading within standards, but the roll-outs were consistently close to the 5 degree value and always in the same direction, requiring a small further correction each time. The tendency to under-anticipate the roll-out is expected to be removed by using a fixed lead point related to the bank angle in the following sorties."
+      }
+    },
+    {
+      "id": "vfr_navigation-14-em04",
+      "label": "Accuracy over the traffic pattern points and pattern geometry",
+      "mif_row": null,
+      "source": "general:a,b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an entry planned without identifying the traffic pattern reference points before the arrival, overflew the pattern points well outside the 0.5 NM maximum radius. The resulting ground track did not correspond to the published traffic pattern and the aircraft entered the pattern displaced from the correct leg. The IP took control to position the aircraft on the published pattern.",
+        "1": "SP, due to a late visual acquisition of the airfield and its reference points, overflew the pattern points at the limit of the 0.5 NM maximum radius. The ground track was corrected toward the published pattern only after successive verbal indications from the IP, and the pattern geometry remained distorted for the first leg.",
+        "2": "SP, due to a wind correction that was not applied on the leg toward the field, drifted from the planned track and overflew a pattern point at a radius approaching but not exceeding 0.5 NM. SP identified the displacement against the ground references without prompting and re-established the correct pattern geometry on the following leg.",
+        "3": "SP identified the traffic pattern reference points early and overflew them within the 0.5 NM maximum radius, keeping the entry consistent with the published pattern. The legs were flown with correct wind correction and the resulting ground track reproduced the pattern geometry accurately.",
+        "4": "SP overflew every traffic pattern reference point with negligible displacement, well inside the 0.5 NM maximum radius, and flew the entry geometry exactly as published. Wind correction was applied from the beginning of each leg so that the ground track required no adjustment.",
+        "marginal": "SP flew the pattern entry within standards, but the overflight of the reference points was repeatedly close to the 0.5 NM radius and always on the outside of the published track. The tendency to widen the entry geometry is expected to be corrected by acquiring the reference points earlier and applying the wind correction from the start of the leg in the following sorties."
+      }
+    },
+    {
+      "id": "vfr_navigation-14-em05",
+      "label": "Descent planning and energy management for the arrival",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to workload management during the approach phase that left the descent planning undone until the field was in sight, arrived at the traffic pattern high and fast with no remaining distance to correct. The descent was flown with excessive rate and the aircraft was not established at pattern altitude and airspeed at the entry point. The IP took control to reposition the aircraft for a safe entry.",
+        "1": "SP, due to task sequencing that concentrated the arrival preparation into the last portion of the route, started the descent late and reached the entry point at the limit of the published altitude and airspeed values. The profile was retrieved only after repeated verbal direction from the IP on when to descend and when to decelerate.",
+        "2": "SP, due to an arrival plan that did not account for the tailwind on the inbound leg, began the descent slightly late and remained above the planned profile for part of the arrival. SP recognized the deviation from the planned descent point in time and adjusted power and rate to arrive at the pattern entry established at the correct altitude and airspeed.",
+        "3": "SP planned the descent point and the deceleration point before the arrival and flew the profile so that the aircraft was established at pattern altitude and pattern airspeed before the entry point. Power changes were anticipated and the arrival required no late corrections.",
+        "4": "SP calculated the descent and deceleration points accurately for the conditions of the day and flew the arrival with negligible deviation from the planned profile. The aircraft reached the traffic pattern entry fully established, with the workload of the arrival distributed evenly over the whole inbound leg.",
+        "marginal": "SP completed the arrival within standards, but the descent was consistently started later than planned and the profile was retrieved with rates and power changes larger than necessary. The tendency to compress the arrival workload into the final part of the route is expected to be corrected by fixing the descent and deceleration points earlier in the following sorties."
+      }
+    },
+    {
+      "id": "vfr_navigation-14-em06",
+      "label": "Safe entry: lookout, traffic sequencing and separation",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to loss of situational awareness of the aircraft position in the pattern, entered the traffic pattern without having established the position of the reported traffic and without a safe entry sequence. Separation from the preceding aircraft was not assured and the entry was not safe. The IP took control and repositioned the aircraft outside the pattern before re-entering.",
+        "1": "SP, due to degraded situational awareness of the traffic already established in the pattern, continued toward the entry point without adjusting the sequence and reached a spacing at the minimum acceptable value. The entry was made safe only after the IP directed both the extension of the leg and the visual search for the preceding aircraft.",
+        "2": "SP, due to a lookout scan concentrated on the runway rather than on the pattern legs, acquired the preceding traffic later than required for a comfortable sequence. SP recognized the situation without prompting, adjusted the entry by extending the leg and re-established safe spacing before joining the pattern.",
+        "3": "SP maintained an effective visual lookout throughout the arrival, acquired the traffic in the pattern early and entered safely with correct sequencing and spacing. The position of the aircraft relative to the other pattern traffic was known at all times.",
+        "4": "SP built and maintained a complete picture of the pattern traffic from well before the arrival, acquired every reported aircraft visually and entered the traffic pattern with an unambiguously safe sequence and generous spacing. The lookout scan continued uninterrupted through the entry.",
+        "marginal": "SP entered the traffic pattern safely, but the traffic was acquired later than desirable and the spacing achieved, while acceptable, left little margin for a change of sequence. The tendency to concentrate the lookout on the runway rather than on the pattern legs is expected to be corrected by an earlier and wider visual search in the following sorties."
+      }
+    },
+    {
+      "id": "vfr_navigation-14-em07",
+      "label": "Arrival checks, configuration and radio calls at the entry",
+      "mif_row": null,
+      "source": "general:a,b",
+      "hf_concept": "hf-workload-distribution",
+      "texts": {
+        "0": "SP, due to workload distribution that left the SP flying and transmitting at the same time during the descent, did not complete the arrival checks and did not make the required call at the pattern entry point. The aircraft entered the traffic pattern in an incorrect configuration and without clearance from the tower. The IP intervened to complete the checks and to make the required transmission.",
+        "1": "SP, due to failure to shed a secondary task when the arrival workload increased, left the arrival checks unfinished until after the entry point and made the entry call late. The checks and the transmission were completed only after the IP prompted each of them; no control input was required from the IP.",
+        "2": "SP, due to an interruption of the checklist by a radio exchange during the descent, omitted one item of the arrival checks at the point where it was required. SP detected the omission on the following check of the configuration and completed the item and the required call before the pattern entry point.",
+        "3": "SP completed the arrival checks at the planned points, configured the aircraft correctly for the pattern entry and made every required radio call in standard phraseology at the correct position. The cockpit workload was distributed so that flying the aircraft was never interrupted by the checks or the transmissions.",
+        "4": "SP sequenced the arrival checks, the configuration change and the radio calls so that each was completed early and without interference with the flight path. Every transmission was made in standard phraseology at the correct point and the read-back confirmed the actual clearance.",
+        "marginal": "SP completed all the arrival checks and calls within standards, but each was performed at the latest acceptable point and the transmissions were made while the aircraft was still being manoeuvred. The tendency to compress the checks and the radio work into the entry is expected to be corrected by starting the arrival checks earlier on the inbound leg in the following sorties."
+      }
+    },
+    {
+      "id": "vfr_navigation-14-em08",
+      "label": "Formation recovery and pattern entry discipline (N44XX / N45XX)",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": "hf-crew-resource-management",
+      "texts": {
+        "0": "SP, due to inadequate coordination with the formation lead during the recovery, did not fly the briefed formation arrival and did not hold the assigned position for the pattern entry. Spacing from the other aircraft was lost and the entry did not correspond to the briefed formation profile. The IP took control to restore separation and to re-establish the aircraft in the recovery pattern.",
+        "1": "SP, due to crew and formation coordination that did not survive the increase in workload at the recovery, held the assigned formation position only at the limit of the briefed tolerances during the descent and pattern entry. Position and spacing were restored after successive directions from the IP and from the formation lead, with corrections applied late.",
+        "2": "SP, due to a delayed response to the lead power change during the recovery descent, allowed the formation position to open beyond the briefed spacing without exceeding the maximum. SP recognized the closure error and re-established the correct position and the briefed spacing before the pattern entry point.",
+        "3": "SP flew the formation recovery in the briefed position, responded promptly to the lead manoeuvres and entered the traffic pattern with correct spacing and sequence as briefed for the formation profile. Cross-talk with the other cockpit and with the lead was clear and timely.",
+        "4": "SP maintained the briefed formation position with negligible variation through the whole recovery, anticipated the lead manoeuvres and entered the traffic pattern with exact spacing and sequence. Coordination with the lead and within the cockpit was continuous and required no repetition.",
+        "marginal": "SP flew the formation recovery and pattern entry within the briefed tolerances, but the position corrections were consistently reactive and the spacing at the entry was at the wide end of the briefed range. The tendency to respond to the lead rather than to anticipate is expected to be corrected by closer monitoring of the lead attitude and power state in the following sorties."
+      }
+    }
+  ]
+}

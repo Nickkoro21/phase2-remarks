@@ -1,0 +1,117 @@
+{
+  "item_id": "formation-32",
+  "item_name": "VISUAL SIGNALS",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [32],
+  "mif_rows": [
+    {"sn": 32, "row_name": "Visual Signals"}
+  ],
+  "error_modes": [
+    {
+      "id": "formation-32-em01",
+      "label": "Knowledge and selection of the correct visual signal",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-lack-of-knowledge",
+      "texts": {
+        "0": "SP, due to insufficient knowledge of the published visual signal set, did not know and execute the correct signal for the required action and passed signals that meant a different maneuver to the other member. On three separate occasions the wrong signal was given and the formation started an action that had not been briefed, so IP took over the direction of the flight by radio for the remainder of the sortie. The requirement to know and execute all visual signals was not met and IP intervention was required.",
+        "1": "SP, due to insufficient knowledge of the published visual signal set, selected the wrong signal for the intended action twice and did not recognize the error unaided. The correct signal was passed only after IP prompted verbally on each occasion, and the formation action was delayed by about ten seconds each time. Performance remained at the limit of the standard because no self-correction occurred.",
+        "2": "SP, due to incomplete recall of the less frequently used signals, started the wrong hand signal for the fuel check. SP recognized the error without prompting, cancelled the signal and passed the correct one within about three seconds, and the flight continued as briefed. The action was completed correctly with timely self-correction and no IP intervention.",
+        "3": "SP knew and executed the correct visual signal for every required action throughout the sortie. Each signal matched the published set and conveyed the intended maneuver to the other member without ambiguity. No improvised signals were used and no radio backup was needed.",
+        "4": "SP demonstrated complete command of the visual signal set, including the rarely used signals, and selected the correct one instantly in every case. Signals were passed with no hesitation and matched the published standard exactly. The other member acted on each signal without a single request for clarification.",
+        "marginal": "SP knew and executed the correct visual signals within standards, but selection of the less common signals followed a visible pause on two occasions. The pause is a trend towards hesitation on signals outside the routine set. SP is expected to review the complete signal list before the next sortie so that recall of every signal is immediate."
+      }
+    },
+    {
+      "id": "formation-32-em02",
+      "label": "Signal conspicuity and duration - perceivable beyond doubt",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to hand movement kept low inside the cockpit and below the canopy rail, did not execute the signals in a way perceivable beyond doubt from the other aircraft. Four consecutive signals went unseen by the other member, the flight stayed in the previous configuration, and IP had to take over and pass the direction by radio. The requirement for signals perceivable beyond doubt was not met and IP intervention was required.",
+        "1": "SP, due to signals given with a small rapid hand movement held for under one second, did not make them perceivable beyond doubt from the other aircraft. The other member did not react until IP directed SP verbally to repeat each signal larger and hold it, which happened on three signals. Performance remained at the limit of the standard because the presentation was corrected only after prompting.",
+        "2": "SP, due to an initial signal given with the hand partly masked by the canopy bow, was not seen immediately by the other member. SP recognized the absence of a response, repositioned the hand into clear view and held the signal until acknowledged, all within about two seconds and without prompting. The signal was made perceivable by timely self-correction with no IP intervention.",
+        "3": "SP executed every signal high in the canopy with a deliberate and exaggerated movement and held it until it was acknowledged. All signals were perceivable beyond doubt from the other member's position and none required repetition.",
+        "4": "SP presented every signal at exactly the right size, position and duration for the formation geometry flown, adapting the presentation to the other member's line of sight in echelon and in route. No signal required repetition or clarification at any point in the sortie.",
+        "marginal": "SP made the signals perceivable within standards, but two of them were held only just long enough for the other member to read them. The trend is towards short signal duration that leaves no margin if the other member is momentarily cross-checking. SP is expected to hold each signal until the acknowledgment is seen on the next sortie."
+      }
+    },
+    {
+      "id": "formation-32-em03",
+      "label": "Acknowledgment of signals addressed to the SP",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, due to lack of communication of the recognized signal back to the originator, did not confirm with a visual signal that the signals addressed to SP had been understood. Five signals from the leader were left unacknowledged, the leader repeated each of them and finally reverted to radio, and IP intervened to direct the acknowledgment. The requirement to confirm understanding by visual signal was not met.",
+        "1": "SP, due to attention held on maintaining the briefed position, did not return the confirming signal for three of the leader's signals. Each confirmation was passed only after IP directed SP verbally, about eight seconds after the original signal. Performance stayed at the limit of the standard because acknowledgment came only after prompting.",
+        "2": "SP, due to the head being briefly inside the cockpit when the signal was passed, did not acknowledge the leader's signal at first. SP saw the repeated signal, returned the confirming signal within about two seconds and then executed the directed action, with no prompting from IP. Confirmation was restored by timely self-correction.",
+        "3": "SP confirmed with a clear visual signal that every signal addressed to SP had been understood, before starting the directed action. Each acknowledgment was returned promptly and the leader never had to repeat a signal.",
+        "4": "SP acknowledged every signal received immediately and unambiguously, and where the signal called for a specific response SP returned the matching signal rather than a generic acknowledgment. The originator was left in no doubt about SP's understanding at any point in the sortie.",
+        "marginal": "SP confirmed understanding of the signals addressed to SP within standards, but on two occasions the acknowledgment was returned only after the directed action had already started. The trend is towards acting first and confirming afterwards, which leaves the originator briefly uncertain. SP is expected to acknowledge before initiating the directed action on the next sortie."
+      }
+    },
+    {
+      "id": "formation-32-em04",
+      "label": "Interpretation of signals received from the other member",
+      "mif_row": null,
+      "source": "general:a,general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP did not apprehend the signals passed by the other member and read the fuel check signal as the signal for a lead change. SP moved forward out of the briefed position while the leader was still maneuvering, the flight lost its briefed geometry, and IP took control to reposition the aircraft. The requirement to apprehend the visual signals was not met and IP intervention was required.",
+        "1": "SP misread two of the leader's signals and started the wrong action on each occasion. SP stopped and applied the correct action only after IP explained the meaning of the signal verbally, delaying the formation action by about fifteen seconds each time. Performance remained at the limit of the standard because the misreading was not resolved by SP.",
+        "2": "SP initially misread the leader's signal for the configuration change and began to select the wrong control. SP compared the signal with the briefed sequence, corrected the interpretation within about three seconds and completed the correct action, with no IP intervention. The error was contained by timely self-correction.",
+        "3": "SP apprehended every signal passed by the other member correctly and executed the directed action without hesitation. No signal was misread and no clarification was requested at any point in the sortie.",
+        "4": "SP read every signal correctly at first presentation, including signals given in echelon where the presentation angle was less favorable. Each directed action followed immediately and exactly as briefed, with no verbal backup at any stage.",
+        "marginal": "SP apprehended the signals within standards, but on two occasions there was a noticeable delay before the meaning was acted upon. The trend is towards reading the signal correctly only after a second look. SP is expected to build immediate recognition so that interpretation and action are continuous."
+      }
+    },
+    {
+      "id": "formation-32-em05",
+      "label": "Timing and sequencing of signals within the maneuver",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to signals passed without regard to the phase of the maneuver, gave the configuration signal while the formation was established in a turn and the other member was working to hold position. The signal was passed at a point where it could not be read, the flight ended up in split configurations, and IP intervened to restore a common configuration by radio. The signals were not executed in a way that was usable by the other member of the formation.",
+        "1": "SP, due to signals passed before the formation was steady, gave three of them during unstable phases when the other member could not read them. SP re-timed the signals only after IP directed verbally to wait for wings level, and each formation action was delayed by about twenty seconds. Performance stayed at the limit of the standard because the timing was corrected only with prompting.",
+        "2": "SP started the descent signal just as the formation entered a turn. SP recognized that the other member's attention was on holding position, held the signal until wings level and then passed it, without prompting from IP. The signal was delivered effectively with timely self-correction.",
+        "3": "SP passed each signal at the correct point in the sequence, waiting for a steady formation and allowing the other member time to read, acknowledge and act before the maneuver began. The timing of every signal supported the briefed sequence.",
+        "4": "SP timed every signal precisely to the phase of flight, anticipating the point at which the other member could read it and leaving exactly the right interval before the action. The formation flowed through the briefed sequence with no pause and no repeated signal at any stage.",
+        "marginal": "SP timed the signals within standards, but twice the signal was passed with only a small margin before the action was required. The trend is towards late signalling that compresses the other member's reaction time. SP is expected to pass each signal earlier so that there is time to acknowledge and prepare."
+      }
+    },
+    {
+      "id": "formation-32-em06",
+      "label": "Aircraft control and lookout while giving or reading signals",
+      "mif_row": null,
+      "source": "general:a,general:b",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to an attention bottleneck on presenting the hand signal at the expense of the outside scan, did not maintain the briefed position while executing the signals. Formation spacing opened well beyond the briefed limits and then closed unpredictably during each signal, and IP took control to re-establish a safe position. Executing the visual signals cost SP aircraft control and required IP intervention.",
+        "1": "SP, due to attention concentrated on the hand signal, allowed the formation position to drift each time a signal was passed. SP returned to the briefed position only after IP prompted verbally, on three occasions. Performance remained at the limit of the standard because the position was recovered only with prompting.",
+        "2": "SP, due to attention drawn to presenting the signal, allowed a small step-down and spacing deviation while the signal was held. SP detected the drift, returned to the briefed position within about three seconds and completed the signal, with no prompting and no IP intervention. The deviation was contained by timely self-correction.",
+        "3": "SP executed and read the visual signals while holding the briefed position and maintaining the outside scan. Signalling never cost SP aircraft control and clearing continued throughout the sortie.",
+        "4": "SP passed and read every signal with no detectable effect on formation position or lookout. The scan, the position cross-check and the signalling ran together smoothly and the other aircraft was kept in sight at all times.",
+        "marginal": "SP kept position and lookout within standards while signalling, but a small position deviation appeared on each of the longer signals. The trend is towards attention being drawn inside while the hand signal is held. SP is expected to keep the position cross-check running through the signal on the next sortie."
+      }
+    },
+    {
+      "id": "formation-32-em07",
+      "label": "Visual signals exchanged with the tower and ground personnel",
+      "mif_row": null,
+      "source": "general:a,general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP did not know and execute the visual signals exchanged with the tower and with ground personnel. SP did not respond to the light signal directed at the aircraft and did not acknowledge the marshaller's instructions, so IP took over the coordination with the tower and the ground crew. The requirement to execute and apprehend the visual signals with the tower was not met and IP intervention was required.",
+        "1": "SP recognized the tower light signal but did not know the required response and gave no acknowledgment. The correct response was passed only after IP directed SP verbally, about ten seconds after the signal was given. Performance stayed at the limit of the standard because no self-correction occurred.",
+        "2": "SP initially misread the marshaller's signal and started the wrong ground action. SP rechecked the signal, corrected within about two seconds and complied as directed, with no IP intervention. Coordination with ground personnel was restored by timely self-correction.",
+        "3": "SP executed and apprehended every visual signal exchanged with the tower and with ground personnel correctly and acknowledged each one in the prescribed way. No signal originating outside the formation was missed or misread.",
+        "4": "SP responded to every tower and ground visual signal immediately and with the exact prescribed acknowledgment, including the signals used only in the lost communications case. Coordination with the tower and the ground crew was complete with no verbal backup required.",
+        "marginal": "SP handled the tower and ground visual signals within standards, but the acknowledgment to the marshaller was given only after a second look on two occasions. The trend is towards delayed recognition of signals originating outside the formation. SP is expected to include the tower and ground signal set in the pre-flight review."
+      }
+    }
+  ]
+}

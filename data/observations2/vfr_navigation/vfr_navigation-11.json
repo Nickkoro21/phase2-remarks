@@ -1,0 +1,147 @@
+{
+  "item_id": "vfr_navigation-11",
+  "item_name": "MAP READING",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [11],
+  "mif_rows": [
+    {"sn": 11, "row_name": "Map Reading"}
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-11-em01",
+      "label": "GROUND POINT RECOGNITION",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient study of the chart features along the planned route, did not recognize most of the ground points near the flight path. SP mismatched prominent linear features with the chart symbology and reported a wrong point on two consecutive legs, and the IP had to take the aircraft and identify the position himself. Basic aircraft control degraded during the search and altitude exceeded 300 ft from the assigned altitude.",
+        "1": "SP, due to insufficient study of the chart features along the planned route, failed to recognize confidently the ground points near the flight path. SP identified the required points only after the IP pointed out the reference feature verbally, and the correct position report came at the +/- 300 ft altitude limit while attention stayed inside the cockpit. No IP intervention on the controls was required.",
+        "2": "SP, due to hesitation in matching chart symbology with the terrain picture, did not recognize confidently all of the ground points near the flight path on the first attempt. SP re-checked the chart, cross-referenced the surrounding features and identified the point without any prompting, holding altitude within 150 to 300 ft of the assigned value during the search. The recognition was completed early enough to keep the leg timing usable.",
+        "3": "SP recognized confidently most of the ground points near the flight path and reported them accurately as they passed abeam. SP matched chart symbology with the terrain picture without hesitation and kept altitude within +/- 150 ft, airspeed within +/- 10 kt and heading within +/- 5 degrees while doing so. Position awareness was maintained continuously throughout each leg.",
+        "4": "SP recognized every ground point near the flight path immediately and reported each one with the correct relative position. SP used secondary features to confirm each identification before calling it, and the basic flight parameters showed negligible deviations throughout. Position awareness remained fully current from departure to the last turning point.",
+        "marginal": "SP recognized the ground points near the flight path within standards, but the identifications relied mainly on the largest and most obvious features and hesitation was evident on the smaller ones. The trend is toward slower recognition when the terrain picture is less distinctive, and SP is expected to broaden the use of secondary chart features so that recognition remains confident in low-contrast terrain."
+      }
+    },
+    {
+      "id": "vfr_navigation-11-em02",
+      "label": "TIME - MAP - GROUND TECHNIQUE",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not having internalized the map reading sequence, did not use the right map reading technique and worked from the ground to the map instead of Time - Map - Ground. SP searched the whole chart for whatever feature happened to be visible, lost the running estimate of position and required the IP to intervene and re-establish the navigation picture. Heading wandered beyond 10 degrees from the briefed value during the search.",
+        "1": "SP, due to not having internalized the map reading sequence, did not apply the Time - Map - Ground technique in the correct order and consulted the chart before checking elapsed time. SP restored the correct sequence only after the IP prompted verbally, and heading was at the +/- 10 degrees limit when the correction started. No control intervention by the IP was needed.",
+        "2": "SP, due to an unrehearsed cockpit routine, started the map reading cycle from the map rather than from elapsed time on the first two checkpoints. SP recognized the error unprompted, re-established the Time - Map - Ground order and completed the remaining checkpoints correctly, with heading held between 5 and 10 degrees of the briefed value during the reorganization. No prompting or intervention was required.",
+        "3": "SP used the right map reading technique and worked consistently in the Time - Map - Ground order on every checkpoint. SP checked elapsed time first, narrowed the search area on the chart and then looked out for the expected feature, keeping heading within +/- 5 degrees and altitude within +/- 150 ft throughout. The cycle was completed well before each point passed abeam.",
+        "4": "SP applied the Time - Map - Ground technique on every checkpoint with a fully established cockpit routine and a fixed chart-to-ground scan pattern. SP anticipated each feature before it became visible and confirmed it in a single glance outside, with negligible deviations in heading, altitude and airspeed. The technique was maintained without degradation over the whole route.",
+        "marginal": "SP used the Time - Map - Ground technique in the correct order and remained within standards, but the sequence broke down briefly whenever two checkpoints came close together. The trend is toward reverting to a ground-to-map search under time pressure, and SP is expected to keep the elapsed-time step first even on compressed legs so that the technique holds at higher checkpoint density."
+      }
+    },
+    {
+      "id": "vfr_navigation-11-em03",
+      "label": "TIMELY RECOGNITION OF DEVIATION AND CORRECTION",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incomplete comparison between the observed and the expected ground picture, was not able to recognize timely the developing deviation from the turning point and executed no correction. SP continued on the erroneous picture until the IP identified the deviation and took the aircraft to regain the route. The recovery required a heading change well beyond 10 degrees and an altitude excursion beyond 300 ft.",
+        "1": "SP, due to an incomplete comparison between the observed and the expected ground picture, recognized the deviation from the turning point late and executed the appropriate correction only after the IP pointed it out verbally. The correction was initiated with heading already at the +/- 10 degrees limit from the briefed value and the turning point was reached off the planned geometry. No IP control intervention was required.",
+        "2": "SP, due to a slow first comparison of the terrain picture against the chart, allowed a deviation from the planned track toward the turning point to develop before detecting it. SP identified the discrepancy unprompted, applied a corrective heading and re-established the correct approach to the turning point with heading between 5 and 10 degrees of the briefed value during the correction. The turning point was crossed on plan.",
+        "3": "SP recognized timely the developing deviations from the turning points and executed appropriate corrections in every case. SP compared the terrain picture against the chart early on each leg, applied small corrections before the error could grow and held heading within +/- 5 degrees and altitude within +/- 150 ft. Every turning point was crossed on the planned geometry.",
+        "4": "SP detected the first indication of divergence from the planned track well before the turning point and corrected with minimal control input each time. SP anticipated the effect of the wind on the remaining leg and pre-corrected accordingly, leaving negligible deviations at every turning point. No leg required more than a marginal heading adjustment.",
+        "marginal": "SP recognized the deviations from the turning points and corrected them within standards, but the detection came consistently in the second half of each leg rather than early. The trend is toward larger corrections than necessary near the turning points, and SP is expected to start the terrain-to-chart comparison earlier on each leg so that the corrections stay small."
+      }
+    },
+    {
+      "id": "vfr_navigation-11-em04",
+      "label": "ATTENTION DIVISION BETWEEN CHART AND AIRCRAFT STATE",
+      "mif_row": null,
+      "source": "general:a,b",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to attention captured by the chart while the aircraft state went unmonitored, kept the head down searching for a single ground point and stopped monitoring the flight parameters. The instrument cross-check lapsed completely, altitude departed by more than 300 ft and airspeed by more than 20 kt, and the IP intervened on the controls to restore the aircraft state. Map reading was suspended until the IP handed the aircraft back.",
+        "1": "SP, due to attention captured by the chart while the aircraft state went unmonitored, allowed the head-down time on a single ground point to extend well past the time available. SP resumed the cross-check only after the IP called the parameters, with altitude at the +/- 300 ft limit and airspeed at the +/- 20 kt limit at that moment. The correction was completed by SP without control intervention.",
+        "2": "SP, due to a longer than intended head-down interval on the chart, let the instrument cross-check lapse over one leg. SP recognized the omission unprompted, returned to the scan and corrected an altitude excursion between 150 and 300 ft and an airspeed drift between 10 and 20 kt back to the assigned values. Map reading continued afterwards in short, interleaved glances.",
+        "3": "SP divided attention correctly between the chart, the outside picture and the flight instruments throughout the navigation. SP kept each head-down interval short and returned to the cross-check between glances, holding altitude within +/- 150 ft, airspeed within +/- 10 kt and heading within +/- 5 degrees. No ground point search was allowed to interrupt the monitoring of the aircraft state.",
+        "4": "SP maintained a continuous cross-check while map reading, with head-down intervals so short that the flight parameters showed negligible deviations at all times. SP timed the chart glances to the quiet parts of each leg and confirmed the aircraft state after every one of them. Attention division remained effective even during the busiest checkpoints.",
+        "marginal": "SP divided attention between the chart and the flight instruments within standards, but the head-down intervals lengthened noticeably whenever a ground point was not immediately identified. The trend is toward a degrading cross-check under search workload, and SP is expected to break off the chart search at fixed intervals to reconfirm the aircraft state."
+      }
+    },
+    {
+      "id": "vfr_navigation-11-em05",
+      "label": "COCKPIT CHART MANAGEMENT AND WORKLOAD",
+      "mif_row": null,
+      "source": "general:b,c",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to task sequencing that concentrated all cockpit workload inside the turn, handled an unfolded and unmarked chart while manoeuvring at the turning point. SP lost the chart orientation completely, was unable to continue the Time - Map - Ground cycle and the IP took the aircraft to stabilize it while the chart was refolded. Altitude and heading exceeded 300 ft and 10 degrees respectively during the episode.",
+        "1": "SP, due to task sequencing that concentrated all cockpit workload inside the turn, was still folding and orienting the chart when the next leg had already started. SP re-established a usable chart set-up only after the IP prompted, and heading was at the +/- 10 degrees limit when the leg was finally flown correctly. No control intervention by the IP was required.",
+        "2": "SP, due to a chart folded for the wrong leg, needed additional cockpit time to re-orient the map after the first turning point. SP recognized the problem unprompted, re-folded the chart on the straight portion of the leg rather than in the turn and continued the map reading cycle with altitude held between 150 and 300 ft of the assigned value during the reorganization. The remaining legs were flown with the chart correctly prepared.",
+        "3": "SP managed the chart efficiently in the cockpit, with the map folded and oriented for the leg in use before each turning point. SP handled the workload on the straight portions of the legs and kept altitude within +/- 150 ft, airspeed within +/- 10 kt and heading within +/- 5 degrees. The map reading cycle was never interrupted by chart handling.",
+        "4": "SP prepared the chart for every leg in advance and moved through the route without any cockpit handling delay. SP anticipated each turn and completed the chart transition before entering it, leaving negligible deviations in the flight parameters. Cockpit workload remained evenly distributed across the whole sortie.",
+        "marginal": "SP managed the chart in the cockpit within standards, but the transition to the next leg was consistently completed only just before the turning point. The trend is toward chart handling migrating into the turn as the legs shorten, and SP is expected to complete the chart set-up earlier so that the turning points are flown with no cockpit workload remaining."
+      }
+    },
+    {
+      "id": "vfr_navigation-11-em06",
+      "label": "ALTITUDE CONTROL WHILE MAP READING",
+      "mif_row": null,
+      "source": "specific:ALTITUDE* (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an interrupted instrument scan while searching the chart for a ground point, did not maintain the assigned navigation altitude. Altitude departed by more than 300 ft from the assigned value and the trend continued unchecked until the IP intervened on the controls. SP had not recognized the excursion before the intervention.",
+        "1": "SP, due to an interrupted instrument scan while searching the chart for a ground point, allowed the assigned navigation altitude to drift without detecting the trend. Altitude reached 300 ft from the assigned value and SP initiated the correction only after the IP called it verbally. The recovery was flown by SP without control intervention.",
+        "2": "SP, due to a longer than intended chart glance, let the aircraft drift off the assigned navigation altitude. SP detected the excursion at approximately 200 ft from the assigned value, returned to the scan and regained the altitude promptly and unprompted. The remaining legs were flown within +/- 150 ft.",
+        "3": "SP maintained the assigned navigation altitude within +/- 150 ft throughout the map reading task. SP interleaved the chart glances with the instrument cross-check so that any developing trend was caught immediately. Altitude control remained accurate and prompt on every leg.",
+        "4": "SP held the assigned navigation altitude with negligible deviations for the entire route, including during the checkpoint identifications. SP corrected the smallest trend before it became a deviation and never let the altitude wander during a chart glance. Altitude control was unaffected by the map reading workload.",
+        "marginal": "SP maintained the assigned navigation altitude within standards, but a consistent low trend developed during each extended chart glance and was corrected only at the end of it. The trend is toward larger excursions as the map reading workload increases, and SP is expected to reconfirm the altimeter at the end of every chart glance so that the drift is caught earlier."
+      }
+    },
+    {
+      "id": "vfr_navigation-11-em07",
+      "label": "AIRSPEED CONTROL WHILE MAP READING",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power left unadjusted while attention remained on the chart, did not maintain the briefed navigation airspeed. Airspeed departed by more than 20 kt from the briefed value, the leg timing became unusable and the IP intervened to restore the aircraft state. SP had not detected the deviation before the intervention.",
+        "1": "SP, due to power left unadjusted while attention remained on the chart, allowed the navigation airspeed to drift from the briefed value. Airspeed reached 20 kt from the briefed value and SP adjusted the power only after the IP called it verbally. No control intervention by the IP was needed and the leg timing was recalculated afterwards.",
+        "2": "SP, due to a delayed power adjustment during a checkpoint identification, let the navigation airspeed drift from the briefed value. SP detected the deviation at approximately 15 kt, corrected the power unprompted and re-established the briefed airspeed before the leg timing was materially affected. Airspeed remained within +/- 10 kt for the rest of the route.",
+        "3": "SP maintained the briefed navigation airspeed within +/- 10 kt while carrying out the map reading task. SP adjusted the power promptly whenever a trend appeared and kept the leg timing consistent with the flight plan. Airspeed control was accurate throughout the navigation.",
+        "4": "SP held the briefed navigation airspeed with negligible deviations for the entire route. SP anticipated the power requirement at each altitude and configuration change so that no correction was needed at the checkpoints. Leg timing matched the flight plan on every leg.",
+        "marginal": "SP maintained the briefed navigation airspeed within standards, but the airspeed decayed slightly on every leg where a checkpoint identification took longer than expected. The trend is toward accumulating timing error over the route, and SP is expected to include the airspeed indicator in the scan between chart glances so that the power is adjusted before the drift develops."
+      }
+    },
+    {
+      "id": "vfr_navigation-11-em08",
+      "label": "HEADING CONTROL WHILE MAP READING",
+      "mif_row": null,
+      "source": "specific:HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unmonitored heading indicator while the chart was in use, did not maintain the briefed heading between checkpoints. Heading departed by more than 10 degrees from the briefed value, the ground picture no longer matched the chart at all and the IP intervened to re-establish the heading. SP had not recognized the divergence before the intervention.",
+        "1": "SP, due to an unmonitored heading indicator while the chart was in use, allowed the briefed heading to drift between checkpoints. Heading reached 10 degrees from the briefed value and SP returned to it only after the IP prompted verbally, by which time the expected ground picture no longer matched. The correction was flown by SP without control intervention.",
+        "2": "SP, due to a relaxed heading hold during a chart glance, drifted from the briefed heading between two checkpoints. SP detected the divergence at approximately 8 degrees, returned to the briefed heading unprompted and re-acquired the expected ground picture on the correct side. Heading remained within +/- 5 degrees on the remaining legs.",
+        "3": "SP maintained the briefed heading within +/- 5 degrees throughout the map reading task. SP referenced the heading indicator between chart glances and applied small corrections before any divergence could develop. The expected ground picture matched the chart on every leg.",
+        "4": "SP held the briefed heading with negligible deviations across the whole route, including during the checkpoint identifications. SP applied wind corrections that kept the ground picture exactly as anticipated at each point. Heading control was entirely unaffected by the chart workload.",
+        "marginal": "SP maintained the briefed heading within standards, but a consistent drift to one side appeared during every extended chart glance and was corrected only afterwards. The trend is toward a mismatch between the expected and the observed ground picture on longer legs, and SP is expected to reconfirm the heading indicator immediately after each chart glance."
+      }
+    },
+    {
+      "id": "vfr_navigation-11-em09",
+      "label": "USE OF THE CHART AS THE PRIMARY NAVIGATION REFERENCE",
+      "mif_row": null,
+      "source": "general:a,b,c",
+      "hf_concept": "hf-over-reliance-on-automation",
+      "texts": {
+        "0": "SP, due to reliance on the automated navigation solution in place of the chart, did not perform map reading and identified no ground points near the flight path. SP flew the route by following the navigation display alone and could not state the position relative to the terrain when asked, so the IP took over the navigation task. The map reading technique was not demonstrated at any stage of the sortie.",
+        "1": "SP, due to reliance on the automated navigation solution in place of the chart, used the navigation display as the primary reference and consulted the map only after the IP directed it. SP then identified the ground points correctly, but each identification came after the point had already passed abeam. No IP control intervention was required.",
+        "2": "SP, due to an early preference for the navigation display, began the route by confirming position from the equipment rather than from the terrain. SP recognized the omission unprompted, reverted to the Time - Map - Ground cycle with the chart as the primary reference and identified the subsequent ground points correctly and before they passed abeam. Basic flight parameters stayed within the limits throughout.",
+        "3": "SP used the chart as the primary navigation reference and identified the ground points from the terrain picture, treating the on-board equipment only as a cross-check. SP maintained a continuous position estimate independent of the equipment and held altitude within +/- 150 ft, airspeed within +/- 10 kt and heading within +/- 5 degrees. Map reading was demonstrated fully throughout the route.",
+        "4": "SP navigated entirely by map reading, calling each ground point from the terrain before any confirmation from the on-board equipment. SP used the equipment only to verify what had already been established from the chart, with negligible deviations in the flight parameters. Independent position awareness was maintained without interruption from departure to recovery.",
+        "marginal": "SP used the chart as the primary navigation reference within standards, but reached for the navigation display first whenever a ground point was not immediately recognized. The trend is toward the equipment replacing the map reading cycle in the harder segments, and SP is expected to complete the Time - Map - Ground cycle before any cross-check with the on-board equipment."
+      }
+    }
+  ]
+}

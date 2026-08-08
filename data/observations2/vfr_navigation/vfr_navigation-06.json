@@ -1,0 +1,162 @@
+{
+  "item_id": "vfr_navigation-06",
+  "item_name": "IN-FLIGHT PLANNING / FORMATION INTERGRITY",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [6],
+  "mif_rows": [
+    { "sn": 6, "row_name": "In flight Planning/ Formation Consistency" }
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-06-em01",
+      "label": "ALTITUDE CONTROL DURING IN-FLIGHT PROFILE MODIFICATION",
+      "mif_row": null,
+      "source": "specific:ALTITUDE* (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to recomputing the route head-down with the aircraft left untrimmed, did not maintain the assigned leg altitude while modifying the mission profile. Altitude wandered more than 400 feet low and continued to decay toward the leg safety altitude without being detected. IP took control of the vertical flight path and levelled the aircraft before SP registered the deviation.",
+        "1": "SP, due to fixation on the navigation chart throughout the profile change, did not hold the assigned leg altitude. Altitude reached 300 feet off the cleared level and was recovered only after IP called the deviation twice from the rear cockpit. The correction came from verbal prompting alone and after several miles of track had been flown out of level.",
+        "2": "SP, due to a late power reduction after the climb to the new leg altitude, allowed the aircraft to settle about 200 feet above the assigned level. SP detected the deviation on the next altimeter cross-check and re-established the level inside the following turn with no IP input. The remainder of the leg was flown within 150 feet.",
+        "3": "SP maintained the assigned altitude on every leg within 150 feet, including through the climb and descent segments imposed by the in-flight profile modification. Level-offs were anticipated and power was set so that no overshoot occurred. The altimeter cross-check stayed regular across the whole navigation.",
+        "4": "SP held every leg altitude to within a few tens of feet, including during the recomputed climb and descent segments required by the weather deviation. Each level-off was flown with the power lead point set correctly and no overshoot. Deviations from the planned vertical profile were negligible.",
+        "marginal": "SP kept the leg altitudes within standards, but the deviations sat close to the upper edge of the tolerance and were consistently in the same direction, high after each climbing leg. The trend is toward a cross-check exercised after the altitude has already drifted rather than one that prevents the drift. SP is expected to tighten the altimeter scan during profile changes and hold the assigned level within half the tolerance on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-06-em02",
+      "label": "AIRSPEED CONTROL WHILE REVISING THE PROFILE",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to leaving the power lever at the transit setting while working on the revised route, did not maintain the planned leg airspeed. Speed decayed more than 25 knots below the planned value and the times SP had just recomputed became unusable within two legs. IP set the power and directed the airspeed back to the planned figure before the next turning point.",
+        "1": "SP, due to attention absorbed by the fuel recomputation, did not hold the planned leg airspeed. Airspeed reached 20 knots off the planned value and was restored only after IP prompted for a power check on the intercom. The correction was made on verbal direction alone and after the leg time had already run about a minute long.",
+        "2": "SP, due to a power setting selected before the new altitude was established, first flew the revised leg about 15 knots fast. SP recognised the discrepancy at the leg midpoint, adjusted power and re-established the planned airspeed without IP intervention. The remaining legs were flown within 10 knots and the recomputed times held.",
+        "3": "SP maintained the planned leg airspeed within 10 knots throughout the navigation, including on the legs flown at the revised altitudes. Power was reset promptly after every altitude change so that ground speed matched the figures used for the in-flight recomputation. No airspeed correction was required from IP.",
+        "4": "SP flew each leg at the planned airspeed with deviations of only a few knots, resetting power immediately at every altitude and configuration change. The recomputed leg times were met to within seconds because the airspeed held exactly what the computation assumed. Deviations from the planned speed schedule were negligible.",
+        "marginal": "SP held the planned airspeed within standards, but each correction was applied late and the speed was allowed to drift toward the tolerance edge before being noticed. The trend is toward chasing the airspeed after a deviation has built rather than setting a known power value for the leg. SP is expected to use precomputed power settings for each altitude band and keep the leg airspeed inside half the tolerance next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-06-em03",
+      "label": "HEADING PRECISION ON THE REVISED TRACK",
+      "mif_row": null,
+      "source": "specific:HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a heading computed from the wrong chart line during the in-flight amendment, did not fly the revised leg heading. The aircraft was flown more than 15 degrees off the required heading and diverged progressively from the intended ground track. IP had to give the correct heading to steer and monitor the roll-out onto it.",
+        "1": "SP, due to an incomplete compass cross-check after the turn onto the amended leg, did not hold the required heading. The aircraft settled 10 degrees off the computed heading and was corrected only after IP pointed out the discrepancy between the heading indicator and the planned value. The heading was regained on verbal prompting and after a noticeable delay.",
+        "2": "SP, due to rolling out early from the turn onto the new leg, initially held a heading about 8 degrees off the computed value. SP identified the error on the first heading cross-check, applied a measured correction and re-established the required heading without IP input. The rest of the leg was flown inside 5 degrees.",
+        "3": "SP flew each amended leg heading within 5 degrees of the computed value, rolling out on heading directly from every turn. Heading was cross-checked against the computed figure at each turning point and small corrections were applied immediately. No heading input was required from IP.",
+        "4": "SP rolled out on the exact computed heading at every turning point and held it with deviations of only one or two degrees for the whole leg. Heading, track and time stayed matched throughout the amended route with no accumulating error. Deviations from the planned heading schedule were negligible.",
+        "marginal": "SP maintained the required headings within standards, but corrections were made in large single inputs that overshot and then required a second correction back. The trend is toward heading control by successive overshoots rather than by small anticipated corrections. SP is expected to apply corrections proportional to the error and roll out on the computed heading directly in the next navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-06-em04",
+      "label": "PROFILE MODIFICATION TO AVOID UNFAVOURABLE WEATHER",
+      "mif_row": null,
+      "source": "general:a,k,l",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to continuation of the plan after the information that invalidated it had already been received, did not modify the mission profile to avoid the unfavourable weather ahead. SP flew the briefed leg into deteriorating visibility with no alternative track prepared and no request to deviate. IP took control, turned the aircraft away from the weather and directed the modified profile.",
+        "1": "SP, due to continuation bias in maintaining the planned route after the conditions along it had clearly deteriorated, did not modify the mission profile in time. SP began the deviation only after IP had twice pointed out the cloud build-up on the leg. The profile was eventually modified safely but only through verbal direction and after the aircraft had closed to the edge of the usable visibility.",
+        "2": "SP, due to an initial deviation heading chosen without allowing for the extent of the cloud, first turned onto a track that would still have entered the affected area. SP reassessed the picture within the turn, selected a wider deviation and returned to the planned track after passing the weather, all without IP intervention. The modified profile kept the aircraft clear throughout.",
+        "3": "SP modified the mission profile appropriately to avoid the unfavourable weather encountered, selecting a deviation that kept the aircraft clear with a usable margin. The track was regained as soon as the affected area was passed and the sortie objectives were preserved. The modification was proposed and flown without prompting.",
+        "4": "SP recognised the developing weather well before it became a factor and modified the mission profile with a deviation that cost minimal time and fuel while keeping a generous margin from the affected area. The return to the planned track was flown at the earliest safe point and the recomputed times were already available when the track was regained. Deviations from the ideal solution were negligible.",
+        "marginal": "SP modified the profile within standards, but the decision was taken only when the weather had become an immediate factor rather than while options were still open. The trend is toward reacting to conditions at the last usable moment instead of deciding at a named decision point. SP is expected to set explicit deviation criteria before each leg and act on them as soon as they are met."
+      }
+    },
+    {
+      "id": "vfr_navigation-06-em05",
+      "label": "IN-FLIGHT FUEL, TIME AND DISTANCE COMPUTATION",
+      "mif_row": null,
+      "source": "general:b,l",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to using the planned ground speed instead of the actual one after the deviation, did not compute fuel in flight correctly against time and distance. The fuel remaining figure SP reported for the turning point was wrong by a margin that would have concealed a shortfall on the return leg. IP recomputed fuel, time and distance and issued the corrected figures to SP.",
+        "1": "SP, due to an interrupted fuel check that was never completed, did not produce the in-flight fuel and time figures at the turning point. SP arrived at the correct numbers only after IP prompted for each element in turn, fuel remaining, time to run and distance to go. The computation reached the minimum acceptable standard solely through verbal guidance and well after the turning point.",
+        "2": "SP, due to reading the wrong leg line on the flight log, first computed a time to the next turning point that was inconsistent with the fuel used. SP noticed the mismatch during the routine fuel check, recomputed from the correct leg and had valid figures before the turning point, without IP input. Fuel and time were then tracked correctly for the remainder of the sortie.",
+        "3": "SP computed fuel in flight precisely in relation to time and distance, updating the figures at every turning point and after the profile modification. The fuel remaining at each check matched the computed value and the reserve was tracked against the planned minimum. No computation required correction by IP.",
+        "4": "SP maintained a continuously updated fuel, time and distance picture, recomputing immediately after the deviation and cross-checking the result against actual fuel flow. Every turning point figure was available before the aircraft reached it and matched the indicated fuel to within a few pounds. Errors in the in-flight computation were negligible.",
+        "marginal": "SP computed fuel, time and distance within standards, but the checks were done only at the turning points and the figures were carried forward without allowance for the changed ground speed. The trend is toward computations that are formally correct yet lag the actual state of the aircraft. SP is expected to update the fuel and time picture whenever speed, altitude or track changes, not only at fixed points."
+      }
+    },
+    {
+      "id": "vfr_navigation-06-em06",
+      "label": "IN-FLIGHT AMENDMENT OF THE FLIGHT PLAN",
+      "mif_row": null,
+      "source": "general:c,l",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to amending the flight plan without re-reading the entries back against the chart, made errors in the in-flight modification. The revised leg sequence contained a turning point that no longer matched the track flown and the revised ETAs were carried over from the original plan. IP had to stop the amendment, correct the log and dictate the valid sequence.",
+        "1": "SP, due to attempting the flight plan amendment while simultaneously flying the turn, entered the revised legs with errors in headings and times. The log was made usable only after IP identified each incorrect entry from the rear cockpit. The amendment was completed on verbal prompting and after the aircraft had already passed the affected turning point.",
+        "2": "SP, due to writing the revised heading before the new distance had been measured, first entered an inconsistent leg on the flight log. SP cross-checked the entry against the chart, corrected the heading and time and had a coherent amended plan before the turn, with no IP intervention. The remaining amendments were entered correctly at the first attempt.",
+        "3": "SP modified the flight plan in flight without making mistakes, entering revised headings, distances, times and fuel figures that were consistent with each other and with the chart. Each amendment was completed before the aircraft reached the affected turning point. The log remained legible and usable throughout the sortie.",
+        "4": "SP amended the flight plan in flight with complete accuracy and without interrupting aircraft control, producing revised headings, times and fuel figures that were cross-checked against the chart as they were written. The amended log was complete before the aircraft reached the deviation point and required no further change. Errors in the amendment were negligible.",
+        "marginal": "SP amended the flight plan within standards, but each entry was written and then reworked once, and the log became difficult to read at the amended legs. The trend is toward an amendment process that produces a correct final answer through repeated correction rather than at the first attempt. SP is expected to measure and confirm each element before writing it, and to keep the amended log legible for later use."
+      }
+    },
+    {
+      "id": "vfr_navigation-06-em07",
+      "label": "SAFETY ALTITUDE, OBSTACLE CLEARANCE AND VFR ALTITUDE RULES",
+      "mif_row": null,
+      "source": "general:d,e,g",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to lack of awareness of a published restriction that was available in the briefing material, did not modify the flight altitude so that minimum altitudes with respect to obstacles were preserved. SP descended for the weather deviation below the leg safety altitude and was unable to state the RAA or the safety altitude for the leg when asked. IP arrested the descent and directed a climb back to a legal and safe level.",
+        "1": "SP, due to lack of awareness of the terrain profile on the amended leg, did not apply the correct safety altitude to the modified route. The aircraft was levelled at an altitude that met the leg minimum only after IP stated the required figure. SP recalled the semicircular rule and the affected airport altitudes only when prompted item by item.",
+        "2": "SP, due to applying the safety altitude of the original leg to the amended one, initially selected a level that was correct for terrain but not for the semicircular rule on the new heading. SP identified the discrepancy while writing the amendment, climbed to the correct VFR level and confirmed the leg safety altitude, without IP input. Obstacle clearance was preserved at every stage.",
+        "3": "SP modified the flight altitude so that minimum altitudes with respect to obstacles were never violated and the level flown complied with the semicircular rule for the heading in use. SP stated the safety altitude for each leg and the RAA when asked, and accounted for the altitudes affecting the nearby airports. No altitude selection required correction by IP.",
+        "4": "SP had the safety altitude of every leg, the RAA and the altitude limits imposed by the nearby airports available without reference to notes, and applied them immediately when the profile was modified. Each amended level satisfied terrain clearance, the semicircular rule and the airport constraints simultaneously and was selected before the turn onto the leg. Errors of altitude selection were negligible.",
+        "marginal": "SP kept the altitudes legal and clear of obstacles within standards, but the leg safety altitude and the RAA were recalled only after a pause and by reading them from the log. The trend is toward altitude limits that are looked up rather than held actively while the profile is being changed. SP is expected to carry the leg safety altitudes, the RAA and the affected airport altitudes as ready knowledge on the next navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-06-em08",
+      "label": "ALTITUDE CORRECTION TECHNIQUE DURING TURNS",
+      "mif_row": null,
+      "source": "general:f",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to failing to add back pressure and power as bank was applied, did not use altitude correction techniques properly during the turns onto the amended legs. The aircraft lost more than 300 feet in the turn and the recovery was made with a nose-high attitude that then produced a climb through the assigned level. IP took control during the second turn to re-establish the level flight path.",
+        "1": "SP, due to a scan that stopped at the attitude indicator once bank was established, did not apply the altitude corrections required in the turn. Altitude reached 300 feet low by the roll-out and was recovered only after IP called for a pitch correction. The technique was applied on direction rather than on SP's own cross-check.",
+        "2": "SP, due to applying back pressure only after the bank had passed thirty degrees, allowed about 200 feet of altitude loss early in the turn. SP recognised the trend from the vertical speed indication, corrected pitch and power and rolled out on the assigned altitude without IP input. The subsequent turns were flown with the correction applied as bank was established.",
+        "3": "SP used altitude correction techniques properly during turns, adding back pressure and power as bank was applied and reducing them at roll-out. Altitude was held within 150 feet through every turn of the amended route. The instrument cross-check continued normally while the turn was flown.",
+        "4": "SP flew every turn of the navigation with the altitude effectively constant, anticipating the pitch and power requirement at the entry and removing it precisely at the roll-out. Altitude excursions in the turns were of a few tens of feet and never in a consistent direction. Deviations from the level flight path were negligible.",
+        "marginal": "SP applied the altitude correction techniques within standards, but the corrections were reactive, applied after the vertical speed indication had already moved rather than as the bank was established. The trend is toward turns in which altitude is recovered rather than held. SP is expected to lead the pitch and power requirement at turn entry so that the altitude does not move in the first place."
+      }
+    },
+    {
+      "id": "vfr_navigation-06-em09",
+      "label": "HEADING CHANGE AND REGAINING THE INTENDED GROUND TRACK",
+      "mif_row": null,
+      "source": "general:h,i,j,k",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not comparing the actual ground track with the planned one at any point of the leg, did not modify the aircraft heading to return to the intended track. The aircraft was allowed to drift progressively off track until the planned turning point could no longer be identified visually. IP directed the heading change required to regain the track and identified the turning point for SP.",
+        "1": "SP, due to a track error that was recognised but not quantified, did not execute an adequate heading change to correct the ground track. SP applied a token correction that did not close the displacement and returned to track only after IP specified the heading to fly. The track was regained through verbal direction and after a significant delay.",
+        "2": "SP, due to an initial correction based on an estimated rather than measured track error, first regained the intended track more slowly than required. SP re-measured the displacement at the next visual fix, increased the correction and rolled out on a heading that closed the track error in good time, without IP input. Subsequent legs were flown on track.",
+        "3": "SP modified the heading whenever necessary to avoid obstacles and to return to the intended track, turning and rolling out on the required heading each time. Track errors were identified at the first visual fix and corrected by a measured heading change that closed the displacement promptly. No heading direction was required from IP.",
+        "4": "SP detected the developing track error at the earliest visual fix and applied a single computed heading change that regained the intended track at the exact point planned. Every turn was rolled out on the required heading with no secondary correction, and the deviation caused by the weather was closed in the shortest practicable distance. Track-keeping errors were negligible.",
+        "marginal": "SP regained the intended track within standards, but the corrections were applied at the turning points only, so the aircraft flew the middle portion of each leg displaced from track. The trend is toward correcting track at fixed points rather than continuously against visual fixes. SP is expected to compare ground track with the planned track at every identifiable feature and correct as soon as a displacement is seen."
+      }
+    },
+    {
+      "id": "vfr_navigation-06-em10",
+      "label": "IP COORDINATION AND FORMATION INTEGRITY DURING THE DEVIATION",
+      "mif_row": null,
+      "source": "general:l,m",
+      "hf_concept": "hf-leadership-and-followership",
+      "texts": {
+        "0": "SP, due to acting on own initiative without any coordination with the other cockpit, deviated from the planned track without IP permission and without stating the reason or the intended new heading. In the formation phase the position relative to lead was abandoned during the turn and the element separation was lost. IP took control, re-established the formation position and directed the coordinated deviation.",
+        "1": "SP, due to reluctance to state a proposal to the instructor, delayed the request to deviate and announced the track change only after it had begun. The intention was clarified and the formation position was re-established only after IP asked directly what SP was doing. Coordination and formation integrity reached the minimum standard through IP questioning rather than SP initiative.",
+        "2": "SP, due to a request phrased without the intended heading or the expected time off track, initially left IP without the information needed to approve the deviation. SP recognised the omission, restated the proposal completely with heading, reason and estimated return point, and flew the deviation while holding the briefed formation position, with no IP intervention. The corresponding formation items were applied throughout.",
+        "3": "SP deviated from the planned track only when objective difficulties were present, requested IP permission before initiating the change and stated the heading, the reason and the intended return to track. The recomputation of time and fuel followed immediately. Formation position and the corresponding formation criteria were maintained throughout the modification.",
+        "4": "SP coordinated the deviation with IP before it was needed, presenting the reason, the proposed heading, the time and fuel penalty and the intended return point in one concise transmission. The formation position was held precisely through the whole modified profile and the corresponding formation items were applied without any degradation of integrity. Coordination shortfalls were negligible.",
+        "marginal": "SP coordinated the deviation and held the formation within standards, but the request to IP was made at the point the turn was required rather than in advance, leaving no time for discussion. The trend is toward informing the other cockpit at the moment of action instead of proposing and agreeing beforehand. SP is expected to raise the proposed track change while options still exist and to state heading, reason and return point in the initial call."
+      }
+    }
+  ]
+}

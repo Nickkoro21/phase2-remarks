@@ -1,0 +1,132 @@
+{
+  "item_id": "formation-20",
+  "item_name": "CROSS UNDER",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [20],
+  "mif_rows": [
+    {"sn": 20, "row_name": "Position Change (Cross Under)"}
+  ],
+  "error_modes": [
+    {
+      "id": "formation-20-em01",
+      "label": "Altitude control through the position change",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to back pressure released while unloading the aircraft to move aft and under the leader, did not hold the formation altitude during the position change. The result was a descent of more than 300 feet below the formation altitude, developed inside the crossing and not arrested. The IP took the controls to stop the sink and to reposition the aircraft in the formation.",
+        "1": "SP, due to a pitch input that was not coordinated with the power reduction, did not keep the formation altitude while crossing behind the leader. Altitude reached the 300 feet limit low, and the deviation stopped growing only after repeated verbal indications from the IP. The recovery to the formation altitude was slow and required a second prompt.",
+        "2": "SP, due to a power reduction applied without the matching pitch correction, did not hold altitude constant through the crossing. Altitude deviated between 150 and 300 feet below the formation altitude at the aft point of the maneuver. SP recognized the trend on the altimeter, corrected it in time and re-established the formation altitude without any intervention.",
+        "3": "SP held the formation altitude throughout the cross under, with deviation contained inside 150 feet. Pitch and power inputs were coordinated as the aircraft moved aft, across and back up into position. Any excursion was detected and corrected at once.",
+        "4": "SP completed the whole position change with negligible altitude excursion, effectively unchanged from the formation altitude and far inside the 150 feet band. Pitch control remained precise while the visual reference shifted from one side of the leader to the other, and no correction of the vertical position was needed after stabilization.",
+        "marginal": "SP stayed inside the altitude standards during the cross under, but on two crossings the deviation approached the tighter 150 feet band and always on the low side under the leader. The trend indicates that back pressure is relaxed as SP moves aft, and that the recovery of altitude is left to the end of the maneuver. Expected improvement is to hold the vertical position within a stable narrow band from the start to the completion of the crossing."
+      }
+    },
+    {
+      "id": "formation-20-em02",
+      "label": "Airspeed control during the aft displacement and the rejoin",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a power reduction far larger than the one required to generate the aft displacement, did not control the airspeed during the position change. The result was a loss of more than 20 knots against the briefed formation airspeed and an uncontrolled drop well behind the leader. The IP intervened on the throttle and on the controls to recover the position.",
+        "1": "SP, due to a power correction applied only after the separation was already visible, did not keep the airspeed inside the formation band. The deviation reached 20 knots below the formation airspeed and was reduced only after verbal indications from the IP on the power setting. The rejoin to the new position was completed late.",
+        "2": "SP, due to a late reduction and a late restoration of power around the crossing, did not keep the airspeed constant during the position change. The deviation stayed between 10 and 20 knots from the formation airspeed. SP recognized the closure difference in good time, adjusted power and stabilized the airspeed without any intervention.",
+        "3": "SP controlled the airspeed inside 10 knots of the formation airspeed for the whole cross under. Power was reduced by the amount needed for the aft displacement and restored in time for the rejoin, so that closure remained controlled. Stabilization in the new position was achieved without airspeed hunting.",
+        "4": "SP flew the position change with negligible airspeed excursion, well inside the 10 knots band and with power inputs of the exact size required. The aft displacement, the crossing and the rejoin were flown with a continuously matched closure rate. No airspeed correction was necessary after the new position was reached.",
+        "marginal": "SP kept the airspeed inside the standards during the cross under, but the deviation repeatedly approached 10 knots low on the aft displacement. The trend is toward an initial power reduction slightly larger than needed, which is then compensated at the rejoin. Expected improvement is to size the power reduction so that the airspeed variation remains small and symmetrical about the formation airspeed."
+      }
+    },
+    {
+      "id": "formation-20-em03",
+      "label": "Heading on completion of the crossing",
+      "mif_row": null,
+      "source": "specific:EXIT HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a bank input toward the new side that was not removed once the lateral displacement had been achieved, did not stabilize on the leader's heading at the completion of the crossing. The result was a divergence of more than 10 degrees from the formation heading with continued lateral travel away from the leader. The IP intervened on the controls to stop the divergence and to re-establish the position.",
+        "1": "SP, due to a delayed removal of the crossing bank, did not roll out on the formation heading at the end of the position change. The heading divergence reached 10 degrees and was reduced only after verbal indications from the IP. Alignment with the leader was regained late and with a second correction.",
+        "2": "SP, due to a rollout started after the aircraft had already reached the new lateral position, did not settle on the formation heading immediately. The divergence remained between 5 and 10 degrees. SP recognized the misalignment against the leader, corrected it promptly and stabilized on the formation heading without any intervention.",
+        "3": "SP completed the crossing aligned with the leader, with heading divergence contained inside 5 degrees. The bank used for the lateral displacement was removed at the correct point so that the aircraft arrived on the new side already tracking the formation heading. No further heading correction was required after stabilization.",
+        "4": "SP arrived in the new position with negligible heading divergence, effectively parallel to the leader and far inside the 5 degrees band. The lateral displacement was stopped exactly at the required point, and the aircraft tracked the formation heading from the moment of arrival. Lateral position remained constant without further inputs.",
+        "marginal": "SP finished the crossings inside the heading standards, but the divergence at the rollout repeatedly approached 5 degrees, always in the direction of travel. The trend indicates that the bank is held slightly beyond the point where the new lateral position has been reached. Expected improvement is to anticipate the rollout so that the aircraft arrives on the new side already aligned with the leader."
+      }
+    },
+    {
+      "id": "formation-20-em04",
+      "label": "Timely and correct execution of the position change on the leader's command",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-distraction",
+      "texts": {
+        "0": "SP, due to distraction by a secondary cockpit task during a critical phase of flight, did not execute the position change timely and correctly on the leader's command. The result was an initiation of the crossing several seconds after the signal and in the wrong direction, with the aircraft displaced toward the leader instead of aft. The IP intervened on the controls to stop the movement and to complete the change of position.",
+        "1": "SP, due to distraction by radio traffic while established in the formation, did not begin the position change at the time required by the leader's command. The crossing was started only after repeated verbal indications from the IP and after the leader had already been established in the new configuration. The sequence was then flown correctly but out of phase with the flight.",
+        "2": "SP, due to a short lapse in the visual scan of the leader after the command, did not initiate the position change at the exact moment of the signal. The result was a delay of a few seconds at the start of the crossing. SP recognized the delay, executed the remaining sequence in the correct order and completed the change of position without any intervention.",
+        "3": "SP executed the position change timely and correctly on the leader's command, without any need for IP intervention. The signal was acknowledged and the aft displacement, the crossing and the rejoin were flown in the correct sequence. The new position was established within the expected time.",
+        "4": "SP executed every position change immediately on the leader's command and in the exact briefed sequence, with no prompting of any kind. The response to the signal was instantaneous and the crossing was completed in a single continuous movement. The result was a change of position that matched the leader's expectation without any correction.",
+        "marginal": "SP executed the position changes on the leader's command within standards, but the initiation was consistently one to two seconds behind the signal. The trend is toward waiting for confirmation of the command before acting, which lengthens the time spent in transit. Expected improvement is to respond to the leader's signal immediately and to keep the whole sequence continuous."
+      }
+    },
+    {
+      "id": "formation-20-em05",
+      "label": "Longitudinal spacing within one aircraft length",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a closure rate that was not controlled with small power corrections during the aft displacement, did not keep the spacing from the leader inside one aircraft length. The result was a separation of several aircraft lengths, with the leader's aspect no longer usable as a formation reference. The IP took the controls to re-establish the position.",
+        "1": "SP, due to power corrections applied only after the separation had become visible, did not hold the spacing within the required limit. Distance from the leader reached one aircraft length during the crossing and was reduced only after verbal indications from the IP. The rejoin to the new position was completed late and with excessive closure.",
+        "2": "SP, due to an initial power reduction slightly larger than required for the displacement, did not keep the spacing constant through the crossing. The separation grew toward one aircraft length at the aft point of the maneuver. SP recognized the increasing aspect change in time, restored power and closed the spacing without any intervention.",
+        "3": "SP kept the spacing from the leader inside one aircraft length throughout the cross under. Power was used in small corrections so that the aft displacement remained the minimum needed to clear the leader. The new position was reached with the correct longitudinal reference established.",
+        "4": "SP maintained the spacing from the leader essentially constant and well inside one aircraft length for the whole position change. The aft displacement was limited to what was needed for clearance and was recovered without overshoot. The formation references remained continuously usable at every point of the crossing.",
+        "marginal": "SP remained within the spacing limit during the cross under, but on each crossing the separation approached one aircraft length before being closed. The trend is toward using distance rather than precise power control to secure clearance from the leader. Expected improvement is to keep the aft displacement small and to control it with early, small power corrections."
+      }
+    },
+    {
+      "id": "formation-20-em06",
+      "label": "Avoidance of the leader's prop wash during the crossing",
+      "mif_row": null,
+      "source": "general:c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an insufficient step down when passing behind the leader, did not keep the aircraft clear of the leader's prop wash. The result was entry into the wash with an uncommanded roll and a loss of the visual reference on the leader. The IP took the controls to recover the aircraft and to re-establish separation from the formation.",
+        "1": "SP, due to a vertical displacement started only after the aircraft had begun to move aft, did not avoid the edge of the leader's prop wash. The aircraft was buffeted while crossing and the step down was increased only after verbal indications from the IP. The remaining crossing was completed with delay and with the reference on the leader partly lost.",
+        "2": "SP, due to a step down established slightly late relative to the aft displacement, did not maintain the full vertical clearance from the leader's wake. The result was a brief light buffet at the closest point of the crossing. SP recognized the indication at once, increased the step down and completed the crossing clear of the wash without any intervention.",
+        "3": "SP kept the aircraft clear of the leader's prop wash for the whole position change. The step down was established before the aft displacement and was held until the aircraft was clear on the new side. No buffet was encountered and the visual reference on the leader was retained throughout.",
+        "4": "SP crossed under the leader with a vertical clearance that was correct and stable at every point, and no trace of wake was encountered. The step down was established early, held exactly as needed and recovered smoothly on arrival in the new position. The reference on the leader was maintained continuously and the crossing was flown in one uninterrupted movement.",
+        "marginal": "SP avoided the leader's prop wash on all crossings, but the step down was established only marginally before the aft displacement began. The trend is toward a vertical clearance that is adequate rather than comfortable at the closest point of the crossing. Expected improvement is to set the step down earlier and to hold it constant until the aircraft is fully clear on the new side."
+      }
+    },
+    {
+      "id": "formation-20-em07",
+      "label": "Minimum separation of 10 feet from No1",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": "hf-acts-errors",
+      "texts": {
+        "0": "SP, due to a perceptual error in judging closure and lateral separation, did not respect the minimum distance from No1 during the crossing. The result was an approach closer than 10 feet to the leader with continuing closure and no corrective input. The IP took the controls to open the separation and to terminate the maneuver.",
+        "1": "SP, due to a perceptual error in judging closure while the leader's aspect was changing, did not keep the separation from No1 at a safe value. The distance reached the 10 feet limit and was opened only after an immediate verbal call from the IP. The position change was then completed with the reference on the leader regained late.",
+        "2": "SP, due to a misjudged closure rate at the start of the lateral displacement, did not maintain the planned separation from No1. The distance reduced noticeably toward the leader before stabilizing well above 10 feet. SP recognized the closure early, arrested it with a small lateral correction and completed the crossing without any intervention.",
+        "3": "SP kept the separation from No1 comfortably greater than 10 feet at every point of the position change. Closure was controlled with small, early inputs and the lateral displacement was stopped exactly where required. The crossing was completed with the safety margin from the leader preserved throughout.",
+        "4": "SP flew the whole position change with a separation from No1 that was never in question, far above the 10 feet minimum and constant at every phase. Closure was anticipated rather than corrected, and the aircraft was placed in the new position with a steady lateral margin. No convergence toward the leader developed at any stage.",
+        "marginal": "SP kept the separation from No1 above the minimum on every crossing, but the lateral margin reduced more than necessary at the point of passing under the leader. The trend indicates that the closure is judged late and then stopped with a single correction. Expected improvement is to assess the closure rate earlier so that the lateral margin remains comfortable and constant during the crossing."
+      }
+    },
+    {
+      "id": "formation-20-em08",
+      "label": "Smooth, continuous and solid aircraft control",
+      "mif_row": null,
+      "source": "general:e",
+      "hf_concept": "hf-hfacs-act-nanocodes",
+      "texts": {
+        "0": "SP, due to an over-controlled aircraft (AE104) in the correction, did not control the aircraft in a smooth, continuous and solid manner during the cross under. The result was a sustained lateral oscillation about the intended path, with successive inputs that amplified rather than damped the movement. The IP took the controls to stabilize the aircraft and to establish it in the new position.",
+        "1": "SP, due to control inputs of excessive size applied in response to each visual change, did not fly the position change smoothly and continuously. The aircraft moved in a series of abrupt steps and the oscillation stopped only after verbal indications from the IP on the size of the inputs. Stabilization in the new position was reached late.",
+        "2": "SP, due to an initial control input larger than the displacement required, did not keep the movement continuous at the start of the crossing. The result was an abrupt beginning followed by a small overshoot of the intended path. SP reduced the size of the subsequent inputs, damped the movement and completed the crossing smoothly without any intervention.",
+        "3": "SP controlled the aircraft in a smooth, continuous and solid manner throughout the position change. Control inputs were proportionate to the displacement required and the aircraft moved along one continuous path from the old to the new position. No overshoot or oscillation developed at any stage.",
+        "4": "SP flew the position change as a single continuous movement, with control inputs so measured that no correction of the path was necessary. The aircraft was placed in the new position with a positive, solid stop and no residual oscillation. Control precision was maintained even while the visual reference on the leader changed side.",
+        "marginal": "SP flew the cross under within the control standards, but each crossing began with an input slightly larger than needed and was followed by a small damping correction. The trend indicates a step-wise rather than a continuous displacement. Expected improvement is to size the initial input to the required displacement so that the aircraft moves along one smooth path and stops positively in the new position."
+      }
+    }
+  ]
+}

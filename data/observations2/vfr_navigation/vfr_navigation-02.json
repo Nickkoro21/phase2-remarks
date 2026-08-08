@@ -1,0 +1,130 @@
+{
+  "item_id": "vfr_navigation-02",
+  "item_name": "GROUND PROCEDURES",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [2],
+  "mif_rows": [{"sn": 2, "row_name": "Ground Procedures"}],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-02-em01",
+      "label": "NAVIGATION ROUTE PLANNING AND ENERGY PLAN",
+      "mif_row": null,
+      "source": "general:exec-1,exec-4",
+      "hf_concept": "hf-briefing-and-threat-identification",
+      "texts": {
+        "0": "SP, due to mission planning that did not address the forecast weather at the recovery time, did not plan the navigation sortie according to aircraft energy planning and did not prepare the alternate route at all. Leg headings, leg times and the fuel checkpoints of the route were left undefined and the mission planning sheets were still incomplete at step-in. IP had to recompute the route fuel and impose a turnaround point on the ground before the sortie could be flown.",
+        "1": "SP, due to a threat present in the minimum threat set but not identified during planning, did not take the forecast headwind on the outbound legs into consideration and left the alternate route unplanned. The planning sheets were brought to an acceptable state only after IP indicated each missing leg time and fuel figure in turn. The plan reached the lower limit of the requirement solely through verbal prompting and delayed step-in.",
+        "2": "SP, due to a currency shortfall that was not addressed at the start of the planning phase, first built an energy plan that did not cover the second leg of the route at the planned altitude. SP detected the shortfall while cross-checking the planning sheet against the Flight Manual and recomputed leg fuel, leg times and the alternate route before the brief, without IP intervention. The corrected plan covered the full route with the required reserve.",
+        "3": "SP planned the navigation sortie suitably, according to aircraft energy planning and own training level, taking into consideration all the data required for mission planning. Route legs, headings, leg times, fuel checkpoints and the alternate mission were computed correctly and the planning sheets were complete and legible before the brief. No figure required correction by IP.",
+        "4": "SP produced a navigation plan of exceptional quality, with leg times, fuel checkpoints and the alternate route computed to the minute and cross-checked against the Flight Manual and the Local Area Procedures. Every contingency raised during the brief was already supported by figures SP had prepared in advance. Deviations from the ideal plan were negligible.",
+        "marginal": "SP planned the sortie within standards, but the energy plan rested on the minimum route fuel with no usable reserve and the alternate mission was worked out in outline only. The trend is toward a plan that satisfies the requirement on paper while leaving no margin for a diversion or a delayed recovery. SP is expected to build the alternate route to the same level of detail as the primary one on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-02-em02",
+      "label": "MISSION BRIEFING EXECUTION AND DECLARATION OF TRAINING HANDICAPS",
+      "mif_row": null,
+      "source": "general:exec-2,exec-3",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to preparation limited to reading the route on the map without rehearsing the briefing sequence, did not execute the mission briefing according to the Mission Briefing Guide and omitted the route, checkpoint and lost procedures paragraphs entirely. SP also did not inform IP of the navigation sorties missed earlier in the syllabus. IP had to stop the brief and deliver the missing items himself before the sortie could proceed.",
+        "1": "SP, due to a briefing board completed in the last minutes before the brief, covered the items out of the order of the Mission Briefing Guide and passed over the emergency and lost procedures paragraphs until IP called for them. The handicap in low level chart reading was declared only after direct questioning by IP. The brief reached the lower limit of the standard through repeated verbal prompting.",
+        "2": "SP, due to the map and the planning sheet being laid out only at the briefing table, started the brief without the weather and NOTAM items in their proper sequence. SP recognized the omission at the end of the first paragraph, returned to the correct point of the Mission Briefing Guide and completed the remaining items in order, without IP intervention. Own training handicaps were declared unprompted.",
+        "3": "SP took part in and executed the mission briefing according to the Mission Briefing Guide, covering route, checkpoints, timings, weather, emergencies and lost procedures in the prescribed order. SP informed IP of the handicaps accumulated so far in training without being asked. The brief required no addition or correction by IP.",
+        "4": "SP delivered the mission briefing to an exceptional standard, following the Mission Briefing Guide item by item and supporting each route paragraph with the computed figures and the alternate mission. SP declared own training handicaps and proposed how the sortie would address them. Nothing of substance remained for IP to add.",
+        "marginal": "SP briefed within standards, but the route and checkpoint paragraphs were delivered from the planning sheet almost word for word, with little evidence that the picture had been built mentally. The trend is toward a brief that is complete in form but shallow in content, which will not support the higher navigation sorties. SP is expected to brief the route from the chart, without reading, on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-02-em03",
+      "label": "CHECKLIST DISCIPLINE AND STANDARDIZATION",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to running the checks from memory in order to make the briefed taxi time, did not execute the checks according to the checklist and left the fuel quantity and the navigation equipment items unread. Two items of the Before Taxi check were never performed and the sequence was not standardized at any point. IP had to halt the flow and run the check from the beginning.",
+        "1": "SP, due to a rushed strap-in that started the flow behind the briefed timeline, performed the checks in a non standardized order and read several items without confirming the corresponding indication. Each omitted item was completed only after IP called it out. The check was brought to the lower limit of the standard through verbal prompting alone.",
+        "2": "SP, due to an interruption by the ground crew during the cockpit check, initially skipped two items of the Before Taxi flow. SP noticed the break in the sequence at the end of the page, returned to the interruption point and completed the remaining items in the standardized order, without IP intervention. The check was finished within the ground timeline.",
+        "3": "SP executed all checks according to the checklist, without IP intervention, in an impeccable and standardized manner. Each item was read, actioned and confirmed against the corresponding indication in the prescribed order. The whole ground flow was completed within the briefed timeline.",
+        "4": "SP executed the checks to an exceptional standard, with a rhythm and a standardized flow that left every indication confirmed and every switch position verified. SP absorbed an interruption by the ground crew without breaking the sequence and resumed at the exact item. No deviation from the checklist discipline was observable.",
+        "marginal": "SP executed the checks within standards, but the pace was uneven and several items were confirmed with a glance rather than with a deliberate check of the indication. The trend is toward a flow that keeps the words of the checklist while losing its verification value. SP is expected to slow the flow and confirm each indication explicitly on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-02-em04",
+      "label": "COMPLETENESS OF THE LAP AND SOP GROUND SEQUENCE",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an out of sequence ground flow built around the aircraft rather than around the published order, skipped procedures required by the Local Area Procedures and the SOPs, including the walk around of the external stores and the ground frequency check. The sortie could not have been released with the sequence as executed. IP had to intervene and impose the published order of the ground phase.",
+        "1": "SP, due to attention absorbed by an unrelated cockpit indication, omitted the arming and the pre taxi radio procedures of the SOPs and began the flow only after IP restated the published sequence. The remaining procedures were completed in the correct order but each transition required a verbal cue. The ground phase met the lower limit of the standard and ran past the briefed timeline.",
+        "2": "SP, due to a ground flow started before the aircraft documents had been reviewed, initially left out the acceptance procedure required by the Local Area Procedures. SP identified the gap while cross-checking the forms and executed the missing procedure before engine start, without IP intervention. The rest of the ground sequence followed the SOPs in the published order.",
+        "3": "SP did not skip any procedure required by the Local Area Procedures and the SOPs, and executed the normal ground procedures described in the Flight Manual in the published order. The documents, the acceptance and the pre taxi procedures were all completed. The ground phase was released without any addition by IP.",
+        "4": "SP executed the ground sequence to an exceptional standard, with every Local Area Procedure and SOP requirement completed in the published order and without a single prompt. SP also identified a discrepancy in the aircraft forms and resolved it with the ground crew before it could affect the timeline. Nothing in the sequence was left to be covered by IP.",
+        "marginal": "SP completed the ground sequence within standards, but the order was recovered rather than planned, with two procedures executed only after SP recognized they were about to be passed. The trend is toward a sequence that is complete at the end but not disciplined in its progress. SP is expected to follow the published order from the first item on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-02-em05",
+      "label": "GROUND CREW COORDINATION AND CLEARANCE BEFORE SWITCH OR CONTROL MOVEMENT",
+      "mif_row": null,
+      "source": "general:c,e",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, due to an indirect hint instead of a direct statement of the intended action, did not cooperate with the ground crew without allowing misapprehensions and moved the flight controls while the crew chief was still at the wing. SP was not aware of the ground crew position before activating the switch and no acknowledgement was obtained. IP had to intervene physically to stop the action.",
+        "1": "SP, due to failure to pass a required call at the briefed point, started the engine sequence with a hand signal that the ground crew read differently from the one intended. SP confirmed the crew position and the intention only after IP called for the acknowledgement. Coordination was restored at the lower limit of the standard and only through the verbal cue from the rear cockpit.",
+        "2": "SP, due to lack of communication of the recognized problem to the ground crew, initially began the control check without a clear signal that the area was clear. SP stopped the action on own initiative, established eye contact with the crew chief, obtained the acknowledgement and repeated the check correctly, without IP intervention. The remaining ground coordination was unambiguous.",
+        "3": "SP cooperated with the ground crew without allowing misapprehensions and was aware of the crew position before activating any switch or moving any aircraft control. Every signal was given clearly and acknowledged before the corresponding action. No coordination item required IP intervention.",
+        "4": "SP coordinated with the ground crew to an exceptional standard, confirming the position of every person around the aircraft before each switch and control movement and using unambiguous signals throughout. SP also anticipated the crew chief needs at the chocks and the fire guard position without being prompted. No misapprehension arose at any point of the ground phase.",
+        "marginal": "SP coordinated with the ground crew within standards, but two signals were given while looking inside the cockpit and the acknowledgement was assumed rather than seen. The trend is toward coordination that works because the crew chief compensates for it. SP is expected to confirm the acknowledgement visually before every switch and control movement on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-02-em06",
+      "label": "AIRCRAFT CONDITION ASSESSMENT, FLIGHT PERMISSIBILITY AND HANDLING OF LEVERS AND SWITCHES",
+      "mif_row": null,
+      "source": "general:d,i",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a preflight inspection conducted without reference to the Flight Manual sequence, did not specify the aircraft condition correctly and declared it fit for flight with an open write up in the forms that affected the navigation equipment. SP also selected the wrong switch position for the transponder and the navigation radio during the cockpit check. IP had to reassess the aircraft condition and correct both selections before start.",
+        "1": "SP, due to the aircraft forms being reviewed after the walk around rather than before it, reached a decision on flight permissibility that was hesitant and was reversed twice. Two levers were placed in the correct position only after IP named them. The assessment and the switch selections met the lower limit of the standard through verbal prompting alone.",
+        "2": "SP, due to a walk around started from the wrong side of the aircraft, initially missed a fluid trace at the main gear and continued toward the cockpit. SP returned to the position on own initiative, examined it, discussed it with the ground crew and reached a correct and confident decision on flight permissibility, without IP intervention. All levers and switches were subsequently set correctly on the first attempt.",
+        "3": "SP specified the aircraft condition and decided its flight permissibility correctly and confidently, on the basis of the walk around and the aircraft forms. SP knew and used correctly all aircraft levers and switches during the ground phase. No assessment or selection required correction by IP.",
+        "4": "SP assessed the aircraft condition to an exceptional standard, correlating the walk around findings with the open entries in the forms and stating the flight permissibility decision with clear justification. Every lever and switch was identified and set correctly without hesitation and without a single misselection. The whole assessment stood without any input from IP.",
+        "marginal": "SP assessed the aircraft condition within standards, but the decision on flight permissibility was expressed tentatively and the selection of two less used switches required a visible search of the panel. The trend is toward knowledge that is adequate on the ground but will be slow under time pressure. SP is expected to state the permissibility decision without hesitation and to locate every switch by position on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-02-em07",
+      "label": "TAXI ROUTE COMPLIANCE, GROUND PATH CLEARANCE AND STOPPING",
+      "mif_row": null,
+      "source": "general:f,g,h",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to attention held on the kneeboard route card while the aircraft was moving, did not follow the specified taxi route and turned onto the parallel taxiway against the published direction. SP did not ensure that the ground path was clear of obstacles and allowed the aircraft to creep during the leak check. The stops were abrupt and oscillatory and IP had to take control to stop the aircraft.",
+        "1": "SP, due to a taxi speed set too high for the turns of the published route, reached the holding point outside the specified line and stopped the aircraft with two clear oscillations of the nose. The correct route and the correct stopping point were established only after IP called the turn and the braking. Ground handling stayed at the lower limit of the standard throughout the taxi.",
+        "2": "SP, due to a scan concentrated ahead of the aircraft rather than along the whole ground path, initially began the turn toward the wrong taxiway intersection. SP recognized the divergence from the specified route, stopped the turn and rejoined the published route in time, without IP intervention. The aircraft was subsequently held stationary for the leak check and the line up without any movement.",
+        "3": "SP followed the specified taxi route and ensured that the ground path of the aircraft was clear of obstacles throughout the taxi. SP stopped the aircraft as required, without oscillations and without IP intervention, and allowed no aircraft movement when it had to be halted for the leak check and the line up. Taxi speed was appropriate for every turn.",
+        "4": "SP taxied to an exceptional standard, following the specified route precisely, clearing the ground path continuously on both sides and adjusting speed ahead of each turn. Every stop was smooth and on the required point, with no oscillation and no movement during the leak check and the line up. Nothing in the ground handling required comment from IP.",
+        "marginal": "SP taxied within standards, but the clearing scan was directed almost entirely ahead of the aircraft and the stops were achieved with late braking that produced a small nose movement. The trend is toward ground handling that is safe today only because the taxiway was uncongested. SP is expected to widen the clearing scan and to anticipate the braking point on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-02-em08",
+      "label": "FORMATION GROUND PROCEDURES AS NUMBER TWO: TAXI SPACING AND FREQUENCY CHECKS",
+      "mif_row": null,
+      "source": "general:fmt-b,fmt-c",
+      "hf_concept": "hf-complacency",
+      "texts": {
+        "0": "SP, due to complacency in a familiar pattern that replaced an active scan, did not keep standard distance from the leader during taxi and closed to a spacing at which jet blast and a leader stop could not be absorbed. The ground frequency check was never initiated and the formation departed the ramp without a common radio picture. IP had to intervene on the brakes and run the frequency check from the rear cockpit.",
+        "1": "SP, due to complacency toward a taxi sequence flown repeatedly without incident, allowed the distance from the leader to open and close without control and executed the frequency check late and out of the order agreed in the pre flight briefing. Standard spacing and the correct check sequence were restored only after IP called for them. Both items met the lower limit of the standard through verbal prompting.",
+        "2": "SP, due to attention held on the leader while the ramp exit was congested, initially closed inside the standard taxi distance behind the leader. SP recognized the closure, reduced to idle and reestablished the briefed spacing in time, without IP intervention. The ground frequency check was then executed correctly and in the order agreed in the pre flight briefing.",
+        "3": "SP kept standard distance from the leader during the whole taxi and executed the frequency checks on the ground before taxi timely and correctly, without need for IP intervention and according to the pre flight briefing. Spacing was stable through the turns and at every stop. The formation reached the holding point with a common radio picture.",
+        "4": "SP maintained standard distance from the leader to an exceptional standard, absorbing the leader speed changes and the ramp congestion without a single correction on the brakes. The ground frequency checks were executed exactly as briefed, in sequence and without delay, and SP confirmed the readback of the other aircraft. Nothing in the formation ground phase required input from IP.",
+        "marginal": "SP flew the ground phase as number two within standards, but the distance from the leader drifted around the briefed value and was recovered with late brake applications rather than with anticipation. The trend is toward spacing that depends on the leader taxiing predictably. SP is expected to hold the briefed distance by power and anticipation and to initiate the frequency check at the briefed point on the next sortie."
+      }
+    }
+  ]
+}

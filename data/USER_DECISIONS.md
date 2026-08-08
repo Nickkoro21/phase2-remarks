@@ -403,3 +403,10 @@ Control, 3 γραμμές). **Δεν** αντιγράφηκαν οι πίνακ�
 «ΑΠΑΝΤΗΣΕΙΣ (2026-07-31)» στην αρχή του αρχείου για την εφαρμογή κάθε απόφασης.
 
 Παράδειγμα απάντησης: `1α, 2β, 3α, 4γ` — ή απλώς `1α, 2α, 3α, 4β` κ.ο.κ.
+
+
+---
+
+## 8. contact-09 — TRAFFIC PATTERN STALLS / «BASE LEG STALL» (ΑΠΑΝΤΗΘΗΚΕ 2026-08-08)
+
+Η EXECUTION απαριθμεί 4 stalls, ο πίνακας έχει 3 γραμμές. **Απόφαση χρήστη:** οι ίδιες αποκλίσεις ισχύουν για ΟΛΑ τα traffic pattern stalls — η γραμμή «BASE LEG STALL» καλύπτει και τα δύο Final Turn Stalls (Undershooting/Overshooting). Εφαρμόστηκε ως flag + note στο criteria/contact.json (contact-09).

@@ -1,0 +1,162 @@
+{
+  "item_id": "vfr_navigation-01",
+  "item_name": "MISSION PLANNING / BRIEFING - DEBRIEFING",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [1],
+  "mif_rows": [
+    { "sn": 1, "row_name": "Mission Planning/ Briefing - Debriefing" }
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-01-em01",
+      "label": "FLIGHT PLAN COMPLETION AND FILING",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to reusing a flight plan form from a previous navigation sortie without rechecking it against the current route, did not fill the flight plan correctly and left route, endurance and alternate fields inconsistent with the planned mission. The plan was rejected at submission and the departure slot was lost. IP had to rewrite the flight plan and file it before the sortie could proceed.",
+        "1": "SP, due to copying the route from memory instead of from the plotted map, filled the flight plan with one turning point missing and with an endurance figure that did not match the computed fuel. Each incorrect field was corrected only after IP pointed to it in turn. The flight plan was brought to the lower limit of the standard by verbal prompting alone and was filed after the planned filing time.",
+        "2": "SP, due to transposing two turning points while completing the route field, first produced a flight plan that did not match the plotted track. SP detected the discrepancy during a self-check against the map, corrected the route, endurance and fuel entries and filed the plan on time. No IP intervention was required.",
+        "3": "SP filled the flight plan completely and correctly, with route, cruising level, true airspeed, endurance, fuel and alternate all consistent with the plotted map and the computed data. The plan was filed within the time required by the Squadron Tactical Standards. No entry required correction.",
+        "4": "SP filled an exceptional flight plan, cross-checking every field against the plotted route, the performance computations and the current NOTAM before filing. Endurance, fuel and alternate entries were supported by figures SP had already computed for two loading cases. Departures from the ideal entry were negligible.",
+        "marginal": "SP filled and filed the flight plan within standards, but endurance and fuel were entered from a standard sortie figure rather than from the computation made for this route. The trend is toward a form that is formally correct while the numbers on it are not the numbers SP actually calculated. SP is expected to transfer computed values directly into the flight plan on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-01-em02",
+      "label": "ROUTE PLOTTING ON THE MAP",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to plotting the route by eye without using the plotter and the map scale, did not plot the route on the map correctly and produced tracks with course errors large enough to place two legs outside the intended corridor. Distances and drawn headings did not agree with the mission card. IP had to replot the whole route before the brief could start.",
+        "1": "SP, due to an inaccurate origin of the first leg, plotted the route with track angles that were consistently offset and with the ten-nautical-mile marks omitted on three legs. The plot was brought to an acceptable state only after IP indicated each leg that had to be redrawn. The map reached the lower limit of the standard and the planning phase overran the allotted time.",
+        "2": "SP, due to using an outdated map edition for the first plot, initially drew one leg through an area whose boundary had been amended. SP identified the discrepancy while checking the plot against the current chart, transferred the affected legs to the current edition and remeasured the tracks and distances in good time and without IP intervention.",
+        "3": "SP plotted the route on the map correctly, with tracks, distances and turning points measured accurately and marked clearly on the current chart edition. Leg distance marks and the safety altitude for each leg were annotated as required. The plot agreed with the mission card throughout.",
+        "4": "SP produced an exceptional route plot, with tracks and distances measured to the resolution of the plotter, and with turning points, distance marks, safety altitudes and airspace boundaries annotated so clearly that the map could be used without reference to any other document. Deviations from the ideal plot were negligible.",
+        "marginal": "SP plotted the route on the map within standards, but the annotation was crowded around the turning points and the leg distance marks were faint enough to be difficult to read in flight. The trend is toward a plot that is accurate on the ground but hard to use in the cockpit. SP is expected to plot with cockpit legibility in mind on the next navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-01-em03",
+      "label": "PERFORMANCE CHART USE AND DATA COMPUTATION",
+      "mif_row": null,
+      "source": "general:c|execution:1",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to insufficient knowledge of the Flight Manual performance charts, did not produce the takeoff, climb, enroute, descent and landing computations required for the mission. The figures presented were read from the wrong chart and the fuel required for the route was understated by a margin that would not have supported the alternate. IP had to recompute all the data before the sortie could proceed.",
+        "1": "SP, due to entering the climb chart with pressure altitude instead of density altitude, produced climb fuel and time figures that did not match the conditions of the day, and left the landing distance computation blank. The data set was completed only after IP identified each chart and each missing entry. The computations reached the lower limit of the standard and the planning phase ran well past the scheduled time.",
+        "2": "SP, due to an interpolation error between two chart lines, first computed an enroute fuel figure that did not agree with the leg times. SP noticed the inconsistency while cross-checking fuel against time, repeated the interpolation correctly and corrected the descent and landing figures in good time and without IP intervention.",
+        "3": "SP demonstrated good knowledge of the Flight Manual performance charts, the aeronautical maps and MAIP, and computed takeoff, climb, enroute, descent and landing data correctly for the conditions of the day. Interpolation was carried out accurately and the results were consistent with the leg times and the fuel plan. No computation required correction.",
+        "4": "SP demonstrated exceptional command of the performance charts, the aeronautical maps and MAIP, computing all phases for the actual conditions and additionally for a higher temperature and a heavier landing case. Every figure was traceable to a named chart and page and cross-checked against the fuel and time plan. Departures from the ideal computation were negligible.",
+        "marginal": "SP computed all required performance data within standards, but every figure was taken to the nearest chart line without interpolation, and the takeoff and landing distances were therefore optimistic for the day. The trend is toward a data set that is complete but not precise enough to support a marginal runway. SP is expected to interpolate between chart lines and to state the assumptions used on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-01-em04",
+      "label": "SELECTION OF SIGNIFICANT GROUND REFERENCES PER LEG",
+      "mif_row": null,
+      "source": "general:d",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to selecting checkpoints from the map without considering how they would appear from the planned altitude, did not select significant ground references for the legs of the route and offered features that are not identifiable in flight. Two legs were left with no usable reference at all. IP had to select the checkpoints and rebuild the timing plan around them.",
+        "1": "SP, due to choosing linear features that lie along the track rather than across it, selected references that do not confirm position on three legs and omitted a reference for the leg with the longest overwater segment. Usable checkpoints were selected only after IP prompted for each leg in turn. The selection reached the lower limit of the standard and delayed completion of the mission card.",
+        "2": "SP, due to selecting an initial checkpoint that would be behind the wing at the planned flight altitude, first produced a reference for the second leg that could not be seen from the cockpit. SP recognized the problem while reviewing the legs against the planned altitude, replaced it with a distinct road and lake intersection and adjusted the leg times accordingly, without IP intervention.",
+        "3": "SP selected significant ground references for every leg of the route, choosing features that are large, unique and identifiable from the planned flight altitude. Each reference was marked on the map with its time and distance from the turning point. The selection supported position confirmation throughout the route.",
+        "4": "SP selected exceptional ground references, with a primary and a secondary feature for each leg, chosen for contrast against the surrounding terrain and for visibility in the expected haze and sun angle. Each reference carried its time, distance and expected relative position. Departures from the ideal selection were negligible.",
+        "marginal": "SP selected significant ground references for every leg within standards, but the choices were concentrated near the turning points, leaving long stretches of each leg without a position check. The trend is toward a route that can be flown but not continuously verified. SP is expected to distribute the references along the whole leg on the next navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-01-em05",
+      "label": "MISSION CARD COMPLETION AND USE OF AERONAUTICAL PUBLICATIONS",
+      "mif_row": null,
+      "source": "general:e|execution:2a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to preparing the mission card from a previous sortie without consulting MAIP, the maps, the FLIPs and the Flight Manual, filled it with omissions in headings, leg times, fuel and frequencies. Several entries contradicted the plotted route and no reference was made to AFMAN 11-202 Vol 3 or to the Flight Procedures manual. IP had to rebuild the card before the brief.",
+        "1": "SP, due to transcribing frequencies and field data from memory rather than from the current publications, left the alternate airfield block and two leg fuel entries empty on the mission card. Each omission was filled only after IP pointed to it. The card reached the lower limit of the standard and was completed after the scheduled start of the briefing.",
+        "2": "SP, due to using a superseded MAIP page for the destination, initially entered a tower frequency that had been amended. SP identified the discrepancy while cross-checking the card against the current publication, corrected the frequency and rechecked the remaining field data in good time. The card was completed without IP intervention.",
+        "3": "SP filled the mission card correctly and without omissions, using MAIP, the maps, the FLIPs, the Flight Manual, AFMAN 11-202 Vol 3 and the Flight Procedures manual. Headings, distances, leg times, fuel, frequencies and field data agreed with the plotted route and the computed performance data. No entry required correction.",
+        "4": "SP filled an exceptional mission card, complete, legible and ordered for cockpit use, with every entry traceable to the current publication it came from. Field data, frequencies and fuel figures were cross-checked twice and the card was usable without reference to any other document in flight. Departures from the ideal card were negligible.",
+        "marginal": "SP filled the mission card without omissions and within standards, but the handwriting and the column layout make the fuel and time blocks difficult to read in the cockpit at low light. The trend is toward a card that is technically complete but slow to use in flight. SP is expected to produce a card that can be read at a glance on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-01-em06",
+      "label": "MISSION BRIEFING EXECUTION",
+      "mif_row": null,
+      "source": "general:f|execution:2",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to preparing the briefing without following the Squadron Tactical Standards briefing sequence, did not execute the briefing without omissions and left out the route review, the weather and the emergency section entirely. The objectives of the sortie were never stated. IP had to stop the briefing, take it over and rebrief the whole profile.",
+        "1": "SP, due to briefing from the mission card instead of from a prepared flow, omitted the airspace restrictions and the abort criteria and covered the alternate airfields only when asked directly. Each missing paragraph was delivered only after IP prompted for it. The briefing reached the lower limit of the standard and ran about fifteen minutes over the scheduled time.",
+        "2": "SP, due to starting the briefing out of sequence, initially passed over the weather and NOTAM review before the route description. SP recognized the omission, returned to it and completed the remaining paragraphs in the correct order and inside the scheduled time. The briefing was completed to standard without IP intervention.",
+        "3": "SP executed the briefing without omissions, covering objectives, route, altitudes, ground references, timings, fuel, weather, NOTAM, airspace restrictions, alternate airfields and emergency procedures in the prescribed sequence. The briefing was delivered inside the time allotted and each item was tied to the plan on the map and the mission card. No paragraph required prompting.",
+        "4": "SP executed an exceptional briefing, delivering every paragraph from a prepared flow, with the threats for the day identified and a mitigation stated for each. Contingencies raised during the briefing were already supported by figures SP had computed in advance. Departures from the ideal briefing were negligible.",
+        "marginal": "SP executed the briefing without omissions and within standards, but the delivery was a recitation of headings with little reference to the actual weather, runway and airspace situation of the day. The trend is toward a briefing that covers the required items without converting them into decisions for this sortie. SP is expected to brief each item against the actual conditions on the next event."
+      }
+    },
+    {
+      "id": "vfr_navigation-01-em07",
+      "label": "DEBRIEFING EXECUTION AND SELF-ANALYSIS",
+      "mif_row": null,
+      "source": "general:f",
+      "hf_concept": "hf-inquiry-and-advocacy",
+      "texts": {
+        "0": "SP, due to absent inquiry into events that had already been contradicted by the recorded times and fuel, did not execute the debriefing and could not reconstruct the sequence of the sortie. Errors on the route were neither identified nor attributed to a cause, and no corrective technique was proposed. IP had to conduct the entire debriefing and state the findings for SP.",
+        "1": "SP, due to failure to question an assumption about the position fix at the second turning point, debriefed the sortie chronologically without isolating the cause of the track error and omitted the fuel and timing analysis. Each finding emerged only after IP asked a direct question. The debriefing reached the lower limit of the standard and no corrective action was proposed by SP.",
+        "2": "SP, due to no advocacy of an alternative explanation once the first reconstruction of the leg had clearly failed, initially attributed the timing error to the forecast wind. SP re-examined the recorded headings, identified the actual cause as a late turn at the second turning point and proposed the corrective technique without IP intervention.",
+        "3": "SP executed the debriefing without omissions, reconstructing the sortie against the mission card, identifying each deviation, attributing it to a cause and proposing a corrective technique. Fuel, timings and track keeping were analysed against the plan. The debriefing was completed within the time allotted and no finding had to be supplied by IP.",
+        "4": "SP executed an exceptional debriefing, reconstructing the sortie leg by leg with times, fuel and headings, separating planning errors from execution errors, and proposing a specific corrective technique and a measurable objective for the next sortie. Every conclusion was supported by recorded data. Departures from the ideal debriefing were negligible.",
+        "marginal": "SP executed the debriefing within standards, but the analysis stopped at describing what happened and reached the underlying cause only for the most obvious deviation. The trend is toward a debriefing that records events without converting them into training objectives. SP is expected to state a cause and a corrective technique for every deviation on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-01-em08",
+      "label": "ALTERNATE AIRFIELD SELECTION AND TURNING POINT DIVERT DATA",
+      "mif_row": null,
+      "source": "general:h|execution:2a",
+      "hf_concept": "hf-divert-criteria-and-decision-points",
+      "texts": {
+        "0": "SP, due to the absence of explicit divert criteria in the mission plan, did not choose alternate airfields and did not plan heading, time and fuel to the nearest airfield from any turning point. The route was planned as if recovery to the departure field were assured. IP had to select the alternates and compute the divert data before the sortie could proceed.",
+        "1": "SP, due to no named decision point for the weather deterioration that had been forecast, selected one alternate for the whole route and computed divert heading, time and fuel for only the first two turning points. The remaining turning points were covered only after IP asked for each in turn. The divert plan reached the lower limit of the standard and was completed after the scheduled brief time.",
+        "2": "SP, due to a briefed decision point that was first left without a fuel figure attached to it, initially produced divert data that could not be used to make the decision in flight. SP identified the gap while reviewing the mission card, computed the fuel required from that turning point to the nearest airfield and attached it to the decision point, without IP intervention.",
+        "3": "SP chose suitable alternate airfields for the route and planned heading, time and fuel from every turning point to the nearest airfield, computed within logical error and entered on the mission card. Field data and frequencies for each alternate were taken from the current publications. The divert plan was usable in flight without further computation.",
+        "4": "SP chose exceptional alternates and produced divert heading, time and fuel from every turning point for two fuel states, with a named decision point and a stated criterion attached to each leg. The data were laid out on the mission card so that the divert decision could be made in flight in a single reading. Departures from the ideal plan were negligible.",
+        "marginal": "SP selected alternate airfields and computed divert data for every turning point within standards, but the fuel figures carry no allowance for a missed approach at the alternate. The trend is toward a divert plan that works only if the first approach at the alternate succeeds. SP is expected to build a usable reserve into the divert figures on the next navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-01-em09",
+      "label": "WEATHER, NOTAM AND OPERATIONAL RESTRICTIONS REVIEW",
+      "mif_row": null,
+      "source": "execution:2b|conditions:1",
+      "hf_concept": "hf-briefing-and-threat-identification",
+      "texts": {
+        "0": "SP, due to a threat present in the minimum threat set but not identified during planning, did not review the weather, the NOTAM and the airspace restrictions for the route and planned a leg through an active restricted area. The VMC minima for the day were never checked against the forecast. IP had to stop the planning, produce the restrictions and rebuild the affected legs.",
+        "1": "SP, due to mission planning that did not address the forecast weather at the recovery time, reviewed the departure field weather only and omitted the enroute NOTAM for the second half of the route. The restrictions were identified only after IP directed SP to each publication in turn. The review reached the lower limit of the standard and the flight plan was filed late as a result.",
+        "2": "SP, due to a currency shortfall in the NOTAM briefing that was not addressed at the start of the planning phase, initially planned a leg at an altitude affected by a temporary restriction. SP identified the restriction while completing the second check of the route, replanned the leg altitude and adjusted the fuel and time figures, without IP intervention.",
+        "3": "SP reviewed the weather, the NOTAM, the airspace restrictions and the flight plan requirements for the whole route and confirmed that the day only VFR and VMC conditions of the sortie were satisfied. Each identified threat was carried into the plan with a stated mitigation. No restriction had to be produced by IP.",
+        "4": "SP reviewed the weather, NOTAM and restrictions exceptionally, tracking the forecast trend across the planned recovery window and identifying every threat on the route together with the decision point at which it would be managed. The alternates were selected against the same forecast trend. Departures from the ideal review were negligible.",
+        "marginal": "SP reviewed the weather, NOTAM and restrictions within standards, but the review was recorded as a list of items checked rather than as threats carried into the plan. The trend is toward information that is collected but not converted into a mitigation or a decision point. SP is expected to state the mitigation for each identified threat on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-01-em10",
+      "label": "FORMATION SORTIE PLANNING AND BRIEFING ITEMS (N44XX / N45XX)",
+      "mif_row": null,
+      "source": "general:g|execution:3|conditions:4",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to planning the N44XX and N45XX sortie as a single ship navigation, did not apply the corresponding formation items and left the join up, the formation position changes, the lost wingman procedure and the visual signals out of the plan and the brief. The formation recovery was never addressed. IP had to plan and brief the formation items in full.",
+        "1": "SP, due to using a single ship briefing flow for a formation navigation sortie, omitted the lost wingman procedure and the formation breakup from the brief and covered the visual signals only in outline. Each formation item was briefed only after IP prompted for it. The plan and the brief reached the lower limit of the standard and delayed step in.",
+        "2": "SP, due to an omission of the formation breakup point in the first version of the plan, initially briefed a recovery that did not state where the elements would separate. SP identified the gap while reviewing the route with the map, added the breakup point with its fuel and time figures and briefed it in sequence, without IP intervention.",
+        "3": "SP applied the corresponding formation items to the N44XX and N45XX sortie, planning and briefing join up, formation positions and changes, visual signals, lost wingman, formation breakup and recovery as described for formation sorties. The formation items were integrated with the route, fuel and timing plan. No item required prompting.",
+        "4": "SP applied the formation items exceptionally, planning and briefing every N44XX and N45XX requirement with the responsibilities of lead and wing stated for each phase, and with the lost wingman and breakup contingencies supported by computed fuel and time figures. The formation plan and the navigation plan were fully consistent. Departures from the ideal were negligible.",
+        "marginal": "SP applied the corresponding formation items within standards, but the responsibilities for navigation and lookout between lead and wing were briefed in general terms rather than allocated by phase. The trend is toward a formation plan that states the procedure without assigning who does what. SP is expected to allocate navigation and lookout duties explicitly on the next formation navigation sortie."
+      }
+    }
+  ]
+}

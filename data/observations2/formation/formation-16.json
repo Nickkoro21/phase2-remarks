@@ -1,0 +1,150 @@
+{
+  "item_id": "formation-16",
+  "item_name": "PITCH OUT / SPACING",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [16],
+  "mif_rows": [
+    {
+      "sn": 16,
+      "row_name": "Pitch Out / Spacing"
+    }
+  ],
+  "error_modes": [
+    {
+      "id": "formation-16-em01",
+      "label": "ALTITUDE CONTROL THROUGH THE PITCH OUT",
+      "mif_row": null,
+      "source": "specific:ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to attention held outside on the leader instead of returning to the altimeter after the roll-in, did not maintain the pitch out altitude and allowed the aircraft to descend throughout the turn. The aircraft passed 400 feet below the pattern altitude with the descent still developing and no correction started. IP took the controls and recovered the aircraft to the pattern altitude before rollout on downwind.",
+        "1": "SP, due to a pitch attitude that was not reset against the bank after establishing the pitch out, did not hold the pitch out altitude and let the aircraft settle in the turn. The deviation reached 300 feet low, at the limit of the tolerance for the maneuver, and stopped only after IP called the altitude twice. SP regained the pattern altitude on downwind, but the correction came from verbal prompting rather than from own cross-check.",
+        "2": "SP, due to a delayed return of the cross-check to the altimeter after rolling into the pitch out, initially allowed the aircraft to descend about 200 feet below the pattern altitude. SP identified the deviation while still in the turn and corrected back inside the tolerance before rolling out on downwind. No prompting or intervention by IP was required.",
+        "3": "SP maintained the pitch out altitude throughout the turn with deviations contained inside 150 feet. The altimeter cross-check ran continuously against the bank and the aircraft was level at the pattern altitude at rollout on downwind. Corrections were small, early and made on SP own initiative.",
+        "4": "SP flew the pitch out with the altitude held essentially constant, the deviation never exceeding a few tens of feet at any point in the turn. Pitch was traded against bank with no perceptible settle at either the roll-in or the rollout. The pattern altitude was regained and held with negligible error.",
+        "marginal": "SP maintained the pitch out altitude within standards, but every turn was flown with the same low bias, reaching about 130 feet before being corrected on the downwind leg. The trend is a repeated settle at the roll-in that is caught late instead of being prevented. SP is expected to set and hold the pitch attitude against the bank as it is established, so that the altitude stays within a considerably tighter band."
+      }
+    },
+    {
+      "id": "formation-16-em02",
+      "label": "AIRSPEED CONTROL DURING THE PITCH OUT",
+      "mif_row": null,
+      "source": "specific:AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power left at the transit setting when the pitch out was executed, did not maintain the pre-determined airspeed required of formation members during the pitch out. The aircraft accelerated to 35 knots above the briefed figure and the excess was still increasing on downwind. IP had to direct the power reduction and then reduce the power personally to bring the aircraft back inside the pattern speed.",
+        "1": "SP, due to the power reduction being made only after the bank was fully established rather than with it, did not hold the pre-determined pitch out airspeed. The aircraft reached 20 knots fast, at the limit of the tolerance, and was brought back only after IP called the airspeed. The speed was inside standards on downwind, but the correction was produced by the prompt and not by SP own scan.",
+        "2": "SP, due to a power setting selected without reference to the briefed pitch out figure, initially allowed the airspeed to build about 15 knots above the pre-determined value. SP noted the trend on the airspeed indicator during the turn and reset the power in good time, recovering the briefed speed before rollout on downwind without IP intervention.",
+        "3": "SP maintained the pre-determined pitch out airspeed with deviations contained inside 10 knots throughout the maneuver. Power was reduced together with the roll-in and adjusted in small increments as the bank was held. The briefed pattern speed was established on downwind without any correction being called.",
+        "4": "SP flew the pitch out with the airspeed pinned to the pre-determined figure, the deviation remaining within a very few knots from roll-in to rollout. Power was led rather than chased, so no speed excursion ever developed. The pattern speed on downwind was exactly the briefed value.",
+        "marginal": "SP held the pitch out airspeed within standards, but the aircraft was consistently about 9 knots fast from the roll-in to the rollout on downwind. The trend is a habitual late power reduction that leaves the speed at the outer edge of the acceptable band on every pitch out. SP is expected to reduce power together with the roll-in so that the pre-determined airspeed is achieved from the start of the turn."
+      }
+    },
+    {
+      "id": "formation-16-em03",
+      "label": "EXIT HEADING AND ROLLOUT ON DOWNWIND",
+      "mif_row": null,
+      "source": "specific:EXIT HEADING (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the rollout being flown by looking at the runway rather than by anticipating the downwind heading, did not stop the turn on the required exit heading. The aircraft rolled out 18 degrees through the downwind heading and continued to diverge from the runway track. IP directed the recovery turn and then took the controls to reestablish the aircraft on the downwind leg.",
+        "1": "SP, due to the roll-out being started at the exit heading instead of being led, did not achieve the required exit heading of the pitch out. The aircraft settled 10 degrees off the downwind heading, at the limit of the tolerance, and was realigned only after IP called the heading. The correction restored the track but was produced by the prompt rather than by SP own cross-check.",
+        "2": "SP, due to a roll rate that was reduced too late in the recovery from the pitch out bank, initially rolled out about 8 degrees off the required downwind heading. SP recognized the offset immediately on the heading indicator and corrected onto the exit heading inside the tolerance before the spacing check, without IP intervention.",
+        "3": "SP rolled out of the pitch out on the required exit heading with the deviation contained inside 5 degrees. The roll-out was led so that the wings came level as the downwind heading was reached. The aircraft was tracking the downwind leg without any subsequent heading correction.",
+        "4": "SP stopped the pitch out precisely on the required exit heading, with the residual deviation of the order of one or two degrees. The roll-out was anticipated exactly, so the wings came level and the heading stabilized in the same instant. No corrective input was needed on the downwind leg.",
+        "marginal": "SP achieved the exit heading of the pitch out within standards, but every rollout finished about 5 degrees outside the downwind heading in the same direction. The trend is a roll-out that is consistently started late and then patched with a small corrective turn. SP is expected to lead the roll-out from the pitch out bank so that the exit heading is achieved directly rather than corrected afterwards."
+      }
+    },
+    {
+      "id": "formation-16-em04",
+      "label": "RESPONSE TO LEADER COMMAND AND PITCH OUT TIMING",
+      "mif_row": null,
+      "source": "general:execution-1,conditions-2",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the pitch out signal being expected on the radio while the leader gave it visually, did not execute the pitch out following the leader command as laid down in the Techniques and Procedures Manual. The turn was started more than eight seconds late and the resulting interval was far outside anything usable for the pattern. IP had to command the turn and then intervene on the controls to salvage a workable spacing.",
+        "1": "SP, due to hesitation in confirming the leader command before acting on it, did not execute the pitch out in a timely manner. The turn was initiated some three seconds late and the interval finished at the outer limit of what the pattern allows, being adjusted only after IP called for the turn. The maneuver was completed to standard, but the timing was driven by IP prompting.",
+        "2": "SP, due to the head being inside the cockpit at the moment the leader command was given, initially started the pitch out slightly late. SP recognized the delay at once, adjusted the bank and the power inside the briefed limits, and restored the interval to the required value before the downwind spacing check without IP intervention.",
+        "3": "SP executed the pitch out following the leader command, in the manner prescribed by the Techniques and Procedures Manual. The turn was started without perceptible delay and the resulting interval was the briefed one. No adjustment to the timing was required at any stage.",
+        "4": "SP executed the pitch out on the leader command with immediate and precise response, the turn starting exactly on the signal. The interval produced matched the briefed figure with negligible error and required no subsequent adjustment. SP anticipation of the command point was evident throughout.",
+        "marginal": "SP executed the pitch out following the leader command within standards, but consistently a beat behind the signal on each repetition. The trend is an interval built slightly long every time, absorbed later by adjustments on the downwind leg. SP is expected to act on the leader command as it is given so that the interval is correct from the roll-in."
+      }
+    },
+    {
+      "id": "formation-16-em05",
+      "label": "PRE-DETERMINED BANK AND SPACING GENERATION",
+      "mif_row": null,
+      "source": "general:conditions-2",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the briefed bank value not being flown against the attitude indicator, did not maintain the pre-determined bank required of formation members during the pitch out. The bank was some 20 degrees shallower than briefed and the spacing produced was unusable for the pattern. IP took the controls, reestablished the correct bank and rebuilt the interval before the downwind leg.",
+        "1": "SP, due to a bank that was allowed to relax as attention moved back to the leader, did not hold the pre-determined pitch out bank. The bank wandered around the briefed value and the resulting spacing finished at the limit of what the pattern allows, being corrected only after IP called the bank angle. The interval was recovered, but through prompting rather than through SP own cross-check.",
+        "2": "SP, due to a roll-in that was stopped short of the briefed value, initially flew the pitch out with insufficient bank and a spacing trend toward the long side. SP identified the shallow bank on the attitude indicator early in the turn, increased it to the pre-determined value and restored the interval inside acceptable limits without IP intervention.",
+        "3": "SP maintained the pre-determined bank throughout the pitch out and produced the briefed spacing. The bank was set at the roll-in and held constant until the roll-out was led for the exit heading. The interval on downwind matched the briefed figure with no adjustment required.",
+        "4": "SP held the pre-determined pitch out bank with negligible variation from roll-in to roll-out, producing spacing that matched the briefed interval exactly. The bank was established in a single positive input and required no trimming during the turn. The resulting interval needed no correction whatsoever on the downwind leg.",
+        "marginal": "SP flew the pitch out with the pre-determined bank within standards, but the bank was consistently a few degrees shallow and the interval consistently at the long end of the acceptable range. The trend is a spacing that is workable but always has to be closed later in the pattern. SP is expected to set the full briefed bank at the roll-in so that the interval is generated by the pitch out itself."
+      }
+    },
+    {
+      "id": "formation-16-em06",
+      "label": "SMOOTHNESS AND SOLIDITY OF AIRCRAFT CONTROL",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to control inputs applied in large uncoordinated steps rather than in a continuous manner, did not control the aircraft in a smooth and solid way during the pitch out. The roll-in was abrupt, the ball was displaced for the whole turn and the load factor oscillated noticeably. IP took the controls to stabilize the aircraft and complete the maneuver.",
+        "1": "SP, due to overcontrolling in roll and then chasing the resulting pitch changes, did not fly the pitch out in a smooth and solid way. The turn was flown with repeated coarse corrections in roll and pitch and settled down only after IP called for smaller inputs. Control of the aircraft was regained, but only on verbal direction from IP.",
+        "2": "SP, due to a rudder input that did not accompany the initial roll, initially flew the pitch out out of balance with a visible ball displacement. SP recognized the uncoordinated entry, coordinated the rudder with the aileron and flew the remainder of the turn smoothly and firmly without IP intervention.",
+        "3": "SP controlled the aircraft in a smooth and solid way throughout the pitch out. Roll, pitch and rudder inputs were coordinated, the flight path was continuous and the aircraft remained in balance from entry to rollout. No coarse or corrective input was observed.",
+        "4": "SP flew the pitch out with control inputs of exceptional smoothness and precision, the aircraft tracking a continuous flight path with the ball centered throughout. Roll-in and roll-out were single positive movements with no subsequent correction. Any deviation from the ideal flight path was negligible.",
+        "marginal": "SP controlled the aircraft in a smooth and solid way within standards, but the roll rate at the entry varied noticeably between repetitions and small ball displacements appeared at each roll-out. The trend is inconsistency in the entry and exit inputs rather than any loss of control. SP is expected to standardize the roll rate and coordinate the rudder so that every pitch out is flown to the same smooth pattern."
+      }
+    },
+    {
+      "id": "formation-16-em07",
+      "label": "BLIND SITUATION HANDLING AND CALLS",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": "hf-knock-it-off-and-unable-discipline",
+      "texts": {
+        "0": "SP, due to reluctance to admit loss of visual contact and make the required call, did not handle the blind situation correctly when the leader was lost against the ground background in the pitch out. SP continued to turn toward the last known position of the leader with no call made and no deconfliction action taken. IP made the blind call and took the controls to separate the aircraft from the element.",
+        "1": "SP, due to hesitation in using the prescribed terminology once visual contact was lost, did not handle the blind situation in a timely manner. The blind call was made some five seconds late and only after IP prompted for it, and the deconfliction turn followed the call rather than accompanying it. Visual contact was regained, but the sequence was driven by IP direction.",
+        "2": "SP, due to visual contact being broken as the leader passed through the canopy bow during the pitch out, was momentarily blind in the turn. SP made the blind call promptly in the prescribed terminology, held the briefed altitude for deconfliction and regained visual contact before the rollout, with no IP intervention required.",
+        "3": "SP handled the blind situation correctly and in a timely manner when visual contact was momentarily lost during the pitch out. The call was made immediately in the prescribed terminology, the briefed deconfliction responsibilities were applied and visual contact was regained. The pattern sequence continued without disruption.",
+        "4": "SP handled the loss of visual contact with exemplary decisiveness, the blind call and the deconfliction action being taken in the same instant the leader was lost from sight. The call carried the position and altitude information needed for the leader to resolve the situation immediately. Visual contact was regained with negligible loss of pattern discipline.",
+        "marginal": "SP handled the blind situation within standards, but the call was made only after a perceptible pause and in phraseology that had to be repeated to be understood. The trend is a correct action taken with hesitation at exactly the moment when speed matters most. SP is expected to make the blind call immediately and in standard terminology as soon as visual contact is lost."
+      }
+    },
+    {
+      "id": "formation-16-em08",
+      "label": "SPACING ASSESSMENT AND CORRECTION ON DOWNWIND",
+      "mif_row": null,
+      "source": "general:a,execution-1",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to a mental picture of the pattern built entirely on the leader position and not on the geometry of the runway, did not assess the spacing produced by the pitch out at any point on the downwind leg. The interval remained far outside the briefed value with no correction attempted and the pattern sequence was compromised. IP had to direct the extension of the downwind leg and then take the controls to reestablish a usable interval.",
+        "1": "SP, due to situational awareness being reduced to the leader alone with no reference to the runway abeam position, did not assess the spacing after the pitch out. The interval finished at the limit of what the pattern allows and was corrected only after IP called for a power adjustment on the downwind leg. The correction restored the sequence but originated with IP.",
+        "2": "SP, due to the spacing check being delayed until well after the rollout, initially carried an interval noticeably shorter than the briefed one. SP detected the closure against the leader on the downwind leg, adjusted power and track in good time and restored the correct interval before the base turn, without IP intervention.",
+        "3": "SP assessed the spacing generated by the pitch out immediately on rolling out on downwind and maintained the briefed interval. The assessment was made against both the leader and the runway abeam position, and the small power adjustment required was applied early. The pattern sequence proceeded exactly as briefed.",
+        "4": "SP assessed and controlled the spacing with exceptional accuracy, the interval matching the briefed figure from the rollout to the base turn. The picture was cross-checked continuously against the leader and the runway, so no adjustment beyond a minimal power change was ever needed. The pattern sequence was flown with negligible deviation.",
+        "marginal": "SP assessed and maintained the spacing within standards, but the interval was recognized late on every circuit and always needed a power change on the downwind leg to bring it back. The trend is an awareness of the spacing that is reconstructed after the rollout rather than carried through the pitch out. SP is expected to judge the interval during the turn so that the downwind leg begins with the briefed spacing already established."
+      }
+    },
+    {
+      "id": "formation-16-em09",
+      "label": "CLEARING AND DECONFLICTION THROUGH THE PITCH OUT",
+      "mif_row": null,
+      "source": "general:a,conditions-1",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to attention captured entirely by the leader aircraft at the expense of the visual scan of the pattern, did not clear the turn direction before rolling into the pitch out. Another aircraft established on the downwind leg went unseen and the turn was continued toward it. IP called the traffic and took the controls to break off the turn and reestablish separation.",
+        "1": "SP, due to the whole visual scan being locked on the leader during the run-in, did not clear the pattern before the pitch out. The clearing turn of the head was made only after IP called for it and the roll-in followed rather than preceded the lookout. Separation was maintained, but the clearing action was produced entirely by IP prompting.",
+        "2": "SP, due to fixation on the leader while awaiting the pitch out command, initially omitted the clearing scan of the turn direction. SP recognized the omission before rolling in, completed the lookout across the downwind leg and the base leg and confirmed the area was clear, then executed the pitch out without IP intervention.",
+        "3": "SP cleared the turn direction and the pattern before executing the pitch out and maintained the visual scan throughout the maneuver. The lookout covered the downwind and base legs while visual contact with the leader was retained. Separation from all pattern traffic was assured at every stage of the turn.",
+        "4": "SP maintained an exceptional visual scan throughout the pitch out, clearing the turn direction before the roll-in and continuing to sweep the pattern while holding visual contact with the leader. Every aircraft in the pattern was accounted for and reported without prompting. Attention was distributed with no lapse in either lookout or aircraft control.",
+        "marginal": "SP cleared the turn direction before the pitch out within standards, but the lookout was a single brief glance and the scan reverted immediately to the leader for the rest of the turn. The trend is a clearing action performed as a formality rather than as a continuous scan of the pattern. SP is expected to sustain the visual scan through the whole pitch out while retaining contact with the leader."
+      }
+    }
+  ]
+}

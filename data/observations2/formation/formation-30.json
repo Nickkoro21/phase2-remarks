@@ -1,0 +1,162 @@
+{
+  "item_id": "formation-30",
+  "item_name": "LANDING PATTERN",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [30],
+  "mif_rows": [
+    { "sn": 30, "row_name": "Landing Pattern" }
+  ],
+  "error_modes": [
+    {
+      "id": "formation-30-em01",
+      "label": "Break altitude control",
+      "mif_row": "Landing Pattern",
+      "source": "specific:BREAK / ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a late power reduction combined with a nose-up pitch input while rolling into the break, did not hold the briefed break altitude. The excursion passed the +/-300 ft limit and was still increasing when the IP took the controls to reposition the aircraft for the downwind. The break was completed outside published tolerance and the pattern had to be re-flown.",
+        "1": "SP, due to an interrupted altimeter cross-check during the roll into the break, did not maintain the break altitude within the tighter band. The deviation reached the +/-300 ft limit and was arrested only after the IP prompted verbally for altitude. The return to the briefed altitude was late and was still in progress into the downwind turn.",
+        "2": "SP, due to an aggressive pitch input at break entry, did not hold the break altitude within +/-150 ft. The deviation stabilized at roughly 200 ft, inside the +/-300 ft limit. SP recognized it on the altimeter and returned to the briefed altitude before the downwind without any input from the IP.",
+        "3": "SP established the break altitude at the briefed point and held it within +/-150 ft throughout the maneuver. Pitch was set together with the power reduction and the altimeter was cross-checked continuously through the roll. Any tendency to climb was trapped immediately with a small correction.",
+        "4": "SP flew the break with altitude essentially fixed on the briefed value, with excursions of a few tens of feet at most. Power reduction and pitch were coordinated so that no correction was required after the roll. Altitude control remained precise from break entry to the downwind roll-out.",
+        "marginal": "SP held break altitude inside the +/-150 ft band, but the excursion was consistently toward the high side and used most of the available margin on each pattern. The corrections were correct but were applied later than the deviation appeared. SP is expected to anticipate the pitch change with the power reduction so that altitude is captured with margin to spare."
+      }
+    },
+    {
+      "id": "formation-30-em02",
+      "label": "Break bank angle",
+      "mif_row": "Landing Pattern",
+      "source": "specific:BREAK / BANK (degrees)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to bank being set on outside references alone with no reference to the attitude indicator, did not fly the briefed break bank. Bank exceeded the +/-15 deg tolerance, the resulting turn radius left unusable spacing, and the IP intervened on the controls to re-establish the briefed angle. The break was flown outside published limits.",
+        "1": "SP, due to a rushed roll-in that was not stopped at the briefed value, did not maintain break bank within the tighter band. Bank sat at the +/-15 deg limit for most of the turn and was corrected only after the IP called the angle. The correction came late enough that downwind spacing was already affected.",
+        "2": "SP, due to an over-controlled roll input at break entry, did not hold break bank within +/-10 deg. The overshoot reached about 13 deg of error, inside the +/-15 deg limit. SP identified it against the attitude indicator and reset the briefed bank in the first part of the turn without IP input.",
+        "3": "SP rolled into the break and stopped the bank on the briefed value, holding it within +/-10 deg for the whole turn. The angle was cross-checked against the attitude indicator and held steady rather than being continuously reworked. Roll-out was made on the briefed downwind heading.",
+        "4": "SP set the break bank precisely on the briefed value with only a few degrees of variation throughout the turn. The roll-in was smooth and stopped exactly on the required angle, and the turn was flown with no further bank adjustment. The spacing produced by the turn required no repair on the downwind.",
+        "marginal": "SP held break bank within +/-10 deg, but the value drifted through the turn and needed repeated small resets to stay inside the band. Nothing went outside standards, though the spacing produced by the turn was less consistent than it should be. SP is expected to set the briefed bank once and hold it on an attitude cross-check rather than correcting it repeatedly."
+      }
+    },
+    {
+      "id": "formation-30-em03",
+      "label": "Downwind altitude control",
+      "mif_row": "Landing Pattern",
+      "source": "specific:DOWN WIND / ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to trim not being reset after gear and flap extension, did not hold the briefed downwind altitude. The aircraft descended through the +/-300 ft limit while the configuration change was completed, and the IP took the controls to recover pattern altitude before the base turn. The downwind was flown outside published tolerance.",
+        "1": "SP, due to attention held on the landing checklist while the aircraft was left untrimmed, did not maintain downwind altitude within the tighter band. The deviation reached the +/-300 ft limit and was recovered only after the IP prompted for pattern altitude. The correction was still in progress at the base turn point.",
+        "2": "SP, due to a delayed power addition with gear extension, did not hold downwind altitude within +/-150 ft. The descent reached about 200 ft below the briefed altitude, inside the +/-300 ft limit. SP detected it on the altimeter and re-established pattern altitude before the base turn with no input from the IP.",
+        "3": "SP held the briefed downwind altitude within +/-150 ft from the roll-out out of the break to the base turn. Power and trim were adjusted with each configuration change so that altitude did not move. The altimeter remained in the scan alongside the checklist actions.",
+        "4": "SP flew the downwind with altitude effectively locked on the briefed value, varying by only a few tens of feet through gear and flap extension. Configuration changes were absorbed with trim and power without any altitude excursion. No correction was required at any point on the leg.",
+        "marginal": "SP kept downwind altitude inside the +/-150 ft band, but the aircraft settled low at each configuration change and the altitude was regained rather than held. The result remained within standards on every pattern flown. SP is expected to lead the configuration change with power and trim so that pattern altitude is maintained instead of recovered."
+      }
+    },
+    {
+      "id": "formation-30-em04",
+      "label": "Downwind airspeed control",
+      "mif_row": "Landing Pattern",
+      "source": "specific:DOWN WIND / AIRSPEED (knots)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to inadequate monitoring of airspeed during the approach, did not control downwind airspeed against the briefed value. Speed was carried more than 20 kt above the briefed figure and was later allowed to fall below it, and the IP intervened on the throttle to re-establish a usable pattern speed. The published tolerance on this leg allows excess only, so both excursions were outside limits.",
+        "1": "SP, due to an interrupted instrument cross-check while attention stayed outside the cockpit on the runway, did not hold downwind airspeed near the briefed value. Speed sat at the +20 kt limit for most of the leg and was reduced only after the IP called the airspeed. The deceleration was still in progress when the base turn was started.",
+        "2": "SP, due to a late power reduction after the roll-out from the break, did not bring downwind airspeed inside the +10 kt band. Speed stabilized about 15 kt fast, within the +20 kt limit. SP identified the excess in the cross-check and set the briefed value before the base turn without IP input.",
+        "3": "SP established the briefed downwind airspeed and held it within +10 kt with no excursion below the briefed value. Power was set early after the break roll-out and adjusted with each configuration change. The airspeed indicator was cross-checked at a rate that kept the speed stable throughout the leg.",
+        "4": "SP flew the downwind at the briefed airspeed with only a few knots of variation and never below the briefed figure. Power changes were anticipated with the configuration so that no correction was needed. Speed at the base turn point was exactly what the profile required.",
+        "marginal": "SP kept downwind airspeed inside the +10 kt band, but the speed ran consistently at the top of that band and was only brought back at the base turn. No excursion below the briefed value occurred and the leg remained within standards. SP is expected to set the power earlier so that the briefed speed is established well before the base turn."
+      }
+    },
+    {
+      "id": "formation-30-em05",
+      "label": "Base leg airspeed control",
+      "mif_row": "Landing Pattern",
+      "source": "specific:BASE LEG / AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to excess power carried through the base turn and a late configuration change, did not control base leg airspeed. Speed exceeded the briefed value by more than 20 kt and then decayed below it as the turn tightened, and the IP took the throttle and controls to stabilize the aircraft. The tolerance on this leg permits excess only, so both excursions were outside published limits.",
+        "1": "SP, due to a base turn started before the power reduction was made, did not hold base leg airspeed near the briefed value. Speed reached the +20 kt limit and was reduced only after the IP called for the airspeed. The aircraft was still fast when final was rolled out.",
+        "2": "SP, due to a shallow initial base turn that required additional power to close the pattern, did not keep base leg airspeed within +10 kt. Speed reached roughly 15 kt fast, inside the +20 kt limit. SP recognized the excess and set the briefed value before rolling out on final without IP input.",
+        "3": "SP held base leg airspeed within +10 kt of the briefed value throughout the turn, with no excursion below it. Power was reduced at the start of the turn and adjusted as flaps were extended. Airspeed at the roll-out on final was the briefed figure.",
+        "4": "SP flew the base leg at the briefed airspeed with only a few knots of variation and no decay below the briefed value. The power reduction and the configuration change were timed so that no further correction was needed. The aircraft arrived on final already at approach speed.",
+        "marginal": "SP kept base leg airspeed inside the +10 kt band, but the speed stayed near the upper edge for the whole turn and reached the briefed value only at the roll-out on final. The leg remained within standards. SP is expected to reduce power at the start of the base turn so that approach speed is established during the turn rather than at its end."
+      }
+    },
+    {
+      "id": "formation-30-em06",
+      "label": "Final approach altitude and profile",
+      "mif_row": "Landing Pattern",
+      "source": "specific:FINAL / ALTITUDE (feet)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a glidepath flown on runway perspective alone with no aimpoint reference, did not maintain the final approach profile. The aircraft went more than 100 ft below the required path, which is the tighter side of the tolerance, and the IP added power and took the controls to recover the approach. The final was flown outside published limits.",
+        "1": "SP, due to a delayed power correction after an early descent from the base turn, did not hold final approach altitude within the tighter band. The aircraft reached the 100 ft low limit and the correction was applied only after the IP prompted for the profile. The aimpoint was regained late in the approach.",
+        "2": "SP, due to a steep base-to-final descent, did not hold the final approach profile within the +100/-50 ft band. The aircraft went about 80 ft low, still inside the 100 ft low limit. SP recognized the shifting aimpoint and corrected with power back onto the profile without IP input.",
+        "3": "SP flew the final approach on profile, within +100/-50 ft of the required altitude for the phase. The aimpoint was held steady in the windscreen and corrections were made with small power adjustments. The approach required no repositioning at any point.",
+        "4": "SP tracked the final approach profile with only minor variation from the required altitude and a fixed aimpoint throughout. Power corrections were small, early and rarely needed. The aircraft arrived at the threshold exactly on the intended path.",
+        "marginal": "SP stayed within the +100/-50 ft band on final, but the approach ran on the low side of the profile and the tighter minus tolerance was nearly used on each pattern. Corrections were correct and the approach remained within standards. SP is expected to fly the aimpoint from the roll-out on final so the profile is held from above rather than at the low limit."
+      }
+    },
+    {
+      "id": "formation-30-em07",
+      "label": "Final approach airspeed control",
+      "mif_row": "Landing Pattern",
+      "source": "specific:FINAL / AIRSPEED (knots)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to excess airspeed carried from the base turn with no power reduction on final, did not control the final approach airspeed. Speed remained more than 15 kt above the briefed value into the round out and the IP intervened to prevent a long, floating touchdown. The tolerance on final permits excess only and was clearly exceeded.",
+        "1": "SP, due to a power setting left unchanged after the roll-out on final, did not hold approach airspeed near the briefed value. Speed sat at the +15 kt limit for most of the approach and was reduced only after the IP called the airspeed. The aircraft was still fast approaching the round out.",
+        "2": "SP, due to a late reduction of power after flap extension, did not bring final approach airspeed inside the +10 kt band. Speed stabilized about 12 kt fast, inside the +15 kt limit. SP identified it and set the briefed value well before the round out without IP input.",
+        "3": "SP flew the final approach within +10 kt of the briefed airspeed with no decay below the briefed value. Power was set at the roll-out on final and adjusted only as the configuration required. Speed at the start of the round out was as briefed.",
+        "4": "SP held final approach airspeed on the briefed value with only a few knots of variation and never below it. The power setting was established early and needed no significant change. Speed control remained precise all the way to the round out.",
+        "marginal": "SP remained inside the +10 kt band on final, but the speed sat at the upper edge for most of the approach and was reduced only close to the round out. The approach stayed within standards. SP is expected to establish the briefed approach speed at the roll-out on final so that the last part of the approach is flown at a stable speed."
+      }
+    },
+    {
+      "id": "formation-30-em08",
+      "label": "AOA control in the landing pattern",
+      "mif_row": "Landing Pattern",
+      "source": "specific:DOWN WIND - BASE - FINAL / AOA UNITS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an instrument scan built on the airspeed indicator with the AOA indexer left out of it, did not fly the pattern on the required AOA. The indication varied by more than 3 units through the downwind, base and final and reached the slow side in the turn, and the IP took the controls to unload the aircraft. The AOA pattern was flown outside published tolerance.",
+        "1": "SP, due to bank and back pressure applied together in the base turn without reference to the indexer, did not hold the required AOA. The indication reached the +/-3 unit limit and was corrected only after the IP called the AOA. The aircraft was still off the required value at the roll-out on final.",
+        "2": "SP, due to an increase in back pressure while closing the pattern, did not keep AOA within +/-1.5 units. The excursion reached about 2.5 units, inside the +/-3 unit limit. SP saw the indexer change and returned to the on-speed indication before the roll-out on final without IP input.",
+        "3": "SP flew the downwind, base and final within +/-1.5 units of the required AOA. The indexer was included in the scan alongside the airspeed indicator and pitch was adjusted to keep the on-speed indication through the turns. AOA was held on speed to the round out.",
+        "4": "SP held the on-speed AOA indication throughout the pattern with only marginal movement of the indexer. Pitch and power were coordinated in the turns so that the indication did not change. The aircraft arrived over the threshold precisely on speed.",
+        "marginal": "SP kept AOA inside the +/-1.5 unit band, but the indication moved toward the slow side in each turn and was returned to on speed only on the following straight leg. The pattern remained within standards. SP is expected to hold the indexer on speed through the turn itself by coordinating pitch with bank."
+      }
+    },
+    {
+      "id": "formation-30-em09",
+      "label": "Pattern interval and spacing on the formation recovery",
+      "mif_row": "Landing Pattern",
+      "source": "general:formation_recovery_interval_and_spacing (contact-23 pattern criteria applied to the formation recovery)",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to loss of situational awareness of the aircraft's position in the pattern, did not establish the briefed interval on the preceding formation aircraft. The break was taken at an interval that left no usable spacing on the downwind, and the IP intervened to extend the pattern and re-establish separation. The recovery could not be completed as briefed.",
+        "1": "SP, due to degraded situational awareness of the other formation aircraft after the break, did not maintain the briefed pattern spacing. The interval closed to the point where the approach could not be continued as flown and was opened only after the IP directed the extension. The correction came from outside the cockpit rather than from SP.",
+        "2": "SP, due to attention concentrated on the landing checklist during the downwind, did not hold the briefed interval on the preceding aircraft. The spacing closed noticeably before the base turn. SP re-acquired the other aircraft, delayed the base turn and restored a usable interval without any direction from the IP.",
+        "3": "SP maintained visual contact with the preceding formation aircraft throughout the pattern and flew the briefed interval. The break point and the base turn were adjusted as required to keep the spacing consistent. The sequence of the recovery was flown as briefed with no direction required.",
+        "4": "SP kept the preceding aircraft in sight from the break to the landing and held the briefed interval accurately at every point of the pattern. Adjustments to spacing were small, early and made without any change to the pattern parameters. The formation recovery flowed exactly as briefed.",
+        "marginal": "SP maintained the briefed interval and kept the other aircraft in sight, but the spacing was allowed to close before each correction was made rather than being managed continuously. The pattern remained within standards throughout. SP is expected to assess the interval earlier in the pattern so that spacing is regulated with small adjustments."
+      }
+    },
+    {
+      "id": "formation-30-em10",
+      "label": "Approach assessment and go-around decision",
+      "mif_row": "Landing Pattern",
+      "source": "general:approach_stability_assessment_and_go_around_judgment",
+      "hf_concept": "hf-lack-of-assertiveness",
+      "texts": {
+        "0": "SP, due to failure to call the go-around once the approach was no longer stable, continued an approach that had already departed the briefed profile in both speed and path. No corrective decision was made and the IP took the controls and initiated the go-around. The judgment required to terminate an unstable approach was not exercised.",
+        "1": "SP, due to reluctance to abandon a pattern already flown to the final turn, did not terminate an approach that was outside the briefed parameters. The go-around was initiated only after the IP directed it. By that point the aircraft was at the limit of the published tolerances on both speed and path.",
+        "2": "SP, due to a late assessment of the approach against the briefed criteria, allowed the pattern to develop toward parameters that would not support a landing. SP recognized the deteriorating profile before the limits were reached, called and flew the go-around on his own initiative, and the second pattern was flown as briefed.",
+        "3": "SP assessed the approach continuously against the briefed criteria and made the continue or go-around decision at the correct point. The approach flown to landing remained within the published parameters and any deviation was corrected before it developed. Decisions were stated clearly to the IP.",
+        "4": "SP evaluated each approach against the briefed criteria without prompting and acted on the assessment immediately. The pattern was managed so that the parameters never approached the point of requiring a go-around. Intentions were stated to the IP ahead of each decision point.",
+        "marginal": "SP made the correct continue or go-around decisions and every approach remained within standards, but the assessment was made close to the point at which the decision was needed. The judgment was sound and no intervention was required. SP is expected to evaluate the approach against the briefed criteria earlier so that the decision is made with time in hand."
+      }
+    }
+  ]
+}

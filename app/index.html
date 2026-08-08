@@ -15,10 +15,14 @@
       <p class="tagline">T-6A Gradesheet Observations · BD 3-1 §41 · Phase 2 Syllabus MIF</p>
     </div>
   </div>
+  <nav class="viewtabs">
+    <button id="tab-remarks" class="viewtab active">Remarks</button>
+    <button id="tab-requirements" class="viewtab">Requirements</button>
+  </nav>
   <div class="databadge" id="databadge">—</div>
 </header>
 
-<main class="layout">
+<main class="layout" id="view-remarks">
   <!-- STEP 1: Category -->
   <section class="panel" id="panel-category">
     <h2><span class="step">1</span> Category</h2>
@@ -51,6 +55,19 @@
   <section class="panel wide" id="panel-results">
     <h2><span class="step">4</span> Remarks <span id="result-count" class="count"></span></h2>
     <div id="results"><p class="hint">Pick a category, an item and the codes to see the available remarks.</p></div>
+  </section>
+</main>
+
+<main class="layout req-layout hidden" id="view-requirements">
+  <section class="panel" id="panel-req-domains">
+    <h2><span class="step">1</span> Domain</h2>
+    <div class="cat-grid" id="req-domain-grid"></div>
+    <label class="lbl" style="margin-top:14px">Search</label>
+    <input type="search" id="req-search" placeholder="Search requirements…" autocomplete="off">
+  </section>
+  <section class="panel wide" id="panel-req-list">
+    <h2><span class="step">2</span> Requirements <span id="req-count" class="count"></span></h2>
+    <div id="req-results"><p class="hint">Pick a domain to browse the Phase II requirements.</p></div>
   </section>
 </main>
 

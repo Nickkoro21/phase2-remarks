@@ -1,0 +1,102 @@
+{
+  "item_id": "vfr_navigation-10",
+  "item_name": "MAINTAIN TRACK",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [10],
+  "mif_rows": [
+    {"sn": 10, "row_name": "Maintaining Course"}
+  ],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-10-em01",
+      "label": "Deviation from planned ground track",
+      "mif_row": null,
+      "source": "specific:DEVIATION FROM GROUND TRACK (NM)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a leg heading flown without any drift correction after roll-out, did not maintain the planned ground track and did not correct the deviation as soon as practical. Displacement from the course line passed 2 NM and continued to increase toward the edge of the planned route corridor. The IP had to take the aircraft back toward the course line and re-establish the leg.",
+        "1": "SP, due to a wind correction angle applied late and in one direction only, allowed displacement from the planned ground track to reach the 2 NM limit. The return to the course line was started only after verbal prompting from the IP. The correction was slow enough that the following checkpoint was still crossed off track.",
+        "2": "SP, due to a shallow initial correction after rolling out on the leg heading, drifted between 1 and 2 NM from the planned ground track. SP recognized the displacement at the next visual reference, applied a positive correction angle and regained the course line before the following checkpoint. No intervention was required.",
+        "3": "SP maintained the planned ground track within 1 NM throughout the route. Corrections were applied early, in the correct direction and with an appropriate magnitude. Each checkpoint was crossed on the planned course line.",
+        "4": "SP held the planned ground track with deviations that were barely measurable on the chart. Drift was anticipated ahead of each leg turn and the correction angle was set immediately on roll-out. The aircraft tracked directly over every checkpoint of the route.",
+        "marginal": "SP kept displacement from the planned ground track inside the standards, but the deviations were consistently near the wider tolerance and always to the downwind side. The trend indicates a drift correction that is applied after the error appears rather than anticipated. SP is expected to set the correction angle on roll-out for each leg and hold the track error inside the tighter tolerance."
+      }
+    },
+    {
+      "id": "vfr_navigation-10-em02",
+      "label": "Timeliness of track correction",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to an absent cross-check of aircraft position against the planned course line, did not correct the track deviation as soon as practical. The error was allowed to build through most of the leg and the displacement passed 2 NM before any action was taken. The IP directed both the recognition of the error and the turn back to course.",
+        "1": "SP, due to a position cross-check performed only at the planned checkpoints and never between them, recognized the track deviation only after it had reached the 2 NM limit. The correction was initiated after verbal prompting from the IP. The aircraft regained the course line late in the following leg.",
+        "2": "SP, due to a cross-check that lapsed while the chart was being handled in the cockpit, detected the track error one to two miles off the planned line. Once the scan was resumed SP identified the displacement, turned toward the course line without prompting and re-established the track before the next turning point.",
+        "3": "SP cross-checked position against the planned course line continuously and corrected each track deviation as soon as it appeared. Errors were caught inside one mile and removed with a single correctly sized correction.",
+        "4": "SP maintained a continuous cross-check between the chart, the ground picture and the navigation display, so track errors were identified while they were still forming. Each correction was small, immediate and required no follow-up action.",
+        "marginal": "SP corrected every track deviation inside the standards, but the corrections were consistently started at the checkpoint rather than as soon as the error appeared. The trend is a cross-check driven by checkpoints instead of a continuous comparison of position with the course line. SP is expected to compare position against the planned line between checkpoints and act on the first indication of drift."
+      }
+    },
+    {
+      "id": "vfr_navigation-10-em03",
+      "label": "Drift assessment and wind correction angle technique",
+      "mif_row": null,
+      "source": "general:a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a correction angle guessed rather than derived from the observed drift, applied corrections that were in the wrong direction or grossly oversized. The aircraft was flown through the course line repeatedly and the resulting excursion exceeded 2 NM. The IP had to establish the heading that held the planned ground track.",
+        "1": "SP, due to repeated small heading changes instead of one assessed correction angle, never stabilized on a heading that held the ground track. The oscillation about the course line reached the 2 NM limit. A usable correction angle was set only after the IP called out the drift direction.",
+        "2": "SP, due to an initial correction angle undersized for the actual drift, remained between 1 and 2 NM off the planned track for part of the leg. SP re-estimated the drift from the movement of a ground reference, increased the correction angle and closed back to the course line without assistance.",
+        "3": "SP established a correction angle that matched the observed drift and held the ground track within one mile. Heading was adjusted in single deliberate steps and the aircraft remained stable on the course line.",
+        "4": "SP assessed the drift from the ground picture within the first mile of each leg and set a correction angle that held the aircraft on the course line for the whole leg. Heading changes were minimal and no reconvergence to the track was necessary.",
+        "marginal": "SP held the ground track within the standards, but the correction angle was reached through several successive heading changes rather than one assessment. The trend is a trial-and-error technique that costs time and track accuracy on short legs. SP is expected to assess drift from the ground picture once and set the full correction angle in a single step."
+      }
+    },
+    {
+      "id": "vfr_navigation-10-em04",
+      "label": "Recognition of wind effect and recomputation of time and fuel",
+      "mif_row": null,
+      "source": "general:b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to continued use of the briefed forecast wind after the actual drift and groundspeed had clearly changed, did not recognize the wind effect in flight and did not recalculate flight time or fuel. Leg times and fuel figures remained the planned ones while the aircraft fell progressively behind the route. The IP had to provide the revised time and fuel picture.",
+        "1": "SP, due to a leg timing check made only at the far end of the route, recognized the wind effect only when the accumulated delay was already large. The recalculation of flight time and fuel was carried out after the IP asked for revised figures. The corrected estimates arrived too late to be of any use for that leg.",
+        "2": "SP, due to a groundspeed check taken over too short a segment, first accepted a leg time that did not match the actual wind. SP repeated the check over the following segment, recognized the headwind component and recalculated the remaining leg times and the fuel required without prompting.",
+        "3": "SP recognized the wind effect in flight from the observed drift and groundspeed and recalculated the remaining flight time and fuel when the change required it. The revised figures were consistent with the actual progress along the route.",
+        "4": "SP identified the difference between the forecast and the actual wind within the first leg and immediately produced revised leg times and fuel figures for the rest of the route. The estimates were accurate and were passed clearly, so the flight plan stayed current for the whole sortie.",
+        "marginal": "SP recognized the wind effect and produced acceptable revised time and fuel figures, but the recalculation was done once and was not refreshed as the wind changed along the route. The trend is a single update rather than continuous management of the plan. SP is expected to re-check groundspeed on each leg and revise time and fuel whenever the observed wind differs from the planned wind."
+      }
+    },
+    {
+      "id": "vfr_navigation-10-em05",
+      "label": "Orientation and running position awareness",
+      "mif_row": null,
+      "source": "general:a|execution:2",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to lack of awareness of the aircraft position relative to the planned course line, lost orientation between checkpoints and continued on a heading that no longer led to the next turning point. The displacement grew past 2 NM without being recognized. The IP had to re-establish both the position and the planned track.",
+        "1": "SP, due to lack of awareness of position after an unplanned deviation around cloud, was unable to state the aircraft position relative to the planned track when asked. Orientation was regained only with the IP pointing out the ground features. By that time the track error was at the 2 NM limit.",
+        "2": "SP, due to a chart-to-ground comparison interrupted during the turn onto the new leg, was briefly uncertain of position after roll-out. SP used the next major ground feature to re-establish orientation, identified a one to two mile track error and corrected back toward the course line unaided.",
+        "3": "SP remained oriented throughout the route and was able to state the aircraft position relative to the planned track at any time. Chart features were matched to the ground continuously and the track was held within one mile.",
+        "4": "SP kept an accurate running position at all times and identified each ground feature before reaching it. Orientation was never in doubt, including after deviations around weather, and the planned track was regained immediately on each occasion.",
+        "marginal": "SP stayed oriented and inside the standards, but the position picture was rebuilt at each checkpoint rather than carried continuously between them. The trend is that an unplanned deviation would leave SP briefly uncertain of position. SP is expected to maintain a running position between checkpoints and be able to state it at any point on the leg."
+      }
+    },
+    {
+      "id": "vfr_navigation-10-em06",
+      "label": "Cockpit task sequencing around turning points",
+      "mif_row": null,
+      "source": "general:a|execution:1",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to task sequencing that concentrated the chart work, the log entries and the radio calls inside the turn onto the new leg, did not fly the aircraft accurately while those tasks were completed. The heading was allowed to wander, checkpoints were missed and the track error exceeded 2 NM. The IP intervened to fly the aircraft back onto the planned course line.",
+        "1": "SP, due to inadequate workload management around the turning points, fell behind the route and completed the log and time entries well after each checkpoint. Aircraft handling degraded while the tasks were caught up and the track error reached the 2 NM limit. The correction was made only after the IP prompted a return to course.",
+        "2": "SP, due to cockpit tasks started at the checkpoint rather than before it, allowed a one to two mile track error to develop while the log was being completed. SP recognized the divergence, gave priority to flying the correction heading over the paperwork and regained the course line before the next checkpoint.",
+        "3": "SP sequenced the navigation tasks so that chart work and log entries were completed without degrading aircraft control. Checkpoints were identified on time and the track was held within one mile throughout the route.",
+        "4": "SP prepared each leg before reaching the turning point, so heading, time and fuel entries were made with the aircraft flown precisely. Workload stayed evenly distributed across the route and no cockpit task was allowed to compete with holding the planned track.",
+        "marginal": "SP completed the navigation tasks and held the track within the standards, but the workload was consistently bunched at the turning points. The trend is that any additional cockpit task at a turn would displace the track correction. SP is expected to prepare the next leg before the turning point so that the correction angle is set on roll-out."
+      }
+    }
+  ]
+}

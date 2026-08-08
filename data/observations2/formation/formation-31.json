@@ -1,0 +1,160 @@
+{
+  "item_id": "formation-31",
+  "item_name": "LANDING",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [31],
+  "mif_rows": [{ "sn": 31, "row_name": "Landing" }],
+  "error_modes": [
+    {
+      "id": "formation-31-em01",
+      "label": "Flaps LDG / T-O / AOA landing - touchdown point control",
+      "mif_row": null,
+      "source": "specific:TOUCH DOWN POINT (feet from the beginning of the RWY) [a/ FLAPS LDG - FLAPS T/O - AOA] (ref contact-24)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a late round out flown with residual power after the formation approach, did not bring the A/C to the touchdown point as described in the Flight Manuals. The A/C floated in ground effect and contacted the RWY beyond 1500 ft from the beginning of the RWY, outside the landing criteria. The IP took the controls to close the throttle and place the A/C on the RWY. The aim point was neither selected nor protected during the level off.",
+        "1": "SP, due to a delayed power reduction while the aim point was reacquired after the lateral repositioning from the formation, carried excess energy into the level off. Touchdown was achieved at the 1500 ft limit from the beginning of the RWY, and only after the IP called for the power to be closed and the landing attitude to be held. SP did not recognize the developing float from the A/C response before the verbal prompt.",
+        "2": "SP, due to a round out started slightly high, allowed a short float before contact with the RWY. Touchdown occurred between 1000 and 1500 ft from the beginning of the RWY. SP recognized the float, held the landing attitude and completed the touchdown in time, with no intervention from the IP.",
+        "3": "SP executed the round out timely, levelled off the A/C, assumed the landing attitude and brought the A/C in touch with the RWY as described in the Flight Manuals. Touchdown was achieved within 1000 ft from the beginning of the RWY, on the selected aim point. The gradual power reduction and the control of the rate of descent were consistent from the end of the formation approach to contact.",
+        "4": "SP flew the round out and the flare with precise power and attitude control, placing the A/C on the selected aim point with negligible dispersion between repeated landings. Touchdown was achieved comfortably within 1000 ft from the beginning of the RWY, with no float and no late correction. Aim point discipline was maintained through the transition from the formation approach to the individual landing.",
+        "marginal": "SP touched down within the required 1000 ft from the beginning of the RWY, but consistently at the far end of that band. The tendency is a round out started slightly high after the transition from the formation, which produces a brief float and moves the touchdown point long. SP is expected to begin the gradual power reduction earlier and to hold the landing attitude with less float, so that the touchdown point is centred on the aim point rather than at the limit."
+      }
+    },
+    {
+      "id": "formation-31-em02",
+      "label": "Flaps LDG / T-O / AOA landing - lateral placement and centerline deviation at touchdown",
+      "mif_row": null,
+      "source": "specific:DEVIATION FROM CENTER LINE (feet) [a/ FLAPS LDG - FLAPS T/O - AOA] (ref contact-24)|general(ref contact-24):a,f",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unremoved crab carried from the formation approach, did not direct the A/C to the RWY centerline reference. The A/C touched down more than 15 ft laterally displaced from that reference and with a drift, outside the landing criteria. The IP took the controls to align the A/C and stop the lateral movement during the roll-out. SP neither applied the crosswind controls nor executed a go-around.",
+        "1": "SP, due to insufficient rudder input during the level off, left the A/C offset from the RWY centerline reference. Touchdown was achieved at the 15 ft lateral limit, and the alignment was corrected only after the IP called for rudder and into-wind aileron. SP did not detect the lateral displacement from the outside references before the prompt.",
+        "2": "SP, due to a slightly late removal of the crab after the transition from the formation, touched down laterally displaced from the RWY centerline reference by between 5 and 15 ft. SP identified the offset during the level off, applied rudder and into-wind aileron and stopped the drift before contact, with no intervention from the IP.",
+        "3": "SP directed the A/C to the RWY centerline reference, removed the crab before contact and touched down within 5 ft of it, with the longitudinal axis aligned with the direction of the roll-out. Crosswind controls were applied progressively through the level off, and no drift was present at touchdown. The alignment was held throughout the deceleration.",
+        "4": "SP held the A/C on the RWY centerline reference from the end of the formation approach to contact, with negligible lateral deviation and no perceptible drift at touchdown. Crosswind controls were applied continuously and in the correct proportion, so that no lateral correction was required during the roll-out.",
+        "marginal": "SP touched down within the required 5 ft of the RWY centerline reference, but consistently displaced to the same side. The tendency is a residual crab that is removed late, so the alignment is achieved just before contact rather than during the level off. SP is expected to establish the wing-low, rudder-aligned technique earlier so that the lateral placement is centred rather than at the edge of the acceptable band."
+      }
+    },
+    {
+      "id": "formation-31-em03",
+      "label": "Flaps LDG / T-O / AOA landing - touchdown speed control",
+      "mif_row": null,
+      "source": "specific:TOUCH DOWN SPEED (knots) [a/ FLAPS LDG - FLAPS T/O - AOA] (ref contact-24)|general(ref contact-24):b,c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incomplete power reduction during the level off, did not bring the A/C in touch with the RWY at the speed described in the Flight Manuals. Touchdown speed exceeded the computed value by more than 10 kt, outside the landing criteria. The IP intervened on the throttle and the pitch attitude to stop the float and complete the landing. SP did not include the airspeed in the scan after the transition from the formation approach.",
+        "1": "SP, due to power left in during the flare, held the A/C off the RWY at excess speed. Touchdown was achieved at the +10 kt limit from the computed touchdown speed, and only after the IP called for the throttle to be closed and the landing attitude to be maintained. The speed trend was not recognized by SP before the verbal prompt.",
+        "2": "SP, due to a gradual power reduction that was started slightly late, touched down between 5 and 10 kt above the computed touchdown speed. SP identified the excess speed during the level off, closed the throttle and held the landing attitude, completing the touchdown without any intervention from the IP.",
+        "3": "SP reduced power gradually, controlled the rate of descent and brought the A/C in touch with the RWY within 0 to +5 kt of the computed touchdown speed, in the landing attitude described in the Flight Manuals. The speed control was stable from the final part of the approach through the flare.",
+        "4": "SP controlled the energy through the level off so that touchdown occurred at the computed touchdown speed with negligible excess, in the correct landing attitude and with no float. Power reduction and pitch were coordinated throughout, and the same speed was repeated on successive landings.",
+        "marginal": "SP touched down within the required 0 to +5 kt band, but repeatedly at the fast end of it. The tendency is a power reduction completed late in the flare, which leaves a small speed surplus and a longer float than necessary. SP is expected to begin the reduction earlier and to trade the surplus into attitude, so that the touchdown speed sits inside the band rather than at its limit."
+      }
+    },
+    {
+      "id": "formation-31-em04",
+      "label": "Flaps UP landing - touchdown point control",
+      "mif_row": null,
+      "source": "specific:TOUCH DOWN POINT (feet from the beginning of the RWY) [b/ FLAPS UP] (ref contact-24)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a round out flown with the flaps-down sight picture in the no-flap configuration, did not bring the A/C to the touchdown point as described in the Flight Manuals. The flatter approach path and the higher energy produced an extended float and contact with the RWY beyond 2000 ft from the beginning of the RWY, outside the landing criteria. The IP took the controls to place the A/C on the RWY within the remaining distance available.",
+        "1": "SP, due to a late recognition of the flatter no-flap approach path, arrived at the level off high on the aim point. Touchdown was achieved at the 2000 ft limit from the beginning of the RWY, and only after the IP directed the power to be closed and the landing attitude to be held. SP did not adjust the aim point for the flaps up configuration before the prompt.",
+        "2": "SP, due to a slightly high round out in the no-flap configuration, allowed a short float before contact. Touchdown occurred between 1500 and 2000 ft from the beginning of the RWY. SP recognized the developing float, held the landing attitude and completed the touchdown in time, with no intervention from the IP.",
+        "3": "SP flew the no-flap approach on the correct path, executed the round out timely and brought the A/C in touch with the RWY within 1500 ft from the beginning of the RWY. The aim point was adjusted for the flaps up configuration and the rate of descent was controlled through the level off, as described in the Flight Manuals.",
+        "4": "SP flew the flaps up landing with the aim point and the approach path adjusted for the configuration, placing the A/C on the RWY well inside 1500 ft from the beginning of the RWY with negligible float. The energy management through the flare was consistent and required no late correction.",
+        "marginal": "SP touched down within the required 1500 ft from the beginning of the RWY in the no-flap configuration, but at the long end of that band. The tendency is an aim point that is not moved far enough back for the flatter flaps up path, which produces a shallow round out and a longer float. SP is expected to select the aim point for the configuration and to close the throttle earlier so that the touchdown point is centred inside the band."
+      }
+    },
+    {
+      "id": "formation-31-em05",
+      "label": "Flaps UP landing - lateral placement and centerline deviation at touchdown",
+      "mif_row": null,
+      "source": "specific:DEVIATION FROM CENTER LINE (feet) [b/ FLAPS UP] (ref contact-24)|general(ref contact-24):a,f",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the higher touchdown speed of the no-flap configuration and an unremoved crab, did not direct the A/C to the RWY centerline reference. Touchdown occurred more than 15 ft laterally displaced from that reference and with a drift, outside the landing criteria. The IP took the controls to align the A/C during the roll-out. No go-around was initiated although the touchdown parameters were not met.",
+        "1": "SP, due to a late application of the crosswind controls in the flaps up configuration, allowed the A/C to remain offset from the RWY centerline reference. Touchdown was achieved at the 15 ft lateral limit and was corrected only after the IP called for rudder and into-wind aileron. The lateral displacement was not detected by SP from the outside references before the prompt.",
+        "2": "SP, due to a slightly late alignment in the no-flap flare, touched down between 5 and 15 ft laterally from the RWY centerline reference. SP identified the offset, applied rudder to align the longitudinal axis and stopped the drift before contact, with no intervention from the IP.",
+        "3": "SP directed the A/C to the RWY centerline reference in the flaps up configuration, removed the crab before contact and touched down within 5 ft of it, aligned with the direction of the roll-out. Crosswind controls were applied progressively and no drift was present at touchdown.",
+        "4": "SP held the A/C on the RWY centerline reference throughout the no-flap flare, touching down with negligible lateral deviation and no drift despite the higher touchdown speed. Crosswind controls were held into the roll-out without any subsequent lateral correction.",
+        "marginal": "SP touched down within the required 5 ft of the RWY centerline reference in the flaps up configuration, but consistently offset to the same side. The tendency is a late transition from crab to wing-low, which leaves little margin at the higher no-flap touchdown speed. SP is expected to establish the alignment during the level off so that the lateral placement is centred rather than at the edge of the band."
+      }
+    },
+    {
+      "id": "formation-31-em06",
+      "label": "Flaps UP landing - touchdown speed control",
+      "mif_row": null,
+      "source": "specific:TOUCH DOWN SPEED (knots) [b/ FLAPS UP] (ref contact-24)|general(ref contact-24):b,c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incomplete power reduction combined with the higher reference speed of the no-flap configuration, did not bring the A/C in touch with the RWY at the speed described in the Flight Manuals. Touchdown speed exceeded the computed value by more than 10 kt, outside the landing criteria, with a corresponding extension of the landing roll. The IP intervened on the throttle and the attitude to complete the landing.",
+        "1": "SP, due to power carried into the flaps up flare, held the A/C off the RWY at excess speed. Touchdown was achieved at the +10 kt limit from the computed touchdown speed and only after the IP directed the throttle to be closed. SP did not recognize the speed surplus in the no-flap configuration before the verbal prompt.",
+        "2": "SP, due to a late power reduction in the flaps up level off, touched down between 5 and 10 kt above the computed touchdown speed. SP identified the excess speed, closed the throttle and held the landing attitude, completing the touchdown without any intervention from the IP.",
+        "3": "SP flew the no-flap flare with a gradual power reduction and a controlled rate of descent, bringing the A/C in touch with the RWY within 0 to +5 kt of the computed touchdown speed and in the correct landing attitude. The speed was stabilized before the level off and held through contact.",
+        "4": "SP managed the energy of the flaps up landing so that touchdown occurred at the computed touchdown speed with negligible excess and no float, in the landing attitude described in the Flight Manuals. The technique was repeated with the same result on successive no-flap landings.",
+        "marginal": "SP touched down within the required 0 to +5 kt band in the flaps up configuration, but at the fast end of it on each attempt. The tendency is a power reduction completed only in the flare, which is less forgiving at the higher no-flap reference speed. SP is expected to complete the reduction earlier so that the touchdown speed is centred inside the band and the landing roll is not extended."
+      }
+    },
+    {
+      "id": "formation-31-em07",
+      "label": "Round out technique - float, ballooning and bounce recognition after the formation approach",
+      "mif_row": null,
+      "source": "general(ref contact-24):b,c,e",
+      "hf_concept": "hf-acts-errors",
+      "texts": {
+        "0": "SP, due to a skill-based error in control input during the level off, did not execute the round out timely and did not assume the landing attitude. A high flare followed by a rapid pitch correction produced ballooning and a bounce, and the developing condition was neither prevented nor recognized. The IP took the controls to arrest the pitch excursion and complete the landing.",
+        "1": "SP, due to an over-controlled pitch input in the flare, allowed the A/C to balloon and did not react to the condition on his/her own. The landing attitude was re-established and the touchdown completed only after the IP called for the attitude to be held and the power to be adjusted. The onset of the balloon was not recognized by SP from the A/C response.",
+        "2": "SP, due to a round out started marginally early, allowed a short float before contact with the RWY. SP recognized the condition from the sink rate and the attitude, held the landing attitude without further pitch inputs and completed the touchdown in time, with no intervention from the IP.",
+        "3": "SP executed the round out timely, levelled off the A/C and assumed the landing attitude, bringing the A/C in touch with the RWY as described in the Flight Manuals. No high flare, float, ballooning, porpoising or bounce developed, and the pitch inputs through the level off were smooth and progressive.",
+        "4": "SP flew the level off with continuous, minimal pitch corrections, assuming the landing attitude at the correct height and holding it through contact. No abnormal landing condition developed on any of the landings flown, and the technique was consistent from the first to the last attempt.",
+        "marginal": "SP kept the round out and the landing attitude within the required standard, but the level off was repeatedly initiated a little early, producing a brief float before contact. The technique remains acceptable, however the margin for a bounce narrows when the surface conditions are less favourable. SP is expected to refine the height judgement in the flare so that the landing attitude is assumed at the point where contact follows without float."
+      }
+    },
+    {
+      "id": "formation-31-em08",
+      "label": "Formation interval, spacing and clearance from the preceding A/C on final and during the roll-out",
+      "mif_row": null,
+      "source": "general(ref contact-24):a,d|execution:1,4",
+      "hf_concept": "hf-distributed-situational-awareness",
+      "texts": {
+        "0": "SP, due to an unshared assessment of the aircraft state between the two A/C of the formation, did not maintain the briefed interval behind the preceding A/C on final and into the landing. The spacing closed to a value that no longer allowed an independent level off and roll-out on the assigned side of the RWY. The IP took the controls and directed the go-around. SP made no call on the reducing separation.",
+        "1": "SP, due to absent cross-talk on the closure with the preceding A/C, allowed the interval to reduce below the briefed spacing on short final. The interval was re-established, and the landing continued on the assigned side of the RWY, only after the IP called for power and for the position relative to the other A/C to be checked. SP did not report the closure before the prompt.",
+        "2": "SP, due to a late power adjustment on final, allowed the interval behind the preceding A/C to reduce below the briefed spacing. SP recognized the closure, adjusted power to re-establish the interval before the level off and stated the correction to the other cockpit, so that the landing was completed on the assigned side of the RWY without any intervention from the IP.",
+        "3": "SP maintained the briefed interval behind the preceding A/C from the final turn to touchdown, kept the A/C on the assigned side of the RWY and, after touchdown, decelerated by applying the standard procedure without closing on the A/C ahead. The position of the other A/C was reported to the other cockpit at the briefed points.",
+        "4": "SP held the briefed interval with minimal power corrections through the final and the landing, kept the A/C on the assigned side of the RWY and vacated following the LAPs with continuous awareness of the preceding A/C. The plain-language calls kept both cockpits working from the same picture of the formation throughout the recovery.",
+        "marginal": "SP maintained separation from the preceding A/C within the briefed spacing, but consistently at the close end of it, which left limited room for a variation in the other A/C roll-out. The tendency is a power reduction on final that lags the closure rather than anticipating it. SP is expected to control the interval earlier and to state the developing closure, so that the spacing is held with a margin rather than at its minimum."
+      }
+    },
+    {
+      "id": "formation-31-em09",
+      "label": "Crosswind control and deceleration on the assigned side of the RWY after touchdown",
+      "mif_row": null,
+      "source": "general(ref contact-24):d,f",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the crosswind controls not being maintained after touchdown, did not keep the A/C on the assigned side of the RWY during the roll-out. Abrupt corrections produced lateral oscillations and a drift towards the other A/C of the formation, and the standard deceleration procedure was not applied. The IP took the controls to stabilize the roll-out and vacate the RWY.",
+        "1": "SP, due to the into-wind aileron being released once the A/C was on the RWY, allowed the A/C to move laterally from the assigned side during the deceleration. The controls were re-applied and the direction re-established only after the IP called for aileron and rudder. SP did not detect the lateral movement from the outside references before the prompt.",
+        "2": "SP, due to a partial relaxation of the crosswind controls after touchdown, allowed a lateral movement from the assigned side of the RWY early in the roll-out. SP recognized the deviation, re-applied the controls smoothly and completed the deceleration to taxi speed without oscillations and without any intervention from the IP.",
+        "3": "SP applied proper crosswind controls through touchdown and increased them as the A/C decelerated, keeping the roll-out on the assigned side of the RWY. Deceleration to taxi speed was achieved by applying the standard procedure, without abrupt oscillations, and SP vacated the RWY following the LAPs with no deviations.",
+        "4": "SP maintained the crosswind controls continuously from the flare into the roll-out, holding the A/C on the assigned side of the RWY with no lateral movement and no directional correction of note. The deceleration was smooth and the RWY was vacated following the LAPs and clear of the other A/C of the formation.",
+        "marginal": "SP kept the roll-out on the assigned side of the RWY and decelerated by applying the standard procedure, but the crosswind controls were held at the value used at touchdown rather than increased as the speed decayed. The result is a small lateral movement late in the roll-out that is corrected each time. SP is expected to keep increasing the into-wind aileron through the deceleration so that no correction is required."
+      }
+    },
+    {
+      "id": "formation-31-em10",
+      "label": "Recognition of an unsuitable landing condition and go-around decision",
+      "mif_row": null,
+      "source": "general(ref contact-24):e,f",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to continuation of the plan after the information that invalidated it had already been received, did not recognize that the touchdown parameters could not be met after the formation approach. The landing was continued from an unstable position, with drift and an unarrested sink rate, instead of executing the go-around required by the criteria. The IP took the controls and initiated the go-around.",
+        "1": "SP, due to continuation bias in completing the landing as briefed, pressed the approach although the crosswind controls were not producing the required alignment. The go-around was initiated only after the IP directed it, and the decision point had already been passed. SP did not verbalize the developing condition to the other cockpit.",
+        "2": "SP, due to a late assessment of the alignment and the sink rate on short final, delayed the decision but then recognized that the touchdown parameters would not be met. SP executed the go-around on his/her own, applied power and established the climb, and repositioned for a further approach without any intervention from the IP.",
+        "3": "SP assessed the landing condition continuously through the level off, recognized the onset of an unsuitable condition and reacted accordingly, either correcting inside the parameters or executing the go-around as required by the criteria. The decision was made in time and stated clearly to the other cockpit and to the formation.",
+        "4": "SP identified the developing condition at its onset and acted without hesitation, keeping the decision well ahead of the A/C on every approach flown. The go-around criteria were applied consistently and communicated in plain language, so that the intention was unambiguous to the IP, the other A/C and ATC.",
+        "marginal": "SP reached the correct decision on the landing condition each time, but the assessment was made late in the level off rather than on final approach. The tendency is to attempt one further correction before considering the go-around, which compresses the time available for it. SP is expected to fix the decision point earlier in the approach so that the go-around, when required, is initiated from a stabilized position."
+      }
+    }
+  ]
+}

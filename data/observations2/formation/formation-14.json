@@ -1,0 +1,147 @@
+{
+  "item_id": "formation-14",
+  "item_name": "MISSION PLANNING / BRIEFING.",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [14],
+  "mif_rows": [
+    { "sn": 14, "row_name": "Mission Planning - Briefing" }
+  ],
+  "error_modes": [
+    {
+      "id": "formation-14-em01",
+      "label": "MISSION PROFILE AND OBJECTIVES AS LEADER",
+      "mif_row": null,
+      "source": "general:a.1|exec:1c,1d",
+      "hf_concept": "hf-briefing-and-threat-identification",
+      "texts": {
+        "0": "SP, due to a threat present in the minimum threat set but not identified in the planning phase, did not determine the mission profile and did not set objectives according to the experience level of the formation and the difficulty level of the mission. The profile brought to the briefing room had no sequence of events, no working area allocation and no objective assigned to the wingman, and the forecast weather at the recovery time was left unaddressed. IP had to suspend the brief, build the profile and set the objectives before the formation could be released.",
+        "1": "SP, due to mission planning that did not address the forecast weather at the recovery time, did not determine a complete mission profile and set objectives that did not match the experience level of the wingman. Four items of the profile were entered only after IP named each of them in turn, and the objectives were rewritten twice on IP direction. The plan reached the lower limit of the standard by verbal prompting alone and delayed the brief by about fifteen minutes.",
+        "2": "SP, due to a currency shortfall that was not addressed at the start of the planning phase, first set objectives above the level the formation could fly on that sortie. SP recognized the mismatch while reviewing the profile against the syllabus event, reduced the objectives and reallocated the working area before the brief opened, without IP intervention. The profile presented then covered the full sequence of events with objectives matched to the formation.",
+        "3": "SP determined the mission profile and set the objectives according to the experience level of the formation and the difficulty level of the mission. The sequence of events, working area allocation, timings and the objective for each member were defined before the brief and required no correction by IP. The profile was consistent with the syllabus event throughout.",
+        "4": "SP produced a mission profile of exceptional quality, with the sequence of events, area allocation, timings and individual objectives built around the specific experience level of the wingman and the specific difficulty of the sortie. Every threat in the minimum threat set was addressed in the profile before the brief opened, with the mitigation already worked out. Deviations from the ideal profile were negligible.",
+        "marginal": "SP determined the mission profile and set objectives within standards, but the objectives were stated in general terms and gave the wingman no measurable target for the sortie, and the profile carried no margin for a delayed area entry. The trend is toward a profile that satisfies the requirement on paper while leaving the debriefing with nothing specific to measure. SP is expected to state objectives in measurable terms and to build usable margin into the profile on the next sortie."
+      }
+    },
+    {
+      "id": "formation-14-em02",
+      "label": "DIRECTIVES FOR MISSION PROFILE AND BRIEFING GUIDE BOOK COMPLIANCE",
+      "mif_row": null,
+      "source": "general:a.2|exec:1b",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, as leader, did not execute the mission briefing according to the Briefing Guide Book and did not give solid directives for the mission profile. Whole sections of the guide covering join-up, lost wingman and knock-it-off call standards were omitted, and the directives given for the profile were open to more than one reading. IP had to stop the briefing and cover the omitted sections before the formation stepped.",
+        "1": "SP, as leader, executed the briefing in an order that did not follow the Briefing Guide Book and gave directives that left the wingman without a defined action for two events of the profile. Both sections were covered only after IP named them, and the directives were restated on IP prompting. The briefing met the lower limit of the standard by verbal prompting alone and ran about twenty minutes past its planned end.",
+        "2": "SP, as leader, initially covered the mission profile without giving the airspeed and altitude directives for the transit segment. SP identified the omission on reaching the next section of the Briefing Guide Book, returned to the profile and gave the missing directives before continuing, without IP intervention. The remaining sections of the guide were then delivered in the published order.",
+        "3": "SP executed the mission briefing according to the Briefing Guide Book and gave solid directives for the mission profile. Each section of the guide was covered in the published order and every phase of the profile was tied to a directive that admitted a single interpretation. No section required completion by IP.",
+        "4": "SP delivered a briefing of exceptional quality, covering every section of the Briefing Guide Book and supporting each phase of the profile with a directive stated in terms of airspeed, position and responsibility. Contingencies raised from the floor were answered with directives already prepared in the planning phase. The formation left the briefing room with no point of the profile undefined.",
+        "marginal": "SP executed the briefing according to the Briefing Guide Book within standards, but several directives were given as intentions rather than as instructions, and two sections were read from the guide without being related to the profile of the day. The trend is toward a briefing that discharges the format while leaving the wingman to infer what is actually required. SP is expected to convert each section of the guide into a specific directive for the flown profile on the next sortie."
+      }
+    },
+    {
+      "id": "formation-14-em03",
+      "label": "CONTROL OF THE BRIEFING AND DEBRIEFING PROCESS",
+      "mif_row": null,
+      "source": "exec:1a",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, as leader, did not have control of the briefing process. The session was taken over by questions from the floor within the first minutes, the planned order was abandoned and about half of the profile was never reached before the time available ran out. IP had to take control of the room and complete the process.",
+        "1": "SP, as leader, lost control of the briefing at three points where the discussion moved off the profile, and did not bring it back until IP directed it. The remaining sections were then covered against the clock, with the last two rushed. The process was completed to the lower limit of the standard only through IP prompting and overran the allotted time by about fifteen minutes.",
+        "2": "SP, as leader, allowed a discussion of a secondary point to run past its place in the briefing sequence. SP recognized within about a minute that the profile had not been reached, closed the discussion, deferred the point to the debriefing and returned to the planned order, without IP intervention. The briefing was completed within the time available.",
+        "3": "SP had control of the briefing and debriefing process throughout. Discussion was taken at the points where it belonged, closed once the point had been answered and deferred when it fell outside the profile of the day, and both sessions finished within the time allotted. The formation was never in doubt about which part of the process was in progress.",
+        "4": "SP exercised exceptional control of the briefing and debriefing process, holding the planned order while still drawing every member into the discussion at the point where their input mattered. Questions were answered without loss of the thread and the session finished ahead of the time allotted with all content covered. No part of the process required redirection.",
+        "marginal": "SP had control of the briefing and debriefing process within standards, but the pace was set by the clock rather than by the content, and two discussions were closed before the wingman had finished the point being made. The trend is toward control maintained at the cost of the exchange the process exists to produce. SP is expected to hold the order of the session while leaving room for the formation to contribute on the next sortie."
+      }
+    },
+    {
+      "id": "formation-14-em04",
+      "label": "CRM COMPREHENSION BY ALL FORMATION MEMBERS BEFORE BRIEFING COMPLETION",
+      "mif_row": null,
+      "source": "general:a.3|exec:1e",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, due to lack of communication of the recognized difference to the other members, did not make sure that the CRM content was comprehensible to all formation members before the briefing was completed. No comprehension check was made at any point, and two members left the room with different understandings of the lost wingman procedure and of who held responsibility for lookout during the transit. IP had to reopen the briefing and re-establish the common picture before the formation stepped.",
+        "1": "SP, due to an indirect hint instead of a direct statement of the responsibilities, did not confirm that the CRM content was completely comprehensible to all members and closed the briefing on a general question that drew no answer. The comprehension check was carried out only after IP directed that each member be asked individually, and it revealed one item that had not been understood. The requirement was met at its lower limit and only through that prompting.",
+        "2": "SP, due to failure to pass a required confirmation at the briefed point, initially closed the CRM section without checking that the knock-it-off call standards had been understood. SP recognized the omission before moving to the next section, returned to the point and confirmed the standards with each member individually, without IP intervention. All members left the briefing with the same understanding of the calls.",
+        "3": "SP made sure that the CRM content was completely comprehensible to all formation members and confirmed it before the briefing was completed. Each member was asked directly about the responsibilities, the call standards and the contingencies, and every answer was correct. The formation left the room with a single common picture of the mission.",
+        "4": "SP ensured comprehension of the CRM content to an exceptional standard, checking understanding at the end of each section rather than only at the close, and using specific scenario questions in place of a general invitation to ask. Where an answer was incomplete, SP restated the point and confirmed it again before moving on. No element of the mission was left with more than one interpretation.",
+        "marginal": "SP confirmed comprehension of the CRM content within standards, but the check was made as a single question to the formation as a whole and only one member answered. The trend is toward a confirmation that records agreement without testing it. SP is expected to check understanding member by member and against specific mission events on the next sortie."
+      }
+    },
+    {
+      "id": "formation-14-em05",
+      "label": "ALTERNATIVE WAYS OF EXECUTION AND DECISION POINTS IN THE PLAN",
+      "mif_row": null,
+      "source": "exec:1c",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, as leader, did not plan the mission profile taking under consideration alternative ways of execution. No alternative was prepared for a closed working area, for a weather deterioration or for a ground abort of the wingman, and no decision point or divert criterion was named anywhere in the profile. IP had to build the contingency plan and state the divert criteria before the formation was released.",
+        "1": "SP, as leader, planned a single way of executing the profile and left both the alternative for the second working area and the criteria for using it undefined. The alternative profile and the divert criteria were produced only after IP named each one in turn. The plan reached the lower limit of the standard by prompting alone and delayed the release of the formation.",
+        "2": "SP, as leader, first presented a profile with one line of execution and no decision point for the weather deterioration that had been forecast. SP identified the gap while comparing the forecast against the planned recovery time, added an alternative working area and a named decision point for the recovery, and briefed both, without IP intervention. The plan then covered the forecast condition.",
+        "3": "SP planned the mission profile taking under consideration alternative ways of execution. An alternative was defined for the working area, for the recovery and for a ground abort of one member, each tied to a named decision point and to stated criteria. The formation was briefed on all alternatives before the briefing was completed.",
+        "4": "SP produced contingency planning of exceptional quality, with an alternative for every phase of the profile, a named decision point for each and the criteria for choosing between them stated in terms the wingman could apply independently. The alternatives were themselves cross-checked against fuel and against the recovery time. No part of the profile depended on a single line of execution.",
+        "marginal": "SP planned alternative ways of execution within standards, but the alternatives were described in outline and the criteria for selecting them were left to be decided airborne. The trend is toward contingency planning that exists in the brief without being usable under workload. SP is expected to attach specific criteria and a named decision point to each alternative on the next sortie."
+      }
+    },
+    {
+      "id": "formation-14-em06",
+      "label": "DEBRIEFING EXECUTION AND ANALYSIS OF OBJECTIVES COMPLETION",
+      "mif_row": null,
+      "source": "exec:1f",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, as leader, did not execute the mission debriefing according to the Briefing Guide and did not cover the faults of the formation members. The session consisted of a general statement that the mission had gone well, no objective was assessed against what had been set in the brief and no fault was named. IP had to conduct the debriefing in full.",
+        "1": "SP, as leader, executed a debriefing that followed the Briefing Guide only in part and covered two of the six faults observed during the sortie. The remaining faults and the analysis of objectives completion were addressed only after IP identified each in turn. The debriefing met the lower limit of the standard through that prompting and left the wingman without a ranked list of points to work on.",
+        "2": "SP, as leader, opened the debriefing on the formation faults without first analyzing completion of the objectives set in the brief. SP recognized the departure from the Briefing Guide within the first minutes, returned to the objectives, assessed each against the standard set and then continued with the faults, without IP intervention. All points of the sortie were covered.",
+        "3": "SP executed the mission debriefing according to the Briefing Guide, covering the faults of each formation member and analyzing completion of the objectives set in the brief. Each fault was stated with its cause and its effect on the profile, and each objective was assessed against the standard defined before the sortie. The session closed with agreed points to work on.",
+        "4": "SP delivered a debriefing of exceptional quality, assessing every objective against the standard set in the brief, tracing each fault to its cause and ranking the points by their effect on the mission. The wingman was drawn into the analysis of their own faults rather than being told them, and the session produced specific and achievable corrections. Nothing observed during the sortie was left unaddressed.",
+        "marginal": "SP executed the debriefing according to the Briefing Guide within standards, but the faults were listed without being tied to their causes and the analysis of objectives was reduced to a completed or not completed statement. The trend is toward a debriefing that records the sortie without improving the next one. SP is expected to state the cause and the effect of each fault and to measure each objective against the briefed standard on the next sortie."
+      }
+    },
+    {
+      "id": "formation-14-em07",
+      "label": "WINGMAN ATTENDANCE AND ASSISTANCE TO THE LEADER",
+      "mif_row": null,
+      "source": "general:b.1|exec:2",
+      "hf_concept": "hf-authority-gradient",
+      "texts": {
+        "0": "SP, due to an authority gradient that suppressed the upward input, did not attend the briefing flow as a participant and did not assist the leader in assessing the mission elements. The NOTAMs affecting the recovery airfield had been read by SP before the session and were never passed to the leader, and the formation planned against an airfield with a closed runway. IP had to stop the process and hand the information across.",
+        "1": "SP, due to reluctance to raise a point perceived as the leader prerogative, followed the briefing flow without offering the meteorological and alternate airfield data that had been prepared. The information reached the leader only after IP asked SP directly what had been found during planning. The assistance requirement was met at its lower limit and only through that prompting.",
+        "2": "SP, due to deference to the leader that initially replaced own assessment, held back a discrepancy noticed between the briefed alternate airfield and the current NOTAMs. SP recognized within about a minute that the point had to be passed, raised it at the next break in the briefing flow and the alternate was changed, without IP intervention. The formation planned against current information.",
+        "3": "SP attended the briefing and debriefing flow and assisted the leader in assessing the mission elements. NOTAMs, meteorological data and alternate airfield status had been checked before the session and were offered at the points where they bore on the plan. The leader received every item needed without having to ask for it.",
+        "4": "SP supported the leader to an exceptional standard, arriving with NOTAMs, weather and alternate airfield status already compared against the planned profile and the recovery time. Each item was offered at the moment it bore on a decision, stated briefly and without displacing the leader authority over the plan. The leader was able to plan against complete and current information throughout.",
+        "marginal": "SP attended the briefing flow and assisted the leader within standards, but the input was given only when asked for and two items relevant to the recovery were held until the leader raised the subject. The trend is toward assistance that waits to be requested rather than being offered when it matters. SP is expected to pass mission-relevant information at the point it bears on the plan on the next sortie."
+      }
+    },
+    {
+      "id": "formation-14-em08",
+      "label": "WINGMAN COMPREHENSION OF BRIEFING AND DEBRIEFING",
+      "mif_row": null,
+      "source": "general:b.2",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, as wingman, did not comprehend the briefing and was unable to answer the questions put by the formation leader. The join-up sequence, the lost wingman procedure and the assigned frequencies were all answered incorrectly, and SP did not ask for any of them to be repeated. IP had to rebrief the mission before the formation was allowed to step.",
+        "1": "SP, as wingman, answered the leader questions on the profile only in part, giving the sequence after the second turn and the fuel bingo figure incorrectly at the first attempt. Both were corrected after IP directed SP to review the briefing notes and answer again. Comprehension reached the lower limit of the standard only through that prompting and after a delay to the step time.",
+        "2": "SP, as wingman, first gave the wrong altitude block for the transit when questioned by the leader. SP recognized the error while the question was still being discussed, checked the briefing notes, corrected the answer and confirmed the remaining figures for the segment, without IP intervention. All subsequent questions were answered correctly.",
+        "3": "SP comprehended the briefing and the debriefing and answered every question put by the formation leader correctly. The profile, the call standards, the contingencies and the fuel figures were reproduced without reference to notes. No element of the mission had to be repeated for SP.",
+        "4": "SP demonstrated exceptional comprehension of the briefing and debriefing, answering every question correctly and relating each answer to the point of the profile where it applied. Where a briefed item was open to more than one reading, SP identified it and asked for clarification before it could become a difference of understanding airborne. Nothing in the mission was left unclear.",
+        "marginal": "SP comprehended the briefing within standards, but two answers were given only after reference to written notes and the reasoning behind the contingency plan was reproduced rather than understood. The trend is toward recall of the brief without the understanding needed to apply it when the profile changes. SP is expected to be able to explain the reason for each briefed item on the next sortie."
+      }
+    },
+    {
+      "id": "formation-14-em09",
+      "label": "WINGMAN BRIEFING DISCIPLINE AND INTERRUPTIONS",
+      "mif_row": null,
+      "source": "general:b.3",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, as wingman, interrupted the briefing repeatedly without being asked by the formation leader. Four sections were broken into before the leader had finished the point, the planned order of the briefing was lost and the remaining content had to be covered against the clock. IP had to intervene and restore the order of the session.",
+        "1": "SP, as wingman, interrupted the leader twice during the profile section, on points the leader was about to cover. The interruptions stopped only after IP directed that questions be held until the end of each section. The requirement was met at its lower limit and only after that direction, with the briefing running past its planned end.",
+        "2": "SP, as wingman, began to raise a question during the contingency section before the leader had invited comment. SP stopped within a few words, waited for the section to close and then put the question at the point provided, without IP intervention. The remainder of the briefing ran in the planned order.",
+        "3": "SP did not interrupt the briefing or the debriefing, and raised points only when asked by the formation leader or at the points provided for questions. The order of both sessions was maintained throughout. Every point SP needed to raise was still put and answered.",
+        "4": "SP observed briefing discipline to an exceptional standard, holding every question to the point provided for it, noting the points in order and putting them concisely when invited. All of the points SP had noted were answered without any loss to the leader briefing flow. The session ran exactly as the leader had planned it.",
+        "marginal": "SP did not interrupt the briefing within standards, but the same restraint extended to a question about the join-up sequence that was noted and then never put at all. The trend is toward silence in place of timing. SP is expected to hold questions to the point provided and then actually put them on the next sortie."
+      }
+    }
+  ]
+}

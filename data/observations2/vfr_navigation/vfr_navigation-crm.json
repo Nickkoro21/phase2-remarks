@@ -1,0 +1,100 @@
+{
+  "item_id": "vfr_navigation-crm",
+  "item_name": "CRM",
+  "category": "vfr_navigation",
+  "schema": "v2-trunk",
+  "mif_numbers": [],
+  "mif_rows": [],
+  "error_modes": [
+    {
+      "id": "vfr_navigation-crm-em01",
+      "label": "Mission planning and route briefing conducted as a crew task",
+      "mif_row": null,
+      "source": "general:a,c|execution:1,2a",
+      "hf_concept": "hf-briefing-and-threat-identification",
+      "texts": {
+        "0": "SP, due to a threat that was present in the minimum threat set but not identified in the brief, planned the VFR navigation route as an individual task and briefed no division of duties between front and rear cockpit. SP covered neither the checkpoint sequence, nor the leg timing responsibility, nor the airspace and terrain constraints along the track. The IP had to stop the briefing and rebuild the route plan with SP before the sortie could be authorized.",
+        "1": "SP, due to mission planning that did not address the forecast weather at the recovery time, briefed the route without stating who would hold the chart, who would run the clock and who would fly. SP added the missing crew coordination content only after the IP had raised the point verbally more than once, and the plan was completed after the briefing had formally ended. No IP intervention was required in flight.",
+        "2": "SP, due to a first pass through the route flown without reference to the airspace boundaries along track, briefed the opening legs without assigning lookout and chart-reading responsibility. SP recognized the omission before the briefing ended, restated the division of duties for the whole route and flew the sortie as restated. No IP prompting or intervention was needed.",
+        "3": "SP planned the VFR navigation route as a crew task and briefed it accurately and without delay, with checkpoint sequence, timing responsibility, lookout duties and airspace constraints agreed before flight. SP identified the threats along the track in the brief and stated how each would be managed. The sortie was flown as briefed and no IP addition to the plan was required.",
+        "4": "SP planned every leg of the route as a crew task, including the contingencies for weather, unexpected traffic and checkpoint acquisition failure, and assigned duties for each of them. The brief was complete and unambiguous, the threats along track were identified and paired with a stated countermeasure, and deviations from the expected standard on this axis were negligible.",
+        "marginal": "SP met the standard in planning and briefing the route as a crew task, but the crew coordination content was concentrated in the first legs and thinned out toward the turning point and the recovery. The trend across the brief was toward assuming the division of duties rather than stating it. SP is expected to brief duties, timing responsibility and threats for every leg of the route on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-crm-em02",
+      "label": "Use of the IFG/CRM matrix chart to highlight the applicable items",
+      "mif_row": null,
+      "source": "general:b|execution:2",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to unfamiliarity with the publication, did not use the IFG/CRM matrix chart at any point of the navigation sortie and could not locate the items applicable to the profile. No matrix item was highlighted in the briefing and none was carried into the debriefing. The IP had to open the chart and work the applicable items with SP before the grade sheet could be completed.",
+        "1": "SP, due to incomplete preparation during mission planning, opened the IFG/CRM matrix chart but highlighted items unrelated to the VFR navigation profile flown. SP selected the correct items only after repeated verbal direction from the IP, and their discussion was pushed to the end of the debriefing. No action beyond the extended debriefing was required.",
+        "2": "SP, due to a rushed review of the chart before the brief, first highlighted a general matrix item instead of the one matching the navigation task actually flown. SP recognized the mismatch without prompting, returned to the IFG/CRM matrix chart and selected the correct items in time for the discussion. No IP direction was needed.",
+        "3": "SP used the IFG/CRM matrix chart accurately and without delay to highlight the CRM items applicable to the navigation sortie. The items selected matched the route flown and the areas covered in the debriefing, and were presented in the standard sequence.",
+        "4": "SP used the IFG/CRM matrix chart to highlight the applicable items and tied each one to a specific event of the route, from planning through the turning point to the recovery. The selection was complete, correct and required no revision by the IP, with negligible deviation from the expected standard.",
+        "marginal": "SP used the IFG/CRM matrix chart and met the standard, but selected the minimum number of items and needed a second look at the chart to confirm two of them. The trend was toward picking the familiar items rather than those matching the navigation profile actually flown. SP is expected to preselect the applicable matrix items during mission planning on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-crm-em03",
+      "label": "Crew communication and information sharing along the navigation legs",
+      "mif_row": null,
+      "source": "general:a,c|execution:2b",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, due to lack of communication of the recognized problem to the other cockpit, kept an unresolved position doubt to himself/herself and passed no checkpoint, timing or heading information for the whole leg. The IP had no means of knowing what SP believed the aircraft position to be until the track error had already taken the aircraft off the planned route. The IP had to take control of the navigation and reestablish the aircraft on track before the sortie could continue.",
+        "1": "SP, due to an indirect hint instead of a direct statement of the navigation state, passed checkpoint and timing calls that did not say whether the checkpoint had actually been identified. SP stated the position, the time and the heading correction clearly only after the IP had asked for them more than once, and the information arrived after the leg it referred to had been flown. No IP control input was required.",
+        "2": "SP, due to a high radio workload in the first part of the leg, omitted the checkpoint and timing call at the initial point and left the other cockpit without a shared picture of the navigation state. SP recognized the omission without prompting, passed a complete position, time and fuel update and maintained the agreed calls for the rest of the route. No IP prompting was needed.",
+        "3": "SP passed accurate and timely checkpoint, timing, heading and fuel information at each briefed point, so that both cockpits held the same picture of the navigation state throughout the route. Doubts about checkpoint identification were stated as doubts rather than left implicit, and radio and intercom transmissions did not compete with each other.",
+        "4": "SP kept the navigation state shared with the other cockpit continuously, stating the position, the confidence in it and the intended correction before being asked. Communication was structured, plain and separated from the radio calls in workload, and deviations from the expected standard on this axis were negligible.",
+        "marginal": "SP met the standard on sharing the navigation state, but the calls became shorter and less complete as the workload increased toward the turning point. The trend was toward passing the heading and omitting the fuel and timing elements of the update. SP is expected to keep the checkpoint, time and fuel content in every position call on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-crm-em04",
+      "label": "Workload distribution between aircraft control, navigation and lookout",
+      "mif_row": null,
+      "source": "general:a,c|execution:2c",
+      "hf_concept": "hf-workload-distribution",
+      "texts": {
+        "0": "SP, due to poor workload distribution that left one crew member doing every job, attempted to fly the aircraft, read the chart, run the timing and transmit at the same time along the whole leg. Aircraft control and lookout were both abandoned while SP worked the chart head-down, and no task was passed to the other cockpit. The IP had to take control of the aircraft to restore the flight path and the lookout.",
+        "1": "SP, due to failure to shed a secondary task when workload increased, kept the chart work and the radio together during the turn onto the next leg and let the lookout lapse. SP passed the non-essential task to the other cockpit only after repeated verbal direction from the IP, and the rebalance came after the turn had been completed. No IP control input was required.",
+        "2": "SP, due to task sequencing that concentrated the chart work inside the turn, began the checkpoint search while still correcting the heading and briefly lost the outside scan. SP recognized the saturation without prompting, deferred the chart work until the aircraft was established on heading and reestablished the lookout. No IP prompting or intervention was needed.",
+        "3": "SP distributed the workload so that aircraft control, navigation and lookout were each served at the appropriate point of the leg, with chart work planned for the straight and level segments. Secondary tasks were deferred or passed to the other cockpit as workload rose, and the outside scan was maintained accurately and without interruption.",
+        "4": "SP anticipated the workload peaks of the route and moved the chart work, the fuel check and the radio calls clear of them before they occurred. Aircraft control and lookout were never displaced by a navigation task, and deviations from the expected standard on this axis were negligible.",
+        "marginal": "SP met the standard on workload distribution, but the rebalancing was reactive and came only once the outside scan had already narrowed. The trend was toward completing the chart task in progress rather than deferring it when the workload rose. SP is expected to plan chart and fuel work clear of turns and checkpoint acquisition on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-crm-em05",
+      "label": "Application of the CRM concept when analyzing route deviations and divert decisions",
+      "mif_row": null,
+      "source": "general:c|execution:1,2c",
+      "hf_concept": "hf-divert-criteria-and-decision-points",
+      "texts": {
+        "0": "SP, due to a briefed decision point that was passed without any decision being made, worked the deteriorating route situation alone and applied no CRM concept to the analysis. SP made no assessment of the remaining fuel, the weather ahead and the available alternates, and used neither the other cockpit nor the agencies available on the radio as a resource. The IP had to stop the navigation problem and direct the divert before the situation could be resolved.",
+        "1": "SP, due to the absence of explicit divert criteria in the mission brief, analyzed the unplanned route change on the basis of a single factor and did not state the alternatives to the other cockpit. SP considered fuel, weather and alternates together only after the IP had raised each of them verbally, and the decision was taken after the point at which it should have been made. No IP control input was required.",
+        "2": "SP, due to an initial focus on regaining the planned track, began the analysis of the weather ahead without stating the fuel available for the diversion. SP recognized the gap without prompting, restated the problem to the other cockpit with fuel, weather and alternates together and reached a decision within the leg. No IP direction was needed.",
+        "3": "SP applied the CRM concept to the maximum extent when analyzing the route deviation, stating the problem, the fuel and weather constraints and the available options to the other cockpit before deciding. The decision was made at the briefed decision point rather than after it, and the resulting plan was passed to both cockpits and to the controlling agency.",
+        "4": "SP treated the changed route situation as a crew problem from the first indication, defined the decision point and the criteria that would trigger the divert, and used every resource available inside and outside the cockpit. The analysis was complete, the decision was timely and reversible, and deviations from the expected standard on this axis were negligible.",
+        "marginal": "SP met the standard in analyzing the route deviation as a crew task, but the options were stated only once the preferred plan had already been chosen. The trend was toward confirming the first solution rather than comparing the alternatives. SP is expected to state the divert criteria and the decision point before the leg on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-crm-em06",
+      "label": "Debriefing self-assessment and identification of CRM development areas",
+      "mif_row": null,
+      "source": "general:a,d|execution:4,5,6",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to reviewing the sortie only by whether the checkpoints were reached, took no part in the CRM discussion at the debriefing and offered no assessment of the coordination errors made along the route. SP identified no area for CRM development and attributed the track and timing errors entirely to the conditions. The IP had to conduct the CRM debriefing alone and complete the CRM box of the grade sheet without any input from SP.",
+        "1": "SP, due to a debriefing prepared from memory without reference to the route log, described the navigation events but not the crew coordination behind them. SP identified a CRM development area only after the IP had named the events verbally more than once, and the discussion ran past the point where the remaining items could be covered. No further action beyond the extended debriefing was required.",
+        "2": "SP, due to an initial reconstruction of the sortie leg by leg rather than by crew action, first omitted the coordination failure at the turning point from the self-assessment. SP recognized the omission without prompting, raised the event, stated its effect on the route timing and proposed a specific improvement for the next sortie. No IP prompting was needed.",
+        "3": "SP assessed his/her own CRM performance accurately and without delay at the debriefing, identified the specific areas for development and stated where crew coordination had enhanced the navigation task and flight safety. The discussion covered the graded CRM items applicable to the sortie and the CRM box of the grade sheet was completed at the end of the debriefing.",
+        "4": "SP led the CRM portion of the debriefing, linked each coordination behavior to its effect on the route accuracy, the timing and the flight safety, and proposed measurable improvements for the next navigation sortie. The self-assessment matched the events as observed and required no correction by the IP, with negligible deviation from the expected standard.",
+        "marginal": "SP met the standard in the CRM self-assessment, but the areas identified were general rather than tied to the specific events of the route. The trend was toward accepting the IP's assessment rather than offering an independent one. SP is expected to bring two self-identified CRM development areas, referenced to specific points of the route, to the next debriefing."
+      }
+    }
+  ]
+}

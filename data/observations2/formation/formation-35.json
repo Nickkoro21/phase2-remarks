@@ -1,0 +1,102 @@
+{
+  "item_id": "formation-35",
+  "item_name": "AIRMANSHIP",
+  "category": "formation",
+  "schema": "v2-trunk",
+  "mif_numbers": [35],
+  "mif_rows": [
+    {"sn": 35, "row_name": "Airmanship"}
+  ],
+  "error_modes": [
+    {
+      "id": "formation-35-em01",
+      "label": "WINGMAN ANTICIPATION OF NO1 INTENTION WITHOUT ASSUMPTION",
+      "mif_row": null,
+      "source": "general:null",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to a mental model of the flight built on assumption instead of on the briefed contract, acted on what No1 was expected to do rather than on what No1 actually did. SP initiated a position change for a turn that had never been signalled and left the briefed position with no visual signal or radio call received. The resulting geometry produced an uncontrolled closure with lead and the IP took control to separate the aircraft. The remaining formation profile was terminated.",
+        "1": "SP, due to a mental model that filled the gaps with assumption rather than with confirmed information, repeatedly started position changes before No1 signal was identified. Each wrong anticipation was corrected only after direct verbal prompting by the IP. Position and spacing were restored late and the flight was reformed at the limit of the acceptable standard.",
+        "2": "SP, due to an incomplete check of No1 visual signals against the briefed sequence, began to anticipate the next maneuver on expectation rather than on a confirmed signal. SP recognized the error before the deviation developed, returned to the briefed position and held it until the signal was given. No IP input was required and formation geometry stayed clear of the standard limits.",
+        "3": "SP anticipated No1 intention from the briefed sequence, the flight profile and lead aircraft attitude, but acted only on a confirmed visual signal or radio call. Position changes were initiated at the correct point, and where the picture was ambiguous SP asked instead of assuming.",
+        "4": "SP stayed one step ahead of No1 throughout the sortie, correlating the briefed sequence, lead energy state and the visual signals so that every position change was prepared before it was ordered. No action was taken on assumption at any point and each ambiguity was resolved with a short standard call. Formation integrity was maintained without a single unrequested movement.",
+        "marginal": "SP anticipated No1 intention correctly and generally acted on confirmed signals, but twice started the movement on expectation and verified the signal only afterwards. The trend was toward assuming rather than confirming whenever the sequence felt familiar. SP is expected to keep the anticipation mental and to move only after the signal has been positively identified."
+      }
+    },
+    {
+      "id": "formation-35-em02",
+      "label": "AWARENESS AND JUDGMENT - ORIENTATION AND CROSS-CHECK WHILE FLYING POSITION",
+      "mif_row": null,
+      "source": "general:contact-38:a.1,a.3,a.5",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to a cross-check that stopped alternating between lead aircraft, own control and performance instruments and the outside references, lost track of the flight position relative to the field and the assigned area. Own altitude, airspeed and fuel state were left unmonitored while attention stayed on lead. The flight left the assigned area and descended through the briefed floor, and the IP took control to reposition and re-orient the aircraft.",
+        "1": "SP, due to a slow and interrupted cross-check between lead aircraft and own instruments, did not keep track of what was happening in own aircraft while flying position. Orientation with respect to the field, the area boundary and the other flight members was re-established only after repeated verbal prompting by the IP. The corrections were applied late and the resulting excursions reached the limit of the acceptable standard.",
+        "2": "SP, due to a scan that narrowed onto lead aircraft during the maneuvering, delayed the detection of developing altitude and fuel trends in own aircraft. SP recognized the omission without prompting, restored the alternation between lead, the instruments and the outside references and re-established orientation with respect to the field and the assigned area. The deviation stayed short of the standard limit and required no IP input.",
+        "3": "SP correlated continuously what was happening on the ground, in own aircraft and in the other flight members, alternating the scan between lead, the control and performance instruments and the outside references. Orientation with respect to the field, the assigned area and the traffic remained accurate, and the mission impact of each event was handled as it appeared.",
+        "4": "SP maintained an uninterrupted alternation between lead aircraft, own instruments and the outside references and continuously correlated flight position, fuel state and traffic. Adverse factors such as weather, airspace restrictions and traffic density were identified early and their effect on the formation was minimized before it degraded the mission. Orientation was never in doubt at any point of the sortie.",
+        "marginal": "SP kept orientation and stayed within the required standards, but the scan narrowed onto lead aircraft each time position keeping became demanding, and own instruments were checked only after the position was stabilized. The trend was toward monitoring lead at the expense of own aircraft state. SP is expected to keep own control and performance instruments inside the scan while flying position."
+      }
+    },
+    {
+      "id": "formation-35-em03",
+      "label": "RISK MANAGEMENT AND DECISION MAKING WITHIN THE FLIGHT",
+      "mif_row": null,
+      "source": "general:contact-38:b.1,b.2,b.3,b.4,b.5",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a failure to identify the contingencies of the formation profile before committing to it, continued the sortie into a hazard that had already been recognized by the flight. Available data on weather, traffic and fuel were not gathered before the decision, no alternative was considered and no decision was stated to the flight. The aircraft was flown into a position from which the hazard could no longer be avoided by the wingman alone and the IP intervened to break out the aircraft.",
+        "1": "SP, due to incomplete gathering of the available data, identified the hazard late and did not state a clear decision or its rationale to the flight. The alternative course of action was adopted only after the IP prompted it verbally and repeated the prompt. The hazard was avoided, but the margin achieved was at the limit of the acceptable standard.",
+        "2": "SP, due to an initial assessment based on partial information, delayed the decision to alter the profile after the hazard appeared. SP then gathered the missing data, identified the alternative, stated the decision to the flight with its rationale and regulated the flight path accordingly. The hazard was avoided in good time and without any IP input.",
+        "3": "SP identified contingencies and alternatives accurately, gathered the available data before deciding, stated the decisions clearly to the flight and gave the rationale when asked. Actual and potential hazards were recognized and the flight path was regulated so that they were positively avoided.",
+        "4": "SP identified the contingencies of each phase before they became relevant and had the alternatives ready with their decision points already defined. Decisions were stated to the flight early, concisely and with a rationale that lead could act on immediately. Every hazard was avoided by a wide margin with no degradation of the briefed profile.",
+        "marginal": "SP identified the hazards and reached correct decisions, but the decisions were formed late and were stated to the flight without the supporting rationale. The trend was toward deciding once the hazard was established rather than at the planned decision point. SP is expected to define the alternatives in advance and to state both the decision and its reason to the flight."
+      }
+    },
+    {
+      "id": "formation-35-em04",
+      "label": "TASK PRIORITIZATION AND SATURATION UNDER FORMATION WORKLOAD",
+      "mif_row": null,
+      "source": "general:contact-38:c.1,c.2,c.3",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to an attention bottleneck on holding the fingertip picture, dropped every other task while the workload increased. Radio calls, checks and the fuel check were omitted, and the tasks that were attempted were carried out in an order that violated the briefed sequence. Channelized attention on lead wingtip left the aircraft state unmonitored until the IP took control and re-established the flight.",
+        "1": "SP, due to attention captured by position keeping, handled the tasks one at a time and left the remainder pending as the workload built up. Missing radio calls and checks were completed only after the IP prompted each of them individually. The sequence was recovered late and the accumulated task backlog brought the sortie to the limit of the acceptable standard.",
+        "2": "SP, due to attention concentrated on the position picture during the rejoin, delayed the secondary tasks and let two of them accumulate. SP recognized the developing saturation without prompting, re-ordered the tasks by significance and cleared the backlog before the next event. No task was ultimately dropped and no IP input was required.",
+        "3": "SP put the tasks in order of significance without missing anything and without violating any rule, and handled multiple tasks in sequence while flying position. Task management remained deliberate as the workload increased and at no point developed into channelized attention on a single item.",
+        "4": "SP sequenced the flying, the checks, the radio and the visual scan so that each task was completed at its most efficient point and nothing accumulated. Task loading was distributed ahead of the busy phases, leaving spare capacity available at the rejoin and in the recovery. Attention was never captured by any single item, including the position picture itself.",
+        "marginal": "SP completed all the tasks in the correct order and inside the standards, but the ordering was reactive and secondary tasks were deferred each time position keeping demanded attention. The trend was toward a backlog that had to be cleared in the quiet phases. SP is expected to sequence the tasks ahead of the busy phases and to keep capacity in reserve for the rejoin."
+      }
+    },
+    {
+      "id": "formation-35-em05",
+      "label": "FLEXIBILITY AND CAPACITY - MISSION ADJUSTMENT AND USE OF AVAILABLE RESOURCES",
+      "mif_row": null,
+      "source": "general:contact-38:a.6,d.1,d.2,d.3,e",
+      "hf_concept": "hf-lack-of-assertiveness",
+      "texts": {
+        "0": "SP, due to a lack of assertiveness in stating unable when the flight profile exceeded own capability, continued to accept maneuvers that could no longer be flown safely in position. No alternative course of action was selected to reduce task loading, no knock-it-off was called and the remaining fuel and area were not taken into account. The aircraft was flown beyond SP capacity to control it in formation and the IP took control.",
+        "1": "SP, due to reluctance to state a limitation to the flight, adjusted the mission only after the IP directed it verbally. The remaining flight time, fuel and assigned area were not used efficiently and the profile was reorganized late in the sortie. Mission effectiveness was preserved only at the limit of the acceptable standard.",
+        "2": "SP, due to hesitation in requesting a reduction of the profile as the conditions changed, continued at a task loading that was close to own capacity. SP then assessed the factors correctly, selected an alternative course of action and stated it to the flight in time, adjusting the remaining events to the available fuel and area. Mission effectiveness was maintained with no IP input.",
+        "3": "SP coped with the changing conditions of the sortie and adjusted the profile as needed to obtain the briefed objectives, remaining aware of how much task loading could be accepted safely. The remaining flight time, fuel and assigned area were used efficiently, and an alternative course of action was selected whenever it reduced the task loading.",
+        "4": "SP recognized the change of conditions before it affected the flight and reorganized the remaining profile so that the objectives were obtained within the available fuel, time and area. Own capacity was managed with a clear margin, and limitations and requests were stated to the flight early and without hesitation. No event was flown at the edge of SP capability.",
+        "marginal": "SP adjusted the mission correctly and never exceeded own capability, but the alternatives were selected late and the limitations were voiced only once the workload had already peaked. The trend was toward absorbing the task loading rather than reducing it. SP is expected to state the limitation and select the alternative at the point it is recognized, not after it becomes pressing."
+      }
+    },
+    {
+      "id": "formation-35-em06",
+      "label": "FLIGHT DISCIPLINE, CHECKS AND SOP COMPLIANCE",
+      "mif_row": null,
+      "source": "general:contact-38:a.2,a.4,f.1,f.2",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an incomplete knowledge of the rules and procedures governing the formation sortie, did not carry out the operational checks in accordance with the checklist, the Techniques and Procedures Manual and the SOPs. Required steps were performed out of order and briefed restrictions of the flight were exceeded. Recovery to base was not managed by SP and the IP took control and completed the procedures and the return to the field.",
+        "1": "SP, due to a superficial knowledge of the applicable procedures, performed the checks incompletely and out of the published order. Each omission was identified and corrected only after the IP prompted it, and the recovery was flown under continuous IP direction. The procedures were eventually completed, but at the limit of the acceptable standard.",
+        "2": "SP, due to an interruption of the checklist flow while holding position, omitted one step of an operational check and delayed a briefed procedure. SP detected the omission without prompting, restarted the check from the correct point and completed the sequence in the published order. The recovery to base was flown correctly and no IP input was required.",
+        "3": "SP performed all operational checks in accordance with the checklist, the Techniques and Procedures Manual and the SOPs, and carried out the required steps of each procedure in the proper order. Rules and briefed restrictions were respected throughout and the return to base was managed with minimum IP supervision.",
+        "4": "SP applied the checklist, the Techniques and Procedures Manual and the SOPs precisely and in the correct order at every phase, integrating them with the position keeping without any interruption of the flow. Knowledge of the rules and of the briefed restrictions was complete and applied without hesitation. The recovery to base was planned and executed independently, with no IP supervision required.",
+        "marginal": "SP completed all the checks and followed the published procedures, but items were occasionally performed out of the normal order and one check was started later than the planned point. The trend was toward fitting the procedures around the position keeping rather than planning them into the sequence. SP is expected to protect the checklist flow and to run each procedure at its briefed point."
+      }
+    }
+  ]
+}
