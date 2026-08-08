@@ -1,0 +1,666 @@
+{
+  "category": "vfr_navigation",
+  "category_label": "VFR NAVIGATION",
+  "source": {
+    "file": "Phase_2_Syllabus_2025.pdf",
+    "flow_chart_pages_pdf": [
+      19
+    ],
+    "flow_chart_page_printed": "-11-",
+    "flow_chart_ref": "PART I, §3 TRAINING FLOW CHART — (4) NAVIGATION",
+    "note": "The whole VFR Navigation column of the printed Training Flow Chart fits on a single page (PDF 19 / printed -11-). PDF pages 11-18 were scanned and contain no Navigation SORTIE boxes (N2xxx / N4xxx) and no arrow into or out of the Navigation column. Note that the NA ground series is split across two Flow Chart pages: NA 101-103 / IPR PL2 / NA 191 / GPS are drawn on the Instrument page (PDF 15) and feed I 4501, while NA 104-111 / NA 190 are drawn on the Navigation page (PDF 19). The Flow Chart is a raster image with no text layer; it was rendered with PyMuPDF at 300-500 dpi and read visually, band by band."
+  },
+  "sorties": [
+    {
+      "id": "N2101",
+      "band": "fs",
+      "section": "N21XX",
+      "label_verbatim": "N 2101",
+      "night": false,
+      "checkride": false,
+      "first_solo": false,
+      "solo_candidate": false,
+      "page_pdf": 19,
+      "column": "right",
+      "box_style": "thick_solid_black",
+      "diagram_level": 4
+    },
+    {
+      "id": "N2201",
+      "band": "fs",
+      "section": "N22XX",
+      "label_verbatim": "N 2201",
+      "night": false,
+      "checkride": false,
+      "first_solo": false,
+      "solo_candidate": false,
+      "page_pdf": 19,
+      "column": "right",
+      "box_style": "thick_solid_black",
+      "diagram_level": 7
+    },
+    {
+      "id": "N2202",
+      "band": "fs",
+      "section": "N22XX",
+      "label_verbatim": "N 2202",
+      "night": false,
+      "checkride": false,
+      "first_solo": false,
+      "solo_candidate": false,
+      "page_pdf": 19,
+      "column": "right",
+      "box_style": "thick_solid_black",
+      "diagram_level": 10
+    },
+    {
+      "id": "N2301",
+      "band": "fs",
+      "section": "N23XX",
+      "label_verbatim": "N 2301",
+      "night": false,
+      "checkride": false,
+      "first_solo": false,
+      "solo_candidate": false,
+      "page_pdf": 19,
+      "column": "right",
+      "box_style": "thick_solid_black",
+      "diagram_level": 12
+    },
+    {
+      "id": "N2302",
+      "band": "fs",
+      "section": "N23XX",
+      "label_verbatim": "N 2302",
+      "night": false,
+      "checkride": false,
+      "first_solo": false,
+      "solo_candidate": false,
+      "page_pdf": 19,
+      "column": "right",
+      "box_style": "thick_solid_black",
+      "diagram_level": 13
+    },
+    {
+      "id": "N2303",
+      "band": "fs",
+      "section": "N23XX",
+      "label_verbatim": "N 2303",
+      "night": false,
+      "checkride": false,
+      "first_solo": false,
+      "solo_candidate": false,
+      "page_pdf": 19,
+      "column": "right",
+      "box_style": "thick_solid_black",
+      "diagram_level": 15
+    },
+    {
+      "id": "N2304",
+      "band": "fs",
+      "section": "N23XX",
+      "label_verbatim": "N 2304",
+      "night": false,
+      "checkride": false,
+      "first_solo": false,
+      "solo_candidate": false,
+      "page_pdf": 19,
+      "column": "right",
+      "box_style": "thick_solid_black",
+      "diagram_level": 16
+    },
+    {
+      "id": "N4101",
+      "band": "flights",
+      "section": "N41XX",
+      "label_verbatim": "N 4101",
+      "night": false,
+      "checkride": false,
+      "first_solo": false,
+      "solo_candidate": false,
+      "page_pdf": 19,
+      "column": "center",
+      "box_style": "double_outline_black",
+      "diagram_level": 4
+    },
+    {
+      "id": "N4102",
+      "band": "flights",
+      "section": "N41XX",
+      "label_verbatim": "N 4102",
+      "night": false,
+      "checkride": false,
+      "first_solo": false,
+      "solo_candidate": false,
+      "page_pdf": 19,
+      "column": "center",
+      "box_style": "double_outline_black",
+      "diagram_level": 5
+    },
+    {
+      "id": "N4201",
+      "band": "flights",
+      "section": "N42XX",
+      "label_verbatim": "N 4201",
+      "night": false,
+      "checkride": false,
+      "first_solo": false,
+      "solo_candidate": false,
+      "page_pdf": 19,
+      "column": "center",
+      "box_style": "double_outline_black",
+      "diagram_level": 7
+    },
+    {
+      "id": "N4202",
+      "band": "flights",
+      "section": "N42XX",
+      "label_verbatim": "N 4202",
+      "night": false,
+      "checkride": false,
+      "first_solo": false,
+      "solo_candidate": false,
+      "page_pdf": 19,
+      "column": "center",
+      "box_style": "double_outline_black",
+      "diagram_level": 8
+    },
+    {
+      "id": "N4301",
+      "band": "flights",
+      "section": "N43XX",
+      "label_verbatim": "N 4301",
+      "night": false,
+      "checkride": false,
+      "first_solo": false,
+      "solo_candidate": false,
+      "page_pdf": 19,
+      "column": "center",
+      "box_style": "double_outline_black",
+      "diagram_level": 9
+    },
+    {
+      "id": "N4302",
+      "band": "flights",
+      "section": "N43XX",
+      "label_verbatim": "N 4302",
+      "night": false,
+      "checkride": false,
+      "first_solo": false,
+      "solo_candidate": false,
+      "page_pdf": 19,
+      "column": "center",
+      "box_style": "double_outline_black",
+      "diagram_level": 10
+    },
+    {
+      "id": "N4401",
+      "band": "flights",
+      "section": "N44XX",
+      "label_verbatim": "N 4401",
+      "night": false,
+      "checkride": false,
+      "first_solo": false,
+      "solo_candidate": false,
+      "page_pdf": 19,
+      "column": "center",
+      "box_style": "double_outline_black",
+      "diagram_level": 11
+    },
+    {
+      "id": "N4402",
+      "band": "flights",
+      "section": "N44XX",
+      "label_verbatim": "N 4402",
+      "night": false,
+      "checkride": false,
+      "first_solo": false,
+      "solo_candidate": false,
+      "page_pdf": 19,
+      "column": "center",
+      "box_style": "double_outline_black",
+      "diagram_level": 12
+    },
+    {
+      "id": "N4403",
+      "band": "flights",
+      "section": "N44XX",
+      "label_verbatim": "N 4403",
+      "night": false,
+      "checkride": false,
+      "first_solo": false,
+      "solo_candidate": false,
+      "page_pdf": 19,
+      "column": "center",
+      "box_style": "double_outline_black",
+      "diagram_level": 13
+    },
+    {
+      "id": "N4501",
+      "band": "flights",
+      "section": "N45XX",
+      "label_verbatim": "N 4501",
+      "night": false,
+      "checkride": false,
+      "first_solo": false,
+      "solo_candidate": false,
+      "page_pdf": 19,
+      "column": "center",
+      "box_style": "double_outline_black",
+      "diagram_level": 14
+    },
+    {
+      "id": "N4502",
+      "band": "flights",
+      "section": "N45XX",
+      "label_verbatim": "N 4502",
+      "night": false,
+      "checkride": false,
+      "first_solo": false,
+      "solo_candidate": false,
+      "page_pdf": 19,
+      "column": "center",
+      "box_style": "double_outline_black",
+      "diagram_level": 15
+    },
+    {
+      "id": "N4503",
+      "band": "flights",
+      "section": "N45XX",
+      "label_verbatim": "N 4503",
+      "night": false,
+      "checkride": false,
+      "first_solo": false,
+      "solo_candidate": false,
+      "page_pdf": 19,
+      "column": "center",
+      "box_style": "double_outline_black",
+      "diagram_level": 16
+    },
+    {
+      "id": "N4690",
+      "band": "flights",
+      "section": "N4690",
+      "label_verbatim": "N 4690",
+      "night": false,
+      "checkride": true,
+      "first_solo": false,
+      "solo_candidate": false,
+      "page_pdf": 19,
+      "column": "center",
+      "box_style": "orange_fill_black_border",
+      "diagram_level": 17
+    }
+  ],
+  "edges": [
+    {
+      "from": "N4101",
+      "to": "N4102",
+      "kind": "sequence",
+      "style": "solid",
+      "page_pdf": 19
+    },
+    {
+      "from": "N4102",
+      "to": "N4201",
+      "kind": "sequence",
+      "style": "solid",
+      "page_pdf": 19,
+      "note": "long vertical connector; N4102 and N4201 are not adjacent rows in the printed column"
+    },
+    {
+      "from": "N4201",
+      "to": "N4202",
+      "kind": "sequence",
+      "style": "solid",
+      "page_pdf": 19
+    },
+    {
+      "from": "N4202",
+      "to": "N4301",
+      "kind": "sequence",
+      "style": "solid",
+      "page_pdf": 19
+    },
+    {
+      "from": "N4301",
+      "to": "N4302",
+      "kind": "sequence",
+      "style": "solid",
+      "page_pdf": 19
+    },
+    {
+      "from": "N4302",
+      "to": "N4401",
+      "kind": "sequence",
+      "style": "solid",
+      "page_pdf": 19
+    },
+    {
+      "from": "N4401",
+      "to": "N4402",
+      "kind": "sequence",
+      "style": "solid",
+      "page_pdf": 19
+    },
+    {
+      "from": "N4402",
+      "to": "N4403",
+      "kind": "sequence",
+      "style": "solid",
+      "page_pdf": 19
+    },
+    {
+      "from": "N4403",
+      "to": "N4501",
+      "kind": "sequence",
+      "style": "solid",
+      "page_pdf": 19
+    },
+    {
+      "from": "N4501",
+      "to": "N4502",
+      "kind": "sequence",
+      "style": "solid",
+      "page_pdf": 19
+    },
+    {
+      "from": "N4502",
+      "to": "N4503",
+      "kind": "sequence",
+      "style": "solid",
+      "page_pdf": 19
+    },
+    {
+      "from": "N4503",
+      "to": "N4690",
+      "kind": "sequence",
+      "style": "solid",
+      "page_pdf": 19
+    },
+    {
+      "from": "N2301",
+      "to": "N2302",
+      "kind": "sequence",
+      "style": "solid",
+      "page_pdf": 19,
+      "note": "arrow internal to the F/S column"
+    },
+    {
+      "from": "N2303",
+      "to": "N2304",
+      "kind": "sequence",
+      "style": "solid",
+      "page_pdf": 19,
+      "note": "arrow internal to the F/S column"
+    },
+    {
+      "from": "N2101",
+      "to": "N4101",
+      "kind": "feed",
+      "style": "solid",
+      "page_pdf": 19,
+      "note": "F/S column -> flights column, arrowhead on the right edge of N 4101"
+    },
+    {
+      "from": "N2201",
+      "to": "N4201",
+      "kind": "feed",
+      "style": "solid",
+      "page_pdf": 19,
+      "note": "F/S column -> flights column, arrowhead on the right edge of N 4201"
+    },
+    {
+      "from": "N2202",
+      "to": "N4302",
+      "kind": "feed",
+      "style": "solid",
+      "page_pdf": 19,
+      "note": "F/S column -> flights column, arrowhead on the right edge of N 4302"
+    },
+    {
+      "from": "N2302",
+      "to": "N4403",
+      "kind": "feed",
+      "style": "solid",
+      "page_pdf": 19,
+      "note": "F/S column -> flights column, arrowhead on the right edge of N 4403"
+    },
+    {
+      "from": "N2304",
+      "to": "N4503",
+      "kind": "feed",
+      "style": "solid",
+      "page_pdf": 19,
+      "note": "F/S column -> flights column, arrowhead on the right edge of N 4503"
+    },
+    {
+      "from": "C5201",
+      "to": "N4101",
+      "kind": "feed",
+      "style": "solid",
+      "page_pdf": 19,
+      "cross_category": "contact",
+      "source_box_style": "dashed_outline",
+      "note": "cross-category feed. The C 5201 box is drawn on the NAVIGATION page as a DASHED-outline reference box (its real box lives in the Contact column, PDF 13); the ARROW itself is solid, drawn from the bottom of C 5201 into the top of N 4101."
+    },
+    {
+      "from": "F4401",
+      "to": "N4401",
+      "kind": "feed",
+      "style": "solid",
+      "page_pdf": 19,
+      "cross_category": "formation",
+      "source_box_style": "dashed_outline",
+      "note": "cross-category feed. The F 4401 box is drawn on the NAVIGATION page as a DASHED-outline reference box (its real box lives in the Formation column, PDF 18); the ARROW itself is solid, drawn from the right edge of F 4401 into the left edge of N 4401."
+    },
+    {
+      "from": "C5201",
+      "to": "N2101",
+      "kind": "prereq",
+      "source": "VFR Navigation F/S Training Section N21XX, RESTRICTIONS (1), p.PDF 159 (printed -151-)",
+      "verbatim": "RESTRICTIONS: 1. C5201 must have been executed before starting this Training Section.",
+      "note": "N21XX contains exactly one F/S sortie (SORTIES/HOURS TOTAL: 1/1,3) = N 2101. This prerequisite is NOT drawn in the Training Flow Chart."
+    },
+    {
+      "from": "NA190",
+      "to": "N2101",
+      "kind": "prereq",
+      "source": "VFR Navigation F/S Training Section N21XX, RESTRICTIONS (2), p.PDF 159 (printed -151-)",
+      "verbatim": "RESTRICTIONS: 2. NA 190 must have been executed before starting this Training Section.",
+      "note": "also drawn in the Training Flow Chart as a solid arrow NA 190 -> N 2101 (see ground_entry_points)"
+    },
+    {
+      "from": "LNAV790",
+      "to": "N2201",
+      "kind": "prereq",
+      "source": "VFR Navigation F/S Training Section N22XX, RECTRICTIONS, p.PDF 160 (printed -152-)",
+      "verbatim": "RECTRICTIONS: LNAV 790 must have been executed before starting this Training Section.",
+      "note": "spelling 'RECTRICTIONS' is as printed in the source. Also drawn in the Training Flow Chart as a solid arrow LNAV 790 -> N 2201 (see ground_entry_points)."
+    },
+    {
+      "from": "LNAV790",
+      "to": "N2202",
+      "kind": "prereq",
+      "source": "VFR Navigation F/S Training Section N22XX, RECTRICTIONS, p.PDF 160 (printed -152-)",
+      "verbatim": "RECTRICTIONS: LNAV 790 must have been executed before starting this Training Section.",
+      "note": "the restriction is written at Training-Section level; N22XX contains 2 F/S sorties (SORTIES/HOURS TOTAL: 2/2,6) = N 2201 and N 2202. Only the arrow to N 2201 is drawn in the Flow Chart."
+    },
+    {
+      "from": "C5201",
+      "to": "N4201",
+      "kind": "prereq",
+      "source": "VFR NAVIGATION CATEGORY SPECIAL INSTRUCTIONS (1), p.PDF 223 (printed -215-)",
+      "verbatim": "(1) Low Level Navigation sorties can be flown after C5201.",
+      "expansion_rule": "PART IV MISSION header is authoritative over the PDF 223 VFR Navigation Table where the two conflict. Special Instruction (1) names a CLASS ('Low Level Navigation sorties'), not ids, so each section was classified LOW vs MEDIUM by its PART IV section MISSION header: LOW = N42XX (PDF 226) + N43XX (PDF 227) + N45XX (PDF 229), which produces exactly the 7 C5201 -> N4xxx edges in this file; MEDIUM = N41XX (PDF 225) + N44XX (PDF 228), which produces none. N44XX is the single conflict: its PDF 223 table row reads 'LOW LEVEL VFR NAVIGATION (FORMATION)', word-for-word identical to the N45XX row, but its PART IV header on PDF 228 reads 'MISSION: Medium Level VFR Navigation (Two Ship Formation)'. The header wins, so C5201 -> N4401 / N4402 / N4403 are DELIBERATELY absent; if the table is instead taken as authoritative, those three edges must be added. Cross-check: Special Instruction (3) legislates for 'All Medium Level Navigation sorties', and N41XX + N44XX are exactly the sections the PART IV headers call Medium. See the 'SOURCE DISCREPANCY (N44XX level)' flag.",
+      "note": "scope expanded from the VFR Navigation Table on the same page, which labels N42XX as 'LOW LEVEL VFR NAVIGATION'; confirmed by PART IV N42XX header 'MISSION: VFR Navigation (Low Altitude)' (PDF 226)"
+    },
+    {
+      "from": "C5201",
+      "to": "N4202",
+      "kind": "prereq",
+      "source": "VFR NAVIGATION CATEGORY SPECIAL INSTRUCTIONS (1), p.PDF 223 (printed -215-)",
+      "verbatim": "(1) Low Level Navigation sorties can be flown after C5201.",
+      "expansion_rule": "PART IV MISSION header is authoritative over the PDF 223 VFR Navigation Table where the two conflict. Special Instruction (1) names a CLASS ('Low Level Navigation sorties'), not ids, so each section was classified LOW vs MEDIUM by its PART IV section MISSION header: LOW = N42XX (PDF 226) + N43XX (PDF 227) + N45XX (PDF 229), which produces exactly the 7 C5201 -> N4xxx edges in this file; MEDIUM = N41XX (PDF 225) + N44XX (PDF 228), which produces none. N44XX is the single conflict: its PDF 223 table row reads 'LOW LEVEL VFR NAVIGATION (FORMATION)', word-for-word identical to the N45XX row, but its PART IV header on PDF 228 reads 'MISSION: Medium Level VFR Navigation (Two Ship Formation)'. The header wins, so C5201 -> N4401 / N4402 / N4403 are DELIBERATELY absent; if the table is instead taken as authoritative, those three edges must be added. Cross-check: Special Instruction (3) legislates for 'All Medium Level Navigation sorties', and N41XX + N44XX are exactly the sections the PART IV headers call Medium. See the 'SOURCE DISCREPANCY (N44XX level)' flag.",
+      "note": "scope expanded from the VFR Navigation Table on the same page, which labels N42XX as 'LOW LEVEL VFR NAVIGATION'; confirmed by PART IV N42XX header 'MISSION: VFR Navigation (Low Altitude)' (PDF 226)"
+    },
+    {
+      "from": "C5201",
+      "to": "N4301",
+      "kind": "prereq",
+      "source": "VFR NAVIGATION CATEGORY SPECIAL INSTRUCTIONS (1), p.PDF 223 (printed -215-)",
+      "verbatim": "(1) Low Level Navigation sorties can be flown after C5201.",
+      "expansion_rule": "PART IV MISSION header is authoritative over the PDF 223 VFR Navigation Table where the two conflict. Special Instruction (1) names a CLASS ('Low Level Navigation sorties'), not ids, so each section was classified LOW vs MEDIUM by its PART IV section MISSION header: LOW = N42XX (PDF 226) + N43XX (PDF 227) + N45XX (PDF 229), which produces exactly the 7 C5201 -> N4xxx edges in this file; MEDIUM = N41XX (PDF 225) + N44XX (PDF 228), which produces none. N44XX is the single conflict: its PDF 223 table row reads 'LOW LEVEL VFR NAVIGATION (FORMATION)', word-for-word identical to the N45XX row, but its PART IV header on PDF 228 reads 'MISSION: Medium Level VFR Navigation (Two Ship Formation)'. The header wins, so C5201 -> N4401 / N4402 / N4403 are DELIBERATELY absent; if the table is instead taken as authoritative, those three edges must be added. Cross-check: Special Instruction (3) legislates for 'All Medium Level Navigation sorties', and N41XX + N44XX are exactly the sections the PART IV headers call Medium. See the 'SOURCE DISCREPANCY (N44XX level)' flag.",
+      "note": "scope expanded from the VFR Navigation Table on the same page, which labels N43XX as 'LOW LEVEL VFR NAVIGATION'; confirmed by PART IV N43XX header 'MISSION: VFR Navigation (Low Altitude)' (PDF 227)"
+    },
+    {
+      "from": "C5201",
+      "to": "N4302",
+      "kind": "prereq",
+      "source": "VFR NAVIGATION CATEGORY SPECIAL INSTRUCTIONS (1), p.PDF 223 (printed -215-)",
+      "verbatim": "(1) Low Level Navigation sorties can be flown after C5201.",
+      "expansion_rule": "PART IV MISSION header is authoritative over the PDF 223 VFR Navigation Table where the two conflict. Special Instruction (1) names a CLASS ('Low Level Navigation sorties'), not ids, so each section was classified LOW vs MEDIUM by its PART IV section MISSION header: LOW = N42XX (PDF 226) + N43XX (PDF 227) + N45XX (PDF 229), which produces exactly the 7 C5201 -> N4xxx edges in this file; MEDIUM = N41XX (PDF 225) + N44XX (PDF 228), which produces none. N44XX is the single conflict: its PDF 223 table row reads 'LOW LEVEL VFR NAVIGATION (FORMATION)', word-for-word identical to the N45XX row, but its PART IV header on PDF 228 reads 'MISSION: Medium Level VFR Navigation (Two Ship Formation)'. The header wins, so C5201 -> N4401 / N4402 / N4403 are DELIBERATELY absent; if the table is instead taken as authoritative, those three edges must be added. Cross-check: Special Instruction (3) legislates for 'All Medium Level Navigation sorties', and N41XX + N44XX are exactly the sections the PART IV headers call Medium. See the 'SOURCE DISCREPANCY (N44XX level)' flag.",
+      "note": "scope expanded from the VFR Navigation Table on the same page, which labels N43XX as 'LOW LEVEL VFR NAVIGATION'; confirmed by PART IV N43XX header 'MISSION: VFR Navigation (Low Altitude)' (PDF 227)"
+    },
+    {
+      "from": "C5201",
+      "to": "N4501",
+      "kind": "prereq",
+      "source": "VFR NAVIGATION CATEGORY SPECIAL INSTRUCTIONS (1), p.PDF 223 (printed -215-)",
+      "verbatim": "(1) Low Level Navigation sorties can be flown after C5201.",
+      "expansion_rule": "PART IV MISSION header is authoritative over the PDF 223 VFR Navigation Table where the two conflict. Special Instruction (1) names a CLASS ('Low Level Navigation sorties'), not ids, so each section was classified LOW vs MEDIUM by its PART IV section MISSION header: LOW = N42XX (PDF 226) + N43XX (PDF 227) + N45XX (PDF 229), which produces exactly the 7 C5201 -> N4xxx edges in this file; MEDIUM = N41XX (PDF 225) + N44XX (PDF 228), which produces none. N44XX is the single conflict: its PDF 223 table row reads 'LOW LEVEL VFR NAVIGATION (FORMATION)', word-for-word identical to the N45XX row, but its PART IV header on PDF 228 reads 'MISSION: Medium Level VFR Navigation (Two Ship Formation)'. The header wins, so C5201 -> N4401 / N4402 / N4403 are DELIBERATELY absent; if the table is instead taken as authoritative, those three edges must be added. Cross-check: Special Instruction (3) legislates for 'All Medium Level Navigation sorties', and N41XX + N44XX are exactly the sections the PART IV headers call Medium. See the 'SOURCE DISCREPANCY (N44XX level)' flag.",
+      "note": "scope expanded from the VFR Navigation Table on the same page, which labels N45XX as 'LOW LEVEL VFR NAVIGATION (FORMATION)'; confirmed by PART IV N45XX header 'MISSION: Low Level VFR Navigation (Two Ship Formation)' (PDF 229)"
+    },
+    {
+      "from": "C5201",
+      "to": "N4502",
+      "kind": "prereq",
+      "source": "VFR NAVIGATION CATEGORY SPECIAL INSTRUCTIONS (1), p.PDF 223 (printed -215-)",
+      "verbatim": "(1) Low Level Navigation sorties can be flown after C5201.",
+      "expansion_rule": "PART IV MISSION header is authoritative over the PDF 223 VFR Navigation Table where the two conflict. Special Instruction (1) names a CLASS ('Low Level Navigation sorties'), not ids, so each section was classified LOW vs MEDIUM by its PART IV section MISSION header: LOW = N42XX (PDF 226) + N43XX (PDF 227) + N45XX (PDF 229), which produces exactly the 7 C5201 -> N4xxx edges in this file; MEDIUM = N41XX (PDF 225) + N44XX (PDF 228), which produces none. N44XX is the single conflict: its PDF 223 table row reads 'LOW LEVEL VFR NAVIGATION (FORMATION)', word-for-word identical to the N45XX row, but its PART IV header on PDF 228 reads 'MISSION: Medium Level VFR Navigation (Two Ship Formation)'. The header wins, so C5201 -> N4401 / N4402 / N4403 are DELIBERATELY absent; if the table is instead taken as authoritative, those three edges must be added. Cross-check: Special Instruction (3) legislates for 'All Medium Level Navigation sorties', and N41XX + N44XX are exactly the sections the PART IV headers call Medium. See the 'SOURCE DISCREPANCY (N44XX level)' flag.",
+      "note": "scope expanded from the VFR Navigation Table on the same page, which labels N45XX as 'LOW LEVEL VFR NAVIGATION (FORMATION)'; confirmed by PART IV N45XX header 'MISSION: Low Level VFR Navigation (Two Ship Formation)' (PDF 229)"
+    },
+    {
+      "from": "C5201",
+      "to": "N4503",
+      "kind": "prereq",
+      "source": "VFR NAVIGATION CATEGORY SPECIAL INSTRUCTIONS (1), p.PDF 223 (printed -215-)",
+      "verbatim": "(1) Low Level Navigation sorties can be flown after C5201.",
+      "expansion_rule": "PART IV MISSION header is authoritative over the PDF 223 VFR Navigation Table where the two conflict. Special Instruction (1) names a CLASS ('Low Level Navigation sorties'), not ids, so each section was classified LOW vs MEDIUM by its PART IV section MISSION header: LOW = N42XX (PDF 226) + N43XX (PDF 227) + N45XX (PDF 229), which produces exactly the 7 C5201 -> N4xxx edges in this file; MEDIUM = N41XX (PDF 225) + N44XX (PDF 228), which produces none. N44XX is the single conflict: its PDF 223 table row reads 'LOW LEVEL VFR NAVIGATION (FORMATION)', word-for-word identical to the N45XX row, but its PART IV header on PDF 228 reads 'MISSION: Medium Level VFR Navigation (Two Ship Formation)'. The header wins, so C5201 -> N4401 / N4402 / N4403 are DELIBERATELY absent; if the table is instead taken as authoritative, those three edges must be added. Cross-check: Special Instruction (3) legislates for 'All Medium Level Navigation sorties', and N41XX + N44XX are exactly the sections the PART IV headers call Medium. See the 'SOURCE DISCREPANCY (N44XX level)' flag.",
+      "note": "scope expanded from the VFR Navigation Table on the same page, which labels N45XX as 'LOW LEVEL VFR NAVIGATION (FORMATION)'; confirmed by PART IV N45XX header 'MISSION: Low Level VFR Navigation (Two Ship Formation)' (PDF 229)"
+    }
+  ],
+  "ground_entry_points": [
+    {
+      "lesson_or_exam": "NA 104-111",
+      "to": "NA190",
+      "style": "solid",
+      "page_pdf": 19,
+      "note": "ground lesson block -> ground exam; not a sortie target. Flow Chart prints 'NA 104-111'; the PART II ground-training table (PDF 105/107) prints 'NA 104-11'.",
+      "diagram_level": 1
+    },
+    {
+      "lesson_or_exam": "NA 190",
+      "to": "N2101",
+      "style": "solid",
+      "page_pdf": 19,
+      "note": "VFR Navigation written examination -> first Navigation F/S sortie. Line leaves the right edge of NA 190, runs horizontally, then turns down into the top of N 2101.",
+      "diagram_level": 2
+    },
+    {
+      "lesson_or_exam": "LNAV 701-705",
+      "to": "LNAV790",
+      "style": "solid",
+      "page_pdf": 19,
+      "note": "ground lesson block -> ground exam; not a sortie target. Flow Chart prints 'LNAV 701-705'; the PART II ground-training table (PDF 105/107) prints 'LNAV 701-5'.",
+      "diagram_level": 5
+    },
+    {
+      "lesson_or_exam": "LNAV 790",
+      "to": "N2201",
+      "style": "solid",
+      "page_pdf": 19,
+      "note": "Low Level Navigation written examination -> first N22XX F/S sortie",
+      "diagram_level": 6
+    }
+  ],
+  "flags": [
+    "NO green boxes anywhere in the NAVIGATION Flow Chart page. A pixel scan of PDF 19 finds colour in exactly three row bands, all orange (NA 190, LNAV 790, N 4690) and zero green pixels. Consequently solo_candidate=false for all 20 Navigation sorties.",
+    "The no-solo reading is confirmed three times over: (a) the VFR Navigation Table (PDF 223) leaves the SOLO SORTIES/HOURS columns empty for every section; (b) PART IV GENERAL PROGRAMME (PDF 163) gives NAVIGATION 13 dual sorties / 14,4 h and no solo line; (c) no green box in the Flow Chart.",
+    "Sortie counts reconcile exactly. Flights: N41XX=2 (N4101-02), N42XX=2 (N4201-02), N43XX=2 (N4301-02), N44XX=3 (N4401-03), N45XX=3 (N4501-03), N4690=1 -> 13, matching the VFR Navigation Table (PDF 223) and the PART IV general programme (PDF 163). F/S: N21XX=1 (N2101), N22XX=2 (N2201-02), N23XX=4 (N2301-04) -> 7, matching PART III sections N21XX/N22XX/N23XX (PDF 159-161).",
+    "SOURCE DISCREPANCY (N44XX level): the VFR Navigation Table on PDF 223 lists N44XX as 'LOW LEVEL VFR NAVIGATION (FORMATION)', but the N44XX section header on PDF 228 reads 'MISSION: Medium Level VFR Navigation (Two Ship Formation)'. Because of this conflict, N4401/N4402/N4403 were NOT given the C5201 'Low Level Navigation' prerequisite edge from Special Instruction (1). If the table is taken as authoritative, three more prereq edges C5201 -> N4401/N4402/N4403 would be added.",
+    "SCOPE EXPANSION (documented, not invented): Special Instruction (1) on PDF 223 names a class of sorties ('Low Level Navigation sorties'), not individual ids. It was expanded to N4201, N4202, N4301, N4302, N4501, N4502, N4503 using the VFR Navigation Table printed on the SAME page. Every such edge carries the verbatim rule plus a note naming the table row used. Likewise the F/S restrictions on PDF 159/160 are written at Training-Section level and were expanded to the sorties of that section.",
+    "The Flow Chart draws C 5201 feeding N 4101 (a MEDIUM level sortie), while the category Special Instruction (1) ties C5201 to LOW level sorties, and the N21XX F/S restriction (PDF 159) ties C5201 to N 2101. The three statements are recorded separately and were not merged.",
+    "C 5201 and F 4401 appear on the NAVIGATION page as DASHED-outline reference boxes (their real boxes are in the Contact column, PDF 13, and the Formation column, PDF 18). The dashing is a property of the BOX, not of the arrow: both connecting ARROWS are drawn solid. This differs from the Instrument page (PDF 16) where the I 3601 -> I 4701 connector is itself a dashed arrow.",
+    "Verified absent (checked at 330 dpi on the right-hand F/S column): there is NO arrow N2101->N2201, N2201->N2202, N2202->N2301, or N2302->N2303. The F/S column is drawn as three detached groups (N2101 | N2201, N2202 | N2301->N2302, N2303->N2304) with only N2301->N2302 and N2303->N2304 connected.",
+    "PDF pages 11-18 were rendered and inspected: the Contact (11-14), Instrument (15-16) and Formation (17-18) pages contain no Navigation SORTIE boxes (N2xxx / N4xxx) and no arrow entering or leaving the Navigation column, so the entire Navigation category is contained on PDF 19. One qualification, because the statement is not true of the NA prefix as such: the NA ground series is split between two Flow Chart pages. PDF 15 (Instrument, printed -7-) draws the ground chain NA 101-103 -> IPR PL2 -> NA 191 -> GPS in its left column; the line leaving GPS runs right and merges into the I 4490 -> I 4501 connector, so that chain terminates at I 4501 and stays entirely inside the Instrument column. PDF 19 (Navigation) draws the rest of the series, NA 104-111 -> NA 190 -> N 2101. Pages 11-14 and 16-18 carry no NA box at all.",
+    "Flow Chart label vs PART II ground-training table: the chart prints 'NA 104-111' and 'LNAV 701-705'; the PART II tables (PDF 105 and 107) print 'NA 104-11' and 'LNAV 701-5'. label_verbatim / lesson_or_exam keep the Flow Chart spelling.",
+    "night=false for every Navigation sortie: the Flow Chart page has no night marking, no red-text box (contrast I 3601 / I 4701 on PDF 16, printed in red), and neither the category Special Instructions (PDF 223) nor any N-section in PART III/IV mentions night conditions.",
+    "N4690 is the only checkride ('MISSION: VFR Navigation Checkride', PDF 231) and the only orange sortie box; it is 1/1,2 dual. NA 190 and LNAV 790 are also orange but are ground written examinations, not sorties, so they are in ground_entry_points, not in sorties.",
+    "Special Requirement SRN-01 ('one leg at 500 ft AGL') is attached to Sections N43XX (PDF 227) and N45XX (PDF 229), and restated in category Special Instruction (4) on PDF 223: 'IP will demonstrate one leg at 500' AGL in N43XX and N45XX Section.' It is a within-sortie requirement, not an ordering edge, so no edge was created for it.",
+    "The 'section' field carries the syllabus Training Section code (N21XX, N41XX, ...) as printed in PART III/PART IV headers, not a repeat of the sortie id.",
+    "Field 'diagram_level' is the vertical row index of the printed page (PDF 19): boxes drawn at the same height share a level. Levels 1-3 and 6 hold ground/cross-reference boxes only, which is why the sortie list skips them. The full level map, including the two dashed cross-reference boxes C 5201 (level 3) and F 4401 (level 11), is in 'diagram_levels'. Within a level the page uses three fixed column tracks, left to right (x measured at 300 dpi on PDF 19, in PDF points): LEFT x 101-203, CENTRE/flights x 269.5-372.7, RIGHT x 440-543.6. The sortie 'column' field uses these track names; only 'center' and 'right' occur, since no N-sortie box is drawn in the LEFT track. The tracks are NOT one-per-role: the ground boxes are split between LEFT (NA 104-111 at x 101.5-201.6, NA 190) and RIGHT (LNAV 701-705 at x 440.6-540.2 and LNAV 790, sharing the track with the F/S sortie boxes). Likewise there is no single 'cross-reference column' - each dashed cross-reference box sits in the track its arrow enters from: C 5201 is in the CENTRE track (x 269.5-371.3, pixel-identical to N 4101 below it, which it feeds from above), while F 4401 is in the LEFT track (x 101.0-202.6, feeding N 4401 from the left)."
+  ],
+  "diagram_levels": {
+    "1": [
+      "NA 104-111"
+    ],
+    "2": [
+      "NA 190"
+    ],
+    "3": [
+      "C 5201 (dashed cross-ref box)"
+    ],
+    "4": [
+      "N 4101",
+      "N 2101"
+    ],
+    "5": [
+      "N 4102",
+      "LNAV 701-705"
+    ],
+    "6": [
+      "LNAV 790"
+    ],
+    "7": [
+      "N 4201",
+      "N 2201"
+    ],
+    "8": [
+      "N 4202"
+    ],
+    "9": [
+      "N 4301"
+    ],
+    "10": [
+      "N 4302",
+      "N 2202"
+    ],
+    "11": [
+      "F 4401 (dashed cross-ref box)",
+      "N 4401"
+    ],
+    "12": [
+      "N 4402",
+      "N 2301"
+    ],
+    "13": [
+      "N 4403",
+      "N 2302"
+    ],
+    "14": [
+      "N 4501"
+    ],
+    "15": [
+      "N 4502",
+      "N 2303"
+    ],
+    "16": [
+      "N 4503",
+      "N 2304"
+    ],
+    "17": [
+      "N 4690"
+    ]
+  }
+}

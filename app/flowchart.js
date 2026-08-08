@@ -1,29 +1,28 @@
 "use strict";
 /* ══════════════════════════════════════════════════════════════════════════
-   PHASE II FLOWCHART — «ΡΑΓΕΣ ΤΡΟΧΙΑΣ»
-   L0 Πίνακας Σταδίου → L1 Ράγα Τροχιάς (4 ζώνες) → L2 Σταθμός → L3 Έξοδοι.
-   Πρωτεύων άξονας = ΚΑΤΗΓΟΡΙΑ (5 τροχιές), δευτερεύων = ΣΤΑΔΙΟ (4 ζώνες).
+   PHASE II FLOWCHART — «ΡΑΓΕΣ ΤΡΟΧΙΑΣ» · v2 (ανά SORTIE)
 
-   Επαφή με τον υπόλοιπο κώδικα: μόνο #view-flowchart, η κλάση .hidden και
-   το window.fcInit() (app.js:480). Το data/flowchart.json διαβάζεται ΩΣ ΕΧΕΙ.
+   L0 Πίνακας Σταδίου → L1 Ράγα Τροχιάς (4 ζώνες) → L2 Σταθμός/Έξοδος.
+   Πρωτεύων άξονας = ΚΑΤΗΓΟΡΙΑ (5 τροχιές), δευτερεύων = ΖΩΝΗ (4 ζώνες).
+
+   ΔΕΔΟΜΕΝΑ: data/flowchart2.json (schema flowchart-v2)
+     groups[73]          — ΤΑΥΤΙΖΟΝΤΑΙ με τους 73 v1 nodes (ίδια σειρά/πεδία)
+     group_edges_v1[98]  — ΤΑΥΤΙΖΟΝΤΑΙ με τις 98 v1 ακμές  → L0/L1 μένουν ίδια
+     sorties[133]        — οι μεμονωμένες έξοδοι (F/S + flights)
+     edges[174]          — ΑΚΜΕΣ ΑΝΑ SORTIE με uid refs "g:X" / "s:X"
+     ground_chain_edges  — ground→ground + το μοναδικό sortie→ground βέλος
+
+   ΠΡΟΣΟΧΗ 1: 13 ids υπάρχουν ΚΑΙ ως group ΚΑΙ ως sortie (C1101, I4701, …).
+              Τίποτε δεν δεικτοδοτείται με σκέτο id — μόνο με uid.
+   ΠΡΟΣΟΧΗ 2: το ίδιο ζεύγος (from,to) γράφεται δύο φορές με διαφορετικό kind
+              (same_pair_kinds). Ο renderer ΕΝΩΝΕΙ σε ΜΙΑ ακμή με kinds[].
+
+   Επαφή με τον υπόλοιπο κώδικα: μόνο #view-flowchart, η κλάση .hidden και το
+   window.fcInit() (app.js). Το JSON διαβάζεται ΩΣ ΕΧΕΙ, ποτέ δεν γράφεται.
    Vanilla JS, μηδέν εξαρτήσεις, δουλεύει από file://.
    ══════════════════════════════════════════════════════════════════════════ */
 
 (() => {
-  /* ── κρατημένα αυτούσια από την προηγούμενη υλοποίηση ── */
-  const KIND_COLORS = {
-    theory: "#7d8ca3",
-    ground_exam: "#ffb454",
-    sim: "#3fd0c9",
-    flight: "#58b0ff",
-    checkride: "#ffd166",
-  };
-  const CAT_COLORS = {
-    contact: "#58b0ff",
-    instrument: "#9d8cff",
-    formation: "#46d19a",
-    vfr_navigation: "#ff9d5c",
-  };
   const KIND_LABELS = {
     theory: "Theory",
     ground_exam: "Ground exam",
@@ -31,7 +30,19 @@
     flight: "Flight",
     checkride: "Checkride",
   };
-  const EDGE_STYLE = { sequence: "", prereq: "6 4", implied: "2 4" };
+
+  /* ΣΤΥΛ ΑΚΜΩΝ (αίτημα χρήστη): solid = sequence · dashed = feed/prereq ·
+     dotted = before. Τα ground_entry/ground_sequence δεν ονομάστηκαν ρητά:
+     το ground_entry κόβει ζώνες όπως το prereq → dashed, το ground_sequence
+     μένει μέσα στη ζώνη GROUND όπως το sequence → solid.                    */
+  const DASH = { solid: "", dashed: "6 4", dotted: "2 4" };
+  function edgeStyle(m) {
+    const k = m.kinds;
+    if (k.indexOf("sequence") >= 0 || k.indexOf("ground_sequence") >= 0) return "solid";
+    if (k.indexOf("feed") >= 0 || k.indexOf("prereq") >= 0 || k.indexOf("ground_entry") >= 0) return "dashed";
+    if (k.indexOf("before") >= 0) return "dotted";
+    return "solid";
+  }
 
   /* ── ταξινομία ── */
   const TRACKS = [
@@ -40,18 +51,26 @@
     { id: "formation",      label: "Formation",      rgb: "70,209,154",  hex: "#46d19a", tot: "formation" },
     // ΠΡΟΣΟΧΗ: το totals.* κλειδί λέγεται "navigation", όχι "vfr_navigation".
     { id: "vfr_navigation", label: "VFR Navigation", rgb: "255,157,92",  hex: "#ff9d5c", tot: "navigation" },
-    { id: "core",           label: "Shared ground",  rgb: "125,140,163", hex: "#7d8ca3", tot: null },
+    { id: "shared",         label: "Shared ground",  rgb: "125,140,163", hex: "#7d8ca3", tot: null },
   ];
   const TRACK_BY = {};
   for (const t of TRACKS) TRACK_BY[t.id] = t;
+  const TRACK_ALIAS = { core: "shared", shared: "shared" };
 
+  /* ΧΡΩΜΑ ΑΝΑ ΖΩΝΗ (single-track view). Οι τιμές ζουν στο CSS ώστε το light
+     theme να τις σκουραίνει — εδώ κρατάμε μόνο τα ονόματα των μεταβλητών.   */
   const BANDS = [
-    { id: "ground", label: "GROUND",    c: "#7d8ca3", g: "▤", sub: "GROUND ACADEMICS · PART II §11" },
-    { id: "exam",   label: "EXAMS",     c: "#ffb454", g: "▣", sub: "WRITTEN EXAMS · ≥80%" },
-    { id: "fs",     label: "F/S",       c: "#3fd0c9", g: "⬒", sub: "FLIGHT SIMULATOR · PART III §13" },
-    { id: "air",    label: "T-6A",      c: null,      g: "✈", sub: "AIRCRAFT · PART IV §14" },
+    { id: "ground",  label: "GROUND",  g: "▤", sub: "GROUND ACADEMICS · PART II §11" },
+    { id: "exams",   label: "EXAMS",   g: "▣", sub: "WRITTEN EXAMS · ≥80%" },
+    { id: "fs",      label: "F/S",     g: "⬒", sub: "FLIGHT SIMULATOR · PART III §13" },
+    { id: "flights", label: "FLIGHTS", g: "✈", sub: "T-6A SORTIES · PART IV §14" },
   ];
-  const BAND_OF = { theory: "ground", ground_exam: "exam", sim: "fs", flight: "air", checkride: "air" };
+  const BAND_BY = {};
+  for (const b of BANDS) BAND_BY[b.id] = b;
+  const bandVar = (id) => "var(--fcb-" + id + ")";
+  const bandRgb = (id) => "var(--fcb-" + id + "-rgb)";
+  const BAND_OF = { theory: "ground", ground_exam: "exams", sim: "fs", flight: "flights", checkride: "flights" };
+  const BAND_ALIAS = { exam: "exams", air: "flights" };
 
   const G = { sec: "●", exam: "▣", ckr: "◆", solo: "★", fin: "⦿", night: "☾", in: "⇤", out: "⇥", warn: "⚠", info: "ⓘ" };
 
@@ -59,21 +78,32 @@
   let fc = null;
   let loaded = false;
   const S = {
-    lv: 0, track: null, selected: null,
+    lv: 0, track: null, sel: null,          // sel = uid ("g:X" / "s:X")
     density: "rich", poster: false,
     hiddenBands: new Set(), spot: new Set(),
-    rendered: new Set(),   // ids στο DOM της τρέχουσας ράγας
-    chev: new Set(),       // "from>to" ακμές που ήδη τις λέει ένα chevron
-    pulsed: new Set(),     // 1st-SOLO pulse: μία φορά ανά session ανά τροχιά
+    open: new Set(),        // ανοιχτά Training Sections (group ids) — accordion ανά ζώνη
+    rendered: new Set(),    // uids που βρίσκονται ΤΩΡΑ στο DOM της ράγας
+    chev: new Set(),        // "uid>uid" ακμές που ήδη τις λέει ένα chevron
+    pulsed: new Set(),
     sug: [], sugIx: -1, hashLock: false,
   };
   const IX = {
-    byId: new Map(), out: new Map(), in: new Map(), deg: new Map(),
-    sortie: new Map(), exam: new Map(), search: [],
+    byId: new Map(),      // group id  → group
+    out: new Map(), in: new Map(), deg: new Map(),   // ΟΜΑΔΙΚΕΣ ακμές (v1)
+    exam: new Map(), search: [],
+    sortie: new Map(),    // sortie id → sortie
+    srtOf: new Map(),     // group id  → [sortie, …] στη σειρά του διαγράμματος
+    uid: new Map(),       // uid → group | sortie
   };
+  const SE = { out: new Map(), in: new Map(), all: [] };  // ΑΚΜΕΣ ΑΝΑ SORTIE (ενωμένες)
 
   const el = (id) => document.getElementById(id);
-  function esc(s) { const d = document.createElement("div"); d.textContent = s ?? ""; return d.innerHTML; }
+  const ESC_MAP = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ESC_MAP[c]); }
+  function cssVar(name) {
+    const v = getComputedStyle(document.documentElement).getPropertyValue(name);
+    return (v || "").trim() || "#7d8ca3";
+  }
 
   /* §0.3 ΜΟΡΦΟΠΟΙΗΣΗ — computed νούμερα πάντα με ελληνικό κόμμα.
      parseTot() χρησιμοποιείται ΜΟΝΟ για πλάτη μπάρας & ελέγχους, ποτέ για εμφάνιση. */
@@ -89,18 +119,24 @@
   /* Ελληνικά κεφαλαία ΧΩΡΙΣ τόνο (το toUpperCase κρατά το τονικό σημάδι). */
   function up(s) {
     let u = String(s || "").toUpperCase();
-    // NFD ⇒ ο τόνος γίνεται ξεχωριστό combining U+0301· τα διαλυτικά μένουν.
     if (u.normalize) u = u.normalize("NFD").replace(/[̀́͂]/g, "").normalize("NFC");
     return u;
   }
 
-  const trackOf = (n) => n.category || "core";
-  const bandOf  = (n) => BAND_OF[n.kind];
+  /* ── uid helpers ───────────────────────────────────────────────────────── */
+  const isSortieUid = (u) => String(u || "").charAt(0) === "s";
+  const node = (uid) => IX.uid.get(uid) || null;
+  const domId = (uid) => (isSortieUid(uid) ? "fcs-" : "fcn-") + String(uid).slice(2);
+  const elOf = (uid) => el(domId(uid));
+  const trackOf = (n) => TRACK_ALIAS[n.track || n.category || "shared"] || (n.track || n.category || "shared");
+  const bandOf  = (n) => BAND_ALIAS[n.band] || n.band || BAND_OF[n.kind];
+  const srtLabel = (s) => s.label_verbatim || s.id;
+  const labelOf = (n) => (n.uid && isSortieUid(n.uid) ? srtLabel(n) : n.label);
   function cellOf(id) { const n = IX.byId.get(id); return n ? trackOf(n) + "|" + bandOf(n) : "?"; }
 
-  /* ── δείκτης ── */
+  /* ── δείκτης ────────────────────────────────────────────────────────────── */
   function buildIndex() {
-    for (const n of fc.nodes) IX.byId.set(n.id, n);
+    for (const n of fc.nodes) { IX.byId.set(n.id, n); IX.uid.set("g:" + n.id, n); }
     for (const e of fc.edges) {
       if (!IX.out.has(e.from)) IX.out.set(e.from, []);
       IX.out.get(e.from).push(e);
@@ -110,7 +146,6 @@
       IX.deg.set(e.to,   (IX.deg.get(e.to)   || 0) + 1);
     }
     for (const n of fc.nodes) {
-      for (const s of (n.sorties || [])) IX.sortie.set(s, n.id);
       for (const x of (n.exams || [])) IX.exam.set(x.code, { ex: x, node: n.id, gate: false });
       if (n.kind === "ground_exam") {
         IX.exam.set(n.label, {
@@ -119,48 +154,83 @@
         });
       }
     }
+
+    /* sorties + ενωμένες ακμές ανά sortie */
+    for (const s of (fc.sorties || [])) {
+      IX.sortie.set(s.id, s);
+      IX.uid.set(s.uid, s);
+      if (!IX.srtOf.has(s.group)) IX.srtOf.set(s.group, []);
+      IX.srtOf.get(s.group).push(s);
+    }
+    const seen = new Map();
+    for (const e of fcSortieEdges()) {
+      if (!IX.uid.has(e.from_ref) || !IX.uid.has(e.to_ref)) continue;   // άγνωστο άκρο → αγνοείται
+      const key = e.from_ref + ">" + e.to_ref;
+      let m = seen.get(key);
+      if (!m) {
+        m = { key: key, from: e.from_ref, to: e.to_ref, kinds: [], ev: [] };
+        seen.set(key, m);
+        SE.all.push(m);
+        if (!SE.out.has(e.from_ref)) SE.out.set(e.from_ref, []);
+        SE.out.get(e.from_ref).push(m);
+        if (!SE.in.has(e.to_ref)) SE.in.set(e.to_ref, []);
+        SE.in.get(e.to_ref).push(m);
+      }
+      if (m.kinds.indexOf(e.kind) < 0) m.kinds.push(e.kind);
+      m.ev.push(e);
+    }
+
+    /* ── αναζήτηση: sections + sorties + exams ── */
     for (const n of fc.nodes) {
       IX.search.push({
-        id: n.id, code: n.label,
+        uid: "g:" + n.id, code: n.label,
         hay: (n.id + " " + n.label + " " + (n.name || "")).toLowerCase(),
-        sub: KIND_LABELS[n.kind] || n.kind,
+        sub: (KIND_LABELS[n.kind] || n.kind) + " · section",
       });
     }
-    IX.sortie.forEach((nid, code) => {
-      IX.search.push({ id: nid, code: code, hay: code.toLowerCase(), sub: "sortie · " + IX.byId.get(nid).label });
-    });
+    for (const s of (fc.sorties || [])) {
+      IX.search.push({
+        uid: s.uid, code: srtLabel(s),
+        hay: (s.id + " " + srtLabel(s) + " " + (s.name || "") + " " + (s.section_verbatim || "")).toLowerCase(),
+        sub: "sortie · " + s.group + " · " + (BAND_BY[bandOf(s)] || { label: "" }).label,
+      });
+    }
     IX.exam.forEach((v, code) => {
       IX.search.push({
-        id: v.node, code: code, hay: (code + " " + (v.ex.name || "")).toLowerCase(),
+        uid: "g:" + v.node, code: code, hay: (code + " " + (v.ex.name || "")).toLowerCase(),
         sub: (v.gate ? "gate exam" : "exam") + " · " + IX.byId.get(v.node).label,
       });
     });
   }
+  /* Οι ακμές ανά sortie = "edges" + "ground_chain_edges" (η δεύτερη κρατά τα
+     ground→ground βέλη ΚΑΙ το μοναδικό sortie→ground: I4501 → CO 109).
+     ΠΡΟΣΟΧΗ: το fc.edges έχει ΗΔΗ αντικατασταθεί από τις ομαδικές ακμές v1 —
+     οι ακμές ανά sortie φυλάσσονται στο fc.sortieEdges από το fcInit().      */
+  function fcSortieEdges() {
+    return [].concat(fc.sortieEdges || [], fc.ground_chain_edges || []);
+  }
 
   /* ΠΡΟΣΟΧΗ: το totals.final_evaluations_verbatim γράφει «Ν4690» με ΕΛΛΗΝΙΚΟ κεφαλαίο Νι.
-     Κάθε string-match σε λατινικό "N4690" αποτυγχάνει ΣΙΩΠΗΛΑ → μόνο δομικό κριτήριο.
-     isFinal = checkride χωρίς εξερχόμενη sequence μέσα στο ίδιο κελί. */
+     Κάθε string-match σε λατινικό "N4690" αποτυγχάνει ΣΙΩΠΗΛΑ → μόνο δομικό κριτήριο. */
   function isFinal(n) {
     if (!n.checkride) return false;
     return !(IX.out.get(n.id) || []).some((e) => e.kind === "sequence" && cellOf(e.to) === cellOf(n.id));
   }
-
   /* κόμβοι «ΔΙΑΡΚΩΣ»: χωρίς κουτί στο Training Flow Chart (GT-WSGES, GT-GENBRIEF) */
   function isContinuous(n) {
     return (IX.deg.get(n.id) || 0) === 0 || /^not_in_flow_chart/.test((n.flags || []).join("|"));
   }
 
   const nodesOf = (track) => fc.nodes.filter((n) => trackOf(n) === track);
+  const srtOf = (gid) => IX.srtOf.get(gid) || [];
   const flagLike = (re) => (fc.flags || []).filter((f) => re.test(f));
 
   /* ═══ ΚΑΝΟΝΑΣ ΑΚΕΡΑΙΟΤΗΤΑΣ (§0.2) ═══════════════════════════════════════
-     Κάθε headline νούμερο βγαίνει από το fc.totals και ΤΥΠΩΝΕΤΑΙ ΑΥΤΟΥΣΙΟ ως
-     string. ΠΟΤΕ δεν αθροίζεται από κόμβους. Το άθροισμα υπολογίζεται μόνο για
-     να ανιχνευθεί απόκλιση και να μπει το ⓘ δίπλα στο τυπωμένο νούμερο.        */
+     Κάθε headline νούμερο βγαίνει από το fc.totals και ΤΥΠΩΝΕΤΑΙ ΑΥΤΟΥΣΙΟ.  */
   function agg(track) {
     const all = nodesOf(track);
     const by = (b) => all.filter((n) => bandOf(n) === b);
-    const ground = by("ground"), exam = by("exam"), fs = by("fs"), air = by("air");
+    const ground = by("ground"), exams = by("exams"), fs = by("fs"), flights = by("flights");
     const inline = [];
     for (const n of ground) for (const x of (n.exams || [])) inline.push({ ex: x, node: n.id });
 
@@ -174,7 +244,7 @@
       gaps: list.filter((n) => n.sorties_total != null && n.hours_total == null),
     });
     let cFs = sum(fs);
-    const cAir = sum(air);
+    const cAir = sum(flights);
     // Το printed contact F/S («16 / 20,8») ΔΕΝ περιλαμβάνει το familiarization.
     if (track === "contact") {
       const fam = parseTot(fc.totals.fs.familiarization);
@@ -191,21 +261,25 @@
     const feeds = {};
     for (const n of all) {
       for (const e of (IX.out.get(n.id) || [])) {
-        const tt = trackOf(IX.byId.get(e.to));
+        const to = IX.byId.get(e.to);
+        if (!to) continue;
+        const tt = trackOf(to);
         if (tt !== track) feeds[tt] = (feeds[tt] || 0) + 1;
       }
     }
+    const nSrt = fs.concat(flights).reduce((s, g) => s + srtOf(g.id).length, 0);
     return {
-      all: all, ground: ground, exam: exam, fs: fs, air: air, inline: inline,
+      all: all, ground: ground, exams: exams, fs: fs, flights: flights, inline: inline,
       periodsGround: ground.reduce((s, n) => s + (n.periods || 0), 0),
-      periodsExam:   exam.reduce((s, n) => s + (n.periods || 0), 0),
-      examCount: exam.length + inline.length,
+      periodsExam:   exams.reduce((s, n) => s + (n.periods || 0), 0),
+      examCount: exams.length + inline.length,
+      sorties: nSrt,
       printedFs: pFs, printedFl: pFl,
       mmFs: pFs ? mm(pFs, cFs) : null,
       mmAir: pFl ? mm(pFl.total, cAir) : null,
-      ckr: air.filter((n) => n.checkride),
-      finals: air.filter(isFinal),
-      soloSections: air.filter((n) => n.solo_allowed && !n.solo_required),
+      ckr: flights.filter((n) => n.checkride),
+      finals: flights.filter(isFinal),
+      soloSections: flights.filter((n) => n.solo_allowed && !n.solo_required),
       firstSolo: all.filter((n) => n.solo_required),
       nights: all.filter((n) => n.night),
       feeds: feeds,
@@ -217,12 +291,19 @@
     if (loaded) return;
     loaded = true;
     try {
-      const res = await fetch("../data/flowchart.json", { cache: "no-store" });
+      const res = await fetch("../data/flowchart2.json", { cache: "no-store" });
       fc = await res.json();
     } catch (err) {
-      el("fc-vitals").innerHTML = '<p class="hint">flowchart.json not found.</p>';
+      el("fc-vitals").innerHTML = '<p class="hint">flowchart2.json not found.</p>';
       return;
     }
+    /* groups ≡ v1 nodes · group_edges_v1 ≡ v1 edges → L0 και οι ζώνες
+       GROUND/EXAMS δουλεύουν χωρίς μετάφραση. Οι ΑΝΑ SORTIE ακμές (το αρχικό
+       fc.edges του v2) φυλάσσονται ΠΡΙΝ την αντικατάσταση.                  */
+    fc.sortieEdges = fc.edges || [];
+    fc.nodes = fc.groups || fc.nodes || [];
+    fc.edges = fc.group_edges_v1 || [];
+    fc.sorties = fc.sorties || [];
     buildIndex();
     renderL0();
     wire();
@@ -237,10 +318,12 @@
     const gate = fc.nodes.filter((n) => n.kind === "ground_exam").length;
     const inline = fc.nodes.reduce((s, n) => s + (n.exams || []).length, 0);
     const fsN = fc.nodes.filter((n) => bandOf(n) === "fs").length;
-    const airN = fc.nodes.filter((n) => bandOf(n) === "air").length;
+    const airN = fc.nodes.filter((n) => bandOf(n) === "flights").length;
     const ckr = fc.nodes.filter((n) => n.checkride);
     const fins = ckr.filter(isFinal);
     const sumPer = fc.nodes.reduce((s, n) => s + (n.periods || 0), 0);
+    const nFs = fc.sorties.filter((s) => bandOf(s) === "fs").length;
+    const nAir = fc.sorties.filter((s) => bandOf(s) === "flights").length;
 
     const vitals = [
       { k: "ground", h: "GROUND", n: String(t.ground_training_periods),
@@ -250,9 +333,9 @@
           : null },
       { k: "exams", h: "EXAMS", n: String(gate + inline),
         s: gate + " gates + " + inline + " in-block · ≥80%", i: null },
-      { k: "fs", h: "F/S", n: t.fs.total, s: fsN + " Training Sections", i: null },
-      { k: "air", h: "T-6A", n: t.flight.total.total,
-        s: airN + " Training Sections · " + t.flight.total.dual + " D + " + t.flight.total.solo + " S", i: null },
+      { k: "fs", h: "F/S", n: t.fs.total, s: fsN + " sections · " + nFs + " sorties", i: null },
+      { k: "flights", h: "FLIGHTS", n: t.flight.total.total,
+        s: airN + " sections · " + nAir + " sorties · " + t.flight.total.dual + " D + " + t.flight.total.solo + " S", i: null },
       { k: "solo", h: "SOLO", n: t.flight.total.solo, s: "★ all mandatory · min. 6,0 h", i: null },
       { k: "ckr", h: "CHECKRIDES", n: String(ckr.length),
         s: fins.length + " FINAL · min. 78 flying days", i: null },
@@ -274,7 +357,7 @@
       const pct = Math.round((h / tot) * 1000) / 10;
       return `<button type="button" class="fc-load-seg" data-track="${esc(x.id)}"
         style="flex:${h};background:${x.hex}"
-        title="${esc(up(x.label) + " · " + fmt(h) + " h · " + Math.round(pct) + "% of T-6A")}"
+        title="${esc(up(x.label) + " · " + fmt(h) + " h · " + Math.round(pct) + "% of FLIGHTS")}"
         aria-label="${esc(x.label + " " + fmt(h) + " hours")}"></button>`;
     }).join("");
     el("fc-load").innerHTML = segs;
@@ -284,7 +367,7 @@
       el("fc-load").insertAdjacentElement("afterend", p);
       return p;
     })();
-    cap.textContent = "LOAD — share of T-6A hours";
+    cap.textContent = "LOAD — share of FLIGHTS hours";
 
     el("fc-tracks").innerHTML = TRACKS.map(trackCard).join("");
     el("fc-spine").innerHTML = spine();
@@ -292,30 +375,30 @@
 
   function trackCard(tk) {
     const A = agg(tk.id);
-    const counts = { ground: A.ground.length, exam: A.exam.length, fs: A.fs.length, air: A.air.length };
+    const counts = { ground: A.ground.length, exams: A.exams.length, fs: A.fs.length, flights: A.flights.length };
     const skel = BANDS.map((b) => counts[b.id]
-      ? `<span class="fc-skel-seg" style="flex:${counts[b.id]};background:${b.c || tk.hex}"></span>` : "").join("");
+      ? `<span class="fc-skel-seg" style="flex:${counts[b.id]};background:${bandVar(b.id)}"></span>` : "").join("");
 
     let m1, m2 = "";
-    if (tk.id === "core") {
+    if (tk.id === "shared") {
       m1 = (A.periodsGround + A.periodsExam) + " periods";
-      const gates = A.exam.map((n) => n.label).join(", ");
+      const gates = A.exams.map((n) => n.label).join(", ");
       const ins = A.inline.map((x) => x.ex.code).join(", ");
       m2 = "EXAMS " + A.examCount + " (" + gates + " gate" + (ins ? " + " + ins + " in-block" : "") + ")";
     } else {
       m1 = "GROUND " + A.periodsGround + " per. · EXAMS " + A.examCount
-         + " (" + plural(A.exam.length, "gate", "gates")
+         + " (" + plural(A.exams.length, "gate", "gates")
          + (A.inline.length ? " + " + A.inline.length + " in-block" : "") + ")";
       const fam = tk.id === "contact" ? " (+FAM " + fc.totals.fs.familiarization + ")" : "";
       const solo = A.printedFl.solo === "- / -" ? "solo —" : A.printedFl.solo + " S";
-      m2 = "F/S " + A.printedFs + fam + " · T-6A " + A.printedFl.total + " h"
+      m2 = "F/S " + A.printedFs + fam + " · FLIGHTS " + A.printedFl.total + " h"
          + (A.mmAir ? " " + G.info : "") + " — " + A.printedFl.dual + " D · " + solo;
     }
 
     const chips = [];
-    if (tk.id === "core") {
+    if (tk.id === "shared") {
       chips.push(`<span class="fc-b">▤ ${A.ground.length} blocks</span>`);
-      if (A.exam.length) chips.push(`<span class="fc-b fc-b-warn">▣ ${esc(A.exam.map((n) => n.label).join(" · "))}</span>`);
+      if (A.exams.length) chips.push(`<span class="fc-b fc-b-warn">▣ ${esc(A.exams.map((n) => n.label).join(" · "))}</span>`);
     } else {
       if (A.ckr.length) {
         chips.push(`<span class="fc-b fc-b-ckr">${G.ckr} ${A.ckr.length} CKR${A.ckr.length === A.finals.length ? " FINAL" : ""}</span>`);
@@ -323,13 +406,14 @@
       if (A.firstSolo.length) chips.push(`<span class="fc-b fc-b-solo-req">${G.solo} 1st SOLO</span>`);
       if (A.soloSections.length) chips.push(`<span class="fc-b fc-b-solo">SOLO in ${A.soloSections.length} sections</span>`);
       if (A.nights.length) chips.push(`<span class="fc-b fc-b-night">${G.night} NIGHT ×${A.nights.length}</span>`);
+      if (A.sorties) chips.push(`<span class="fc-b">${A.sorties} sorties</span>`);
     }
 
-    const micro = A.air.length ? `<span class="fc-micro" aria-hidden="true">${microRail(A.air)}</span>` : "";
+    const micro = A.flights.length ? `<span class="fc-micro" aria-hidden="true">${microRail(A.flights)}</span>` : "";
     const feedTxt = Object.keys(A.feeds).map((k) => TRACK_BY[k].label + " ×" + A.feeds[k]).join(" · ");
     const feed = feedTxt ? `<span class="fc-tc-feed">FEEDS → ${esc(feedTxt)}</span>` : "";
 
-    return `<button type="button" class="fc-tc${tk.id === "core" ? " is-core" : ""}" data-track="${esc(tk.id)}"
+    return `<button type="button" class="fc-tc${tk.id === "shared" ? " is-core" : ""}" data-track="${esc(tk.id)}"
       style="--tk:${tk.hex};--tk-rgb:${tk.rgb}"
       aria-label="${esc(tk.label + " — " + A.all.length + " sections")}"
       title="${esc(m1 + (m2 ? " · " + m2 : ""))}">
@@ -342,8 +426,8 @@
   }
 
   /* μίνι-ράγα: solo_required > checkride > solo_allowed > απλός σταθμός */
-  function microRail(air) {
-    return air.map((n, ix) => {
+  function microRail(list) {
+    return list.map((n, ix) => {
       let cls = "fc-micro-dot";
       if (n.solo_required) cls += " is-solo-req";
       else if (n.checkride) cls += " is-ckr";
@@ -365,7 +449,7 @@
       }
       const tk = TRACK_BY[trackOf(n)];
       const fin = isFinal(n);
-      h += `<button type="button" class="fc-gate-pill" data-n="${esc(n.id)}" style="--tk:${tk.hex}"
+      h += `<button type="button" class="fc-gate-pill" data-jump="g:${esc(n.id)}" style="--tk:${tk.hex}"
         title="${esc(n.name + (n.duration_verbatim ? " — " + n.duration_verbatim : ""))}"
         aria-label="${esc(n.label + " — " + n.name)}">
         <span class="fc-gp-code">${esc(n.label)}</span>
@@ -379,14 +463,19 @@
 
   /* ══════════════════════ L1 — ΡΑΓΑ ΤΡΟΧΙΑΣ ══════════════════════ */
   function openTrack(id, keepSel) {
-    if (!TRACK_BY[id]) return;
-    S.track = id;
+    const tid = TRACK_ALIAS[id] || id;
+    if (!TRACK_BY[tid]) return;
+    S.track = tid;
     if (S.lv < 1) S.lv = 1;
-    if (!keepSel && S.selected && trackOf(IX.byId.get(S.selected)) !== id) { S.selected = null; S.lv = 1; }
+    if (!keepSel && S.sel) {
+      const n = node(S.sel);
+      if (!n || trackOf(n) !== tid) { S.sel = null; S.lv = 1; }
+    }
+    if (S.sel) ensureOpenFor(S.sel);
     renderTrackbar();
     renderFilters();
     renderBands();
-    if (S.selected) applySelection(); else closeSheet();
+    if (S.sel) applySelection(); else closeSheet();
     render();
     scheduleEdges();
   }
@@ -400,7 +489,7 @@
     }
     const sum = A.printedFl
       ? "GROUND " + A.periodsGround + " per. · EXAMS " + A.examCount
-        + " · F/S " + A.printedFs + " · T-6A " + A.printedFl.total + " h"
+        + " · F/S " + A.printedFs + " · FLIGHTS " + A.printedFl.total + " h · " + A.sorties + " sorties"
         + (A.mmAir ? "  " + G.info + " " + A.mmAir : "")
       : (A.periodsGround + A.periodsExam) + " periods · EXAMS " + A.examCount + " · feeds the flying tracks";
     h += `<span class="fc-tb-sum">${esc(sum)}</span>`;
@@ -414,27 +503,59 @@
     for (const b of BANDS) {
       const on = !S.hiddenBands.has(b.id);
       h += `<button type="button" class="fc-fbtn${on ? "" : " is-off"}" data-band="${esc(b.id)}"
-        aria-pressed="${on}">${esc(b.label)}</button>`;
+        aria-pressed="${on}" style="--bc:${bandVar(b.id)}">${esc(b.label)}</button>`;
     }
     h += `<span class="fc-fgroup-h">SPOTLIGHT</span>`;
     const spots = [["solo", G.solo + " SOLO"], ["ckr", G.ckr + " Checkrides"], ["night", G.night + " Night"]];
     for (const [k, lab] of spots) {
       h += `<button type="button" class="fc-fbtn" data-spot="${k}" aria-pressed="${S.spot.has(k)}">${esc(lab)}</button>`;
     }
+    h += `<span class="fc-fgroup-h">SECTIONS</span>`
+       + `<button type="button" class="fc-fbtn" data-sections="all" title="Expand every Training Section (E)">Expand all</button>`
+       + `<button type="button" class="fc-fbtn" data-sections="none" title="Collapse every Training Section (X)">Collapse all</button>`;
     el("fc-filters").innerHTML = h;
   }
 
   const spotHit = (n) => {
-    if (S.spot.has("solo") && (n.solo_allowed || n.solo_required)) return true;
+    const solo = n.solo_allowed || n.solo_required || n.solo_candidate || n.first_solo;
+    if (S.spot.has("solo") && solo) return true;
     if (S.spot.has("ckr") && n.checkride) return true;
     if (S.spot.has("night") && n.night) return true;
     return false;
   };
 
-  /* Η ΣΕΙΡΑ ΤΟΥ fc.nodes ΕΙΝΑΙ Η ΣΕΙΡΑ ΤΩΝ TRAINING SECTIONS ΤΟΥ SYLLABUS —
-     ΚΑΜΙΑ ταξινόμηση. (Το I4701 φαίνεται 7ο στο instrument/air ενώ το flag του
-     I4601-03 λέει ότι στο flow chart πετιέται ανάμεσα σε I4602 και I4603· αυτό
-     το εξηγεί το flag στο side sheet — δεν «διορθώνεται» εδώ.)                  */
+  /* ── ΑΝΟΙΓΜΑ/ΚΛΕΙΣΙΜΟ TRAINING SECTION (accordion ανά ζώνη) ───────────────
+     Χειροκίνητο κλικ = accordion (κλείνει τα υπόλοιπα της ίδιας ζώνης).
+     Αυτόματο άνοιγμα από επιλογή = προσθετικό, ώστε τα δύο άκρα μιας ακμής
+     να φαίνονται ταυτόχρονα.                                                */
+  function openSection(gid, exclusive) {
+    const g = IX.byId.get(gid);
+    if (!g) return;
+    if (exclusive) {
+      const b = bandOf(g);
+      for (const other of Array.from(S.open)) {
+        const og = IX.byId.get(other);
+        if (og && og.id !== gid && bandOf(og) === b) S.open.delete(other);
+      }
+    }
+    S.open.add(gid);
+  }
+  function ensureOpenFor(uid) {
+    if (!isSortieUid(uid)) return;
+    const s = node(uid);
+    if (!s) return;
+    openSection(s.group, true);
+    const around = [].concat(SE.in.get(uid) || [], SE.out.get(uid) || []);
+    for (const m of around) {
+      const other = node(m.from === uid ? m.to : m.from);
+      if (!other || !isSortieUid(other.uid)) continue;
+      if (trackOf(other) !== S.track) continue;          // άλλη τροχιά → chip στο side sheet
+      openSection(other.group, false);
+    }
+  }
+
+  /* Η ΣΕΙΡΑ ΤΟΥ fc.groups ΕΙΝΑΙ Η ΣΕΙΡΑ ΤΩΝ TRAINING SECTIONS ΤΟΥ SYLLABUS
+     και η σειρά του fc.sorties η σειρά των εξόδων — ΚΑΜΙΑ ταξινόμηση.       */
   function renderBands() {
     const t = S.track, tk = TRACK_BY[t], A = agg(t);
     const host = el("fc-bands");
@@ -449,10 +570,15 @@
     for (const b of BANDS) {
       if (S.hiddenBands.has(b.id)) { vis[b.id] = []; continue; }
       vis[b.id] = A[b.id].slice();
-      for (const n of vis[b.id]) S.rendered.add(n.id);
+      for (const n of vis[b.id]) {
+        S.rendered.add("g:" + n.id);
+        if (b.id === "fs" || b.id === "flights") {
+          if (S.open.has(n.id)) for (const s of srtOf(n.id)) S.rendered.add(s.uid);
+        }
+      }
     }
-    const coreChips = (t !== "core" && !S.hiddenBands.has("ground")) ? nodesOf("core") : [];
-    for (const n of coreChips) S.rendered.add(n.id);
+    const coreChips = (t !== "shared" && !S.hiddenBands.has("ground")) ? nodesOf("shared") : [];
+    for (const n of coreChips) S.rendered.add("g:" + n.id);
 
     // 2) HTML
     let h = "";
@@ -460,7 +586,8 @@
       if (S.hiddenBands.has(b.id)) continue;
       const body = bandBody(t, b, A, vis, coreChips);
       if (!body.count) continue;
-      h += `<section class="fc-band" data-band="${esc(b.id)}" style="--bc:${b.c || tk.hex}"
+      h += `<section class="fc-band" data-band="${esc(b.id)}"
+              style="--bc:${bandVar(b.id)};--tk:${bandVar(b.id)};--tk-rgb:${bandRgb(b.id)}"
               aria-label="${esc(b.label + " — " + b.sub)}">
         <div class="fc-band-head">
           <span class="fc-band-g" aria-hidden="true">${b.g}</span>
@@ -483,10 +610,10 @@
   }
 
   function bandTot(b, A) {
-    if (b.id === "ground") return A.periodsGround + " periods";
-    if (b.id === "exam")   return A.examCount + " exams · ≥80%";
-    if (b.id === "fs")     return A.printedFs ? "F/S " + A.printedFs + (A.mmFs ? " " + G.info : "") : "—";
-    if (b.id === "air")    return A.printedFl ? "T-6A " + A.printedFl.total + " h" + (A.mmAir ? " " + G.info : "") : "—";
+    if (b.id === "ground")  return A.periodsGround + " periods";
+    if (b.id === "exams")   return A.examCount + " exams · ≥80%";
+    if (b.id === "fs")      return A.printedFs ? "F/S " + A.printedFs + (A.mmFs ? " " + G.info : "") : "—";
+    if (b.id === "flights") return A.printedFl ? "FLIGHTS " + A.printedFl.total + " h" + (A.mmAir ? " " + G.info : "") : "—";
     return "";
   }
 
@@ -503,10 +630,10 @@
     if (list.length) phase = list[0].phase;
 
     if (b.id === "ground") {
-      const main = t === "core" ? list.filter((n) => !isContinuous(n)) : list;
+      const main = t === "shared" ? list.filter((n) => !isContinuous(n)) : list;
       count += main.length;
       if (main.length) html += `<div class="fc-row">${chainRow(main, "is-ground")}</div>`;
-      if (t === "core") {
+      if (t === "shared") {
         const cont = list.filter(isContinuous);
         if (cont.length) {
           count += cont.length;
@@ -518,7 +645,7 @@
           <div class="fc-row">${coreChips.map((n) => card(n, "is-core" + (feedsTrack(n, t) ? " is-feed" : ""), "end")).join("")}</div></div>`;
       }
 
-    } else if (b.id === "exam") {
+    } else if (b.id === "exams") {
       count += list.length;
       if (list.length) html += `<div class="fc-row">${chainRow(list, "is-gate")}</div>`;
       if (A.inline.length) {
@@ -527,20 +654,19 @@
           <div class="fc-row">${A.inline.map(exChip).join("")}</div></div>`;
       }
 
-    } else if (b.id === "fs") {
+    } else {   // fs · flights → ΑΝΑΔΙΠΛΩΜΕΝΕΣ ΚΑΡΤΕΣ-ΓΟΝΕΙΣ
       count += list.length;
-      if (list.length) html += `<div class="fc-row">${chainRow(list, "")}</div>`;
-
-    } else if (b.id === "air") {
-      count += list.length;
-      if (list.length) html += `<div class="fc-row">${chainRow(list, (n) => (n.checkride ? "is-ckr" : ""))}</div>`;
+      if (list.length) {
+        html += `<div class="fc-row fc-secrow">${sectionRow(list)}</div>`;
+        html += `<p class="fc-cap">${esc(list.reduce((s, g) => s + srtOf(g.id).length, 0))} sorties in ${list.length} Training Sections — click a section to open its sortie chain.</p>`;
+      }
     }
     return { html: html, count: count, phase: phase };
   }
 
   function feedsTrack(coreNode, track) {
-    return (IX.out.get(coreNode.id) || []).some((e) => trackOf(IX.byId.get(e.to)) === track)
-        || (IX.in.get(coreNode.id) || []).some((e) => trackOf(IX.byId.get(e.from)) === track);
+    return (IX.out.get(coreNode.id) || []).some((e) => IX.byId.get(e.to) && trackOf(IX.byId.get(e.to)) === track)
+        || (IX.in.get(coreNode.id) || []).some((e) => IX.byId.get(e.from) && trackOf(IX.byId.get(e.from)) === track);
   }
 
   function chainRow(list, cls) {
@@ -549,7 +675,7 @@
       let link = "end";
       if (next) {
         const e = (IX.out.get(n.id) || []).find((x) => x.to === next.id);
-        if (e) { link = e.kind === "implied" ? "implied" : "seq"; S.chev.add(e.from + ">" + e.to); }
+        if (e) { link = e.kind === "implied" ? "implied" : "seq"; S.chev.add("g:" + e.from + ">g:" + e.to); }
         else link = "none";
       }
       return card(n, typeof cls === "function" ? cls(n) : (cls || ""), link);
@@ -563,11 +689,12 @@
     end: "end of band",
   };
 
+  /* ── ΚΑΡΤΑ TRAINING SECTION (groups) ── */
   function card(n, cls, link, noId) {
     const full = n.label + (n.name ? " — " + n.name : "");
     const fam = n.kind === "sim" && /familiariz/i.test(n.name || "");
     return `<button type="button" class="fc-card ${cls}${spotHit(n) ? " is-spot" : ""}"
-      ${noId ? "" : `id="fcn-${esc(n.id)}"`} data-n="${esc(n.id)}" data-link="${esc(link)}"
+      ${noId ? "" : `id="fcn-${esc(n.id)}"`} data-uid="g:${esc(n.id)}" data-n="${esc(n.id)}" data-link="${esc(link)}"
       aria-pressed="false" aria-label="${esc(full)}"
       title="${esc(full + " · " + (LINK_TITLE[link] || ""))}">
       <span class="fc-c-top"><span class="fc-c-code">${esc(shortLabel(n))}</span>${statusChips(n, fam)}</span>
@@ -577,8 +704,86 @@
     </button>`;
   }
 
-  /* §3.4 μακριά labels: «FF 101-108 · FF 190 · …» (109 χαρ. στο GT-FLYPRIN)
-     → «FF 101-108 +6». Το πλήρες κείμενο μένει σε title= και στο side sheet. */
+  /* ── ΣΕΙΡΑ ΑΠΟ TRAINING SECTIONS με σταδιακή αποκάλυψη ─────────────────────
+     Κλειστό section = μία κάρτα-γονέας. Ανοιχτό = η κάρτα ΚΑΙ, ΣΤΗ ΘΕΣΗ ΤΗΣ,
+     η αλυσίδα των sorties της (η .is-open πιάνει ολόκληρη τη γραμμή).        */
+  function sectionRow(list) {
+    return list.map((g, ix) => {
+      const next = list[ix + 1];
+      let link = "end";
+      if (next) {
+        const e = (IX.out.get(g.id) || []).find((x) => x.to === next.id);
+        if (e) { link = e.kind === "implied" ? "implied" : "seq"; S.chev.add("g:" + e.from + ">g:" + e.to); }
+        else link = "none";
+      }
+      return sectionCard(g, link);
+    }).join("");
+  }
+
+  function sectionCard(g, link) {
+    const open = S.open.has(g.id);
+    const list = srtOf(g.id);
+    const full = g.label + (g.name ? " — " + g.name : "");
+    const cls = (g.checkride ? "is-ckr " : "") + "is-sec" + (spotHit(g) ? " is-spot" : "");
+    const head = `<button type="button" class="fc-card ${cls}" id="fcn-${esc(g.id)}"
+        data-uid="g:${esc(g.id)}" data-n="${esc(g.id)}" data-sec="${esc(g.id)}" data-link="${esc(link)}"
+        aria-expanded="${open}" aria-pressed="false" aria-label="${esc(full + " — " + list.length + " sorties")}"
+        title="${esc(full + " · " + (open ? "click to collapse" : "click to open its sortie chain"))}">
+      <span class="fc-c-top">
+        <span class="fc-sec-caret" aria-hidden="true">${open ? "▾" : "▸"}</span>
+        <span class="fc-c-code">${esc(shortLabel(g))}</span>${statusChips(g, false)}
+      </span>
+      <span class="fc-c-name">${esc(g.name || "")}</span>
+      <span class="fc-c-m">${metrics(g)}</span>
+      ${feedChips(g)}
+    </button>`;
+    const body = open
+      ? `<div class="fc-sec-body"><div class="fc-sec-chain">${srtChain(g, list)}</div></div>`
+      : "";
+    return `<div class="fc-sec${open ? " is-open" : ""}" data-secwrap="${esc(g.id)}">${head}${body}</div>`;
+  }
+
+  /* ── ΑΛΥΣΙΔΑ SORTIES ── */
+  function srtChain(g, list) {
+    if (!list.length) return `<span class="fc-cap">No sortie recorded for this section.</span>`;
+    let h = "";
+    list.forEach((s, ix) => {
+      h += srtChip(s);
+      const next = list[ix + 1];
+      if (!next) return;
+      const m = (SE.out.get(s.uid) || []).find((x) => x.to === next.uid);
+      if (m) {
+        S.chev.add(s.uid + ">" + next.uid);
+        h += `<span class="fc-srt-link" aria-hidden="true" title="${esc(m.kinds.join(" · "))}">→</span>`;
+      } else {
+        h += `<span class="fc-srt-link is-none" aria-hidden="true" title="no arrow in the source">·</span>`;
+      }
+    });
+    return h;
+  }
+
+  function srtChip(s) {
+    const bits = [];
+    if (s.checkride) bits.push(`<span class="fc-b fc-b-ckr">${G.ckr}</span>`);
+    if (s.first_solo) bits.push(`<span class="fc-b fc-b-solo-req">${G.solo} 1st</span>`);
+    else if (s.solo_candidate) bits.push(`<span class="fc-b fc-b-solo">${G.solo}</span>`);
+    if (s.night) bits.push(`<span class="fc-b fc-b-night">${G.night}</span>`);
+    const cls = "fc-srt"
+      + (s.checkride ? " is-ckr" : "")
+      + (s.first_solo ? " is-1st" : (s.solo_candidate ? " is-cand" : ""))
+      + (s.night ? " is-night" : "")
+      + (spotHit(s) ? " is-spot" : "");
+    const ttl = srtLabel(s) + " — " + (s.name || "") + " · section " + s.group
+      + (s.hours != null ? " · " + fmt(s.hours) + " h" : "");
+    return `<button type="button" class="${cls}" id="fcs-${esc(s.id)}" data-uid="${esc(s.uid)}" data-s="${esc(s.id)}"
+      aria-pressed="false" title="${esc(ttl)}" aria-label="${esc(ttl)}">
+      <span class="fc-srt-code">${esc(srtLabel(s))}</span>
+      ${bits.length ? `<span class="fc-srt-b">${bits.join("")}</span>` : ""}
+      ${s.hours != null ? `<span class="fc-srt-h">${esc(fmt(s.hours))} h</span>` : ""}
+    </button>`;
+  }
+
+  /* §3.4 μακριά labels: «FF 101-108 · FF 190 · …» → «FF 101-108 +6». */
   function shortLabel(n) {
     const parts = String(n.label || "").split(" · ");
     return parts.length > 1 ? parts[0] + " +" + (parts.length - 1) : n.label;
@@ -614,12 +819,11 @@
   }
 
   /* §3.5 ΤΣΙΠΑΚΙΑ ΑΝΑΦΟΡΑΣ — ακμή με το άλλο άκρο εκτός DOM ΔΕΝ γίνεται ποτέ
-     γραμμή. Είναι το ιδίωμα της ίδιας της πηγής: «[C 5201] is repeated as a
-     dashed reference box at the head of the FORMATION flow».                  */
+     γραμμή. Είναι το ιδίωμα της ίδιας της πηγής (dashed reference box).      */
   function feedChips(n) {
     const bits = [];
-    for (const e of (IX.in.get(n.id) || [])) if (!S.rendered.has(e.from)) bits.push(refChip(e.from, "in", e));
-    for (const e of (IX.out.get(n.id) || [])) if (!S.rendered.has(e.to)) bits.push(refChip(e.to, "out", e));
+    for (const e of (IX.in.get(n.id) || [])) if (!S.rendered.has("g:" + e.from)) bits.push(refChip(e.from, "in", e));
+    for (const e of (IX.out.get(n.id) || [])) if (!S.rendered.has("g:" + e.to)) bits.push(refChip(e.to, "out", e));
     return bits.length ? `<span class="fc-c-feeds">${bits.join("")}</span>` : "";
   }
   function refChip(otherId, dir, e) {
@@ -627,58 +831,111 @@
     if (!o) return "";
     const tk = TRACK_BY[trackOf(o)];
     const txt = dir === "in" ? G.in + "[" + shortLabel(o) + "]" : "[" + shortLabel(o) + "]" + G.out;
-    return `<span class="fc-feed" role="button" tabindex="-1" data-jump="${esc(otherId)}"
+    return `<span class="fc-feed" role="button" tabindex="-1" data-jump="g:${esc(otherId)}"
       style="--fk:${tk.hex}" title="${esc((e.note || e.kind) + " · " + tk.label)}">${esc(txt)}</span>`;
   }
 
   function exChip(x) {
     const e = x.ex;
     const gates = (e.gates || []).length ? " ▸ gates " + e.gates.join(", ") : "";
-    return `<button type="button" class="fc-exchip" data-n="${esc(x.node)}" data-exam="${esc(e.code)}"
+    return `<button type="button" class="fc-exchip" data-jump="g:${esc(x.node)}" data-exam="${esc(e.code)}"
       title="${esc(e.name || "")}" aria-label="${esc(e.code + " — " + (e.name || ""))}">
       <b>${esc(e.code)}</b> ▸ ${esc(e.periods + " per.")}${e.periods_foreign != null ? esc(" (" + e.periods_foreign + " foreign)") : ""}${esc(gates)}
       <span aria-hidden="true">↑</span></button>`;
   }
 
-  /* ══════════════════════ L2 — ΣΤΑΘΜΟΣ ══════════════════════ */
-  function select(id) {
-    const n = IX.byId.get(id);
+  /* ══════════════════════ L2 — ΕΠΙΛΟΓΗ ══════════════════════ */
+  function select(uid) {
+    const n = node(uid);
     if (!n) return;
     const t = trackOf(n);
     if (S.poster) { S.poster = false; el("fc-poster").setAttribute("aria-pressed", "false"); }
-    if (S.track !== t || !S.rendered.has(id)) { S.selected = id; openTrack(t, true); return; }
-    S.selected = id;
+    const needsOpen = isSortieUid(uid) && !S.rendered.has(uid);
+    if (S.track !== t || needsOpen || !S.rendered.has(uid)) {
+      S.sel = uid;
+      const b = bandOf(n);
+      if (S.hiddenBands.has(b)) S.hiddenBands.delete(b);
+      ensureOpenFor(uid);
+      openTrack(t, true);
+      return;
+    }
+    S.sel = uid;
     S.lv = 2;
+    ensureOpenFor(uid);
+    if (isSortieUid(uid)) renderBands();      // τα auto-open sections χρειάζονται re-render
     applySelection();
     render();
   }
 
   /* Μοναδική πηγή αλήθειας για το επίπεδο: όποιος δρόμος κι αν οδήγησε εδώ
-     (κάρτα, πύλη ράχης, αναζήτηση, deep link) η ύπαρξη επιλογής ΕΙΝΑΙ το L2.
-     Χωρίς αυτό το drawNow() θα έκοβε τις ακμές στα jumps (γκέτο S.lv >= 2). */
+     (κάρτα, chip, πύλη ράχης, αναζήτηση, deep link) η ύπαρξη επιλογής = L2. */
   function applySelection() {
-    const id = S.selected;
+    const uid = S.sel;
+    const n = node(uid);
+    if (!n) { closeSheet(); return; }
     S.lv = 2;
-    const conn = new Set([id]);
-    for (const e of (IX.out.get(id) || [])) conn.add(e.to);
-    for (const e of (IX.in.get(id) || [])) conn.add(e.from);
-    const cards = el("fc-bands").querySelectorAll(".fc-card");
-    for (const c of cards) {
-      const nid = c.dataset.n;
-      const sel = nid === id;
+    const conn = new Set([uid]);
+    if (isSortieUid(uid)) {
+      for (const m of (SE.out.get(uid) || [])) conn.add(m.to);
+      for (const m of (SE.in.get(uid) || [])) conn.add(m.from);
+      conn.add("g:" + n.group);
+    } else {
+      for (const e of (IX.out.get(n.id) || [])) conn.add("g:" + e.to);
+      for (const e of (IX.in.get(n.id) || [])) conn.add("g:" + e.from);
+      for (const s of srtOf(n.id)) conn.add(s.uid);
+    }
+    const items = el("fc-bands").querySelectorAll("[data-uid]");
+    for (const c of items) {
+      const u = c.dataset.uid;
+      const sel = u === uid;
       c.classList.toggle("fc-sel", sel);
-      c.classList.toggle("fc-dim", !conn.has(nid));
+      c.classList.toggle("fc-dim", !conn.has(u));
       c.setAttribute("aria-pressed", sel ? "true" : "false");
     }
-    renderDetail(id);
+    decorateChain(uid);
+    renderDetail(uid);
     drawNow();
   }
 
+  /* Καθαρίζει ΠΑΝΤΑ πρώτα τα overlays της αλυσίδας, μετά (α) ανάβει τους
+     συνδέσμους δίπλα στην επιλογή — η διπλανή ακμή τη λέει ήδη το «→», δεν
+     ξανασχεδιάζεται ως γραμμή — και (β) βάζει τα τσιπάκια αναφοράς.         */
+  function decorateChain(uid) {
+    const host = el("fc-bands");
+    for (const o of host.querySelectorAll(".fc-srt-link.is-on")) o.classList.remove("is-on");
+    for (const o of host.querySelectorAll(".fc-srt-refs")) o.parentNode.removeChild(o);
+    if (!isSortieUid(uid)) return;
+    const c = elOf(uid);
+    if (!c) return;
+    for (const sib of [c.previousElementSibling, c.nextElementSibling]) {
+      if (sib && sib.classList.contains("fc-srt-link")) sib.classList.add("is-on");
+    }
+    const bits = [];
+    for (const m of (SE.in.get(uid) || [])) if (!S.rendered.has(m.from)) bits.push(srtRefChip(m.from, "in", m));
+    for (const m of (SE.out.get(uid) || [])) if (!S.rendered.has(m.to)) bits.push(srtRefChip(m.to, "out", m));
+    if (!bits.length) return;
+    const span = document.createElement("span");
+    span.className = "fc-srt-refs";
+    span.innerHTML = bits.join("");
+    c.insertAdjacentElement("afterend", span);
+  }
+  function srtRefChip(otherUid, dir, m) {
+    const o = node(otherUid);
+    if (!o) return "";
+    const tk = TRACK_BY[trackOf(o)];
+    const lb = labelOf(o);
+    const txt = dir === "in" ? G.in + "[" + lb + "]" : "[" + lb + "]" + G.out;
+    return `<span class="fc-feed" role="button" tabindex="-1" data-jump="${esc(otherUid)}"
+      style="--fk:${tk.hex}" title="${esc(m.kinds.join(" + ") + " · " + tk.label + " · " + (BAND_BY[bandOf(o)] || { label: "" }).label)}">${esc(txt)}</span>`;
+  }
+
   function clearSelection() {
-    S.selected = null;
+    S.sel = null;
     if (S.lv > 1) S.lv = 1;
-    const cards = el("fc-bands").querySelectorAll(".fc-card");
-    for (const c of cards) { c.classList.remove("fc-sel", "fc-dim"); c.setAttribute("aria-pressed", "false"); }
+    const host = el("fc-bands");
+    for (const c of host.querySelectorAll("[data-uid]")) { c.classList.remove("fc-sel", "fc-dim"); c.setAttribute("aria-pressed", "false"); }
+    for (const o of host.querySelectorAll(".fc-srt-link.is-on")) o.classList.remove("is-on");
+    for (const o of host.querySelectorAll(".fc-srt-refs")) o.parentNode.removeChild(o);
     clearSvg();
     closeSheet();
     render();
@@ -691,17 +948,14 @@
   }
 
   /* ── ΑΚΜΕΣ ──────────────────────────────────────────────────────────────
-     ΑΠΑΓΟΡΕΥΕΤΑΙ transform σε οποιονδήποτε πρόγονο του scroller (θα χαλούσε
-     τα getBoundingClientRect μαθηματικά) — γι' αυτό η επιλογή είναι
-     outline+box-shadow και ΠΟΤΕ scale.
-     Σχεδιάζονται ΜΟΝΟ ακμές με ΚΑΙ ΤΑ ΔΥΟ άκρα στο DOM που ΔΕΝ τις λέει ήδη
-     ένα chevron → πρακτικά ≤5 κοντές γραμμές.                                */
+     ΑΠΑΓΟΡΕΥΕΤΑΙ transform σε πρόγονο του scroller (χαλάει τα rect μαθηματικά)
+     → η επιλογή είναι outline+box-shadow και ΠΟΤΕ scale.
+     Σχεδιάζονται ΜΟΝΟ ακμές του επιλεγμένου κόμβου, με ΚΑΙ ΤΑ ΔΥΟ άκρα στο
+     DOM, που ΔΕΝ τις λέει ήδη ένα chevron.                                  */
   let rafId = 0;
   function drawNow() {
-    if (S.selected && S.lv >= 2 && !S.poster) drawEdges(S.selected); else clearSvg();
+    if (S.sel && S.lv >= 2 && !S.poster) drawEdges(S.sel); else clearSvg();
   }
-  /* rAF throttle για scroll / resize / φίλτρα. Οι αλλαγές κατάστασης (επιλογή,
-     άνοιγμα-κλείσιμο sheet) σχεδιάζουν ΑΜΕΣΑ: το rAF δεν χτυπά σε κρυφό tab. */
   function scheduleEdges() {
     if (rafId) return;
     const raf = window.requestAnimationFrame || ((f) => setTimeout(f, 16));
@@ -716,14 +970,38 @@
     return e;
   }
 
-  function drawEdges(id) {
+  /* Οι ακμές του επιλεγμένου κόμβου, ενωμένες σε ΕΝΑ βέλος ανά (from,to). */
+  function edgesAround(uid) {
+    if (isSortieUid(uid)) {
+      return [].concat(SE.in.get(uid) || [], SE.out.get(uid) || []);
+    }
+    const id = String(uid).slice(2);
+    const seen = new Map(), out = [];
+    const add = (e) => {
+      const key = "g:" + e.from + ">g:" + e.to;
+      let m = seen.get(key);
+      if (!m) {
+        m = { key: key, from: "g:" + e.from, to: "g:" + e.to, kinds: [], ev: [] };
+        seen.set(key, m); out.push(m);
+      }
+      if (m.kinds.indexOf(e.kind) < 0) m.kinds.push(e.kind);
+      m.ev.push(e);
+    };
+    for (const e of (IX.in.get(id) || [])) add(e);
+    for (const e of (IX.out.get(id) || [])) add(e);
+    return out;
+  }
+
+  function drawEdges(uid) {
     const svg = el("fc-svg"), sc = el("fc-rail-scroll");
     if (!svg || !sc) return;
     clearSvg();
     svg.setAttribute("width", sc.clientWidth);
     svg.setAttribute("height", sc.scrollHeight);
-    const tk = TRACK_BY[S.track];
-    const IN_C = "#ffb454", OUT_C = tk.hex;
+    const n = node(uid);
+    if (!n) return;
+    const OUT_C = cssVar("--fcb-" + (bandOf(n) || "flights"));
+    const IN_C = cssVar("--fcb-exams");
 
     const defs = mk("defs", {});
     for (const [mid, col] of [["fc-arr-in", IN_C], ["fc-arr-out", OUT_C]]) {
@@ -734,8 +1012,8 @@
     svg.appendChild(defs);
 
     const sr = sc.getBoundingClientRect();
-    const box = (nid) => {
-      const c = el("fcn-" + nid);
+    const box = (u) => {
+      const c = elOf(u);
       if (!c) return null;
       const r = c.getBoundingClientRect();
       return {
@@ -748,21 +1026,20 @@
 
     // Το fade-in το κάνει CSS keyframe (@keyframes fcEdge) — κανένα δεύτερο tick.
     const g = mk("g", { opacity: "0.9" });
-    const edges = [].concat(IX.in.get(id) || [], IX.out.get(id) || []);
-    for (const e of edges) {
-      if (S.chev.has(e.from + ">" + e.to)) continue;             // το λέει ήδη το chevron
-      if (!S.rendered.has(e.from) || !S.rendered.has(e.to)) continue;  // → τσιπάκι αναφοράς
-      const a = box(e.from), b = box(e.to);
+    for (const m of edgesAround(uid)) {
+      if (S.chev.has(m.from + ">" + m.to)) continue;              // το λέει ήδη το chevron
+      if (!S.rendered.has(m.from) || !S.rendered.has(m.to)) continue;   // → τσιπάκι αναφοράς
+      const a = box(m.from), b = box(m.to);
       if (!a || !b) continue;
-      const outgoing = e.from === id;
+      const outgoing = m.from === uid;
       let d;
       if (b.t >= a.b - 6) {                       // b κάτω από το a
         const y1 = a.b, y2 = b.t, dd = Math.max(28, (y2 - y1) / 2);
         d = `M ${a.cx} ${y1} C ${a.cx} ${y1 + dd}, ${b.cx} ${y2 - dd}, ${b.cx} ${y2}`;
-      } else if (a.t >= b.b - 6) {                // b πάνω από το a (I4501-02 → GT-CO109)
+      } else if (a.t >= b.b - 6) {                // b πάνω από το a
         const y1 = a.t, y2 = b.b, dd = Math.max(28, (y1 - y2) / 2), off = 24;
         d = `M ${a.cx} ${y1} C ${a.cx - off} ${y1 - dd}, ${b.cx - off} ${y2 + dd}, ${b.cx} ${y2}`;
-      } else if (b.l >= a.r - 6) {                // δίπλα-δεξιά (GT-FLYPRIN → GT-AERO-CRM)
+      } else if (b.l >= a.r - 6) {                // δίπλα-δεξιά
         const x1 = a.r, x2 = b.l, dd = Math.max(24, (x2 - x1) / 2);
         d = `M ${x1} ${a.cy} C ${x1 + dd} ${a.cy}, ${x2 - dd} ${b.cy}, ${x2} ${b.cy}`;
       } else {                                    // δίπλα-αριστερά ή επικάλυψη
@@ -774,24 +1051,151 @@
         stroke: outgoing ? OUT_C : IN_C,
         "marker-end": "url(#" + (outgoing ? "fc-arr-out" : "fc-arr-in") + ")",
       });
-      if (EDGE_STYLE[e.kind]) p.setAttribute("stroke-dasharray", EDGE_STYLE[e.kind]);
+      const st = edgeStyle(m);
+      if (DASH[st]) p.setAttribute("stroke-dasharray", DASH[st]);
       const ttl = mk("title", {});
-      ttl.textContent = (IX.byId.get(e.from).label) + " → " + (IX.byId.get(e.to).label)
-        + " · " + e.kind + (e.note ? " · " + e.note : "");
+      const A = node(m.from), B = node(m.to);
+      ttl.textContent = (A ? labelOf(A) : m.from) + " → " + (B ? labelOf(B) : m.to)
+        + " · " + m.kinds.join(" + ") + " (" + st + ")";
       p.appendChild(ttl);
       g.appendChild(p);
     }
     svg.appendChild(g);
   }
 
-  /* ── SIDE SHEET (§4.3, 11 τμήματα) ── */
-  function renderDetail(id) {
-    const n = IX.byId.get(id), box = el("fc-detail"), tk = TRACK_BY[trackOf(n)];
-    const out = IX.out.get(id) || [], inn = IX.in.get(id) || [];
-    box.style.setProperty("--tk", tk.hex);
-    box.style.setProperty("--tk-rgb", tk.rgb);
+  /* ══════════════════════ SIDE SHEET ══════════════════════ */
+  function renderDetail(uid) {
+    if (isSortieUid(uid)) renderSortieDetail(node(uid));
+    else renderGroupDetail(node(uid));
+    el("fc-detail").classList.remove("hidden");
+    el("fc-l1").classList.add("has-sheet");
+  }
 
-    // 3 · VITALS GRID
+  function sheetTint(n) {
+    const box = el("fc-detail");
+    const b = bandOf(n);
+    box.style.setProperty("--tk", bandVar(b));
+    box.style.setProperty("--tk-rgb", bandRgb(b));
+  }
+
+  /* ── ΕΞΟΔΟΣ (sortie) ── */
+  function renderSortieDetail(s) {
+    if (!s) return;
+    const box = el("fc-detail");
+    const g = IX.byId.get(s.group);
+    const tk = TRACK_BY[trackOf(s)];
+    sheetTint(s);
+
+    const badges = [];
+    if (s.checkride) badges.push(`<span class="fc-b fc-b-ckr">${G.ckr} CHECKRIDE</span>`);
+    if (s.first_solo) badges.push(`<span class="fc-b fc-b-solo-req">${G.solo} 1st SOLO</span>`);
+    else if (s.solo_candidate) badges.push(`<span class="fc-b fc-b-solo">${G.solo} SOLO CANDIDATE</span>`);
+    if (s.night) badges.push(`<span class="fc-b fc-b-night">${G.night} NIGHT</span>`);
+
+    const vg = [];
+    const put = (k, v) => vg.push(`<div class="fc-vg"><span>${esc(k)}</span> ${esc(v == null ? "—" : String(v))}</div>`);
+    put("HOURS", s.hours != null ? fmt(s.hours) : null);
+    put("BAND", (BAND_BY[bandOf(s)] || {}).label);
+    put("SECTION", s.group);
+    put("PRINTED", s.section_verbatim);
+    put("TRACK", tk.label);
+    put("PAGE", s.page_pdf != null ? "PDF p." + s.page_pdf : null);
+
+    const chain = srtOf(s.group);
+    const ci = chain.findIndex((x) => x.id === s.id);
+    const prev = ci > 0 ? chain[ci - 1] : null;
+    const next = ci >= 0 && ci < chain.length - 1 ? chain[ci + 1] : null;
+
+    const inn = SE.in.get(s.uid) || [], out = SE.out.get(s.uid) || [];
+    box.innerHTML = `
+      <div class="fc-d-head">
+        <span class="fc-d-code">${esc(srtLabel(s))}</span>
+        <span class="badge">sortie</span>
+        <span class="badge" style="color:${tk.hex};border-color:${tk.hex}">${esc(tk.label)}</span>
+        <button type="button" class="copy-btn" id="fc-close" aria-label="Close">✕</button>
+      </div>
+      <p class="obs-text">${esc(s.name || "")}</p>
+      ${badges.length ? `<div class="fc-d-badges">${badges.join("")}</div>` : ""}
+      <div class="fc-vitals-grid">${vg.join("")}</div>
+      ${s.hours_basis ? `<p class="fc-cap">${esc(s.hours_basis)}</p>` : ""}
+      ${g ? `<h4 class="fc-h4">TRAINING SECTION</h4>
+        <p class="fc-ul"><button type="button" class="req-link fc-jump" data-jump="g:${esc(g.id)}">${esc(g.label)}</button>
+        <span class="hint"> ${esc(g.name || "")}</span></p>
+        <p class="fc-cap">${esc(metricsPlain(g))}</p>` : ""}
+      ${edgeList(inn, "in")}
+      ${edgeList(out, "out")}
+      ${verbatimBlock(inn)}
+      <div class="fc-step">
+        <button type="button" class="req-link" data-jump="${prev ? esc(prev.uid) : ""}" ${prev ? "" : "disabled"}>◀ PREV</button>
+        <button type="button" class="req-link" data-copy="${esc(s.id)}">COPY ${esc(s.id)}</button>
+        <button type="button" class="req-link" data-jump="${next ? esc(next.uid) : ""}" ${next ? "" : "disabled"}>NEXT ▶</button>
+      </div>
+      ${s.note ? `<details><summary>${G.warn} DATA NOTE</summary><p class="verbatim">${esc(s.note)}</p></details>` : ""}
+      ${(s.also_printed_in || []).length ? `<details><summary>ALSO PRINTED IN (${s.also_printed_in.length})</summary>
+        ${s.also_printed_in.map((a) => `<p class="verbatim">${esc(a.file || "")}${a.page_pdf ? " · PDF p." + esc(String(a.page_pdf)) : ""}${a.role ? " · " + esc(a.role) : ""}${a.cross_category ? " · " + esc(a.cross_category) : ""}</p>`).join("")}</details>` : ""}
+      <p class="req-src">📄 ${esc((s.source_files || []).join(" · "))}${s.page_pdf ? " · PDF p." + esc(String(s.page_pdf)) : ""}</p>`;
+  }
+
+  function metricsPlain(n) {
+    const bits = [];
+    if (n.sorties_total != null) bits.push(n.sorties_total + (n.sorties_total === 1 ? " sortie" : " sorties"));
+    if (n.hours_total != null) bits.push(fmt(n.hours_total) + " h");
+    if (n.hours_per_sortie != null) bits.push(fmt(n.hours_per_sortie) + " h per sortie");
+    if (n.device) bits.push(n.device);
+    return bits.join(" · ");
+  }
+
+  /* ΠΡΙΝ / ΜΕΤΑ — μία γραμμή ανά ΕΝΩΜΕΝΗ ακμή, με τα kinds της. */
+  function edgeList(list, dir) {
+    if (!list.length) return "";
+    const rows = list.map((m) => {
+      const otherUid = dir === "out" ? m.to : m.from;
+      const o = node(otherUid);
+      if (!o) return "";
+      const ot = TRACK_BY[trackOf(o)];
+      const off = !S.rendered.has(otherUid);
+      return `<li><span class="fc-dot" style="background:${ot.hex}" aria-hidden="true"></span>
+        <button type="button" class="req-link fc-jump" data-jump="${esc(otherUid)}">${esc(labelOf(o))}</button>
+        <span class="hint">${esc(m.kinds.join(" + "))} · ${esc(edgeStyle(m))}${off ? " · " + esc(ot.label) : ""}</span></li>`;
+    }).join("");
+    return `<h4 class="fc-h4">${dir === "in" ? "← BEFORE" : "AFTER →"}</h4><ul class="fc-ul">${rows}</ul>`;
+  }
+
+  /* ΠΗΓΕΣ / VERBATIM των ρητών prerequisites (prereq · feed · before).
+     Μία γραμμή ανά (source, verbatim): η ίδια πρόταση συχνά καλύπτει δύο άκρα
+     («… are I4501 and I3601 …») — απαριθμούνται όλα μαζί.                    */
+  function verbatimBlock(list) {
+    const bag = new Map();
+    for (const m of list) {
+      for (const e of m.ev) {
+        if (!e.verbatim && !e.source) continue;
+        const k = (e.source || "") + "|" + (e.verbatim || "");
+        let v = bag.get(k);
+        if (!v) { v = { e: e, froms: [], kinds: [] }; bag.set(k, v); }
+        const from = node(e.from_ref);
+        const lb = from ? labelOf(from) : e.from_ref;
+        if (v.froms.indexOf(lb) < 0) v.froms.push(lb);
+        if (v.kinds.indexOf(e.kind) < 0) v.kinds.push(e.kind);
+      }
+    }
+    if (!bag.size) return "";
+    const rows = [];
+    bag.forEach((v) => {
+      rows.push(`<div class="fc-vb">
+        <p class="verbatim">“${esc(v.e.verbatim || "")}”</p>
+        <p class="req-src">📄 ${esc(v.e.source || "")} · ${esc(v.froms.join(" · "))} · ${esc(v.kinds.join(" + "))}</p>
+      </div>`);
+    });
+    return `<h4 class="fc-h4">PREREQUISITE SOURCES</h4>${rows.join("")}`;
+  }
+
+  /* ── TRAINING SECTION (group) — η v1 συμπεριφορά ── */
+  function renderGroupDetail(n) {
+    if (!n) return;
+    const box = el("fc-detail"), tk = TRACK_BY[trackOf(n)];
+    const out = IX.out.get(n.id) || [], inn = IX.in.get(n.id) || [];
+    sheetTint(n);
+
     const vg = [];
     const put = (k, v) => vg.push(`<div class="fc-vg"><span>${esc(k)}</span> ${esc(v == null ? "—" : String(v))}</div>`);
     if (n.kind === "theory" || n.kind === "ground_exam") {
@@ -809,19 +1213,17 @@
       if (n.means_of_training) put("MEANS", n.means_of_training);
     }
 
-    // 5 · ΕΞΕΤΑΣΕΙΣ (εντός block)
     let examTbl = "";
     if ((n.exams || []).length) {
       examTbl = `<h4 class="fc-h4" id="fc-d-exams">${G.exam} IN-BLOCK EXAMS</h4><div class="fc-scroll-x">
         <table class="fc-tbl"><thead><tr><th>Code</th><th>Name</th><th>Per.</th><th>Foreign</th><th>Gates</th></tr></thead><tbody>
         ${n.exams.map((x) => `<tr><td class="num">${esc(x.code)}</td><td>${esc(x.name || "")}</td>
-          <td class="num">${esc(String(x.periods ?? "—"))}</td>
+          <td class="num">${esc(String(x.periods == null ? "—" : x.periods))}</td>
           <td class="num">${esc(x.periods_foreign == null ? "—" : String(x.periods_foreign))}</td>
           <td>${esc((x.gates || []).join(", "))}</td></tr>`).join("")}
         </tbody></table></div>`;
     }
 
-    // 6 · CONDITIONAL (foreign SPs)
     let cond = "";
     if (n.conditional) {
       const extra = Object.keys(n.conditional).filter((k) => k !== "reason")
@@ -830,22 +1232,20 @@
         ${extra ? `<div class="kv-row">${extra}</div>` : ""}`;
     }
 
-    // 7 · ΠΡΙΝ / ΜΕΤΑ
     const li = (e, dir) => {
       const nid = dir === "out" ? e.to : e.from;
       const o = IX.byId.get(nid);
+      if (!o) return "";
       const ot = TRACK_BY[trackOf(o)];
       return `<li><span class="fc-dot" style="background:${ot.hex}" aria-hidden="true"></span>
-        <button type="button" class="req-link fc-jump" data-jump="${esc(nid)}">${esc(o.label)}</button>
+        <button type="button" class="req-link fc-jump" data-jump="g:${esc(nid)}">${esc(o.label)}</button>
         <span class="hint">${esc(e.kind)}${e.note ? " · " + esc(e.note) : ""}</span></li>`;
     };
 
-    // 8 · STEPPER μέσα στην αλυσίδα του κελιού
-    const chain = fc.nodes.filter((x) => cellOf(x.id) === cellOf(id));
-    const ci = chain.findIndex((x) => x.id === id);
+    const chain = fc.nodes.filter((x) => cellOf(x.id) === cellOf(n.id));
+    const ci = chain.findIndex((x) => x.id === n.id);
     const prev = ci > 0 ? chain[ci - 1] : null, next = ci >= 0 && ci < chain.length - 1 ? chain[ci + 1] : null;
 
-    // 10 · duration verbatim / editorial summary
     let dur = "";
     if (n.duration_verbatim) dur = `<p class="req-src">“${esc(n.duration_verbatim)}”</p>`;
     else if (n.duration_summary) {
@@ -870,43 +1270,39 @@
       ${inn.length ? `<h4 class="fc-h4">← BEFORE</h4><ul class="fc-ul">${inn.map((e) => li(e, "in")).join("")}</ul>` : ""}
       ${out.length ? `<h4 class="fc-h4">AFTER →</h4><ul class="fc-ul">${out.map((e) => li(e, "out")).join("")}</ul>` : ""}
       <div class="fc-step">
-        <button type="button" class="req-link" data-jump="${prev ? esc(prev.id) : ""}" ${prev ? "" : "disabled"}>◀ PREV</button>
-        <button type="button" class="req-link" data-jump="${next ? esc(next.id) : ""}" ${next ? "" : "disabled"}>NEXT ▶</button>
+        <button type="button" class="req-link" data-jump="${prev ? "g:" + esc(prev.id) : ""}" ${prev ? "" : "disabled"}>◀ PREV</button>
+        <button type="button" class="req-link" data-jump="${next ? "g:" + esc(next.id) : ""}" ${next ? "" : "disabled"}>NEXT ▶</button>
       </div>
       ${(n.flags || []).length ? `<details><summary>${G.warn} DATA NOTES (${n.flags.length})</summary>
         ${n.flags.map((f) => `<p class="verbatim">${esc(f)}</p>`).join("")}</details>` : ""}
       ${dur}
       ${n.source ? `<p class="req-src">📄 ${esc(n.source.file || "")}${n.source.page_pdf ? " · p." + esc(String(n.source.page_pdf)) : ""}${n.source.ref ? " · " + esc(n.source.ref) : ""}</p>` : ""}`;
-
-    box.classList.remove("hidden");
-    el("fc-l1").classList.add("has-sheet");
   }
 
-  /* ── L3 — ΕΞΟΔΟΙ ────────────────────────────────────────────────────────
-     ΚΡΙΣΙΜΟ: sorties_solo ≠ solo_candidate_sorties.length. Οι υποψήφιες είναι
-     15 σε όλο το στάδιο, οι πραγματικές SOLO 8. Ισοπέδωση θα έδειχνε ~15 solo
-     και θα παραβίαζε το §9.c (ελάχ. 6,0 SOLO h) → ΔΥΟ διακριτά glyphs.        */
+  /* ── ΕΞΟΔΟΙ ΜΕΣΑ ΣΤΟ SHEET ΤΟΥ SECTION ───────────────────────────────────
+     ΚΡΙΣΙΜΟ: sorties_solo ≠ solo candidates. Οι υποψήφιες είναι 17 σε όλο το
+     στάδιο, οι πραγματικές SOLO 8 → ΔΥΟ διακριτά glyphs, ποτέ ισοπέδωση.    */
   function sortieBlock(n) {
-    const list = n.sorties || [];
+    const list = srtOf(n.id);
     if (!list.length) return "";
-    const cand = n.solo_candidate_sorties || [];
-    const chips = list.map((code) => {
+    const chips = list.map((s) => {
       let cls = "fc-sortie", gl = "";
-      if (cand.indexOf(code) >= 0 && n.solo_required) { cls += " is-1st"; gl = G.solo + " "; }
-      else if (cand.indexOf(code) >= 0) { cls += " is-cand"; gl = G.solo + " "; }
-      else if (n.checkride) { cls += " is-ckr"; gl = G.ckr + " "; }
-      else if (n.night) { cls += " is-night"; gl = G.night + " "; }
-      return `<button type="button" class="${cls}" data-copy="${esc(code)}"
-        title="copy code">${esc(gl + code)}</button>`;
+      if (s.first_solo) { cls += " is-1st"; gl = G.solo + " "; }
+      else if (s.solo_candidate) { cls += " is-cand"; gl = G.solo + " "; }
+      else if (s.checkride) { cls += " is-ckr"; gl = G.ckr + " "; }
+      else if (s.night) { cls += " is-night"; gl = G.night + " "; }
+      return `<button type="button" class="${cls}" data-jump="${esc(s.uid)}"
+        title="${esc(s.name || "")}">${esc(gl + srtLabel(s))}</button>`;
     }).join("");
+    const cand = list.filter((s) => s.solo_candidate).length;
     let cap = "";
-    if (cand.length && n.sorties_solo !== cand.length) {
-      cap = `<p class="fc-cap">SOLO ${n.sorties_solo} of ${cand.length} candidate sorties (green outline in the flow chart)</p>`;
+    if (cand && n.sorties_solo !== cand) {
+      cap = `<p class="fc-cap">SOLO ${n.sorties_solo} of ${cand} candidate sorties (green frame in the flow chart)</p>`;
     }
     return `<h4 class="fc-h4">SORTIES (${list.length})</h4><div class="fc-sorties">${chips}</div>${cap}`;
   }
 
-  /* ══════════════════════ DRAWER (§2.1) ══════════════════════ */
+  /* ══════════════════════ DRAWER ══════════════════════ */
   function openDrawer(key) {
     const t = fc.totals;
     let title = "", body = "";
@@ -922,59 +1318,71 @@
     } else if (key === "ground") {
       title = "GROUND — " + t.ground_training_periods + " periods";
       body = vb(t.ground_training_verbatim) + vb(t.ground_training_min_duration_verbatim)
-        + flagLike(/282/).map(vb).join("") + flagLike(/41 ground boxes/).map(vb).join("");
+        + flagLike(/ground/i).slice(0, 3).map(vb).join("");
 
     } else if (key === "exams") {
       const p2 = (fc.phases || []).find((x) => x.id === "p2");
-      title = "EXAMS — 14 (8 gates + 6 in-block)";
+      const gate = fc.nodes.filter((n) => n.kind === "ground_exam").length;
+      const inl = fc.nodes.reduce((s, n) => s + (n.exams || []).length, 0);
+      title = "EXAMS — " + (gate + inl) + " (" + gate + " gates + " + inl + " in-block)";
       const rows = [];
       IX.exam.forEach((v, code) => {
         rows.push(`<tr><td class="num">${esc(code)}</td><td>${esc(v.ex.name || "")}</td>
-          <td class="num">${esc(String(v.ex.periods ?? "—"))}</td>
+          <td class="num">${esc(String(v.ex.periods == null ? "—" : v.ex.periods))}</td>
           <td class="num">${esc(v.ex.periods_foreign == null ? "—" : String(v.ex.periods_foreign))}</td>
           <td>${esc(v.gate ? "gate (node)" : "inside " + IX.byId.get(v.node).label)}</td>
           <td>${esc((v.ex.gates || []).join(", "))}</td></tr>`);
       });
-      body = src(p2 && p2.source) + flagLike(/FULL EXAM SET/).map(vb).join("")
+      body = src(p2 && p2.source)
         + `<div class="fc-scroll-x"><table class="fc-tbl"><thead><tr><th>Code</th><th>Name</th><th>Per.</th><th>Foreign</th><th>Position</th><th>Gates</th></tr></thead><tbody>${rows.join("")}</tbody></table></div>`;
 
-    } else if (key === "fs") {
-      title = "F/S — " + t.fs.total;
-      const rows = TRACKS.filter((x) => x.tot).map((x) =>
-        `<tr><td>${esc(x.label)}</td><td class="num">${esc(t.fs[x.tot])}</td><td class="num">${agg(x.id).fs.length}</td></tr>`).join("");
-      body = `<div class="fc-scroll-x"><table class="fc-tbl"><thead><tr><th>Track</th><th>Sorties / hours</th><th>Sections</th></tr></thead><tbody>${rows}
-        <tr><td>Familiarization</td><td class="num">${esc(t.fs.familiarization)}</td><td class="num">—</td></tr>
-        <tr><td><b>TOTAL</b></td><td class="num"><b>${esc(t.fs.total)}</b></td><td class="num">${fc.nodes.filter((n) => bandOf(n) === "fs").length}</td></tr>
-        </tbody></table></div>` + src(t.fs.source);
-
-    } else if (key === "air") {
-      title = "T-6A — " + t.flight.total.total;
-      const rows = TRACKS.filter((x) => x.tot).map((x) =>
-        `<tr><td>${esc(x.label)}</td><td class="num">${esc(t.flight[x.tot].dual)}</td>
-         <td class="num">${esc(t.flight[x.tot].solo)}</td><td class="num">${esc(t.flight[x.tot].total)}</td></tr>`).join("");
-      body = `<div class="fc-scroll-x"><table class="fc-tbl"><thead><tr><th>Track</th><th>DUAL</th><th>SOLO</th><th>TOTAL</th></tr></thead><tbody>${rows}
-        <tr><td><b>TOTAL</b></td><td class="num"><b>${esc(t.flight.total.dual)}</b></td>
-        <td class="num"><b>${esc(t.flight.total.solo)}</b></td><td class="num"><b>${esc(t.flight.total.total)}</b></td></tr>
-        </tbody></table></div>` + src(t.flight.source) + flagLike(/I4101-02/).map(vb).join("");
+    } else if (key === "fs" || key === "flights") {
+      const isFs = key === "fs";
+      title = (isFs ? "F/S — " + t.fs.total : "FLIGHTS — " + t.flight.total.total);
+      const rows = TRACKS.filter((x) => x.tot).map((x) => {
+        const A = agg(x.id);
+        const n = (isFs ? A.fs : A.flights).reduce((s, g) => s + srtOf(g.id).length, 0);
+        return isFs
+          ? `<tr><td>${esc(x.label)}</td><td class="num">${esc(t.fs[x.tot])}</td><td class="num">${A.fs.length}</td><td class="num">${n}</td></tr>`
+          : `<tr><td>${esc(x.label)}</td><td class="num">${esc(t.flight[x.tot].dual)}</td>
+             <td class="num">${esc(t.flight[x.tot].solo)}</td><td class="num">${esc(t.flight[x.tot].total)}</td><td class="num">${n}</td></tr>`;
+      }).join("");
+      const nAll = fc.sorties.filter((s) => bandOf(s) === (isFs ? "fs" : "flights")).length;
+      body = isFs
+        ? `<div class="fc-scroll-x"><table class="fc-tbl"><thead><tr><th>Track</th><th>Sorties / hours</th><th>Sections</th><th>Sorties here</th></tr></thead><tbody>${rows}
+            <tr><td>Familiarization</td><td class="num">${esc(t.fs.familiarization)}</td><td class="num">—</td><td class="num">—</td></tr>
+            <tr><td><b>TOTAL</b></td><td class="num"><b>${esc(t.fs.total)}</b></td>
+            <td class="num">${fc.nodes.filter((n) => bandOf(n) === "fs").length}</td><td class="num"><b>${nAll}</b></td></tr>
+            </tbody></table></div>` + src(t.fs.source)
+        : `<div class="fc-scroll-x"><table class="fc-tbl"><thead><tr><th>Track</th><th>DUAL</th><th>SOLO</th><th>TOTAL</th><th>Sorties here</th></tr></thead><tbody>${rows}
+            <tr><td><b>TOTAL</b></td><td class="num"><b>${esc(t.flight.total.dual)}</b></td>
+            <td class="num"><b>${esc(t.flight.total.solo)}</b></td><td class="num"><b>${esc(t.flight.total.total)}</b></td>
+            <td class="num"><b>${nAll}</b></td></tr>
+            </tbody></table></div>` + src(t.flight.source);
 
     } else if (key === "solo") {
       title = "SOLO — " + t.flight.total.solo;
-      const rows = fc.nodes.filter((n) => n.solo_allowed || n.solo_required).map((n) =>
-        `<tr><td class="num">${esc(n.label)}</td><td>${esc(n.name || "")}</td>
-         <td class="num">${esc(String(n.sorties_solo ?? "—"))}</td>
-         <td class="num">${esc(String((n.solo_candidate_sorties || []).length))}</td>
-         <td>${esc((n.solo_candidate_sorties || []).join(", "))}</td></tr>`).join("");
+      const rows = fc.nodes.filter((n) => n.solo_allowed || n.solo_required).map((n) => {
+        const cand = srtOf(n.id).filter((s) => s.solo_candidate);
+        return `<tr><td class="num">${esc(n.label)}</td><td>${esc(n.name || "")}</td>
+         <td class="num">${esc(String(n.sorties_solo == null ? "—" : n.sorties_solo))}</td>
+         <td class="num">${cand.length}</td>
+         <td>${esc(cand.map(srtLabel).join(", "))}</td></tr>`;
+      }).join("");
       body = vb(t.minimum_hours_verbatim) + src(t.minimum_hours_source)
         + `<div class="fc-scroll-x"><table class="fc-tbl"><thead><tr><th>Section</th><th>Mission</th><th>SOLO</th><th>Candidates</th><th>Codes</th></tr></thead><tbody>${rows}</tbody></table></div>`;
 
     } else if (key === "ckr") {
-      title = "CHECKRIDES — " + fc.nodes.filter((n) => n.checkride).length;
-      const rows = fc.nodes.filter((n) => n.checkride).map((n) =>
-        `<tr><td class="num">${esc(n.label)}</td><td>${esc(TRACK_BY[trackOf(n)].label)}</td>
-         <td>${esc(n.name || "")}</td><td>${isFinal(n) ? G.fin + " FINAL" : ""}</td></tr>`).join("");
+      const ck = fc.sorties.filter((s) => s.checkride);
+      title = "CHECKRIDES — " + ck.length;
+      const rows = ck.map((s) => {
+        const g = IX.byId.get(s.group);
+        return `<tr><td class="num">${esc(srtLabel(s))}</td><td>${esc(TRACK_BY[trackOf(s)].label)}</td>
+         <td>${esc(s.name || "")}</td><td>${g && isFinal(g) ? G.fin + " FINAL" : ""}</td></tr>`;
+      }).join("");
       body = vb(t.final_evaluations_verbatim) + vb(t.flight_training_min_duration_verbatim)
-        + `<p class="fc-cap">The 4 FINALs are derived STRUCTURALLY (a checkride with no outgoing sequence inside its own cell) — the source verbatim spells «Ν4690» with a Greek capital Nu.</p>`
-        + `<div class="fc-scroll-x"><table class="fc-tbl"><thead><tr><th>Code</th><th>Track</th><th>Mission</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
+        + `<p class="fc-cap">The FINALs are derived STRUCTURALLY (a checkride with no outgoing sequence inside its own cell) — the source verbatim spells «Ν4690» with a Greek capital Nu.</p>`
+        + `<div class="fc-scroll-x"><table class="fc-tbl"><thead><tr><th>Sortie</th><th>Track</th><th>Mission</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
     } else return;
 
     const d = el("fc-drawer");
@@ -985,33 +1393,36 @@
     d.classList.remove("hidden");
   }
 
-  /* ══════════════════════ LEGEND (§7.2 / §7.3) ══════════════════════ */
+  /* ══════════════════════ LEGEND ══════════════════════ */
   function renderLegendPop() {
     const row = (sw, txt) => `<div class="fc-leg">${sw}<span>${esc(txt)}</span></div>`;
     const dot = (c) => `<i style="background:${c}"></i>`;
     const gl = (g) => `<b aria-hidden="true">${g}</b>`;
     let h = `<h4 class="fc-h4">SHAPE = MEANING</h4>`;
-    h += row(gl(G.sec), "training section")
+    h += row(gl(G.sec), "training section (parent card — click to open its sortie chain)")
+       + row(gl("▸▾"), "section collapsed / expanded")
        + row(gl(G.exam), "ground exam (gate)")
-       + row(gl(G.ckr), "checkride")
+       + row(gl(G.ckr), "checkride sortie")
        + row(gl(G.fin), "FINAL evaluation (last one of the category)")
-       + row(gl(G.solo), "SOLO — filled = 1st SOLO, outline = candidate sortie")
-       + row(gl(G.night), "night")
+       + row(gl(G.solo), "SOLO — filled = 1st SOLO, green = candidate sortie")
+       + row(gl(G.night), "night sortie")
        + row(gl(G.in + G.out), "reference chip to another track (dashed reference box)")
        + row(gl(G.warn), "data note")
        + row(gl(G.info), "printed ≠ sum of sections");
-    h += `<h4 class="fc-h4">TRACKS (left ribbon + code color)</h4>`;
+    h += `<h4 class="fc-h4">ZONES — the colour of a single-track view</h4>`;
+    for (const b of BANDS) h += row(dot(bandVar(b.id)), b.label + " — " + b.sub);
+    h += `<h4 class="fc-h4">TRACKS — the colour of the “All tracks” dashboard</h4>`;
     for (const t of TRACKS) h += row(dot(t.hex), t.label);
-    h += `<h4 class="fc-h4">BANDS (header only, never on the card)</h4>`;
-    for (const b of BANDS) h += row(dot(b.c || "var(--tk)"), b.label + " — " + b.sub);
     h += `<h4 class="fc-h4">STATUS</h4>`
-       + row(dot("#5fe0a8"), "candidate SOLO — green outline")
+       + row(dot("#5fe0a8"), "candidate SOLO — green frame")
        + row(dot("#ffd166"), "1st SOLO / evaluation")
        + row(dot("#ff7a70"), "night");
-    h += `<h4 class="fc-h4">EDGES</h4>`
-       + row(gl("──"), "sequence — arrow in the flow chart")
-       + row(gl("- -"), "prereq — arrow crossing a column")
-       + row(gl("··"), "implied — order with no drawn arrow");
+    h += `<h4 class="fc-h4">EDGES — one arrow per pair, kinds merged</h4>`
+       + row(gl("──"), "solid — sequence (arrow drawn in the Training Flow Chart)")
+       + row(gl("- -"), "dashed — feed / prereq / ground entry (crosses a column)")
+       + row(gl("··"), "dotted — before (rule written in the text, no arrow)")
+       + row(dot(bandVar("exams")), "amber arrow — INTO the selection (← BEFORE)")
+       + row(gl("→"), "zone-coloured arrow — OUT of the selection (AFTER →)");
     h += `<h4 class="fc-h4">SOURCE OF THE COLORS</h4><p class="verbatim">${esc(fc.legend.symbols_verbatim)}</p>`;
     const s = fc.legend.symbols_source;
     h += `<p class="req-src">📄 ${esc(s.file)} · p.${esc(String(s.page_pdf))} · ${esc(s.ref)}</p>`;
@@ -1019,7 +1430,7 @@
     el("fc-legend-pop").innerHTML = h;
   }
 
-  /* ══════════════════════ POSTER (§9) ══════════════════════ */
+  /* ══════════════════════ POSTER ══════════════════════ */
   function renderPoster() {
     const phases = (fc.phases || []).slice().sort((a, b) => (a.order || 0) - (b.order || 0));
     el("fc-poster-view").innerHTML = phases.map((p) => {
@@ -1027,15 +1438,15 @@
       return `<div class="fc-pcol">
         <div class="fc-pcol-h">${esc(p.label)} <span class="fc-band-n">${list.length}</span></div>
         ${list.map((n) => {
-          const tk = TRACK_BY[trackOf(n)];
+          const b = bandOf(n);
           return card(n, "is-poster" + (n.checkride ? " is-ckr" : ""), "end", true)
-            .replace('class="fc-card', `style="--tk:${tk.hex};--tk-rgb:${tk.rgb}" class="fc-card`);
+            .replace('class="fc-card', `style="--tk:${bandVar(b)};--tk-rgb:${bandRgb(b)}" class="fc-card`);
         }).join("")}
       </div>`;
     }).join("");
   }
 
-  /* ══════════════════════ ΑΝΑΖΗΤΗΣΗ (§6.2) ══════════════════════ */
+  /* ══════════════════════ ΑΝΑΖΗΤΗΣΗ ══════════════════════ */
   let qTimer = 0;
   function search(q) {
     const box = el("fc-sug");
@@ -1044,17 +1455,18 @@
     const seen = new Set(), hits = [];
     for (const e of IX.search) {
       if (e.hay.indexOf(s) < 0) continue;
-      const k = e.id + "|" + e.code;
+      const k = e.uid + "|" + e.code;
       if (seen.has(k)) continue;
       seen.add(k);
       hits.push(e);
-      if (hits.length >= 8) break;
+      if (hits.length >= 10) break;
     }
     S.sug = hits; S.sugIx = hits.length ? 0 : -1;
     box.innerHTML = hits.length
       ? hits.map((e, i) => {
-          const tk = TRACK_BY[trackOf(IX.byId.get(e.id))];
-          return `<button type="button" class="fc-sug-item${i === 0 ? " is-on" : ""}" data-jump="${esc(e.id)}" data-ix="${i}">
+          const n = node(e.uid);
+          const tk = TRACK_BY[trackOf(n || {})] || TRACK_BY.shared;
+          return `<button type="button" class="fc-sug-item${i === 0 ? " is-on" : ""}" data-jump="${esc(e.uid)}" data-ix="${i}">
             <span class="fc-sug-dot" style="background:${tk.hex}"></span>
             <span class="fc-sug-code">${esc(e.code)}</span>
             <span class="fc-sug-sub">${esc(e.sub)}</span></button>`;
@@ -1070,34 +1482,37 @@
   }
   function sugPick() {
     if (S.sugIx < 0 || !S.sug[S.sugIx]) return;
-    const id = S.sug[S.sugIx].id;
+    const uid = S.sug[S.sugIx].uid;
     el("fc-sug").classList.add("hidden");
     el("fc-q").blur();
-    jump(id);
+    jump(uid);
   }
 
   /* ══════════════════════ ΠΛΟΗΓΗΣΗ ══════════════════════ */
-  function jump(id) {
-    const n = IX.byId.get(id);
+  function jump(uid) {
+    if (!uid) return;
+    const u = normUid(uid);
+    const n = node(u);
     if (!n) return;
-    const t = trackOf(n);
     if (S.poster) { S.poster = false; el("fc-poster").setAttribute("aria-pressed", "false"); }
-    if (S.track !== t || !S.rendered.has(id)) {
-      // απόκρυψη ζώνης που περιέχει τον στόχο → ξανα-άνοιγμά της
-      const b = bandOf(n);
-      if (S.hiddenBands.has(b)) S.hiddenBands.delete(b);
-      S.selected = id;
-      openTrack(t, true);
-    } else {
-      select(id);
-    }
-    const c = el("fcn-" + id);
+    const b = bandOf(n);
+    if (S.hiddenBands.has(b)) S.hiddenBands.delete(b);
+    select(u);
+    const c = elOf(u);
     if (c) c.scrollIntoView({ behavior: "smooth", block: "center" });
     scheduleEdges();
   }
+  /* συμβατότητα: σκέτο id → group πρώτα (v1 deep links), αλλιώς sortie */
+  function normUid(x) {
+    const s = String(x);
+    if (s.indexOf("g:") === 0 || s.indexOf("s:") === 0) return s;
+    if (IX.byId.has(s)) return "g:" + s;
+    if (IX.sortie.has(s)) return "s:" + s;
+    return s;
+  }
 
   function goL0() {
-    S.lv = 0; S.selected = null; S.track = null;
+    S.lv = 0; S.sel = null; S.track = null;
     S.rendered = new Set(); S.chev = new Set();
     clearSvg(); closeSheet(); render();
   }
@@ -1120,19 +1535,26 @@
       const tk = TRACK_BY[S.track];
       bits.push(`<span class="fc-crumb-sep" aria-hidden="true">▸</span>
         <button type="button" class="fc-crumb${S.lv === 1 ? " is-here" : ""}" data-go="l1" style="color:${tk.hex}">${esc(tk.label)}</button>`);
-      if (S.selected) {
+      const n = S.sel ? node(S.sel) : null;
+      if (n && isSortieUid(S.sel)) {
+        const g = IX.byId.get(n.group);
+        if (g) bits.push(`<span class="fc-crumb-sep" aria-hidden="true">▸</span>
+          <button type="button" class="fc-crumb" data-jump="g:${esc(g.id)}">${esc(g.label)}</button>`);
         bits.push(`<span class="fc-crumb-sep" aria-hidden="true">▸</span>
-          <span class="fc-crumb is-here">${esc(IX.byId.get(S.selected).label)}</span>`);
+          <span class="fc-crumb is-here">${esc(srtLabel(n))}</span>`);
+      } else if (n) {
+        bits.push(`<span class="fc-crumb-sep" aria-hidden="true">▸</span>
+          <span class="fc-crumb is-here">${esc(n.label)}</span>`);
       }
     }
     el("fc-crumbs").innerHTML = bits.join("");
   }
 
-  /* ══════════════════════ HASH (§6.6) ══════════════════════ */
+  /* ══════════════════════ HASH ══════════════════════ */
   function syncHash() {
     let h = "#fc";
     if (S.poster) h += "/poster";
-    else { if (S.track) h += "/" + S.track; if (S.selected) h += "/" + S.selected; }
+    else { if (S.track) h += "/" + S.track; if (S.sel) h += "/" + S.sel; }
     if (location.hash === h) return;
     S.hashLock = true;
     try { history.replaceState(null, "", h); }
@@ -1140,12 +1562,14 @@
     setTimeout(() => { S.hashLock = false; }, 0);
   }
   function readHash() {
-    const m = /^#fc(?:\/([^/]+))?(?:\/([^/]+))?/.exec(location.hash || "");
+    const m = /^#fc(?:\/([^/]+))?(?:\/(.+))?$/.exec(location.hash || "");
     if (!m) return;
     if (m[1] === "poster") { setPoster(true); return; }
-    if (m[1] && TRACK_BY[m[1]]) {
-      if (m[2] && IX.byId.get(m[2])) { S.selected = m[2]; openTrack(m[1], true); }
-      else openTrack(m[1]);
+    const tid = TRACK_ALIAS[m[1]] || m[1];
+    if (tid && TRACK_BY[tid]) {
+      const u = m[2] ? normUid(m[2]) : null;
+      if (u && node(u)) { S.sel = u; ensureOpenFor(u); openTrack(tid, true); }
+      else openTrack(tid);
     }
   }
 
@@ -1156,7 +1580,7 @@
     b.textContent = d === "compact" ? "COMPACT" : "RICH";
     b.setAttribute("aria-pressed", d === "compact" ? "true" : "false");
     if (S.track) renderBands();
-    if (S.selected) applySelection();
+    if (S.sel) applySelection();
     scheduleEdges();
   }
   function setPoster(on) {
@@ -1170,6 +1594,17 @@
     if (open) renderLegendPop();
     p.classList.toggle("hidden", !open);
     el("fc-legend-btn").setAttribute("aria-expanded", open ? "true" : "false");
+  }
+  function setAllSections(on) {
+    if (!S.track) return;
+    S.open = new Set();
+    if (on) {
+      const A = agg(S.track);
+      for (const g of A.fs.concat(A.flights)) S.open.add(g.id);
+    }
+    renderBands();
+    if (S.sel && S.rendered.has(S.sel)) applySelection(); else clearSelection();
+    scheduleEdges();
   }
 
   function copyCode(btn, code) {
@@ -1202,45 +1637,69 @@
       }
       if (t.id === "fc-drawer") { t.classList.add("hidden"); return; }
 
-      const feed = t.closest(".fc-feed, .fc-jump, .fc-sug-item, [data-jump]");
-      if (feed && feed.dataset.jump) { ev.stopPropagation(); jump(feed.dataset.jump); return; }
-
       const cp = t.closest("[data-copy]");
       if (cp) { copyCode(cp, cp.dataset.copy); return; }
+
+      const feed = t.closest("[data-jump]");
+      if (feed && feed.dataset.jump) { ev.stopPropagation(); jump(feed.dataset.jump); return; }
 
       const dw = t.closest("[data-drawer]");
       if (dw) { openDrawer(dw.dataset.drawer); return; }
 
-      const ex = t.closest(".fc-exchip");
-      if (ex) { jump(ex.dataset.n); return; }
-
       const tc = t.closest("[data-track]");
       if (tc) { openTrack(tc.dataset.track); return; }
-
-      const gp = t.closest(".fc-gate-pill");
-      if (gp) { jump(gp.dataset.n); return; }
 
       const fb = t.closest("[data-band]");
       if (fb && fb.classList.contains("fc-fbtn")) {
         const id = fb.dataset.band;
         if (S.hiddenBands.has(id)) S.hiddenBands.delete(id); else S.hiddenBands.add(id);
-        if (S.selected && S.hiddenBands.has(bandOf(IX.byId.get(S.selected)))) clearSelection();
+        const sn = S.sel ? node(S.sel) : null;
+        if (sn && S.hiddenBands.has(bandOf(sn))) clearSelection();
         renderFilters(); renderBands();
-        if (S.selected) applySelection();
+        if (S.sel && S.rendered.has(S.sel)) applySelection();
         scheduleEdges();
         return;
       }
+      const sa = t.closest("[data-sections]");
+      if (sa) { setAllSections(sa.dataset.sections === "all"); return; }
       const sp = t.closest("[data-spot]");
       if (sp) {
         const k = sp.dataset.spot;
         if (S.spot.has(k)) S.spot.delete(k); else S.spot.add(k);
         renderFilters(); renderBands();
-        if (S.selected) applySelection();
+        if (S.sel && S.rendered.has(S.sel)) applySelection();
         return;
       }
 
+      const srt = t.closest(".fc-srt");
+      if (srt) { ev.stopPropagation(); select(srt.dataset.uid); return; }
+
       const cardEl = t.closest(".fc-card");   // ΟΧΙ «card» — σκιάζει τη συνάρτηση card()
-      if (cardEl) { ev.stopPropagation(); select(cardEl.dataset.n); return; }
+      if (cardEl) {
+        ev.stopPropagation();
+        const gid = cardEl.dataset.sec;
+        if (gid) {                            // κάρτα-γονέας F/S ή FLIGHTS
+          if (S.open.has(gid)) {
+            S.open.delete(gid);
+            const wasInside = S.sel && (S.sel === "g:" + gid
+              || (isSortieUid(S.sel) && node(S.sel) && node(S.sel).group === gid));
+            renderBands();
+            if (wasInside) clearSelection();
+            else if (S.sel && S.rendered.has(S.sel)) applySelection();
+            scheduleEdges();
+          } else {
+            openSection(gid, true);
+            S.sel = "g:" + gid;
+            S.lv = 2;
+            renderBands();
+            applySelection();
+            render();
+          }
+          return;
+        }
+        select(cardEl.dataset.uid);
+        return;
+      }
 
       if (t.id === "fc-close") { clearSelection(); return; }
       const go = t.closest("[data-go]");
@@ -1251,7 +1710,7 @@
       if (t.id === "fc-legend-btn") { toggleLegend(); return; }
 
       // κλικ σε κενό της σκηνής = ΜΟΝΟ αποεπιλογή (δεν αλλάζει επίπεδο)
-      if (t.closest("#fc-rail-scroll") && S.selected) clearSelection();
+      if (t.closest("#fc-rail-scroll") && S.sel) clearSelection();
     });
 
     el("fc-rail-scroll").addEventListener("scroll", scheduleEdges);
@@ -1271,6 +1730,13 @@
 
     document.addEventListener("keydown", keyNav);
     window.addEventListener("hashchange", () => { if (!S.hashLock) readHash(); });
+
+    /* Τα χρώματα των ακμών διαβάζονται από CSS vars τη στιγμή του σχεδιασμού →
+       στην εναλλαγή dark/light (app.js: html.light) πρέπει να ξανασχεδιαστούν. */
+    if (window.MutationObserver) {
+      new MutationObserver(() => scheduleEdges())
+        .observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    }
   }
 
   /* §6.4 ΠΛΗΚΤΡΟΛΟΓΙΟ — ενεργό μόνο όταν το view είναι ορατό και ο στόχος
@@ -1289,7 +1755,7 @@
       if (!el("fc-drawer").classList.contains("hidden")) { el("fc-drawer").classList.add("hidden"); return; }
       if (!el("fc-legend-pop").classList.contains("hidden")) { toggleLegend(); return; }
       if (S.poster) { setPoster(false); return; }
-      if (S.selected) clearSelection(); else if (S.lv === 1) goL0();
+      if (S.sel) clearSelection(); else if (S.lv === 1) goL0();
       return;
     }
     if (k >= "1" && k <= "5") { ev.preventDefault(); openTrack(TRACKS[+k - 1].id); return; }
@@ -1298,16 +1764,19 @@
     if (k === "p" || k === "P" || k === "π" || k === "Π") { setPoster(!S.poster); return; }
     if (k === "c" || k === "C" || k === "ψ" || k === "Ψ") { setDensity(S.density === "rich" ? "compact" : "rich"); return; }
     if (S.poster || S.lv === 0) return;
+    if (k === "e" || k === "E" || k === "ε" || k === "Ε") { setAllSections(true); return; }
+    if (k === "x" || k === "X" || k === "χ" || k === "Χ") { setAllSections(false); return; }
 
-    const cards = [].slice.call(el("fc-bands").querySelectorAll(".fc-card"));
-    if (!cards.length) return;
+    const items = [].slice.call(el("fc-bands").querySelectorAll(".fc-card[data-uid], .fc-srt[data-uid]"));
+    if (!items.length) return;
     if (k === "ArrowRight" || k === "ArrowLeft") {
       ev.preventDefault();
-      const i = S.selected ? cards.findIndex((c) => c.dataset.n === S.selected) : -1;
-      const j = Math.max(0, Math.min(cards.length - 1, i + (k === "ArrowRight" ? 1 : -1)));
-      const tgt = cards[i < 0 ? 0 : j];
-      select(tgt.dataset.n);
-      tgt.scrollIntoView({ block: "nearest" });
+      const i = S.sel ? items.findIndex((c) => c.dataset.uid === S.sel) : -1;
+      const j = Math.max(0, Math.min(items.length - 1, i + (k === "ArrowRight" ? 1 : -1)));
+      const tgt = items[i < 0 ? 0 : j];
+      select(tgt.dataset.uid);
+      const back = elOf(tgt.dataset.uid);
+      if (back) back.scrollIntoView({ block: "nearest" });
       return;
     }
     if (k === "ArrowDown" || k === "ArrowUp") {
@@ -1315,16 +1784,16 @@
       const bandsEl = [].slice.call(el("fc-bands").querySelectorAll(".fc-band"));
       if (!bandsEl.length) return;
       let bi = 0;
-      if (S.selected) {
-        const cur = el("fcn-" + S.selected);
+      if (S.sel) {
+        const cur = elOf(S.sel);
         const sec = cur && cur.closest(".fc-band");
         bi = Math.max(0, bandsEl.indexOf(sec));
       }
       const nb = bandsEl[Math.max(0, Math.min(bandsEl.length - 1, bi + (k === "ArrowDown" ? 1 : -1)))];
-      const first = nb.querySelector(".fc-card");
-      if (first) { select(first.dataset.n); first.scrollIntoView({ block: "nearest" }); }
+      const first = nb.querySelector(".fc-card[data-uid]");
+      if (first) { select(first.dataset.uid); const b2 = elOf(first.dataset.uid); if (b2) b2.scrollIntoView({ block: "nearest" }); }
       return;
     }
-    if (k === "Enter" && S.selected) { ev.preventDefault(); applySelection(); }
+    if (k === "Enter" && S.sel) { ev.preventDefault(); applySelection(); }
   }
 })();
