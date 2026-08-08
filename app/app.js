@@ -368,9 +368,10 @@ async function showInfo() {
   const resolved = ep.resolved || sc.resolved || item.resolved || null;
 
   let html = "";
+  const stripMarker = (t) => (t ?? "").replace(/^\s*(preamble\s*\/|[0-9]+\s*\/|[a-z]\s*\/)\s*/i, "");
   const listBlock = (title, arr) => {
     if (!arr || !arr.length) return "";
-    return `<h4>${title}</h4><ul>${arr.map((x) => `<li>${esc(typeof x === "string" ? x : `${x.key ? x.key + "/ " : ""}${x.text}`)}</li>`).join("")}</ul>`;
+    return `<h4>${title}</h4><ul>${arr.map((x) => `<li>${esc(stripMarker(typeof x === "string" ? x : x.text))}</li>`).join("")}</ul>`;
   };
   html += listBlock("Execution", item.execution);
   html += listBlock("Conditions", item.conditions);
@@ -394,6 +395,16 @@ async function showInfo() {
       openRequirements(el.dataset.req);
     };
   });
+  const chartBtn = body.querySelector("#mif-chart-btn");
+  if (chartBtn) {
+    chartBtn.onclick = () => {
+      $("info-modal").classList.add("hidden");
+      if (window.openMifChart) {
+        const sns = state.item.mif_numbers || [];
+        window.openMifChart(state.category, sns.length === 1 ? sns[0] : sns);
+      }
+    };
+  }
 }
 
 /* ── MIF progression (desired code per Training Section) ── */
@@ -427,7 +438,11 @@ async function mifProgressionHtml() {
       }
     }
   } catch (e) { /* mif data unavailable — skip section */ }
-  return html ? `<h4>MIF progression — desired code per Training Section</h4>${html}` : "";
+  return html
+    ? `<h4>MIF progression — desired code per Training Section
+         <button class="info-btn" id="mif-chart-btn" title="Interactive progress chart for this category">📈 Progress chart</button>
+       </h4>${html}`
+    : "";
 }
 
 /* ── Related requirements (item_links.json, optional) ── */
@@ -585,6 +600,13 @@ document.addEventListener("click", (e) => {
   if (e.target.closest(".panel, .topbar, .modal-box, #info-modal, .credit, .viewtab")) return;
   if (state.category) resetRemarks();
 });
+
+/* MIF progress chart module (self-contained, injected to avoid index.html churn) */
+{
+  const mcs = document.createElement("script");
+  mcs.src = "mifchart.js";
+  document.head.appendChild(mcs);
+}
 
 $("item-search").addEventListener("input", renderItems);
 init();
