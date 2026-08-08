@@ -58,6 +58,25 @@ function renderCategories() {
   }
 }
 
+/* Progressive disclosure: panels open step by step */
+function revealPanels() {
+  $("panel-item").classList.toggle("hidden", !state.category);
+  $("panel-codes").classList.toggle("hidden", !state.itemData && !state.item);
+  $("panel-results").classList.toggle("hidden",
+    !(state.itemData && state.desired !== null && state.achieved !== null));
+}
+
+function resetRemarks() {
+  state.category = state.item = state.itemData = state.row = state.desired = state.achieved = null;
+  document.querySelectorAll("#view-remarks .cat-card, #view-remarks .item-btn")
+    .forEach((b) => b.classList.remove("active"));
+  $("item-search").disabled = true;
+  $("item-search").value = "";
+  $("item-info-btn").classList.add("hidden");
+  $("item-list").innerHTML = `<p class="hint">Select a category first.</p>`;
+  revealPanels();
+}
+
 function selectCategory(key, btn) {
   document.querySelectorAll(".cat-card").forEach((b) => b.classList.remove("active"));
   btn.classList.add("active");
@@ -69,6 +88,7 @@ function selectCategory(key, btn) {
   renderItems();
   renderCodes();
   renderResults();
+  revealPanels();
 }
 
 function renderItems() {
@@ -116,6 +136,7 @@ async function selectItem(it, btn) {
   state.row = rows.length > 1 ? rows[0] : (rows[0] ?? null);
   renderCodes();
   renderResults();
+  revealPanels();
 }
 
 /* v2-trunk: expand error modes into the flat observations shape the UI consumes.
@@ -196,7 +217,7 @@ function renderCodes() {
       b.className = "chip" + (state.desired === d ? " active" : "");
       b.textContent = d;
       b.disabled = !desiredSet.has(d);
-      b.onclick = () => { state.desired = d; state.achieved = null; renderCodes(); renderResults(); };
+      b.onclick = () => { state.desired = d; state.achieved = null; renderCodes(); renderResults(); revealPanels(); };
       dWrap.appendChild(b);
     }
   }
@@ -211,7 +232,7 @@ function renderCodes() {
       b.className = "chip" + (state.achieved === a ? " active" : "");
       b.textContent = a;
       b.disabled = !achievedSet.has(a);
-      b.onclick = () => { state.achieved = a; renderCodes(); renderResults(); };
+      b.onclick = () => { state.achieved = a; renderCodes(); renderResults(); revealPanels(); };
       aWrap.appendChild(b);
     }
   }
@@ -542,8 +563,8 @@ async function renderReqList() {
       </div>
       <p class="obs-text">${esc(r.requirement ?? "")}</p>
       ${kvChips(r.values)}
-      ${r.verbatim ? `<details><summary>Source text</summary><p class="verbatim">${esc(r.verbatim)}</p>
-        <p class="hint">${esc(r.source ? `${r.source.file ?? ""} · p.${r.source.page_pdf ?? "?"} · ${r.source.ref ?? ""}` : "")}</p></details>` : ""}`;
+      ${r.source ? `<p class="req-src">📄 ${esc(r.source.file ?? "")} · p.${esc(String(r.source.page_pdf ?? "?"))}${r.source.ref ? " · " + esc(r.source.ref) : ""}</p>` : ""}
+      ${r.verbatim ? `<details><summary>Source text (verbatim)</summary><p class="verbatim">${esc(r.verbatim)}</p></details>` : ""}`;
     box.appendChild(card);
   }
   $("req-count").textContent = shown ? `${shown} shown` : "no matches";
@@ -552,6 +573,16 @@ async function renderReqList() {
 
 $("req-search").addEventListener("input", renderReqList);
 renderReqDomains();
+
+/* Click outside the panels (remarks view) → deselect everything */
+document.addEventListener("click", (e) => {
+  if ($("view-remarks").classList.contains("hidden")) return;
+  // A control re-rendered by its own click handler is detached by the time the
+  // event bubbles here — that is an inside click, never an "outside" one.
+  if (!(e.target instanceof Element) || !e.target.isConnected) return;
+  if (e.target.closest(".panel, .topbar, .modal-box, #info-modal, .credit, .viewtab")) return;
+  if (state.category) resetRemarks();
+});
 
 $("item-search").addEventListener("input", renderItems);
 init();

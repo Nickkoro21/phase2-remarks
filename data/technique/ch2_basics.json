@@ -1,0 +1,418 @@
+{
+  "chunk": "ch2_basics",
+  "source": "T-6A Techniques and Procedures Manual (I.N. T-6A 02/14, Change 9 Jul 22)",
+  "chapter": "Chapter 2 - BASIC T-6 FLIGHT PRINCIPLES",
+  "pages_pdf_range": [38, 51],
+  "printed_page_offset": "printed = pdf - 10 (verified: PDF p.38 prints '28')",
+  "sections": [
+    {
+      "section": "2.1",
+      "title": "INTRODUCTION",
+      "pages_pdf": [38],
+      "item_mapping": [],
+      "category_hint": ["contact", "instrument", "formation", "vfr_navigation"],
+      "technique_summary": "This chapter discusses basic terms that apply to all A/C. It explains concepts and terms associated with the T-6 as a single-engine, propeller-driven A/C. Knowledge and understanding of these terms and their associated aerodynamic effects is essential to successfully fly the T-6.",
+      "parameters": [],
+      "procedure_steps": [],
+      "common_errors": [],
+      "corrections": [],
+      "notes": "Chapter opener; no gradable content of its own."
+    },
+    {
+      "section": "2.2",
+      "title": "CONTROL EFFECTS",
+      "pages_pdf": [38],
+      "item_mapping": ["contact-05", "instrument-04"],
+      "category_hint": ["contact", "instrument"],
+      "technique_summary": "Each flight control affects the attitude of the A/C by controlling movement about one of three axes. Control movements result in the same predictable A/C responses, regardless of the attitude of the A/C. The pilot is the approximate pivot point about which all changes of attitude occur.",
+      "parameters": [
+        {"name": "vertical axis", "value": "yaw", "verbatim": "Vertical Axis Yaw"},
+        {"name": "longitudinal axis", "value": "roll", "verbatim": "Longitudinal Axis Roll"},
+        {"name": "lateral axis", "value": "pitch", "verbatim": "Lateral Axis Pitch"}
+      ],
+      "procedure_steps": [],
+      "common_errors": [],
+      "corrections": [],
+      "notes": "Figure 2.1 Control Axes."
+    },
+    {
+      "section": "2.3",
+      "title": "USE OF CONTROLS",
+      "pages_pdf": [39],
+      "item_mapping": ["contact-05", "instrument-04"],
+      "category_hint": ["contact", "instrument"],
+      "technique_summary": "When a control surface is moved out of its streamlined position, air flowing past it exerts pressure against the control surface and tries to return it to neutral. These air forces on control surfaces are felt on the control stick and rudder pedals. Control forces are directly proportional to airspeed and control deflection and provide feedback to the pilot. This feedback identifies trim requirements.",
+      "parameters": [
+        {"name": "control force relationship", "value": "directly proportional to airspeed and control deflection", "verbatim": "Control forces are directly proportional to airspeed and control deflection and provide feedback to the pilot."}
+      ],
+      "procedure_steps": [],
+      "common_errors": [],
+      "corrections": [],
+      "notes": "Air forces can impede positioning of the controls to the desired position."
+    },
+    {
+      "section": "2.3.1",
+      "title": "HOW TO USE THE RUDDER",
+      "pages_pdf": [39],
+      "item_mapping": ["contact-05", "instrument-04"],
+      "category_hint": ["contact", "instrument"],
+      "technique_summary": "When properly positioned, the heels of the feet rest upon the cockpit floor and the balls of the feet touch the rudder pedals. Rudder application should be smooth, similar to application of brakes in an automobile. In order to optimize control feel, maintain firm but relaxed pressure on the rudders.",
+      "parameters": [],
+      "procedure_steps": [
+        "Rest the heels of the feet upon the cockpit floor with the balls of the feet touching the rudder pedals.",
+        "Apply rudder smoothly, similar to application of brakes in an automobile.",
+        "Maintain firm but relaxed pressure on the rudders to optimize control feel."
+      ],
+      "common_errors": [],
+      "corrections": [],
+      "notes": null
+    },
+    {
+      "section": "2.3.2",
+      "title": "HOW TO USE THE CONTROL STICK",
+      "pages_pdf": [39],
+      "item_mapping": ["contact-05", "instrument-04"],
+      "category_hint": ["contact", "instrument"],
+      "technique_summary": "Although many maneuvers generate heavy control stick forces, a firm but light touch on the control stick optimizes control feel. Hands and arms should remain relaxed. Ideally, during cruise operations fingertips on the control stick is all that should be needed. Fingertips give the best feedback on minute changes of A/C trim.",
+      "parameters": [],
+      "procedure_steps": [
+        "Use a firm but light touch on the control stick; keep hands and arms relaxed.",
+        "During cruise operations use fingertips only on the control stick."
+      ],
+      "common_errors": [],
+      "corrections": [],
+      "notes": null
+    },
+    {
+      "section": "2.3.3",
+      "title": "HOW TO USE THE PCL (incl. Table 2.1 General Power Settings)",
+      "pages_pdf": [39, 40],
+      "item_mapping": ["contact-05", "instrument-04", "contact-02"],
+      "category_hint": ["contact", "instrument"],
+      "technique_summary": "Known power settings provide a useful starting point for PCL position. Starting with power settings close to the desired setting minimizes torque and propeller effects. General power settings are listed in Table 2.1; these pitch and power settings are approximate, and vary from A/C to A/C based on factors such as A/C weight, pressure altitude, and temperature. The PCL requires relatively little travel to change the power, so a small movement can result in a larger than desired power change.",
+      "parameters": [
+        {"name": "level flight - 250 KIAS", "value": "250 KIAS, gear UP, flaps UP, pitch 2 deg NL, power 93%", "verbatim": "250 2°NL 93%"},
+        {"name": "level flight - 200 KIAS", "value": "200 KIAS, gear UP, flaps UP, pitch 0 deg, power 50% + altitude (see note)", "verbatim": "200 0° 50% + altitude (see note)"},
+        {"name": "level flight - 150 KIAS", "value": "150 KIAS, gear UP, flaps UP, pitch 2 deg NH, power 32%", "verbatim": "Level Flight 150 UP UP 2°NH 32%"},
+        {"name": "torque altitude correction (level flight 200 KIAS)", "value": "add MSL altitude in thousands to the torque setting", "verbatim": "NOTE: Add mean sea level (MSL) altitude (e.g., at 3,000 feet MSL, set 53% torque)."},
+        {"name": "takeoff", "value": "85 KIAS, gear DOWN, flaps TO, pitch 7-10 deg NH", "verbatim": "Takeoff 85 DOWN TO 7-10°NH"},
+        {"name": "climb - 180 KIAS", "value": "180 KIAS, gear UP, flaps UP, pitch 8 deg NH, power MAX", "verbatim": "180 8°NH"},
+        {"name": "climb - 160 KIAS", "value": "160 KIAS, gear UP, flaps UP, pitch 10 deg NH, power MAX", "verbatim": "160 10°NH"},
+        {"name": "climb - 140 KIAS", "value": "140 KIAS, gear UP, flaps UP, pitch 12 deg NH, power MAX, other ±1% per 1,000 feet", "verbatim": "Climb 140 UP UP 12°NH MAX ±1% per 1,000 feet"},
+        {"name": "Table 2.1 legend", "value": "NH = nose high, NL = nose low, TO = takeoff flaps, MAX = maximum", "verbatim": "LEGEND: NH—nose high NL—nose low TO—takeoff flaps MAX—maximum"},
+        {"name": "Table 2.1 columns", "value": "ITEM / Maneuver / Airspeed / Gear / Flaps / Pitch / Power / Other", "verbatim": "A B C D E F G ITEM Maneuver Airspeed Gear Flaps Pitch Power Other"}
+      ],
+      "procedure_steps": [
+        "Start from a known power setting close to the desired setting to minimize torque and propeller effects.",
+        "For precise power control, hold the left hand fixed against the fuselage wall and modulate the PCL with only the fingertips.",
+        "Place the palm of the hand on the PCL, NEVER the wrist."
+      ],
+      "common_errors": [
+        "The PCL requires relatively little travel to change the power. A small movement of the PCL can result in a larger than desired power change.",
+        "Proper hand placement on the PCL is critical to safe operations. Place the palm of the hand on the PCL, NEVER your wrist. Several incidents of inadverted PCL CUTOFF FINGER LIFT have occurred, due to improper hand placement, causing an inadvertent engine shutdown."
+      ],
+      "corrections": [
+        "One technique for precise power control is to hold the left hand fixed against the fuselage wall and modulate the PCL with only the fingertips.",
+        "Because torque is computer controlled, the torque may change slightly after the PCL is set."
+      ],
+      "notes": "Table 2.1 cell alignment was reconstructed from the linear text extraction (merged 'Level Flight' and 'Climb' maneuver cells span rows 1-3 and 5-7 respectively). Row values (airspeed/pitch/power) are verbatim."
+    },
+    {
+      "section": "2.3.4",
+      "title": "OTHER DEVICES",
+      "pages_pdf": [40],
+      "item_mapping": ["contact-05"],
+      "category_hint": ["contact"],
+      "technique_summary": "Other devices controlled by the pilot that also affect A/C handling are the flaps, landing gear, and speed brake. However, their effects, for the purposes of general A/C handling, are incidental. Trim sufficiently compensates for minor aerodynamic effects of these systems.",
+      "parameters": [],
+      "procedure_steps": [],
+      "common_errors": [],
+      "corrections": [
+        "Trim sufficiently compensates for minor aerodynamic effects of the flaps, landing gear, and speed brake."
+      ],
+      "notes": null
+    },
+    {
+      "section": "2.4",
+      "title": "TRIM",
+      "pages_pdf": [40, 41, 42],
+      "item_mapping": ["contact-05", "instrument-04"],
+      "category_hint": ["contact", "instrument"],
+      "technique_summary": "Trim is needed to compensate for control stick forces to prevent fatigue, increase smoothness, and enable multitasking. When properly trimmed, an A/C can and should be flown with just the fingertips on the control stick to allow slight out-of-trim conditions to be easily felt. Trimming is a continuous process: when pressure on the controls is relieved and A/C attitude is maintained, the A/C is correctly trimmed. In the T-6 subtle power changes normally do not require large, immediate changes in control pressure, so the need for trim is evident only gradually as airspeed, power, and pitch change.",
+      "parameters": [
+        {"name": "trim order", "value": "rudder, elevator, aileron", "verbatim": "Trim in the following order: rudder, elevator, and aileron."},
+        {"name": "trim tab direction (rudder/elevator)", "value": "tabs move opposite the parent control surface", "verbatim": "the rudder and elevator tabs move in the opposite direction from the parent control"},
+        {"name": "aileron trim", "value": "trim tabs preset by maintenance, not adjustable in flight; aileron trim repositions the ailerons", "verbatim": "Note that aileron trim tabs are preset by maintenance personnel and do not adjust in flight. The aileron trim actually repositions the ailerons."},
+        {"name": "TAD inputs", "value": "engine torque, altitude, airspeed and pitch rate", "verbatim": "Using engine torque, altitude, airspeed and pitch rate, the TAD computes a desired rudder trim tab position and applies it to the rudder trim tab actuator."}
+      ],
+      "procedure_steps": [
+        "Establish and hold the desired attitude, then relieve control pressure with trim (trimming is a continuous process).",
+        "Trim rudder first: apply rudder to center the ball while holding the turn needle centered, then relieve pressure using rudder trim.",
+        "Correct fore or aft control stick pressure, or maintain a stabilized attitude, with elevator trim.",
+        "Correct wing heaviness or rolling tendencies with aileron trim.",
+        "Trim in the order rudder, elevator, aileron."
+      ],
+      "common_errors": [
+        "Without proper rudder trim, the A/C flies in a skid as indicated by the turn-and-slip indicator (the ball is deflected while the needle is centered). The longitudinal axis of the A/C is not aligned with the direction the A/C is travelling. In effect, the A/C is flying sideways through the air (proportional to the deflection of the ball).",
+        "During large transients of the four parameters (torque, altitude, airspeed, pitch rate), the TAD will lag the desired trim position requiring pilot input to ensure coordinated flight."
+      ],
+      "corrections": [
+        "To correct a skid: first apply rudder to center the ball (while holding the turn needle centered) and then relieve pressure using rudder trim.",
+        "When properly trimmed, an A/C can and should be flown with just the fingertips on the control stick to allow slight out-of-trim conditions to be easily felt."
+      ],
+      "notes": "Figure 2.2 Trim Tab Locations. TAD = trim aid device."
+    },
+    {
+      "section": "2.5",
+      "title": "COORDINATION",
+      "pages_pdf": [42],
+      "item_mapping": ["contact-05", "instrument-04"],
+      "category_hint": ["contact", "instrument"],
+      "technique_summary": "No single control movement provides all the control input necessary for a successful manoeuvre. The various A/C controls must be properly orchestrated and smoothly applied for coordinated flight. Apply control pressure smoothly and evenly.",
+      "parameters": [],
+      "procedure_steps": [
+        "Orchestrate all A/C controls together and apply control pressure smoothly and evenly."
+      ],
+      "common_errors": [
+        "Rough, erratic use of any control causes the A/C to react accordingly."
+      ],
+      "corrections": [
+        "Apply control pressure smoothly and evenly."
+      ],
+      "notes": null
+    },
+    {
+      "section": "2.6.1",
+      "title": "SLIPSTREAM EFFECT",
+      "pages_pdf": [42, 43],
+      "item_mapping": ["contact-05", "contact-02", "instrument-04"],
+      "category_hint": ["contact", "instrument"],
+      "technique_summary": "The thrust generated by the rotation of the propeller induces a phenomenon called corkscrew slipstream effect: the rotating prop produces a helical air stream about the longitudinal axis that strikes the wing root, fuselage, and tail surfaces with a constant high-energy force proportional to power setting and airspeed. In the T-6 the corkscrew slipstream induces a slightly higher AOA on the left wing root and left tail surfaces and slightly lowers AOA on the right side, causing the A/C to yaw left when power is increased and requiring right rudder to maintain coordinated flight. A power reduction has the opposite effect, requiring left rudder.",
+      "parameters": [
+        {"name": "slipstream force", "value": "proportional to power setting and airspeed", "verbatim": "This slipstream strikes the wing root, fuselage, and tail surfaces with a constant high-energy force proportional to power setting and airspeed."},
+        {"name": "rudder movement", "value": "proportional to the amount and rate of PCL movement", "verbatim": "The amount of rudder movement is proportional to the amount and rate of PCL movement."}
+      ],
+      "procedure_steps": [
+        "As the PCL is moved forward with the left hand, move the right foot forward to counter the yaw induced to the left.",
+        "On a power reduction, apply left rudder to maintain coordinated flight."
+      ],
+      "common_errors": [
+        "Too little rudder application lets the nose swing left; too much rudder application swings the nose right."
+      ],
+      "corrections": [
+        "The amount and rate of rudder movement can be determined by looking out the front of the A/C and using the rudder to keep the nose from swinging either left (too little rudder application) or right (too much rudder application)."
+      ],
+      "notes": "Figure 2.3 Slipstream Effects. The addition of power increases airflow over the tail surfaces and makes them more effective at slow speeds."
+    },
+    {
+      "section": "2.6.2",
+      "title": "P-FACTOR",
+      "pages_pdf": [43],
+      "item_mapping": ["contact-05", "contact-12"],
+      "category_hint": ["contact"],
+      "technique_summary": "P-factor is caused by AOA being higher on the downward moving propeller blade than on the upward moving blade. This occurs when the A/C's thrust line is above the free air stream relative wind or at low speeds and high angles of attack with power-on. It moves the aerodynamic center of the propeller to the right of the shaft on a clockwise-rotating propeller, causing the A/C to yaw left as AOA or power is increased.",
+      "parameters": [],
+      "procedure_steps": [
+        "Increase right rudder to maintain coordinated flight as angle of attack is increased, such as in a pull-up for an over-the-top aerobatic manoeuvre.",
+        "As the airspeed decreases and the AOA increases, apply right rudder to keep the A/C in coordinated flight."
+      ],
+      "common_errors": [],
+      "corrections": [
+        "When the thrust line is below the free air stream relative wind the A/C yaws right and left rudder is required; this right yawing situation seldom occurs since pushing over to that point is rarely warranted."
+      ],
+      "notes": "Figure 2.4 P-Factor."
+    },
+    {
+      "section": "2.6.3",
+      "title": "TORQUE",
+      "pages_pdf": [44],
+      "item_mapping": ["contact-05"],
+      "category_hint": ["contact"],
+      "technique_summary": "Torque reaction in a propeller-driven A/C acts opposite the direction of propeller rotation. In the case of the T-6, the A/C tends to roll to the left as a result of torque when power is increased, and the A/C tends to roll right when power is reduced. Rudder and the TAD are the primary means for compensating for engine torque.",
+      "parameters": [],
+      "procedure_steps": [],
+      "common_errors": [],
+      "corrections": [
+        "Rudder and the TAD are the primary means for compensating for engine torque."
+      ],
+      "notes": "Figure 2.5 Torque."
+    },
+    {
+      "section": "2.6.4",
+      "title": "GYROSCOPIC EFFECT",
+      "pages_pdf": [45],
+      "item_mapping": ["contact-05", "contact-10"],
+      "category_hint": ["contact"],
+      "technique_summary": "Gyroscopic reactions are called gyroscopic precession, occurring when a force is applied to displace a spinning mass such as the propeller or, in the case of a spin, the A/C as a whole. Gyroscopic precession causes an applied force to act in a plane 90 degrees from that in which it was applied, in the same direction as the rotation. The effect depends on the rate of movement about the pitch or yaw axis; increased rotation rates tend to increase the effect. The size and high rpm of the T-6's propeller result in an increased precession effect.",
+      "parameters": [
+        {"name": "precession plane", "value": "90 degrees from the plane of the applied force", "verbatim": "Gyroscopic precession causes an applied force to act in a plane 90° from that in which it was applie d (it is applied in the same direction as the rotation)."},
+        {"name": "yaw left reaction", "value": "nose tends to pitch up", "verbatim": "If the nose is yawed to the left, the nose tends to pitch up."},
+        {"name": "yaw right reaction", "value": "nose tends to pitch down", "verbatim": "If the nose is yawed to the right, the nose tends to pitch down."},
+        {"name": "pitch down reaction", "value": "left yaw tends to develop", "verbatim": "If the nose is pitched down, a left yaw tends to develop."},
+        {"name": "pitch up reaction", "value": "right yaw tends to develop", "verbatim": "If the nose is pitched up, a right yaw tends to develop."}
+      ],
+      "procedure_steps": [],
+      "common_errors": [
+        "This explains why a pilot, who abruptly corrects A/C deviations (pitch, bank, and yaw), ends up frustrated with the adverse effects of precession."
+      ],
+      "corrections": [],
+      "notes": "Figure 2.6 Gyroscopic Effects. Reactions listed are for a clockwise-turning propeller as viewed from the pilot's seat."
+    },
+    {
+      "section": "2.7",
+      "title": "COMPOSITE FLIGHT",
+      "pages_pdf": [45, 46],
+      "item_mapping": ["contact-05", "contact-36", "instrument-04"],
+      "category_hint": ["contact", "instrument"],
+      "technique_summary": "Composite flight utilizes outside references, complimented by flight instruments, to establish and maintain desired flight attitudes. Establish and maintain an attitude by positioning the nose and wings of the A/C in relation to the horizon. Small changes in attitude may not be readily noticed by outside reference to the horizon, but are indicated by the flight instruments. While maintaining this position, use trim to reduce or eliminate control pressures.",
+      "parameters": [
+        {"name": "crosscheck distribution (clear conditions)", "value": "approximately 80% outside references (and clearing), 20% inside references (flight instruments)", "verbatim": "In clear flight conditions (for example, horizon clearly discernable), devote approximately 80 % to outside references (and clearing) and 20 % to inside references (flight instruments)."},
+        {"name": "trading altitude for airspeed example", "value": "100 feet high and approximately 5 KIAS slow in the traffic pattern -> minor pitch down", "verbatim": "For instance, if the A/C is 100 feet high, and approximately 5 KIAS slow in the traffic pattern, a minor pitch down should put the airplane close to desired parameters."}
+      ],
+      "procedure_steps": [
+        "Establish and maintain an attitude by positioning the nose and wings of the A/C in relation to the horizon.",
+        "Crosscheck the flight instruments for small attitude changes not readily noticed outside.",
+        "While maintaining this position, use trim to reduce or eliminate control pressures.",
+        "Do not concentrate on one cue.",
+        "Clear vigilantly for other A/C.",
+        "Check one parameter, make a correction, and then check another parameter. Repeat this cycle."
+      ],
+      "common_errors": [
+        "Over-reliance upon instrumentation to maintain A/C attitude is a common error in composite flight and results in excessive head-down time that impedes ability to observe A/C and other hazards.",
+        "A failure to adequately trim at this point in the cross-check will result in ineffective A/C control.",
+        "Concentrating on one cue instead of cycling the crosscheck."
+      ],
+      "corrections": [
+        "A single pitch change can correct a deviation involving both altitude and airspeed (trading altitude for airspeed)."
+      ],
+      "notes": "Time spent looking at specific cues (horizon, flight instruments, etc) varies with flight conditions."
+    },
+    {
+      "section": "2.8",
+      "title": "BASIC INSTRUMENT FLIGHT",
+      "pages_pdf": [46],
+      "item_mapping": ["instrument-04"],
+      "category_hint": ["instrument"],
+      "technique_summary": "As outside references deteriorate, the composite crosscheck evolves into an instrument crosscheck. General instrument procedures are found in AFMAN 11-217, Volume 1, Instrument Flight Procedures, FLIP, and general planning. T-6 specific guidance is found in the flight manual and Chapter 7 of this manual.",
+      "parameters": [],
+      "procedure_steps": [],
+      "common_errors": [],
+      "corrections": [],
+      "notes": "Pointer section only; detail is in Chapter 7."
+    },
+    {
+      "section": "2.9",
+      "title": "STRAIGHT AND LEVEL FLIGHT",
+      "pages_pdf": [46, 47, 48],
+      "item_mapping": ["contact-05", "instrument-04"],
+      "category_hint": ["contact", "instrument"],
+      "technique_summary": "Straight-and-level flight requires familiarity with flight instruments and visual cues. Consciously fix reference points on the A/C in relation to the horizon, and crosscheck this relationship with the flight instruments (EADI, altimeter, VSI). Good aircraft control is a continuous succession of minor, almost imperceptible corrections to keep the aircraft on the desired flight path. When straight and level, trim the A/C in all three axes.",
+      "parameters": [
+        {"name": "level flight pitch picture", "value": "at 200 KIAS approximately half-ground/half-sky, wings equidistant from the horizon", "verbatim": "In Straight And Level unaccelerated Flight at 200 KIAS, the level flight visual pitch picture is approximately half-ground/half-sky with the wings equidistant from the horizon."},
+        {"name": "figure 2.7 reference", "value": "Level Flight 200 KIAS (half-ground/half-sky)", "verbatim": "Figure 2.7 Level Flight 200 KIAS (half-ground/half-sky)"},
+        {"name": "airspeed change trim example", "value": "PCL retarded to slow from 200 to 120 KIAS in level flight", "verbatim": "For example, if the PCL is retarded to slow from 200 to 120 KIAS in level flight, the nose of the A/C drops to seek 200 KIAS."},
+        {"name": "pitch attitude vs airspeed", "value": "higher airspeeds require a lower nose attitude; lower airspeeds a higher nose attitude", "verbatim": "At higher airspeeds, hold the nose at a lower attitude to maintain level flight; at lower airspeeds hold the nose at a higher attitude."}
+      ],
+      "procedure_steps": [
+        "Fix reference points on the A/C in relation to the horizon and crosscheck with the EADI, altimeter, and VSI.",
+        "When straight and level, trim the A/C in all three axes.",
+        "Re-trim whenever continuous control stick or rudder pressure is required to maintain the desired attitude.",
+        "After heavy forces are trimmed off, fine tune the trim by releasing (loosening grip on) the control stick and noting the direction the nose or wings travel, then apply trim in the opposite direction."
+      ],
+      "common_errors": [
+        "A common error in straight-and-level flight is to apply force to the control stick inadvertently due to the weight of the pilot's arm.",
+        "Failing to re-trim after an airspeed change: a properly trimmed A/C is trimmed for a specific airspeed and flies at the trimmed airspeed hands-off, so changes to airspeed require additional trim input, predominantly in elevator and rudder (pitch and yaw) trim."
+      ],
+      "corrections": [
+        "Minimize inadvertent control stick force by resting the forearm on the thigh.",
+        "When slowing in level flight, hold backstick pressure to maintain level flight until nose up trim relieves the backstick pressure.",
+        "Large changes in airspeed in a short amount of time will require large changes in elevator trim and will require running the trim or holding the trim button forward or aft.",
+        "If the nose drops apply aft elevator trim; if the aircraft rolls left apply right aileron trim."
+      ],
+      "notes": "Straight-and-level flight requires almost no pressure on the controls if the A/C is properly trimmed and the air is smooth; however, when flying through turbulence, the flight attitude may change abruptly."
+    },
+    {
+      "section": "2.10",
+      "title": "TURNS",
+      "pages_pdf": [48, 49],
+      "item_mapping": ["contact-05", "instrument-04", "instrument-05"],
+      "category_hint": ["contact", "instrument"],
+      "technique_summary": "Turns involve coordination of all three controls: ailerons, rudder, and elevator. Prior to turning, clear in the direction of the turn, then simultaneously apply pressure to ailerons and the rudder in the direction of the turn; the roll rate is governed by the amount and rate of pressure applied. As bank increases, increase backpressure to compensate for the loss of vertical lift. Rollout is much the same as entry except control pressure is applied in the opposite direction; because the A/C continues to turn during the rollout, start the rollout before the desired heading.",
+      "parameters": [
+        {"name": "shallow turn", "value": "approximately 30 degrees bank or less", "verbatim": "A shallow turn is a turn of approximately 30° bank or less."},
+        {"name": "steep turn", "value": "approximately 45 to 60 degrees bank or greater", "verbatim": "A steep turn is a turn of approximately 45° to 60° bank or greater."},
+        {"name": "rollout lead point - 45 deg or greater bank", "value": "10 degrees lead", "verbatim": "As a guide, during composite flight use a 10° lead point for turns with 45° or greater bank ."},
+        {"name": "rollout lead point - less than 45 deg bank", "value": "5 degrees lead", "verbatim": "Use a 5° lead point for turns with less than 45° bank."},
+        {"name": "steep turn power", "value": "power increase required to maintain airspeed", "verbatim": "For steep turns, a power increase is required to maintain airspeed."},
+        {"name": "precision turn example", "value": "precise 90 degree turn using a road or section line", "verbatim": "To make a precise 90 degree turn, align the A/C with a road or section line on the ground, and turn perpendicular to it."}
+      ],
+      "procedure_steps": [
+        "Clear in the direction of the turn.",
+        "Simultaneously apply aileron and rudder pressure in the direction of the turn; hold control pressure constant until at the desired angle of bank.",
+        "Keep the bug spot on or near the horizon; as bank increases, increase backpressure and raise the bug spot to slightly above the horizon.",
+        "Approaching the desired angle of bank, return ailerons and rudder to neutral but maintain the increased pitch attitude to hold constant altitude.",
+        "For steep turns, add power to maintain airspeed.",
+        "To roll out, apply aileron and rudder pressure toward the high wing and release elevator pressure smoothly as bank decreases, keeping the bug spot on the horizon.",
+        "Start the rollout before the desired heading using a 10 degree lead for 45 degrees or greater bank and a 5 degree lead for less than 45 degrees bank."
+      ],
+      "common_errors": [
+        "A common error is to treat a steep turn differently from a shallow turn. The aerodynamic effects are more pronounced in a steep turn, but ultimately the same as in any turn.",
+        "Rapid and abrupt control inputs often result in excessive backpressure (causing a climb) or insufficient backpressure (causing a dive).",
+        "Constantly leaning forward, backward, or side-to-side changes the relative position of A/C references with respect to outside references.",
+        "Rolling out without lead: because the A/C normally turns as long as there is bank, the A/C continues to turn during the rollout until the wings return to the level position; the steeper the bank, the more lead is required."
+      ],
+      "corrections": [
+        "To correct nose-low (or nose-high) attitudes in a steep turn, reduce (or increase) the angle of bank with coordinated aileron and rudder pressure. Simultaneously adjust backpressure to raise (or lower) the nose to the desired pitch attitude. After attaining the desired attitude, re-establish the desired angle of bank.",
+        "As a technique, crosscheck the VSI to detect nose-low or nose-high attitudes.",
+        "Maintain a consistent position in the cockpit so outside references remain the same."
+      ],
+      "notes": "Bug spot = a point on the windscreen directly in front of the pilot that appears to pivot on the horizon. Dragging the IFF TRANSPONDER antenna across the horizon is another T-6 reference commonly used to maintain a level turn. The best outside reference for measuring bank is the angle of the horizon across the windscreen."
+    },
+    {
+      "section": "2.11",
+      "title": "ADVERSE YAW",
+      "pages_pdf": [50],
+      "item_mapping": ["contact-05", "instrument-04"],
+      "category_hint": ["contact", "instrument"],
+      "technique_summary": "Adverse yaw is the tendency of the A/C to yaw away from the direction of aileron input. Increased lift on the up-going wing causes more induced drag, which retards forward movement of that wing, resulting in the nose yawing opposite the direction of the roll. Adverse yaw is eliminated by use of the rudder: as aileron pressure is applied, simultaneously apply rudder pressure in the same direction as the desired turn, and use rudder pressure as long as the bank is changing.",
+      "parameters": [
+        {"name": "rudder pressure requirement", "value": "depends on A/C speed and amount of aileron deflection", "verbatim": "The correct amount of rudder pressure depends on the A/C speed and the amount of aileron deflection."}
+      ],
+      "procedure_steps": [
+        "As aileron pressure is applied, simultaneously apply rudder pressure in the same direction as the desired turn.",
+        "Use rudder pressure as long as the bank is changing.",
+        "Crosscheck the turn and slip indicator and keep the ball centered.",
+        "Use rudder in the same direction as aileron control stick pressure during the roll out as well as the entry."
+      ],
+      "common_errors": [
+        "Failing to use rudder with aileron, allowing the nose to yaw opposite the direction of the roll.",
+        "Aileron drag effect is present during recovery from a turn as well as during the entry; not using rudder in the roll out leaves adverse yaw uncountered."
+      ],
+      "corrections": [
+        "A common technique is to step / kick on the ball. This means to push on the rudder that is on the same side of centerline as the ball so as to put the ball back in the middle of the turn and slip indicator."
+      ],
+      "notes": null
+    },
+    {
+      "section": "2.12",
+      "title": "UNCOORDINATED FLIGHT",
+      "pages_pdf": [50, 51],
+      "item_mapping": ["contact-05", "instrument-04"],
+      "category_hint": ["contact", "instrument"],
+      "technique_summary": "In a coordinated level turn with constant bank and airspeed, the flight path of the A/C is a true circle (no wind). Variation in the circular flight path is caused by uncoordinated control, erratic bank, or changes in airspeed. A skid is caused by insufficient bank angle in relation to the turn rate; a slip is caused by too much bank angle in relation to the turn rate.",
+      "parameters": [],
+      "procedure_steps": [],
+      "common_errors": [
+        "A skid is caused by insufficient bank angle in relation to the turn rate of the A/C. Excessive bottom rudder (rudder deflection to the inside of the turn) during the turn causes a skid.",
+        "A skid also occurs in level flight if the nose of the A/C rotates sideways about the vertical axis when the wings are held level due to improper rudder input. The result is a slow turn caused by the rudder only.",
+        "Skids are dangerous due to the possibility of inadvertent roll at slow airspeeds.",
+        "A slip is caused by too much bank angle in relation to the turn rate of the A/C. When in a turn, insufficient bottom rudder pressure in relation to the aileron pressure results in a slip.",
+        "Variation in the circular flight path is also caused by uncoordinated control, erratic bank, or changes in airspeed."
+      ],
+      "corrections": [
+        "Slips are used to align the A/C with the runway for landing during crosswind conditions. Slips are also useful for increasing descent rates in certain situations."
+      ],
+      "notes": "Figure 2.8 Coordinated and Uncoordinated Flight. Source wording for the skid indication reads 'The turn-and-slip ball shows a slip by displacing to the outside of the turn' inside paragraph 2.12.2 (skid); paragraph 2.12.3 states the slip indication is the ball displacing to the inside of the turn. Recorded as printed."
+    }
+  ]
+}
