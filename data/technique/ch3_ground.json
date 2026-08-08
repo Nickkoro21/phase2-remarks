@@ -123,8 +123,7 @@
         "Accepting tire condition that is not acceptable for the planned mission."
       ],
       "corrections": [
-        "If you are unsure about the condition or operation of any system, check with qualified maintenance personnel.",
-        "The pilot in command has final authority to accept or reject an A/C."
+        "If you are unsure about the condition or operation of any system, check with qualified maintenance personnel."
       ],
       "notes": null
     },
@@ -247,7 +246,7 @@
         "Occasionally glance outside to detect possible A/C movement or signals from the crew chief.",
         "If motoring the engine before engine start is necessary, inform the crew chief and ensure the propeller area is clear (motoring may be executed with the canopy open).",
         "Inform the crew chief before activating any system (engine start, speed brake, flaps, etc.) that could endanger ground personnel; use visual signals in accordance with T-6A S.O.P. and this manual.",
-        "Wait for the crew chief to repeat the signal indicating it is safe to operate the system."
+        "The crew chief repeats the signal when it is safe to operate the system."
       ],
       "common_errors": [
         "Closing the canopy without ensuring the CFS pin storage box in the RCP is closed.",
@@ -255,10 +254,10 @@
         "Remaining head-down inside — not glancing outside to detect possible A/C movement or crew chief signals.",
         "Motoring the engine without informing the crew chief and without ensuring the propeller area is clear.",
         "Activating a system (engine start, speed brake, flaps, etc.) that could endanger ground personnel without informing the crew chief.",
-        "Operating a system before the crew chief repeats the signal indicating it is safe."
+        "Operating a system before the crew chief repeats the signal indicating it is safe. [inferred — the manual states this descriptively: \"The crew chief repeats the signal when it is safe to operate the system.\"]"
       ],
       "corrections": [],
-      "notes": null
+      "notes": "The last common error is inferred, not a recorded prohibition: 3.6.4 states descriptively that \"The crew chief repeats the signal when it is safe to operate the system.\""
     },
     {
       "section": "3.7",
@@ -385,7 +384,7 @@
         {
           "name": "taxi checklist completion point",
           "value": "first turn out of parking",
-          "verbatim": "Normally the taxi checklist including NWS, brakes, and heading, turn, or slip indicators is completed on the first turn out of parking."
+          "verbatim": "Normally, the taxi checklist including NWS, brakes, and heading, turn, or slip indicators is completed on the first turn out of parking."
         }
       ],
       "procedure_steps": [
@@ -398,6 +397,7 @@
         "To turn with NWS selected, simultaneously apply rudder in the desired direction and reduce power (normally to idle).",
         "For a sharper turn, deselect NWS (nose wheel casters freely) and use the inside brake to turn.",
         "Taxi on the centerline, or align the appropriate main wheel with the taxi line if local procedures direct staggered taxi.",
+        "Techniques to establish this stagger include aligning the taxi line just outside of the canopy rail and lining up the exhaust stack on the taxi line.",
         "Prepare for takeoff and departure while taxiing in uncongested areas (WX, winds, departure routing, NAVAID setup, takeoff emergencies), using the acronym included in the SOPs."
       ],
       "common_errors": [
@@ -637,10 +637,8 @@
         "Failing to properly execute the After Landing Checklist items when returning to Apron without taking off.",
         "Breakdown of CRM during ground egress: \"CRM is critical to a successful ground egress.\""
       ],
-      "corrections": [
-        "This procedure may be practiced even without an emergency when leaving the cockpit."
-      ],
-      "notes": "3.15.1 covers emergency ground egress; 3.15.2 covers returning to Apron without taking off. Both are unnamed numbered subparagraphs of 3.15 and are consolidated here."
+      "corrections": [],
+      "notes": "3.15.1 covers emergency ground egress; 3.15.2 covers returning to Apron without taking off. Both are unnamed numbered subparagraphs of 3.15 and are consolidated here. Training note (3.15.1): \"This procedure may be practiced even without an emergency when leaving the cockpit.\""
     }
   ]
 }

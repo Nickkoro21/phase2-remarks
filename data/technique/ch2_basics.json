@@ -91,13 +91,13 @@
       "category_hint": ["contact", "instrument"],
       "technique_summary": "Known power settings provide a useful starting point for PCL position. Starting with power settings close to the desired setting minimizes torque and propeller effects. General power settings are listed in Table 2.1; these pitch and power settings are approximate, and vary from A/C to A/C based on factors such as A/C weight, pressure altitude, and temperature. The PCL requires relatively little travel to change the power, so a small movement can result in a larger than desired power change.",
       "parameters": [
-        {"name": "level flight - 250 KIAS", "value": "250 KIAS, gear UP, flaps UP, pitch 2 deg NL, power 93%", "verbatim": "250 2°NL 93%"},
-        {"name": "level flight - 200 KIAS", "value": "200 KIAS, gear UP, flaps UP, pitch 0 deg, power 50% + altitude (see note)", "verbatim": "200 0° 50% + altitude (see note)"},
+        {"name": "level flight - 250 KIAS", "value": "250 KIAS, gear UP, flaps UP, pitch 2 deg NL, power 93%", "verbatim": "250 2°NL 93%", "reconstructed_fields": ["gear", "flaps"]},
+        {"name": "level flight - 200 KIAS", "value": "200 KIAS, gear UP, flaps UP, pitch 0 deg, power 50% + altitude (see note)", "verbatim": "200 0° 50% + altitude (see note)", "reconstructed_fields": ["gear", "flaps"]},
         {"name": "level flight - 150 KIAS", "value": "150 KIAS, gear UP, flaps UP, pitch 2 deg NH, power 32%", "verbatim": "Level Flight 150 UP UP 2°NH 32%"},
         {"name": "torque altitude correction (level flight 200 KIAS)", "value": "add MSL altitude in thousands to the torque setting", "verbatim": "NOTE: Add mean sea level (MSL) altitude (e.g., at 3,000 feet MSL, set 53% torque)."},
         {"name": "takeoff", "value": "85 KIAS, gear DOWN, flaps TO, pitch 7-10 deg NH", "verbatim": "Takeoff 85 DOWN TO 7-10°NH"},
-        {"name": "climb - 180 KIAS", "value": "180 KIAS, gear UP, flaps UP, pitch 8 deg NH, power MAX", "verbatim": "180 8°NH"},
-        {"name": "climb - 160 KIAS", "value": "160 KIAS, gear UP, flaps UP, pitch 10 deg NH, power MAX", "verbatim": "160 10°NH"},
+        {"name": "climb - 180 KIAS", "value": "180 KIAS, gear UP, flaps UP, pitch 8 deg NH, power MAX, other ±1% per 1,000 feet", "verbatim": "180 8°NH", "reconstructed_fields": ["gear", "flaps", "power", "other"]},
+        {"name": "climb - 160 KIAS", "value": "160 KIAS, gear UP, flaps UP, pitch 10 deg NH, power MAX, other ±1% per 1,000 feet", "verbatim": "160 10°NH", "reconstructed_fields": ["gear", "flaps", "power", "other"]},
         {"name": "climb - 140 KIAS", "value": "140 KIAS, gear UP, flaps UP, pitch 12 deg NH, power MAX, other ±1% per 1,000 feet", "verbatim": "Climb 140 UP UP 12°NH MAX ±1% per 1,000 feet"},
         {"name": "Table 2.1 legend", "value": "NH = nose high, NL = nose low, TO = takeoff flaps, MAX = maximum", "verbatim": "LEGEND: NH—nose high NL—nose low TO—takeoff flaps MAX—maximum"},
         {"name": "Table 2.1 columns", "value": "ITEM / Maneuver / Airspeed / Gear / Flaps / Pitch / Power / Other", "verbatim": "A B C D E F G ITEM Maneuver Airspeed Gear Flaps Pitch Power Other"}
@@ -115,7 +115,7 @@
         "One technique for precise power control is to hold the left hand fixed against the fuselage wall and modulate the PCL with only the fingertips.",
         "Because torque is computer controlled, the torque may change slightly after the PCL is set."
       ],
-      "notes": "Table 2.1 cell alignment was reconstructed from the linear text extraction (merged 'Level Flight' and 'Climb' maneuver cells span rows 1-3 and 5-7 respectively). Row values (airspeed/pitch/power) are verbatim."
+      "notes": "Table 2.1 cell alignment was reconstructed from the linear text extraction (merged 'Level Flight' and 'Climb' maneuver cells span rows 1-3 and 5-7 respectively). The 'verbatim' field of each row contains only what is printed on that row; fields carried over from the merged cells of the block are listed per parameter in 'reconstructed_fields'. For the Level Flight block gear/flaps are merged (printed on row 3) while Power is per-row; for the Climb block gear/flaps/power/other are merged (printed on row 7)."
     },
     {
       "section": "2.3.4",
@@ -180,6 +180,19 @@
         "Apply control pressure smoothly and evenly."
       ],
       "notes": null
+    },
+    {
+      "section": "2.6",
+      "title": "POWER AND TORQUE EFFECTS",
+      "pages_pdf": [42],
+      "item_mapping": [],
+      "category_hint": ["contact", "instrument"],
+      "technique_summary": "Section header grouping the power and torque effects of the T-6's single-engine, propeller-driven configuration: slipstream effect, P-factor, torque, and gyroscopic effect.",
+      "parameters": [],
+      "procedure_steps": [],
+      "common_errors": [],
+      "corrections": [],
+      "notes": "Section header only; content in 2.6.1-2.6.4."
     },
     {
       "section": "2.6.1",
@@ -321,7 +334,7 @@
       ],
       "common_errors": [
         "A common error in straight-and-level flight is to apply force to the control stick inadvertently due to the weight of the pilot's arm.",
-        "Failing to re-trim after an airspeed change: a properly trimmed A/C is trimmed for a specific airspeed and flies at the trimmed airspeed hands-off, so changes to airspeed require additional trim input, predominantly in elevator and rudder (pitch and yaw) trim."
+        "Failing to re-trim after an airspeed change: a properly trimmed A/C is trimmed for a specific airspeed and flies at the trimmed airspeed hands-off, so changes to airspeed require additional trim input potentially in all three axes, but predominantly in elevator and rudder (pitch and yaw) trim."
       ],
       "corrections": [
         "Minimize inadvertent control stick force by resting the forearm on the thigh.",
@@ -353,10 +366,11 @@
         "Approaching the desired angle of bank, return ailerons and rudder to neutral but maintain the increased pitch attitude to hold constant altitude.",
         "For steep turns, add power to maintain airspeed.",
         "To roll out, apply aileron and rudder pressure toward the high wing and release elevator pressure smoothly as bank decreases, keeping the bug spot on the horizon.",
-        "Start the rollout before the desired heading using a 10 degree lead for 45 degrees or greater bank and a 5 degree lead for less than 45 degrees bank."
+        "Start the rollout before the desired heading using a 10 degree lead for 45 degrees or greater bank and a 5 degree lead for less than 45 degrees bank.",
+        "For a precision turn, align the A/C with a road or section line on the ground and turn perpendicular to it; in the absence of a ground reference, pick a point on the horizon directly off a wingtip."
       ],
       "common_errors": [
-        "A common error is to treat a steep turn differently from a shallow turn. The aerodynamic effects are more pronounced in a steep turn, but ultimately the same as in any turn.",
+        "A common error is to treat a steep turn differently from a shallow turn. The aerodynamic effects are more pronounced in a steep turn, but ultimately the same as in any turn. The difference between steep turns and shallow turns is the amount of back stick pressure and power needed to maintain level flight.",
         "Rapid and abrupt control inputs often result in excessive backpressure (causing a climb) or insufficient backpressure (causing a dive).",
         "Constantly leaning forward, backward, or side-to-side changes the relative position of A/C references with respect to outside references.",
         "Rolling out without lead: because the A/C normally turns as long as there is bank, the A/C continues to turn during the rollout until the wings return to the level position; the steeper the bank, the more lead is required."
@@ -407,6 +421,7 @@
         "A skid also occurs in level flight if the nose of the A/C rotates sideways about the vertical axis when the wings are held level due to improper rudder input. The result is a slow turn caused by the rudder only.",
         "Skids are dangerous due to the possibility of inadvertent roll at slow airspeeds.",
         "A slip is caused by too much bank angle in relation to the turn rate of the A/C. When in a turn, insufficient bottom rudder pressure in relation to the aileron pressure results in a slip.",
+        "A slip can be induced by holding opposite rudder in a turn.",
         "Variation in the circular flight path is also caused by uncoordinated control, erratic bank, or changes in airspeed."
       ],
       "corrections": [

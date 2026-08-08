@@ -148,8 +148,7 @@
         "Failure to positively confirm completion of all checklists.",
         "Treating a '(BOTH)' item as complete without receiving a proper response from the PNF.",
         "Starting a new checklist before completing the previous one.",
-        "Giving lip service to performing a checklist when using a standardized phrase or mnemonic instead of actually performing the checklist item or required check.",
-        "Referring to the checklist during critical phases of flight (not necessary)."
+        "Giving lip service to performing a checklist when using a standardized phrase or mnemonic instead of actually performing the checklist item or required check."
       ],
       "corrections": [
         "Execute a few items from memory then reference the checklist page to verify completion; or complete the entire checklist and then refer back to it to verify completion.",
@@ -222,7 +221,7 @@
         "Attempting to completely eliminate risk rather than matching risk to the mission."
       ],
       "corrections": [],
-      "notes": "The manual's six CRM skills map directly onto the CRM row of every category gradesheet."
+      "notes": "The manual's six CRM skills map directly onto the CRM row of every category gradesheet. The manual prints 'permission analysis and planning' at 1.8.1.f; read as 'mission analysis' (apparent typo)."
     },
     {
       "section": "1.9",
@@ -476,6 +475,7 @@
         "The PF relinquishing control says, 'You have the A/C.'",
         "The PNF assumes control, says 'I have the A/C,' and noticeably shakes the control stick.",
         "The order may be reversed as the AC always retains the authority to take A/C control when required; if the AC as PNF says 'I have the A/C' and noticeably shakes the control stick, the PF must immediately relinquish control and say 'You have the A/C.'",
+        "The order of transfer is less important than each crewmember executing his/her role in accordance with the procedures listed.",
         "In the event of intercom failure, the PF signals the desire to relinquish A/C control by smoothly pushing the rudder pedals in a back and forth motion, and the PNF assumes control by vigorously shaking the control stick. As a technique, the pilot relinquishing control raises both hands in the air for the other pilot to see, either directly from the RCP or using mirrors from the FCP.",
         "Never relinquish control of the A/C until the other pilot has positively assumed control (shaken the control stick).",
         "Do not hesitate to relinquish control when directed by the IP.",
@@ -499,7 +499,7 @@
       "section": "1.16",
       "title": "Clearing",
       "pages_pdf": [26, 27, 28, 29, 30],
-      "item_mapping": ["contact-36", "formation-33", "vfr_navigation-21"],
+      "item_mapping": ["contact-36", "formation-33", "vfr_navigation-21", "instrument-30"],
       "category_hint": ["contact", "formation", "vfr_navigation", "instrument"],
       "technique_summary": "Each crewmember is responsible for collision avoidance regardless of rank, experience, or cockpit position, whether IFR or VFR. The two primary tools for clearing in the T-6 are eyes and radios. ATC shares A/C separation responsibility with the pilot and provides separation between IFR and participating VFR A/C operating in controlled airspace; the use of radar monitoring, assigned flying areas, or ATC separation can assist in but does not relieve pilots of the responsibility to clear. Visual detection is the most important factor in clearing for other A/C.",
       "parameters": [
@@ -513,7 +513,7 @@
         "Visual Scanning. Search an area with an arc of approximately 20-30° at a time and focus on a distant point within the arc for 3-5 seconds; after crosschecking instruments, refocus on a distant point.",
         "Heading Changes. On a collision course another A/C appears stationary in the canopy and is difficult to see; slight heading changes create the relative movement required for detection. Most effective when ATC provides traffic alerts for A/C not acquired visually.",
         "Wing Flashes. When an A/C is known to be close but not visually acquired, a wing flash or rock can create the necessary movement for detection.",
-        "Radio. Use position reports or position information to narrow visual clearing efforts to specific quadrants.",
+        "Radio. Use position reports or position information to narrow visual clearing efforts to specific quadrants. Knowledge of local area traffic can also cue crewmembers to the most likely areas of potential conflict.",
         "If the PNF sees a hazard, point it out immediately to the PF (for example, 'traffic, right 2 o'clock low, tracking right to left').",
         "If time is critical and collision is imminent, the PNF should take control of the A/C and avoid the hazard, ensuring the intended flight path is well clear of other A/C (500 feet minimum).",
         "Be aware of the restrictions to visibility created by the canopy bows.",
@@ -542,7 +542,7 @@
       "section": "1.17",
       "title": "G-Awareness",
       "pages_pdf": [30],
-      "item_mapping": ["contact-06"],
+      "item_mapping": ["contact-06", "formation-35"],
       "category_hint": ["contact", "formation"],
       "technique_summary": "The T-6 is flown in a variety of flight regimes that result in rapidly changing G-forces. To avoid grey out, blackout, or G-induced loss of consciousness (GLOC) an effective anti-G straining manoeuvre is essential. Physical fitness, adequate rest, and proper hydration can improve G-tolerance.",
       "parameters": [],
@@ -559,7 +559,7 @@
       "section": "1.17.1",
       "title": "Anti-G Straining Manoeuvre (AGSM)",
       "pages_pdf": [30],
-      "item_mapping": ["contact-06"],
+      "item_mapping": ["contact-06", "formation-35"],
       "category_hint": ["contact", "formation"],
       "technique_summary": "Accomplish the AGSM by firmly contracting muscles of the legs, abdomen, and chest. As the amount of G increases, increase the intensity of the strain, and attempt to exhale through a closed airway. Continue to strain and simultaneously breathe approximately every 2 to 3 seconds. Think of the AGSM as a continuum: as the amount of G increases, increase the intensity of the strain and pay careful attention to proper breathing technique.",
       "parameters": [
@@ -588,7 +588,7 @@
       "section": "1.17.2",
       "title": "AGSM Effectiveness",
       "pages_pdf": [30, 31],
-      "item_mapping": ["contact-06"],
+      "item_mapping": ["contact-06", "formation-35"],
       "category_hint": ["contact", "formation"],
       "technique_summary": "It is important to start the AGSM before the onset of G-forces and maintain the strain throughout the period of increased G-loading. The amount of strain required varies with the amount of applied G-force. An effective AGSM uses full muscle contraction and keeps constant breathing cycles. Lower-G situations still require all elements of a full AGSM, but at a lower level of strain intensity.",
       "parameters": [],
@@ -610,7 +610,7 @@
       "section": "1.17.3",
       "title": "AGSM Demonstration",
       "pages_pdf": [31],
-      "item_mapping": ["contact-06"],
+      "item_mapping": ["contact-06", "formation-35"],
       "category_hint": ["contact", "formation"],
       "technique_summary": "The AGSM demonstration allows practice of the anti-G strain technique and familiarization with increased G-loading in a controlled setting. The demonstration consists of a series of turns, each at a constant G-level, with a break between turns for critique and rest. The manoeuvre is flown at gradually increasing G-levels, starting at 2 Gs and increasing to 4 Gs, depending on proficiency.",
       "parameters": [
@@ -635,7 +635,7 @@
       "section": "1.17.4",
       "title": "G-Awareness Exercise",
       "pages_pdf": [31],
-      "item_mapping": ["contact-06"],
+      "item_mapping": ["contact-06", "formation-35"],
       "category_hint": ["contact", "formation"],
       "technique_summary": "Accomplish a G-awareness exercise on sorties that include manoeuvres that require or may result in 3 or more Gs. It should be a level or slightly descending turn, using maximum power, begun with sufficient airspeed to sustain 4 Gs. The G-onset rate should be slow and smooth, allowing sufficient time to evaluate the effectiveness of the AGSM and determine G-tolerance.",
       "parameters": [
@@ -751,10 +751,12 @@
       "corrections": [
         "Fly the A/C first: 'Aviate - Navigate - Communicate.'",
         "Set power and trim to help maintain control.",
+        "In many cases the proper actions are clear; however, alternate courses of action may exist depending on the nature of the emergency, flight conditions, and pilot proficiency.",
         "Use ATC to identify suitable recovery airfields, find required frequencies, alert emergency response assets, identify hazardous weather, or help find a chase ship.",
         "Use the SOF to read checklists, reference the flight manual, check calculations, identify potential chase ships, or offer advice on course of action and recovery plans.",
         "Use a chase ship to lead A/C with instrument malfunctions through weather, provide ground-expert-like assistance, clear for a task saturated emergency A/C, handle communications with ATC, or inspect A/C areas which cannot be seen from either cockpit.",
-        "The PNF shall consult the checklist, monitor systems, provide advice, and maintain situational awareness on the nearest suitable landing field."
+        "The PNF shall consult the checklist, monitor systems, provide advice, and maintain situational awareness on the nearest suitable landing field.",
+        "The flight crew checklist, in-flight guide, flight information handbook, or other flight information publications (FLIP) can contain useful information."
       ],
       "notes": "Flight manual landing definitions: Land As Soon As Possible — declare an emergency and land at the nearest suitable landing area considering severity of the emergency, weather conditions, field facilities, ambient lighting, and command guidance. Land As Soon As Practical — emergency conditions are less urgent; the mission is to be terminated but an immediate landing may not be necessary. Suitable Landing Area — a hard surface runway, taxiway, or under/overrun; landing on an unprepared surface or ditching is not recommended. The A/C commander determines who flies the A/C based on pilot workload and the experience level and ability of both pilots."
     },

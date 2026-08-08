@@ -1,0 +1,1175 @@
+{
+  "chunk": "ch5_patterns",
+  "source": "T-6A Techniques and Procedures Manual (I.N. T-6A 02/14, Change 9 Jul 22)",
+  "sections": [
+    {
+      "section": "5.1",
+      "title": "INTRODUCTION",
+      "pages_pdf": [64],
+      "item_mapping": ["contact-22"],
+      "category_hint": ["contact", "vfr_navigation", "formation"],
+      "technique_summary": "In any traffic pattern the runway is the primary visual reference. Each airfield has specific procedures designed to help prevent conflicts, assign traffic priority, and maximize training.",
+      "parameters": [],
+      "procedure_steps": [
+        "Use the runway as the primary visual reference in any traffic pattern.",
+        "Fly the airfield-specific procedures that prevent conflicts, assign traffic priority, and maximize training."
+      ],
+      "common_errors": [],
+      "corrections": [],
+      "notes": "Chapter-opening paragraph; no numeric parameters."
+    },
+    {
+      "section": "5.2",
+      "title": "LETDOWN AND TRAFFIC ENTRY",
+      "pages_pdf": [64],
+      "item_mapping": ["contact-21", "vfr_navigation-14", "formation-05"],
+      "category_hint": ["contact", "vfr_navigation", "formation"],
+      "technique_summary": "Objective: descend and enter the traffic pattern. Letdown is the transition from the enroute structure to the traffic pattern. In busy environments detailed procedures are used for traffic sequencing and deconfliction. Strive to make all radio calls at the proper location; however, if deviations occur, always report actual location.",
+      "parameters": [
+        {"name": "letdown airspeed", "value": "200 to 250 KIAS", "verbatim": "Airspeed - 200 to 250 KIAS in accordance with local directives."},
+        {"name": "power / speed brake", "value": "as required", "verbatim": "Power - As required. Speed brake as required."},
+        {"name": "pitch", "value": "as required for altitude restrictions", "verbatim": "Pitch - As required to meet altitude restrictions."},
+        {"name": "crosswind estimation rule", "value": "60 to 1 rule", "verbatim": "Use the 60 to 1 rule to determine crosswind component (crosswind = airspeed in miles per minute time multiplied by drift correction in degrees equals crab)."},
+        {"name": "headwind estimation", "value": "GPS groundspeed minus IAS", "verbatim": "The difference between GPS groundspeed and indicated airspeed is approximately equal to the headwind component."}
+      ],
+      "procedure_steps": [
+        "Comply with published routing and altitude restrictions.",
+        "Monitor ATIS, if available.",
+        "Clear pattern entry route.",
+        "Set UHF/VHF to proper frequencies.",
+        "Consider surface wind effects on pattern and landing; anticipate crab and crosswind control requirements."
+      ],
+      "common_errors": [
+        "Making radio calls at other than the proper location without reporting the actual location.",
+        "Assuming surface winds equal winds at pattern altitude ('Surface winds may differ from winds at pattern altitude')."
+      ],
+      "corrections": [
+        "If deviations occur, always report actual location.",
+        "Use clearing turns during VMC letdown to improve clearing, control of descent rate, and focus on outside visual references.",
+        "Use crab or drift correction and GPS groundspeed, at pattern altitude, to estimate pattern winds."
+      ],
+      "notes": "Drift correction is defined as the number of degrees off runway heading required to maintain constant ground track."
+    },
+    {
+      "section": "5.3",
+      "title": "A/C CONFIGURATION",
+      "pages_pdf": [65, 66],
+      "item_mapping": ["contact-23", "contact-24", "contact-29"],
+      "category_hint": ["contact"],
+      "technique_summary": "Three configurations are used in the T-6 and the same glide path is used for all flap settings. Touch-and-go landings are practiced at any flap setting; normally full stop landings are performed with flaps at Landing (LDG). Each configuration has its own base-turn and final airspeeds, and in gusty winds one-half the gust (max 10 KIAS) is added to final approach and touchdown speeds.",
+      "parameters": [
+        {"name": "gust correction (all configurations)", "value": "+1/2 gust, max 10 KIAS", "verbatim": "When flying in gusty winds, add one-half the gust up to a maximum of 10 KIAS to final approach and touchdown speeds."},
+        {"name": "Gear Down / Flaps LDG - base turn", "value": "110 KIAS minimum", "verbatim": "Base turn - 110 KIAS minimum (no less than ON-SPEED AOA indication)."},
+        {"name": "Gear Down / Flaps LDG - final airspeed", "value": "100 KIAS", "verbatim": "Final airspeed - 100 KIAS."},
+        {"name": "LDG flaps - runway length criterion", "value": "80 % of runway length", "verbatim": "LDG flaps should be used for full stop landings when landing distance is equal to or greater than 80 % of runway length."},
+        {"name": "LDG flaps - training crosswind limit", "value": "10 KIAS", "verbatim": "Landing flaps should not be used in the training environment for landings with crosswinds greater than 10 KIAS because of the potential stresses the side loads impart on the landing gear."},
+        {"name": "LDG flaps - emergency crosswind limit", "value": "25 KIAS", "verbatim": "If an emergency exists, the crosswind limit for land flaps is 25 KIAS."},
+        {"name": "Gear Down / Flaps TO - base turn", "value": "115 KIAS minimum", "verbatim": "Base turn - 115 KIAS minimum (no less than ON-SPEED AOA indication)."},
+        {"name": "Gear Down / Flaps TO - final airspeed", "value": "105 KIAS", "verbatim": "Final airspeed - 105 KIAS."},
+        {"name": "TO flaps - normal use", "value": "touch-and-go landings; full stop if landing distance not a factor", "verbatim": "Normally used for touch-and-go landings. May also be used for full stop landings if landing distance not a factor."},
+        {"name": "TO flaps - crosswind use", "value": "10 knot or greater crosswind", "verbatim": "Normally used for full stop landings with 10 knot or greater crosswind. May be used for full stop landing gusty winds."},
+        {"name": "Gear Down / Flaps UP - base turn", "value": "120 KIAS minimum", "verbatim": "Base turn - 120 KIAS minimum (no less than ON-SPEED AOA indication)."},
+        {"name": "Gear Down / Flaps UP - final airspeed", "value": "110 KIAS", "verbatim": "Final airspeed - 110 KIAS."},
+        {"name": "Flaps UP - crosswind use", "value": "greater than 20 KIAS", "verbatim": "May be used for full stop landings with high crosswinds (greater than 20 KIAS) if landing distance is not a factor."}
+      ],
+      "procedure_steps": [
+        "Select the configuration appropriate to landing distance required, crosswind, and gust conditions.",
+        "Fly the base-turn and final airspeeds for the selected configuration, never slower than ON-SPEED AOA indication.",
+        "In gusty winds add one-half the gust (max 10 KIAS) to final approach and touchdown speeds."
+      ],
+      "common_errors": [
+        "Using LDG flaps in gusty wind conditions ('Not recommended in gusty wind conditions').",
+        "Using LDG flaps in the training environment with crosswinds greater than 10 KIAS.",
+        "Flying the configuration airspeed while slower than ON-SPEED AOA indication."
+      ],
+      "corrections": [
+        "Cross-check airspeed with AOA; never fly slower than the ON-SPEED AOA indication in the base turn."
+      ],
+      "notes": "Aerodynamic comparison given by the manual: LDG flaps generate significantly more drag than TO flaps and require the lowest pitch attitude and highest power setting of the three configurations to maintain level flight; LDG flaps decrease stall speed and reduce landing distance. TO flaps give slightly less lift but much less drag, providing the highest lift-to-drag ratio, with slightly higher stall speed and slightly longer landing distance than LDG flaps. Flaps UP generates the lowest amount of lift, requires the lowest power but the highest pitch attitude, has a stall speed higher than TO flaps and a significantly longer landing distance than LDG or TO flaps."
+    },
+    {
+      "section": "5.4",
+      "title": "OVERHEAD PATTERN AND LANDING",
+      "pages_pdf": [66, 68, 69],
+      "item_mapping": ["contact-22", "contact-23", "vfr_navigation-18"],
+      "category_hint": ["contact", "vfr_navigation"],
+      "technique_summary": "The 360-degree overhead pattern is used to safely accommodate a maximum number of A/C with minimum congestion. Pattern spacing is adjusted for wind conditions. Figure 5.1 depicts the normal traffic pattern and Table 5.1 lists the overhead pattern parameters for each of the three configurations.",
+      "parameters": [
+        {"name": "pattern type", "value": "360 degree overhead", "verbatim": "The 360° overhead pattern is used to safely accommodate a maximum number of A/C with minimum congestion."},
+        {"name": "gear extension speed (Figure 5.1)", "value": "below 147 KIAS", "verbatim": "Lower gear below 147KIAS"},
+        {"name": "downwind deceleration (Figure 5.1)", "value": "120 KIAS minimum", "verbatim": "Slow to 120KIAS minimum"},
+        {"name": "final turn minimum by configuration (Figure 5.1)", "value": "120 (UP) / 115 (TO) / 110 (LDG)", "verbatim": "120 (UP) 115(TO) 110(LDG) In turn, No slower than On-speed AOA"},
+        {"name": "Table 5.1 - downwind KIAS (min)", "value": "120", "verbatim": "DOWNWIND 1 KIAS (min) 120"},
+        {"name": "Table 5.1 - downwind torque", "value": "30-35%", "verbatim": "2 Torque 30-35%"},
+        {"name": "Table 5.1 - downwind pitch attitude (level flight)", "value": "1/4 ground, 3/4 sky (LDG and TO); spinner on horizon (UP)", "verbatim": "3 Pitch attitude (level flight) 1/4 ground, 3/4 sky | 1/4 ground, 3/4 sky | Spinner on horizon"},
+        {"name": "Table 5.1 - final turn KIAS", "value": "110 / 115 / 120 minimum (LDG / TO / UP)", "verbatim": "FINAL TURN 5 KIAS 110 Minimum (No less than ON – SPEED AOA Indicator) | 115 Minimum | 120 Minimum"},
+        {"name": "Table 5.1 - final turn torque", "value": "approx 18% (LDG) / 15% (TO) / 12% (UP)", "verbatim": "6 Torque Approx 18% | Approx 15% | Approx 12%"},
+        {"name": "Table 5.1 - final turn pitch attitude", "value": "2/3 ground 1/3 sky (LDG, TO); 1/2 ground 1/2 sky (UP)", "verbatim": "8 Pitch Attitude 2/3 Ground, 1/3 sky | 2/3 Ground, 1/3 sky | ½ Ground, ½ sky"},
+        {"name": "Table 5.1 - final KIAS (min)", "value": "100 / 105 / 110 (or AOA)", "verbatim": "FINAL 9 KIAS (Min)(Note 1) 100 (or AOA) | 105 (or AOA) | 110 (or AOA)"},
+        {"name": "Table 5.1 - final torque", "value": "approx 16-18% / 14-16% / 12-14%", "verbatim": "10 Torque Approx 16-18% | Approx 14-16% | Approx 12-14%"},
+        {"name": "Table 5.1 - final pitch attitude", "value": "aim point 1/2 upwind screen (LDG, TO); 1/3 upwind screen (UP)", "verbatim": "11 Pitch Attitude Aim point 1/2 upwind screen | Aim point 1/2 upwind screen | Aim point 1/3 upwind screen"},
+        {"name": "Table 5.1 - touchdown KIAS target", "value": "80 / 85 / 90", "verbatim": "TOUCHDOWN 13 KIAS (Note1- 2) Target 80 | 85 | 90"},
+        {"name": "Table 5.1 - touchdown KIAS range", "value": "75-90 / 80-95 / 85-100", "verbatim": "Range 75-90 | 80-95 | 85-100"},
+        {"name": "Table 5.1 - target touchdown zone", "value": "500-1000 feet down (LDG, TO); 500-1500 feet down (UP)", "verbatim": "14 Target touchdown zone (Note 3) 500-1000 feet down | 500-1000 feet down | 500-1500 feet down"},
+        {"name": "Table 5.1 Note 1 - gust correction", "value": "+1/2 gust up to 10 KIAS", "verbatim": "1. Add ½ the gust component up to 10 KIAS to final approach speeds."},
+        {"name": "Table 5.1 Note 2 - speed increments", "value": "weight, crosswind, OAT", "verbatim": "2. Factors such as A/C weight, crosswind and outside air temperature may increase these speeds slightly."}
+      ],
+      "procedure_steps": [
+        "Adjust pattern spacing for wind conditions.",
+        "Fly the configuration-specific airspeeds, torque settings, and pitch pictures of Table 5.1 at downwind, final turn, final, and touchdown.",
+        "Plan the touchdown in the target touchdown zone for the configuration flown."
+      ],
+      "common_errors": [
+        "Routinely landing in the first few feet or 1.000 feet down the runway ('This does not mean that routinely landing in the first few feet or 1.000 feet down the runway is acceptable')."
+      ],
+      "corrections": [
+        "Select a proper touchdown point that has an adequate safety margin against landing short, yet allows the A/C to easily stop within the available runway."
+      ],
+      "notes": "Section number taken from the manual Table of Contents (5.4 OVERHEAD PATTERN AND LANDING); in the body of the manual this paragraph is unnumbered and the following paragraph is misnumbered '5.4. Initial Point (IP)'. Row 4 of Table 5.1, 'Runway spacing (No wind)', carries no readable value in the extracted PDF text (the cell content is graphical); the corresponding information is given in 5.7.3.4: 'No wind spacing is approximately 1/2 mile.'"
+    },
+    {
+      "section": "5.5",
+      "title": "INITIAL POINT (IP)",
+      "pages_pdf": [66, 67],
+      "item_mapping": ["contact-22", "vfr_navigation-18"],
+      "category_hint": ["contact", "vfr_navigation"],
+      "technique_summary": "Objective: align the A/C with the landing runway. The IP is flown level at pattern altitude prescribed by the local LAP with pitch as required for level flight.",
+      "parameters": [
+        {"name": "IP airspeed", "value": "200 KIAS", "verbatim": "Airspeed: 200 KIAS."},
+        {"name": "IP power", "value": "50 percent + 1 percent per 1,000 feet MSL", "verbatim": "Power: 50 percent + 1 percent per 1,000 feet MSL altitude."},
+        {"name": "IP pitch", "value": "as required for level flight", "verbatim": "Pitch: As required for level flight."},
+        {"name": "IP altitude", "value": "per local LAP", "verbatim": "Altitude: Fly the pattern as described in the local LAP."}
+      ],
+      "procedure_steps": [
+        "Align the A/C with the landing runway.",
+        "Set 200 KIAS with power of 50 percent plus 1 percent per 1,000 feet MSL altitude.",
+        "Hold pattern altitude as described in the local LAP with pitch as required for level flight."
+      ],
+      "common_errors": [],
+      "corrections": [],
+      "notes": "Numbered 5.4 in the body of the manual but 5.5 (I.P.) in the Table of Contents; the pitch and altitude sub-paragraphs appear in the body under the 5.5 'Break' heading."
+    },
+    {
+      "section": "5.6",
+      "title": "BREAK",
+      "pages_pdf": [67],
+      "item_mapping": ["contact-22", "vfr_navigation-18"],
+      "category_hint": ["contact", "vfr_navigation"],
+      "technique_summary": "Objective: transition from IP to downwind by a 180-degree level decelerating turn. Clear in the direction of turn, smoothly roll into 45 to 60 degrees of bank while adjusting the PCL, and fly a level decelerating turn to inside downwind, trimming control stick forces as airspeed decreases.",
+      "parameters": [
+        {"name": "break airspeed schedule", "value": "200 KIAS to 120-147 KIAS", "verbatim": "Airspeed - Slow from 200 KIAS to 120-147 KIAS."},
+        {"name": "break power", "value": "approximately 10 %", "verbatim": "Power - As required (approximately 10 %)."},
+        {"name": "FCP visual reference", "value": "drag IFF antenna across horizon", "verbatim": "FCP visual reference - Drag IFF antenna across horizon."},
+        {"name": "break zone", "value": "approach end to 3.000 feet down the runway", "verbatim": "The break zone is between the approach end and 3.000 feet down the runway."},
+        {"name": "bank angle", "value": "45° to 60°", "verbatim": "Smoothly roll into 45° to 60° of bank and simultaneously adjust the PCL as required (approximately 10 %)."},
+        {"name": "inside downwind speed", "value": "120-147 KIAS", "verbatim": "On inside downwind continue to slow to 120-147 KIAS."},
+        {"name": "late break airspeed", "value": "200 KIAS until break", "verbatim": "If required to break beyond normal break point, maintain airspeed (200 KIAS) until you break and lower gear at mid-field downwind to aid traffic pattern spacing."}
+      ],
+      "procedure_steps": [
+        "Clear in the direction of turn.",
+        "Smoothly roll into 45 to 60 degrees of bank and simultaneously adjust the PCL as required (approximately 10 %).",
+        "Fly a level, decelerating 180-degree turn to inside downwind, trimming control stick forces as airspeed decreases.",
+        "On inside downwind continue to slow to 120-147 KIAS.",
+        "If breaking beyond the normal break point, maintain 200 KIAS until the break and lower the gear at mid-field downwind."
+      ],
+      "common_errors": [
+        "Breaking outside the break zone without adjusting for wind conditions and traffic spacing.",
+        "Failing to vary angle of bank and backpressure with wind conditions ('Angle of bank and backpressure vary with wind conditions')."
+      ],
+      "corrections": [
+        "Adjust the actual break point for wind conditions and traffic spacing; tower controllers may direct a break at a certain point within or outside the break zone."
+      ],
+      "notes": null
+    },
+    {
+      "section": "5.7",
+      "title": "DOWNWIND",
+      "pages_pdf": [67, 68],
+      "item_mapping": ["contact-22", "contact-23", "vfr_navigation-18"],
+      "category_hint": ["contact", "vfr_navigation"],
+      "technique_summary": "Objective: maintain proper spacing and a ground track parallel to the runway. Apply drift correction and offset the inside/closed downwind ground track into the wind to account for the effects of wind on the final turn. Arrive at the perch point at 120 KIAS minimum, properly configured and ready to perform a planned 30-degree bank final turn.",
+      "parameters": [
+        {"name": "downwind airspeed", "value": "120 KIAS minimum", "verbatim": "Description. Airspeed - 120 KIAS minimum."},
+        {"name": "gear clear call speed gate", "value": "below 147 KIAS", "verbatim": "On downwind, with airspeed below 147 KIAS, make an inter-cockpit \"gear clear\" call and pause momentarily before moving the gear handle."},
+        {"name": "downwind torque", "value": "approximately 30-35% Torque", "verbatim": "Adjust power (approximately 30-35% Torque) to maintain airspeed (120 KIAS minimum) and pattern altitude."},
+        {"name": "no-wind spacing", "value": "approximately 1/2 mile", "verbatim": "No wind spacing is approximately ½ mile."},
+        {"name": "drift correction on downwind", "value": "approximately twice that used on initial", "verbatim": "Drift correction is approximately twice the correction used on initial."},
+        {"name": "planned final turn bank", "value": "30° bank", "verbatim": "Arrive at perch point at 120 KIAS minimum, properly configured and ready to perform a planned 30° bank final turn."}
+      ],
+      "procedure_steps": [
+        "With airspeed below 147 KIAS, make the inter-cockpit 'gear clear' call and pause momentarily before moving the gear handle.",
+        "Lower the landing gear abeam tower (and flaps at AOA approach) and trim for zero control forces (hands off).",
+        "Adjust power (approximately 30-35% torque) to maintain 120 KIAS minimum and pattern altitude.",
+        "Adjust spacing and perch point for winds; no-wind spacing is approximately 1/2 mile."
+      ],
+      "common_errors": [
+        "Not applying drift correction / not offsetting the inside or closed downwind ground track into the wind for the effects of wind on the final turn.",
+        "Arriving at the perch point slow, not properly configured, or not trimmed."
+      ],
+      "corrections": [
+        "Trim for zero control forces (hands off) after lowering the gear.",
+        "Adjust spacing and perch point for winds; see Table 5.1 for visual references."
+      ],
+      "notes": "On student pre-solo contact sorties the IP must acknowledge the 'gear clear' call with clear before the student pilot lowers the gear; on all other sorties gear clear is an advisory call only."
+    },
+    {
+      "section": "5.8",
+      "title": "PERCH AND FINAL TURN",
+      "pages_pdf": [69, 70, 71],
+      "item_mapping": ["contact-23", "vfr_navigation-18"],
+      "category_hint": ["contact", "vfr_navigation"],
+      "technique_summary": "Objective: use a descending 180-degree turn to align the A/C with the runway; the final turn is complete when wings level on final. For no-wind conditions the desired perch point occurs when the touchdown point is at approximately 45 degrees off the shoulder. Start the final turn by adjusting power, lowering the nose, and rolling into 30 degrees of bank, planning to roll out on extended runway centerline approximately 1/2 to 3/4 mile from the runway on a 3- to 4-degree glidepath.",
+      "parameters": [
+        {"name": "perch point reference", "value": "touchdown point approximately 45° off shoulder", "verbatim": "For a no-wind contitions, the desired perch point occurs when the touchdown point is at approximately 45° off your shoulder (Figure 5.2.)."},
+        {"name": "planned final turn bank", "value": "30° of bank", "verbatim": "Start the final turn by adjusting power, lowering the nose of the A/C, and rolling into 30° of bank."},
+        {"name": "maximum bank in final turn", "value": "up to 45° acceptable; do not exceed approximately 45°", "verbatim": "Plan to use no more than 30° of bank in the final turn. While up to 45° of bank is acceptable if required, caution must be exercised as stall speed increases with increasing bank angle. Do not exceed approximately 45° bank during final turn."},
+        {"name": "go-around bank criterion", "value": "greater than 45° bank required", "verbatim": "If bank required to complete the final turn is greater than 45°, initiate a go around."},
+        {"name": "final length", "value": "1/2 to 3/4 mile", "verbatim": "Begin final turn (perch point) to allow for a ½ to ¾ mile final."},
+        {"name": "rollout point and glidepath", "value": "approximately 1/2 to 3/4 mile, 3-to-4-degree glidepath", "verbatim": "Roll out on extended RWY centerline approximately ½ to ¾ mile from the runway on a 3-to 4-degree glidepath."},
+        {"name": "final turn power (technique)", "value": "approximately 14-18 % LDG and TO flaps; 12-14 % no flap", "verbatim": "A power setting of approximately 14-18 % for LDG and TO flaps, and 12-14 % for a No flap approach."},
+        {"name": "altitude halfway through final turn", "value": "approximately 700-800 feet AGL for a 1.200-foot pattern", "verbatim": "Halfway through the final turn (perpendicular to the RWY), cross-check A/C altitude which should be approximately 700-800 feet AGL for a 1.200-foot pattern."},
+        {"name": "final intercept altitude", "value": "approximately 300 feet AGL", "verbatim": "This allows for aircrew to intercept final at 1/2 up 3/4 to mile, approximately 300 feet AGL."}
+      ],
+      "procedure_steps": [
+        "At perch, lower the flaps as required (the nose pitches up slightly as the flaps lower due to the increase in lift).",
+        "Begin the final turn to allow for a 1/2 to 3/4 mile final, correcting for winds; displace the perch point into the wind affecting the final turn.",
+        "Clear visually and with the radios; do not start the final turn if conflicts exist or if potential conflicts are not in sight.",
+        "Start the final turn by adjusting power, lowering the nose, and rolling into 30 degrees of bank.",
+        "When able, after starting the final turn, make a gear down call.",
+        "Cross-check airspeed with AOA.",
+        "Roll out on extended runway centerline approximately 1/2 to 3/4 mile on a 3- to 4-degree glidepath."
+      ],
+      "common_errors": [
+        "Starting the final turn with a conflict present or with potential conflicts not in sight.",
+        "Requiring more than approximately 45 degrees of bank to complete the final turn.",
+        "Not correcting the perch point for wind (with a strong headwind on final, begin the final turn earlier than for a no-wind pattern).",
+        "Not properly configured by the perch point.",
+        "Pattern spacing that cannot be maintained within the normal ground track.",
+        "Failing to cross-check airspeed with AOA at higher A/C weights, where higher airspeed may be required to maintain an on-speed indication."
+      ],
+      "corrections": [
+        "Break out from inside downwind (pattern status permitting) using local procedures if another aircraft in the final turn is not in sight, if a straight-in is inside 2 miles and not in sight, if an ELP is inside low key and normal spacing cannot be maintained, if pattern spacing cannot be maintained within the normal ground track, or if not properly configured by the perch point.",
+        "Correct spacing on subsequent patterns to allow for 30 degrees of bank in the final turn.",
+        "If any doubt exists about the safety of continuing the approach, go around; do not hesitate to disregard the ground track and use traffic pattern stall recovery procedures if required.",
+        "Use the prompt 'flaps, power, pitch, roll' to begin the final turn.",
+        "Pick a rollout point on final before beginning the final turn and visualize the pitch and bank required to hit it."
+      ],
+      "notes": "The descent angle in the final turn, if projected to the ground, goes to a point just short of the intended aim point on final. A good composite crosscheck should include, as a minimum, the intended landing point, the rollout point, and airspeed."
+    },
+    {
+      "section": "5.9",
+      "title": "FINAL",
+      "pages_pdf": [71, 72, 73],
+      "item_mapping": ["contact-23", "contact-24"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective: maintain runway alignment, proper glide path, and correct airspeed. Final begins when wings level after the final turn and ends when the flare begins. Stable airspeed, proper glide path, and a fixed aim point provide the consistency required for a successful landing; airspeed is based on configuration and winds, glide path is 3-4 degrees, and under normal conditions the aim point is the runway threshold.",
+      "parameters": [
+        {"name": "final glide path", "value": "3-4°", "verbatim": "glide path is 3-4°, and under normal conditions the aim point is the RWY threshold."},
+        {"name": "aim point offset", "value": "about 500 feet short of intended touchdown point", "verbatim": "Aim point is usually about 500 feet short of the intended touchdown point and is usually the runway threshold."},
+        {"name": "gusty wind correction", "value": "+1/2 gust factor up to 10-knot increase", "verbatim": "Increase final approach airspeed by 1/2 the gust factor up to a 10-knots increase. Gusty winds do not affect final turn speeds."},
+        {"name": "crosswind greater than 10 KIAS", "value": "TO flaps, touchdown at approach speed minus 10 KIAS", "verbatim": "In crosswinds greater than 10 KIAS, plan to use TO flaps and touch down at approach speed minus 10 KIAS."},
+        {"name": "initial power reduction rolling out of bank", "value": "approximately 5 %", "verbatim": "Begin slowing from final turn or maNovuvring speed to final speed when beginning to roll out of bank by initially reducing power (approximately 5 %) and maintaining or slightly adding backstick pressure to prevent the nose from dropping."},
+        {"name": "heavyweight fuel threshold", "value": "above 700-800 pounds of fuel", "verbatim": "Above 700-800 pounds of fuel weight approximately 3-5 KIAS above final turn and final airspeed may be required to maintain on-speed (amber donut) AOA indications."},
+        {"name": "heavyweight airspeed increment", "value": "approximately 3-5 KIAS", "verbatim": "approximately 3-5 KIAS above final turn and final airspeed may be required to maintain on-speed (amber donut) AOA indications"}
+      ],
+      "procedure_steps": [
+        "Maintain proper spacing with preceding A/C; if spacing is insufficient, go around.",
+        "After rolling out on final, use the wing-low method to maintain runway alignment (crab may be used initially).",
+        "Cross-check airspeed with AOA.",
+        "Prior to landing transition to wing-low: rudder deflection to align the longitudinal axis with the runway, aileron into the wind as necessary to prevent drift, additional power if required to counteract increased drag from cross controls.",
+        "Maintain the wing-low attitude throughout landing rollout or touch-and-go."
+      ],
+      "common_errors": [
+        "Landing the T-6 with crab ('Do not land the T-6 with crab') - T-6 landing gear struts are not designed to continually withstand the side loads imposed by landing in a crab.",
+        "Continuing final with insufficient spacing behind the preceding A/C.",
+        "Failing to increase airspeed at higher A/C weights so that an on-speed (amber donut) AOA indication cannot be maintained.",
+        "Allowing excessive sink rates to develop at heavy weight (heavy aircraft are less responsive to pitch and power changes and develop sink rates quicker than light aircraft)."
+      ],
+      "corrections": [
+        "Use RAP when transitioning to wing-low: R - Rudder to align the nose with the runway; A - Aileron into the wind to prevent drift; P - Power to counteract increased drag.",
+        "Be alert and stop excessive sink rates with pitch and power.",
+        "Use a crosscheck of aim point and airspeed on final to focus attention on the most critical items.",
+        "If spacing is insufficient, go around."
+      ],
+      "notes": "The amount of crab required on final indicates the amount of control deflection needed to transition to the wing-low method. Higher gross weight equates to higher stall speed, which decreases time between excessive pitch increase and stall. In crosswinds the A/C may float farther than normal before touchdown because of the extra airspeed. OCR artifact in source: 'maNovuvring speed' = manoeuvring speed."
+    },
+    {
+      "section": "5.10",
+      "title": "STRAIGHT-IN APPROACH",
+      "pages_pdf": [73, 74],
+      "item_mapping": ["contact-29"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective: land with minimum manoeuvring and gradual airspeed changes. Practice landings using all flap settings. Descend to 1500 feet AGL 5 miles from the runway threshold at 120-147 KIAS, configure prior to the 2 mile point, and slow to final approach speed once configured.",
+      "parameters": [
+        {"name": "straight-in descent altitude and distance", "value": "1500 feet AGL, 5 miles from runway threshold", "verbatim": "Descend to 1500 feet AGL, 5 miles from runway threshold and adjust airspeed at 120-147 KIAS."},
+        {"name": "straight-in airspeed", "value": "120-147 KIAS", "verbatim": "adjust airspeed at 120-147 KIAS"},
+        {"name": "configuration point", "value": "prior to 2 mile point", "verbatim": "Configure prior to 2 mile point."},
+        {"name": "glide path", "value": "3-4°", "verbatim": "Begin descent using 3-4° glide path at 1500 feet AGL."},
+        {"name": "descent start visual cue - flaps LDG or TO", "value": "threshold in lower 1/3 of windscreen", "verbatim": "With flaps LDG or TO, begin the descent when the threshold of the runway (aim point) is in the lower 1/3 of the windscreen."},
+        {"name": "descent start visual cue - flaps UP", "value": "spinner reaches the threshold", "verbatim": "For flaps UP, begin the descent when the spinner reaches the threshold (aim point)."}
+      ],
+      "procedure_steps": [
+        "Request straight-in in accordance with local directives.",
+        "Descend to 1500 feet AGL, 5 miles from runway threshold, and adjust airspeed to 120-147 KIAS.",
+        "Configure prior to the 2 mile point.",
+        "Slow to final approach speed once configured."
+      ],
+      "common_errors": [
+        "Early descent on straight in approach (listed in 5.17 as a cause of a low, dragged-in final)."
+      ],
+      "corrections": [
+        "Monitor distance to threshold (aim point) from VOR/TACAN/ILS to determine the proper point to begin descent."
+      ],
+      "notes": "Situations that may require a Straight-In Approach: flight control malfunction, electrical problem, pitot-static problem, structural damage, unlocked canopy. A longer final provides adequate time to practice multiple transitions from crab to wing-low crosswind controls."
+    },
+    {
+      "section": "5.11",
+      "title": "NORMAL LANDING",
+      "pages_pdf": [74, 75, 76],
+      "item_mapping": ["contact-24", "vfr_navigation-19", "formation-31"],
+      "category_hint": ["contact", "vfr_navigation", "formation"],
+      "technique_summary": "Objective: land in the proper landing zone, in the proper landing attitude, on speed (Table 5.1). Landing is divided into three phases: roundout, flare and touchdown, and landing roll. The roundout transitions from final to the flare by reducing power and descent rate and progressively shifting the aim point down the runway; the flare reduces energy by slowly increasing backstick pressure as power is reduced to idle; the landing roll transitions from landing to taxi, with airspeed reduced straight ahead on the runway until at safe taxi speed.",
+      "parameters": [
+        {"name": "airspeed at threshold", "value": "approximately 10 KIAS below final airspeed", "verbatim": "At the threshold, airspeed should be approximately 10 KIAS below final airspeed."},
+        {"name": "braking speed gate", "value": "below 80 KIAS", "verbatim": "With the nose gear on the runway and below 80 KIAS, smoothly apply brakes and increase back stick pressure."},
+        {"name": "braking caution", "value": "above 80 KIAS", "verbatim": "At speeds below 80 KIAS, the chances of approaching optimum braking action are greatly increased. Use caution when braking at speeds above 80 KIAS."},
+        {"name": "N1 flight idle to ground idle", "value": "67% to 60%, approximately 4 seconds", "verbatim": "Confirm N1 reduction from flight idle (67%) to ground idle (60%) shortly after main gear touchdown (approximately 4 seconds)."},
+        {"name": "roundout power reduction point", "value": "approximately 1000 feet short of aim point", "verbatim": "Approximately 1000 feet short of the aim point, reduce power to approximately 10 % torque (about a knob width)."},
+        {"name": "roundout power setting", "value": "approximately 10 % torque (about a knob width)", "verbatim": "reduce power to approximately 10 % torque (about a knob width)"},
+        {"name": "aim point shift timing", "value": "approximately 2 seconds after power reduced (500 feet from aim point)", "verbatim": "Approximately 2 seconds after power is reduced (500 feet from aim point) start to shift aim point to the end of the runway."}
+      ],
+      "procedure_steps": [
+        "Roundout: start power reduction and reduce descent rate; shift the aim point progressively further down the runway; reduce power slowly (ultimately to idle in the flare).",
+        "Flare: slowly increase backstick pressure as power is reduced and airspeed decreases; flare at a rate proportional to the rate of descent.",
+        "When landing is assured, smoothly retard the PCL to idle and continue backstick pressure until the proper landing attitude is reached; ensure PCL is idle at touchdown.",
+        "Maintain crosswind (wing-low) controls throughout the flare, touchdown, and landing roll.",
+        "After touchdown on a full-stop landing, slowly relax backstick pressure and smoothly lower the nose gear to the runway.",
+        "Landing roll: with the nose gear on the runway and below 80 KIAS, smoothly apply brakes and increase backstick pressure; maintain directional control with rudder and/or brakes.",
+        "At taxi speed, engage the NWS prior to initiating turns; do not complete any After Landing Checklist items until clear of the runway."
+      ],
+      "common_errors": [
+        "Excess backstick pressure in the flare, which could lead to a climb in the flare.",
+        "Flaring at a rate not proportional to the rate of descent - higher descent rates require faster application of backstick pressure to prevent a hard landing; a lower than normal descent rate requires slower control stick movement to prevent a high flare.",
+        "Losing crosswind controls through touchdown and landing roll, allowing the upwind wing to rise and the A/C to skip.",
+        "Feet on the brakes when the A/C touches down.",
+        "Failing to retard the throttle to idle at touchdown when power is used during the flare.",
+        "Allowing the nose gear to lift off the runway while increasing backstick pressure during braking.",
+        "Over-controlling when applying brakes; allowing the wheels to lock during braking.",
+        "Selecting NWS before the A/C is at normal taxi speed (at higher speeds NWS is extremely sensitive)."
+      ],
+      "corrections": [
+        "Apply MAX power and execute a Go-Around any time the controls feel mushy, the A/C experiences an approach-to-stall indication, or if the touchdown point is excessively shifted from the desired.",
+        "Faster or slower power reductions can compensate for errors made in the roundout and early flare.",
+        "Use differential braking to keep the A/C aligned with the runway centerline; a single, smooth application with increasing pressure as airspeed decreases offers the best braking potential.",
+        "Once a wheel is locked, it may be necessary to completely release brake pressure to allow wheel rotation.",
+        "For nose wheel shimmy during the landing roll, apply back stick pressure to relieve weight on the nose wheel, then gently release pressure to re-establish nose wheel contact; if the condition persists, reapply back stick pressure.",
+        "Center rudder pedals before selecting NWS.",
+        "Apply back stick pressure at a rate just less than required to level the A/C, allowing controlled deceleration and loss of altitude.",
+        "Continue power reduction throughout the flare, basing the rate of reduction on total energy (height, sink rate, and airspeed)."
+      ],
+      "notes": "As the nose rises forward visibility is reduced and peripheral vision becomes the key factor in height and drift assessment. Crosswind controls increase drag, rate of deceleration, and stall speed; with significant crosswinds expect one main gear to touch down before the other, and when rudder effectiveness is lost full aileron deflection may be necessary. Strong crosswinds, a low strut, or a low Runway Condition Reading (RCR) all influence controllability after landing."
+    },
+    {
+      "section": "5.12",
+      "title": "TOUCH-AND-GO LANDING",
+      "pages_pdf": [77],
+      "item_mapping": ["contact-24"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective: accomplish multiple landings on a single sortie. A touch-and-go is a normal landing followed by a normal takeoff; after touchdown power is advanced to MAX to execute the takeoff and the A/C is rotated at approximately 85 KIAS.",
+      "parameters": [
+        {"name": "rotation speed", "value": "approximately 85 KIAS", "verbatim": "After touchdown, power is advanced to MAX to execute takeoff. Rotate at approximately 85 KIAS."},
+        {"name": "power", "value": "MAX", "verbatim": "At main gear touch down, smoothly apply power to MAX."}
+      ],
+      "procedure_steps": [
+        "Accomplish a normal landing; at main gear touchdown smoothly apply power to MAX.",
+        "Lower the nose as the PCL is advanced and maintain sufficient forward stick pressure to keep the nose gear off the runway.",
+        "Maintain crosswind controls throughout touchdown and takeoff roll; use rudder for directional control and compensate for engine torque.",
+        "Aggressively re-trim during the takeoff portion of the touch-and-go.",
+        "Execute the After Takeoff Checklist when safely airborne."
+      ],
+      "common_errors": [
+        "Allowing the A/C to lift off the runway below normal takeoff speed ('Do not allow the A/C to lift off the runway below normal takeoff speed').",
+        "Premature lift-off caused by the elevator trim required for final and landing as power is applied.",
+        "Failing to compensate for increasing torque, allowing the nose to yaw to the left."
+      ],
+      "corrections": [
+        "Apply forward control stick pressure to compensate for the tendency of the nose to pitch up; this pressure can be significant depending on the amount of trim used for landing.",
+        "Apply more right rudder as torque increases after the PCL is advanced to keep the A/C nose tracking straight down the runway."
+      ],
+      "notes": "Control stick deflection for proper crosswind control constantly changes between flare and takeoff as airspeed, power, and weight-on-wheels change."
+    },
+    {
+      "section": "5.13",
+      "title": "CLOSED PATTERN",
+      "pages_pdf": [77, 78],
+      "item_mapping": ["contact-35"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective: manoeuvre the A/C to inside downwind to perform multiple practice patterns and landings while minimizing fuel and time. A closed pattern is a climbing turn to enter downwind after a touch-and-go landing or a go-around, flown at 140 KIAS minimum with a maximum of 90 degrees of bank and power as required (normally MAX initially).",
+      "parameters": [
+        {"name": "minimum airspeed", "value": "140 KIAS", "verbatim": "Minimum airspeed is 140 KIAS; maximum bank is 90°."},
+        {"name": "maximum bank", "value": "90°", "verbatim": "Bank - 90° maximum."},
+        {"name": "power", "value": "as required, normally MAX initially", "verbatim": "Power - As required (normally MAX initially)."},
+        {"name": "initial bank in climbing turn", "value": "approximately 60° of bank", "verbatim": "advance the PCL smoothly to MAX, and start a climbing turn to the downwind leg, initially using approximately 60° of bank"},
+        {"name": "level-off lead", "value": "100-200 feet before reaching downwind", "verbatim": "Initiate level-off 100-200 feet before reaching downwind and retard the PCL to approximately 20 percent torque."},
+        {"name": "level-off torque", "value": "approximately 20 percent torque", "verbatim": "retard the PCL to approximately 20 percent torque"},
+        {"name": "downwind airspeed after closed", "value": "140-150 KIAS", "verbatim": "When established on downwind reduce power to maintain 140-150 KIAS."},
+        {"name": "pull-up visual reference", "value": "approximately fire light on the horizon", "verbatim": "Pull the nose up (approximately fire light on the horizon) and begin a climbing turn towards downwind."}
+      ],
+      "procedure_steps": [
+        "At a minimum airspeed of 140 KIAS and in accordance with local directives, request clearance for a closed traffic pattern.",
+        "When approved, clear, advance the PCL smoothly to MAX, and start a climbing turn to the downwind leg, initially using approximately 60 degrees of bank.",
+        "Approaching pattern altitude, reduce power to prevent acceleration.",
+        "Initiate level-off 100-200 feet before reaching downwind and retard the PCL to approximately 20 percent torque.",
+        "When established on downwind, reduce power to maintain 140-150 KIAS."
+      ],
+      "common_errors": [
+        "Downwind leg displacement not the same as established with an overhead break.",
+        "Excessive vertical speed at level-off.",
+        "Excessively nose-high pull-ups."
+      ],
+      "corrections": [
+        "If vertical speed is excessive, bank may be increased to 90 degrees to affect level-off.",
+        "During excessively nose-high pull-ups, a small amount of rudder in the direction of the turn will help bring the nose back to the horizon."
+      ],
+      "notes": null
+    },
+    {
+      "section": "5.14",
+      "title": "ABNORMAL PATTERN PROCEDURES",
+      "pages_pdf": [79],
+      "item_mapping": ["contact-22", "contact-34", "contact-38"],
+      "category_hint": ["contact"],
+      "technique_summary": "Recognition of abnormal situations in the traffic pattern is critical. Traffic conflicts or poorly flown patterns or landings can lead to dangerous situations, and the manual directs an immediate go-around or query to the tower rather than an attempt to salvage the situation.",
+      "parameters": [],
+      "procedure_steps": [
+        "If a landing attempt looks or simply feels wrong, do not hesitate to execute a go-around.",
+        "If in doubt about the location of traffic, query the tower controller.",
+        "If at any time stall indications are observed, execute stall recovery procedures and disregard ground track."
+      ],
+      "common_errors": [
+        "Failure to recognize abnormal situations in the traffic pattern.",
+        "Hesitating to execute a go-around when a landing attempt looks or feels wrong.",
+        "Continuing to fly ground track instead of recovering when stall indications are observed."
+      ],
+      "corrections": [
+        "Execute a go-around without hesitation.",
+        "Query the tower controller if in doubt about the location of traffic.",
+        "EXECUTE STALL RECOVERY PROCEDURES AND DISREGARD GROUND TRACK if at any time stall indications are observed."
+      ],
+      "notes": "The stall-recovery direction is capitalized in the manual."
+    },
+    {
+      "section": "5.15",
+      "title": "GO-AROUND",
+      "pages_pdf": [79, 80],
+      "item_mapping": ["contact-34"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective: safely discontinue the pattern from the final turn, final, or landing. A go-around is the termination of an approach with the A/C in a landing configuration; power is used to accelerate and the A/C is configured to a clean configuration when appropriate, and at low altitudes a climb is mandatory. Safety is enhanced by an early decision to go around.",
+      "parameters": [
+        {"name": "go-around gate at or below 500 feet AGL", "value": "PCL to MAX", "verbatim": "At or below 500 feet AGL, advance PCL to MAX."},
+        {"name": "go-around above 500 feet AGL", "value": "power as required", "verbatim": "Above 500 feet AGL, use power as required. Raise the gear and flaps, and accelerate to normal pattern airspeed."},
+        {"name": "continued descent altitude", "value": "normally to 500-700 feet AGL", "verbatim": "Continued descent may be required (normally to 500-700 feet AGL) to comply with local directives."},
+        {"name": "offset turn", "value": "approximately 20° away from the runway", "verbatim": "Turn approximately 20° away from the runway."},
+        {"name": "acceleration band", "value": "between 140 and 200 KIAS", "verbatim": "Allow the A/C to accelerate between 140 and 200 KIAS, then climb or descend to 500-700 feet above the terrain."},
+        {"name": "post go-around altitude", "value": "500-700 feet above the terrain", "verbatim": "then climb or descend to 500-700 feet above the terrain. Then request closed pattern or to report to North/South point."}
+      ],
+      "procedure_steps": [
+        "At or below 500 feet AGL, advance PCL to MAX; when certain the A/C will not touch down and with a positive climb indication, retract the landing gear and flaps.",
+        "Above 500 feet AGL, use power as required, raise the gear and flaps, and accelerate to normal pattern airspeed.",
+        "As flaps retract, raise the nose slightly to counteract the tendency of the A/C to sink.",
+        "Clear the runway (offset) if necessary by turning approximately 20 degrees away from the runway, then turning back to parallel the runway when well clear.",
+        "Allow the A/C to accelerate between 140 and 200 KIAS, then climb or descend to 500-700 feet above the terrain and request closed pattern or report to North/South point."
+      ],
+      "common_errors": [
+        "Delaying the go-around decision or trying to salvage a bad approach ('Do not delay the decision and do not try to salvage a badapproach').",
+        "Needing a runway supervisor to direct a go-around for a poorly flown pattern ('There should be no need for a runway supervisor to direct a go-around for a poorly flown pattern').",
+        "Raising the gear when a second touchdown is possible after a balloon or bounce.",
+        "Over speed of gear and flaps during a final turn go-around, where airspeed may increase rapidly if in a descent.",
+        "Over banking to establish offset, which could lead to a stall."
+      ],
+      "corrections": [
+        "Make an early decision to go around if required.",
+        "Do not raise the gear if a second touchdown is possible.",
+        "Use caution to avoid overspeed of gear and flaps in a final turn go-around.",
+        "Use extreme caution if offset is required during a final turn go-around."
+      ],
+      "notes": "Normally offset is performed towards the downwind side of the runway; comply with local procedures. When offsetting, attain safe airspeed and altitude, then smoothly roll into a shallow-banked, coordinated turn."
+    },
+    {
+      "section": "5.16",
+      "title": "FINAL IRREGULARITIES",
+      "pages_pdf": [80],
+      "item_mapping": ["contact-23", "contact-34"],
+      "category_hint": ["contact"],
+      "technique_summary": "Depending on the nature and magnitude of the irregularity and the A/C flight parameters, correction and continued final may be possible. However, a go-around is always acceptable.",
+      "parameters": [],
+      "procedure_steps": [
+        "Assess the nature and magnitude of the irregularity and the A/C flight parameters.",
+        "Correct and continue final if possible, otherwise go around."
+      ],
+      "common_errors": [],
+      "corrections": [
+        "A go-around is always acceptable."
+      ],
+      "notes": "Introductory paragraph for sections 5.17 through 5.19."
+    },
+    {
+      "section": "5.17",
+      "title": "LOW (DRAGGED-IN) FINAL",
+      "pages_pdf": [80],
+      "item_mapping": ["contact-23", "contact-29"],
+      "category_hint": ["contact"],
+      "technique_summary": "The A/C is flying below proper glidepath. Normal power settings are too low to maintain airspeed on a shallower than normal glidepath, so airspeed and/or altitude may decrease. Recovery is to add power, level off, and intercept the proper glide path, or go around if too low or slow.",
+      "parameters": [],
+      "procedure_steps": [
+        "Recognize the A/C is below proper glidepath.",
+        "Add power, level off, and intercept proper glide path.",
+        "If too low or slow, go around and avoid obstacles."
+      ],
+      "common_errors": [
+        "Early descent on straight in approach.",
+        "Long perch coupled with normal pitch and descent rate - altitude rolling out on final is as planned, but the long perch leads to a longer than desired final.",
+        "Excessive altitude loss from diving final turn.",
+        "Failure to maintain proper glide path."
+      ],
+      "corrections": [
+        "If too low or slow, go-around. Avoid obstacles.",
+        "Add power, level-off, and intercept proper glide path."
+      ],
+      "notes": "Effects per the manual: normal power settings are too low to maintain airspeed on a shallower than normal glidepath; airspeed and/or altitude may decrease."
+    },
+    {
+      "section": "5.18",
+      "title": "STEEP FINAL",
+      "pages_pdf": [80, 81],
+      "item_mapping": ["contact-23"],
+      "category_hint": ["contact"],
+      "technique_summary": "The A/C is flying above proper glide path. The result is a high descent rate with low power settings; the low power setting, coupled with the pitch change required to intercept normal glidepath, could result in a rapid decrease of airspeed and a high sink rate, and if not corrected this power deficient situation could result in a stall or a hard landing.",
+      "parameters": [],
+      "procedure_steps": [
+        "Recognize the deviation above glide path early.",
+        "Use slightly higher than normal descent rates as soon as the deviation is recognized.",
+        "Use power as required to control airspeed during the descent and maintain airspeed when re-established on normal glide path.",
+        "Go around if sink rate is too high or if it is not practical to intercept normal glide path with a normal descent rate."
+      ],
+      "common_errors": [
+        "Too close to runway on inside downwind.",
+        "Early perch.",
+        "Level final turn."
+      ],
+      "corrections": [
+        "Go-around if sink rate is too high or if it is not practical to intercept normal glide path with a normal descent rate.",
+        "Use slightly higher than normal descent rates as soon as deviation is recognized. Use power as required to control airspeed during the descent and maintain airspeed when re-established on normal glide path."
+      ],
+      "notes": "Effects per the manual: high descent rate with low power settings; possible rapid decrease of airspeed and high sink rate; if not corrected, could result in a stall or a hard landing."
+    },
+    {
+      "section": "5.19",
+      "title": "SLOW FINAL",
+      "pages_pdf": [81],
+      "item_mapping": ["contact-23"],
+      "category_hint": ["contact"],
+      "technique_summary": "Increased pitch attitude is required to maintain lift as airspeed is reduced. The cause is improper glide path and/or power setting; the effects are a higher than normal pitch attitude with mistaken perception of the proper glidepath, increased AOA and increased likelihood of stall (especially in gusty wind conditions), and an aim point that shifts down the runway as pitch increases.",
+      "parameters": [],
+      "procedure_steps": [
+        "Recognize the higher than normal pitch attitude and low airspeed.",
+        "Apply power at an altitude high enough to re-establish the correct airspeed and attitude.",
+        "Correct aim point and glide path to re-establish proper airspeed.",
+        "If well below glidepath, go around."
+      ],
+      "common_errors": [
+        "Improper glide path and/or power setting.",
+        "Mistaken perception of the proper glidepath caused by the higher than normal pitch attitude.",
+        "Allowing increased AOA and increased likelihood of stall, especially in gusty wind conditions.",
+        "Allowing the aim point to shift down the runway as pitch increases."
+      ],
+      "corrections": [
+        "Apply power at an altitude high enough to re-establish the correct airspeed and attitude. If you are well below glidepath, go-around.",
+        "Correct aim point and glide path to re-establish proper airspeed."
+      ],
+      "notes": null
+    },
+    {
+      "section": "5.20",
+      "title": "LANDING IRREGULARITIES",
+      "pages_pdf": [81, 82],
+      "item_mapping": ["contact-24", "contact-34"],
+      "category_hint": ["contact"],
+      "technique_summary": "Airspeed during the flare is just above stall airspeed and, even at slow airspeeds, the elevator is still very effective. Any abrupt change in pitch could result in a balloon, a bounce, or even a stall. When any of these conditions are encountered, apply MAX power, adjust the pitch attitude, and go around if it is unsafe to continue the landing.",
+      "parameters": [],
+      "procedure_steps": [
+        "Recognize the balloon, bounce, or stall indication in the flare.",
+        "Apply MAX power and adjust the pitch attitude.",
+        "Go around if it is unsafe to continue the landing.",
+        "If power is applied and the A/C continues to settle, hold the landing attitude and let the A/C touch down; MAX power cushions the contact."
+      ],
+      "common_errors": [
+        "Abrupt change in pitch in the flare, which could result in a balloon, a bounce, or even a stall.",
+        "Trying to hold the A/C off by raising the nose above the landing attitude when the A/C continues to settle after power is applied.",
+        "Raising the gear after a hard landing."
+      ],
+      "corrections": [
+        "Apply MAX power; adjust the pitch attitude, and GO-AROUND if it is unsafe to continue the landing.",
+        "Hold the landing attitude and let the A/C touch down; MAX power cushions the contact.",
+        "In case of a hard landing, do not raise the gear."
+      ],
+      "notes": "Introductory paragraph for sections 5.21 through 5.28."
+    },
+    {
+      "section": "5.21",
+      "title": "HIGH FLARE",
+      "pages_pdf": [82],
+      "item_mapping": ["contact-24"],
+      "category_hint": ["contact"],
+      "technique_summary": "Cause: roundout executed too early or with excessive pitch up; flare begun too early (high above the runway) or with excessive pitch up. Effect is the inability to execute a normal flare due to excess altitude, with possible premature nose gear contact, stall, or a hard landing. Recovery, with adequate airspeed and runway remaining, is to release a small amount of backpressure to increase descent rate and re-establish a normal flare as the A/C approaches normal altitude.",
+      "parameters": [],
+      "procedure_steps": [
+        "Recognize the higher than normal altitude in the flare.",
+        "With adequate airspeed and runway remaining, release a small amount of backpressure to increase descent rate.",
+        "As the A/C approaches normal altitude, increase backpressure to reestablish normal flare.",
+        "If at any time during the flare you become aware of higher than normal altitude, do not hesitate; go around."
+      ],
+      "common_errors": [
+        "Roundout executed too early or with excessive pitch up.",
+        "Flare begun too early (high above runway) or with excessive pitch up.",
+        "Abrupt pitch down to compensate for high flare, causing possible premature nose gear contact with the runway.",
+        "Continuing the flare with excess altitude, leading to a stall.",
+        "Radical pitch changes in the flare, where there is insufficient margin-of-error."
+      ],
+      "corrections": [
+        "With adequate airspeed and runway remaining, release a small amount of backpressure to increase descent rate. As A/C approaches normal altitude, increase backpressure to reestablish normal flare.",
+        "If at any time during the flare you become aware of higher than normal altitude, DO NOT hesitate; GO AROUND."
+      ],
+      "notes": "Effects per the manual: inability to execute normal flare due to excess altitude; possible premature nose gear contact; stall if flare is continued with excess altitude; hard landing due to high sink rate as airspeed decreases from higher than normal altitude. As landing attitude is attained the A/C is rapidly approaching stall."
+    },
+    {
+      "section": "5.22",
+      "title": "LATE AND RAPID ROUNDOUT",
+      "pages_pdf": [82],
+      "item_mapping": ["contact-24"],
+      "category_hint": ["contact"],
+      "technique_summary": "Cause: higher than expected descent rate or misjudged altitude. Effects are a hard landing due to higher than normal descent rate or insufficient time to complete the flare, and an abrupt roundout to prevent premature touchdown that may lead to an accelerated stall. Recovery is to hold landing attitude and rapidly advance the PCL to MAX power.",
+      "parameters": [],
+      "procedure_steps": [
+        "Hold the landing attitude.",
+        "Rapidly advance the PCL to MAX power.",
+        "Recover via go-around; the main gear may contact the ground a second time, but if recovered properly the second contact is usually moderate."
+      ],
+      "common_errors": [
+        "Higher than expected descent rate.",
+        "Misjudged altitude.",
+        "Abrupt roundout to prevent premature touchdown with the runway, which may lead to an accelerated stall - a dangerous situation that may cause an extremely hard landing and damage to the main gear."
+      ],
+      "corrections": [
+        "Hold landing attitude and rapidly advance PCL to MAX power. Immediate use of power increases thrust, lift, and controllability, and enables a successful recovery via go-around."
+      ],
+      "notes": "Whether the accelerated-stall situation is controllable depends on airspeed."
+    },
+    {
+      "section": "5.23",
+      "title": "PORPOISING",
+      "pages_pdf": [83],
+      "item_mapping": ["contact-24"],
+      "category_hint": ["contact"],
+      "technique_summary": "Cause: incorrect landing attitude and airspeed - at touchdown the nose gear contacts the runway before the main gear. The A/C bounces back and forth between the nose gear and main gear and, without immediate corrective action, the porpoise progresses to a violent, unstable pitch oscillation with repeated heavy impacts that ultimately cause structural damage to the landing gear and airframe.",
+      "parameters": [],
+      "procedure_steps": [
+        "Immediately position the controls to attain takeoff attitude to prevent the nose wheel from contacting the runway, and simultaneously advance the PCL to MAX.",
+        "Hold the controls steady in the recovery position to dampen the oscillations.",
+        "Do not raise the landing gear after a porpoise."
+      ],
+      "common_errors": [
+        "Incorrect landing attitude and airspeed; at touchdown, the nose gear contacts the runway before the main gear.",
+        "Attempting to counteract each bounce with opposite control stick movement - the combined reaction time of pilot and A/C is such that this control movement aggravates the porpoise.",
+        "Raising the landing gear after a porpoise, when structural damage may prevent normal gear operation."
+      ],
+      "corrections": [
+        "Immediately position the controls to attain takeoff attitude in order to prevent the nose wheel from contacting the runway and simultaneously advance the PCL to MAX.",
+        "Hold the controls steady in the recovery position to dampen the oscillations. Power increases control effectiveness by increasing airspeed.",
+        "Do not raise the landing gear after a porpoise."
+      ],
+      "notes": null
+    },
+    {
+      "section": "5.24",
+      "title": "FLOATING",
+      "pages_pdf": [83],
+      "item_mapping": ["contact-24"],
+      "category_hint": ["contact"],
+      "technique_summary": "Cause: late power reduction, excessive airspeed, or improper flap setting. The effect is landing long on the runway, and it is possible to experience ballooning or bouncing. Recovery depends on the magnitude of the float and the length of runway remaining.",
+      "parameters": [],
+      "procedure_steps": [
+        "Assess the magnitude of float and length of runway remaining.",
+        "For a slight float, gradually increase pitch attitude as airspeed decreases and landing speed is approached.",
+        "If a long landing is inevitable, go around."
+      ],
+      "common_errors": [
+        "Late power reduction.",
+        "Excessive airspeed.",
+        "Improper flap setting.",
+        "Prolonged floating, especially in strong crosswinds."
+      ],
+      "corrections": [
+        "For a slight float, gradually increase pitch attitude as airspeed decreases and landing speed is approached.",
+        "Avoid prolonged floating, especially in strong crosswinds. If a long landing is inevitable, Go-Around."
+      ],
+      "notes": "Effect per the manual: landing long on the runway; it is possible to experience ballooning or bouncing."
+    },
+    {
+      "section": "5.25",
+      "title": "BALLOONING",
+      "pages_pdf": [83, 84],
+      "item_mapping": ["contact-24"],
+      "category_hint": ["contact"],
+      "technique_summary": "Cause: rapid roundout or flare - raising the nose to assume landing attitude before lift has decreased sufficiently. The effect is a gain of altitude dependent on airspeed and pitch rate. A landing may be completed after a slight balloon by holding the landing attitude as the A/C settles; a go-around is required from a severe balloon.",
+      "parameters": [],
+      "procedure_steps": [
+        "For a slight balloon, hold landing attitude as the A/C settles to the runway.",
+        "Maintain wing-low crosswind controls through the ballooning and landing.",
+        "Go around from a severe balloon."
+      ],
+      "common_errors": [
+        "Rapid roundout or flare.",
+        "Raising the nose to assume landing attitude before lift has decreased sufficiently.",
+        "Attempting to salvage the landing after a severe balloon."
+      ],
+      "corrections": [
+        "Landing may be completed after a slight ballooning. Hold landing attitude as the A/C settles to runway. Maintain wing-low crosswind controls through the ballooning and landing.",
+        "Go-Around from a severe ballooning. Do Not attempt to salvage the landing."
+      ],
+      "notes": "Effect per the manual: altitude gain (dependent on airspeed and pitch rate)."
+    },
+    {
+      "section": "5.26",
+      "title": "BOUNCING",
+      "pages_pdf": [84],
+      "item_mapping": ["contact-24"],
+      "category_hint": ["contact"],
+      "technique_summary": "Causes: firm or hard touchdown causing the A/C to bounce off the runway; contact with the ground before landing attitude is attained; late recognition that the A/C is settling too fast combined with excessive back stick pressure. The height reached depends on the force of the impact, the amount of backstick pressure held, and the speed at touchdown. Recovery is the same as for ballooning, depending on severity.",
+      "parameters": [],
+      "procedure_steps": [
+        "For a slight bounce, continue the landing process; maintain direction with wing-low crosswind controls and smoothly adjust pitch to attain landing attitude just before touchdown.",
+        "For a severe bounce (A/C rising rapidly), go around immediately: simultaneously apply MAX power, maintain direction, and lower the nose to a safe pitch attitude.",
+        "Continue the go-around even if another bounce occurs.",
+        "Do not retract the landing gear if a hard landing is encountered."
+      ],
+      "common_errors": [
+        "Firm or hard touchdown causes A/C to bounce off runway.",
+        "Contact with ground before landing attitude is attained.",
+        "Late recognition that A/C is settling too fast, combined with excessive back stick pressure.",
+        "Attempting a landing after a severe bounce.",
+        "Losing crosswind correction when bouncing in a crosswind, allowing the A/C to drift."
+      ],
+      "corrections": [
+        "Slight Bounce. Continue the landing process. Maintain direction with wing-low crosswind controls and smoothly adjust pitch to attain landing attitude just before touchdown.",
+        "Severe Bounce (A/C rising rapidly). Do not attempt a landing after a severe bounce, GO-AROUND immediately.",
+        "Simultaneously apply MAX power, maintain direction, and lower nose to a safe pitch attitude; continue go-around even if another bounce occurs.",
+        "Do not retract the landing gear if a hard landing is encountered.",
+        "In crosswinds, reestablish crosswind controls to stop the drift and either continue the landing or go-around, depending on the situation."
+      ],
+      "notes": "Bouncing in crosswinds requires extreme caution: when one wheel impacts the runway the other wheel touches down immediately after, the crosswind correction is lost, and the A/C drifts."
+    },
+    {
+      "section": "5.27",
+      "title": "LANDING IN A DRIFT OR CRAB",
+      "pages_pdf": [84, 85],
+      "item_mapping": ["contact-24"],
+      "category_hint": ["contact"],
+      "technique_summary": "The A/C contacts the runway in a crab or drifting sideways. Throughout final, flare, and touchdown in a crosswind the A/C should track in a straight line down the runway, with wing-low crosswind controls aligning the fuselage with the runway. Insufficient wing-low crosswind controls result in landing with a drift, in a crab, or a combination of both, imposing excessive side loads on the landing gear.",
+      "parameters": [],
+      "procedure_steps": [
+        "Throughout final, flare, and touchdown in a crosswind, track in a straight line down the runway.",
+        "Use wing-low crosswind controls to align the fuselage with the runway.",
+        "Go around immediately if unable to apply proper crosswind controls before touchdown."
+      ],
+      "common_errors": [
+        "Failure to apply sufficient wing-low crosswind corrections.",
+        "Insufficient wing-low crosswind controls resulting in landing with a drift, in a crab, or a combination of both."
+      ],
+      "corrections": [
+        "GO-AROUND immediately if unable to apply proper crosswind controls before touchdown."
+      ],
+      "notes": "Effects per the manual: excessive side loads on landing gear and potential gear damage."
+    },
+    {
+      "section": "5.28",
+      "title": "WING RISING AFTER TOUCHDOWN",
+      "pages_pdf": [85],
+      "item_mapping": ["contact-24"],
+      "category_hint": ["contact"],
+      "technique_summary": "Cause: differential lift combined with a rolling moment. During a crosswind landing, airflow is greater on the upwind wing because the fuselage reduces airflow over the downwind wing, causing differential lift; the wind also impacts the fuselage on the upwind side causing a rolling moment about the longitudinal axis. The combined effect may raise one wing even though directional control is maintained. Recovery is to use ailerons to keep the wings level and rudder and/or asymmetric braking for directional control.",
+      "parameters": [],
+      "procedure_steps": [
+        "Use ailerons to keep the wings level.",
+        "Use rudder and/or asymmetric braking to maintain directional control.",
+        "Apply aileron immediately - ailerons are more effective if applied immediately."
+      ],
+      "common_errors": [
+        "Delayed aileron application as the wing rises - as the wing rises, the effect increases as more wing area is exposed to the crosswind.",
+        "Applying no correction, allowing one wing to rise enough to cause the other wing to strike the ground."
+      ],
+      "corrections": [
+        "Use ailerons to keep the wings level. Use rudder and/or asymmetric braking to maintain directional control. Ailerons are more effective if applied immediately."
+      ],
+      "notes": "Effects per the manual: depending on the amount of crosswind and the degree of corrective action, directional control could be lost; if no correction is applied, one wing can rise enough to cause the other wing to strike the ground."
+    },
+    {
+      "section": "5.29",
+      "title": "ANGLE OF ATTACK (AOA) PATTERNS",
+      "pages_pdf": [85, 86, 87],
+      "item_mapping": ["contact-23", "contact-24"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective: familiarize students with the AOA system and AOA-based pattern operations. The AOA pattern differs in that AOA is kept constant while airspeed decreases through the final turn and final. The pattern and approach are the same as a normal traffic pattern, but flaps are lowered after the landing gear on downwind; once configured, use pitch to maintain optimum AOA and adjust power to control glidepath (rate of descent). AOA indexer information is only usable if a proper glidepath is maintained.",
+      "parameters": [
+        {"name": "optimum AOA indication", "value": "on-speed amber donut, 10 - 11 units on the AOA gauge", "verbatim": "use pitch to maintain optimum AOA (on-speed amber donut on the AOA indexer, 10 - 11 units on the AOA gauge) and adjust power to control glidepath (rate of descent)"},
+        {"name": "optimum approach speed, gear down, flaps LDG, 3° glidepath", "value": "approximately 100 KIAS at maximum landing weight", "verbatim": "For a pattern with landing gear down, flaps LDG, and PCL set for a 3° glidepath, the optimum approach speed (center donut) is approximately 100 KIAS at maximum landing weight."},
+        {"name": "speed decrement with fuel burn", "value": "approximately 1 knot for every 100 pounds of fuel used", "verbatim": "Optimum approach airspeed will decrease approximately 1 knot for every 100 pounds of fuel used."},
+        {"name": "airspeed at perch", "value": "less than 120 KIAS", "verbatim": "Airspeed will be less than 120 KIAS (the minimum airspeed for normal Air Force patterns prior to the perch)."},
+        {"name": "final turn bank", "value": "30° initial, up to 45° to prevent overshoot", "verbatim": "Initiate final turn with 30° of bank. Bank angles up to 45° may be used to prevent an overshoot."},
+        {"name": "rollout distance on final", "value": "approximately 1/2 mile from the aim point", "verbatim": "Rollout on final should be approximately 1/2 mile from the aim point."}
+      ],
+      "procedure_steps": [
+        "Lower flaps after lowering the landing gear on downwind; attain landing configuration early enough to be at optimum AOA with a stabilized power setting by the perch.",
+        "Adjust power to maintain level flight and on-speed AOA indications on downwind.",
+        "Initiate the final turn with 30 degrees of bank; use pitch to adjust AOA and power to adjust descent rate or glide path.",
+        "During final turn and final, crosscheck the AOA indexer, AOA gauge, and aim point (normally runway threshold).",
+        "Maintain final approach power setting through the roundout until the sink rate is sufficiently reduced, then smoothly reduce power to idle and touch down normally."
+      ],
+      "common_errors": [
+        "Flying on-speed AOA on an improper glidepath, which may cause a short landing.",
+        "Configuring too late to be at optimum AOA with a stabilized power setting by the perch.",
+        "Using the AOA technique until touchdown, which will cause a high sink rate touchdown.",
+        "Reducing power as early or as quickly as in a normal pattern, when power is reduced later and/or slower due to the slower than normal approach speed."
+      ],
+      "corrections": [
+        "AOA indexer chevrons point in the direction the nose needs to be moved - if the upper (slow) chevron is illuminated, AOA is higher than optimum, then lower the nose.",
+        "If steep, reduce power. If shallow, increase power.",
+        "Do not use the AOA technique until touchdown; perform normal touch-and-go or landing procedures."
+      ],
+      "notes": "Initial Point, break, and closed pattern are flown the same as the normal pattern. The T-6 AOA indexer uses colors matching the Navy Fresnel Lens Optical Landing System, so symbol position (upper chevron, center donut, lower chevron) is used instead of symbol color; the center donut illuminates when the A/C is in the optimum AOA range. As landing weight decreases, approach AOA (center donut) continues to provide the optimum approach speed and manoeuvre speed regardless of bank angle."
+    },
+    {
+      "section": "5.30",
+      "title": "EMERGENCY LANDING PATTERNS (ELP)",
+      "pages_pdf": [87, 88, 89],
+      "item_mapping": ["contact-30", "contact-39"],
+      "category_hint": ["contact"],
+      "technique_summary": "Three terms describe the same pattern flown depending on power available: Emergency Landing Pattern (ELP), flown for training purposes; Precautionary Emergency Landing (PEL), flown anytime system/engine malfunctions jeopardize continued operation of the engine; and Forced Landing (FL), flown with no engine power available. If there is any doubt about engine performance, or there is benefit to remaining in the ejection envelope longer, consider recovering via a PEL. Descent below minimum controlled ejection altitude uses the acronym ORM 3-2-1.",
+      "parameters": [
+        {"name": "ORM 3-2-1 minimum descent gate", "value": "2000 feet AGL", "verbatim": "ORM 3-2-1 means that with an engine malfunction requiring a PEL/FL, T-6 aircrews will not descend below 2000 feet AGL unless they are: On profile for the field of intended landing / Runway in sight and in a position to / Maneuver safely to land."},
+        {"name": "ORM 3 - final decision altitude", "value": "300 feet AGL", "verbatim": "300΄ AGL is the point to make the final decision to continue or eject."},
+        {"name": "ORM 2 - gear confirmation altitude", "value": "200 feet AGL", "verbatim": "200΄ AGL the gear will be confirmed and reported down"},
+        {"name": "ORM 1 - alignment altitude", "value": "100 feet AGL", "verbatim": "at 100΄ AGL the A/C should be aligned with the centerline."},
+        {"name": "time available for decision", "value": "a few seconds to over 20 minutes", "verbatim": "Time available may vary from a few seconds (engine failure on takeoff) to over 20 minutes for a high-altitude power loss (HAPL)."}
+      ],
+      "procedure_steps": [
+        "Execute a PEL/FL for a fire warning in flight, engine failure, uncommanded power change or loss of power, compressor stall, low fuel pressure, chip detector warning, oil system malfunction, uncommanded propeller feather, bird strike on the propeller, or unusual engine operation.",
+        "Apply ORM 3-2-1: do not descend below 2000 feet AGL unless on profile for the field of intended landing, runway in sight, and in a position to manoeuvre safely to land.",
+        "At 300 feet AGL make the final decision to continue or eject; at 200 feet AGL confirm and report gear down; at 100 feet AGL be aligned with the centerline.",
+        "Fly ELPs only to suitable landing areas (hard surface runway, taxiway, under-run, or overrun) of sufficient length."
+      ],
+      "common_errors": [
+        "Descending below 2000 feet AGL when not on profile, without the runway in sight, or not in a position to manoeuvre safely to land.",
+        "Attempting a landing on an unprepared surface when ejection is possible ('Landing on an unprepared surface shall only be attempted if ejection is not possible or the ejection system is inoperative')."
+      ],
+      "corrections": [
+        "If there is any doubt about engine performance, or there is benefit to remaining in the ejection envelope longer, consider recovering via a PEL."
+      ],
+      "notes": "Figure 5.5 (ELP ORM 3-2-1) provides a graphic depiction of factors affecting the decision to continue an ELP attempt or eject."
+    },
+    {
+      "section": "5.31",
+      "title": "ELP TYPES",
+      "pages_pdf": [89, 90],
+      "item_mapping": ["contact-30"],
+      "category_hint": ["contact"],
+      "technique_summary": "The ELP is a 360-degree pattern designed to position the A/C for landing when system/engine malfunctions jeopardize continued operation of the engine or there is no engine power available. The same profile is used for the PEL and FL - the difference is power available. If flown correctly the FL and PEL look the same, but the methods used to correct low energy states differ.",
+      "parameters": [
+        {"name": "SFL simulated feathered propeller torque", "value": "4-6 % torque", "verbatim": "Simulate a feathered propeller on simulated forced landings (SFL) by setting 4-6 % torque."},
+        {"name": "unfeathered propeller simulation", "value": "IDLE power, add 500 feet", "verbatim": "To simulate unfeather propeller situation ELP can be executed with IDLE power adding 500 feet to compensate for the extra drag."}
+      ],
+      "procedure_steps": [
+        "For an FL, correct for low energy by delaying landing gear or flap extension, intercepting the ELP at some point other than High Key (Low Key, Base Key, final), and/or adjusting pattern ground track.",
+        "For a PEL, use power to correct for a low energy state as soon as it is recognized; in addition to early use of drag devices as in an FL, additional drag (zero torque) is also available on a PEL.",
+        "Practice ELPs normally from High Key, Low Key, or above High Key altitude (HAPL)."
+      ],
+      "common_errors": [],
+      "corrections": [
+        "For a FL, correct for low energy by delaying landing gear or flap extension, intercepting the ELP at some point other than High Key, and/or adjusting pattern ground track.",
+        "For a PEL, use power to correct for a low energy state as soon as it is recognized."
+      ],
+      "notes": "Practice ELPs are flown the same as actual PELs. The depicted profile (Figure 5.7) is used for both the PEL and FL."
+    },
+    {
+      "section": "5.32",
+      "title": "INITIAL ACTIONS",
+      "pages_pdf": [90, 91, 92, 93],
+      "item_mapping": ["contact-30", "contact-39"],
+      "category_hint": ["contact"],
+      "technique_summary": "Initial reaction to an engine related malfunction at low altitude should be to trade excess airspeed for altitude (zoom) in accordance with boldface procedures. The PEL checklist steps are remembered with 'Turn, Climb, Clean, Check, and BIP', followed by a Plan: intercept the ELP profile at or above High Key, intercept at a point other than High Key with the appropriate configuration and airspeed, or eject when it becomes evident the A/C cannot be safely recovered (ORM 3-2-1).",
+      "parameters": [
+        {"name": "zoom climb entry speed", "value": "above 150 KIAS", "verbatim": "Above 150 KIAS, initiate a zoom climb using a 2-G pull up to a 20° climb angle until approaching 20 KIAS above the desired glide airspeed, then lower the nose to maintain the desired glide speed."},
+        {"name": "zoom climb G and angle", "value": "2-G pull up to a 20° climb angle", "verbatim": "initiate a zoom climb using a 2-G pull up to a 20° climb angle"},
+        {"name": "zoom recovery speed", "value": "approaching 20 KIAS above desired glide airspeed", "verbatim": "until approaching 20 KIAS above the desired glide airspeed, then lower the nose to maintain the desired glide speed"},
+        {"name": "best rate climb speed", "value": "140 KIAS", "verbatim": "If not within flameout glide distance to High Key, use the highest suitable power setting and 140 KIAS to climb (best rate)."},
+        {"name": "on-profile torque", "value": "4 - 6 % torque", "verbatim": "Once altitude is sufficient to establish High Key, reduce power to 4 - 6 % torque and trim for a 125 knot (minimum) descent."},
+        {"name": "glide descent speed", "value": "125 knot (minimum)", "verbatim": "trim for a 125 knot (minimum) descent"},
+        {"name": "airspeed-to-altitude trade", "value": "10 KIAS ≈ 100 feet", "verbatim": "Ten KIAS of extra airspeed can be traded for approximately 100 feet of increased altitude. For example, 175 KIAS and 6.000 feet is approximately the same energy level as 125 KIAS and 6.500 feet."},
+        {"name": "glide ratio penalty of extended gear", "value": "2:1 reduced to 1.5:1", "verbatim": "At optimum glide airspeeds, the drag of extended landing gear reduces the glide ratio (NM divided by 1000 feet of altitude) from 2:1 to 1.5:1."},
+        {"name": "DME method", "value": "1/2 DME + KEY; add 3.000 feet (High Key) or 1.500 feet (Low Key)", "verbatim": "A memory aid for this technique is \"1/2 DME + KEY.\" (1) Determine distance to field (GPS NRST function). (2) Distance divided by 2 = minimum AGL altitude required. (3) Is altitude (AGL) sufficient to reach the field? (4) Add 3.000 feet (High Key) or 1.500 feet (Low Key) to AGL altitude required."},
+        {"name": "altitude method - max glide distance", "value": "altitude AGL multiplied by 2", "verbatim": "Determine max glide distance (altitude AGL multiplied by 2)."},
+        {"name": "altitude method - key subtraction", "value": "3000 foot (High Key) or 1500 foot (Low Key)", "verbatim": "Subtract 3000 foot (High Key) or 1500 foot (Low Key) from AGL altitude; divide by 2 to determine max glide distance to high or Low Key."},
+        {"name": "example short runway", "value": "less than 4.000 foot runway", "verbatim": "a usable airfield with a less than 4.000 foot runway may be only a few minutes away"}
+      ],
+      "procedure_steps": [
+        "Turn immediately to the nearest suitable field based on A/C condition, weather, airfield conditions, altitude, and gliding distance available.",
+        "Climb (zoom) to trade excess airspeed (greater than 150 KIAS) for altitude, or use the highest suitable power setting and 140 KIAS if not within flameout glide distance to High Key.",
+        "Clean up the A/C by raising landing gear, flaps, and speed brake as soon as possible.",
+        "Check the A/C - cross check all indications, analyze the situation, and take proper action while intercepting or maintaining the ELP profile.",
+        "BIP - boost pump and ignition switches as required.",
+        "Plan: intercept the ELP profile at or above High Key, intercept at another point with appropriate configuration and airspeed, or eject (ORM 3-2-1)."
+      ],
+      "common_errors": [
+        "Delaying the turn to the nearest suitable field - in most PEL situations time is the most critical element, and the longer the engine runs the greater the chance for complete failure.",
+        "Exceeding the engine-out glide range for the nearer field before being within engine-out glide range of the desired field.",
+        "Losing situational awareness or visual contact with the intended landing runway while climbing.",
+        "Failing to constantly recalculate altitude required for the ELP during the glide to account for winds and required turns.",
+        "Leaving excess drag (gear, flaps, speed brake) extended, which inhibits the climb and greatly reduces gliding range."
+      ],
+      "corrections": [
+        "Use the memory aid 'Turn, Climb, Clean, Check, and BIP.'",
+        "If unable to climb due to clouds, icing, etc., increase energy by accelerating to a higher airspeed and remain clear of clouds until in position to descend and/or decelerate to enter the ELP.",
+        "Once on ELP profile, reduce power to 4-6 % torque and maintain altitude as the airspeed bleeds off to 125 KIAS.",
+        "Use the NRST function on the GPS for accurate distance information."
+      ],
+      "notes": "Field selection factors: distance to airfield; terrain around airfield; runway length, width, direction, and condition; weather; fire or rescue support; emergency oxygen and electrical power supply; threat to the public if the A/C must be abandoned. 'Being in the bubble' means being at sufficient altitude to land at an airfield using an engine flameout glide; climbing to be in the bubble for a further but more desirable field is 'bubble hopping'. In most cases, landing with an operational engine is preferred to performing a forced landing."
+    },
+    {
+      "section": "5.33",
+      "title": "HIGH ALTITUDE POWER LOSS (HAPL)",
+      "pages_pdf": [93],
+      "item_mapping": ["contact-30"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective: identify the nearest suitable airfield and safely manoeuvre the A/C to intercept the ELP profile, arriving at High Key aligned with the landing runway. If High Key cannot be reached, intercept the profile at a point before Low Key, and make a timely decision to continue or terminate the ELP and eject. HAPL is a loss of power at any altitude above High Key altitude.",
+      "parameters": [
+        {"name": "airspeed clean", "value": "125 KIAS minimum", "verbatim": "Airspeed. Maintain 125 KIAS minimum clean or 120 KIAS minimum with landing gear."},
+        {"name": "airspeed with landing gear", "value": "120 KIAS minimum", "verbatim": "125 KIAS minimum clean or 120 KIAS minimum with landing gear"},
+        {"name": "SFL power", "value": "4-6 % torque (simulates PCL off)", "verbatim": "SFL. 4-6 % torque (simulates PCL off)."},
+        {"name": "PEL power", "value": "as required until on profile, then 4-6 % torque", "verbatim": "PEL. Adjust as required until on profile. 4 - 6 % torque (simulates PCL off) once on profile."},
+        {"name": "360° turn altitude loss - 30° bank", "value": "2.000 feet", "verbatim": "30° bank – 2.000 feet."},
+        {"name": "360° turn altitude loss - 45° bank", "value": "1.500 feet", "verbatim": "45° bank – 1.500 feet."},
+        {"name": "360° turn altitude loss - 60° bank", "value": "1.000 feet", "verbatim": "60° bank – 1.000 feet."}
+      ],
+      "procedure_steps": [
+        "Maintain A/C control and analyze the situation; execute boldface procedures.",
+        "Turn, climb, clean, check, and BIP.",
+        "Carefully manage energy to arrive at High Key on altitude, dissipating excess energy prior to High Key.",
+        "To lose energy: slip, S-turn, lower the gear early, or use a combination of all three; alternatively make 360-degree turns prior to High Key."
+      ],
+      "common_errors": [
+        "Arriving at High Key with excess energy, causing disorientation and preventing the profile from being flown normally.",
+        "Failure to arrive at High Key aligned with the landing runway."
+      ],
+      "corrections": [
+        "Attempt to dissipate excess energy prior to High Key to minimize disorientation and allow the profile to be flown normally.",
+        "To lose energy: slip, S-turn, lower the gear early, or use a combination of all three techniques.",
+        "Another technique to lose excess altitude is to make 360° turns prior to High Key, generally accomplished very near or directly over the intended landing destination.",
+        "If High Key cannot be reached, intercept profile at a point before Low Key."
+      ],
+      "notes": null
+    },
+    {
+      "section": "5.34",
+      "title": "GLIDE PERFORMANCE",
+      "pages_pdf": [94],
+      "item_mapping": ["contact-30"],
+      "category_hint": ["contact"],
+      "technique_summary": "A clean configuration glide at 125 KIAS approximates best glide range. For no-wind planning, a clean A/C (propeller feathered or 4-6 % torque set) at 125 KIAS should glide 2 miles for every 1.000 feet of altitude lost (2:1 glide ratio) with a VSI of approximately 1350-1500 fpm. Check the descent rate after setting 4-6 % torque and adjust as required.",
+      "parameters": [
+        {"name": "best glide airspeed", "value": "125 KIAS", "verbatim": "A clean configuration glide at 125 KIAS approximates best glide range."},
+        {"name": "glide ratio", "value": "2 miles for every 1.000 feet (2:1)", "verbatim": "a clean A/C (propeller feathered or 4-6 % torque set) at 125 KIAS should glide 2 miles for every 1.000 feet of altitude lost (2:1 glide ratio), with a VSI of approximately 1350-1500 fpm."},
+        {"name": "target VSI", "value": "approximately 1350-1500 fpm", "verbatim": "with a VSI of approximately 1350-1500 fpm"},
+        {"name": "VSI correction gate", "value": "greater than 1.500 fpm, increase torque to achieve 1350 fpm", "verbatim": "If VSI is greater than 1.500 fpm, increase torque to achieve a 1350 fpm descent."},
+        {"name": "level deceleration distance", "value": "approximately 0.1 to 0.2 nautical miles per 10 KIAS above 125 KIAS", "verbatim": "If unable to climb or zoom, the A/C travels approximately 0.1 to 0.2 nautical miles of horizontal distance for every 10 KIAS of excess airspeed above 125 KIAS in a level deceleration."},
+        {"name": "example level deceleration", "value": "200 KIAS ≈ 1.2 NM", "verbatim": "For example, at 200 KIAS the A/C glides approximately 1.2 NM straight and level before slowing to 125 KIAS."}
+      ],
+      "procedure_steps": [
+        "Set 4-6 % torque in a clean configuration and check the descent rate.",
+        "If VSI is greater than 1.500 fpm, increase torque to achieve a 1350 fpm descent.",
+        "If power is insufficient to achieve a descent rate less than 1.500 fpm, consider shutting down the engine to improve glide performance.",
+        "If time permits, use DME or GPS to confirm the actual glide ratio; consider wind and required turns."
+      ],
+      "common_errors": [
+        "Failing to check the descent rate after setting 4-6 % torque.",
+        "Not adjusting the return plan when actual glide distance varies from expected."
+      ],
+      "corrections": [
+        "Adjust the return plan if actual glide distance varies from expected."
+      ],
+      "notes": null
+    },
+    {
+      "section": "5.35",
+      "title": "SLIPS",
+      "pages_pdf": [94, 95],
+      "item_mapping": ["contact-30"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective: dissipate energy to achieve the ELP profile while proceeding in a desired direction. A slip is uncoordinated flight used to increase the sink rate and lose altitude with a constant airspeed and ground track; stall speed is higher than in coordinated flight. Lower one wing and apply opposite (top) rudder pedal pressure, monitoring airspeed closely and adjusting nose attitude to maintain 125 KIAS.",
+      "parameters": [
+        {"name": "airspeed in slip", "value": "125 KIAS", "verbatim": "Monitor airspeed closely and adjust nose attitude as necessary to maintain 125 KIAS."},
+        {"name": "full slip descent rate", "value": "may exceed 2.000 fpm", "verbatim": "In a full slip, the rate of descent may exceed 2.000 fpm."},
+        {"name": "minimum recovery altitude", "value": "200 – 300 feet", "verbatim": "The slip must be executed when necessary and stopped with enough altitude remaining (200 – 300 feet) to slow the rate of descent and ensure positive control of the A/C during the final moments of the manoeuvre."},
+        {"name": "nose position guideline", "value": "below the horizon in a full slip", "verbatim": "As a guideline, keep the nose below the horizon in a full slip."}
+      ],
+      "procedure_steps": [
+        "Lower one wing and apply opposite (top) rudder pedal pressure.",
+        "Monitor airspeed closely and adjust nose attitude as necessary to maintain 125 KIAS; monitor the VSI and note the increased rate of descent.",
+        "Straight-ahead slip: select a reference point on the horizon and adjust rudder pressure and/or angle of bank to keep the nose on the point.",
+        "Turning slip: lower the inside wing while increasing opposite (top) rudder pressure, varying angle of bank and rudder pressure to maintain the desired track over the ground.",
+        "Recovery: smoothly roll the wings toward level flight while reducing rudder pressure, stopping the slip with enough altitude remaining to slow the rate of descent and ensure positive control."
+      ],
+      "common_errors": [
+        "Improper application of rudder, resulting in a skid.",
+        "Poor airspeed control.",
+        "Not varying the angle of bank or rudder pressure to maintain desired track over ground.",
+        "Rough entry and recovery control applications."
+      ],
+      "corrections": [
+        "Smoothly roll the wings toward level flight while reducing rudder pressure.",
+        "Stop the slip with enough altitude remaining (200-300 feet) to slow the rate of descent and ensure positive control of the A/C."
+      ],
+      "notes": "Slips may be used at any point in an actual PEL/FL but are potentially dangerous in a configured T-6 close to the ground. NOTE from the manual: if the pilot improperly applies the rudder (bottom) after the wing is lowered and during the turning slip by moving the stick in the opposite turn direction (without first neutralizing controls to reverse turn), the A/C may depart controlled flight. During aggressive slips a fuel low light may come on but should extinguish after the slip is terminated."
+    },
+    {
+      "section": "5.36",
+      "title": "EMERGENCY LANDING PATTERN",
+      "pages_pdf": [95, 96, 97, 98, 99],
+      "item_mapping": ["contact-30"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective: safely land the A/C from High or Low Key. The ELP is a 360-degree pattern designed to position the A/C for landing for an SFL, PEL, or FL, flown at 125 KIAS minimum clean or 120 KIAS minimum with landing gear down and flaps at any position. The primary reference during an ELP is the runway; crosscheck energy level (altitude, airspeed) with position, predict energy level at known reference points, and anticipate required corrections.",
+      "parameters": [
+        {"name": "airspeed clean", "value": "125 KIAS (min)", "verbatim": "Airspeed. Maintain 125 KIAS (min) with clean or 120 KIAS (min) with landing gear down and flaps at any position."},
+        {"name": "airspeed configured", "value": "120 KIAS (min)", "verbatim": "120 KIAS (min) with landing gear down and flaps at any position"},
+        {"name": "SFL power", "value": "4-6 % torque, do not adjust throughout the profile", "verbatim": "SFL. 4-6 % torque. Do not adjust power throughout the profile unless safety of flight is jeopardized."},
+        {"name": "PEL power", "value": "as required until on profile, 4-6 % torque on profile", "verbatim": "PEL. Adjust power as required in accordance with the flight manual until on profile, 4-6 % torque on profile."},
+        {"name": "Table 5.2 - High Key altitude", "value": "3.000 feet AGL", "verbatim": "1 High Key 3.000 feet AGL Gear down; flaps up 1/3 down planned RWY. ¼ WTD abeam, or directly over intended point of landing. Runway heading or aligned with landing direction. Wings level."},
+        {"name": "Table 5.2 - Cross Key altitude", "value": "2.200 to 2.300 feet AGL", "verbatim": "2 Cross key 2.200 to 2.300 feet AGL Halfway from High Key to Low Key."},
+        {"name": "Table 5.2 - Low Key altitude and configuration", "value": "1.500 feet AGL, gear down, flaps TO as required", "verbatim": "3 Low Key 1.500 feet AGL Gear down; flaps TO as required 2/3 WTD abeam intended point of landing. Runway between red filler cap and wingtip paint."},
+        {"name": "Table 5.2 - Base Key altitude and speed", "value": "600 to 800 feet AGL, 120 KIAS", "verbatim": "4 Base Key 600 to 800 feet AGL 120 KIAS Gear down; flaps LDG as required. Halfway between Low Key and final."},
+        {"name": "Table 5.2 - Final airspeed", "value": "110 KIAS (minimum)", "verbatim": "5 Final N/A 110 KIAS (minimum) Plan for a 1.000 foot (min) final prior to the intended point of touch down."},
+        {"name": "Table 5.2 - final length", "value": "1.000 foot (min)", "verbatim": "Plan for a 1.000 foot (min) final prior to the intended point of touch down."},
+        {"name": "High Key offset technique bank to Low Key", "value": "approximately 20° bank - no wind", "verbatim": "Offset technique. Approximately 20° bank - no wind."},
+        {"name": "High Key overhead technique bank to Low Key", "value": "approximately 30° bank - no-wind", "verbatim": "Overhead technique. Approximately 30° bank - no-wind."},
+        {"name": "High Key offset displacement", "value": "approximately one-quarter wing tip distance (WTD)", "verbatim": "Use runway displacement approximately one-quarter wing tip distance (WTD) from the runway away from the intended ELP turn direction. Place the runway just above the canopy rail as an approximation for one quarter WTD."},
+        {"name": "Low Key position", "value": "approximately two-thirds WTD (fuel cap on runway), 1.500 feet AGL, 120 KIAS", "verbatim": "Located approximately two-thirds WTD (fuel cap on runway), abeam the intended point of landing (no wind), altitude approximately 1.500 feet AGL and 120 KIAS."},
+        {"name": "Low Key to Base Key airspeed", "value": "120 KIAS minimum", "verbatim": "Low Key to Base Key. Maintain 120 KIAS minimum."},
+        {"name": "aim point", "value": "500-1.000 feet short of intended landing point (no wind)", "verbatim": "Hold the aim point (500-1.000 feet short of intended landing point - no wind) and observe the airspeed."},
+        {"name": "energy sufficiency indicator", "value": "airspeed increasing above 120 KIAS", "verbatim": "If the airspeed is increasing above 120 KIAS it is a good indication that the energy state is sufficient to reach the landing point; consider the wind and lower flaps to LDG position."},
+        {"name": "intended point of landing", "value": "within the first one-third (1/3) of runway on the centerline", "verbatim": "The intended point of landing is within the first one-third (1/3) of runway on the centerline with LDG flaps extended and touching down at LDG flap landing speed."}
+      ],
+      "procedure_steps": [
+        "Establish High Key at 3.000 feet AGL, gear down and flaps up, aligned with the landing direction and wings level, using either the offset (1/4 WTD) or overhead technique.",
+        "If on profile at or prior to High Key, lower the landing gear; turn toward Low Key using approximately 20 degrees of bank (offset) or 30 degrees (overhead).",
+        "At Cross Key check for 2.200 to 2.300 feet AGL, halfway from High Key to Low Key.",
+        "At Low Key (1.500 feet AGL, 120 KIAS, 2/3 WTD abeam intended point of landing) level wings momentarily and check for proper spacing and altitude; if energy is sufficient, lower TO flaps.",
+        "Low Key to Base Key, maintain 120 KIAS minimum and fly the A/C perpendicular to the runway at Base Key, 600 to 800 feet AGL; when a safe landing is assured, lower flaps to LDG.",
+        "Intercept final at a minimum of 1.000 feet from the intended point of touchdown and maintain 110 KIAS (minimum) until transition to landing.",
+        "Landing: adjust nose attitude in the roundout to transition to a normal landing, touch down on the main gear, then gently lower the nose wheel; apply braking based on runway remaining."
+      ],
+      "common_errors": [
+        "Delay of turn toward the nearest suitable field during initial climb.",
+        "Excessive climb; delaying to establish High Key increases the risk of engine failure during PEL.",
+        "Improper position at High Key (A/C not aligned).",
+        "Poor power control on PEL or SFL; failure to set and maintain 4-6 % torque once on ELP profile.",
+        "Excessive or insufficient bank angle at High Key, which may result in improper Low Key spacing.",
+        "Premature configuration; for example, TO flaps lowered at Low Key regardless of prevailing wind, altitude, or actual position.",
+        "Poor airspeed control, often related to poor trim.",
+        "Failure to compare actual and desired position and energy.",
+        "Failure to anticipate or correct for wind.",
+        "Insufficient, late, or no use of power to correct profile during PEL.",
+        "Failure to retard PCL to idle during the landing phase of PEL.",
+        "On narrow runways the tendency is to be too close to the runway at Low Key, resulting in high energy when rolling out on final.",
+        "Excessive wings level time at Low Key, and being past abeam the last usable landing surface."
+      ],
+      "corrections": [
+        "SFL or FL: correct for low energy by delaying landing gear or flap extension, intercepting the ELP at some point other than High Key (Low Key, Base Key, Final), and/or adjusting the pattern ground track.",
+        "PEL: use power to correct for low energy as soon as it is recognized; reduce PCL to idle when landing is assured.",
+        "If excessively high or low at Cross Key, check for proper power setting and/or configuration; otherwise evaluate airspeed, bank angle, and wind to determine the cause of the altitude deviation.",
+        "Trim throughout the ELP to minimize airspeed deviations; make all corrections smooth and expeditious to avoid stall.",
+        "During PELs, crosscheck torque at every radio call and configuration check.",
+        "If below target altitude on an SFL or FL, delay configuration changes only until on profile; if below target altitude on a PEL, immediately add power to get back on profile prior to extending gear or flaps.",
+        "PEL: if runway remaining after touchdown is insufficient to stop the A/C, execute go-around; if sufficient power is available to establish Low Key, reattempt PEL; if power is insufficient or the engine is not reliable, consider ejection.",
+        "FL: if the A/C cannot be stopped before the end of the runway, execute the A/C Departs Prepared Surface Checklist or eject."
+      ],
+      "notes": "Anticipate a longer flare and touchdown on an FL due to reduced drag, and on an SFL because the PCL is not reduced to idle when landing is assured. Strive to set LDG flaps, but use flaps as required to ensure the A/C will not touch down short of the runway; flaps can be lowered after landing is assured or after touchdown if stopping distance is critical. All WTDs are approximate and based on no-wind conditions. Altitude is not the only indication of proper energy management - distance from the runway and the effect of the wind should be taken into account."
+    },
+    {
+      "section": "5.37",
+      "title": "ELP WIND ANALYSIS",
+      "pages_pdf": [99, 100],
+      "item_mapping": ["contact-30"],
+      "category_hint": ["contact"],
+      "technique_summary": "Winds can cause the ELP track to differ significantly from standard. A strong wind component that is not sufficiently corrected or taken under consideration can result in an unsuccessful ELP, even if it was otherwise flawlessly flown. Determine the winds from forecasts, tower, radio calls, and surface observations, then adjust High Key placement and Low Key spacing accordingly.",
+      "parameters": [
+        {"name": "forecast wind levels used", "value": "surface, 1.000 to 3.000 feet, 5.000 feet, winds aloft", "verbatim": "Surface winds, winds at 1.000 to 3.000 feet, winds at 5.000 feet and winds aloft should be obtained from weather forecasts and serve as a good starting point for building situational awareness about actual wind conditions."},
+        {"name": "wind at High Key estimation", "value": "double the surface wind velocity", "verbatim": "Double the surface wind velocity to estimate winds at High Key as wind is typically stronger at altitude than at the surface."},
+        {"name": "headwind High Key displacement", "value": "1.000 feet for every 10 KIAS of wind", "verbatim": "Headwinds. Move the High Key position into the wind 1.000 feet for every 10 KIAS of wind."}
+      ],
+      "procedure_steps": [
+        "Determine the winds from forecasts, tower-reported surface winds, radio calls to other A/C or an FBO, and observation of surface conditions (smoke, waves on lakes, wind tetrahedron, windsock).",
+        "Double the surface wind velocity to estimate winds at High Key.",
+        "For crosswinds, decide the turn direction and adjust Low Key spacing accordingly.",
+        "For headwinds, move the High Key position into the wind 1.000 feet for every 10 KIAS of wind, start the turn from Low Key to Base Key earlier than normal, and use an aim point closer to the intended point of touchdown."
+      ],
+      "common_errors": [
+        "A strong wind component that is not sufficiently corrected or taken under consideration, which can result in an unsuccessful ELP even if otherwise flawlessly flown.",
+        "Assuming the winds at 1.000 to 3.000 feet are the same as surface winds - they can vary significantly and significantly alter the required ELP ground track."
+      ],
+      "corrections": [
+        "Turning away from the wind at High Key: adjust Low Key spacing; although there is a tailwind initially, the headwind departing Low Key allows more time for decision-making during the last, critical stages of the ELP. Remember, \"base, wind in your face.\"",
+        "Turning into the wind at High Key: adjust Low Key spacing; the turn from Low Key will be aided by the crosswind component, and although this compresses the time from Low Key to Final, it can provide an extra energy cushion.",
+        "With headwinds expect a shorter and steeper final, and consider delaying lowering full flaps a little longer than for a no-wind condition."
+      ],
+      "notes": "If performing an ELP at a non-towered airfield without weather observation capability, assume that in the local area surface winds will be similar to those at the home field."
+    },
+    {
+      "section": "5.38",
+      "title": "ADDITIONAL OPTIONS FOR ELP TRAINING",
+      "pages_pdf": [100, 101, 102],
+      "item_mapping": ["contact-30", "contact-35"],
+      "category_hint": ["contact"],
+      "technique_summary": "Three additional training options: Break to Low Key (an intentional climbing break turn commenced in the normal break zone, arriving at Low Key in the normal Low Key configuration), Closed to Low Key (a climbing turn to 1,500 feet AGL from initial takeoff, touch-and-go landing, or go-around, flown similarly to a closed pull-up), and the Zero-Torque ELP (an ELP flown with excessive propeller drag to demonstrate its effects and stress the importance of cross-checking power setting).",
+      "parameters": [
+        {"name": "Break to Low Key - configuration speed gate", "value": "below 147 KIAS", "verbatim": "After decelerating below 147 KIAS, lower gear and TO flaps."},
+        {"name": "Break to Low Key - airspeed to Low Key", "value": "120 KIAS (minimum)", "verbatim": "Use power as required to maintain 120 KIAS (minimum) until arriving at Low Key."},
+        {"name": "Closed to Low Key - minimum airspeed", "value": "140 KIAS", "verbatim": "Minimum airspeed is 140 KIAS; maximum bank is 90 degrees."},
+        {"name": "Closed to Low Key - maximum bank", "value": "90 degrees", "verbatim": "maximum bank is 90 degrees"},
+        {"name": "Closed to Low Key - initial bank", "value": "approximately 60 degrees", "verbatim": "advance the PCL smoothly to MAX, and start a climbing turn toward Low Key, initially using approximately 60 degrees of bank"},
+        {"name": "Closed to Low Key - level-off altitude", "value": "1,500 feet AGL", "verbatim": "Upon reaching 1,500 feet AGL, reduce power (as required), confirm proper spacing, and report high downwind per local guidance."},
+        {"name": "Closed to Low Key - torque at Low Key", "value": "4 to 6 % torque", "verbatim": "At Low Key, set 4 to 6 % torque and continue with normal ELP procedures."},
+        {"name": "Zero-Torque ELP - airspeed", "value": "120 KIAS (minimum)", "verbatim": "Airspeed. 120 KIAS (minimum)."},
+        {"name": "Zero-Torque ELP - power at High Key", "value": "0% torque; then power as required to arrest descent to Low Key", "verbatim": "High Key. 0% torque; then power as required to arrest descent to Low Key."},
+        {"name": "Zero-Torque ELP - power at Low Key", "value": "0% torque; then power according to go-around procedures", "verbatim": "Low Key. 0% torque; then power according to go-around procedures."},
+        {"name": "Zero-Torque ELP - configuration", "value": "Gear down; flaps up at High Key, TO at Low Key", "verbatim": "(3) Gear. Down. (4) Flaps. Up at High Key; TO at Low Key."},
+        {"name": "Zero-Torque ELP - altitude loss halfway High to Low Key", "value": "approximately 750 feet", "verbatim": "At the halfway point between High Key and Low Key, altitude loss should normally be approximately 750 feet."},
+        {"name": "Zero-Torque ELP - go-around gate", "value": "minimum of 200 feet AGL", "verbatim": "Because of excessive NL pitch attitudes and descent rates throughout the manoeuvre, initiate a go-around with a minimum of 200 feet AGL."},
+        {"name": "Zero-Torque ELP - excessive drag trigger", "value": "less than 4 % torque", "verbatim": "inadvertently setting the PCL to less than 4 % torque during a PEL or SFL training"}
+      ],
+      "procedure_steps": [
+        "Break to Low Key: request Break to Low Key SFL; when approved, reduce power as necessary to make a decelerating, climbing turn toward Low Key; after decelerating below 147 KIAS lower gear and TO flaps; use power as required to maintain 120 KIAS minimum until arriving at Low Key; from Low Key continue with normal ELP procedures.",
+        "Closed to Low Key: at 140 KIAS minimum request clearance; when approved, clear for traffic, advance the PCL smoothly to MAX, and start a climbing turn toward Low Key initially using approximately 60 degrees of bank; upon reaching 1,500 feet AGL reduce power, confirm proper spacing, and report high downwind; after decelerating below 147 KIAS lower gear and TO flaps and maintain 120 KIAS minimum; at Low Key set 4 to 6 % torque and continue with normal ELP procedures.",
+        "Zero-Torque ELP: fly to normal High Key altitude, configure with gear, set the PCL to idle, and note the pitch attitude required to maintain 120 KIAS and the actual altitude loss at the halfway point; add power to arrive at Low Key on altitude. Alternatively fly to a normal Low Key, lower flaps to TO, and set power to idle, noting the pitch required to maintain 120 KIAS and the rapid altitude loss."
+      ],
+      "common_errors": [
+        "Inadvertently setting the PCL to less than 4 % torque during a PEL or SFL training, producing excessive propeller drag.",
+        "Failing to cross-check power setting during ELP training.",
+        "Allowing the excessive descent rate of a zero-torque profile to continue, where altitude loss at Low Key would be excessive."
+      ],
+      "corrections": [
+        "Add power to arrive at Low Key on altitude.",
+        "Because of excessive nose-low pitch attitudes and descent rates throughout the manoeuvre, initiate a go-around with a minimum of 200 feet AGL."
+      ],
+      "notes": "An ELP flown with excessive propeller drag (greater than that of a feathered propeller) requires more nose-down pitch to maintain airspeed, resulting in excessive descent rates and altitude loss. Excessive propeller drag may be caused by inadvertently setting the PCL to less than 4 % torque during PEL/SFL training, a mechanical malfunction resulting in an unfeathered propeller after engine shutdown, or excessive drag from a propeller malfunction with a running engine. OCR artifact in source: 'excessive NL pitch attitudes' = nose-low pitch attitudes."
+    }
+  ]
+}

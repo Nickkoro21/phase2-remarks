@@ -4,7 +4,7 @@
   "sections": [
     {
       "section": "4.1",
-      "title": "INTRODUCTION (CHAPTER 4 - TAKEOFF, CLIMB, AND LEVEL-OFF)",
+      "title": "INTRODUCTION",
       "pages_pdf": [57],
       "item_mapping": [],
       "category_hint": ["contact"],
@@ -13,13 +13,13 @@
       "procedure_steps": [],
       "common_errors": [],
       "corrections": [],
-      "notes": "Chapter opener; no gradable item mapping. Printed page 47 = PDF page 57 (offset +10, not +8)."
+      "notes": "Manual heading is \"4.1. Introduction\"; the chapter it opens is titled \"Chapter 4 — TAKEOFF, CLIMB, AND LEVEL-OFF\" (title kept verbatim so it stays traceable). Chapter opener; no gradable item mapping. Printed page 47 = PDF page 57 (offset +10, not +8)."
     },
     {
       "section": "4.2",
       "title": "LINEUP CHECK",
       "pages_pdf": [57],
-      "item_mapping": ["contact-02", "instrument-02", "vfr_navigation-03", "formation-08"],
+      "item_mapping": ["contact-02", "instrument-02", "vfr_navigation-03", "formation-01", "formation-07", "formation-08"],
       "category_hint": ["contact", "instrument", "vfr_navigation", "formation"],
       "technique_summary": "Objective is to accomplish checklist items in preparation for takeoff. This check is normally accomplished after you have stopped the A/C on the center line of the active runway. The PF must ensure that all items are complete and \"BOTH\" items are confirmed with the PNF. Clear final prior to crossing the runway hold short line.",
       "parameters": [
@@ -68,7 +68,7 @@
       "section": "4.3",
       "title": "TAKEOFF",
       "pages_pdf": [57, 58],
-      "item_mapping": ["contact-02", "instrument-02", "vfr_navigation-03", "formation-08"],
+      "item_mapping": ["contact-02", "instrument-02", "vfr_navigation-03", "formation-01", "formation-07", "formation-08"],
       "category_hint": ["contact", "instrument", "vfr_navigation", "formation"],
       "technique_summary": "Objective is to safely get the A/C airborne. Two takeoff options exist, static and rolling. The static takeoff is used early in training because it provides more time to accomplish required checks and verify proper engine operation; a static takeoff is also required at night and for solo students. A rolling takeoff aids traffic flow in a busy pattern and is a smooth transition from taxi to takeoff roll. Rolling takeoffs have a negligible effect on TOLD and no recalculation is required.",
       "parameters": [
@@ -138,13 +138,13 @@
         "Technique: reduce the pitch attitude picture by half (place the spinner slightly below the horizon) to attain the takeoff attitude; use control stick pressure as necessary to hold this attitude.",
         "Immediately after takeoff and safe gear retraction apply some right rudder trim to counteract adverse yaw and center the ball."
       ],
-      "notes": "Figure 4.1 (PDF page 59) is titled \"FCP Takeoff Pitch Attitude\" and is image-only — no extractable numeric text beyond the 7°–10° in the body."
+      "notes": "Figure 4.1 (PDF page 59) is titled \"FCP Takeoff Pitch Attitude\" and is image-only — no extractable numeric text beyond the 7°–10° in the body. DERIVED COMMON ERRORS: Chapter 4 publishes no \"Common Errors\" block (such blocks appear elsewhere, e.g. §5.35.6, PDF page 95); the common_errors listed here are derived by inverting the imperatives of the source text, each traceable to a sentence of the manual, and are not a verbatim manual list."
     },
     {
       "section": "4.4",
       "title": "CROSSWIND TAKEOFF",
       "pages_pdf": [59, 60],
-      "item_mapping": ["contact-02", "instrument-02", "vfr_navigation-03", "formation-08"],
+      "item_mapping": ["contact-02", "instrument-02", "vfr_navigation-03", "formation-01", "formation-07", "formation-08"],
       "category_hint": ["contact", "instrument", "vfr_navigation", "formation"],
       "technique_summary": "The procedures for a takeoff with a crosswind are the same as for a no wind takeoff except aileron is held into the wind to keep the wings level. Aileron deflection is necessary because the upwind wing develops more lift, causing it to fly (begin rising) before the downwind wing. Anticipate the aileron requirement due to the crosswind and either preposition aileron into the wind or apply aileron into wind as required during takeoff roll. Use rudder to keep the A/C from weather-vaning.",
       "parameters": [],
@@ -166,7 +166,7 @@
         "Use rudder to keep the A/C from weather-vaning.",
         "Progressively smaller control inputs are required to maintain A/C control as airspeed increases."
       ],
-      "notes": "Figure 4.2 \"Skipping on Takeoff\" is on PDF page 60 (printed 50) and is image-only."
+      "notes": "Figure 4.2 \"Skipping on Takeoff\" is on PDF page 60 (printed 50) and is image-only. DERIVED COMMON ERRORS: Chapter 4 publishes no \"Common Errors\" block; the common_errors listed here are derived by inverting the imperatives of the source text and are not a verbatim manual list."
     },
     {
       "section": "4.5",
@@ -231,7 +231,7 @@
         "Normally accelerate to 160-180 KIAS during climb out to allow the nose to be lower and improve forward visibility.",
         "Verbally confirm the A/C is cleaned up by gear/flap limiting airspeed."
       ],
-      "notes": "The source text renders the normal climb-out speed as \"16 0-180 KIAS\" (extraction artifact of 160-180 KIAS); verbatim preserved as printed."
+      "notes": "The source text renders the normal climb-out speed as \"16 0-180 KIAS\" (extraction artifact of 160-180 KIAS); verbatim preserved as printed. DERIVED COMMON ERRORS: Chapter 4 publishes no \"Common Errors\" block; the common_errors listed here are derived by inverting the imperatives of the source text and are not a verbatim manual list."
     },
     {
       "section": "4.6",
@@ -255,13 +255,13 @@
         "Crosswind controls must be released after takeoff and the A/C allowed to crab into the wind, to prevent the upwind wing from dipping towards the ground.",
         "Climb in coordinated flight and maintain runway alignment on takeoff leg."
       ],
-      "notes": "Figure 4.3 \"Crabbing Into Crosswind After Takeoff\" is on PDF page 61 (printed 51) and is image-only."
+      "notes": "Figure 4.3 \"Crabbing Into Crosswind After Takeoff\" is on PDF page 61 (printed 51) and is image-only. DERIVED COMMON ERRORS: Chapter 4 publishes no \"Common Errors\" block; the common_errors listed here are derived by inverting the imperatives of the source text and are not a verbatim manual list."
     },
     {
       "section": "4.7.1",
       "title": "ABNORMAL PROCEDURES — TAKEOFF ABORTS",
       "pages_pdf": [62],
-      "item_mapping": ["contact-02", "contact-39"],
+      "item_mapping": ["contact-02", "contact-39", "instrument-02", "vfr_navigation-03", "formation-08"],
       "category_hint": ["contact", "instrument", "vfr_navigation", "formation"],
       "technique_summary": "If there is reason to ABORT the takeoff, do not hesitate to do so. If the PNF sees something hazardous should inform the PF. If the A/C Commander (AC) is not flying during a time-critical situation that requires immediate action, and there is no time to relay this to the PF, the AC should take control of the A/C and accomplish the appropriate procedures.",
       "parameters": [],
@@ -278,13 +278,13 @@
         "Do not hesitate to abort when there is reason to.",
         "In a time-critical situation with no time to relay to the PF, the A/C Commander takes control and accomplishes the appropriate procedures."
       ],
-      "notes": null
+      "notes": "contact-39 (EMERGENCY PROCEDURES) is mapped here because an abort is an immediate-action procedure executed per Check List. DERIVED COMMON ERRORS: Chapter 4 publishes no \"Common Errors\" block; the common_errors listed here are derived by inverting the imperatives of the source text and are not a verbatim manual list."
     },
     {
       "section": "4.7.2",
       "title": "ABNORMAL PROCEDURES — WAKE TURBULENCE",
       "pages_pdf": [62],
-      "item_mapping": ["contact-02", "contact-39"],
+      "item_mapping": ["contact-02", "instrument-02", "vfr_navigation-03", "formation-08"],
       "category_hint": ["contact", "instrument", "vfr_navigation", "formation"],
       "technique_summary": "Anticipate wake turbulence when taking off behind other A/C on the same or parallel runways, especially if the wind is calm or straight down the runway. Wake turbulence is formed when an A/C is creating lift, therefore plan to take off at a point prior to the preceding A/C's take-off point or after their point of touchdown.",
       "parameters": [],
@@ -299,13 +299,13 @@
       "corrections": [
         "Plan to take off at a point prior to the preceding A/C's take-off point or after their point of touchdown."
       ],
-      "notes": null
+      "notes": "Wake-turbulence avoidance by choosing the takeoff point is preventive takeoff planning, not an emergency procedure, so contact-39 (EMERGENCY PROCEDURES) is not mapped here — it is mapped only in §4.7.1; contact-02 (TAKE OFF) covers this content. DERIVED COMMON ERRORS: Chapter 4 publishes no \"Common Errors\" block; the common_errors listed here are derived by inverting the imperatives of the source text and are not a verbatim manual list."
     },
     {
       "section": "4.8",
       "title": "TURNS AFTER TAKEOFF",
       "pages_pdf": [62],
-      "item_mapping": ["contact-02", "contact-03", "instrument-02", "vfr_navigation-04"],
+      "item_mapping": ["contact-02", "contact-03", "instrument-02", "instrument-03", "vfr_navigation-04"],
       "category_hint": ["contact", "instrument", "vfr_navigation"],
       "technique_summary": "Climb straight ahead until past the departure end of the runway (or as directed). Attain a minimum of 140 KIAS and 700 feet AGL (local directives) before the first turn after takeoff.",
       "parameters": [
@@ -329,13 +329,13 @@
         "Turning below the minimum 140 KIAS and/or below 700 feet AGL."
       ],
       "corrections": [],
-      "notes": null
+      "notes": "The first turn after takeoff is already a departure phase, hence instrument-03 (STANDARD INSTRUMENT DEPARTURE) is mapped alongside instrument-02, mirroring contact-02 + contact-03. DERIVED COMMON ERRORS: Chapter 4 publishes no \"Common Errors\" block; the common_errors listed here are derived by inverting the imperatives of the source text and are not a verbatim manual list."
     },
     {
       "section": "4.9",
-      "title": "CLIMBS (INCLUDING CLIMBING TURNS AND LEVEL-OFF)",
+      "title": "CLIMBS",
       "pages_pdf": [62, 63],
-      "item_mapping": ["contact-03", "contact-05", "instrument-02", "vfr_navigation-04"],
+      "item_mapping": ["contact-03", "contact-05", "instrument-03", "instrument-07", "vfr_navigation-04"],
       "category_hint": ["contact", "instrument", "vfr_navigation"],
       "technique_summary": "Objective is to establish the A/C in a climb as required by local directives or published departure. Accelerate to climb airspeed 140-180 KIAS in accordance with local directives, power as required (normally MAX), pitch as required to fly the desired airspeed (normally 10-15°). Climbout airspeeds below 160 KIAS are permitted by the flight manual, but not normally recommended due to high pitch attitudes that limit forward visibility. Initiate the climb check in accordance with the flight manual passing 10.000 feet MSL.",
       "parameters": [
@@ -380,6 +380,11 @@
           "verbatim": "Level flight for 160 KIAS is about 2-3° nose-high."
         },
         {
+          "name": "pitch above level flight for 1000 ft/NM climb",
+          "value": "about 8° above level flight (10° pitch, 160 KIAS)",
+          "verbatim": "Therefore a pitch attitude of 10° is about 8° above level flight (for 160 KIAS) resulting in 1000 feet per nautical mile climb rate."
+        },
+        {
           "name": "level-off lead point",
           "value": "approximately 10 % of the VSI (e.g. 200 feet below at 2.000 fpm)",
           "verbatim": "One technique is to use a lead point that is approximately 10 % of the VSI. For example, if climbing at a rate of 2.000 fpm, start the level-off 200 feet below the desired altitude."
@@ -413,7 +418,7 @@
         "Trim used in the turn must be taken out during the rollout.",
         "Use a level-off lead point of approximately 10 % of the VSI; at the lead point smoothly lower the nose to level flight, then adjust PCL to the desired airspeed and trim."
       ],
-      "notes": "Figure 4.4 \"Constant Airspeed Climb Pitch Attitudes\" (PDF page 63, printed 53) is image-only; the numeric pitch/gradient relationships in the body text are captured above."
+      "notes": "Manual heading is \"4.9. Climbs\" (title kept verbatim); climbing turns and level-off are sub-techniques §4.9.4.b and §4.9.4.c and are included in this section's content. MAPPING: the whole section lies beyond the scope of the TAKE OFF items (contact-02 execution runs only \"b/ Brakes release until the acceleration of the A/C up to the standard climb airspeed\" ... \"e/ Acceleration of the A/C to the standard climb airspeed\"), so instrument-03 (SID — execution \"SP executes climb and SID.\") and instrument-07 (CONSTANT AIRSPEED - CONSTANT RATE CLIMBS / DESCENTS AND VERTICAL \"S\") are mapped instead of instrument-02, matching contact-03 / vfr_navigation-04. Figure 4.4 \"Constant Airspeed Climb Pitch Attitudes\" (PDF page 63, printed 53) is image-only; the numeric pitch/gradient relationships in the body text are captured above. DERIVED COMMON ERRORS: Chapter 4 publishes no \"Common Errors\" block; the common_errors listed here are derived by inverting the imperatives of the source text and are not a verbatim manual list."
     }
   ]
 }

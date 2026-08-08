@@ -1,0 +1,2872 @@
+{
+  "title": "Phase II flowchart",
+  "subtitle": "T-6A Basic Training (Phase II) — full stage flow: ground academics → ground exams → F/S → T-6A sorties → checkrides. Failure / regression paths are NOT included.",
+  "generated": "2026-08-08",
+  "sources": [
+    {
+      "file": "Phase_2_Syllabus_2025.pdf",
+      "ref": "PART I §1-3 (Objective / Training Duration / Training Flow Chart)",
+      "pages_pdf": "9-19",
+      "note": "the Flow Chart itself is a raster image on PDF pages 11-19; it was rendered at 3.2x and read visually"
+    },
+    {
+      "file": "Phase_2_Syllabus_2025.pdf",
+      "ref": "PART II §11 Ground Training (programme & training periods)",
+      "pages_pdf": "105-107, 109"
+    },
+    {
+      "file": "Phase_2_Syllabus_2025.pdf",
+      "ref": "PART III §13 Flight Simulator Training",
+      "pages_pdf": "139-161"
+    },
+    {
+      "file": "Phase_2_Syllabus_2025.pdf",
+      "ref": "PART IV §14 Flight Training",
+      "pages_pdf": "163-231"
+    },
+    {
+      "file": "Phase_2_Syllabus_2025.pdf",
+      "ref": "§9 General Directives",
+      "pages_pdf": "101"
+    },
+    {
+      "file": "D:/FDMS/data/mif/t6a.json",
+      "ref": "MIF table columns = Training Sections (sorties D/S)"
+    },
+    {
+      "file": "D:/FDMS/data/mif/fs.json",
+      "ref": "MIF F/S table columns = F/S Training Sections (sorties, means of training)"
+    },
+    {
+      "file": "D:/FDMS/data/requirements/flight_training.json + simulator_training.json + ground_training.json",
+      "ref": "digitised requirements (flow / hours / prerequisites with verbatim)"
+    }
+  ],
+  "legend": {
+    "kinds": [
+      "theory",
+      "ground_exam",
+      "sim",
+      "flight",
+      "checkride",
+      "solo"
+    ],
+    "categories": [
+      "contact",
+      "instrument",
+      "formation",
+      "vfr_navigation"
+    ],
+    "edge_kinds": {
+      "sequence": "arrow drawn in the Training Flow Chart inside the same column / phase",
+      "prereq": "arrow drawn in the Training Flow Chart crossing columns (ground → F/S, ground → A/C, F/S → A/C, category → category)",
+      "implied": "ordering that follows from the position of the boxes / from the PART II-III programme, with no arrow drawn"
+    },
+    "symbols_verbatim": "A/C SORTIE / GROUND TRAINING (CBTS/LESSONS) / F/S TRAINING. * Potential SOLO flights are depicted with a green frame. ** Evaluation flights are depicted with orange color. *** Night flights are depicted with red color.",
+    "symbols_source": {
+      "file": "Phase_2_Syllabus_2025.pdf",
+      "page_pdf": 9,
+      "ref": "PART I, §3.b"
+    },
+    "notes": [
+      "No node carries kind='solo': the syllabus marks SOLO with a green frame on individual sorties inside a Training Section, so SOLO is expressed with solo_allowed / solo_required / sorties_solo / solo_candidate_sorties.",
+      "solo_required=true only where SOLO is structural to the Section (C4790-91 = checkride for SOLO + 1st SOLO). §9.c nevertheless makes every SOLO sortie mandatory — see totals.solo_mandatory_verbatim."
+    ]
+  },
+  "totals": {
+    "ground_training_periods": 524,
+    "ground_training_periods_foreign_sps": 279,
+    "ground_training_verbatim": "SPs shall attend Ground Training program, which comprises 524 (282 for the foreign SPs) training periods.",
+    "ground_training_min_duration_verbatim": "In advance, minimum duration for ground training is twenty five (25) working days (including 10 days of WSGES training).",
+    "flight_training_min_duration_verbatim": "The duration of flight training is at least 78 flying days.",
+    "fs": {
+      "familiarization": "2/2,0",
+      "contact": "16 / 20,8",
+      "instrument": "18 / 23,2",
+      "formation": "5 / 6,5",
+      "navigation": "7 / 9,1",
+      "total": "48 / 61,6",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 139,
+        "ref": "PART III, §13.a GENERAL PROGRAM"
+      }
+    },
+    "flight": {
+      "contact": {
+        "dual": "31 / 38,9",
+        "solo": "5 / 4,3",
+        "total": "36 / 43,2"
+      },
+      "instrument": {
+        "dual": "14 / 18,4",
+        "solo": "- / -",
+        "total": "14 / 18,4"
+      },
+      "formation": {
+        "dual": "19 / 22,9",
+        "solo": "3 / 3,6",
+        "total": "22 / 26,5"
+      },
+      "navigation": {
+        "dual": "13 / 14,4",
+        "solo": "- / -",
+        "total": "13 / 14,4"
+      },
+      "total": {
+        "dual": "77 / 94,6",
+        "solo": "8 / 7,9",
+        "total": "85 / 102,5"
+      },
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 163,
+        "ref": "PART IV, §14.a GENERAL PROGRAM"
+      }
+    },
+    "minimum_hours_verbatim": "No SP shall finish the Training Phase, having flown less than 77,0 DUAL flight hours and less than 6,0 SOLO flight hours. All the SOLO sorties are mandatory to be executed.",
+    "minimum_hours_source": {
+      "file": "Phase_2_Syllabus_2025.pdf",
+      "page_pdf": 101,
+      "ref": "§9.c GENERAL DIRECTIVES"
+    },
+    "final_evaluations_verbatim": "The last sortie of each Category of Training Exercises (Contact – Instruments – Formation and Navigation) stands as an evaluation and constitutes the final examination for these categories. The sorties in question are: C5490, I4890, F4690 and Ν4690.",
+    "ground_gate_verbatim": "No SP shall begin training in a Training Section or Exercise if he/she has not previously attended and successfully been evaluated upon the objects of ground training, as they appear in the Training Flow Chart."
+  },
+  "flags": [
+    "I4101-02 sorties/hours: the PART IV header (PDF 193) prints 'SORTIES/HOURS TOTAL: 3 / 3.9', but the MIF table, the Training Flow Chart (only I4101 and I4102 boxes) and the PART IV general programme (INSTRUMENT 14 sorties / 18,4 h) all give 2 sorties. Summing the other Instrument sections gives 12 sorties / 15,8 h, so the missing block must be 2 / 2,6. sorties_dual=2 was kept (3 sources agree); hours_total was left null instead of choosing a figure the syllabus never prints.",
+    "C 2501 / C 2502 are drawn twice in the Flow Chart: on the CONTACT page (C 2502 → C 4602) and again on the FORMATION page (C 2502 → F 4303). The MIF gives section C2501-03 only 3 sorties, so the second depiction is a cross-reference, not extra sorties. Both edges are kept, marked in their notes.",
+    "PART II text (PDF 105) states '524 (282 for the foreign SPs) training periods', while the foreign-SP table (PDF 107) totals 279. The Greek total of 524 reconciles exactly with the node periods; the foreign figure is recorded as printed in totals.ground_training_periods_foreign_sps = 279 with the 282 discrepancy left unresolved.",
+    "Lesson-code differences between the Flow Chart boxes and the PART II table: 'OP 101-115' vs 'OP 101-15', 'FF 101-108' vs 'FF 101-107', 'CO 106-108' vs 'CO 106-107', 'SOPs 101-104' vs 'SOP 101-104', 'IPR PL2' vs 'OPR PL2', 'NA 101-103' vs 'NA 101-3'. Flow-Chart labels were used for node labels; PART II codes are quoted in duration_verbatim.",
+    "Ground academics are grouped: 41 ground boxes of the Flow Chart are condensed into 12 theory nodes; only the 8 exams that gate an F/S or A/C sortie (CO 190, JP 190, IN 190, IN 290, FO 190, TACFOR 590, NA 190, LNAV 790) are kept as separate ground_exam nodes. FF 190, PT 190, AE 190, JX 190-191 and NA 191 gate only further ground lessons and stay inside their theory node (recorded in duration_verbatim).",
+    "Node count 73 exceeds the 45-65 guidance: the 34 T-6A Training Sections plus the 19 F/S Training Sections (both required as individual nodes) already occupy 53, and the ground side cannot go below 20 nodes without dropping the exam gates.",
+    "hours_per_sortie is populated only where a Section contains a single sortie (there the printed total IS the per-sortie figure). For multi-sortie Sections the syllabus prints only the Section total, so hours_per_sortie is null — no per-sortie value was computed.",
+    "The A/C Systems (WSGES) block and the General Briefing block (125 periods) are in the PART II programme but have no box in the Training Flow Chart. GT-GENBRIEF therefore has no edges (continuous briefings throughout the phase).",
+    "solo_required=true only on C4790-91 (the Section IS 'Contact checkride for SOLO (C4790) and 1st SOLO (C4791)'). §9.c ('All the SOLO sorties are mandatory to be executed') makes every SOLO mandatory in practice — recorded in totals.minimum_hours_verbatim, not duplicated per node.",
+    "Failure / regression paths (FCJ, re-checks, elimination per §9.e and BD 3-1/HATC) are deliberately NOT modelled, per scope."
+  ],
+  "phases": [
+    {
+      "id": "p1",
+      "label": "Ground Training (Academics)",
+      "order": 1,
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 105,
+        "ref": "PART II, §11 GROUND TRAINING"
+      }
+    },
+    {
+      "id": "p2",
+      "label": "Ground Exams",
+      "order": 2,
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 105,
+        "ref": "PART II, §11.b(2) written exams, minimum grade 80%"
+      }
+    },
+    {
+      "id": "p3",
+      "label": "F/S (Simulator) Training",
+      "order": 3,
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 139,
+        "ref": "PART III, §13 FLIGHT SIMULATOR TRAINING"
+      }
+    },
+    {
+      "id": "p4",
+      "label": "Contact — T-6A Flights",
+      "order": 4,
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 163,
+        "ref": "PART IV, §14 FLIGHT TRAINING — CONTACT"
+      }
+    },
+    {
+      "id": "p5",
+      "label": "Instrument — T-6A Flights",
+      "order": 5,
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 163,
+        "ref": "PART IV, §14 FLIGHT TRAINING — INSTRUMENT"
+      }
+    },
+    {
+      "id": "p6",
+      "label": "Formation — T-6A Flights",
+      "order": 6,
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 163,
+        "ref": "PART IV, §14 FLIGHT TRAINING — FORMATION"
+      }
+    },
+    {
+      "id": "p7",
+      "label": "VFR Navigation — T-6A Flights",
+      "order": 7,
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 163,
+        "ref": "PART IV, §14 FLIGHT TRAINING — NAVIGATION"
+      }
+    }
+  ],
+  "nodes": [
+    {
+      "id": "GT-WSGES",
+      "label": "A/C Systems (WSGES)",
+      "name": "A/C systems training — Weapon System Ground Equipment School",
+      "kind": "theory",
+      "category": null,
+      "phase": "p1",
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "periods": 60,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "duration_verbatim": "1. A/C systems training (WSGES) | A/C’s Systems | 60",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 105,
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM (Greek SPs)"
+      },
+      "flags": [
+        "not_in_flow_chart: the WSGES A/C-Systems block is listed in PART II but has no box in the Training Flow Chart",
+        "PART I §2: minimum ground training 25 working days (including 10 days of WSGES training)"
+      ]
+    },
+    {
+      "id": "GT-INITIAL",
+      "label": "OP 101-115 · IC 101 · JP 101-110* · LP 101-108 · PR 101-113",
+      "name": "Initial academics: orientation, CAI, flight physiology, local area procedures, normal & emergency procedures",
+      "kind": "theory",
+      "category": null,
+      "phase": "p1",
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "periods": 34,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "conditional": {
+        "JP 101-110": 18,
+        "reason": "foreign SPs who have not covered Flight Physiology in their Air Force Academy"
+      },
+      "duration_verbatim": "2. Orientation to training. | OP 101-15 | 2 · 3. Introduction to CAI (Computer Assisted Instruction) | IC 101 | 1 · 9. Flight Safety – Local Area Procedures (LAP) | LP 101-108 | 10 · 8. Normal and Emergency procedures | PR 101-113 | 21 · [suppl.] Flight physiology | JP 101-110 | 18",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 105,
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM (Greek SPs) + PART II, §11.c(1)(c) supplementary lessons (PDF 109)"
+      },
+      "flags": [
+        "flow_chart box reads 'OP 101-115', PART II table reads 'OP 101-15'"
+      ]
+    },
+    {
+      "id": "GT-FLYPRIN",
+      "label": "FF 101-108 · FF 190 · CO 101-105 · CO 106-108 · PT 101-104 · PT 190 · BB 101-102 · SOPs 101-104 · IFG 101-102",
+      "name": "Flying principles, contact maneuvers, performance tables, ejection/survival, SOPs & In-Flight Guide",
+      "kind": "theory",
+      "category": "contact",
+      "phase": "p1",
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "periods": 64,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "duration_verbatim": "6. Flying Principles: Basic principles of flying | FF 101-107 | 17 · Exams on Basic principles of flying | FF 190 | 2 · Basic Contact maneuvers | CO 101-105 | 8 · Advanced Contact maneuvers | CO 106-107 | 6 · OJT (On the Job Training) | 11 · 14. A/C’s Performance Tables | PT 101-104 | 4 · Exams on A/C’s Performance Tables | PT 190 | 2 · 13. Ejection – Survival procedures | BB 101-102 | 2 · 11. Standard Operation Procedures (SOP) | SOP 101-104 | 8 · 12. In Flight Guide (IFG) analysis | IFG 101-102 | 4",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 105,
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM (Greek SPs)"
+      },
+      "flags": [
+        "flow_chart boxes read 'FF 101-108' and 'CO 106-108'; PART II table reads 'FF 101-107' and 'CO 106-107'",
+        "grouping: the FF 190 and PT 190 exams are internal to this block (they gate only ground lessons); CO 190 is modelled as a separate ground_exam node because it gates F/S sortie C1101"
+      ]
+    },
+    {
+      "id": "GT-AERO-CRM",
+      "label": "AE 101-108 · AE 190 · CR 201-202*",
+      "name": "Aerodynamics & Crew Resource Management",
+      "kind": "theory",
+      "category": null,
+      "phase": "p1",
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "periods": 30,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "conditional": {
+        "CR 101-4/201-2": 8,
+        "reason": "foreign SPs who have not covered CRM in their Air Force Academy"
+      },
+      "duration_verbatim": "5. Aerodynamics: Aerodynamics | AΕ 101-108 | 17 · Exams on Aerodynamics | AΕ 190 | 2 · OJT (On the Job Training) | 11 · [suppl.] Crew Resource Management (CRM) | CR 101- 4/201-2 | 8",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 105,
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM (Greek SPs) + PART II, §11.c(1)(c) supplementary lessons (PDF 109)"
+      }
+    },
+    {
+      "id": "GT-METEO-BA",
+      "label": "JX 101-109 · JX 190-191 · Meteo Briefing · BA 101-103",
+      "name": "Meteorology (I & II) and Briefing Analysis",
+      "kind": "theory",
+      "category": null,
+      "phase": "p1",
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "periods": 62,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "duration_verbatim": "4. Meteorology I: Meteorology | JX 101-109 | 12 · Exams on Meteorology | JX 190 | 3 · OJT (On the Job Training) | 15 · 18. Meteorology II: Meteo Briefing | 29 · Exams on Meteorology | JX 191 | 1 · 10. Briefing Analysis | BA 101-103 | 2",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 105,
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM (Greek SPs)"
+      }
+    },
+    {
+      "id": "GT-INSTR",
+      "label": "IN 101-105 · IN 201-210",
+      "name": "Instruments academics (Basic & Advanced) — IN 190 exam is flown between the two blocks",
+      "kind": "theory",
+      "category": "instrument",
+      "phase": "p1",
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "periods": 31,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "duration_verbatim": "7. IFR Navigation: Basic Instruments | IN 101-105 | 8 · Advanced Instruments | ΙΝ 201-210 | 23",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 105,
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM (Greek SPs)"
+      },
+      "flags": [
+        "grouping: in the Training Flow Chart the order is IN 101-105 → IN 190 → IN 201-210 → IN 290; both lesson blocks are merged in this node, the two exams stay separate"
+      ]
+    },
+    {
+      "id": "GT-IFRNAV-GPS",
+      "label": "NA 101-103 · IPR PL2 · NA 191 · GPS",
+      "name": "IFR navigation, air traffic rules, mission planning & use of GPS in flight",
+      "kind": "theory",
+      "category": "instrument",
+      "phase": "p1",
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "periods": 45,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "duration_verbatim": "7. IFR Navigation: Navigation IFR | NA 101-3 | 8 · Air Traffic Rules | 2 · IFR Navigation Examination | NA 191 | 1 · Planning Procedure | OPR PL2 | 7 · OJT (On the Job Training) | 25 · 15. Use of GPS in flight | GPS | 2",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 105,
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM (Greek SPs)"
+      },
+      "flags": [
+        "flow_chart box reads 'IPR PL2'; PART II table reads 'OPR PL2' (Planning Procedure)",
+        "NA 191 kept inside this block: it gates only the GPS ground lesson, not a sortie"
+      ]
+    },
+    {
+      "id": "GT-CO110",
+      "label": "CO 110",
+      "name": "Landing Pattern and AOA Landing",
+      "kind": "theory",
+      "category": "contact",
+      "phase": "p1",
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "periods": 2,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "duration_verbatim": "16. Applied Aerodynamics: Landing Pattern and AOA Landing | CO 110 | 2",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 106,
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM (Greek SPs)"
+      }
+    },
+    {
+      "id": "GT-CO109",
+      "label": "CO 109",
+      "name": "Night Flight",
+      "kind": "theory",
+      "category": "instrument",
+      "phase": "p1",
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "periods": 2,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": true,
+      "duration_verbatim": "16. Applied Aerodynamics: Night Flight | CO 109 | 2",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 106,
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM (Greek SPs)"
+      }
+    },
+    {
+      "id": "GT-FORM",
+      "label": "FO 101-104 · FO 201 · TACFOR 501-506",
+      "name": "Formation, Extended Trail & Tactical Formation academics",
+      "kind": "theory",
+      "category": "formation",
+      "phase": "p1",
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "periods": 39,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "duration_verbatim": "16. Applied Aerodynamics: Formation | FO 101-4 | 11 · Extended Trail | FO 201 | 2 · Tactical Formation | TACFOR 501-6 | 6 · OJT (On the Job Training) | 20",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 106,
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM (Greek SPs)"
+      }
+    },
+    {
+      "id": "GT-VFRNAV",
+      "label": "NA 104-111 · LNAV 701-705",
+      "name": "VFR Navigation & Low Altitude Navigation academics",
+      "kind": "theory",
+      "category": "vfr_navigation",
+      "phase": "p1",
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "periods": 20,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "duration_verbatim": "17. Navigation: VFR Navigation | NA 104-11 | 15 · Low Altitude Navigation | LNAV 701-5 | 5",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 106,
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM (Greek SPs)"
+      }
+    },
+    {
+      "id": "GT-GENBRIEF",
+      "label": "General Briefing",
+      "name": "General Briefing: Flying Technique · Airmanship Basics Analysis · Flying Procedures · Emergency Procedures · Flight Safety",
+      "kind": "theory",
+      "category": null,
+      "phase": "p1",
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "periods": 125,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "duration_verbatim": "19. General Briefing: Flying Technique | 25 · Airmanship Basics Analysis | 20 · Flying Procedures | 25 · Emergency Procedures | 30 · Flight Safety | 25",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 106,
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM (Greek SPs)"
+      },
+      "flags": [
+        "not_in_flow_chart: continuous ground briefings throughout the phase; no box in the Training Flow Chart, therefore no edges"
+      ]
+    },
+    {
+      "id": "CO190",
+      "label": "CO 190",
+      "name": "Exams on Basic Contact maneuvers",
+      "kind": "ground_exam",
+      "category": "contact",
+      "phase": "p2",
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "periods": 2,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "duration_verbatim": "6. Flying Principles: Exams on Basic Contact maneuvers | CO 190 | 2 (foreign SPs: 1)",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 105,
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM + PART I, §3 TRAINING FLOW CHART"
+      }
+    },
+    {
+      "id": "JP190",
+      "label": "JP 190*",
+      "name": "Exams on Flight physiology (foreign SPs only)",
+      "kind": "ground_exam",
+      "category": null,
+      "phase": "p2",
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "periods": 1,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "conditional": {
+        "reason": "foreign SPs who have not covered Flight Physiology in their Air Force Academy"
+      },
+      "duration_verbatim": "[suppl.] Exams on Flight physiology | JP 190 | 1",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 109,
+        "ref": "PART II, §11.c(1)(c) + PART I, §3 TRAINING FLOW CHART"
+      }
+    },
+    {
+      "id": "IN190",
+      "label": "IN 190",
+      "name": "Exams on Basic Instruments",
+      "kind": "ground_exam",
+      "category": "instrument",
+      "phase": "p2",
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "periods": 2,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "duration_verbatim": "7. IFR Navigation: Exams on Basic Instruments | IN 190 | 2 (foreign SPs: 1)",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 105,
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM + PART I, §3 TRAINING FLOW CHART"
+      }
+    },
+    {
+      "id": "IN290",
+      "label": "IN 290",
+      "name": "Exams on Advanced Instruments",
+      "kind": "ground_exam",
+      "category": "instrument",
+      "phase": "p2",
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "periods": 2,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "duration_verbatim": "7. IFR Navigation: Exams on Advanced Instruments | ΙΝ 290 | 2 (foreign SPs: 1)",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 105,
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM + PART I, §3 TRAINING FLOW CHART"
+      }
+    },
+    {
+      "id": "FO190",
+      "label": "FO 190",
+      "name": "Formation Examination",
+      "kind": "ground_exam",
+      "category": "formation",
+      "phase": "p2",
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "periods": 1,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "duration_verbatim": "16. Applied Aerodynamics: Formation Examination | FO 190 | 1",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 106,
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM + PART I, §3 TRAINING FLOW CHART"
+      }
+    },
+    {
+      "id": "TACFOR590",
+      "label": "TACFOR 590",
+      "name": "Tactical Formation Examination",
+      "kind": "ground_exam",
+      "category": "formation",
+      "phase": "p2",
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "periods": 1,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "duration_verbatim": "16. Applied Aerodynamics: Tactical Formation Examination | TACFOR 590 | 1",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 106,
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM + PART I, §3 TRAINING FLOW CHART"
+      }
+    },
+    {
+      "id": "NA190",
+      "label": "NA 190",
+      "name": "VFR Navigation Examination",
+      "kind": "ground_exam",
+      "category": "vfr_navigation",
+      "phase": "p2",
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "periods": 1,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "duration_verbatim": "17. Navigation: VFR Navigation Examination | NA 190 | 1",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 106,
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM + PART I, §3 TRAINING FLOW CHART"
+      }
+    },
+    {
+      "id": "LNAV790",
+      "label": "LNAV 790",
+      "name": "Low Altitude Navigation Examination",
+      "kind": "ground_exam",
+      "category": "vfr_navigation",
+      "phase": "p2",
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "periods": 1,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "duration_verbatim": "17. Navigation: Low Altitude Navigation Examination | LNAV 790 | 1",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 106,
+        "ref": "PART II, §11.b(5) TRAINING PROGRAM + PART I, §3 TRAINING FLOW CHART"
+      }
+    },
+    {
+      "id": "B1001-02",
+      "label": "B1001-02",
+      "name": "Basic exercises (Familiarization) — normal procedures",
+      "kind": "sim",
+      "category": "contact",
+      "phase": "p3",
+      "sorties_dual": 2,
+      "sorties_solo": 0,
+      "sorties_total": 2,
+      "hours_per_sortie": null,
+      "hours_total": 2.0,
+      "hours_dual": 2.0,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "B1001",
+        "B1002"
+      ],
+      "device": "UTD or in the A/C",
+      "means_of_training": "OFU",
+      "duration_verbatim": "TRAINING SECTION: B10ΧΧ SORTIES/HOURS TOTAL: 2/2.0",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 141,
+        "ref": "PART III, §13.d TRAINING ANALYSIS — F/S Training Section"
+      }
+    },
+    {
+      "id": "C1101",
+      "label": "C1101",
+      "name": "Contact — basic A/C control and familiarization with flight characteristics",
+      "kind": "sim",
+      "category": "contact",
+      "phase": "p3",
+      "sorties_dual": 1,
+      "sorties_solo": 0,
+      "sorties_total": 1,
+      "hours_per_sortie": 1.3,
+      "hours_total": 1.3,
+      "hours_dual": 1.3,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "C1101"
+      ],
+      "device": "PTT/OFT/FTD",
+      "means_of_training": "OF",
+      "duration_verbatim": "TRAINING SECTION: C11XX SORTIES/HOURS TOTAL: 1/1.3",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 143,
+        "ref": "PART III, §13.d TRAINING ANALYSIS — F/S Training Section"
+      }
+    },
+    {
+      "id": "C2101",
+      "label": "C2101",
+      "name": "Emergency Procedures",
+      "kind": "sim",
+      "category": "contact",
+      "phase": "p3",
+      "sorties_dual": 1,
+      "sorties_solo": 0,
+      "sorties_total": 1,
+      "hours_per_sortie": 1.3,
+      "hours_total": 1.3,
+      "hours_dual": 1.3,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "C2101"
+      ],
+      "device": "OFT/UTD/FTD",
+      "means_of_training": "OFU",
+      "duration_verbatim": "TRAINING SECTION: C21XX SORTIES/HOURS TOTAL: 1/1.3",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 144,
+        "ref": "PART III, §13.d TRAINING ANALYSIS — F/S Training Section"
+      }
+    },
+    {
+      "id": "C2201-02",
+      "label": "C2201-02",
+      "name": "Contact — fundamental flight maneuvers",
+      "kind": "sim",
+      "category": "contact",
+      "phase": "p3",
+      "sorties_dual": 2,
+      "sorties_solo": 0,
+      "sorties_total": 2,
+      "hours_per_sortie": null,
+      "hours_total": 2.6,
+      "hours_dual": 2.6,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "C2201",
+        "C2202"
+      ],
+      "device": "PTT/OFT/FTD",
+      "means_of_training": "OFP",
+      "duration_verbatim": "TRAINING SECTION: C22ΧΧ SORTIES/HOURS TOTAL: 2/2.6",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 145,
+        "ref": "PART III, §13.d TRAINING ANALYSIS — F/S Training Section"
+      }
+    },
+    {
+      "id": "C2301-02",
+      "label": "C2301-02",
+      "name": "Emergency Procedures training in a mission profile",
+      "kind": "sim",
+      "category": "contact",
+      "phase": "p3",
+      "sorties_dual": 2,
+      "sorties_solo": 0,
+      "sorties_total": 2,
+      "hours_per_sortie": null,
+      "hours_total": 2.6,
+      "hours_dual": 2.6,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "C2301",
+        "C2302"
+      ],
+      "device": "UTD/OFT/FTD",
+      "means_of_training": "OFU",
+      "duration_verbatim": "TRAINING SECTION: C23XX SORTIES/HOURS TOTAL: 2/2,6",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 146,
+        "ref": "PART III, §13.d TRAINING ANALYSIS — F/S Training Section"
+      }
+    },
+    {
+      "id": "C2401-03",
+      "label": "C2401-03",
+      "name": "Contact — fundamental flight maneuvers and landings",
+      "kind": "sim",
+      "category": "contact",
+      "phase": "p3",
+      "sorties_dual": 3,
+      "sorties_solo": 0,
+      "sorties_total": 3,
+      "hours_per_sortie": null,
+      "hours_total": 3.9,
+      "hours_dual": 3.9,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "C2401",
+        "C2402",
+        "C2403"
+      ],
+      "device": "PTT/OFT/FTD",
+      "means_of_training": "OFP",
+      "duration_verbatim": "TRAINING SECTION: C24XX SORTIES/HOURS TOTAL: 3/3,9",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 147,
+        "ref": "PART III, §13.d TRAINING ANALYSIS — F/S Training Section"
+      }
+    },
+    {
+      "id": "C2501-03",
+      "label": "C2501-03",
+      "name": "Emergency Procedures training in a mission profile",
+      "kind": "sim",
+      "category": "contact",
+      "phase": "p3",
+      "sorties_dual": 3,
+      "sorties_solo": 0,
+      "sorties_total": 3,
+      "hours_per_sortie": null,
+      "hours_total": 3.9,
+      "hours_dual": 3.9,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "C2501",
+        "C2502",
+        "C2503"
+      ],
+      "device": "UTD/OFT/FTD",
+      "means_of_training": "OFU",
+      "duration_verbatim": "TRAINING SECTION: C2501 SORTIES/HOURS TOTAL: 3/3,9",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 148,
+        "ref": "PART III, §13.d TRAINING ANALYSIS — F/S Training Section"
+      }
+    },
+    {
+      "id": "C2601-04",
+      "label": "C2601-04",
+      "name": "Contact — fundamental flight maneuvers and landings",
+      "kind": "sim",
+      "category": "contact",
+      "phase": "p3",
+      "sorties_dual": 4,
+      "sorties_solo": 0,
+      "sorties_total": 4,
+      "hours_per_sortie": null,
+      "hours_total": 5.2,
+      "hours_dual": 5.2,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "C2601",
+        "C2602",
+        "C2603",
+        "C2604"
+      ],
+      "device": "PTT/OFT/FTD",
+      "means_of_training": "OFP",
+      "duration_verbatim": "TRAINING SECTION: C26ΧΧ SORTIES/HOURS TOTAL: 4/5,2",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 149,
+        "ref": "PART III, §13.d TRAINING ANALYSIS — F/S Training Section"
+      }
+    },
+    {
+      "id": "I3101-02",
+      "label": "I3101-02",
+      "name": "Basic Instruments procedures",
+      "kind": "sim",
+      "category": "instrument",
+      "phase": "p3",
+      "sorties_dual": 2,
+      "sorties_solo": 0,
+      "sorties_total": 2,
+      "hours_per_sortie": null,
+      "hours_total": 2.4,
+      "hours_dual": 2.4,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "I3101",
+        "I3102"
+      ],
+      "device": "UTD/OFT/FTD/PTT",
+      "means_of_training": "A",
+      "duration_verbatim": "TRAINING SECTION: I31ΧΧ SORTIES/HOURS TOTAL: 2/2,4",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 151,
+        "ref": "PART III, §13.d TRAINING ANALYSIS — F/S Training Section"
+      }
+    },
+    {
+      "id": "I3201-03",
+      "label": "I3201-03",
+      "name": "Basic and Advanced Instruments",
+      "kind": "sim",
+      "category": "instrument",
+      "phase": "p3",
+      "sorties_dual": 3,
+      "sorties_solo": 0,
+      "sorties_total": 3,
+      "hours_per_sortie": null,
+      "hours_total": 3.9,
+      "hours_dual": 3.9,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "I3201",
+        "I3202",
+        "I3203"
+      ],
+      "device": "UTD/OFT/FTD/PTT",
+      "means_of_training": "A",
+      "duration_verbatim": "TRAINING SECTION: I32XX SORTIES/HOURS TOTAL: 3/3,9",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 152,
+        "ref": "PART III, §13.d TRAINING ANALYSIS — F/S Training Section"
+      }
+    },
+    {
+      "id": "I3301-04",
+      "label": "I3301-04",
+      "name": "Basic and Advanced Instruments",
+      "kind": "sim",
+      "category": "instrument",
+      "phase": "p3",
+      "sorties_dual": 4,
+      "sorties_solo": 0,
+      "sorties_total": 4,
+      "hours_per_sortie": null,
+      "hours_total": 5.2,
+      "hours_dual": 5.2,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "I3301",
+        "I3302",
+        "I3303",
+        "I3304"
+      ],
+      "device": "UTD/OFT/FTD/PTT",
+      "means_of_training": "A",
+      "duration_verbatim": "TRAINING SECTION: I33XX SORTIES/HOURS TOTAL: 4/5,2",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 153,
+        "ref": "PART III, §13.d TRAINING ANALYSIS — F/S Training Section"
+      }
+    },
+    {
+      "id": "I3401-04",
+      "label": "I3401-04",
+      "name": "IFR Navigation",
+      "kind": "sim",
+      "category": "instrument",
+      "phase": "p3",
+      "sorties_dual": 4,
+      "sorties_solo": 0,
+      "sorties_total": 4,
+      "hours_per_sortie": null,
+      "hours_total": 5.2,
+      "hours_dual": 5.2,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "I3401",
+        "I3402",
+        "I3403",
+        "I3404"
+      ],
+      "device": "UTD/OFT/FTD/PTT",
+      "means_of_training": "A",
+      "duration_verbatim": "TRAINING SECTION: I34ΧΧ SORTIES/HOURS TOTAL: 4/5,2",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 154,
+        "ref": "PART III, §13.d TRAINING ANALYSIS — F/S Training Section"
+      }
+    },
+    {
+      "id": "I3501-04",
+      "label": "I3501-04",
+      "name": "IFR Navigation",
+      "kind": "sim",
+      "category": "instrument",
+      "phase": "p3",
+      "sorties_dual": 4,
+      "sorties_solo": 0,
+      "sorties_total": 4,
+      "hours_per_sortie": null,
+      "hours_total": 5.2,
+      "hours_dual": 5.2,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "I3501",
+        "I3502",
+        "I3503",
+        "I3504"
+      ],
+      "device": "UTD/OFT/FTD/PTT",
+      "means_of_training": "A",
+      "duration_verbatim": "TRAINING SECTION: I35ΧΧ SORTIES/HOURS TOTAL: 4/5,2",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 155,
+        "ref": "PART III, §13.d TRAINING ANALYSIS — F/S Training Section"
+      }
+    },
+    {
+      "id": "I3601",
+      "label": "I3601",
+      "name": "Night IFR Navigation",
+      "kind": "sim",
+      "category": "instrument",
+      "phase": "p3",
+      "sorties_dual": 1,
+      "sorties_solo": 0,
+      "sorties_total": 1,
+      "hours_per_sortie": 1.3,
+      "hours_total": 1.3,
+      "hours_dual": 1.3,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": true,
+      "sorties": [
+        "I3601"
+      ],
+      "device": "OFT/FTD/PTT",
+      "means_of_training": "OFP",
+      "duration_verbatim": "TRAINING SECTION: I36ΧΧ SORTIES/HOURS TOTAL: 1/1,3",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 156,
+        "ref": "PART III, §13.d TRAINING ANALYSIS — F/S Training Section"
+      }
+    },
+    {
+      "id": "F3101-2",
+      "label": "F3101-2",
+      "name": "Two-ship Formation",
+      "kind": "sim",
+      "category": "formation",
+      "phase": "p3",
+      "sorties_dual": 2,
+      "sorties_solo": 0,
+      "sorties_total": 2,
+      "hours_per_sortie": null,
+      "hours_total": 2.6,
+      "hours_dual": 2.6,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "F3101",
+        "F3102"
+      ],
+      "device": "PTT/OFT/FTD",
+      "means_of_training": "OFP",
+      "duration_verbatim": "TRAINING SECTION: F31XX SORTIES/HOURS TOTAL: 2/2,6",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 157,
+        "ref": "PART III, §13.d TRAINING ANALYSIS — F/S Training Section"
+      }
+    },
+    {
+      "id": "F3201-3",
+      "label": "F3201-3",
+      "name": "Two-ship Formation",
+      "kind": "sim",
+      "category": "formation",
+      "phase": "p3",
+      "sorties_dual": 3,
+      "sorties_solo": 0,
+      "sorties_total": 3,
+      "hours_per_sortie": null,
+      "hours_total": 3.9,
+      "hours_dual": 3.9,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "F3201",
+        "F3202",
+        "F3203"
+      ],
+      "device": "PTT/OFT/FTD",
+      "means_of_training": "OFP",
+      "duration_verbatim": "TRAINING SECTION: F32ΧΧ SORTIES/HOURS TOTAL: 3/3,9",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 158,
+        "ref": "PART III, §13.d TRAINING ANALYSIS — F/S Training Section"
+      }
+    },
+    {
+      "id": "N2101",
+      "label": "N2101",
+      "name": "VFR Navigation (Medium Level)",
+      "kind": "sim",
+      "category": "vfr_navigation",
+      "phase": "p3",
+      "sorties_dual": 1,
+      "sorties_solo": 0,
+      "sorties_total": 1,
+      "hours_per_sortie": 1.3,
+      "hours_total": 1.3,
+      "hours_dual": 1.3,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "N2101"
+      ],
+      "device": "PTT/OFT/FTD",
+      "means_of_training": "OFP",
+      "duration_verbatim": "TRAINING SECTION: Ν21ΧΧ SORTIES/HOURS TOTAL: 1/1,3",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 159,
+        "ref": "PART III, §13.d TRAINING ANALYSIS — F/S Training Section"
+      }
+    },
+    {
+      "id": "N2201-02",
+      "label": "N2201-02",
+      "name": "VFR Navigation (Low Level)",
+      "kind": "sim",
+      "category": "vfr_navigation",
+      "phase": "p3",
+      "sorties_dual": 2,
+      "sorties_solo": 0,
+      "sorties_total": 2,
+      "hours_per_sortie": null,
+      "hours_total": 2.6,
+      "hours_dual": 2.6,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "N2201",
+        "N2202"
+      ],
+      "device": "PTT/OFT/FTD",
+      "means_of_training": "OFP",
+      "duration_verbatim": "TRAINING SECTION: Ν22ΧΧ SORTIES/HOURS TOTAL: 2/2,6",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 160,
+        "ref": "PART III, §13.d TRAINING ANALYSIS — F/S Training Section"
+      }
+    },
+    {
+      "id": "N2301-04",
+      "label": "N2301-04",
+      "name": "VFR Navigation (Low Level)",
+      "kind": "sim",
+      "category": "vfr_navigation",
+      "phase": "p3",
+      "sorties_dual": 4,
+      "sorties_solo": 0,
+      "sorties_total": 4,
+      "hours_per_sortie": null,
+      "hours_total": 5.2,
+      "hours_dual": 5.2,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "N2301",
+        "N2302",
+        "N2303",
+        "N2304"
+      ],
+      "device": "PTT/OFT/FTD",
+      "means_of_training": "OFP",
+      "duration_verbatim": "TRAINING SECTION: Ν23ΧΧ SORTIES/HOURS TOTAL: 4/5,2",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 161,
+        "ref": "PART III, §13.d TRAINING ANALYSIS — F/S Training Section"
+      }
+    },
+    {
+      "id": "C4101",
+      "label": "C4101",
+      "name": "Contact – Familiarization",
+      "kind": "flight",
+      "category": "contact",
+      "phase": "p4",
+      "sorties_dual": 1,
+      "sorties_solo": 0,
+      "sorties_total": 1,
+      "hours_per_sortie": 1.0,
+      "hours_total": 1.0,
+      "hours_dual": 1.0,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "C4101"
+      ],
+      "duration_verbatim": "TRAINING SECTION: C41ΧΧ SORTIES/HOURS TOTAL: 1 / 1.0 DUAL SORTIES/HOURS: 1 / 1.0 SOLO SORTIES/HOURS: 0 / 0.0",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 167,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "C4201-03",
+      "label": "C4201-03",
+      "name": "Contact – fundamental flight maneuvers",
+      "kind": "flight",
+      "category": "contact",
+      "phase": "p4",
+      "sorties_dual": 3,
+      "sorties_solo": 0,
+      "sorties_total": 3,
+      "hours_per_sortie": null,
+      "hours_total": 3.9,
+      "hours_dual": 3.9,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "C4201",
+        "C4202",
+        "C4203"
+      ],
+      "duration_verbatim": "TRAINING SECTION: C42ΧΧ SORTIES/HOURS TOTAL: 3 /3,9 DUAL SORTIES/HOURS: 3 /3.9 SOLO SORTIES/HOURS: 0 /0.0",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 168,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "C4301-03",
+      "label": "C4301-03",
+      "name": "Contact – Basic Maneuvers",
+      "kind": "flight",
+      "category": "contact",
+      "phase": "p4",
+      "sorties_dual": 3,
+      "sorties_solo": 0,
+      "sorties_total": 3,
+      "hours_per_sortie": null,
+      "hours_total": 3.9,
+      "hours_dual": 3.9,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "C4301",
+        "C4302",
+        "C4303"
+      ],
+      "duration_verbatim": "TRAINING SECTION: C43ΧΧ SORTIES/HOURS TOTAL: 3 / 3.9 DUAL SORTIES/HOURS: 3 / 3.9 SOLO SORTIES/HOURS: 0 / 0.0",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 169,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "C4401-03",
+      "label": "C4401-03",
+      "name": "Contact – Basic Maneuvers",
+      "kind": "flight",
+      "category": "contact",
+      "phase": "p4",
+      "sorties_dual": 3,
+      "sorties_solo": 0,
+      "sorties_total": 3,
+      "hours_per_sortie": null,
+      "hours_total": 3.9,
+      "hours_dual": 3.9,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "C4401",
+        "C4402",
+        "C4403"
+      ],
+      "duration_verbatim": "TRAINING SECTION: C44ΧΧ SORTIES/HOURS TOTAL: 3 / 3.9 DUAL SORTIES/HOURS: 3 / 3.9 SOLO SORTIES/HOURS: 0 / 0.0",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 170,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "C4590",
+      "label": "C4590",
+      "name": "Contact checkride",
+      "kind": "checkride",
+      "category": "contact",
+      "phase": "p4",
+      "sorties_dual": 1,
+      "sorties_solo": 0,
+      "sorties_total": 1,
+      "hours_per_sortie": 1.4,
+      "hours_total": 1.4,
+      "hours_dual": 1.4,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": true,
+      "night": false,
+      "sorties": [
+        "C4590"
+      ],
+      "duration_verbatim": "TRAINING SECTION: C4590 SORTIES/HOURS TOTAL: 1 / 1.4 DUAL SORTIES/HOURS: 1 / 1.4 SOLO SORTIES/HOURS: 0 / 0.0",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 172,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "C4601-02",
+      "label": "C4601-02",
+      "name": "Contact – Overhead Traffic Pattern",
+      "kind": "flight",
+      "category": "contact",
+      "phase": "p4",
+      "sorties_dual": 2,
+      "sorties_solo": 0,
+      "sorties_total": 2,
+      "hours_per_sortie": null,
+      "hours_total": 2.6,
+      "hours_dual": 2.6,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "C4601",
+        "C4602"
+      ],
+      "duration_verbatim": "TRAINING SECTION: C46XX SORTIES/HOURS TOTAL: 2 / 2.6 DUAL SORTIES/HOURS: 2 / 2.6 SOLO SORTIES/HOURS: 0 / 0.0",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 173,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "C4790-91",
+      "label": "C4790-91",
+      "name": "Contact checkride for SOLO (C4790) and 1st SOLO (C4791)",
+      "kind": "checkride",
+      "category": "contact",
+      "phase": "p4",
+      "sorties_dual": 1,
+      "sorties_solo": 1,
+      "sorties_total": 2,
+      "hours_per_sortie": null,
+      "hours_total": 1.1,
+      "hours_dual": 0.8,
+      "hours_solo": 0.3,
+      "solo_required": true,
+      "solo_allowed": true,
+      "checkride": true,
+      "night": false,
+      "sorties": [
+        "C4790",
+        "C4791"
+      ],
+      "solo_candidate_sorties": [
+        "C4791"
+      ],
+      "duration_verbatim": "TRAINING SECTION: C4790 – C4791 SORTIES/HOURS TOTAL: 2 / 1.1 DUAL SORTIES/HOURS: 1 / 0.8 SOLO SORTIES/HOURS: 1 / 0.3",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 175,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "C4801-04",
+      "label": "C4801-04",
+      "name": "Contact – Basic/Advanced Maneuvers",
+      "kind": "flight",
+      "category": "contact",
+      "phase": "p4",
+      "sorties_dual": 3,
+      "sorties_solo": 1,
+      "sorties_total": 4,
+      "hours_per_sortie": null,
+      "hours_total": 4.9,
+      "hours_dual": 3.9,
+      "hours_solo": 1.0,
+      "solo_required": false,
+      "solo_allowed": true,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "C4801",
+        "C4802",
+        "C4803",
+        "C4804"
+      ],
+      "solo_candidate_sorties": [
+        "C4802",
+        "C4803"
+      ],
+      "duration_verbatim": "TRAINING SECTION: C48XX SORTIES/HOURS TOTAL: 4/4, 9 DUAL SORTIES/HOURS: 3/3, 9 SOLO SORTIES/HOURS: 1/1, 0",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 176,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "C4901-05",
+      "label": "C4901-05",
+      "name": "Contact – Basic/Advanced Maneuvers",
+      "kind": "flight",
+      "category": "contact",
+      "phase": "p4",
+      "sorties_dual": 4,
+      "sorties_solo": 1,
+      "sorties_total": 5,
+      "hours_per_sortie": null,
+      "hours_total": 6.2,
+      "hours_dual": 5.2,
+      "hours_solo": 1.0,
+      "solo_required": false,
+      "solo_allowed": true,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "C4901",
+        "C4902",
+        "C4903",
+        "C4904",
+        "C4905"
+      ],
+      "solo_candidate_sorties": [
+        "C4902",
+        "C4903",
+        "C4904"
+      ],
+      "duration_verbatim": "TRAINING SECTION: C49XX SORTIES/HOURS TOTAL: 5/6,2 DUAL SORTIES/HOURS: 4/5,2 SOLO SORTIES/HOURS: 1/1,0",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 178,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "C5090",
+      "label": "C5090",
+      "name": "Contact Checkride",
+      "kind": "checkride",
+      "category": "contact",
+      "phase": "p4",
+      "sorties_dual": 1,
+      "sorties_solo": 0,
+      "sorties_total": 1,
+      "hours_per_sortie": 1.4,
+      "hours_total": 1.4,
+      "hours_dual": 1.4,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": true,
+      "night": false,
+      "sorties": [
+        "C5090"
+      ],
+      "duration_verbatim": "TRAINING SECTION: C5090 SORTIES/HOURS TOTAL: 1 / 1.4 DUAL SORTIES/HOURS: 1 / 1.4 SOLO SORTIES/HOURS: 0 / 0.0",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 181,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "C5101-02",
+      "label": "C5101-02",
+      "name": "Contact – Basic/Advanced Maneuvers",
+      "kind": "flight",
+      "category": "contact",
+      "phase": "p4",
+      "sorties_dual": 2,
+      "sorties_solo": 0,
+      "sorties_total": 2,
+      "hours_per_sortie": null,
+      "hours_total": 2.4,
+      "hours_dual": 2.4,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "C5101",
+        "C5102"
+      ],
+      "duration_verbatim": "TRAINING SECTION: C51XX SORTIES/HOURS TOTAL: 2 / 2.4 DUAL SORTIES/HOURS: 2 / 2.4 SOLO SORTIES/HOURS: 0 / 0.0",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 183,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "C5201-04",
+      "label": "C5201-04",
+      "name": "Contact – Basic/Advanced Maneuvers",
+      "kind": "flight",
+      "category": "contact",
+      "phase": "p4",
+      "sorties_dual": 3,
+      "sorties_solo": 1,
+      "sorties_total": 4,
+      "hours_per_sortie": null,
+      "hours_total": 4.6,
+      "hours_dual": 3.6,
+      "hours_solo": 1.0,
+      "solo_required": false,
+      "solo_allowed": true,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "C5201",
+        "C5202",
+        "C5203",
+        "C5204"
+      ],
+      "solo_candidate_sorties": [
+        "C5202",
+        "C5203"
+      ],
+      "duration_verbatim": "TRAINING SECTION: C52XX SORTIES/HOURS TOTAL: 4 / 4.6 DUAL SORTIES/HOURS: 3 / 3.6 SOLO SORTIES/HOURS: 1 / 1.0",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 185,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "C5301-04",
+      "label": "C5301-04",
+      "name": "Contact – Basic/Advanced Maneuvers",
+      "kind": "flight",
+      "category": "contact",
+      "phase": "p4",
+      "sorties_dual": 3,
+      "sorties_solo": 1,
+      "sorties_total": 4,
+      "hours_per_sortie": null,
+      "hours_total": 4.6,
+      "hours_dual": 3.6,
+      "hours_solo": 1.0,
+      "solo_required": false,
+      "solo_allowed": true,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "C5301",
+        "C5302",
+        "C5303",
+        "C5304"
+      ],
+      "solo_candidate_sorties": [
+        "C5302",
+        "C5303"
+      ],
+      "duration_verbatim": "TRAINING SECTION: C53XX SORTIES/HOURS TOTAL: 4 / 4.6 DUAL SORTIES/HOURS: 3 / 3.6 SOLO SORTIES/HOURS: 1 / 1.0",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 187,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "C5490",
+      "label": "C5490",
+      "name": "Final Contact Checkride",
+      "kind": "checkride",
+      "category": "contact",
+      "phase": "p4",
+      "sorties_dual": 1,
+      "sorties_solo": 0,
+      "sorties_total": 1,
+      "hours_per_sortie": 1.3,
+      "hours_total": 1.3,
+      "hours_dual": 1.3,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": true,
+      "night": false,
+      "sorties": [
+        "C5490"
+      ],
+      "duration_verbatim": "TRAINING SECTION: C5490 SORTIES/HOURS TOTAL: 1 / 1.3 DUAL SORTIES/HOURS: 1 / 1.3 SOLO SORTIES/HOURS: 0 / 0",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 189,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "I4101-02",
+      "label": "I4101-02",
+      "name": "Basic Instrument",
+      "kind": "flight",
+      "category": "instrument",
+      "phase": "p5",
+      "sorties_dual": 2,
+      "sorties_solo": 0,
+      "sorties_total": 2,
+      "hours_per_sortie": null,
+      "hours_total": null,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "I4101",
+        "I4102"
+      ],
+      "duration_verbatim": "TRAINING SECTION: I41ΧΧ SORTIES/HOURS TOTAL: 3 / 3.9 SORTIES/HOURS DUAL: 3 / 3.9",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 193,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      },
+      "flags": [
+        "CONFLICT: the PART IV section header prints 'SORTIES/HOURS TOTAL: 3 / 3.9', but the MIF table (I4101-02), the Training Flow Chart (boxes I4101, I4102) and the PART IV general programme (INSTRUMENT = 14 sorties / 18,4 h) all give 2 sorties. hours_total left null — the syllabus does not print a consistent figure."
+      ]
+    },
+    {
+      "id": "I4201-02",
+      "label": "I4201-02",
+      "name": "Advanced Instrument",
+      "kind": "flight",
+      "category": "instrument",
+      "phase": "p5",
+      "sorties_dual": 2,
+      "sorties_solo": 0,
+      "sorties_total": 2,
+      "hours_per_sortie": null,
+      "hours_total": 2.6,
+      "hours_dual": 2.6,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "I4201",
+        "I4202"
+      ],
+      "duration_verbatim": "TRAINING SECTION: I42ΧΧ SORTIES/HOURS TOTAL: 2 / 2.6 SORTIES/HOURS DUAL: 2 / 2.6",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 194,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "I4301-02",
+      "label": "I4301-02",
+      "name": "Advanced Instrument",
+      "kind": "flight",
+      "category": "instrument",
+      "phase": "p5",
+      "sorties_dual": 2,
+      "sorties_solo": 0,
+      "sorties_total": 2,
+      "hours_per_sortie": null,
+      "hours_total": 2.6,
+      "hours_dual": 2.6,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "I4301",
+        "I4302"
+      ],
+      "duration_verbatim": "TRAINING SECTION: I43ΧΧ SORTIES/HOURS TOTAL: 2 / 2.6 SORTIES/HOURS DUAL: 2 / 2.6",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 196,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "I4490",
+      "label": "I4490",
+      "name": "Instrument Checkride",
+      "kind": "checkride",
+      "category": "instrument",
+      "phase": "p5",
+      "sorties_dual": 1,
+      "sorties_solo": 0,
+      "sorties_total": 1,
+      "hours_per_sortie": 1.4,
+      "hours_total": 1.4,
+      "hours_dual": 1.4,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": true,
+      "night": false,
+      "sorties": [
+        "I4490"
+      ],
+      "duration_verbatim": "TRAINING SECTION: I4490 SORTIES/HOURS TOTAL: 1 / 1,4 SORTIES/HOURS DUAL: 1 / 1,4",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 199,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "I4501-02",
+      "label": "I4501-02",
+      "name": "IFR navigation flights through airways or Approach to Approach",
+      "kind": "flight",
+      "category": "instrument",
+      "phase": "p5",
+      "sorties_dual": 2,
+      "sorties_solo": 0,
+      "sorties_total": 2,
+      "hours_per_sortie": null,
+      "hours_total": 2.6,
+      "hours_dual": 2.6,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "I4501",
+        "I4502"
+      ],
+      "duration_verbatim": "TRAINING SECTION: I45ΧΧ SORTIES/HOURS TOTAL: 2 / 2.6 SORTIES/HOURS DUAL: 2 / 2.6",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 201,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "I4601-03",
+      "label": "I4601-03",
+      "name": "IFR navigation flights through airways or Approach to Approach",
+      "kind": "flight",
+      "category": "instrument",
+      "phase": "p5",
+      "sorties_dual": 3,
+      "sorties_solo": 0,
+      "sorties_total": 3,
+      "hours_per_sortie": null,
+      "hours_total": 3.9,
+      "hours_dual": 3.9,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "I4601",
+        "I4602",
+        "I4603"
+      ],
+      "duration_verbatim": "TRAINING SECTION: I46ΧΧ SORTIES/HOURS TOTAL: 3 / 3.9 SORTIES/HOURS DUAL: 3 / 3.9",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 202,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      },
+      "flags": [
+        "In the Training Flow Chart the night sortie I4701 is flown between I4602 and I4603 (order: I4601 → I4602 → I4701 → I4603 → I4890)."
+      ]
+    },
+    {
+      "id": "I4701",
+      "label": "I4701",
+      "name": "Night IFR navigation flight through airways",
+      "kind": "flight",
+      "category": "instrument",
+      "phase": "p5",
+      "sorties_dual": 1,
+      "sorties_solo": 0,
+      "sorties_total": 1,
+      "hours_per_sortie": 1.4,
+      "hours_total": 1.4,
+      "hours_dual": 1.4,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": true,
+      "sorties": [
+        "I4701"
+      ],
+      "duration_verbatim": "TRAINING SECTION: I4701 SORTIES/HOURS TOTAL: 1 / 1.4 SORTIES/HOURS DUAL: 1 / 1.4",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 203,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "I4890",
+      "label": "I4890",
+      "name": "Final Instruments Checkride",
+      "kind": "checkride",
+      "category": "instrument",
+      "phase": "p5",
+      "sorties_dual": 1,
+      "sorties_solo": 0,
+      "sorties_total": 1,
+      "hours_per_sortie": 1.3,
+      "hours_total": 1.3,
+      "hours_dual": 1.3,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": true,
+      "night": false,
+      "sorties": [
+        "I4890"
+      ],
+      "duration_verbatim": "TRAINING SECTION: I4890 SORTIES/HOURS TOTAL: 1 / 1.3 SORTIES/HOURS DUAL: 1 / 1.3",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 205,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "F4101-04",
+      "label": "F4101-04",
+      "name": "Two-ship Formation",
+      "kind": "flight",
+      "category": "formation",
+      "phase": "p6",
+      "sorties_dual": 4,
+      "sorties_solo": 0,
+      "sorties_total": 4,
+      "hours_per_sortie": null,
+      "hours_total": 4.8,
+      "hours_dual": 4.8,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "F4101",
+        "F4102",
+        "F4103",
+        "F4104"
+      ],
+      "duration_verbatim": "TRAINING SECTION: F41ΧΧ SORTIES/HOURS TOTAL: 4/4,8 SORTIES/HOURS DUAL: 4/4,8 SORTIES/HOURS SOLO: 0/0",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 209,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "F4201-04",
+      "label": "F4201-04",
+      "name": "Two-ship Formation",
+      "kind": "flight",
+      "category": "formation",
+      "phase": "p6",
+      "sorties_dual": 4,
+      "sorties_solo": 0,
+      "sorties_total": 4,
+      "hours_per_sortie": null,
+      "hours_total": 4.8,
+      "hours_dual": 4.8,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "F4201",
+        "F4202",
+        "F4203",
+        "F4204"
+      ],
+      "duration_verbatim": "TRAINING SECTION: F42ΧΧ SORTIES/HOURS TOTAL: 4/4,8 SORTIES/HOURS DUAL: 4/4,8 SORTIES/HOURS SOLO: 0/0",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 211,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "F4301-06",
+      "label": "F4301-06",
+      "name": "Two-ship Formation",
+      "kind": "flight",
+      "category": "formation",
+      "phase": "p6",
+      "sorties_dual": 4,
+      "sorties_solo": 2,
+      "sorties_total": 6,
+      "hours_per_sortie": null,
+      "hours_total": 7.2,
+      "hours_dual": 4.8,
+      "hours_solo": 2.4,
+      "solo_required": false,
+      "solo_allowed": true,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "F4301",
+        "F4302",
+        "F4303",
+        "F4304",
+        "F4305",
+        "F4306"
+      ],
+      "solo_candidate_sorties": [
+        "F4301",
+        "F4302",
+        "F4303",
+        "F4304",
+        "F4305"
+      ],
+      "duration_verbatim": "TRAINING SECTION: F43ΧΧ SORTIES/HOURS TOTAL: 6/7,2 SORTIES/HOURS DUAL: 4/4,8 SORTIES/HOURS SOLO: 2/2,4",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 213,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "F4401-04",
+      "label": "F4401-04",
+      "name": "Tactical Formation",
+      "kind": "flight",
+      "category": "formation",
+      "phase": "p6",
+      "sorties_dual": 4,
+      "sorties_solo": 0,
+      "sorties_total": 4,
+      "hours_per_sortie": null,
+      "hours_total": 4.8,
+      "hours_dual": 4.8,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "F4401",
+        "F4402",
+        "F4403",
+        "F4404"
+      ],
+      "duration_verbatim": "TRAINING SECTION: F44ΧΧ SORTIES/HOURS TOTAL: 4/4,8 SORTIES/HOURS DUAL: 4/4,8 SORTIES/HOURS SOLO: 0/0",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 215,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "F4501-03",
+      "label": "F4501-03",
+      "name": "Formation",
+      "kind": "flight",
+      "category": "formation",
+      "phase": "p6",
+      "sorties_dual": 2,
+      "sorties_solo": 1,
+      "sorties_total": 3,
+      "hours_per_sortie": null,
+      "hours_total": 3.6,
+      "hours_dual": 2.4,
+      "hours_solo": 1.2,
+      "solo_required": false,
+      "solo_allowed": true,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "F4501",
+        "F4502",
+        "F4503"
+      ],
+      "solo_candidate_sorties": [
+        "F4501",
+        "F4502"
+      ],
+      "duration_verbatim": "TRAINING SECTION: F45ΧΧ SORTIES/HOURS TOTAL: 3/3,6 SORTIES/HOURS DUAL: 2/2,4 SORTIES/HOURS SOLO: 1/1,2",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 217,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "F4690",
+      "label": "F4690",
+      "name": "Final Formation Checkride",
+      "kind": "checkride",
+      "category": "formation",
+      "phase": "p6",
+      "sorties_dual": 1,
+      "sorties_solo": 0,
+      "sorties_total": 1,
+      "hours_per_sortie": 1.3,
+      "hours_total": 1.3,
+      "hours_dual": 1.3,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": true,
+      "night": false,
+      "sorties": [
+        "F4690"
+      ],
+      "duration_verbatim": "TRAINING SECTION: F4690 SORTIES/HOURS TOTAL: 1/1,3 SORTIES/HOURS DUAL: 1/1,3 SORTIES/HOURS SOLO: 0/0",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 221,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "N4101-02",
+      "label": "N4101-02",
+      "name": "VFR Navigation",
+      "kind": "flight",
+      "category": "vfr_navigation",
+      "phase": "p7",
+      "sorties_dual": 2,
+      "sorties_solo": 0,
+      "sorties_total": 2,
+      "hours_per_sortie": null,
+      "hours_total": 2.2,
+      "hours_dual": 2.2,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "N4101",
+        "N4102"
+      ],
+      "duration_verbatim": "TRAINING SECTION: Ν41ΧΧ SORTIES/HOURS TOTAL: 2/2,2 SORTIES/HOURS DUAL: 2/2,2",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 225,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "N4201-02",
+      "label": "N4201-02",
+      "name": "VFR Navigation",
+      "kind": "flight",
+      "category": "vfr_navigation",
+      "phase": "p7",
+      "sorties_dual": 2,
+      "sorties_solo": 0,
+      "sorties_total": 2,
+      "hours_per_sortie": null,
+      "hours_total": 2.2,
+      "hours_dual": 2.2,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "N4201",
+        "N4202"
+      ],
+      "duration_verbatim": "TRAINING SECTION: Ν42ΧΧ SORTIES/HOURS TOTAL: 2/2,2 SORTIES/HOURS DUAL: 2/2,2",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 226,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "N4301-02",
+      "label": "N4301-02",
+      "name": "VFR Navigation",
+      "kind": "flight",
+      "category": "vfr_navigation",
+      "phase": "p7",
+      "sorties_dual": 2,
+      "sorties_solo": 0,
+      "sorties_total": 2,
+      "hours_per_sortie": null,
+      "hours_total": 2.2,
+      "hours_dual": 2.2,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "N4301",
+        "N4302"
+      ],
+      "duration_verbatim": "TRAINING SECTION: Ν43ΧΧ SORTIES/HOURS TOTAL: 2/2,2 SORTIES/HOURS DUAL: 2/2,2",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 227,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "N4401-03",
+      "label": "N4401-03",
+      "name": "VFR Navigation",
+      "kind": "flight",
+      "category": "vfr_navigation",
+      "phase": "p7",
+      "sorties_dual": 3,
+      "sorties_solo": 0,
+      "sorties_total": 3,
+      "hours_per_sortie": null,
+      "hours_total": 3.3,
+      "hours_dual": 3.3,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "N4401",
+        "N4402",
+        "N4403"
+      ],
+      "duration_verbatim": "TRAINING SECTION: Ν44ΧΧ SORTIES/HOURS TOTAL: 3/3,3 SORTIES/HOURS DUAL: 3/3,3",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 228,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "N4501-03",
+      "label": "N4501-03",
+      "name": "VFR Navigation",
+      "kind": "flight",
+      "category": "vfr_navigation",
+      "phase": "p7",
+      "sorties_dual": 3,
+      "sorties_solo": 0,
+      "sorties_total": 3,
+      "hours_per_sortie": null,
+      "hours_total": 3.3,
+      "hours_dual": 3.3,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": false,
+      "night": false,
+      "sorties": [
+        "N4501",
+        "N4502",
+        "N4503"
+      ],
+      "duration_verbatim": "TRAINING SECTION: Ν45ΧΧ SORTIES/HOURS TOTAL: 3/3,3 SORTIES/HOURS DUAL: 3/3,3",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 229,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    },
+    {
+      "id": "N4690",
+      "label": "N4690",
+      "name": "Final Navigation Checkride",
+      "kind": "checkride",
+      "category": "vfr_navigation",
+      "phase": "p7",
+      "sorties_dual": 1,
+      "sorties_solo": 0,
+      "sorties_total": 1,
+      "hours_per_sortie": 1.2,
+      "hours_total": 1.2,
+      "hours_dual": 1.2,
+      "hours_solo": 0.0,
+      "solo_required": false,
+      "solo_allowed": false,
+      "checkride": true,
+      "night": false,
+      "sorties": [
+        "N4690"
+      ],
+      "duration_verbatim": "TRAINING SECTION: Ν4690 SORTIES/ TOTAL HOURS: 1/1,2 SORTIES/ DUAL HOURS: 1/1,2",
+      "source": {
+        "file": "Phase_2_Syllabus_2025.pdf",
+        "page_pdf": 231,
+        "ref": "PART IV, §14 FLIGHT TRAINING — Training Section header"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "GT-WSGES",
+      "to": "GT-INITIAL",
+      "kind": "implied",
+      "note": "PART II programme order; not drawn as an arrow in the Flow Chart"
+    },
+    {
+      "from": "GT-INITIAL",
+      "to": "B1001-02",
+      "kind": "prereq",
+      "note": "PR 101-113 → B 1001"
+    },
+    {
+      "from": "GT-INITIAL",
+      "to": "GT-FLYPRIN",
+      "kind": "sequence",
+      "note": "PR 101-113 → FF 101-108"
+    },
+    {
+      "from": "GT-FLYPRIN",
+      "to": "CO190",
+      "kind": "sequence",
+      "note": "CO 106-108 → CO 190"
+    },
+    {
+      "from": "CO190",
+      "to": "C1101",
+      "kind": "prereq",
+      "note": "CO 190 → C 1101"
+    },
+    {
+      "from": "GT-FLYPRIN",
+      "to": "C2101",
+      "kind": "prereq",
+      "note": "IFG 101-102 → C 2101"
+    },
+    {
+      "from": "GT-FLYPRIN",
+      "to": "GT-AERO-CRM",
+      "kind": "sequence",
+      "note": "IFG 101-102 → AE 101-108"
+    },
+    {
+      "from": "GT-AERO-CRM",
+      "to": "C4101",
+      "kind": "prereq",
+      "note": "AE 190 → CR 201-202* → C 4101"
+    },
+    {
+      "from": "GT-METEO-BA",
+      "to": "JP190",
+      "kind": "sequence",
+      "note": "JX 190-191 → JP 190*"
+    },
+    {
+      "from": "JP190",
+      "to": "C4901-05",
+      "kind": "prereq",
+      "note": "JP 190* → C 4905"
+    },
+    {
+      "from": "GT-METEO-BA",
+      "to": "C4801-04",
+      "kind": "prereq",
+      "note": "BA 101-103 → C 4801"
+    },
+    {
+      "from": "GT-INSTR",
+      "to": "IN190",
+      "kind": "sequence",
+      "note": "IN 101-105 → IN 190"
+    },
+    {
+      "from": "IN190",
+      "to": "I3101-02",
+      "kind": "prereq",
+      "note": "IN 190 → I 3101"
+    },
+    {
+      "from": "IN190",
+      "to": "IN290",
+      "kind": "sequence",
+      "note": "IN 190 → IN 201-210 → IN 290"
+    },
+    {
+      "from": "IN290",
+      "to": "I4101-02",
+      "kind": "prereq",
+      "note": "IN 290 → I 4101"
+    },
+    {
+      "from": "GT-IFRNAV-GPS",
+      "to": "I4501-02",
+      "kind": "prereq",
+      "note": "GPS → I 4501"
+    },
+    {
+      "from": "GT-CO110",
+      "to": "C5101-02",
+      "kind": "prereq",
+      "note": "CO 110 → C 5101"
+    },
+    {
+      "from": "I4501-02",
+      "to": "GT-CO109",
+      "kind": "prereq",
+      "note": "dashed connector I 4501 → CO 109"
+    },
+    {
+      "from": "GT-CO109",
+      "to": "I3601",
+      "kind": "prereq",
+      "note": "CO 109 → I 3601"
+    },
+    {
+      "from": "I3601",
+      "to": "I4701",
+      "kind": "prereq",
+      "note": "dashed connector I 3601 → I 4701 (night)"
+    },
+    {
+      "from": "GT-FORM",
+      "to": "FO190",
+      "kind": "sequence",
+      "note": "FO 101-104 → FO 190"
+    },
+    {
+      "from": "FO190",
+      "to": "F3101-2",
+      "kind": "prereq",
+      "note": "FO 190 → F 3101"
+    },
+    {
+      "from": "GT-FORM",
+      "to": "F4201-04",
+      "kind": "prereq",
+      "note": "FO 201 → F 4201"
+    },
+    {
+      "from": "GT-FORM",
+      "to": "TACFOR590",
+      "kind": "sequence",
+      "note": "TACFOR 501-506 → TACFOR 590"
+    },
+    {
+      "from": "TACFOR590",
+      "to": "F4401-04",
+      "kind": "prereq",
+      "note": "TACFOR 590 → F 4401"
+    },
+    {
+      "from": "GT-VFRNAV",
+      "to": "NA190",
+      "kind": "sequence",
+      "note": "NA 104-111 → NA 190"
+    },
+    {
+      "from": "NA190",
+      "to": "N2101",
+      "kind": "prereq",
+      "note": "NA 190 → N 2101"
+    },
+    {
+      "from": "GT-VFRNAV",
+      "to": "LNAV790",
+      "kind": "sequence",
+      "note": "LNAV 701-705 → LNAV 790"
+    },
+    {
+      "from": "LNAV790",
+      "to": "N2201-02",
+      "kind": "prereq",
+      "note": "LNAV 790 → N 2201"
+    },
+    {
+      "from": "B1001-02",
+      "to": "C1101",
+      "kind": "sequence",
+      "note": "B 1002 → C 1101"
+    },
+    {
+      "from": "C2101",
+      "to": "C2201-02",
+      "kind": "sequence",
+      "note": "C 2101 → C 2201"
+    },
+    {
+      "from": "C2201-02",
+      "to": "C4101",
+      "kind": "prereq",
+      "note": "C 2202 → C 4101"
+    },
+    {
+      "from": "C2201-02",
+      "to": "C2301-02",
+      "kind": "implied",
+      "note": "F/S column order (no arrow drawn between the blocks)"
+    },
+    {
+      "from": "C2301-02",
+      "to": "C4201-03",
+      "kind": "prereq",
+      "note": "C 2302 → C 4203"
+    },
+    {
+      "from": "C2301-02",
+      "to": "C2401-03",
+      "kind": "implied",
+      "note": "F/S column order"
+    },
+    {
+      "from": "C2401-03",
+      "to": "C4301-03",
+      "kind": "prereq",
+      "note": "C 2401 → C 4303"
+    },
+    {
+      "from": "C2401-03",
+      "to": "C4401-03",
+      "kind": "prereq",
+      "note": "C 2403 → C 4403"
+    },
+    {
+      "from": "C2401-03",
+      "to": "C2501-03",
+      "kind": "implied",
+      "note": "F/S column order"
+    },
+    {
+      "from": "C2501-03",
+      "to": "C4601-02",
+      "kind": "prereq",
+      "note": "C 2502 → C 4602"
+    },
+    {
+      "from": "C2501-03",
+      "to": "C4801-04",
+      "kind": "prereq",
+      "note": "C 2503 → C 4804"
+    },
+    {
+      "from": "C2501-03",
+      "to": "F4301-06",
+      "kind": "prereq",
+      "note": "C 2502 → F 4303 (C 2501/C 2502 are drawn a second time on the FORMATION page)"
+    },
+    {
+      "from": "C2501-03",
+      "to": "C2601-04",
+      "kind": "implied",
+      "note": "F/S column order"
+    },
+    {
+      "from": "C2601-04",
+      "to": "C5101-02",
+      "kind": "prereq",
+      "note": "C 2601 → C 5101"
+    },
+    {
+      "from": "C2601-04",
+      "to": "C5201-04",
+      "kind": "prereq",
+      "note": "C 2602 → C 5203"
+    },
+    {
+      "from": "C2601-04",
+      "to": "C5301-04",
+      "kind": "prereq",
+      "note": "C 2604 → C 5303"
+    },
+    {
+      "from": "I3101-02",
+      "to": "I3201-03",
+      "kind": "sequence",
+      "note": "I 3102 → I 3201"
+    },
+    {
+      "from": "I3201-03",
+      "to": "I4101-02",
+      "kind": "prereq",
+      "note": "I 3201 → I 4101"
+    },
+    {
+      "from": "I3201-03",
+      "to": "I4201-02",
+      "kind": "prereq",
+      "note": "I 3203 → I 4202"
+    },
+    {
+      "from": "I3201-03",
+      "to": "I3301-04",
+      "kind": "implied",
+      "note": "F/S column order"
+    },
+    {
+      "from": "I3301-04",
+      "to": "I4301-02",
+      "kind": "prereq",
+      "note": "I 3304 → I 4302"
+    },
+    {
+      "from": "I3301-04",
+      "to": "I3401-04",
+      "kind": "implied",
+      "note": "F/S column order"
+    },
+    {
+      "from": "I3401-04",
+      "to": "I4501-02",
+      "kind": "prereq",
+      "note": "I 3404 → I 4502"
+    },
+    {
+      "from": "I3401-04",
+      "to": "I3501-04",
+      "kind": "implied",
+      "note": "F/S column order"
+    },
+    {
+      "from": "I3501-04",
+      "to": "I4601-03",
+      "kind": "prereq",
+      "note": "I 3504 → I 4603"
+    },
+    {
+      "from": "F3101-2",
+      "to": "F4101-04",
+      "kind": "prereq",
+      "note": "F 3102 → [C 5201] → F 4101"
+    },
+    {
+      "from": "F3101-2",
+      "to": "F3201-3",
+      "kind": "implied",
+      "note": "F/S column order"
+    },
+    {
+      "from": "F3201-3",
+      "to": "F4201-04",
+      "kind": "prereq",
+      "note": "F 3203 → F 4203"
+    },
+    {
+      "from": "N2101",
+      "to": "N4101-02",
+      "kind": "prereq",
+      "note": "N 2101 → N 4101"
+    },
+    {
+      "from": "N2101",
+      "to": "N2201-02",
+      "kind": "implied",
+      "note": "F/S column order"
+    },
+    {
+      "from": "N2201-02",
+      "to": "N4201-02",
+      "kind": "prereq",
+      "note": "N 2201 → N 4201"
+    },
+    {
+      "from": "N2201-02",
+      "to": "N4301-02",
+      "kind": "prereq",
+      "note": "N 2202 → N 4302"
+    },
+    {
+      "from": "N2201-02",
+      "to": "N2301-04",
+      "kind": "implied",
+      "note": "F/S column order"
+    },
+    {
+      "from": "N2301-04",
+      "to": "N4401-03",
+      "kind": "prereq",
+      "note": "N 2302 → N 4403"
+    },
+    {
+      "from": "N2301-04",
+      "to": "N4501-03",
+      "kind": "prereq",
+      "note": "N 2304 → N 4503"
+    },
+    {
+      "from": "C4101",
+      "to": "C4201-03",
+      "kind": "sequence"
+    },
+    {
+      "from": "C4201-03",
+      "to": "C4301-03",
+      "kind": "sequence"
+    },
+    {
+      "from": "C4301-03",
+      "to": "C4401-03",
+      "kind": "sequence"
+    },
+    {
+      "from": "C4401-03",
+      "to": "C4590",
+      "kind": "sequence"
+    },
+    {
+      "from": "C4590",
+      "to": "C4601-02",
+      "kind": "sequence"
+    },
+    {
+      "from": "C4601-02",
+      "to": "C4790-91",
+      "kind": "sequence"
+    },
+    {
+      "from": "C4790-91",
+      "to": "C4801-04",
+      "kind": "sequence"
+    },
+    {
+      "from": "C4801-04",
+      "to": "C4901-05",
+      "kind": "sequence"
+    },
+    {
+      "from": "C4901-05",
+      "to": "C5090",
+      "kind": "sequence"
+    },
+    {
+      "from": "C5090",
+      "to": "C5101-02",
+      "kind": "sequence"
+    },
+    {
+      "from": "C5101-02",
+      "to": "C5201-04",
+      "kind": "sequence"
+    },
+    {
+      "from": "C5201-04",
+      "to": "C5301-04",
+      "kind": "sequence"
+    },
+    {
+      "from": "C5301-04",
+      "to": "C5490",
+      "kind": "sequence"
+    },
+    {
+      "from": "C4790-91",
+      "to": "I4101-02",
+      "kind": "prereq",
+      "note": "[C 4791] is repeated as a dashed reference box at the head of the INSTRUMENT flow"
+    },
+    {
+      "from": "I4101-02",
+      "to": "I4201-02",
+      "kind": "sequence"
+    },
+    {
+      "from": "I4201-02",
+      "to": "I4301-02",
+      "kind": "sequence"
+    },
+    {
+      "from": "I4301-02",
+      "to": "I4490",
+      "kind": "sequence"
+    },
+    {
+      "from": "I4490",
+      "to": "I4501-02",
+      "kind": "sequence"
+    },
+    {
+      "from": "I4501-02",
+      "to": "I4601-03",
+      "kind": "sequence"
+    },
+    {
+      "from": "I4601-03",
+      "to": "I4701",
+      "kind": "sequence"
+    },
+    {
+      "from": "I4701",
+      "to": "I4890",
+      "kind": "sequence"
+    },
+    {
+      "from": "C5201-04",
+      "to": "F4101-04",
+      "kind": "prereq",
+      "note": "[C 5201] is repeated as a dashed reference box at the head of the FORMATION flow"
+    },
+    {
+      "from": "F4101-04",
+      "to": "F4201-04",
+      "kind": "sequence"
+    },
+    {
+      "from": "F4201-04",
+      "to": "F4301-06",
+      "kind": "sequence"
+    },
+    {
+      "from": "F4301-06",
+      "to": "F4401-04",
+      "kind": "sequence"
+    },
+    {
+      "from": "F4401-04",
+      "to": "F4501-03",
+      "kind": "sequence"
+    },
+    {
+      "from": "F4501-03",
+      "to": "F4690",
+      "kind": "sequence"
+    },
+    {
+      "from": "C5201-04",
+      "to": "N4101-02",
+      "kind": "prereq",
+      "note": "[C 5201] is repeated as a dashed reference box at the head of the NAVIGATION flow"
+    },
+    {
+      "from": "F4401-04",
+      "to": "N4401-03",
+      "kind": "prereq",
+      "note": "[F 4401] is repeated as a dashed reference box feeding N 4401"
+    },
+    {
+      "from": "N4101-02",
+      "to": "N4201-02",
+      "kind": "sequence"
+    },
+    {
+      "from": "N4201-02",
+      "to": "N4301-02",
+      "kind": "sequence"
+    },
+    {
+      "from": "N4301-02",
+      "to": "N4401-03",
+      "kind": "sequence"
+    },
+    {
+      "from": "N4401-03",
+      "to": "N4501-03",
+      "kind": "sequence"
+    },
+    {
+      "from": "N4501-03",
+      "to": "N4690",
+      "kind": "sequence"
+    }
+  ]
+}

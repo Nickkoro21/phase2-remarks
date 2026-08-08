@@ -1,0 +1,1570 @@
+{
+  "chunk": "ch9_formation",
+  "source": "T-6A Techniques and Procedures Manual (I.N. T-6A 02/14, Change 9 Jul 22)",
+  "sections": [
+    {
+      "section": "9.1",
+      "title": "INTRODUCTION - PURPOSE, FLIGHT DISCIPLINE, AGGRESSIVENESS",
+      "pages_pdf": [196, 197],
+      "item_mapping": ["formation-35", "formation-37", "formation-crm", "vfr_navigation-23"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "The primary purpose of flying formation is mutual support. Formation skills and procedures are intended to turn a potential liability of two A/C flying close together into the benefit of mutual support, but only through meticulous adherence to the contractual obligations of Number 1 and Number 2 roles. Flight discipline requires in-depth knowledge of flight rules, unit standards and this manual, plus strict adherence to the pre-flight briefing and any real time alterations directed by Number 1. Aggressiveness is a state of mind, not the speed of flight control movement: as Number 1 it means thinking ahead of the A/C and anticipating changes; as Number 2 it means correcting positional deviations while mentally anticipating the next phase of flight.",
+      "parameters": [],
+      "procedure_steps": [
+        "Prepare, brief, fly and debrief under uncompromising flight discipline; the flight leader holds the \"hammer\" and the flight leader's directives must be followed.",
+        "As Number 2, fly within the proper formation position parameters for the position directed by the flight lead.",
+        "As Number 2, do not act until directed by Number 1, then respond smoothly and in a timely manner.",
+        "As Number 1, anticipate the need for changes and adjustments before they actually occur."
+      ],
+      "common_errors": [
+        "Remaining out of position: \"flying in the proper parameters for the formation position directed by the flight lead with no tolerance for remaining out of position\".",
+        "Number 2 acting before being directed by Number 1.",
+        "Number 2 accepting a directed task that is beyond his/her ability instead of informing Number 1.",
+        "Number 2 allowing the flight to enter an unsafe or unauthorized situation rather than speaking up.",
+        "Number 2 continuing without querying when unsure of the assigned position."
+      ],
+      "corrections": [
+        "As Number 1, correct any wingman deviations immediately by directing Number 2 to the proper position if appropriate corrections are not being made.",
+        "Number 2 will query immediately if unsure of assigned position.",
+        "If the directed tasks are beyond Number 2's ability, he/she must immediately inform Number 1.",
+        "Number 2 must speak up rather than allow the flight to enter an unsafe or unauthorized situation."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.3",
+      "title": "RESPONSIBILITIES - FLIGHT LEADER, NUMBER 1 AND NUMBER 2",
+      "pages_pdf": [197, 198, 199],
+      "item_mapping": ["formation-04", "formation-33", "formation-34", "formation-35", "formation-crm", "vfr_navigation-05", "vfr_navigation-06", "vfr_navigation-21"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "The flight leader is ultimately responsible for the safe and effective conduct of the mission (planning, briefing, execution, debriefing) and does not change during a mission under normal circumstances. Number 1's top priorities include clearing for the formation, planning, and monitoring Number 2. Number 2's top priorities are flight path deconfliction from Number 1, maintaining proper position relative to Number 1, and executing additional tasks as directed. The mutually understood procedures, standards and briefed tasks form a contract between Number 1 and Number 2.",
+      "parameters": [],
+      "procedure_steps": [
+        "Number 1 basic responsibilities in priority order: (1) Clear for the formation, (2) Plan ahead of the A/C, (3) Monitor Number 2, (4) Navigation, (5) Communication.",
+        "Number 1 owns all the radios in every A/C in the formation; radio frequencies will not be changed unless directed by Number 1 (or per unit standards).",
+        "Number 2 basic responsibilities in priority order: (1) Do Not Hit Number 1, (2) Keep Number 1 in Sight, (3) Be in Position and on Frequency (\"being there\"), (4) Clear for the Formation, (5) Back Up Number 1.",
+        "Number 2 uses all of Number 1's A/C as a reference; do not focus on just one spot.",
+        "Number 1 uses power setting to manage energy similar to contact flying and executes each manoeuvre smoothly, allowing Number 2 to maintain position without undue difficulty."
+      ],
+      "common_errors": [
+        "Number 2 focusing on just one spot on Number 1's A/C instead of using all of Number 1's A/C as a reference.",
+        "Number 2 crosschecking lower priorities (clearing, backing up lead) at the expense of flight path deconfliction and proper position.",
+        "Assuming instead of anticipating: Number 2 \"must look and sound sharp, match Number 1's configuration and radio calls, and always anticipate but never assume\".",
+        "Number 1 becoming so overly conscious of smoothness that precision or safety is compromised.",
+        "High performance and high-G manoeuvring with abrupt inputs, causing Number 2 to exceed G-limitations."
+      ],
+      "corrections": [
+        "If clearing, being in position or keeping the formation leader in sight is degraded by \"backing up lead\", immediately reprioritize in the order shown.",
+        "Before directing a manoeuvre, always consider Number 2's position and ability to safely perform such a manoeuvre; monitor Number 2 to ensure the correct position before the next manoeuvre.",
+        "High performance and high-G manoeuvres require smooth and deliberate control inputs to keep Number 2 from exceeding G-limitations."
+      ],
+      "notes": "The manual explicitly separates \"flight leader\" (overall responsibility) from \"Number 1\" (a position with a predefined set of responsibilities, priorities and tasks)."
+    },
+    {
+      "section": "9.3.3",
+      "title": "COLLISION AVOIDANCE",
+      "pages_pdf": [199, 200],
+      "item_mapping": ["formation-33", "formation-12", "formation-34", "formation-36", "formation-crm", "vfr_navigation-21", "vfr_navigation-24"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "Flight path deconfliction is the most fundamental tenet of formation flying. Generally Number 2 has primary responsibility for flight path deconfliction within the element and this responsibility does not transfer to Number 1 unless Number 2 calls \"blind\". Number 2 is always assumed to be visual unless a blind status is effectively transmitted, received and acknowledged. Brevity words used are blind / visual (A/C inside the formation), no joy / tally ho (A/C outside the formation) and padlocked.",
+      "parameters": [
+        {"name": "blind call content", "value": "call sign, blind, current altitude", "verbatim": "an immediate blind call must be made with current altitude (Kilo 2, blind, 9000')"},
+        {"name": "altitude separation when both A/C blind", "value": "at least 1000 feet", "verbatim": "If Number 1 is also blind, Number 1 must immediately direct at least 1000 feet of altitude separation."},
+        {"name": "posit response format", "value": "clock position, elevation, range", "verbatim": "The \"posit\" call is a question as to the position of Number 2 relative to Number 1 (Kilo 2, 6 o'clock, low, 300 feet)."}
+      ],
+      "procedure_steps": [
+        "If Number 2 loses visual contact, immediately call blind with current altitude.",
+        "When Number 1 acknowledges the blind call, primary responsibility for flight path deconfliction shifts within the element and Number 1 talks Number 2's eyes back to a visual.",
+        "When Number 2 regains visual contact, Number 2 resumes primary responsibility once Number 1 acknowledges the \"visual\" call.",
+        "If Number 1 loses sight and is uncertain of Number 2's position, query Number 2 by requesting \"posit\" (Kilo 2, posit)."
+      ],
+      "common_errors": [
+        "Failure of Number 1 to properly clear or visually monitor Number 2 during a critical phase of flight, such as a Rejoin or Extended Trail exercise.",
+        "Failure of Number 2 to execute lost wingman procedures promptly and correctly if visual contact is lost in IMC.",
+        "Failure to recognize excessive overtake (during rejoins, compare actual airspeed with the directed airspeed).",
+        "Failure to maintain lateral or vertical separation - for turning or straight-ahead rejoins Number 2 must maintain lateral or vertical separation until closure rates are under control and stabilized in route.",
+        "Failure of Number 2 to call blind and manoeuvre in the safest direction when visual contact is lost.",
+        "Failure to consider the effects of wingtip vortices - Number 2 may fly into vortices when too close during close (fingertip) formation or cross under."
+      ],
+      "corrections": [
+        "Use power and/or speed brake as necessary to control overtake; Number 1 should direct an overshoot or breakout if necessary.",
+        "In IMC, if Number 2 cannot maintain the normal fingertip position (using normal visual references) or loses sight of Number 1, initiate appropriate lost wingman procedures.",
+        "If deconfliction is questionable or if the blind call is not acknowledged, break out of formation.",
+        "If wingtip vortices are encountered, control the A/C and move back out or break out as necessary.",
+        "Number 1 must be directive or take evasive action if Number 2 loses sight; Number 1 must monitor Number 2, either directly or with the mirrors."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.3.4",
+      "title": "CALL SIGNS",
+      "pages_pdf": [200, 201],
+      "item_mapping": ["formation-34", "vfr_navigation-22"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "Aircrew of each A/C in the formation are assigned a call sign with a unique word prefix and one digit numeric suffix. The designated flight leader gets the call sign ending in 1 and the other flight member the call sign ending in 2. All radio calls to an agency outside the formation begin with the full call sign; directive calls inside the flight use the full word prefix plus the digit suffix so that critical calls carry two means of identification (words and numbers).",
+      "parameters": [
+        {"name": "call sign structure", "value": "unique word prefix + one digit numeric suffix", "verbatim": "a call sign that has a unique word prefix and one digit numeric suffix"},
+        {"name": "ops check response format", "value": "call sign, fuel, max G", "verbatim": "Mistras A ops check, 1 is 700, 3.8-Gs, 2 is 780, 4.4-Gs"}
+      ],
+      "procedure_steps": [
+        "Use the full call sign for all transmissions to agencies outside the formation.",
+        "Use full word prefix and digit suffix for directive calls within the flight (for example, Mistras A2 break out).",
+        "When immediately responding to an in-flight directive, Number 2 may simply use \"2\" to predicate radio transmissions; respond with full word prefix and double digit call sign to Number 1 directed radio calls."
+      ],
+      "common_errors": [
+        "No two airborne formations should have the same word prefix in their call sign unless separate elements of the same larger formation."
+      ],
+      "corrections": [
+        "If there is another flight on the same frequency and the word prefix is garbled or stepped on, use of prefix and suffix improves the chances that the proper wingman will respond."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.3.5",
+      "title": "RADIO DISCIPLINE",
+      "pages_pdf": [201, 202],
+      "item_mapping": ["formation-34", "formation-32", "vfr_navigation-22"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "Clear, concise and correct communications are a good indicator of flight discipline. Number 1 speaks for the flight to agencies outside the formation until the formation splits up. Number 1 owns the radios; Number 2 only changes frequencies when directed by Number 1 or when written unit standards dictate. \"Go\" requires an acknowledgement before changing; \"push\" requires no acknowledgement. The suffix \"victor\" designates VHF.",
+      "parameters": [
+        {"name": "frequency change - go", "value": "acknowledge before changing", "verbatim": "If Number 1 uses the term \"go\" for a frequency change, Number 2 will acknowledge before changing the frequency (for example, Mistras A2 go channel 3; acknowledge 2)."},
+        {"name": "frequency change - push", "value": "change without acknowledging", "verbatim": "If Number 1 uses the term \"push,\" Number 2 should change to the new frequency without acknowledging (Mistras A2 push channel 3; no acknowledgment)."},
+        {"name": "traffic call format", "value": "call sign, direction, clock position, elevation, approximate distance", "verbatim": "Mistras Kilo 1, traffic right, 2 o'clock, slightly high, 3 miles"}
+      ],
+      "procedure_steps": [
+        "Minimize and combine radio calls on common-use frequencies to reduce radio congestion.",
+        "When in close (fingertip) formation, wingmen automatically move to route position when Number 1 directs a channel change and return to close (fingertip) after check-in on the new frequency.",
+        "If in a position wider than close (fingertip), remain in that position unless directed otherwise.",
+        "If in IMC, wingmen maintain close (fingertip) formation spacing and use the crew concept (PF talks on the radio, PNF accomplishes the frequency change). If solo in IMC, change frequency when workload permits.",
+        "Timing, tempo, intonation, syntax and format should mirror Number 1, but provide accurate information."
+      ],
+      "common_errors": [
+        "Number 2 changing frequencies without being directed by Number 1 or in accordance with written unit standards.",
+        "Number 2 going hunting for Number 1 when they end up on different frequencies - instead go to the assigned frequency and wait.",
+        "Using the term \"leader\" when referring to own ship parameters; use \"one\" (the only time \"leader\" should be used on the radio is when executing a lead change).",
+        "Failing to respond to directive calls - wingmen will normally respond to all directive calls unless briefed otherwise or if the action is obvious."
+      ],
+      "corrections": [
+        "If Number 1 sends Number 2 to the wrong frequency, Number 2 should go to that frequency and wait; Number 1 will get Number 2 on the proper frequency using the radio or visual signals.",
+        "If a radio call is unclear, Number 2 will query Number 1."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.4",
+      "title": "VISUAL SIGNALS",
+      "pages_pdf": [202],
+      "item_mapping": ["formation-32", "formation-34"],
+      "category_hint": ["formation"],
+      "technique_summary": "Visual signals relay information between flight members or direct manoeuvres and are used when radio transmissions are inappropriate or difficult to make. As Number 2, when Number 1 gives a signal, acknowledge with a head nod. Signals must be clear, appropriate, and proportional to range.",
+      "parameters": [
+        {"name": "signal proportionality example", "value": "slight wing-rock vs large wing-rock", "verbatim": "A slight wing-rock to reform to close (fingertip) formation from 2 ship-width route, versus a large wing-rock to signal a reform from 500-foot route"}
+      ],
+      "procedure_steps": [
+        "Number 1 gives the signal; Number 2 acknowledges with a head nod.",
+        "Number 1 repeats the signal until an acknowledgment is received.",
+        "Use the radio, if necessary, to immediately clear up any confusion.",
+        "Brief any non-standard visual signals before they are used."
+      ],
+      "common_errors": [
+        "Acknowledging or changing position when unsure of a signal - if unsure, Number 2 should not acknowledge nor change position.",
+        "A pilot not at the controls giving or acknowledging visual signals - only the pilot at the controls should give visual signals to another A/C or acknowledge signals from another A/C.",
+        "Signals that are not proportional to range."
+      ],
+      "corrections": [
+        "Use the radio, if necessary, to immediately clear up any confusion."
+      ],
+      "notes": "Visual signals are described in T-6A Standard Operational Procedures (S.O.P) and in this manual."
+    },
+    {
+      "section": "9.5",
+      "title": "IN-FLIGHT CHECKS",
+      "pages_pdf": [202, 203],
+      "item_mapping": ["formation-04", "formation-32", "vfr_navigation-06"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "In-flight checks ensure the flight makes periodic checks of A/C systems, departure, special use airspace, manoeuvring or recovery. The fuel check visual signal is used to initiate all checks; Number 1 and Number 2 check fuel and perform the checklist appropriate for the phase of flight (ops check, descent check). Number 2 accomplishes the check one item at a time, checking position on Number 1 between each item.",
+      "parameters": [
+        {"name": "ops/descent check radio format", "value": "call sign and total fuel", "verbatim": "check in by transmitting call sign and total fuel for ops checks and descent check (for example, Mistras A1 is 800)"}
+      ],
+      "procedure_steps": [
+        "Use the intra-flight radio if practical to initiate checks; use visual signals if formation spacing allows or if radio traffic inhibits the intra-flight radio.",
+        "Number 1 ensures someone is clearing for the formation, may perform the check first, then directs Number 2 to perform the check via radio call or visual signal, allowing enough time for Number 2 to complete it.",
+        "Number 2 acknowledges, moves to route position (if the check was directed while in close formation) and executes the appropriate checklist items.",
+        "Accomplish the check one item at a time, checking position on Number 1 between each item.",
+        "If forced to turn during a check, Number 1 calls the turn and ensures Number 2 is attentive before turning; Number 2 resumes the check after the turn is complete."
+      ],
+      "common_errors": [
+        "Failing to prioritize: fly formation first and accomplish checklist items as workload permits.",
+        "Continuing the check during turns instead of flying the A/C and resuming after the turn is complete."
+      ],
+      "corrections": [
+        "Prioritize tasks - fly formation first and accomplish checklist items as workload permits.",
+        "One technique to ensure accomplishment of every step is to execute a few items from memory then reference the checklist page to verify completion; another is to complete the entire checklist and then refer back to verify completion."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.6",
+      "title": "FUEL AND G-AWARENESS",
+      "pages_pdf": [203, 204],
+      "item_mapping": ["formation-04", "formation-34", "formation-35", "vfr_navigation-06"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "All flight members must understand the factors and assumptions used to determine joker and bingo fuels and should increase the frequency of fuel checks during high fuel flow operations (extended trail, low altitude) and when approaching joker and bingo. Number 1 continually monitors the flight's fuel state and G-loading and must take action when any A/C exceeds G-limitations, reaches joker or bingo fuel, or reports an abnormal fuel condition.",
+      "parameters": [
+        {"name": "unload value after wake turbulence/prop wash", "value": "approximately 1-G", "verbatim": "Number 2 should unload to approximately 1-G, exit the area of turbulence, and check the G-meter."},
+        {"name": "fuel state reference below joker", "value": "reference from joker", "verbatim": "Mistras A2 is joker minus 100"}
+      ],
+      "procedure_steps": [
+        "Unless already on the recovery, Number 2 informs Number 1 when reaching joker and/or bingo fuel; Number 1 acknowledges the call.",
+        "Number 1 initiates a fuel and G-check periodically throughout the mission.",
+        "Accomplish these checks after the G-awareness exercise and after each extended trail exercise."
+      ],
+      "common_errors": [
+        "Number 2 manoeuvring behind Number 1 without caution for areas of prop wash or wake turbulence, especially in Number 1's six o'clock.",
+        "Failing to inform Number 1 before dropping below joker fuel.",
+        "Not increasing the frequency of fuel checks during high fuel flow operations (extended trail, low altitude)."
+      ],
+      "corrections": [
+        "Any time wake turbulence or prop wash is encountered, Number 2 should unload to approximately 1-G, exit the area of turbulence, and check the G-meter.",
+        "If the A/C G-limits have been exceeded, the formation will terminate manoeuvring and conduct a controllability check, as required.",
+        "If fuel drops below joker before informing Number 1, Number 2 will reference the fuel state from joker.",
+        "Number 1 must continually monitor the flight's fuel state and adjust the profile, frequency of ops checks, and joker or bingo as necessary."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.7",
+      "title": "FENCE CHECK",
+      "pages_pdf": [204],
+      "item_mapping": ["formation-04", "vfr_navigation-06"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "Number 1 normally directs \"FENCE-In\" when entering the MOA and \"FENCE-Out\" when exiting.",
+      "parameters": [],
+      "procedure_steps": [
+        "Number 1 directs \"FENCE-In\" when entering the MOA.",
+        "Number 1 directs \"FENCE-Out\" when exiting."
+      ],
+      "common_errors": [],
+      "corrections": [],
+      "notes": "The manual refers to paragraph 6.2 for details on the FENCE check; no details are repeated in Chapter 9."
+    },
+    {
+      "section": "9.8",
+      "title": "BATTLE DAMAGE (BD) CHECK",
+      "pages_pdf": [204],
+      "item_mapping": ["formation-20", "formation-21", "formation-32", "formation-33"],
+      "category_hint": ["formation"],
+      "technique_summary": "Using mutual support, A/C within a formation manoeuvre to inspect each other for damage, leaks, missing panels or irregularities. The BD Check is generally executed after aggressive manoeuvring or combat operations. Number 1 initiates with a radio call or the \"check mark\" visual signal; Number 2 moves to route, climbs to see the opposite wingtip, and crosses under to look at the other side in the same fashion.",
+      "parameters": [],
+      "procedure_steps": [
+        "Number 1 initiates the BD check with a radio call or the \"check mark\" visual signal.",
+        "Number 2 moves to route position and climbs to see the opposite wingtip of Number 1's A/C, then performs a cross under to look at the other side in the same fashion.",
+        "Number 2 maintains nose-tail separation while inspecting Number 1 and looks for any damage, leaks, missing panels or irregularities.",
+        "On completion, Number 2 returns to the formation position from which the check was initiated, on the opposite side of Number 1 from which the check was started.",
+        "If there are no discrepancies, Number 2 passes a thumbs-up indicating a \"clean\" BD check; if not clean, Number 2 uses the radio to describe the discrepancies.",
+        "Number 1 then initiates a lead change, Number 2 assumes lead while clearing for the flight, and Number 1 inspects Number 2."
+      ],
+      "common_errors": [
+        "Losing nose-tail separation while inspecting Number 1."
+      ],
+      "corrections": [
+        "During the BD check the A/C in the lead position (being inspected) must clear for the formation, comply with all clearances and maintain radio responsibility; the A/C manoeuvring to inspect maintains deconfliction within the formation."
+      ],
+      "notes": "Technique: if time or fuel are critical and the Number 1 A/C contains two pilots, the BD check may be conducted without a nav lead change - the PNF in Number 1 inspects Number 2 while the PF clears. This option must be briefed or directed before employed."
+    },
+    {
+      "section": "9.9",
+      "title": "MISSION PLANNING",
+      "pages_pdf": [205],
+      "item_mapping": ["formation-14", "vfr_navigation-01"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "The Flight Leader establishes priorities for mission planning and delegates tasks to flight members to ensure thorough planning without duplication of effort. All flight members should be involved in mission preparation. The level of planning detail is dictated by mission specifics and pilot experience level, but all necessary planning must be completed in time to conduct a concise, comprehensive mission briefing.",
+      "parameters": [],
+      "procedure_steps": [
+        "FL establishes planning priorities and delegates tasks without duplication of effort.",
+        "All flight members are involved in mission preparation.",
+        "Complete all mission planning in time to conduct a concise, comprehensive briefing."
+      ],
+      "common_errors": [
+        "Duplication of effort in planning.",
+        "Planning not completed in time to conduct a concise, comprehensive mission briefing."
+      ],
+      "corrections": [],
+      "notes": null
+    },
+    {
+      "section": "9.10",
+      "title": "MISSION BRIEFING AND DEBRIEFING",
+      "pages_pdf": [205],
+      "item_mapping": ["formation-14", "formation-crm", "vfr_navigation-01", "vfr_navigation-crm"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "The FL (or designated briefer) ensures all flight members are briefed on start, taxi, takeoff, recovery and relevant special subjects. The briefing sets the tone for the entire mission, sets objectives, establishes goals and sets the standard used to measure successful performance. The majority of the pre-flight brief should be spent describing the \"how to\" of the mission. The debriefing covers areas that need improvement and reconstructs the mission only in enough detail to debrief issues affecting the formation as a whole.",
+      "parameters": [
+        {"name": "crew briefing time", "value": "5 minutes minimum", "verbatim": "The briefer must allow time for each crew to discuss inter-cockpit responsibilities, emergency procedures, and other crew coordination issues. Use 5 minutes as a minimum."}
+      ],
+      "procedure_steps": [
+        "All formation members should be present for the pre-flight briefing.",
+        "Conduct the briefing in a professional manner, clear and concise, spending the majority of time on the \"how to\" of the mission.",
+        "Allow a minimum of 5 minutes for crew briefings (inter-cockpit responsibilities, emergency procedures, crew coordination).",
+        "Debrief in a business-like atmosphere; reconstruct the mission only enough to debrief issues affecting the formation as a whole."
+      ],
+      "common_errors": [
+        "Spending excessive time on S.O.P material - minimum time should be spent on S.O.P as all formation members should have them committed to memory if they are to be used.",
+        "Taking critiques of execution personally."
+      ],
+      "corrections": [
+        "Delegate briefing responsibilities as appropriate (time hack, EP, Weather, NOTAMS, etc.).",
+        "Elements conducted in accordance with S.O.P or procedures in this manual may be briefed as standard.",
+        "Receive instruction openly; use the debriefing as a tool for improvement."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.11",
+      "title": "G-AWARENESS EXERCISE",
+      "pages_pdf": [205, 206],
+      "item_mapping": ["formation-04", "formation-35"],
+      "category_hint": ["formation"],
+      "technique_summary": "Perform a G-awareness exercise or AGSM demonstration (as described in Chapter 1) before accomplishing any manoeuvre that may require three or more Gs. Brief the exercise with an emphasis on deconfliction procedures. Sufficient visual cues must be available to perform the manoeuvre.",
+      "parameters": [
+        {"name": "G threshold requiring the exercise", "value": "three or more Gs", "verbatim": "Perform a G-awareness exercise or AGSM demonstration (as described in Chapter 1) before accomplishing any manoeuvre that may require three or more Gs."}
+      ],
+      "procedure_steps": [
+        "Brief the exercise with emphasis on deconfliction procedures.",
+        "Ensure sufficient visual cues are available.",
+        "Number 1 considers sun angle and position prior to the manoeuvre to preclude possible loss of sight due to the sun."
+      ],
+      "common_errors": [
+        "Not considering sun angle and position, allowing possible loss of sight due to the sun."
+      ],
+      "corrections": [
+        "If poor weather conditions prevent safe accomplishment of the G-awareness exercise, Number 1 should modify the flight mission profile and limit manoeuvring accordingly."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.12",
+      "title": "KNOCK-IT-OFF AND TERMINATE PROCEDURES",
+      "pages_pdf": [206, 207],
+      "item_mapping": ["formation-34", "formation-36", "formation-23", "vfr_navigation-22"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "Knock-it-off is used when safety of flight is a factor or when doubt or confusion exists. Terminate directs a specific A/C or flight to cease manoeuvring and proceed as briefed or directed, and is used when safety of flight is not a factor. Any member of the formation may initiate either call. At the Knock-It-Off call, Number 1 continues the current manoeuvre without changing power setting to ensure predictability and aid flight path deconfliction.",
+      "parameters": [
+        {"name": "radio-out Knock-It-Off signal", "value": "continuous wing rock", "verbatim": "A/C with a radio failure should signal \"Knock-It-Off\" by continuous wing rock."}
+      ],
+      "procedure_steps": [
+        "Upon hearing a Knock-It-Off call or observing a continuous wing rock, all participating A/C will: clear the flight path; cease manoeuvring; acknowledge with a call sign in order of position in formation (or with a wing rock if radios have failed); obtain verbal clearance before resuming manoeuvres.",
+        "At the Knock-It-Off call, Number 1 continues the current manoeuvre without changing power setting.",
+        "If any A/C loses sight, the A/C losing sight makes the appropriate \"blind\" radio call.",
+        "For Terminate, Number 1 smoothly transitions to a shallow turn or level flight until Number 2 has attained the desired formation parameters; once back in position Number 2 may signal for continued manoeuvring by calling \"in\"."
+      ],
+      "common_errors": [
+        "Changing power setting at the Knock-It-Off call, degrading predictability and flight path deconfliction.",
+        "Resuming manoeuvres without obtaining verbal clearance."
+      ],
+      "corrections": [
+        "Use terminate to cease manoeuvring when Number 2 has met the desired learning objectives, or if Number 2 is outside position parameters (desired learning objectives are not achievable).",
+        "Another A/C observing a continuous wing rock should transmit \"Knock-It-Off\" and provide required assistance."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.13",
+      "title": "LOST WINGMAN PROCEDURES",
+      "pages_pdf": [207, 208],
+      "item_mapping": ["formation-36", "formation-05", "formation-06", "vfr_navigation-24", "vfr_navigation-15"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "Lost wingman procedures gain immediate separation when Number 2 loses sight of Number 1 in the weather. In IMC, when visual contact is lost or if unable to maintain position due to disorientation, Number 2 simultaneously executes the applicable lost wingman procedure while transitioning to instruments. Smooth application of control inputs is imperative to minimize the effects of spatial disorientation. Number 2 notifies Number 1, who coordinates with the controlling agency and requests a separate clearance for Number 2.",
+      "parameters": [
+        {"name": "wings-level lost wingman - bank and time", "value": "15 degrees of bank for 15 seconds", "verbatim": "The lost wingman turns away, using 15 of bank for 15 seconds and informs Number 1. After 15 seconds, Number 2 resumes course and obtains a separate clearance."},
+        {"name": "turn, outside - bank and time", "value": "reverse turn, 15 degrees of bank for 15 seconds", "verbatim": "The lost wingman reverses the direction of turn, using 15 of bank for 15 seconds, and informs Number 1."},
+        {"name": "missed approach climb", "value": "500 feet above the missed approach altitude", "verbatim": "continues to the published missed approach track while climbing 500 feet above the missed approach altitude"}
+      ],
+      "procedure_steps": [
+        "Number 1: immediately perform the appropriate procedure, acknowledge Number 2's radio call, and transmit A/C attitude (acknowledged by Number 2); transmit heading, altitude and airspeed as necessary.",
+        "Wings-level flight (climb, descent or straight and level): turn away using 15 degrees of bank for 15 seconds, inform Number 1, then resume course and obtain a separate clearance.",
+        "Turn, when outside the turn: reverse the direction of turn using 15 degrees of bank for 15 seconds, inform Number 1, then roll out, continue straight ahead and ensure positive separation before resuming the turn and obtaining a separate clearance.",
+        "Turn, when inside the turn: momentarily reduce power to ensure nose-tail separation and tell Number 1 to roll out of the turn; maintain angle of bank to ensure lateral separation, then obtain a separate clearance. Number 1 may resume turning only when separation is ensured.",
+        "Precision and non-precision final approach: momentarily turn away from Number 1 to ensure separation and start a climb to the FAF or glide slope intercept altitude as appropriate; while proceeding to the MAP, inform Number 1 and obtain a separate clearance.",
+        "Missed approach: momentarily turn away to ensure clearance, inform Number 1, and continue to the published missed approach track while climbing 500 feet above the missed approach altitude; obtain a separate clearance."
+      ],
+      "common_errors": [
+        "Failure of Number 2 to execute lost wingman procedures promptly and correctly if visual contact is lost in IMC.",
+        "Abrupt control inputs, which aggravate the effects of spatial disorientation."
+      ],
+      "corrections": [
+        "Smooth application of control inputs is imperative to minimize the effects of spatial disorientation.",
+        "Review lost wingman procedures in detail during each briefing when weather or other restrictions to visibility are known or anticipated for the flight."
+      ],
+      "notes": "Responsibility: lost wingman procedures do not guarantee obstacle clearance; all pilots must be aware of terrain and obstacles along the flight path and use good judgment."
+    },
+    {
+      "section": "9.14",
+      "title": "FORMATION BREAKOUT",
+      "pages_pdf": [208, 209],
+      "item_mapping": ["formation-12", "formation-36", "vfr_navigation-24"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "Breakout ensures immediate separation and avoids a midair collision. Breakout is mandatory when Number 2's presence constitutes a Hazard, Number 2 is In Front of Number 1, Number 2 is Told (directed) to break out, or Number 2 has lost Situational Awareness (technique \"HITS\"). The wingman clears in the direction of the break and manoeuvres away from Number 1's last known position, using power and/or speed brake as required to maintain safe manoeuvring airspeed and expedite separation.",
+      "parameters": [
+        {"name": "mandatory breakout criteria (HITS)", "value": "Hazard / In front / Told / lost SA", "verbatim": "a. Number 2's presence constitutes a Hazard to the formation. b. Number 2 is In Front of Number 1. c. Number 2 is Directed (Told) to break out. d. Number 2 has lost Situational Awareness."}
+      ],
+      "procedure_steps": [
+        "Clear in the direction of the break and manoeuvre away from Number 1's last known position (or in the direction that ensures immediate separation).",
+        "Use power and/or speed brake as required to maintain safe manoeuvring airspeed and expedite separation.",
+        "When able, the wingman informs Number 1 (\"Mistras A2 is breaking out\").",
+        "Number 1 continues to fly predictably and, if the wingman is in sight, manoeuvres to maintain sight and deconflict flight paths.",
+        "If visual with Number 1, with safe separation of all formation members, the wingman may roll out."
+      ],
+      "common_errors": [
+        "On final approach, a rapid increase in back stick pressure can quickly result in a stall.",
+        "Abrupt application of excessive rudder or abrupt application of MAX power can cause the A/C to roll past the desired bank angle, which can further aggravate the slow speed condition and reduce the chances of a successful recovery.",
+        "Losing sight during the breakout; disorientation when passing under Number 1 or viewing Number 1 through the top of the canopy.",
+        "Assuming a breakout always requires an abrupt, high-G turn away from Number 1 - it does not.",
+        "Rejoining after leaving the formation without being directed by Number 1."
+      ],
+      "corrections": [
+        "The A/C breaking out should anticipate disorientation and must use caution if passing under Number 1, or viewing Number 1 through the top of the canopy.",
+        "If a wingman initiates the breakout, that A/C maintains safe separation until Number 1 acknowledges the breakout, confirms visual contact, or establishes altitude separation; if Number 1 directs the breakout, Number 1 is responsible for safe separation and deconfliction until acknowledgement, visual contact or altitude separation.",
+        "An A/C that has left formation may not rejoin until directed by Number 1."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.15",
+      "title": "LOST SIGHT PROCEDURES",
+      "pages_pdf": [209],
+      "item_mapping": ["formation-12", "formation-33", "formation-34", "vfr_navigation-21"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "When one A/C loses sight of another (usually Number 2 losing sight of Number 1), the formation achieves at least vertical separation, then completes a rejoin when visual contact is regained. Number 2 notifies Number 1 and states current altitude. If there is no timely acknowledgement of the blind call, Number 2 manoeuvres away from the last known position of Number 1 and alters altitude.",
+      "parameters": [
+        {"name": "blind call content", "value": "call sign, blind, altitude (plus heading/turn if appropriate)", "verbatim": "Mistras A2 is blind, 17.000 feet, right turn through heading 130"},
+        {"name": "altitude separation when both blind", "value": "minimum 1.000 feet", "verbatim": "If both A/C have lost sight of each other, Number 1 must immediately direct a minimum of 1.000 feet altitude separation."},
+        {"name": "rejoin limit when Number 1 is blind", "value": "no closer than route position until Number 1 calls visual", "verbatim": "Number 2 does not rejoin closer than a route position until Number 1 calls \"visual.\""}
+      ],
+      "procedure_steps": [
+        "Number 2 notifies Number 1 and states current altitude.",
+        "If there is no timely acknowledgement of the blind call, manoeuvre away from Number 1's last known position and alter altitude.",
+        "The formation member with visual contact transmits a relative position to the blind A/C (for example, \"Mistras A1 is visual, right, 2 o'clock, high\").",
+        "If both A/C have lost sight, Number 1 immediately directs a minimum of 1.000 feet altitude separation and takes positive action to ensure flight path deconfliction until visual contact is regained."
+      ],
+      "common_errors": [
+        "Treating a momentary sun-blind condition as anything other than an actual lost-sight case - \"A sun-blind condition is an actual lost-sight case; apply proper procedures immediately.\""
+      ],
+      "corrections": [
+        "If Number 2 is blind and Number 1 has Number 2 in sight and the situation requires immediate A/C separation, Number 1 manoeuvres to ensure separation between the two A/C.",
+        "In some cases, losing sight of the other A/C does not require a breakout or lost wingman procedure because sufficient spacing already exists."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.16",
+      "title": "LEAD CHANGES",
+      "pages_pdf": [210],
+      "item_mapping": ["formation-21", "formation-32", "formation-34"],
+      "category_hint": ["formation"],
+      "technique_summary": "Lead changes result in a clear transfer of specific responsibilities from one flight member to another and must be clearly understood by the entire formation. If in close (fingertip) formation, Number 1 directs Number 2 to route and calls or signals for the lead change; Number 2 assumes route position near line abreast. If already in route or greater spacing, Number 1 may use the radio. Number 2 acknowledges and becomes the new Number 1 regardless of the method of transfer.",
+      "parameters": [
+        {"name": "position required to take the lead", "value": "on or forward of the 3/9 line", "verbatim": "It is necessary for Number 2 to be on or forward of the 3/9 line to take the lead."}
+      ],
+      "procedure_steps": [
+        "Number 1 directs Number 2 to route position and calls or signals for the lead change.",
+        "In wings level flight, Number 2 assumes the line abreast route position.",
+        "If Number 1 uses a radio call, Number 2 acknowledges the call and becomes the new Number 1; if Number 1 uses a visual signal, Number 2 acknowledges with a head nod and becomes the new Number 1.",
+        "The new \"Number 1\" should establish a power setting to aid the new \"Number 2\" in moving to the proper position.",
+        "The call signs do not change."
+      ],
+      "common_errors": [
+        "Taking the lead while aft of the 3/9 line.",
+        "Slow lead changes with visual signals, extending the time without a leader actively clearing for the formation.",
+        "Considering the lead change complete before Number 2 acknowledges it."
+      ],
+      "corrections": [
+        "Lead changes accomplished with visual signals should be expeditious to minimize the time without a leader actively clearing for the formation.",
+        "If limited visibility is an issue, use the radio to execute the lead change."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.17",
+      "title": "TERMINOLOGY - HCA, ASPECT ANGLE, PURSUIT, LOS, TURN CIRCLE",
+      "pages_pdf": [210, 211, 212, 213, 214, 215, 216, 217, 218],
+      "item_mapping": ["formation-23", "formation-37", "vfr_navigation-25"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "Section 9B defines the common formation language: aggressiveness, stabilized, Heading Crossing Angle (HCA, synonymous with angle off), Aspect Angle (AA, measured from the tail of one A/C to the position of another, independent of heading and expressed in multiples of 10), lift vector, velocity vector, Line of Sight (LOS) and LOS rate, Plane of Motion (POM), lead / pure / lag pursuit pictures and curves, the A/C 3/9 line, turn circle, turn rate, turning room and safe airspace. On a lead pursuit curve aspect increases, LOS is aft and HCA decreases; on a pure pursuit curve aspect equals HCA and there is zero LOS change; on a lag pursuit curve aspect decreases, HCA increases and closure decreases and becomes negative.",
+      "parameters": [
+        {"name": "aspect angle expression", "value": "degrees off the tail, multiples of 10", "verbatim": "Aspect is expressed in degrees off the tail of the reference A/C, commonly expressed in multiples of 10."},
+        {"name": "key training aspect angles", "value": "30 and 45 degrees", "verbatim": "Two important aspect angles used extensively in T-6 training are [30] and 45."},
+        {"name": "3/9 line aspect equivalence", "value": "90 degrees aspect (9 aspect)", "verbatim": "This line equates to a 90 aspect angle (9 aspect)."},
+        {"name": "T-6 turn circle radius", "value": "approximately 8.000 feet at 10.000 feet MSL, 30 degrees bank, 180 KIAS", "verbatim": "At about 10.000 feet MSL, at 30 bank, and 180 KIAS (for example, a normal rejoin), the radius of the T-6 turn circle is approximately 8.000 feet."},
+        {"name": "T-6 turn rate", "value": "approximately 3 degrees per second at 10.000 feet MSL, 30 degrees bank, 180 KIAS", "verbatim": "At about 10.000 feet MSL, at 30 bank, 180 KIAS (for example, a normal rejoin), the T-6 turn rate is approximately 3 per second."}
+      ],
+      "procedure_steps": [
+        "Control the position of the lift vector by using ailerons to set the wing position; control its magnitude by adjusting back stick pressure to vary G-load. In the T-6, use the CFS chord as a reference to indicate where the lift vector is pointed.",
+        "Assess LOS rate visually as forward-LOS (other A/C moving forward on canopy towards the nose) or aft-LOS (moving aft towards the tail).",
+        "Recognize the pursuit curve summary: Lead - HCA down, closure up, angle off down; Pure - closure up only; Lag - HCA up, closure down, angle off down (Table 9.1)."
+      ],
+      "common_errors": [
+        "Number 2 moving forward of Number 1's 3/9 line during manoeuvres - \"Number 2 should normally remain aft of Number 1's 3/9 line during manoeuvres.\"",
+        "Confusing aspect angle with a clock position - \"Aspect angle is not a clock position.\"",
+        "Confusing aggressiveness with speed of flight control movement or reckless abandon.",
+        "Interpreting \"stabilize\" as \"stop\" - \"Stabilize does not mean stop; it means under control.\""
+      ],
+      "corrections": [
+        "Number 2 must stabilize in route position before continuing to close (fingertip) formation during a rejoin.",
+        "In the T-6, turning room is mostly used aft of the 3/9 line."
+      ],
+      "notes": "Figure 9.1 (HCA/AA) contains a broken cross-reference in the source PDF (\"Sfalma! Lanthasmeni syndesi\") where the 30 degrees value appears; the 30 and 45 degree pair is confirmed by Figure 9.3 (\"30 and 45 AA\")."
+    },
+    {
+      "section": "9.17.21-9.17.23",
+      "title": "REPOSITIONS - HIGH YO-YO (LAG), QUARTER PLANE, LOW YO-YO (LEAD)",
+      "pages_pdf": [219, 220],
+      "item_mapping": ["formation-23", "formation-11"],
+      "category_hint": ["formation"],
+      "technique_summary": "A high yo-yo (lag reposition) is a reposition of Number 2's A/C using various combinations of pursuit and a move out of plane above Number 1's POM to control closure and aspect and prevent a potential 3/9 line overshoot; it creates turning room by using the vertical POM. A quarter plane is an aggressive, last ditch out-of-plane lag manoeuvre used to control closure and aspect in order to preserve the 3/9 line; in a true quarter plane Number 2 establishes a POM that is 90 degrees to Number 1's POM. A low yo-yo (lead reposition) uses combinations of pursuit and a move out of plane below Number 1's POM to increase closure and aspect angle.",
+      "parameters": [
+        {"name": "quarter plane POM relationship", "value": "90 degrees to Number 1's POM", "verbatim": "In a true quarter plane, Number 2 establishes a POM that is 90 to Number 1's POM."}
+      ],
+      "procedure_steps": [
+        "High yo-yo: move out of plane above Number 1's POM with appropriate pursuit to control closure and aspect and create turning room in the vertical.",
+        "Quarter plane: establish a POM 90 degrees to Number 1's POM to control closure and aspect and preserve the 3/9 line.",
+        "Low yo-yo: move out of plane below Number 1's POM with appropriate pursuit to increase closure and aspect angle."
+      ],
+      "common_errors": [
+        "A late decision (or no decision) to execute a high yo-yo, or a failure to control closure and aspect - this is what drives the need for a quarter plane."
+      ],
+      "corrections": [
+        "Indicators that a quarter plane is needed are similar to those of a high yo-yo; however, aspect, HCA, range and closure cues are more significant and require a much more aggressive manoeuvre than a lag reposition."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.19",
+      "title": "CLOSE FORMATION (FINGERTIP)",
+      "pages_pdf": [221, 222, 223],
+      "item_mapping": ["formation-17", "formation-29", "vfr_navigation-07", "vfr_navigation-05"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "Close formation (fingertip) forms the basis of all formation flying and is the closest Number 2 will fly to Number 1, so maintaining the proper position is critical to flight path deconfliction. The contract is that Number 1 will fly a smooth A/C and Number 2 will adjust to maintain proper position. Good fingertip position is the result of recognition of deviations, anticipation of required control inputs, and application of deliberate corrections - continuous, small and controlled.",
+      "parameters": [
+        {"name": "fingertip formation line", "value": "approximately 30 degrees aft of line abreast", "verbatim": "The close (fingertip) formation line is approximately 30 aft of line abreast (LAB) and equates to approximately a 60 or 6-aspect angle (AA)."},
+        {"name": "fingertip aspect angle", "value": "approximately 60 degrees / 6-aspect", "verbatim": "equates to approximately a 60 or 6-aspect angle (AA)"},
+        {"name": "wingtip separation", "value": "approximately 10 feet", "verbatim": "The close (fingertip) position in the T-6 provides approximately 10 feet of wingtip separation."},
+        {"name": "vertical reference (FCP)", "value": "exhaust stack on top of Number 1's closest wing", "verbatim": "Number 2's primary front cockpit (FCP) reference to maintain proper vertical (up and down) position is to place the exhaust stack on top of Number 1's closest wing."},
+        {"name": "fore/aft reference", "value": "aft wingtip light on front edge of exhaust stack opening; pitot tube aligned with aft edge", "verbatim": "center Number 1's aft wingtip light on the front edge of the engine exhaust stack opening and align Number 1's pitot tube with the aft edge of the engine exhaust stack opening"},
+        {"name": "lateral reference", "value": "FCP pilot aligned with forward edge of Number 1's horizontal stabilizer", "verbatim": "Number 2's primary reference to maintain proper lateral spacing ... is when Number 2's FCP pilot is aligned with the forward edge of Number 1's horizontal stabilizer"},
+        {"name": "power correction technique", "value": "three PCL movements", "verbatim": "Power corrections usually require three PCL movements: one to start the correction, one to stop the A/C, and finally one to stabilize the A/C in the desired position."},
+        {"name": "signal to fingertip from route", "value": "shallow wing rock", "verbatim": "Number 1 executes a shallow wing rock to direct Number 2 to close (fingertip) formation from route position."}
+      ],
+      "procedure_steps": [
+        "Set the vertical position (stack) first, correct fore and aft second, then adjust the lateral spacing in or out.",
+        "Push or pull (forward/aft control stick pressure) to move the A/C vertically up or down with respect to Number 1.",
+        "Increase power to move the A/C forward and decrease power to move the A/C back.",
+        "Make small (almost imperceptible) bank angle changes towards or away from Number 1 to move the A/C laterally in or out.",
+        "Number 1 maintains a constant power setting or makes smooth power changes."
+      ],
+      "common_errors": [
+        "\"Chasing the power\" - large power changes by Number 1 forcing Number 2 to make large instead of small, precise changes.",
+        "Over correction of power by Number 2.",
+        "Attempting to correct more than one reference at a time instead of correcting one reference at a time.",
+        "Flying out of trim and uncoordinated, which increases workload and makes position harder to maintain."
+      ],
+      "corrections": [
+        "Make continuous, small, and controlled corrections to stay in position.",
+        "Keep the A/C trimmed and coordinated to decrease workload.",
+        "When a deviation is recognized, initially correct one reference at a time: (1) vertical/stack, (2) fore and aft, (3) lateral spacing.",
+        "One technique to minimize over correction of power is to change power with small movements of the wrist, not the whole arm."
+      ],
+      "notes": "Close (fingertip) formation is primarily used for weather penetration, airfield arrival, departure, and flyovers and/or aerial demonstration formations."
+    },
+    {
+      "section": "9.20",
+      "title": "ROUTE FORMATION",
+      "pages_pdf": [224, 225],
+      "item_mapping": ["formation-18", "formation-29", "formation-33", "vfr_navigation-05"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "Route is a wider extension of close formation spacing flown to enhance clearing and visual lookout, increase flight manoeuvrability, help complete in-flight checks, radio changes and other cockpit tasks, and to allow Number 2 to fly more relaxed. Number 1 orders route with a radio call or visual signal and should restrict manoeuvring to moderate turns and pitch changes.",
+      "parameters": [
+        {"name": "route spacing", "value": "2-ship widths to approximately 500 feet", "verbatim": "Route spacing is 2-ship widths and no further than approximately 500 feet."},
+        {"name": "route fore/aft limits", "value": "no further forward than line abreast, no further aft than the extended fingertip reference line", "verbatim": "Route is flown no further forward than line abreast and no further aft than the extended close (fingertip) formation reference line."},
+        {"name": "maximum bank in route", "value": "approximately 60 degrees", "verbatim": "Maximum bank angle when flying in route position is approximately 60."},
+        {"name": "route line abreast tolerance", "value": "between the extended 3/9 line and 10 degrees aft of LAB", "verbatim": "When LAB, strive to remain between the extended 3/9 line and 10 aft of LAB (Number 1 is off the shoulder or the wing tip of Number 2)."},
+        {"name": "route spacing for cockpit tasks and rejoins", "value": "two to four ship widths", "verbatim": "For radio frequency changes, inflight checks and lead changes, Number 2 flies route at two to four ship widths spacing unless briefed otherwise"},
+        {"name": "level stack reference", "value": "helmet of Number 1's FCP pilot on the horizon", "verbatim": "Number 2 generally maintains a position level with Number 1 (a level stack) by keeping helmet of Number 1's FCP pilot on the horizon."},
+        {"name": "500-foot visual cue", "value": "A/C appears twice the size of the anti-collision strobe flash guard", "verbatim": "At 500 feet, the other A/C will appear to be twice the size of the anti-collision strobe flash guard on the wingtip of your own A/C."},
+        {"name": "range where fingertip references fade", "value": "between 300-500 feet", "verbatim": "Between 300- 500 feet, normal close (fingertip) references begin to fade."}
+      ],
+      "procedure_steps": [
+        "Number 2 stabilizes in route before diverting attention to change radio channels, accomplish in-flight checks, or execute other cockpit tasks.",
+        "Number 2 automatically moves to route position for radio channel changes unless weather conditions are a factor.",
+        "During rejoins, Number 2 stabilizes in route spacing at two to four ship widths before assuming close (fingertip) position.",
+        "Inside a turn, Number 2 may need to manoeuvre slightly behind the fingertip line to maintain spacing and keep Number 1 in sight, manoeuvring below Number 1's POM only as necessary to keep Number 1 in sight just above the canopy rail.",
+        "On the outside of a turn, Number 2 maintains the same vertical references used in echelon turns.",
+        "Number 1 executes a shallow wing rock to direct Number 2 to move closer in route position; a wing rock with no other signal directs Number 2 to close (fingertip) position."
+      ],
+      "common_errors": [
+        "Not striving for a specific position: \"Although the formal definition of the route position has fairly wide tolerances, Number 2 should strive to maintain a specific position when in route.\"",
+        "Crossing to the opposite side without a cross under signal from Number 1 - \"Number 2 will not cross to the opposite side unless specifically directed to do so by a cross under signal from Number 1.\"",
+        "Number 1 manoeuvring beyond moderate turns and pitch changes while the formation is in route."
+      ],
+      "corrections": [
+        "Visualize two A/C between Number 1 and Number 2 to approximate the inner limit of route.",
+        "Normally, route LAB is flown out towards the 500-foot limit to enhance formation visual clearing and manoeuvrability."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.21",
+      "title": "CROSSUNDER",
+      "pages_pdf": [226],
+      "item_mapping": ["formation-20", "formation-32"],
+      "category_hint": ["formation"],
+      "technique_summary": "A crossunder repositions Number 2 from one side of the formation to the other and should be accomplished with the formation in close (fingertip) or route formation. Number 2 maintains nose-tail separation while crossing under. Number 1 directs a cross under with a radio call or a visual signal - a rapid, shallow wing dip in the desired direction, sized proportionally to Number 2's spacing.",
+      "parameters": [
+        {"name": "crossunder visual signal", "value": "rapid, shallow wing dip in the desired direction", "verbatim": "The visual signal is a rapid, shallow wing dip in the desired direction of the cross under."},
+        {"name": "nose-tail reference during crossunder", "value": "canopy bow superimposed on trailing edge of Number 1's elevator", "verbatim": "Number 2's canopy bow should appear to be superimposed on the trailing edge of Number 1's elevator."}
+      ],
+      "procedure_steps": [
+        "Reduce power as required to establish a small forward LOS rate.",
+        "Move back and down below Number 1's POM to establish nose-tail clearance, then add power slightly to stop rearward movement.",
+        "Bank slightly toward the new side to change A/C heading a few degrees (create small HCA).",
+        "Roll wings-level and fly across and behind Number 1, adding power as required to maintain proper nose-tail separation (typically a slight power increase is required).",
+        "Re-establish Number 1's heading when in the desired position on the new side.",
+        "Add power to move forward and up into position, then reduce power to stabilize on the opposite side."
+      ],
+      "common_errors": [
+        "Excessive rearward movement in a climb - \"If in a climb, keep the power reduction small to avoid excessive rearward movement.\"",
+        "Failing to anticipate power changes, or making large pitch and bank changes instead of small ones.",
+        "Loss of nose-tail separation; flying into Number 1's wingtip vortices when too close during cross under."
+      ],
+      "corrections": [
+        "Anticipate each power change and make small changes in pitch and bank.",
+        "As proficiency increases, it is possible to \"round the corners\" to aid in expediting a cross under."
+      ],
+      "notes": "Crossunders may be completed during turns or while accomplishing light to moderate manoeuvring."
+    },
+    {
+      "section": "9.22",
+      "title": "ECHELON TURN",
+      "pages_pdf": [227],
+      "item_mapping": ["formation-19", "formation-29", "vfr_navigation-05"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "An echelon turn is a turn in which Number 2 remains in the same POM as Number 1, rather than maintaining close (fingertip) references. Echelon turns may be flown from close (fingertip) or route position. All turns while in route position are echelon turns (echelon signal not required); turns while in close (fingertip) position are flown as echelon turns only when signaled.",
+      "parameters": [
+        {"name": "maximum angle of bank", "value": "60 degrees maximum", "verbatim": "Number 1 should roll smoothly into bank (60 maximum angle of bank) and maintain appropriate back pressure."},
+        {"name": "level turn vertical reference", "value": "horizon bisects Number 1's fuselage", "verbatim": "In a level turn, the horizon bisects Number 1's fuselage."},
+        {"name": "FCP technique reference", "value": "one half of the yellow rescue door visible behind aft edge of Number 1's wing", "verbatim": "In the FCP, one half of the yellow rescue door should be visible (resembles a triangle) behind the aft edge of Number 1's wing."}
+      ],
+      "procedure_steps": [
+        "Number 1 rolls smoothly into bank (60 degrees maximum) and maintains appropriate back pressure; roll rate should approximate that used during instrument conditions.",
+        "Number 2 matches Number 1's roll rate and uses back pressure to maintain spacing.",
+        "If out of position, use bank to correct vertical (keeping Number 1's fuselage bisected by the horizon), power to correct fore and aft position, and back pressure to maintain spacing.",
+        "During rollout, Number 1 uses a smooth roll rate and gradually reduces back pressure; Number 2 matches Number 1's roll rate to maintain position."
+      ],
+      "common_errors": [
+        "Number 1 varying back pressure instead of bank angle to control undesired climbs and descents - \"Slight variations in bank angle to control undesired climbs and descents are smoother and easier for Number 2 than variations in back pressure.\"",
+        "Number 2 not matching Number 1's roll rate."
+      ],
+      "corrections": [
+        "Use bank to correct vertical, power to correct fore and aft, and back pressure to maintain spacing."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.23",
+      "title": "REJOINS - GENERAL",
+      "pages_pdf": [228],
+      "item_mapping": ["formation-09", "formation-10", "formation-32"],
+      "category_hint": ["formation"],
+      "technique_summary": "Rejoins get the flight back together safely and efficiently. They are commonly practiced from pitchouts and after Number 2 has taken spacing, and are also accomplished after breakouts, practice lost wingman, instrument trail departures and lost sight situations. A reform moves Number 2 from one formation position to another. All rejoins are to close (fingertip) position unless directed otherwise by Number 1.",
+      "parameters": [
+        {"name": "rejoin signal", "value": "radio call or wing rock sized by distance", "verbatim": "Number 1 directs a rejoin and reform with a radio call or visual signal (wing rock). The size of the wing rock is based on distance between A/C."}
+      ],
+      "procedure_steps": [
+        "Number 1 initiates the rejoin with a radio call or visual signal and may use slight climbs or descents when necessary for energy management or area orientation.",
+        "Number 1 should consider using a radio call to initiate a rejoin when Number 2 is not in sight.",
+        "Number 1 monitors Number 2 closely during all rejoins."
+      ],
+      "common_errors": [],
+      "corrections": [
+        "If Number 1 perceives an unsafe situation developing at any time during the rejoin, take positive action immediately to prevent a midair collision."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.23.3.a",
+      "title": "STRAIGHT AHEAD REJOIN",
+      "pages_pdf": [228],
+      "item_mapping": ["formation-10", "formation-03", "vfr_navigation-04"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "Use straight ahead rejoins when a turn is not possible or practical; airspeed closure is used to effect the rejoin. Number 1 maintains a stable platform (level, climbing or descending), clears and monitors Number 2. Number 2 rejoins to the left side unless directed otherwise, generating closure with airspeed and establishing a position behind and slightly below Number 1 with a vector towards Number 1's low 6 o'clock.",
+      "parameters": [
+        {"name": "initial overtake", "value": "20 to 30 KIAS", "verbatim": "Increase airspeed to generate closure (initially use 20 to 30 KIAS of overtake)."},
+        {"name": "range to begin the bid", "value": "approximately 500 feet", "verbatim": "Continue to close until approximately 500 feet (when details on Number 1's A/C such as the pitot tubes can be seen). At this point, bank slightly away from Number 1 (make a bid)"},
+        {"name": "bid target position", "value": "two to four ship widths out from Number 1's wingtip", "verbatim": "towards a position two to four ship widths out from Number 1's wingtip"},
+        {"name": "arrival airspeed", "value": "same airspeed as Number 1 in route", "verbatim": "plan to arrive in the route position with the same airspeed as Number 1"}
+      ],
+      "procedure_steps": [
+        "Number 1 directs the rejoin, maintains a stable platform, clears and monitors Number 2 (clearing takes priority over monitoring).",
+        "Number 2 rejoins to the left side unless directed otherwise and increases airspeed for 20-30 KIAS of overtake.",
+        "Establish a position behind and slightly below Number 1 with a vector towards Number 1's low 6 o'clock; place Number 1 slightly above the horizon to stay clear of wake turbulence.",
+        "At approximately 500 feet, bank slightly away from Number 1 (make a bid) towards two to four ship widths out from Number 1's wingtip; the velocity vector should angle away from Number 1.",
+        "Decrease overtake with a power reduction and plan to arrive in route with the same airspeed as Number 1.",
+        "After stabilized in route, move into close (fingertip)."
+      ],
+      "common_errors": [
+        "Failing to recognize excessive overtake.",
+        "Not maintaining lateral or vertical separation until closure rates are under control and stabilized in route.",
+        "Not anticipating that Number 2 will be difficult to see until the final stages of a straight ahead rejoin, due to the location of Number 2 behind and below Number 1."
+      ],
+      "corrections": [
+        "As a technique, reduce the power such that the PCL moves aft to match Number 1's aft LOS in the windscreen.",
+        "If a turn is required during the rejoin after a straight ahead rejoin is initiated, Number 1 informs Number 2 and clears; do not turn into Number 2 if it would exceed Number 2's capabilities or prevent a safe rejoin.",
+        "If Number 1 turns during a straight-ahead rejoin, transition to a turning rejoin and be alert for possible overshoot situations."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.23.3.b",
+      "title": "TURNING REJOIN",
+      "pages_pdf": [229, 230],
+      "item_mapping": ["formation-09", "formation-03", "vfr_navigation-04"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "A turning rejoin uses a combination of airspeed and angular closure. Number 1 maintains pre-briefed airspeed and bank angle, delays after a pitchout long enough for Number 2 to roll out in trail, and monitors Number 2's aspect angle and closure. Number 2 begins the turn in the same direction when Number 1 starts to turn, establishes vertical separation and closure, and manages aspect with minor adjustments to bank angle, using the vertical stabilizer position relative to the outside wing as the aspect reference.",
+      "parameters": [
+        {"name": "initial closure", "value": "approximately 20-30 KIAS", "verbatim": "Begin with approximately 20-30 KIAS of closure and a moderate lead pursuit picture (pull nose in front of Number 1) to increase aspect."},
+        {"name": "vertical separation reference", "value": "Number 1 within approximately 2-4 ship widths of the horizon", "verbatim": "Simultaneously establish desired vertical separation (place Number 1 within approximately 2-4 ship widths of the horizon) and closure."},
+        {"name": "rejoin aspect reference", "value": "vertical stabilizer bisects the outside wing (3 aspect / 30 degrees AA)", "verbatim": "When the vertical stabilizer approximately bisects the outside wing (3 aspect/30 AA), reduce bank angle to maintain this relative reference line."},
+        {"name": "critical stage of rejoin", "value": "approximately 500 feet from Number 1", "verbatim": "The critical stage of the rejoin begins approximately 500 feet from Number 1."},
+        {"name": "range where fingertip references appear", "value": "inside 300-500 feet", "verbatim": "Inside 300-500 feet, the normal close (fingertip) references will become visible."},
+        {"name": "speed brake technique", "value": "after power below 20 % (light in the gear handle) but before idle", "verbatim": "to control closure with power, use the speed brake after the power has been reduced below 20 % (light in the gear handle) but before idle power is selected"},
+        {"name": "rejoin airspeed", "value": "180 KIAS unless otherwise briefed", "verbatim": "Unless otherwise briefed, rejoin airspeed in the T-6 is 180 KIAS."},
+        {"name": "turning rejoin bank angle", "value": "30 degrees", "verbatim": "During turning rejoins bank angle is 30."},
+        {"name": "airspeed callout threshold", "value": "more than 10 KIAS from briefed/expected", "verbatim": "Number 1 should call out actual airspeed if airspeed differs more than 10 KIAS from briefed or expected rejoin airspeed."},
+        {"name": "closure to rejoin to the outside (number 3)", "value": "about 10-15 KIAS positive closure", "verbatim": "Maintain enough positive closure (about 10-15 KIAS) to facilitate this move to the outside."}
+      ],
+      "procedure_steps": [
+        "Number 1: direct the rejoin (first wing dip in the direction of the rejoin if using a wing rock), maintain pre-briefed airspeed and bank angle, establish the turn in level flight, monitor Number 2's aspect angle and closure and be ready to take evasive action.",
+        "Number 2: when Number 1 starts to turn, begin a turn in the same direction to intercept the desired aspect; simultaneously establish vertical separation and closure. Number 1 must be visible to pilots in both cockpits.",
+        "Begin with approximately 20-30 KIAS of closure and a moderate lead pursuit picture to increase aspect.",
+        "When the vertical stabilizer approximately bisects the outside wing (3 aspect / 30 degrees AA), reduce bank angle to maintain this relative reference line; when stable, there is no LOS.",
+        "Inside 300-500 feet, move forward slightly onto an extension of the close (fingertip) reference line and begin decreasing closure with a power reduction and speed brake as necessary.",
+        "Plan to stabilize in route with slight positive closure but approximately co-airspeed with Number 1, then move into close (fingertip) at a controlled rate.",
+        "For a rejoin to the outside (number 3 position): fly the initial portion exactly like a rejoin to the inside, then cross below and behind Number 1 with at least nose-tail separation to get outside Number 1's turn circle, stabilize in route echelon on the outside, then move into close (fingertip)."
+      ],
+      "common_errors": [
+        "Failure to recognize excessive overtake during rejoins - compare actual airspeed with the directed airspeed.",
+        "Failure to maintain lateral or vertical separation until closure rates are under control and stabilized in route.",
+        "Not monitoring bank and overtake closely during the last few hundred feet, so aspect and closure are not under control.",
+        "Rejoining to the outside of the turn (number 3 position) without it being pre-briefed or directed."
+      ],
+      "corrections": [
+        "Use varying degrees of bank angle to manage aspect during a rejoin: shallow the bank angle to decrease aspect, increase the bank angle to increase aspect.",
+        "If the vertical stabilizer appears to move toward the wingtip, aspect angle is increasing; if it moves toward the wing root, aspect angle is decreasing.",
+        "Use the speed brake after power is below 20 % but before idle, to reduce spool-up time and avoid the need for 0 % torque."
+      ],
+      "notes": "Aspect and airspeed may be varied to account for different levels of proficiency and different situations. During two-ship operations, unless pre-briefed or directed otherwise, Number 2 normally rejoins to the inside of the turn."
+    },
+    {
+      "section": "9.24",
+      "title": "OVERSHOOTS",
+      "pages_pdf": [230, 231],
+      "item_mapping": ["formation-11", "formation-09", "formation-10", "formation-12"],
+      "category_hint": ["formation"],
+      "technique_summary": "A properly flown overshoot safely dissipates excessive closure and/or aspect during a rejoin. Number 2 must not delay an overshoot with an unusually aggressive attempt to save a rejoin, and must keep Number 1 in sight at all times during any overshoot. A straight-ahead rejoin with excessive closure results in a pure airspeed overshoot; a turning rejoin with excessive closure airspeed results in a combination airspeed-aspect overshoot.",
+      "parameters": [
+        {"name": "turning rejoin overshoot plane of motion", "value": "about 50 feet below Number 1", "verbatim": "results in a combination of airspeed-aspect overshoot in a plane of motion about 50 feet below Number 1"},
+        {"name": "minimum spacing crossing Number 1's 6 o'clock", "value": "2 ship lengths", "verbatim": "Make an early overshoot decision and cross Number 1's 6 o'clock with a minimum spacing of 2 ship lengths."},
+        {"name": "maximum height during turning overshoot", "value": "no higher than route echelon position", "verbatim": "Fly no higher than route echelon position."}
+      ],
+      "procedure_steps": [
+        "Straight-ahead rejoin overshoot: maintain lateral spacing on a parallel or divergent vector to Number 1; select idle and speed brake (if required) as soon as excess overtake is recognized.",
+        "After beginning to slide back into formation, retract the speed brake and increase power prior to achieving matching airspeed (no LOS), to prevent excessive aft movement.",
+        "Turning rejoin overshoot: make an early overshoot decision and cross Number 1's 6 o'clock with a minimum of 2 ship lengths; select idle and speed brake as required.",
+        "When outside the turn, use bank and back stick pressure as necessary to stabilize in a route/echelon position, no higher than route echelon.",
+        "When under control, return to the inside of Number 1's turn, reestablish an appropriate rejoin line, and complete the rejoin."
+      ],
+      "common_errors": [
+        "Turning into Number 1, \"a common error while looking over the shoulder at Number 1's A/C\" - this can cause a vector into Number 1's flight path and create a dangerous situation requiring a breakout.",
+        "Delaying the overshoot with an unusually aggressive attempt to save a rejoin.",
+        "Excessive back pressure during the overshoot, which causes closure.",
+        "Breaking out unnecessarily - a small, controllable 3/9 line overshoot is easily managed and there is no need to break out if flight paths are not convergent and visual contact can be maintained.",
+        "Flying higher than route echelon position while outside the turn."
+      ],
+      "corrections": [
+        "If unable to maintain nose-tail separation, break out.",
+        "A matching airspeed overshoot due to excess aspect may not require manoeuvring outside of Number 1's turn circle; there may be sufficient space in Number 1's low 6 o'clock to align fuselages and stop the overshoot.",
+        "During a turning rejoin overshoot, the amount of excess overtake determines the distance Number 2 must fly outside Number 1's turn circle to arrest the excess energy."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.25",
+      "title": "FIGHTING WING",
+      "pages_pdf": [231, 232],
+      "item_mapping": ["formation-18", "formation-23", "formation-33"],
+      "category_hint": ["formation"],
+      "technique_summary": "Fighting wing enhances formation flexibility and maximizes clearing. It is a fluid position defined by a 30 to 45 degree cone, 500 to 1.000 feet aft of Number 1. Number 2 manoeuvres into and maintains the cone with a combination of pursuit selection and lift vector placement, requiring constant analysis of AA and closure rate.",
+      "parameters": [
+        {"name": "fighting wing cone", "value": "30 to 45 degree cone, 500 to 1.000 feet aft of Number 1", "verbatim": "Fighting wing is a fluid position defined by a 30 to 45 cone, 500 to 1.000 feet aft of Number 1"},
+        {"name": "vertical tolerance", "value": "plus or minus 100 feet vertical of Number 1", "verbatim": "it may be possible for Number 2 to be outside standard formation parameters (for example, plus or minus 100 feet vertical of Number 1)"},
+        {"name": "aft limit visual cue", "value": "Number 1's vertical stabilizer bisects the opposite wing", "verbatim": "the aft limit of the cone is the same as for the basic rejoin; Number 1's vertical stabilizer bisects the opposite wing"},
+        {"name": "forward edge visual cue", "value": "vertical stabilizer superimposed over the opposite wingtip or inside wingtip strobe light just forward of the spinner", "verbatim": "The forward edge of the cone is approximately when Number 1's vertical stabilizer is superimposed over the opposite wingtip or inside wingtip strobe light just forward of the spinner."}
+      ],
+      "procedure_steps": [
+        "Number 1 directs the wingman to fighting wing with a radio call (\"Mistras A2, go fighting wing\"); Number 2 acknowledges and manoeuvres into the cone.",
+        "An initial turn away from Number 1 (lag pursuit) increases lateral spacing and causes a slight movement aft of Number 1 (forward LOS).",
+        "The rate of aft movement can be increased with the use of power, speed brake, or a vertical move out-of-plane.",
+        "Reform from fighting wing to the same side that Number 2 was on prior to being sent to fighting wing, unless briefed or directed otherwise."
+      ],
+      "common_errors": [
+        "Stagnating in Number 1's high or low 6-o'clock while manoeuvring within the cone, where it is difficult for Number 1 to monitor Number 2.",
+        "Calling \"in\" when not performing the extended trail exercise - \"Do not call 'in' unless performing the extended trail exercise.\"",
+        "Failing to constantly analyze AA and closure rate, so the proper amount of lead and lag pursuit is not applied to stay within the cone."
+      ],
+      "corrections": [
+        "Apply the proper amount of lead and lag pursuit based on constant analysis of AA and closure rate to stay within the cone."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.27",
+      "title": "GROUND OPERATIONS - START, BEFORE TAXI, TAXI, BEFORE TAKEOFF, AFTER LANDING",
+      "pages_pdf": [232, 233],
+      "item_mapping": ["formation-15", "formation-32", "vfr_navigation-02"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "Formations normally start engines on a visual pilot-to-pilot signal; if A/C are parked beyond visual range, the flight lead sets a start time. Number 2 signals readiness to taxi with a thumb's-up, Number 1 normally checks the flight in on VHF then UHF and calls for taxi clearance. The overspeed governor and before takeoff checks are completed automatically at the normal runway holding points, same as single ship, and Number 2 gives a thumb's-up when complete.",
+      "parameters": [
+        {"name": "check-in radio sequence", "value": "VHF, then UHF", "verbatim": "Number 1 normally checks the flight in on VHF, then UHF."},
+        {"name": "delay request format", "value": "call sign 2 needs X minutes", "verbatim": "If more time is needed, state, \"(call sign) 2 needs (X) minutes\" on the post-start check-in."}
+      ],
+      "procedure_steps": [
+        "Start engines on a visual pilot-to-pilot signal; if beyond visual range, the flight lead sets a start time.",
+        "Number 2 informs Number 1 of any difficulties that may delay start or taxi.",
+        "When ready to taxi, Number 2 gives a thumb's-up signal to Number 1; if not in visual contact, Number 2 awaits check-in.",
+        "Number 1 checks the flight in on VHF then UHF, then calls for taxi clearance.",
+        "The formation A/C normally taxi together; if another A/C attempts to taxi between formation members, Number 1 should ask that A/C to hold.",
+        "After the before takeoff checks at the runway holding point, Number 2 gives a thumb's-up signal to Number 1.",
+        "After landing, the formation normally clears the runway, checks in on ground frequency, then taxis back as a formation; if the flight was split, members normally taxi back as a single ship."
+      ],
+      "common_errors": [
+        "Not asking for clarification when Number 2 does not understand the taxi clearance."
+      ],
+      "corrections": [
+        "If Number 2 does not understand the clearance, ask for clarification."
+      ],
+      "notes": "Consult local unit standards for appropriate engine start procedures."
+    },
+    {
+      "section": "9.28",
+      "title": "FORMATION DEPARTURES - GENERAL",
+      "pages_pdf": [233],
+      "item_mapping": ["formation-03", "formation-07", "formation-08", "vfr_navigation-04"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "Environmental or training factors determine the takeoff method and Number 1 will ensure all members of the formation understand the takeoff option being executed. There are two options for getting a T-6 formation airborne: Option 1, formation takeoff (commonly referred to as a \"wing takeoff\"), which is the most common, and Option 2, interval takeoff, which is often driven by wind requirements.",
+      "parameters": [],
+      "procedure_steps": [
+        "Number 1 ensures all members of the formation understand the takeoff option being executed.",
+        "Number 1 considers wind, weather, and direction of the turn out of traffic to determine the proper side to place Number 2."
+      ],
+      "common_errors": [],
+      "corrections": [],
+      "notes": "See T-6A S.O.P's for formation takeoff restrictions."
+    },
+    {
+      "section": "9.28.3.a",
+      "title": "DEPARTURE OPTION 1 - FORMATION (WING) TAKEOFF",
+      "pages_pdf": [233, 234, 235],
+      "item_mapping": ["formation-07", "formation-32", "vfr_navigation-03"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "Number 1 takes the center of one half of the runway and taxis far enough forward to allow Number 2 to manoeuvre into position; Number 2 lines up on the close (fingertip) formation line. Both A/C run up to approximately 30 % torque, then release brakes together with Number 1 targeting 85 to 95 % torque to give Number 2 a slight power advantage. Number 2 uses power as required to maintain position, matches Number 1's pitch attitude and stacks level until gear and flaps are raised.",
+      "parameters": [
+        {"name": "crosswind threshold for upwind placement", "value": "exceeds 5 KIAS", "verbatim": "Place Number 2 on the upwind side for takeoff when the crosswind component exceeds 5 KIAS to keep Number 2 from entering Number 1's wake turbulence in the event Number 2 falls behind."},
+        {"name": "lateral wingtip clearance on lineup", "value": "minimum of 20 feet", "verbatim": "Number 2 lines up on the close (fingertip) formation line with a minimum of 20 feet of lateral wingtip clearance."},
+        {"name": "run-up torque", "value": "approximately 30 % torque", "verbatim": "Both A/C smoothly advance PCL to approximately 30 % torque and check the engine."},
+        {"name": "Number 1 takeoff torque", "value": "85 to 95 % torque", "verbatim": "Both A/C then smoothly add power, with Number 1 targeting 85 to 95 % torque (unless MAX torque is a factor) to give Number 2 a slight power advantage."},
+        {"name": "minimum airspeed to raise gear and flaps", "value": "110 KIAS", "verbatim": "When the formation is safely airborne with a minimum of 110 KIAS, Number 1 retracts both gear and flaps."},
+        {"name": "climb power after takeoff", "value": "maximum of 95 % power", "verbatim": "Number 1 sets a maximum of 95% power and maintains takeoff attitude, as airspeed increases."},
+        {"name": "power push technique (Number 2)", "value": "PCL to MAX then back one lever width, approximately 85 %", "verbatim": "A \"power push\" technique during a formation takeoff is for Number 2 to push the PCL smoothly to MAX and then pull it back one lever width to approximately 85%."},
+        {"name": "takeoff roll stack", "value": "stack level - anti-collision light in the exhaust", "verbatim": "Stack level (anti-collision light in the exhaust) until the gear and flaps are raised."}
+      ],
+      "procedure_steps": [
+        "Place Number 2 on the upwind side when the crosswind component exceeds 5 KIAS.",
+        "Number 1 takes the center of one half of the runway and taxis a sufficient distance to allow Number 2 room to manoeuvre into position.",
+        "Number 2 lines up on the close (fingertip) formation line with a minimum of 20 feet of lateral wingtip clearance and gives a head nod to signify ready for run-up.",
+        "Number 1 gives the run-up signal and looks at Number 2; Number 2 acknowledges with a head nod.",
+        "Both A/C smoothly advance PCL to approximately 30 % torque and check the engine.",
+        "Number 1 looks at Number 2; when ready for takeoff, Number 2 gives a head nod.",
+        "Number 1 reports \"ready for departure\" and, when cleared, signals for brake release with a downward head nod; both A/C smoothly add power with Number 1 targeting 85 to 95 % torque.",
+        "Number 2 uses power as required to maintain position, uses peripheral vision to detect lateral movement on the runway and matches Number 1's pitch attitude.",
+        "With a minimum of 110 KIAS, Number 1 retracts gear and flaps; Number 2 raises gear and flaps when climbing and Number 1's gear begins to retract.",
+        "Number 2 performs the after takeoff check and assumes fingertip position with close formation spacing.",
+        "Number 1 sets a maximum of 95 % power, maintains takeoff attitude and does not initiate the first turn out of traffic until a safe airspeed and altitude."
+      ],
+      "common_errors": [
+        "Fixating inside the cockpit during the run-up - \"Do not fixate inside the cockpit.\"",
+        "Allowing the A/C to creep forward during run-up - \"Ensure the A/C does not creep forward.\"",
+        "Number 2 raising the gear before Number 1 - \"Number 2 never raises the gear before Number 1.\"",
+        "Not using peripheral vision to detect lateral movement on the runway.",
+        "Initiating the first turn out of traffic before a safe airspeed and altitude."
+      ],
+      "corrections": [
+        "If unable to maintain fore or aft position with normal power settings, Number 2 selects MAX power and performs an individual takeoff; Number 1 directs a rejoin.",
+        "If overrunning Number 1, Number 2 may delay retracting the gear."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.28.3.b",
+      "title": "DEPARTURE OPTION 2 - INTERVAL TAKEOFF",
+      "pages_pdf": [234],
+      "item_mapping": ["formation-01", "formation-08", "formation-03", "vfr_navigation-03"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "The interval takeoff is the same as the formation takeoff until engine run-up. There is no visual signal for interval takeoff: Number 1 releases brakes and performs a MAX power takeoff after Number 2's head nod confirms the run-up check is complete, and Number 2 waits 10 seconds before beginning the takeoff roll in MAX power. The rejoin may be turning, straight-ahead, or a combination of both.",
+      "parameters": [
+        {"name": "interval spacing on the roll", "value": "10 seconds", "verbatim": "Number 2 waits 10 seconds and begins the takeoff roll in MAX power."},
+        {"name": "takeoff power", "value": "MAX power (both A/C)", "verbatim": "Number 1 releases brakes and performs a MAX power takeoff ... Number 2 waits 10 seconds and begins the takeoff roll in MAX power."},
+        {"name": "Number 1 airborne power and airspeed", "value": "85 % power, 160 KIAS minimum", "verbatim": "When airborne at a minimum of 160 KIAS, Number 1 reduces power to 85% and maintains airspeed of 160 KIAS."}
+      ],
+      "procedure_steps": [
+        "Same as formation takeoff until engine run-up.",
+        "Number 2 gives a head nod that the run-up check of the engine is complete; there is no visual signal for interval takeoff.",
+        "Number 1 releases brakes and performs a MAX power takeoff.",
+        "Number 2 waits 10 seconds and begins the takeoff roll in MAX power.",
+        "When airborne at a minimum of 160 KIAS, Number 1 reduces power to 85 % and maintains 160 KIAS.",
+        "Execute the rejoin as a turning rejoin, straight-ahead rejoin, or a combination of both as the departure route dictates."
+      ],
+      "common_errors": [
+        "Number 2 not being alert for transitions from one type of rejoin to another as Number 1 follows the departure route."
+      ],
+      "corrections": [
+        "The flight lead will establish intermediate level off airspeeds in the preflight briefing."
+      ],
+      "notes": "Interval takeoff is often driven by wind requirements."
+    },
+    {
+      "section": "9.29",
+      "title": "WING WORK EXERCISE (WW EX)",
+      "pages_pdf": [235, 236, 237, 238],
+      "item_mapping": ["formation-17", "formation-29", "vfr_navigation-05", "vfr_navigation-07"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "The WW Ex develops Number 1's ability to provide a stable platform (smooth changes in pitch, bank and G-loading with consistent, predictable roll rates) while clearing, planning and monitoring, and develops Number 2's ability to maintain or constantly correct back to the proper close (fingertip) position using small, smooth, deliberate power and stick inputs. It is flown as a series of manoeuvres in a targeted airspeed range, building up to 2 to 3 Gs and approximately 90 degrees angle of bank as proficiency improves.",
+      "parameters": [
+        {"name": "G and bank build-up", "value": "up to 2 to 3 Gs and approximately 90 degrees angle of bank", "verbatim": "Eventually maneuver up to 2 to 3 Gs and approximately 90 angle of bank as proficiency improves."},
+        {"name": "complete WW Ex", "value": "minimum of two leaves, one in each direction on each side of Number 1", "verbatim": "A complete WW Ex is considered a minimum of two leaves, one in each direction (a turn towards and a turn away) on each side of Number 1."},
+        {"name": "target energy level", "value": "approximately 180-200 KIAS, middle of the area altitude block", "verbatim": "Target energy level is the middle of the area altitude block between approximately 180-200 KIAS."},
+        {"name": "power - low area", "value": "approximately 50-55 % torque (~6.000-13.000 feet MSL)", "verbatim": "use approximately 50-55% torque in a low area (~6.000-13.000 feet MSL)"},
+        {"name": "power - high area", "value": "approximately 60-65 % torque (~15.000-24.000 feet MSL)", "verbatim": "approximately 60-65 % torque in a high area (~15.000-24.000 feet MSL)"}
+      ],
+      "procedure_steps": [
+        "Number 1 sets power to maintain the desired energy level and uses a building-block approach through Levels I, II and III.",
+        "For Levels II and III, initially blend pitch with roll to the desired bank angle, hold the bank as the nose drops through the horizon, and begin the rollout as the nose approaches the desired nose-low pitch attitude, reversing direction while maintaining positive G.",
+        "Attempt to pull through the horizon in a near wings level attitude; use bank angle to aid pitch control.",
+        "For turns into Number 2, visually clear the flight path before commencing the turn.",
+        "Number 2 corrects one reference at a time: (1) vertical position or stack, (2) fore or aft to the close (fingertip) reference line, (3) lateral spacing in or out.",
+        "Turns away: Number 2 is in a lag pursuit position - increase back pressure and climb to maintain vertical position, with an increase in power to maintain airspeed and position; when Number 1 stops the roll-in, reduce power as the relative climb is complete.",
+        "Turns into: add slight forward pressure to maintain vertical position and reduce power."
+      ],
+      "common_errors": [
+        "Stair-stepping/ratcheting roll rates into or out of turns - \"Do not stair-step/ratchet roll rates into or out of turns.\"",
+        "Beginning a roll out and suddenly rolling back into the bank - \"Do not begin a roll out and suddenly roll back into the bank.\"",
+        "Number 1 staring at Number 2 instead of continually monitoring position and status - \"Do not stare at Number 2\".",
+        "Number 2 focusing or staring at any single reference - \"Avoid any tendency to focus or stare at any single reference.\"",
+        "Extremely low or high power settings by Number 1, which limit Number 2's ability to adjust for deviations.",
+        "Advancing to higher WW Ex levels too quickly - \"Avoid advancing to higher levels too quickly. Develop and master proficiency at lower levels first.\"",
+        "In pushover manoeuvres near zero or negative G, the ability to counteract movement toward Number 1 is limited and bank alone in 0-G conditions does not produce a heading change; wingtip vortices may produce a rapid roll into Number 1."
+      ],
+      "corrections": [
+        "If a turn must be continued for area orientation, stop the roll, pause momentarily to allow Number 2 to adjust, then begin the roll smoothly back into the turn.",
+        "Use the mirrors, if necessary, and communicate with the other crewmember when required to assist monitoring Number 2; be ready to take evasive action and/or direct a breakout.",
+        "As a technique, trim for a slower airspeed can help make a smooth vertical pull up.",
+        "Should a breakout become necessary, use flight controls, power and speed brake as the situation dictates; break out in the direction that most quickly ensures separation.",
+        "Consider environmental conditions such as sun angle and cloud layers, and plan formation manoeuvring to avoid them."
+      ],
+      "notes": "Table 9.2 (T-6 WW Ex Training Levels and Parameters) is embedded as a graphic on PDF page 236 and its cell values could not be extracted from the text layer; only the prose parameters above are captured. Note under Table 9.2: \"Depending from the wingman's proficiency ET Exercise can be initiated from Level II or Level III.\" A leaf of the Level 3 WW Ex is a vertical pull-up with both an apex and bottom of a lazy eight-type manoeuvre."
+    },
+    {
+      "section": "9.30",
+      "title": "PRACTICE LOST WINGMAN PROCEDURES",
+      "pages_pdf": [238],
+      "item_mapping": ["formation-36", "formation-34", "vfr_navigation-24"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "Lost wingman procedures are practiced in VMC only, to prepare for actual lost wingman situations in IMC. Number 1 directs the practice with a radio call; Number 2 acknowledges but does not begin execution - the acknowledgement simply verifies that Number 2 knows the exercise has been directed. Number 1 is primarily responsible for flight path deconfliction while Number 2 is heads down during the procedure.",
+      "parameters": [
+        {"name": "meteorological condition for practice", "value": "VMC only", "verbatim": "Lost wingman procedures are practiced in VMC (only) to prepare for actual lost wingman situations in IMC."}
+      ],
+      "procedure_steps": [
+        "Number 1 directs: \"Mistras A2, go practice lost wingman\".",
+        "Number 2 acknowledges \"2\" but does not begin execution.",
+        "When ready, Number 2 executes the appropriate lost wingman procedure and makes the appropriate radio call (\"Mistras A1 roll out, Mistras A2, lost wingman\").",
+        "Number 1 monitors Number 2 to ensure adequate separation is maintained.",
+        "Number 2 ends the exercise by conveying \"visual\" with a radio call; Number 1 then directs a rejoin or other position."
+      ],
+      "common_errors": [
+        "Beginning execution on acknowledgement instead of when ready."
+      ],
+      "corrections": [
+        "Number 1 may issue a reference heading when practicing straight and level lost wingman procedures; it is common for Number 2 to apply the procedure and then turn to that reference heading before calling visual."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.31",
+      "title": "BREAKOUT PROCEDURES (PRACTICE)",
+      "pages_pdf": [238, 239],
+      "item_mapping": ["formation-12", "formation-34"],
+      "category_hint": ["formation"],
+      "technique_summary": "Breakouts are practiced in VMC only and are normally directed by Number 1 during practice, though during an actual breakout either A/C may initiate. After the initiating call, all manoeuvring and radio calls are identical to an actual breakout. The priorities are: ensure safe separation, establish appropriate communications, and get the formation back together.",
+      "parameters": [
+        {"name": "meteorological condition for practice", "value": "VMC only", "verbatim": "Breakouts are practiced in VMC (only)."},
+        {"name": "breakout priorities", "value": "separation, communications, rejoin", "verbatim": "The priorities are: a. Ensure safe separation, b. Establish appropriate communications c. Get the formation back together."}
+      ],
+      "procedure_steps": [
+        "With Number 2 in sight, either A/C initiates with a radio call: \"Mistras A2 break out\" (Number 1 initiating) or \"Mistras A2 is breaking out\" (Number 2 initiating).",
+        "Number 2 calls \"Mistras A2 is breaking out\" and executes the appropriate breakout manoeuvre.",
+        "After separation is established, Number 1 calls \"Roll out\".",
+        "Number 2 calls \"Visual\"."
+      ],
+      "common_errors": [
+        "Number 2 obtaining excessive range during the breakout."
+      ],
+      "corrections": [
+        "If Number 2 appears to be obtaining excessive range, Number 1 may direct Number 2 to roll out with a radio call; Number 2 acknowledges, rolls out, obtains and calls \"visual\" with Number 1, and awaits further direction."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.32",
+      "title": "CLOSE TRAIL EXERCISE",
+      "pages_pdf": [239, 240],
+      "item_mapping": ["formation-22", "formation-20", "formation-29"],
+      "category_hint": ["formation"],
+      "technique_summary": "Close trail practices manoeuvring with Number 2 in a position below and behind Number 1, with Number 1 manoeuvring similarly to the wing work exercise. Close trail spacing is one to two A/C lengths (nose to tail) behind Number 1, just below Number 1's wake turbulence and prop wash. Number 2 maintains position primarily with power, anticipating power changes as Number 1 manoeuvres.",
+      "parameters": [
+        {"name": "close trail spacing", "value": "one to two A/C lengths nose to tail", "verbatim": "Close trail spacing is one to two A/C lengths (nose to tail) behind Number 1, just below Number 1's wake turbulence and prop wash."},
+        {"name": "two ship lengths reference", "value": "elevator tips line up about one-third of the way out the wings", "verbatim": "At approximately two ship lengths, the tips of Number 1's elevator line up about one-third of the way out the wings (just past the dihedral break in the wing)."},
+        {"name": "vertical reference", "value": "engine exhaust stacks visible directly on top of the wing", "verbatim": "As a vertical reference, the engine exhaust stacks should be visible directly on top of the wing."},
+        {"name": "manoeuvring limitations", "value": "same as wing work exercise", "verbatim": "Close trail maneuvering limitations are the same as wing work exercise."}
+      ],
+      "procedure_steps": [
+        "Number 1 directs close trail with a radio call (\"Mistras A2, go close trail\") or visual signal, from close (fingertip), route or echelon, and waits for Number 2 to call in before manoeuvring.",
+        "Number 2 acknowledges by the same means used to direct, manoeuvres into position (typically manoeuvring as in the cross under) and calls \"Mistras A2 is in\".",
+        "Number 2 maintains position primarily with power, anticipating power changes; during turns at higher G, small amounts of lead or lag pursuit may be necessary.",
+        "Number 1 manoeuvres smoothly and predictably using combinations of turns and lazy eight type manoeuvres and maintains positive G at all times.",
+        "Reform: Number 1 directs close (fingertip) with a shallow wing rock or radio call; Number 2 goes to the left side if Number 1 is wings-level, or to the inside of the turn if Number 1 is turning, unless directed otherwise."
+      ],
+      "common_errors": [
+        "Flying high in the close trail position - \"To prevent encountering wake turbulence, never fly high in the close trail position.\"",
+        "Any space between the engine exhaust stacks and the wing means Number 2 is too high and the possibility of encountering wake turbulence increases.",
+        "Attempting to correct excessive spacing forward with power alone - \"If excessive spacing develops, do not attempt to correct forward with power alone.\"",
+        "Number 1 making sudden releases of back stick pressure, rapid or inconsistent turn rates, or rapid turn reversals.",
+        "Number 1 manoeuvring before Number 2 calls in.",
+        "Closure rates are difficult to recognize and correct for when directly behind and below Number 1."
+      ],
+      "corrections": [
+        "Add power and establish a small amount of lead pursuit if in a turn; if wings-level, move off to one side to obtain a better visual perspective of Number 1's A/C.",
+        "The two most important points are to remain below Number 1's wake turbulence and always keep Number 1 in sight.",
+        "Number 1 manoeuvres smoothly and predictably and avoids significant power changes until Number 2 is in the directed formation position.",
+        "Another technique is to make a \"T\" out of the aft edge of the speed brake and the UHF/VHF antenna."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.33",
+      "title": "PITCHOUT",
+      "pages_pdf": [241],
+      "item_mapping": ["formation-16", "formation-09"],
+      "category_hint": ["formation"],
+      "technique_summary": "A pitchout provides spacing for rejoin practice: normally a level, 180 degree turn performed sequentially by the members of a formation. Number 1 clears in the direction of the desired turn and begins a turn away from Number 2 using approximately 60 degrees of bank and sufficient G to establish the desired airspeed. Number 2 stays visual, delays 2 to 3 seconds or as briefed, then turns to follow.",
+      "parameters": [
+        {"name": "Number 1 bank", "value": "approximately 60 degrees of bank", "verbatim": "begin a turn away from Number 2, using approximately 60 of bank and sufficient G to establish the desired airspeed"},
+        {"name": "turn amount", "value": "level turn of about 180 degrees", "verbatim": "Normally fly a level turn of about 180."},
+        {"name": "Number 2 delay - standard", "value": "2 to 3 seconds, giving approximately 500 to 1000 feet of separation at roll out", "verbatim": "Delay 2 to 3 seconds or as briefed, which should provide approximately 500 to 1000 feet of separation at roll out"},
+        {"name": "Number 2 delay - extended", "value": "5 to 7 seconds, giving approximately 1500-2000 foot spacing", "verbatim": "A 5 to 7 second delay will result in approximately 1500-2000 foot spacing."},
+        {"name": "spacing adjustment point", "value": "after approximately 90 degrees of turn", "verbatim": "After approximately 90 of turn, vary bank and back stick pressure to attain desired spacing"},
+        {"name": "roll out position", "value": "behind and slightly below Number 1, 1-2 ship widths above the horizon", "verbatim": "roll out behind and slightly below Number 1. Place Number 1 approximately 1-2 ship widths above the horizon."}
+      ],
+      "procedure_steps": [
+        "Number 1 directs a pitchout with a visual signal or radio call and clears in the direction of the desired turn.",
+        "Number 1 begins a turn away from Number 2 using approximately 60 degrees of bank and sufficient G to establish the desired airspeed, normally a level 180 degree turn.",
+        "Number 2 stays visual, delays 2 to 3 seconds or as briefed, then turns to follow Number 1.",
+        "After approximately 90 degrees of turn, Number 2 varies bank and back stick pressure to attain the desired spacing and rolls out behind and slightly below Number 1.",
+        "Number 2 calls \"ready\" when at the desired range and rejoins when directed.",
+        "Number 1 allows enough time for Number 2 to complete the pitchout and directs the rejoin after hearing Number 2 call \"ready\"."
+      ],
+      "common_errors": [
+        "Sacrificing clearing to maintain precise altitude control or an exact 180 degree turn - \"Do not sacrifice clearing to maintain precise altitude control or an exact 180 turn.\""
+      ],
+      "corrections": [
+        "Slight climbs or descents are acceptable for energy management; the degrees of turn may be adjusted for weather, area orientation and/or energy management."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.34",
+      "title": "TAKE SPACING",
+      "pages_pdf": [241],
+      "item_mapping": ["formation-16", "formation-09", "formation-10"],
+      "category_hint": ["formation"],
+      "technique_summary": "Take spacing sends Number 2 to a trail position when a pitchout is not practical. Number 1 directs with a radio call (\"Mistras A2 take spacing\") or visual signal. Spacing can be achieved with a combination of manoeuvre and deceleration by Number 2 and/or acceleration by Number 1. At the desired range, Number 2 calls \"ready\"; Number 1 then slows to the rejoin airspeed and directs a rejoin.",
+      "parameters": [],
+      "procedure_steps": [
+        "Number 1 directs Number 2 to take spacing with a radio call or visual signal.",
+        "Number 2 reduces power and/or uses speed brake to slow and increase spacing; one technique is for Number 1 to accelerate.",
+        "At the desired range, Number 2 calls \"ready\".",
+        "Number 1 slows to the rejoin airspeed and directs a rejoin."
+      ],
+      "common_errors": [],
+      "corrections": [
+        "Another technique is for Number 2 to take spacing by performing a series of \"S\" turns behind and below Number 1's prop wash."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.36",
+      "title": "RANGE ESTIMATION (MIL-SIZING)",
+      "pages_pdf": [242, 243],
+      "item_mapping": ["formation-23", "formation-37", "vfr_navigation-25"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "Range to an object can be determined if the size of the object is known. One mil equals one foot at 1000 feet; for the T-6 this gives specific apparent sizes measured at 20 inches from the pilot's eye. Cockpit tools used to compare A/C size include the AOA indexer, the FCP canopy bow mirrors and the anti-collision strobe light flash guard on the leading edge of the wingtip.",
+      "parameters": [
+        {"name": "mil definition", "value": "one mil equals one foot at 1000 feet", "verbatim": "One mil equals one foot at 1000 feet."},
+        {"name": "measuring distance from eye", "value": "20 inches from the pilot's eye", "verbatim": "this equates to the following A/C dimensions when measured at 20 inches from the pilot's eye"},
+        {"name": "T-6 apparent size at 300 feet", "value": "approximately 111 mils or 5.6 cm (2.2 inches)", "verbatim": "At 300 feet, a T-6 is approximately 111 mils or 5.6 cm (2.2 inches)."},
+        {"name": "T-6 apparent size at 500 feet", "value": "approximately 67 mils or 3.4 cm (1.3 inches)", "verbatim": "At 500 feet, a T-6 is approximately 67 mils or 3.4 cm (1.3 inches)."},
+        {"name": "T-6 apparent size at 1000 feet", "value": "approximately 33 mils or 1.7 cm (0.7 inches)", "verbatim": "At 1000 feet, a T-6 is approximately 33 mils or 1.7 cm (0.7 inches)."},
+        {"name": "300 feet cues", "value": "width of AOA indexer turned sideways or 3/4 mirror width", "verbatim": "Width of AOA indexer turned sideways or mirror width. Detail visible (canopy details, pilots). Tail flash easily readable (letters, not numbers)."},
+        {"name": "500 feet cues", "value": "1/2 mirror width; A/C size twice the wingtip anti-collision strobe flash guard", "verbatim": "mirror width. A/C size approximates twice the size of the wingtip anti-collision strobe flash guard. Normal fingertip references apparent."},
+        {"name": "1000 feet cues", "value": "narrow width of AOA indexer or 1/4 mirror width; A/C size approximates the strobe flash guard", "verbatim": "Narrow width of AOA indexer or mirror width. A/C size approximates the size of the wingtip anti-collision strobe flash guard. A/C detail lost. Tail flash not visible."}
+      ],
+      "procedure_steps": [
+        "Compare the apparent size of the other A/C against the AOA indexer, canopy bow mirrors, or the wingtip anti-collision strobe flash guard.",
+        "Cross-check with detail cues: at 300 feet canopy details and pilots are visible and the tail flash letters are easily readable; at 500 feet normal fingertip references are apparent and tail letters are visible but not clearly readable; at 1000 feet A/C detail is lost and the tail flash is not visible."
+      ],
+      "common_errors": [],
+      "corrections": [],
+      "notes": "Table 9.3 (Range Estimation) values are captured above; the fraction glyphs for mirror width (3/4, 1/2, 1/4) are partially lost in the source text layer."
+    },
+    {
+      "section": "9.37",
+      "title": "EXTENDED TRAIL (ET) - GENERAL, LIMITS AND ENTRY",
+      "pages_pdf": [244, 245, 246],
+      "item_mapping": ["formation-23", "formation-18", "formation-36"],
+      "category_hint": ["formation"],
+      "technique_summary": "Extended trail uses lead, lag and pure pursuit options and lift vector placement to practice three-dimensional manoeuvring in relation to another A/C, flown from the fighting wing position. Number 1 provides a stable platform with consistent, predictable roll rate and no sudden changes in back-stick pressure; Number 2 manoeuvres within the fighting wing cone through proper pursuit curve and lift vector application with a fixed power setting. Both A/C initially set and maintain the same power setting.",
+      "parameters": [
+        {"name": "the bubble", "value": "300 foot spherical safety buffer around each A/C", "verbatim": "The 300 foot bubble is a safety of flight limit that surrounds each A/C. If an A/C is inside the 300-foot bubble during ET call \"knock it off.\""},
+        {"name": "ET manoeuvre limit", "value": "500 foot slant range", "verbatim": "The Extended Trail (ET) maneuver limit is a 500 foot slant range. Momentary deviations within 500 feet are acceptable if it is quickly recognized and remedied."},
+        {"name": "minimum airspeed Over The Top", "value": "100 KIAS", "verbatim": "Minimum airspeed for Over The Top is 100 KIAS."},
+        {"name": "torque roll conditions", "value": "greater than 60 % torque with high AOA (stick shaker) and less than approximately 40 KIAS", "verbatim": "High power settings (greater than 60 % torque), combined with high AOA (stick shaker), and slow airspeed (less than approximately 40 KIAS), can result in an unintentional torque roll."},
+        {"name": "ET entry energy", "value": "180 to 200 KIAS, approximately the middle of the altitude block", "verbatim": "At an appropriate energy level (180 to 200 KIAS and approximately the middle of the altitude block), Number 1 directs the ET with a radio call"},
+        {"name": "ET entry delay", "value": "2-3 seconds", "verbatim": "Number 2 delays 2-3 seconds, then maneuvers into the fighting wing cone and calls, \"Mistras A2, is in\""},
+        {"name": "general power guide", "value": "85 % in a low area, MAX power in a high area", "verbatim": "As a guide, use 85 % in a low area, MAX power in a high area."},
+        {"name": "Level I parameters (Table 9.4)", "value": "Stable Turn, 30-60 degrees bank, ~2-Gs, 50 % (fixed)", "verbatim": "1 I (initial proficiency) Stable Turn 30-60 ~ 2-Gs 50% (fixed)"},
+        {"name": "Level II parameters (Table 9.4)", "value": "Turns, Modified Lazy-8, ~120 degrees maximum bank, moderate G, 85 % (low area) / MAX (high area)", "verbatim": "2 II (limited proficiency) Turns, Modified Lazy-8 ~120 Maximum Moderate 85% (low area); MAX (hi area)"},
+        {"name": "Level III parameters (Table 9.4)", "value": "Modified Cuban 8, Loop, Cloverleaf, Barrel Roll; bank and G as required; 85 % (low area) / MAX (high area)", "verbatim": "3 III (desired proficiency) Modified Cuban 8, Loop, Cloverleaf, Barrel Roll As required As required 85% (low area); MAX (hi area)"},
+        {"name": "post ET check tolerance", "value": "within 50 pounds and 0.5 Gs", "verbatim": "Number 2 responds, \"2 same\" (if within 50 pounds and 0.5 Gs) or \"2.800, 5 Gs\". Report the maximum G-reading on all G-checks."}
+      ],
+      "procedure_steps": [
+        "ET entry: at 180 to 200 KIAS and approximately the middle of the altitude block, Number 1 directs \"go extended trail level 1/2\"; Number 2 responds; Number 1 makes a moderate G-turn away from Number 2.",
+        "Number 2 delays 2-3 seconds, manoeuvres into the fighting wing cone and calls \"is in\" before Number 1 begins manoeuvring.",
+        "Both A/C set and maintain the briefed power setting throughout the exercise.",
+        "To transition levels, Number 1 rolls out, levels off and calls the new level; Number 2 acknowledges; set the new power setting after Number 2 acknowledges.",
+        "To end the exercise, Number 1 or Number 2 calls \"terminate\"; Number 1 may reduce power when Number 2 is in sight or acknowledges.",
+        "After each ET exercise, Number 1 conducts a fuel and G check using the radio, reporting the maximum G-reading."
+      ],
+      "common_errors": [
+        "Abrupt turn reversals by lead are prohibited - turns in one direction followed by a rapid, unanticipated roll in the opposite direction.",
+        "Entering the 300-foot bubble (requires \"knock it off\").",
+        "Manoeuvring Over The Top in Level III when Number 1 is blind or Number 2 is not in a position to go Over The Top.",
+        "Flying ET with more than two ships - \"ET is flown two-ship only.\"",
+        "Continuing a manoeuvre when airspeed, G and AOA are not sufficient."
+      ],
+      "corrections": [
+        "If unable to quickly regain the fighting wing cone after a momentary deviation inside 500 feet, call \"terminate\".",
+        "If Number 1 is blind or Number 2 is not in position for Over The Top, maintain Level II until both requirements are satisfied.",
+        "If airspeed, G, and AOA are not sufficient to continue a manoeuvre, Terminate or Knock It Off as appropriate.",
+        "If Number 2 wants Number 1 to discontinue manoeuvring (for example, loss of spacing), notify Number 1 with a \"terminate\" call with the reason."
+      ],
+      "notes": "Note under Table 9.4: \"Depending on the wingman's proficiency ET Exercise can be initiated from level II or level III.\""
+    },
+    {
+      "section": "9.37.5",
+      "title": "FLYING ET - GENERAL RESPONSIBILITIES",
+      "pages_pdf": [245, 246],
+      "item_mapping": ["formation-23", "formation-33", "formation-35"],
+      "category_hint": ["formation"],
+      "technique_summary": "Each pilot is responsible for taking the necessary action to avoid a collision; however, it is Number 2's primary responsibility to avoid hitting Number 1. Because of the dynamic nature of ET, the potential for collision is increased and flying ET requires uncompromising flight discipline. Number 1 is a training platform for Number 2 and must constantly monitor G-loading, remembering that Number 2 typically requires more G than Number 1 to maintain position.",
+      "parameters": [
+        {"name": "where Number 1 looks for Number 2", "value": "behind the wing in the 4-5 o'clock or 7-8 o'clock position", "verbatim": "Generally look for Number 2 behind the wing in the 4-5 o'clock or 7-8 o'clock position, and be more vigilant if Number 2 strays from the cone parameters."}
+      ],
+      "procedure_steps": [
+        "Number 1 constantly monitors Number 2's aspect, range, closure, HCA and LOS for the possibility of an inadvertent 3/9 line or bubble violation.",
+        "Number 2 generally uses varying degrees of lead pursuit to maintain the fighting wing cone.",
+        "Pause momentarily to see how rapidly Number 1 is moving in the canopy (LOS/LOS rate), predict Number 1's flight path, then manoeuvre by selecting the appropriate pursuit option and lift vector placement."
+      ],
+      "common_errors": [
+        "Delaying the KIO call - \"Do not delay calling KIO if it is evident one of these situations is about to occur. It is far more desirable to KIO prior to the excursion than to see the situation developing and wait for it to happen.\"",
+        "Number 1 flying tight, high-G manoeuvres that are of little value if Number 2 is unable to maintain proper position.",
+        "Number 1 manoeuvring in an unpredictable or abrupt manner that might force Number 2 inside the bubble or forward of the 3/9 line.",
+        "Number 2 spending excessive time in lag pursuit - \"Normally, little time is spent in lag pursuit.\""
+      ],
+      "corrections": [
+        "If necessary, terminate or transition to the next lower level of ET until Number 2 can establish position in the fighting wing cone.",
+        "Use pure and lag pursuit judiciously to avoid high aspect, heading crossing angles and LOS rates.",
+        "Use terminate procedures to cease manoeuvring if unable to maintain position.",
+        "Any pilot in either A/C must not hesitate to call \"Terminate\" or \"Knock It Off\" if appropriate."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.37.6",
+      "title": "FLYING ET - LEVEL ONE",
+      "pages_pdf": [246],
+      "item_mapping": ["formation-23"],
+      "category_hint": ["formation"],
+      "technique_summary": "Number 1 begins ET Level 1 with a radio call and, after Number 2 acknowledges, enters a moderate G-turn of approximately 2 Gs. Number 2 attempts to use the same power setting as Number 1 to explore and manoeuvre within the fighting wing cone using appropriate pursuit geometry and lift vector placement, learning how difficult it is to stabilize in any one position without the use of power.",
+      "parameters": [
+        {"name": "G loading", "value": "approximately 2 Gs", "verbatim": "enter a moderate G-turn of approximately 2 Gs"},
+        {"name": "bank and power", "value": "30-60 degrees bank turn with approximately 45-50 % power", "verbatim": "Set power to maintain a 30-60 bank turn with approximately 45-50 % power."}
+      ],
+      "procedure_steps": [
+        "Number 1 calls \"go extended trail, Level 1\".",
+        "After Number 2 acknowledges, Number 1 enters a moderate G-turn of approximately 2 Gs and sets power for a 30-60 degree bank turn with approximately 45-50 % power.",
+        "Number 2 uses the same power setting to explore the quadrants of the fighting wing cone using pursuit options and lift vector placement."
+      ],
+      "common_errors": [],
+      "corrections": [],
+      "notes": "Table 9.4 lists 50 % (fixed) power for Level I; the Level 1 narrative gives approximately 45-50 % power."
+    },
+    {
+      "section": "9.37.7",
+      "title": "FLYING ET - LEVEL TWO",
+      "pages_pdf": [246, 247],
+      "item_mapping": ["formation-23"],
+      "category_hint": ["formation"],
+      "technique_summary": "After Number 2 acknowledges the Level 2 call, Number 1 selects MAX power and turns away from Number 2. Number 2 manoeuvres to the fighting wing cone and calls \"is in\", then predicts Number 1's flight path and manoeuvres in relation to it, with constant analysis of Number 1's plane of motion and relative aspect, range, closure, HCA and LOS. Pursuit curves exist in both the vertical and horizontal planes.",
+      "parameters": [
+        {"name": "power for low and medium altitudes", "value": "85 % torque", "verbatim": "For low and medium altitudes, 85% torque is a good power setting to maintain energy."},
+        {"name": "power at higher altitudes/temperatures", "value": "MAX power", "verbatim": "Higher altitudes and air temperatures or a low initial energy state may require the use of MAX power during maneuvering."},
+        {"name": "cone to maintain", "value": "30-45 degree cone away from Number 1's high or low 6 o'clock", "verbatim": "Attempt to maintain the 30-45 cone away from Number 1's high or low 6 o'clock position."}
+      ],
+      "procedure_steps": [
+        "Number 1 calls \"go extended trail, Level 2\"; after Number 2 acknowledges, selects MAX power and turns away from Number 2.",
+        "Number 2 manoeuvres to the fighting wing cone and calls \"Mistras A2, is in\".",
+        "Predict Number 1's flight path and manoeuvre in relation to it, analysing plane of motion, aspect, range, closure, HCA and LOS.",
+        "Once the desired learning objectives have been met, transition to Level III manoeuvring or terminate."
+      ],
+      "common_errors": [
+        "Stagnating in the 5-7 o'clock position - \"Transitory periods in Number 1's high or low 6-o'clock position are acceptable; however, avoid stagnating in the 5-7 o'clock position.\"",
+        "Using intentional lag rolls - \"Intentional lag rolls are generally not required to maintain the cone.\"",
+        "Over-correcting with exaggerated pursuit curve adjustments held for too long."
+      ],
+      "corrections": [
+        "A move toward lag pursuit may generally be the best solution to mitigate these problems; but most of the time, merely using less lead pursuit will adequately solve the problem.",
+        "Exaggerated pursuit curve adjustments are normally only required for a short period of time."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.37.8",
+      "title": "FLYING ET - LEVEL THREE (INCLUDING OVER THE TOP)",
+      "pages_pdf": [247, 248],
+      "item_mapping": ["formation-23"],
+      "category_hint": ["formation"],
+      "technique_summary": "After Number 2 acknowledges the Level 3 call, Number 1 selects MAX power and turns away, and after turning 180 degrees continues straight ahead maintaining 200 KIAS. When Number 2 reports fuel on board, Number 1 rolls into 60 degrees of bank using 2 Gs to maintain level flight and adjusts the PCL to maintain 200 KIAS; when Number 2 calls in, Number 1 uses 85 % torque (low area) or MAX (high area) and starts manoeuvring with hard turns, modified lazy-eights, barrel rolls and Over The Top manoeuvres.",
+      "parameters": [
+        {"name": "Number 1 setup airspeed", "value": "200 KIAS", "verbatim": "After turning 180 continue straight ahead and maintain 200 KIAS."},
+        {"name": "Number 1 setup bank and G", "value": "60 degrees of bank, 2 Gs to maintain level flight", "verbatim": "roll into 60 of bank, use 2 G's to maintain level flight and adjust the PCL as required to maintain 200 KIAS"},
+        {"name": "manoeuvring power", "value": "85 % torque (low area) or MAX (high area)", "verbatim": "When No2 reports \"Mistras A2, is in\" use 85% Torque (low area) or MAX (high area) and start maneuvering."},
+        {"name": "Number 2 delay after the turn away", "value": "5-8 seconds", "verbatim": "wait for 5-8 seconds and then vary bank and back stick pressure to attain 1500 - 2000 foot spacing"},
+        {"name": "Number 2 spacing", "value": "1500-2000 feet", "verbatim": "attain 1500 - 2000 foot spacing and roll out behind and slightly below Number 1"},
+        {"name": "Number 2 vertical reference", "value": "Number 1 approximately 1-2 ship widths above the horizon", "verbatim": "Place Number 1 approximately 1-2 ship widths above the horizon."}
+      ],
+      "procedure_steps": [
+        "Number 1 calls \"go Extended Trail, Level 3\"; after acknowledgement, selects MAX power and turns away from Number 2, then after 180 degrees continues straight ahead at 200 KIAS.",
+        "Number 2 waits 5-8 seconds, varies bank and back stick pressure to attain 1500-2000 foot spacing, rolls out behind and slightly below Number 1 with Number 1 approximately 1-2 ship widths above the horizon, and reports fuel on board.",
+        "When Number 1 starts turning, Number 2 uses MAX, Low Yo-Yo, High Yo-Yo and Quarter Plane to manoeuvre to the fighting wing cone and calls \"in\".",
+        "Prioritize between nose track and energy when High AOA, buffet and/or stick shaker indicate the A/C is losing energy.",
+        "Apply \"lag at the bottom, lead at the top\": delay pulling up into the vertical until noticing LOS in the vertical, then at the apex generally sacrifice airspeed for nose track and attempt to beat Number 1's nose through the horizon.",
+        "If range and plane are satisfactory, attempt to hit Over The Top with the nose through the horizon before or at the same time as Number 1, with fuselages aligned (zero HCA or angle off)."
+      ],
+      "common_errors": [
+        "Sacrificing airspeed for nose track without recognizing that it may eventually result in excessive spacing due to airspeed difference, and may place the A/C in a negative energy state.",
+        "Relaxing back-stick pressure when Number 1 is in a hard turn - it may preserve energy or increase airspeed but can also result in excessive spacing.",
+        "Not recognizing that if Number 1's nose position is below the horizon, the A/C is likely to be accelerating.",
+        "Number 1 attempting to force Number 2 to overshoot - \"Number 1 will not attempt to force Number 2 to overshoot.\"",
+        "Entering Over The Top manoeuvres without adequate airspeed."
+      ],
+      "corrections": [
+        "Conservation of energy is critical during Level 3; manoeuvre in relation to Number 1 and balance the need for nose track or energy through proper pursuit selection and lift vector placement.",
+        "Consider Number 2's skill level while manoeuvring to prevent exceeding Number 2's capabilities.",
+        "Ensure adequate airspeed is available for over-the-top manoeuvres."
+      ],
+      "notes": "Manoeuvres in ET are not flown with the precise parameters of contact flying; attitudes and airspeeds vary for effective training, area orientation, visual lookout and smoothness."
+    },
+    {
+      "section": "9.40.1",
+      "title": "FORMATION RECOVERY - DESCENT TO VFR PATTERN, BREAK AND LANDING",
+      "pages_pdf": [248, 249],
+      "item_mapping": ["formation-05", "formation-30", "formation-31", "formation-19", "vfr_navigation-14", "vfr_navigation-17", "vfr_navigation-18", "vfr_navigation-19"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "Formation recoveries are similar to single-ship recoveries, but operational restrictions can significantly change recovery options and Number 1 must consider Number 2's capabilities when developing the recovery plan. Once established at pattern altitude inside the entry point, all turns away from Number 2 are echelon unless briefed otherwise. Number 1 positions Number 2 on the side opposite the direction of the Break before North/South Point, turns smoothly to downwind at the Break point and delays power reduction until the turn is initiated.",
+      "parameters": [
+        {"name": "minimum power in descent", "value": "avoid less than 20 % torque", "verbatim": "In general, Number 1 should avoid low power settings (less than 20 % torque). Instead of reducing power below 20 % torque, the speed brake may be used."},
+        {"name": "Number 2 delay after Break", "value": "minimum of 5 seconds", "verbatim": "After Number 1 has executed Break, Number 2 waits for a minimum of 5 seconds before starting his turn."},
+        {"name": "downwind position", "value": "slightly outside Number 1's ground track", "verbatim": "On downwind, Number 2 should be slightly outside Number 1's ground track."},
+        {"name": "landing position", "value": "centerline of the runway for both A/C", "verbatim": "Number 1 normally lands on the centerline of the runway. Number 2 will land also on the centerline of the runway."}
+      ],
+      "procedure_steps": [
+        "If weather allows, Number 1 can direct Number 2 to a position (route or fighting wing) that enhances clearing and allows greater manoeuvrability.",
+        "Once established at pattern altitude, inside the entry point for the VFR pattern, all turns away from Number 2 are echelon unless briefed otherwise.",
+        "Prior to North/South Point, Number 1 positions Number 2 on the side opposite the direction of the Break.",
+        "At the Break point, Number 1 smoothly turns to the downwind and delays power reduction until the turn is initiated.",
+        "Number 2 waits a minimum of 5 seconds after Number 1's Break before starting the turn and ensures proper spacing on downwind.",
+        "Number 2 flies a normal contact pattern; perch point should be the same."
+      ],
+      "common_errors": [
+        "Number 1 using low power settings (less than 20 % torque) during the descent.",
+        "Number 2 following a poorly-flown pattern - \"Number 2 should not follow a poorly-flown pattern. Go-around if required.\"",
+        "Insufficient spacing on downwind."
+      ],
+      "corrections": [
+        "Instead of reducing power below 20 % torque, the speed brake may be used.",
+        "Go-around if required rather than following a poorly-flown pattern."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.40.2",
+      "title": "FORMATION APPROACH",
+      "pages_pdf": [249],
+      "item_mapping": ["formation-06", "formation-13", "formation-32", "vfr_navigation-16", "vfr_navigation-15"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "Formation approach procedures are the same as for a single ship. Before starting an instrument penetration, Number 1 positions Number 2 on the side opposite the direction of the penetration turn and on the upwind side of the landing runway. Number 1 directs landing gear and flap configuration with a radio call or visual signal (radio call in IMC), and gear and flaps are normally lowered with only one signal unless briefed otherwise.",
+      "parameters": [
+        {"name": "minimum torque", "value": "not less than 20 % torque", "verbatim": "Number 1 should not use less than 20% torque."},
+        {"name": "flap configuration", "value": "TO position", "verbatim": "Formation approaches are flown with flaps in the TO position."},
+        {"name": "approach airspeed", "value": "110 KIAS", "verbatim": "Maintain 110 KIAS on the instrument approach unless winds dictate otherwise or when a circling approach is planned."}
+      ],
+      "procedure_steps": [
+        "Before an instrument penetration, position Number 2 on the side opposite the direction of the penetration turn.",
+        "Position Number 2 on the upwind side of the landing runway.",
+        "Number 1 directs landing gear and flap configuration with a radio call or visual signal (use a radio call in IMC).",
+        "Number 2 checks Number 1's A/C configuration and gives a thumbs up; Number 1 checks Number 2 and returns the thumbs up if the configuration looks good.",
+        "Number 1 transmits a gear down call for both A/C after configuration is confirmed.",
+        "Maintain 110 KIAS on the instrument approach unless winds dictate otherwise or a circling approach is planned."
+      ],
+      "common_errors": [
+        "Using less than 20 % torque.",
+        "Using visual signals instead of a radio call for configuration changes in IMC."
+      ],
+      "corrections": [],
+      "notes": null
+    },
+    {
+      "section": "9.40.3",
+      "title": "FORMATION GO-AROUND",
+      "pages_pdf": [249],
+      "item_mapping": ["formation-06", "formation-30", "formation-36", "vfr_navigation-19"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "For a formation go-around, Number 1 smoothly adds power to approximately 75 % torque and follows normal formation takeoff and single ship go-around procedures. If splitting in the pattern after a formation go-around or low approach, the A/C on the inside of the pattern pulls for a closed pattern or turns crosswind first.",
+      "parameters": [
+        {"name": "go-around power", "value": "approximately 75 % torque", "verbatim": "Number 1 smoothly adds power to approximately 75% torque, follows normal formation takeoff, and single ship go-around procedures."}
+      ],
+      "procedure_steps": [
+        "Number 1 smoothly adds power to approximately 75 % torque.",
+        "Follow normal formation takeoff and single ship go-around procedures.",
+        "If splitting in the pattern, the A/C on the inside of the pattern pulls for a closed pattern or turns crosswind first."
+      ],
+      "common_errors": [],
+      "corrections": [
+        "Number 1 should have positioned Number 2 on the upwind side of the landing runway."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.40.4",
+      "title": "FORMATION MISSED APPROACH",
+      "pages_pdf": [249, 250],
+      "item_mapping": ["formation-06", "formation-36", "vfr_navigation-15", "vfr_navigation-24"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "The potential for lost wingman and for spatial disorientation is high during a formation missed approach. Smoothly advance power to approximately 75 %, as in the formation go-around, and slowly and smoothly establish the missed approach pitch attitude. Use the radio to direct gear and flap retraction and ensure the minimum climb gradient is maintained.",
+      "parameters": [
+        {"name": "missed approach power", "value": "approximately 75 %", "verbatim": "Smoothly advance power to approximately 75 %, as in the formation Go-Around"}
+      ],
+      "procedure_steps": [
+        "Smoothly advance power to approximately 75 %.",
+        "Slowly and smoothly establish the missed approach pitch attitude.",
+        "Use the radio to direct gear and flap retraction.",
+        "Ensure the minimum climb gradient is maintained."
+      ],
+      "common_errors": [
+        "High potential for lost wingman and for spatial disorientation."
+      ],
+      "corrections": [
+        "A/C attitude calls to Number 2 can help avoid spatial disorientation."
+      ],
+      "notes": "Figure 9.31 (Stacked level on Final) accompanies this paragraph."
+    },
+    {
+      "section": "9.42",
+      "title": "FORMATION TAKEOFF ABNORMALITIES AND ABORTS",
+      "pages_pdf": [250, 251],
+      "item_mapping": ["formation-36", "formation-07", "formation-08", "formation-15", "vfr_navigation-24"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "If Number 2 overruns Number 1, Number 2 selects MAX power and makes a separate takeoff while maintaining the same side of the runway and follows Number 1's directions. If Number 2 falls behind, Number 2 crosschecks engine instruments and airspeed and aborts (if there is a problem) or performs a separate takeoff, rejoining after becoming safely airborne. During an abort, maintain A/C control, ensure separation from the other A/C by maintaining the respective side of the runway, and make a radio call as soon as practical.",
+      "parameters": [
+        {"name": "element abort call", "value": "\"abort, abort, abort\" with the word flight", "verbatim": "Number 1 directs an element abort with a radio call, \"Mistras A abort, abort, abort.\" The operative word flight indicates both A/C should abort."},
+        {"name": "interval takeoff abort at Kalamata", "value": "Number 2 is always below abort speed at Kalamata airport", "verbatim": "If Number 2 is rolling, but below abort speed (generally in Kalamata airport Number 2 is always below abort speed), an abort must also be executed."}
+      ],
+      "procedure_steps": [
+        "Number 2 passing Number 1: select MAX power and make a separate takeoff while maintaining the same side of the runway; follow Number 1's directions.",
+        "Number 2 falling behind: crosscheck engine instruments and airspeed indicator, then abort (if there is a problem) or perform a separate takeoff and rejoin after becoming safely airborne.",
+        "Formation takeoff abort (one A/C): maintain A/C control, maintain the respective side of the runway, make a radio call as soon as practical; the A/C continuing advances PCL to MAX power, maintains its side of the runway and executes a normal single-ship takeoff.",
+        "Interval takeoff abort: if Number 1 aborts, transmit a radio call when practical; if Number 2 has not released brakes, reduce power to idle and hold position until Number 1 clears the runway; if rolling but below abort speed, abort; if above abort speed, continue the takeoff.",
+        "Element abort: each A/C maintains its respective side of the runway and makes every effort to stop prior to the end of the runway."
+      ],
+      "common_errors": [
+        "Sympathetic aborts after brake release during a formation takeoff - \"there are normally no sympathetic aborts after brake release. Sympathetic aborts can create situations in which the good A/C risks making the situation worse by adding another A/C into the high-speed abort situation; risk of collision, hot brakes, or blown tires increases.\"",
+        "Sacrificing A/C control to make a radio call - \"Do not sacrifice A/C control to make a radio call.\"",
+        "Difficulty for Number 2 to recognize an abort using only visual cues during an interval takeoff."
+      ],
+      "corrections": [
+        "Maintain A/C control and ensure separation from the other A/C by maintaining the respective side of the runway."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.43",
+      "title": "AIRBORNE EMERGENCIES (GENERAL)",
+      "pages_pdf": [251, 252],
+      "item_mapping": ["formation-36", "formation-21", "formation-crm", "vfr_navigation-24", "vfr_navigation-crm"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "Maintain formation integrity to the maximum extent possible during airborne emergencies; mutual support is one of the primary reasons for formation flying. If either member must return to the airfield due to an emergency, the other A/C should also return and provide assistance. In general, the A/C with a malfunction should be given the Number 1 position so it can handle the emergency without maintaining formation position.",
+      "parameters": [
+        {"name": "Number 1 position offers", "value": "offered three times", "verbatim": "The Number 1 position should be offered three times: a. When the emergency occurs, b. When on recovery when below the weather and able to navigate VFR to the field, c. When on final with the field in sight."},
+        {"name": "minimum spacing with an emergency", "value": "no closer than route formation", "verbatim": "Except in IMC, avoid flying closer than route formation as Number 2."}
+      ],
+      "procedure_steps": [
+        "The formation member having the emergency notifies the other members about the problem, his intentions, and the type of assistance required.",
+        "If an A/C malfunction occurs while in fingertip, increase A/C separation before handling the emergency, if weather permits.",
+        "In VMC without engine problems, the A/C having the emergency generally leads back to a Straight In; in IMC, it generally leads back to an instrument approach.",
+        "Number 2: when a malfunction is encountered, call Knock It Off and inform Number 1 of the problem; normally take the Number 1 position when offered, if able to communicate and navigate."
+      ],
+      "common_errors": [
+        "Flying in the Number 2 position with an emergency - \"Generally, avoid flying in Number 2 position with an emergency.\"",
+        "Flying closer than route spacing while carrying an emergency (except in IMC)."
+      ],
+      "corrections": [
+        "If Number 2 refuses the Number 1 position at any time, offer it at each successive point as described.",
+        "If Number 2 is able to communicate over the radio, Number 1 should offer verbal assistance as necessary.",
+        "Follow the preflight briefing instructions for emergencies as much as practical."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.44-9.47",
+      "title": "ENGINE PROBLEMS, PHYSIOLOGICAL INCIDENT, BIRD STRIKE, MIDAIR COLLISION",
+      "pages_pdf": [252],
+      "item_mapping": ["formation-36", "vfr_navigation-24"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "With engine problems the emergency A/C leads back to execute a PEL; if weather or field conditions at the intended recovery runway are unknown, the other formation member may be sent ahead to report on airfield conditions. For a physiological incident the A/C having the emergency typically leads back. If a bird strike appears imminent, do not attempt evasive manoeuvres into the other A/C. If a midair collision occurs between formation members, they shall not act as chase ships for each other.",
+      "parameters": [],
+      "procedure_steps": [
+        "Engine problems: the emergency A/C leads back to execute a PEL; the other member may be sent ahead to report airfield conditions and radio back.",
+        "Physiological incident: the A/C having the emergency typically leads back; the other member uses caution and sound judgment, especially if penetration during IMC is required.",
+        "Bird strike: the primary concern is to avoid midair collision and A/C separation; if a strike occurs, ensure A/C separation before handling the emergency.",
+        "Midair collision: Number 1 should coordinate separate clearances and chase ships."
+      ],
+      "common_errors": [
+        "Attempting evasive manoeuvres into the other A/C in an effort to avoid a bird.",
+        "Formation members acting as chase ships for each other after a midair collision - \"they shall not act as chase ships for each other.\""
+      ],
+      "corrections": [
+        "Consider executing a crab landing if forward visibility is severely restricted after a bird strike."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.48",
+      "title": "SPATIAL DISORIENTATION IN FORMATION",
+      "pages_pdf": [253],
+      "item_mapping": ["formation-36", "formation-crm", "vfr_navigation-24", "vfr_navigation-crm"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "If either pilot suffers spatial disorientation, immediately inform the other A/C and transfer A/C control to the other pilot if practical. If Number 2 is disoriented, the PNF in the Number 1 A/C advises Number 2 of A/C attitude, altitude, heading and airspeed; if symptoms persist and conditions permit, Number 1 should establish straight and level flight for 30 to 60 seconds and, if possible, get the formation to VMC conditions.",
+      "parameters": [
+        {"name": "straight and level relief period", "value": "30 to 60 seconds", "verbatim": "If symptoms persist and conditions permit, Number 1 should establish Straight And Level flight for 30 to 60 seconds."}
+      ],
+      "procedure_steps": [
+        "Number 1 disoriented: immediately inform Number 2 and transfer A/C control to the other pilot if practical; if transfer is not an option, confirm attitude with the other crewmember or Number 2; if symptoms persist, terminate the mission and recover by the simplest and safest route possible.",
+        "Number 2 disoriented: immediately inform Number 1 and transfer A/C control to the other pilot if practical; the PNF in Number 1 advises Number 2 of attitude, altitude, heading and airspeed.",
+        "If symptoms persist and conditions permit, Number 1 establishes straight and level flight for 30 to 60 seconds and, if possible, gets the formation to VMC.",
+        "If the problem persists, consider offering the Number 1 position."
+      ],
+      "common_errors": [
+        "Initiating lost wingman procedures while disoriented - \"As Number 2, be cautious when initiating lost wingman procedures as this could trigger further spatial disorientation.\""
+      ],
+      "corrections": [
+        "If unable to maintain position, and Number 2 becomes a threat to Number 1, a breakout should be initiated.",
+        "If necessary, terminate the mission and recover by the simplest and safest route possible."
+      ],
+      "notes": null
+    },
+    {
+      "section": "9.49-9.50",
+      "title": "A/C STROBE LIGHTS AND ICING",
+      "pages_pdf": [253],
+      "item_mapping": ["formation-36", "formation-34", "vfr_navigation-24"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "Number 1's strobe lights may distract Number 2 and could lead to spatial disorientation; Number 2 should advise Number 1 if the strobes create a problem and Number 1 should turn them off. If the Number 2 A/C experiences icing, Number 2 notifies Number 1, who should climb or descend to avoid continuous cruising in icing conditions.",
+      "parameters": [],
+      "procedure_steps": [
+        "Number 2 advises Number 1 if the strobes create a problem; Number 1 turns them off.",
+        "If Number 2 experiences icing, notify Number 1; Number 1 climbs or descends to avoid continuous cruising in icing conditions."
+      ],
+      "common_errors": [],
+      "corrections": [],
+      "notes": null
+    },
+    {
+      "section": "9.51",
+      "title": "NO RADIO (NORDO)",
+      "pages_pdf": [253, 254],
+      "item_mapping": ["formation-36", "formation-32", "formation-34", "vfr_navigation-24", "vfr_navigation-22"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "When a member of the formation has a total radio failure, the NORDO A/C normally receives or retains the Number 2 position. The flight member with the operative radio leads the NORDO A/C into the overhead pattern, notifies the tower and plans for a low approach to the active runway; the NORDO A/C flies a normal pattern and landing. When Number 1 clears Number 2's landing with ATC, Number 1 informs Number 2 by a visual signal and Number 2 assumes landing clearance and lands normally.",
+      "parameters": [
+        {"name": "NORDO rejoin limit", "value": "no closer than route position until directed", "verbatim": "the NORDO A/C should cautiously attempt to rejoin (no closer than route). Rock wings (attention in the air) and move no closer than route position until directed."}
+      ],
+      "procedure_steps": [
+        "The A/C with the operative radio leads the NORDO A/C into the overhead pattern, notifies the tower, and plans for a low approach to the active runway.",
+        "If weather prevents an overhead pattern, execute a Straight In or instrument approach as appropriate.",
+        "With a total radio failure while in fingertip, Number 2 manoeuvres to route, attracts the attention of Number 1, and shows the appropriate visual signal.",
+        "If in other than fingertip or route position and a rejoin is not anticipated, the NORDO A/C cautiously attempts to rejoin no closer than route, rocking wings (attention in the air) until directed.",
+        "Terminate the mission as soon as practical and lead the NORDO A/C to the base of intended landing."
+      ],
+      "common_errors": [
+        "Rejoining closer than route position before being directed."
+      ],
+      "corrections": [],
+      "notes": null
+    },
+    {
+      "section": "9.52",
+      "title": "EJECTION",
+      "pages_pdf": [254],
+      "item_mapping": ["formation-36", "vfr_navigation-24"],
+      "category_hint": ["formation", "vfr_navigation"],
+      "technique_summary": "If ejection is required, Number 2 acts as the On Scene Commander (rescue combat air patrol [RESCAP] commander) until relieved or bingo fuel is reached.",
+      "parameters": [
+        {"name": "duration of On Scene Commander duty", "value": "until relieved or bingo fuel is reached", "verbatim": "Number 2 acts as the On Scene Commander (rescue combat air patrol [RESCAP] commander) until relieved or bingo fuel is reached."}
+      ],
+      "procedure_steps": [
+        "Number 2 acts as the On Scene Commander (RESCAP commander) until relieved or bingo fuel is reached."
+      ],
+      "common_errors": [],
+      "corrections": [],
+      "notes": "Local in-flight guides will outline local specifics."
+    }
+  ]
+}

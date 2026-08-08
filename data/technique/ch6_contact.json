@@ -1,0 +1,906 @@
+{
+  "chunk": "ch6_contact",
+  "source": "T-6A Techniques and Procedures Manual (I.N. T-6A 02/14, Change 9 Jul 22)",
+  "sections": [
+    {
+      "section": "6.1",
+      "title": "INTRODUCTION",
+      "pages_pdf": [103],
+      "item_mapping": ["contact-00-general"],
+      "category_hint": ["contact"],
+      "technique_summary": "Contact flying develops the skills and techniques necessary for success in every other type of flying, with the use of outside references emphasizing the composite crosscheck. Basic skills such as checklist use, systems operation, task management and cockpit organization are introduced and developed in preparation for more complex sorties. The basic manoeuvres learned and practiced in contact are the basis for all other flying. Exploration of the flight envelope during stalls increases safety both in the traffic pattern and during area work; energy awareness, position awareness and overall situational awareness developed in three dimensional contact manoeuvring is universally applicable.",
+      "parameters": [],
+      "procedure_steps": [
+        "Instrument training in the A/C is only accomplished after the basics of flight are learned in the contact phase.",
+        "Formation cannot be mastered without an understanding of the advanced manoeuvring concepts developed through aerobatic practice."
+      ],
+      "common_errors": [],
+      "corrections": [],
+      "notes": "Chapter introduction; no gradeable technique of its own."
+    },
+    {
+      "section": "6.2",
+      "title": "CHECKS (FENCE, OPERATIONS CHECK, CLEF)",
+      "pages_pdf": [103, 104],
+      "item_mapping": ["contact-36", "contact-38"],
+      "category_hint": ["contact"],
+      "technique_summary": "Execute the operational checklist at initial level off and the appropriate checks before performing manoeuvres. Checks are not required between individual manoeuvres if flown in a series. A FENCE check is performed when entering the Military Operations Area (FENCE-in) and again when leaving the MOA (FENCE-out). A CLEF check is the memory aid for the checklist steps required prior to stalling, spinning or aerobatic manoeuvres.",
+      "parameters": [
+        {"name": "operations check interval", "value": "approximately every 15 minutes", "verbatim": "perform an operations check approximately every 15 minutes while accomplishing area work", "verbatim_spans_pagebreak": true},
+        {"name": "operations check timing technique", "value": "on the quarter hour (1415, 1430, 1445)", "verbatim": "Use of the stopwatch feature of the clock or accomplishing a check on the quarter hour (for example, 1415, 1430, 1445, etc.) can help ensure checks are accomplished in a timely manner."},
+        {"name": "CLEF fuel balance", "value": "within 50 pounds", "verbatim": "F - Fuel balance (within 50 pounds)."}
+      ],
+      "procedure_steps": [
+        "FENCE: F - Fuel (balance and quantity).",
+        "FENCE: E - Engine (within limits).",
+        "FENCE: N - NAVAIDS (GPS/EHSI set).",
+        "FENCE: C - Communication (frequencies set, radio call in accordance with local directives). Checks complete (climb, ops, pre-stall, spin, aerobatic, descent).",
+        "FENCE: E - Equipment (G-suit test).",
+        "CLEF: C - Clear the area (also CWS panel clear).",
+        "CLEF: L - Loose items stowed.",
+        "CLEF: E - Engine (within limits).",
+        "CLEF: F - Fuel balance (within 50 pounds)."
+      ],
+      "common_errors": [],
+      "corrections": [],
+      "notes": "FENCE in the T-6 is performed entering/leaving the MOA to instill an easily transferable habit pattern."
+    },
+    {
+      "section": "6.3",
+      "title": "MANOEUVRING AT INCREASED G-LOADING",
+      "pages_pdf": [104],
+      "item_mapping": ["contact-06"],
+      "category_hint": ["contact"],
+      "technique_summary": "During contact flying, especially during aerobatics, G-loading changes constantly. The most intense G-loading changes occur during manoeuvres that start in a very nose-down attitude at relatively low airspeed but transition to high G at increasing airspeeds, such as nose-low recoveries, spin recoveries and split-S manoeuvres. An effective anti-G straining manoeuvre is essential.",
+      "parameters": [
+        {"name": "G threshold requiring G-awareness exercise / AGSM demonstration", "value": "three or more Gs", "verbatim": "Perform a G-awareness exercise or AGSM demonstration (as described in Chapter 1) before accomplishing any manoeuvre that may require three or more Gs."}
+      ],
+      "procedure_steps": [
+        "Perform a G-awareness exercise or AGSM demonstration (as described in Chapter 1) before accomplishing any manoeuvre that may require three or more Gs."
+      ],
+      "common_errors": [],
+      "corrections": [],
+      "notes": "The G-awareness exercise itself is described in Chapter 1, outside this chunk."
+    },
+    {
+      "section": "6.4",
+      "title": "AREA ORIENTATION (Figure 6.1.)",
+      "pages_pdf": [104, 105, 106],
+      "item_mapping": ["contact-04"],
+      "category_hint": ["contact"],
+      "technique_summary": "Visual ground references such as cities, lakes, road intersections and terrain are the primary means of maintaining area orientation. When visual references are inadequate, or to augment visual orientation, the GPS or VOR with DME may be used. A good composite crosscheck of ground references verified by instruments is an effective way to maintain or build situational awareness. Normally a standard display setup is used until proficiency is demonstrated; after that, other than standard display options may be used to optimize situational awareness and precise control of the A/C.",
+      "parameters": [
+        {"name": "Center Radial method applicability", "value": "areas 20 radials wide or less", "verbatim": "This method is best suited for areas that are 20 radials wide or less."},
+        {"name": "Pie-in-the-Sky method applicability", "value": "wide areas, 20 radials wide or more", "verbatim": "Best used in wide areas (20 radials wide or more)."},
+        {"name": "GPS flight plan selection", "value": "Number 1 to Number 10 according to the cleared flight area", "verbatim": "Select the correct flight plan from Number 1 to Number 10 accordingly to the flight area you have been cleared to (refer to IFG)."},
+        {"name": "GPS MAP (ARC) technique ranges", "value": "EHSI ARC map 10 mile range with super NAV 5 at 20 mile range", "verbatim": "use EHSI ARC map mode set at 10 mile range with super NAV 5 set at 20 mile range"},
+        {"name": "example left turn in Figure 6.1.", "value": "approximately 130°, course 046°", "verbatim": "A left turn to approximately 130° makes the bearing pointer fall toward the 046° course and makes the DME decrease."}
+      ],
+      "procedure_steps": [
+        "Center Radial (course) Method: set the center radial or center course of the area in the course selector window (CSW) of the EHSI. When center radial is set, the course arrow points away from the NAVAID; when center course is set, the course arrow points towards the NAVAID. The center of the area (laterally) is always toward the CDI.",
+        "Pie-in-the-Sky Method: set one boundary (course) in the CSW and mark the other boundary (course) with the heading marker. Keep the head of the bearing pointer, which always falls, between the head of the course arrow and the heading marker.",
+        "GPS primary technique: select the correct flight plan (Number 1 to Number 10) for the cleared area, then select Nav 5 or Super Nav 5 on the GPS to display the selected flight area.",
+        "GPS MAP secondary technique: use EHSI map mode with map displayed on GPS control head; select range in EHSI map mode so that the area almost completely fills the EHSI. A larger range in the GPS control head may be useful to show adjacent areas and other waypoints of interest.",
+        "GPS MAP (ARC) secondary technique: EHSI ARC map mode at 10 mile range with super NAV 5 set at 20 mile range."
+      ],
+      "common_errors": [
+        "Letting the heading remain constant while relying on the bearing pointer alone — in Figure 6.1., if heading remains constant, the A/C will exit the area due to the DME range."
+      ],
+      "corrections": [
+        "It is common to set the center radial or pie-in-the-sky method underneath in case of GPS failure.",
+        "OBS mode may be used to simulate VOR or DME area orientation if the proper waypoint is available in the database."
+      ],
+      "notes": "In Figure 6.1., if heading remains constant, the A/C will exit the area due to the DME range."
+    },
+    {
+      "section": "6.5",
+      "title": "ENERGY MANAGEMENT",
+      "pages_pdf": [107, 108],
+      "item_mapping": ["contact-04", "contact-12"],
+      "category_hint": ["contact"],
+      "technique_summary": "Efficient energy management allows the sortie profile to be accomplished with a minimum of wasted time and fuel. Energy level is defined by airspeed (kinetic energy) and altitude (potential energy) and is manipulated with power, drag and G-loading. Plan manoeuvres in an order that minimizes the requirement for deliberate energy changes, and make use of the inherent energy gaining or losing properties of individual manoeuvres. Constant awareness of total energy state aids in correct manoeuvre selection and effective profile management.",
+      "parameters": [
+        {"name": "altitude/airspeed exchange rate", "value": "1.000 feet ≈ 50 KIAS", "verbatim": "1.000 feet of altitude equals approximately 50 KIAS of airspeed with the canopy bow on the horizon and power at maximum"},
+        {"name": "altitude for airspeed technique", "value": "MAX power, canopy bow on the horizon", "verbatim": "Altitude for airspeed - MAX power with the canopy bow on the horizon."},
+        {"name": "airspeed for altitude technique", "value": "MAX power, wings level, 20° nose-high", "verbatim": "Airspeed for altitude - MAX power, wings level, and 20° nose-high."},
+        {"name": "optimum energy for aerobatic manoeuvring", "value": "180 to 200 KIAS, midway between top and bottom area limits", "verbatim": "in a typical MOA, optimum energy for aerobatic manoeuvring is 180 to 200 KIAS at an altitude midway between the top and bottom area limits"},
+        {"name": "best energy-gain climb", "value": "140 to 160 KIAS with MAX power", "verbatim": "The best method to gain large amounts of energy is a climb at 140 to 160 KIAS with MAX power."}
+      ],
+      "procedure_steps": [
+        "Losing energy: use low power settings, increased drag (for example, speed brake), or increased AOA (G-loading); a simple way to lose energy is to perform a constant speed descent until the desired energy level is reached.",
+        "Gaining energy: energy gain is enhanced with low AOA (avoid flight near zero-G) and high power.",
+        "Energy losers: Spin; Traffic Pattern Stalls; Cloverleaf; Split-S; Nose-Low Recovery ELP Stalls; High G Turns with Lower Power Settings.",
+        "Energy gainers: Power-On Stalls; Nose-High Recovery; Stability Demonstration; Chandelle.",
+        "Plan the profile so airspeed exiting a Cuban 8 is very close to entry airspeed for a Loop, and so ELP stalls (energy losers) can be flown last at the bottom of the area before RTB."
+      ],
+      "common_errors": [],
+      "corrections": [],
+      "notes": "The optimum-energy technique may not be optimum if the airspace is limited by weather, ATC restrictions, etc."
+    },
+    {
+      "section": "6.6",
+      "title": "POWER-ON STALLS",
+      "pages_pdf": [108, 109],
+      "item_mapping": ["contact-08"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective is proper recognition of an aerodynamic stall and proper recovery with minimum loss of altitude. A/C pitch and bank angle are held constant until control effectiveness is lost, indicated by uncommanded nose drop or unplanned rolling motion. Recovery consists of selection of MAX power, reduction of backstick pressure to break the stall, and a roll to wings-level followed by addition of backstick pressure to the stick shaker while remaining just shy of stall AOA. The manoeuvre is complete when a positive climb is attained, indicated by increasing altitude.",
+      "parameters": [
+        {"name": "airspeed", "value": "above 140 KIAS", "verbatim": "Airspeed – Above 140 KIAS."},
+        {"name": "entry power", "value": "30 - 60% torque", "verbatim": "Power - Entry, 30 - 60% torque. Recovery, MAX."},
+        {"name": "recovery power", "value": "MAX", "verbatim": "Power - Entry, 30 - 60% torque. Recovery, MAX."},
+        {"name": "entry pitch", "value": "15 - 40° Nose-High", "verbatim": "Pitch - Entry, 15 - 40° Nose-High."},
+        {"name": "bank", "value": "0° straight-ahead, 20-30° turning stall", "verbatim": "Bank - 0° for Straight-Ahead Stall, 20-30° for a Turning Stall."},
+        {"name": "FCP visual reference entry", "value": "crook of front windscreen on the horizon", "verbatim": "FCP Visual Reference - Entry, crook of front windscreen on the horizon."},
+        {"name": "FCP visual reference recovery", "value": "initially fire light on the horizon", "verbatim": "FCP Visual Reference - Recovery, initially fire light on the horizon, then as required to safely accelerate to cruise airspeed."},
+        {"name": "recovery AOA", "value": "15.5 to 18 units", "verbatim": "Apply back stick pressure, in a controlled manner with a constantly increasing nose track, to attain 15.5 to 18 units of AOA."},
+        {"name": "altitude gain at 160 KIAS entry", "value": "about 1500 to 2000 feet", "verbatim": "An entry speed of 160 KIAS results in about 1500 to 2000 feet altitude gain."},
+        {"name": "altitude threshold for fire-light reference", "value": "above 20.000 feet MSL", "verbatim": "Unless at very high altitudes (above 20.000 feet MSL), using as reference the fire light on the horizon should preclude this situation."}
+      ],
+      "procedure_steps": [
+        "Clear the area, paying particular attention to the area above and in front of the A/C.",
+        "Straight-Ahead Stall: adjust the PCL to 30 - 60% torque and raise the nose to a pitch attitude between 15° and 40°.",
+        "Maintain attitude by constantly increasing back stick pressure; keep the wings level with coordinated rudder and aileron.",
+        "Initiate recovery when control effectiveness is lost (uncommanded nose drop despite increased backpressure, or uncommanded rolling motion).",
+        "To recover, simultaneously advance the PCL to MAX and smoothly relax back stick forces as necessary to break the stall (decrease AOA to deactivate the stick shaker).",
+        "Use coordinated rudder and aileron to level the wings; as AOA decreases and the stall is broken, positive pressure is felt in the controls.",
+        "Apply back stick pressure in a controlled manner with a constantly increasing nose track to attain 15.5 to 18 units of AOA; recover with a minimum loss of altitude.",
+        "Turning Power-On Stall: same setup, except 20 - 30° of bank in either direction is added; hold the bank angle with rudder and aileron application until control effectiveness is lost. Recovery is the same as for the Straight-Ahead Stall."
+      ],
+      "common_errors": [
+        "Attempting to maintain pitch attitude or bank angle after control effectiveness is lost (\"Do not attempt to maintain pitch attitude or bank angle after control effectiveness is lost.\").",
+        "Waiting for full back stick / for the exact point of full stall before recovering (\"Full back stick may not occur before recovery is required.\").",
+        "Staring at the AOA indicator during the relax step (\"Do not stare at the AOA indicator.\").",
+        "Secondary stall, indicated by upward nose track stopping despite increasing back pressure on the control stick.",
+        "Excessive nose-high attitudes during recovery which result in decreasing airspeed and, if left uncorrected, could lead to another stall.",
+        "At higher pitch attitudes (between 30 and 40°) the stall speed is slower and a greater pitch reduction is necessary to regain flying airspeed (insufficient pitch reduction)."
+      ],
+      "corrections": [
+        "Use \"MAX, Relax, Roll\" to guide initial recovery actions: MAX - select MAX power; Relax - reduce backpressure momentarily out of stick shaker; Roll - roll wings level with coordinated rudder and aileron.",
+        "After actions to break the stall, pull the nose up until the fire light is on the horizon.",
+        "If the nose stops tracking before the fire light reaches the horizon, release back pressure momentarily to let airspeed increase to avoid a secondary stall.",
+        "As power and airspeed increase, more back pressure is needed to establish a climb."
+      ],
+      "notes": "Emphasize observation of A/C handling characteristics during recovery from the stall and not the exact point where the full stall is reached."
+    },
+    {
+      "section": "6.7",
+      "title": "SECONDARY STALL",
+      "pages_pdf": [109, 110],
+      "item_mapping": ["contact-08", "contact-09"],
+      "category_hint": ["contact"],
+      "technique_summary": "During OCF and stall training, a common recovery error is to enter a secondary stall. A secondary stall is an accelerated stall caused by excessive elevator control; it is called a secondary stall because it occurs after a partial recovery from a stall. It is caused by attempting to hasten a stall recovery with excess back pressure. It is the effect of a rushed return to level flight after a stall or spin recovery and demonstrates the value of smooth back pressure and the importance of flying airspeed to the stall recovery.",
+      "parameters": [],
+      "procedure_steps": [],
+      "common_errors": [
+        "During OCF and stall training, a common recovery error is to enter a secondary stall.",
+        "Attempting to hasten a stall recovery with excess back pressure.",
+        "Rushed return to level flight after a stall or spin recovery."
+      ],
+      "corrections": [
+        "Use smooth back pressure and respect the importance of flying airspeed to the stall recovery."
+      ],
+      "notes": null
+    },
+    {
+      "section": "6.8",
+      "title": "ELP STALLS",
+      "pages_pdf": [110, 111],
+      "item_mapping": ["contact-08", "contact-30"],
+      "category_hint": ["contact"],
+      "technique_summary": "ELP stalls are flown to practice recovery from potentially dangerous low airspeed conditions during the ELP and before High Key. Speed may decrease for various reasons including lack of attention, task saturation and attempting to stretch the glide to regain profile parameters. The objective is proper recognition and recovery from an approach to stall situation during ELP with no power available. Inadvertent airspeed decay is simulated at three points during the ELP: en route to High Key, between High and Low Key, and between Low Key and the runway.",
+      "parameters": [
+        {"name": "total altitude required for a full series", "value": "up to approximately 4000 feet", "verbatim": "A full series of ELP stalls may require up to approximately 4000 feet."},
+        {"name": "airspeed clean", "value": "125 KIAS", "verbatim": "Airspeed - Clean, 125 KIAS. Landing configuration, 120 KIAS."},
+        {"name": "airspeed landing configuration", "value": "120 KIAS", "verbatim": "Airspeed - Clean, 125 KIAS. Landing configuration, 120 KIAS."},
+        {"name": "power", "value": "4-6% torque", "verbatim": "Power - 4-6% torque"},
+        {"name": "FCP visual reference recovery clean", "value": "½ prop arc on the horizon", "verbatim": "FCP visual reference (recovery) – Clean, ½ prop arc on the horizon. Landing configuration, prop arc on the horizon"},
+        {"name": "FCP visual reference recovery landing configuration", "value": "prop arc on the horizon (approximately 8° nose-low)", "verbatim": "recover by lowering the pitch attitude to put the prop arc on the horizon (approximately 8° nose-low) until 120 KIAS regained"},
+        {"name": "gear warning horn speed", "value": "approximately 120 KIAS", "verbatim": "allow airspeed to decay until the gear warning horn sounds (approximately 120 KIAS)"},
+        {"name": "bank between High and Low Key", "value": "30°", "verbatim": "Establish a 120 KIAS glide with 30° bank and power set to 4 - 6% torque."},
+        {"name": "altitude loss glide to High Key", "value": "approximately 300 feet", "verbatim": "Altitude loss is approximately 300 feet."},
+        {"name": "altitude loss between High and Low Key", "value": "approximately 800 feet", "verbatim": "Altitude loss is approximately 800 feet."},
+        {"name": "altitude loss between Low Key and runway", "value": "approximately 900 feet", "verbatim": "Altitude loss is approximately 900 feet."}
+      ],
+      "procedure_steps": [
+        "Glide to High Key: establish glide at 125 KIAS with wings level and power set 4 - 6% torque; raise the pitch attitude slightly and allow airspeed to decay until the gear warning horn sounds (approximately 120 KIAS). Recover by lowering the pitch attitude slightly below the normal glide picture and reestablish glide to 125 KIAS.",
+        "Glide between High and Low Key: configure gear down, flaps UP; establish a 120 KIAS glide with 30° bank and power 4 - 6% torque; gently pull back on the stick to raise pitch attitude (approximately level flight turn picture) and allow airspeed to decay until the stick shaker is activated or an approach to stall indication is noted; maintain the turn or profile ground track and recover by lowering the pitch attitude to put the prop arc on the horizon (approximately 8° nose-low) until 120 KIAS regained.",
+        "Glide between Low Key and the runway: configure gear down, flaps TO; establish a 120 KIAS glide with 30° bank turn and power 4 - 6% torque; gently pull back on the stick to raise pitch attitude (approximately level flight turn picture) and allow airspeed to decay until the stick shaker is activated or an approach to stall indication is noted; maintain the turn or profile ground track and recover by lowering pitch attitude to put the prop arc on the horizon (approximately 8° nose-low) until 120 KIAS regained."
+      ],
+      "common_errors": [
+        "Speed may decrease for various reasons including lack of attention, task saturation, and attempting to stretch the glide to regain profile parameters."
+      ],
+      "corrections": [
+        "Recover by lowering the pitch attitude slightly below the normal glide picture (clean) or by putting the prop arc on the horizon, approximately 8° nose-low (configured), until target glide airspeed is regained.",
+        "Maintain the turn or profile ground track during the recovery."
+      ],
+      "notes": "NOTE: Due to altitude loss during the recovery, if an ELP stall between Low Key and the runway is encountered during an actual FL, consideration should be given to Ejection."
+    },
+    {
+      "section": "6.9",
+      "title": "TRAFFIC PATTERN STALLS",
+      "pages_pdf": [111, 112, 113],
+      "item_mapping": ["contact-09"],
+      "category_hint": ["contact"],
+      "technique_summary": "In the traffic pattern, unrecoverable stall or sink rate situations can occur before indications become obvious. If a stall indication occurs during the traffic pattern, disregard ground track and recover. The objective is proper recognition and recovery from approach to stall conditions in the traffic pattern; emphasis is on recognition of approach to stall indications and appropriate recovery procedures, not on the setup or flow from one stall to the next. Four traffic pattern stalls are practiced with three in the A/C; the three practiced in the A/C are configured stalls emphasizing final turn and final stall recovery, and traffic pattern stalls are practiced at all three flap settings. For all TP stalls, recover on approach to stall indication, considered to be the activation of the stick shaker or A/C buffet, whichever occurs first.",
+      "parameters": [
+        {"name": "break stall setup airspeed", "value": "200 KIAS", "verbatim": "Break stall setup, 200 KIAS."},
+        {"name": "turning setup airspeed", "value": "120 KIAS (min)", "verbatim": "Turning setup, 120 KIAS (min)."},
+        {"name": "landing attitude setup airspeed", "value": "100 KIAS (min)", "verbatim": "Landing attitude setup, 100 KIAS (min)."},
+        {"name": "final turn power", "value": "10 to 15 % torque", "verbatim": "Final turn setup, 10 to 15 % torque."},
+        {"name": "recovery power", "value": "MAX", "verbatim": "Recovery: MAX."},
+        {"name": "gear", "value": "Down", "verbatim": "Gear. Down."},
+        {"name": "flaps", "value": "LDG, TO and UP", "verbatim": "Flaps. LDG, TO and UP."},
+        {"name": "initial turn bank", "value": "30°", "verbatim": "Initial turn, 30°."},
+        {"name": "bank to induce overshooting stall", "value": "approximately 40 to 45°", "verbatim": "To induce overshooting stall, approximately 40 to 45°."},
+        {"name": "bank to induce undershooting stall", "value": "approximately 15 to 20°", "verbatim": "To induce undershooting stall, approximately 15 to 20°."},
+        {"name": "landing attitude stall bank", "value": "0°", "verbatim": "Landing attitude stall, 0°."},
+        {"name": "break stall power", "value": "approximately 15 – 20% torque", "verbatim": "At 200 KIAS, retard the PCL to approximately 15 – 20% torque and enter a 60° bank turn."},
+        {"name": "break stall initial bank", "value": "60°", "verbatim": "enter a 60° bank turn"},
+        {"name": "break stall increased bank", "value": "75°-90°", "verbatim": "Midway through the turn, increase bank angle (75°-90°) and back-stick pressure until a stall indication is recognized."},
+        {"name": "break stall heading change", "value": "180°", "verbatim": "When you have completed 180° heading change from your initial heading, roll out and fly a simulated downwind leg."},
+        {"name": "final turn power LDG and TO flaps", "value": "approximately 15-20%", "verbatim": "Use a power setting of approximately 15-20% for LDG and TO flaps, and 10-15% for a No flap approach."},
+        {"name": "final turn power No flap", "value": "10-15%", "verbatim": "Use a power setting of approximately 15-20% for LDG and TO flaps, and 10-15% for a No flap approach."},
+        {"name": "stabilised final-turn airspeed", "value": "110 KIAS minimum (no less than on-speed AOA indication)", "verbatim": "you have stabilised airspeed at 110 KIAS minimum (no less than on – speed AOA indication)"},
+        {"name": "recovery AOA", "value": "15.5 to 18 units", "verbatim": "Maintain recovery AOA (15.5 to 18 units) until fire light is on the horizon."},
+        {"name": "torque yaw onset delay", "value": "approximately two seconds after moving the PCL to MAX", "verbatim": "Anticipate left nose up movement to start approximately two seconds after moving the PCL to MAX."}
+      ],
+      "procedure_steps": [
+        "Break Stall: align the A/C with a good ground reference line (roads or coastline work well) and check altitude; at 200 KIAS retard the PCL to approximately 15 – 20% torque and enter a 60° bank turn; midway through the turn increase bank angle (75°-90°) and back-stick pressure until a stall indication is recognized; recover by reducing the backstick pressure and continue turning using 60° bank; when 180° of heading change is completed, roll out and fly a simulated downwind leg.",
+        "Overshooting (Nose-low) Final-Turn Stall: fly a simulated downwind leg, configure for an overhead pattern and perform the Before Landing Checklist; maintain 120 KIAS minimum and initiate a normal final turn at the simulated perch point; after the turn is established and airspeed is stabilised at 110 KIAS minimum, steadily increase bank angle and back pressure to simulate a steep, overshooting final turn; recover on approach to stall by simultaneously using control stick and rudder forces to decrease AOA, level the wings, and advance power to MAX; minimize altitude loss and maintain recovery AOA (15.5 to 18 units) until fire light is on the horizon.",
+        "Undershooting (Nose-high) Final-Turn Stall: same setup; after the turn is established and stabilised at 110 KIAS minimum, raise the nose slightly and shallow out the bank; continue the turn until approach to stall indications; recovery is the same as for the overshooting final-turn stall, however, since airspeed is initially lower, recovery takes slightly longer.",
+        "Landing Attitude Stall: establish a simulated final approach at the appropriate airspeed depending on flap setting; retard the PCL to idle and execute a simulated roundout for landing; hold the landing attitude constant until an approach to stall indication occurs; recovery is similar to the final turn stalls."
+      ],
+      "common_errors": [
+        "In the traffic pattern, unrecoverable stall or sink rate situations can occur before indications become obvious.",
+        "Losing altitude during the Break Stall recovery (\"Do not lose altitude during the recovery.\").",
+        "Staring at the AOA indicator during the relax step (\"Do not stare at the AOA indicator.\").",
+        "Failing to counter propeller and gyroscopic effects, which force the nose to the left when power is increased from idle to MAX at slow airspeed; the slower the airspeed at recovery, the more pronounced the yaw will be at engine spool up.",
+        "Excessively nose-high attitude with decreasing airspeed during recovery could lead to a secondary stall, because airspeed is very close to the stall margin during a typical traffic pattern stall recovery."
+      ],
+      "corrections": [
+        "Use \"MAX, Relax, Roll\" to guide initial recovery actions (except Break Stall), executing the steps simultaneously: MAX - advance PCL to MAX power; Relax - reduce backpressure momentarily out of stick shaker; Roll - roll wings level with coordinated rudder and aileron.",
+        "Counter the tendency of the nose to move left by using right rudder as torque increases; find a point far in front of the A/C and use right rudder to keep the nose from moving left.",
+        "Raise the nose to put the fire light on the horizon; as power and airspeed build up, increased back pressure is needed to maintain recovery AOA.",
+        "A common technique is to use reverse altimeter and VVI as indications that the A/C is safely climbing.",
+        "If in the actual pattern, do not hesitate to eject if recovery appears unlikely."
+      ],
+      "notes": "If a stall indication occurs during the traffic pattern, disregard ground track and recover. Much like Power-On Stalls, the smoother the entry, the cleaner the stall will be."
+    },
+    {
+      "section": "6.10",
+      "title": "SLOW-FLIGHT",
+      "pages_pdf": [113, 114, 115],
+      "item_mapping": ["contact-07"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective is familiarization and proficiency with A/C performance and characteristics at minimum flying airspeed, and to demonstrate the importance of smooth control application at slow speeds. Slow below 147 KIAS, configure the A/C as briefed, and perform the Before Landing Checklist. Maintain altitude as airspeed decreases; when target slow-flight airspeed is reached, adjust power to maintain airspeed and altitude and trim as required. A/C characteristics are demonstrated using the SCATSAFE acronym.",
+      "parameters": [
+        {"name": "airspeed flaps LDG", "value": "80 - 85 KIAS", "verbatim": "Airspeed - Flaps LDG, 80 - 85 KIAS. Flaps TO, 85 - 90 KIAS. Flaps UP, 90 - 95 KIAS."},
+        {"name": "airspeed flaps TO", "value": "85 - 90 KIAS", "verbatim": "Airspeed - Flaps LDG, 80 - 85 KIAS. Flaps TO, 85 - 90 KIAS. Flaps UP, 90 - 95 KIAS."},
+        {"name": "airspeed flaps UP", "value": "90 - 95 KIAS", "verbatim": "Airspeed - Flaps LDG, 80 - 85 KIAS. Flaps TO, 85 - 90 KIAS. Flaps UP, 90 - 95 KIAS."},
+        {"name": "gear", "value": "Down", "verbatim": "Gear – Down."},
+        {"name": "flaps", "value": "As desired", "verbatim": "Flaps - As desired."},
+        {"name": "slow-down entry speed", "value": "below 147 KIAS", "verbatim": "Slow below 147 KIAS, configure the A/C as briefed, and perform the Before Landing Checklist."},
+        {"name": "adverse yaw demonstration bank / reference offset", "value": "20° bank, reference point approximately 20° off the nose, 20° heading change", "verbatim": "Select two points, one directly in front of the A/C and one approximately 20° to the right or left of the nose. Without applying rudder, initiate a rapid right or left turn using 20° bank."},
+        {"name": "steep turns bank", "value": "towards 60°", "verbatim": "Slowly increase bank towards 60° while adding power and back pressure to maintain level flight."},
+        {"name": "abrupt control movement pitch", "value": "20° nose-high", "verbatim": "abruptly apply back stick pressure to 20° nose-high to simulate snatching the control stick in the flare"},
+        {"name": "coordination exercise bank", "value": "15 - 20° of bank", "verbatim": "Conduct a series of left and right turns, using 15 - 20° of bank."},
+        {"name": "rudder required straight-and-level", "value": "approximately two inches of right rudder", "verbatim": "Approximately two inches of right rudder is required to maintain straight-and-level, coordinated flight."},
+        {"name": "rudder required right turns", "value": "approximately twice the rudder deflection", "verbatim": "Right turns require approximately twice the rudder deflection to maintain coordination."},
+        {"name": "rudder required left turns", "value": "approximately one-half inch of right rudder", "verbatim": "Left turns require approximately one-half inch of right rudder to maintain coordination."}
+      ],
+      "procedure_steps": [
+        "Slow below 147 KIAS, configure the A/C as briefed and perform the Before Landing Checklist; maintain altitude as airspeed decreases.",
+        "When target slow-flight airspeed is reached, adjust power to maintain airspeed and altitude; trim as required.",
+        "S - Straight and Level: note the pitch attitude, torque and rudder deflection required to maintain straight-and-level flight; this is the picture a pilot should see at rotation during take-off or just prior to touchdown during landing.",
+        "C - Control Effectiveness: move the ailerons with small, rapid movements and note that even with aileron movement there is little effect on heading or bank during slow-flight.",
+        "A - Adverse Yaw: initiate a rapid 20° bank turn without rudder and note the initial yaw; after approximately 20° heading change roll out rapidly without rudder and note the nose continues past the roll out point then comes back; repeat with coordinated rudder and note the nose tracks immediately and stops on the selected rollout point.",
+        "T - Torque and Turns: quickly increase power to MAX from straight-and-level coordinated slow-flight and release the controls; the nose tracks up, yaws, rolls left and approaches a stall; when stick shaker is activated reduce power to idle and note the tendency of the nose to track down and right; re-establish slow-flight, increase power to MAX again, this time holding proper takeoff pitch and applying coordinated rudder to maintain a proper nose track.",
+        "S - Steep Turns: slowly increase bank towards 60° while adding power and back pressure to maintain level flight; look at a point on the ground and watch the wingtip pivot around it; the AOA quickly increases, progressing into a stall; roll out of the bank to recover from the impending stall.",
+        "A - Abrupt Control Movement: abruptly apply back stick pressure to 20° nose-high to simulate snatching the control stick in the flare; the AOA rapidly increases and the A/C progresses towards a full stall; release backpressure to recover.",
+        "F - Flap Retraction: from straight-and-level coordinated slow-flight, raise the flaps from LDG to UP without pausing at TO; while the flaps retract, increase pitch attitude to maintain altitude; airspeed initially increases, but as flaps retract towards UP the AOA also increases causing a stall; recover from the stall by selecting LDG flaps.",
+        "E - Coordination Exercise: conduct a series of left and right turns using 15 - 20° of bank, keeping the ball centered with coordinated rudder."
+      ],
+      "common_errors": [
+        "During operation on the back side of the power curve, increased AOA results in increased drag and a stall if not carefully flown.",
+        "Rapid control inputs, especially in the flare, often do not give the A/C sufficient time to respond.",
+        "Lack of coordinated rudder during a turn results in weaving or \"S-ing\" on final.",
+        "The T-6 initially tends to pitch up, yaw and roll left if positive control is not maintained during full power take-offs and touch and go landings.",
+        "High angles of bank at slow airspeeds result in reduction in turning radius versus increased turn rates; the AOA quickly increases, progressing into a stall.",
+        "Fixation on the aim point during landing can cause an abrupt flare; late recognition of the rapidly approaching runway causes the pilot to abruptly raise the nose, causing an approach-to-stall condition, a hard landing, or both; the stick shaker activates but there is no decrease in sink rate.",
+        "Flap retraction prior to the recommended airspeed causes the A/C to lose lift and develop a sink rate."
+      ],
+      "corrections": [
+        "In slow-flight, smooth, positive inputs are required to effectively control the A/C as there is less airflow over the control surfaces at slow airspeeds.",
+        "If the A/C completely stalls during slow-flight, recover by alleviating the condition that caused the stall (decrease the AOA, lower the flaps, decrease bank, etc.). Note that this is not the primary method of stall recovery and is used only during slow-flight.",
+        "If the stall condition is not immediately corrected, or if an approach to stall indication occurs at any other time, initiate traffic pattern stall recovery procedures.",
+        "To avoid an abrupt flare on landing, view the total landing environment and apply controls in a smooth, positive manner.",
+        "Positive control of the A/C ensures safe takeoffs, touch-and-go landings and go-arounds."
+      ],
+      "notes": "Approach to stall indications (stick shaker or light buffet) are common while executing slow-flight. Slow-flight is conveniently flown before or after traffic pattern stalls, however it may be performed at any time."
+    },
+    {
+      "section": "6.11",
+      "title": "STABILITY DEMONSTRATION",
+      "pages_pdf": [115, 116],
+      "item_mapping": ["contact-05"],
+      "category_hint": ["contact"],
+      "technique_summary": "The stability demonstration shows the low speed flight characteristics of the A/C in extreme nose-high attitudes. Although airspeed is below level-flight stall speed, the A/C will not stall if there is no attempt to attain level flight, and the A/C will not depart controlled flight (for example, spin) if not stalled. The objective is to demonstrate that the A/C will not stall, regardless of airspeed, if there is no pilot input on it. The manoeuvre is complete when the A/C is returned to level flight.",
+      "parameters": [
+        {"name": "entry airspeed", "value": "160 KIAS", "verbatim": "Airspeed – Entry= 160 KIAS. Recovery= 80 KIAS or stick shaker."},
+        {"name": "recovery airspeed", "value": "80 KIAS or stick shaker", "verbatim": "Airspeed – Entry= 160 KIAS. Recovery= 80 KIAS or stick shaker."},
+        {"name": "entry power", "value": "60 % torque", "verbatim": "Power – Entry= 60 % torque. Recovery= idle."},
+        {"name": "recovery power", "value": "idle", "verbatim": "Power – Entry= 60 % torque. Recovery= idle."},
+        {"name": "attitude", "value": "40-45° pitch, wings level", "verbatim": "Attitude - Raise the nose to 40-45° pitch attitude wings level."},
+        {"name": "altitude required", "value": "2000 feet above entry", "verbatim": "Altitude Required - 2000 feet above entry."},
+        {"name": "G limit at recovery", "value": "avoid 0 +/- 0.25 Gs", "verbatim": "Recover – Select idle power and neutralize controls, avoid 0 +/- 0.25 Gs."},
+        {"name": "G to maintain during recovery", "value": "slightly more than 0.25 Gs", "verbatim": "Crosscheck the G-meter and maintain slightly more than 0.25 Gs with a small amount of back-stick pressure on the control stick to avoid exceeding engine operating limits.", "verbatim_spans_pagebreak": true},
+        {"name": "zero-G time limit", "value": "greater than five seconds", "verbatim": "Avoid zero-G flight for greater than five seconds due to engine operating limitations."}
+      ],
+      "procedure_steps": [
+        "Perform prestall checks; accelerate to 160 KIAS, set 60 % torque, and clear the area.",
+        "Raise the nose to a 45° pitch attitude and maintain coordinated wings-level flight.",
+        "Hold this attitude until flying airspeed is depleted to approximately 80 KIAS (or at first stick shaker).",
+        "Recover by selecting idle power and neutralizing all controls.",
+        "Allow the nose to lower until positive pressure is felt on the controls, indicating the A/C is regaining flying airspeed.",
+        "Recover to level flight without stalling the A/C."
+      ],
+      "common_errors": [
+        "Remaining at zero-G for too long during the recovery (\"Avoid zero-G flight for greater than five seconds due to engine operating limitations.\")."
+      ],
+      "corrections": [
+        "Estimate the 45° nose-high attitude by visualizing the feet on the horizon.",
+        "Use memory aid \"idle-ize, neutralize\" as a guide for recovery actions at 80 KIAS (or stick shaker).",
+        "Crosscheck the G-meter and maintain slightly more than 0.25 Gs with a small amount of back-stick pressure on the control stick to avoid exceeding engine operating limits."
+      ],
+      "notes": null
+    },
+    {
+      "section": "6.12",
+      "title": "INADVERTENT DEPARTURE FROM CONTROLLED FLIGHT (OCF)",
+      "pages_pdf": [116],
+      "item_mapping": ["contact-10", "contact-11"],
+      "category_hint": ["contact"],
+      "technique_summary": "The A/C is in OCF if it does not respond immediately and in a normal manner to control inputs. If in OCF, apply the boldface recovery procedure (OCF recovery) to return the A/C to level flight; in all cases observe the minimum uncontrolled ejection altitude. The OCF recovery is also used when the A/C is in a nose-high unusual attitude and situational awareness is lost to the point of disorientation; it provides a guaranteed, predictable method to return the A/C to level flight and regain SA.",
+      "parameters": [
+        {"name": "minimum uncontrolled ejection altitude", "value": "6.000 feet AGL", "verbatim": "EJECT if A/C is not recovered until minimum uncontrolled ejection altitude (6.000 feet AGL)."}
+      ],
+      "procedure_steps": [
+        "Accomplish the OCF recovery simultaneously: reduce the PCL to idle; neutralize the flight controls; check the altitude (idle-ize, neutralize, altitude check).",
+        "After the controls are neutralized, expect the airspeed to dissipate and the nose to lower as the A/C seeks to regain flying airspeed.",
+        "Allow the nose to lower until positive control pressure is felt; the nose may near the vertical during this stage of the recovery.",
+        "Upon regaining flying airspeed, recover the A/C to level flight."
+      ],
+      "common_errors": [
+        "An unloaded recovery may result in a considerable altitude loss.",
+        "Failing to recover by the minimum uncontrolled ejection altitude (\"EJECT if A/C is not recovered until minimum uncontrolled ejection altitude (6.000 feet AGL).\")."
+      ],
+      "corrections": [
+        "Initially, A/C control authority is minimal, but it returns to normal as airspeed builds up in the dive.",
+        "An unloaded recovery may result in a considerable altitude loss.",
+        "EJECT if the A/C is not recovered by the minimum uncontrolled ejection altitude (6.000 feet AGL)."
+      ],
+      "notes": "Section 6 of the flight manual contains detailed information about departures from controlled flight; recovery procedure details are in section 3 of the flight manual."
+    },
+    {
+      "section": "6.13",
+      "title": "INTENTIONAL SPIN ENTRY (emphasizing departure recognition and recovery)",
+      "pages_pdf": [116, 117],
+      "item_mapping": ["contact-10"],
+      "category_hint": ["contact"],
+      "technique_summary": "The emphasis in primary pilot training is on departure from controlled flight recognition and recovery. On most contact sorties where OCF recoveries are performed, recovery will be initiated within one turn of the application of rudder, and recovery will utilize OCF recovery procedures. The purpose is to recognize what it looks and feels like when an A/C departs controlled flight, practice OCF recovery from intentional departure, increase confidence in the ability to recover in case of inadvertent OCF, and maintain situational awareness and the ability to function effectively when experiencing unusual attitudes.",
+      "parameters": [
+        {"name": "entry airspeed", "value": "140 KIAS (min)", "verbatim": "Airspeeds - Initiate entry at 140 KIAS (min). Spin entry, approximately 80 KIAS."},
+        {"name": "spin entry airspeed", "value": "approximately 80 KIAS", "verbatim": "Airspeeds - Initiate entry at 140 KIAS (min). Spin entry, approximately 80 KIAS."},
+        {"name": "power", "value": "Idle", "verbatim": "Power - Idle."},
+        {"name": "pitch", "value": "15 to 40°", "verbatim": "Pitch - 15 to 40°."},
+        {"name": "rudder at spin entry", "value": "Full deflection in spin direction", "verbatim": "Rudder - Full deflection in spin direction."},
+        {"name": "elevator at spin entry", "value": "Full aft stick", "verbatim": "Elevator - Full aft stick."},
+        {"name": "ailerons at spin entry", "value": "Neutral", "verbatim": "Ailerons - Neutral."},
+        {"name": "recovery initiation", "value": "within one turn of the application of rudder", "verbatim": "Initiate OCF recovery procedure within one turn of the application of rudder."}
+      ],
+      "procedure_steps": [
+        "Accomplish pre-spin checks and adhere to restrictions in accordance with GR 1T-6A-11.",
+        "Attain level flight at approximately 140 KIAS; raise the nose 15 - 40° nose-high and retard the PCL to idle; place both hands on the control stick.",
+        "Only the Instructor can push the Warning Silence Button to silence the gear warning horn during deceleration.",
+        "At spin entry airspeed (approximately 80 KIAS) the pitch attitude should be 15 - 40° nose-high; apply full rudder in the desired direction of spin, with the control stick full aft (ailerons neutral).",
+        "Initiate OCF recovery procedure within one turn of the application of rudder.",
+        "Cross check altitude and recover from the dive."
+      ],
+      "common_errors": [],
+      "corrections": [
+        "Use memory aid \"idle-ize, neutralize\" to guide recovery actions.",
+        "Physically recheck the PCL to ensure it is in idle.",
+        "Position all flight controls to neutral position.",
+        "Check altitude and recover from dive to level flight; as a technique, verbalize the altitude.",
+        "As a technique, verbalize the oil pressure before advancing the PCL."
+      ],
+      "notes": null
+    },
+    {
+      "section": "6.14",
+      "title": "INTENTIONAL SPIN ENTRY (emphasizing steady state spin recognition and recovery)",
+      "pages_pdf": [118, 119],
+      "item_mapping": ["contact-10"],
+      "category_hint": ["contact"],
+      "technique_summary": "The purpose of accomplishing a near steady state spin is to experience the characteristics of and recover from an A/C in steady state spin. The emphasis should be on spin characteristics (18+ AOA, turn needle deflection, almost constant airspeed and rotation rate), not just counting turns. Recoveries from these spins will utilize Erect Spin Recovery procedures and be initiated when the airspeed stabilizes at 120-135 KIAS.",
+      "parameters": [
+        {"name": "entry airspeed", "value": "140 KIAS (min)", "verbatim": "Airspeeds - Initiate entry, 140 KIAS (min). Spin entry, approximately 80 KIAS."},
+        {"name": "spin entry airspeed", "value": "approximately 80 KIAS", "verbatim": "Airspeeds - Initiate entry, 140 KIAS (min). Spin entry, approximately 80 KIAS."},
+        {"name": "power", "value": "Idle", "verbatim": "Power - Idle."},
+        {"name": "pitch", "value": "15 to 40°", "verbatim": "Pitch - 15 to 40°."},
+        {"name": "rudder at spin entry", "value": "Full deflection in spin direction", "verbatim": "Rudder - Full deflection in spin direction."},
+        {"name": "elevator at spin entry", "value": "Full aft stick; pitch trim set for take off (green band on gauge) prior to spin entry", "verbatim": "Elevator - Full aft stick. (Pitch trim should be set for take off (green band on gauge) prior to spin entry."},
+        {"name": "ailerons at spin entry", "value": "Neutral", "verbatim": "Ailerons - Neutral."},
+        {"name": "steady state spin AOA", "value": "18+ AOA", "verbatim": "The emphasis should be on spin characteristics (18+ AOA, turn needle deflection, almost constant airspeed and rotation rate) not just counting turns."},
+        {"name": "recovery initiation airspeed", "value": "120-135 KIAS", "verbatim": "Initiate Erect Spin Recovery procedures when the airspeed stabilizes at 120-135 KIAS."}
+      ],
+      "procedure_steps": [
+        "Accomplish pre-spin checks and adhere to restrictions in accordance with GR 1T-6A-11.",
+        "Attain level flight at approximately 140 KIAS; raise the nose to 15 to 40° nose-high and reduce the PCL to idle. Only the Instructor pushes the Warning Silence Button to silence the gear warning horn during deceleration.",
+        "At spin entry airspeed (approximately 80 KIAS) the pitch attitude should be 15 - 40° nose-high; apply full rudder in the desired direction of spin, control stick full aft (ailerons neutral).",
+        "Initiate Erect Spin Recovery procedures when the airspeed stabilizes at 120-135 KIAS.",
+        "Cross check altitude and recover from the dive."
+      ],
+      "common_errors": [],
+      "corrections": [
+        "Use memory aid \"idle-ize, neutralize\" to guide recovery actions.",
+        "Physically recheck the PCL to ensure it is in idle.",
+        "Position full opposite Rudder to spin direction.",
+        "Position Control stick forward of neutral.",
+        "Wait for the A/C to cease spinning.",
+        "Check altitude and recover from dive to level flight; as a technique, verbalize the altitude."
+      ],
+      "notes": null
+    },
+    {
+      "section": "6.15",
+      "title": "CONTACT RECOVERIES FROM ABNORMAL FLIGHT",
+      "pages_pdf": [119],
+      "item_mapping": ["contact-11"],
+      "category_hint": ["contact"],
+      "technique_summary": "Recovery may be required due to an improperly flown manoeuvre, disorientation, area boundaries (lateral or vertical), an A/C malfunction, or traffic conflicts.",
+      "parameters": [],
+      "procedure_steps": [],
+      "common_errors": [],
+      "corrections": [],
+      "notes": "Introductory paragraph to sections 6.16 - 6.18."
+    },
+    {
+      "section": "6.16",
+      "title": "NOSE-HIGH RECOVERY (Figure 6.2.)",
+      "pages_pdf": [119, 120],
+      "item_mapping": ["contact-11"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective is expeditious return to level flight from a nose-high attitude, without departing controlled flight or exceeding A/C limits. T-6 aerobatics require nose-high attitudes, and a nose-high attitude can be encountered with insufficient airspeed to continue the manoeuvre; immediate and proper recovery procedures prevent aggravated stall and spin entry. Set power to MAX and initiate a coordinated roll with backpressure to bring the nose towards the nearest horizon; as the nose approaches the horizon, roll to an upright attitude.",
+      "parameters": [
+        {"name": "power", "value": "MAX", "verbatim": "Set power to MAX and initiate a coordinated roll with backpressure to bring the nose of the A/C towards the nearest horizon."},
+        {"name": "power reduction in low-airspeed nose-high situations", "value": "usually below 60% torque", "verbatim": "a reduction in power may be required (usually below 60% torque) and all available control authority may be required to smoothly return the A/C to level flight"}
+      ],
+      "procedure_steps": [
+        "Set power to MAX and initiate a coordinated roll with backpressure to bring the nose towards the nearest horizon.",
+        "Depending on initial airspeed and A/C attitude, a wings-level, inverted attitude may be reached; as the nose approaches the horizon, roll to an upright attitude.",
+        "If airspeed is low, delay the rollout until the nose is definitely below the horizon; in some cases the nose has to be flown well below the horizon to regain enough airspeed to feel positive pressure on the controls.",
+        "When airspeed is sufficient, roll wings level, raise the nose, check for normal oil pressure indications, and use power as required to recover to level flight."
+      ],
+      "common_errors": [
+        "Being aggressive when pulling to the horizon or pulling up from a nose-low attitude (\"Do not be aggressive when pulling to the horizon or pulling up from a nose-low attitude.\").",
+        "Encountering a nose-high attitude with insufficient airspeed to continue the manoeuvre."
+      ],
+      "corrections": [
+        "The stick shaker and airframe buffet indicate a potential for stall; decrease back stick pressure before the stall.",
+        "In all cases, observe system limitations when operating near zero-G.",
+        "During some nose-high, low airspeed situations, when the A/C responds to inputs slowly due to low airspeed or torque effect, a reduction in power may be required (usually below 60% torque) and all available control authority may be required to smoothly return the A/C to level flight.",
+        "If the A/C does not respond normally, or if situational awareness is lost, an OCF recovery should be accomplished."
+      ],
+      "notes": null
+    },
+    {
+      "section": "6.17",
+      "title": "NOSE-LOW RECOVERY (Figure 6.3.)",
+      "pages_pdf": [120, 121],
+      "item_mapping": ["contact-11"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective is expeditious recovery to level flight from a nose-low attitude with minimum altitude loss and without exceeding A/C limits. T-6 aerobatics require nose-low attitudes; immediate and proper recovery procedures prevent a high-speed dive or excessive G-forces. Roll the A/C towards the nearest horizon, level the wings, then pull up to obtain level flight using up to the maximum allowable G force, using power and speed brake as required.",
+      "parameters": [
+        {"name": "maximum allowable airspeed", "value": "316 KIAS", "verbatim": "Do not exceed maximum allowable airspeed (316 KIAS)."},
+        {"name": "speed brake / idle technique threshold", "value": "approaching 200 KIAS or greater", "verbatim": "Approaching 200 KIAS or greater select idle and extend speed brake."}
+      ],
+      "procedure_steps": [
+        "Roll the A/C towards the nearest horizon and level the wings.",
+        "Pull up to obtain level flight using up to the maximum allowable G force; use power and speed brake as required.",
+        "Accomplish a proper AGSM as G-loading increases during recovery."
+      ],
+      "common_errors": [
+        "Exceeding maximum allowable airspeed (316 KIAS); airspeed may continue to increase as the nose is raised, and maximum airspeed can occur just before level flight is attained."
+      ],
+      "corrections": [
+        "Approaching 200 KIAS or greater select idle and extend speed brake."
+      ],
+      "notes": null
+    },
+    {
+      "section": "6.18",
+      "title": "INVERTED RECOVERY",
+      "pages_pdf": [121],
+      "item_mapping": ["contact-11"],
+      "category_hint": ["contact"],
+      "technique_summary": "When slightly nose-high, nose-low, or near an inverted position, recover by rolling in the shortest direction to set the A/C in an upright position, adding power as required. For purely inverted recoveries, execute a coordinated roll towards the nearest horizon.",
+      "parameters": [],
+      "procedure_steps": [
+        "Roll in the shortest direction to set the A/C upright, adding power as required.",
+        "For purely inverted recoveries, execute a coordinated roll towards the nearest horizon."
+      ],
+      "common_errors": [],
+      "corrections": [
+        "Technique: roll to the blue or sky."
+      ],
+      "notes": null
+    },
+    {
+      "section": "6.19",
+      "title": "AEROBATICS (Table 6.1.)",
+      "pages_pdf": [121, 122],
+      "item_mapping": ["contact-12"],
+      "category_hint": ["contact"],
+      "technique_summary": "Aerobatic manoeuvres develop techniques for obtaining maximum flight performance from the A/C. Aerobatics explore the entire performance envelope and should be smoothly executed; aerobatic practice improves feel for the A/C and the ability to coordinate the flight controls while remaining oriented regardless of attitude. Training emphasis is on smoothness and proper nose track during the manoeuvre. Strive to use the entry parameters. The left hand is always on the PCL and the right hand is always on the control stick.",
+      "parameters": [
+        {"name": "Aileron Roll (Table 6.1.)", "value": "220 KIAS, 80% torque, +1.000 feet, Neutral energy", "verbatim": "1 Aileron Roll 220 80% +1.000 feet Neutral"},
+        {"name": "Barrel Roll (Table 6.1.)", "value": "220 KIAS, 80% torque, +1.500 feet / -2.000 feet, Neutral energy", "verbatim": "2 Barrel Roll 220 80% +1.500 feet-2.000 feet Neutral"},
+        {"name": "Chandelle (Table 6.1.)", "value": "250 KIAS, MAX, +3.500 feet, Gaining", "verbatim": "3 Chandelle 250 MAX +3.500 feet Gaining"},
+        {"name": "Cloverleaf (Table 6.1.)", "value": "220 KIAS, 80% torque, +3.000 feet / -1000 feet, Slightly losing", "verbatim": "4 Cloverleaf 220 80% +3.000 feet-1000 feet Slightly losing"},
+        {"name": "Cuban Eight (Table 6.1.)", "value": "250 KIAS, MAX, +3.000 feet, Neutral", "verbatim": "5 Cuban Eight 250 MAX +3.000 feet Neutral"},
+        {"name": "Immelmann (Table 6.1.)", "value": "250 KIAS, MAX, +3.000 feet, Gaining", "verbatim": "6 Immelmann 250 MAX +3.000 feet Gaining"},
+        {"name": "Lazy Eight (Table 6.1.)", "value": "220 KIAS, 80% torque, +2.000 feet / -1.000 feet, Neutral", "verbatim": "7 Lazy Eight 220 80% +2.000 feet-1.000 feet Neutral"},
+        {"name": "Loop (Table 6.1.)", "value": "250 KIAS, MAX, +3.000 feet, Neutral", "verbatim": "8 Loop 250 MAX +3.000 feet Neutral"},
+        {"name": "Split-S (Table 6.1.)", "value": "120 KIAS, Idle to 80%, +500 feet / -2.000 feet (75%) / -2.500 feet (IDLE), Losing", "verbatim": "9 Split-S 120 Idle to 80% +500 feet –2.000 feet(75%)-2.500 feet(IDLE) Losing"}
+      ],
+      "procedure_steps": [],
+      "common_errors": [],
+      "corrections": [],
+      "notes": "Indicated torque varies relative to altitude and airspeed without changing the PCL position (See Table 6.1.)."
+    },
+    {
+      "section": "6.20",
+      "title": "AILERON ROLL (Figure 6.4.)",
+      "pages_pdf": [122, 123],
+      "item_mapping": ["contact-12"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective is to complete a 360° roll with a constant roll rate. The aileron roll is a 360° roll about the longitudinal axis of the A/C; the manoeuvre is complete when the wings are again parallel to the horizon. The nose of the A/C does not roll around a specific point in the roll.",
+      "parameters": [
+        {"name": "airspeed", "value": "220 KIAS", "verbatim": "Airspeed - 220 KIAS."},
+        {"name": "power", "value": "80 %", "verbatim": "Power - 80 %."},
+        {"name": "attitude", "value": "Wings level entry, 20-30° nose-high pitch attitude", "verbatim": "Attitude - Wings level entry, 20-30° nose-high pitch attitude."},
+        {"name": "FCP visual reference", "value": "Corner of front windscreen on the horizon to start roll", "verbatim": "FCP visual reference - Corner of front windscreen on the horizon to start roll."},
+        {"name": "altitude required", "value": "+1.000 feet", "verbatim": "1 Aileron Roll 220 80% +1.000 feet Neutral"},
+        {"name": "20° nose-high visual cue", "value": "the clock is approximately on the horizon", "verbatim": "At 20° nose-high, the clock is approximately on the horizon."},
+        {"name": "30° nose-high visual cue", "value": "the stand-by airspeed indicator is on the horizon", "verbatim": "At 30° nose-high, the stand-by airspeed indicator is on the horizon."}
+      ],
+      "procedure_steps": [
+        "Attain entry parameters and smoothly raise the nose to 20 - 30° nose-high pitch attitude.",
+        "Relax back stick pressure and stop nose track, then roll the A/C left or right using coordinated aileron and rudder.",
+        "As the A/C approaches wings level, neutralize the rudder and aileron and return to level flight."
+      ],
+      "common_errors": [],
+      "corrections": [
+        "In the T-6, an aileron roll to the left requires less rudder and aileron deflection than a roll to the right, due to engine torque.",
+        "Visual references help keep focus outside."
+      ],
+      "notes": null
+    },
+    {
+      "section": "6.21",
+      "title": "LAZY 8 (Figure 6.5.)",
+      "pages_pdf": [123, 124, 125],
+      "item_mapping": ["contact-12"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective is to maintain coordinated flight through two successive, symmetric, opposite direction turns that define the manoeuvre. This is a slow, lazy manoeuvre that describes a horizontal figure eight at the horizon, with the horizon line bisecting the figure eight lengthwise. Pitch, bank and airspeed constantly change; the manoeuvre is complete after two 180° turns with the A/C in level flight.",
+      "parameters": [
+        {"name": "airspeed", "value": "220 KIAS", "verbatim": "Airspeed - 220 KIAS."},
+        {"name": "power", "value": "80%", "verbatim": "Power - 80%."},
+        {"name": "attitude", "value": "Entry wings level; 90° MAX bank, 45° MAX nose-high pitch", "verbatim": "Attitude - Entry, wings level. 90° MAX bank, 45° MAX Nose-High pitch."},
+        {"name": "altitude", "value": "approximately 2.000 feet above and 1.000 below entry altitude", "verbatim": "Altitude - Approximately 2.000 feet above and 1.000 below entry altitude."},
+        {"name": "FCP visual reference", "value": "bottom foot on or slightly above horizon at top of leaf, feet splitting the horizon through the horizon line, top foot on horizon at bottom of leaf", "verbatim": "FCP visual reference - Bottom foot on or slightly above horizon at top of leaf, feet splitting the horizon as you come through the horizon line, top foot on horizon at bottom of leaf."},
+        {"name": "highest pitch attitude timing", "value": "approximately 45° at 45° of turn (halfway to the reference point)", "verbatim": "Time the turn and pull-up so the nose reaches the highest pitch attitude (approximately 45°) when the A/C has turned 45° or halfway to the reference point."},
+        {"name": "maximum bank at the horizon", "value": "80° - 90°", "verbatim": "The A/C should be pointed to the reference point with a maximum bank of 80° - 90° reached when the nose passes through the horizon."},
+        {"name": "lowest airspeed", "value": "approximately 100 KIAS below entry airspeed", "verbatim": "The lowest airspeed is achieved at this point (approximately 100 KIAS below entry airspeed)."},
+        {"name": "attitude at 135° of turn", "value": "nose at lowest attitude, bank 45°", "verbatim": "When the A/C has turned 135°, the nose should be at its lowest attitude and the bank should be 45°."},
+        {"name": "nose-low airspeed relationship (technique)", "value": "approximately 190 KIAS at 30° nose-low, 200 KIAS at 20° nose-low (for 220 KIAS wings-level)", "verbatim": "the number of KIAS below wings level airspeed should be approximately equal to the number of degrees Nose-Low. For example, if the wings level desired airspeed is 220 KIAS, the airspeed should be approximately 190 KIAS at 30° nose-low, 200 KIAS at 20° nose-low, etc."},
+        {"name": "roll-around bank in nose-up part (technique)", "value": "approximately 60° bank", "verbatim": "During the nose up part of turns, pull back the stick to put the bottom foot (foot on inside of turn) on top of the horizon and roll around it until reaching approximately 60° bank."}
+      ],
+      "procedure_steps": [
+        "Begin from straight-and-level flight with entry airspeed and power setting; select the desired reference point on the horizon or ground and align the A/C so the reference point is directly over the wingtip.",
+        "Apply aileron, rudder and elevator pressures simultaneously to start a gradual climbing turn in the direction of the reference point; the initial bank should be very shallow to prevent excessive turn rate.",
+        "Time the turn and pull-up so the nose reaches the highest pitch attitude (approximately 45°) when the A/C has turned 45°, or halfway to the reference point.",
+        "Bank continues to increase as the nose falls; the A/C should be pointed to the reference point with a maximum bank of 80° - 90° reached when the nose passes through the horizon, at the lowest airspeed.",
+        "Let the nose fall and begin to roll out of the bank; the second half of the leaf (nose below horizon) should be symmetric and approximately the same size as the first half.",
+        "At 135° of turn the nose should be at its lowest attitude and the bank should be 45°; continue blending control stick and rudder pressure to simultaneously raise the nose and level the wings.",
+        "The A/C should be wings level with entry airspeed as the nose passes through the horizon, having completed 180° of turn; without delay begin the second leaf in the opposite direction."
+      ],
+      "common_errors": [
+        "Freezing the pitch or bank when passing through the horizon (\"Do not freeze the pitch or bank when passing through the horizon.\").",
+        "Excessive turn rate caused by too much initial bank (\"The initial bank should be very shallow to prevent excessive turn rate.\").",
+        "Asymmetric leaves — the second half of the leaf should be symmetric and approximately the same size as the first half, and the bank should change at the same rate as during the nose up portion.",
+        "Selecting reference points too close to the A/C (\"The selected reference points should be far from the A/C (not beneath the wing) so you don't fly over them.\")."
+      ],
+      "corrections": [
+        "Use outside references and the attitude indicator to crosscheck pitch and bank attitudes.",
+        "Monitor the progress of the turn by checking the outside reference point (it should be at the opposite shoulder from the manoeuvre start).",
+        "Set up perpendicular to a long road or section line and visualize the road as the straight line part of a dollar sign ($); the two turns complete the \"S\" portion.",
+        "If ground references are unavailable, the heading bug can be set to the initial heading and used to monitor the progress of the turns.",
+        "Look in the direction of the turn and clear throughout the manoeuvre."
+      ],
+      "notes": "Control pressure constantly changes due to changing bank, pitch and airspeed. As the nose is raised, the airspeed decreases, causing the rate of turn to increase."
+    },
+    {
+      "section": "6.22",
+      "title": "BARREL ROLL (Figure 6.6.)",
+      "pages_pdf": [126, 127],
+      "item_mapping": ["contact-12"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective is to maintain coordinated flight through a 360° roll that describes a circle around a point near the horizon. A barrel roll is a coordinated roll in which the nose of the A/C describes a circle around a point on or near the horizon; positive seat pressure should be felt throughout the roll and it is practiced in both directions. The manoeuvre is complete when the A/C is wings level, abeam the reference point on the original side, at approximately entry airspeed.",
+      "parameters": [
+        {"name": "airspeed", "value": "220 KIAS", "verbatim": "Airspeed - 220 KIAS."},
+        {"name": "power", "value": "80 % torque", "verbatim": "Power - 80 % torque."},
+        {"name": "attitude", "value": "Entry, wings level", "verbatim": "Attitude - Entry, wings level."},
+        {"name": "altitude", "value": "approximately 1500 feet above and 2.000 below entry altitude", "verbatim": "Altitude - Approximately 1500 feet above and 2.000 below entry altitude."},
+        {"name": "FCP visual reference", "value": "Reference point at or near the corner of front windscreen", "verbatim": "FCP visual reference - Reference point at or near the corner of front windscreen."},
+        {"name": "initial turn displacement", "value": "up to 45° to the side of the reference point", "verbatim": "Keep the A/C in near level flight until it has turned up to 45° to the side of the reference point."}
+      ],
+      "procedure_steps": [
+        "Select a reference point, such as a cloud or landmark, directly in front of the A/C, on or slightly above the horizon.",
+        "Set power and attain entry airspeed with the nose of the A/C below the reference point.",
+        "Begin a coordinated turn in the opposite direction of the desired roll; keep the A/C in near level flight until it has turned up to 45° to the side of the reference point, then roll out of the initial turn so the wings are level as the A/C passes through the horizon.",
+        "From level flight, increase pitch attitude and bank; as the bank reaches 90° the A/C should be directly above the reference point.",
+        "Passing 90° of bank, relax some back pressure and increase aileron deflection to continue the roll with reduced airspeed; plan to roll so the wings become level just as the A/C reaches the inverted level-flight attitude, displaced from the reference point the same distance as at the beginning.",
+        "Continue the roll and apply increased elevator pressure; as the bank again reaches 90° at the bottom of the manoeuvre, the nose track should continue to arc around the reference point.",
+        "In the last quarter of the roll, increase back stick pressure because gravity is now working against the lift vector; maintain coordinated control pressure so the nose completes the circle around the reference point, ending up wings level at the horizon."
+      ],
+      "common_errors": [
+        "Failing to keep the distance from the reference point constant — the distance from the reference point defines the size of the barrel roll and it should remain constant throughout the manoeuvre.",
+        "Holding excessive back pressure past 90° of bank; back pressure must be reduced compared to the first quarter of the roll because gravity is now in the same direction as the lift vector (downward) when inverted."
+      ],
+      "corrections": [
+        "The manoeuvre should be entered from level flight at briefed entry parameters, with a reference point selected in the direction of the roll.",
+        "Choosing the reference point above the horizon and within the canopy bow helps ensure reasonable displacement and barrel roll size."
+      ],
+      "notes": "The distance to the side of the reference point depends on the initial turn and speed of the rollout."
+    },
+    {
+      "section": "6.23",
+      "title": "LOOP (Figure 6.7.)",
+      "pages_pdf": [127, 128, 129],
+      "item_mapping": ["contact-12"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective is to complete a 360° turn in the vertical plane with a constant nose track. Because it is executed in a single plane, the elevator is the principal control surface used during the manoeuvre, while ailerons and rudder are used to maintain directional control and coordinated flight. The manoeuvre is complete when the wings are level at the horizon on the same heading as at entry.",
+      "parameters": [
+        {"name": "airspeed", "value": "250 KIAS", "verbatim": "Airspeed - 250 KIAS."},
+        {"name": "power", "value": "MAX", "verbatim": "Power - MAX."},
+        {"name": "attitude", "value": "Wings level to horizon throughout manoeuvre", "verbatim": "Attitude - Wings level to horizon throughout manoeuvre."},
+        {"name": "altitude", "value": "approximately 3000 feet above entry altitude", "verbatim": "Altitude - Approximately 3000 feet above entry altitude."},
+        {"name": "FCP visual reference", "value": "Wing tips equidistant from horizon in pullup", "verbatim": "FCP visual reference - Wing tips equidistant from horizon in pull up."},
+        {"name": "entry attitude", "value": "straight-and-level up to 20° nose-low", "verbatim": "Begin straight-and-level up to 20° Nose-Low, with power setting at MAX."},
+        {"name": "pull-up G", "value": "3 - 4 Gs", "verbatim": "Smoothly pull the stick using 3 - 4 Gs."},
+        {"name": "airspeed over the top", "value": "approximately 100 to 120 KIAS", "verbatim": "Airspeed over the top should be approximately 100 to 120 KIAS, wings level and inverted."},
+        {"name": "airspeed lead point", "value": "20 KIAS for a 20° nose-low entry", "verbatim": "Anticipate entry by 20 KIAS (an attitude of 20° Nose-Low requires a 20 KIAS lead point to achieve the desired target airspeed by the time the nose is back to level flight)."},
+        {"name": "nose deviation with insufficient rudder", "value": "up to 30° off desired track", "verbatim": "As airspeed decreases, insufficient rudder may allow the nose to deviate, up to 30° off desired track."}
+      ],
+      "procedure_steps": [
+        "Begin straight-and-level up to 20° nose-low, with power setting at MAX; when using 20° nose-low, as the airspeed approaches 250 KIAS raise the nose to attain straight-and-level.",
+        "Smoothly pull the stick using 3 - 4 Gs; when the forward view of the horizon disappears in the pull-up, maintain wings level (straight pull) by keeping the wingtips equidistant from the horizon.",
+        "Back stick pressure and G-loading decrease to maintain a constant nose track as airspeed decreases, however aft control stick displacement increases.",
+        "Apply right rudder pressure to keep the A/C coordinated as airspeed decreases.",
+        "Airspeed over the top should be approximately 100 to 120 KIAS, wings level and inverted.",
+        "Pull straight through the vertical and increase G-loading to maintain a constant nose track until a level flight attitude is reached; maintain coordinated rudder as the airspeed increases in the dive."
+      ],
+      "common_errors": [
+        "As airspeed decreases, insufficient rudder may allow the nose to deviate up to 30° off desired track.",
+        "As the airspeed slows near the top of the loop, due to propeller effects the nose will tend to yaw to the left.",
+        "Wings not level near vertical — if wings are not level, improper rudder application is most likely the problem."
+      ],
+      "corrections": [
+        "Align the A/C with a road, coastline or section line to provide a visual reference for a straight pull and keep aligned with it throughout the loop; if a ground reference is not available, the heading bug may be used to ensure a straight pull.",
+        "When the horizon disappears, use the crosscheck of \"wingtip, wingtip, ball\" to keep the wings level and flight coordinated; roll away from the wingtip that has the most ground above it, to level the wings.",
+        "Use the \"step on the ball\" rule to push the rudder pedal coinciding with the side the ball is deflected to.",
+        "When near vertical, tilt your head back and try to locate the horizon as early as possible.",
+        "To ensure a straight pull through the top, pick a point that appears above the canopy bow; as the canopy bow is about to cover that point, pick another point further up and continue this process until the horizon can be used as a primary reference."
+      ],
+      "notes": "There is no requirement to finish the manoeuvre with any particular airspeed or altitude."
+    },
+    {
+      "section": "6.24",
+      "title": "IMMELMAN (Figure 6.8.)",
+      "pages_pdf": [129, 130],
+      "item_mapping": ["contact-12"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective is to execute a vertical, climbing, 180° turn with constant nose track. The Immelman manoeuvre is actually half a loop followed by a half roll, all flown in the same vertical plane. The manoeuvre is complete after a momentary pause in level flight with wings level on a heading opposite from the entry heading.",
+      "parameters": [
+        {"name": "airspeed", "value": "250 KIAS", "verbatim": "Airspeed - 250 KIAS."},
+        {"name": "power", "value": "MAX", "verbatim": "Power - MAX."},
+        {"name": "attitude", "value": "Wings level to horizon before and after half roll at top", "verbatim": "Attitude - Wings level to horizon before and after half roll at top."},
+        {"name": "altitude", "value": "approximately 3000 feet above entry altitude", "verbatim": "Altitude - Approximately 3000 feet above entry altitude."},
+        {"name": "FCP visual reference", "value": "Wing tips equidistant from horizon in pullup", "verbatim": "FCP visual reference - Wing tips equidistant from horizon in pullup."},
+        {"name": "entry attitude", "value": "straight-and-level to 20° nose-low", "verbatim": "Begin straight-and-level to 20° Nose-Low, with power setting at MAX."},
+        {"name": "pull-up G", "value": "3 - 4 Gs", "verbatim": "Smoothly pull the nose up using 3 - 4 Gs."},
+        {"name": "roll initiation point", "value": "approximately 10° above the horizon and inverted (FCP canopy bow on the horizon)", "verbatim": "As the A/C reaches a point approximately 10° above the horizon and inverted (FCP canopy bow on the horizon), relax back stick pressure and apply aileron with coordinated rudder in either direction to initiate a roll to level flight."},
+        {"name": "airspeed at roll", "value": "approximately 100 to 120 KIAS", "verbatim": "Airspeed should be approximately 100 to 120 KIAS."},
+        {"name": "nose deviation with insufficient rudder", "value": "up to 30° off desired track", "verbatim": "Insufficient rudder, as airspeed decreases, may allow the nose to deviate up to 30° off desired track."}
+      ],
+      "procedure_steps": [
+        "Begin straight-and-level to 20° nose-low with power at MAX; using 20° nose-low, as the airspeed approaches 250 KIAS raise the nose to attain straight-and-level.",
+        "Smoothly pull the nose up using 3 - 4 Gs; when the forward view of the horizon disappears during the pull up, maintain wings level (straight pull) by keeping the wingtips equidistant from the horizon.",
+        "Apply moderate right rudder pedal pressure to keep the A/C coordinated as airspeed decreases.",
+        "As the A/C reaches a point approximately 10° above the horizon and inverted (FCP canopy bow on the horizon), relax back stick pressure and apply aileron with coordinated rudder in either direction to initiate a roll to level flight, at approximately 100 to 120 KIAS.",
+        "The manoeuvre is complete after a momentary pause in level flight following the rollout."
+      ],
+      "common_errors": [
+        "Insufficient rudder, as airspeed decreases, may allow the nose to deviate up to 30° off desired track."
+      ],
+      "corrections": [
+        "Technique is the same as for the first half of the loop.",
+        "Back stick pressure and G-loading decrease to maintain a constant nose track as airspeed decreases, however aft control stick displacement increases."
+      ],
+      "notes": null
+    },
+    {
+      "section": "6.25",
+      "title": "SPLIT-S (Figure 6.9.)",
+      "pages_pdf": [130, 131],
+      "item_mapping": ["contact-12"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective is to execute a 180° descending turn in the pure vertical. The Split-S combines the first half of an aileron roll with the last half of a loop and demonstrates how much altitude is lost if recovery from inverted flight is attempted by pulling through the horizon. The A/C climbs during entry and descends during recovery; the manoeuvre is complete when the A/C returns to level flight.",
+      "parameters": [
+        {"name": "airspeed", "value": "120 KIAS", "verbatim": "Airspeed - 120 KIAS."},
+        {"name": "power", "value": "Idle to 80% torque", "verbatim": "Power - Idle to 80% torque."},
+        {"name": "attitude", "value": "Entry 20° nose-high; wings level before and throughout pull", "verbatim": "Attitude - Entry, 20° nose-high. Wings level before and throughout pull."},
+        {"name": "altitude", "value": "approximately 3000 feet below entry altitude", "verbatim": "Altitude - Approximately 3000 feet below entry altitude."},
+        {"name": "FCP visual reference", "value": "Corner of forward windscreen on horizon to start roll", "verbatim": "FCP visual reference - Corner of forward windscreen on horizon to start roll."},
+        {"name": "entry setup airspeed", "value": "approximately 40 KIAS above entry airspeed", "verbatim": "Begin in straight-and-level flight approximately 40 KIAS above entry airspeed."},
+        {"name": "roll airspeed", "value": "approximately 140 KIAS", "verbatim": "When the airspeed is approximately 140 KIAS, roll the A/C to a wings-level, inverted attitude."},
+        {"name": "entry pitch visual cue", "value": "approximately 20° pitch attitude (FCP clock on the horizon)", "verbatim": "Raise the nose to an approximately 20° pitch attitude (FCP clock on the horizon)."},
+        {"name": "maximum AOA in pullout", "value": "15,5 units", "verbatim": "Attempt to achieve maximum nose track, without stalling, by pulling up to 15,5 units."},
+        {"name": "G during pullout", "value": "approximately 3 – 4 Gs", "verbatim": "Airspeed and G-loading (approximately 3 – 4 Gs) increase during the pullout."},
+        {"name": "altitude loss (Table 6.1.)", "value": "+500 feet / -2.000 feet (75%) / -2.500 feet (IDLE)", "verbatim": "9 Split-S 120 Idle to 80% +500 feet –2.000 feet(75%)-2.500 feet(IDLE) Losing"}
+      ],
+      "procedure_steps": [
+        "Begin in straight-and-level flight approximately 40 KIAS above entry airspeed; power setting may be established at any time before or during the half roll.",
+        "Raise the nose to an approximately 20° pitch attitude (FCP clock on the horizon).",
+        "When the airspeed is approximately 140 KIAS, roll the A/C to a wings-level, inverted attitude.",
+        "Apply backpressure to bring the nose through the horizon; attempt to achieve maximum nose track, without stalling, by pulling up to 15,5 units.",
+        "Perform a proper anti-G strain as airspeed and G-loading (approximately 3 – 4 Gs) increase during the pullout."
+      ],
+      "common_errors": [
+        "Starting the pull down before the wings are level when inverted (\"Ensure wings are level when inverted, before starting the pull down.\")."
+      ],
+      "corrections": [
+        "Similar to the Loop, attempt to set up the manoeuvre over a road or a section line.",
+        "Ensure wings are level when inverted, before starting the pull down.",
+        "Pull the stick to the \"zipper\" to ensure a straight pull.",
+        "Use successive points above the canopy bow (as described on the back half of the loop) that lead in a straight line from below the A/C out to the horizon to help ensure a straight pull."
+      ],
+      "notes": "As the aircraft passes the horizon in an inverted attitude, the maximum AOA during the recovery should be 15,5 Units, in order for the maximum nose track to be achieved."
+    },
+    {
+      "section": "6.26",
+      "title": "CUBAN-8 (Figure 6.10.)",
+      "pages_pdf": [132, 133],
+      "item_mapping": ["contact-12"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective is to maintain coordinated flight through two successive loop-type turns in the vertical. Each half of this manoeuvre is a combination of a slightly modified Loop and an Immelman: the first portion of each leaf is approximately the first five-eighths of a Loop followed by half a roll, and the pull and roll is then repeated in the opposite direction. The manoeuvre looks like an 8 on its side and is complete at level flight, with entry airspeed and on the original heading.",
+      "parameters": [
+        {"name": "airspeed", "value": "250 KIAS", "verbatim": "Airspeed - 250 KIAS."},
+        {"name": "power", "value": "MAX", "verbatim": "Power - MAX."},
+        {"name": "attitude", "value": "Wings level to horizon throughout manoeuvre", "verbatim": "Attitude - Wings level to horizon throughout manoeuvre."},
+        {"name": "altitude", "value": "approximately 3.000 feet above entry altitude", "verbatim": "Altitude - Approximately 3.000 feet above entry altitude."},
+        {"name": "FCP visual reference", "value": "Wing tips equidistant from horizon in pull up; seat on horizon when 45° nose-low, inverted", "verbatim": "Wing tips equidistant from horizon in pull up. Seat on horizon when 45° nose-low, inverted.", "verbatim_delisted": true},
+        {"name": "entry attitude", "value": "straight-and-level to 20° nose-low", "verbatim": "Begin straight-and-level to 20° Nose-Low, with power setting at MAX."},
+        {"name": "pull-up G", "value": "3 - 4 Gs", "verbatim": "Smoothly pull the nose up using 3 - 4 Gs."},
+        {"name": "half roll point", "value": "approaching 45° nose-low and inverted", "verbatim": "After passing Over the top and inverted, continue the Loop until approaching 45° Nose-Low and inverted. Execute a coordinated half roll in either direction."},
+        {"name": "pull-up lead point", "value": "approximately 35 to 40 KIAS below entry airspeed", "verbatim": "Begin the pull-up approximately 35 to 40 KIAS below entry airspeed (airspeed lead point approximately equal to number of degrees of nose-low pitch)."}
+      ],
+      "procedure_steps": [
+        "Begin straight-and-level to 20° nose-low with power at MAX; as the airspeed approaches 250 KIAS raise the nose to attain straight-and-level.",
+        "Smoothly pull the nose up using 3 - 4 Gs and perform the first part of a Loop until over the top and inverted.",
+        "Continue the Loop until approaching 45° nose-low and inverted, then execute a coordinated half roll in either direction; relax the elevator pressure to keep the nose track in the same vertical plane.",
+        "After completing the half roll, maintain 45° nose-low until beginning the pull up for the second half of the manoeuvre.",
+        "Plan to initiate the pull up to attain the briefed entry airspeed at the horizon (passing through level flight), beginning the pull-up approximately 35 to 40 KIAS below entry airspeed.",
+        "Continue the pull-up into another loop entry; the second half of the Cuban-8 is identical to the first except the roll is in the opposite direction."
+      ],
+      "common_errors": [
+        "Rolling in the wrong direction on the second half of the manoeuvre (\"Verbalizing the roll direction on the first half of the maneuver will help ensure the roll on the second half of the maneuver is in the correct direction.\")."
+      ],
+      "corrections": [
+        "Use ground references, or heading bug, as in other over the top manoeuvres.",
+        "Upon reaching 45° nose-low inverted (seat on the horizon), momentarily freeze the control stick before the coordinated roll.",
+        "To maintain 45° nose-low, pick a point on the ground and freeze it in the windscreen.",
+        "Verbalizing the roll direction on the first half of the manoeuvre will help ensure the roll on the second half is in the correct direction."
+      ],
+      "notes": null
+    },
+    {
+      "section": "6.27",
+      "title": "CLOVERLEAF (Figure 6.11.)",
+      "pages_pdf": [133, 134, 135],
+      "item_mapping": ["contact-12"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective is to combine elements of the loop, roll and Split-S into a fluid manoeuvre. The Cloverleaf is composed of four identical manoeuvres, each of which changes heading by 90°. The pull up is similar to the loop although with less G-load; the top part is a rolling pull to the horizon 90° displaced from the original heading (the pulling roll resembles a nose-high recovery); the lower part or pull through is flown like a Split-S. The manoeuvre is complete in level flight after four leaves in the same direction, and fewer than four leaves may be performed when practicing.",
+      "parameters": [
+        {"name": "airspeed", "value": "220 KIAS", "verbatim": "Airspeed - 220 KIAS."},
+        {"name": "power", "value": "80% torque", "verbatim": "Power – 80% torque."},
+        {"name": "attitude", "value": "Wings level for pull up and pull through", "verbatim": "Attitude - Wings level for pull up and pull through."},
+        {"name": "altitude", "value": "approximately 3.000 feet above entry altitude", "verbatim": "Altitude - Approximately 3.000 feet above entry altitude."},
+        {"name": "FCP visual reference", "value": "Wing tips equidistant from horizon in pullup; feet on horizon when 45° nose-high", "verbatim": "Wing tips equidistant from horizon in pullup. Feet on horizon when 45° Nose-High.", "verbatim_delisted": true},
+        {"name": "pull-up G", "value": "2 – 3 Gs", "verbatim": "The initial part of the maneuver is a straight pullup similar to a Loop except for a slightly lesser G-loading (2 – 3 Gs)."},
+        {"name": "roll initiation", "value": "45° nose-high (feet on the horizon)", "verbatim": "As the A/C reaches 45° Nose-High (feet on the horizon), begin a coordinated roll toward the 90° reference point."},
+        {"name": "airspeed at inverted point", "value": "approximately 120 KIAS", "verbatim": "Coordinate the pull and roll to pass the nose through the reference point with the A/C wings level, inverted, and at a relatively low airspeed (approximately 120 KIAS)."},
+        {"name": "maximum AOA in pull through recovery", "value": "15,5 Units", "verbatim": "As the aircraft passes the horizon, in an inverted attitude, the maximum AOA during the recovery should be 15,5 Units, in order for the maximum nose track to be achieved."},
+        {"name": "airspeed at the horizon (technique)", "value": "200-220 KIAS", "verbatim": "Plan to have 200-220 KIAS at the horizon."},
+        {"name": "altitude (Table 6.1.)", "value": "+3.000 feet / -1000 feet, Slightly losing", "verbatim": "4 Cloverleaf 220 80% +3.000 feet-1000 feet Slightly losing"}
+      ],
+      "procedure_steps": [
+        "Begin in straight-and-level flight with entry airspeed and required power setting; choose a reference point 90° off the A/C's nose in the desired direction.",
+        "Perform a straight pullup similar to a Loop except with slightly lesser G-loading (2 – 3 Gs).",
+        "As the A/C reaches 45° nose-high (feet on the horizon), begin a coordinated roll toward the 90° reference point; allow the nose to continue the climb during the roll so the manoeuvre is fairly slow and lazy.",
+        "Coordinate the pull and roll to pass the nose through the reference point with the A/C wings level, inverted, and at a relatively low airspeed (approximately 120 KIAS).",
+        "Keep the wings level and pull through the bottom of the manoeuvre similar to Split-S.",
+        "Approaching the horizon in the pull through, reduce back pressure to allow acceleration to entry airspeed at the horizon.",
+        "Complete three additional leaves in the same direction."
+      ],
+      "common_errors": [
+        "Focusing attention on the airspeed indicator at the inverted point (\"Do not focus your attention at the airspeed indicator, but note the airspeed at the inverted point.\")."
+      ],
+      "corrections": [
+        "Use section lines, coastline or prominent roads off of the wingtip in the direction of the turn to visually identify 90° points.",
+        "Begin the roll when the feet are on the horizon; a combination of roll and pull is necessary to have the A/C inverted with wings level over the reference point.",
+        "Crosscheck G-load at the horizon after each pull through the bottom; plan to have 200-220 KIAS at the horizon, then G has to be reduced back to the 2 to 3 Gs required for the initial pull up by releasing back stick pressure."
+      ],
+      "notes": null
+    },
+    {
+      "section": "6.28",
+      "title": "CHANDELLE (Figure 6.12.)",
+      "pages_pdf": [135, 136],
+      "item_mapping": ["contact-12"],
+      "category_hint": ["contact"],
+      "technique_summary": "Objective is to gain maximum altitude during a 180° turn. The Chandelle is a precision, constant bank 180° steep climbing turn that achieves the maximum gain of altitude for a given power setting. The manoeuvre is complete after 180° of turn, when the nose is smoothly lowered to the horizon with wings level.",
+      "parameters": [
+        {"name": "airspeed", "value": "250 KIAS", "verbatim": "Airspeed - 250 KIAS."},
+        {"name": "power", "value": "MAX", "verbatim": "Power - MAX."},
+        {"name": "attitude", "value": "Entry wings level 15° nose-low; exit wings level 45° nose-high", "verbatim": "Attitude - Entry, wings level, 15° Nose-Low. Exit, wings level, 45° Nose-High."},
+        {"name": "altitude", "value": "approximately 3000 feet above entry altitude", "verbatim": "Altitude - Approximately 3000 feet above entry altitude."},
+        {"name": "altitude required (Table 6.1.)", "value": "+3.500 feet, Gaining", "verbatim": "3 Chandelle 250 MAX +3.500 feet Gaining"},
+        {"name": "FCP visual reference", "value": "Bottom edge of canopy on horizon at entry; feet on horizon (45° nose-high) at exit", "verbatim": "Bottom edge of canopy on horizon at entry. Feet on horizon (45° Nose-High) at exit.", "verbatim_delisted": true},
+        {"name": "setup airspeed", "value": "approximately 180-200 KIAS (below entry airspeed)", "verbatim": "Begin wings level, 15° Nose-Low with MAX power setting, but below entry airspeed (approximately 180-200 KIAS)."},
+        {"name": "turn G", "value": "approximately 3 Gs", "verbatim": "combine rudder, aileron, and elevator pressure to begin a climbing turn, using approximately 3 Gs"},
+        {"name": "bank", "value": "gradually increase to 60°", "verbatim": "Gradually increase bank to 60° and keep the nose track rising at a uniform rate."},
+        {"name": "horizon crossing point", "value": "60° bank with 30 to 45° after the beginning of the turn", "verbatim": "Plan to pass through the horizon at 60° bank with 30 to 45° after the beginning of the turn."},
+        {"name": "rollout start point", "value": "135° point of the turn", "verbatim": "At the 135° point of the turn, start the rollout but keep the nose rising."},
+        {"name": "exit pitch attitude", "value": "approximately 40 to 45° at the 180° point", "verbatim": "Time the rollout so the wings become level as the nose reaches the highest pitch attitude (approximately 40 to 45°) at the 180° point."},
+        {"name": "roll-in vs pull-up rate", "value": "60° bank change, 15° pitch change", "verbatim": "When starting the manoeuvre, the rate of roll-in is faster than the rate of pull-up (60° bank change, 15° pitch change)."},
+        {"name": "technique reference point", "value": "135° off of the nose is a 45° aspect", "verbatim": "Outside the cockpit, pick a 135° reference point in the direction of the turn (135° off of the nose is a 45° aspect see Figure 5.2.)."}
+      ],
+      "procedure_steps": [
+        "Begin wings level, 15° nose-low with MAX power setting but below entry airspeed (approximately 180-200 KIAS).",
+        "When airspeed reaches entry airspeed, combine rudder, aileron and elevator pressure to begin a climbing turn using approximately 3 Gs.",
+        "Gradually increase bank to 60° and keep the nose track rising at a uniform rate; the nose should track a straight line diagonal to the horizon.",
+        "Plan to pass through the horizon at 60° bank with 30 to 45° after the beginning of the turn; check how the turn is executed by using outside references.",
+        "Once the nose is above the horizon, the vertical component of lift decreases and considerably more back pressure is required to keep the nose rising at a uniform rate.",
+        "At the 135° point of the turn, start the rollout but keep the nose rising; monitor the amount of turn remaining before reaching the 180° point by checking outside references.",
+        "Time the rollout so the wings become level as the nose reaches the highest pitch attitude (approximately 40 to 45°) at the 180° point.",
+        "When the manoeuvre is complete (180° of turn), smoothly lower the nose to the horizon with wings level."
+      ],
+      "common_errors": [
+        "If the rate of climb is too fast, and the A/C approaches stall before turning 180°, discontinue the manoeuvre.",
+        "If the rate of pitch change is too slow, the 180° point may be reached before the maximum pitch attitude is attained.",
+        "Exceeding 60° bank in the turn."
+      ],
+      "corrections": [
+        "The constant changes in pitch angle, airspeed and vertical component of lift require simultaneous changes in control pressures to keep the nose rising at a constant rate.",
+        "Use both perpendicular and parallel to roads, or section lines, to visually monitor the progress of turns.",
+        "In the cockpit, the heading marker can be a good crosscheck tool in addition to crosschecking bank and pitch on the EADI.",
+        "Top or outside aileron is necessary to avoid exceeding 60° bank in the turn.",
+        "Visualizing the Chandelle as similar to climbing a spiral staircase can help with manoeuvre execution."
+      ],
+      "notes": null
+    }
+  ]
+}

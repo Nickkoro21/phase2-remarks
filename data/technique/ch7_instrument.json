@@ -1,0 +1,974 @@
+{
+  "chunk": "ch7_instrument",
+  "source": "T-6A Techniques and Procedures Manual (I.N. T-6A 02/14, Change 9 Jul 22)",
+  "sections": [
+    {
+      "section": "7.1",
+      "title": "INTRODUCTION",
+      "pages_pdf": [137],
+      "item_mapping": [],
+      "category_hint": ["instrument"],
+      "technique_summary": "Instrument flight in Hellenic Air Force A/C is governed by standardized rules and procedures, most of which are found in sources other than this manual. The volumes of AFMAN 11-217 are the main source of guidance for instrument flight and must be studied to ensure success. This chapter supplements AFMAN 11-217 with T-6 specific considerations and presents training rules, basic and advanced instrument manoeuvres, spatial disorientation, and the application of basic principles to instrument mission execution.",
+      "parameters": [],
+      "procedure_steps": [
+        "Study AFMAN 11-217 volumes as the primary instrument-flight reference.",
+        "Use this chapter for T-6 specific supplements only.",
+        "Consult other supplement publications: AFMAN 11-217 Vol 2, Flight Information Publications (M.A.I.P volume 1,2,3, General Planning, etc.), AIP GREECE and the flight manual."
+      ],
+      "common_errors": [],
+      "corrections": [],
+      "notes": "Chapter 7 does not contain dedicated 'Common Errors' paragraphs (unlike the contact chapter); error entries elsewhere in this file are drawn from the cautionary/limiting statements of the text."
+    },
+    {
+      "section": "7.2",
+      "title": "REAR COCKPIT INSTRUMENT PROCEDURES",
+      "pages_pdf": [137],
+      "item_mapping": [],
+      "category_hint": ["instrument"],
+      "technique_summary": "For instrument flight, the rear cockpit is functionally the same as the front cockpit. When a student pilot occupies the rear cockpit, the instructor shall execute all landings.",
+      "parameters": [],
+      "procedure_steps": [
+        "Fly instrument procedures from the rear cockpit as from the front cockpit.",
+        "Instructor executes all landings when the student occupies the rear cockpit."
+      ],
+      "common_errors": [],
+      "corrections": [],
+      "notes": null
+    },
+    {
+      "section": "7.3",
+      "title": "EFIS AND GPS DISPLAY OPTIONS",
+      "pages_pdf": [137],
+      "item_mapping": [],
+      "category_hint": ["instrument"],
+      "technique_summary": "There are multiple configurations for the EFIS and GPS. Normally, a standard display setup (established locally) is used until proficiency is demonstrated. After demonstrating proficiency, other than standard display options may be used to optimize situational awareness and precise control of the A/C.",
+      "parameters": [],
+      "procedure_steps": [
+        "Use the locally established standard display setup until proficiency is demonstrated.",
+        "After proficiency is demonstrated, non-standard display options may be used to optimize SA and precise A/C control."
+      ],
+      "common_errors": [],
+      "corrections": [],
+      "notes": null
+    },
+    {
+      "section": "7.4",
+      "title": "TASK MANAGEMENT",
+      "pages_pdf": [137, 138],
+      "item_mapping": ["instrument-crm"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Unlike contact flying, the horizon is not used to determine pitch and bank; instrument flight uses the EADI for attitude information. As visual cues become less prominent, a greater percentage of attention must be focused on the EADI. Time-consuming tasks (approach plate review, chart manipulation, NAVAID setup, GPS programming) are accomplished as much as the workload allows, with A/C basic control always the first priority. Effectively trimming the A/C significantly reduces workload and is the key to successfully accomplishing other subtasks.",
+      "parameters": [],
+      "procedure_steps": [
+        "Use the EADI for attitude information; focus a greater percentage of attention on it as visual cues become less prominent.",
+        "Keep basic A/C control as first priority; accomplish time-consuming tasks as workload allows.",
+        "Break complex tasks into subtasks: complete a subtask then return full attention to the instruments.",
+        "Alternate attention between subtasks and the instruments until the full task is complete.",
+        "Trim the A/C effectively to reduce workload.",
+        "Anticipate and begin required actions as early as practical, e.g. put anticipated frequencies and navigational aids into the queue or standby function of the radio management unit (RMU)."
+      ],
+      "common_errors": [
+        "Allowing complex tasks that divert attention from basic instrument flight to be attempted as a single block instead of being broken down into subtasks.",
+        "Failing to trim effectively, which increases the workload of controlling the A/C and degrades accomplishment of other subtasks.",
+        "Failing to anticipate required actions (frequencies, NAVAIDs not pre-set in the RMU standby/queue)."
+      ],
+      "corrections": [
+        "Break the complex task into subtasks; complete one subtask then return full attention to the instruments.",
+        "Alternate attention between subtasks and the instruments until the full task is complete."
+      ],
+      "notes": null
+    },
+    {
+      "section": "7.5",
+      "title": "COCKPIT ORGANIZATION",
+      "pages_pdf": [138],
+      "item_mapping": ["instrument-01", "instrument-crm"],
+      "category_hint": ["instrument"],
+      "technique_summary": "An organized approach to cockpit setup is essential, due to the additional publications (charts and approach plates) required on most instrument sorties. Cockpit organization during mission planning is of major importance when it gets busy in the A/C. In general, strive to find ways to get ahead and prepare for upcoming tasks.",
+      "parameters": [],
+      "procedure_steps": [
+        "Prefold all charts before cockpit strap in; store them in the order they will be used.",
+        "Use IFR Navigation Mission Card, VFR chart (when flying a VFR leg) to annotate information likely to be required in flight.",
+        "Fold other paperwork so it is easy to read; store in the order it will be used.",
+        "Use a self adhesive tab or rubber band to mark required pages in the IFR supplement and instrument approach plates (IAP, MAIP VOL I & II).",
+        "Write down radio frequencies as they are assigned.",
+        "Print and highlight applicable NOTAMs.",
+        "Use the standby frequency function of the RMU to anticipate radio changes."
+      ],
+      "common_errors": [
+        "Publications not prefolded / not stored in order of use, causing disorganized cockpit when workload is high.",
+        "Not writing down radio frequencies as they are assigned.",
+        "Not using the RMU standby frequency function to anticipate radio changes."
+      ],
+      "corrections": [],
+      "notes": null
+    },
+    {
+      "section": "7.6",
+      "title": "CONTROL AND PERFORMANCE CONCEPT",
+      "pages_pdf": [138, 140],
+      "item_mapping": ["instrument-04"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Proper use of the control and performance concept (described in AFMAN 11-217, Volume 1) makes basic A/C control much easier and frees attention for other tasks. T-6 control instruments are the EADI and the primary engine data display (specifically, engine torque). Performance instruments are the altimeter, airspeed indicator, VSI, AOA, and EHSI (heading). When possible, start with the known pitch and power settings of Table 7.1. Use of known pitch and power settings helps to minimize power changes.",
+      "parameters": [
+        {"name": "control instruments", "value": "EADI and primary engine data display (engine torque)", "verbatim": "T-6 control instruments are the EADI and the primary engine data display (specifically, engine torque)."},
+        {"name": "performance instruments", "value": "altimeter, airspeed indicator, VSI, AOA, EHSI (heading)", "verbatim": "Performance instruments are the altimeter, airspeed indicator, VSI, AOA, and EHSI (heading)."},
+        {"name": "Table 7.1 - Vertical-S up", "value": "150 KIAS, gear UP, flaps UP, 4 NH, 55 % torque, 1.000 fpm", "verbatim": "1 Vertical-S up | 150 | UP | UP | 4 NH | 55% | 1.000 fpm"},
+        {"name": "Table 7.1 - Vertical-S down", "value": "150 KIAS, gear UP, flaps UP, 2 NL, 15 % torque, 1.000 fpm", "verbatim": "2 Vertical-S down | 150 | UP | UP | 2 NL | 15% | 1.000 fpm"},
+        {"name": "Table 7.1 - 45° steep turn", "value": "150 KIAS, gear UP, flaps UP, 3 NH, 45 % torque", "verbatim": "3 45° steep turn | 150 | UP | UP | 3 NH | 45%"},
+        {"name": "Table 7.1 - 60° steep turn", "value": "150 KIAS, gear UP, flaps UP, 4 NH, 60 % torque", "verbatim": "4 60° steep turn | 150 | UP | UP | 4 NH | 60%"},
+        {"name": "Table 7.1 - Wingover", "value": "220 KIAS, 25 NH / 25 NL, 80 % torque", "verbatim": "5 Wingover | 220 | 25 ΝΗ / 25 NL | 80%"},
+        {"name": "Table 7.1 - Aileron roll", "value": "220 KIAS, 25 NH / 25 NL, 80 % torque", "verbatim": "6 Aileron roll | 220 | 25 ΝΗ / 25 NL | 80%"},
+        {"name": "Table 7.1 - Penetration", "value": "200 KIAS, gear UP, flaps UP, 10 NL with 10 % torque or 5 NL with 20 % torque", "verbatim": "8 Penetration | 200 | UP | UP | 10 NL  5 NL | 10%  20%"},
+        {"name": "Table 7.1 - unlabelled row after Penetration (item 9)", "value": "5 NL, 20 % torque", "verbatim": "5 NL | 20%"},
+        {"name": "Table 7.1 - Enroute descent", "value": "200 KIAS, gear UP, flaps UP, 7.5 NL, 8 % torque", "verbatim": "10 Enroute descent | 200 | UP | UP | 7.5 NL | 8%"},
+        {"name": "Table 7.1 - Final approach (level/configured)", "value": "110 KIAS, gear DOWN, flaps TO, 3 NH, 35 % torque", "verbatim": "11 Final approach (level/ configured) | 110 | DOWN | TO | 3 NH | 35%"},
+        {"name": "Table 7.1 - Precision final", "value": "110 KIAS, gear DOWN, flaps TO, LOL (line-on-line), 21 % torque, 600 fpm", "verbatim": "12 Precision final | 110 | DOWN | TO | LOL | 21% | 600 fpm"},
+        {"name": "Table 7.1 - Non-precision final", "value": "110 KIAS, gear DOWN, flaps TO, 1 NL, 16 % torque, 1.000 fpm", "verbatim": "13 Non-precision final | 110 | DOWN | TO | 1 NL | 16% | 1.000 fpm"},
+        {"name": "Table 7.1 - Circling (Note 2)", "value": "gear DOWN, flaps TO, pitch AR, torque AR", "verbatim": "14 Circling (Note 2) | DOWN | TO | AR | AR"},
+        {"name": "Table 7.1 - Visual final", "value": "110 KIAS, gear DOWN, flaps TO, pitch AR, torque AR", "verbatim": "15 Visual final | 110 | DOWN | TO | AR | AR"},
+        {"name": "Table 7.1 - Holding", "value": "150 KIAS, gear UP, flaps UP, 2 NH, 35 % torque", "verbatim": "16 Holding | 150 | UP | UP | 2 NH | 35%"},
+        {"name": "Table 7.1 legend", "value": "AR: As required; LOL: Line-on-line; NH: Nose-high; NL: Nose-low", "verbatim": "LEGEND: AR: As required / LOL: Line-on-line / NH: Nose-high / NL: Nose-low"},
+        {"name": "Table 7.1 Note 1", "value": "torque settings approximate, vary with density altitude", "verbatim": "1. All torque settings are approximate and vary slightly depending on density altitude."},
+        {"name": "Table 7.1 Note 2 (circling)", "value": "120 KIAS on instrument final followed by circling, then 110 KIAS", "verbatim": "2. For an instrument final followed by a circling approach, fly 120 KIAS until rolling out of bank to transition to a visual final, then slow to 110 KIAS."}
+      ],
+      "procedure_steps": [
+        "Use the EADI and torque as control instruments; altimeter, ASI, VSI, AOA and EHSI as performance instruments.",
+        "Start with the known pitch and power settings of Table 7.1 whenever possible.",
+        "Adjust for the slight variation of power settings between A/C depending on fuel load and temperature."
+      ],
+      "common_errors": [
+        "Excessive or continual power changes in the T-6 causes heading, pitch, and trim deviations which make precise instrument flight more difficult.",
+        "Not starting from known pitch and power settings, resulting in unnecessary power changes."
+      ],
+      "corrections": [
+        "Use of known pitch and power settings helps to minimize power changes."
+      ],
+      "notes": "Table 7.1 is on printed page 130 (PDF 140); Note 2 continues on printed page 131 (PDF 141). Item numbers 7 and 9 are not printed in the table; the row following 'Penetration' carries only '5 NL / 20%'."
+    },
+    {
+      "section": "7.7",
+      "title": "INSTRUMENT FLIGHT MANOEUVRES",
+      "pages_pdf": [139],
+      "item_mapping": ["instrument-04"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Instrument flight is simply a series of basic instrument manoeuvres flown in a sequence that depends on the route, weather, air traffic congestion, and other factors. The basic manoeuvres that follow are the building blocks for the advanced concepts described later in the chapter.",
+      "parameters": [],
+      "procedure_steps": [],
+      "common_errors": [],
+      "corrections": [],
+      "notes": null
+    },
+    {
+      "section": "7.8",
+      "title": "TURNS AND TURNS TO HEADINGS",
+      "pages_pdf": [139],
+      "item_mapping": ["instrument-04"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is to maintain smooth, coordinated flight in turns to specific headings. Normally, bank is no greater than 30° to reduce the chances of spatial disorientation. Apply coordinated aileron and rudder in the direction of the turn, refer to the EADI for bank information, and maintain constant altitude and airspeed by crosschecking the EADI and performance instruments. Increase pitch attitude as necessary to counteract the loss of lift whenever the A/C is banked, and adjust power to hold constant airspeed.",
+      "parameters": [
+        {"name": "normal maximum bank", "value": "30°", "verbatim": "Normally, bank is no greater than 30° to reduce the chances of spatial disorientation."},
+        {"name": "roll-out lead", "value": "1/3 of the bank angle", "verbatim": "As a technique, use 1/3 of the bank angle to lead the desired heading."},
+        {"name": "roll-out lead, 30° bank", "value": "about 10° prior to the desired heading", "verbatim": "For a 30° bank turn, begin roll out about 10° prior to the desired heading."},
+        {"name": "bank for small heading changes", "value": "commensurate bank; e.g. 15° bank for a 15° heading change", "verbatim": "For heading changes of less than 30° use a commensurate amount of bank; for example, for a heading change of 15° use 15° of bank."}
+      ],
+      "procedure_steps": [
+        "Apply coordinated aileron and rudder in the direction of the turn; refer to the EADI for bank information.",
+        "In level turns maintain constant altitude and airspeed by crosschecking the EADI and performance instruments.",
+        "Increase the pitch attitude, as necessary, to counteract the loss of lift whenever the A/C is banked.",
+        "Apply corrections when the flight instruments indicate a deviation.",
+        "When the desired bank is reached, it may be necessary to exert slight aileron pressure in the opposite direction; maintain the desired angle of bank.",
+        "Adjust power to hold a constant airspeed - as the bank is established, a small increase in power is usually required.",
+        "Reverse these procedures to return to straight-and-level flight.",
+        "Technique 'bug, turn, talk': set heading bug before starting the turn, start the turn, read back the heading.",
+        "Crosscheck the turn and slip indicator (the ball) to ensure coordinated flight.",
+        "Begin to roll out of bank before the desired heading is reached."
+      ],
+      "common_errors": [
+        "Bank greater than 30° in normal instrument turns, increasing the chances of spatial disorientation.",
+        "Failing to increase pitch attitude to counteract the loss of lift when the A/C is banked (altitude loss in the turn).",
+        "Uncoordinated flight - not crosschecking the turn and slip indicator (the ball).",
+        "Not leading the roll-out, i.e. not beginning to roll out of bank before the desired heading is reached.",
+        "Not adjusting power as bank is established (a small increase in power is usually required)."
+      ],
+      "corrections": [
+        "Apply corrections when the flight instruments indicate a deviation.",
+        "Use 1/3 of the bank angle as roll-out lead (about 10° for a 30° bank turn).",
+        "Exert slight aileron pressure in the opposite direction when the desired bank is reached, to hold the bank."
+      ],
+      "notes": null
+    },
+    {
+      "section": "7.9",
+      "title": "AIRSPEED CHANGES",
+      "pages_pdf": [141],
+      "item_mapping": ["instrument-06"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is a smooth, controlled, and deliberate change of airspeed. Change power setting to produce changes in airspeed; at completion of the airspeed change, power is set to maintain the new airspeed. The A/C should be coarsely trimmed during the airspeed change and fine tuned for the target airspeed. Airspeed changes are normally practiced between 110-250 KIAS.",
+      "parameters": [
+        {"name": "practice airspeed band", "value": "110-250 KIAS", "verbatim": "They are normally practiced between 110-250 KIAS."},
+        {"name": "rudder trim with torque increase", "value": "nose right rudder trim", "verbatim": "An increase in torque generally requires nose right rudder trim."},
+        {"name": "rudder trim with torque reduction", "value": "nose left rudder trim", "verbatim": "Likewise, a reduction in torque requires nose left rudder trim."}
+      ],
+      "procedure_steps": [
+        "To increase airspeed in straight-and-level flight, advance the power beyond the setting required to maintain the new airspeed.",
+        "As airspeed increases, lift increases so there is a climb tendency - adjust pitch attitude to maintain altitude.",
+        "Approaching target airspeed, reduce power to a setting estimated to maintain the new airspeed.",
+        "Reduce airspeed in the same manner but use an opposite power schedule.",
+        "Trim coarsely during the change and fine tune for the target airspeed; adjust rudder trim as torque changes.",
+        "Speed brake may be used for rapid airspeed reductions."
+      ],
+      "common_errors": [
+        "Neglecting the need for rudder trim during airspeed/torque changes.",
+        "Late speed brake retraction near target airspeed may result in an overshoot of the targeted airspeed.",
+        "Failing to adjust pitch for the climb tendency as airspeed (and therefore lift) increases.",
+        "Trim requirements and the possibility for spatial disorientation increase with the use of the speed brake."
+      ],
+      "corrections": [
+        "Adjustments to trim will be required almost continuously during airspeed changes.",
+        "Adjust pitch attitude to maintain altitude as lift changes.",
+        "Set power to the setting estimated to maintain the new airspeed as the target is approached."
+      ],
+      "notes": null
+    },
+    {
+      "section": "7.10",
+      "title": "CONSTANT AIRSPEED CLIMBS AND DESCENTS",
+      "pages_pdf": [141, 142],
+      "item_mapping": ["instrument-07"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is to maintain constant airspeed during climb or descent, normally practiced at 110-250 KIAS. To climb, simultaneously increase power and raise pitch to maintain the desired airspeed; to descend, simultaneously reduce power and lower pitch. The amount of pitch change varies with airspeed and power setting, and although airspeed is constant, trim is required due to the power change.",
+      "parameters": [
+        {"name": "practice airspeed band", "value": "110-250 KIAS", "verbatim": "They are normally practiced at 110-250 KIAS."},
+        {"name": "pitch/VSI correction for 2 KIAS", "value": "approximately 100 fpm", "verbatim": "To regain 2 KIAS, adjust the pitch to change the vertical speed by approximately 100 fpm (or by 200 fpm to regain 5 KIAS)."},
+        {"name": "Rule of 100 (200 KIAS)", "value": "(Degrees Nose-Low) x (% torque) = 100", "verbatim": "To maintain 200 KIAS, the \"Rule of 100\" provides approximate pitch and power combinations for descents in the T-6: (Degrees Nose-Low) multiplied by (% torque) = 100."},
+        {"name": "Rule of 100 examples", "value": "10° pitch and 10 % torque, 5° pitch and 20 % torque", "verbatim": "For example: use 10° pitch and 10 % torque, 5° pitch and 20 % torque, etc."}
+      ],
+      "procedure_steps": [
+        "To climb, simultaneously increase power and raise pitch to maintain desired airspeed.",
+        "To descend, simultaneously reduce power and lower pitch to maintain desired airspeed.",
+        "Trim for the power change even though airspeed is constant.",
+        "Use speed brake to expedite a constant airspeed descent (larger pitch changes are then required to maintain airspeed).",
+        "Use VSI as an aid in pitch control."
+      ],
+      "common_errors": [
+        "Failing to trim after the power change, even though airspeed remains constant.",
+        "Not accounting for the larger pitch changes required to maintain airspeed with the speed brake extended."
+      ],
+      "corrections": [
+        "To regain 2 KIAS, adjust the pitch to change the vertical speed by approximately 100 fpm (or by 200 fpm to regain 5 KIAS).",
+        "Use the Rule of 100 for approximate pitch/power combinations at 200 KIAS."
+      ],
+      "notes": null
+    },
+    {
+      "section": "7.11",
+      "title": "CONSTANT RATE CLIMBS AND DESCENTS",
+      "pages_pdf": [142],
+      "item_mapping": ["instrument-07"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is to maintain constant vertical speed during climb or descent, normally at constant airspeed, usually practiced between 110-250 KIAS and 500-6.000 fpm. Simultaneously advance or reduce power and change pitch to produce the desired climb or descent rate; when vertical speed stabilizes, adjust pitch and power to maintain target vertical speed and airspeed. Initially use known pitch and power settings and fine tune when vertical speed stabilizes.",
+      "parameters": [
+        {"name": "practice airspeed band", "value": "110-250 KIAS", "verbatim": "Such climbs or descends are usually practiced between 110-250 KIAS and 500-6.000 fpm."},
+        {"name": "practice vertical speed band", "value": "500-6.000 fpm", "verbatim": "Such climbs or descends are usually practiced between 110-250 KIAS and 500-6.000 fpm."},
+        {"name": "60-to-1 rule", "value": "1 degree of pitch change = 100 fpm per NM", "verbatim": "1 degree of pitch change = 100 fpm per NM."},
+        {"name": "60-to-1 example", "value": "at 240 KTAS (4 NM/min), 2° pitch = 800 fpm", "verbatim": "For example: at 240 KTAS (4 NM/min), 2° of pitch change (4 NM/ min multiplied by 200 ft/NM) results in 800 fpm vertical speed."},
+        {"name": "pitch change formula", "value": "VVI / NM per minute / 100 = pitch change", "verbatim": "VVI divided by NM per minute multiplied by 100 = pitch change."},
+        {"name": "pitch change formula example", "value": "1000 fpm at 150 KTAS (2.5 NM/min) = 4° pitch change", "verbatim": "For example: target vertical speed 1000 fpm at 150 KTAS (2.5 NM/ min) = 4° pitch change."}
+      ],
+      "procedure_steps": [
+        "Simultaneously advance or reduce power and change pitch to produce the desired climb or descent rate.",
+        "When vertical speed stabilizes, adjust pitch and power to maintain target vertical speed and airspeed.",
+        "Initially use known pitch and power settings and fine tune when vertical speed stabilizes.",
+        "Use the 60-to-1 rule to calculate the pitch change required for the target vertical speed."
+      ],
+      "common_errors": [
+        "Chasing the VSI instead of setting known pitch and power first and fine tuning after the vertical speed stabilizes."
+      ],
+      "corrections": [
+        "Use the 60-to-1 rule: 1 degree of pitch change = 100 fpm per NM.",
+        "If airspeed and target vertical speed are fixed, solve for pitch change: VVI divided by NM per minute multiplied by 100."
+      ],
+      "notes": "The formula is printed as 'VVI divided by NM per minute multiplied by 100 = pitch change' - reproduced verbatim."
+    },
+    {
+      "section": "7.12",
+      "title": "STEEP TURNS",
+      "pages_pdf": [142, 143],
+      "item_mapping": ["instrument-05"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is to maintain smooth, coordinated flight during turns to specific headings at steeper than normal bank angles. Airspeed is 150 KIAS normally (other airspeeds permissible) at 45° and 60° bank. Enter a steep turn in the same manner as a normal turn, anticipating the addition of power to maintain constant airspeed; pitch required in the turn is higher than in wings level flight. Use a constant angle of bank and correct altitude deviations by adjusting pitch attitude.",
+      "parameters": [
+        {"name": "airspeed", "value": "150 KIAS normally, other airspeeds permissible", "verbatim": "Airspeed - 150 KIAS normally, other airspeeds permissible."},
+        {"name": "bank", "value": "45° and 60°", "verbatim": "Attitude - 45° and 60° bank."},
+        {"name": "power addition point", "value": "passing 30° of bank", "verbatim": "Add power when passing 30° of bank."},
+        {"name": "roll-out lead, 45° bank", "value": "approximately 15°", "verbatim": "To roll out on the desired heading, use as a lead approximately 15° for a 45° bank turn and 20° for a 60° bank turn."},
+        {"name": "roll-out lead, 60° bank", "value": "20°", "verbatim": "To roll out on the desired heading, use as a lead approximately 15° for a 45° bank turn and 20° for a 60° bank turn."},
+        {"name": "Table 7.1 - 45° steep turn", "value": "150 KIAS, 3 NH, 45 % torque", "verbatim": "3 45° steep turn | 150 | UP | UP | 3 NH | 45%"},
+        {"name": "Table 7.1 - 60° steep turn", "value": "150 KIAS, 4 NH, 60 % torque", "verbatim": "4 60° steep turn | 150 | UP | UP | 4 NH | 60%"}
+      ],
+      "procedure_steps": [
+        "Enter a steep turn in the same manner as a normal turn.",
+        "Anticipate the addition of power to maintain constant airspeed; add power when passing 30° of bank.",
+        "Set the higher pitch required in the turn, anticipating pitch change as the VSI lags behind actual A/C performance.",
+        "Use a constant angle of bank during steep turns.",
+        "Correct altitude deviations by adjusting the pitch attitude.",
+        "Use 'Bug, Turn, Talk' and the known pitch and power settings in Table 7.1.",
+        "Roll out using approximately 15° lead for a 45° bank turn and 20° for a 60° bank turn."
+      ],
+      "common_errors": [
+        "Not anticipating the addition of power, resulting in airspeed loss in the turn.",
+        "Chasing the VSI - failing to anticipate pitch change as the VSI lags behind actual A/C performance.",
+        "Varying the angle of bank instead of holding a constant bank.",
+        "Consistently rolling out short or past the desired heading (inappropriate lead point)."
+      ],
+      "corrections": [
+        "Attempt to correct altitude deviations by adjusting the pitch attitude; however, if altitude gain or loss is excessive, a decrease or increase in bank can help correct the pitch attitude.",
+        "Lead points should be adjusted as necessary if consistently rolling out short or past the desired heading."
+      ],
+      "notes": null
+    },
+    {
+      "section": "7.13",
+      "title": "VERTICAL-S",
+      "pages_pdf": [143],
+      "item_mapping": ["instrument-07"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is to practice and enhance the ability to crosscheck instruments. It is a climb or descent with 1.000 fpm and 150 KIAS, as described in AFMAN 11-217 Volume 1; the type of Vertical-S flown (A-B-C-D) is based on the student's proficiency. Use the procedures for constant rate climbs and descents. Begin with the A/C completely trimmed (trimmed hands-off) for level flight at 150 KIAS and simultaneously set power and pitch attitude to the target setting of Table 7.1.",
+      "parameters": [
+        {"name": "vertical speed", "value": "1.000 fpm", "verbatim": "Climb or descent with 1.000 fpm and 150 KIAS."},
+        {"name": "airspeed", "value": "150 KIAS", "verbatim": "Climb or descent with 1.000 fpm and 150 KIAS."},
+        {"name": "lead at top/bottom", "value": "100 feet (10 % of VVI)", "verbatim": "Lead the change at the top or bottom of the manoeuvre by 100 feet (10 % of VVI)."},
+        {"name": "Table 7.1 - Vertical-S up", "value": "4 NH, 55 % torque, 1.000 fpm", "verbatim": "1 Vertical-S up | 150 | UP | UP | 4 NH | 55% | 1.000 fpm"},
+        {"name": "Table 7.1 - Vertical-S down", "value": "2 NL, 15 % torque, 1.000 fpm", "verbatim": "2 Vertical-S down | 150 | UP | UP | 2 NL | 15% | 1.000 fpm"}
+      ],
+      "procedure_steps": [
+        "Begin with the A/C completely trimmed (trimmed hands-off, see paragraph 2.9.1.) for level flight at 150 KIAS.",
+        "Simultaneously set power and pitch attitude to the target setting (Table 7.1.).",
+        "Use the procedures for constant rate climbs and descents.",
+        "Lead the change at the top or bottom of the manoeuvre by 100 feet (10 % of VVI).",
+        "Lead pitch reversal with power."
+      ],
+      "common_errors": [
+        "Starting the manoeuvre without the A/C completely trimmed hands-off for level flight at 150 KIAS.",
+        "Not leading the reversal at the top or bottom by 100 feet (10 % of VVI), causing altitude overshoot.",
+        "Reversing pitch before power instead of leading pitch reversal with power."
+      ],
+      "corrections": [
+        "Lead the change at the top or bottom of the manoeuvre by 100 feet (10 % of VVI).",
+        "Lead pitch reversal with power."
+      ],
+      "notes": null
+    },
+    {
+      "section": "7.14",
+      "title": "CONFIDENCE MANOEUVRES",
+      "pages_pdf": [143, 144],
+      "item_mapping": ["instrument-11"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is to gain confidence in the use of the attitude indicator in extreme pitch and bank attitudes. Wingover (similar to one half lazy 8) and Aileron Roll are flown using the EADI as the primary reference, at 220 KIAS and 80 % torque; each manoeuvre is complete when stabilized in level flight. Begin in straight and level flight with briefed entry airspeed and power setting and perform the manoeuvre as described in AFMAN 11-217, Volume 1.",
+      "parameters": [
+        {"name": "airspeed", "value": "220 KIAS", "verbatim": "Airspeed - 220 KIAS."},
+        {"name": "power", "value": "80 % torque", "verbatim": "Power: 80 % torque."},
+        {"name": "aileron roll nose-high pitch", "value": "25° on the EADI", "verbatim": "Maintain wings level and raise the nose to 25° on the EADI."},
+        {"name": "aileron roll recovery attitude", "value": "approximately 25° nose-low at about 220 KIAS", "verbatim": "Continue rolling to wings-level upright, as the nose continues to drop to approximately 25° nose-low at about 220 KIAS."},
+        {"name": "wingover pitch at 30° bank", "value": "approximately 10° nose-high", "verbatim": "Pitch is approximately 10° nose-high at 30° bank."},
+        {"name": "wingover pitch at 60° bank", "value": "approximately 20° nose-high", "verbatim": "At 60° bank, pitch as approximately 20° nose-high."},
+        {"name": "wingover bank at the horizon", "value": "90°", "verbatim": "As the nose falls, continue to roll. At the horizon, bank should be 90°."},
+        {"name": "wingover pitch on recovery", "value": "about 20° Nose-Low", "verbatim": "Increase backpressure and when approaching 60° bank, catch the high wingtip on the horizon bar. Pitch is about 20° Nose-Low."}
+      ],
+      "procedure_steps": [
+        "Aileron Roll: begin in straight and level flight at entry airspeed and power setting.",
+        "Aileron Roll: maintain wings level and raise the nose to 25° on the EADI.",
+        "Aileron Roll: use aileron and rudder to perform a coordinated roll, starting with a moderate roll rate.",
+        "Aileron Roll: adjust the roll rate to pass through the horizon in a wings level and inverted attitude - unlike the contact aileron roll, a constant roll rate is not the goal.",
+        "Aileron Roll: continue rolling to wings-level upright as the nose drops to approximately 25° nose-low at about 220 KIAS, then smoothly return to level flight.",
+        "Wingover: begin in straight and level flight at entry airspeed and power setting; it is a slow and precise manoeuvre with a constant roll rate.",
+        "Wingover: increase backpressure and start to roll so that the low wingtip of the EADI fixed A/C symbol remains on the horizon bar.",
+        "Wingover: backpressure increases as bank increases to 60°; at the horizon bank should be 90°.",
+        "Wingover: begin to roll out passing the horizon, increase backpressure and when approaching 60° bank catch the high wingtip on the horizon bar.",
+        "Wingover: keep the wingtip on the horizon bar until wings level."
+      ],
+      "common_errors": [
+        "Do not unload when inverted, to hit the horizon (aileron roll).",
+        "Flying the instrument aileron roll with a constant roll rate as in the contact aileron roll - a constant roll rate is not the goal.",
+        "Losing the low/high wingtip off the horizon bar during the wingover (roll rate not matched to pitch)."
+      ],
+      "corrections": [
+        "Adjust the roll rate to pass through the horizon in a wings level and inverted attitude.",
+        "Keep the wingtip on the horizon bar until wings level (wingover)."
+      ],
+      "notes": null
+    },
+    {
+      "section": "7.15",
+      "title": "UNUSUAL ATTITUDE RECOVERIES",
+      "pages_pdf": [144, 145],
+      "item_mapping": ["instrument-10"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is to recover to a normal attitude with reference to instruments only. An unusual attitude is any unexpected or inadvertent attitude encountered during normal instrument flight; generally, in IMC, bank should be limited to 30° and pitch limited to -10° Nose-Low to 15° Nose-High. Use the EADI as the main recovery instrument after proper operation is verified and it is confirmed that an unusual attitude exists, comparing EADI indications with the standby attitude indicator and performance instruments. The recovery is complete when the desired attitude for normal instrument flight is reached.",
+      "parameters": [
+        {"name": "IMC bank limit", "value": "30°", "verbatim": "Generally, in IMC, bank should be limited to 30° and pitch limited to -10° Nose-Low to 15° Nose-High."},
+        {"name": "IMC pitch limits", "value": "-10° Nose-Low to 15° Nose-High", "verbatim": "Generally, in IMC, bank should be limited to 30° and pitch limited to -10° Nose-Low to 15° Nose-High."},
+        {"name": "critical inverted condition", "value": "beyond 90° of bank, diving", "verbatim": "In high performance A/C, an inverted (beyond 90° of bank), diving attitude is the most critical situation."},
+        {"name": "pull-up bank threshold", "value": "less than 90° bank", "verbatim": "If the A/C is diving, roll toward wings level and start pull up when bank is less than 90°."}
+      ],
+      "procedure_steps": [
+        "Recognize - identify potential unusual attitude with EADI and A/C performance.",
+        "Confirm - verify actual attitude with standby ADI and performance instruments.",
+        "Recover - apply appropriate recovery procedure (as described in AFMAN 11-217, Volume 1).",
+        "If the EADI is operating properly it is used to recover; in extreme nose-high or nose-low attitudes red recovery chevrons point to the horizon and may be used to determine attitude.",
+        "Diving: roll toward wings level and start pull up when bank is less than 90°; reduce power and extend the speed brake if required.",
+        "Climbing: use power as required to maintain desired airspeed; as the fuselage dot of the miniature A/C approaches the horizon bar, adjust bank to establish a wings-level attitude."
+      ],
+      "common_errors": [
+        "Possible causes of unusual attitudes include slow crosscheck, spatial disorientation, focusing on a subtask, and transition from VFR to IFR.",
+        "Correcting pitch before rolling upright from an inverted (beyond 90° of bank), diving attitude - correction to an upright attitude (less than 90° bank) is the priority and must be initiated before pitch correction.",
+        "Using more bank than required in the recovery - it is not necessary to use 90° in all recoveries.",
+        "Recovering on the EADI without first verifying its proper operation against the standby attitude indicator and performance instruments."
+      ],
+      "corrections": [
+        "Compare the EADI indications with the standby attitude indicator and performance instruments to confirm an unusual attitude.",
+        "If diving: roll toward wings level, start pull up when bank is less than 90°, reduce power and extend the speed brake if required.",
+        "If climbing: use power as required to maintain desired airspeed; if airspeed is low, the nose may continue below the horizon.",
+        "Only use as much bank as required to recover."
+      ],
+      "notes": null
+    },
+    {
+      "section": "7.16",
+      "title": "SPATIAL DISORIENTATION DEMONSTRATION",
+      "pages_pdf": [145, 146],
+      "item_mapping": [],
+      "category_hint": ["instrument"],
+      "technique_summary": "These manoeuvres simulate various types of spatial disorientation and are practiced to stress the constant requirement to rely on the A/C instruments despite pilot feeling assumptions. An IP is required to practice these manoeuvres. More violent and prolonged manoeuvres may have a disorienting effect, but they are not likely to be inadvertently encountered in normal instrument flight.",
+      "parameters": [
+        {"name": "turn G-loading (climb sensation demo)", "value": "about one-G", "verbatim": "With a relatively slow entry, the PF executes a normal, well coordinated instrument turn at about one-G."},
+        {"name": "turn magnitude (diving sensation demo)", "value": "about 90°", "verbatim": "The PNF closes his/her eyes while PF executes a turn of about 90°."},
+        {"name": "bank and roll rate (motion reversal demo)", "value": "30 to 45° bank, 1 to 2° per second", "verbatim": "The PF rolls the A/C to 30 to 45° bank, at a constant rate of 1 to 2° per second."},
+        {"name": "airspeed (climb sensation demo)", "value": "normal final approach airspeed", "verbatim": "The PNF closes his/her eyes with A/C in straight and level flight at normal final approach airspeed."}
+      ],
+      "procedure_steps": [
+        "Sensation of Climbing While Turning: PNF closes eyes in straight and level flight; PF executes a slow-entry, well coordinated instrument turn at about one-G; PNF normally senses a climb.",
+        "Sensation of Diving During Recovery From a Turn: PNF closes eyes while PF executes a turn of about 90°, keeping eyes closed until midway through the rollout; PNF normally senses a descent.",
+        "False Sensation of Tilting to Right or Left: PNF closes eyes in straight and level flight; PF applies right rudder to produce a slight skid to the left; PNF normally senses body tilt to the right.",
+        "False Sensation of Motion Reversal: PNF closes eyes; PF rolls to 30 to 45° bank at 1 to 2° per second, stops the roll abruptly and holds bank; PNF normally senses a rapid rotation in the opposite direction.",
+        "Sensation of Climbing: PNF closes eyes at normal final approach airspeed; PF adds power and accelerates straight ahead; PNF normally senses a climb."
+      ],
+      "common_errors": [
+        "If the A/C enters a mild, coordinated turn while the pilot's eyes are diverted away from the instruments, the sensation of a Nose-Up attitude may occur.",
+        "If the pilot's eyes are diverted from the instruments during a turn under instrument conditions, a slow rollout can cause a perception similar to a decrease in G-force.",
+        "If the pilot's eyes are momentarily diverted from the instruments as a skid occurs, a false sensation of the body tilting in the opposite direction may occur.",
+        "If roll or yaw is stopped abruptly while the pilot's eyes are diverted from the instruments, a sensation of roll or yaw in the opposite direction may occur; the natural response to this sensation is to re-enter a turn, increase the original roll, or yaw.",
+        "The false sensation of climb (or increased nose up attitude) produced by acceleration may be very strong during an instrument missed approach; an opposite sensation may be felt during deceleration."
+      ],
+      "corrections": [
+        "Rely on the A/C instruments despite pilot feeling assumptions."
+      ],
+      "notes": "An IP is required to practice these manoeuvres. See AFMAN 11-217 for further information."
+    },
+    {
+      "section": "7.17",
+      "title": "APPLICATION OF INSTRUMENT FLIGHT MANOEUVRES",
+      "pages_pdf": [146],
+      "item_mapping": [],
+      "category_hint": ["instrument"],
+      "technique_summary": "The basic manoeuvres and principles of instrument flight are the basis for safe instrument flight. Skills developed with practice are used alone, or in combination, to perform an instrument sortie from takeoff through the enroute portion to descent and landing.",
+      "parameters": [],
+      "procedure_steps": [],
+      "common_errors": [],
+      "corrections": [],
+      "notes": null
+    },
+    {
+      "section": "7.18",
+      "title": "INSTRUMENT TAKEOFF (ITO) AND CLIMB",
+      "pages_pdf": [146],
+      "item_mapping": ["instrument-02"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is to safely transition to IMC from a normal takeoff (VMC): a normal takeoff based on visual cues, with transition to instruments on the departure leg at the same rate as the loss of visual cues. After lift-off use outside references and the EADI to control attitude. Unless otherwise directed, do not turn until at a minimum of 140 KIAS and 400 feet AGL. Initially raise the nose to approximately 7-8° Nose-High on the EADI to establish a definite rate of climb, trim, and verify the climb with altimeter and VSI.",
+      "parameters": [
+        {"name": "minimum airspeed before turning", "value": "140 KIAS", "verbatim": "Unless otherwise directed, do not turn until at a minimum of 140 KIAS and 400 feet AGL."},
+        {"name": "minimum altitude before turning", "value": "400 feet AGL", "verbatim": "Unless otherwise directed, do not turn until at a minimum of 140 KIAS and 400 feet AGL."},
+        {"name": "initial climb pitch", "value": "approximately 7-8° Nose-High on the EADI", "verbatim": "Initially raise the nose to approximately 7-8° Nose-High indication, on the EADI to establish a definite rate of climb."}
+      ],
+      "procedure_steps": [
+        "Perform a normal takeoff.",
+        "After lift-off, use outside references and the EADI to control attitude; transition to instruments at the same rate as visual cues are lost.",
+        "Do not turn until at a minimum of 140 KIAS and 400 feet AGL unless otherwise directed.",
+        "Raise the nose to approximately 7-8° Nose-High on the EADI to establish a definite rate of climb.",
+        "Trim and verify climb with altimeter and VSI.",
+        "Maintain initial attitude until target climb speed.",
+        "Adjust the climb profile for non-standard climb gradients on published departures.",
+        "Complete line up checklist and execute engine run-up prior to takeoff into IMC.",
+        "Before takeoff, review impact of IMC on emergency recovery options."
+      ],
+      "common_errors": [
+        "Transitioning to instruments faster or slower than the rate at which visual cues are lost.",
+        "Turning before reaching 140 KIAS and 400 feet AGL when not otherwise directed.",
+        "Not establishing a definite rate of climb (pitch below approximately 7-8° Nose-High on the EADI).",
+        "Failing to adjust the climb profile where published departures require non-standard climb gradients."
+      ],
+      "corrections": [
+        "Verify climb with altimeter and VSI after setting pitch and trimming.",
+        "Maintain initial attitude until target climb speed."
+      ],
+      "notes": null
+    },
+    {
+      "section": "7.19",
+      "title": "LEVEL OFF",
+      "pages_pdf": [147],
+      "item_mapping": ["instrument-04"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is to smoothly level off at the desired altitude with power set to maintain the desired airspeed - a change of pitch to reduce vertical speed at a specific altitude combined with power adjustments to meet the desired airspeed. Use 10 % of vertical speed (VSI) as the lead point to begin levelling off; at the lead point, cut the pitch in half and then continue the pitch change to smoothly level off.",
+      "parameters": [
+        {"name": "level-off lead point", "value": "10 % of vertical speed (VSI)", "verbatim": "Use 10 % of vertical speed (VSI) as a lead point to begin leveling-off."},
+        {"name": "lead point example", "value": "200 feet below desired altitude at 2000 fpm", "verbatim": "For example: begin level off 200 feet below desired altitude when VSI indicates 2000 fpm."}
+      ],
+      "procedure_steps": [
+        "To level off at airspeed below climb speed, lower the nose to level flight and reduce power below the setting required to maintain the lower airspeed.",
+        "To level off at a higher airspeed, leave the PCL at MAX or set power above the setting required to maintain the greater airspeed.",
+        "Adjust power approaching target airspeed and trim.",
+        "Use similar procedures for a level off from a descent.",
+        "At the lead point (10 % of VSI), cut the pitch in half, then continue the pitch change to smoothly level off."
+      ],
+      "common_errors": [
+        "Beginning the level off without the 10 % of VSI lead point (altitude overshoot).",
+        "Making the whole pitch change at once instead of cutting the pitch in half at the lead point."
+      ],
+      "corrections": [
+        "If intermediate level offs are required, it is permissible to maintain climb airspeed or accelerate to the appropriate cruise speed for that altitude."
+      ],
+      "notes": null
+    },
+    {
+      "section": "7.20",
+      "title": "INSTRUMENT DEPARTURES",
+      "pages_pdf": [147, 148],
+      "item_mapping": ["instrument-03"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is to comply with departure procedures and safely transition from takeoff to the enroute structure. Departure routes and altitudes are designed to provide clearance from obstacles or efficient traffic flow. Minimum obstacle and ATC climb gradients must be met. Consult AFMAN 11-217 for detailed procedures.",
+      "parameters": [],
+      "procedure_steps": [
+        "Review the entire departure procedure to include surrounding terrain, hazards and climb gradient requirements, during pre-flight planning.",
+        "Set NAVAIDs and displays, as required, to fly the departure.",
+        "Thoroughly review the airfield diagram (strange field).",
+        "Develop a plan for emergency return; have an instrument approach plate open with the primary recovery approach displayed in case immediate return to the departure base is required.",
+        "Develop a specific course of action for each section of the departure (e.g. problems before gear retraction, after gear retraction in VMC, and in IMC).",
+        "Review how surrounding terrain affects an emergency recovery.",
+        "Review no radio (NORDO) procedures."
+      ],
+      "common_errors": [
+        "Failing to meet minimum obstacle and ATC climb gradients.",
+        "Not reviewing the entire departure procedure (terrain, hazards, climb gradient requirements) during pre-flight planning.",
+        "NAVAIDs and displays not set as required to fly the departure.",
+        "No plan for emergency return / approach plate for the primary recovery approach not available."
+      ],
+      "corrections": [],
+      "notes": null
+    },
+    {
+      "section": "7.21",
+      "title": "COURSE INTERCEPTS",
+      "pages_pdf": [148, 149, 150, 151],
+      "item_mapping": ["instrument-12", "instrument-13"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is to intercept a radial inbound or outbound from a station: turns to intercept specific courses in order to comply with published or assigned departure, enroute, or arrival routing. Inbound, tune-identify-monitor (TIM), set the inbound course and check for a TO indication, then turn in the shorter direction toward the CDI, placing the head of the course arrow in the top half of the instrument case; roll out when the bearing pointer is between the upper lubber line and the course arrow. Outbound, TIM, set the desired outbound course and turn in the shorter direction toward the CDI. Correct for winds.",
+      "parameters": [
+        {"name": "inbound intercept angle limit", "value": "always less than 90° (course arrow above 90° index)", "verbatim": "Inbound intercept angles must always be less than 90° (course arrow above 90° index) but may vary depending on the number of degrees off the selected course and the rate of intercept desired."},
+        {"name": "outbound intercept angle", "value": "usually 45°", "verbatim": "The intercept angle selected depends on the rate of intercept desired, but usually 45° provides a suitable angle of intercept."},
+        {"name": "inbound memory aid", "value": "\"Charlie Brown plus 30\" - course arrow, bearing pointer, +30°", "verbatim": "To intercept a course inbound, \"Charlie Brown plus 30\" is a common memory aid. Start at the course arrow (Charlie) on the EHSI, move up the case to the bearing pointer (Brown) and finally, continue 30° past the bearing pointer to identify the intercept heading."},
+        {"name": "outbound memory aid", "value": "\"Top Cat plus 45\" - tail of bearing pointer, course arrow, +45°", "verbatim": "To intercept a course outbound, \"Top Cat plus 45\" is a common memory aid. Start on the tail of the bearing pointer (Top), move up the case to the course arrow (Cat), and finally, continue 45° past the course arrow to identify the intercept heading."},
+        {"name": "drift correction formula", "value": "crosswind component divided by true airspeed in NM/Min", "verbatim": "To maintain a course and correct for winds, divide the crosswind component of the wind by the true airspeed in NM/Min."},
+        {"name": "drift correction example", "value": "240 KTAS (4 NM/min) with 40 KIAS crosswind = approximately 10° drift correction", "verbatim": "For example: If flying at 240 KTAS (4 NM/min) with 40 KIAS of crosswind, approximately 10° of drift correction (40 KIAS/4 NM/min) into the wind are required to maintain a course."}
+      ],
+      "procedure_steps": [
+        "Inbound: Tune, identify, and monitor (TIM).",
+        "Inbound: set inbound course (convert radial to a course if required) and check for a TO indication.",
+        "Inbound: turn to an intercept heading - turn in the shorter direction toward the CDI, placing the head of the course arrow in the top half of the instrument case.",
+        "Inbound: roll out when the bearing pointer is between the upper lubber line and the course arrow.",
+        "Inbound: correct for winds.",
+        "Outbound: TIM.",
+        "Outbound: set desired outbound course.",
+        "Outbound: turn to an intercept heading in the shorter direction toward the CDI, placing the head of the course arrow in the top half of the instrument case.",
+        "Correct for winds.",
+        "Mark with the heading bug the intercept heading."
+      ],
+      "common_errors": [
+        "Inbound intercept angle of 90° or more (course arrow below the 90° index).",
+        "Turning the longer way instead of turning in the shorter direction toward the CDI.",
+        "Not checking for a TO indication after setting the inbound course.",
+        "Failing to correct for winds when maintaining the course."
+      ],
+      "corrections": [
+        "Lead points are dependent on the CDI rate of movement and turn radius.",
+        "Divide the crosswind component of the wind by the true airspeed in NM/Min to determine drift correction."
+      ],
+      "notes": "Figure 7.1 (Inbound Course Intercepts, PDF 149) and Figure 7.2 (Outbound Course Intercepts, PDF 151) illustrate the procedure with T-6 instrumentation."
+    },
+    {
+      "section": "7.22",
+      "title": "ARC AND RADIAL INTERCEPTS",
+      "pages_pdf": [152],
+      "item_mapping": ["instrument-14", "instrument-15"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is to intercept a radial inbound or outbound from an arc, and to intercept an arc from a radial, using lead turns from a position on an arc or radial that accurately place the A/C on the desired radial or arc. At normal T-6 airspeeds lead points are not large and, during radial intercepts, the CDI is always off-the-wall (within 10° of desired course); the rate of CDI movement during the intercept can be used to determine the lead point. Initial lead point calculations are based on a 90° turn with 30° bank.",
+      "parameters": [
+        {"name": "CDI condition during radial intercept", "value": "always off-the-wall (within 10° of desired course)", "verbatim": "At normal T-6 airspeeds, lead points are not large and during radial intercepts, the CDI is always off-the-wall (within 10° of desired course)."},
+        {"name": "lead point calculation basis", "value": "90° turn with 30° bank", "verbatim": "Initial lead point calculations are based on a 90° turn with 30° bank."},
+        {"name": "turn radius method 1", "value": "Turn radius (NM) = Groundspeed (NM/min) minus 2 (30° bank)", "verbatim": "Turn radius (NM) = Groundspeed (NM/min) minus 2 (30° bank). For example, 4 NM/min (240 KGS) minus 2 = 2 NM turn radius."},
+        {"name": "turn radius method 2", "value": "Turn radius (NM) = Groundspeed (NM/min)^2 divided by 10 (30° bank)", "verbatim": "Turn radius (NM) = Groundspeed (NM/min)2 divided by 10 (30° bank). For example, 4 NM/min (240 KGS)2 divided by 10 = 1.6 NM turn radius."},
+        {"name": "lead point adjustment, 60° turn", "value": "one-half of the calculated lead point", "verbatim": "One-half of the calculated lead point for a turn of 60°."},
+        {"name": "lead point adjustment, 45° turn", "value": "one-third of the calculated lead point", "verbatim": "One-third of the calculated lead point for a turn of 45°."},
+        {"name": "lead point adjustment, 30° turn", "value": "one-sixth of the calculated lead point", "verbatim": "One-sixth of the calculated lead point for a turn of 30°."},
+        {"name": "arc-to-radial lead point", "value": "Radials (degrees) per NM = 60 divided by Arc (NM)", "verbatim": "Radials (degrees) per NM = 60 divided by Arc (NM). For example: on 20 NM arc there are 3 radials per NM."},
+        {"name": "arc-to-radial lead point example", "value": "20 NM arc, 4 NM/min (240 KGS), 2 NM lead = 6 radials", "verbatim": "The lead point from the 20 NM arc = 60 divided by 20 multiplied by 2 = 6 radials."}
+      ],
+      "procedure_steps": [
+        "Consult AFMAN 11-217, Volume 1, for detailed information on arc and radial intercepts and rules regarding altitude restrictions at arc or radial intersections.",
+        "Use the rate of CDI movement during the intercept to determine the lead point.",
+        "Calculate the no-wind turn radius (equals the lead point) with either turn-radius formula.",
+        "Adjust the lead point for turns of less than 90° (1/2 for 60°, 1/3 for 45°, 1/6 for 30°).",
+        "For arc-to-radial intercepts, convert the lead point in NM to a lead point in radials with the 60-to-1 rule."
+      ],
+      "common_errors": [
+        "Using the full 90°/30°-bank lead point for turns of less than 90° (lead point must be reduced).",
+        "Not accounting for less bank or a greater amount of turn, which changes the lead point."
+      ],
+      "corrections": [
+        "Less bank or greater amount of turn changes the lead point - adjust accordingly.",
+        "Use the CDI rate of movement to refine the lead point during the intercept."
+      ],
+      "notes": null
+    },
+    {
+      "section": "7.23",
+      "title": "FIX TO FIX",
+      "pages_pdf": [152, 153, 154, 155, 156],
+      "item_mapping": ["instrument-16"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is to proceed direct to a point defined by radial and DME using onboard navigational equipment. Specific points on the EHSI represent location and target radial or DME; the relative positions of current and desired position enable determination of the course between them. TIM the NAVAID, set the radial of the desired fix in the course selector window (CSW), then turn in the shorter direction to a heading between the head of the bearing pointer and the head of the course arrow, favouring the bearing pointer if the destination DME is less than current DME and the course arrow if it is greater. Fine tune and regularly update the heading, applying known wind drift corrections.",
+      "parameters": [
+        {"name": "no-wind midpoint heading rule", "value": "heading exactly between the head of the bearing pointer and the head of the course arrow arrives at the target radial at the same DME as current DME", "verbatim": "A heading (in a no wind condition) exactly between the head of the bearing pointer and the head of the course arrow results in arrival at the target radial at the same DME as current DME."},
+        {"name": "ratio method - twice current DME", "value": "heading midway between the midpoint and the course arrow", "verbatim": "Heading midway between the midpoint and the course arrow, results in hitting the target radial at DME twice the current DME."},
+        {"name": "ratio method - half current DME", "value": "heading midway between the midpoint and the bearing pointer", "verbatim": "Likewise, heading midway between the midpoint and the bearing pointer results in hitting target radial at DME one half the current DME."},
+        {"name": "worked example (Figures 7.3/7.4)", "value": "from 180 radial at 60 DME heading 360° to 090 radial at 30 DME = approximately 025°", "verbatim": "The resultant heading to the fix under no wind conditions is approximately 025°."},
+        {"name": "drift correction formula", "value": "crosswind component divided by true airspeed in NM/min", "verbatim": "Proper wind drift correction can be determined by dividing the crosswind component by the true airspeed in NM/min."},
+        {"name": "drift correction example", "value": "no wind heading 360°, 30 KIAS crosswind from the west, 3 NM/min = 10° drift, heading 350°", "verbatim": "the drift correction is 10° into the wind (30 divided by 3 = 10°) for a resulting heading of 350° to proceed towards the fix."},
+        {"name": "update schedule example", "value": "60 DME to 15 DME: updates at 45 DME (1/3), 30 DME (1/2), 20 DME (3/4)", "verbatim": "For example: If going from 60 DME to 15 DME, plan updates at 45 DME (1/3 ratio), 30 DME (1/2 ratio), and 20 DME (3/4 ratio)."}
+      ],
+      "procedure_steps": [
+        "TIM NAVAID and double check that the correct frequency is selected.",
+        "Set radial of the desired fix in course selector window (CSW).",
+        "Turn in the shorter direction to a heading between the head of the bearing pointer and the head of the course arrow.",
+        "Favour the head of the bearing pointer if destination DME is less than current DME; favour the head of the course arrow if destination DME is greater than current DME.",
+        "After turning to an initial heading, fine tune and update by envisioning the A/C's current position and the targeted fix superimposed on the EHSI as if it were a map.",
+        "Use the DME of the position furthest from the station as the distance to the outer ring of the EHSI bezel; the ground station is at the centre of the EHSI.",
+        "Pencil method: connect the two positions with an imaginary line, then imagine a parallel line through the centre of the compass card - it intercepts the no-wind heading to the target fix.",
+        "Plumb bob method: imagine a line between current position and target fix and turn to put the line in a vertical orientation (fixes aligned vertically).",
+        "Apply known wind drift corrections.",
+        "Regularly update the required heading to the target fix, always using current DME."
+      ],
+      "common_errors": [
+        "Confusing current position and target fix on the EHSI - current A/C position is always somewhere between the tail of the bearing pointer and the centre of the EHSI, and the target fix is always somewhere between the centre of the EHSI and the course arrow.",
+        "Not anticipating that the DME will initially get smaller than the current position DME before increasing to the target DME when both the bearing pointer and the head of the course arrow are in the upper half of the EHSI (cutting the arc).",
+        "Failing to regularly update the required heading to the target fix using current DME.",
+        "Wrong frequency selected - the NAVAID must be tuned, identified, monitored and double checked."
+      ],
+      "corrections": [
+        "A requirement for significant heading changes during updates can indicate approximate wind speed and direction - apply proper wind drift correction.",
+        "Repeat the steps used to determine the initial heading, always using current DME.",
+        "Schedule updates at distances that form simple ratios with the target DME."
+      ],
+      "notes": "Figure 7.3 (Fix-to-Fix Example, PDF 154) and Figure 7.4 (Visualize the HSI, PDF 155) illustrate the technique."
+    },
+    {
+      "section": "7.24",
+      "title": "IN-FLIGHT CHECKS",
+      "pages_pdf": [156, 157, 158],
+      "item_mapping": ["instrument-30"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is to accomplish in-flight checks and other actions required during instrument flight in accordance with the flight manual, with actions such as IAP review accomplished in a timely fashion throughout the sortie. Required actions per AFMAN 11-217, Volume 1 include review of the IAP for planned approaches, recheck of destination weather, and coordination of lost communication instructions if required. Several memory aids are used: WHOLDS, the 6 T's, CAT, the 3 A's, NMAIL/MAN let-down plate review, LIDS and NORM.",
+      "parameters": [
+        {"name": "holding pattern speed (6 T's - Throttle)", "value": "120 - 150 KIAS", "verbatim": "Throttle - Adjust power for the appropriate holding pattern speed (120 - 150 KIAS) if you haven't reduced it or reduce power for descend."}
+      ],
+      "procedure_steps": [
+        "WHOLDS (prior to descent from cruising altitude): W - Weather, check prior to IAF or beginning enroute descent; H - Holding, coordinate holding instructions, if required; O - Obtain clearance for the approach; L - Let down plate (approach) review; D - Descent check; S - Speed, slow down for holding, or low altitude procedure.",
+        "6 T's (at Holding Fix, IAF, FAF): Time - check your time, or begin outbound timing; Turn - turn in order to enter holding pattern; Throttle - adjust power for the appropriate holding pattern speed (120 - 150 KIAS) or reduce power for descent; Twist - set the outbound course of the holding pattern, or beginning descent set the approach course; Track - track the course set on the CRS; Talk - report 'established in Holding pattern' upon initial passage of the Holding fix, or report 'over IAF begin descend' when time has come and ready to descend.",
+        "CAT (passing IAF): Course - set the inbound approach course before beginning turn; Altimeter - set the barometric pressure given by the ATC controller and confirm the altitude you must begin turning; Turn direction - confirm the direction of the turn (left or right).",
+        "3 A (before FAF): Aircraft - complete the appropriate procedures if not already completed (before landing checklist); Airspeed - adjust your speed for the recommended approach speed; Airfield Diagram - remember the runway environment (lighting, the runway, the runway markings, etc.).",
+        "Let down plate review: N - NAVAIDS, set for position awareness; M - Minimums, altitudes (on approach, min/emergency safe, etc.), weather minimums; A - Altimeter; I - Initial descent rate; L - Lost communication instructions, if required; M - Missed approach and/or climbout; A - Aerodrome sketch; N - NAVAIDS, set, and review changes for approach.",
+        "LIDS (before commencing final approach or between approaches): L - Localizer, set correct frequency; I - Inbound course, set if required; D - DME, check frequency; S - Speed for approach.",
+        "NORM: N - NAVAIDS set; O - Obtain clearance; R - Review approach and/or RMU set; M - Minimum and/or missed approach."
+      ],
+      "common_errors": [
+        "In-flight checks and IAP review not accomplished in a timely fashion throughout the sortie.",
+        "Destination weather not rechecked before descent.",
+        "Lost communication instructions not coordinated when required.",
+        "Not slowing down for holding or the low altitude procedure (WHOLDS - Speed)."
+      ],
+      "corrections": [],
+      "notes": "The let-down plate review acronym is printed as two blocks (N-M-A-I-L then M-A-N) spanning printed pages 147-148."
+    },
+    {
+      "section": "7.25",
+      "title": "HOLDING",
+      "pages_pdf": [158],
+      "item_mapping": ["instrument-17"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is to manoeuvre to properly enter holding and remain within holding airspace: turn at entry to enter the published or assigned holding pattern and fly wind corrected headings to remain within protected airspace. Normally hold at 150 KIAS; airspeed as low as 120 KIAS (or MAX endurance AOA, whichever is higher) may be flown in holding. Procedures for holding entry, holding, and holding exit are described in FLIP General Planning, AFMAN 11-217 Volume 1, and the flight manual.",
+      "parameters": [
+        {"name": "normal holding airspeed", "value": "150 KIAS", "verbatim": "Normally hold at 150 KIAS."},
+        {"name": "minimum holding airspeed", "value": "120 KIAS (or MAX endurance AOA; whichever is higher)", "verbatim": "Airspeed as low as 120 KIAS (or MAX endurance AOA; whichever is higher) may be flown in holding."},
+        {"name": "Table 7.1 - Holding", "value": "150 KIAS, gear UP, flaps UP, 2 NH, 35 % torque", "verbatim": "16 Holding | 150 | UP | UP | 2 NH | 35%"}
+      ],
+      "procedure_steps": [
+        "Turn at entry to enter the published or assigned holding pattern.",
+        "Fly wind corrected headings to remain within protected airspace.",
+        "Use the GPS to determine wind.",
+        "Compare A/C heading to actual A/C track to determine crosswind correction required.",
+        "Use techniques for the Vertical-S when climbing or descending in a holding pattern."
+      ],
+      "common_errors": [
+        "Failing to fly wind corrected headings, resulting in departure from protected airspace.",
+        "Holding below 120 KIAS / below MAX endurance AOA."
+      ],
+      "corrections": [
+        "Compare A/C heading to actual A/C track (GPS) to determine the crosswind correction required."
+      ],
+      "notes": null
+    },
+    {
+      "section": "7.26",
+      "title": "PENETRATIONS AND DESCENTS",
+      "pages_pdf": [158, 159, 160],
+      "item_mapping": ["instrument-18", "instrument-19"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is to smoothly transition from cruise altitude to an instrument approach via enroute descent or published IAP, descending in accordance with published or assigned routing and altitude restrictions. Use of lead points for turns and known pitch and power settings for the descent improve smoothness and efficiency. Airspeed is 200 to 250 KIAS with power as required - for 200 KIAS approximately 10° Nose-Low and 10 % torque or 5° Nose-Low and 20 % torque - and speed brake as required. Plan the descent to allow A/C configuration before the FAF.",
+      "parameters": [
+        {"name": "airspeed", "value": "200 to 250 KIAS", "verbatim": "Airspeed - 200 to 250 KIAS."},
+        {"name": "power/pitch for 200 KIAS", "value": "approximately 10° Nose-Low and 10 % torque or 5° Nose-Low and 20 % torque", "verbatim": "Power - As required. For 200 KIAS approximately 10° Nose-Low and 10 % torque or 5° Nose-Low and 20 % torque."},
+        {"name": "speed brake", "value": "As required", "verbatim": "Speed brake - As required."},
+        {"name": "penetration speed limit below 10.000 ft MSL", "value": "do not exceed 250 KIAS", "verbatim": "Airspeed may be adjusted to comply with published altitude restrictions (do not exceed 250 KIAS below 10.000 feet MSL)."},
+        {"name": "pilot-discretion descent gradient", "value": "5° descent", "verbatim": "If given the option of a descent at pilot discretion, a 5° descent is comfortable and controllable."},
+        {"name": "top-of-descent formula", "value": "(altitude to lose in thousands of feet) x 2 + 10 miles", "verbatim": "To determine when to start descend using a 5° descent: multiply the Altitude to lose in thousands of feet by 2 and add 10 miles."},
+        {"name": "top-of-descent example", "value": "20.000 feet to lose = approximately 50 NM", "verbatim": "For example: If the altitude to lose is 20.000 feet, start descending approximately 50 NM from the destination (20 multiplied by 2 = 40 plus 10 = 50 NM). The extra 10 miles allows for an instrument approach into the destination."},
+        {"name": "60-to-1 pitch rule", "value": "Pitch change = Altitude to lose (hundreds of feet) divided by nautical miles", "verbatim": "Pitch change = Altitude to lose (hundreds of feet) divided by nautical miles. For example: To lose 5.000 feet in 10 NM; 50 divided by 10 = 5° Nose-Low."},
+        {"name": "60-to-1 equivalence", "value": "every 1° of pitch = 100 feet per NM", "verbatim": "Every 1° of pitch equals descent (or climb) of 100 feet per NM."},
+        {"name": "EADI descent technique", "value": "the 10° nose-low line on the EADI represents NM to descend", "verbatim": "The 10° nose-low line on the EADI represents NM to descend. Lower the nose, based on this scale, to altitude to lose (in thousands)."},
+        {"name": "EADI technique example", "value": "lose 10,000 feet in 20 NM = 5° nose-low", "verbatim": "For example: To lose 10,000 feet in 20 NM. Set scale with 20 at 10° Nose-Low line. Descent of 10 (thousand feet) is 1/2 of 20, therefore pitch required is 5° nose-low."},
+        {"name": "VSI verification formula", "value": "VSI = Groundspeed (NM/min) x Pitch (descent gradient) x 100", "verbatim": "VSI = Groundspeed (NM/min) multiplied by Pitch (descent gradient) multiplied by 100. For example: 4 NM/min (240 KGS) multiplied by 5° descent gradient multiplied by 100 = 2000 fpm on VSI."},
+        {"name": "wind effect on VSI", "value": "60 kt headwind (180 KGS) = 1500 fpm; 60 kt tailwind (300 KGS) = 2500 fpm for a 5° gradient", "verbatim": "Descent above calculated with 240 TAS; expected VSI is 2000 fpm; to maintain 5° descent gradient with a 60 knot headwind (180 KGS), VSI is 1500 fpm. Likewise, with a 60 knot tailwind (300 KGS), VSI is 2500 fpm."},
+        {"name": "Rule of 100 (200 KIAS)", "value": "degrees nose-low x torque = 100", "verbatim": "To maintain 200 KIAS in the T-6 use degrees nose-low multiplied by torque = 100. For example: Use 10° pitch and 10 % torque, 5° pitch and 20 % torque, etc."},
+        {"name": "Table 7.1 - Penetration", "value": "200 KIAS, gear UP, flaps UP, 10 NL / 10 % torque or 5 NL / 20 % torque", "verbatim": "8 Penetration | 200 | UP | UP | 10 NL  5 NL | 10%  20%"},
+        {"name": "Table 7.1 - Enroute descent", "value": "200 KIAS, gear UP, flaps UP, 7.5 NL, 8 % torque", "verbatim": "10 Enroute descent | 200 | UP | UP | 7.5 NL | 8%"}
+      ],
+      "procedure_steps": [
+        "Penetrations: lower nose and set power to maintain 200 KIAS.",
+        "Penetrations: adjust airspeed to comply with published altitude restrictions (do not exceed 250 KIAS below 10.000 feet MSL).",
+        "Penetrations: plan the descent to allow A/C configuration before the FAF.",
+        "Enroute Descent: lower nose and set power to achieve desired airspeed and rate of descent; plan the descent to allow configuration before the FAF.",
+        "Verify descent gradient by crosscheck of VSI; calculate descent rate from airspeed and pitch.",
+        "Update the descent profile to account for the effect of wind.",
+        "Use GPS and NAVAIDS to maintain situational awareness."
+      ],
+      "common_errors": [
+        "Exceeding 250 KIAS below 10.000 feet MSL.",
+        "Not planning the descent to allow A/C configuration before the FAF.",
+        "Use caution when calculating VSI with IAS or TAS - significant winds change the desired VSI for the selected descent gradient (headwinds result in lower VSI and tailwinds in higher).",
+        "Failing to update the descent profile for wind, leading to a hurried deceleration and configuration."
+      ],
+      "corrections": [
+        "Verify descent gradient by crosscheck of VSI.",
+        "Plan the descent to allow for smooth unhurried deceleration and configuration.",
+        "Use known pitch and power settings and lead points for turns to improve smoothness and efficiency."
+      ],
+      "notes": "Figure 7.5 (EADI Descent Calculation) is on printed page 150 (PDF 160)."
+    },
+    {
+      "section": "7.27",
+      "title": "FINAL APPROACH",
+      "pages_pdf": [161],
+      "item_mapping": ["instrument-20", "instrument-21", "instrument-22", "instrument-23", "instrument-24"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is to transition from IMC to VMC via instrument approach procedure: a straight in approach flown using EADI, GPS and NAVAIDS to monitor A/C attitude, altitude, and flight path, with weather minimums allowing transition to visual cues for landing. Airspeed is 110 KIAS (120 KIAS may be used if a circling approach is planned), gear down, flaps TO. Before glide path intercept (precision) or the FAF (non-precision), configure the A/C, slow to approach speed and complete the Before-Landing Checklist.",
+      "parameters": [
+        {"name": "airspeed", "value": "110 KIAS (120 KIAS if circling planned)", "verbatim": "Airspeed - 110 KIAS (120 KIAS may be used if a circling approach is planned)."},
+        {"name": "gear", "value": "Down", "verbatim": "Gear - Down."},
+        {"name": "flaps", "value": "TO", "verbatim": "Flaps - TO."},
+        {"name": "configuration point", "value": "2-3 NM prior to the FAF", "verbatim": "Configuring 2-3 NM prior to the FAF in the T-6 allows for stabilization of airspeed and trim prior to descending at the FAF."},
+        {"name": "drift calculation", "value": "crosswind component in KIAS divided by airspeed in NM/min (60 to 1 rule)", "verbatim": "With known winds, use 60 to 1 rule to calculate drift (drift equals crosswind component in KIAS divided by airspeed in NM/min)."},
+        {"name": "heading correction limit", "value": "5°", "verbatim": "If possible, limit heading changes to 5° when making a course correction."},
+        {"name": "heading bug width", "value": "approximately 10° wide (5° either side of the bugged heading)", "verbatim": "Because the heading bug is approximately 10° wide (5° either side of the bugged heading), limiting heading changes to the area beneath the heading bug will reduce the tendency to overcorrect."},
+        {"name": "pitch correction limit", "value": "2° (approximately 400 feet/min on the VSI)", "verbatim": "Limit pitch changes to 2° (approximately 400 feet/min on the VSI) for glide slope corrections."},
+        {"name": "Table 7.1 - Final approach (level/configured)", "value": "110 KIAS, DOWN, TO, 3 NH, 35 % torque", "verbatim": "11 Final approach (level/ configured) | 110 | DOWN | TO | 3 NH | 35%"},
+        {"name": "Table 7.1 - Precision final", "value": "110 KIAS, DOWN, TO, LOL, 21 % torque, 600 fpm", "verbatim": "12 Precision final | 110 | DOWN | TO | LOL | 21% | 600 fpm"},
+        {"name": "Table 7.1 - Non-precision final", "value": "110 KIAS, DOWN, TO, 1 NL, 16 % torque, 1.000 fpm", "verbatim": "13 Non-precision final | 110 | DOWN | TO | 1 NL | 16% | 1.000 fpm"}
+      ],
+      "procedure_steps": [
+        "Before glide path intercept (precision) or FAF (non-precision approaches), configure A/C, slow to approach speed, and complete the Before-Landing Checklist.",
+        "With crosswinds or gusty winds, configure using appropriate flap setting and increase airspeed, as required.",
+        "Configure 2-3 NM prior to the FAF to allow stabilization of airspeed and trim before descending at the FAF.",
+        "Determine wind with GPS and calculate estimated drift correction; if winds are not known, compare A/C track on the GPS to A/C heading.",
+        "Mark using the heading bug the wind corrected heading for the final.",
+        "When deviations are noted, set specific headings to make corrections.",
+        "Calculate descent gradients for altitude restrictions on IAP such as non-precision step-down fixes inside the FAF."
+      ],
+      "common_errors": [
+        "Overcontrolling in heading - heading changes greater than 5° / outside the area beneath the heading bug produce a tendency to overcorrect.",
+        "Pitch changes greater than 2° (approximately 400 feet/min on the VSI) for glide slope corrections.",
+        "Large power corrections - avoid these unless required for excessively low or high airspeed.",
+        "Configuring too late, so that airspeed and trim are not stabilized prior to descending at the FAF.",
+        "Not calculating descent gradients for step-down fix altitude restrictions inside the FAF."
+      ],
+      "corrections": [
+        "When deviations are noted, set specific headings to make corrections; limit heading changes to 5°.",
+        "Set the heading bug to final approach course to use as an additional visual cue of heading deviations.",
+        "Limit pitch changes to 2° for glide slope corrections and avoid large power corrections.",
+        "With crosswinds or gusty winds, configure using appropriate flap setting and increase airspeed as required."
+      ],
+      "notes": null
+    },
+    {
+      "section": "7.28",
+      "title": "TRANSITION TO LANDING",
+      "pages_pdf": [162],
+      "item_mapping": ["instrument-28"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is to safely transit from IMC to VMC and land the A/C using visual cues. Transition to landing begins when visual cues for the runway environment are available; the transition from IMC to VMC is similar to the transition during an instrument takeoff - gradually adapt to the outside environment and identify visual cues at the same rate as they appear. With the field in sight and the decision made to land, slow the A/C to 105 KIAS (100 KIAS if flaps LDG are selected) and maintain the instrument glide path or transition to a visual glide path.",
+      "parameters": [
+        {"name": "landing speed, flaps TO", "value": "105 KIAS", "verbatim": "With field in sight and the decision has been made to land, slow A/C to 105 KIAS."},
+        {"name": "landing speed, flaps LDG", "value": "100 KIAS", "verbatim": "If flaps LDG are selected, slow to 100 KIAS."}
+      ],
+      "procedure_steps": [
+        "Begin transition when visual cues for the runway environment are available; identify visual cues at the same rate as they appear.",
+        "With field in sight and the decision made to land, slow A/C to 105 KIAS (100 KIAS if flaps LDG are selected).",
+        "Maintain instrument glide path or transition to a visual glide path for landing; use VASI or other visual glide path guidance when available.",
+        "Ensure adequate visual references (runway environment) are available before starting transition to landing.",
+        "Thoroughly review the airport diagram (IAP), paying particular attention to runway lighting, runway dimensions, runway slope, and charted obstructions."
+      ],
+      "common_errors": [
+        "Do not correct to visual glide path with a high sink rate, which may result in a short or hard landing (duck-under).",
+        "Starting the transition to landing without adequate visual references (runway environment) available.",
+        "Continuing the landing when weather phenomenon such as ground fog degrade the visual references after initially breaking out from IMC to VMC."
+      ],
+      "corrections": [
+        "Some weather phenomenon, such as ground fog, may require missed approach even after initially breaking out from IMC to VMC.",
+        "Use VASI or other visual glide path guidance when available."
+      ],
+      "notes": "See AFMAN 11-217, Volume 1, for further information on 'duck-unders' and landing illusions."
+    },
+    {
+      "section": "7.29",
+      "title": "CIRCLING APPROACH",
+      "pages_pdf": [162, 163],
+      "item_mapping": ["instrument-27"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is to safely manoeuvre to align with the landing runway - a visual flight manoeuvre used when the approach does not meet requirements for a straight in approach or when an approach to a runway different than the landing runway must be flown, performed with the runway environment in sight at all times. Fly the instrument approach at 110 KIAS and accelerate to 120 KIAS while circling, gear down, flaps TO. Fly the T-6 to Category B circling minimums based on its manoeuvring airspeed of 120 KIAS and do not exceed the obstacle clearance distance of 1.5 NM from the runway.",
+      "parameters": [
+        {"name": "circling airspeed", "value": "120 KIAS while circling until on a visual final", "verbatim": "Airspeed - 120 KIAS while circling until on a visual final."},
+        {"name": "gear", "value": "Down", "verbatim": "Gear - Down."},
+        {"name": "flaps", "value": "TO", "verbatim": "Flaps - TO."},
+        {"name": "instrument approach airspeed", "value": "110 KIAS, accelerate to 120 KIAS while circling", "verbatim": "Fly the instrument approach at 110 KIAS and accelerate to 120 KIAS while circling (120 KIAS may be used as a technique to fly the entire approach, and not only the circling approach)."},
+        {"name": "circling category", "value": "Category B, manoeuvring airspeed 120 KIAS", "verbatim": "Fly the T-6 to Category B circling minimums based on its manoeuvring airspeed of 120 KIAS."},
+        {"name": "obstacle clearance distance", "value": "1.5 NM from the runway (Category B)", "verbatim": "Do not exceed the obstacle clearance distance of 1.5 NM from the runway (for Category B, A/C) during the circling manoeuvre."},
+        {"name": "bank to final", "value": "30° bank turn to final", "verbatim": "If visibility permits, attempt to maintain lateral spacing that allows for a 30° bank turn to final, and begin the base turn to allow for normal length final (approximately 1/2 mile)."},
+        {"name": "final length", "value": "approximately 1/2 mile", "verbatim": "begin the base turn to allow for normal length final (approximately 1/2 mile)"},
+        {"name": "final approach speeds by flap setting", "value": "110 KIAS flaps UP; 105 KIAS flaps TO; 100 KIAS flaps LDG", "verbatim": "When visual on final, slow to final approach speed appropriate for flap setting (110 KIAS flaps UP; 105 KIAS flaps TO; 100 KIAS flaps LDG)."},
+        {"name": "downwind spacing reference", "value": "wingtip on the landing runway at 500 feet AGL", "verbatim": "A good visual reference for proper downwind spacing at 500 feet AGL is wingtip on the landing runway."},
+        {"name": "practice altitude", "value": "at the MDA (up to normal overhead pattern altitude 1.000 feet AGL under actual conditions)", "verbatim": "Practice circling approaches at the MDA. However, under actual conditions, increase altitude above the MDA, as weather conditions permit, up to normal overhead pattern altitude (1.000 feet AGL)."},
+        {"name": "Table 7.1 - Circling (Note 2)", "value": "gear DOWN, flaps TO, pitch AR, torque AR", "verbatim": "14 Circling (Note 2) | DOWN | TO | AR | AR"}
+      ],
+      "procedure_steps": [
+        "Keep the runway environment in sight at all times.",
+        "Fly the instrument approach at 110 KIAS and accelerate to 120 KIAS while circling.",
+        "If visibility permits, maintain lateral spacing that allows for a 30° bank turn to final and begin the base turn to allow for a normal length final (approximately 1/2 mile).",
+        "Do not exceed 1.5 NM from the runway (Category B obstacle clearance distance) during the circling manoeuvre.",
+        "LDG flaps may be extended on base or final if landing distance is critical.",
+        "Descend from MDA when in position to intercept a normal glide-path.",
+        "When visual on final, slow to the final approach speed appropriate for the flap setting; reduce airspeed from 120 KIAS as bank is decreased so as to roll out wings level no slower than the targeted final approach speed.",
+        "Compensate for existing winds to maintain proper spacing.",
+        "Request clearance for a circling approach early enough to allow coordination with tower."
+      ],
+      "common_errors": [
+        "Insufficient downwind spacing can lead to the use of excessive bank in the turn to final; this situation can lead to conditions ripe for a stall or overshooting the final leg resulting in the need to go missed approach from below the MDA.",
+        "Excessive downwind spacing can result in loss of visual cues or departure from protected airspace.",
+        "Misjudging displacement at circling MDA - because of the lower altitude, proper displacement on a circling approach appears to be much wider than for an overhead pattern.",
+        "Exceeding the 1.5 NM obstacle clearance distance from the runway during the circling manoeuvre.",
+        "Rolling out wings level slower than the targeted final approach speed.",
+        "Requesting clearance for the circling approach too late for coordination with tower."
+      ],
+      "corrections": [
+        "Use wingtip on the landing runway at 500 feet AGL as a visual reference for proper downwind spacing.",
+        "Compensate for existing winds to maintain proper spacing.",
+        "Reduce airspeed from 120 KIAS as bank is decreased when transitioning from the final turn to the final."
+      ],
+      "notes": null
+    },
+    {
+      "section": "7.30",
+      "title": "MISSED APPROACH",
+      "pages_pdf": [163, 164],
+      "item_mapping": ["instrument-29"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is to safely discontinue an instrument approach and comply with published procedures or ATC instructions - a climb away from the airfield similar to instrument takeoff, which may be performed in IMC with reference to instruments only or may require transition to instruments. Smoothly advance the PCL to MAX and set attitude to 10-15° Nose-High on the EADI; once at targeted pitch, power may be reduced as necessary to preclude excessive pitch and associated disorientation in IMC. Check VSI and altimeter to verify climb and raise gear and flaps; at 140-180 KIAS set power and pitch for target climb airspeed.",
+      "parameters": [
+        {"name": "power", "value": "PCL to MAX", "verbatim": "Smoothly advance the PCL to MAX and set attitude to 10-15° Nose-High on the EADI."},
+        {"name": "pitch attitude", "value": "10-15° Nose-High on the EADI", "verbatim": "Smoothly advance the PCL to MAX and set attitude to 10-15° Nose-High on the EADI."},
+        {"name": "clean-up / climb speed setting", "value": "140-180 KIAS", "verbatim": "At 140-180 KIAS set power and pitch for target climb airspeed."},
+        {"name": "airspeed on vectors for an additional approach", "value": "150-200 KIAS (or in accordance with local directives)", "verbatim": "Maintain 150-200 KIAS (or in accordance with local directives) on vectors for an additional approach."},
+        {"name": "radar downwind airspeed", "value": "200 KIAS", "verbatim": "If not otherwise directed by ATC, local directives, or unusual circumstances (weather, traffic, etc.) maintain 200 KIAS on radar downwind and slow to 160 KIAS on radar base."},
+        {"name": "radar base airspeed", "value": "160 KIAS", "verbatim": "If not otherwise directed by ATC, local directives, or unusual circumstances (weather, traffic, etc.) maintain 200 KIAS on radar downwind and slow to 160 KIAS on radar base."},
+        {"name": "airspeed if diversion necessary", "value": "appropriate cruise airspeed", "verbatim": "Maintain appropriate cruise airspeed if diversion is necessary."}
+      ],
+      "procedure_steps": [
+        "Smoothly advance the PCL to MAX.",
+        "Set attitude to 10-15° Nose-High on the EADI.",
+        "Once at targeted pitch, reduce power as necessary to preclude excessive pitch and associated disorientation in IMC.",
+        "Check VSI and altimeter to verify climb.",
+        "Raise gear and flaps.",
+        "At 140-180 KIAS set power and pitch for target climb airspeed.",
+        "Follow assigned route and comply with altitude restrictions.",
+        "Maintain 150-200 KIAS (or in accordance with local directives) on vectors for an additional approach; maintain appropriate cruise airspeed if diversion is necessary."
+      ],
+      "common_errors": [
+        "Excessive pitch and associated disorientation in IMC when power is not reduced after reaching the targeted pitch.",
+        "Not verifying the climb with VSI and altimeter before raising gear and flaps.",
+        "Failing to comply with published missed approach procedures / assigned route and altitude restrictions.",
+        "False sensation of climb produced by acceleration may be very strong during an instrument missed approach (see paragraph 7.16.5.)."
+      ],
+      "corrections": [
+        "Once at targeted pitch, power may be reduced as necessary to preclude excessive pitch and associated disorientation in IMC.",
+        "Check VSI and altimeter to verify climb."
+      ],
+      "notes": null
+    },
+    {
+      "section": "7.31",
+      "title": "CLIMBOUT",
+      "pages_pdf": [164],
+      "item_mapping": ["instrument-02"],
+      "category_hint": ["instrument"],
+      "technique_summary": "Objective is a safe transition from VMC on the departure leg to the pattern, multiple instrument approaches, or to a departure procedure - a climb on departure similar to instrument takeoff. Follow departure procedures if departing to the enroute structure. Power may be reduced to control acceleration and climb rate if entering the radar pattern for multiple instrument approaches; maintain 160-200 KIAS (or in accordance with local directives).",
+      "parameters": [
+        {"name": "radar pattern airspeed", "value": "160-200 KIAS (or in accordance with local directives)", "verbatim": "Power may be reduced to control acceleration and climb rate if entering the radar pattern for multiple instrument approaches; maintain 160-200 KIAS (or in accordance with local directives)."},
+        {"name": "radar downwind airspeed", "value": "200 KIAS", "verbatim": "If not otherwise directed by ATC, local directives, or unusual circumstances (weather, traffic, etc.) maintain 200 KIAS on radar downwind and slow to 160 KIAS on radar base."},
+        {"name": "radar base airspeed", "value": "160 KIAS", "verbatim": "If not otherwise directed by ATC, local directives, or unusual circumstances (weather, traffic, etc.) maintain 200 KIAS on radar downwind and slow to 160 KIAS on radar base."}
+      ],
+      "procedure_steps": [
+        "Climb on departure as for instrument takeoff (see paragraph 7.18.).",
+        "Follow departure procedures if departing to the enroute structure.",
+        "Reduce power to control acceleration and climb rate if entering the radar pattern for multiple instrument approaches; maintain 160-200 KIAS.",
+        "Maintain 200 KIAS on radar downwind and slow to 160 KIAS on radar base unless otherwise directed."
+      ],
+      "common_errors": [
+        "Allowing acceleration and climb rate to go unchecked when entering the radar pattern for multiple instrument approaches (airspeed outside 160-200 KIAS)."
+      ],
+      "corrections": [
+        "Power may be reduced to control acceleration and climb rate if entering the radar pattern for multiple instrument approaches."
+      ],
+      "notes": null
+    }
+  ]
+}
