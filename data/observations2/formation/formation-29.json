@@ -157,6 +157,126 @@
         "4": "SP as Wingman monitored the aircraft state so closely that every approaching limit was reported before it was reached, in plain and unambiguous terms, while position and G control remained precise. The Leader was never required to ask for the information.",
         "marginal": "SP as Wingman made all the required reports, but each followed a period of self-checking before transmitting, so the Leader received the information later than ideal. The reports were accurate and the standard is met. SP is expected to report the state as soon as it is recognized rather than after independent confirmation."
       }
+    },
+    {
+      "id": "formation-29-tm01",
+      "label": "Power correction technique in close (fingertip) position",
+      "mif_row": null,
+      "source": "technique:9.19 CLOSE FORMATION (FINGERTIP)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to chasing the power with large movements of the whole arm instead of the three PCL movement technique, did not stop the aircraft in the close (fingertip) position. Every correction produced an overshoot in the opposite direction, airspeed swung more than 20 knots around the briefed value and closure could no longer be absorbed at approximately 10 feet of wingtip separation. The IP took the throttle and stabilized the formation position.",
+        "1": "SP, due to covering the whole correction with one large power change instead of one movement to start it, one to stop the aircraft and one to stabilize it, allowed airspeed excursions to reach the 20 knot limit while sliding fore and aft of the reference line. The oscillation was damped only after the IP called for smaller inputs. Position was regained late and the reference line was crossed several times.",
+        "2": "SP, due to a power correction that was started correctly but stopped late, moved through the close (fingertip) reference line with airspeed 10 to 20 knots off the briefed value. SP recognized the overshoot, took the power off with a small wrist movement and stabilized in position without prompting. No input from the IP was required.",
+        "3": "SP corrected fore and aft position with three deliberate PCL movements, one to start the correction, one to stop the aircraft and one to stabilize it, keeping airspeed within 10 knots of the briefed value. Corrections stayed continuous, small and controlled and the position was rebuilt without oscillation.",
+        "4": "SP made power corrections so small that they were barely visible at the throttle, and no overshoot of the close (fingertip) references developed at any point. Airspeed deviations remained negligible and the aircraft was stopped in position with a single stabilizing movement.",
+        "marginal": "SP held the close (fingertip) position within standards, but most power corrections needed a fourth movement to settle the aircraft because the initial input was too large. The final position was acceptable while the technique still produced a visible overshoot. SP is expected to change power with small movements of the wrist rather than the whole arm."
+      }
+    },
+    {
+      "id": "formation-29-tm02",
+      "label": "Correcting one position reference at a time in the prescribed order",
+      "mif_row": null,
+      "source": "technique:9.19 CLOSE FORMATION (FINGERTIP)",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to attempting to correct the vertical, the fore and aft and the lateral error at the same time, coupled stick, bank and power inputs that worked against each other. The stack was never rebuilt, altitude deviation passed 300 feet from the assigned block and the aircraft closed inside the briefed wingtip separation. The IP took the controls to re-establish the position.",
+        "1": "SP, due to working the lateral spacing before the stack had been set, left all three references in error simultaneously and allowed altitude to reach the 300 foot limit. The correction sequence was restored only after the IP directed one reference at a time. Position was recovered slowly and with inputs larger than the deviation required.",
+        "2": "SP, due to starting the fore and aft correction before the stack was stabilized, drifted 150 to 300 feet from the assigned altitude while the references were being rebuilt. SP recognized the coupling, returned to the prescribed sequence of vertical, then fore and aft, then lateral spacing, and regained the position unaided.",
+        "3": "SP corrected one reference at a time in the prescribed order, setting the vertical stack first, then the fore and aft position on the reference line, then the lateral spacing in or out, holding altitude within 150 feet throughout. Each deviation was recognized early and removed before the next one was addressed.",
+        "4": "SP rebuilt position by isolating a single reference at a time so precisely that no deviation was allowed to develop on the other two. Altitude and spacing errors remained negligible and every correction was anticipatory rather than reactive.",
+        "marginal": "SP used the correct sequence of references, but frequently began the next correction before the previous one had fully stabilized, so small residual errors were carried through. Position remained inside standards and no reference was left uncorrected. SP is expected to complete each correction before moving to the next one."
+      }
+    },
+    {
+      "id": "formation-29-tm03",
+      "label": "Bank rather than back pressure to control undesired climbs and descents in echelon turns",
+      "mif_row": null,
+      "source": "technique:9.22 ECHELON TURN",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP as Leader, due to varying back pressure instead of making slight bank angle changes to control undesired climbs and descents, produced G variations the Wingman could not follow in the echelon turn. The formation left the assigned altitude by more than 300 feet and the Wingman was pushed out of the plane of motion. The IP took the controls to re-establish a stable turn.",
+        "1": "SP as Leader, due to pulling and relaxing back pressure to hold the nose in the turn, drove altitude to the 300 foot limit while the Wingman worked to stay in the same plane of motion. The technique was changed to bank corrections only after the IP prompted, and the horizon no longer bisected the Leader's fuselage for a large part of the turn.",
+        "2": "SP as Leader, due to an initial correction made with back pressure rather than with bank, allowed the turn to drift 150 to 300 feet from the assigned altitude. SP recognized the effect on the Wingman, switched to slight bank angle changes and re-established the turn smoothly without prompting.",
+        "3": "SP as Leader controlled undesired climbs and descents with slight variations in bank angle rather than in back pressure, holding altitude within 150 feet through the echelon turns. G remained steady enough for the Wingman to hold the plane of motion with the horizon bisecting the Leader's fuselage.",
+        "4": "SP as Leader held the turns so steadily that climbs and descents were corrected with bank changes barely perceptible to the Wingman. Altitude deviations remained negligible and back pressure was never used as the correcting input.",
+        "marginal": "SP as Leader kept the echelon turns within standards, but the first correction for a climb or a descent was still made with back pressure before bank was used. Altitude stayed inside the allowed band and the Wingman held position. SP is expected to correct with slight bank angle changes, which are smoother and easier for the Wingman."
+      }
+    },
+    {
+      "id": "formation-29-tm04",
+      "label": "Matching the Leader's roll rate and holding the plane of motion in echelon turns",
+      "mif_row": null,
+      "source": "technique:9.22 ECHELON TURN",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP as Wingman, due to not matching the Leader's roll rate at the entry and at the rollout of the echelon turn, left the Leader's plane of motion in both directions. The stack was lost, spacing opened and closed without control and the aircraft ended more than 300 feet off the formation altitude. The IP took the controls to recover the position.",
+        "1": "SP as Wingman, due to rolling at a rate selected independently of the Leader, arrived in the turn out of plane and then corrected with bank and back pressure at the same time. Position was rebuilt only after the IP called for matching the Leader's roll rate, and altitude reached the 300 foot limit before the turn stabilized.",
+        "2": "SP as Wingman, due to a roll input started slightly after the Leader's, entered the turn marginally out of plane and drifted 150 to 300 feet on the stack. SP matched the remainder of the roll, used bank to correct vertical position and back pressure to maintain spacing, and re-established the reference without prompting.",
+        "3": "SP as Wingman matched the Leader's roll rate at entry and at rollout, staying in the same plane of motion with the horizon bisecting the Leader's fuselage. Bank was used for vertical position, power for fore and aft and back pressure for spacing, with altitude held within 150 feet.",
+        "4": "SP as Wingman mirrored the Leader's roll rate so exactly that the plane of motion was never left and no corrective input was needed after either roll. Spacing and stack deviations remained negligible throughout the echelon turns.",
+        "marginal": "SP as Wingman matched the Leader's roll rate but consistently began the roll a moment late, so each turn started with a small out of plane error that had to be corrected. Position stayed within standards and no reference was lost. SP is expected to start the roll with the Leader so that the plane of motion is held from the entry."
+      }
+    },
+    {
+      "id": "formation-29-tm05",
+      "label": "Stable platform as Leader - consistent roll rates without stair-stepping or reversals",
+      "mif_row": null,
+      "source": "technique:9.29 WING WORK EXERCISE (WW EX)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP as Leader, due to stair-stepping and ratcheting the roll rate into and out of the turns and reversing a roll out back into the bank, did not provide a stable platform for the Wingman. The Wingman lost the close (fingertip) references and separation degraded through the reversal, while the formation left the assigned altitude by more than 300 feet. The IP took the controls and stopped the exercise.",
+        "1": "SP as Leader, due to inconsistent and unpredictable roll rates through the leaves of the exercise, forced the Wingman into large corrections and drove altitude to the 300 foot limit. The roll rates were smoothed only after the IP prompted, and one roll out was begun and then suddenly reversed back into the bank.",
+        "2": "SP as Leader, due to a roll rate that varied between the entry and the reversal, made the Wingman's corrections larger than they should have been and allowed 150 to 300 feet of altitude drift. SP recognized the effect, stopped the roll, paused momentarily to let the Wingman adjust and then rolled smoothly back into the turn.",
+        "3": "SP as Leader flew each leaf with a consistent and predictable roll rate, blending pitch with roll and never beginning a roll out and rolling back into the bank. Altitude stayed within 150 feet and the Wingman held position with small, smooth and deliberate inputs.",
+        "4": "SP as Leader provided a platform so stable that roll rate, pitch and G onset were repeated identically in each direction and the Wingman needed only minimal correction. Altitude and airspeed deviations remained negligible for the complete exercise.",
+        "marginal": "SP as Leader kept the exercise within standards, but the roll rate was noticeably faster at the start of each reversal than at the entry. The Wingman held position and the parameters stayed inside the allowed band. SP is expected to keep roll rates consistent and predictable so the platform remains stable in both directions."
+      }
+    },
+    {
+      "id": "formation-29-tm06",
+      "label": "Formation visual scan - no staring at the other aircraft or a single reference",
+      "mif_row": null,
+      "source": "technique:9.29 WING WORK EXERCISE (WW EX)",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to staring at the Wingman as Leader and at a single close (fingertip) reference as Wingman, stopped clearing, planning and monitoring. The flight path was not visually cleared before a turn into the Wingman and altitude and airspeed left the allowed values by more than the specified limits without being noticed. The IP intervened to clear the flight path and recover the parameters.",
+        "1": "SP, due to focusing on one reference instead of taking in the whole picture, allowed altitude to reach the 300 foot limit while position was being held. The scan was broadened only after the IP called for it, and the turn into the Wingman was started with the flight path cleared late.",
+        "2": "SP, due to fixing on the exhaust stack reference for longer than necessary, allowed 150 to 300 feet of altitude drift before the instruments were checked. SP recognized the fixation, widened the scan to take in the whole aircraft picture and the flight instruments, and recovered the parameter unaided.",
+        "3": "SP kept the scan moving between the formation references, the flight instruments and the airspace, without staring at the Wingman as Leader or at any single reference as Wingman. Altitude was held within 150 feet and the flight path was visually cleared before every turn into the Wingman.",
+        "4": "SP distributed the scan so well that position, aircraft parameters and clearing were all serviced continuously, using the mirrors when needed to monitor the Wingman. No parameter was allowed to drift and every turn was cleared well before it was started.",
+        "marginal": "SP maintained the required scan, but returned to the same reference more often than the others, so instrument checks arrived in bursts once position was settled. All parameters stayed inside standards. SP is expected to avoid any tendency to focus on a single reference and to keep clearing and monitoring continuous."
+      }
+    },
+    {
+      "id": "formation-29-tm07",
+      "label": "Flying a specific position in route and changing sides only on signal",
+      "mif_row": null,
+      "source": "technique:9.20 ROUTE FORMATION",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP as Wingman, due to treating the wide tolerances of route as a reason not to fly a specific position, drifted beyond approximately 500 feet and forward of line abreast, then crossed to the opposite side without a cross under signal from the Leader. The geometry the Leader expected no longer existed and flight path deconfliction was lost. The IP took the controls and re-established route position on the briefed side.",
+        "1": "SP as Wingman, due to not striving for a specific position within the route tolerances, wandered between two ship widths and the 500 foot limit and fell aft of the extended close (fingertip) reference line. The position was rebuilt only after the IP called it, and the Leader had to delay the in-flight checks until the formation was stable.",
+        "2": "SP as Wingman, due to a delayed lateral correction, allowed spacing to open toward the 500 foot limit and the level stack to be lost. SP recognized the drift from the Leader's helmet position on the horizon and re-established a specific position within the route band without prompting.",
+        "3": "SP as Wingman flew route at a specific position within the tolerances, between two ship widths and approximately 500 feet, no further forward than line abreast and no further aft than the extended close (fingertip) reference line. The side was changed only when a cross under was signalled by the Leader, and the position was stabilized before any cockpit task was started.",
+        "4": "SP as Wingman held one deliberate route position so steadily that spacing, stack and fore and aft references needed no visible correction. Radio changes and in-flight checks were carried out only from a stabilized position and the briefed side was never left without a signal.",
+        "marginal": "SP as Wingman stayed inside the route tolerances, but the position was allowed to float between the inner and the outer limit instead of being flown to a chosen value. Spacing remained legal and no unsignalled crossing occurred. SP is expected to strive for a specific position rather than to use the full width of the route band."
+      }
+    },
+    {
+      "id": "formation-29-tm08",
+      "label": "Close trail stack below the wake turbulence and prop wash",
+      "mif_row": null,
+      "source": "technique:9.32 CLOSE TRAIL EXERCISE",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP as Wingman, due to flying high in the close trail position with a visible space between the engine exhaust stacks and the Leader's wing, entered the wake turbulence and prop wash. The aircraft was rolled and displaced out of position, spacing collapsed inside one aircraft length and the Leader was momentarily lost from sight. The IP took the controls and moved the aircraft clear.",
+        "1": "SP as Wingman, due to allowing the stack to rise until a gap appeared between the exhaust stacks and the wing, flew at the position where wake turbulence is encountered. The stack was lowered only after the IP called it, and by then spacing had opened well beyond two aircraft lengths.",
+        "2": "SP as Wingman, due to a late release of back pressure after a turn, let the close trail position rise toward the top of the Leader's wing and spacing grow past two aircraft lengths. SP recognized the vertical reference going, re-established the exhaust stacks directly on top of the wing and closed the spacing with power and a small amount of lead pursuit rather than with power alone.",
+        "3": "SP as Wingman held close trail at one to two aircraft lengths nose to tail, with the engine exhaust stacks visible directly on top of the Leader's wing, remaining below the wake turbulence and prop wash. The Leader was kept in sight at all times and power changes were anticipated as the Leader manoeuvred.",
+        "4": "SP as Wingman held the close trail stack so precisely that the exhaust stacks stayed on top of the wing through every reversal, with spacing never leaving the one to two aircraft length band. Power was anticipated for each manoeuvre, so neither closure nor excessive spacing developed.",
+        "marginal": "SP as Wingman remained below the wake turbulence, but the stack was allowed to creep up after each pull before being corrected back onto the wing. Spacing and vertical position stayed acceptable throughout. SP is expected never to fly high in close trail and to anticipate the power change that each manoeuvre requires."
+      }
     }
   ]
 }

@@ -3,9 +3,14 @@
   "item_name": "VFR ARRIVAL / TRAFFIC PATTERN ENTRY",
   "category": "vfr_navigation",
   "schema": "v2-trunk",
-  "mif_numbers": [14],
+  "mif_numbers": [
+    14
+  ],
   "mif_rows": [
-    { "sn": 14, "row_name": "VFR Arrival / Traffic Pattern Entry" }
+    {
+      "sn": 14,
+      "row_name": "VFR Arrival / Traffic Pattern Entry"
+    }
   ],
   "error_modes": [
     {
@@ -126,6 +131,126 @@
         "3": "SP flew the formation recovery in the briefed position, responded promptly to the lead manoeuvres and entered the traffic pattern with correct spacing and sequence as briefed for the formation profile. Cross-talk with the other cockpit and with the lead was clear and timely.",
         "4": "SP maintained the briefed formation position with negligible variation through the whole recovery, anticipated the lead manoeuvres and entered the traffic pattern with exact spacing and sequence. Coordination with the lead and within the cockpit was continuous and required no repetition.",
         "marginal": "SP flew the formation recovery and pattern entry within the briefed tolerances, but the position corrections were consistently reactive and the spacing at the entry was at the wide end of the briefed range. The tendency to respond to the lead rather than to anticipate is expected to be corrected by closer monitoring of the lead attitude and power state in the following sorties."
+      }
+    },
+    {
+      "id": "vfr_navigation-14-tm01",
+      "label": "Radio calls at the proper location during the letdown and the actual location report",
+      "mif_row": 14,
+      "source": "technique:5.2 LETDOWN AND TRAFFIC ENTRY",
+      "hf_concept": "hf-plain-language-communication",
+      "texts": {
+        "0": "SP, due to making the letdown and traffic entry calls at other than the proper location, reported positions the aircraft had not reached and never amended the report with the actual location. The controller sequenced the aircraft on a false position picture and SP, working the problem head down, left the published entry route with the heading more than 10 degrees off the inbound track. The IP took the radios, passed the actual location and turned the aircraft back onto the entry route.",
+        "1": "SP, due to transmitting the entry call short of the published reporting point, did not report the actual location of the aircraft as required when a call is made away from the proper location. Attention held on the radio allowed the track toward the entry point to open to the 10 degree limit before the IP verbally prompted both the corrected position report and the heading. The correct sequencing information reached the controller only at the limit of the standard.",
+        "2": "SP, due to a letdown call made before reaching the proper location, initially passed a reporting point the aircraft had not yet overflown. SP recognized the discrepancy without prompting, transmitted the actual location immediately and returned to the entry track with the heading no more than 8 degrees off. The remaining calls were made at the proper locations.",
+        "3": "SP made all letdown and traffic entry calls at the proper locations and, where one call could not be made exactly over the reporting point, reported the actual location of the aircraft. Heading toward the entry point stayed inside 5 degrees while transmitting. Radio work was integrated with the descent with no loss of aircraft control.",
+        "4": "SP transmitted every letdown and pattern entry call precisely at the proper location, with correct content, so the controller position picture matched the aircraft at all times. Heading and altitude excursions during the transmissions were negligible. No call required an actual location amendment because none was made away from its reporting point.",
+        "marginal": "SP made the required calls close to the proper locations and did report the actual location on the one call that slipped early, holding the heading just inside 5 degrees while transmitting. Radio and flying tasks were still handled one after the other, so every transmission produced a small track excursion. The tendency is expected to be removed by planning the calls against the published reporting points before the letdown in the following sorties."
+      }
+    },
+    {
+      "id": "vfr_navigation-14-tm02",
+      "label": "Surface winds assumed equal to the winds at pattern altitude",
+      "mif_row": 14,
+      "source": "technique:5.2 LETDOWN AND TRAFFIC ENTRY",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to assuming that the surface winds passed by the tower were the same as the winds at pattern altitude, did not use the crab carried on the inbound leg or the GPS groundspeed at pattern altitude to estimate the pattern winds. The entry legs were flown with a drift correction taken from the surface report only, and the aircraft was displaced from the published track by well over 0.5 NM with the heading more than 10 degrees off the pattern axis. The IP took control to re-establish the aircraft on the pattern track.",
+        "1": "SP, due to carrying the surface wind report into the pattern without checking it against the drift correction required at pattern altitude, did not update the wind estimate before the entry. The uncorrected drift opened the entry heading to the 10 degree limit and the overflight of the pattern points reached the 0.5 NM radius. SP applied the correction only after the IP called the drift.",
+        "2": "SP, due to a wind estimate still based on the surface report, applied a drift correction that did not match the wind at pattern altitude. SP noticed the developing displacement on the entry leg without prompting, compared the GPS groundspeed with the indicated airspeed and re-established the track with the heading no more than 8 degrees off. The entry was completed on the published geometry.",
+        "3": "SP treated the surface winds as different from the winds at pattern altitude and estimated the pattern wind from the crab required and the GPS groundspeed at pattern altitude. The drift correction applied held the entry track with the heading inside 5 degrees and the pattern points overflown inside the 0.5 NM radius. No further wind adjustment was needed after the entry.",
+        "4": "SP established the wind at pattern altitude from the drift correction and the GPS groundspeed before the entry and flew the whole entry with that correction applied from the start of each leg. Heading held on the pattern axis with negligible deviation and the ground track matched the published pattern. The surface report was used only for the landing considerations.",
+        "marginal": "SP anticipated the crosswind control requirements and kept the entry inside standards, but the wind estimate was refined only after the first leg had already drifted, with heading corrections close to the 5 degree value. The tendency to start from the surface report and adjust late is expected to be corrected by checking the crab and the GPS groundspeed as soon as pattern altitude is reached in the following sorties."
+      }
+    },
+    {
+      "id": "vfr_navigation-14-tm03",
+      "label": "Crosswind and headwind component estimation (60 to 1 rule, GPS groundspeed minus IAS)",
+      "mif_row": 14,
+      "source": "technique:5.2 LETDOWN AND TRAFFIC ENTRY",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not applying the 60 to 1 rule to convert the crab into a crosswind component and not taking the headwind as the difference between GPS groundspeed and indicated airspeed, entered the pattern with no numerical picture of the wind. The descent was planned on the indicated airspeed alone, so the ground distance was misjudged, the entry legs were displaced beyond 0.5 NM from the pattern points and the aircraft arrived at the entry more than 300 feet from pattern altitude. The IP took control and repositioned the aircraft for the entry.",
+        "1": "SP, due to omitting the crosswind estimation from the drift correction carried, did not quantify the wind before committing to the entry. The unquantified tailwind component compressed the descent and the deviation from pattern altitude reached the 300 foot limit at the entry point. SP corrected the profile only after repeated verbal indications from the IP.",
+        "2": "SP, due to an incomplete crosswind computation in which the drift correction was noted but not converted with the 60 to 1 rule, planned the entry on an approximate wind. SP detected the error from the difference between GPS groundspeed and indicated airspeed without prompting and adjusted the descent, keeping the altitude deviation near 200 feet and re-establishing pattern altitude before the entry point.",
+        "3": "SP converted the drift correction into a crosswind component with the 60 to 1 rule and took the headwind component as the difference between GPS groundspeed and indicated airspeed. The wind figures obtained were used in the letdown plan, so the aircraft reached the entry point within 150 feet of pattern altitude and on the pattern track. Crosswind control requirements were anticipated for the pattern legs.",
+        "4": "SP computed the crosswind and headwind components before the letdown and refreshed them at pattern altitude, so the descent point and the entry geometry were based on actual groundspeed. Altitude and track at the entry point were held with negligible deviation. The anticipated crab matched the drift observed on every pattern leg.",
+        "marginal": "SP estimated the wind components correctly and stayed within standards, but the computation was made only once and was not refreshed at pattern altitude, so the last leg needed a correction close to the 150 foot value. The tendency to work from a single early wind figure is expected to be corrected by rechecking the GPS groundspeed against indicated airspeed at pattern altitude in the following sorties."
+      }
+    },
+    {
+      "id": "vfr_navigation-14-tm04",
+      "label": "Clearing turns during the VMC letdown",
+      "mif_row": 14,
+      "source": "technique:5.2 LETDOWN AND TRAFFIC ENTRY",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to descending straight ahead in VMC without using clearing turns, did not clear the pattern entry route below and ahead of the aircraft and kept the attention inside the cockpit. The area under the nose was never checked, the descent rate was left unchecked and the aircraft passed through the traffic pattern altitude by more than 300 feet with unresolved conflicting traffic. The IP took control, cleared the area and re-established the aircraft above the pattern.",
+        "1": "SP, due to a letdown flown wings level with no clearing turn, did not obtain a view of the airspace masked by the nose and did not use the turn to control the descent rate. The uncontrolled rate brought the altitude deviation to the 300 foot limit at the level off and the pattern entry route was cleared only after the IP directed the turn. No control input was required from the IP.",
+        "2": "SP, due to a clearing turn started late and stopped short in the VMC letdown, did not complete the visual scan of the entry route and did not use the manoeuvre to steady the descent rate. SP recognized the omission without prompting, completed a second clearing turn and levelled off with the altitude deviation near 200 feet and the entry route clear.",
+        "3": "SP used clearing turns during the VMC letdown to clear the pattern entry route, to control the descent rate and to keep the attention on the outside visual references. The level off at pattern altitude was made inside 150 feet with the entry route confirmed clear. The turns were flown without disturbing the planned track to the entry point.",
+        "4": "SP planned and flew the clearing turns so that the whole entry route was covered visually, the descent rate stayed under control throughout and the outside references were used continuously. Level off at pattern altitude was achieved with negligible deviation and the track to the entry point was unaffected. Traffic in the pattern was acquired early as a result of the turns.",
+        "marginal": "SP flew the clearing turns and stayed within standards, but they were made after most of the descent had been completed and the rate corrections during them were close to the limit of what the profile allowed. The tendency to clear late in the letdown is expected to be corrected by starting the clearing turns at the top of the descent in the following sorties."
+      }
+    },
+    {
+      "id": "vfr_navigation-14-tm05",
+      "label": "Airfield information review before an arrival at a strange field",
+      "mif_row": null,
+      "source": "technique:8.13 ARRIVAL (IFR)",
+      "hf_concept": "hf-complacency",
+      "texts": {
+        "0": "SP, due to relying on prior familiarity instead of reviewing the airfield information before the arrival, did not have the airfield layout, the field elevation, the runway data or the tower frequency available at the alternate airfield. The pattern altitude was set from memory on wrong field elevation and the aircraft entered more than 300 feet from the correct pattern altitude and displaced from the published pattern. The IP took control, established the correct pattern altitude and completed the entry.",
+        "1": "SP, due to an airfield review left undone because the field had been visited before, did not confirm the runway data and the approach lighting for the arrival. The uncertainty at the entry point produced an altitude deviation at the 300 foot limit and a late identification of the landing runway, both resolved after verbal indications from the IP.",
+        "2": "SP, due to an incomplete review of the airfield information in which the frequencies were checked but the field elevation and runway data were not, entered the pattern with an approximate picture of the airfield. SP identified the discrepancy on the altimeter without prompting, corrected the pattern altitude within about 200 feet of deviation and completed the entry on the published geometry.",
+        "3": "SP reviewed the airfield layout, field elevation, runway data, approach lighting, glide path guidance and the tower and ground frequencies before the arrival, despite prior familiarity with the field. The pattern was entered at the correct altitude within 150 feet and on the published entry route. The required frequencies were selected before the entry point.",
+        "4": "SP reviewed the complete airfield information before the arrival and used it to build the entry plan, so pattern altitude, entry route and radio work were correct from the first call. Deviations at the entry were negligible and no item of airfield data had to be looked up after the letdown started. The arrival matched the training objectives briefed for the sortie.",
+        "marginal": "SP reviewed the airfield information and entered within standards, but the review was completed during the letdown rather than before it and one runway detail was confirmed only at the entry point, with the altitude deviation close to 150 feet. The tendency to rely on prior familiarity until the field is in sight is expected to be corrected by completing the airfield review before the descent in the following sorties."
+      }
+    },
+    {
+      "id": "vfr_navigation-14-tm06",
+      "label": "Formation lead: low power settings below 20 percent torque in the recovery descent",
+      "mif_row": 14,
+      "source": "technique:9.40.1 FORMATION RECOVERY - DESCENT TO VFR PATTERN, BREAK AND LANDING",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, flying as Number 1 and due to controlling the recovery descent with power settings well below 20 percent torque instead of using the speed brake, left Number 2 unable to hold position with the engine at idle. The formation accelerated through the planned descent profile and reached the pattern entry more than 20 knots off the briefed arrival speed with Number 2 out of position. The IP took control, restored the power setting and stabilized the descent.",
+        "1": "SP, flying as Number 1 and due to reducing power below 20 percent torque rather than extending the speed brake, gave Number 2 no power margin to correct with. The airspeed deviation at the entry reached the 20 knot limit and the power setting was restored only after the IP called for the speed brake. No control input was required from the IP.",
+        "2": "SP, flying as Number 1 and due to a momentary power reduction toward the low end of the range during the descent, allowed the formation speed to deviate about 15 knots from the briefed arrival speed. SP recognized the low torque setting without prompting, restored the power above 20 percent and used the speed brake to hold the profile before the entry point.",
+        "3": "SP, flying as Number 1, avoided power settings below 20 percent torque throughout the recovery descent and used the speed brake to control the profile. The formation arrival speed was held within 10 knots of the briefed value and Number 2 retained a usable power margin for position corrections. The descent was delivered to the entry point on profile.",
+        "4": "SP, flying as Number 1, planned the descent so that the power stayed comfortably above 20 percent torque and the speed brake carried the profile adjustments. Airspeed excursions were negligible and Number 2 held position without large power changes. The formation arrived at the pattern entry exactly on the briefed speed and altitude.",
+        "marginal": "SP, flying as Number 1, kept the recovery descent within standards, but the power was allowed to approach the 20 percent torque value before the speed brake was selected, so Number 2 was left with a small margin on two occasions. The tendency to reduce power first and reach for the speed brake afterwards is expected to be corrected by selecting the speed brake as the primary drag device in the following sorties."
+      }
+    },
+    {
+      "id": "vfr_navigation-14-tm07",
+      "label": "Number 2 delay after the Break and spacing on downwind",
+      "mif_row": 14,
+      "source": "technique:9.40.1 FORMATION RECOVERY - DESCENT TO VFR PATTERN, BREAK AND LANDING",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, flying as Number 2 and due to starting the turn to downwind without waiting the minimum of 5 seconds after the Break of Number 1, produced insufficient spacing on downwind and closed on the lead aircraft. SP also rolled out inside the ground track of Number 1 instead of slightly outside it, so the interval for the landing sequence did not exist and the entry was not safe. The IP took control to re-establish spacing.",
+        "1": "SP, flying as Number 2 and due to a Break delay shorter than the minimum of 5 seconds, arrived on downwind with the spacing at the lower limit of what the pattern allows. SP extended the downwind only after the IP called the interval, and the position relative to the ground track of Number 1 was corrected late in the leg. No control input was required from the IP.",
+        "2": "SP, flying as Number 2 and due to a delay after the Break that was timed loosely rather than counted, started the turn slightly early and rolled out close to the ground track of Number 1. SP recognized the reduced spacing without prompting and adjusted the downwind position to sit slightly outside the lead ground track before the perch point.",
+        "3": "SP, flying as Number 2, waited the minimum of 5 seconds after the Break of Number 1 before starting the turn and rolled out on downwind slightly outside the ground track of the lead aircraft. The resulting spacing supported a normal contact pattern with the perch point unchanged. No adjustment to the interval was needed on the leg.",
+        "4": "SP, flying as Number 2, timed the delay after the Break precisely and established the downwind position slightly outside the lead ground track with the interval exactly as briefed. The pattern was flown as a normal contact pattern from the same perch point without any spacing correction. The landing sequence was assured from the roll out onto downwind.",
+        "marginal": "SP, flying as Number 2, respected the minimum delay after the Break and kept the spacing within acceptable limits, but the turn was consistently started at the earliest point of the delay and the downwind position sat only marginally outside the lead ground track. The tendency to close the interval is expected to be corrected by counting the delay deliberately and confirming the lead ground track before rolling out in the following sorties."
+      }
+    },
+    {
+      "id": "vfr_navigation-14-tm08",
+      "label": "Number 2 following a poorly flown pattern instead of going around",
+      "mif_row": 14,
+      "source": "technique:9.40.1 FORMATION RECOVERY - DESCENT TO VFR PATTERN, BREAK AND LANDING",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, flying as Number 2 and due to following a poorly flown pattern of the lead aircraft rather than going around, accepted a downwind that was displaced and an interval that continued to decrease. SP arrived at the perch point with the aircraft more than 300 feet from pattern altitude and no usable spacing for the landing. The IP took control and initiated the go around.",
+        "1": "SP, flying as Number 2 and due to matching a pattern of the lead aircraft that was already outside normal parameters, did not fly a normal contact pattern of his own. The altitude deviation on downwind reached the 300 foot limit and the go around decision was taken only after the IP called for it. No control input was required from the IP.",
+        "2": "SP, flying as Number 2 and due to initially following the displaced pattern of the lead aircraft, allowed the downwind to develop about 200 feet from pattern altitude. SP recognized without prompting that the pattern being followed was not a normal contact pattern, corrected to his own parameters and continued the approach with the perch point re-established.",
+        "3": "SP, flying as Number 2, flew a normal contact pattern with his own parameters rather than following the lead aircraft, holding pattern altitude within 150 feet and the perch point unchanged. Where the lead pattern diverged, SP kept the correct geometry and preserved the interval. The go around option was kept available throughout.",
+        "4": "SP, flying as Number 2, flew the pattern to his own normal contact parameters with negligible deviations, unaffected by the geometry of the lead aircraft, and had the go around decision point clearly identified. Altitude, spacing and perch point were all as briefed. No correction was required at any stage of the pattern.",
+        "marginal": "SP, flying as Number 2, kept his own pattern parameters within standards but tracked the lead geometry closely on downwind, so the altitude and spacing corrections were made late and remained near the limits of the acceptable band. The tendency to fly relative to the lead pattern rather than to normal contact parameters is expected to be corrected by setting a personal go around gate before the perch point in the following sorties."
       }
     }
   ]

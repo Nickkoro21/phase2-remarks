@@ -3,9 +3,14 @@
   "item_name": "INSTRUMET PROCEDURES",
   "category": "vfr_navigation",
   "schema": "v2-trunk",
-  "mif_numbers": [15],
+  "mif_numbers": [
+    15
+  ],
   "mif_rows": [
-    {"sn": 15, "row_name": "Instrument Procedures"}
+    {
+      "sn": 15,
+      "row_name": "Instrument Procedures"
+    }
   ],
   "error_modes": [
     {
@@ -141,6 +146,126 @@
         "3": "SP communicated the intended instrument procedure clearly to the IP and used standard phraseology with ATC. Clearances were read back correctly and the values applied matched those assigned. Radio work was integrated with the cross-check and did not affect the controlled parameters.",
         "4": "SP kept the IP fully informed of the intended procedure and of any change to the plan, using concise and unambiguous phrasing. Clearances were correctly read back, set and verified on the instruments before being flown. Communication was timed to protect the cross-check, and parameter deviations during radio work were negligible.",
         "marginal": "SP coordinated adequately with the IP and ATC and kept all parameters within standards, but calls were made without regard to the phase of the procedure. The trend was a transmission started at a high workload point, followed by a short lapse in the cross-check. SP is expected to time the communication so that it does not compete with the aircraft control task."
+      }
+    },
+    {
+      "id": "vfr_navigation-15-tm01",
+      "label": "Prompt execution of the lost wingman turn away (15 degrees of bank for 15 seconds)",
+      "mif_row": null,
+      "source": "technique:9.13 LOST WINGMAN PROCEDURES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a lost wingman procedure that was not initiated on losing sight of Number 1 in the weather, did not turn away using 15 degrees of bank for 15 seconds and did not inform Number 1. Separation was left to chance while SP continued to search visually for the leader, and heading and altitude ran more than 10 degrees and 300 feet from the assigned values. IP intervened, flew the separation turn and requested the separate clearance.",
+        "1": "SP, due to a delayed decision to declare lost wingman, began the turn away well after visual contact with Number 1 was lost. The 15 degrees of bank were held for less than the required 15 seconds and course was resumed before separation was assured, with heading reaching 10 degrees and altitude 300 feet from the assigned values. The call to Number 1 and the request for a separate clearance were made only after the IP directed them.",
+        "2": "SP, due to a bank angle held short of 15 degrees during the wings-level lost wingman turn, obtained less lateral separation than the 15 seconds of the procedure provide. SP recognized the shallow bank, corrected it and completed the timing before resuming course, with heading and altitude deviations staying between the inner and outer tolerances. Number 1 was informed and the separate clearance was obtained with no IP prompting.",
+        "3": "SP declared lost wingman as soon as visual contact with Number 1 was lost in the weather and transitioned to instruments at the same time. The turn away was flown at 15 degrees of bank for 15 seconds, Number 1 was informed, and course was resumed before a separate clearance was obtained. Heading and altitude were held within 5 degrees and 150 feet of the assigned values throughout the maneuver.",
+        "4": "SP executed the wings-level lost wingman procedure without hesitation, holding 15 degrees of bank for the full 15 seconds while flying the aircraft on instruments. The call to Number 1 was made together with the control input, course was resumed on time and the separate clearance was obtained without delay. Deviations from the assigned altitude and heading were negligible for the whole sequence.",
+        "marginal": "SP executed the lost wingman procedure within standards, but the initiation lagged the loss of visual contact and the 15 seconds were estimated rather than counted. The trend was a separation turn correct in bank angle but short in duration, with parameters still inside tolerance. SP is expected to start the procedure at the moment sight is lost and to count the full 15 seconds before resuming course."
+      }
+    },
+    {
+      "id": "vfr_navigation-15-tm02",
+      "label": "Smooth control application while transitioning to instruments on loss of visual contact",
+      "mif_row": null,
+      "source": "technique:9.13 LOST WINGMAN PROCEDURES",
+      "hf_concept": "hf-spatial-disorientation",
+      "texts": {
+        "0": "SP, due to abrupt control inputs while transitioning from the formation position to instruments, aggravated the effects of spatial disorientation instead of minimizing them. Bank and pitch were changed in steps rather than smoothly, the instrument indications were no longer believed, and altitude and airspeed passed 300 feet and 20 KIAS from the assigned values. IP took control and re-established straight and level flight on instruments.",
+        "1": "SP, due to sharp control inputs during the separation turn in the weather, induced disorienting sensations that delayed acceptance of the instrument indications. Corrections were made against the attitude indicator until the IP transmitted the aircraft attitude, and altitude and airspeed reached 300 feet and 20 KIAS from the assigned values. The aircraft was stabilized only after that verbal direction.",
+        "2": "SP, due to control inputs applied faster than the smooth application the procedure requires, produced a brief mismatch between bodily sensations and the attitude indicator. SP recognized the disorientation, slowed the input rate and flew the aircraft by reference to the attitude indicator, keeping altitude and airspeed between the inner and outer tolerances. The state was recovered without prompting and the procedure was completed.",
+        "3": "SP applied all control inputs smoothly during the transition from visual formation references to instruments, which limited the effects of spatial disorientation. The attitude indicator was accepted as the primary reference and corrections were made in small continuous inputs. Altitude and airspeed remained within 150 feet and 10 KIAS of the assigned values throughout.",
+        "4": "SP transitioned to instruments with control inputs so smooth that no disorienting sensation developed during the separation maneuver. Attitude was set once and held, and the cross-check confirmed the aircraft state before any further correction was made. Deviations in altitude, airspeed and heading were negligible for the entire sequence.",
+        "marginal": "SP kept the aircraft within standards during the transition to instruments, but the initial control inputs were firmer than the smooth application the procedure calls for. The trend was a small pitch and bank overshoot on entry, followed by a settling period before the scan was fully trusted. SP is expected to make the input rate deliberately slow on entering the weather so that disorientation is not provoked."
+      }
+    },
+    {
+      "id": "vfr_navigation-15-tm03",
+      "label": "Selection of the lost wingman variant matching the flight condition",
+      "mif_row": null,
+      "source": "technique:9.13 LOST WINGMAN PROCEDURES",
+      "hf_concept": "hf-lack-of-knowledge",
+      "texts": {
+        "0": "SP, due to a lost wingman variant chosen without regard to the flight condition, flew the wings-level turn away while established inside a formation turn. Power was not momentarily reduced for nose-tail separation and Number 1 was not told to roll out, so the geometry closed instead of opening and the assigned altitude was exceeded by more than 300 feet. IP intervened to establish separation and obtain the clearance.",
+        "1": "SP, due to confusion between the outside turn and inside turn lost wingman procedures, reversed the direction of turn while positioned inside the turn instead of maintaining the angle of bank for lateral separation. The error was identified by the IP over the radio and the correct procedure was flown only after that direction, with heading reaching 10 degrees from the assigned value. Separation was eventually achieved but the sequence required verbal correction throughout.",
+        "2": "SP, due to slow recall of which lost wingman variant applied on the missed approach, delayed the climb to 500 feet above the missed approach altitude. SP identified the correct procedure without prompting, turned away momentarily and then continued on the published missed approach track with the required climb. Altitude and heading deviations remained between the inner and outer tolerances.",
+        "3": "SP selected the lost wingman procedure appropriate to the flight condition on each occasion, distinguishing wings-level flight, turns from outside and inside, final approach and missed approach. On the missed approach the climb was continued to 500 feet above the missed approach altitude on the published track. Assigned parameters were held within 150 feet and 5 degrees while the procedures were executed.",
+        "4": "SP applied the correct lost wingman variant immediately and without reference to notes, including the momentary power reduction for nose-tail separation and the direction to Number 1 to roll out when inside the turn. On the final approach case the turn away and the climb to glide slope intercept altitude were flown as published while proceeding to the MAP. Deviations from assigned values were negligible and a separate clearance was obtained in each case.",
+        "marginal": "SP applied a correct lost wingman procedure in each situation and stayed within standards, but the choice of variant came after visible hesitation. The trend was a pause to reconstruct the procedure before acting, which reduced the separation margin obtained. SP is expected to hold all the cases available for immediate recall so that the appropriate procedure begins at the moment sight is lost."
+      }
+    },
+    {
+      "id": "vfr_navigation-15-tm04",
+      "label": "Positioning of Number 2 before the instrument penetration",
+      "mif_row": null,
+      "source": "technique:9.40.2 FORMATION APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a penetration begun without repositioning Number 2, left the wingman on the same side as the direction of the penetration turn and on the downwind side of the landing runway. Number 2 had to fly through the turn geometry to hold position and drifted toward the runway centerline, and the approach was flown more than 10 degrees off the published course. IP intervened to reposition the formation and re-establish the approach.",
+        "1": "SP, due to omitting the pre-penetration check of the wingman's side, started the penetration turn with Number 2 on the inside of the turn. The wingman was moved only after the IP directed the change over the radio, and the reposition cost heading and altitude accuracy at the outer tolerance limits during the turn. The approach was continued but the formation was stabilized late.",
+        "2": "SP, due to a late assessment of the landing runway wind, first positioned Number 2 correctly for the penetration turn and then had to change sides again for the upwind requirement. The second reposition was ordered by SP without prompting and was complete before the final approach fix, with course and altitude deviations staying between the inner and outer tolerances. The approach continued with the wingman correctly placed.",
+        "3": "SP positioned Number 2 on the side opposite the direction of the penetration turn and on the upwind side of the landing runway before starting the penetration. The reposition was directed early enough to be complete and stabilized before the descent began. Course, altitude and airspeed on the approach were held within the inner tolerances.",
+        "4": "SP derived the wingman's side from the penetration turn direction and the reported wind before the descent, so a single reposition satisfied both requirements. Number 2 was stabilized in the new position well before the approach began and no further changes were needed. Approach parameters showed negligible deviation from the published values.",
+        "marginal": "SP placed Number 2 correctly for the penetration and for the landing runway, but the decision was made only when the descent clearance was received. The trend was a reposition completed just before the turn, leaving the wingman little time to stabilize. SP is expected to determine the wingman's side during approach planning so the formation is set before the penetration begins."
+      }
+    },
+    {
+      "id": "vfr_navigation-15-tm05",
+      "label": "Minimum 20 percent torque on the formation instrument approach",
+      "mif_row": null,
+      "source": "technique:9.40.2 FORMATION APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power settings taken below 20 percent torque on the formation instrument approach, removed the wingman's ability to hold position with a usable power margin. Number 2 fell aft and low while chasing the changing power, and airspeed departed the 110 KIAS approach speed by more than 20 KIAS. IP intervened, restored the minimum torque setting and stabilized the approach.",
+        "1": "SP, due to a descent flown by reducing torque rather than by setting pitch, went below the 20 percent minimum during the approach. The setting was restored only after the IP called for it, and airspeed reached 20 KIAS from the approach speed while the wingman worked to hold position. Power was then kept above the minimum for the remainder of the approach.",
+        "2": "SP, due to a momentary power reduction while capturing the glide path, allowed torque to fall toward the 20 percent minimum. SP recognized the low setting, added power and controlled the excess rate of descent with pitch, keeping airspeed between the inner and outer tolerances. The wingman held position and no IP prompting was required.",
+        "3": "SP flew the formation instrument approach without reducing torque below 20 percent, controlling the descent with pitch and small power adjustments. The wingman kept a power margin on both sides of the setting throughout the approach. Airspeed and altitude on the approach were held within 10 KIAS and 150 feet of the required values.",
+        "4": "SP held a torque setting clearly above the 20 percent minimum for the whole approach and made power changes in small anticipated increments. The wingman held position with minimal correction and never needed idle or high power to stay in place. Deviations from the approach airspeed and from the glide path were negligible.",
+        "marginal": "SP kept torque at or just above the 20 percent minimum and completed the approach within standards, but the margin left to the wingman was small. The trend was a power setting driven down toward the limit at each descent and recovered before the limit was passed. SP is expected to plan the descent so that the approach is flown with torque clearly above the minimum."
+      }
+    },
+    {
+      "id": "vfr_navigation-15-tm06",
+      "label": "Radio call instead of visual signal for configuration changes in IMC",
+      "mif_row": null,
+      "source": "technique:9.40.2 FORMATION APPROACH",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, due to gear and flap configuration directed with a visual signal in IMC, gave a command the wingman could not see in the weather. Number 2 remained clean while SP configured, the drag mismatch was never resolved, and airspeed diverged from the required 110 KIAS by more than 20 KIAS. IP intervened, transmitted the configuration call and restored the formation.",
+        "1": "SP, due to a visual signal used instead of a radio call once the formation entered cloud, left the wingman without a usable configuration cue. The gear down call for both aircraft was transmitted only after the IP prompted it, and the delayed configuration put airspeed 20 KIAS from the approach speed. The remaining configuration changes were made by radio.",
+        "2": "SP, due to a configuration change begun before the wingman's thumbs up was seen, called for gear while the check of the leader's aircraft was still in progress. SP recognized the broken sequence, waited for the confirmation and then transmitted the gear down call for both aircraft, with airspeed deviations staying between the inner and outer tolerances. The approach continued without IP prompting.",
+        "3": "SP directed the landing gear and flap configuration with a radio call once in IMC and used the full confirmation sequence before the gear down call for both aircraft. Number 2's check and thumbs up were answered before any change was ordered. Approach airspeed and altitude stayed within the inner tolerances during the configuration changes.",
+        "4": "SP used a single clear radio call for gear and flaps, timed so both aircraft configured together with no drag mismatch. The mutual configuration check was completed and acknowledged before the call, and the gear down call for both aircraft was transmitted in the correct order. Airspeed and glide path deviations during configuration were negligible.",
+        "marginal": "SP used radio calls for configuration in IMC and stayed within standards, but the calls were made after the change had already started. The trend was a command that followed the action instead of preceding it, leaving the wingman reacting to the leader's drag change. SP is expected to transmit the configuration call first so that both aircraft change configuration together."
+      }
+    },
+    {
+      "id": "vfr_navigation-15-tm07",
+      "label": "110 KIAS with flaps TO on the formation instrument approach",
+      "mif_row": null,
+      "source": "technique:9.40.2 FORMATION APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an approach flown at a self-selected airspeed instead of the 110 KIAS the formation approach requires, gave the wingman no stable reference for position keeping. The flaps were also left out of the TO position, so drag and attitude did not match the briefed configuration, and airspeed departed the required value by more than 20 KIAS. IP intervened to set the configuration and the approach airspeed.",
+        "1": "SP, due to airspeed controlled by power alone with the flaps in the wrong position, could not settle the approach on 110 KIAS. Deviations reached 20 KIAS from the required speed and were corrected only after the IP called the airspeed, leaving the wingman correcting continuously. The TO flap setting was selected late in the approach.",
+        "2": "SP, due to a trim change made late after selecting the TO flap position, allowed the approach airspeed to drift from 110 KIAS. SP identified the drift on the cross-check, adjusted power and retrimmed, and airspeed deviations remained between the inner and outer tolerances. The approach was stabilized without IP prompting.",
+        "3": "SP flew the formation instrument approach at 110 KIAS with the flaps in the TO position as required. Airspeed was steady enough for the wingman to hold position with small corrections and was adjusted only where the winds dictated. Airspeed remained within 10 KIAS of the required value throughout the approach.",
+        "4": "SP established 110 KIAS and the TO flap setting before the final approach segment and held the speed without noticeable variation. The single stable speed allowed the wingman to fly position with almost no power changes. Deviations from the required approach airspeed and from the glide path were negligible.",
+        "marginal": "SP flew the approach at 110 KIAS with flaps in the TO position and stayed within standards, but the speed was held by repeated small power corrections rather than by a trimmed condition. The trend was a slow oscillation about the required speed that the wingman had to absorb. SP is expected to trim for the approach configuration so the speed stays stable without continuous input."
+      }
+    },
+    {
+      "id": "vfr_navigation-15-tm08",
+      "label": "Power and pitch control on the formation missed approach",
+      "mif_row": null,
+      "source": "technique:9.40.4 FORMATION MISSED APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to power advanced rapidly past the approximately 75 percent called for and a missed approach pitch attitude set abruptly, created exactly the conditions that produce lost wingman and disorientation on a formation missed approach. Gear and flap retraction were not directed by radio, and the aircraft went through the missed approach altitude with airspeed more than 20 KIAS from the required value. IP took control to establish the missed approach climb.",
+        "1": "SP, due to power applied in one large movement instead of smoothly to approximately 75 percent, unsettled the formation at the start of the missed approach. The pitch attitude was captured only after the IP transmitted the required attitude, and airspeed and altitude reached 20 KIAS and 300 feet from the assigned values during the transition. The gear and flap retraction calls followed the IP prompt.",
+        "2": "SP, due to a missed approach pitch attitude established faster than the slow and smooth input the procedure describes, allowed airspeed to decay toward the low end of the climb range. SP recognized the trend, eased the attitude and confirmed approximately 75 percent power, keeping deviations between the inner and outer tolerances. Gear and flap retraction were then directed by radio and the climb gradient was maintained.",
+        "3": "SP advanced power smoothly to approximately 75 percent and established the missed approach pitch attitude slowly, so the wingman could follow without losing sight. Gear and flap retraction were directed by radio and the minimum climb gradient was maintained on the published track. Airspeed and heading were held within 10 KIAS and 5 degrees during the missed approach.",
+        "4": "SP flew the formation missed approach with a continuous power application to approximately 75 percent and a pitch change slow enough that the wingman held position throughout. Retraction calls were made by radio at the correct points and aircraft attitude was transmitted to Number 2 to guard against disorientation. The minimum climb gradient was exceeded with negligible deviation in airspeed and heading.",
+        "marginal": "SP completed the formation missed approach within standards, but the power application and the pitch change were quicker than the procedure describes. The trend was a wingman working hard to stay in position during the first seconds of the go-around. SP is expected to make both the power and the attitude change deliberately slow and to back them up with attitude calls to Number 2."
       }
     }
   ]

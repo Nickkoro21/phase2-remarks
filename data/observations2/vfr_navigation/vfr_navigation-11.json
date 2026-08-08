@@ -142,6 +142,126 @@
         "4": "SP navigated entirely by map reading, calling each ground point from the terrain before any confirmation from the on-board equipment. SP used the equipment only to verify what had already been established from the chart, with negligible deviations in the flight parameters. Independent position awareness was maintained without interruption from departure to recovery.",
         "marginal": "SP used the chart as the primary navigation reference within standards, but reached for the navigation display first whenever a ground point was not immediately recognized. The trend is toward the equipment replacing the map reading cycle in the harder segments, and SP is expected to complete the Time - Map - Ground cycle before any cross-check with the on-board equipment."
       }
+    },
+    {
+      "id": "vfr_navigation-11-tm01",
+      "label": "CHECKPOINT LOOK-AHEAD AND ATTENTION FOCUS DISTANCE",
+      "mif_row": null,
+      "source": "technique:8.19.6.d(6) CLOCK-MAP-GROUND METHOD",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to focusing attention on the ground under the nose instead of on points 30 seconds to 1 minute ahead of the A/C, did not look for checkpoints 2-5 minutes ahead and had none of them identified by 1 minute out. SP started searching for each checkpoint only after it had passed abeam, so the running position estimate was lost over consecutive legs. The IP took the A/C and re-established the navigation picture, with heading already more than 10 degrees off the briefed value and altitude beyond 300 ft from the assigned altitude.",
+        "1": "SP, due to focusing attention too close to the A/C instead of on points 30 seconds to 1 minute ahead, did not have the checkpoints identified by 1 minute out. SP began the ground search only when the point was nearly abeam and reacted in time only after the IP called the look-ahead verbally. Heading was at the 10 degrees limit from the briefed value when the identification was completed, and no control intervention by the IP was required.",
+        "2": "SP, due to a late start of the chart-to-ground look-ahead, identified the first checkpoints about 30 seconds out instead of 1 minute out. SP recognized the compressed window unprompted, moved the search back to 2-5 minutes ahead and had the remaining points identified on time. Heading stayed between 5 and 10 degrees of the briefed value while the scan was reorganized, and the leg timing remained usable.",
+        "3": "SP looked for the checkpoints 2-5 minutes ahead and had them identified by 1 minute out on every leg. SP kept attention on points 30 seconds to 1 minute ahead of the A/C and used one or two prominent points on each leg, holding heading within +/- 5 degrees and altitude within +/- 150 ft. Each checkpoint was crossed with the position estimate already confirmed.",
+        "4": "SP maintained the look-ahead window on every leg and had each checkpoint identified well before the 1 minute point. SP anticipated the prominent points before they became visible and confirmed each one with a single glance outside, leaving negligible deviations in heading, altitude and airspeed. The timing crosscheck remained current over the whole route.",
+        "marginal": "SP kept the checkpoint look-ahead within standards, but the search window shrank toward the 1 minute point whenever a leg contained more than one prominent feature. The trend is toward identifying checkpoints only as they approach the abeam position, and SP is expected to restart the 2-5 minute look-ahead immediately after each point so that the margin does not erode on dense legs."
+      }
+    },
+    {
+      "id": "vfr_navigation-11-tm02",
+      "label": "SCAN LIMITED TO REFERENCES OFF THE NOSE",
+      "mif_row": null,
+      "source": "technique:8.19.6.d(6) CLOCK-MAP-GROUND METHOD",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to crosschecking the navigation with only references off the nose of the A/C, did not exercise a scan as far as could be seen in each direction. SP disregarded the features abeam and behind the wingline, so a growing offset from the planned track produced no chart-to-ground mismatch and the position could not be resolved. The IP intervened on the controls to regain the route after heading exceeded 10 degrees from the briefed value and altitude departed by more than 300 ft.",
+        "1": "SP, due to crosschecking with only references off the nose, kept the map reading scan inside a narrow forward sector and did not look abeam. SP located the expected feature only after the IP verbally pointed out a landmark off the wing, and heading was at the 10 degrees limit from the briefed value when the position was re-established. No control intervention by the IP was required.",
+        "2": "SP, due to an initially narrow forward-only crosscheck, missed the abeam features on the first leg and had to hold the checkpoint identification open longer than planned. SP widened the scan unprompted to include as far as could be seen in each direction and identified the following points from lateral references without delay. Heading remained between 5 and 10 degrees of the briefed value during the reorganization of the scan.",
+        "3": "SP exercised a scan that included as far as could be seen in each direction and did not limit the crosscheck to references off the nose. SP used lateral landmarks to confirm the along-track position on every leg while holding heading within +/- 5 degrees and altitude within +/- 150 ft. The navigation picture stayed continuous from point to point.",
+        "4": "SP scanned the full sector on both sides throughout the route and used abeam features as readily as those ahead. SP built each position fix from more than one reference before the checkpoint arrived, with negligible deviations in heading, altitude and airspeed. The wide scan was maintained without any cost to A/C control.",
+        "marginal": "SP scanned beyond the nose within standards, but the lateral part of the scan was used only after the forward references failed to match. The trend is toward a forward-only crosscheck as workload rises, and SP is expected to include the abeam sector in the routine scan so that lateral landmarks are available before the forward picture becomes ambiguous."
+      }
+    },
+    {
+      "id": "vfr_navigation-11-tm03",
+      "label": "RELATIONSHIP BETWEEN LANDMARKS FOR CHECKPOINT DISAMBIGUATION",
+      "mif_row": null,
+      "source": "technique:8.19.6.d(6) CLOCK-MAP-GROUND METHOD",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to failing to note the relationship of how landmarks are arranged in relation to one another, could not separate two similar small towns ahead and selected the wrong one as the next checkpoint. SP did not use the surrounding pattern, such as the several towers lying east of one of the cities, to confirm which town was charted as the point. The false fix drove the A/C onto a wrong leg and the IP took the A/C to recover the route, with heading more than 10 degrees off the briefed value.",
+        "1": "SP, due to treating each landmark in isolation instead of using the pattern formed with the neighbouring features, was unable to decide between two similar checkpoints. SP resolved the ambiguity only after the IP verbally described the relative position of the adjacent features, and altitude had reached 300 ft from the assigned value while the search continued. The recovery was flown by SP without control intervention.",
+        "2": "SP, due to an incomplete reading of how the landmarks are arranged in relation to one another, hesitated between two similar features on one leg. SP unprompted checked the secondary pattern around the point, confirmed the correct checkpoint from the relative position of the surrounding features and continued on plan. Altitude stayed between 150 and 300 ft of the assigned value during the hesitation and was regained immediately afterwards.",
+        "3": "SP noted the relationship of the landmarks to one another and used it to confirm every checkpoint. SP resolved the similar-looking features by their relative position with respect to the neighbouring towers, roads and water features, while holding altitude within +/- 150 ft and heading within +/- 5 degrees. No checkpoint was accepted on a single feature match.",
+        "4": "SP read each area as a pattern of landmarks rather than as isolated points and confirmed every checkpoint through at least two relationships. SP dismissed the similar decoy features immediately from their relative geometry, with negligible deviations in the basic parameters. The technique held equally well in featureless and in cluttered areas.",
+        "marginal": "SP used the relationship between landmarks within standards, but the confirmation came only after an initial single-feature match had already been accepted. The trend is toward mistaking a similar feature for the checkpoint in areas with repeated terrain patterns, and SP is expected to build the identification on the arrangement of the surrounding landmarks before calling the point."
+      }
+    },
+    {
+      "id": "vfr_navigation-11-tm04",
+      "label": "CHART ALIGNMENT WITH THE ACTUAL TRACK",
+      "mif_row": null,
+      "source": "technique:8.19.6.d(6) CLOCK-MAP-GROUND METHOD",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to holding the chart north-up instead of aligning it in the same relative direction as the A/C's actual track, reversed the left and right sense of the features while flying the reciprocal legs. SP searched for the checkpoints on the wrong side of the course line and rejected the correct features as non-matching, and the along-track position estimate was lost. The IP took the A/C to re-establish the route after heading diverged by more than 10 degrees from the briefed value.",
+        "1": "SP, due to reading a north-up chart on a southerly leg without aligning it with the actual track, transposed the lateral position of the landmarks with respect to the course line. SP re-oriented the chart only after the IP verbally prompted, and heading was at the 10 degrees limit when the correct picture was restored. No control intervention by the IP was required.",
+        "2": "SP, due to keeping the chart north-up after the turn onto the reciprocal leg, misplaced the first landmark to the wrong side of the course line. SP detected the inconsistency unprompted, aligned the chart in the same relative direction as the actual track and completed the remaining checkpoints correctly. Heading was held between 5 and 10 degrees of the briefed value during the re-orientation.",
+        "3": "SP aligned the chart in the same relative direction as the A/C's actual track on every leg, including after each turning point. SP read the features on the correct side of the course line without any mental transposition, holding heading within +/- 5 degrees and altitude within +/- 150 ft. Chart handling did not interrupt the identification sequence.",
+        "4": "SP kept the chart aligned with the actual track at all times and re-oriented it during the turn so that the new leg was ready before rollout. SP read left and right features directly from the aligned chart with no hesitation, leaving negligible deviations in the basic parameters. Chart orientation remained correct through every course change.",
+        "marginal": "SP aligned the chart with the actual track within standards, but the re-orientation was performed only after the turn was completed and the first landmark of the new leg was already abeam. The trend is toward a transposed left-right picture in the first part of each leg, and SP is expected to align the chart for the next leg before rolling out of the turn."
+      }
+    },
+    {
+      "id": "vfr_navigation-11-tm05",
+      "label": "CHARTED ROAD CLASSIFICATION AND ROAD COUNTING",
+      "mif_row": null,
+      "source": "technique:8.17 CULTURAL FEATURES (Roads, Bridges, Railroads, Power Lines, Populated Areas, Coastal Hydrography)",
+      "hf_concept": "hf-lack-of-knowledge",
+      "texts": {
+        "0": "SP, due to counting roads as an orientation technique and trusting the charted road classification, took a two-lane road encoded as primary for the thick single line on the chart and fixed the position on the wrong crossing. SP did not use the planned time of arrival to classify the roads that were seen but were hard to identify, and did not restrict positive road identification to the dual lane highways shown by a double line. The false fix drove a turn onto a wrong leg and the IP took the A/C, with heading more than 10 degrees off the briefed value.",
+        "1": "SP, due to relying on the charted road classification for a road that was hard to classify from the air, reported the position on the wrong transportation line. SP corrected the identification only after the IP verbally pointed out the dual lane highway as the reliable reference, and heading was at the 10 degrees limit when the correction started. No control intervention by the IP was required.",
+        "2": "SP, due to attempting to separate a primary from a secondary road purely on charted appearance, delayed the time check over the transportation line. SP unprompted used the planned time of arrival to classify the road, confirmed it against the neighbouring double line highway and completed the crosscheck without losing the leg timing. Heading was kept between 5 and 10 degrees of the briefed value during the reassessment.",
+        "3": "SP made no attempt to count roads as an orientation technique and used the dual lane highways, portrayed as a double line, as the reliable transportation references. SP identified the roads that were hard to classify on the basis of the planned time of arrival and obtained accurate time checks along the route, holding heading within +/- 5 degrees and altitude within +/- 150 ft. Every road crossing used for a fix was positively identified.",
+        "4": "SP used the transportation lines exactly as the technique prescribes, taking the double line highways as primary references and resolving all ambiguous roads by planned time of arrival. SP obtained crisp time checks at each crossing without any attempt at road counting, with negligible deviations in the basic parameters. Road-based position fixes were correct throughout the route.",
+        "marginal": "SP used the road network for time checks within standards, but tended to accept the charted classification of two-lane roads without cross-checking it against the planned time of arrival. The trend is toward a wrong fix where several similar roads run parallel, and SP is expected to reserve positive road identification for the double line highways and to time-check the rest."
+      }
+    },
+    {
+      "id": "vfr_navigation-11-tm06",
+      "label": "POPULATED AREA IDENTIFICATION FROM THE CHARTED OUTLINE",
+      "mif_row": null,
+      "source": "technique:8.17 CULTURAL FEATURES (Roads, Bridges, Railroads, Power Lines, Populated Areas, Coastal Hydrography)",
+      "hf_concept": "hf-overconfidence",
+      "texts": {
+        "0": "SP, due to attempting to identify a city on the basis of its charted outline alone, matched the built-up area under the A/C to the wrong town and reported a false position. SP did not look for the unique element that differentiates one city from another in the same area and did not allow for the fact that the charted outline excludes the recent suburban developments. The wrong fix was carried into the next leg and the IP took the A/C to recover the route, with heading more than 10 degrees off the briefed value.",
+        "1": "SP, due to relying on the charted city outline alone, hesitated between two populated areas and reported the checkpoint incorrectly at first. SP accepted the correct town only after the IP verbally named the distinguishing element, and altitude reached 300 ft from the assigned value while the search continued. No control intervention by the IP was required.",
+        "2": "SP, due to expecting the town to match the size suggested by the chart, was surprised by a populated area much larger than the charted outline and delayed the identification. SP unprompted searched for the unique element that separates that city from its neighbour, confirmed the checkpoint and resumed the planned sequence. Altitude was held between 150 and 300 ft of the assigned value during the delay.",
+        "3": "SP identified the populated areas by a unique element that differentiates each one from the others in the same area rather than by the charted outline alone. SP allowed for the towns being larger or smaller than the chart suggests, especially the small ones shown by a small circle, and kept altitude within +/- 150 ft and heading within +/- 5 degrees. Every populated checkpoint was positively identified before it passed abeam.",
+        "4": "SP identified every populated area immediately from its distinguishing element and treated the charted outline only as an indication of where the vertical development of the city lies. SP was not misled by suburban growth beyond the charted outline nor by the small circle symbol used for towns of unknown shape, with negligible deviations in the basic parameters. All city checkpoints were confirmed on first sight.",
+        "marginal": "SP identified the populated areas within standards, but the identification leaned on the general shape of the built-up area and the distinguishing element was sought only when the shape did not fit. The trend is toward a wrong call where two towns of similar size lie close together, and SP is expected to nominate a unique element for each populated checkpoint during preparation."
+      }
+    },
+    {
+      "id": "vfr_navigation-11-tm07",
+      "label": "RELIEF INTERPRETATION: CONTOURS, SPOT ELEVATIONS AND MEF",
+      "mif_row": null,
+      "source": "technique:8.16 RELIEF (Contour Lines, Spot Elevations, MEF, Gradient Tints)",
+      "hf_concept": "hf-briefing-and-threat-identification",
+      "texts": {
+        "0": "SP, due to not taking the contour interval from the chart legend and not using the Maximum Elevation Figures of the grid squares, misread the closely spaced contour lines of a steep slope as gentle rising ground. SP flew the leg without reference to the spot elevations and to the MEF, which already includes 100 to 199 ft of clearance over the highest known feature, and the terrain clearance became the IP's concern. The IP intervened on the controls to climb the A/C after altitude had departed by more than 300 ft from the assigned navigation altitude.",
+        "1": "SP, due to reading the relief only from the gradient tints and not from the contour lines and MEF, did not anticipate the rising ground on the leg. SP started the climb to restore the assigned navigation altitude only after the IP called the terrain verbally, with altitude at 300 ft from the assigned value. The correction was flown by SP without control intervention.",
+        "2": "SP, due to a late crosscheck of the contour spacing and the spot elevations ahead, allowed the A/C to settle as the ground rose along the leg. SP detected the trend unprompted at about 200 ft below the assigned navigation altitude, referred to the MEF of the grid square and regained the altitude promptly. The remaining legs were flown with the relief checked ahead of the A/C.",
+        "3": "SP read the relief correctly from the contour lines, the spot elevations and the Maximum Elevation Figures and anticipated each change of terrain along the route. SP used the contour interval given in the legend and the gradient tints to confirm the terrain picture, keeping altitude within +/- 150 ft of the assigned navigation altitude. Terrain clearance over every grid square remained comfortably above the MEF.",
+        "4": "SP interpreted the relief continuously and had the MEF of each grid square and the relevant spot elevations available before entering it. SP used the contour spacing to predict the slope of the terrain ahead and held the assigned navigation altitude with negligible deviations. Terrain awareness required no prompting at any point of the route.",
+        "marginal": "SP interpreted the relief within standards, but the MEF and the spot elevations were consulted only after the terrain had visibly started to rise. The trend is toward a reactive rather than anticipatory use of the relief information, and SP is expected to read the contour interval and the MEF of the next grid square before entering it so that the altitude is set in advance."
+      }
+    },
+    {
+      "id": "vfr_navigation-11-tm08",
+      "label": "SYMBOL SIZE AND CHART SCALE LIMITATIONS",
+      "mif_row": null,
+      "source": "technique:8.15 CHARTS (Navigational Charts, Scales, Chart Legend)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to judging the real-world size of the features from the size of their symbols on the 1:500.000 sectional, expected a lookout tower and a minor airfield to be as conspicuous as symbols that cover about half a nautical mile and 4.000 ft to scale. SP did not appreciate that the discrepancies between the real world and its chart representation result from the limitations imposed by scale, with road widths alone exaggerated about 20 times, and rejected the correct checkpoints as non-matching. The position was lost and the IP took the A/C to re-establish the route, with heading more than 10 degrees off the briefed value.",
+        "1": "SP, due to expecting the ground features to match the exaggerated symbol sizes of the sectional, hesitated to accept a checkpoint that looked far smaller than the chart suggested. SP accepted the correct feature only after the IP verbally explained the scale exaggeration, and heading was at the 10 degrees limit when the identification was completed. No control intervention by the IP was required.",
+        "2": "SP, due to comparing the apparent size of the ground feature with the size of its chart symbol, delayed the identification of a small airfield shown by an open circle. SP recalled unprompted that the symbol sizes do not conform to true scale while the relative positions of the features remain accurate, confirmed the checkpoint from the distance to a nearby road and continued on plan. Heading was held between 5 and 10 degrees of the briefed value during the delay.",
+        "3": "SP identified the checkpoints from the relative position of the features rather than from the size of the symbols, allowing for the exaggeration of the sectional symbology. SP used the accurate charted distances between objects to confirm each point and held heading within +/- 5 degrees and altitude within +/- 150 ft. No correct feature was rejected because of its apparent size.",
+        "4": "SP treated the symbol sizes of the 1:500.000 sectional as conventions and worked entirely from the accurate relative positions and distances between the features. SP identified even the small and low-contrast checkpoints on first sight, with negligible deviations in heading, altitude and airspeed. The scale limitations of the chart never delayed an identification.",
+        "marginal": "SP allowed for the chart scale limitations within standards, but the first comparison was still made on apparent feature size and only then on the relative position of the objects. The trend is toward hesitation over small checkpoints whose symbols are large on the chart, and SP is expected to lead every identification with the charted distance to the neighbouring features."
+      }
     }
   ]
 }

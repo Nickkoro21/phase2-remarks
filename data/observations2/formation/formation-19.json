@@ -127,6 +127,96 @@
         "4": "SP matched power and lift to the leader's turn so precisely that no fore-aft or vertical movement was visible at any point of the maneuver. Throttle and pitch inputs were anticipatory and blended, keeping the aircraft in position through both the roll-in and the roll-out. The energy state of the formation was never disturbed.",
         "marginal": "SP managed power within standards, but the throttle was moved in discrete steps that produced a small fore-aft oscillation about the reference line on every turn. The deviations stayed inside limits and were corrected each time. SP is expected to lead the power change with the leader's bank and to use continuous rather than stepped throttle inputs."
       }
+    },
+    {
+      "id": "formation-19-tm01",
+      "label": "Matching Number 1's roll rate at the roll-in",
+      "mif_row": "Echelon Turn",
+      "source": "technique:9.22 ECHELON TURN",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a roll rate that did not match Number 1's roll-in, lagged the leader's bank and then over-rolled to catch up. The lag drove the aircraft aft and high, with longitudinal separation opening past 10 ft behind the reference and vertical separation exceeding 10 ft above the wing midpoint. The catch-up roll produced closure toward the leader instead of a stabilized recovery. IP took control to reposition the aircraft in the echelon before the turn was continued.",
+        "1": "SP, due to a slow roll rate that did not follow Number 1 into the bank, allowed the aircraft to fall aft to about 10 ft behind the reference, at the outer limit of the acceptable band. The position was regained only after repeated verbal prompting from the IP and required a large bank change. SP did not anticipate the leader's roll rate on the subsequent turn either.",
+        "2": "SP, due to an initially slower roll rate than Number 1's, drifted aft by about 7 ft as the bank was established. SP recognized the mismatch from the changing sight picture and matched the leader's roll rate with a smooth aileron input, closing back toward the reference before the turn was steady. The deviation remained inside the acceptable band and no intervention was needed.",
+        "3": "SP matched Number 1's roll rate at the roll-in closely enough that the fore and aft position stayed within 4 ft of the reference. The small amount of lag that appeared as the bank increased was removed with a prompt aileron and power input. The echelon position was stabilized within the first quarter of the turn.",
+        "4": "SP matched Number 1's roll rate throughout the roll-in so that the sight picture remained essentially unchanged. Fore and aft position varied by no more than one to two feet as the bank was established. The aircraft entered the turn already stabilized in the echelon position.",
+        "marginal": "SP kept the position inside the limits, but consistently began the roll slightly after Number 1 and let the aircraft settle about 4 ft aft before matching the roll rate. The same late roll-in appeared on each turn and was corrected only after the bank was fully established. SP is expected to anticipate the leader's roll rate and to start the roll with Number 1."
+      }
+    },
+    {
+      "id": "formation-19-tm02",
+      "label": "Remaining in Number 1's plane of motion rather than holding fingertip references",
+      "mif_row": "Echelon Turn",
+      "source": "technique:9.22 ECHELON TURN",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to continuing to fly close (fingertip) references instead of remaining in Number 1's plane of motion, held the aircraft out of the echelon geometry once the bank increased. The horizon no longer bisected Number 1's fuselage and the aircraft ended more than 10 ft below the plane of motion of the leader. The same error was repeated on the following turn with the same result. IP took control to re-establish the echelon position.",
+        "1": "SP, due to reverting to fingertip references at the roll-in, did not stay in the leader's plane of motion and finished the turn about 10 ft off the plane of motion, at the limit of the acceptable band. The horizon was visibly displaced from the midpoint of Number 1's fuselage for most of the turn. The correction was made only after repeated verbal reminders from the IP.",
+        "2": "SP, due to an initial attempt to hold fingertip references, drifted about 7 ft out of Number 1's plane of motion in the first part of the turn. SP recognized that the horizon was no longer bisecting the leader's fuselage and returned to the echelon plane of motion without prompting. The position was stable for the remainder of the turn.",
+        "3": "SP remained in Number 1's plane of motion for the whole turn, keeping the horizon bisecting the leader's fuselage within about 4 ft of displacement. Any tendency to fall back to fingertip references was recognized and corrected immediately. The echelon geometry was preserved at each bank angle flown.",
+        "4": "SP flew the turn in Number 1's plane of motion with the horizon bisecting the leader's fuselage throughout. There was no attempt to hold fingertip references once the echelon turn was established. Displacement from the plane of motion stayed within a foot or two at all bank angles.",
+        "marginal": "SP stayed within the limits, but repeatedly reverted toward fingertip references at the roll-in and let the displacement from the plane of motion reach about 4 ft before correcting. The horizon was slightly off the midpoint of Number 1's fuselage for a large part of each turn. SP is expected to establish the plane of motion at the roll-in and to hold it without returning to close references."
+      }
+    },
+    {
+      "id": "formation-19-tm03",
+      "label": "Correct control for each correction: bank for vertical, power for fore and aft, back pressure for spacing",
+      "mif_row": "Echelon Turn",
+      "source": "technique:9.22 ECHELON TURN",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP, due to correcting vertical position with back pressure instead of bank and fore and aft position with pitch instead of power, drove the aircraft through the reference position in both axes. Vertical separation exceeded 10 ft and the fore and aft position went past 10 ft while corrections continued to be applied on the wrong axis. Each input made the other axis worse and the position was not recovered by SP. IP took control to stabilize the echelon.",
+        "1": "SP, due to using back pressure rather than bank to correct an undesired climb, allowed vertical separation to reach about 10 ft, at the limit of the acceptable band. The correct control mapping was applied only after repeated verbal direction from the IP. The same reversal appeared on the second correction of the turn.",
+        "2": "SP, due to an initial back pressure input to correct a vertical displacement, let the separation grow to about 7 ft before changing to a bank correction. SP recognized the wrong control selection unprompted and used bank for vertical and power for fore and aft for the rest of the turn. The deviation stayed inside the acceptable band.",
+        "3": "SP used bank to correct vertical position, power to correct fore and aft position and back pressure to maintain spacing, keeping deviations within 4 ft in both axes. The control selection was correct on each correction made during the turn. No cross-coupling between the axes was evident.",
+        "4": "SP applied the correct control for each axis throughout the turn, so that vertical and fore and aft deviations never exceeded one to two feet. Corrections were small, isolated to the axis being corrected and did not disturb the spacing. The echelon position stayed visibly constant.",
+        "marginal": "SP kept deviations inside the limits, but tended to reach for back pressure first on vertical displacements and only then apply bank, allowing the separation to grow to about 4 ft before it was arrested. The mixed control selection also produced small fore and aft variations each time. SP is expected to use bank for vertical and power for fore and aft as the first response."
+      }
+    },
+    {
+      "id": "formation-19-tm04",
+      "label": "Use of the FCP rescue door reference behind the aft edge of Number 1's wing",
+      "mif_row": "Echelon Turn",
+      "source": "technique:9.22 ECHELON TURN",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not using the FCP reference of one half of the yellow rescue door visible behind the aft edge of Number 1's wing, flew the turn without a usable position cue. The door was fully hidden for part of the turn and fully exposed for the rest, corresponding to fore and aft excursions beyond 10 ft from the reference. SP could not describe the position from the sight picture when questioned. IP took control to re-establish the echelon position.",
+        "1": "SP, due to an incorrect interpretation of the rescue door reference in the FCP, held a position in which the visible triangle was consistently larger than it should be, about 10 ft off the reference and at the limit of the acceptable band. The sight picture was rebuilt only after repeated verbal description by the IP. SP continued to reference the wingtip rather than the door for the remainder of the turn.",
+        "2": "SP, due to a late scan of the rescue door reference at the roll-in, allowed the fore and aft position to move about 7 ft before the triangle was reacquired. SP corrected back to the reference sight picture with a small power change once the cue was regained. The deviation was contained inside the acceptable band without prompting.",
+        "3": "SP used the FCP reference of one half of the yellow rescue door behind the aft edge of Number 1's wing and kept the fore and aft position within 4 ft of the reference. The size of the visible triangle changed only slightly through the turn. Corrections were initiated as soon as the cue changed.",
+        "4": "SP held the rescue door sight picture essentially constant for the whole turn, with the visible triangle unchanged from roll-in to roll-out. Fore and aft position varied by no more than one to two feet. The reference was used as the primary position cue at every bank angle.",
+        "marginal": "SP stayed inside the limits, but allowed the visible portion of the rescue door to grow noticeably each time the leader increased bank, corresponding to about 4 ft aft of the reference. The cue was used to detect the drift rather than to prevent it. SP is expected to hold the reference sight picture and to correct at the first change in the size of the triangle."
+      }
+    },
+    {
+      "id": "formation-19-tm05",
+      "label": "Matching Number 1's roll rate and back pressure reduction during the rollout",
+      "mif_row": "Echelon Turn",
+      "source": "technique:9.22 ECHELON TURN",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not matching Number 1's roll rate at the rollout and not reducing back pressure as the bank came off, allowed the aircraft to climb out of the echelon position. Vertical separation exceeded 10 ft above the reference and the aircraft simultaneously moved forward past 10 ft as the lift vector was repositioned. The excursion continued to develop after the leader was wings level. IP took control to recover the position.",
+        "1": "SP, due to a delayed reduction of back pressure during the rollout, climbed to about 10 ft above the reference, at the limit of the acceptable band. The position was regained only after repeated verbal prompting from the IP and after the leader had completed the rollout. The same late back pressure release appeared on the following rollout.",
+        "2": "SP, due to holding turn back pressure slightly too long as Number 1 rolled out, climbed about 7 ft above the reference before the input was relaxed. SP recognized the developing climb and matched the leader's roll rate to re-establish the position before the formation was steady on the new heading. The deviation stayed inside the acceptable band.",
+        "3": "SP matched Number 1's roll rate during the rollout and gradually reduced back pressure as the bank came off, keeping vertical deviation within 4 ft. Any tendency to climb was recognized and arrested immediately. The echelon position was stable by the time the leader was wings level.",
+        "4": "SP matched the leader's roll rate through the rollout and reduced back pressure smoothly in step with the bank, so that vertical position varied by no more than one to two feet. The transition from turn to wings level produced no visible change in the sight picture. The position was already stabilized when the leader completed the rollout.",
+        "marginal": "SP remained inside the limits, but relaxed back pressure only after the leader had started the rollout, allowing a climb of about 4 ft on each rollout. The tendency was consistent and was corrected only after the wings were level. SP is expected to reduce back pressure in step with Number 1's roll rate rather than after it."
+      }
+    },
+    {
+      "id": "formation-19-tm06",
+      "label": "Recognition that turns away from Number 2 are echelon in the recovery pattern",
+      "mif_row": null,
+      "source": "technique:9.40.1 FORMATION RECOVERY - DESCENT TO VFR PATTERN, BREAK AND LANDING",
+      "hf_concept": "hf-briefing-and-threat-identification",
+      "texts": {
+        "0": "SP, due to waiting for an echelon signal instead of applying the rule that all turns away from Number 2 inside the entry point are echelon unless briefed otherwise, held close references into the turn at pattern altitude. The aircraft finished the turn more than 10 ft out of the leader's plane of motion and with lateral spacing outside the acceptable band. The confusion persisted on the following turn in the pattern. IP took control to re-establish the position.",
+        "1": "SP, due to not applying the briefed rule for echelon turns during the recovery, entered the turn on close references and reached about 10 ft out of the plane of motion, at the limit of the acceptable band. The echelon position was established only after repeated verbal direction from the IP. SP required the same reminder before the next turn away.",
+        "2": "SP, due to a late recognition that the turn away at pattern altitude was to be flown as an echelon turn, spent the first part of the turn on close references and drifted about 7 ft out of the plane of motion. SP identified the error without prompting and re-established the echelon geometry before the rollout. The deviation stayed inside the acceptable band.",
+        "3": "SP applied the rule that turns away from Number 2 inside the entry point are echelon unless briefed otherwise and flew each pattern turn in the leader's plane of motion within 4 ft. The transition to the echelon position was made at the roll-in without prompting. Position was stable through the turns preceding the Break.",
+        "4": "SP treated every turn away from the formation in the recovery as an echelon turn without waiting for a signal, and held the plane of motion within one to two feet. The sight picture was established at the roll-in and remained unchanged through each turn. No prompting or clarification was required at any point of the recovery.",
+        "marginal": "SP flew the pattern turns inside the limits, but hesitated at each roll-in as if waiting for an echelon signal and let the displacement reach about 4 ft before settling into the echelon position. The hesitation was repeated on every turn away. SP is expected to apply the recovery rule for echelon turns without waiting for a signal."
+      }
     }
   ]
 }

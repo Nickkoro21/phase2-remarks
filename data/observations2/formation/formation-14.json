@@ -3,9 +3,14 @@
   "item_name": "MISSION PLANNING / BRIEFING.",
   "category": "formation",
   "schema": "v2-trunk",
-  "mif_numbers": [14],
+  "mif_numbers": [
+    14
+  ],
   "mif_rows": [
-    { "sn": 14, "row_name": "Mission Planning - Briefing" }
+    {
+      "sn": 14,
+      "row_name": "Mission Planning - Briefing"
+    }
   ],
   "error_modes": [
     {
@@ -141,6 +146,126 @@
         "3": "SP did not interrupt the briefing or the debriefing, and raised points only when asked by the formation leader or at the points provided for questions. The order of both sessions was maintained throughout. Every point SP needed to raise was still put and answered.",
         "4": "SP observed briefing discipline to an exceptional standard, holding every question to the point provided for it, noting the points in order and putting them concisely when invited. All of the points SP had noted were answered without any loss to the leader briefing flow. The session ran exactly as the leader had planned it.",
         "marginal": "SP did not interrupt the briefing within standards, but the same restraint extended to a question about the join-up sequence that was noted and then never put at all. The trend is toward silence in place of timing. SP is expected to hold questions to the point provided and then actually put them on the next sortie."
+      }
+    },
+    {
+      "id": "formation-14-tm01",
+      "label": "OPERATIONAL RISK MANAGEMENT IN MISSION SELECTION AND PLANNING",
+      "mif_row": null,
+      "source": "technique:1.9 Operational Risk Management (ORM)",
+      "hf_concept": "hf-operational-risk-management",
+      "texts": {
+        "0": "SP, due to omission of the ORM process before profile selection, did not identify the risks of the sortie and did not reduce them to an acceptable level. None of the three assessment areas was addressed: the index of thermal stress and the bird status for the working period, the risk carried by the formation profile itself, and the currency and fatigue state of the wingman were all left unexamined. IP had to stop the planning, conduct the risk assessment and direct the mission changes it produced before the formation could brief.",
+        "1": "SP, due to treating ORM as a form to be completed after the profile had been fixed, assessed the environmental conditions only and left mission profile and pilot factors unexamined. Both remaining areas were covered only after IP named them in turn, and the wingman currency shortfall they revealed forced a change to the profile at the briefing table. The assessment reached the lower limit of the standard by verbal prompting alone.",
+        "2": "SP, due to an initial assessment that weighed training benefit without weighing the risk against it, first accepted a profile whose low level segment coincided with the peak bird activity period. SP identified the mismatch while reviewing the bird hazard model during mission planning, moved the segment ahead of the peak period and kept the training value of the sortie intact, without IP intervention. The revised profile was briefed with the trade-off stated.",
+        "3": "SP identified the risks of the sortie and reduced them to an acceptable level before the briefing. Environmental conditions, mission profile and pilot factors were each assessed, and the risks accepted were traded off against the training benefit and stated to the formation. The mission changes made to reduce risk did not degrade the training objectives.",
+        "4": "SP conducted risk management of exceptional quality, assessing environmental conditions, mission profile and pilot factors against the specific sortie and carrying the assessment through to the alternate mission as well. Each risk identified was reduced by a mission change that left the training benefit undiminished, and the residual risks were briefed together with the point at which they would be reassessed airborne. Nothing in the plan was accepted without the risk being weighed.",
+        "marginal": "SP identified and reduced the risks of the sortie within standards, but the pilot factors area was covered by a single statement that the formation was current, and no risk was traded against training benefit. The trend is toward an assessment that documents risk rather than acting on it. SP is expected to assess experience, fatigue and currency individually and to name the mission change made for each risk on the next sortie."
+      }
+    },
+    {
+      "id": "formation-14-tm02",
+      "label": "GO/NO-GO ITEMS AND TOLD IN THE MISSION PLANNING TASKS",
+      "mif_row": null,
+      "source": "technique:1.10.4 Mission Planning",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to entering the briefing without working through the mission planning tasks, did not sign off the Go/No-Go items and did not compute the takeoff and landing data. The FCIF and the squadron read files were unread, the TOLD card was blank and weight and balance had not been checked against the planned fuel load. IP had to stop the process and have every planning task completed before the formation was released to step.",
+        "1": "SP, due to leaving the planning tasks to the last part of the planning period, arrived with the TOLD computed but with the FCIF and read files unsigned and the local restrictions unreviewed. Each outstanding task was completed only after IP named it in turn, and the ramp freeze found in the local restrictions changed the taxi plan at the briefing table. The planning met the lower limit of the standard through that prompting and delayed the brief by about fifteen minutes.",
+        "2": "SP, due to computing the takeoff and landing data against the planned rather than the actual fuel load, first produced TOLD figures that did not match the aircraft as loaded. SP identified the discrepancy while checking weight and balance, recomputed the data and rechecked the field length required before the briefing opened, without IP intervention. The figures briefed matched the aircraft weight.",
+        "3": "SP completed the mission planning tasks before the briefing. Go/No-Go items were signed off, NOTAMs, weather and operations notes were checked, TOLD and weight and balance were computed and the local restrictions and the bird hazard model were reviewed. No planning task was outstanding when the briefing opened.",
+        "4": "SP completed the mission planning tasks to an exceptional standard, computing takeoff and landing data for the planned and for the alternate recovery airfield and checking weight and balance against both fuel states. Go/No-Go items, local restrictions and the bird hazard model were reviewed early enough that their effect was already built into the profile rather than announced at the brief. The formation stepped with every planning product complete and current.",
+        "marginal": "SP completed the mission planning tasks within standards, but the TOLD was computed from the forecast rather than the observed conditions and the bird hazard model was checked for the departure period only. The trend is toward planning products that are present but no longer current at the time they are used. SP is expected to update the takeoff and landing data against the observed conditions and to cover the whole working period in the hazard review on the next sortie."
+      }
+    },
+    {
+      "id": "formation-14-tm03",
+      "label": "BINGO AND JOKER FUEL SET AT PRE-PLANNED TRANSITION POINTS",
+      "mif_row": null,
+      "source": "technique:1.11 Fuel Considerations",
+      "hf_concept": "hf-divert-criteria-and-decision-points",
+      "texts": {
+        "0": "SP, as leader, did not brief bingo fuel and did not set any joker fuel for the sortie. No transition point of the profile carried a fuel figure, the recovery fuel required at the intended destination was never stated, and the formation would have had no common trigger for leaving the working area. IP had to stop the briefing, define bingo and joker fuels and have them briefed before the formation stepped.",
+        "1": "SP, as leader, briefed a bingo fuel but set no joker fuel at any of the three transition points of the profile. The joker figures were produced only after IP identified each transition point in turn, and the fuel plan was closed at the lower limit of the standard by that prompting alone. The wingman left the briefing with figures written down but with no action attached to any of them.",
+        "2": "SP, as leader, initially briefed a single joker fuel covering the whole working period although the profile contained two separate transition points. SP recognized while reviewing the sequence of events that the second transition would be reached with the first joker already passed, added a joker fuel for it and briefed both with the action each one triggers, without IP intervention. The fuel plan then matched the profile.",
+        "3": "SP briefed bingo fuel and a joker fuel for every pre-planned transition point of the profile. Each figure was stated with the action it triggers and with the fuel required on arrival at the intended destination, and the schedule of fuel checks through the sortie was covered. The formation left the briefing with a common fuel plan.",
+        "4": "SP produced a fuel plan of exceptional quality, with bingo derived from the intended destination and the required arrival fuel and a joker fuel at each transition point of the profile, including the alternate line of execution. The conditions under which the flight lead would adjust joker or bingo fuel in flight were briefed in advance together with the calls to be used. The formation could apply the plan without further reference to the leader.",
+        "marginal": "SP briefed bingo fuel and one joker fuel within standards, but the joker was set at a round figure rather than at a pre-planned transition point of the profile, and the action it triggers was not stated. The trend is toward fuel figures that are briefed without governing any decision. SP is expected to tie each joker fuel to a transition point and to state the action it triggers on the next sortie."
+      }
+    },
+    {
+      "id": "formation-14-tm04",
+      "label": "DELEGATION OF PLANNING TASKS AND DUPLICATION OF EFFORT",
+      "mif_row": 14,
+      "source": "technique:9.9 MISSION PLANNING",
+      "hf_concept": "hf-role-assignment",
+      "texts": {
+        "0": "SP, as flight leader, did not establish priorities for mission planning and delegated no task to the flight members. Both pilots worked the weather and the NOTAMs while the airspace reservation and the route were left untouched, and the planning was still incomplete when the briefing time arrived. IP had to allocate the tasks and hold the planning together so that the formation could brief at all.",
+        "1": "SP, as flight leader, allocated the planning tasks in general terms only and left two of them claimed by nobody. The duplication of effort on the weather and the gap on the airspace reservation were resolved only after IP pointed out each in turn, and the planning finished with no margin before the briefing. The requirement was met at its lower limit through that prompting.",
+        "2": "SP, as flight leader, initially kept the whole planning load and left the wingman without a task. SP recognized about ten minutes into the planning period that the products would not be ready in time, delegated the NOTAMs, the bird hazard model and the alternate airfield check, and set the order in which each was needed, without IP intervention. The planning was completed before the scheduled briefing time.",
+        "3": "SP established the priorities for mission planning and delegated the tasks so that every flight member was involved and no effort was duplicated. Each task was given with the time by which its product was required, and all planning was complete in time to conduct a concise and comprehensive briefing. Nothing had to be worked twice.",
+        "4": "SP directed the planning to an exceptional standard, ranking the tasks by their effect on the profile, delegating each to the member best placed to complete it and cross-checking the products as they were returned. The planning finished ahead of the briefing time with margin to review the profile against the completed products. No member was idle and no task was worked by two people.",
+        "marginal": "SP established planning priorities and delegated tasks within standards, but no time was set for the return of each product and two of them arrived while the briefing was already being assembled. The trend is toward delegation that distributes work without controlling when it is needed. SP is expected to attach a required time to each delegated task on the next sortie."
+      }
+    },
+    {
+      "id": "formation-14-tm05",
+      "label": "TIME SPENT ON S.O.P MATERIAL INSTEAD OF THE HOW TO OF THE MISSION",
+      "mif_row": 14,
+      "source": "technique:9.10 MISSION BRIEFING AND DEBRIEFING",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, as leader, spent the briefing reading S.O.P material that every formation member is required to hold committed to memory and never reached the how to of the mission. Standard elements that could have been briefed as standard consumed the whole session, and the profile of the day, the objectives and the contingencies were not covered at all. IP had to stop the briefing and brief the mission itself before the formation stepped.",
+        "1": "SP, as leader, gave about two thirds of the briefing to S.O.P material and reached the how to of the mission only in the last minutes. The profile was compressed and the objectives were covered only after IP directed that they be briefed. The session met the lower limit of the standard through that prompting and overran the time allotted by about twenty minutes.",
+        "2": "SP, as leader, opened the briefing by working through the standard start, taxi and takeoff procedures item by item although they are conducted in accordance with S.O.P. SP recognized after several minutes that the majority of the time was going to material already committed to memory, briefed the remaining standard elements as standard and moved to the how to of the profile, without IP intervention. The briefing finished within the time allotted with all mission content covered.",
+        "3": "SP briefed the elements conducted in accordance with S.O.P as standard and spent the majority of the session on the how to of the mission. The profile, the objectives and the standard used to measure successful performance were developed in detail, with only the departures from S.O.P called out. The briefing was clear, concise and finished within the time allotted.",
+        "4": "SP delivered a briefing of exceptional economy, disposing of the standard elements in a single statement and devoting the whole of the remaining time to how the mission would be flown. Each phase of the profile was briefed in terms of what each member does, sees and calls, and the departures from S.O.P were highlighted against the standard rather than read alongside it. The formation left with a detailed mental picture of the sortie and no time wasted.",
+        "marginal": "SP briefed the S.O.P elements as standard and covered the how to of the mission within standards, but about a third of the session was still given to procedures the formation holds committed to memory. The trend is toward a briefing that fills the time available rather than spending it where the mission is won. SP is expected to brief standard elements as standard and to convert the time recovered into detail on the profile on the next sortie."
+      }
+    },
+    {
+      "id": "formation-14-tm06",
+      "label": "CREW BRIEFING TIME FOR INTER-COCKPIT RESPONSIBILITIES AND CREW COORDINATION",
+      "mif_row": 14,
+      "source": "technique:9.10 MISSION BRIEFING AND DEBRIEFING",
+      "hf_concept": "hf-two-seat-training-cockpit",
+      "texts": {
+        "0": "SP, as briefer, allowed no time for the crews to brief inter-cockpit responsibilities, emergency procedures and crew coordination, and released the formation directly from the mass brief to the aircraft. Neither cockpit had agreed who flies, who works the radios or how control would be transferred in an emergency. IP had to recall the formation and have the crew briefings conducted before the step.",
+        "1": "SP, as briefer, allowed about two minutes for the crew briefings against the five minutes required as a minimum, and the emergency procedures and crew coordination items were left uncovered in one cockpit. The additional time was granted only after IP directed it, and the outstanding items were then briefed under time pressure. The requirement was met at its lower limit by that prompting alone.",
+        "2": "SP, as briefer, moved to release the formation without calling the crew briefing period. SP recognized before the members left the room that no time had been set aside, called the period, allowed the full five minutes and confirmed that inter-cockpit responsibilities and emergency procedures had been covered, without IP intervention. Both crews stepped with their coordination agreed.",
+        "3": "SP allowed a minimum of five minutes for the crew briefings and confirmed that each crew had covered inter-cockpit responsibilities, emergency procedures and crew coordination. The time was built into the briefing schedule rather than taken from the end of it, and no crew stepped with an item outstanding. The formation departed on schedule.",
+        "4": "SP managed the crew briefing period to an exceptional standard, protecting more than the five minute minimum within a briefing that still finished on time and directing the crews to the coordination points that the specific profile would stress. Each crew reported back the transfer of control and the emergency responsibilities it had agreed. No inter-cockpit responsibility was left to be settled airborne.",
+        "marginal": "SP allowed the five minute minimum for the crew briefings within standards, but the period was taken from the end of a session that had already slipped, and one crew used it to complete personal equipment rather than to brief coordination. The trend is toward a crew briefing period that is granted in form but not used for its purpose. SP is expected to schedule the period and to confirm what each crew covered in it on the next sortie."
+      }
+    },
+    {
+      "id": "formation-14-tm07",
+      "label": "MISSION SPECIFIC STUDY AND CHAIR FLYING BEFORE THE BRIEFING",
+      "mif_row": null,
+      "source": "technique:1.10.3 Mission Specific Study",
+      "hf_concept": "hf-lack-of-knowledge",
+      "texts": {
+        "0": "SP, due to omitting the mission specific study before the sortie, arrived at the briefing without having reviewed the manoeuvres to be flown in the flight manual and this manual and without having chair flown the profile. The entry parameters for the rejoin and for the pitchout could not be stated when asked, and the local area procedures for the working area were unknown. IP had to stop the process and send SP to study before the briefing could continue.",
+        "1": "SP, due to study limited to reading the profile the evening before, could state the sequence of manoeuvres but not the entry parameters for two of them, and had not chair flown the sortie. The parameters were established only after IP directed SP to the relevant sections in turn, and the daily study topic was left uncovered. Preparation reached the lower limit of the standard through that prompting.",
+        "2": "SP, due to study focused on the primary mission with no time given to the alternate, could not initially state the profile that would be flown if the working area were unavailable. SP recognized the gap while reviewing the operational restrictions before the briefing, covered the alternate profile and chair flew its two unfamiliar manoeuvres, without IP intervention. Both lines of execution could then be briefed from memory.",
+        "3": "SP completed the mission specific study before the briefing. The manoeuvres to be flown had been reviewed in the flight manual and in this manual, the approach plates, operational restrictions and local area procedures had been covered, and the sortie had been chair flown with the checklists and specific tasks mentally reviewed. The daily study topic was covered and time had been given to the possible alternate mission.",
+        "4": "SP prepared to an exceptional standard, chair flying the whole profile including the alternate line of execution and visualizing each manoeuvre with its entry parameters, its checklist actions and the calls associated with it. Every parameter asked for during the briefing was stated from memory and referred to its source. The preparation removed any need to work out a procedure for the first time airborne.",
+        "marginal": "SP completed the mission specific study within standards, but the review of the manoeuvres was limited to this manual without the corresponding flight manual sections, and the chair flying covered the sequence without the checklist actions inside it. The trend is toward preparation that recalls what comes next without rehearsing how it is flown. SP is expected to chair fly the checklists and specific tasks together with the manoeuvre sequence on the next sortie."
+      }
+    },
+    {
+      "id": "formation-14-tm08",
+      "label": "ROOT CAUSE ANALYSIS AND DEPTH OF RECONSTRUCTION IN THE DEBRIEFING",
+      "mif_row": null,
+      "source": "technique:1.13 Debriefing",
+      "hf_concept": "hf-debrief-models-desc-stear",
+      "texts": {
+        "0": "SP, as leader, debriefed the errors of the sortie without analysing their root causes and without stating how they would be corrected. The session was spent reconstructing the whole sortie event by event, including points that affected one cockpit only, and the time ran out with the two errors that affected the formation as a whole never analysed. IP had to conduct the analysis and produce the corrections.",
+        "1": "SP, as leader, named the errors observed but attributed them to their symptoms rather than to their causes, and offered no correction for any of them. The root cause of the two rejoin errors was reached only after IP directed the analysis step by step, and the corrections were supplied by IP. The debriefing met the lower limit of the standard through that intervention.",
+        "2": "SP, as leader, began the debriefing by reconstructing the sortie in detail from taxi onwards, including events that affected one aircraft only. SP recognized within the first minutes that the session would not reach the formation issues, cut the reconstruction to the detail needed to set up those issues and moved to the analysis of causes, without IP intervention. All formation level points were then covered with their corrections.",
+        "3": "SP analysed the root cause of each error and how it would be corrected, addressed all questions and concerns raised and emphasized the major learning points. The mission was reconstructed only in enough detail to debrief the issues that affected the formation as a whole. The session closed with each member holding a correction that could be applied on the next sortie.",
+        "4": "SP conducted an analysis of exceptional quality, tracing each error back through the events that produced it to a cause the crew could act on, and separating the causes that recurred across the sortie from single occurrences. Reconstruction was held to the minimum needed to establish each issue, and the corrections were stated in terms that can be measured on the next sortie. Every question raised was answered before the point was closed.",
+        "marginal": "SP analysed the causes of the errors and stated corrections within standards, but the reconstruction of the sortie occupied most of the session and two questions raised late were answered in outline only. The trend is toward a debriefing whose analysis is sound but is reached too late to be developed. SP is expected to limit reconstruction to the issues affecting the formation as a whole and to protect time for the questions on the next sortie."
       }
     }
   ]

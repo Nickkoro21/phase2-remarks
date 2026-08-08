@@ -3,9 +3,14 @@
   "item_name": "RADIO COMMUNICATION",
   "category": "formation",
   "schema": "v2-trunk",
-  "mif_numbers": [34],
+  "mif_numbers": [
+    34
+  ],
   "mif_rows": [
-    {"sn": 34, "row_name": "Radio Comm."}
+    {
+      "sn": 34,
+      "row_name": "Radio Comm."
+    }
   ],
   "error_modes": [
     {
@@ -96,6 +101,126 @@
         "3": "SP, as Wingman, monitored the Leader's radio communication with the ground stations and with the other aircraft throughout the sortie. SP maintained the clearance picture independently and interfered on R/T only when asked by the Leader or when flight safety required it. Each interjection was correct, brief and made at the right moment.",
         "4": "SP, as Wingman, kept an independent and accurate picture of every clearance issued to the formation and identified two discrepancies in the Leader's read-back before the ground station did. Each interjection was made in standard phraseology, at the first opportunity and without blocking any other transmission. SP interfered only where flight safety or the Leader's request justified it, and stayed silent on the frequency otherwise.",
         "marginal": "SP monitored the Leader's external communication within standards, but the independent clearance picture was maintained only while the formation was in level flight. The trend is toward dropping the listening watch on the ground station frequency whenever the formation manoeuvres. SP is expected to keep monitoring the Leader's exchanges continuously so that a safety-related discrepancy is detected in any phase of the sortie."
+      }
+    },
+    {
+      "id": "formation-34-tm01",
+      "label": "STANDARD PHRASEOLOGY AND BREVITY OF THE TRANSMISSIONS",
+      "mif_row": null,
+      "source": "technique:1.18 Radio Procedures",
+      "hf_concept": "hf-non-standard-phraseology",
+      "texts": {
+        "0": "SP, due to improvised phrasing used in place of standard phraseology, did not transmit in the format expected and added verbiage that is not required, with the result that four calls carried filler such as 'with you' and 'be advised' while the location and the level were omitted, and the controller queried the formation twice for the missing elements. The IP took the radio and re-transmitted the request in standard form. The frequency was occupied by the repeated exchanges for about 30 seconds.",
+        "1": "SP, due to improvised phrasing used in place of standard phraseology, did not keep the transmission to the information needed in the format expected, with the result that two calls contained non-standard wording and one omitted the location, and the IP prompted for the standard form before the next transmission. SP repeated the call correctly after the prompt and the remaining calls were acceptable. Phraseology stayed at the limit of the acceptable standard for the rest of the sortie.",
+        "2": "SP, due to a slip into conversational wording on a congested frequency, did not open the call with the agency and the call sign in the prescribed order, with the result that the transmission was non-standard for about 5 seconds until SP restated it unaided. SP recognised the added verbiage without prompting and passed the request in standard phraseology at the second attempt. No IP intervention was required.",
+        "3": "SP used standard phraseology on every transmission and gave the controller the information needed, nothing more and nothing less. Calls were built as agency calling, call sign, location and request, and no filler wording was added. No transmission had to be repeated or amended for clarity.",
+        "4": "SP transmitted in standard phraseology throughout the sortie, including the two unbriefed requests made in the area, and every call carried the required elements in the correct order at the first attempt. No non-required verbiage entered any transmission even on the congested recovery frequency. Where a controller phrase was not understood, SP clarified it in plain language without cluttering the frequency.",
+        "marginal": "SP kept phraseology within standards, but the wording was assembled on the frequency and short filler phrases appeared whenever the request was longer than one line. The trend is toward composing the call while transmitting rather than before keying the microphone. SP is expected to build the content of each call before transmission so that brevity and standard format are kept under congestion."
+      }
+    },
+    {
+      "id": "formation-34-tm02",
+      "label": "TIMING OF TRANSMISSIONS AND STEPPING ON OTHER CALLS",
+      "mif_row": null,
+      "source": "technique:1.18 Radio Procedures",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to keying the microphone without listening out first, depressed the transmit button during other transmissions and did not anticipate the replies of the other party, with the result that two controller instructions to the formation were stepped on and one call was made while another aircraft was in the flare. The IP took the radio to restore order on the frequency and to obtain the instruction that had been blocked. Both blocked instructions had to be requested again.",
+        "1": "SP, due to keying the microphone without listening out first, did not wait for the exchange in progress to finish, with the result that one transmission overlapped a controller reply to another aircraft and the call had to be made again about 15 seconds later, after the IP pointed out the block. SP then waited for a gap before each subsequent call. Frequency discipline remained at the limit of the acceptable standard.",
+        "2": "SP, due to attention held on the formation position while a request was pending, started a transmission as the controller began to answer another aircraft, with the result that about 2 seconds of overlap occurred before SP released the button unaided. SP waited out the exchange and repeated the call at the first clear gap without prompting. No IP intervention was required.",
+        "3": "SP listened out before every transmission and did not depress the microphone button during an exchange in progress. Calls were withheld while another aircraft was in a critical phase of flight. No transmission of the formation blocked, or was blocked by, another station during the sortie.",
+        "4": "SP anticipated the replies of the controller and of the other formation member on every exchange and placed each transmission in a clear gap, including on the congested recovery frequency. No call was started over another station and no transmission was made while another aircraft was in the flare. SP also held a non-urgent request until the traffic sequence had been passed, keeping the frequency clear.",
+        "marginal": "SP kept the transmissions clear of other calls within standards, but the timing depended on the controller pausing rather than on SP tracking the exchange in progress. The trend is toward transmitting as soon as the frequency sounds quiet, without accounting for a reply still expected. SP is expected to anticipate the reply of the other party so that no transmission is started over an exchange in progress."
+      }
+    },
+    {
+      "id": "formation-34-tm03",
+      "label": "READ-BACK OF THE ATC CLEARANCE",
+      "mif_row": null,
+      "source": "technique:3.8 RADIO PROCEDURES",
+      "hf_concept": "hf-undetected-errors",
+      "texts": {
+        "0": "SP, due to treating the read-back as optional once the clearance was thought to be understood, did not read back the clearances issued to the formation, with the result that two clearances went unread and a third was acknowledged with the call sign only, while the level flown differed from the level assigned. The IP transmitted the read-back and obtained a re-clearance from the controller. The taxi instruction had to be reissued before the formation moved.",
+        "1": "SP, due to treating the read-back as optional once the clearance was thought to be understood, did not read back the full content of the clearance, with the result that the level was acknowledged but the routing element was left out and the IP prompted for the missing item about 15 seconds later. SP completed the read-back after the prompt and the controller confirmed it. Read-back accuracy remained at the limit of the acceptable standard.",
+        "2": "SP, due to a rushed acknowledgement while the formation was configuring, did not include the assigned squawk in the read-back, with the result that the item was missing for about 5 seconds until SP amended the transmission unaided. SP recognised the omission before the controller asked for it and read back the complete clearance. No prompting from the IP was required.",
+        "3": "SP read back every ATC clearance issued to the formation, including the instructions that appeared unusual or different from standard. Each read-back carried the required items and matched what had been transmitted. No clearance had to be repeated by the controller.",
+        "4": "SP read back every clearance completely and accurately at the first attempt, including a non-standard taxi instruction and a level amended during the recovery. Each read-back followed the transmission without delay and in the wording used by the controller, so that understanding was confirmed on the spot. SP also read back an instruction that appeared unusual, and it was corrected by the controller before the formation acted on it.",
+        "marginal": "SP read back the clearances within standards, but the read-back was reconstructed from memory after a pause and the least expected item was always the last to be repeated. The trend is toward acknowledging first and rebuilding the content afterwards. SP is expected to read back the clearance directly as it is received so that understanding is confirmed without delay."
+      }
+    },
+    {
+      "id": "formation-34-tm04",
+      "label": "GO VERSUS PUSH FREQUENCY CHANGES AND RADIO OWNERSHIP BY NUMBER 1",
+      "mif_row": null,
+      "source": "technique:9.3.5 RADIO DISCIPLINE",
+      "hf_concept": "hf-lack-of-knowledge",
+      "texts": {
+        "0": "SP, as Wingman and due to an unclear distinction between the terms go and push, did not acknowledge before changing when the Leader used go, and on a later occasion changed frequency without being directed, with the result that the formation was split across two frequencies for about one minute while SP went hunting for the Leader through the presets. The IP selected the assigned frequency and re-established contact. Two directive calls from the Leader were missed while SP was off frequency.",
+        "1": "SP, as Wingman and due to an unclear distinction between the terms go and push, did not acknowledge the frequency change directed with go, with the result that the Leader repeated the direction and the IP pointed out that an acknowledgement was required before changing. SP acknowledged and changed on the repeat, and the later changes were handled correctly. Radio discipline remained at the limit of the acceptable standard.",
+        "2": "SP, as Wingman and due to a rushed reaction to a push directed during the recovery, acknowledged a change that required no acknowledgement, with the result that about 3 seconds of unnecessary transmission were added to a congested frequency before SP recognised the term used. SP applied the correct protocol on the remaining changes without prompting. No IP intervention was required.",
+        "3": "SP, as Wingman, changed frequency only when directed by the Leader or when the written unit standards dictated it. Every change directed with go was acknowledged before the change and every change directed with push was made without acknowledgement. Ownership of the radios by the Leader was respected throughout the sortie.",
+        "4": "SP, as Wingman, applied the go and push protocol correctly on every frequency change, including one directed during a turn, and checked in on the new frequency immediately after each change. SP never selected a frequency that had not been directed, and when sent to a frequency where the Leader was not present SP stayed there and waited instead of hunting through the presets. No transmission of SP interfered with the Leader's ownership of the radios.",
+        "marginal": "SP applied the go and push protocol within standards, but the correct response was reached only after a short pause on each directed change. The trend is toward deciding the response after the change rather than recognising the term as it is transmitted. SP is expected to identify go and push on receipt so that the acknowledgement, or the absence of it, follows immediately."
+      }
+    },
+    {
+      "id": "formation-34-tm05",
+      "label": "CALL SIGN STRUCTURE AND ITS USE ON DIRECTIVE CALLS",
+      "mif_row": null,
+      "source": "technique:9.3.4 CALL SIGNS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to disregard for the call sign structure of a unique word prefix and a one digit numeric suffix, did not use the full call sign towards the agencies outside the formation and used the term leader when passing own ship parameters, with the result that the ground station addressed the wrong flight twice and a directive call inside the flight was answered by another formation on the frequency. The IP corrected the calls and re-identified the formation to the controller. Identification of the flight was restored only after the IP transmitted the full call sign.",
+        "1": "SP, due to disregard for the call sign structure, did not include the digit suffix on a directive call inside the flight, with the result that the call went unanswered until the IP prompted for the full word prefix and suffix about 10 seconds later. SP repeated the call correctly and it was acknowledged. Use of the call sign remained at the limit of the acceptable standard.",
+        "2": "SP, due to a lapse while responding to a Leader directed call, answered with the digit alone instead of the full word prefix and double digit call sign, with the result that the response was ambiguous for about 3 seconds on a frequency shared with another formation until SP restated it unaided. SP used the complete call sign for the rest of the sortie without prompting. No IP intervention was required.",
+        "3": "SP used the full call sign on every transmission to agencies outside the formation and the full word prefix with the digit suffix on the directive calls inside the flight. Immediate responses to in-flight directives were predicated correctly and the term one was used for own ship parameters. No transmission of the formation was answered by another flight.",
+        "4": "SP applied the call sign convention exactly throughout the sortie, so that every critical call inside the flight carried both means of identification, the word prefix and the number. With another formation on the same frequency, the use of prefix and suffix ensured that only the correct aircraft responded even where a transmission was partly garbled. SP used the term leader on the radio only in the context of the lead change.",
+        "marginal": "SP used the call signs within standards, but the full word prefix was dropped on the shorter directive calls whenever the tempo of the exercise increased. The trend is toward relying on the numeric suffix alone once the flight is established on a frequency. SP is expected to keep both means of identification on directive calls so that the correct aircraft responds even when a transmission is garbled or stepped on."
+      }
+    },
+    {
+      "id": "formation-34-tm06",
+      "label": "BLIND, VISUAL AND POSIT CALLS ON LOSS OF VISUAL CONTACT",
+      "mif_row": null,
+      "source": "technique:9.15 LOST SIGHT PROCEDURES",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, as Wingman and due to a delay in admitting the loss of visual contact, did not make an immediate blind call with the current altitude, with the result that the formation kept manoeuvring for about 20 seconds with no member holding responsibility for flight path deconfliction and the Leader had to ask for a posit. The IP made the blind call and directed the altitude separation. Visual contact was regained only after the IP had transmitted the relative position of the other aircraft.",
+        "1": "SP, as Wingman and due to a delay in admitting the loss of visual contact, did not include the current altitude in the blind call, with the result that the Leader could not direct separation until the missing element was passed about 10 seconds later, after the IP prompted for it. SP then transmitted altitude and turn direction and the Leader talked SP back to a visual. Content of the lost sight calls remained at the limit of the acceptable standard.",
+        "2": "SP, as Wingman and due to hesitation over a momentary sun-blind condition, did not treat it at once as an actual lost sight case, with the result that the blind call was made about 5 seconds late, although on SP's own initiative and with the correct content. SP passed call sign, blind and current altitude and manoeuvred away from the last known position of the Leader unaided. No IP intervention was required.",
+        "3": "SP made an immediate blind call with the current altitude whenever visual contact was lost and waited for the acknowledgement before resuming. The visual call was transmitted as soon as contact was regained and responsibility for flight path deconfliction was resumed only after the Leader had acknowledged it. Every posit request was answered with clock position, elevation and range.",
+        "4": "SP treated every loss of visual contact, including a momentary sun-blind condition, as an actual lost sight case and transmitted the blind call with altitude and turn direction at once. Where the blind call was not acknowledged in time, SP manoeuvred away from the last known position of the Leader and altered altitude while continuing to transmit. The visual call and the answers to the posit requests were complete, brief and correct in every case.",
+        "marginal": "SP made the lost sight calls within standards, but the altitude element was added as a second transmission instead of being carried in the first call. The trend is toward reporting the loss of sight first and the position afterwards. SP is expected to build call sign, blind and current altitude into one immediate transmission so that separation can be directed at once."
+      }
+    },
+    {
+      "id": "formation-34-tm07",
+      "label": "KNOCK-IT-OFF AND TERMINATE CALLS AND THEIR ACKNOWLEDGEMENT",
+      "mif_row": null,
+      "source": "technique:9.12 KNOCK-IT-OFF AND TERMINATE PROCEDURES",
+      "hf_concept": "hf-knock-it-off-and-unable-discipline",
+      "texts": {
+        "0": "SP, due to reluctance to use the knock-it-off call where doubt and confusion existed, did not initiate the call and did not acknowledge with the call sign in order of position when it was made by the other member, with the result that manoeuvring continued for about 15 seconds after the call and the exercise was resumed without verbal clearance. The IP transmitted knock-it-off and stopped the manoeuvre. The formation was reset by the IP before the exercise was continued.",
+        "1": "SP, due to hesitation in using the knock-it-off call, did not acknowledge in order of position in the formation, with the result that the acknowledgement was transmitted about 10 seconds late and out of sequence and the IP prompted for it. SP then ceased manoeuvring and waited for verbal clearance before resuming. Use of the procedure remained at the limit of the acceptable standard.",
+        "2": "SP, due to a moment of doubt over which term the situation justified, did not distinguish terminate from knock-it-off on the first attempt, with the result that the wrong term was transmitted and was corrected by SP unaided within about 3 seconds. SP then ceased manoeuvring, acknowledged in order and obtained verbal clearance before resuming. No IP intervention was required.",
+        "3": "SP used knock-it-off whenever safety of flight was a factor or doubt or confusion existed and used terminate where safety of flight was not a factor. Every call was acknowledged with the call sign in order of position in the formation. Manoeuvring was resumed only after verbal clearance had been obtained.",
+        "4": "SP initiated knock-it-off without hesitation at the first indication of doubt, cleared the flight path, ceased manoeuvring and acknowledged in the correct order on every occasion. The distinction between terminate and knock-it-off was applied correctly throughout the sortie, including once where the other member had already started the manoeuvre. No exercise was resumed before verbal clearance had been obtained.",
+        "marginal": "SP used the knock-it-off and terminate calls within standards, but each call was preceded by a pause while SP decided which of the two terms applied. The trend is toward weighing the choice of term instead of stopping the manoeuvre first. SP is expected to make the call immediately where doubt or confusion exists, since knock-it-off is the correct term whenever safety of flight is a factor."
+      }
+    },
+    {
+      "id": "formation-34-tm08",
+      "label": "NO RADIO PROCEDURES AND SIGNALLING WITH A FAILED RADIO",
+      "mif_row": null,
+      "source": "technique:9.51 NO RADIO (NORDO)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an unrehearsed no radio procedure, did not signal the total radio failure to the other aircraft and did not take up the Number 2 position, with the result that the failure was recognised only after three unanswered calls and SP attempted a rejoin inside route position without being directed. The IP moved the aircraft to route, obtained the attention of the other aircraft and gave the appropriate visual signal. The recovery of the formation was arranged by the IP.",
+        "1": "SP, due to an unrehearsed no radio procedure, did not attract the attention of the other aircraft before giving the visual signal, with the result that the signal was repeated twice without acknowledgement and the IP prompted for the correct sequence about 20 seconds after the failure had been identified. SP then moved to route, rocked the wings and passed the signal, which was acknowledged. Handling of the no radio case remained at the limit of the acceptable standard.",
+        "2": "SP, due to hesitation over the correct signal for the failure, did not pass it on the first attempt after moving to route, with the result that the exchange took about 5 seconds longer than required before SP selected and gave the correct signal unaided. SP held route position and moved no closer until directed. No IP intervention was required.",
+        "3": "SP recognised the total radio failure, manoeuvred from close formation to route, attracted the attention of the other aircraft and showed the appropriate visual signal. SP retained the Number 2 position and rejoined no closer than route until directed. The pattern and the landing were flown on the visual signals passed by the other aircraft.",
+        "4": "SP identified the radio failure at once, took up the Number 2 position and passed the appropriate visual signal after attracting the attention of the other aircraft at the first attempt. SP acknowledged every subsequent signal with a head nod, held route position until directed closer and assumed landing clearance only on the signal from the other aircraft. Where a knock-it-off was required with the radio out, SP signalled it with a continuous wing rock.",
+        "marginal": "SP handled the no radio case within standards, but the failure was confirmed only after several further attempts to transmit, and the visual signal was given before the attention of the other aircraft had clearly been obtained. The trend is toward persisting with a failed radio instead of moving to the visual signal procedure. SP is expected to recognise the total failure early, move to route and attract attention before signalling."
       }
     }
   ]

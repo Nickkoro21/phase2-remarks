@@ -3,7 +3,9 @@
  "item_name": "INTERVAL TAKE OFF",
  "category": "formation",
  "schema": "v2-trunk",
- "mif_numbers": [8],
+ "mif_numbers": [
+  8
+ ],
  "mif_rows": [
   {"sn": 8, "row_name": "Interval T/O"}
  ],
@@ -126,6 +128,126 @@
     "3": "SP answered every radio and visual signal from lead in the briefed form and at the briefed point of the sequence. The readiness call, the run-up signal and the brake release reference were all acknowledged clearly, so the takeoff proceeded exactly as briefed.",
     "4": "SP acknowledged the leader's signals promptly and unambiguously throughout the takeoff sequence, with standard phraseology and no repetition required. The coordination between the two aircraft was continuous, and the interval was flown without a single clarifying transmission.",
     "marginal": "SP answered the leader's radio and visual signals correctly, but each acknowledgement came at the end of the time the sequence allowed rather than immediately on the signal. Nothing was missed and the interval was flown as briefed on every takeoff of the sortie. SP is expected to answer as soon as the signal is given, so that lead is not left waiting for confirmation before starting the roll."
+   }
+  },
+  {
+   "id": "formation-08-tm09",
+   "label": "PCL advance to MAX power at the start of Number 2's takeoff roll",
+   "mif_row": "Interval T/O",
+   "source": "technique:9.28.3.b DEPARTURE OPTION 2 - INTERVAL TAKEOFF",
+   "hf_concept": null,
+   "texts": {
+    "0": "SP, due to a PCL advance made while attention stayed on lead's position down the runway, did not begin the takeoff roll in MAX power as the interval takeoff requires. The aircraft accelerated with less than takeoff power, the spacing behind lead opened far beyond the geometry produced by the 10 second interval, and the late shove to MAX then drove the airspeed more than 10 knots past the standard while the aircraft was cleaning up. IP intervened on the PCL and on the controls to restore takeoff power and the standard speed schedule.",
+    "1": "SP, due to a PCL advance carried out in steps instead of one smooth movement to MAX, did not have takeoff power set in the early part of the roll. The acceleration deficit was made up with a late power application and the airspeed settled about 10 knots above the standard, at the outer limit of the one sided tolerance, and only after IP called for MAX power. The engine instruments were checked after the power had already been reset rather than when stabilized at maximum power.",
+    "2": "SP, due to a PCL movement to MAX that lagged brake release by a noticeable margin, began the interval takeoff roll with less than takeoff power. The subsequent catch up produced an excess of roughly 7 knots over the standard, between the code 3 and code 1 limits, and SP recognized the power setting on the torque indication and stabilized the speed without prompting. No IP input on the PCL was required.",
+    "3": "SP released brakes and smoothly advanced the PCL to MAX in one movement, so the interval takeoff roll was flown in takeoff power from the start. Engine instruments were checked when stabilized at maximum power and the takeoff airspeed stayed inside 5 knots of the standard with no low side deviation.",
+    "4": "SP set MAX power exactly at brake release with a single continuous PCL movement, checked the engine instruments once the power was stabilized and let the aircraft accelerate on the published schedule. Deviations from the takeoff airspeed were negligible against the tolerance and the spacing behind lead developed exactly as the 10 second interval predicts.",
+    "marginal": "SP used MAX power for every interval takeoff but consistently reached the stop a beat after brake release, so the first part of each roll was flown with the power still increasing. Airspeed and spacing stayed inside standards and no prompting was needed on any takeoff of the sortie. SP is expected to have the PCL at MAX as the brakes are released, so the acceleration does not have to be recovered later in the roll."
+   }
+  },
+  {
+   "id": "formation-08-tm10",
+   "label": "Alertness to transitions between rejoin types as lead follows the departure route",
+   "mif_row": "Interval T/O",
+   "source": "technique:9.28.3.b DEPARTURE OPTION 2 - INTERVAL TAKEOFF",
+   "hf_concept": "hf-monitoring-cross-check",
+   "texts": {
+    "0": "SP, due to a mental picture fixed on one rejoin type, was not alert for the transition from a straight ahead rejoin to a turning rejoin as lead followed the departure route. The aircraft continued on the previous geometry after lead began the turn, so the closure and the angle off developed together and the aircraft arrived inside the briefed minimum separation with the overtake still running. IP took the controls to stop the closure and to re establish the rejoin geometry on the new leg.",
+    "1": "SP, due to a crosscheck of lead that was not carried through the change of the departure route, did not recognize the transition from one rejoin type to the other when it occurred. The geometry was flown as if lead were still straight ahead, the closure ran to the limit of the acceptable band and the correction was made only after IP called the turning rejoin. The rejoin was completed late and under direction.",
+    "2": "SP, due to attention divided between the climb parameters and lead, recognized the transition to the other rejoin type slightly after lead had started it. The geometry error stayed between the code 3 and code 1 limits, and SP reset the aim point and the closure on his own initiative before the position degraded further, with no IP input at any stage.",
+    "3": "SP stayed alert for the transitions from one type of rejoin to another as lead followed the departure route, and adjusted the geometry each time the rejoin changed between straight ahead and turning. The closure and the aim point were reset promptly on each change and the rejoin was flown inside the briefed parameters.",
+    "4": "SP anticipated every change of rejoin type from the briefed departure route and had the new geometry established as lead began each turn or rollout. No correction was needed after the fact and the closure remained stable through each transition, with deviations negligible against the briefed values.",
+    "marginal": "SP followed lead through the changes of rejoin type but recognized each transition only after it had visibly begun, so every geometry adjustment came slightly late. The parameters stayed inside standards on all transitions and no prompting was required. SP is expected to anticipate the transitions from the briefed departure route, so that the rejoin geometry is set before lead's turn develops."
+   }
+  },
+  {
+   "id": "formation-08-tm11",
+   "label": "Anticipation of lead's 160 KIAS and 85 percent power and of the briefed intermediate level off airspeeds",
+   "mif_row": "Interval T/O",
+   "source": "technique:9.28.3.b DEPARTURE OPTION 2 - INTERVAL TAKEOFF",
+   "hf_concept": null,
+   "texts": {
+    "0": "SP, due to a rejoin flown without reference to the fact that lead reduces to 85 percent and holds 160 KIAS once airborne, did not anticipate the leader's airspeed on the departure. The aircraft was flown at a speed that bore no relation to the 160 KIAS reference or to the intermediate level off airspeeds established in the preflight briefing, and the resulting differential exceeded 10 knots with the closure still increasing at the level off. IP intervened with power to match the leader's airspeed and to stabilize the join up.",
+    "1": "SP, due to failure to use the briefed intermediate level off airspeeds as the reference for the climb, did not set a speed compatible with lead holding 160 KIAS after his power reduction to 85 percent. The differential sat at about 10 knots, at the limit of the acceptable band, and SP set the correct speed only after IP called the leader's airspeed. The rejoin was completed with the position corrected under direction.",
+    "2": "SP, due to a power setting held past the point where lead had already reduced to 85 percent, allowed the airspeed to diverge from the 160 KIAS the leader was maintaining. The differential reached roughly 7 knots, between the code 3 and code 1 limits, and SP identified it against the briefed level off airspeed and reset power on his own initiative, with no IP input.",
+    "3": "SP flew the departure with the airspeed referenced to lead maintaining 160 KIAS after his reduction to 85 percent, and used the intermediate level off airspeeds established in the preflight briefing. The differential was held inside 5 knots at each level off and the closure was managed without a large power change.",
+    "4": "SP anticipated the leader's power reduction and airspeed at every stage of the departure, arriving at each briefed intermediate level off with the differential decaying to zero. The 160 KIAS reference was used from the moment the aircraft was clean, and deviations were negligible against the briefed values.",
+    "marginal": "SP matched the leader's airspeeds within standards but reacted to each level off after seeing lead stabilize rather than flying the airspeeds set in the preflight briefing. The differentials stayed inside the acceptable band on every leg and no prompting was needed. SP is expected to fly the briefed intermediate level off airspeeds directly, so the join up does not depend on reading lead's speed change after it happens."
+   }
+  },
+  {
+   "id": "formation-08-tm12",
+   "label": "Sympathetic abort after brake release on the interval takeoff",
+   "mif_row": "Interval T/O",
+   "source": "technique:9.42 FORMATION TAKEOFF ABNORMALITIES AND ABORTS",
+   "hf_concept": "hf-startle-effect",
+   "texts": {
+    "0": "SP, due to an immediate reaction to lead's abort call rather than to his own aircraft state, executed a sympathetic abort after brake release although there are normally no sympathetic aborts once the roll has begun. Power was retarded and braking applied with the other aircraft already decelerating ahead, adding a second aircraft to the high speed abort situation, and the deceleration was made with the track more than 10 feet off the assigned line. IP took the controls to stop the abort and to keep the aircraft on its side of the runway.",
+    "1": "SP, due to a startled response to the abort transmission, began retarding the PCL after brake release without first assessing his own aircraft and position. The power reduction and the initial braking took the track to about 10 feet from the assigned line, at the limit of the allowed deviation, and SP resumed the takeoff only after IP stated that no sympathetic abort was required. The recovery of takeoff power was late and the sequence was completed under direction.",
+    "2": "SP, due to a momentary reaction to lead's abort call, relaxed the PCL after brake release before checking his own aircraft state. The speed loss was small and the track displaced roughly 8 feet from the assigned line, between the code 3 and code 1 limits, and SP recognized that no sympathetic abort applied and restored MAX power on his own initiative with runway remaining.",
+    "3": "SP kept MAX power set after brake release when lead aborted, applying the rule that there are normally no sympathetic aborts once the roll has begun, and continued the takeoff on his own side of the runway. Directional control was maintained inside 5 feet of the assigned line and separation from the aborting aircraft was preserved throughout.",
+    "4": "SP assessed his own aircraft and position without any change to the takeoff power when the abort was called ahead, and flew a normal takeoff on the assigned side of the runway. There was no hesitation on the PCL, no speed loss and no perceptible deviation from the assigned line, so no additional aircraft was introduced into the high speed abort situation.",
+    "marginal": "SP continued the takeoff correctly after lead's abort but with a visible hesitation on the PCL before the decision was consolidated. Speed and track stayed inside standards and the takeoff was completed without prompting. SP is expected to check his own aircraft state first and to hold takeoff power, so that the reaction to the call does not become a sympathetic abort."
+   }
+  },
+  {
+   "id": "formation-08-tm13",
+   "label": "Recognition of lead's abort from visual cues during the interval takeoff",
+   "mif_row": "Interval T/O",
+   "source": "technique:9.42 FORMATION TAKEOFF ABNORMALITIES AND ABORTS",
+   "hf_concept": "hf-lack-of-awareness",
+   "texts": {
+    "0": "SP, due to reliance on the radio alone in a situation where an abort is difficult for Number 2 to recognize using only visual cues, did not detect that lead had stopped accelerating on the runway ahead. The aircraft continued the roll toward a decelerating aircraft, the spacing produced by the 10 second interval closed rapidly and no lateral separation was established. IP took the controls and directed the action required to preserve separation from the aborting aircraft.",
+    "1": "SP, due to a crosscheck of lead limited to occasional glances during the acceleration, recognized the leader's abort late from the visual cues available. The closure had already consumed most of the interval spacing and the track was about 10 feet off the assigned line, at the limit of the allowed deviation, when SP reacted following IP's call of the abort. The remaining sequence was flown under direction.",
+    "2": "SP, due to attention concentrated on the airspeed indication in the middle of the roll, saw lead's deceleration slightly after the visual cues first appeared. The spacing reduced and the track displaced roughly 8 feet from the assigned line, between the code 3 and code 1 limits, before SP recognized the abort himself and took the appropriate action with runway remaining and without IP input.",
+    "3": "SP maintained a crosscheck of lead through the interval takeoff roll and recognized the abort from the visual cues as the leader's acceleration stopped. The reaction was prompt, separation from the other aircraft was preserved and the track stayed inside 5 feet of the assigned line.",
+    "4": "SP detected the change in lead's acceleration at the first visual indication, despite the recognized difficulty of identifying an abort visually during an interval takeoff, and acted immediately. Separation from the other aircraft was never in question and the aircraft remained precisely on its assigned line throughout.",
+    "marginal": "SP recognized the leader's abort within standards but only after the radio call confirmed what the visual cues had already shown. Spacing and track remained inside the acceptable band and no IP action was needed. SP is expected to build the recognition on a continuous visual crosscheck of lead, so that the radio call confirms a decision already made."
+   }
+  },
+  {
+   "id": "formation-08-tm14",
+   "label": "Abort or continue decision relative to abort speed when lead aborts",
+   "mif_row": "Interval T/O",
+   "source": "technique:9.42 FORMATION TAKEOFF ABNORMALITIES AND ABORTS",
+   "hf_concept": null,
+   "texts": {
+    "0": "SP, due to a decision made without reference to his own speed against abort speed, did not apply the interval takeoff rule after lead aborted. The aircraft was rolling below abort speed, where an abort must be executed, but SP continued toward the occupied runway, and the spacing closed with no lateral separation established. IP took the controls and directed the abort.",
+    "1": "SP, due to hesitation in comparing his own speed with abort speed, did not decide between aborting and continuing at the point the situation required. The aircraft rolled on with the decision unresolved until IP stated the correct action, and by then the track was about 10 feet from the assigned line, at the limit of the allowed deviation. The abort was then executed correctly but with reduced runway available.",
+    "2": "SP, due to a short delay in checking the airspeed indication against abort speed, took the required action later than the situation allowed. The aircraft displaced roughly 8 feet from the assigned line during the initial deceleration, between the code 3 and code 1 limits, and SP completed the abort on his own initiative and stopped well before the end of the runway.",
+    "3": "SP applied the interval takeoff rules correctly, checking his own speed against abort speed and executing the abort as required when rolling below it. The aircraft was kept on its assigned side of the runway inside 5 feet of the line and stopped with runway remaining.",
+    "4": "SP had the decision framework set before brake release and acted on it immediately, with the aircraft held at idle and in position when the brakes had not been released, or the abort executed at once when rolling below abort speed. The action was taken without hesitation, with negligible deviation from the assigned line and ample runway remaining.",
+    "marginal": "SP took the correct action for his speed but only after visibly working through the decision during the roll, consuming runway that a prepared decision would have preserved. The aircraft stayed inside standards and stopped safely on its own side of the runway. SP is expected to have the abort criteria set before brake release, so the action follows the recognition without an intermediate decision phase."
+   }
+  },
+  {
+   "id": "formation-08-tm15",
+   "label": "Aircraft control given up to make a radio call during a takeoff abnormality",
+   "mif_row": "Interval T/O",
+   "source": "technique:9.42 FORMATION TAKEOFF ABNORMALITIES AND ABORTS",
+   "hf_concept": "hf-attention-bottleneck",
+   "texts": {
+    "0": "SP, due to priority given to transmitting before flying, sacrificed aircraft control to make a radio call while the abnormality was still developing on the runway. Directional inputs stopped while the transmission was composed, the aircraft diverged more than 10 feet from the assigned line and the deceleration was flown without a stable track. IP took the controls to re establish directional control and completed the radio call afterwards.",
+    "1": "SP, due to an attempt to pass the call at the same moment as the initial control inputs, allowed the track to deteriorate while transmitting. The displacement reached about 10 feet from the assigned line, at the limit of the allowed deviation, and SP returned to the controls only after IP called for aircraft control first. The transmission was made correctly but at the cost of the track.",
+    "2": "SP, due to a radio call made slightly earlier than the aircraft state allowed, let the directional corrections lapse for a short period during the roll. The track drifted roughly 8 feet from the assigned line, between the code 3 and code 1 limits, and SP recognized the lapse, resumed the rudder corrections and re centered the aircraft without prompting.",
+    "3": "SP flew the aircraft first and made the radio call as soon as practical, without sacrificing aircraft control to transmit. Directional control was continuous through the abnormality and the track was held inside 5 feet of the assigned line.",
+    "4": "SP maintained full directional control throughout, transmitted only when the aircraft state permitted and kept the call short and standard. The track showed no perceptible change while the call was being made and separation from the other aircraft was preserved at all times.",
+    "marginal": "SP kept aircraft control adequate while transmitting, but the call was made at the busiest point of the roll and small track corrections had to follow it. Deviations remained inside standards and no IP action was needed. SP is expected to delay the transmission until as soon as practical, so that aircraft control is never traded for a radio call."
+   }
+  },
+  {
+   "id": "formation-08-tm16",
+   "label": "Maintaining the respective side of the runway during an abort or a separate takeoff",
+   "mif_row": "Interval T/O",
+   "source": "technique:9.42 FORMATION TAKEOFF ABNORMALITIES AND ABORTS",
+   "hf_concept": "hf-situational-awareness",
+   "texts": {
+    "0": "SP, due to a track flown to the runway centerline instead of to the respective side after the abnormality, did not ensure separation from the other aircraft. The aircraft crossed into the half of the runway occupied by lead by more than 10 feet while both aircraft were still decelerating or accelerating, so the only remaining separation was longitudinal. IP took the controls to move the aircraft back to its assigned side of the runway.",
+    "1": "SP, due to directional corrections referenced to the centerline rather than to the assigned side, allowed the aircraft to converge with the other aircraft's half of the runway. The displacement from the assigned line reached about 10 feet, at the limit of the allowed deviation, and SP re established the correct side only after IP called for separation. The separate takeoff was then completed under direction.",
+    "2": "SP, due to a slow reaction to the drift produced by the power change, moved off the assigned side of the runway by roughly 8 feet after passing the other aircraft. The deviation stayed between the code 3 and code 1 limits and SP recognized it against the runway markings and returned to his side without prompting or IP input.",
+    "3": "SP maintained the respective side of the runway throughout the abnormality, selecting MAX power for the separate takeoff and holding the assigned line inside 5 feet. Lateral separation from the other aircraft was preserved from the first indication of the problem to lift off, and lead's directions were followed as given.",
+    "4": "SP held the aircraft exactly on its assigned side of the runway from the first indication of the abnormality through the separate takeoff, with the power change producing no perceptible drift. Lateral separation was never reduced and the aircraft was positioned to follow lead's directions at any moment.",
+    "marginal": "SP stayed on the respective side of the runway but tracked close to the centerline for much of the separate takeoff, so the lateral separation was at the lower end of the acceptable band. No deviation exceeded standards and no correction was called for. SP is expected to keep the aircraft well within its own half, so that the separation from the other aircraft does not depend on small track errors."
    }
   }
  ]

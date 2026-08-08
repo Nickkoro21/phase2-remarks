@@ -127,6 +127,81 @@
         "4": "SP managed the approach with clear and timely communication to the Leader and no ambiguity about position or intention. The wingman position was never in doubt and the briefed decision points were applied without hesitation. Coordination remained effective through the whole approach.",
         "marginal": "SP met the discipline standard, but calls to the Leader were made later than the developing situation warranted and intentions were stated tentatively. Under increasing workload the tendency was to fly the correction silently. SP is expected to state position and intent early and unambiguously."
       }
+    },
+    {
+      "id": "formation-13-tm01",
+      "label": "Torque held below the 20 percent minimum on the approach",
+      "mif_row": null,
+      "source": "technique:9.40.2 FORMATION APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to pulling torque well below the 20 percent minimum in order to kill an overtake, was left without engine response when power was demanded again. The aircraft fell aft and wide past the outer fingertip allowance, opening beyond 30 ft of lateral separation with the observance angle outside 55 degrees, and the IP added power and recovered the position. The spool up delay caused by the low power setting was not identified by SP.",
+        "1": "SP, due to repeatedly setting torque under the 20 percent minimum while checking closure, met the same acceleration lag each time power was reapplied. Position swung out to the outer tolerance, about 30 ft of lateral separation with the observance angle at the 45 to 55 degree edge, and was regained only after the IP called for power. The tolerances themselves were not exceeded.",
+        "2": "SP, due to one power reduction that went just under the 20 percent torque floor while stopping an overtake, absorbed a slow spool up and drifted aft past the tighter band, out to roughly 25 ft of lateral separation while staying inside the outer allowance. SP recognized the sluggish response straight away, restored torque above the minimum and re-established the position without prompting.",
+        "3": "SP kept torque at or above the 20 percent minimum throughout the approach so that engine response stayed immediate. Closure was controlled with small throttle movements around a serviceable power setting and lateral separation stayed inside 20 ft with the observance angle within 30 plus or minus 5 degrees. No large power excursion was required.",
+        "4": "SP flew the whole approach with the throttle worked in a narrow band well clear of the 20 percent minimum, so every correction produced immediate thrust. Lateral separation sat on the 10 ft reference point and the observance angle held 30 degrees with no visible movement in the sight picture. Power was never allowed to reach a setting from which recovery would be delayed.",
+        "marginal": "SP maintained the position within standards, but torque was allowed to touch the 20 percent minimum on two occasions and the resulting acceleration lag turned small fall backs into larger recoveries. The trend is toward using the throttle as a brake rather than as a rate control. SP is expected to keep power above the minimum so that engine response remains available."
+      }
+    },
+    {
+      "id": "formation-13-tm02",
+      "label": "Configuration change made off the single gear and flap signal",
+      "mif_row": null,
+      "source": "technique:9.40.2 FORMATION APPROACH",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to expecting a second signal for the flaps after the gear, left the flaps up when Number 1 directed the landing configuration with the single briefed signal. The drag mismatch produced an unchecked overtake that drove the aircraft forward inside the 45 degree observance limit and closed the lateral separation inside the 10 ft reference point, so the IP intervened to stop the closure and directed the configuration. The missed part of the directive was not detected by SP.",
+        "1": "SP, due to configuring only after the Leader's gear was seen travelling rather than on Number 1's signal, was consistently late on each selection. The drag and pitch mismatch carried the position out to the outer allowance, about 30 ft of lateral separation with the observance angle at the 55 degree edge, and the selections were completed only after the IP prompted. The tolerances were not exceeded.",
+        "2": "SP, due to a delayed reading of Number 1's visual signal while the scan was fixed on the wing reference, started the configuration change a beat late and allowed the position to open past the tighter band to roughly 25 ft of lateral separation, still inside the outer allowance. SP picked up the drag change quickly, matched the Leader's deceleration and closed the position back down unassisted.",
+        "3": "SP acted on Number 1's single signal and lowered gear and flaps together with the Leader. The configuration change was flown in step and the position stayed within the tighter fingertip band, lateral separation inside 20 ft and the observance angle within 30 plus or minus 5 degrees. No prompt or repeat of the signal was needed.",
+        "4": "SP took the configuration directive on the first signal and moved the gear and flap handles with the Leader's, so both aircraft configured as one. The sight picture did not move through the selection, with lateral separation on the 10 ft reference point and no change in the observance angle. The directive was acknowledged without any delay in the visual scan.",
+        "marginal": "SP configured on Number 1's signal and stayed within standards, but each selection was started a noticeable beat after the signal was given and the position had to be re-closed afterwards. The pattern shows the signal is being confirmed twice before it is acted on. SP is expected to accept the single directive for gear and flaps and configure with the Leader."
+      }
+    },
+    {
+      "id": "formation-13-tm03",
+      "label": "Cross-check of the Leader's configuration and thumbs up exchange",
+      "mif_row": null,
+      "source": "technique:9.40.2 FORMATION APPROACH",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to returning the thumbs up as a reflex without actually checking Number 1's gear and flaps, passed a configuration that had not been verified before the gear down call was transmitted. The long unfocused look also took the sight picture out of the scan and the aircraft climbed and went wide beyond the outer allowance, more than 10 ft above the Leader's wing line, requiring IP intervention. The purpose of the cross-check was not applied.",
+        "1": "SP, due to breaking the wing reference for an extended stare at the Leader's landing gear rather than a deliberate glance, let the position drift out to the outer tolerance during the check, reaching the 10 ft limit above the wing line with about 30 ft of lateral separation. The thumbs up was given only after the IP prompted and the position was recovered on the same call. The tolerances were not exceeded.",
+        "2": "SP, due to a cross-check taken in one long look instead of split between the gear, the flaps and the sight picture, allowed the position to open past the tighter band to roughly 25 ft of lateral separation while remaining inside the outer allowance. The Leader's configuration was correctly verified and the thumbs up given, and SP re-established the position without being told.",
+        "3": "SP checked Number 1's gear and flap configuration and gave the thumbs up, then confirmed the Leader's return signal before the gear down call. The check was taken in short glances that kept the sight picture in the scan and the position stayed inside 20 ft of lateral separation and within a few feet of the wing line.",
+        "4": "SP verified the Leader's configuration item by item and passed the thumbs up with no interruption to the wing reference. Lateral separation held on the 10 ft reference point and the vertical position did not move off the wing line during the exchange. The signal was returned and acknowledged before the gear down call without any delay.",
+        "marginal": "SP completed the cross-check and the thumbs up exchange within standards, but the signal was given before the flaps had been looked at and the position loosened toward the edge of the tighter band while the check was made. The trend is toward a signal passed to complete the sequence rather than to confirm the Leader's configuration. SP is expected to verify both gear and flaps in short glances that keep the sight picture in the scan."
+      }
+    },
+    {
+      "id": "formation-13-tm04",
+      "label": "Flap setting other than TO for the formation approach",
+      "mif_row": null,
+      "source": "technique:9.40.2 FORMATION APPROACH",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP, due to reverting to the single ship habit of selecting LDG flaps, configured with more drag than the Leader on an approach that is flown with flaps in the TO position. The aircraft decelerated and sank aft and low, going beyond 30 ft of lateral separation and more than 5 ft below the Leader's wing line, and the IP intervened to reset the flaps to TO and recover the position. The configuration difference was not recognized as the cause.",
+        "1": "SP, due to selecting LDG flaps before checking the briefed formation approach configuration, carried extra drag until the error was called. The deceleration took the position out to the outer allowance, about 30 ft of lateral separation with the observance angle at the 55 degree edge, and the flaps were returned to TO only after the IP directed it. The tolerances were not exceeded.",
+        "2": "SP, due to moving the flap handle past the TO position before catching it, briefly carried more drag than the Leader and fell aft past the tighter band to roughly 25 ft of lateral separation, still inside the outer allowance. SP identified the wrong setting immediately, reset the flaps to TO and closed the position back down with a coordinated power input.",
+        "3": "SP set the flaps to the TO position for the formation approach and matched the Leader's drag and deceleration. The position held within the tighter fingertip band, lateral separation inside 20 ft and vertical position within a few feet of the wing line, through the configuration change and down the approach.",
+        "4": "SP selected TO flaps without hesitation and led the drag change with power so the sight picture did not move. Lateral separation stayed on the 10 ft reference point and the observance angle held 30 degrees through the approach. The configuration matched the Leader exactly for the whole descent.",
+        "marginal": "SP flew the approach with flaps in the TO position and within standards, but the handle was checked against the LDG detent before the correct selection was made and the resulting hesitation let the position sag to the edge of the tighter band. The trend is toward carrying single ship configuration habits into the formation approach. SP is expected to set TO flaps directly and anticipate the smaller drag change."
+      }
+    },
+    {
+      "id": "formation-13-tm05",
+      "label": "Side positioning for the penetration turn and the upwind side of the runway",
+      "mif_row": null,
+      "source": "technique:9.40.2 FORMATION APPROACH",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to not moving to the side opposite the direction of the penetration turn when Number 1 set the formation up for the approach, was left on the inside of the turn and on the downwind side of the landing runway. When the turn was started the position could not be held from the inside, separation closed inside the 10 ft reference point and the observance angle went beyond 55 degrees, and the IP took control to reposition the aircraft. The requirement to be on the upwind side was not recognized.",
+        "1": "SP, due to starting the reposition to the correct side only after the penetration turn had begun, crossed under late and arrived on the outer allowance, about 30 ft of lateral separation with the observance angle at the 55 degree edge. The correct side was taken up only after the IP directed the move and the position was rebuilt from there. The tolerances were not exceeded.",
+        "2": "SP, due to a slow reading of the Leader's setup for the approach, was late recognizing the need to be on the side opposite the penetration turn and repositioned with a compressed cross under that opened the position past the tighter band to roughly 25 ft of lateral separation, still inside the outer allowance. SP settled the crossing rate early and re-established the correct side unassisted.",
+        "3": "SP took up the side opposite the direction of the penetration turn and on the upwind side of the landing runway before the approach was started. The reposition was flown with a controlled crossing rate and the position stayed within the tighter fingertip band, lateral separation inside 20 ft and the observance angle within 30 plus or minus 5 degrees.",
+        "4": "SP anticipated the direction of the penetration turn from the Leader's setup and was already established on the correct upwind side before the approach began. The reposition produced no excursion, with lateral separation on the 10 ft reference point and the vertical position steady on the wing line. No further adjustment was needed through the turn.",
+        "marginal": "SP was on the correct side for the penetration turn within standards, but the move was made only after the Leader's intentions became obvious and the crossing rate had to be checked at the end. The trend is toward reacting to the turn rather than positioning for it. SP is expected to work out the direction of the penetration turn in advance and take the upwind side before the approach starts."
+      }
     }
   ]
 }

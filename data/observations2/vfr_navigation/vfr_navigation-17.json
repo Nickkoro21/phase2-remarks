@@ -3,9 +3,14 @@
   "item_name": "TRAFFIC PATTERN PROCEDURES",
   "category": "vfr_navigation",
   "schema": "v2-trunk",
-  "mif_numbers": [17],
+  "mif_numbers": [
+    17
+  ],
   "mif_rows": [
-    {"sn": 17, "row_name": "Airport Traffic Pattern"}
+    {
+      "sn": 17,
+      "row_name": "Airport Traffic Pattern"
+    }
   ],
   "error_modes": [
     {
@@ -156,6 +161,96 @@
         "3": "SP used the VOR/DME, TACAN or GPS where it was required in order to be orientated with the airport environment and used them for the return. The aids were tuned and identified in time, the indications were cross-checked against the visual references and the position relative to the authorized VFR entry points was known throughout the return.",
         "4": "SP set up and identified the navigation aids before departing the assigned area and used them continuously to cross-check the visual picture during the return. The position relative to the airport environment and the authorized VFR entry points was established at all times without any doubt, and the aids were interpreted correctly and without any additional workload.",
         "marginal": "SP used the navigation aids for the return and the orientation with the airport environment within standards, but this axis was marginal: the aids were tuned and identified only after the departure from the assigned area, and the indications were consulted rather than cross-checked continuously against the visual references. The orientation was correct but was rebuilt each time it was needed. SP is expected to set up and identify the aids before leaving the area and to keep the position relative to the entry points continuously cross-checked."
+      }
+    },
+    {
+      "id": "vfr_navigation-17-tm01",
+      "label": "Power setting in the descent to the pattern (20 % torque floor and speed brake)",
+      "mif_row": null,
+      "source": "technique:9.40.1 FORMATION RECOVERY - DESCENT TO VFR PATTERN, BREAK AND LANDING",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, leading the recovery, controlled the rate of descent by retarding the power well below the 20 % torque floor and never used the speed brake as the alternative described in the technique. Engine response at the level-off was slow, so the aircraft arrived at the entry point more than 20 knots below the briefed pattern airspeed and left the wingman with no closure control. The IP had to take the throttle and re-establish the flight on speed before the entry point.",
+        "1": "SP flew the descent with the power reduced below 20 % torque instead of adding speed brake, and did not restore the power in time for the level-off. Airspeed at the entry point was about 20 knots off the briefed figure, at the limit, and was corrected only after the IP prompted for power and speed brake. SP did not associate the low torque setting with the slow acceleration.",
+        "2": "SP allowed the torque to fall to the low end of the useful range during the descent before selecting the speed brake, so the rate of descent was controlled by power rather than by drag. The airspeed excursion at the level-off reached about 15 knots, but SP recognised the trend, restored the torque above 20 % and stabilised the aircraft on the pattern airspeed in time and without IP intervention.",
+        "3": "SP planned the descent so that the torque stayed above 20 % throughout and used the speed brake whenever a higher rate of descent was required. Airspeed was held inside 10 knots of the briefed pattern figure and engine response at the level-off was immediate, so the flight arrived at the entry point on speed and in position.",
+        "4": "SP managed the descent entirely with speed brake and small power adjustments, never approaching the 20 % torque floor. Airspeed deviations from the briefed pattern figure were negligible, the level-off required no correction and the wingman had steady, predictable closure throughout the descent.",
+        "marginal": "SP kept the airspeed inside the required band on the descent, but this axis was marginal: the torque was repeatedly allowed to sit at the bottom of the acceptable range and the speed brake was selected only after the descent rate had already been set with power. Each level-off therefore needed a noticeable power increase and the speed recovered late. SP is expected to use the speed brake first and to keep the torque clear of the 20 % floor throughout the descent."
+      }
+    },
+    {
+      "id": "vfr_navigation-17-tm02",
+      "label": "Echelon turn discipline inside the pattern entry point",
+      "mif_row": null,
+      "source": "technique:9.40.1 FORMATION RECOVERY - DESCENT TO VFR PATTERN, BREAK AND LANDING",
+      "hf_concept": "hf-distributed-situational-awareness",
+      "texts": {
+        "0": "SP, leading at pattern altitude inside the entry point, initiated a turn into the wingman although all turns away from Number 2 are echelon unless briefed otherwise, and did not check the side on which Number 2 was flying. The wingman was forced across the flight path and the roll-out was more than 10 degrees off the intended pattern heading, with the formation no longer positioned for the entry. The IP had to direct the turn and re-establish the flight on the pattern heading.",
+        "1": "SP did not apply the rule that turns away from Number 2 are echelon inside the entry point, and started the turn without confirming the wingman's side. Number 2 was left in a position that required a large correction and the roll-out was about 10 degrees off the pattern heading, at the limit, before the IP called for the turn direction and the echelon check.",
+        "2": "SP began the turn inside the entry point before completing the check of the wingman's side, so the echelon requirement was satisfied only after a delayed adjustment. Heading at the roll-out was displaced by a moderate amount inside the permitted band, but SP recognised the geometry, re-established the wingman on the outside of the turn and corrected the heading in time without IP intervention.",
+        "3": "SP confirmed the wingman's side before every turn inside the entry point and flew all turns away from Number 2 as echelon, exactly as briefed. Roll-outs were within 5 degrees of the pattern headings and the wingman held position on the outside of each turn without any large correction.",
+        "4": "SP anticipated each turn inside the entry point, checked the wingman's position early and flew every turn away from Number 2 as echelon with a smooth, constant bank. Heading deviations at the roll-outs were negligible and the wingman was never required to correct for the turn direction.",
+        "marginal": "SP flew the turns inside the entry point as echelon and stayed inside the heading limits, but this axis was marginal: the wingman's side was verified late on each turn and the bank was applied before the geometry had been fully confirmed. The roll-outs were therefore repeatedly at the outer edge of the permitted heading band and the wingman had to work to hold the outside position. SP is expected to establish the turn direction relative to Number 2 before applying bank."
+      }
+    },
+    {
+      "id": "vfr_navigation-17-tm03",
+      "label": "Power reduction timing at the Break point",
+      "mif_row": null,
+      "source": "technique:9.40.1 FORMATION RECOVERY - DESCENT TO VFR PATTERN, BREAK AND LANDING",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, leading the pattern entry, reduced power well before the Break instead of delaying the reduction until the turn to downwind was initiated. The formation decelerated on the entry heading, the airspeed fell more than 20 knots below the briefed figure before any bank was applied and the wingman generated uncontrolled closure from the outside position. The IP had to intervene with power and direct the Break.",
+        "1": "SP anticipated the Break and brought the power back before the turn was started, contrary to the technique of delaying the power reduction until the turn is initiated. Airspeed at the Break was about 20 knots low, at the limit, and the wingman was left with excessive closure until the IP called for power and for the turn to be started first.",
+        "2": "SP started the power reduction slightly ahead of the bank at the Break point, so the deceleration began before the turn. The airspeed loss reached an intermediate value inside the permitted band, but SP recognised the early reduction, restored the power and completed the Break as a smooth turn to downwind in time and without IP intervention.",
+        "3": "SP held the briefed power until the turn to downwind at the Break was initiated, then reduced it smoothly as the bank was established. Airspeed at the Break stayed within 10 knots of the briefed figure and the wingman's spacing on downwind was predictable throughout.",
+        "4": "SP flew the Break as a single smooth manoeuvre, initiating the turn to downwind first and reducing the power only after the bank was established. Airspeed deviations were negligible, the ground track through the Break was constant and the wingman had a stable reference for the timed turn.",
+        "marginal": "SP kept the airspeed at the Break inside the required band, but this axis was marginal: on each pattern the power came back at almost the same instant as the bank rather than after the turn was initiated, and the speed decayed towards the lower edge of the tolerance before the turn was fully established. The wingman was repeatedly left with more closure than planned. SP is expected to initiate the turn to downwind first and to delay the power reduction until the bank is set."
+      }
+    },
+    {
+      "id": "vfr_navigation-17-tm04",
+      "label": "Number 2 break interval and resulting downwind spacing",
+      "mif_row": null,
+      "source": "technique:9.40.1 FORMATION RECOVERY - DESCENT TO VFR PATTERN, BREAK AND LANDING",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, flying as Number 2, started the turn only two to three seconds after Number 1's Break instead of waiting the minimum of five seconds, and did not check the resulting spacing on downwind. The aircraft rolled out with insufficient spacing on downwind and no room to re-establish the interval before the perch point. The IP had to intervene and direct a go-around to rebuild the pattern spacing.",
+        "1": "SP did not hold the minimum of five seconds after Number 1's Break and turned early, so the interval was never established. Spacing on downwind was at the minimum usable value and was restored only after the IP called for the delay and for a spacing correction. SP had not monitored Number 1's position while flying the turn.",
+        "2": "SP timed the Break interval by feel rather than by the briefed count, so the turn was started slightly before the five seconds were complete. Spacing on downwind was reduced but stayed within workable limits, and SP recognised the closure, corrected it with a lateral adjustment on downwind and re-established the interval in time without IP intervention.",
+        "3": "SP waited the minimum of five seconds after Number 1's Break before starting the turn and checked the spacing during the turn to downwind. Spacing on downwind was correct and stable, and the perch point was reached with the same geometry as briefed for the contact pattern.",
+        "4": "SP counted the interval accurately after Number 1's Break, started the turn precisely and monitored Number 1 throughout the manoeuvre. Spacing on downwind was established immediately with negligible correction and required no adjustment before the perch point.",
+        "marginal": "SP held the minimum interval after Number 1's Break and the spacing on downwind remained usable, but this axis was marginal: the count was started late on each pattern and the resulting spacing was consistently at the tight end, requiring a lateral correction on downwind. SP is expected to time the interval from Number 1's Break itself and to check the spacing before rolling out on downwind."
+      }
+    },
+    {
+      "id": "vfr_navigation-17-tm05",
+      "label": "Number 2 downwind position relative to Number 1's ground track",
+      "mif_row": null,
+      "source": "technique:9.40.1 FORMATION RECOVERY - DESCENT TO VFR PATTERN, BREAK AND LANDING",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, flying as Number 2, rolled out on downwind inside Number 1's ground track instead of slightly outside it, and did not correct for the drift towards the runway. The aircraft ended up under the leader's flight path with no visual contact and with a track error large enough to compromise the turn to the perch point. The IP had to intervene and re-position the aircraft outside Number 1's ground track.",
+        "1": "SP did not establish the downwind position slightly outside Number 1's ground track and drifted onto the leader's track. Number 1 was held at the limit of usable visual contact and the position was corrected only after the IP pointed out the geometry. SP did not perceive that the tracks had converged.",
+        "2": "SP rolled out on downwind with the aircraft on rather than slightly outside Number 1's ground track, because the turn was flown without reference to the leader's position. The displacement stayed inside acceptable limits and SP recognised the convergence, moved the track outside the leader's and stabilised the downwind in time without IP intervention.",
+        "3": "SP established the downwind slightly outside Number 1's ground track as described in the technique, with continuous visual contact on the leader. The lateral displacement was held steady, the wind drift was corrected on the leg and the turn to the perch point was flown from the correct position.",
+        "4": "SP rolled out on downwind precisely outside Number 1's ground track and held that displacement without variation for the whole leg. Visual contact with the leader was maintained throughout, drift was anticipated and the position at the perch point required no correction.",
+        "marginal": "SP flew the downwind outside Number 1's ground track and stayed within acceptable limits, but this axis was marginal: the displacement was repeatedly allowed to wash out towards the leader's track before being re-established, particularly with a crosswind from the runway side. Visual contact was maintained but with an unnecessarily tight geometry. SP is expected to set the outside displacement at the roll-out and to hold it for the whole downwind leg."
+      }
+    },
+    {
+      "id": "vfr_navigation-17-tm06",
+      "label": "Following a poorly flown pattern instead of going around",
+      "mif_row": null,
+      "source": "technique:9.40.1 FORMATION RECOVERY - DESCENT TO VFR PATTERN, BREAK AND LANDING",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, flying as Number 2, followed a poorly flown pattern from the leader rather than going around as the technique requires, and continued to match a track and a spacing that were already wrong. The aircraft was carried outside the pattern parameters by more than the permitted margins and arrived at the perch point with no acceptable solution. The IP had to intervene and direct the go-around.",
+        "1": "SP recognised that the pattern being flown ahead was not correct but continued to follow it instead of calling for a go-around. The aircraft was held at the limit of the pattern parameters and the go-around was initiated only after the IP directed it. SP had no decision point in mind for breaking out of the pattern.",
+        "2": "SP followed the degraded pattern longer than necessary before reacting, so the deviation had already built up before the correction was made. The parameters remained inside the permitted band and SP decided in time to stop following the leader's track, re-established the pattern on his own geometry and completed the approach without IP intervention.",
+        "3": "SP assessed the pattern being flown ahead against the briefed parameters and did not follow it when it degraded, flying his own correct pattern instead. All pattern parameters were held inside the required limits and the decision to correct rather than to follow was made early and stated clearly.",
+        "4": "SP continuously compared the pattern ahead with the briefed geometry, refused to follow the degraded track from the outset and flew a pattern with negligible deviations. The decision was made early, communicated without prompting and the go-around option was kept available throughout.",
+        "marginal": "SP did not follow the degraded pattern to the point of exceeding any limit, but this axis was marginal: the decision to stop matching the leader's track was taken late on each occasion and the parameters were allowed to reach the edge of the tolerance first. The go-around was treated as a last option rather than as a planned one. SP is expected to set a decision point in advance and to break out of a poorly flown pattern early, going around if required."
       }
     }
   ]

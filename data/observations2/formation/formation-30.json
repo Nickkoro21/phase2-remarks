@@ -157,6 +157,126 @@
         "4": "SP evaluated each approach against the briefed criteria without prompting and acted on the assessment immediately. The pattern was managed so that the parameters never approached the point of requiring a go-around. Intentions were stated to the IP ahead of each decision point.",
         "marginal": "SP made the correct continue or go-around decisions and every approach remained within standards, but the assessment was made close to the point at which the decision was needed. The judgment was sound and no intervention was required. SP is expected to evaluate the approach against the briefed criteria earlier so that the decision is made with time in hand."
       }
+    },
+    {
+      "id": "formation-30-tm01",
+      "label": "Low power settings below 20 % torque in the descent to the pattern instead of speed brake",
+      "mif_row": "Landing Pattern",
+      "source": "technique:9.40.1 FORMATION RECOVERY - DESCENT TO VFR PATTERN, BREAK AND LANDING",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to controlling the descent to the VFR pattern with torque reduced well below 20 % instead of using the speed brake, did not arrive at the entry point on the briefed profile. With the engine spooled down the level off was not captured and the aircraft settled more than 300 feet below pattern altitude with the airspeed decaying below the briefed break speed. The IP took the controls, added power and re-established the aircraft at pattern altitude before the break.",
+        "1": "SP, due to reducing torque below 20 % in the descent rather than extending the speed brake, did not arrest the rate of descent at pattern altitude. The deviation reached the +/-300 foot limit at the entry point and power was restored only after the IP called for it. The aircraft was still recovering to pattern altitude when the break point was reached.",
+        "2": "SP, due to an initial power reduction below 20 % torque during the descent, did not hold the planned rate to pattern altitude and went about 200 feet low, inside the +/-300 foot limit. SP recognized the low torque setting, restored power above 20 %, used the speed brake for the remainder of the descent and was level at pattern altitude before the entry point with no IP input.",
+        "3": "SP kept torque at or above 20 % throughout the descent and used the speed brake for rate control, so pattern altitude was captured within +/-150 feet at the entry point. Engine response was available for the level off and the airspeed was stabilized on the briefed break speed. No prompting was required.",
+        "4": "SP planned the descent so that the speed brake, not a low power setting, provided the rate control, and torque was never allowed near 20 %. Pattern altitude was captured with negligible deviation and the aircraft arrived at the entry point exactly on the briefed speed. Engine response was immediate at the level off.",
+        "marginal": "SP kept pattern altitude within +/-150 feet at the entry point, but torque was allowed to drift toward 20 % before the speed brake was used, so each level off relied on a spool up. Standards were met throughout the descent. SP is expected to extend the speed brake as the primary rate control and keep torque clear of the 20 % floor."
+      }
+    },
+    {
+      "id": "formation-30-tm02",
+      "label": "Power reduction delayed until the turn at the Break point is initiated",
+      "mif_row": "Landing Pattern",
+      "source": "technique:9.40.1 FORMATION RECOVERY - DESCENT TO VFR PATTERN, BREAK AND LANDING",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to reducing power at the Break point before the turn to downwind was initiated, did not fly the smooth break called for by the recovery. The aircraft decelerated while still wings level, the turn was then flown with bank more than 15 degrees off the briefed value and break altitude was not held within 300 feet. The IP took the controls to re-establish the pattern.",
+        "1": "SP, due to pulling the power back at the break point instead of delaying the reduction until the turn was started, did not carry the briefed energy into the break. Bank at the break reached the +/-15 degree limit as SP tried to recover the ground track, and the correction was made only after the IP called the parameters. Break altitude was at the limit of the published tolerance.",
+        "2": "SP, due to an early power reduction just before the break turn was initiated, did not begin the turn with the briefed airspeed and the initial bank was about 10 degrees off the planned value, inside the +/-15 degree limit. SP recognized the early reduction, restored power for the turn and re-established the briefed bank and break altitude before rolling out on downwind without IP input.",
+        "3": "SP held power until the turn to downwind was initiated and only then reduced it, so the break was flown smoothly with bank within +/-10 degrees and break altitude within +/-150 feet. The deceleration to gear and flap speed occurred in the turn as planned. No prompting was required.",
+        "4": "SP timed the power reduction exactly with the initiation of the turn, so the break was flown as a single smooth manoeuvre with negligible deviation in bank and break altitude. The deceleration was distributed through the turn and the aircraft rolled out on downwind on speed and on altitude. The pattern needed no adjustment afterwards.",
+        "marginal": "SP kept break bank and altitude within the +/-10 degree and +/-150 foot bands, but the power came back marginally before the turn was initiated so the first part of the break was flown decelerating. The parameters remained within standards. SP is expected to delay the power reduction until the turn is actually started so that the break energy is carried into the turn."
+      }
+    },
+    {
+      "id": "formation-30-tm03",
+      "label": "Echelon turns away from Number 2 once inside the VFR entry point",
+      "mif_row": "Landing Pattern",
+      "source": "technique:9.40.1 FORMATION RECOVERY - DESCENT TO VFR PATTERN, BREAK AND LANDING",
+      "hf_concept": "hf-leadership-and-followership",
+      "texts": {
+        "0": "SP, due to turning toward Number 2 once established at pattern altitude inside the entry point instead of flying the turn as an echelon turn away from him, did not preserve the briefed formation geometry in the pattern. Number 2 was left with no usable position, the turn was flown with bank more than 15 degrees off the briefed value and pattern altitude was not held within 300 feet. The IP intervened to stop the turn and re-establish the formation.",
+        "1": "SP, due to initiating a turn into Number 2 inside the entry point rather than turning away in echelon as briefed, did not give the wingman a workable reference. Bank reached the +/-15 degree limit and pattern altitude the +/-300 foot limit while the geometry was recovered, and the correction followed an IP call rather than SP's own assessment.",
+        "2": "SP, due to starting a turn before confirming which side Number 2 was on, did not fly the turn as an echelon turn away from the wingman and had to reverse the direction. Bank varied about 10 degrees and pattern altitude about 200 feet, inside the published limits. SP recognized the geometry, re-established the wingman on the outside of the turn and completed the pattern entry without IP input.",
+        "3": "SP flew every turn inside the entry point away from Number 2 in echelon as briefed, holding bank within +/-10 degrees and pattern altitude within +/-150 feet. The wingman remained on the outside of each turn with a workable reference throughout. The geometry required no direction from the IP.",
+        "4": "SP checked the wingman's side before each turn and flew all turns inside the entry point away from Number 2, with negligible deviation in bank and pattern altitude. The turns were smooth enough that the wingman held position without any power or geometry change. The pattern entry was flown exactly as briefed.",
+        "marginal": "SP kept all turns inside the entry point away from Number 2 and stayed within the +/-10 degree and +/-150 foot bands, but the direction of each turn was confirmed only as the turn was started. The formation geometry was preserved throughout. SP is expected to confirm the wingman's side early enough that each echelon turn is planned before it begins."
+      }
+    },
+    {
+      "id": "formation-30-tm04",
+      "label": "Positioning Number 2 on the side opposite the direction of the Break before North/South Point",
+      "mif_row": "Landing Pattern",
+      "source": "technique:9.40.1 FORMATION RECOVERY - DESCENT TO VFR PATTERN, BREAK AND LANDING",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to not establishing Number 2 on the side opposite the direction of the Break prior to North/South Point, did not have the formation configured for the break when the break point arrived. The break was started with the wingman on the inside, bank exceeded the briefed value by more than 15 degrees and break altitude was not held within 300 feet while the geometry was sorted out. The IP intervened and directed the repositioning.",
+        "1": "SP, due to a late crossover of Number 2 that was still in progress at North/South Point, did not have the wingman on the side opposite the break in time. The break was flown at the +/-15 degree bank limit and the +/-300 foot altitude limit while waiting for the wingman to settle, and the repositioning was initiated only after the IP called for it.",
+        "2": "SP, due to a delayed decision on the break direction, did not move Number 2 to the opposite side until close to North/South Point. The wingman settled just before the break point and bank and break altitude deviated about 10 degrees and 200 feet respectively, inside the published limits. SP identified the delay, allowed the crossover to complete and flew the break as briefed without IP input.",
+        "3": "SP positioned Number 2 on the side opposite the direction of the Break well before North/South Point, so the break was flown with bank within +/-10 degrees and break altitude within +/-150 feet. The wingman was stable in position before the break point was reached. No direction was required.",
+        "4": "SP decided the break direction early, moved Number 2 to the opposite side with time in hand before North/South Point and flew the break with negligible deviation in bank and altitude. The wingman was steady in position throughout the approach to the break point. The recovery matched the briefed plan exactly.",
+        "marginal": "SP had Number 2 on the correct side for the break and held break bank and altitude within the +/-10 degree and +/-150 foot bands, but the crossover was completed only shortly before North/South Point. The break itself was flown to standard. SP is expected to establish the wingman on the side opposite the break early enough that he is settled well before the break point."
+      }
+    },
+    {
+      "id": "formation-30-tm05",
+      "label": "Number 2 minimum five second delay after Number 1 executes the Break",
+      "mif_row": "Landing Pattern",
+      "source": "technique:9.40.1 FORMATION RECOVERY - DESCENT TO VFR PATTERN, BREAK AND LANDING",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, flying as Number 2 and due to starting the turn without waiting the minimum of five seconds after Number 1 executed the Break, did not build the spacing the pattern requires. The aircraft arrived on downwind with no usable interval and had to be flown fast to avoid closure, exceeding the downwind airspeed tolerance of +20 knots and leaving break altitude outside the 300 foot band. The IP took the controls to extend the pattern and restore separation.",
+        "1": "SP, flying as Number 2 and due to breaking early rather than timing the minimum five second delay, did not achieve the briefed downwind spacing. Airspeed on downwind reached the +20 knot limit while attempting to preserve the interval and break altitude was at the +/-300 foot limit. The delay was corrected only after the IP called the timing.",
+        "2": "SP, flying as Number 2 and due to counting the delay against Number 1's roll-in rather than the completed Break, did not use the full five seconds before starting the turn. The downwind interval closed and airspeed rose about 10 knots above the briefed value, inside the +20 knot tolerance. SP recognized the closure, opened the spacing on the downwind and flew the base turn at the correct point with no IP input.",
+        "3": "SP, flying as Number 2, waited at least five seconds after Number 1 executed the Break before starting the turn and rolled out on downwind with the briefed spacing. Downwind airspeed stayed within +10 knots of the briefed value and break altitude within +/-150 feet. The interval needed no adjustment.",
+        "4": "SP, flying as Number 2, timed the break delay precisely against Number 1's Break and established the downwind interval with negligible deviation in airspeed and altitude. No airspeed adjustment was needed on downwind to hold the spacing. The pattern was flown exactly as briefed.",
+        "marginal": "SP, flying as Number 2, used the minimum five second delay and stayed within +10 knots and +/-150 feet, but the delay was timed on the low side so the interval had to be protected with a small speed adjustment on downwind. The pattern remained within standards. SP is expected to build the delay so that the spacing is set at the break rather than managed afterwards."
+      }
+    },
+    {
+      "id": "formation-30-tm06",
+      "label": "Number 2 ground track slightly outside Number 1 on downwind and matching perch point",
+      "mif_row": "Landing Pattern",
+      "source": "technique:9.40.1 FORMATION RECOVERY - DESCENT TO VFR PATTERN, BREAK AND LANDING",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, flying as Number 2 and due to flying a downwind ground track inside Number 1 instead of slightly outside it, did not preserve the room needed for the base turn. The perch point was reached well inside the normal contact pattern position, the turn had to be tightened and both downwind altitude and final altitude fell outside the 300 foot and minus 100 foot tolerances. The IP took the controls to reposition the aircraft on the pattern.",
+        "1": "SP, flying as Number 2 and due to allowing the downwind ground track to drift inside Number 1's track, did not establish the perch point where a normal contact pattern would place it. The base turn was flown from a displaced perch and altitude reached the +/-300 foot limit on downwind and the minus 100 foot limit on final. The ground track was corrected only after the IP called it.",
+        "2": "SP, flying as Number 2 and due to referencing the runway rather than Number 1's ground track, did not hold the downwind position slightly outside the leader and drifted toward the inside. Downwind altitude varied about 200 feet, inside the +/-300 foot limit. SP corrected the ground track, re-established the normal perch point and flew the base turn without IP input.",
+        "3": "SP, flying as Number 2, held a downwind ground track slightly outside Number 1's and used the same perch point as a normal contact pattern. Downwind altitude was held within +/-150 feet and final altitude within the plus 100 and minus 50 foot band. The base turn required no adjustment.",
+        "4": "SP, flying as Number 2, flew the downwind consistently just outside Number 1's ground track and arrived at the normal perch point with negligible deviation in altitude. The base turn was started at the planned point and the aircraft rolled out on final on profile. No repositioning was needed at any stage.",
+        "marginal": "SP, flying as Number 2, kept the downwind ground track outside Number 1's and stayed within +/-150 feet, but the offset was allowed to shrink before each correction was made. The perch point remained usable and standards were met. SP is expected to hold the downwind offset continuously so that the perch point is reached without a late lateral correction."
+      }
+    },
+    {
+      "id": "formation-30-tm07",
+      "label": "Number 2 flying his own pattern instead of following a poorly-flown pattern",
+      "mif_row": "Landing Pattern",
+      "source": "technique:9.40.1 FORMATION RECOVERY - DESCENT TO VFR PATTERN, BREAK AND LANDING",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, flying as Number 2 and due to following a poorly-flown pattern rather than flying his own parameters or going around, did not correct a base and final that were already off profile. Final altitude went outside the plus 200 and minus 100 foot band and final airspeed exceeded the +15 knot tolerance while SP matched the aircraft ahead. The IP took the controls and initiated the go-around.",
+        "1": "SP, flying as Number 2 and due to duplicating the pattern flown by the aircraft ahead instead of flying the published parameters, did not re-establish his own profile on base and final. Final altitude and airspeed reached the plus 200 foot and +15 knot limits, and the go-around was flown only after the IP directed it. The decision to stop following the pattern was not made by SP.",
+        "2": "SP, flying as Number 2 and due to using the aircraft ahead as the pattern reference, did not fly his own base leg parameters and airspeed rose about 10 knots above the briefed value, inside the +20 knot tolerance. SP recognized that the pattern ahead was not usable as a reference, returned to his own parameters on final and flew the approach within limits without IP input.",
+        "3": "SP, flying as Number 2, flew his own pattern parameters throughout and did not follow the aircraft ahead when its profile was not usable. Final altitude was held within the plus 100 and minus 50 foot band and final airspeed within +10 knots. Where the pattern ahead did not support a landing, SP went around on his own initiative.",
+        "4": "SP, flying as Number 2, treated the aircraft ahead only as a spacing reference and flew the published pattern parameters with negligible deviation on base and final. Any pattern that could not support the approach was resolved with an early go-around stated to the IP. No parameter was compromised to stay with the aircraft ahead.",
+        "marginal": "SP, flying as Number 2, kept his own final altitude and airspeed within the plus 100 foot and +10 knot bands, but the pattern ahead was used as the primary reference until the deviation became evident. Standards were met on every approach. SP is expected to fly his own pattern parameters from the break and to go around rather than accept a poorly-flown pattern as the reference."
+      }
+    },
+    {
+      "id": "formation-30-tm08",
+      "label": "Power application to approximately 75 % torque for the formation go-around",
+      "mif_row": "Landing Pattern",
+      "source": "technique:9.40.3 FORMATION GO-AROUND",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not adding power smoothly to approximately 75 % torque when the formation go-around was flown, did not arrest the descent at the correct point. The aircraft continued below the final profile by more than 100 feet and the airspeed was allowed to build past the +15 knot tolerance as the nose was lowered to recover, leaving the wingman without a usable reference. The IP took the controls and set the go-around power.",
+        "1": "SP, due to a late and abrupt power application instead of a smooth increase to approximately 75 % torque, did not fly the go-around as briefed. Final altitude reached the minus 100 foot limit before the climb was established and airspeed reached the +15 knot limit, and the power was set correctly only after the IP called for it. The wingman had to work to stay in position.",
+        "2": "SP, due to setting the go-around power in two stages rather than smoothly to approximately 75 % torque, did not establish the initial climb cleanly and the aircraft sank about 50 feet further along the final profile. Airspeed varied about 10 knots, inside the +15 knot tolerance. SP corrected the torque to the briefed value, stabilized the climb and kept the wingman's reference steady without IP input.",
+        "3": "SP smoothly added power to approximately 75 % torque and followed normal formation takeoff and single ship go-around procedures. Final altitude stayed within the plus 100 and minus 50 foot band during the transition and airspeed within +10 knots. The wingman held position throughout the go-around.",
+        "4": "SP set approximately 75 % torque with a single smooth movement and flew the go-around with negligible deviation in altitude and airspeed. The rate of power application was slow enough that the wingman required no corrections to hold position. The formation climbed away exactly as briefed.",
+        "marginal": "SP set approximately 75 % torque and kept the go-around within the plus 100 foot and +10 knot bands, but the power was added marginally faster than the wingman could match and the initial climb was established slightly late. The manoeuvre remained within standards. SP is expected to move the power smoothly to the briefed torque so that the wingman can follow without a position correction."
+      }
     }
   ]
 }

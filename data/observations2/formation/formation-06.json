@@ -3,7 +3,9 @@
   "item_name": "FORMATION APPROACH",
   "category": "formation",
   "schema": "v2-trunk",
-  "mif_numbers": [6],
+  "mif_numbers": [
+    6
+  ],
   "mif_rows": [
     {
       "sn": 6,
@@ -144,6 +146,111 @@
         "3": "SP maintained a continuous cross-check of altitude, airspeed and heading while leading the formation, interleaving the lookout on the wingman with the instrument scan. Deviations were detected while they were small and corrected before they affected the formation. Flying the aircraft clearly retained priority over the leadership tasks.",
         "4": "SP integrated the instrument cross-check and the formation lookout so completely that neither task degraded the other throughout the approach. Every parameter was captured at the onset of any trend, and the aircraft state was never in question while the formation was being directed. The standard of basic aircraft control was well above what the SP experience level requires.",
         "marginal": "SP kept every parameter within the applicable standards, but the cross-check visibly slowed each time the wingman was checked, and the corrections that followed were reactive. Nothing exceeded the limits and control was retained throughout, yet the scan rate was the weak point of the approach. SP is expected to interleave the lookout with the instrument scan more evenly so that deviations are caught at onset over the next sorties."
+      }
+    },
+    {
+      "id": "formation-06-tm01",
+      "label": "MINIMUM TORQUE SETTING WHILE LEADING THE FORMATION APPROACH",
+      "mif_row": 6,
+      "source": "technique:9.40.2 FORMATION APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to flying the descent on power reduction instead of on the drag of the landing configuration, took the torque below the 20 percent minimum specified for a formation approach. The wingman was left with no power margin to reduce and dropped out of position, while the approach speed decayed more than 25 knots below the briefed value, past the 20 knot limit. IP had to restore the power setting and re-establish the approach.",
+        "1": "SP reduced torque below the 20 percent minimum during the approach descent and did not restore it until IP called for power twice. The airspeed fell 20 knots below the briefed approach value, at the limit of the standard, and the wingman had to move aft and low to stay with the formation. Power was then advanced in one large movement that the wingman had to chase.",
+        "2": "SP let the torque slip just below the 20 percent minimum while adjusting the rate of descent, and the approach speed dropped about 15 knots below the briefed value. SP saw the torque and airspeed indications, restored the power setting and recovered the speed with no intervention by IP. The deviation stayed between the 10 and 20 knot bands, but the power should not have been taken below the minimum at all.",
+        "3": "SP kept the torque at or above the 20 percent minimum throughout the approach, controlling the descent with pitch and configuration rather than large power reductions. The briefed approach speed was held within about 7 knots and the wingman retained a usable power margin on both sides. Power changes were small and made early enough that no chasing was required.",
+        "4": "SP flew the whole approach with the torque comfortably above the 20 percent minimum and the briefed speed within about 3 knots. Every descent adjustment was made with pitch and configuration first, so the wingman never ran out of power margin in either direction. The power trace was smooth enough for the wingman to hold position on trim alone.",
+        "marginal": "SP stayed above the 20 percent torque minimum, but on two occasions the setting came close to it and the airspeed sat near 9 knots slow. The formation remained inside the standard and the wingman held position, yet the margin left for the wing aircraft was thinner than a formation approach should give it. SP is expected to plan the descent on configuration and pitch so that the torque stays clear of the minimum over the next sorties."
+      }
+    },
+    {
+      "id": "formation-06-tm02",
+      "label": "POSITIONING THE WINGMAN FOR THE DIRECTION OF THE PENETRATION TURN",
+      "mif_row": 6,
+      "source": "technique:9.40.2 FORMATION APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to omitting the pre-penetration positioning of Number 2 on the side opposite the direction of the penetration turn, started the penetration with the wingman on the inside of the turn. The wingman was forced under the leader to avoid the closing geometry and the formation wandered more than 12 degrees off the penetration track, beyond the 10 degree limit. IP had to direct the crossunder and take the controls to re-establish the track.",
+        "1": "SP began the penetration without moving Number 2 to the side opposite the turn and ordered the crossunder only after IP pointed out the geometry. Track control suffered while the wingman repositioned and the heading was 10 degrees off the penetration track, at the limit of the standard. The formation entered the penetration late and displaced from the briefed profile.",
+        "2": "SP was late in checking which side the wingman occupied relative to the penetration turn and directed the crossunder just as the turn was started. SP recognized the error, delayed the turn briefly and rolled out on track without any intervention by IP, with the heading deviation held to about 8 degrees. The positioning check should have been completed before the penetration was commenced.",
+        "3": "SP positioned Number 2 on the side opposite the direction of the penetration turn before the penetration was started, so the turn was entered with correct geometry. The penetration track was held within about 3 degrees and the wingman was never required to reposition during the turn. The sequence matched the briefed profile.",
+        "4": "SP confirmed and set the wingman on the side opposite the penetration turn well before the penetration point, with the crossunder completed and the formation steady before the turn began. The penetration track was flown within about 2 degrees throughout. The wingman flew the entire turn without a single position correction.",
+        "marginal": "SP did position Number 2 on the correct side for the penetration turn, but the crossunder was directed so close to the penetration point that the formation was only just steady when the turn began. Track was held near 4 degrees off and nothing was exceeded, yet there was no margin left if the wingman had been slow. SP is expected to complete the positioning check earlier in the descent over the next sorties."
+      }
+    },
+    {
+      "id": "formation-06-tm03",
+      "label": "POSITIONING THE WINGMAN ON THE UPWIND SIDE OF THE LANDING RUNWAY",
+      "mif_row": 6,
+      "source": "technique:9.40.2 FORMATION APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not positioning Number 2 on the upwind side of the landing runway before the final segment, left the wingman downwind of the leader with the crosswind pushing the two aircraft together. The formation was displaced from the runway centerline and the track deviated more than 12 degrees, beyond the 10 degree limit, as SP corrected against the drift. IP had to take the controls to restore separation and runway alignment.",
+        "1": "SP kept the wingman on the downwind side of the landing runway and changed it only after IP directed the crossunder on final. The correction against the crosswind drift took the formation 10 degrees off the runway track, at the limit of the standard, and the wingman worked continuously against closure. The approach was completed with the formation still displaced from centerline.",
+        "2": "SP set the wingman on the downwind side of the runway and recognized the error as the drift developed on final. SP directed the crossunder in good time and re-established runway alignment with no intervention by IP, holding the track deviation to about 8 degrees. The upwind side should have been selected before the final segment was entered.",
+        "3": "SP placed Number 2 on the upwind side of the landing runway before final, so the crosswind carried the wingman away from the leader rather than into him. Runway track was held within about 3 degrees and no repositioning was needed on final. The formation was correctly set for a go-around or low approach at any point.",
+        "4": "SP positioned the wingman on the upwind side of the landing runway early, briefed the reason on the radio and never had to revisit it. Runway track was maintained within about 2 degrees to the end of the approach and the wingman held position with no drift correction of his own. The formation was configured for a safe split throughout.",
+        "marginal": "SP did place the wingman on the upwind side of the landing runway, but only after the approach had been established and after a delay that left little time before final. Track stayed near 4 degrees off during the reposition and nothing was exceeded. SP is expected to make the upwind side decision before the final segment over the next sorties."
+      }
+    },
+    {
+      "id": "formation-06-tm04",
+      "label": "POWER APPLICATION FOR THE FORMATION GO-AROUND",
+      "mif_row": null,
+      "source": "technique:9.40.3 FORMATION GO-AROUND",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to advancing power abruptly instead of smoothly to the approximately 75 percent torque called for on a formation go-around, produced a pitch up the wingman could not match. The formation ballooned more than 400 feet above the briefed go-around profile, beyond the 300 foot limit, and the wingman was left aft and low. IP had to take the controls to stop the climb and re-establish the profile.",
+        "1": "SP applied go-around power in one rapid movement past the approximately 75 percent torque target and did not moderate the pitch until IP called for it. The climb overshot the briefed profile by 300 feet, at the limit of the standard, and the wingman lost the position and had to rejoin. The go-around was completed but the formation was never steady.",
+        "2": "SP advanced the power faster than the smooth application a formation go-around requires and reached a torque above the approximately 75 percent target. SP noticed the pitch up developing, reduced to the correct setting and contained the climb to about 220 feet above profile without any intervention by IP. The deviation stayed between the 150 and 300 foot bands, but the initial power application should have been smooth.",
+        "3": "SP added power smoothly to approximately 75 percent torque and let the pitch attitude follow, holding the go-around profile within about 100 feet. The wingman was able to match the power change and stayed in position throughout. The go-around was flown as a normal formation takeoff sequence, as briefed.",
+        "4": "SP moved the power lever smoothly to approximately 75 percent torque and established the go-around attitude with pressure alone, keeping the profile within about 40 feet. The wingman held position with no visible correction from the start of the go-around. The transition from approach to climb was indistinguishable from a briefed formation takeoff.",
+        "marginal": "SP reached approximately 75 percent torque for the go-around and stayed inside the standard, but the power was applied in one movement rather than progressively and the profile ran close to 140 feet high. The wingman held position, though visibly working through the transition. SP is expected to lead the power in smoothly so that the wingman can match it over the next sorties."
+      }
+    },
+    {
+      "id": "formation-06-tm05",
+      "label": "ESTABLISHING THE MISSED APPROACH PITCH ATTITUDE IN FORMATION",
+      "mif_row": null,
+      "source": "technique:9.40.4 FORMATION MISSED APPROACH",
+      "hf_concept": "hf-spatial-disorientation",
+      "texts": {
+        "0": "SP, due to rotating rapidly to the missed approach pitch attitude instead of establishing it slowly and smoothly after advancing power to approximately 75 percent, created exactly the conditions in which the wingman loses position and becomes disoriented. Airspeed decayed more than 25 knots below the briefed climb value, past the 20 knot limit, and the minimum climb gradient was not maintained. IP had to take the controls and re-establish the missed approach profile.",
+        "1": "SP set the missed approach attitude in an abrupt single input and did not moderate it until IP called for a smoother rotation. The speed fell 20 knots below the briefed climb value, at the limit of the standard, and the wingman went aft and low while trying to follow. The climb gradient was recovered only in the later part of the missed approach.",
+        "2": "SP raised the nose to the missed approach attitude faster than the slow, smooth rotation the manual requires and the speed dropped about 15 knots below the briefed climb value. SP recognized the decay, eased the attitude and restored the speed and the climb gradient without any intervention by IP. The deviation stayed between the 10 and 20 knot bands, but the rotation rate should have been controlled from the start.",
+        "3": "SP advanced power to approximately 75 percent and then established the missed approach attitude slowly and smoothly, holding the briefed climb speed within about 7 knots. The wingman was able to follow the pitch change without repositioning and the minimum climb gradient was maintained. Gear and flap retraction was directed on the radio in the same sequence.",
+        "4": "SP flew the missed approach with a power application and a pitch change so gradual that the wingman never left the briefed position, holding the climb speed within about 3 knots. The minimum climb gradient was maintained from the first moment and the retraction calls arrived ahead of each configuration change. Nothing in the transition required the wingman to correct.",
+        "marginal": "SP established the missed approach attitude within the standard, but the rotation was firmer than a formation missed approach allows and the climb speed sat near 9 knots slow. The gradient was met and the wingman kept position, yet the pitch change was the kind that invites disorientation in the wing aircraft. SP is expected to establish the attitude more slowly and smoothly over the next sorties."
+      }
+    },
+    {
+      "id": "formation-06-tm06",
+      "label": "DIRECTING THE PATTERN SPLIT AFTER A GO-AROUND OR LOW APPROACH",
+      "mif_row": null,
+      "source": "technique:9.40.3 FORMATION GO-AROUND",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not applying the rule that the A/C on the inside of the pattern pulls for the closed pattern or turns crosswind first, directed the split with the outside aircraft departing first. The two flight paths converged, the formation left the briefed pattern track by more than 12 degrees beyond the 10 degree limit, and separation was not assured. IP had to take the controls and re-sequence the split.",
+        "1": "SP called the split with the wrong aircraft leaving first and corrected the sequence only after IP intervened verbally. The re-sequencing took the pattern track 10 degrees off the briefed value, at the limit of the standard, and the second aircraft was left to sort out its own spacing. Both aircraft rejoined the pattern late and out of the briefed geometry.",
+        "2": "SP hesitated over which aircraft was on the inside of the pattern and made the split call a moment after the correct point. SP restated the sequence immediately, the inside aircraft turned crosswind first and the pattern track was recovered to about 8 degrees off without any intervention by IP. The split sequence should have been decided before the low approach.",
+        "3": "SP directed the split with the inside aircraft pulling for the closed pattern, so the two flight paths diverged from the first moment. The pattern track was held within about 3 degrees and spacing developed as briefed. No additional transmissions were needed to resolve the sequence.",
+        "4": "SP briefed and then executed the split exactly as required, with the inside aircraft turning crosswind first and separation obvious to both crews from the outset. The pattern track was flown within about 2 degrees and the resulting spacing needed no adjustment. The split was completed with a single, clear transmission.",
+        "marginal": "SP used the correct split sequence with the inside aircraft leaving first, but the call was made at the point of the turn rather than ahead of it and the pattern track ran near 4 degrees off. Separation was never in question and the spacing worked out. SP is expected to decide and transmit the split sequence before the low approach over the next sorties."
+      }
+    },
+    {
+      "id": "formation-06-tm07",
+      "label": "LEAD RESPONSE AND ATTITUDE CALLS WHEN THE WINGMAN LOSES VISUAL CONTACT",
+      "mif_row": null,
+      "source": "technique:9.13 LOST WINGMAN PROCEDURES",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, due to not acknowledging Number 2's call and not transmitting A/C attitude as the lost wingman procedure requires, left the wingman without any external reference while separating. SP also continued to maneuver before separation was assured and let the assigned altitude go more than 400 feet off, beyond the 300 foot limit. IP had to take over both the radio and the flight path to stabilize the situation.",
+        "1": "SP acknowledged the wingman's call late and gave no attitude, heading or airspeed information until IP prompted each item. Own altitude control degraded while the transmissions were being sorted out and reached 300 feet off the assigned value, at the limit of the standard. The separate clearance was requested only after IP directed it.",
+        "2": "SP acknowledged the call promptly but transmitted the A/C attitude only after a short delay, during which the assigned altitude drifted about 220 feet. SP then passed attitude, heading and airspeed in the correct order, recovered the altitude and coordinated the separate clearance with no intervention by IP. The attitude call should have followed the acknowledgement immediately.",
+        "3": "SP acknowledged the wingman's radio call at once, transmitted the A/C attitude and followed it with heading, altitude and airspeed as required, while holding the assigned altitude within about 100 feet. The flight path was kept steady and predictable throughout the separation. The separate clearance was requested without delay.",
+        "4": "SP handled the lost visual contact with an immediate acknowledgement, an attitude call that was on the radio before the wingman could ask for it, and unhurried follow-up on heading, altitude and airspeed. Assigned altitude was held within about 40 feet with no maneuvering until separation was assured. The coordination for the separate clearance was complete and correct.",
+        "marginal": "SP followed the lost wingman sequence and every element was passed, but the attitude call came after a pause and the assigned altitude ran near 140 feet off while SP was on the radio. Nothing was exceeded and the separation was safe. SP is expected to give the attitude call immediately after the acknowledgement and protect basic A/C control while transmitting over the next sorties."
       }
     }
   ]

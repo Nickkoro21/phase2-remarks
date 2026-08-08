@@ -160,6 +160,111 @@
         "4": "SP sustained an accurate and unbroken cross-check throughout the formation approach, so that the flight parameters and the formation reference were both held without either task displacing the other. Control inputs were minimal and the aircraft state was known at every point of the recovery. Deviations from the approach parameters were negligible.",
         "marginal": "SP maintained basic aircraft control within standards, but the instrument cross-check was interrupted for noticeably long periods while the formation reference was flown, and the corrections were made once the errors had already accumulated. The trend is a scan weighted almost entirely toward the formation picture, which leaves the approach parameters unmonitored between glances. SP is expected to keep a fixed cross-check interval between the formation reference and the flight instruments on the next formation recovery."
       }
+    },
+    {
+      "id": "vfr_navigation-16-tm01",
+      "label": "MINIMUM LEAD TORQUE SETTING ON THE FORMATION APPROACH",
+      "mif_row": 16,
+      "source": "technique:9.40.2 FORMATION APPROACH",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to a power reduction taken well below the 20 percent torque floor set for the leader of a formation approach, did not preserve a usable power reference for the wingman and let the indicated airspeed decay more than 25 knots below the briefed approach figure. The wingman ran out of throttle margin below the lead setting and fell aft and out of the approach position. IP had to advance the power and rebuild the flight before the approach could be continued.",
+        "1": "SP, due to torque being pulled back into the idle range instead of being held at or above 20 percent, did not leave the wingman any power margin to hold position and allowed the airspeed to reach 20 knots low on the inbound leg. Power was restored only after IP called the torque setting and then the airspeed. SP did not associate the wingman's aft drift with the low lead torque without prompting.",
+        "2": "SP, due to a single large throttle reduction at the configuration change that briefly took torque under 20 percent, did not hold the minimum lead power setting and let the airspeed drop about 15 knots below the briefed figure. SP saw the torque and airspeed indications on the next cross-check cycle, reset power above the floor and re-stabilized the flight before the turn to final. No IP intervention was required.",
+        "3": "SP kept torque at or above 20 percent throughout the formation approach, so the wingman always had power available below the lead setting to correct position. Airspeed stayed within 10 knots of the briefed approach figure across the configuration change. Power changes were made in small steps that the wingman could follow.",
+        "4": "SP flew the whole approach with the lead power setting held clear of the 20 percent floor and changed in anticipation of each configuration step. The wingman held position on small throttle corrections and never approached the limit of the available power margin. Airspeed and torque deviations from the briefed profile were negligible.",
+        "marginal": "SP kept the approach within standards, but torque was allowed to sit right on the 20 percent floor after the gear was lowered and the wingman was seen working the throttle to stay in position. The trend is a lead power setting placed at the minimum rather than above it, which leaves the wingman nothing to reduce if the flight decelerates further. SP is expected to plan the approach power so that torque remains comfortably above 20 percent on the next formation recovery."
+      }
+    },
+    {
+      "id": "vfr_navigation-16-tm02",
+      "label": "CONFIGURATION DIRECTED BY RADIO CALL RATHER THAN VISUAL SIGNAL IN IMC",
+      "mif_row": 16,
+      "source": "technique:9.40.2 FORMATION APPROACH",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, due to landing gear and flap configuration being directed with a visual signal after the flight had entered instrument conditions, did not pass the configuration by radio and left the wingman with no usable cue. The wingman stayed unconfigured while the lead decelerated, the speed split grew beyond 25 knots and the formation picture was lost in cloud. IP had to transmit the configuration call and separate the aircraft before the approach could be continued.",
+        "1": "SP, due to reliance on a wing rock and a hand signal for the gear direction while the flight was in cloud, did not use the radio call required in IMC and the wingman configured late by copying the lead's deceleration. The airspeed difference between the aircraft reached about 20 knots before the call was finally made at IP's direction. SP transmitted correctly only after being told that visual signals are not usable in IMC.",
+        "2": "SP, due to a configuration signal begun visually as the flight entered a cloud layer, did not pass the gear and flap direction by radio at the briefed point and received no response from the wingman. SP recognized that the signal could not be seen, transmitted the call in standard phraseology and the flight configured together with the speed split held near 15 knots. The correction was timely and required no IP prompting.",
+        "3": "SP directed landing gear and flap configuration by radio call as soon as the flight was in instrument conditions, in standard phraseology and at the briefed point. The wingman acknowledged and configured with the lead, and the speeds of the two aircraft stayed within 10 knots. The visual signal was used only while the flight was in visual conditions.",
+        "4": "SP matched the means of directing the configuration to the actual weather at every stage of the recovery, passing each gear and flap direction by radio once the flight was in cloud and confirming the acknowledgement before acting. The wingman configured simultaneously with the lead on every step. The speed and position of the flight were undisturbed by the configuration changes.",
+        "marginal": "SP directed the configuration acceptably, but the first change in cloud was preceded by a visual signal that went unanswered and the radio call followed only after a pause. The trend is a default to visual signals that is corrected after the fact rather than planned for the conditions. SP is expected to switch to radio calls for all configuration directions as soon as the flight enters IMC on the next formation recovery."
+      }
+    },
+    {
+      "id": "vfr_navigation-16-tm03",
+      "label": "PLACING THE WINGMAN OPPOSITE THE DIRECTION OF THE PENETRATION TURN",
+      "mif_row": 16,
+      "source": "technique:9.40.2 FORMATION APPROACH",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to the wingman being left on the inside of the coming penetration turn instead of being moved to the side opposite the direction of turn, did not set the formation geometry before starting the descent. The wingman was squeezed under the lead in the turn, had to open more than 20 feet beyond the fingertip lateral reference and lost the visual picture. IP had to roll out, reposition the flight and restart the penetration.",
+        "1": "SP, due to a penetration begun before the reposition to the side opposite the turn had been ordered, did not clear the wingman from the inside of the descending turn. The wingman held on only by opening to the outer limit of the lateral tolerance, about 20 feet wide of the reference, and the reposition was ordered only after IP called for it. SP did not link the direction of the penetration turn to the required side without prompting.",
+        "2": "SP, due to the penetration turn direction being confirmed on the radio after the wingman had already been placed, did not position the wingman on the correct side at the first opportunity. SP recognized the mismatch before the descent, called the wingman across to the side opposite the turn and started the penetration with the flight correctly set. Lateral position stayed inside about 10 feet of the reference and no IP prompting was required.",
+        "3": "SP positioned the wingman on the side opposite the direction of the penetration turn before starting the descent, so the turn opened rather than closed the formation. The wingman held the fingertip lateral reference within 10 feet throughout the penetration. The flight rolled out on the exit heading within 5 degrees of the planned course.",
+        "4": "SP established the penetration geometry well before the descent, moving the wingman to the outside of the coming turn and confirming the position before the first descent call. The wingman flew the whole penetration on the reference position with no perceptible change in lateral spacing. The roll-out on the exit heading was made with negligible error.",
+        "marginal": "SP set the formation on the correct side for the penetration, but the reposition was ordered as the descent was already being started and the wingman was still crossing at the first turn. The trend is a geometry arranged at the moment of need rather than before the penetration, which puts the wingman in transit during a configuration change. SP is expected to place the wingman on the side opposite the turn before the descent is begun on the next recovery."
+      }
+    },
+    {
+      "id": "vfr_navigation-16-tm04",
+      "label": "PLACING THE WINGMAN ON THE UPWIND SIDE OF THE LANDING RUNWAY",
+      "mif_row": 16,
+      "source": "technique:9.40.2 FORMATION APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the wingman being left on the downwind side of the landing runway when the penetration was started, did not apply the upwind side rule for the formation approach. The crosswind drifted the wingman toward the lead through the descent, the lead manoeuvred away and took the flight about 15 degrees off the approach course, and the spacing became unusable. IP had to break off the approach and set the flight up again.",
+        "1": "SP, due to the landing runway wind being taken from the recovery brief rather than from the current tower report, did not place the wingman on the upwind side before the approach. The wingman was drifted toward the lead through the descent and the flight reached the approach course about 10 degrees off, with the reposition ordered only after IP called the wind. The geometry was corrected but the extra work was carried into the turn to final.",
+        "2": "SP, due to the wingman being positioned for the penetration turn without also checking the landing runway wind, initially left the wingman on the downwind side. SP saw the drift building on the descent, moved the wingman upwind and rolled out on the approach course within about 5 degrees. The correction was made in good time and without IP intervention.",
+        "3": "SP positioned the wingman on the upwind side of the landing runway before the approach, so the crosswind carried the wingman away from the lead rather than into it. The flight tracked the final approach course within 5 degrees with no reposition required. The wingman held the reference lateral spacing throughout the approach.",
+        "4": "SP planned the recovery so that the wingman was on the upwind side of the landing runway and opposite the penetration turn from the first repositioning call, using the current surface wind. The wingman needed no lateral correction at any point of the approach and the flight tracked the final course with negligible error. The geometry required no adjustment after it was set.",
+        "marginal": "SP had the wingman on the upwind side, but the side was chosen from the runway in use rather than from the reported wind, which had already shifted across the centreline by the time of the approach. The trend is a placement taken by habit rather than from the actual wind, which will put the wingman downwind whenever the two disagree. SP is expected to confirm the surface wind before deciding the wingman's side on the next formation recovery."
+      }
+    },
+    {
+      "id": "vfr_navigation-16-tm05",
+      "label": "CONFIGURATION CROSS-CHECK AND THUMBS UP BEFORE THE GEAR DOWN CALL",
+      "mif_row": 16,
+      "source": "technique:9.40.2 FORMATION APPROACH",
+      "hf_concept": "hf-undetected-errors",
+      "texts": {
+        "0": "SP, due to the gear down call for both aircraft being transmitted before either cockpit had looked the other over, did not complete the configuration cross-check and did not exchange the thumbs up. The wingman was still unconfigured when the call went out, and the resulting deceleration split the airspeeds by more than 25 knots with the wingman well out of position. IP had to stop the approach, obtain both configurations by radio and reconfigure the flight.",
+        "1": "SP, due to a configuration check made on the lead aircraft alone, did not examine the wingman before returning the thumbs up and transmitted the gear down call without confirming the wingman's gear and flaps. The discrepancy came to light only when IP called for the wingman's state, by which time the airspeeds had split by about 20 knots. SP treated the thumbs up as a signal to be returned rather than as a check to be completed.",
+        "2": "SP, due to the thumbs up being returned while the wingman was still moving into a position from which the gear could be seen, did not verify the wingman's configuration before the exchange was closed. SP held the gear down call, looked the wingman over once the position was steady and then transmitted for both aircraft, keeping the speeds within about 15 knots. The sequence was recovered without IP prompting.",
+        "3": "SP checked the wingman's gear and flaps, returned the thumbs up only after that configuration was confirmed and transmitted the gear down call for both aircraft in the correct order. The two aircraft configured together and the speeds stayed within 10 knots through the change. Each step of the exchange was acknowledged before the next was begun.",
+        "4": "SP ran the configuration exchange exactly as briefed, receiving the wingman's thumbs up, checking the wingman's gear and flaps in turn and transmitting the single gear down call for both aircraft only once both configurations were confirmed. The flight configured as one aircraft with no perceptible change in position or spacing. Speed and formation deviations through the configuration change were negligible.",
+        "marginal": "SP completed the configuration exchange within standards, but the thumbs up was returned almost simultaneously with the wingman's signal and the actual look at the wingman's gear came after the gear down call. The trend is a confirmation performed as a courtesy rather than as a check, which would not catch a wingman who signalled with the gear still up. SP is expected to see the wingman's configuration before returning the thumbs up and before transmitting on the next formation approach."
+      }
+    },
+    {
+      "id": "vfr_navigation-16-tm06",
+      "label": "FLAP SETTING FOR THE FORMATION APPROACH IN THE TO POSITION",
+      "mif_row": 16,
+      "source": "technique:9.40.2 FORMATION APPROACH",
+      "hf_concept": "hf-lack-of-knowledge",
+      "texts": {
+        "0": "SP, due to the landing flap setting of a single ship approach being carried into the formation profile instead of the TO position flown on formation approaches, did not direct the correct flap configuration. The added drag forced a large power change, the speed fell more than 25 knots below the briefed approach figure and the wingman could not match the lead's deceleration. IP had to reset the flaps to TO and re-stabilize the flight.",
+        "1": "SP, due to a flap call taken from the single ship recovery habit pattern, directed a setting other than TO for the formation approach and did not correct it until IP named the required position. The airspeed reached about 20 knots away from the briefed figure while the flight re-stabilized on the inbound leg. SP did not recognize the flap position as a formation approach requirement without prompting.",
+        "2": "SP, due to the flap lever being moved past TO during the configuration change, did not leave the flaps at the position required for the formation approach. SP saw the flap indication on the following cross-check, reselected TO and held the airspeed within about 15 knots of the briefed figure. The correction was made before the turn to final and without IP intervention.",
+        "3": "SP directed and set flaps to the TO position for the formation approach and confirmed the indication before continuing. Airspeed was held within 10 knots of the briefed figure through the configuration change and the wingman matched the lead without a large power correction. The flap setting needed no revisiting during the approach.",
+        "4": "SP set flaps to TO as the standard configuration for a formation approach, confirmed the indication and anticipated the resulting trim and power change so that the flight path stayed undisturbed. The wingman held position through the configuration change on minor throttle corrections alone. Speed and altitude deviations across the change were negligible.",
+        "marginal": "SP flew the approach with the flaps in the TO position, but the selection was made hesitantly and the lever was checked against the indication only after the speed had begun to change. The trend is a configuration standard recalled during execution rather than briefed in advance, which invites the single ship flap setting under time pressure. SP is expected to brief and call the TO flap setting as part of the formation approach configuration on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-16-tm07",
+      "label": "SELECTION OF THE 110 KIAS INSTRUMENT APPROACH REFERENCE SPEED",
+      "mif_row": 16,
+      "source": "technique:9.40.2 FORMATION APPROACH",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the formation instrument approach being flown on a self-selected speed instead of the 110 KIAS reference, did not set a figure the wingman could fly and did not apply the wind or circling approach exceptions. The flight was taken down the approach more than 25 knots away from 110 KIAS, leaving the wingman without a stable power setting. IP had to set the approach speed and take control to re-establish the flight.",
+        "1": "SP, due to the airspeed being carried over from the navigation route rather than reset when the instrument approach was joined, did not establish the 110 KIAS reference for the formation approach. The indication settled about 20 knots away from the reference and was corrected only after IP stated the required figure. SP could name no wind or circling reason for departing from 110 KIAS.",
+        "2": "SP, due to the reference being reset only when the wingman queried the approach speed, did not establish 110 KIAS at the point the approach was joined. SP set the correct figure, told the wingman the reason for the earlier speed and had the flight within about 15 knots of the reference before the final approach fix. No IP intervention was required.",
+        "3": "SP established 110 KIAS for the formation instrument approach and held the indication within 10 knots, having confirmed that neither the reported winds nor a planned circling approach called for a different figure. The wingman flew the approach on a steady power setting. The reference was passed to the wingman before the approach was joined.",
+        "4": "SP selected the approach reference deliberately, confirming 110 KIAS against the reported winds and the planned approach type and passing the figure to the wingman before the descent. The speed was held on the reference throughout, so the wingman needed no power change other than at the configuration steps. Deviations from the reference speed were negligible.",
+        "marginal": "SP flew the approach on the 110 KIAS reference, but the figure was recalled during execution rather than briefed and the indication sat consistently on the fast side of it. The trend is a reference used as an approximate target instead of a stated approach speed, which gives the wingman a moving power datum. SP is expected to state the approach speed, and the reason for any departure from 110 KIAS, before joining the approach on the next sortie."
+      }
     }
   ]
 }

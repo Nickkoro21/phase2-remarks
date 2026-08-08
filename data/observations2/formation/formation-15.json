@@ -127,6 +127,111 @@
         "4": "SP assessed the aircraft condition to an exceptional standard, identifying a developing indication before it reached a limit, verifying it against the Flight Manual and presenting the leader with both the status and the recommended course of action. The decision on flight permissibility was made confidently and communicated in time for the flight to preserve the briefed timeline. Any imprecision in the assessment was negligible.",
         "marginal": "SP assessed the aircraft condition within standards, but the decision on flight permissibility was reached slowly and was clearly influenced by the flight's departure time. The trend is toward accepting the aircraft in order to keep the two-ship together rather than on the strength of the indications. SP is expected to make and report the serviceability decision on the Flight Manual criteria alone, independently of the flight schedule, on the next sortie."
       }
+    },
+    {
+      "id": "formation-15-tm01",
+      "label": "ENGINE START ON THE PILOT-TO-PILOT VISUAL SIGNAL OR ON THE LEAD-SET START TIME",
+      "mif_row": 15,
+      "source": "technique:9.27 GROUND OPERATIONS - START, BEFORE TAXI, TAXI, BEFORE TAKEOFF, AFTER LANDING",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to waiting for a pilot-to-pilot visual start signal from a parking position where the leader's cockpit was never in view, did not apply the start time set by the flight lead for aircraft parked beyond visual range. The engine was still unstarted more than five minutes after the leader had started, the flight missed its check-in and no report of the situation was made. IP had to direct the start and re-coordinate the whole sequence with the leader.",
+        "1": "SP, due to treating the lead-set start time as an approximate reference rather than as the briefed substitute for the visual signal, did not begin the start sequence at the set time. The start was initiated about two minutes late and only after IP called for it verbally, and the delay was absorbed by the flight at the holding point. The remainder of the sequence then followed the briefed order without further prompting.",
+        "2": "SP, due to an initial expectation of a visual signal, hesitated at the start of the sequence before recognising that the two aircraft were parked beyond visual range. SP applied the lead-set start time on own initiative, started inside the flight's start window and reported ready on the post-start check-in. No IP intervention was required.",
+        "3": "SP started the engine on the correct basis for the parking arrangement, taking the pilot-to-pilot visual signal while the leader was in view and the lead-set start time when the leader was not. The start fell inside the flight's start window and the aircraft was ready for the post-start check-in in the briefed sequence. No prompting was needed from the leader or from IP.",
+        "4": "SP fixed the start basis for the day's parking before strapping in and started the engine on the leader's signal without hesitation. The start was in step with the leader throughout and readiness was reached ahead of the check-in. Any deviation from the briefed sequence was not detectable.",
+        "marginal": "SP started on the correct basis, but the leader's signal was acknowledged late on each occasion and the lead-set start time was recalled only after a glance at the clock in the middle of the checklist. The trend is toward a start that depends on catching the leader's movement rather than on a reference fixed before engine start. SP is expected to confirm the start basis in the pre-flight briefing and to monitor the clock from the before-start check onward on the next sortie."
+      }
+    },
+    {
+      "id": "formation-15-tm02",
+      "label": "REPORTING A START OR TAXI DELAY TO NUMBER ONE ON THE POST-START CHECK-IN",
+      "mif_row": 15,
+      "source": "technique:9.27 GROUND OPERATIONS - START, BEFORE TAXI, TAXI, BEFORE TAKEOFF, AFTER LANDING",
+      "hf_concept": "hf-lack-of-assertiveness",
+      "texts": {
+        "0": "SP, due to an attempt to work a start difficulty out alone instead of informing Number One, did not report the extra time required on the post-start check-in and never used the standard needs-minutes format. The flight was held on the apron for more than five minutes with the leader unaware of the reason and with taxi clearance already issued. IP had to transmit the delay and re-coordinate the taxi with the leader.",
+        "1": "SP, due to reluctance to admit that extra time was needed, reported the delay only after IP prompted for it, and the report omitted the number of minutes required. The leader had to ask twice before the flight could be re-planned and the flight taxied about three minutes behind the briefed time.",
+        "2": "SP acknowledged the check-in without mentioning a pending item, then recognised the delay before the taxi call and transmitted the standard call stating the minutes required. The leader adjusted the taxi time and the flight departed inside its slot. No IP intervention was required.",
+        "3": "SP informed Number One of every difficulty that could delay start or taxi, transmitting the standard call with the exact number of minutes required on the post-start check-in. The leader was able to plan the taxi accordingly and the flight held its briefed timing. No prompting from the leader or from IP was needed.",
+        "4": "SP recognised the developing delay before the check-in and passed the requirement with the exact time needed in the standard format. The report reached the leader early enough that no flight timing had to be changed. Coordination with Number One was uninterrupted.",
+        "marginal": "SP reported the delay within standards, but the call was transmitted at the very end of the check-in sequence and the time requested was an optimistic estimate rather than the time actually needed. The trend is toward reports that reach the leader too late to be usable and that require a second update. SP is expected to pass the requirement as soon as it is recognised and to state a realistic figure on the next sortie."
+      }
+    },
+    {
+      "id": "formation-15-tm03",
+      "label": "READINESS SIGNAL TO NUMBER ONE BEFORE TAXI AND AFTER THE BEFORE TAKEOFF CHECKS",
+      "mif_row": 15,
+      "source": "technique:9.27 GROUND OPERATIONS - START, BEFORE TAXI, TAXI, BEFORE TAKEOFF, AFTER LANDING",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the before-taxi and before-takeoff checks being run entirely head-down without looking across at the leader, did not give the thumb's-up readiness signal before taxi and did not give it after the before takeoff checks at the runway holding point. The flight sat stationary at the holding point until the leader queried the flight on the radio, and SP did not fall back on the check-in when visual contact was lost. IP had to pass the ready signal and rebuild the ready sequence with the leader.",
+        "1": "SP, due to the readiness signal being treated as a courtesy rather than as the briefed means of reporting complete, gave the thumb's-up only after IP called for it at both the before-taxi point and the holding point. Each signal reached the leader roughly thirty seconds late and the flight's line-up was delayed by the same amount. No further coordination error followed.",
+        "2": "SP completed the before takeoff checks at the holding point and initially looked back inside before signalling, then recognised the omission and gave the thumb's-up to the leader without prompting. The delay to the leader was a few seconds and the flight lined up on schedule. IP did not have to intervene.",
+        "3": "SP gave the thumb's-up readiness signal to Number One when ready to taxi and again after the before takeoff checks were complete at the runway holding point, and awaited the check-in whenever the leader was not in visual contact. Each signal was given as soon as the corresponding checks were complete and was acknowledged by the leader at first presentation. No prompting was required.",
+        "4": "SP signalled readiness to Number One at both points the moment the corresponding checks were complete, with the aircraft correctly positioned for the leader to see the signal. The flight moved and lined up without any pause attributable to Number Two. Coordination with the leader was continuous.",
+        "marginal": "SP gave both readiness signals within standards, but each was given only after a short search for the leader's cockpit and the signal at the holding point was made with the hand low in the canopy. The trend is toward readiness reports that the leader has to look for rather than receive. SP is expected to position the signal clearly and to give it immediately on completion of the checks on the next sortie."
+      }
+    },
+    {
+      "id": "formation-15-tm04",
+      "label": "CLARIFICATION AND READ-BACK OF A TAXI CLEARANCE NOT FULLY UNDERSTOOD",
+      "mif_row": 15,
+      "source": "technique:9.27 GROUND OPERATIONS - START, BEFORE TAXI, TAXI, BEFORE TAKEOFF, AFTER LANDING",
+      "hf_concept": "hf-inquiry-and-advocacy",
+      "texts": {
+        "0": "SP, due to accepting a taxi clearance that was not understood instead of asking for clarification, did not read the clearance back and taxied on an assumed route. SP turned onto a taxiway that was not part of the clearance, broke the flight away from the leader and entered an area occupied by another taxiing aircraft. IP took the controls and the radio to stop the aircraft and obtain the correct clearance.",
+        "1": "SP, due to a habit of acknowledging clearances without reading them back, did not query a taxi instruction that differed from the standard route and had to be told by IP to ask for clarification. The correct routing was established only after two additional transmissions, and the flight held short of the first turn for about one minute. The remainder of the taxi followed the clearance.",
+        "2": "SP acknowledged an unusual taxi instruction without a full read-back, then recognised on the first turn that the holding point had not been understood and asked ground for clarification on own initiative. The routing was confirmed before the aircraft reached the next intersection and the flight stayed together. No IP intervention was needed.",
+        "3": "SP listened carefully to the taxi instructions and read the clearance back in full, and asked for clarification on the one occasion when the instruction was not clearly understood. The flight taxied on the cleared route with the leader at all times and no repeat transmission was needed. No IP intervention was required.",
+        "4": "SP read back every taxi clearance accurately at first transmission and resolved the one non-standard instruction with a single precise query. Ground control needed no repetition and the flight taxied without any routing doubt. Radio work added no delay to the flight.",
+        "marginal": "SP read back the taxi clearances within standards, but the read-backs omitted the holding point on two occasions and the query on the non-standard instruction was made only after the aircraft had started to move. The trend is toward clarifying the route after committing to it rather than before. SP is expected to read back the full clearance including the holding point and to resolve any doubt before releasing brakes on the next sortie."
+      }
+    },
+    {
+      "id": "formation-15-tm05",
+      "label": "OVERSPEED GOVERNOR CHECK: CLEARING THE AREA AND SMOOTH POWER APPLICATION",
+      "mif_row": null,
+      "source": "technique:3.10 OVER SPEED GOVERNOR CHECK",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the run-up being started without ensuring the area immediately in front of and behind the aircraft was clear, did not clear outside during the overspeed governor check and advanced power abruptly and higher than required to verify proper function. The aircraft crept forward against the brakes with the jet blast directed at ground equipment behind, and the control stick was left forward so the nose gear strut compressed during the check. IP took the power lever and the brakes to stop the aircraft and abandoned the check.",
+        "1": "SP, due to the clearing scan being limited to the area ahead, did not check behind the aircraft before the run-up and had to be told by IP to reposition before power was applied. Power was then advanced more rapidly than required and the check was repeated once on IP's verbal direction. The aircraft did not move but the whole run-up cost the flight about one minute at the holding point.",
+        "2": "SP began to advance power for the overspeed governor check with the control stick neutral but with the scan still inside, then recognised the omission, retarded the power lever, cleared in front and behind and repeated the check smoothly. Power was taken only as high as required and the aircraft remained stationary. No IP intervention was required.",
+        "3": "SP ensured the area immediately in front of and behind the aircraft was clear, cleared outside during the check and advanced power smoothly and slowly only as high as required to verify proper function of the overspeed governor. The control stick was held neutral to slightly aft so the nose gear strut did not compress, and the aircraft remained stationary on the brakes. No prompting was needed.",
+        "4": "SP cleared the area in front of and behind the aircraft, positioned the flight to keep jet blast off the leader and ran the check with a smooth, minimal power application. The stick was held neutral to slightly aft throughout and the aircraft did not move at all. The check added no delay to the flight.",
+        "marginal": "SP completed the overspeed governor check within standards, but the clearing scan behind was a single quick glance and power was advanced somewhat faster and slightly higher than needed to confirm the governor. The trend is toward a run-up that will move the aircraft or blast equipment on a more congested holding point. SP is expected to clear positively in both directions and to advance power slowly to the minimum required on the next sortie."
+      }
+    },
+    {
+      "id": "formation-15-tm06",
+      "label": "BRAKE AND NOSE WHEEL STEERING TECHNIQUE DURING FORMATION TAXI",
+      "mif_row": null,
+      "source": "technique:3.9 TAXI",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to taxi power carried well above idle to stay with the leader, rode the brakes continuously and used differential braking with nose wheel steering engaged in every turn instead of reducing power to idle with rudder. The aircraft accelerated through the taxi speed defined by LAP between turns and the brakes were still being dragged when the flight reached the holding point. IP took the controls to reduce power, stop the aircraft and allow the brakes to cool.",
+        "1": "SP, due to power left above idle after each turn, controlled the taxi speed almost entirely with the brakes and had to be reminded verbally by IP twice to retard the power lever to idle. Speed remained inside the LAP limit but the brakes were in use for most of the taxi and one turn was made with differential braking against engaged nose wheel steering. No aircraft damage or clearance issue resulted.",
+        "2": "SP initially carried extra power out of the parking area and applied brake against it, then recognised the technique error, retarded the power lever to idle and completed the remaining turns with rudder and nose wheel steering alone. Taxi speed stayed within the LAP value and braking became smooth and intermittent. No IP intervention was needed.",
+        "3": "SP initiated taxi at idle power, used the brakes only as necessary to control speed and did not ride them, and turned by applying rudder while reducing power to idle with nose wheel steering selected. Braking was smooth, even and cautious throughout and taxi speed remained within the value defined by LAP. No correction was required from IP.",
+        "4": "SP taxied at idle power with brake use limited to occasional, smooth applications, and every turn was flown with coordinated rudder and a power reduction to idle. Nose wheel steering was never fought with differential braking and the interval behind the leader stayed constant. Any variation in speed was negligible.",
+        "marginal": "SP handled brakes and nose wheel steering within standards, but power was reduced to idle only after the turn had begun and short brake applications were used to hold the interval on the straight sections. The trend is toward speed control by brake rather than by power setting, with the associated wear on the nose wheel steering and tire. SP is expected to set idle before initiating each turn and to control the interval with power on the next sortie."
+      }
+    },
+    {
+      "id": "formation-15-tm07",
+      "label": "AFTER LANDING: RUNWAY CLEARANCE, GROUND FREQUENCY CHECK-IN AND FORMATION TAXI BACK",
+      "mif_row": 15,
+      "source": "technique:9.27 GROUND OPERATIONS - START, BEFORE TAXI, TAXI, BEFORE TAKEOFF, AFTER LANDING",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to attention being released as soon as the aircraft was on the ground, did not clear the runway as briefed, did not check in on ground frequency and did not rejoin the leader for the formation taxi back. The aircraft was left on the runway edge for over a minute with the flight uncontactable and then taxied back on a route of its own while the flight had been briefed to taxi as a formation. IP had to take the radio, obtain the taxi clearance and reposition the aircraft on the leader.",
+        "1": "SP, due to the after-landing sequence being run without reference to the briefed recovery plan, cleared the runway but did not check in on ground frequency until IP called for it, and closed on the leader only after a verbal reminder. The flight taxied back together but the check-in was about thirty seconds behind the leader's call and required one repeat from ground.",
+        "2": "SP cleared the runway and initially began to taxi back single ship although the flight had never been split, then recognised the error, checked in on ground frequency and re-established the briefed taxi interval on the leader. The formation taxied back together from the first turn. No IP intervention was required.",
+        "3": "SP cleared the runway as briefed, checked in with the flight on ground frequency in the correct sequence and taxied back as a formation behind the leader. The single-ship taxi back was applied correctly on the sortie where the flight had been split. No prompting from the leader or from IP was needed.",
+        "4": "SP cleared the runway promptly, checked in on ground frequency at the first call and closed to the briefed taxi interval without any correction. The formation taxi back was flown at a constant interval to the parking area. Deviation from the recovery plan was not detectable.",
+        "marginal": "SP completed the after-landing sequence within standards, but the ground frequency check-in was made only after the leader had already been answered by ground and the interval on the taxi back was allowed to open and close through the turns. The trend is toward a recovery in which Number Two is following rather than flying the briefed formation taxi. SP is expected to check in on the leader's call and to hold a constant taxi interval to the parking area on the next sortie."
+      }
     }
   ]
 }

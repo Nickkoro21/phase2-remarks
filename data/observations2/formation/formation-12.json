@@ -127,6 +127,126 @@
         "4": "SP transitioned from the breakout to fully stabilized flight with no perceptible gap, all parameters settling on their values at once and remaining there. The aircraft was left in an ideal state from which further instructions from the formation leader or the IP could be accepted immediately.",
         "marginal": "SP stabilized the aircraft within standards after the breakout, but the parameters were allowed to wander for several seconds before the cross-check was resumed and the deviations were near the outer part of the band during that period. The maneuver is being treated as finished at the point of separation rather than at the point of stabilization. SP is expected to close out the breakout by re-establishing the cross-check without that pause."
       }
+    },
+    {
+      "id": "formation-12-tm01",
+      "label": "Clearing in the direction of the break and manoeuvring away from Number 1 last known position",
+      "mif_row": 12,
+      "source": "technique:9.14 FORMATION BREAKOUT",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to a break initiated without clearing in the direction of the break, manoeuvred toward the last known position of Number 1 instead of away from it. The direction selected did not ensure immediate separation and the flight path was driven back across the formation, with the exit heading finishing more than 10 degrees on the wrong side of the direction required. The IP took the controls and reversed the direction of the manoeuvre to open the geometry.",
+        "1": "SP, due to a clearing action taken only after bank had already been established, began the break in a direction that did not clearly move the aircraft away from the last known position of Number 1. The direction was corrected only after the IP verbally directed the break the other way, and the exit heading settled about 10 degrees off the required separation vector. Separation was eventually obtained, but the choice of direction was not SP work.",
+        "2": "SP, due to a hurried clearing glance in the direction of the break, initially selected a break vector that only partially moved the aircraft away from the last known position of Number 1. SP recognized that the divergence was weak, cleared again and adjusted the break, finishing about 7 degrees off the ideal separation heading with no IP intervention. The correction was timely and the geometry never became convergent.",
+        "3": "SP cleared in the direction of the break before applying bank and manoeuvred positively away from the last known position of Number 1. The direction chosen ensured immediate separation and the exit heading was held within 5 degrees of the vector required to open the geometry.",
+        "4": "SP cleared the airspace in the direction of the break as part of the initiating action and selected without hesitation the vector that moved the aircraft directly away from the last known position of Number 1. The break was flown on that vector from the first input, with negligible deviation of the exit heading from the direction that guaranteed separation.",
+        "marginal": "SP cleared in the direction of the break and moved away from the last known position of Number 1 within standards, but the clearing action was consistently a brief glance taken as the bank was going in rather than before it. The direction chosen was correct while remaining at the edge of what ensured immediate separation. SP is expected to clear first and commit to the vector that moves the aircraft away from Number 1 before any bank is applied."
+      }
+    },
+    {
+      "id": "formation-12-tm02",
+      "label": "Use of power and speed brake to maintain safe manoeuvring airspeed and expedite separation",
+      "mif_row": 12,
+      "source": "technique:9.14 FORMATION BREAKOUT",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a breakout flown on stick alone with no throttle or speed brake movement, did not use power as required to maintain safe manoeuvring airspeed while expediting the separation. Bank and back stick were held while the airspeed decayed more than 20 knots below the formation airspeed and the rate of separation stagnated. The IP intervened on the throttle to restore energy and complete the separation.",
+        "1": "SP, due to a late recognition that the manoeuvre was consuming energy, did not advance power in time to hold safe manoeuvring airspeed during the break. Power was added only after the IP called the decaying airspeed, by which point the excursion had reached about 20 knots and the separation had been slower than the situation demanded. Energy management during the break depended on IP prompting.",
+        "2": "SP, due to a power advance made after the bank rather than with it, allowed the airspeed to fall about 15 knots below the formation airspeed while separation was being generated. SP recognized the decay on the airspeed indicator, added power and cleaned the manoeuvre up without IP intervention. Safe manoeuvring airspeed was restored before the deviation grew further.",
+        "3": "SP used power and, where appropriate, speed brake as required during the break, holding the airspeed within 10 knots of the value needed for safe manoeuvring while expediting the separation. Energy was managed as part of the manoeuvre rather than as an afterthought, and the rate of separation was never limited by a lack of airspeed.",
+        "4": "SP moved the throttle with the first control input of the break, so that safe manoeuvring airspeed was preserved throughout and the separation was expedited without any airspeed excursion of note. The use of power and speed brake was matched exactly to the separation required, with negligible variation from the target airspeed.",
+        "marginal": "SP maintained safe manoeuvring airspeed during the break within standards, but the throttle was consistently moved after the manoeuvre had begun and the airspeed was allowed to sag toward the lower edge of the acceptable band before power was added. The trend is toward treating energy as a recovery item rather than part of the break. SP is expected to lead the manoeuvre with power so that the separation is expedited from the outset."
+      }
+    },
+    {
+      "id": "formation-12-tm03",
+      "label": "Abrupt oversized break inputs and the assumption that a breakout requires a high-G turn",
+      "mif_row": 12,
+      "source": "technique:9.14 FORMATION BREAKOUT",
+      "hf_concept": "hf-startle-effect",
+      "texts": {
+        "0": "SP, due to the assumption that a breakout always requires an abrupt high-G turn away from Number 1, applied a rapid increase in back stick pressure together with abrupt rudder and an abrupt advance to MAX power. The aircraft rolled past the desired bank angle and the nose was pulled well through, producing an altitude departure of more than 300 feet from the formation altitude and an airspeed excursion beyond 20 knots. The IP intervened on the controls to unload the aircraft and re-establish a controlled separation.",
+        "1": "SP, due to an abrupt application of rudder and a rapid increase in back stick pressure at break initiation, rolled past the desired bank angle and aggravated the manoeuvre rather than simply separating. The inputs were reduced to a controlled level only after the IP verbally directed a smoother break, with the altitude excursion reaching about 300 feet and the airspeed about 20 knots off. The separation was achieved, but through an abrupt manoeuvre that was not what the situation required.",
+        "2": "SP, due to an initial overreaction at break initiation, applied more back stick and bank than the geometry called for and momentarily exceeded the intended bank angle. SP recognized the overcontrol, relaxed the back pressure and settled the manoeuvre, containing the altitude excursion to about 200 feet with no IP intervention. The separation was positive and the manoeuvre finished under control.",
+        "3": "SP flew the breakout with control inputs sized to the situation, avoiding any rapid increase in back stick pressure or abrupt rudder application and matching the bank angle to the separation actually required. Altitude was held within 150 feet of the formation altitude and airspeed within 10 knots throughout the manoeuvre.",
+        "4": "SP recognized that the situation did not call for an abrupt high-G turn and separated with a smooth, correctly sized manoeuvre, free of rudder abruptness and of any advance of power beyond what was needed. The aircraft was flown precisely to the intended bank angle with negligible altitude or airspeed excursion while separation was positively established.",
+        "marginal": "SP kept the break inputs within standards, but the manoeuvre was consistently flown more aggressively than the geometry required, with back stick pressure applied quickly and bank angle taken slightly past the intended value before being settled. The pattern suggests a default toward the abrupt high-G interpretation of a breakout. SP is expected to size the manoeuvre to the separation actually needed rather than reaching for the most aggressive option."
+      }
+    },
+    {
+      "id": "formation-12-tm04",
+      "label": "Anticipation of disorientation when passing under Number 1 or viewing through the top of the canopy",
+      "mif_row": 12,
+      "source": "technique:9.14 FORMATION BREAKOUT",
+      "hf_concept": "hf-spatial-disorientation",
+      "texts": {
+        "0": "SP, due to no anticipation of the disorientation associated with passing under Number 1 and viewing the leader through the top of the canopy, fixated on the leader with the head fully back and lost the attitude picture. Sight of Number 1 was lost during the break, the aircraft was allowed to depart more than 300 feet from the formation altitude and the exit heading wandered beyond 10 degrees with no instrument cross-check taken. The IP intervened to recover the attitude and re-establish the separation.",
+        "1": "SP, due to a failure to anticipate the disorientation while passing beneath Number 1, held the visual on the leader through the top of the canopy without any reference to the attitude indicator. The developing altitude excursion of about 300 feet and the heading wander were arrested only after the IP called for an instrument cross-check. SP kept the leader in sight, but attitude control during that phase relied on IP prompting.",
+        "2": "SP, due to a momentary disorientation as the leader moved to the top of the canopy during the break, allowed the pitch and bank picture to degrade and the altitude to depart about 200 feet. SP recognized the sensation, cross-checked the attitude indicator and re-established the flight path in a timely manner with no IP intervention. Both the visual and the aircraft control were recovered before the deviation grew.",
+        "3": "SP anticipated the disorientation associated with passing under Number 1 and used caution while the leader was viewed through the top of the canopy, backing the visual picture with attitude reference. Altitude was contained within 150 feet and heading within 5 degrees of the intended values while sight of the leader was maintained throughout.",
+        "4": "SP briefed and expected the disorientation of the underneath pass, alternating between the visual on Number 1 and the attitude reference so that neither the sight of the leader nor the flight path was compromised at any point. Deviations in altitude and heading during that phase of the break were negligible.",
+        "marginal": "SP maintained aircraft control while passing under Number 1 within standards, but the head was held back on the leader for long periods with the attitude cross-check delayed until a deviation had begun to build. The trend is toward absorbing the disorientation rather than anticipating it. SP is expected to plan the underneath pass in advance and interleave the attitude reference with the visual on the leader."
+      }
+    },
+    {
+      "id": "formation-12-tm05",
+      "label": "Blind call content and action taken when the blind call is not acknowledged",
+      "mif_row": null,
+      "source": "technique:9.15 LOST SIGHT PROCEDURES",
+      "hf_concept": "hf-non-standard-phraseology",
+      "texts": {
+        "0": "SP, due to a transmission that gave neither call sign nor current altitude, made a lost sight call that did not allow Number 1 to deconflict the flight paths. With no acknowledgement received, SP continued to hold heading and altitude instead of manoeuvring away from the last known position of Number 1 and altering altitude, leaving the aircraft within 300 feet of the formation altitude and inside the leader turn. The IP transmitted the correct blind call and directed the altitude change.",
+        "1": "SP, due to a blind call transmitted without the current altitude, gave Number 1 an incomplete picture of the vertical geometry after sight was lost. The altitude was added and the aircraft manoeuvred away from the last known position only after the IP directed it, with the vertical separation still at about 300 feet when the action was finally taken. The procedure was completed, but the content of the call and the follow-up action came from the IP.",
+        "2": "SP, due to an initial call made with the call sign and the word blind but with the altitude appended late, delayed the moment at which Number 1 could build the vertical picture. SP recognized the omission, immediately restated the call with current altitude and, on receiving no prompt acknowledgement, manoeuvred away from the last known position and altered altitude without IP intervention. The correction was made in time and separation was assured.",
+        "3": "SP transmitted a complete blind call with call sign and current altitude as soon as sight was lost, and on the absence of a timely acknowledgement manoeuvred away from the last known position of Number 1 while altering altitude. The vertical separation established was positive and the exchange with the leader followed the prescribed content.",
+        "4": "SP made an immediate and correctly formatted blind call with call sign, blind and current altitude, adding the turn direction and heading where it helped the leader build the picture. Without waiting on the acknowledgement, SP altered altitude and manoeuvred clear of the last known position, so that flight path deconfliction was assured independently of the radio.",
+        "marginal": "SP made the blind call with the required content and altered altitude within standards, but the altitude element was consistently the last item of the transmission and the manoeuvre away from the last known position waited on the acknowledgement rather than starting with the call. The trend is toward treating the radio as the primary means of deconfliction. SP is expected to state the altitude within the initial call and to begin the separating manoeuvre without waiting on a reply."
+      }
+    },
+    {
+      "id": "formation-12-tm06",
+      "label": "Excessive range during the breakout and the directed roll out and visual sequence",
+      "mif_row": 12,
+      "source": "technique:9.31 BREAKOUT PROCEDURES (PRACTICE)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a break continued far beyond the point at which safe separation had been assured, obtained excessive range on Number 1 and lost the visual on the leader altogether. The roll out directed by Number 1 was not acknowledged and not flown, and the exit heading finished more than 10 degrees beyond the value that would have preserved the picture. The IP took the controls, rolled out and re-acquired the formation.",
+        "1": "SP, due to holding bank after the separation requirement had already been satisfied, allowed the range on Number 1 to open excessively during the practice breakout. The roll out was flown and the visual call made only after the IP repeated the direction from Number 1, with the exit heading about 10 degrees past the intended value. The recovery of the picture depended on IP prompting rather than on SP judgement.",
+        "2": "SP, due to a slightly prolonged break, opened more range on Number 1 than the exercise required before the situation was reassessed. SP recognized the trend, rolled out on the direction from Number 1, acknowledged it and called visual, finishing about 7 degrees off the intended exit heading with no IP intervention. The formation picture was recovered in good time and further direction was awaited.",
+        "3": "SP flew the breakout to the point at which safe separation was established and then held the geometry without opening excessive range on Number 1. The roll out directed by the leader was acknowledged and flown, the visual call was made and the exit heading was contained within 5 degrees of the intended value while further direction was awaited.",
+        "4": "SP stopped the break exactly where safe separation was assured, keeping Number 1 comfortably in sight and the range appropriate for the exercise throughout. The roll out was acknowledged and flown immediately, the visual call followed at once, and deviations from the intended exit heading were negligible.",
+        "marginal": "SP kept the range on Number 1 within acceptable limits, but the break was consistently held a little past the point at which separation had already been achieved, so the picture on the leader was thinning by the time the roll out came. The pattern points toward flying the manoeuvre to a fixed duration rather than to the separation actually obtained. SP is expected to reassess the geometry continuously and stop the break as soon as safe separation exists."
+      }
+    },
+    {
+      "id": "formation-12-tm07",
+      "label": "Unnecessary breakout from a small controllable 3/9 line overshoot",
+      "mif_row": null,
+      "source": "technique:9.24 OVERSHOOTS",
+      "hf_concept": "hf-overconfidence",
+      "texts": {
+        "0": "SP, due to treating a small and controllable 3/9 line overshoot as a mandatory breakout condition, abandoned a recoverable rejoin although the flight paths were not convergent and visual contact on Number 1 was never in doubt. The unnecessary manoeuvre took the aircraft more than 300 feet off the formation altitude and more than 10 degrees off the rejoin geometry, and the exercise had to be reset. The IP intervened to stop the manoeuvre and restore the rejoin.",
+        "1": "SP, due to an incorrect assessment of a minor 3/9 line overshoot, initiated a breakout that the geometry did not require, with nose-tail separation intact and the leader in sight throughout. The manoeuvre was stopped only after the IP identified that the flight paths were not convergent, by which time the departure from the formation altitude had reached about 300 feet. The decision to leave the formation was not supported by the situation.",
+        "2": "SP, due to an initial overreaction to a controllable overshoot across the 3/9 line, began to displace away from the formation before completing the assessment of the flight paths. SP re-evaluated in time, recognized that nose-tail separation and visual contact were both preserved, and returned to the overshoot recovery with about 200 feet of altitude excursion and no IP intervention. The rejoin was completed correctly.",
+        "3": "SP distinguished a small controllable 3/9 line overshoot from a condition requiring a breakout, confirming that the flight paths were not convergent and that visual contact and nose-tail separation were maintained. The overshoot was managed within the rejoin, with altitude held within 150 feet and the rejoin geometry preserved.",
+        "4": "SP assessed the overshoot accurately as it developed, judged that the flight paths were divergent and that visual contact and nose-tail separation were assured, and managed the geometry inside the rejoin without any unnecessary departure from the formation. Deviations in altitude and rejoin line during the recovery were negligible.",
+        "marginal": "SP correctly avoided an unnecessary breakout, but the assessment of the small 3/9 line overshoot was reached only after the aircraft had already started to displace away from the formation. The trend is toward reaching for the breakout before the flight paths and nose-tail separation have been evaluated. SP is expected to complete the assessment first and reserve the breakout for the conditions that actually impose it."
+      }
+    },
+    {
+      "id": "formation-12-tm08",
+      "label": "Responsibility for separation until acknowledgement and prohibition on rejoining until directed",
+      "mif_row": 12,
+      "source": "technique:9.14 FORMATION BREAKOUT",
+      "hf_concept": "hf-leadership-and-followership",
+      "texts": {
+        "0": "SP, due to treating the separation as complete the moment the aircraft was clear, began to close back on the formation without any acknowledgement of the breakout, without confirmation of visual contact by Number 1 and without altitude separation established. SP rejoined without being directed by Number 1, bringing the aircraft back inside 300 feet of the formation altitude while the leader was still manoeuvring predictably on the assumption of separation. The IP intervened to stop the closure and restore the spacing.",
+        "1": "SP, due to an early assumption that the breakout had been acknowledged, started to reduce the separation before Number 1 had confirmed visual contact or established altitude separation. The closure was stopped and the correct spacing re-established only after the IP directed it, with the vertical separation already reduced to about 300 feet. The discipline of holding position until directed was not maintained by SP.",
+        "2": "SP, due to an over-eagerness to get the formation back together, began to shape toward a rejoin line before the direction from Number 1 had been received. SP recognized that no rejoin had been directed, arrested the closure and held safe separation with about 200 feet of vertical spacing preserved and no IP intervention. The rejoin was subsequently flown only on the direction of the leader.",
+        "3": "SP maintained safe separation after the breakout until Number 1 acknowledged the manoeuvre, confirmed visual contact or established altitude separation, and made no attempt to rejoin until directed by the leader. The spacing held during that period remained comfortably outside 150 feet vertically and the rejoin was initiated only on direction.",
+        "4": "SP held the separation established by the breakout without any drift back toward the formation, waiting for the acknowledgement, the visual confirmation or the altitude separation from Number 1 before considering any change. The rejoin was flown only after it was directed, and the spacing maintained throughout the interval varied negligibly.",
+        "marginal": "SP held safe separation until directed and did not rejoin on its own initiative, but the spacing was allowed to erode slowly during the wait and the aircraft was consistently shaped toward the rejoin line before any direction had been given. The pattern points toward anticipating the rejoin rather than holding the separation. SP is expected to preserve the spacing unchanged until Number 1 acknowledges, confirms visual or directs the rejoin."
+      }
     }
   ]
 }

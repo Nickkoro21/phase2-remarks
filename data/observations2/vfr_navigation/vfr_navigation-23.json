@@ -112,6 +112,126 @@
         "4": "SP kept a running comparison of fuel and time against the plan and revised the recovery picture continuously as actual winds and groundspeed became known. Alternatives and decision points were identified and stated before they were needed, the profile was adjusted to extract maximum training value from the available fuel and time, and the aircraft recovered with the reserve exactly as planned.",
         "marginal": "SP monitored fuel and time and made a correct recovery decision within the required standards, but the assessment was made only when the figures were requested rather than as a continuous part of the navigation. The trend was toward reacting to the fuel state instead of anticipating it. SP is expected to state the recovery and divert picture at each turning point, before the situation forces the decision."
       }
+    },
+    {
+      "id": "vfr_navigation-23-tm01",
+      "label": "CLEARING THE AIRSPACE AND SYSTEMS MONITORING WHILE A DISTRACTION APPEARS ON THE ROUTE",
+      "mif_row": null,
+      "source": "technique:1.4.2 FLYING SAFETY",
+      "hf_concept": "hf-distraction",
+      "texts": {
+        "0": "SP, due to the absence of an aggressive disposition towards gaining and maintaining situational awareness, allowed an unexpected converging A/C and a system indication to become a complete distraction during a critical phase of the route. SP stopped clearing the airspace and stopped monitoring the A/C systems, so neither the traffic nor the aircraft state was being tracked while the leg continued. Separation from the converging traffic and the route parameters degraded beyond the acceptable limits and the IP took control to clear the aircraft and re-establish the navigation.",
+        "1": "SP, due to attention locking onto a caution indication shortly before a turning point, stopped clearing the airspace and did not visually acquire the converging A/C until the IP called it a second time. Lookout and systems monitoring were restored only after repeated verbal prompting, and the resulting closure and track error reached the limit of the acceptable standard. The indication itself was handled correctly, but the priority between flying, clearing and assessing the malfunction had to be imposed by the IP.",
+        "2": "SP, due to a momentary distraction while assessing an unexpected system indication on the leg, interrupted the lookout scan for several seconds. SP recognized the lapse without prompting, cleared the sector, acquired the reported traffic visually and resumed monitoring the A/C systems while continuing the planned track. The deviation stayed between the acceptable and the limiting values and no IP input was required.",
+        "3": "SP kept clearing the airspace and monitoring the A/C systems while assessing an unexpected indication and while acquiring converging traffic, without allowing either to displace flying the aircraft. Situational awareness of self and aircraft in relation to the traffic and the route was maintained continuously and the distraction produced no significant deviation from the planned track, altitude or timing.",
+        "4": "SP absorbed the converging traffic and the system indication as routine events, keeping the lookout scan, the systems monitoring and the navigation running in parallel throughout. The traffic was acquired before it was called, the indication was assessed and reported without interrupting the leg, and the route parameters remained unaffected.",
+        "marginal": "SP kept the aircraft within the required standards while handling the distraction, but the lookout scan and the systems monitoring visibly narrowed each time an unexpected event appeared. The trend was toward dealing with the event first and resuming clearing afterwards. SP is expected to maintain the clearing and monitoring pattern continuously, so that an unexpected malfunction or converging A/C is absorbed without a gap in situational awareness."
+      }
+    },
+    {
+      "id": "vfr_navigation-23-tm02",
+      "label": "MISSION PREPARATION, BRIEFING AND EXECUTION AS BRIEFED",
+      "mif_row": null,
+      "source": "technique:1.5 FLIGHT DISCIPLINE",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to mission preparation that did not include study of the profile or of the rules and procedures governing the route, showed up unprepared to fly and could not discuss the navigation at the briefing. Questions on the profile were left unanswered and the mission requirements were not understood before engine start, so the sortie was flown without the intended plan. The route was not executed as briefed, the deviations exceeded the acceptable limits and the IP had to rebrief in the air and take control to complete the profile.",
+        "1": "SP, due to incomplete study of the profile before the briefing, was able to state the route but not the governing guidelines and the restrictions applying to it. Several elements of the plan were understood only after the IP repeated them verbally in flight, and the resulting departures from the briefed execution reached the limit of the acceptable standard. The mission was completed, but the briefed sequence had to be reinforced from outside the plan.",
+        "2": "SP, due to a preparation gap on one segment of the profile, initially flew that leg differently from the way it had been briefed. SP identified the discrepancy against the briefing notes, stated it, and returned to the briefed execution for the remainder of the route without prompting. The departure from the plan stayed short of the limiting values and required no IP intervention.",
+        "3": "SP arrived prepared to fly, having studied the profile and the applicable rules and procedures, was on time and ready to discuss the mission, and left no question unanswered at the briefing. The navigation was then executed as briefed and in accordance with the governing guidelines from engine start to engine shutdown, and the debriefing points were recognized by SP without being raised first by the IP.",
+        "4": "SP prepared the mission to a standard that allowed the entire profile, its restrictions and its contingencies to be briefed from memory and discussed in depth. Execution matched the brief precisely from engine start to engine shutdown, real time adjustments were made within the briefed framework rather than outside it, and SP led the discipline portion of the debriefing with accurate self-assessment.",
+        "marginal": "SP prepared and executed the mission within the required standards, but the preparation covered the sequence of the route more than the rules and procedures governing it. The trend was toward flying the plan correctly while being unable to justify it against the governing guidelines. SP is expected to prepare the rules and restrictions to the same depth as the profile, so that execution as briefed is a deliberate choice rather than a habit."
+      }
+    },
+    {
+      "id": "vfr_navigation-23-tm03",
+      "label": "INTERRUPTED CHECKLIST NOT RESTARTED AT THE CORRECT POINT DURING THE ROUTE",
+      "mif_row": null,
+      "source": "technique:1.6 CHECKLIST DISCIPLINE",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP, due to an interruption from a radio call in the middle of a checklist on the leg, resumed at the point where the interruption was assumed to have occurred instead of restarting at the first step or two to three steps prior to the interrupted step. Items were omitted, a new checklist was started before the previous one had been completed, and completion was never positively confirmed. The omission left the aircraft configured incorrectly for the segment being flown and the IP had to stop the navigation, take control and run the checklist to restore the configuration.",
+        "1": "SP, due to resuming an interrupted checklist without backing up two to three steps prior to the interrupted step, omitted an item and did not detect the omission during the leg. The gap was identified only after the IP prompted, the checklist was then rerun, and the configuration error persisted long enough to place the affected parameter at the limit of the acceptable standard. Positive confirmation of completion was obtained, but only after external prompting.",
+        "2": "SP, due to an interruption during a checklist at a turning point, initially resumed one step after the interruption. SP recognized the risk of an omitted item, restarted two to three steps prior to the interrupted step as required and positively confirmed completion before starting the next checklist. Nothing was omitted, the excursion in the affected parameter stayed inside the acceptable values and no IP input was needed.",
+        "3": "SP handled every checklist interruption during the route by restarting at the first step of the checklist or two to three steps prior to the interrupted step, and positively confirmed completion before beginning the next one. No item was omitted, no new checklist was started before the previous one was complete, and the checklist work did not compete with flying the aircraft.",
+        "4": "SP planned the checklist work so that it fell between the high workload points of the route and was rarely interrupted at all. On the occasions when an interruption occurred, the restart point was applied without hesitation, completion was confirmed positively and the aircraft configuration matched the segment exactly at every stage.",
+        "marginal": "SP applied the correct restart point and omitted nothing, staying within the required standards, but checklists were repeatedly begun at the busiest points of the leg and therefore repeatedly interrupted. The trend was toward relying on the restart technique instead of protecting the checklist from interruption. SP is expected to start checklists where they can be completed without interruption and to keep the restart rule as the exception."
+      }
+    },
+    {
+      "id": "vfr_navigation-23-tm04",
+      "label": "LIP SERVICE TO CHECKLIST ITEMS AND (BOTH) CHALLENGE AND RESPONSE",
+      "mif_row": null,
+      "source": "technique:1.6 CHECKLIST DISCIPLINE",
+      "hf_concept": "hf-complacency",
+      "texts": {
+        "0": "SP, due to giving lip service to the checklist by calling the standardized phrase without actually performing the item or the required check, reported checklists complete while the associated switches and indications had never been verified. Items marked (BOTH) were treated as complete without challenging the PNF and without receiving a proper response, so no cross-cockpit verification existed at any point of the route. The aircraft was flown misconfigured for the segment beyond the acceptable limits and the IP took control and reran the checklists to establish the actual state.",
+        "1": "SP, due to reciting the mnemonic rather than performing each check behind it, reported a checklist complete with one item unverified and challenged a (BOTH) item without waiting for the response from the PNF. The discrepancy was found only when the IP questioned the item directly, and the resulting configuration error reached the limit of the acceptable standard before it was corrected. SP then reran the affected items correctly, but only under direct questioning.",
+        "2": "SP, due to a hurried standardized call at a turning point, initially treated a (BOTH) item as complete before the response from the other cockpit had been received. SP recognized that the challenge and response had not been closed, repeated the challenge, obtained the proper response and positively confirmed the item before continuing. Nothing remained unverified and the deviation stayed short of the limiting values without IP input.",
+        "3": "SP performed each checklist item and the required check behind it rather than the phrase alone, and positively confirmed completion of every checklist regardless of how it was accomplished. Items marked (BOTH) were initiated as a challenge to the PNF and were treated as complete only after a proper response was received, so the cockpit configuration was verified on both sides throughout the route.",
+        "4": "SP performed and verified every checklist item deliberately, with the standardized phrase used only as the label for a check that had actually been carried out. Challenge and response on (BOTH) items was crisp and unhurried at every stage, completion was confirmed positively each time, and the aircraft configuration matched the briefed profile exactly for the whole navigation.",
+        "marginal": "SP performed the checklist items and confirmed completion within the required standards, but the pace of the standardized calls occasionally ran ahead of the check being performed and of the response from the other cockpit. The trend was toward the phrase leading the action rather than following it. SP is expected to slow the calls to the rate of the actual checks, so that no item and no (BOTH) response is ever assumed."
+      }
+    },
+    {
+      "id": "vfr_navigation-23-tm05",
+      "label": "BINGO AND JOKER FUEL AT PRE-PLANNED TRANSITION POINTS OF THE NAVIGATION",
+      "mif_row": null,
+      "source": "technique:1.11 FUEL CONSIDERATIONS",
+      "hf_concept": "hf-divert-criteria-and-decision-points",
+      "texts": {
+        "0": "SP, due to omitting bingo fuel and at least one joker fuel from the mission brief, flew the route with no fuel gate at any pre-planned transition point and made no regular fuel checks. The bingo figure was passed without recognition and recovery was not initiated, so the aircraft continued toward the next turning point with the required arrival fuel already committed. The IP had to state the fuel state, direct the recovery and fly the aircraft back to the intended destination.",
+        "1": "SP, due to briefing a bingo fuel but no joker fuel for the transition points of the route, had no intermediate gate against which to assess progress and detected the bingo figure late. Recovery was initiated only after the IP stated the fuel remaining, and the aircraft arrived at the intended destination with the required fuel at the limit of the acceptable standard. The recovery itself was flown correctly, but the decision was neither self-initiated nor timely.",
+        "2": "SP, due to setting the joker fuel at a point that did not coincide with the planned transition between two segments, initially allowed the route to run past the intended decision point. SP identified the mismatch at the next regular fuel check, restated the joker figure against the actual transition point and adjusted the profile so that the bingo fuel was protected. The margin stayed inside the acceptable values and required no IP input.",
+        "3": "SP briefed bingo fuel and at least one joker fuel for the sortie, set the joker figures at the pre-planned transition points of the route and performed regular fuel checks throughout. Each joker gate was called and assessed as it was reached, the profile was adjusted where required, and the aircraft recovered to the intended destination with the required fuel intact.",
+        "4": "SP briefed bingo and multiple joker fuels matched to every transition of the profile and tracked the actual fuel against them continuously rather than only at the gates. Each gate was reached with the decision already prepared, the recovery was initiated ahead of bingo as the sortie duration required, and the aircraft arrived with the required fuel exactly as planned.",
+        "marginal": "SP briefed bingo and joker fuel and stayed within the required standards, but the joker gates were treated as figures to be read rather than as decision points to be acted on. The trend was toward passing a gate, noting it and continuing unchanged. SP is expected to state the decision associated with each joker fuel as it is reached, so that the bingo figure is never the first point at which the plan is reconsidered."
+      }
+    },
+    {
+      "id": "vfr_navigation-23-tm06",
+      "label": "COCKPIT ORGANIZATION SCALED TO THE COMPLEXITY OF THE NAVIGATION SORTIE",
+      "mif_row": null,
+      "source": "technique:8.5 TASK MANAGEMENT AND / OR COCKPIT ORGANIZATION",
+      "hf_concept": "hf-workload-distribution",
+      "texts": {
+        "0": "SP, due to treating the navigation sortie with the same level of organization as a local instrument sortie, brought no additional preparation for a profile that combined an instrument portion, a VFR route and practice approaches at the destination. Charts, logs, approach plates and frequencies were neither sequenced nor accessible, so each phase transition was met with the material for the previous phase still in use. Preparation for upcoming tasks stopped entirely, the profile fell behind the aircraft beyond the acceptable limits and the IP took control to reorganize the cockpit and continue the sortie.",
+        "1": "SP, due to organizing the cockpit only to the level required for a local sortie, was unprepared for the transition from the VFR route to the approach phase and had to search for the required material after the transition had begun. The next phase was set up only after the IP prompted with the frequency and the plate, and the resulting delay placed the profile at the limit of the acceptable standard. All tasks were eventually completed, but nothing had been prepared in advance.",
+        "2": "SP, due to organization that matched the route but not the change of phase at its end, arrived at the last turning point without the arrival material prepared. SP recognized that the sortie had become more complex than the preparation allowed, used the remaining leg to sequence the plates and frequencies and entered the approach phase set up and on time. The delay stayed inside the acceptable values and no IP input was required.",
+        "3": "SP applied the cockpit organization principles of the instrument sortie and added organization in proportion to the added complexity of the navigation profile. Material for each phase was prepared before the phase began, so the transitions between the instrument portion, the VFR route and the arrival were flown without any loss of position in the sequence.",
+        "4": "SP organized the cockpit so that each phase of the navigation was prepared well before it arrived, consistently finding ways to get ahead of the aircraft rather than keeping pace with it. Charts, logs, plates and frequencies were sequenced for the whole profile before takeoff and were revised in flight as the plan changed, so every phase transition was flown with spare capacity available.",
+        "marginal": "SP organized the cockpit sufficiently to stay within the required standards, but the preparation was completed just as each phase began rather than in advance of it. The trend was toward matching the pace of the sortie instead of getting ahead of it. SP is expected to prepare the material for the next phase while the current one is still routine, so that the added complexity of the navigation profile is absorbed before it is met."
+      }
+    },
+    {
+      "id": "vfr_navigation-23-tm07",
+      "label": "OPERATIONS CHECKS EVERY 15-20 MINUTES AND UPDATE OF THE CLOSEST DIVERT FIELD",
+      "mif_row": null,
+      "source": "technique:8.19.2 COCKPIT MANAGEMENT (CRM / student responsibilities)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to omitting the operations check from the route entirely, flew the navigation without any periodic review of fuel, systems and position and never updated the closest divert field as the route progressed. The divert field carried from the departure briefing remained unchanged for the whole sortie and bore no relation to the aircraft position at any later stage. When a divert was discussed the answer was unusable, the aircraft state had gone unmonitored beyond the acceptable limits and the IP took control to run the check and re-establish the recovery picture.",
+        "1": "SP, due to performing operations checks only when the workload allowed rather than at the required interval of every 15 to 20 minutes, left long stretches of the route unchecked and the closest divert field was not updated across two turning points. The check and the divert update were carried out only after the IP prompted, and the fuel and systems picture reached the limit of the acceptable standard before it was refreshed. The content of the check was correct once performed.",
+        "2": "SP, due to the workload at a turning point, allowed the operations check to slip past the required 15 to 20 minute interval. SP recognized the overdue check without prompting, completed it on the following leg and updated the closest divert field to match the actual position before the next turning point. The gap stayed inside the acceptable values and no IP input was required.",
+        "3": "SP performed operations checks every 15 to 20 minutes throughout the navigation and updated the closest divert field at each one, so fuel, systems and the recovery option were reviewed against the actual position on a regular cycle. The checks were fitted into the route without displacing the timing, the landmark identification or the radio work.",
+        "4": "SP ran the operations check on the required cycle without any reminder and used each one to update the closest divert field, the fuel picture and the systems state against the aircraft position at that moment. The checks were positioned in the quiet parts of the legs, the divert field was current at every point of the route, and the cycle continued unaffected by changes to the plan.",
+        "marginal": "SP performed the operations checks at the required interval and stayed within the standards, but the closest divert field was updated only when the route made the change obvious. The trend was toward treating the check as a fuel and systems review rather than as a recovery review. SP is expected to update the closest divert field at every operations check, so that the recovery option matches the aircraft position at all times."
+      }
+    },
+    {
+      "id": "vfr_navigation-23-tm08",
+      "label": "WINGMAN CONTRACT - QUERY WHEN UNSURE, SPEAK UP, AND DO NOT ACT UNTIL DIRECTED",
+      "mif_row": null,
+      "source": "technique:9.1 INTRODUCTION - PURPOSE, FLIGHT DISCIPLINE, AGGRESSIVENESS",
+      "hf_concept": "hf-inquiry-and-advocacy",
+      "texts": {
+        "0": "SP, due to a failure to meet the contractual obligations of the Number 2 role, acted before being directed by Number 1, accepted a directed task that was beyond his or her ability without saying so, and did not query when unsure of the assigned position. The flight was allowed to continue toward an unauthorized segment of the route without SP speaking up, and the position parameters for the directed formation were not held. Mutual support was lost, the deviation exceeded the acceptable limits and the IP took control to reposition the aircraft and stop the sequence.",
+        "1": "SP, due to reluctance to query Number 1 when the assigned position was unclear, remained out of the proper parameters for the directed position and made no radio call. The query was made only after the IP prompted and the correction to the briefed position was applied late, leaving the position error at the limit of the acceptable standard. SP responded correctly once directed, but the ambiguity was resolved from outside rather than by an immediate query.",
+        "2": "SP, due to an unclear directive during a turn at a turning point, was briefly uncertain of the assigned position and began to reposition before being directed. SP stopped the movement, queried Number 1 immediately, confirmed the position and then responded smoothly and in a timely manner. The excursion from the proper parameters stayed inside the acceptable values and no IP input was required.",
+        "3": "SP flew within the proper parameters for the position directed by the flight lead, did not act until directed by Number 1 and then responded smoothly and in a timely manner. Where the assigned position or a directive was unclear, SP queried immediately rather than continuing, and stated clearly when a directed task was outside his or her current ability.",
+        "4": "SP held the directed position parameters throughout the navigation with no tolerance for remaining out of position, and every response to Number 1 was smooth, timely and correctly sequenced. Ambiguity was resolved by an immediate and concise query on every occasion, and SP spoke up early and precisely when the developing situation would have taken the flight outside the briefed and authorized profile.",
+        "marginal": "SP met the wingman obligations within the required standards, but queries were raised only after a period of trying to resolve the ambiguity alone and corrections to position were begun before the directive was complete. The trend was toward absorbing uncertainty rather than voicing it. SP is expected to query Number 1 immediately when unsure and to withhold action until directed, so that mutual support does not depend on SP guessing correctly."
+      }
     }
   ]
 }

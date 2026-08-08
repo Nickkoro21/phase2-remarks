@@ -3,9 +3,14 @@
   "item_name": "CLEARING",
   "category": "vfr_navigation",
   "schema": "v2-trunk",
-  "mif_numbers": [21],
+  "mif_numbers": [
+    21
+  ],
   "mif_rows": [
-    {"sn": 21, "row_name": "Clearing"}
+    {
+      "sn": 21,
+      "row_name": "Clearing"
+    }
   ],
   "error_modes": [
     {
@@ -126,6 +131,126 @@
         "3": "SP used the R/T effectively to create safe separation from the air traffic, transmitting accurate and timely position reports with intentions at the planned points along the route and on pattern entry. Calls were phrased clearly and matched what the aircraft actually did. Other traffic was able to deconflict from SP's transmissions without further coordination.",
         "4": "SP used the R/T as an active separation tool, transmitting complete position and intentions ahead of each point where a conflict could form and coordinating directly with the traffic sharing the area. Every call was concise, standard and precisely timed to the phase of flight. Radio work removed potential conflicts before they required any maneuvering.",
         "marginal": "SP used the R/T to create separation within standards, but position reports were consistently at the late end of the useful window and intentions were sometimes stated only when questioned. The standard was met at every reporting point, with the least margin on the busiest frequency segments. SP is expected to transmit position and intentions earlier so that separation is established by the call rather than confirmed after it."
+      }
+    },
+    {
+      "id": "vfr_navigation-21-tm01",
+      "label": "Visual scanning technique - 20-30 degree arcs with a 3-5 second focus point",
+      "mif_row": null,
+      "source": "technique:1.16 CLEARING",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a lookout flown as one continuous sweep of the horizon instead of a search of successive arcs of approximately 20-30 degrees, never held the eyes on any single arc long enough for a target to be resolved. No distant point was used inside the arcs, so the scan produced no usable picture of the surrounding airspace and no aircraft was acquired visually during the whole route segment. The IP took control and cleared the sector before the next turn could be flown.",
+        "1": "SP searched in arcs that were far wider than the 20-30 degrees taught and dwelt on each for well under the 3-5 seconds required to focus on a distant point. Detection ranges stayed at the lowest acceptable limit and traffic was acquired only when it was already close abeam. The scan was broken down into proper arcs and dwell times only after repeated verbal direction from the IP, without control intervention.",
+        "2": "SP, due to the pace of the route work, compressed the scan into fast sweeps with a dwell time noticeably short of 3-5 seconds over one navigation leg. SP recognized that no distant focus point was being used, slowed the scan back to arcs of approximately 20-30 degrees and re-established normal detection ranges before the next turning point. The technique lapse stayed short of the limit and no separation issue developed.",
+        "3": "SP searched the airspace in successive arcs of approximately 20-30 degrees, focusing on a distant point such as a cloud or a ground reference within each arc for 3-5 seconds. The scan was sequenced so that the arcs overlapped and no sector was passed over without a focused look. Traffic was consistently acquired at ranges that left a normal avoidance option available.",
+        "4": "SP applied the arc-by-arc scanning technique precisely throughout the sortie, holding approximately 20-30 degrees per arc with a firm 3-5 second focus on a distant point and no sector left unsearched. The scan rate was adapted to the traffic density of the route and the pattern without ever degenerating into an unfocused sweep. Every visual acquisition was made at long range and reported before it became a factor.",
+        "marginal": "SP searched in arcs and used distant focus points within standards, but the dwell time drifted towards the low end of 3-5 seconds and the arcs widened as the navigation workload increased. The technique remained acceptable on every leg, with the margin narrowest between turning points where chart work was heaviest. SP is expected to hold arc width and focus time constant regardless of the cockpit task in progress."
+      }
+    },
+    {
+      "id": "vfr_navigation-21-tm02",
+      "label": "Refocusing outside after an instrument crosscheck",
+      "mif_row": null,
+      "source": "technique:1.16 CLEARING",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, after each crosscheck of the instruments, looked back outside without refocusing on a distant point, leaving the eyes at the natural resting focus of about 18 inches. The lookout was therefore nominally being flown while nothing beyond the canopy was actually being resolved, and traffic in clear air went undetected throughout the leg. The IP took control and manoeuvred clear of an aircraft that had remained unseen by SP.",
+        "1": "SP returned outside after instrument crosschecks with the eyes still set close to the cockpit focus distance and reacquired distant objects only slowly. Detection of nearby aircraft came at the lowest acceptable limit, after the traffic had already grown large in the canopy. SP began deliberately refocusing on a distant reference only after the IP verbally pointed out the omission, with no control intervention required.",
+        "2": "SP, due to a heavy instrument and GPS crosscheck at a turning point, transitioned outside once without refocusing on a distant point and searched an empty sky at close focus for a few seconds. SP recognized the effect unprompted, deliberately picked up a distant cloud to reset the focus and restored normal detection ranges before the next leg. No separation issue arose from the lapse.",
+        "3": "SP refocused on a distant point every time attention returned outside after an instrument crosscheck, countering the eye's natural focus at about 18 inches. Transitions between the cockpit and the outside picture were made deliberately, so that scanning always resumed with the eyes correctly set for distance. Traffic was detected at normal ranges throughout the route and the pattern.",
+        "4": "SP made every inside-to-outside transition through a deliberate refocus on a distant reference, so that no portion of the scan was flown at cockpit focus distance. The habit was applied consistently after navigation log work, GPS checks and systems crosschecks alike, with no loss of detection range at any stage. Visual acquisition remained uniformly long-range from departure to recovery.",
+        "marginal": "SP refocused outside after instrument crosschecks within standards, but the refocus was sometimes delayed by a second or two and the first look outside was made at close focus. The technique held on every leg, with the margin narrowing as head-down navigation work increased. SP is expected to make the distant refocus an explicit part of each transition back to the outside scan."
+      }
+    },
+    {
+      "id": "vfr_navigation-21-tm03",
+      "label": "Detecting an aircraft on a collision course - creating relative movement",
+      "mif_row": null,
+      "source": "technique:1.16 CLEARING",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, faced with traffic that stayed on a constant relative bearing and therefore appeared stationary in the canopy, did not use slight heading changes to create the relative movement needed to detect it and did not act on the traffic alert passed by ATC. No wing flash or rock was used although the aircraft was known to be close and had not been visually acquired. The IP took control and manoeuvred to guarantee the flight path was well clear.",
+        "1": "SP recognized only late that the reported traffic was holding a constant relative bearing and made the slight heading change needed to generate relative movement at the lowest acceptable limit. Visual acquisition came only after the aircraft had grown noticeably in the canopy. The heading change and the subsequent lookout into that quadrant were prompted verbally by the IP rather than initiated by SP.",
+        "2": "SP, due to the difficulty of picking up an aircraft that appeared stationary against the ground background, searched the reported quadrant for some time without result before recalling the technique. SP then applied a slight heading change unprompted, generated the relative movement required and acquired the traffic in good time to keep the flight path well clear. The delay stayed short of the limit and no avoidance manoeuvre was needed.",
+        "3": "SP treated traffic that appeared stationary in the canopy as a collision-course indication and used slight heading changes to create the relative movement required for detection. Where the aircraft was known to be close but not yet acquired, a wing flash was used to make the flight visible to the other pilot. Visual acquisition was achieved in time to keep the intended flight path well clear of the other aircraft.",
+        "4": "SP applied the constant-relative-bearing check continuously along the route and used small heading changes early, so that reported traffic was resolved against the background well before it became a factor. A wing flash or rock was used at once whenever another aircraft was known to be close but not visually acquired. Flight path clearance from every acquired aircraft was maintained with a wide margin and without abrupt manoeuvring.",
+        "marginal": "SP used heading changes to generate relative movement within standards, but the technique was applied only after a fairly long unsuccessful search of the reported quadrant. Acquisition was achieved on every occasion, with the margin narrowest for traffic converging from the forward quadrants. SP is expected to apply the heading change as soon as a target is suspected of holding a constant bearing rather than after the search has failed."
+      }
+    },
+    {
+      "id": "vfr_navigation-21-tm04",
+      "label": "Canopy bow masking and clearing turns for the blind spots",
+      "mif_row": null,
+      "source": "technique:1.16 CLEARING",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a head position held fixed against the canopy bows, left the sectors masked by the structure permanently unsearched and never used clearing turns to look into the blind areas beneath the fuselage and the wings. Whole quadrants of the working area were therefore never cleared before manoeuvring was initiated. The IP took control and flew the clearing turn required to establish that the area below and behind was clear.",
+        "1": "SP made only token head movement around the canopy bows and cleared the areas beneath the fuselage and wings at the lowest acceptable limit before manoeuvring in the training area. Clearing turns were flown with shallow bank and well short of approximately 90 degrees off the established heading, so the masked sectors were only partly exposed. The technique was corrected only after verbal direction from the IP, without control intervention.",
+        "2": "SP, due to attention held on the route timing, initiated one manoeuvre in the working area without first clearing the blind area under the nose. SP recognized the omission unprompted, flew a clearing turn with adequate bank to expose the masked sector and confirmed it was clear before continuing. The lapse stayed short of the limit and no conflict developed.",
+        "3": "SP accounted for the restrictions to visibility created by the canopy bows, moving the head to search the sectors they mask rather than accepting them as unviewable. Clearing turns were used when warranted to clear the blind spots beneath the fuselage and the wings, particularly in the training areas. Each turn used enough bank, up to approximately 90 degrees off the established heading, to expose the area being cleared.",
+        "4": "SP searched around the canopy bows continuously with deliberate head movement, treating the masked sectors as areas requiring more attention rather than less. Clearing turns were flown before every manoeuvre in the training area, with high enough bank and sufficient heading change to expose the full area beneath the fuselage and wings. No portion of the surrounding airspace was left unsearched at any point of the sortie.",
+        "marginal": "SP cleared around the canopy bows and beneath the aircraft within standards, but the head movement was limited and the clearing turns used less bank than needed to fully expose the lower blind spots. The requirement was met before every manoeuvre, with the margin narrowest in the training area. SP is expected to increase both head movement and clearing turn bank so that the masked sectors are searched as thoroughly as the open ones."
+      }
+    },
+    {
+      "id": "vfr_navigation-21-tm05",
+      "label": "Reliance on ATC separation and radar monitoring instead of see-and-avoid",
+      "mif_row": null,
+      "source": "technique:1.16 CLEARING",
+      "hf_concept": "hf-complacency",
+      "texts": {
+        "0": "SP, on the assumption that radar monitoring, the assigned flying area and ATC separation removed the need to look out, effectively suspended visual clearing for the whole leg. These aids assist in but do not relieve the pilot of the responsibility to clear, and SP had no visual picture of the traffic actually sharing the airspace. The IP took control and manoeuvred clear of an aircraft that neither ATC nor SP had called.",
+        "1": "SP treated the assigned area and the radar service as the primary means of separation and used the outside scan only as a secondary check, keeping visual clearing at the lowest acceptable limit. When a traffic call was received SP channelized on the reported position instead of prioritizing the search, although the accuracy of such information varies with conditions and capabilities. Full visual clearing was restored only after repeated verbal direction from the IP.",
+        "2": "SP, due to confidence in the radar service covering the working area, allowed the outside scan to thin out for a short period after being told the area was clear. SP recognized unprompted that the service assists in but does not relieve the responsibility to clear, restored a full scan and acquired the nearby traffic visually in good time. The lapse stayed short of the limit and separation was never in question.",
+        "3": "SP used radar monitoring, the assigned flying area and ATC separation as aids while retaining visual detection as the primary means of collision avoidance. Traffic information received was translated into a focused search of the correct quadrant rather than accepted as a complete picture. Clearing responsibility was exercised continuously regardless of the services being provided.",
+        "4": "SP maintained full see-and-avoid responsibility throughout, using the radar service and the area assignment purely to narrow the visual search rather than to replace it. Every traffic call was cross-checked visually and the reported information was weighed against what was actually seen. No period of the sortie relied on an external agency for separation.",
+        "marginal": "SP kept visual clearing as the primary means of separation within standards, but the scan visibly relaxed on legs where a radar service was being received. The responsibility was met throughout, with the margin narrowest inside the assigned working area. SP is expected to keep the lookout at the same intensity whether or not radar monitoring or ATC separation is available."
+      }
+    },
+    {
+      "id": "vfr_navigation-21-tm06",
+      "label": "Clearing priority on the low level route - heads up and eyes out",
+      "mif_row": null,
+      "source": "technique:8.19.6.d ROUTE BASICS - MISSION ELEMENT PRIORITIES",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to chart work carried out down in the cockpit instead of with the chart brought up to eye level, spent far less than eighty percent of the low level segment heads up and eyes out. Clearing was displaced by navigation rather than kept as the highest priority task, and terrain clearance was not the focus during the turns, where the greater part of the low level hazard lies. The IP took control to restore terrain and traffic clearance on the route.",
+        "1": "SP kept the outside picture at the lowest acceptable limit on the low level segment, with head-down chart reading long enough that heads-up time fell to the minimum tolerable. Focus returned to clearing only when prompted, and terrain clearance during the turns was maintained without margin to spare. The chart was raised to eye level and the priorities reordered only after verbal direction from the IP.",
+        "2": "SP, due to an identification problem at a checkpoint, read the chart low in the cockpit for one segment and let heads-up time drop below the intended eighty percent. SP recognized the drift unprompted, raised the chart to eye level and returned the focus to clearing outside before entering the next turn. The deviation stayed short of the limit and terrain and traffic clearance were never compromised.",
+        "3": "SP kept clearing as the highest priority task on the route, spending about eighty percent of the low level time heads up and eyes out. The chart was brought up to eye level to be read, so that the outside picture was retained while navigating, and the focus was always returned to clearing outside. Terrain clearance was given particular attention during the turns.",
+        "4": "SP integrated the mission elements in the correct priority order throughout the low level, with clearing consistently first and navigation tasks fitted around it. The chart was always read at eye level and no cockpit task pulled the eyes down for more than a brief interval. Terrain clearance during the turns was managed with a deliberate margin and the route was flown with the outside picture never lost.",
+        "marginal": "SP kept clearing as the priority task and the chart at eye level within standards, but heads-up time slipped towards the minimum on the busier route segments. The priorities held on every leg, with the margin narrowest in the turns where terrain clearance also demanded attention. SP is expected to plan chart work so that the eighty percent heads-up allocation is preserved even in the most demanding segments."
+      }
+    },
+    {
+      "id": "vfr_navigation-21-tm07",
+      "label": "Hazard call from the pilot not flying and 500 feet flight path clearance",
+      "mif_row": null,
+      "source": "technique:1.16 CLEARING",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, while not flying the aircraft, saw the developing hazard but did not point it out immediately to the pilot flying and passed no clock position, elevation or direction of tracking. With collision becoming imminent SP neither took control nor ensured the intended flight path was well clear of the other aircraft. The IP took control and manoeuvred to restore the 500 feet minimum clearance from the conflicting traffic.",
+        "1": "SP passed the hazard to the pilot flying at the lowest acceptable limit, with a call that lacked the clock position and the tracking information needed to make the traffic findable. The flight path was adjusted late and the resulting clearance was only just adequate. A complete traffic call in the standard format was made only after the IP directed it verbally, with no control intervention required.",
+        "2": "SP, due to hesitation over whether the contact was a factor, delayed the traffic call to the pilot flying by a few seconds. SP then made a complete call giving clock position, elevation and tracking without prompting and the flight path was adjusted early enough to stay well clear of the other aircraft. The delay stayed short of the limit and the 500 feet minimum was never approached.",
+        "3": "SP pointed out every hazard immediately to the pilot flying, using the standard format of clock position, elevation and direction of tracking. Where the geometry required it, SP was ready to take control and ensured the intended flight path stayed well clear of the other aircraft by at least 500 feet. Crew coordination on traffic was clear and unambiguous throughout.",
+        "4": "SP called every contact to the pilot flying as soon as it was acquired, with an accurate clock position, elevation and tracking that allowed immediate acquisition by the other cockpit. Flight path adjustments were agreed and made early, keeping clearance from other aircraft far in excess of the 500 feet minimum. The division of duties between pilot flying and pilot not flying was maintained without confusion at any stage.",
+        "marginal": "SP passed hazard calls to the pilot flying within standards, but some calls omitted the tracking element and were made a little later than the acquisition allowed. Clearance from other aircraft was maintained above the 500 feet minimum throughout, with the margin narrowest for converging traffic in the pattern. SP is expected to call each contact in the complete standard format at the moment it is seen."
+      }
+    },
+    {
+      "id": "vfr_navigation-21-tm08",
+      "label": "Lost sight of the other aircraft - blind call and altitude separation",
+      "mif_row": null,
+      "source": "technique:9.15 LOST SIGHT PROCEDURES",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP lost sight of the other aircraft and made no blind call at all, leaving the flight without the current altitude needed to deconflict and continuing to manoeuvre towards the last known position. A sun-blind condition earlier in the sortie was likewise treated as a transient nuisance rather than as an actual lost-sight case. The IP took control, transmitted the blind call and established the altitude separation required for deconfliction.",
+        "1": "SP called blind at the lowest acceptable limit, several seconds after visual contact was lost and without including the current altitude in the transmission. No manoeuvre away from the last known position was initiated while the call went unacknowledged. The complete blind call and the deconflicting manoeuvre were made only after the IP directed them verbally, with no control intervention required.",
+        "2": "SP, due to a momentary sun-blind condition during a turn, hesitated briefly over whether visual contact had genuinely been lost. SP then treated it correctly as an actual lost-sight case, transmitted the blind call with current altitude unprompted and held a safe flight path until the other aircraft was regained. The delay stayed short of the limit and deconfliction was never in doubt.",
+        "3": "SP called blind immediately on losing visual contact, stating call sign and current altitude, and manoeuvred away from the last known position when the call was not acknowledged in a timely manner. Where both aircraft were blind, the minimum 1000 feet of altitude separation directed was established and held until visual contact was regained. Relative position information was transmitted or acted upon correctly to rebuild the visual.",
+        "4": "SP transmitted the blind call the instant visual contact was lost, complete with altitude and the turn or heading in progress, and took positive action to guarantee flight path deconfliction. The 1000 feet altitude separation was established without delay whenever both aircraft were blind, and no rejoin was attempted closer than route position until visual was called. Every sun-blind moment was handled at once as an actual lost-sight case.",
+        "marginal": "SP made blind calls with altitude and achieved deconfliction within standards, but the calls came a little after the loss of visual and the altitude separation was established slowly. The procedure was completed correctly on each occasion, with the margin narrowest during turns into the sun. SP is expected to transmit the blind call as an immediate reflex and to open altitude separation without waiting for the picture to clarify."
       }
     }
   ]

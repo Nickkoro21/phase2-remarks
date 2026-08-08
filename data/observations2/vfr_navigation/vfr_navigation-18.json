@@ -157,6 +157,126 @@
         "4": "SP flew the base to final transition exactly on the planned roll-out point, arriving aligned on the runway centerline with no correction required. Bank remained comfortably inside the limit, the aircraft was flown clear of any approach to stall, and when a go-around was required it was initiated immediately and flown correctly without hesitation.",
         "marginal": "SP met the required standard on final track and bank, but the roll-out consistently placed the aircraft slightly outside the centerline and alignment was achieved only just before 1/2 NM from the threshold. The tendency is to delay the assessment of whether the approach is still acceptable rather than stating it early. SP is expected to plan the roll-out point more precisely and to call a go-around promptly whenever the approach parameters are no longer being met."
       }
+    },
+    {
+      "id": "vfr_navigation-18-tm01",
+      "label": "INITIAL POINT AIRSPEED, POWER SETTING AND RUNWAY ALIGNMENT",
+      "mif_row": null,
+      "source": "technique:5.5 INITIAL POINT (IP)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to setting neither the 200 KIAS nor the 50 percent plus 1 percent per 1,000 feet MSL power called for at the initial point, arrived on initial fast and out of level flight. The aircraft was never aligned with the landing runway and pattern altitude was left by more than 300 feet before the break. The IP took control, re-established the initial and reset the power.",
+        "1": "SP, due to omitting the initial point power setting and chasing airspeed with the PCL, arrived on initial well above 200 KIAS and did not hold the alignment with the landing runway. Pattern altitude was allowed to reach the 300 feet limit and the offset from the runway extension was removed only after the IP called both the power and the altitude.",
+        "2": "SP, due to carrying cruise power instead of 50 percent plus 1 percent per 1,000 feet MSL, initially accelerated through 200 KIAS and drifted off the runway alignment. SP detected the trend on the crosscheck, reset power and pitch for level flight and regained pattern altitude within about 200 feet and the alignment before the break zone, without prompting.",
+        "3": "SP flew the initial point at 200 KIAS with power set at 50 percent plus 1 percent per 1,000 feet MSL and pitch as required for level flight. The aircraft was aligned with the landing runway as described in the local LAP and pattern altitude was held within 150 feet all the way to the break.",
+        "4": "SP arrived on initial exactly aligned with the landing runway, stabilized at 200 KIAS with the computed power set before the run-in. Pitch was trimmed for level flight and altitude and airspeed excursions were negligible up to the break.",
+        "marginal": "SP held 200 KIAS and pattern altitude inside limits on initial, but power was found by trial rather than computed, so airspeed was still settling as the break zone approached. Alignment with the landing runway was achieved late and the residual offset was always to the same side. SP is expected to set 50 percent plus 1 percent per 1,000 feet MSL early and to establish the runway alignment before the run-in rather than during it."
+      }
+    },
+    {
+      "id": "vfr_navigation-18-tm02",
+      "label": "BREAK POINT, BANK AND BACKPRESSURE VARIED WITH WIND AND TRAFFIC SPACING",
+      "mif_row": null,
+      "source": "technique:5.6 BREAK",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to flying a fixed break picture with no allowance for the wind, used the no-wind bank and backpressure and rolled out well off the desired downwind ground track. Bank differed from the value required by the conditions by more than 15 degrees during the attempted correction and the turn was not kept level, so pattern altitude was left by more than 300 feet. The IP took control to re-establish the downwind spacing and altitude.",
+        "1": "SP, due to not varying angle of bank and backpressure with the wind conditions, carried too little bank through the break and did not adjust the break point for traffic spacing. The correction reached the 15 degrees bank limit and the level decelerating turn lost altitude to the 300 feet limit, both being recovered only after the IP called for more bank and a check of the altitude.",
+        "2": "SP, due to using the briefed no-wind break picture, initially rolled in with less bank than the wind required and began to overshoot the planned downwind track. SP recognized it early, increased bank and backpressure to stay within about 10 degrees of the value required and held altitude inside 200 feet, arriving on inside downwind at 120 to 147 KIAS.",
+        "3": "SP adjusted the break point inside the break zone, between the approach end and 3,000 feet down the runway, for the wind and for traffic spacing, cleared in the direction of turn and rolled smoothly into 45 to 60 degrees of bank with power at approximately 10 percent. Bank and backpressure were varied with the wind so the level decelerating turn stayed within 10 degrees of the required bank and 150 feet of pattern altitude, and the aircraft slowed to 120 to 147 KIAS on inside downwind.",
+        "4": "SP selected the break point for the existing wind and for the traffic ahead, cleared the turn and flew the 180 degree level decelerating turn with bank and backpressure matched to the conditions. Altitude and bank excursions were negligible and the aircraft arrived on inside downwind on the planned ground track at 120 to 147 KIAS. When directed to break beyond the normal break point, SP maintained 200 KIAS until the break and lowered the gear at mid-field downwind.",
+        "marginal": "SP broke inside the break zone and stayed within the bank and altitude standards, but the same bank was used regardless of the wind, so the roll-out was repeatedly displaced from the planned downwind track and needed a correction. The level turn tended to sag toward the low end of the acceptable altitude band as airspeed decayed. SP is expected to vary angle of bank and backpressure with the wind conditions and to select the break point for spacing rather than by habit."
+      }
+    },
+    {
+      "id": "vfr_navigation-18-tm03",
+      "label": "TRIM DURING THE DECELERATING BREAK AND HANDS-OFF TRIM AFTER CONFIGURING",
+      "mif_row": null,
+      "source": "technique:5.7 DOWNWIND",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to not trimming the control stick forces as airspeed decreased in the break and not trimming for zero control forces after the gear was lowered, flew the whole downwind holding a large out-of-trim force. The aircraft was never hands off, pattern altitude varied by more than 300 feet and airspeed was allowed to decay below the 120 KIAS minimum. The IP took control, trimmed the aircraft and re-established the downwind parameters.",
+        "1": "SP, due to leaving the trim set for break entry airspeed, carried a heavy stick force through the deceleration and did not trim to zero control forces after configuring. Pattern altitude reached the 300 feet limit and airspeed sat at the top of the band, 20 knots above the minimum, and trim was reset only after the IP called for it.",
+        "2": "SP, due to trimming only after each configuration change rather than continuously as airspeed decreased, initially held a noticeable stick force and let altitude wander by about 200 feet. SP recognized the out-of-trim state, trimmed for hands-off flight unprompted and had the aircraft stable at 120 KIAS minimum and on pattern altitude well before the perch point.",
+        "3": "SP trimmed control stick forces continuously as airspeed decreased in the break and trimmed for zero control forces, hands off, after lowering the gear. Pattern altitude was held within 150 feet and airspeed stayed within 10 knots above the 120 KIAS minimum with torque at approximately 30 to 35 percent.",
+        "4": "SP kept the aircraft in trim throughout the decelerating turn so that no stick force was carried at any airspeed, and the aircraft was hands off immediately after configuring. Altitude and airspeed excursions on downwind were negligible and the trim state required no further attention during the perch and final turn preparation.",
+        "marginal": "SP arrived at the perch trimmed and inside the downwind standards, but trim was applied in a few large inputs after each configuration change rather than as the airspeed decayed. The residual stick forces produced repeated altitude corrections at the edge of the acceptable band. SP is expected to trim continuously through the deceleration so that the aircraft is hands off from the moment the gear is down."
+      }
+    },
+    {
+      "id": "vfr_navigation-18-tm04",
+      "label": "DRIFT CORRECTION AND OFFSET OF THE DOWNWIND GROUND TRACK INTO THE WIND",
+      "mif_row": null,
+      "source": "technique:5.7 DOWNWIND",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to flying the downwind heading with no drift correction and no offset of the inside downwind ground track into the wind, allowed the spacing to open far beyond the approximately half mile used in no-wind conditions. The geometry that resulted could not be flown within the normal ground track and, while chasing it, SP left pattern altitude by more than 300 feet. The IP took control and repositioned the aircraft on the downwind.",
+        "1": "SP, due to applying the same drift correction as used on initial instead of approximately twice that amount, let the ground track converge on the runway and the spacing close inside the planned distance. Pattern altitude reached the 300 feet limit during the attempt to rebuild the geometry, and the correct offset was flown only after the IP specified the drift correction to hold.",
+        "2": "SP, due to underestimating the effect of the wind on the final turn, initially did not offset the inside downwind ground track into the wind and the spacing began to close. SP identified the drift early, doubled the correction used on initial and re-established a ground track parallel to the runway, holding altitude within about 200 feet and reaching the perch at 120 KIAS minimum.",
+        "3": "SP applied drift correction of approximately twice that used on initial and offset the inside downwind ground track into the wind to account for the effect of the wind on the final turn. The ground track stayed parallel to the runway at about half a mile adjusted for the conditions, with pattern altitude held within 150 feet and airspeed within 10 knots above the minimum.",
+        "4": "SP established the drift correction immediately after roll-out from the break and flew a ground track exactly parallel to the runway at the spacing the wind required. The offset was set so that the final turn could be flown at the planned 30 degrees of bank, and altitude and airspeed excursions on downwind were negligible.",
+        "marginal": "SP maintained a parallel ground track and stayed within the downwind standards, but the drift correction was built up in small steps and the spacing settled at the wide end of the acceptable range. The offset for the effect of the wind on the final turn was applied only near the perch point. SP is expected to set approximately twice the correction used on initial at roll-out and to displace the ground track into the wind from the start of the downwind."
+      }
+    },
+    {
+      "id": "vfr_navigation-18-tm05",
+      "label": "PERCH POINT IDENTIFICATION AND DISPLACEMENT FOR WIND",
+      "mif_row": null,
+      "source": "technique:5.8 PERCH AND FINAL TURN",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to starting the final turn without the touchdown point at approximately 45 degrees off the shoulder and without displacing the perch point into the wind, began the descending turn late with a strong headwind on final. The final was compressed well inside half a mile and the aircraft arrived more than 100 feet below the desired glidepath. The IP took control and executed a go-around.",
+        "1": "SP, due to using the no-wind perch picture with a headwind on final, did not begin the final turn earlier as the conditions required. The roll-out placed the aircraft at the low limit of the standard, 100 feet below the 3 to 4 degree glidepath at about half a mile, and the correction back to the glidepath was made only after the IP called the altitude.",
+        "2": "SP, due to judging the perch on distance rather than on the touchdown point being approximately 45 degrees off the shoulder, initially started the final turn slightly late. SP recognized the geometry, adjusted power and pitch and rolled out on the extended runway centerline at about half a mile within 75 feet of the desired glidepath, before any prompting.",
+        "3": "SP arrived at the perch point with the touchdown point approximately 45 degrees off the shoulder, properly configured and at 120 KIAS minimum, and displaced the perch point into the wind affecting the final turn. Roll-out was on the extended runway centerline between half and three quarters of a mile, with altitude within 100 feet above and 50 feet below the 3 to 4 degree glidepath.",
+        "4": "SP identified the perch point precisely from the 45 degree reference and corrected it for the wind on final without hesitation, beginning the final turn earlier into a headwind. The final turn produced a half to three quarter mile final on a 3 to 4 degree glidepath with negligible deviation and no correction required after roll-out.",
+        "marginal": "SP started each final turn from a perch that met the standard, but the point was consistently taken slightly past the 45 degree reference and the wind displacement was applied only once the drift became obvious. Roll-outs were repeatedly at the short end of the half to three quarter mile final with the glidepath just inside limits. SP is expected to displace the perch point into the wind and to begin the final turn earlier whenever a headwind is present on final."
+      }
+    },
+    {
+      "id": "vfr_navigation-18-tm06",
+      "label": "FINAL TURN ENTRY SEQUENCE FLAPS, POWER, PITCH, ROLL AND THE HALFWAY ALTITUDE CROSSCHECK",
+      "mif_row": null,
+      "source": "technique:5.8 PERCH AND FINAL TURN",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP, due to not using the flaps, power, pitch, roll prompt at the perch, rolled into the final turn before adjusting power and lowering the nose and did not counter the slight nose up produced as the flaps lowered. Halfway through the turn, perpendicular to the runway, the aircraft was far outside the 700 to 800 feet AGL expected in a 1,200 foot pattern and ended the turn more than 100 feet below the glidepath. The IP took control and flew a go-around.",
+        "1": "SP, due to omitting the power step of the flaps, power, pitch, roll sequence, entered the final turn nose high and allowed the aircraft to balloon as the flaps increased lift. The halfway crosscheck was well above the 700 to 800 feet AGL reference and the roll-out was at the 200 feet high limit on the glidepath, corrected only after the IP called for power and pitch.",
+        "2": "SP, due to applying the flaps, power, pitch, roll steps out of order, initially let the nose rise as the flaps lowered and the aircraft stayed high through the first part of the turn. SP used the crosscheck perpendicular to the runway, found the aircraft above the 700 to 800 feet AGL reference and corrected pitch and power to reach the roll-out within 100 feet of the desired glidepath.",
+        "3": "SP began the final turn with the flaps, power, pitch, roll prompt, anticipating the slight nose up as the flaps lowered, and made the gear down call when able. The composite crosscheck of the intended landing point, the rollout point and airspeed was maintained, and altitude halfway through the turn was approximately 700 to 800 feet AGL for the 1,200 foot pattern.",
+        "4": "SP flew the final turn entry as one smooth sequence, with power, pitch and bank set together and the flap induced pitch change absorbed without any altitude excursion. The halfway crosscheck matched the 700 to 800 feet AGL reference and the descent angle projected just short of the intended aim point, so the roll-out on final required no correction.",
+        "marginal": "SP used the correct entry prompt and met the standard, but power was normally set after the roll into bank, so the first part of every final turn was flown slightly high before being brought back. The halfway altitude crosscheck was made late and the aircraft met the reference only just inside limits. SP is expected to complete flaps, power, pitch, roll as a single action and to pick and visualize the rollout point before beginning the turn."
+      }
+    },
+    {
+      "id": "vfr_navigation-18-tm07",
+      "label": "BREAK-OUT FROM INSIDE DOWNWIND WHEN THE CRITERIA FOR CONTINUING ARE NOT MET",
+      "mif_row": null,
+      "source": "technique:5.8 PERCH AND FINAL TURN",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to continuing a pattern whose spacing could not be maintained within the normal ground track, did not break out from inside downwind although the aircraft was not properly configured by the perch point and the traffic in the final turn was not in sight. The final turn was started anyway, the bank required went outside the standard and pattern altitude was left by more than 300 feet. The IP took control and broke the aircraft out of the pattern.",
+        "1": "SP, due to pressing on rather than accepting that the spacing had been lost, delayed the decision to break out from inside downwind. Downwind airspeed and altitude reached the limits of the standard while the spacing was worked, and the break-out was flown only after the IP directed it.",
+        "2": "SP, due to a late start on the configuration, approached the perch point without being properly configured. SP recognized that the criteria for continuing were not met, broke out from inside downwind using local procedures without prompting, and re-entered with airspeed within 10 knots of the minimum and altitude within 150 feet.",
+        "3": "SP checked the pattern against the published break-out criteria and broke out from inside downwind, pattern status permitting, when the aircraft was not properly configured by the perch point and when spacing could not be maintained within the normal ground track. Downwind airspeed stayed within 10 knots above the minimum and altitude within 150 feet throughout.",
+        "4": "SP assessed the pattern continuously against the break-out criteria and decided early, always before the perch point, so the break-out was flown as a planned manoeuvre with negligible altitude and airspeed excursions. Traffic in the final turn, straight-in aircraft inside 2 miles, spacing and configuration were all covered by the decision and stated clearly on the intercom.",
+        "marginal": "SP did break out when the criteria required it and stayed within the downwind standards, but the decision came at the perch point after an attempt to salvage the spacing. Configuration on those patterns was completed at the late end of the acceptable window. SP is expected to check the break-out criteria abeam the tower and to decide early rather than at the last acceptable moment."
+      }
+    },
+    {
+      "id": "vfr_navigation-18-tm08",
+      "label": "FORMATION RECOVERY BREAK INTERVAL AND DOWNWIND POSITION AS NUMBER 2",
+      "mif_row": null,
+      "source": "technique:9.40.1 FORMATION RECOVERY - DESCENT TO VFR PATTERN, BREAK AND LANDING",
+      "hf_concept": "hf-lack-of-assertiveness",
+      "texts": {
+        "0": "SP, as Number 2, due to starting the turn less than the minimum of 5 seconds after Number 1's Break, arrived on downwind with no usable spacing and inside Number 1's ground track. SP then followed a poorly flown pattern instead of going around, and downwind altitude and airspeed were left outside the standard by more than 300 feet and 20 knots. The IP took control and took the aircraft out of the pattern.",
+        "1": "SP, as Number 2, due to breaking early without taking the full 5 second interval, closed the downwind spacing and had to fly inside Number 1's ground track. Downwind altitude and airspeed reached the limits of the standard while the spacing was rebuilt, and the go-around was flown only after the IP directed it.",
+        "2": "SP, as Number 2, due to judging the interval by feel rather than taking the minimum of 5 seconds, initially turned early and drifted inside Number 1's downwind ground track. SP recognized the closure, moved the ground track to the outside as required and re-established the spacing, with airspeed corrected inside 10 knots and altitude inside 150 feet before the perch point.",
+        "3": "SP, as Number 2, waited a minimum of 5 seconds after Number 1's Break before starting the turn and flew the downwind slightly outside Number 1's ground track. The rest was flown as a normal contact pattern with the same perch point, holding downwind airspeed within 10 knots above the minimum and altitude within 150 feet.",
+        "4": "SP, as Number 2, took the interval precisely, rolled out with correct spacing and held a downwind ground track just outside Number 1's, with negligible altitude and airspeed excursions. When Number 1's pattern developed poorly, SP did not follow it but flew a go-around immediately and re-entered as briefed.",
+        "marginal": "SP, as Number 2, met the interval and the downwind standards, but the turn was consistently started at the earliest acceptable moment and the ground track was only just outside Number 1's. Spacing was then held with power changes on downwind rather than being set by the initial interval. SP is expected to take the full interval after Number 1's Break and to set the downwind offset at roll-out so that the perch point can be flown normally."
+      }
     }
   ]
 }

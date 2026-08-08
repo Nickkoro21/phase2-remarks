@@ -3,9 +3,14 @@
   "item_name": "BASIC A/C CONTROL / WINGMAN CONSIDERATION",
   "category": "vfr_navigation",
   "schema": "v2-trunk",
-  "mif_numbers": [5],
+  "mif_numbers": [
+    5
+  ],
   "mif_rows": [
-    {"sn": 5, "row_name": "Basic A/C control"}
+    {
+      "sn": 5,
+      "row_name": "Basic A/C control"
+    }
   ],
   "error_modes": [
     {
@@ -111,6 +116,126 @@
         "3": "SP maintained the briefed formation position throughout the route while carrying out the navigation task, holding line, spacing and step-down in accordance with the corresponding Formation criteria applied to this sortie. Position corrections were small and smooth and were made without any call from lead.",
         "4": "SP held the briefed formation position throughout the route with negligible variation, dividing attention between lead and the navigation task without either being neglected. Line, spacing and step-down were maintained through the turns and the altitude changes. Every correction was anticipated from lead's aircraft rather than made in reaction to it.",
         "marginal": "SP held the formation position within standards, but the position was maintained in bursts, tightening each time SP looked out and drifting while the navigation task was worked head-down. The trend is a visual scan that leaves lead unmonitored for too long at a time, so the position is recovered rather than held. SP is expected to break the navigation task into shorter head-down periods and to keep a continuous reference on lead during the next formation navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-05-tm01",
+      "label": "TRIM NOT SET AFTER LEVEL-OFF AND POWER CHANGES",
+      "mif_row": null,
+      "source": "technique:8.19.4 DEPARTURE (VFR Navigation)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the aircraft being left out of trim after the level-off at the en route altitude, did not re-trim for the cruise condition and flew the first leg against continuous stick pressure. The altitude wandered more than 400 feet from the briefed level and the aircraft drifted more than 15 degrees off the planned track before any correction was attempted. The standing control pressure and the resulting uneven fuel flow were not recognized by SP at any stage. IP had to take the controls, trim the aircraft and re-establish it on altitude and heading.",
+        "1": "SP, due to poor trim carried from the departure into the first en route leg, did not set the trim for the cruise power setting and continued to fly the leg against residual control pressure. Altitude excursions reached 300 feet and the heading wandered up to 10 degrees either side of the planned track. Trim was set only after IP called for it twice, and the same pattern reappeared after the next power change.",
+        "2": "SP, due to trim not being reset after the power reduction at level-off, did not remove the residual stick pressure and allowed the altitude to drift about 200 feet with a heading error of some 7 degrees. SP recognized the standing control pressure during the cross-check, trimmed the aircraft and re-established the leg parameters within the same leg. No prompting from IP was required.",
+        "3": "SP trimmed the aircraft immediately after the level-off and re-trimmed after each power change on the route, so altitude stayed within 150 feet and heading within 5 degrees of the planned values. Control pressures were kept off the stick and the fuel flow remained even. Trim was checked again after each turning point.",
+        "4": "SP kept the aircraft in trim throughout the route, re-trimming after every power and altitude change before any deviation could develop. Altitude and heading were held with negligible error and the fuel flow remained steady across the whole leg structure. Cockpit workload stayed low because the aircraft was stabilized by trim rather than by control pressure.",
+        "marginal": "SP kept altitude and heading inside standards, but the aircraft was flown with residual control pressure and trim was set only after the deviation had become visible on the instruments. The trend is trim used as a correction instead of as the means of stabilizing the leg, which leaves the errors near the outer part of tolerance and increases fatigue over a long route. SP is expected to trim immediately after each level-off and power change on the next navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-05-tm02",
+      "label": "CLEARING PRIORITY - CHART READ DOWN IN THE COCKPIT INSTEAD OF AT EYE LEVEL",
+      "mif_row": null,
+      "source": "technique:8.19.6.d ROUTE BASICS - MISSION ELEMENT PRIORITIES",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to the chart being read down in the cockpit instead of being brought up to eye level, did not keep the required share of route time heads up and eyes out and abandoned the outside scan for long uninterrupted periods. Clearing, which is the highest priority task on the route, was displaced by the chart work while the altitude ran more than 400 feet from the briefed level and the track error grew unchecked. Neither the loss of lookout nor the developing deviation was recognized by SP. IP had to intervene to restore the visual scan and to re-establish the aircraft parameters.",
+        "1": "SP, due to chart reading performed low in the cockpit rather than at eye level, did not keep close to eighty percent of the route time heads up and eyes out and interrupted the outside scan for long blocks at a time. Altitude reached 300 feet from the briefed level and the heading up to 10 degrees off the planned track during those blocks. The lookout and the parameters were restored only after repeated calls from IP.",
+        "2": "SP, due to the chart being held low for the first checkpoint identification, did not bring it up to eye level and lost the outside scan for a noticeable period, with the altitude drifting about 200 feet and the heading about 7 degrees. SP recognized the deficiency, raised the chart to eye level for the remaining checkpoints and re-established the parameters without prompting. Clearing was thereafter given priority over the chart work.",
+        "3": "SP brought the chart up to eye level for every identification, kept the greater part of the route time heads up and eyes out and returned the focus to clearing outside after each check. Altitude stayed within 150 feet and heading within 5 degrees while the chart was being used. The navigation tasks were fitted around the lookout rather than the reverse.",
+        "4": "SP kept the chart at eye level throughout and interleaved short glances with a continuous outside scan, so clearing was never displaced by the navigation task. Altitude and heading remained essentially on the planned values during every identification. Checkpoint work was completed with no perceptible loss of visual lookout.",
+        "marginal": "SP held the required parameters within standards and did raise the chart, but the identifications were still worked as long single looks with the chart low in the cockpit before being corrected. The trend is a chart technique that concentrates head-down time instead of breaking it into short glances at eye level, so both clearing and the flown parameters degrade toward the edge of tolerance in the seconds before each checkpoint. SP is expected to keep the chart at eye level and to return the focus outside between glances on the next navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-05-tm03",
+      "label": "TASKS PERFORMED DURING TURNS INSTEAD OF FLYING THE AIRCRAFT AND CLEARING",
+      "mif_row": null,
+      "source": "technique:8.19.6.d(8)(g)-(h) BIG PICTURE AND ALTITUDE CONTROL",
+      "hf_concept": "hf-distraction",
+      "texts": {
+        "0": "SP, due to cockpit tasks continued through the turn at the turning point instead of flying the aircraft and clearing and doing nothing else, did not maintain terrain and traffic clearing where it is most critical and did not control the aircraft in the turn. The bank was allowed to steepen with the altitude running more than 400 feet below the briefed level and the roll-out more than 15 degrees off the new leg heading. The descent in the turn was not recognized by SP from the altimeter or the attitude indicator. IP had to take the controls to stop the descent and complete the roll-out on the planned track.",
+        "1": "SP, due to the fuel check and the log entry being worked inside the turn rather than after the roll-out, did not give the turn the undivided attention required and allowed the aircraft to descend 300 feet while banked. The roll-out finished 10 degrees off the new leg heading and the aircraft was re-established only after IP called both the altitude and the heading. The same task loading was carried into the following turn.",
+        "2": "SP, due to a chart check started before the roll-out was complete, did not keep the scan on aircraft control and clearing through the turn and lost about 200 feet with a roll-out error of some 7 degrees. SP recognized the deviation on the altimeter, deferred the remaining cockpit tasks until wings level and re-established altitude and heading inside the leg. No IP intervention was required.",
+        "3": "SP flew each turn at the turning points with the attention on aircraft control and clearing only, deferring the chart, fuel and log tasks until after the roll-out. Altitude was held within 150 feet through the turns and the roll-out was within 5 degrees of the new leg heading. Terrain clearance was visually assessed before and during each turn.",
+        "4": "SP protected every turn from cockpit tasks, cleared the flight path into the turn and rolled out on the planned heading with negligible altitude loss. The navigation work was sequenced entirely into the straight segments where it belonged. Turns were flown as a discrete task from entry to roll-out.",
+        "marginal": "SP kept altitude and roll-out heading within standards through the turning points, but cockpit tasks were still being carried into the first part of each turn and only set aside once the bank was established. The trend is task loading that overlaps the most critical phase of the route, so the deviations grow through the turn and are recovered after the roll-out rather than prevented. SP is expected to complete or defer all cockpit tasks before initiating the turn on the next navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-05-tm04",
+      "label": "BIG PICTURE - ALTIMETER NOT CROSSCHECKED AGAINST KNOWN ELEVATIONS",
+      "mif_row": null,
+      "source": "technique:8.19.6.d(8)(g)-(h) BIG PICTURE AND ALTITUDE CONTROL",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to an altimeter that was never crosschecked against the known elevation of towers, lakes, airfields and peak elevations along the route, did not verify the actual height above the ground and did not use the major terrain features to keep the big picture. The aircraft was flown more than 400 feet from the briefed level with the positional awareness lost, and no climb was initiated although the route structure allowed it and the position was in doubt. IP had to intervene to re-establish the aircraft and to re-orientate the flight on the route.",
+        "1": "SP, due to the height above the ground being assessed from the altimeter alone without any crosscheck against the elevations of known features, did not detect the developing error and reached 300 feet from the briefed level with the track wandering up to 10 degrees. The major terrain features abeam the leg were not used for positional awareness and the doubt about position was allowed to persist. Both the altitude and the orientation were resolved only after IP prompted the crosscheck.",
+        "2": "SP, due to a visual assessment of the height above the ground that was not backed by a crosscheck of the altimeter against a known lake and airfield elevation, did not confirm the level early and drifted about 200 feet with a heading error of some 7 degrees. SP used the next major terrain feature to re-establish the big picture, checked the altimeter against its known elevation and returned to the briefed profile without prompting. The remaining legs were flown with the crosscheck restored.",
+        "3": "SP used the major terrain features along the route to maintain positional awareness and crosschecked the altimeter against the known elevations of the features passed. Altitude was held within 150 feet and the track within 5 degrees, and the intention to climb early if the position became doubtful was stated. The big picture was retained through every leg change.",
+        "4": "SP maintained the big picture continuously from the major terrain features, confirming each with the known elevation against the altimeter and keeping the height above the ground visually assessed. Altitude and track error at each checkpoint were negligible and the position was never in doubt. Where the route structure allowed it, altitude was used deliberately to make the visual navigation easier.",
+        "marginal": "SP kept the altitude and the track inside standards and did use the terrain features, but the crosscheck against known elevations was made only at the checkpoints and not between them. The trend is positional awareness that is rebuilt at each fix rather than carried continuously, so any error between checkpoints grows to the edge of tolerance before it is detected. SP is expected to crosscheck the altimeter against known elevations along the leg and to climb early when the position is in doubt on the next navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-05-tm05",
+      "label": "COCKPIT TASKS STARTED BEFORE STABILIZING IN ROUTE POSITION",
+      "mif_row": null,
+      "source": "technique:9.20 ROUTE FORMATION",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the radio channel change and the in-flight checks being started before stabilizing in route position, did not establish the briefed two to four ship widths spacing before diverting attention inside the cockpit. The aircraft closed well inside the route limits with the flight path not deconflicted from Number 1 and the altitude running more than 400 feet from the briefed level. Neither the closure nor the altitude trend was recognized by SP while the attention was inside. IP had to take the controls and move the aircraft back out to a safe position.",
+        "1": "SP, due to attention diverted to the in-flight checks before the aircraft was stabilized in route, did not hold the briefed spacing and drifted out towards the 500 foot limit while the altitude reached 300 feet from the briefed level. Position and altitude were restored only after successive calls from Number 1 and from IP. The same sequence was repeated at the next radio channel change.",
+        "2": "SP, due to a fuel check begun while still moving out from close position, did not stabilize in route first and allowed the spacing and the altitude to open by some 200 feet before the check was interrupted. SP recognized the deviation, stabilized in route at the briefed spacing and then completed the check without any call from Number 1. Aircraft control remained steady throughout.",
+        "3": "SP stabilized in route position at the briefed spacing before every radio change, in-flight check and cockpit task, and held altitude within 150 feet while the task was worked. The specific route position was maintained rather than the wide tolerance being used as a target. Attention was returned outside between each cockpit action.",
+        "4": "SP moved to route and stabilized at the briefed spacing automatically before each cockpit task, so no task was ever worked from an unstable position. Spacing, stack and altitude showed negligible variation while the radio changes and in-flight checks were completed. Number 1 was kept in sight continuously throughout every task.",
+        "marginal": "SP kept spacing and altitude within standards, but several cockpit tasks were begun while the aircraft was still settling into route rather than after it was stabilized. The trend is a task started on an unstable position, so the spacing opens or closes toward the limits before the task is finished and is then recovered. SP is expected to stabilize in route at the briefed spacing before diverting attention to any cockpit task on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-05-tm06",
+      "label": "CLOSE FORMATION - MORE THAN ONE REFERENCE CORRECTED AT A TIME",
+      "mif_row": null,
+      "source": "technique:9.19 CLOSE FORMATION (FINGERTIP)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an attempt to correct stack, fore and aft position and lateral spacing simultaneously instead of one reference at a time, did not re-establish the close position and drove the aircraft through the briefed wingtip separation with the flight path not deconflicted from Number 1. The combined stick, bank and power inputs produced an oscillation in which the altitude also ran more than 400 feet from the briefed level. The deteriorating position was not recognized by SP as an over-controlled correction. IP had to take the controls and move the aircraft out to a safe position.",
+        "1": "SP, due to simultaneous corrections applied to more than one fingertip reference, did not correct in the order stack first, fore and aft second and lateral spacing last, so each input disturbed the reference just corrected. The position was held only at the outer limit acceptable for the sortie and the airspeed swung up to 20 knots during the corrections. The aircraft was stabilized only after repeated calls from Number 1 and from IP.",
+        "2": "SP, due to lateral spacing and stack being worked together after a deviation was recognized, did not correct one reference at a time and allowed the position to wander with airspeed excursions of about 15 knots. SP recognized the over-controlling, returned to the sequence of stack, then fore and aft, then lateral spacing, and re-established the position without any call. The remaining corrections were made in the correct order.",
+        "3": "SP corrected one reference at a time in the order stack, fore and aft, then lateral spacing, using continuous, small and controlled inputs. Airspeed excursions during the corrections stayed within 10 knots and the position was re-established promptly each time. Deviations were recognized early and the required inputs were anticipated.",
+        "4": "SP held the close position with corrections so small and so early that no single reference was ever allowed to develop a visible error. The sequence stack, fore and aft, lateral spacing was applied instinctively and the airspeed remained essentially constant throughout. Position was maintained rather than recovered.",
+        "marginal": "SP held the close position within standards, but corrections were still applied to two references at once before the sequence was re-imposed, and each recovery took longer than it needed to. The trend is a correction technique that mixes stack, fore and aft and lateral inputs, so the position drifts to the edge of tolerance before it settles. SP is expected to correct one reference at a time in the published order on the next formation navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-05-tm07",
+      "label": "CHASING THE POWER - OVER CORRECTION OF POWER IN POSITION",
+      "mif_row": null,
+      "source": "technique:9.19 CLOSE FORMATION (FINGERTIP)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to over correction of power in which the PCL was moved with the whole arm instead of small movements of the wrist, did not use one movement to start the correction, one to stop the aircraft and one to stabilize it, and ended up chasing the power. The resulting fore and aft oscillation carried airspeed swings of more than 25 knots and drove the aircraft through the briefed fore and aft limits relative to Number 1. The divergent oscillation was not recognized by SP as a power problem. IP had to take the controls and stabilize the aircraft clear of Number 1.",
+        "1": "SP, due to power corrections applied in large movements rather than the three deliberate PCL movements required, did not stop the aircraft at the reference and continued to chase the power along the fore and aft axis. Airspeed excursions reached 20 knots and the position was held only at the outer limit acceptable for the sortie. The oscillation was damped only after repeated calls from IP to set a power setting and leave it.",
+        "2": "SP, due to a power correction that was not followed by a movement to stop the aircraft, did not arrest the closure at the reference and overshot the fore and aft position with an airspeed excursion of about 15 knots. SP recognized the over correction, applied the stopping and stabilizing PCL movements and settled the aircraft back on the reference without prompting. Subsequent corrections were made with small wrist movements.",
+        "3": "SP corrected fore and aft position with the three PCL movements, one to start the correction, one to stop the aircraft and one to stabilize it, keeping airspeed excursions within 10 knots. Power was changed with small movements of the wrist rather than the whole arm. The aircraft settled on the reference without overshoot.",
+        "4": "SP anticipated the power required and made corrections so small that the fore and aft reference never developed a visible error, with airspeed effectively constant. Every correction was started, stopped and stabilized deliberately, and no chasing of the power occurred at any stage of the route. Cockpit workload remained low throughout the formation legs.",
+        "marginal": "SP kept fore and aft position and airspeed within standards, but the stopping movement was frequently late so each correction ended with a small overshoot and a second input. The trend is a power technique that starts corrections well but does not stop them, leaving the airspeed near the outer part of tolerance during every adjustment. SP is expected to use the three deliberate PCL movements with wrist inputs only on the next formation navigation sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-05-tm08",
+      "label": "ECHELON TURN - ROLL RATE NOT MATCHED AND PLANE OF MOTION NOT HELD",
+      "mif_row": null,
+      "source": "technique:9.22 ECHELON TURN",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a roll rate that was not matched to Number 1 at the turning point, did not remain in the same plane of motion and did not keep the horizon bisecting Number 1 fuselage, so the aircraft went high and acute in the turn. Back pressure was used in place of bank to correct the vertical position and the resulting excursion exceeded 400 feet from the briefed level with the flight path no longer deconflicted. The developing sight picture error was not recognized by SP. IP had to take the controls and re-establish safe separation.",
+        "1": "SP, due to a roll rate lagging Number 1 into the echelon turn, did not hold the plane of motion and allowed the sight picture to break down, with the horizon well off the correct point on Number 1 fuselage. Altitude excursions relative to the briefed level reached 300 feet and the position was restored only after repeated calls. Bank was still not used as the primary means of correcting the vertical position.",
+        "2": "SP, due to a delayed match of Number 1 roll rate at the roll-in, did not hold the vertical position early in the turn and allowed about 200 feet of excursion before recognizing the error. SP corrected the vertical position with bank, the fore and aft position with power and the spacing with back pressure, and re-established the sight picture inside the turn without any call. The roll-out was flown matching Number 1 roll rate.",
+        "3": "SP matched Number 1 roll rate at the roll-in and the roll-out and maintained the same plane of motion throughout each echelon turn, keeping the horizon bisecting Number 1 fuselage. Vertical excursions stayed within 150 feet and spacing was held with back pressure. Corrections used bank for vertical and power for fore and aft as required.",
+        "4": "SP matched Number 1 roll rate exactly and held the plane of motion through every turn, so the sight picture remained constant from roll-in to roll-out. Vertical and spacing errors were negligible and no correction was visible from outside. Back pressure was blended smoothly with bank throughout the turn.",
+        "marginal": "SP stayed within standards through the echelon turns, but the roll rate was matched slightly late at each roll-in and the plane of motion was recovered rather than held. The trend is a reactive rather than an anticipated roll, so the vertical position drifts toward the edge of tolerance in the first part of every turn. SP is expected to match Number 1 roll rate from the initiation of the roll and to keep the horizon bisecting the fuselage on the next formation navigation sortie."
       }
     }
   ]

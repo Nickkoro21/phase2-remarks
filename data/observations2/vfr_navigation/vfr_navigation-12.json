@@ -127,6 +127,126 @@
         "4": "SP organized the cockpit so that every leg was set up in advance, with the chart, the heading and the leg time ready before the turning point was reached. Aircraft control, lookout and navigation tasks were interleaved smoothly even on the shortest legs, and spare capacity remained available for the radio work. No task was ever left uncompleted or performed at the wrong moment.",
         "marginal": "SP managed the navigation workload within standards, but the chart and the next leg data were prepared only after the turn was completed. The trend is a cockpit that catches up with the aircraft at the start of each leg instead of being set up before the turning point. SP is expected to prepare the next leg while still inbound so that head down time after the turn is minimized."
       }
+    },
+  {
+      "id": "vfr_navigation-12-tm01",
+      "label": "GROUND TO MAP READING INSTEAD OF THE CLOCK-MAP-GROUND METHOD",
+      "mif_row": null,
+      "source": "technique:8.19.6.d(6) CLOCK-MAP-GROUND METHOD",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to reading ground to map instead of applying the Clock-Map-Ground method, did not identify the preselected checkpoints of the route. SP selected prominent objects seen outside and then searched the chart for something resembling them, which produced a false fix on the second leg. The turning points that followed were passed more than 3 NM abeam and the arrival times were more than 60 seconds in error. IP had to state the actual position and direct SP back onto the planned track.",
+        "1": "SP, due to a chart read from the ground to the map rather than from the clock to the map and then to the ground, identified the checkpoints only after seeing them. SP passed the turning points about 2 NM abeam and about 60 seconds off the planned arrival times, at the limit of the standard, and accepted the correct feature each time only after IP named it. The same reversed sequence was used on every leg of the route.",
+        "2": "SP, due to an attempt on the first leg to match an isolated ground object to the chart before checking the timing, initially built a position error of about 1.5 NM and about 45 seconds. SP reverted to the Clock-Map-Ground sequence, checked the elapsed time, located the expected position on the chart and then looked outside for the matching feature. The remaining checkpoints were identified in the correct order without IP assistance.",
+        "3": "SP applied the Clock-Map-Ground method throughout, checking the timing, finding the corresponding location on the chart and only then looking outside for the matching feature. The chart was kept aligned with the actual track of the aircraft, so the checkpoints appeared where they were expected. Turning points were overflown within 1 NM and the arrival times were held within 30 seconds.",
+        "4": "SP worked from the clock to the chart to the ground on every leg, with the chart aligned in the same relative direction as the actual track. Each checkpoint was located on the chart before it became visible and was then confirmed outside without any search. Positional and timing errors along the route remained negligible.",
+        "marginal": "SP identified the checkpoints within standards, but the timing was consulted only after a ground feature had already attracted attention. The trend is a sequence that starts outside the cockpit and uses the chart only for confirmation, which will produce a false fix as soon as two similar features exist on the leg. SP is expected to start every identification from the clock, then the chart, and only then the ground."
+      }
+    },
+    {
+      "id": "vfr_navigation-12-tm02",
+      "label": "CROSSCHECK LIMITED TO REFERENCES OFF THE NOSE",
+      "mif_row": null,
+      "source": "technique:8.19.6.d(6) CLOCK-MAP-GROUND METHOD",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to crosschecking the navigation with only references off the nose of the aircraft, did not recognize turning points that lay off to one side of the track. SP never noted the relationship of the landmarks to one another, so a town of similar size on the wrong side of the leg was accepted as the turning point. The aircraft was flown more than 3 NM from the correct point and arrived more than 60 seconds off the planned time before IP identified the error and took over the navigation.",
+        "1": "SP, due to a visual scan confined to the sector ahead of the aircraft, recognized the turning points only when they appeared on the nose. SP passed two points about 2 NM abeam and about 60 seconds off the planned times, and located the correct feature each time after IP pointed to the confirming landmarks abeam of the track. The scan remained restricted to the nose sector for the rest of the route.",
+        "2": "SP, due to an initial crosscheck limited to the features straight ahead, was unable to separate two similar towns on the third leg and allowed the error to reach about 1.5 NM and about 45 seconds. SP extended the scan to each side, used the towers lying east of one of the towns to identify the correct checkpoint and regained the planned track. The remaining legs were crosschecked with references on both sides without IP input.",
+        "3": "SP crosschecked the navigation with references in every direction and not only off the nose of the aircraft. The arrangement of the landmarks relative to one another was used to confirm each checkpoint, so no similar feature was mistaken for the turning point. Turning points were overflown within 1 NM and within 30 seconds of the planned times.",
+        "4": "SP scanned as far as could be seen in each direction and used the relationship between the landmarks as the primary means of confirming every checkpoint. Features abeam and behind the track were used to keep the position continuously verified, so no identification depended on a single object ahead. Deviations from the turning points and from the planned times remained negligible.",
+        "marginal": "SP crosschecked the navigation within standards, but the confirming features used were almost always ahead of the aircraft and the ones abeam were noted only when the point ahead was in doubt. The trend is a scan that narrows toward the nose as the workload of the leg increases. SP is expected to include references in each direction and to use the arrangement of the landmarks relative to one another on every leg."
+      }
+    },
+    {
+      "id": "vfr_navigation-12-tm03",
+      "label": "LATE START OF TURN POINT IDENTIFICATION - NO VERIFICATION WITH MULTIPLE FEATURES",
+      "mif_row": 12,
+      "source": "technique:8.19.6.d(7)-(8) IDENTIFY TURN POINTS AND CHECKPOINT PROCEDURES (6 Ts)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to starting the identification of the turn points only when they were expected to be overhead instead of about one to one and a half minutes out, did not recognize them in time to turn. SP had no checkpoint identified ahead of the aircraft and accepted a single feature without verifying it with any other, which produced a turn at a point more than 3 NM from the planned one and more than 60 seconds late. IP had to identify the turn point and command the turn.",
+        "1": "SP, due to a search for the turn point that began well inside the one to one and a half minute lead time, identified each point only as it passed under the nose. SP turned about 2 NM from the planned point and about 60 seconds off the planned time, at the limit of the standard, and the identification was confirmed only when IP called the feature. No point was verified with multiple features at any stage of the route.",
+        "2": "SP, due to the checkpoints of the second leg not being picked up two to five minutes ahead, started the identification late and initially reached about 1.5 NM and about 45 seconds of error. SP restored the lead time on the following leg, had the turn point identified about one minute out and verified it against a second feature before the turn. The remaining points were identified in good time without IP assistance.",
+        "3": "SP started trying to identify each turn point about one to one and a half minutes out and verified it with more than one feature before turning. Checkpoints were picked up two to five minutes ahead and were positively identified by one minute out. Every turn point was overflown within 1 NM and within 30 seconds of the planned time.",
+        "4": "SP had every checkpoint located two to five minutes ahead and positively identified well before the one minute point, each one confirmed by at least two independent features. The turn point was therefore already known and the turn was flown as a planned action rather than a reaction. Deviations from the points and from the planned times were negligible.",
+        "marginal": "SP identified the turn points within standards, but the search began closer to one minute than to one and a half minutes out and the verification rested on a single feature. The trend is an identification that leaves no margin to resolve a doubtful point before the turn is due. SP is expected to start looking for the turn point at the full lead time and to confirm it with multiple features."
+      }
+    },
+    {
+      "id": "vfr_navigation-12-tm04",
+      "label": "INCOMPLETE 6 Ts OVER THE CHECKPOINT",
+      "mif_row": 12,
+      "source": "technique:8.19.6.d(7)-(8) IDENTIFY TURN POINTS AND CHECKPOINT PROCEDURES (6 Ts)",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP, due to omitting most of the 6 Ts over the positively identified checkpoint, did not establish the next leg correctly. SP neither noted the time nor adjusted the torque to the new airspeed and left the heading bug on the previous figure, so the following leg was flown at the wrong speed and without any timing reference. The next turning point was reached more than 60 seconds off the planned time and more than 3 NM from the planned position, and IP had to reconstruct the leg data.",
+        "1": "SP, due to a 6 Ts flow interrupted after Time and Turn, did not complete Throttle and Twist over the checkpoints. SP flew the following legs with the torque still set for the previous airspeed and reached the turning points about 60 seconds off the planned times, correcting the setting each time only after IP asked what airspeed was required. The same items were omitted at each subsequent checkpoint.",
+        "2": "SP, due to the Throttle item being deferred while the position report was completed, initially allowed the second leg to run about 45 seconds behind and about 1.5 NM off the planned track. SP completed the remaining Ts as soon as the radio call was finished, reset the torque for the planned airspeed and recovered the leg timing before the next turning point. The 6 Ts were completed in full at every later checkpoint without IP input.",
+        "3": "SP flew directly over each positively identified checkpoint and performed the 6 Ts in sequence, noting the time, turning to the new heading, adjusting the torque to the new airspeed, twisting the heading bug, tracking the course centerline at the desired altitude and making the required call. Each leg therefore began with the correct speed, heading reference and timing. Turning points were made within 1 NM and within 30 seconds.",
+        "4": "SP completed the 6 Ts over every checkpoint without omission and without interrupting the control of the aircraft, with a landmark off the nose selected for heading control immediately after the turn. Altitude was checked against the VFR cruising procedure and adjusted before the checkpoint, so the next leg was commenced fully set up. Timing and track errors on the following legs were negligible.",
+        "marginal": "SP performed the 6 Ts within standards, but the Twist and Talk items were consistently completed a good distance after the checkpoint. The trend is a flow that is started over the point and finished during the following leg, leaving the heading bug and the frequency behind the aircraft. SP is expected to complete all six items over the checkpoint so that the new leg begins with every reference already set."
+      }
+    },
+    {
+      "id": "vfr_navigation-12-tm05",
+      "label": "NO VISUAL ROLLOUT REFERENCE - CLEARING IN THE LOW ALTITUDE TURN",
+      "mif_row": 12,
+      "source": "technique:8.19.6.d(7)-(8) IDENTIFY TURN POINTS AND CHECKPOINT PROCEDURES (6 Ts)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to turning at the checkpoint without clearing in the direction of the turn and without selecting a visual rollout reference, flew the turn entirely head down on the heading indicator. Clearing and aircraft control were not maintained during the low altitude turn and SP rolled out more than 3 NM displaced from the planned track and more than 60 seconds off the planned time for the next point. IP had to take control to clear the turn and to reestablish the aircraft on the new leg.",
+        "1": "SP, due to a turn commenced without a visual rollout reference having been selected outside, chased the heading indicator through the turn at low altitude. SP rolled out displaced about 2 NM from the planned track and arrived about 60 seconds off at the next point, and cleared the turn only after IP directed the lookout. The reference was again not selected at the following turning points.",
+        "2": "SP, due to a rollout reference chosen only after the bank was established, initially rolled out with the aircraft about 1.5 NM off the planned track and about 45 seconds behind. SP identified a suitable ground reference on the new heading, fine tuned the heading onto it and regained the planned track within the leg. Later turns were cleared and flown to a preselected visual reference without IP input.",
+        "3": "SP cleared in the direction of each turn, selected a visual rollout reference before rolling in and turned to that reference before fine tuning the heading. Attention remained outside the cockpit during the low altitude turns and aircraft control was maintained throughout. Rollouts placed the aircraft within 1 NM of the planned track and within 30 seconds of the planned times.",
+        "4": "SP selected the visual rollout reference while still inbound to each checkpoint, cleared the turn thoroughly and flew the turn to that reference with the heading indicator used only for the final fine tuning. Clearing and aircraft control at low altitude were never degraded by the navigation work. Track and timing errors after each rollout were negligible.",
+        "marginal": "SP flew the turns within standards, but the visual rollout reference was selected during the turn rather than before it and the clearing in the direction of the turn was brief. The trend is a turn that relies on the heading indicator at exactly the altitude where lookout matters most. SP is expected to clear the turn and pick the rollout reference before rolling in, then fine tune the heading after rollout."
+      }
+    },
+    {
+      "id": "vfr_navigation-12-tm06",
+      "label": "HEADING CORRECTION BASED ON AN UNCERTAIN LANDMARK",
+      "mif_row": null,
+      "source": "technique:8.18.3.k LANDMARKS (Positive, Linear, Uncertain)",
+      "hf_concept": "hf-overconfidence",
+      "texts": {
+        "0": "SP, due to using an uncertain landmark as the basis for a heading correction, turned the aircraft away from the planned track. SP accepted a small lake among several similar ones as a positive fix and altered heading toward the assumed turning point, and the resulting track error exceeded 3 NM with an arrival more than 60 seconds off the planned time. IP had to cancel the correction, fix the position on a positive landmark and reestablish the navigation.",
+        "1": "SP, due to a heading correction computed from a farm and an isolated tower rather than from a positive landmark, displaced the aircraft from the planned track. SP passed the next turning point about 2 NM abeam and about 60 seconds off the planned time and reverted to the planned heading only after IP questioned the basis of the correction. Uncertain features continued to be treated as fixes on the following legs.",
+        "2": "SP, due to an initial correction applied on the strength of a small lake that had not been positively identified, drifted about 1.5 NM off the planned track and about 45 seconds behind. SP recognized that the feature was an uncertain landmark, removed the correction and waited for the positively identifiable bend in the road before adjusting the heading again. The remaining corrections were based on positive or linear landmarks without IP assistance.",
+        "3": "SP based every heading correction on positive or linear landmarks and used uncertain features only as an indication of a likely position from which the following landmarks could be anticipated. No correction was applied on the strength of a feature that could not be positively identified. Turning points were overflown within 1 NM and within 30 seconds of the planned times.",
+        "4": "SP classified the landmarks along the route as positive, linear or uncertain during the planning and applied that classification rigorously in flight. Corrections were computed only from positively identified features, while the uncertain ones were used solely to anticipate what should appear next. Track and timing errors remained negligible for the whole route.",
+        "marginal": "SP corrected the heading within standards, but on two occasions the correction was applied on an uncertain landmark and only afterwards confirmed by a positive one. The trend is an acceptance of a probable fix as the basis for a heading change. SP is expected to use uncertain landmarks only to anticipate future landmarks and to correct heading only from positively identified features."
+      }
+    },
+    {
+      "id": "vfr_navigation-12-tm07",
+      "label": "IDENTIFICATION FROM CULTURAL FEATURES - ROAD COUNTING AND CITY OUTLINE",
+      "mif_row": null,
+      "source": "technique:8.17 CULTURAL FEATURES (Roads, Bridges, Railroads, Power Lines, Populated Areas, Coastal Hydrography)",
+      "hf_concept": "hf-mental-model",
+      "texts": {
+        "0": "SP, due to counting roads as an orientation technique and identifying a populated area from its charted outline alone, fixed the aircraft over the wrong town. The roads seen did not match the charted classification, as only dual lane highways are reliably portrayed, and the built up area had grown well beyond the outline on the chart. SP turned on a false fix, missed the turning point by more than 3 NM and arrived more than 60 seconds off the planned time, and IP had to reestablish the position.",
+        "1": "SP, due to reliance on the charted road classification for two lane roads, identified the turning point on a road that resembled the one on the chart but was not it. SP passed the point about 2 NM abeam and about 60 seconds off the planned time and accepted the correct feature only when IP described the unique element that differentiated the town. The same reliance on the charted appearance of the roads persisted on the following legs.",
+        "2": "SP, due to an initial attempt to identify the third checkpoint by counting the roads crossing the leg, hesitated over two similar towns and allowed the error to reach about 1.5 NM and about 45 seconds. SP stopped counting roads, identified the town by a unique element that differentiated it from the other one and confirmed the road by its planned time of arrival. The remaining checkpoints were identified from distinguishing elements without IP input.",
+        "3": "SP identified the cultural features by the elements that differentiate them rather than by counting roads or by the charted city outline, and used bridges and coastlines as position and time checks once positively identified. Roads that were seen but hard to classify were resolved by their planned time of arrival. Turning points were overflown within 1 NM and within 30 seconds of the planned times.",
+        "4": "SP treated each populated area as identifiable only by a unique differentiating element and expected the actual extent of the towns to differ from the charted outlines. Bridges over the double line streams and the coastline were used as positive fixes and time checks exactly as planned, and no attempt was made to orient by counting roads. Position and timing errors along the route remained negligible.",
+        "marginal": "SP identified the cultural features within standards, but the first assessment of each town was still made from its charted shape and only then confirmed by a differentiating element. The trend is an expectation that the ground will look like the chart, which will fail at the first town that has grown beyond its charted outline. SP is expected to identify populated areas from a unique element and to treat the charted road classification as unreliable except for dual lane highways."
+      }
+    },
+    {
+      "id": "vfr_navigation-12-tm08",
+      "label": "ANXIETY DISORIENTATION AFTER A MISSING LANDMARK",
+      "mif_row": null,
+      "source": "technique:8.20.4 LOST A/C (Temporary Disorientation)",
+      "hf_concept": "hf-stress",
+      "texts": {
+        "0": "SP, due to anxiety disorientation after the chart to ground method failed to produce an anticipated landmark, treated the missing feature as proof of being lost while the aircraft was still on course. SP abandoned the planned headings and times and wandered while deciding what to do, without checking the clock or reviewing the progress from the last known position. The route error grew beyond 3 NM and beyond 60 seconds and IP had to take over the navigation and restore the aircraft to the planned track.",
+        "1": "SP, due to the same anxiety after an expected landmark did not appear, began to search away from the planned heading instead of continuing on the preplanned heading and time. SP reached the next turning point about 2 NM abeam and about 60 seconds off the planned time and resumed the planned navigation only after IP directed the return to the briefed heading. The reaction to a missing feature was unchanged on the following leg.",
+        "2": "SP, due to a brief loss of confidence when an anticipated landmark was not seen, initially deviated from the planned heading and allowed the error to reach about 1.5 NM and about 45 seconds. SP checked the clock, noted the time, reviewed the progress from the last known position and elected to continue on the preplanned headings and times until the next positive landmark appeared. The navigation was recovered without any IP intervention.",
+        "3": "SP continued flying the preplanned headings and times when an anticipated landmark failed to appear, recognizing that a missing feature is not by itself evidence of being lost. The clock was checked immediately and the progress from the last known position was reviewed while the aircraft remained on the planned track. The following turning point was made within 1 NM and within 30 seconds of the planned time.",
+        "4": "SP remained composed when an expected feature did not appear, noted the time at once, reviewed the extent of the doubt against the last known position and continued the preplanned headings and times without any deviation. The position was reconfirmed at the next positive landmark and the fuel state was checked against the minimum required to complete the route. The episode produced negligible effect on the track and on the timing of the navigation.",
+        "marginal": "SP handled the missing landmark within standards, but the immediate reaction was a widening visual search and a small heading deviation before the preplanned heading was resumed. The trend is a doubt that translates into aircraft movement before the clock and the last known position have been consulted. SP is expected to check the clock first, keep flying the preplanned headings and times and avoid maneuvering while deciding what to do."
+      }
     }
   ]
 }

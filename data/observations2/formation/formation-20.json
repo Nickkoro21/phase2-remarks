@@ -127,6 +127,126 @@
         "4": "SP flew the position change as a single continuous movement, with control inputs so measured that no correction of the path was necessary. The aircraft was placed in the new position with a positive, solid stop and no residual oscillation. Control precision was maintained even while the visual reference on the leader changed side.",
         "marginal": "SP flew the cross under within the control standards, but each crossing began with an input slightly larger than needed and was followed by a small damping correction. The trend indicates a step-wise rather than a continuous displacement. Expected improvement is to size the initial input to the required displacement so that the aircraft moves along one smooth path and stops positively in the new position."
       }
+    },
+    {
+      "id": "formation-20-tm01",
+      "label": "Establishing the small forward LOS rate that starts the aft displacement",
+      "mif_row": 20,
+      "source": "technique:9.21 CROSSUNDER",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to the initial power reduction being omitted at the start of the cross under, did not establish the small forward LOS rate that produces the aft displacement. The lateral movement toward the new side was begun from the fingertip position with no nose-tail clearance built up, and the aircraft was allowed to approach No1 closer than 10 feet while still nearly abeam. The IP took the controls to stop the lateral movement and to open the separation from the leader.",
+        "1": "SP, due to a power reduction too small to generate any usable forward LOS rate, did not move aft before starting to cross behind the leader. Separation from No1 reduced to the 10 feet limit with the leader still abeam, and the aft displacement was created only after verbal indications from the IP on the throttle. The crossing was completed late and with the clearance regained rather than planned.",
+        "2": "SP, due to a power reduction applied after the lateral movement had already started, established the small forward LOS rate late in the sequence. Nose-tail clearance was therefore still building while the aircraft was moving toward the leader, and the spacing gained aft stayed below the intended one aircraft length reference. SP recognized the leader's aspect, held the lateral movement until clearance was achieved and completed the crossing without any intervention.",
+        "3": "SP reduced power as required to establish a small forward LOS rate before any lateral movement was made. The aft displacement developed first, so that the crossing behind the leader was flown with spacing inside one aircraft length and with separation from No1 clearly greater than 10 feet. The sequence of aft displacement, crossing and rejoin was flown in the correct order.",
+        "4": "SP established a forward LOS rate of exactly the size needed, using a power reduction of a few percent torque, and let the aft displacement build before any bank was applied. Nose-tail clearance was achieved with negligible loss of the formation reference and the separation from No1 never came near the 10 feet minimum. No further adjustment of the longitudinal position was required during the crossing.",
+        "marginal": "SP produced a forward LOS rate on each cross under, but on repeated attempts the lateral movement was started while the aft displacement was still developing. Spacing and separation remained inside the standards, yet the clearance behind the leader was consistently at the low end of what the technique calls for. Expected improvement is to reduce power first, let the small forward LOS rate build the nose-tail clearance, and only then begin the lateral displacement."
+      }
+    },
+    {
+      "id": "formation-20-tm02",
+      "label": "Sizing the power reduction when the cross under is flown in a climb",
+      "mif_row": 20,
+      "source": "technique:9.21 CROSSUNDER",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a full-sized power reduction applied while the formation was climbing, did not limit the rearward movement generated during the cross under. Excessive rearward movement developed, the aircraft fell several aircraft lengths behind the leader and the airspeed dropped more than 20 knots below the formation airspeed with no timely power restoration. The IP took the controls and restored power to arrest the separation.",
+        "1": "SP, due to a power reduction not adapted to the climb, allowed excessive rearward movement during the position change. The aircraft moved beyond one aircraft length aft and the airspeed reached 20 knots below the formation airspeed, with the trend stopped only after verbal indications from the IP. The rejoin to the new side was completed well behind the expected timing.",
+        "2": "SP, due to a power reduction sized as for level flight while the formation was climbing, generated more rearward movement than the crossing required. Airspeed decayed between 10 and 20 knots below the formation airspeed and the spacing approached one aircraft length. SP recognized the growing separation on the leader's aspect, restored power in time and completed the crossing without any intervention.",
+        "3": "SP kept the power reduction small during the cross under in the climb, so that the rearward movement stayed no larger than the crossing required. Spacing remained inside one aircraft length and the airspeed deviation stayed inside 10 knots of the formation airspeed. Power was restored at the correct point to stop the aft travel.",
+        "4": "SP adapted the power reduction to the climb without prompting, using a reduction of only a few percent torque, and the rearward movement remained just sufficient for nose-tail clearance. Airspeed excursion was negligible against the formation airspeed and the spacing stayed well inside one aircraft length. The crossing in the climb was flown with no perceptible change of closure.",
+        "marginal": "SP completed the cross unders in the climb inside the standards, but the rearward movement was repeatedly larger than needed, with airspeed approaching 10 knots low. The trend indicates that the same power reduction is used regardless of whether the formation is level or climbing. Expected improvement is to keep the power reduction small whenever the cross under is flown in a climb, so that the aft displacement stays at the minimum required."
+      }
+    },
+    {
+      "id": "formation-20-tm03",
+      "label": "Anticipating the power addition required while crossing behind No1",
+      "mif_row": 20,
+      "source": "technique:9.21 CROSSUNDER",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to failing to anticipate the slight power increase normally required while flying across and behind the leader, did not stop the rearward movement once nose-tail clearance had been achieved. The aircraft continued to fall aft through the crossing, ending several aircraft lengths behind with more than 20 knots of airspeed difference from the formation and no usable reference on No1. The IP took the controls to restore power and to rejoin the formation.",
+        "1": "SP, due to power being added only after the rearward travel was already obvious, did not maintain proper nose-tail separation while crossing behind the leader. The spacing opened to the one aircraft length limit and the airspeed to 20 knots below the formation airspeed, and the trend was arrested only after verbal indications from the IP. The rejoin required a large power addition and a late catch-up.",
+        "2": "SP, due to reacting to the rearward movement instead of anticipating the power change, did not hold the nose-tail separation constant through the crossing. Spacing drifted toward one aircraft length and airspeed between 10 and 20 knots below the formation airspeed while the aircraft was behind the leader. SP identified the growing distance in good time, added power and re-established the correct separation without any intervention.",
+        "3": "SP anticipated each power change during the cross under, adding power slightly to stop the rearward movement and again as required while crossing behind the leader. Nose-tail separation stayed at the value established at the start, with spacing inside one aircraft length and airspeed inside 10 knots of the formation airspeed. No large throttle movements were needed at any point.",
+        "4": "SP anticipated the power changes so precisely that the nose-tail separation remained visibly constant from the moment clearance was established until the rejoin. Airspeed excursion against the formation airspeed was negligible and spacing stayed well inside one aircraft length throughout the crossing. Throttle inputs were small, early and continuous rather than corrective.",
+        "marginal": "SP maintained nose-tail separation inside the standards, but the power addition behind the leader was repeatedly made after the aft movement had started to grow. Spacing approached one aircraft length on several crossings before power was restored. Expected improvement is to anticipate the slight power increase required while crossing behind No1, so that the separation established at the start is simply held rather than recovered."
+      }
+    },
+    {
+      "id": "formation-20-tm04",
+      "label": "Size of the bank used to create the heading crossing angle",
+      "mif_row": 20,
+      "source": "technique:9.21 CROSSUNDER",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a large bank change instead of the slight bank needed to create a small HCA, did not control the rate of lateral travel across to the new side. The heading diverged more than 10 degrees from the leader's heading and the aircraft continued to translate laterally well past the intended position on the new side. The IP took the controls to remove the crossing angle and to stop the lateral travel.",
+        "1": "SP, due to a bank input well beyond the few degrees of heading change the technique calls for, generated an excessive HCA during the cross under. Heading divergence reached 10 degrees and the lateral travel had to be stopped after verbal indications from the IP. The arrival on the new side was achieved only after an opposite correction of similar size.",
+        "2": "SP, due to a bank larger than required to set a small HCA, crossed to the new side with a lateral rate higher than intended. Heading divergence stayed between 5 and 10 degrees and the aircraft reached the new position with residual lateral movement. SP recognized the excess rate, reduced the crossing angle in time and stabilized without any intervention.",
+        "3": "SP used a slight bank toward the new side, changing heading by only a few degrees to create a small HCA, then rolled wings-level to fly across and behind the leader. Heading divergence stayed inside 5 degrees and the lateral travel was controlled and predictable. The new position was reached without an opposite correction.",
+        "4": "SP created an HCA of only a few degrees, exactly matched to the lateral distance to be covered, and the crossing developed as one continuous and unhurried translation. Heading divergence from the formation heading was negligible and the aircraft stopped laterally exactly on the new position. Pitch and bank changes remained small throughout.",
+        "marginal": "SP kept the crossing angles inside the standards, but the initial bank was repeatedly larger than the small HCA the technique describes, with divergence approaching 5 degrees. The result each time was a lateral rate that had to be reduced before arrival on the new side. Expected improvement is to make small pitch and bank changes and to size the HCA to the lateral distance actually required."
+      }
+    },
+    {
+      "id": "formation-20-tm05",
+      "label": "Use of the canopy bow on the elevator trailing edge as nose-tail reference",
+      "mif_row": 20,
+      "source": "technique:9.21 CROSSUNDER",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not using the nose-tail reference of the canopy bow superimposed on the trailing edge of No1's elevator, did not verify the clearance before moving back and down below the leader's POM. The crossing was started with the aircraft still displaced forward of that reference and the separation from No1 reduced to less than 10 feet during the lateral travel. The IP took the controls to open the separation and to re-establish the position.",
+        "1": "SP, due to judging the nose-tail position on general impression rather than on the canopy bow and elevator trailing edge reference, crossed behind the leader with less clearance than the technique requires. The separation from No1 reached the 10 feet limit and was opened only after verbal indications from the IP. The aircraft was repositioned below the leader's POM late in the sequence.",
+        "2": "SP, due to checking the canopy bow against the elevator trailing edge only after the crossing had begun, moved back and down below the leader's POM with the clearance not yet confirmed. The separation from No1 remained above 10 feet but with less margin than intended and the crossing had to be slowed. SP re-established the reference in good time and completed the position change without any intervention.",
+        "3": "SP established the nose-tail reference before crossing, with the canopy bow appearing superimposed on the trailing edge of No1's elevator, and moved back and down below the leader's POM. The clearance was confirmed visually before any lateral travel and the separation from No1 stayed clearly greater than 10 feet. The crossing was flown with the reference held stable.",
+        "4": "SP used the canopy bow on the elevator trailing edge as a continuous reference, so that the nose-tail geometry was known at every point of the cross under. Clearance below the leader's POM was established first and the separation from No1 remained far greater than the 10 feet minimum. The reference was regained immediately on the new side with no re-assessment needed.",
+        "marginal": "SP crossed with acceptable clearance, but the canopy bow was repeatedly only approximately aligned with No1's elevator trailing edge before the lateral travel began. Separation stayed inside the standards while the margin behind the leader was consistently on the small side. Expected improvement is to confirm the nose-tail reference explicitly before moving back and down below the leader's POM on every cross under."
+      }
+    },
+    {
+      "id": "formation-20-tm06",
+      "label": "Power reduction on arrival in the position on the new side",
+      "mif_row": 20,
+      "source": "technique:9.21 CROSSUNDER",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a late power reduction after adding power to move forward and up into position, did not stabilize on the new side and overshot the position. The aircraft continued forward and up through the formation reference, closing to less than 10 feet from No1 and climbing more than 300 feet above the formation altitude before the movement was arrested. The IP took the controls to stop the closure and to re-establish the formation position.",
+        "1": "SP, due to leaving the power addition in beyond the point where the position was reached, did not arrest the forward and upward movement at the correct time. The aircraft went through the position with closure toward No1 and a climb reaching 300 feet above the formation altitude, reduced only after verbal indications from the IP. Stabilization on the new side required a second correction in both power and pitch.",
+        "2": "SP, due to a power reduction applied after arrival instead of just before it, ended the crossing with residual forward and upward movement. The overshoot in the vertical stayed between 150 and 300 feet above the formation altitude and the closure toward No1 had to be stopped. SP recognized the movement, reduced power and settled into the position in time without any intervention.",
+        "3": "SP added power to move forward and up into the new position and reduced power in time to stabilize there. The arrival was contained inside 150 feet of the formation altitude with separation from No1 well above 10 feet and no forward overshoot. The position was held from the moment of arrival.",
+        "4": "SP timed the power reduction so that the aircraft arrived in the position with the residual movement already zero. Vertical excursion at arrival was negligible against the formation altitude and the lateral and longitudinal references were correct at the first attempt. No further throttle correction was required after stabilization on the new side.",
+        "marginal": "SP stabilized on the new side inside the standards, but the power reduction was repeatedly made at arrival rather than in anticipation of it. Each crossing ended with a small forward and upward overshoot that had to be taken out, with vertical excursion approaching 150 feet. Expected improvement is to begin the power reduction before the position is reached, so that the aircraft arrives already stabilized."
+      }
+    },
+    {
+      "id": "formation-20-tm07",
+      "label": "Nose-tail separation while inspecting No1 during the BD check crossunder",
+      "mif_row": null,
+      "source": "technique:9.8 BATTLE DAMAGE (BD) CHECK",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to attention being concentrated on the inspection for damage, leaks and missing panels, did not maintain nose-tail separation while crossing under to the other side of No1. The aircraft drifted forward out of the cleared geometry and approached No1 closer than 10 feet with the scan still on the leader's structure. The IP took the controls to open the separation and to terminate the check.",
+        "1": "SP, due to the inspection task displacing the formation scan, did not hold nose-tail separation during the BD check crossunder. The clearance behind the leader reduced to the 10 feet limit and was recovered only after verbal indications from the IP. The inspection of the second side had to be repeated after the position was re-established.",
+        "2": "SP, due to dwelling on the leader's wing while repositioning, allowed the nose-tail separation to reduce during the cross under of the BD check. The clearance remained above 10 feet but with a visibly reducing margin as the scan stayed on the inspection. SP interrupted the inspection, re-established the separation in time and completed the check without any intervention.",
+        "3": "SP maintained nose-tail separation throughout the BD check crossunder while inspecting No1 for damage, leaks, missing panels and irregularities. The scan alternated between the inspection and the formation references, so that spacing stayed inside one aircraft length and separation clearly above 10 feet. The check was completed on both sides and the original position was regained.",
+        "4": "SP inspected No1 in detail on both sides while the nose-tail geometry remained visibly constant throughout the repositioning. Separation was maintained far above the 10 feet minimum and the aircraft returned to the formation position from which the check was initiated with no correction required. The result of the check was passed without any degradation of the formation position.",
+        "marginal": "SP kept the separation inside the standards during the BD check, but the nose-tail margin reduced each time the inspection scan was held on the leader for longer periods. The position was always recovered, yet the trend shows the formation scan being suspended while inspecting. Expected improvement is to keep the inspection in short segments so that nose-tail separation is monitored continuously through the crossunder."
+      }
+    },
+    {
+      "id": "formation-20-tm08",
+      "label": "Correcting excessive spacing that develops behind No1 after the crossing",
+      "mif_row": null,
+      "source": "technique:9.32 CLOSE TRAIL EXERCISE",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to attempting to correct excessive spacing forward with power alone from directly behind and below the leader, did not recognize the closure rate that developed. The aircraft came out of the excess spacing with an uncontrolled overtake and closed to less than 10 feet from No1 with no lateral offset from which to judge the closure. The IP took the controls to stop the overtake and to re-establish separation.",
+        "1": "SP, due to correcting the excessive spacing with power only, without establishing a small amount of lead pursuit in the turn, did not control the closure back into position. The separation from No1 reduced to the 10 feet limit before the overtake was arrested, and only after verbal indications from the IP. The final positioning was achieved with a large power reduction late in the correction.",
+        "2": "SP, due to relying mainly on power to close the excessive spacing from directly astern, recognized the closure rate later than required. The overtake had to be broken with a marked power reduction, with the separation from No1 reduced well below the intended margin although above 10 feet. SP established a lateral offset in time to judge the closure and completed the correction without any intervention.",
+        "3": "SP corrected the excessive spacing by adding power together with a small amount of lead pursuit in the turn, and by moving off to one side when wings-level to obtain a better visual perspective of No1. Closure was recognized early, the aircraft returned inside one aircraft length and the separation from No1 stayed well above 10 feet. The correction was completed with a single, controlled power cycle.",
+        "4": "SP treated the excessive spacing with the correct technique from the outset, combining a small power addition with a slight lead pursuit and a lateral perspective on No1. Closure was continuously visible and the return to position was made with negligible overtake and no reduction of the safety margin. The correct spacing was regained without any subsequent adjustment.",
+        "marginal": "SP recovered the correct spacing inside the standards, but the first correction was repeatedly attempted with power alone from directly astern before an offset was taken. Closure was recognized late on each occasion, leaving less margin than intended on the return to position. Expected improvement is to add power together with a small amount of lead pursuit, or to move off to one side when wings-level, whenever excessive spacing develops."
+      }
     }
   ]
 }

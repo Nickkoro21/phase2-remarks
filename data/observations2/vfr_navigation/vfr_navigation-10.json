@@ -97,6 +97,126 @@
         "4": "SP prepared each leg before reaching the turning point, so heading, time and fuel entries were made with the aircraft flown precisely. Workload stayed evenly distributed across the route and no cockpit task was allowed to compete with holding the planned track.",
         "marginal": "SP completed the navigation tasks and held the track within the standards, but the workload was consistently bunched at the turning points. The trend is that any additional cockpit task at a turn would displace the track correction. SP is expected to prepare the next leg before the turning point so that the correction angle is set on roll-out."
       }
+    },
+    {
+      "id": "vfr_navigation-10-tm07",
+      "label": "Standard Closing Angle computation and hold time",
+      "mif_row": null,
+      "source": "technique:8.19.6.d(8)(j) STANDARD COURSE CORRECTIONS (SCA) AND WINGTIP REFERENCES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a course correction flown as an arbitrary turn toward the line instead of the Standard Closing Angle, never established a closing geometry with the planned course. The SCA of 17,5 degrees for 210 KGS and the hold time of one minute for every mile off course were not applied, so the aircraft paralleled the course line displaced by more than 2 NM. The IP had to establish the closing heading and time the correction.",
+        "1": "SP, due to a closing angle held for an arbitrary period instead of one minute for every mile off course, rolled out back on the leg heading while the aircraft was still displaced. The residual error stayed at the 2 NM limit until the IP called for the correction to be re-applied. The course line was regained only during the following leg.",
+        "2": "SP, due to an SCA started without a firm estimate of the miles off course, held the closing angle for too short a time and remained between 1 and 2 NM from the planned line. SP recognized the shortfall at the next ground reference, re-applied the 17,5 degree correction for the remaining distance and was back on the course line before the checkpoint. No prompting was required.",
+        "3": "SP applied the Standard Closing Angle derived from the 60-1 rule and held it for one minute for every mile off course. The aircraft closed the planned line without overshoot and track error stayed inside 1 NM for the remainder of the leg.",
+        "4": "SP computed the SCA for the actual ground speed, applied it as soon as the offset was detected and stopped the correction exactly on the course line. Residual displacement was not measurable on the chart and no second correction was needed.",
+        "marginal": "SP used the Standard Closing Angle and stayed inside the standards, but the hold time was judged by eye rather than counted as one minute for every mile off course. The trend is a correction that stops slightly short and leaves a small residual offset on each leg. SP is expected to time the SCA against the estimated miles off course and to stop it on the course line."
+      }
+    },
+    {
+      "id": "vfr_navigation-10-tm08",
+      "label": "Quantifying distance off course with wingtip references",
+      "mif_row": null,
+      "source": "technique:8.19.6.d(8)(j) STANDARD COURSE CORRECTIONS (SCA) AND WINGTIP REFERENCES",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to an off-course distance that was never quantified, described the displacement only as an impression instead of estimating it in half mile increments. With no wingtip reference or any other measure, the correction bore no relation to the actual error and displacement passed 2 NM. The IP had to state the position error and direct the correction.",
+        "1": "SP, due to a wingtip reference used without accounting for the altitude flown, estimated the offset at about half its real value, since at 2000 feet AGL one wingtip is approximately 2,0 NM and not 1 NM. The undersized correction left the aircraft at the 2 NM limit until the IP passed the correct distance off course.",
+        "2": "SP, due to an off-course estimate rounded to whole miles instead of half mile increments, sized the correction coarsely and stayed between 1 and 2 NM from the planned line. SP re-checked the offset against the wingtip reference for the altitude flown, refined the correction and regained the course line before the next checkpoint.",
+        "3": "SP estimated the distance off course in half mile increments using the wingtip reference for the altitude flown. The correction was sized to that estimate and the aircraft was held inside 1 NM of the planned course line.",
+        "4": "SP quantified every offset in half mile increments and cross-checked the wingtip reference against ground features of known distance. Corrections matched the measured error, so track deviation stayed negligible for the whole route.",
+        "marginal": "SP kept track error inside the standards, but the distance off course was estimated only once the offset had become obvious rather than at each major checkpoint. The trend is a correction sized after the error has grown, which costs track accuracy on short legs. SP is expected to quantify displacement in half mile increments at each major checkpoint using the wingtip reference for the altitude flown."
+      }
+    },
+    {
+      "id": "vfr_navigation-10-tm09",
+      "label": "Route entry point identification and first leg parameters",
+      "mif_row": null,
+      "source": "technique:8.19.5 ROUTE ENTRY",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to identification of the entry point far too late, could not maneuver the aircraft to hit it on the first leg heading and airspeed. The route was joined displaced from the entry point and the first leg was flown more than 2 NM off the planned ground track. The IP had to reposition the aircraft onto the course line and re-establish the leg.",
+        "1": "SP, due to a planned departure ground track that had not been reviewed before the entry point, identified the point only when abeam it and crossed it off heading. The offset on the first leg reached the 2 NM limit and the correction was started only after the IP prompted it.",
+        "2": "SP, due to the descent check and the clock preparation being completed close to the entry point, identified the point late and crossed it with the heading not yet settled. SP recognized the 1 to 2 NM offset early on the first leg, corrected toward the course line and was tracking accurately before the first checkpoint.",
+        "3": "SP identified the entry point early, maneuvered to cross it on the first leg heading and airspeed and made the route entry call. The first leg was established inside 1 NM of the planned ground track.",
+        "4": "SP completed the descent check and the time hack preparation well before the entry point and identified the point at long range. The aircraft crossed the entry point exactly on the first leg heading and airspeed, and the route began with no measurable track error.",
+        "marginal": "SP entered the route inside the standards, but the entry point was identified only in the last seconds and the heading was fine tuned after crossing it. The trend is a route entry that leaves the first leg to absorb the initial error. SP is expected to identify the entry point as early as possible and to be established on the first leg heading and airspeed before crossing it."
+      }
+    },
+    {
+      "id": "vfr_navigation-10-tm10",
+      "label": "Turn point identification lead time and turning on time",
+      "mif_row": null,
+      "source": "technique:8.19.6.d(7)-(8) IDENTIFY TURN POINTS AND CHECKPOINT PROCEDURES (6 Ts)",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to holding the leg heading while still searching for a turn point that could not be recognized, did not turn on time when the estimated leg time expired. The aircraft continued past the planned turning point and the ground track error grew beyond 2 NM before any action was taken. The IP had to order the turn and re-establish the route.",
+        "1": "SP, due to starting the search for turn points only when approaching them instead of about one to one and a half minutes out, delayed every turn until the feature was recognized. The late turns left the following legs at the 2 NM limit and the IP had to prompt turning on time.",
+        "2": "SP, due to a turn point verified against a single feature rather than multiple features, hesitated at the checkpoint and turned a few seconds late. The resulting 1 to 2 NM offset was recognized on the new leg and corrected back to the course line without prompting, and the remaining turn points were identified early.",
+        "3": "SP started identifying turn points about one to one and a half minutes out and verified them with more than one feature. Each turn was made on time and every new leg was established inside 1 NM of the planned track.",
+        "4": "SP identified each turn point well in advance and confirmed it with multiple features while the aircraft was still tracking accurately. Where a point remained doubtful SP turned on time and re-identified the position on the new leg, so displacement stayed negligible.",
+        "marginal": "SP turned on time and stayed inside the standards, but turn points were being identified only shortly before the checkpoint and on a single feature. The trend is that a poorly defined point would produce a late turn and a track error. SP is expected to begin identification about one to one and a half minutes out and to confirm the point with multiple features."
+      }
+    },
+    {
+      "id": "vfr_navigation-10-tm11",
+      "label": "Visual rollout reference and landmark off the nose",
+      "mif_row": null,
+      "source": "technique:8.19.6.d(7)-(8) IDENTIFY TURN POINTS AND CHECKPOINT PROCEDURES (6 Ts)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to turning at the checkpoint without selecting a visual rollout reference, rolled out on an arbitrary heading and only then searched for the new course. Clearing in the direction of the turn was degraded at the same time and the new leg started more than 2 NM off the planned ground track. The IP had to establish the leg heading.",
+        "1": "SP, due to rolling out on the heading indicator alone with no landmark off the nose to aid heading control, drifted off the new course as soon as the scan returned inside. Heading control on the leg was loose enough to reach the 2 NM limit and the IP had to prompt the selection of a ground reference.",
+        "2": "SP, due to a rollout reference selected only after the turn had begun, rolled out slightly past the new course and started the leg 1 to 2 NM off the planned track. SP picked a landmark off the nose, fine tuned the heading and closed back to the course line before the next checkpoint.",
+        "3": "SP cleared in the direction of the turn, selected a visual rollout reference before rolling in and fine tuned the heading after rollout. Each new leg was established and held inside 1 NM of the planned ground track.",
+        "4": "SP selected the rollout reference and a further landmark off the nose before every turn, so rollout was on course and heading needed no further correction. Clearing was maintained throughout each turn and track error after rollout was negligible.",
+        "marginal": "SP rolled out on course inside the standards, but the visual reference was picked during the turn rather than before it and the heading was settled with several small changes after rollout. The trend is a rollout accuracy that depends on the cockpit instruments instead of the ground picture. SP is expected to select the visual rollout reference before rolling in and to fine tune heading on a landmark off the nose."
+      }
+    },
+    {
+      "id": "vfr_navigation-10-tm12",
+      "label": "Twist and Track steps of the 6 Ts at the checkpoint",
+      "mif_row": null,
+      "source": "technique:8.19.6.d(7)-(8) IDENTIFY TURN POINTS AND CHECKPOINT PROCEDURES (6 Ts)",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP, due to checkpoint procedures in which the Twist and Track steps of the 6 Ts were omitted, left the heading bug and the CDI set for the previous leg. The new course was flown from memory of the log, the leg centerline was never tracked and displacement passed 2 NM. The IP had to set the leg references and recover the planned track.",
+        "1": "SP, due to the 6 Ts being started well after the checkpoint, set the heading bug and the CDI late and flew the first part of each leg with no course references. Track error built to the 2 NM limit before the IP prompted completion of the checkpoint procedures.",
+        "2": "SP, due to the Twist step performed with the planned heading rather than the wind corrected heading, followed a bug that did not hold the ground track and drifted 1 to 2 NM off the line. SP noticed the disagreement between the CDI and the bug, reset the bug on the wind corrected heading and regained the course line unprompted.",
+        "3": "SP flew directly over each identified checkpoint and completed the 6 Ts in sequence, with the heading bug on the wind corrected heading and the CDI on the next leg course. The leg centerline was tracked inside 1 NM.",
+        "4": "SP completed Time, Turn, Throttle, Twist, Track and Talk without interrupting aircraft control, and the leg references were set before the rollout was complete. The aircraft tracked the centerline of every leg with no measurable displacement.",
+        "marginal": "SP completed the 6 Ts inside the standards, but Twist and Track were consistently the last steps and were done after the aircraft had settled on the new leg. The trend is a short segment of each leg flown without course references. SP is expected to set the heading bug on the wind corrected heading and the CDI on the next leg course as part of the checkpoint procedure."
+      }
+    },
+    {
+      "id": "vfr_navigation-10-tm13",
+      "label": "Cutting off or extending the route to fix timing",
+      "mif_row": null,
+      "source": "technique:8.18.3.h-i TIME OVER TARGET (TOT) AND ROUTE TIMING",
+      "hf_concept": "hf-mission-completion-bias",
+      "texts": {
+        "0": "SP, due to correcting the timing error by cutting off the corners of the route and extending other segments, abandoned the planned ground track in order to protect the elapsed time. The aircraft was flown more than 2 NM inside the planned course line and checkpoints were bypassed. The IP had to return the flight to the planned track and rebuild the timing picture.",
+        "1": "SP, due to a decision to cut the route short rather than apply a ground speed correction based on the 60 to 1 rule, flew a shortened track that reached the 2 NM limit from the planned line. The planned route was resumed only after the IP required the timing to be corrected with airspeed.",
+        "2": "SP, due to an initial attempt to gain time by flying inside the turning point, allowed the ground track to move 1 to 2 NM off the planned line. SP recognized that the timing error had to be corrected with a ground speed change, returned to the course line and held the airspeed correction for the required time.",
+        "3": "SP corrected timing errors with ground speed changes based on the 60 to 1 rule and kept the aircraft on the planned course line. The route was flown as planned with track error inside 1 NM while the elapsed time was recovered.",
+        "4": "SP detected each timing error early and corrected it entirely with airspeed, holding the change for the computed period. The planned ground track was flown over every checkpoint with negligible deviation and the elapsed time matched the plan at the final checkpoint.",
+        "marginal": "SP kept the track inside the standards, but time was recovered partly by easing the turns inside the planned corners rather than by ground speed alone. The trend is a ground track that is traded for time whenever the flight is late. SP is expected to hold the planned track and to correct timing by changing ground speed 10 KIAS for every ten seconds off, held for 3,5 minutes."
+      }
+    },
+    {
+      "id": "vfr_navigation-10-tm14",
+      "label": "Weather circumnavigation by the deliberate course duration method",
+      "mif_row": null,
+      "source": "technique:8.19.6.d(8)(i) WEATHER DEVIATIONS (Deliberate Course Duration Method)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a weather deviation flown as a series of random turns instead of the deliberate course duration method, kept no record of the heading change or of the time the deviation began. The return toward the original course was attempted without timing the inbound leg and the route was rejoined more than 2 NM off track. The IP had to fix the position and re-establish the route.",
+        "1": "SP, due to a deviation angle well above the recommended maximum of 70 degrees, displaced the aircraft so far from the route that the timed return was unreliable. The rejoin left the aircraft at the 2 NM limit from the planned line and the IP had to prompt the correction back to course.",
+        "2": "SP, due to the outbound time being noted only after the turn away from the route, flew an inbound leg slightly shorter than the outbound one and rejoined 1 to 2 NM off the planned track. SP compared the ground picture with the chart after the rejoin, identified the residual offset and closed back to the course line before the next checkpoint.",
+        "3": "SP circumnavigated the weather with the deliberate course duration method, turning a determined number of degrees off course, timing the outbound leg and returning with twice the original heading change for the same time. The route was rejoined inside 1 NM of the planned ground track.",
+        "4": "SP selected a deviation angle matched to the size of the weather, recorded the heading change and the times on the kneeboard and flew equal outbound and inbound legs. The aircraft rejoined the planned course line with no measurable offset and the updated ETA for the next checkpoints was ready on rejoin.",
+        "marginal": "SP rejoined the route inside the standards after the weather deviation, but the heading change and the deviation times were held in memory rather than recorded on the kneeboard. The trend is a rejoin whose accuracy depends on recall under a high cockpit workload. SP is expected to note the heading change and the times and to fly the inbound leg for the same duration as the outbound leg."
+      }
     }
   ]
 }

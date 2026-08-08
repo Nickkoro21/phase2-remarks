@@ -127,6 +127,126 @@
         "4": "SP divided attention between the outside scan and the cockpit tasks with no degradation to either. Every visual reference was identified early and the aircraft position was known continuously relative to the airspace and the terrain. Traffic was acquired and deconflicted with no effect on the flown parameters.",
         "marginal": "SP kept the aircraft clear of terrain and of the airspace limits, but the outside scan was interrupted for long periods while cockpit tasks were worked. The visual references were identified, though later than planned. SP is expected to shorten the head-down periods so that the outside picture is maintained continuously."
       }
+    },
+    {
+      "id": "vfr_navigation-04-tm01",
+      "label": "First turn after takeoff before the departure end of the runway and below the 140 KIAS / 700 feet AGL gate",
+      "mif_row": 4,
+      "source": "technique:4.8 TURNS AFTER TAKEOFF",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a turn started before passing the departure end of the runway, did not climb straight ahead as required and rolled into the departure turn below 140 KIAS and below 700 feet AGL. Airspeed at roll-in was more than 20 knots below the climb schedule and the aircraft was more than 300 feet below the departure profile. The IP intervened to roll out and re-establish the straight ahead climb before the turn was resumed.",
+        "1": "SP, due to anticipation of the departure track, did not delay the first turn until past the departure end of the runway and initiated it while 140 KIAS was still being attained. Airspeed at roll-in sat 20 knots low and the altitude at the turn reached 300 feet below the departure profile, the outer limit of the standard. The bank was reduced only after the IP called for wings level until the minimum turn parameters were met.",
+        "2": "SP, due to a roll-in begun abeam rather than past the departure end of the runway, did not fully attain the 140 KIAS and 700 feet AGL gate before the first turn. Airspeed at roll-in was about 15 knots below schedule and the aircraft was some 200 feet low on the profile. SP recognized the shortfall, shallowed the bank and re-established the climb schedule inside 10 knots without any prompt.",
+        "3": "SP climbed straight ahead until past the departure end of the runway and started the first turn only after 140 KIAS and 700 feet AGL were attained. Airspeed and altitude at roll-in stayed inside 10 knots and 150 feet of the departure profile. Bank was applied smoothly so that the rate of climb was preserved through the turn.",
+        "4": "SP held the straight ahead climb well past the departure end of the runway and initiated the first turn with the 140 KIAS and 700 feet AGL gate comfortably met. Deviations from the climb schedule at roll-in were negligible on both the airspeed indicator and the altimeter. The turn was entered at the exact point required by local directives with no loss of climb performance.",
+        "marginal": "SP met the 140 KIAS and 700 feet AGL gate before the first turn, but the roll-in was consistently started at the earliest acceptable point rather than with margin. Parameters stayed inside the standard, although the sequence left no room for a distraction during the initial climb. SP is expected to confirm both the departure end of the runway and the minimum turn parameters before applying bank."
+      }
+    },
+    {
+      "id": "vfr_navigation-04-tm02",
+      "label": "Climbout flown below 160 KIAS with a high pitch attitude that limits forward visibility",
+      "mif_row": 4,
+      "source": "technique:4.9 CLIMBS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a pitch attitude set well above the 10-15 degree climb reference, did not accelerate to the 140-180 KIAS climb schedule and stabilized the climbout more than 20 knots below the briefed climb airspeed. The nose-high attitude limited forward visibility to the extent that the departure references could not be acquired and the track was not maintained. The IP intervened to lower the nose and restore the climb schedule.",
+        "1": "SP, due to a climb attitude carried high after takeoff, did not lower the nose to the airspeed required and climbed out 20 knots below the briefed value, at the outer limit of the standard. Forward visibility over the nose was reduced to the point that the departure references were identified late. The correction followed only after the IP prompted an airspeed check.",
+        "2": "SP, due to a climb attitude set nearer 15 degrees than the airspeed called for, did not hold the briefed climbout airspeed and allowed it to decay about 15 knots low. SP noted the trend on the airspeed indicator, lowered the nose toward the attitude that produces the briefed airspeed and regained the schedule inside 10 knots without prompting. Forward visibility for the departure references was restored before the first turn.",
+        "3": "SP flew the climbout at the briefed airspeed within the 140-180 KIAS band and kept it inside 10 knots throughout the departure climb. Pitch was held in the 10-15 degree range so that forward visibility over the nose remained adequate for the departure references. The climb schedule was not allowed to settle below 160 KIAS.",
+        "4": "SP established the climbout airspeed immediately after takeoff and held it with negligible variation for the whole departure climb. Pitch was set from the airspeed required, so the attitude never grew high enough to restrict the view over the nose. The climb gradient matched the planned departure profile exactly.",
+        "marginal": "SP kept the climbout airspeed inside the standard, but it settled repeatedly toward the low end near 160 KIAS with a correspondingly high pitch attitude. Forward visibility remained usable, although the margin for identifying the departure references was thin. SP is expected to set pitch from the airspeed required rather than accepting the higher attitude."
+      }
+    },
+    {
+      "id": "vfr_navigation-04-tm03",
+      "label": "Level-off lead point at departure altitude restrictions (10 % of VSI technique)",
+      "mif_row": 4,
+      "source": "technique:4.9 CLIMBS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a level-off begun without any lead point, did not start lowering the nose before reaching the assigned departure altitude and let the established rate of climb carry the aircraft through it. The overshoot passed 300 feet and was still increasing when the IP intervened to establish level flight. The recovery placed the aircraft outside the altitude restriction of that departure segment.",
+        "1": "SP, due to a lead point far smaller than the 10 % of VSI technique requires, did not begin the transition early enough and overshot the level-off altitude by 300 feet, the outer limit of the standard. The nose was lowered only after the IP called the altitude. Level flight and the briefed airspeed were re-established well beyond the point required by the departure.",
+        "2": "SP, due to a lead point taken from a rate of climb that had already increased, did not lead the capture sufficiently and overshot the assigned altitude by about 200 feet. SP recognized the overshoot on the altimeter and returned the aircraft inside 150 feet with a smooth correction and no prompt. The following level-off was led correctly.",
+        "3": "SP started each level-off at a lead point of approximately 10 % of the VSI and captured the assigned altitude within 150 feet. The nose was lowered smoothly to level flight, the PCL was then adjusted to the desired airspeed and the aircraft was trimmed. No overshoot developed at any departure altitude restriction.",
+        "4": "SP sized every lead point from the actual rate of climb and captured each altitude with no measurable overshoot. The transition from climb to level flight was smooth, with power and trim set as the airspeed settled. The altitude restrictions of the departure were met without any subsequent correction being required.",
+        "marginal": "SP led each level-off and stayed inside the standard, but the lead points used were smaller than the rate of climb called for and each capture ended with a small overshoot. Altitude control was never in doubt, yet the pattern depended on a late correction every time. SP is expected to size the lead point from the actual VSI before beginning the level-off."
+      }
+    },
+    {
+      "id": "vfr_navigation-04-tm04",
+      "label": "Pitch, bank and heading flown on instruments instead of outside references cross-checked with the EHSI",
+      "mif_row": 4,
+      "source": "technique:4.9 CLIMBS",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to pitch and bank changes made on the instruments while outside references were available, did not use section lines or a prominent point near the horizon to hold the departure climb and flew the whole segment head-down. Heading wandered more than 10 degrees from the departure track and the wings-level attitude was not maintained between crosschecks. The IP intervened to direct the attention outside and re-establish the track.",
+        "1": "SP, due to a crosscheck built on the attitude indicator rather than on outside references, did not fly the climb attitude visually and allowed the departure heading to reach 10 degrees of error, the limit of the standard. Outside references were used only after the IP directed the attention outside the cockpit. Wings-level attitude was thereafter confirmed against the horizon rather than the instruments.",
+        "2": "SP, due to pitch changes initiated on the instruments before the horizon was used, did not hold the climb attitude steadily and let the departure heading open to about 7 degrees. SP shifted the crosscheck to a ground reference near the horizon, confirmed it on the EHSI and closed the error inside 5 degrees unprompted. The remainder of the climb was flown on outside references.",
+        "3": "SP made all pitch and bank changes using outside references and crosschecked heading on the EHSI and wings level on the attitude indicator. The departure heading was held within 5 degrees and the climb attitude remained stable. The instruments were used to confirm the outside picture rather than to replace it.",
+        "4": "SP flew the entire departure climb from the outside picture, using section lines and a prominent point near the horizon, with the EHSI and attitude indicator serving only as confirmation. Heading and attitude deviations remained negligible throughout. The crosscheck rhythm left ample capacity for clearing and for the departure radio work.",
+        "marginal": "SP used outside references for the climb attitude, but the crosscheck reverted to the instruments whenever a correction was needed and the head-down periods lengthened. Heading and attitude stayed inside the standard, though the outside picture was not continuously maintained. SP is expected to initiate corrections visually and confirm them on the EHSI rather than the reverse."
+      }
+    },
+    {
+      "id": "vfr_navigation-04-tm05",
+      "label": "Climb check passing 10.000 feet MSL and operations check at initial level-off",
+      "mif_row": 4,
+      "source": "technique:4.9 CLIMBS",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP, due to attention held on the departure track, did not initiate the climb check passing 10.000 feet MSL and did not conduct the operations check at initial level-off. The aircraft was flown through the departure with the systems and fuel state unverified, and altitude keeping degraded past 300 feet while the omission was addressed. The IP intervened to direct both checks and to restore the assigned altitude.",
+        "1": "SP, due to a crosscheck that did not include the altimeter as a trigger, did not initiate the climb check passing 10.000 feet MSL and completed it well into the next departure segment. Altitude deviation reached 300 feet while the check was being run, at the outer limit of the standard. The operations check at initial level-off was carried out only after the IP called for it.",
+        "2": "SP, due to a delayed transition from the climb to the level-off task, did not start the operations check at initial level-off and ran it late in the segment, letting the altitude drift about 200 feet. SP recognized the drift, stabilized the aircraft inside 150 feet and completed the check without prompting. The climb check passing 10.000 feet MSL had been accomplished at the correct point.",
+        "3": "SP initiated the climb check passing 10.000 feet MSL and conducted the operations check at initial level-off as required by the flight manual. Altitude was held within 150 feet while both checks were run. The checks were then repeated periodically without interfering with the departure navigation.",
+        "4": "SP triggered the climb check exactly at 10.000 feet MSL and the operations check immediately at initial level-off, with no measurable effect on altitude or heading. Both checks were completed while the departure track and the outside scan were maintained. The periodic repetition of the operations check was equally well timed.",
+        "marginal": "SP accomplished both the climb check and the operations check, but each was started noticeably after its trigger and produced a small altitude excursion within the standard. The content of the checks was complete and correct. SP is expected to treat 10.000 feet MSL and initial level-off as firm triggers rather than as approximate cues."
+      }
+    },
+    {
+      "id": "vfr_navigation-04-tm06",
+      "label": "Trim and stabilization on heading and altitude toward the first checkpoint",
+      "mif_row": 4,
+      "source": "technique:8.19.4 DEPARTURE (VFR Navigation)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to poor trim carried through the level-off, did not stabilize the aircraft on the heading and altitude toward the first checkpoint and flew the leg against continuous control pressure. Altitude wandered beyond 300 feet and the heading beyond 10 degrees, and fuel flow was uneven as power was repeatedly readjusted. The IP intervened to trim the aircraft and re-establish the leg to the first checkpoint.",
+        "1": "SP, due to trim not being reset after the level-off, did not achieve the stabilized cruise condition toward the first checkpoint and held the aircraft with control pressure throughout. Altitude and heading errors reached 300 feet and 10 degrees, the outer limits of the standard, and the workload consumed the capacity needed for the navigation crosscheck. The aircraft was finally trimmed only after the IP prompted it.",
+        "2": "SP, due to trim applied in one coarse input rather than refined after the airspeed settled, did not stabilize fully on the leg and allowed a 200 feet altitude drift and a heading error of about 7 degrees. SP recognized the residual pressure, retrimmed in pitch and rudder and stabilized inside 150 feet and 5 degrees without prompting. The leg to the first checkpoint was then flown hands-light.",
+        "3": "SP levelled off using normal procedures and trimmed the aircraft so that it was stabilized on heading and altitude to the first checkpoint. Altitude was held within 150 feet and heading within 5 degrees with light control forces. Cruise control was set so that fuel flow remained even for the leg.",
+        "4": "SP trimmed the aircraft precisely after the level-off and stabilized on the heading and altitude to the first checkpoint immediately. Deviations remained negligible and the aircraft required essentially no control pressure to hold the leg. The resulting low workload left full capacity for the visual navigation crosscheck.",
+        "marginal": "SP trimmed the aircraft and reached a stabilized condition toward the first checkpoint, but only after several corrections and later than the level-off allowed. Altitude and heading stayed inside the standard while the trim was being refined. SP is expected to trim as the airspeed settles at level-off so that the leg starts already stabilized."
+      }
+    },
+    {
+      "id": "vfr_navigation-04-tm07",
+      "label": "Departure routing, altitude restrictions and NAVAID / GPS setup completed before takeoff",
+      "mif_row": 4,
+      "source": "technique:8.11 DEPARTURE (IFR)",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to departure routing and altitude restrictions not being reviewed before takeoff and the NAVAIDs and GPS left unset, did not have the departure available when the clearance was issued and attempted to build it airborne. The head-down work displaced aircraft control and the assigned altitude and track were both exceeded past the code 1 limits. The IP intervened to fly the aircraft and to establish it on the published departure.",
+        "1": "SP, due to preferred routings not being planned, did not anticipate the route change contained in the clearance and had to set the NAVAIDs and GPS during the initial climb. Altitude reached 300 feet from the assigned value and the departure track opened to 10 degrees while the setup was completed. The situation was resolved only after the IP prompted a return to the assigned parameters.",
+        "2": "SP, due to a partial NAVAID and GPS setup before takeoff, did not have one of the departure restrictions loaded and reconstructed it after the first turn, letting the altitude drift about 200 feet. SP prioritized aircraft control, completed the setup and returned inside 150 feet and 5 degrees without prompting. The remainder of the departure was flown as published.",
+        "3": "SP reviewed the departure routing and altitude restrictions and set the NAVAIDs and GPS before takeoff, with the approach plate for the departure airfield readily available. The departure was flown as cleared with altitude within 150 feet and track within 5 degrees. The pre-takeoff preparation absorbed the clearance detail without airborne reconfiguration.",
+        "4": "SP planned the preferred routings, reviewed the departure restrictions and set the NAVAIDs and GPS completely before takeoff, keeping the approach plate accessible for an emergency return. The issued clearance required no airborne reconfiguration and the departure was flown with negligible deviations. Situational awareness was maintained through every routing and altitude restriction.",
+        "marginal": "SP set the NAVAIDs and GPS and reviewed the departure before takeoff, but the review was thin enough that parts of the clearance had to be confirmed during the climb. Parameters stayed inside the standard while this was done. SP is expected to plan preferred routings and complete the departure review so that no reconstruction is needed airborne."
+      }
+    },
+    {
+      "id": "vfr_navigation-04-tm08",
+      "label": "Overtake and separation control on the rejoin following a formation departure",
+      "mif_row": null,
+      "source": "technique:9.23.3.b TURNING REJOIN",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to failure to recognize excessive overtake, did not compare actual airspeed with the directed rejoin airspeed and closed on Number 1 far above the 20-30 KIAS of planned closure. Lateral and vertical separation were not maintained until the closure rate was under control and the aircraft arrived in route with unmanaged aspect. The IP intervened to arrest the closure and re-establish separation.",
+        "1": "SP, due to bank and overtake not being monitored during the last few hundred feet, did not begin the power reduction at the critical stage of the rejoin and carried closure more than 20 knots above the rejoin airspeed into 500 feet. The aspect reference was lost and the arrival in route was made without stabilized closure. The correction was applied only after the IP called the overtake.",
+        "2": "SP, due to a power reduction started later than the 500 feet critical stage, did not decrease closure in time and reached the route position with about 15 knots of overtake. SP maintained vertical separation with Number 1 held two to four ship widths from the horizon, used the speed brake below 20 percent torque and stabilized co-airspeed without prompting. The move into fingertip was then made at a controlled rate.",
+        "3": "SP flew the rejoin with the planned 20-30 KIAS of closure and kept the vertical stabilizer bisecting the outside wing as the aspect reference. Closure was reduced with power inside 500 feet so that the route position was reached within 10 knots of Number 1. Lateral and vertical separation were maintained until the closure rate was fully under control.",
+        "4": "SP managed aspect with small bank adjustments and reduced closure so precisely that the route position was reached co-airspeed with Number 1 and no line-of-sight rate. Separation was never in question at any stage of the rejoin. The transition into fingertip was smooth and made only after the aircraft was stabilized in route.",
+        "marginal": "SP completed the rejoin inside the standard, but closure was reduced later than the critical stage of the rejoin required and the last correction was sizeable. Separation was maintained throughout and the arrival in route was safe. SP is expected to compare actual airspeed with the directed rejoin airspeed earlier so that overtake is bled off before 500 feet."
+      }
     }
   ]
 }

@@ -127,6 +127,111 @@
         "4": "SP performed the formation radio duties of the role precisely and without omission for the whole route. As Leader, every item of information passed to the Wingman was accurate, timely and complete, including the reminders for the functional and fuel checks after the routing change; as Wingman, SP confirmed each direction immediately, monitored every exchange between the Leader and the ground stations and interposed once for flight safety exactly when it was required.",
         "marginal": "SP carried out the formation radio duties within standards, but the internal calls were consistently passed later than the external ones and the Wingman's confirmations were the last element of each exchange. The trend is toward treating the formation communication as secondary to the ground station communication. SP is expected to plan the internal calls against the route points so that both cockpits share the same information before each turning point."
       }
+    },
+    {
+      "id": "vfr_navigation-22-tm09",
+      "label": "Radio call construction in the agency-call sign-location-request format and attention-getting before a detailed request",
+      "mif_row": null,
+      "source": "technique:1.18 Radio Procedures",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to radio calls assembled in an improvised order instead of the agency calling, call sign, location and request format, did not give the controlling agency the information it expected in the sequence it expected. Three calls of the route omitted the location element and one long re-route request was transmitted without first getting the controller's attention, so the agency answered with a query on each occasion and the exchange had to be rebuilt from the start. The IP took the radios and passed the routing request in the correct format. SP did not restructure any call before the intervention.",
+        "1": "SP, due to calls that placed the request ahead of the call sign and the location, did not use the format expected by the ground station and forced the controller to ask twice which aircraft was transmitting. SP rebuilt the calls in the agency, call sign, location, request order only after the IP dictated the sequence, and the detailed request for the amended routing was still made without first getting the controller's attention. The content itself was correct once reordered and no transfer of the radios was necessary.",
+        "2": "SP, due to a first call that opened with the request instead of the agency and the call sign, did not follow the standard call format at the initial contact, but recognized it unaided as soon as the transmission ended. SP repeated the call in the agency, call sign, location, request order and obtained the controller's attention before passing the longer request that followed. No prompting and no intervention by the IP were required.",
+        "3": "SP built every call in the agency calling, call sign, location and request format. Detailed requests were preceded by a short attention-getting call and were passed only after the controller acknowledged, so no station had to query the aircraft for a missing element.",
+        "4": "SP transmitted every call of the route in the standard format at the first attempt, with the four elements complete and in the correct order. Each detailed request, including the one for the amended routing, was preceded by a short attention-getting call and passed in full after the acknowledgement, and no controller queried a single transmission of the sortie.",
+        "marginal": "SP formatted the calls within standards, but the location element was frequently left to the end and the longer requests were transmitted in one block without an attention-getting call first. The trend is toward ordering the call around whatever SP is thinking of at the moment of transmission. SP is expected to rehearse each call in the agency, call sign, location, request order before keying the microphone so that the format holds for the non-routine requests as well."
+      }
+    },
+    {
+      "id": "vfr_navigation-22-tm10",
+      "label": "PF and PNF radio responsibility and notification of the other cockpit before transmitting",
+      "mif_row": null,
+      "source": "technique:1.18 Radio Procedures",
+      "hf_concept": "hf-role-assignment",
+      "texts": {
+        "0": "SP, due to a division of the radio task that did not follow the PF and PNF responsibilities, neither took the radio calls as pilot flying nor notified the other cockpit when transmitting from the non-flying position. Two frequency changes were made with no call between the cockpits and one accepted level change was never passed forward, so the two cockpits held different clearances over a full leg. The IP took the radios and restated the division of duties for the remainder of the route. SP did not re-establish the crew concept before the intervention.",
+        "1": "SP, due to transmitting from the non-flying position without notifying the pilot flying, left the other cockpit unaware that a level change had been requested and accepted. SP announced the transmission and the selected frequency only after the IP pointed out that the call had been made unannounced, and the same omission was repeated once on the following leg. The radio content was correct on both occasions and no transfer of the radios was necessary.",
+        "2": "SP, due to a transmission started from the non-flying position while the frequency change was still being made, did not notify the other cockpit before keying the microphone, but recognized it unaided at the end of the call. SP immediately passed the content of the exchange and the selected frequency forward, and every later transmission from the non-flying position was announced first. No prompting and no intervention by the IP were required.",
+        "3": "SP applied the PF and PNF radio responsibilities throughout the sortie. As pilot flying SP made the radio calls, and where SP transmitted from the non-flying position the other cockpit was notified beforehand and given the content of the exchange, so both cockpits held the same clearance at all times.",
+        "4": "SP applied the crew concept for the radios precisely for the whole route, with every call made or received passed to the other cockpit without delay. Where the workload peaked at a turning point SP used the pilot flying and pilot not flying split deliberately, keeping the transmission in one cockpit and the frequency selection in the other, and neither cockpit was ever out of step with the assigned clearance.",
+        "marginal": "SP divided the radio work between the cockpits within standards, but the notification to the other cockpit was consistently given after the transmission rather than before it. The trend is toward informing the pilot flying only once the exchange has been completed. SP is expected to announce the intended call before keying the microphone so that both cockpits are ahead of the exchange rather than behind it."
+      }
+    },
+    {
+      "id": "vfr_navigation-22-tm11",
+      "label": "Call sign construction on the formation navigation sortie - full call sign outside the flight, word prefix plus digit suffix inside it",
+      "mif_row": null,
+      "source": "technique:9.3.4 CALL SIGNS",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to call signs shortened to the numeric suffix alone, did not identify the aircraft with the full call sign to agencies outside the formation and did not use the word prefix with the digit suffix on the directive calls inside the flight. A wingman of another flight on the same frequency answered a directive intended for the formation, and SP twice passed own ship parameters using the term leader instead of one. The IP took the radios and re-established the correct call sign usage. SP did not detect the misidentification before the intervention.",
+        "1": "SP, due to directive calls inside the flight made with the digit suffix alone, did not provide the two means of identification that the word prefix and the digit together give, and one directive had to be repeated after it was acknowledged by the wrong aircraft. SP used the full word prefix and suffix only after the IP prompted the correct construction, and own ship parameters were passed once as leader rather than as one. No transfer of the radios was necessary.",
+        "2": "SP, due to a transmission to the en route agency opened with the word prefix alone, did not use the full call sign at the first attempt, but corrected it unaided within the same transmission. Every directive call inside the flight thereafter carried the word prefix and the digit suffix, and own ship parameters were passed as one for the rest of the route. No prompting and no intervention by the IP were required.",
+        "3": "SP used the full call sign on every transmission to agencies outside the formation and the word prefix with the digit suffix on the directive calls inside the flight. Own ship parameters were passed as one, and no call of the sortie was acknowledged by the wrong aircraft.",
+        "4": "SP applied the call sign construction exactly on every transmission of the route, with the full call sign outside the formation and the word prefix plus digit suffix on all directive calls. When one transmission was stepped on by another flight, the prefix and suffix construction ensured that the correct wingman answered the repeat, and the term leader was reserved for the lead change alone.",
+        "marginal": "SP used the call signs within standards, but the digit suffix alone was used for directive calls whenever the frequency was quiet, and the full construction reappeared only on the congested frequencies. The trend is toward judging the identification requirement by how busy the frequency sounds. SP is expected to use the word prefix with the digit suffix on every directive call so that both means of identification are already in use before a transmission is garbled."
+      }
+    },
+    {
+      "id": "vfr_navigation-22-tm12",
+      "label": "Radio ownership by Number 1 and the go and push distinction on frequency changes",
+      "mif_row": null,
+      "source": "technique:9.3.5 RADIO DISCIPLINE",
+      "hf_concept": "hf-leadership-and-followership",
+      "texts": {
+        "0": "SP, due to frequency changes made without being directed by Number 1, did not respect the radio ownership of the flight and left the two aircraft on different frequencies twice on the route. A go frequency change was executed with no acknowledgement at all, and when the flight became split SP went hunting across channels instead of going to the assigned frequency and waiting. The IP intervened, restored the flight to a common frequency and directed the remaining changes. SP did not recognize the loss of the common frequency before the intervention.",
+        "1": "SP, due to an acknowledgement omitted on a go frequency change and given on a push, did not apply the distinction between the two terms and left Number 1 without confirmation that the direction had been received. SP corrected the response only after the IP restated the terms, and one channel change was started from fingertip without first moving to route position. The flight stayed on a common frequency throughout and no transfer of the radios was necessary.",
+        "2": "SP, due to a channel change begun at the moment Number 1 transmitted it, started to select the new frequency before acknowledging a go call, but caught it unaided and acknowledged before the selection was made. SP moved to route position for the change and returned to fingertip after the check-in on the new frequency. No prompting and no intervention by the IP were required.",
+        "3": "SP changed frequency only when directed by Number 1 or where the written unit standards require it, acknowledged every go call before changing and changed on every push call without acknowledging. Each channel change from fingertip was flown from route position, with the return to fingertip made after the check-in on the new frequency.",
+        "4": "SP handled every frequency change of the route exactly as directed, applying the go and push distinction without a single error and checking in immediately on each new channel. When one directed channel proved to be the wrong one, SP went to that frequency and waited rather than hunting, and was re-established on the correct channel by Number 1 with no loss of flight integrity.",
+        "marginal": "SP managed the frequency changes within standards, but the acknowledgement of a go call was consistently transmitted after the new channel had already been selected. The trend is toward acknowledging that the change has been made rather than that the direction has been received. SP is expected to acknowledge first and select afterwards, so that Number 1 knows the call was received before the flight can be split across two frequencies."
+      }
+    },
+    {
+      "id": "vfr_navigation-22-tm13",
+      "label": "Knock-It-Off and Terminate calls, blind calls and acknowledgement in order of position",
+      "mif_row": null,
+      "source": "technique:9.12 KNOCK-IT-OFF AND TERMINATE PROCEDURES",
+      "hf_concept": "hf-knock-it-off-and-unable-discipline",
+      "texts": {
+        "0": "SP, due to a reluctance to call Knock-It-Off while doubt existed over the position of the other aircraft, did not initiate the call when safety of flight was a factor and did not make the blind call after losing sight. When the Knock-It-Off was finally transmitted by the other member, SP neither cleared the flight path nor acknowledged in order of position, and manoeuvring was resumed without verbal clearance. The IP took control, stopped the manoeuvre and re-established deconfliction. SP did not recognize the need for the call at any stage.",
+        "1": "SP, due to hesitation over whether the situation justified the call, did not transmit Knock-It-Off while doubt existed over the flight path of the other aircraft and made the call only after the IP directed it. The acknowledgement was passed out of the order of position in the formation, and verbal clearance was requested before resuming only after the IP prompted it. No control input was required from the IP.",
+        "2": "SP, due to attention held on regaining the visual on the other aircraft, was late with the blind call, but transmitted it unaided within a few seconds and followed it with Knock-It-Off when the doubt persisted. SP cleared the flight path, ceased manoeuvring and acknowledged with the call sign in order of position, then obtained verbal clearance before resuming. No prompting and no intervention by the IP were required.",
+        "3": "SP used Knock-It-Off whenever safety of flight was a factor or doubt and confusion existed, and Terminate where safety of flight was not a factor. On every such call SP cleared the flight path, ceased manoeuvring, acknowledged with the call sign in order of position in the formation and obtained verbal clearance before resuming.",
+        "4": "SP applied the Knock-It-Off and Terminate procedures without a single omission, initiating the call the moment confusion arose and distinguishing the two calls correctly on every occasion. Acknowledgements were made in order of position, the flight path was cleared before manoeuvring ceased, and one continuous wing rock from the other aircraft was recognized immediately, answered with a Knock-It-Off transmission and followed by the required assistance.",
+        "marginal": "SP used the Knock-It-Off and Terminate calls within standards, but each one was transmitted only after SP had first tried to resolve the confusion visually. The trend is toward treating the call as a last resort rather than as the first action once doubt exists. SP is expected to transmit Knock-It-Off as soon as doubt or confusion arises, since the procedure exists for exactly that moment and the delay is what removes the margin."
+      }
+    },
+    {
+      "id": "vfr_navigation-22-tm14",
+      "label": "NORDO procedures after a total radio failure - visual signals, Number 2 position and the route rejoin limit",
+      "mif_row": null,
+      "source": "technique:9.51 NO RADIO (NORDO)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to a total radio failure that was not handled with the NORDO procedures, did not manoeuvre from fingertip to route and did not show the appropriate visual signal to the other aircraft. SP attempted a rejoin closer than route position without being directed and gave no attention in the air signal at any point, so the other member remained unaware of the failure for a full leg. The IP intervened, established the visual signals and led the recovery. SP did not apply any element of the procedure before the intervention.",
+        "1": "SP, due to a delayed recognition of the total radio failure, did not move to route and did not attract the attention of Number 1 with the appropriate visual signal until the IP directed it. The wing rock was then given correctly and SP held route position for the lead in to the overhead pattern, but a full leg had been flown with the failure unannounced. No control input was required from the IP.",
+        "2": "SP, due to attention held on troubleshooting the radio, was late in showing the visual signal after the failure, but recognized the delay unaided and manoeuvred to route within the same leg. SP rocked the wings for attention in the air, passed the appropriate signal and stayed no closer than route until directed. No prompting and no intervention by the IP were required.",
+        "3": "SP applied the NORDO procedures as required, moving from fingertip to route, attracting the attention of the other aircraft and showing the appropriate visual signal. SP took the Number 2 position, remained no closer than route until directed, followed the lead in to the overhead pattern and flew a normal pattern and landing on the visual signal that the landing had been cleared.",
+        "4": "SP recognized the total radio failure immediately and applied every element of the NORDO procedure unprompted, moving to route, rocking the wings for attention in the air and passing the appropriate visual signal at the first opportunity. SP retained the Number 2 position, held the rejoin no closer than route until directed, followed the lead in to the overhead pattern and accepted the visual signal for landing clearance with a normal pattern and landing.",
+        "marginal": "SP handled the radio failure within standards, but the rejoin was flown to the inner edge of route position and closed a little further each time the other aircraft manoeuvred. The trend is toward treating route as a target rather than as a limit while communication is reduced to visual signals. SP is expected to hold a clear margin outside route position until directed, since no verbal correction is available if the closure is misjudged."
+      }
+    },
+    {
+      "id": "vfr_navigation-22-tm15",
+      "label": "Traffic calls in the standard direction, clock position, elevation and distance format",
+      "mif_row": null,
+      "source": "technique:9.3.5 RADIO DISCIPLINE",
+      "hf_concept": "hf-distributed-situational-awareness",
+      "texts": {
+        "0": "SP, due to traffic calls passed as free-text descriptions of what was seen, did not give the direction, the clock position, the elevation and the approximate distance that the standard format requires. Two traffic calls of the route carried neither a clock position nor a distance and the other aircraft was unable to acquire the traffic on either occasion. The IP transmitted the traffic in the standard format and directed the avoidance. SP did not restructure the calls before the intervention.",
+        "1": "SP, due to traffic calls built around the ground feature the traffic was over instead of the clock position, did not pass the elevation and the approximate distance and required the other member to ask for both. SP reformatted the call only after the IP dictated the required elements, and the traffic was acquired later than the geometry allowed. No transfer of the radios was necessary.",
+        "2": "SP, due to a traffic call started before the elevation had been assessed, passed the direction and the clock position without the high or low element at the first attempt, but completed the call unaided a few seconds later with the elevation and the approximate distance. The traffic was acquired on the completed call and every subsequent traffic call was complete at the first transmission. No prompting and no intervention by the IP were required.",
+        "3": "SP passed every traffic call with the call sign, the direction, the clock position, the elevation and the approximate distance in the standard order. Each call was made as soon as the traffic was seen, and the other member acquired the traffic without asking for additional information.",
+        "4": "SP passed every traffic sighting of the route immediately and in the complete standard format, with direction, clock position, elevation and approximate distance accurate on each occasion. The other member acquired all the reported traffic on the first call, and the calls were kept short enough not to displace the required en route reports.",
+        "marginal": "SP passed the traffic calls within standards, but the approximate distance was consistently the last element added and on the busier legs it was left out until it was requested. The trend is toward transmitting what has already been recognized instead of the complete picture. SP is expected to assemble direction, clock position, elevation and distance before keying the microphone so that a single call is enough for the other member to acquire the traffic."
+      }
     }
   ]
 }

@@ -3,7 +3,9 @@
   "item_name": "IN-FLIGHT PLANNING / FORMATION INTERGRITY",
   "category": "vfr_navigation",
   "schema": "v2-trunk",
-  "mif_numbers": [6],
+  "mif_numbers": [
+    6
+  ],
   "mif_rows": [
     { "sn": 6, "row_name": "In flight Planning/ Formation Consistency" }
   ],
@@ -156,6 +158,126 @@
         "3": "SP deviated from the planned track only when objective difficulties were present, requested IP permission before initiating the change and stated the heading, the reason and the intended return to track. The recomputation of time and fuel followed immediately. Formation position and the corresponding formation criteria were maintained throughout the modification.",
         "4": "SP coordinated the deviation with IP before it was needed, presenting the reason, the proposed heading, the time and fuel penalty and the intended return point in one concise transmission. The formation position was held precisely through the whole modified profile and the corresponding formation items were applied without any degradation of integrity. Coordination shortfalls were negligible.",
         "marginal": "SP coordinated the deviation and held the formation within standards, but the request to IP was made at the point the turn was required rather than in advance, leaving no time for discussion. The trend is toward informing the other cockpit at the moment of action instead of proposing and agreeing beforehand. SP is expected to raise the proposed track change while options still exist and to state heading, reason and return point in the initial call."
+      }
+    },
+    {
+      "id": "vfr_navigation-06-tm01",
+      "label": "DELIBERATE COURSE DURATION METHOD - DEVIATION GEOMETRY",
+      "mif_row": null,
+      "source": "technique:8.19.6.d(8)(i) WEATHER DEVIATIONS (Deliberate Course Duration Method)",
+      "hf_concept": "hf-lack-of-knowledge",
+      "texts": {
+        "0": "SP, due to leaving the route with a deviation angle well above the recommended 70 degrees and then turning back on an arbitrary heading instead of twice the original heading change, did not fly a deliberate course duration deviation that could be resolved back onto course. The aircraft rolled out more than 10 degrees off the required return heading and the displacement from the planned track kept growing. IP directed the return heading and took over the navigation until the original course was regained.",
+        "1": "SP, due to selecting the outbound deviation angle without reference to the distance and size of the obstructing weather, applied a turn of about 80 degrees and had to be reminded that no angle above 70 degrees is recommended. The return turn was flown at twice the original heading change only after IP stated the figure, and the roll-out was 10 degrees off the required heading. The deviation was closed back onto course through verbal direction alone.",
+        "2": "SP, due to starting the turn back toward course before the aircraft was abeam the obstruction, initially set a return heading that did not correspond to twice the original heading change and rolled out about 7 degrees off. SP rechecked the geometry of the deliberate course duration method, corrected the heading and regained the planned track with no IP input. The remainder of the deviation was flown within 5 degrees.",
+        "3": "SP flew the deliberate course duration method correctly, leaving the route with a heading change sized to the distance and extent of the obstructing weather and never exceeding the recommended 70 degrees. The turn back toward course was made at twice the original heading change once abeam the obstruction, with roll-out within 5 degrees of the required heading. The planned track was regained without IP input.",
+        "4": "SP sized the outbound deviation angle precisely against the distance and extent of the weather, held it well inside the 70 degree recommendation and turned back at exactly twice the original heading change when abeam the obstruction. Roll-out headings on both legs were within a few degrees of the computed values. Departures from the deliberate course duration geometry were negligible.",
+        "marginal": "SP flew the deviation with the correct geometry and the roll-out headings stayed within standards, but the outbound angle was chosen close to the 70 degree recommendation without a clear reference to the extent of the weather. The trend is toward a deviation sized by habit rather than by the obstruction, which leaves little margin if the build-up extends further. SP is expected to size the outbound heading change to the observed weather and keep the return turn at exactly twice that value on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-06-tm02",
+      "label": "DEVIATION LEG TIMING, KNEEBOARD RECORD AND ETA UPDATE",
+      "mif_row": null,
+      "source": "technique:8.19.6.d(8)(i) WEATHER DEVIATIONS (Deliberate Course Duration Method)",
+      "hf_concept": "hf-slips-lapses-mistakes",
+      "texts": {
+        "0": "SP, due to failing to note the time at the outbound turn and to record the heading change on the kneeboard, could not establish the outbound leg time and flew the inbound leg for an arbitrary duration. The aircraft ended up displaced from the planned track by more than the deviation itself and the ETA to the next checkpoint was never updated. IP reconstructed the deviation timing and directed the heading and the time to fly in order to regain the course.",
+        "1": "SP, due to treating the weather deviation as a purely visual manoeuvre, did not note the time at the turn outbound and produced an inbound leg time only after IP asked for it twice. The inbound leg was flown for a duration that left about 10 degrees of track displacement to resolve, and the ETA to the next checkpoint was updated on IP direction. The deviation was closed to the minimum acceptable standard through verbal prompting.",
+        "2": "SP, due to a late start of the timing at the outbound turn, initially planned an inbound leg shorter than the outbound one. SP detected the discrepancy against the kneeboard record, extended the inbound timing accordingly and rolled out on the original heading within 5 degrees with the track displacement contained. The ETA to the next checkpoint was updated by adding one leg time without IP input.",
+        "3": "SP noted the time at the outbound turn and again when abeam the obstruction, recorded the heading change and the duration of the deviation on the kneeboard, and flew the inbound leg for the same time as the outbound leg. Roll-out on the original heading was within 5 degrees and the aircraft was re-established on the planned track. The ETA to the following checkpoints was updated by adding the leg time as the 60 degree method allows.",
+        "4": "SP timed both legs of the deviation precisely, kept a legible kneeboard record of the heading change and the elapsed time, and rolled out on the original course at the completion of the inbound timing. The revised ETA obtained by adding one leg time matched the actual checkpoint crossing within a few seconds. Deviations from the planned track and timing were negligible.",
+        "marginal": "SP timed the deviation legs and updated the ETA within standards, but the kneeboard record was written after the fact from memory rather than at the turn. The trend is toward timing that is reconstructed rather than measured, which will not survive a longer deviation or a second one. SP is expected to note the time and the heading change at the moment of each turn on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-06-tm03",
+      "label": "TERRAIN CLEARANCE TASKS VERSUS MISSION TASKS",
+      "mif_row": null,
+      "source": "technique:8.19.6 NAVIGATION - DEAD RECKONING, PILOTAGE AND TASK MANAGEMENT",
+      "hf_concept": "hf-attention-bottleneck",
+      "texts": {
+        "0": "SP, due to performing mission tasks for an extended time head down over the flight log, allowed the terrain clearance task to lapse entirely on a leg over rising ground. The aircraft descended more than 300 feet below the leg altitude with no visual scan outside the cockpit. IP took control, climbed the aircraft and re-established the terrain clearance priority before the navigation was resumed.",
+        "1": "SP, due to fuel and timing computations run in one uninterrupted head-down period, let the mission tasks degrade terrain clearance on the amended leg. Altitude reached 300 feet low and SP looked outside and climbed only after IP called for it. The first priority of avoiding the ground was restored by verbal direction rather than by SP's own division of attention.",
+        "2": "SP, due to a route correction attempted as a single continuous mission task, began to lose the outside scan and let the altitude drift about 200 feet low. SP recognised that the task was running long, broke it off, climbed back to the leg altitude and completed the correction in short segments between terrain clearance checks. No IP input was required.",
+        "3": "SP divided attention correctly between terrain clearance tasks and mission tasks, never performing mission tasks for an extended time and returning the scan outside between each element of the fuel, timing and route corrections. Altitude was held within 150 feet of the leg altitude throughout the profile change. Clearing and avoiding the ground remained the visible first priority.",
+        "4": "SP kept the terrain clearance task as the clear first priority throughout the modified navigation, breaking every computation into short segments and returning the scan outside between them. Altitude excursions during the mission tasks were of a few tens of feet and the aircraft was cleared and manoeuvred visually at all times. The division of attention required no comment.",
+        "marginal": "SP kept the aircraft within the altitude standards while working the in-flight computations, but the head-down periods were longer than the technique allows and the outside scan returned only at the end of each task. The trend is toward mission tasks that erode terrain clearance before they are interrupted. SP is expected to break the computations into short segments and to climb whenever the terrain clearance task is degraded."
+      }
+    },
+    {
+      "id": "vfr_navigation-06-tm04",
+      "label": "GROUND SPEED CHECK AND FUEL PREDICTION ON THE AMENDED ROUTE",
+      "mif_row": null,
+      "source": "technique:8.12 ENROUTE (IFR)",
+      "hf_concept": "hf-monitoring-cross-check",
+      "texts": {
+        "0": "SP, due to never accomplishing a ground speed check after the routing was modified, did not determine the effect of the winds on the new legs and carried the planned fuel figures forward unchanged. The fuel predicted at the next checkpoints was wrong by a margin that put the reserve in question and the error went undetected. IP stopped the navigation task, directed a ground speed check and recomputed the fuel with SP.",
+        "1": "SP, due to relying on the planned figures after the reroute rather than on actual ground speed and fuel flow, did not notice that the modified routing and altitude had drastically changed the actual fuels. Each element of the ground speed check and of the revised fuel prediction was produced only after IP called for it. The figures reached the minimum acceptable standard through verbal prompting and well after the first checkpoint of the new leg.",
+        "2": "SP, due to a ground speed check started and then abandoned when the turn onto the amended leg came up, initially carried forward the planned wind and fuel figures. SP repeated the check at the next fix, noted the DME change over one minute, updated the prediction against actual fuel flow and corrected the checkpoint figures without IP input.",
+        "3": "SP accomplished a ground speed check on the amended routing to determine the effects of the winds and used the actual fuel flow to predict the fuel at the future points of the route. Planned, updated and actual fuel were compared at each checkpoint and the differences were stated and accounted for. No computation required correction by IP.",
+        "4": "SP checked ground speed as soon as each amended leg was established and used the actual fuel flow to predict the fuel at every remaining checkpoint. The updated figures matched the actual fuel at the crossings closely enough that no further revision was needed, and the effect of the modified routing and altitude on the fuels was identified before it showed on the gauges. Departures from the predicted fuel profile were negligible.",
+        "marginal": "SP ran the ground speed check and updated the fuel prediction within standards, but the check was accomplished once and the resulting figures were then carried through the rest of the route unchanged. The trend is toward a wind and fuel picture that ages during the deviation, so a further routing change would find the numbers stale. SP is expected to repeat the ground speed check on each amended leg and to compare planned, updated and actual fuel at every checkpoint."
+      }
+    },
+    {
+      "id": "vfr_navigation-06-tm05",
+      "label": "LEVEL OFF POWER AND PLANNED FUEL FLOW ON THE NEW LEG",
+      "mif_row": null,
+      "source": "technique:8.12 ENROUTE (IFR)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to reducing power at level off instead of keeping climb power until approaching the planned IAS, did not establish the new leg at the mission planned airspeed. Airspeed settled more than 20 knots below plan, the planned fuel flow was never set and the leg times just recomputed for the revised profile were invalidated. IP set the power and the fuel flow and directed the recomputation of the leg.",
+        "1": "SP, due to setting the PCL by feel rather than to the planned fuel flow after the climb to the new leg altitude, allowed the airspeed to stabilise 20 knots off the mission planned IAS. The power was corrected and the fuel flow set only after IP called the airspeed twice. The planned IAS was restored through verbal prompting and after several miles of the amended leg had been flown.",
+        "2": "SP, due to a late transition from climb power to the planned fuel flow at level off, allowed the airspeed to overshoot the mission planned IAS by about 15 knots. SP recognised the trend on the airspeed indicator, adjusted the PCL to the planned fuel flow and stabilised the leg with no IP input. The later level-offs were flown within 10 knots.",
+        "3": "SP kept climb power until approaching the planned IAS at level off and then set the planned fuel flow to hold the airspeed on each amended leg. Airspeed was maintained within 10 knots of the mission planned IAS and the PCL was adjusted as required when the altitude or the winds changed. The leg times of the revised profile remained valid.",
+        "4": "SP levelled off on each new leg with the power lead point judged so that the aircraft accelerated directly to the mission planned IAS, then held it on the planned fuel flow. Airspeed excursions were of a few knots and the fuel flow matched the figure used for the revised leg times. Deviations from the planned airspeed profile were negligible.",
+        "marginal": "SP established the amended legs within the airspeed standards, but the airspeed was reached by chasing the PCL rather than by keeping climb power to the planned IAS and then setting the planned fuel flow. The trend is toward a leg that stabilises late, which distorts the leg times and the fuel figures just recomputed. SP is expected to use the planned fuel flow as the reference setting at every level off on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-06-tm06",
+      "label": "CONTINUATION FUEL AND EARLY ROUTE TERMINATION DECISION",
+      "mif_row": null,
+      "source": "technique:8.18.3.g CONTINUATION FUEL",
+      "hf_concept": "hf-divert-criteria-and-decision-points",
+      "texts": {
+        "0": "SP, due to having no continuation fuel figure computed for the checkpoints of the revised route, did not recognise that the fuel required to continue and reach the landing destination with reserves would be exceeded. SP pressed on along the amended track with the reserve unprotected and no decision point identified. IP terminated the route and directed the aircraft direct to the final checkpoint.",
+        "1": "SP, due to a continuation fuel computed only for the original route and never reworked backwards for the amended legs, had no usable minimum fuel figure at the checkpoints. SP accepted that the route had to be shortened only after IP presented the arithmetic. The decision to proceed direct to the final checkpoint was taken on IP direction rather than on SP's own fuel check.",
+        "2": "SP, due to omitting the transit fuel from the end of the route to the landing destination when the profile was revised, initially derived a continuation fuel that was optimistic at the last two checkpoints. SP reworked the computation backwards from the destination with reserves, corrected the figures and shortened the route at the next checkpoint with no IP input.",
+        "3": "SP computed continuation fuel for the revised route by working backwards from the landing destination with reserves through each amended leg, and compared the fuel remaining against that minimum at every checkpoint. The route was modified in good time as the fuel to continue was approached, proceeding direct to the final checkpoint as expected. No fuel decision required IP direction.",
+        "4": "SP carried a continuation fuel figure for every checkpoint of the amended route, including the transit from the end of the route to the landing destination, and compared it against the actual fuel at each crossing. The decision to shorten the route was identified well before the fuel to continue was reached and was stated with the supporting figures. Departures from the planned fuel profile were negligible.",
+        "marginal": "SP kept the continuation fuel figures within standards, but they were reworked only at the checkpoints where IP asked for the fuel state and the margin was allowed to close before any decision was voiced. The trend is toward a fuel decision taken at the limit rather than at a planned decision point. SP is expected to work continuation fuel backwards for the whole amended route as soon as the profile changes."
+      }
+    },
+    {
+      "id": "vfr_navigation-06-tm07",
+      "label": "IN-FLIGHT CHECKS ONE ITEM AT A TIME AND CHECK-IN FORMAT",
+      "mif_row": null,
+      "source": "technique:9.5 IN-FLIGHT CHECKS",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to running the ops check straight through head down instead of accomplishing it one item at a time with a position check on Number 1 between each item, lost the leader's aspect and drifted into an unsafe position. The check was continued through a formation turn rather than suspended and resumed afterwards. IP took control to re-establish deconfliction and position before the check was completed.",
+        "1": "SP, due to attempting the checklist as a single block while in formation, did not check position on Number 1 between items and the aircraft drifted out of the briefed position until IP called for a correction. The check was interrupted and the position restored only on direction from the rear cockpit, and the check-in was transmitted without call sign and total fuel until prompted. The check reached the minimum acceptable standard through verbal prompting.",
+        "2": "SP, due to continuing the descent check into the start of a turn called by the leader, initially allowed the position to open before recognising the priority. SP stopped the check, flew the formation through the turn and resumed the remaining items one at a time with a position check between each, transmitting call sign and total fuel correctly. No IP input was required.",
+        "3": "SP flew the formation first and accomplished the in-flight checks as workload permitted, taking one item at a time and checking position on Number 1 between each item. The check was suspended for the turn and resumed once the turn was complete, and the check-in was transmitted with call sign and total fuel. Position and deconfliction were maintained throughout.",
+        "4": "SP interleaved the ops and descent checks with the formation task so smoothly that the position never varied noticeably, taking single items and returning to Number 1 between each. The checklist page was referenced to verify completion after the memory items and the check-in was transmitted with call sign and total fuel without prompting. Departures from the briefed position during the checks were negligible.",
+        "marginal": "SP completed the in-flight checks within standards, but the items were taken in longer runs than the technique allows and the position check on Number 1 came only after two or three items. The trend is toward a check accomplished at the expense of the formation task rather than as workload permits. SP is expected to take one item at a time and to check position between each item on the next sortie."
+      }
+    },
+    {
+      "id": "vfr_navigation-06-tm08",
+      "label": "JOKER AND BINGO AWARENESS AND FUEL CHECK FREQUENCY",
+      "mif_row": null,
+      "source": "technique:9.6 FUEL AND G-AWARENESS",
+      "hf_concept": "hf-lack-of-communication",
+      "texts": {
+        "0": "SP, due to not increasing the frequency of the fuel checks during the low altitude portion of the amended profile, did not detect the higher fuel flow and passed joker without informing the leader. Bingo was reached before any fuel state was transmitted and the recovery had to be started at once. IP directed the fuel call and the recovery decision.",
+        "1": "SP, due to keeping the ops check interval planned for the original profile after the route had been extended, dropped below joker before informing the leader and made the call only after IP prompted for the fuel state. The fuel was then reported as an absolute figure instead of being referenced from joker until corrected. Fuel awareness reached the minimum acceptable standard through verbal prompting.",
+        "2": "SP, due to a fuel check deferred while the amended leg was being recomputed, was late in recognising the approach to joker. SP tightened the check interval as soon as the higher fuel flow of the low altitude leg was noticed, transmitted the joker call with call sign and total fuel and stated the effect on the remaining profile with no IP input.",
+        "3": "SP increased the frequency of the fuel checks during the high fuel flow portions of the revised profile and informed the leader on reaching joker, using call sign and total fuel. The factors and assumptions behind the joker and bingo figures were stated correctly for the amended route. No fuel call required prompting.",
+        "4": "SP tracked the fuel state continuously through the amended profile, tightening the check interval on the low altitude legs and calling joker at the moment it was reached with the effect on the remaining route already computed. The bingo figure was rechecked against the revised routing and stated together with its assumptions. Departures from the planned fuel state were negligible.",
+        "marginal": "SP made the joker call and kept the fuel checks within the briefed intervals, but the interval was not tightened for the low altitude legs where the fuel flow is highest. The trend is toward a fuel picture that is accurate at the checks and stale between them, which will produce a late joker call on a longer deviation. SP is expected to increase the frequency of the fuel checks during high fuel flow operations on the next sortie."
       }
     }
   ]

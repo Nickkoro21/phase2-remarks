@@ -127,6 +127,111 @@
         "4": "SP integrated GPS information with map reading, timing and visual features so that each source reinforced the others. SP could state position, time and distance to the next turning point at any moment without reference to the display. Navigation would have continued unaffected had the equipment failed.",
         "marginal": "SP kept an independent navigation picture but turned to the GPS first whenever position was in question. Map and timing checks were carried out, though only to confirm what the display had already shown. SP is expected to establish position from the ground picture first and use the GPS to verify it."
       }
+    },
+    {
+      "id": "vfr_navigation-13-tm01",
+      "label": "GPS as advisory source versus primary source: VOR and DME raw data",
+      "mif_row": null,
+      "source": "technique:1.19 GPS Usage",
+      "hf_concept": "hf-complacency",
+      "texts": {
+        "0": "SP, due to using the GPS as a primary source of navigation instead of an advisory one, did not tune, identify or monitor the VOR and DME for the leg. The displayed course was followed with no raw data backup, the aircraft was flown off the planned track with a heading error beyond 10 degrees and the divergence went unrecognized. The IP had to intervene and re-establish the navigation on the radial and the DME distance.",
+        "1": "SP, due to treating the GPS as the primary navigation reference, tuned the VOR and DME only after being directed to and never identified the station by its ident. Raw data entered the crosscheck at the limit of usable time, with the track error already about 10 degrees off the computed course. Repeated verbal prompting was needed before the GPS course was verified against the radial.",
+        "2": "SP, due to working the GPS first and the navaids second, delayed tuning and identifying the VOR and DME for the leg. SP recognized that the advisory role of the equipment requires raw data backup, set the navaids up and confirmed the course while keeping the heading error under 10 degrees. The correction was made in good time and without IP input.",
+        "3": "SP used the GPS in its advisory role and kept the VOR and DME tuned, identified and inside the crosscheck. The GPS course was treated as confirmation of the raw data rather than as a replacement for it, and heading was held within 5 degrees of the computed course. Navaid skills were exercised on every leg of the route.",
+        "4": "SP navigated on VOR and DME raw data throughout and used the GPS only as an advisory overlay. Each station was tuned and identified before it was needed and the two pictures agreed at every checkpoint. Track and heading were held with negligible deviation and the priority between the sources was never inverted.",
+        "marginal": "SP kept the VOR and DME tuned and navigation remained within standards, but every course decision was taken from the GPS first and the raw data was only glanced at afterwards. The advisory source was in practice leading the navigation. SP is expected to fly the leg on raw data and use the GPS to confirm it, so that VOR and DME skills continue to be developed."
+      }
+    },
+    {
+      "id": "vfr_navigation-13-tm02",
+      "label": "Groundspeed check for the effects of wind",
+      "mif_row": null,
+      "source": "technique:8.12 ENROUTE (IFR)",
+      "hf_concept": "hf-situational-awareness",
+      "texts": {
+        "0": "SP, due to omitting the groundspeed check after level off, never determined the effects of the winds on the route. Neither the GPS groundspeed nor the DME change over one minute was used, so the planned drift correction and ETAs were carried unchanged. The aircraft reached the area of the turning point with a heading error beyond 10 degrees and a timing error the IP had to correct.",
+        "1": "SP, due to leaving the groundspeed check until late in the leg, flew on wind values that no longer matched the actual conditions. The GPS groundspeed was read only after the IP prompted it and the revised drift correction was applied at the limit of tolerance, with the heading error about 10 degrees. Timing to the turning point had already slipped noticeably.",
+        "2": "SP, due to a delayed groundspeed check, initially held the planned heading against outdated wind data. SP then read groundspeed from the GPS, compared it with the planned figure and revised the drift correction on its own initiative, keeping the heading error under 10 degrees. The updated ETA was established before the turning point.",
+        "3": "SP accomplished a groundspeed check shortly after level off from the GPS readout and confirmed it with the DME change over one minute. The wind effect was quantified and the drift correction applied, holding heading within 5 degrees of the computed course. ETAs were updated for the remaining legs.",
+        "4": "SP checked groundspeed at level off and rechecked it on each leg, so the wind effect was known at all times. Drift correction and ETAs were revised before any error could develop and the timing method was used to cross-confirm the GPS figure. Track and timing were maintained with negligible deviation.",
+        "marginal": "SP performed the groundspeed check, but only once at the start of the route and never revised it as the wind changed along the legs. Navigation stayed within standards while the timing error grew steadily toward the end. SP is expected to repeat the groundspeed check on each leg so that the wind correction stays representative."
+      }
+    },
+    {
+      "id": "vfr_navigation-13-tm03",
+      "label": "Fuel prediction at future points from actual fuel flow versus planned fuel",
+      "mif_row": null,
+      "source": "technique:8.12 ENROUTE (IFR)",
+      "hf_concept": "hf-lack-of-awareness",
+      "texts": {
+        "0": "SP, due to never combining groundspeed with the actual fuel flow on the EID, did not predict fuel at the future points of the route. Changes to the planned routing, altitude and winds were not recognized as drivers of a fuel difference and planned figures were quoted as if they were actual. The IP had to compute the fuel state and impose a change to the plan.",
+        "1": "SP, due to comparing planned against actual fuel only once, did not notice that a delay and an off-plan altitude had shifted the consumption. The discrepancy was raised only after the IP asked for the fuel at the next turning point and the recomputation came at the limit of usable time. The route was continued on a fuel picture that had not been updated by SP.",
+        "2": "SP, due to concentrating on the navigation display, initially skipped the fuel check at the first turning point. SP recognized the omission, took the actual fuel flow from the EID with the GPS groundspeed and rebuilt the prediction for the remaining points in good time. No IP input was required and the plan remained valid.",
+        "3": "SP predicted fuel at the future points of the route from groundspeed and the actual fuel flow shown on the EID. Planned, updated and actual figures were compared at each turning point and the small differences were explained by the winds and the flown altitude. The fuel picture stayed consistent with the mission plan.",
+        "4": "SP maintained a continuously updated fuel prediction, revising it whenever routing, altitude, wind or temperature departed from the plan. Each turning point was reached with the actual figure already compared against the planned and updated values. The fuel state was known at all times without any prompting.",
+        "marginal": "SP compared planned and actual fuel at the required points, but the updated prediction was recomputed only when the difference had already become obvious. The figures stayed inside the mission plan while the checks lagged the changes that caused them. SP is expected to revise the fuel prediction as soon as routing, altitude or winds differ from the plan, not after the difference has grown."
+      }
+    },
+    {
+      "id": "vfr_navigation-13-tm04",
+      "label": "Task prioritization and in-flight checks during the busiest portions of the sortie",
+      "mif_row": null,
+      "source": "technique:8.12 ENROUTE (IFR)",
+      "hf_concept": "hf-workload-management",
+      "texts": {
+        "0": "SP, due to poor task prioritization in the busiest portions of the sortie, worked the GPS through the clearance and level off sequence and omitted the required in-flight checks. Without the cues of the local training environment no memory aid was used and the omission was never detected by SP. The IP had to stop the equipment work and direct the checks before the route could continue.",
+        "1": "SP, due to loading GPS tasks into the phase between the clearance call and level off, ran the in-flight checks late and incompletely. The missing items were covered only after the IP listed them and the flight parameters were held at the limit of tolerance while SP caught up. No memory aid was in place to protect the checks.",
+        "2": "SP, due to starting a GPS entry sequence during the level off, delayed the in-flight check beyond its normal point. SP recognized the conflict, stopped the entries, completed the check and returned to the equipment afterwards without IP involvement. The parameters were kept inside the intermediate band throughout.",
+        "3": "SP prioritized the tasks correctly through the busy portions of the sortie and completed the required in-flight checks at their proper points. GPS work was deferred to the quiet parts of the leg and the aircraft was flown within 150 feet and 5 degrees while the checks were made. Nothing was omitted from the sequence.",
+        "4": "SP scheduled all GPS work around the required checks and used memory aids to protect them away from the local training environment. Every in-flight check was completed at its point with the aircraft held on parameters. Workload through the clearance, level off and descent phases was distributed so that no task competed with another.",
+        "marginal": "SP completed the required in-flight checks and kept the aircraft on parameters, but each check was started only when the GPS work happened to allow it. The order of tasks depended on the equipment rather than on the phase of the sortie. SP is expected to fix the checks to their points and fit the GPS work around them, especially between the clearance call and level off."
+      }
+    },
+    {
+      "id": "vfr_navigation-13-tm05",
+      "label": "Emergency airfield awareness and use of the GPS nearest function",
+      "mif_row": null,
+      "source": "technique:8.12 ENROUTE (IFR)",
+      "hf_concept": "hf-divert-criteria-and-decision-points",
+      "texts": {
+        "0": "SP, due to never using the GPS nearest function or the map for this purpose, could not identify a suitable emergency airfield at any point of the route. No what if drill was carried out and, when questioned, SP had no bearing, distance or fuel figure to any recovery field. The IP had to establish the diversion picture for the sortie to continue.",
+        "1": "SP, due to leaving emergency airfield awareness to the planning stage only, did not refresh it as the route progressed. A nearest field was produced only after the IP asked for it and the data was assembled at the limit of usable time. The what if drill was carried out under direction rather than on SP initiative.",
+        "2": "SP, due to concentrating on the leg navigation, initially let the emergency airfield picture lapse. SP recognized the omission, used the GPS nearest function to identify a suitable field and confirmed bearing, distance and fuel required in good time. The drill was completed without IP input.",
+        "3": "SP identified suitable emergency airfields periodically along the route and used the GPS nearest function to support the choice. Bearing, distance and fuel required were available on request on each leg. Decision making was practiced with what if drills as the route progressed.",
+        "4": "SP maintained a continuous diversion picture, naming the nearest suitable field with its bearing, distance and fuel at any moment of the route. The GPS nearest function was used to confirm a decision SP had already reasoned through from the map. What if drills were run without prompting on every leg.",
+        "marginal": "SP identified emergency airfields when asked and the data given was correct, but the check was repeated only at the turning points and not as the route moved away from them. The diversion picture was accurate rather than current. SP is expected to refresh the nearest suitable field continuously along the leg, not only at the planned points."
+      }
+    },
+    {
+      "id": "vfr_navigation-13-tm06",
+      "label": "Enroute descent start down point computed from GPS distance to go",
+      "mif_row": null,
+      "source": "technique:8.12 ENROUTE (IFR)",
+      "hf_concept": null,
+      "texts": {
+        "0": "SP, due to not computing the start down point from the 2 to 1 ratio plus 10 miles, requested the descent with no distance reference taken from the GPS or the DME. The descent was started well past the required point, the planned gradient could not be flown and the altitude at the following fix was beyond 300 feet from the plan. The IP had to take over the descent planning to recover the profile.",
+        "1": "SP, due to a late computation of the desired start down point, requested the descent only after the IP pointed at the distance to go. The gradient then had to be steepened well past 5 degrees and airspeed was held at the limit of tolerance through the descent. The planned altitude was regained only close to the fix.",
+        "2": "SP, due to an initial error in the 2 to 1 computation, planned the start down point without the extra 10 miles for the approach. SP rechecked the figure against the GPS distance to go, corrected the request in good time and flew the descent close to the planned gradient. Altitude and airspeed stayed inside the intermediate band.",
+        "3": "SP computed the desired start down point using the 2 to 1 ratio plus 10 miles and confirmed it against the GPS distance to go. The descent was requested to match the desired profile and the gradient was held near 5 degrees. Altitude at the following fix was within 150 feet and airspeed within 10 knots of the plan.",
+        "4": "SP had the start down point computed and cross-confirmed well before it was needed and requested the descent to match the desired profile exactly. Distance to go was monitored throughout, so the gradient never had to be reworked. Altitude and airspeed through the descent showed negligible deviation from the plan.",
+        "marginal": "SP computed the start down point correctly and flew the descent within standards, but the request was made only when the distance to go had almost run out. Any delay in the clearance would have forced a gradient steeper than planned. SP is expected to compute and request the descent early enough to keep the planned 5 degree gradient available."
+      }
+    },
+    {
+      "id": "vfr_navigation-13-tm07",
+      "label": "Temporary disorientation: climb to MSA until positive position is regained",
+      "mif_row": null,
+      "source": "technique:8.20.3 MINIMUM SAFE ALTITUDE (MSA), EMERGENCY ROUTE ABORT ALTITUDE (ERAA) AND ROUTE ABORTS",
+      "hf_concept": "hf-continuation-bias",
+      "texts": {
+        "0": "SP, due to temporary disorientation with regard to navigation, continued at the flown altitude instead of climbing to the MSA of the leg and kept searching the GPS display for a fix. Position was never positively regained and the aircraft was flown on with the route error beyond 10 degrees of heading. The IP had to intervene, initiate the climb and re-establish the position with the map and the navaids.",
+        "1": "SP, due to losing the position picture on the leg, delayed the climb to MSA and continued at low level while working the equipment. The climb was started only after the IP directed it and position was regained at the limit of usable time, with an altitude excursion of about 300 feet during the recovery. The distraction of low altitude flight was not recognized as a factor.",
+        "2": "SP, due to a temporary loss of the position picture, initially pressed on with the map and the GPS at the flown altitude. SP recognized the disorientation, climbed toward the MSA of the leg and regained a positive fix from the navaids in good time, holding the intermediate deviation bands throughout. No IP input was required.",
+        "3": "SP recognized the doubt about position immediately and climbed to the MSA of the leg while re-establishing the fix with the map, the GPS and the navaids. Altitude was held within 150 feet of the MSA during the recovery and the route was rejoined once position was positive. The sequence of climb first and navigate second was followed.",
+        "4": "SP never allowed the position picture to lapse and, at the first ambiguity, climbed at once toward the MSA with the fix re-established from independent sources before the climb was complete. Aircraft control through the climb showed negligible deviation. The MSA of each leg and the ERAA of the route were available from memory at any moment.",
+        "marginal": "SP recovered the position within standards, but the climb toward the MSA was started only after two attempts to resolve the doubt on the GPS. The habit places the equipment ahead of terrain clearance when position is uncertain. SP is expected to climb to the MSA first and regain the fix afterwards, since low altitude flight increases distraction and complicates the recovery."
+      }
     }
   ]
 }
