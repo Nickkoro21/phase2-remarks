@@ -12,6 +12,22 @@
  *   never enters the store snapshot, exports, or the repo itself. "Forget token"
  *   wipes it. All requests go directly browser → api.github.com over TLS.
  *
+ * ENCRYPTION (optional, spec §2 rev 2026-08-09)
+ *   With a session passphrase set, the pushed payload is AES-GCM-256 ciphertext;
+ *   the key comes from PBKDF2-SHA256 (310 000 iterations, random 16-byte salt +
+ *   12-byte IV per push). Wire format:
+ *     {"fdms_enc":1,"kdf":"PBKDF2-SHA256","iter":N,"salt":b64,"iv":b64,"ct":b64}
+ *   The passphrase is stored NOWHERE — memory only, re-entered after each page
+ *   load. Plaintext remotes are still accepted (migration path). A wrong
+ *   passphrase on pull NEVER touches local data.
+ *
+ * ACCESS-CODE CURTAIN ("🔒 Lock")
+ *   A PBKDF2 verifier (salt+hash only, "p2r-lock-verifier") gates the Scheduler
+ *   VIEW behind a full-pane overlay once per browser session. It is a privacy
+ *   curtain for shared screens — local data is NOT encrypted by it; the sync
+ *   passphrase is what encrypts the cloud copy. Data ops (auto-pull, store
+ *   writes) proceed under the curtain; only the UI is veiled.
+ *
  * CONFLICTS
  *   The file's git SHA acts as an optimistic lock: push sends the SHA we last
  *   saw; if another device pushed meanwhile GitHub answers 409/422 and the user
@@ -26,9 +42,14 @@
   const TOK_KEY = "p2r-sync-token";
   const SHA_KEY = "p2r-sync-sha";
   const DIRTY_KEY = "p2r-sync-dirty"; /* survives reloads — a fresh page must NOT look "clean" */
+  const LOCK_KEY = "p2r-lock-verifier";
+  const LOCK_OPEN = "p2r-lock-open"; /* sessionStorage: curtain already passed this session */
   const API = "https://api.github.com";
+  const ITER = 310000; /* PBKDF2-SHA256 iterations for both payload key and lock verifier */
 
-  const st = { dirty: 0, applying: false, busy: false, lastMsg: "", timer: null };
+  const st = { dirty: 0, applying: false, busy: false, lastMsg: "", lockMsg: "", timer: null };
+  /* memory-only session secrets — never localStorage/sessionStorage */
+  const sess = { pass: null, key: null, keyId: "", unlocked: false };
 
   const $ = (id) => document.getElementById(id);
   const esc = (s) => { const d = document.createElement("div"); d.textContent = s ?? ""; return d.innerHTML; };
@@ -55,6 +76,81 @@
     const bytes = new Uint8Array(bin.length);
     for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
     return new TextDecoder().decode(bytes);
+  }
+  /* raw bytes ⇄ base64 (salt / iv / ciphertext) */
+  function bytesToB64(u8) {
+    let bin = "";
+    for (let i = 0; i < u8.length; i += 0x8000)
+      bin += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000));
+    return btoa(bin);
+  }
+  function b64ToBytes(b64) {
+    const bin = atob(String(b64 || "").replace(/\n/g, ""));
+    const u8 = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+    return u8;
+  }
+
+  /* ── WebCrypto: PBKDF2-SHA256 → AES-GCM-256 key / lock verifier ─────────── */
+  function needSubtle() {
+    if (!(window.crypto && crypto.subtle)) throw new Error("WebCrypto unavailable in this context");
+    return crypto.subtle;
+  }
+  async function kdfMaterial(secret) {
+    return needSubtle().importKey("raw", new TextEncoder().encode(secret), "PBKDF2", false, ["deriveBits", "deriveKey"]);
+  }
+  async function aesKeyFrom(secret, saltU8, iter) {
+    const mat = await kdfMaterial(secret);
+    return crypto.subtle.deriveKey(
+      { name: "PBKDF2", hash: "SHA-256", salt: saltU8, iterations: iter },
+      mat, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]);
+  }
+  async function verifierHash(secret, saltU8, iter) {
+    const mat = await kdfMaterial(secret);
+    const bits = await crypto.subtle.deriveBits(
+      { name: "PBKDF2", hash: "SHA-256", salt: saltU8, iterations: iter }, mat, 256);
+    return bytesToB64(new Uint8Array(bits));
+  }
+  const isEnvelope = (j) => !!(j && typeof j === "object" && j.fdms_enc === 1 && j.salt && j.iv && j.ct);
+
+  /* fresh random salt + IV on EVERY push */
+  async function encryptPayload(plain) {
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const key = await aesKeyFrom(sess.pass, salt, ITER);
+    const ct = new Uint8Array(await crypto.subtle.encrypt(
+      { name: "AES-GCM", iv }, key, new TextEncoder().encode(plain)));
+    return JSON.stringify({
+      fdms_enc: 1, kdf: "PBKDF2-SHA256", iter: ITER,
+      salt: bytesToB64(salt), iv: bytesToB64(iv), ct: bytesToB64(ct),
+    });
+  }
+  /* throws on a wrong passphrase (AES-GCM authentication failure) */
+  async function decryptEnvelope(env, pass) {
+    const iter = (env.iter | 0) > 0 ? (env.iter | 0) : ITER;
+    const id = env.salt + "|" + iter;
+    const key = (pass === sess.pass && sess.key && sess.keyId === id)
+      ? sess.key
+      : await aesKeyFrom(pass, b64ToBytes(env.salt), iter);
+    const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64ToBytes(env.iv) }, key, b64ToBytes(env.ct));
+    sess.key = key; sess.keyId = id; /* cache the derived key in memory, only after success */
+    return new TextDecoder().decode(pt);
+  }
+
+  function armPass(p) {
+    if (!p) return;
+    if (p !== sess.pass) { sess.pass = p; sess.key = null; sess.keyId = ""; }
+    refreshPassNote();
+  }
+  function clearPass() {
+    sess.pass = null; sess.key = null; sess.keyId = "";
+    refreshPassNote();
+  }
+  function fieldPass() { const el = $("sync-pass"); return el ? el.value.trim() : ""; }
+  function clearPassField() { const el = $("sync-pass"); if (el) el.value = ""; }
+  function refreshPassNote() {
+    const n = $("sync-pass-note");
+    if (n) n.textContent = sess.pass ? "— set for this session ✓" : "";
   }
 
   /* ── GitHub API ─────────────────────────────────────────────────────────── */
@@ -104,10 +200,12 @@
   async function pushRemote(sha) {
     const c = cfg();
     const snap = window.SchedStore.snapshot();
+    let payload = JSON.stringify(snap);
+    if (sess.pass) payload = await encryptPayload(payload); /* repo sees ciphertext only */
     const dev = c.device || "device";
     const body = {
       message: "scheduler sync — " + dev + " — " + new Date().toISOString(),
-      content: b64encode(JSON.stringify(snap)),
+      content: b64encode(payload),
       branch: c.branch,
     };
     if (sha) body.sha = sha;
@@ -147,11 +245,28 @@
     try {
       const remote = await fetchRemote();
       if (!remote) { setStatus("no remote file yet — push first"); return; }
+      let snap = remote.json;
+      if (isEnvelope(snap)) {
+        const fp = fieldPass();
+        const pass = fp || sess.pass; /* a freshly typed passphrase wins over the cached one */
+        if (!pass) {
+          setStatus(interactive
+            ? "remote is encrypted — type the passphrase above, then Pull"
+            : "⚠ remote is encrypted — enter the passphrase in ☁ Sync, then Pull");
+          return;
+        }
+        let plain;
+        try { plain = await decryptEnvelope(snap, pass); }
+        catch (e) { setStatus("wrong passphrase (or corrupted remote data) — nothing was changed"); return; }
+        try { snap = JSON.parse(plain); }
+        catch (e) { setStatus("decrypted payload is not valid JSON — nothing was changed"); return; }
+        armPass(pass); clearPassField();
+      }
       if (st.dirty > 0 && interactive) {
         if (!confirm("Pull replaces this browser's scheduler data.\nYou have " + st.dirty +
           " local change(s) not pushed — they will be LOST.\n\nContinue?")) { setStatus(st.dirty + " local changes"); return; }
       } else if (st.dirty > 0) { setStatus(st.dirty + " local changes — pull skipped"); return; }
-      applySnapshot(remote.json);
+      applySnapshot(snap);
       lsSet(SHA_KEY, remote.sha);
       setStatus("pulled ✓ " + nowHM());
       window.SchedStore.toast("Sync: pulled latest from GitHub.", "good");
@@ -163,6 +278,8 @@
     if (!configured() || st.busy) return;
     st.busy = true; setStatus("pushing…");
     try {
+      const fp = fieldPass();
+      if (fp) { armPass(fp); clearPassField(); } /* typing + Push arms without Save */
       let sha = lsGet(SHA_KEY) || undefined;
       if (force) {
         const remote = await fetchRemote();
@@ -179,17 +296,160 @@
       }
       if (out.sha) lsSet(SHA_KEY, out.sha);
       setDirty(0);
-      setStatus("pushed ✓ " + nowHM());
+      setStatus("pushed ✓ " + nowHM() + (sess.pass ? " (encrypted)" : ""));
       window.SchedStore.toast("Sync: pushed to GitHub.", "good");
     } catch (e) { setStatus("push failed: " + e.message); }
     finally { st.busy = false; }
+  }
+
+  /* ── access-code curtain (privacy veil, honest: NOT encryption) ─────────── */
+  const lockCfgGet = () => { try { return JSON.parse(lsGet(LOCK_KEY)) || null; } catch (e) { return null; } };
+  const veilNeeded = () => !!lockCfgGet() && !sess.unlocked;
+
+  async function writeLock(code, pair) {
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const rec = {
+      v: 1, kdf: "PBKDF2-SHA256", iter: ITER,
+      salt: bytesToB64(salt), hash: await verifierHash(code, salt, ITER), pair: !!pair,
+    };
+    lsSet(LOCK_KEY, JSON.stringify(rec));
+  }
+  async function lockMatches(code) {
+    const v = lockCfgGet();
+    if (!v) return true;
+    return (await verifierHash(code, b64ToBytes(v.salt), (v.iter | 0) || ITER)) === v.hash;
+  }
+  /* persist=true → the code was TYPED correctly: the whole browser session
+     (incl. reloads, sessionStorage) is open. persist=false → set/changed just
+     now: this page stays open, the NEXT session asks for the new code.       */
+  let lockPending = null; /* deferred scheduler render — see window.SchedLock */
+  function unlockSession(persist) {
+    sess.unlocked = true;
+    removeVeil();
+    try {
+      if (persist) sessionStorage.setItem(LOCK_OPEN, "1");
+      else sessionStorage.removeItem(LOCK_OPEN);
+    } catch (e) {}
+    const fn = lockPending;
+    lockPending = null;
+    if (fn) { try { fn(); } catch (e) { console.error(e); } }
+  }
+  /* While locked, scheduler.js defers its ENTIRE render through this hook, so
+     the veiled DOM contains NO data (no Ctrl+A / find-in-page leak).         */
+  window.SchedLock = {
+    locked: veilNeeded,
+    onUnlock: (fn) => { lockPending = fn; },
+  };
+  function removeVeil() { const v = $("sch-lock"); if (v) v.remove(); }
+  function shake(el) {
+    if (!el) return;
+    el.classList.remove("is-shake");
+    void el.offsetWidth; /* restart the animation */
+    el.classList.add("is-shake");
+  }
+
+  function mountVeil() {
+    const view = $("view-scheduler");
+    if (!view || $("sch-lock")) return;
+    const veil = document.createElement("div");
+    veil.className = "sch-lockveil";
+    veil.id = "sch-lock";
+    veil.innerHTML = `
+      <form class="sch-lockbox" id="sch-lockform">
+        <div class="sch-lockico" aria-hidden="true">🔒</div>
+        <h3>Scheduler locked</h3>
+        <p class="hint">Enter the access code. This is a privacy curtain for shared screens —
+        the sync passphrase is what encrypts the cloud copy.</p>
+        <input type="password" id="sch-lockcode" autocomplete="off" placeholder="access code" aria-label="Access code">
+        <button type="submit" class="sch-tbtn sch-lockbtn">Unlock</button>
+        <div class="sync-status" id="sch-lockmsg"></div>
+      </form>`;
+    view.appendChild(veil);
+    $("sch-lockform").addEventListener("submit", (e) => { e.preventDefault(); void tryUnlock(); });
+  }
+
+  async function tryUnlock() {
+    const box = document.querySelector("#sch-lock .sch-lockbox");
+    const inp = $("sch-lockcode");
+    const msg = $("sch-lockmsg");
+    try {
+      const v = lockCfgGet();
+      if (!v) { unlockSession(false); return; }
+      const code = inp ? inp.value : "";
+      if (!code) { shake(box); return; }
+      if (msg) msg.textContent = "checking…";
+      if (!(await lockMatches(code))) {
+        if (msg) msg.textContent = "wrong code — try again";
+        shake(box);
+        if (inp) inp.select();
+        return;
+      }
+      if (v.pair) armPass(code); /* paired secret also arms the session encryption key */
+      unlockSession(true);
+    } catch (e) { if (msg) msg.textContent = e.message; }
+  }
+
+  async function lockSetNew() {
+    try {
+      const code = ($("lock-new") ? $("lock-new").value : "").trim();
+      if (code.length < 4) { setLockStatus("code must be at least 4 characters"); return; }
+      const pair = !!($("lock-pair") && $("lock-pair").checked);
+      setLockStatus("deriving verifier…");
+      await writeLock(code, pair);
+      if (pair) armPass(code);
+      unlockSession(false);
+      renderPop();
+      setLockStatus("access code set ✓ — the Scheduler will ask for it next session");
+    } catch (e) { setLockStatus(e.message); }
+  }
+
+  async function lockChangeCode() {
+    try {
+      const v = lockCfgGet();
+      if (!v) { renderPop(); return; }
+      const oldC = ($("lock-old") ? $("lock-old").value : "").trim();
+      const newC = ($("lock-new") ? $("lock-new").value : "").trim();
+      if (!oldC) { setLockStatus("enter the current code first"); return; }
+      if (newC.length < 4) { setLockStatus("new code must be at least 4 characters"); return; }
+      setLockStatus("checking…");
+      if (!(await lockMatches(oldC))) { setLockStatus("current code is wrong"); return; }
+      const pair = !!($("lock-pair") && $("lock-pair").checked);
+      await writeLock(newC, pair);
+      if (pair) armPass(newC);
+      unlockSession(false);
+      renderPop();
+      setLockStatus("code changed ✓");
+    } catch (e) { setLockStatus(e.message); }
+  }
+
+  async function lockRemoveCode() {
+    try {
+      const v = lockCfgGet();
+      if (!v) { renderPop(); return; }
+      const oldC = ($("lock-old") ? $("lock-old").value : "").trim();
+      if (!oldC) { setLockStatus("enter the current code to remove it"); return; }
+      setLockStatus("checking…");
+      if (!(await lockMatches(oldC))) { setLockStatus("current code is wrong"); return; }
+      if (!confirm("Remove the access code? The Scheduler will open without asking.")) { setLockStatus(""); return; }
+      lsDel(LOCK_KEY);
+      unlockSession(false);
+      try { sessionStorage.removeItem(LOCK_OPEN); } catch (e) {}
+      renderPop();
+      setLockStatus("code removed — curtain off");
+    } catch (e) { setLockStatus(e.message); }
+  }
+
+  function setLockStatus(msg) {
+    st.lockMsg = msg;
+    const el = $("lock-status");
+    if (el) el.textContent = msg;
   }
 
   /* ── UI ─────────────────────────────────────────────────────────────────── */
   const CSS = `
   .sync-pop{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45)}
   .sync-pop.hidden{display:none}
-  .sync-box{background:var(--panel);border:1px solid var(--line);border-radius:12px;min-width:340px;max-width:440px;padding:16px 18px;box-shadow:0 12px 40px rgba(0,0,0,.4)}
+  .sync-box{background:var(--panel);border:1px solid var(--line);border-radius:12px;min-width:340px;max-width:440px;max-height:88vh;overflow-y:auto;padding:16px 18px;box-shadow:0 12px 40px rgba(0,0,0,.4)}
   .sync-box h3{margin:0 0 4px;font-size:15px}
   .sync-box .hint{font-size:11.5px;color:var(--muted);margin:2px 0 10px;line-height:1.45}
   .sync-box label{display:block;font-size:11px;color:var(--muted);margin:8px 0 3px;text-transform:uppercase;letter-spacing:.04em}
@@ -199,16 +459,38 @@
   .sync-row .sch-tbtn{flex:0 0 auto}
   .sync-status{font-size:12px;color:var(--muted);margin-top:10px;min-height:16px}
   .sync-tok-note{font-size:11px;color:var(--good,#4caf50)}
+  .sync-hr{border:0;border-top:1px solid var(--line);margin:16px 0 10px}
+  .sync-box label.sync-chk{display:flex;gap:7px;align-items:flex-start;text-transform:none;letter-spacing:0;font-size:11.5px;line-height:1.45;margin:9px 0 2px;cursor:pointer;color:var(--muted)}
+  .sync-box label.sync-chk input{width:auto;margin-top:2px;accent-color:var(--accent)}
+  .sch-view{position:relative}
+  .sch-lockveil{position:absolute;inset:0;z-index:66;display:flex;align-items:flex-start;justify-content:center;background:var(--bg);min-height:60vh;padding-top:9vh}
+  .sch-lockbox{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:24px 28px;width:min(340px,92vw);text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.35)}
+  .sch-lockbox h3{margin:6px 0 4px;font-size:15px;color:var(--text)}
+  .sch-lockbox .hint{font-size:11.5px;color:var(--muted);line-height:1.45;margin:4px 0 12px}
+  .sch-lockico{font-size:26px}
+  .sch-lockbox input{width:100%;box-sizing:border-box;padding:8px 10px;background:var(--panel-2);color:var(--text);border:1px solid var(--line);border-radius:7px;font-size:14px;text-align:center;margin-bottom:10px}
+  .sch-lockbox input:focus{outline:none;border-color:var(--accent)}
+  .sch-lockbtn{width:100%}
+  .sch-lockbox .sync-status{margin-top:8px}
+  .is-shake{animation:schshake .45s}
+  @keyframes schshake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-6px)}40%,60%{transform:translateX(6px)}}
   `;
+
+  let cssDone = false;
+  function injectCss() {
+    if (cssDone) return;
+    cssDone = true;
+    const style = document.createElement("style");
+    style.textContent = CSS;
+    document.head.appendChild(style);
+  }
 
   function mount() {
     const host = $("sch-tools");
     if (!host || host._schSync) return false;
     host._schSync = true;
 
-    const style = document.createElement("style");
-    style.textContent = CSS;
-    document.head.appendChild(style);
+    injectCss();
 
     const btn = document.createElement("button");
     btn.type = "button";
@@ -232,6 +514,10 @@
       else if (b.dataset.s === "push") doPush(false);
       else if (b.dataset.s === "force") { if (confirm("Force push OVERWRITES the repo version with this browser's data. Continue?")) doPush(true); }
       else if (b.dataset.s === "forget") { lsDel(TOK_KEY); lsDel(SHA_KEY); renderPop(); setStatus("token forgotten"); }
+      else if (b.dataset.s === "pass-clear") { clearPass(); renderPop(); setStatus("passphrase cleared — next push will be PLAINTEXT"); }
+      else if (b.dataset.s === "lock-set") void lockSetNew();
+      else if (b.dataset.s === "lock-change") void lockChangeCode();
+      else if (b.dataset.s === "lock-remove") void lockRemoveCode();
     });
     refreshBtn();
     return true;
@@ -240,6 +526,7 @@
   function renderPop() {
     const c = cfg() || { repo: "", branch: "main", path: "scheduler/data.json", device: "", auto_pull: true };
     const hasTok = !!token();
+    const lk = lockCfgGet();
     $("sync-pop").innerHTML = `
       <div class="sync-box">
         <h3>☁ GitHub Sync</h3>
@@ -258,15 +545,42 @@
         <input id="sync-device" placeholder="work-laptop / home-pc" value="${esc(c.device || "")}">
         <label>Fine-grained token ${hasTok ? '<span class="sync-tok-note">— saved ✓ (leave empty to keep)</span>' : ""}</label>
         <input id="sync-token" type="password" autocomplete="off" placeholder="${hasTok ? "•••••••••••• saved" : "github_pat_…"}">
+        <label>Encryption passphrase <span class="sync-tok-note" id="sync-pass-note">${sess.pass ? "— set for this session ✓" : ""}</span></label>
+        <input id="sync-pass" type="password" autocomplete="off" placeholder="${sess.pass ? "armed — repo copy is ciphertext" : "optional — encrypts the repo copy"}">
+        <p class="hint">Stored <b>nowhere</b> — re-enter it after every page load. With it set, the repo
+        holds <b>only ciphertext</b> (AES-GCM&nbsp;256, PBKDF2-SHA256 · 310k). Forgetting it makes the
+        <b>remote</b> backups unreadable — local data is unaffected. Empty → plaintext, as before.</p>
         <div class="sync-row">
           <button type="button" class="sch-tbtn" data-s="save">💾 Save</button>
           <button type="button" class="sch-tbtn" data-s="pull">⭳ Pull</button>
           <button type="button" class="sch-tbtn" data-s="push">⭱ Push</button>
           <button type="button" class="sch-tbtn danger" data-s="force">Force push</button>
           <button type="button" class="sch-tbtn danger" data-s="forget">Forget token</button>
+          ${sess.pass ? '<button type="button" class="sch-tbtn" data-s="pass-clear">Clear passphrase</button>' : ""}
           <button type="button" class="sch-tbtn" data-s="close">✕ Close</button>
         </div>
         <div class="sync-status" id="sync-status">${esc(st.lastMsg)}</div>
+        <hr class="sync-hr">
+        <h3>🔒 Scheduler lock ${lk ? '<span class="sync-tok-note">— code active ✓</span>' : ""}</h3>
+        <p class="hint">Privacy curtain for shared screens — local data is <b>NOT</b> encrypted;
+        use the sync passphrase above for real encryption of the cloud copy.</p>
+        ${lk ? `
+        <label>Current code</label>
+        <input id="lock-old" type="password" autocomplete="off" placeholder="needed to change or remove">
+        <label>New code</label>
+        <input id="lock-new" type="password" autocomplete="off" placeholder="min 4 characters">` : `
+        <label>Access code</label>
+        <input id="lock-new" type="password" autocomplete="off" placeholder="asked before the Scheduler opens (min 4 chars)">`}
+        <label class="sync-chk"><input type="checkbox" id="lock-pair" ${lk && lk.pair ? "checked" : ""}>
+          use the same secret as the sync encryption passphrase — one thing to remember;
+          unlocking the curtain then also arms the session encryption key</label>
+        <div class="sync-row">
+          ${lk
+            ? `<button type="button" class="sch-tbtn" data-s="lock-change">Change code</button>
+               <button type="button" class="sch-tbtn danger" data-s="lock-remove">Remove code</button>`
+            : `<button type="button" class="sch-tbtn" data-s="lock-set">Set code</button>`}
+        </div>
+        <div class="sync-status" id="lock-status">${esc(st.lockMsg)}</div>
       </div>`;
   }
 
@@ -283,6 +597,8 @@
     lsSet(CFG_KEY, JSON.stringify(c));
     const t = $("sync-token").value.trim();
     if (t) { lsSet(TOK_KEY, t); $("sync-token").value = ""; }
+    const p = fieldPass();
+    if (p) armPass(p); /* memory only — renderPop() below clears the field */
     renderPop();
     setStatus(configured() ? "saved ✓ — ready to sync" : "saved — token still missing");
     refreshBtn();
@@ -305,6 +621,22 @@
   }
 
   /* ── boot ───────────────────────────────────────────────────────────────── */
+  /* Curtain boot is independent of SchedStore — the veil must exist BEFORE the
+     scheduler tab is ever opened. Data ops keep running under it.            */
+  function lockBoot() {
+    injectCss();
+    try { sess.unlocked = sessionStorage.getItem(LOCK_OPEN) === "1"; } catch (e) { sess.unlocked = false; }
+    if (veilNeeded()) mountVeil();
+    const tab = $("tab-scheduler");
+    if (tab) tab.addEventListener("click", () => {
+      if (veilNeeded()) {
+        mountVeil();
+        const i = $("sch-lockcode");
+        if (i) setTimeout(() => i.focus(), 60);
+      }
+    });
+  }
+
   async function boot() {
     if (!window.SchedStore) { setTimeout(boot, 400); return; }
     await window.SchedStore.ready();
@@ -323,5 +655,6 @@
     if (host && host._schTools) { mount(); refreshBtn(); return; }
     setTimeout(armMount, 600);
   }
+  lockBoot();
   boot();
 })();

@@ -659,6 +659,13 @@
 
   /* ── boot ───────────────────────────────────────────────────────────────── */
   window.schInit = async function schInit() {
+    /* Access-code curtain (schedsync.js): while locked, render NOTHING — the
+       veiled DOM must hold no data (Ctrl+A / find-in-page must come up empty).
+       The deferred call fires the moment the code is accepted.              */
+    if (window.SchedLock && window.SchedLock.locked()) {
+      window.SchedLock.onUnlock(() => window.schInit());
+      return;
+    }
     if (ui.booted) { render(); return; }
     const host = $id("view-scheduler");
     if (!host) return;
