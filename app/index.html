@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Phase 2 Remarks — T-6A Gradesheet Observations</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=20260809a">
 </head>
 <body>
 <header class="topbar">
@@ -19,6 +19,7 @@
     <button id="tab-remarks" class="viewtab active">Remarks</button>
     <button id="tab-requirements" class="viewtab">Requirements</button>
     <button id="tab-flowchart" class="viewtab">Phase II Flowchart</button>
+    <button id="tab-scheduler" class="viewtab">Scheduler</button>
   </nav>
   <button id="theme-btn" class="viewtab" title="Light / dark theme">☀</button>
   <div class="databadge" id="databadge">—</div>
@@ -114,6 +115,20 @@
   <div class="fc-pop hidden" id="fc-legend-pop" role="dialog" aria-label="Legend"></div>
 </main>
 
+<main class="sch-view hidden" id="view-scheduler">
+  <nav class="sch-subtabs" id="sch-subtabs">
+    <button class="sch-subtab active" data-sch="board">Board</button>
+    <button class="sch-subtab" data-sch="roster">Roster</button>
+    <button class="sch-subtab" data-sch="log">Training Log</button>
+    <button class="sch-subtab" data-sch="balance">Balance</button>
+    <span class="sch-tools" id="sch-tools"></span>
+  </nav>
+  <section id="sch-board" class="sch-pane"></section>
+  <section id="sch-roster" class="sch-pane hidden"></section>
+  <section id="sch-log" class="sch-pane hidden"></section>
+  <section id="sch-balance" class="sch-pane hidden"></section>
+</main>
+
 <footer class="credit">
   <span class="credit-line">
     Developed by <strong>Koro</strong> · with <strong>Claude</strong> riding the right seat
@@ -131,8 +146,11 @@
   </div>
 </div>
 
-<script src="app.js"></script>
-<script src="flowchart.js"></script>
-<script src="schedval.js"></script>
+<script src="app.js?v=20260809a"></script>
+<script src="flowchart.js?v=20260809a"></script>
+<script src="schedval.js?v=20260809a"></script>
+<script src="schedstore.js?v=20260809a"></script>
+<script src="scheduler.js?v=20260809a"></script>
+<script src="schedboard.js?v=20260809a"></script>
 </body>
 </html>

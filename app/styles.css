@@ -624,6 +624,183 @@ body {
   #view-flowchart * { transition: none !important; animation: none !important; }
 }
 
+/* ══ SCHEDULER (specs/scheduler-spec.md) ═══════════════════════════════════
+   Phase A: subtab shell · Roster (students / instructors / classes /
+   availability) · Training Log · placeholders for the Phase B panes.
+   Same idiom as the rest of the app: panels, chips, badges, CSS variables. */
+
+/* .hidden must beat the display rules below (equal specificity, later wins) */
+.sch-view.hidden,
+#view-scheduler .hidden { display: none; }
+
+.sch-view { flex: 1; display: flex; flex-direction: column; padding: 14px 22px; gap: 12px; min-height: 0; }
+.sch-subtabs { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.sch-subtab {
+  background: transparent; color: var(--muted); border: 1px solid var(--line);
+  border-radius: 999px; padding: 5px 14px; font-size: 12.5px; font-family: inherit; cursor: pointer;
+}
+.sch-subtab:hover { border-color: var(--accent); color: var(--text); }
+.sch-subtab.active { background: var(--accent-soft); border-color: var(--accent); color: var(--text); font-weight: 600; }
+.sch-tools { margin-left: auto; display: flex; gap: 6px; align-items: center; }
+.sch-tbtn {
+  background: var(--panel); color: var(--muted); border: 1px solid var(--line);
+  border-radius: 7px; padding: 5px 11px; font-size: 12px; font-family: inherit; cursor: pointer;
+}
+.sch-tbtn:hover { border-color: var(--accent); color: var(--text); }
+.sch-tbtn.danger:hover { border-color: var(--bad); color: var(--bad); }
+
+.sch-pane { display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+.sch-grid2 { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 12px; align-items: start; }
+.sch-panel { padding: 12px 14px; }
+.sch-h { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+.sch-h h2 { font-size: 14px; letter-spacing: 0.4px; margin: 0; }
+.sch-h .count { font-size: 11.5px; }
+.sch-hint { color: var(--muted); font-size: 12px; line-height: 1.5; }
+.sch-lbl { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.7px; color: var(--muted); }
+.sch-mono { font-family: Consolas, monospace; font-variant-numeric: tabular-nums; }
+.sch-code { font-family: Consolas, monospace; font-weight: 700; color: var(--accent); }
+.sch-note { color: var(--muted); font-size: 12px; }
+.sch-warn { color: var(--warn); font-family: Consolas, monospace; }
+.sch-yes { color: var(--good); }
+.sch-no { color: var(--muted); opacity: 0.45; }
+.sch-nd { font-family: Consolas, monospace; font-size: 10.5px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 0 5px; }
+
+/* placeholders for the panes Phase B owns */
+.sch-ph {
+  border: 1px dashed var(--line); border-radius: var(--radius); background: var(--panel);
+  padding: 26px 22px; color: var(--muted); font-size: 13px; line-height: 1.6;
+}
+.sch-ph strong { display: block; color: var(--text); font-size: 15px; margin-bottom: 6px; }
+.sch-ph code { font-family: Consolas, monospace; color: var(--accent); }
+
+/* tables — the scroll box owns BOTH axes so the sticky head pins against it
+   (against the viewport it would slide under the topbar instead) */
+.sch-scroll { overflow: auto; max-height: 68vh; }
+.sch-tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.sch-tbl th, .sch-tbl td { padding: 5px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: middle; }
+.sch-tbl th {
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.6px;
+  color: var(--muted); font-weight: 600; white-space: nowrap;
+  position: sticky; top: 0; z-index: 1; background: var(--panel);
+  box-shadow: inset 0 -1px 0 var(--line);
+}
+.sch-tbl tbody tr:hover { background: var(--panel-2); }
+.sch-tbl tr.sch-edit { background: var(--accent-soft); }
+.sch-tbl td.sch-act, .sch-tbl th.sch-act { text-align: right; white-space: nowrap; width: 1%; }
+.sch-two { display: flex; gap: 4px; }
+
+/* controls */
+.sch-in {
+  background: var(--panel-2); color: var(--text); border: 1px solid var(--line);
+  border-radius: 7px; padding: 5px 8px; font-size: 12.5px; font-family: inherit; width: 100%; min-width: 0;
+}
+.sch-in:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.sch-in[readonly] { opacity: 0.7; }
+.sch-in:disabled { opacity: 0.4; }
+#view-scheduler input[type="checkbox"] { accent-color: var(--accent); cursor: pointer; }
+.sch-btn {
+  background: var(--panel-2); color: var(--text); border: 1px solid var(--line);
+  border-radius: 7px; padding: 5px 12px; font-size: 12.5px; font-family: inherit; cursor: pointer;
+}
+.sch-btn:hover { border-color: var(--accent); }
+.sch-btn.primary { background: var(--accent); color: #06121f; border-color: var(--accent); font-weight: 700; }
+.sch-mini {
+  background: transparent; border: 1px solid transparent; color: var(--muted);
+  border-radius: 6px; padding: 2px 6px; font-size: 13px; cursor: pointer; line-height: 1.2;
+}
+.sch-mini:hover { border-color: var(--accent); color: var(--accent); }
+.sch-mini.good:hover { border-color: var(--good); color: var(--good); }
+.sch-mini.danger:hover { border-color: var(--bad); color: var(--bad); }
+
+/* chips & badges */
+.sch-chip {
+  display: inline-block; font-family: Consolas, monospace; font-size: 11px;
+  border: 1px solid var(--line); border-radius: 999px; padding: 1px 7px; margin: 2px 3px 0 0; color: var(--muted);
+}
+.sch-badge {
+  display: inline-block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.6px;
+  border: 1px solid var(--line); border-radius: 999px; padding: 0 7px; color: var(--muted); white-space: nowrap;
+}
+.sch-badge.alt { color: var(--accent); border-color: var(--accent); }
+.sch-badge.warn { color: var(--warn); border-color: var(--warn); }
+.sch-badge.st-active { color: var(--good); border-color: var(--good); }
+.sch-badge.st-hold, .sch-badge.st-kepe { color: var(--warn); border-color: var(--warn); }
+.sch-badge.st-withdrawn { color: var(--bad); border-color: var(--bad); }
+.sch-badge.k-lessons { color: var(--fcb-ground); border-color: var(--fcb-ground); }
+.sch-badge.k-exams { color: var(--fcb-exams); border-color: var(--fcb-exams); }
+.sch-badge.k-fs { color: var(--fcb-fs); border-color: var(--fcb-fs); }
+.sch-badge.k-flights { color: var(--fcb-flights); border-color: var(--fcb-flights); }
+.sch-badge.r-completed { color: var(--good); border-color: var(--good); }
+.sch-badge.r-repeat { color: var(--bad); border-color: var(--bad); }
+.sch-badge.r-score { color: var(--accent); border-color: var(--accent); }
+
+/* classes (read-only) */
+.sch-cls { display: flex; flex-wrap: wrap; gap: 10px; }
+.sch-clscard { border: 1px solid var(--line); border-radius: 8px; background: var(--panel-2); padding: 8px 10px; min-width: 190px; }
+.sch-clsid { font-family: Consolas, monospace; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.sch-clsm { display: flex; flex-wrap: wrap; max-height: 92px; overflow-y: auto; }
+
+/* availability */
+.sch-avgroup { margin-top: 8px; }
+.sch-avrow { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+.sch-av {
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-family: inherit;
+  background: var(--panel-2); border: 1px solid var(--line); border-radius: 7px; padding: 3px 8px; color: var(--text);
+}
+.sch-av:hover { border-color: var(--accent); }
+.sch-av .sch-avst { font-family: Consolas, monospace; font-size: 10px; color: var(--muted); }
+.sch-av.av-available { opacity: 0.75; }
+.sch-av.av-LV { border-color: var(--warn); }
+.sch-av.av-LV .sch-avst { color: var(--warn); }
+.sch-av.av-AMC { border-color: var(--bad); }
+.sch-av.av-AMC .sch-avst { color: var(--bad); }
+.sch-av.av-TO { border-color: var(--hf); }
+.sch-av.av-TO .sch-avst { color: var(--hf); }
+.sch-av.av-SLV { border-color: var(--accent); }
+.sch-av.av-SLV .sch-avst { color: var(--accent); }
+
+/* training-log filters & form */
+.sch-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.sch-fld { display: flex; flex-direction: column; gap: 3px; min-width: 130px; }
+.sch-fld > span { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.7px; color: var(--muted); }
+.sch-fld > span em { font-style: normal; text-transform: none; letter-spacing: 0; opacity: 0.75; }
+.sch-fld.grow { flex: 1 1 200px; }
+.sch-fld.wide { flex: 2 1 320px; }
+.sch-form { display: flex; flex-direction: column; gap: 10px; }
+.sch-fgrid { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-end; }
+.sch-nodeinfo { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text); }
+.sch-fbtns { display: flex; align-items: center; gap: 8px; }
+
+.sch-abs { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; max-height: 190px; overflow-y: auto; }
+.sch-absrow {
+  display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line);
+  border-radius: 7px; padding: 3px 7px; background: var(--panel-2); cursor: pointer;
+}
+.sch-absrow.is-on { border-color: var(--warn); }
+.sch-absr { width: 118px; font-size: 11.5px; padding: 2px 6px; }
+
+/* toast */
+.sch-toast {
+  position: fixed; left: 50%; bottom: 26px; transform: translate(-50%, 18px);
+  background: var(--panel); border: 1px solid var(--line); border-radius: 9px;
+  padding: 8px 16px; font-size: 12.5px; color: var(--text); z-index: 70;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45); opacity: 0; pointer-events: none;
+  transition: opacity 0.18s, transform 0.18s;
+}
+.sch-toast.is-on { opacity: 1; transform: translate(-50%, 0); }
+.sch-toast.is-good { border-color: var(--good); }
+.sch-toast.is-bad { border-color: var(--bad); }
+
+#view-scheduler :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+@media (max-width: 1100px) { .sch-grid2 { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 740px) {
+  .sch-view { padding: 12px 14px; }
+  .sch-tools { margin-left: 0; width: 100%; }
+  .sch-fld { min-width: 110px; }
+}
+@media (prefers-reduced-motion: reduce) { .sch-toast { transition: none; } }
+
 /* ── Light theme ── */
 html.light {
   --bg: #eef2f7; --panel: #ffffff; --panel-2: #f0f4f9; --line: #c3d0de;
@@ -657,3 +834,218 @@ html.light .fc-micro-dot.is-night { background: #cc5348; }
 html.light .fc-src { background: rgba(0, 0, 0, 0.03); }
 html.light .fc-exchip { background: #ffffff; }
 html.light .fc-rel-off { color: var(--muted); }
+
+/* ── Scheduler in light theme ──
+   Same signals, tuned so that they read on white: white input/table surfaces,
+   a solid accent on the primary button, softer shadows. */
+html.light .sch-tbtn, html.light .sch-in, html.light .sch-btn,
+html.light .sch-av, html.light .sch-absrow { background: #ffffff; }
+html.light .sch-tbl th { background: #ffffff; }
+html.light .sch-tbl tbody tr:hover { background: var(--panel-2); }
+html.light .sch-clscard, html.light .sch-ph { background: var(--panel-2); }
+html.light .sch-btn.primary { color: #ffffff; }
+html.light .sch-toast { box-shadow: 0 14px 34px rgba(20, 35, 55, 0.18); }
+html.light .sch-av.av-available { opacity: 0.85; }
+html.light .sch-no { opacity: 0.35; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   Scheduler — PHASE B (schedboard.js): the D+1 board, the progress editor,
+   Balance and the print view. Same tokens as the rest of the app, so both
+   themes follow automatically; only the surfaces that must read on white get
+   an html.light override at the end of the block.
+   ══════════════════════════════════════════════════════════════════════════ */
+.sch-spacer { flex: 1 1 auto; }
+.sch-setup .sch-fgrid { align-items: flex-end; }
+.sch-daynav { display: inline-flex; gap: 3px; align-self: flex-end; padding-bottom: 2px; }
+.sch-addrow { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.sch-num { width: 54px; text-align: center; }
+.sch-chk { flex-direction: row; align-items: center; gap: 5px; min-width: 0; }
+.sch-chk > span { font-size: 11px; }
+.sch-hard { color: var(--bad); }
+
+.sch-mixrow { display: flex; flex-wrap: wrap; gap: 6px; }
+.sch-mixcell {
+  display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px;
+  border: 1px solid var(--line); border-radius: 7px; padding: 2px 6px; background: var(--panel-2);
+}
+.sch-mixcell b { font-family: Consolas, monospace; color: var(--accent); }
+.sch-mixcell.is-under { border-color: var(--warn); }
+.sch-mixcell.is-over { border-color: var(--hf); }
+
+.sch-badge.sch-st-draft { color: var(--muted); }
+.sch-badge.sch-st-published { color: var(--good); border-color: var(--good); }
+.sch-badge.sch-st-actualized { color: var(--accent); border-color: var(--accent); }
+.sch-badge.good { color: var(--good); border-color: var(--good); }
+.sch-badge.bad { color: var(--bad); border-color: var(--bad); }
+
+/* ── a line of the board ─────────────────────────────────────────────────── */
+.sch-wave.is-night { border-color: var(--hf); }
+.sch-line {
+  border: 1px solid var(--line); border-left: 3px solid var(--line); border-radius: 8px;
+  background: var(--panel-2); padding: 6px 8px; margin-bottom: 6px;
+}
+.sch-line:hover { border-color: var(--accent); }
+.sch-line.is-locked { opacity: 0.9; }
+.sch-lrow { display: flex; flex-wrap: wrap; gap: 6px; align-items: flex-end; }
+.sch-rank {
+  font-family: Consolas, monospace; font-size: 12px; font-weight: 700; color: var(--accent);
+  border: 1px solid var(--line); border-radius: 6px; padding: 3px 6px; align-self: flex-end;
+  min-width: 34px; text-align: center;
+}
+.sch-lf { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.sch-lf > span:first-child {
+  font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); white-space: nowrap;
+}
+.sch-lf > span:first-child em { font-style: normal; text-transform: none; letter-spacing: 0; }
+.sch-lf.grow { flex: 1 1 140px; }
+.sch-lf.w-sp { width: 148px; } .sch-lf.w-ms { width: 210px; } .sch-lf.w-cs { width: 150px; }
+.sch-lf.w-ip { width: 150px; } .sch-lf.w-cl { width: 82px; }  .sch-lf.w-to { width: 96px; }
+.sch-lf.w-if { width: 66px; }  .sch-lf.w-dv { width: 74px; }  .sch-lf.w-ls { width: 240px; }
+.sch-lf.w-tm { width: 250px; }
+.sch-lf .sch-in { width: 100%; }
+.sch-ltimes { font-size: 11px; color: var(--muted); padding: 4px 0; display: block; }
+.sch-lact { display: inline-flex; gap: 3px; align-self: flex-end; padding-bottom: 2px; }
+.sch-in.is-bad { border-color: var(--bad); }
+.sch-in option.cond { font-style: italic; }
+
+.sch-lwarn { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 5px; }
+.sch-wc { font-size: 11px; border-radius: 999px; padding: 1px 8px; border: 1px solid; line-height: 1.55; }
+.sch-wc.is-soft { color: var(--warn); border-color: var(--warn); background: rgba(255, 180, 84, 0.09); }
+.sch-wc.is-hard { color: var(--bad); border-color: var(--bad); background: rgba(255, 122, 112, 0.11); font-weight: 600; }
+.sch-line:has(.sch-wc.is-soft) { border-left-color: var(--warn); }
+.sch-line:has(.sch-wc.is-hard) { border-left-color: var(--bad); }
+.sch-cond { font-size: 11px; color: var(--muted); font-style: italic; margin-top: 4px; }
+.sch-cond.is-hard { color: var(--bad); font-style: normal; }
+
+/* ── not scheduled today ─────────────────────────────────────────────────── */
+.sch-nsgrid { display: flex; flex-wrap: wrap; gap: 5px; }
+.sch-nsc {
+  display: inline-flex; align-items: center; gap: 5px; cursor: pointer;
+  background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 4px 8px;
+  color: var(--text); font-size: 12px;
+}
+.sch-nsc:hover { border-color: var(--accent); }
+.sch-nsc:disabled { cursor: default; opacity: 0.55; }
+.sch-nsc.is-soft { border-color: var(--warn); }
+.sch-nsc.is-hard { border-color: var(--bad); }
+.sch-chip.is-soft { color: var(--warn); border-color: var(--warn); }
+.sch-chip.is-hard { color: var(--bad); border-color: var(--bad); }
+.sch-chip.k-lessons { color: var(--fcb-ground); }
+.sch-chip.k-exams { color: var(--fcb-exams); }
+.sch-chip.k-fs { color: var(--fcb-fs); }
+.sch-chip.k-flights { color: var(--fcb-flights); }
+
+.sch-altrow { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; margin-bottom: 5px; }
+.sch-altrow .sch-in { min-width: 140px; }
+
+.sch-kpi {
+  display: inline-flex; flex-direction: column; align-items: center; gap: 1px;
+  border: 1px solid var(--line); border-radius: 8px; padding: 5px 12px; background: var(--panel-2);
+}
+.sch-kpi b { font-family: Consolas, monospace; font-size: 17px; color: var(--accent); }
+.sch-kpi span { font-size: 10px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); }
+.sch-kpi.is-hard { border-color: var(--bad); }
+.sch-kpi.is-hard b { color: var(--bad); }
+
+/* ── actualize ───────────────────────────────────────────────────────────── */
+.sch-actrow {
+  display: flex; flex-wrap: wrap; gap: 7px; align-items: center; font-size: 12.5px;
+  border-bottom: 1px solid var(--line); padding: 5px 2px;
+}
+.sch-actrow .grow { flex: 1 1 180px; }
+.sch-actbtns { display: inline-flex; gap: 3px; }
+.sch-mini.is-on { font-weight: 700; }
+.sch-mini.is-on.good { color: var(--good); border-color: var(--good); background: rgba(70, 209, 154, 0.14); }
+.sch-mini.is-on.danger { color: var(--bad); border-color: var(--bad); background: rgba(255, 122, 112, 0.14); }
+.sch-mini.is-on.warn { color: var(--warn); border-color: var(--warn); background: rgba(255, 180, 84, 0.14); }
+
+/* ── progress editor ─────────────────────────────────────────────────────── */
+.sch-modal {
+  position: fixed; inset: 0; z-index: 80; background: rgba(4, 9, 16, 0.72);
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+}
+.sch-modal.hidden { display: none; }
+.sch-modalbox {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+  width: min(1180px, 100%); max-height: 88vh; display: flex; flex-direction: column;
+  padding: 12px 14px; box-shadow: 0 26px 70px rgba(0, 0, 0, 0.55);
+}
+.sch-modalbody { overflow: auto; padding-right: 4px; }
+.sch-psec { margin-bottom: 12px; }
+.sch-psec h3 {
+  font-size: 12px; letter-spacing: 0.3px; margin-bottom: 5px; display: flex;
+  align-items: center; gap: 7px; flex-wrap: wrap; color: var(--muted); font-weight: 600;
+}
+.sch-powed { border: 1px solid var(--warn); border-radius: 9px; padding: 8px 10px; }
+.sch-pgrid { display: flex; flex-wrap: wrap; gap: 5px; }
+.sch-pnode {
+  display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px;
+  border: 1px solid var(--line); border-radius: 8px; padding: 3px 6px; background: var(--panel-2);
+}
+.sch-pnode.is-completed { border-color: var(--good); }
+.sch-pnode.is-repeat { border-color: var(--bad); }
+.sch-pnode.is-absent_makeup { border-color: var(--warn); }
+.sch-pact { display: inline-flex; gap: 2px; }
+.sch-pbar {
+  position: sticky; top: 0; z-index: 2; display: flex; flex-wrap: wrap; gap: 8px;
+  align-items: flex-end; background: var(--accent-soft); border: 1px solid var(--accent);
+  border-radius: 9px; padding: 8px 10px; margin-bottom: 10px;
+}
+
+/* ── balance ─────────────────────────────────────────────────────────────── */
+.sch-seg { display: inline-flex; gap: 4px; }
+.sch-tbl td.is-soft { color: var(--warn); }
+.sch-tbl td.is-hard { color: var(--bad); font-weight: 600; }
+.sch-tbl td.is-over { color: var(--hf); }
+
+/* ── print view — the squadron form, monochrome ──────────────────────────── */
+#sch-print {
+  position: fixed; inset: 0; z-index: 90; overflow: auto;
+  background: #ffffff; color: #000000; padding: 14px;
+}
+#sch-print .pv-bar { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; }
+#sch-print .pv-page {
+  max-width: 1180px; margin: 0 auto; background: #ffffff; color: #000000;
+  font-family: "Segoe UI", system-ui, sans-serif; font-size: 11px; padding: 10px 14px;
+  border: 1px solid #000000;
+}
+#sch-print .pv-top { border-bottom: 2px solid #000000; padding-bottom: 6px; margin-bottom: 8px; }
+#sch-print .pv-top h2 { font-size: 16px; letter-spacing: 1.4px; }
+#sch-print .pv-h {
+  font-size: 11px; letter-spacing: 1.1px; text-transform: uppercase;
+  border-bottom: 1px solid #000000; margin: 10px 0 4px; padding-bottom: 2px;
+}
+#sch-print .pv-p { font-size: 11px; margin: 2px 0; }
+#sch-print .pv-t { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-bottom: 4px; }
+#sch-print .pv-t th, #sch-print .pv-t td { border: 1px solid #000000; padding: 2px 4px; text-align: left; }
+#sch-print .pv-t th { font-size: 9px; letter-spacing: 0.7px; background: #eeeeee; }
+#sch-print .sch-hint { color: #444444; }
+
+@media print {
+  html.sch-printing body > *:not(#sch-print) { display: none !important; }
+  html.sch-printing #sch-print { position: static; padding: 0; overflow: visible; }
+  html.sch-printing #sch-print .pv-bar { display: none !important; }
+  html.sch-printing #sch-print .pv-page { border: 0; max-width: none; padding: 0; }
+  html.sch-printing #sch-print .pv-t { page-break-inside: auto; }
+  html.sch-printing #sch-print .pv-t tr { page-break-inside: avoid; }
+}
+
+@media (max-width: 1200px) {
+  .sch-lf.w-ms, .sch-lf.w-ls { width: 180px; }
+  .sch-lf.w-tm { width: 100%; }
+}
+@media (max-width: 740px) {
+  .sch-lf.w-sp, .sch-lf.w-ip, .sch-lf.w-ms, .sch-lf.w-cs { width: 100%; }
+  .sch-modalbox { padding: 10px; }
+}
+
+/* ── Phase B in light theme ── */
+html.light .sch-line, html.light .sch-mixcell, html.light .sch-nsc,
+html.light .sch-kpi, html.light .sch-pnode { background: #ffffff; }
+html.light .sch-modal { background: rgba(26, 39, 51, 0.42); }
+html.light .sch-modalbox { box-shadow: 0 26px 60px rgba(20, 35, 55, 0.22); }
+html.light .sch-wc.is-soft { background: rgba(169, 100, 16, 0.10); }
+html.light .sch-wc.is-hard { background: rgba(187, 64, 52, 0.10); }
+html.light .sch-mini.is-on.good { background: rgba(20, 133, 92, 0.13); }
+html.light .sch-mini.is-on.danger { background: rgba(187, 64, 52, 0.13); }
+html.light .sch-mini.is-on.warn { background: rgba(169, 100, 16, 0.13); }

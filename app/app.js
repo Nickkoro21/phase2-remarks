@@ -487,7 +487,7 @@ const REQ_DOMAINS = [
 const reqState = { domain: null, cache: {} };
 
 function switchView(view) {
-  for (const v of ["remarks", "requirements", "flowchart"]) {
+  for (const v of ["remarks", "requirements", "flowchart", "scheduler"]) {
     $(`view-${v}`).classList.toggle("hidden", v !== view);
     $(`tab-${v}`).classList.toggle("active", v === view);
   }
@@ -496,6 +496,7 @@ function switchView(view) {
 $("tab-remarks").onclick = () => switchView("remarks");
 $("tab-requirements").onclick = () => switchView("requirements");
 $("tab-flowchart").onclick = () => switchView("flowchart");
+$("tab-scheduler").onclick = () => { switchView("scheduler"); if (window.schInit) window.schInit(); };
 
 function renderReqDomains() {
   const grid = $("req-domain-grid");
@@ -606,6 +607,9 @@ document.addEventListener("click", (e) => {
   const mcs = document.createElement("script");
   mcs.src = "mifchart.js?v=" + Date.now(); // cache-bust: module updates ship often
   document.head.appendChild(mcs);
+  const rss = document.createElement("script");
+  rss.src = "remarksearch.js?v=" + Date.now();
+  document.head.appendChild(rss);
 }
 
 /* Light / dark theme toggle (persisted) */
