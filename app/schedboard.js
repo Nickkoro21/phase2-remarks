@@ -49,7 +49,7 @@
   const today = () => R().todayISO();
   const students = () => (S().get("students") || []).slice();
   const instructors = () => (S().get("instructors") || []).slice();
-  const AV_CYCLE = ["available", "LV", "AMC", "TO", "SLV"];
+  const AV_CYCLE = ["available", "LV", "SLV", "HLV", "SCL", "OFF", "TO", "AMC"];
   const FS_DEVICES = ["OFT", "FTD"];
 
   /* ── time ─────────────────────────────────────────────────────────────── */
@@ -139,18 +139,19 @@
 
   /* ── people ───────────────────────────────────────────────────────────── */
   const awayOf = (code, date) => { const st = S().availabilityOf(code, date); return st === "available" ? "" : st; };
-  /* Duty roster v2 — per wave: {sof_a, sof_b, rsu, ground_1, ground_2}.
-     Old records ({SOF, RSU, ground_instructor}) migrate on READ only, and only
-     when no v2 field exists yet, so clearing a v2 slot never resurrects the
-     legacy value. Nothing is rewritten until the user touches the day.      */
+  /* Duty roster v3 — per wave: {sof_a, sof_b, rsu_a, rsu_b, ground_1, ground_2}.
+     Older records migrate on READ only ({SOF, RSU, ground_instructor} legacy and
+     the v2 single {rsu} → rsu_a); clearing a slot never resurrects an old value.
+     Nothing is rewritten until the user touches the day.                    */
   function dutyShape(r) {
     r = r || {};
     const v2 = r.sof_a !== undefined || r.sof_b !== undefined || r.rsu !== undefined
-      || r.ground_1 !== undefined || r.ground_2 !== undefined;
+      || r.rsu_a !== undefined || r.ground_1 !== undefined || r.ground_2 !== undefined;
     return {
       sof_a: (v2 ? r.sof_a : r.SOF) || "",
       sof_b: r.sof_b || "",
-      rsu: (v2 ? r.rsu : r.RSU) || "",
+      rsu_a: r.rsu_a !== undefined ? (r.rsu_a || "") : ((v2 ? r.rsu : r.RSU) || ""),
+      rsu_b: r.rsu_b || "",
       ground_1: (v2 ? r.ground_1 : (r.ground_instructor || r.ground)) || "",
       ground_2: r.ground_2 || "",
       alt_instructors: (r.alt_instructors || []).slice(),
@@ -158,7 +159,7 @@
   }
   function dutyOf(date) { return dutyShape(S().find("dutyRoster", date)); }
   function setDuty(date, patch) {
-    S().upsert("dutyRoster", Object.assign({ date: date, SOF: undefined, RSU: undefined, ground_instructor: undefined },
+    S().upsert("dutyRoster", Object.assign({ date: date, SOF: undefined, RSU: undefined, ground_instructor: undefined, rsu: undefined },
       dutyOf(date), patch));
   }
 
@@ -654,12 +655,13 @@
       if (o.id !== l.id && o.wi === wi) push("hard", l.sp + " already flies #" + o.rank + " of this wave");
     }
 
-    /* duties per wave — SOF A must not fly in wave 1, SOF B not in wave 2;
-       SOF/RSU still one sortie max, AFTER their duty wave. */
+    /* duties per wave — SOF/RSU A must not fly in wave 1, SOF/RSU B not in
+       wave 2; SOF/RSU still one sortie max, AFTER their duty wave. */
     if (l.ip && !solo) {
-      const role = A.duty.sof_a === l.ip ? "SOF A" : A.duty.sof_b === l.ip ? "SOF B" : A.duty.rsu === l.ip ? "RSU" : "";
+      const role = A.duty.sof_a === l.ip ? "SOF A" : A.duty.sof_b === l.ip ? "SOF B"
+        : A.duty.rsu_a === l.ip ? "RSU A" : A.duty.rsu_b === l.ip ? "RSU B" : "";
       if (role) {
-        const dutyIdx = role === "SOF B" ? A.secondIdx : firstIdx;
+        const dutyIdx = (role === "SOF B" || role === "RSU B") ? A.secondIdx : firstIdx;
         if (mine.length > c.sofMax) push("hard", l.ip + " is on " + role + " duty — " + c.sofMax + " sortie max, " + mine.length + " on the board");
         if (wi === dutyIdx) push("hard", l.ip + " is on " + role + " duty — must not fly in " + (plan.waves[wi] ? plan.waves[wi].name : "this wave"));
         else if (dutyIdx >= 0 && wi < dutyIdx && plan.waves[wi] && plan.waves[wi].kind === "wave") {
@@ -699,11 +701,29 @@
       }
     }
 
-    /* continuity of the primary / reserve instructor (soft, spec §6) */
+    /* continuity of the primary / reserve instructor — ONLY until the first
+       solo C4791 (unit rule 2026-08-09: afterwards anyone flies with anyone);
+       until then a student sees at most 4 DIFFERENT instructors in the air. */
     if (l.sp && l.ip && !solo) {
-      const s = S().find("students", l.sp);
-      const fam = [s && s.primary_ip].concat((s && s.reserve_ips) || []).filter(Boolean);
-      if (fam.length && fam.indexOf(l.ip) < 0) push("soft", l.ip + " is neither primary nor reserve IP of " + l.sp + " (" + fam.join(" / ") + ")");
+      const done47 = (R().state(l.sp)["s:C4791"] || {}).status === "completed";
+      const vd = window.SchedConsq && SchedConsq.virtualDone ? SchedConsq.virtualDone(l.sp) : null;
+      const preSolo = !done47 && !(vd && vd.has && vd.has("s:C4791"));
+      if (preSolo) {
+        const s = S().find("students", l.sp);
+        const fam = [s && s.primary_ip].concat((s && s.reserve_ips) || []).filter(Boolean);
+        if (fam.length && fam.indexOf(l.ip) < 0) push("soft", l.ip + " is neither primary nor reserve IP of " + l.sp + " (" + fam.join(" / ") + ")");
+        const seen = new Set();
+        for (const ev of (S().get("trainingLog") || [])) {
+          if (ev.scope === "student" && ev.student === l.sp && ev.kind === "flights"
+            && ev.instructor && ev.instructor !== SOLO) seen.add(ev.instructor);
+        }
+        for (const w2 of plan.waves) for (const o of w2.lines) {
+          if (o.id !== l.id && o.sp === l.sp && o.ip && o.ip !== SOLO) seen.add(o.ip);
+        }
+        if (!seen.has(l.ip) && seen.size >= 4)
+          push("soft", l.sp + " — " + l.ip + " would be instructor #" + (seen.size + 1)
+            + " before the first solo (C4791) — max 4 different IPs");
+      }
     }
 
     /* ALT of the same category as MAIN (correction 5) */
@@ -881,9 +901,10 @@
             else if (o.to != null && o.to > ctx.to && o.to - (ctx.to + ctx.dur) < c.turn) reasons.push("turnaround before " + wname(o.wi));
           }
         }
-        const role = A.duty.sof_a === i.code ? "SOF A" : A.duty.sof_b === i.code ? "SOF B" : A.duty.rsu === i.code ? "RSU" : "";
+        const role = A.duty.sof_a === i.code ? "SOF A" : A.duty.sof_b === i.code ? "SOF B"
+          : A.duty.rsu_a === i.code ? "RSU A" : A.duty.rsu_b === i.code ? "RSU B" : "";
         if (role) {
-          const dutyIdx = role === "SOF B" ? A.secondIdx : ctx.firstIdx;
+          const dutyIdx = (role === "SOF B" || role === "RSU B") ? A.secondIdx : ctx.firstIdx;
           if (ctx.wi === dutyIdx) reasons.push(role + " duty wave");
           else if (dutyIdx >= 0 && ctx.wi < dutyIdx && plan.waves[ctx.wi] && plan.waves[ctx.wi].kind === "wave") reasons.push(role + " duty — sortie after the duty wave");
           else if (mine.length >= c.sofMax) reasons.push(role + " duty — " + c.sofMax + " sortie used");
@@ -1006,7 +1027,8 @@
       <div class="sch-fgrid">
         <label class="sch-fld" title="Supervisor of Flying — wave 1: must not fly in wave 1"><span>SOF A (wave 1)</span>${sel("sof_a", d.sof_a, (i) => (i.duty_eligible || {}).SOF)}</label>
         <label class="sch-fld" title="Supervisor of Flying — wave 2: must not fly in wave 2"><span>SOF B (wave 2)</span>${sel("sof_b", d.sof_b, (i) => (i.duty_eligible || {}).SOF)}</label>
-        <label class="sch-fld" title="Runway Supervisory Unit — solo supervision"><span>RSU</span>${sel("rsu", d.rsu, (i) => (i.duty_eligible || {}).RSU)}</label>
+        <label class="sch-fld" title="Runway Supervisory Unit — wave 1: must not fly in wave 1"><span>RSU A (wave 1)</span>${sel("rsu_a", d.rsu_a, (i) => (i.duty_eligible || {}).RSU)}</label>
+        <label class="sch-fld" title="Runway Supervisory Unit — wave 2: must not fly in wave 2"><span>RSU B (wave 2)</span>${sel("rsu_b", d.rsu_b, (i) => (i.duty_eligible || {}).RSU)}</label>
         <label class="sch-fld"><span>Ground 1</span>${sel("ground_1", d.ground_1, (i) => (i.quals || {}).ground)}</label>
         <label class="sch-fld"><span>Ground 2</span>${sel("ground_2", d.ground_2, (i) => (i.quals || {}).ground)}</label>
       </div>
@@ -1471,8 +1493,8 @@
         <p class="pv-p"><b>${esc(plan.date)}</b> · mass briefing <b>${esc(plan.mass_briefing)}</b>
           · status <b>${esc(plan.status)}</b>${plan.published_at ? " · published " + esc(plan.published_at.slice(0, 16).replace("T", " ")) : ""}</p>
         <p class="pv-p"><b>SOF A</b> ${esc(d.sof_a || "—")} &nbsp; <b>SOF B</b> ${esc(d.sof_b || "—")} &nbsp;
-          <b>RSU</b> ${esc(d.rsu || "—")} &nbsp; <b>GROUND 1</b> ${esc(d.ground_1 || "—")} &nbsp;
-          <b>GROUND 2</b> ${esc(d.ground_2 || "—")}</p>
+          <b>RSU A</b> ${esc(d.rsu_a || "—")} &nbsp; <b>RSU B</b> ${esc(d.rsu_b || "—")} &nbsp;
+          <b>GROUND 1</b> ${esc(d.ground_1 || "—")} &nbsp; <b>GROUND 2</b> ${esc(d.ground_2 || "—")}</p>
       </div>
       ${plan.waves.map(waveTable).join("")}
       ${fsT}${lsT}${alt}
@@ -2230,7 +2252,10 @@
         if (!ip.has(c)) return;
         const x = iRec(c); x.sof++; x.total++;
       });
-      if (d.rsu && ip.has(d.rsu)) { const x = iRec(d.rsu); x.rsu++; x.total++; }
+      [d.rsu_a, d.rsu_b].filter(Boolean).forEach((c) => {
+        if (!ip.has(c)) return;
+        const x = iRec(c); x.rsu++; x.total++;
+      });
     }
     return { sp: sp, ip: ip };
   }
@@ -2329,7 +2354,7 @@
           <tbody>${spRows || `<tr><td colspan="9" class="sch-hint">No student.</td></tr>`}</tbody></table></div>
       </section>
       <section class="panel sch-panel">
-        <div class="sch-h"><h2>Instructors</h2><span class="sch-hint">SOF = SOF A + SOF B days · RSU (solo) = solo-supervision duty days — from the duty roster</span></div>
+        <div class="sch-h"><h2>Instructors</h2><span class="sch-hint">SOF = SOF A + SOF B days · RSU (solo) = RSU A + RSU B solo-supervision days — from the duty roster</span></div>
         <div class="sch-scroll"><table class="sch-tbl">
           <thead><tr><th>IP</th><th>Flights</th><th>F/S</th><th>Ground</th><th>SOF</th><th>RSU (solo)</th><th>Load · Δ vs ⌀</th></tr></thead>
           <tbody>${ipRows || `<tr><td colspan="7" class="sch-hint">No instructor.</td></tr>`}</tbody></table></div>

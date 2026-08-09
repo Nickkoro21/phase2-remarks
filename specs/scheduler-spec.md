@@ -21,8 +21,8 @@
 | `instructors` | code (IP-1…IP-15), quals {night, evaluator, ground}, duty_eligible {SOF, RSU}, notes |
 | `classes` | id, μέλη, ημ/νία έναρξης |
 | `training_events` | date, node (uid flowchart2), scope: class\|student, instructor, device, result {completed \| repeat \| score%}, **absent[] {student, λόγος}** (σε class scope), note. Μαθήματα: **start_date, end_date** |
-| `availability` | person, date, κατάσταση {available \| LV \| AMC \| TO \| SLV \| …} |
-| `duty_roster` | date, **sof_a (κύμα 1), sof_b (κύμα 2)**, RSU, **ground_1, ground_2** (έως 2 τάξεις), alt_instructors[] |
+| `availability` | person, date, κατάσταση {available \| **LV \| SLV \| HLV \| SCL \| OFF \| TO \| AMC**} |
+| `duty_roster` | date, **sof_a/sof_b (ανά κύμα)**, **rsu_a/rsu_b (ανά κύμα)**, **ground_1, ground_2** (έως 2 τάξεις), alt_instructors[] |
 | `gates` | student, type {Δοκιμή Προόδου ΑΕ/Δκτή, Εξέταση Καταλληλότητας, **SMS** in/out, παραπομπή}, date, outcome |
 | `day_plan` | το board μιας ημέρας (βλ. §7) + κατάσταση {draft \| published \| actualized} |
 | `config` | mass_briefing default, wave template, IFF pool [2443-2445], όρια, στόχοι μίγματος ημέρας, idle threshold |
@@ -115,8 +115,8 @@ data/requirements ως unit ruling).
 | Hard θεσμικοί | prerequisites/ροή flowchart2 · gates · όχι 2 συνεχόμενες ΜΟΝΟΣ · τελευταία sortie ενότητας όχι ΜΟΝΟΣ · checkride μόνο με Αξιολογητή · ημέρα checkride ΧΩΡΙΣ 2η έξοδο (st-53· εξαίρεση ζεύγος C4790→C4791, st-51) · μετά ΥΣΤΕΡΗΣΗ (result=repeat) όχι πτήση ίδια/επόμενη ημέρα · **turnaround μαθητή 2h** LDG→T/O (st-51· εξαίρεση C4790→C4791) · max 1 νυχτερινή/ημέρα (st-50) — **κάθε παραβίαση δείχνει requirement id + σύντομο verbatim** |
 | **Ημερήσιος φόρτος SP** (οι **alternates ΜΕΤΡΑΝΕ**) | ≤2 items = ΟΚ (st-48/49: 1 Α/Φ+1 F/S ή 2 F/S) · 3 items = soft «acceleration, ΜΕΤΑ ΜΟΝΟΣ μόνο» (st-50: 2 Α/Φ+1 F/S ή 1 Α/Φ+2 F/S) · >3 = hard · **>2 κατηγορίες ασκήσεων = hard** (st-52· εξαιρείται F/S κανονικών/EP διαδικασιών) |
 | **SMS** (Special Monitoring Status — πρώην ΚΕΠΕ, fail-47 §32δ) | max **1 dual Ή 1 F/S** ημερησίως· 2η έξοδος ΜΟΝΟ αν είναι πτήση «ΜΟΝΟΣ»· badge **SMS** παντού (board, roster, dropdowns, print) |
-| Hard unit | turnaround IP 2h · **SOF-Α: όχι πτήση στο κύμα 1, SOF-Β: όχι στο κύμα 2· SOF/RSU max 1 έξοδος, μετά την υπηρεσία** · όχι 1ος F/S + 1ο κύμα · σύνολο γραμμής 3:15 · T/O εκτός HH:05–:35 ⇒ soft σήμανση |
-| Soft (override+λόγος) | F/S ανά IP: προτίμηση 2, max 3 · μαθήματα σε ημέρες υπηρεσίας ground instructor · συνέχεια κύριου/εφεδρικών IP · στόχοι μίγματος · ALT ίδιας κατηγορίας με MAIN |
+| Hard unit | turnaround IP 2h · **SOF-Α/RSU-Α: όχι πτήση στο κύμα 1, SOF-Β/RSU-Β: όχι στο κύμα 2· SOF/RSU max 1 έξοδος, μετά την υπηρεσία** · όχι 1ος F/S + 1ο κύμα · σύνολο γραμμής 3:15 · T/O εκτός HH:05–:35 ⇒ soft σήμανση |
+| Soft (override+λόγος) | F/S ανά IP: προτίμηση 2, max 3 · μαθήματα σε ημέρες υπηρεσίας ground instructor · **συνέχεια κύριου/εφεδρικών IP ΜΟΝΟ έως το C4791 + max 4 διαφορετικοί IP έως το C4791 — μετά «πετάνε όλοι με όλους»** (unit rule 2026-08-09) · στόχοι μίγματος · ALT ίδιας κατηγορίας με MAIN |
 | Παράμετροι ημέρας | mass briefing time · μίγμα · διαθέσιμα devices · IFF pool |
 
 ## 7. Το Live Board (Δ+1)
@@ -132,7 +132,7 @@ T/O (editable) · υπολογιζόμενα brief/LDG/debrief/total · IFF (aut
 
 **Μπλοκ**: Κύμα 1 · Κύμα 2 · Night (προαιρετικό) · **Μαθήματα/Εξετάσεις ανά κύμα (Α/Β,
 προαιρετικά — δεν υπάρχουν πάντα)** · F/S (χωρίς ώρες, με device και σειρά) · Duties
-(**SOF-Α, SOF-Β, RSU, Ground 1, Ground 2**) · **Alternate students (+sortie) / alternate
+(**SOF-Α, SOF-Β, RSU-Α, RSU-Β, Ground 1, Ground 2**) · **Alternate students (+sortie) / alternate
 instructors** · Absents analysis · Manning · Completion ratio ανά cohort.
 
 ## 8. Counters — «κανείς δεν ξεχνιέται, κανείς δεν καίγεται»

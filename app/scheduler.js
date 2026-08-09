@@ -621,7 +621,7 @@
   const STATUS_LABEL = { kepe: "SMS" };
   const STATUS_TITLE = { kepe: "Special Monitoring Status" };
   const statusLabel = (s) => STATUS_LABEL[s] || s;
-  const AV_CYCLE = ["available", "LV", "AMC", "TO", "SLV"];
+  const AV_CYCLE = ["available", "LV", "SLV", "HLV", "SCL", "OFF", "TO", "AMC"];
   /* Round 2 result vocabulary (spec §3α): flying events say PASS / LAG / FAIL.
      The stored values stay completed / lag / fail — legacy "repeat" is read as
      lag everywhere and never rewritten. */

@@ -205,7 +205,7 @@ config = {
     "ip_fs_pref": 2, "ip_fs_max": 3, "sof_rsu_max_sorties": 1,
     "lookahead_depth": 3, "idle_threshold_workdays": 3,
     "day_mix_default": {"99HAF-A": 10, "18ITAF": 4, "3GAF": 4},
-    "absence_codes": ["LV", "AMC", "TO", "SLV"],
+    "absence_codes": ["LV", "SLV", "HLV", "SCL", "OFF", "TO", "AMC"],
 }
 seed = {"schema": "scheduler-seed-v2", "generated_for_testing": True,
         "students": students, "instructors": instructors,
