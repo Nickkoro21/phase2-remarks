@@ -281,7 +281,9 @@
       const sc = num(ev.score);
       let status;
       if (abs) status = "absent_makeup";
-      else if (ev.result === "repeat") status = "repeat";
+      /* Round 2 vocabulary: lag (ΥΣΤΕΡΗΣΗ) / fail (ΑΠΟΤΥΧΙΑ) — the legacy
+         "repeat" is read as lag; all three leave the node owed. */
+      else if (ev.result === "repeat" || ev.result === "lag" || ev.result === "fail") status = "repeat";
       else if (ev.result === "score") status = sc != null && sc >= passPct() ? "completed" : "repeat";
       else status = "completed";
       out[u] = {
@@ -313,8 +315,20 @@
       });
   }
   /* null = free. Otherwise {reason, gate} — flying kinds only; ground training
-     keeps running while a gate is open. */
+     keeps running while a gate is open. EXCEPTION (Round 2, fail-16): an active
+     ΠΔ 29/2020 state blocks EVERY kind — flights, F/S, exams and lessons. */
   function blockFor(code, kind) {
+    const cq = window.SchedConsq;
+    if (cq) {
+      const pd = cq.pd(code);
+      if (pd) {
+        return {
+          pd: pd, req: pd.req || "fail-16", vb: cq.vb(pd.req || "fail-16"),
+          reason: "PD 29/2020 in force (" + pd.srcLabel + (pd.since ? ", " + pd.since : "")
+            + ") — ALL activities stop · " + cq.pdStageText(pd),
+        };
+      }
+    }
     if (kind !== "flights" && kind !== "fs") return null;
     const g = openGates(code).find((x) => x.locksFlying);
     if (!g) return null;
@@ -343,6 +357,13 @@
       const s = stt[u].status;
       if (s === "completed") done.add(u);
       else if (s === "absent_makeup" || s === "repeat") owed.add(u);
+    }
+    /* Round 2 (fail-19): a passed Aptitude Exam unlocks continuation PAST the
+       failed first «ΜΟΝΟΣ» — the engine hands over the uids to treat as done. */
+    if (window.SchedConsq) {
+      window.SchedConsq.virtualDone(code).forEach((u) => {
+        if (stt[u]) { done.add(u); owed.delete(u); }
+      });
     }
     const missOf = (u) => (G.prereq.get(u) || []).filter((p) => !done.has(p.uid));
 
@@ -434,6 +455,44 @@
         .map((u) => ({ u: u, r: depth + 1, missing: (G.prereq.get(u) || []).filter((p) => f.stt[p.uid].status !== "completed") }));
     }
     for (const h of picks) out.push(option(h.u, h.r, h.missing, f.stt));
+
+    /* Round 2 — consequence engine trims and annotates the flying dropdowns:
+       · fail-19: a failed first «ΜΟΝΟΣ» is never re-offered
+       · fail-12: categories with an APT EXAM pending are hard-locked
+       · fail-11: while the F/S ladder runs, the SAME F/S exercise is the ONLY
+         next F/S step
+       · fail-10: the repeat sortie carries its "repeat: <maneuvers>" chip    */
+    const cq = window.SchedConsq;
+    if (cq && (kind === "flights" || kind === "fs")) {
+      const skip2 = cq.skipUids(code);
+      const locked = cq.lockedTracks(code);
+      const lad = kind === "fs" ? cq.fsLadder(code) : null;
+      const keep = [];
+      for (const o of out) {
+        if (skip2.has(o.uid)) continue;
+        if (locked.has(o.track) && o.uid !== (lad && lad.uid)) continue;
+        if (lad && o.uid !== lad.uid) continue;
+        const rn = cq.repeatNoteFor(code, o.uid);
+        if (rn) {
+          o.repeatNote = rn;
+          o.pendingReason = o.pendingReason ? o.pendingReason + " · " + rn : rn;
+        }
+        keep.push(o);
+      }
+      if (lad && !keep.some((o) => o.uid === lad.uid)) {
+        const f2 = frontier(code, opts);
+        const o = option(lad.uid, 0, [], f2.stt);
+        o.repeatNote = "repeat: " + (lad.maneuvers || "the same F/S exercise");
+        o.pendingReason = o.repeatNote + " — fail-11 ladder, attempt " + (lad.fails + 1) + " of 3";
+        keep.unshift(o);
+      }
+      out.length = 0;
+      keep.forEach((o) => out.push(o));
+      if (locked.size && !lad) {
+        out.lockedNote = "APT EXAM pending — " + [...locked].map((t) => TRACK_LABEL[t] || t).join(" · ")
+          + " progress locked until it is passed (fail-12)";
+      }
+    }
     return out;
   }
 
@@ -563,15 +622,30 @@
   const STATUS_TITLE = { kepe: "Special Monitoring Status" };
   const statusLabel = (s) => STATUS_LABEL[s] || s;
   const AV_CYCLE = ["available", "LV", "AMC", "TO", "SLV"];
-  const RESULT_OPTS = [
-    { v: "completed", t: "Completed" },
-    { v: "repeat", t: "Repeat" },
+  /* Round 2 result vocabulary (spec §3α): flying events say PASS / LAG / FAIL.
+     The stored values stay completed / lag / fail — legacy "repeat" is read as
+     lag everywhere and never rewritten. */
+  const RESULT_OPTS_FLY = [
+    { v: "completed", t: "PASS" },
+    { v: "lag", t: "LAG (YSTERISI)" },
+    { v: "fail", t: "FAIL (APOTYXIA)" },
     { v: "score", t: "Score %" },
   ];
+  const RESULT_OPTS_GND = [
+    { v: "completed", t: "Completed" },
+    { v: "score", t: "Score %" },
+  ];
+  const RESULT_LABEL = { completed: "PASS", lag: "LAG (YSTERISI)", repeat: "LAG (YSTERISI)", fail: "FAIL (APOTYXIA)" };
+  /* special out-of-graph sorties (spec §3α) — form value "sp:<key>", stored as
+     {node:"", special:key, category, kind:"flights"} */
+  const SP_PREFIX = "sp:";
+  const CQ = () => window.SchedConsq || null;
+  const spKeyOf = (node) => (String(node || "").indexOf(SP_PREFIX) === 0 ? String(node).slice(SP_PREFIX.length) : "");
   const DEVICE_BY_KIND = { lessons: "GND", exams: "GND", fs: "OFT", flights: "T-6A" };
   const DEVICES = ["T-6A", "OFT", "FTD", "GND"];
   const LOG_ROW_CAP = 400;                  // the seed alone carries ~2 000 events
   const evNode = (ev) => (ev && (ev.node || ev.uid)) || "";
+  const evKind = (ev) => (ev && ev.special ? (ev.kind || "flights") : R().kindOf(evNode(ev)));
 
   const ui = {
     booted: false, pane: "board",
@@ -712,10 +786,20 @@
 
   function studentRow(s) {
     const idle = R().idleDays(s.code, today());
+    /* Round 2 badges: ΠΔ 29/2020 (fail-16) + SMS entries exhausted (fail-45 —
+       display only, unit ruling 2026-08-09: no other consequence) */
+    let consq = "";
+    if (CQ()) {
+      const pd = CQ().pd(s.code);
+      if (pd) consq += ` <span class="sch-badge r-fail" title="${esc("fail-16 — " + CQ().vb("fail-16") + " · " + CQ().pdStageText(pd))}">PD 29/2020</span>`;
+      for (const x of CQ().smsExhausted(s.code)) {
+        consq += ` <span class="sch-badge warn" title="${esc("SMS entries exhausted for " + x.label + " — student can NOT re-enter (unit ruling 2026-08-09); no other consequence. fail-45 — " + CQ().vb("fail-45"))}">SMS✕ ${esc(x.label)}</span>`;
+      }
+    }
     return `<tr>
       <td class="sch-code">${esc(s.code)}</td>
       <td>${esc(s.class || "—")}</td>
-      <td><span class="sch-badge st-${esc(s.status || "active")}"${STATUS_TITLE[s.status] ? ` title="${esc(STATUS_TITLE[s.status])}"` : ""}>${esc(statusLabel(s.status || "active"))}</span></td>
+      <td><span class="sch-badge st-${esc(s.status || "active")}"${STATUS_TITLE[s.status] ? ` title="${esc(STATUS_TITLE[s.status])}"` : ""}>${esc(statusLabel(s.status || "active"))}</span>${consq}</td>
       <td class="sch-mono">${esc(s.primary_ip || "—")}</td>
       <td class="sch-mono">${esc((s.reserve_ips || []).filter(Boolean).join(" · ") || "—")}</td>
       <td class="sch-note">${esc(s.notes || "")}${idle == null ? "" : ` <span class="sch-nd" title="working days since the last recorded event">${idle}d</span>`}</td>
@@ -910,6 +994,7 @@
       id: "", node: "", date: today(), start_date: "", end_date: "",
       scope: "student", class: "", student: "", instructor: "", device: "",
       result: "completed", score: "", note: "", absent: {},
+      category: "", maneuvers: "",
     };
   }
 
@@ -957,14 +1042,17 @@
           : S().membersOf(ev.class || "").indexOf(f.student) >= 0;
         if (!hit) return false;
       }
-      if (f.kind && R().kindOf(evNode(ev)) !== f.kind) return false;
+      if (f.kind && evKind(ev) !== f.kind) return false;
       const d = ev.end_date || ev.date || "";
       const d0 = ev.start_date || ev.date || "";
       if (f.from && d && d < f.from) return false;
       if (f.to && d0 && d0 > f.to) return false;
       if (q) {
         const dsc = R().describe(evNode(ev));
-        const hay = [evNode(ev), dsc ? dsc.label : "", dsc ? dsc.name : "", ev.instructor, ev.device, ev.note, ev.student, ev.class]
+        const spd = ev.special && CQ() ? CQ().SPECIAL[ev.special] : null;
+        const hay = [evNode(ev), dsc ? dsc.label : "", dsc ? dsc.name : "",
+          spd ? spd.short + " " + spd.label + " special" : "", ev.category,
+          ev.instructor, ev.device, ev.note, ev.maneuvers, ev.student, ev.class]
           .filter(Boolean).join(" ").toLowerCase();
         if (hay.indexOf(q) < 0) return false;
       }
@@ -1012,24 +1100,34 @@
 
   function logRowHtml(ev) {
       const d = R().describe(evNode(ev));
-      const k = R().kindOf(evNode(ev));
+      const spd = ev.special && CQ() ? CQ().SPECIAL[ev.special] : null;
+      const k = evKind(ev);
       const when = ev.start_date ? esc(ev.start_date) + " → " + esc(ev.end_date || "…") : esc(ev.date || "—");
       const who = ev.scope === "class"
         ? `<span class="sch-badge">class</span> ${esc(ev.class || "—")}`
         : `<span class="sch-badge alt">SP</span> ${esc(ev.student || "—")}`;
       const abs = (ev.absent || []).length;
-      const res = ev.result === "score" ? esc(String(ev.score ?? "")) + "%" : esc(ev.result || "completed");
+      /* PASS / LAG (YSTERISI) / FAIL (APOTYXIA) — legacy repeat renders as LAG */
+      const raw = ev.result || "completed";
+      const isFly = k === "flights" || k === "fs";
+      const res = raw === "score" ? esc(String(ev.score ?? "")) + "%"
+        : esc(isFly ? (RESULT_LABEL[raw] || raw) : (raw === "repeat" ? "LAG (YSTERISI)" : raw));
+      const rcls = raw === "repeat" ? "lag" : raw;
+      const nodeCell = spd
+        ? `<span class="sch-code">${esc(spd.short)}</span> <span class="sch-note">${esc(spd.label)}</span>
+           ${ev.category && CQ() ? `<span class="sch-badge">${esc(CQ().CAT_LABEL[ev.category] || ev.category)}</span>` : ""}`
+        : d ? `<span class="sch-code">${esc(d.short)}</span> <span class="sch-note">${esc(d.name)}</span>`
+          : `<span class="sch-warn">${esc(evNode(ev) || "—")}</span>`;
       return `<tr>
         <td class="sch-mono">${when}</td>
-        <td>${d ? `<span class="sch-code">${esc(d.short)}</span> <span class="sch-note">${esc(d.name)}</span>`
-          : `<span class="sch-warn">${esc(evNode(ev) || "—")}</span>`}</td>
+        <td>${nodeCell}</td>
         <td><span class="sch-badge k-${esc(k || "x")}">${esc(k ? R().KIND_SHORT[k] : "?")}</span></td>
         <td>${who}</td>
         <td class="sch-mono">${esc(ev.instructor || "—")}</td>
         <td class="sch-mono">${esc(ev.device || "—")}</td>
-        <td><span class="sch-badge r-${esc(ev.result || "completed")}">${res}</span></td>
+        <td><span class="sch-badge r-${esc(rcls)}">${res}</span></td>
         <td>${abs ? `<span class="sch-badge warn" title="${esc((ev.absent || []).map((a) => a.student + (a.reason ? " — " + a.reason : "")).join(" · "))}">${abs} absent</span>` : "—"}</td>
-        <td class="sch-note">${esc(ev.note || "")}</td>
+        <td class="sch-note">${ev.maneuvers ? `<span class="sch-badge warn" title="maneuvers to repeat (fail-10)">repeat: ${esc(ev.maneuvers)}</span> ` : ""}${esc(ev.note || "")}</td>
         <td class="sch-act"><button type="button" class="sch-mini" data-act="edit-ev" data-id="${esc(ev.id)}" title="Edit">✎</button>
           <button type="button" class="sch-mini danger" data-act="del-ev" data-id="${esc(ev.id)}" title="Delete">✕</button></td>
       </tr>`;
@@ -1041,6 +1139,21 @@
     const hits = new Set(R().search(ui.log.nodeQ));
     const parts = [`<option value="">— select a node —</option>`];
     let n = 0;
+    /* special out-of-graph sorties first — they match the free-text search too */
+    if (CQ()) {
+      const q = ui.log.nodeQ.trim().toLowerCase();
+      const sp = Object.keys(CQ().SPECIAL).filter((k) => {
+        if (!q) return true;
+        const hay = (k + " special " + CQ().SPECIAL[k].label + " " + CQ().SPECIAL[k].short).toLowerCase();
+        return q.split(/\s+/).every((t) => hay.indexOf(t) >= 0);
+      });
+      if (sp.length) {
+        n += sp.length;
+        parts.push(`<optgroup label="Special — out of graph">` + sp.map((k) =>
+          `<option value="${esc(SP_PREFIX + k)}"${f.node === SP_PREFIX + k ? " selected" : ""}>${esc(CQ().SPECIAL[k].short + " — " + CQ().SPECIAL[k].label)}</option>`
+        ).join("") + `</optgroup>`);
+      }
+    }
     for (const k of R().KINDS) {
       for (const sec of R().sections(k)) {
         const shown = sec.uids.filter((u) => hits.has(u));
@@ -1057,12 +1170,24 @@
     return { html: parts.join(""), n: n };
   }
 
+  /* evaluator-first IP picker for the special dp/apt sorties (spec §3α B) */
+  function evalIpOptions(sel) {
+    const ev = instructors().filter((i) => (i.quals || {}).evaluator);
+    const rest = instructors().filter((i) => !(i.quals || {}).evaluator);
+    const opt = (i) => `<option value="${esc(i.code)}"${i.code === sel ? " selected" : ""}>${esc(i.code)}</option>`;
+    return `<option value="">—</option>` + ev.map(opt).join("")
+      + (rest.length ? `<optgroup label="not evaluator-qualified — hard warning">${rest.map(opt).join("")}</optgroup>` : "");
+  }
+
   function renderForm() {
     const f = ui.log.form || (ui.log.form = blankForm());
-    const kind = R().kindOf(f.node);
-    const d = f.node ? R().describe(f.node) : null;
+    const spKey = spKeyOf(f.node);
+    const spDef = spKey && CQ() ? CQ().SPECIAL[spKey] : null;
+    const kind = spKey ? "flights" : R().kindOf(f.node);
+    const d = f.node && !spKey ? R().describe(f.node) : null;
     const sel = nodeSelectHtml();
     const isLesson = kind === "lessons";
+    const isFly = kind === "flights" || kind === "fs";
     if (!f.device && kind) f.device = DEVICE_BY_KIND[kind];
 
     const host = $id("sch-formwrap");
@@ -1081,29 +1206,40 @@
           ${d.periods != null ? `<span class="sch-badge">${esc(String(d.periods))} periods</span>` : ""}
           ${d.night ? `<span class="sch-badge warn">night</span>` : ""}
           ${d.checkride ? `<span class="sch-badge warn">checkride</span>` : ""}</p>` : ""}
+        ${spDef ? `<p class="sch-nodeinfo"><span class="sch-code">${esc(spDef.short)}</span> ${esc(spDef.label)}
+          <span class="sch-badge k-flights">Special sortie</span>
+          ${spDef.evaluator ? `<span class="sch-badge warn" title="fail-12 / ΠΔ 29/2020 — flown with an evaluator / the AE / the Sq Cdr">evaluator required</span>` : ""}</p>` : ""}
 
         <div class="sch-fgrid">
           ${isLesson
         ? `<label class="sch-fld"><span>Start date</span><input type="date" class="sch-in" data-ff="start_date" value="${esc(f.start_date || f.date)}"></label>
              <label class="sch-fld"><span>End date</span><input type="date" class="sch-in" data-ff="end_date" value="${esc(f.end_date)}"></label>`
         : `<label class="sch-fld"><span>Date</span><input type="date" class="sch-in" data-ff="date" value="${esc(f.date)}"></label>`}
-          <label class="sch-fld"><span>Scope</span>
+          ${spKey ? `<label class="sch-fld"><span>Scope</span><select class="sch-in" disabled><option>Student</option></select></label>`
+        : `<label class="sch-fld"><span>Scope</span>
             <select class="sch-in" data-ff="scope">
               <option value="student"${f.scope === "student" ? " selected" : ""}>Student</option>
-              <option value="class"${f.scope === "class" ? " selected" : ""}>Class</option></select></label>
-          ${f.scope === "class"
+              <option value="class"${f.scope === "class" ? " selected" : ""}>Class</option></select></label>`}
+          ${!spKey && f.scope === "class"
         ? `<label class="sch-fld"><span>Class</span><select class="sch-in" data-ff="class"><option value="">—</option>
              ${S().classList().map((c) => `<option value="${esc(c.id)}"${f.class === c.id ? " selected" : ""}>${esc(c.id)} (${c.members.length})</option>`).join("")}</select></label>`
         : `<label class="sch-fld"><span>Student</span><select class="sch-in" data-ff="student"><option value="">—</option>
              ${students().map((s) => `<option value="${esc(s.code)}"${f.student === s.code ? " selected" : ""}>${esc(s.code)}${s.class ? " · " + esc(s.class) : ""}</option>`).join("")}</select></label>`}
-          <label class="sch-fld"><span>Instructor</span><select class="sch-in" data-ff="instructor"><option value="">—</option>
-            ${instructors().map((i) => `<option value="${esc(i.code)}"${f.instructor === i.code ? " selected" : ""}>${esc(i.code)}</option>`).join("")}</select></label>
+          ${spKey ? `<label class="sch-fld"><span>Category</span><select class="sch-in" data-ff="category"><option value="">—</option>
+            ${CQ().CATS.map((c) => `<option value="${esc(c)}"${f.category === c ? " selected" : ""}>${esc(CQ().CAT_LABEL[c])}</option>`).join("")}</select></label>` : ""}
+          <label class="sch-fld"><span>Instructor${spDef && spDef.evaluator ? " (evaluator)" : ""}</span>
+            <select class="sch-in" data-ff="instructor">${spDef && spDef.evaluator
+        ? evalIpOptions(f.instructor)
+        : `<option value="">—</option>` + instructors().map((i) => `<option value="${esc(i.code)}"${f.instructor === i.code ? " selected" : ""}>${esc(i.code)}</option>`).join("")}</select></label>
           <label class="sch-fld"><span>Device</span><input class="sch-in" data-ff="device" value="${esc(f.device)}" list="sch-devlist" placeholder="${esc(DEVICES.join(" · "))}"></label>
           <datalist id="sch-devlist">${DEVICES.map((x) => `<option value="${esc(x)}"></option>`).join("")}</datalist>
           <label class="sch-fld"><span>Result</span><select class="sch-in" data-ff="result">
-            ${RESULT_OPTS.map((o) => `<option value="${o.v}"${f.result === o.v ? " selected" : ""}>${o.t}</option>`).join("")}</select></label>
+            ${(isFly ? RESULT_OPTS_FLY : RESULT_OPTS_GND).map((o) => `<option value="${o.v}"${f.result === o.v ? " selected" : ""}>${o.t}</option>`).join("")}</select></label>
           ${f.result === "score" ? `<label class="sch-fld"><span>Score %</span>
             <input type="number" min="0" max="100" class="sch-in" data-ff="score" value="${esc(f.score)}"></label>` : ""}
+          ${isFly && (f.result === "lag" || f.result === "fail")
+        ? `<label class="sch-fld grow"><span>Maneuvers that lagged/failed — repeated on the next sortie (fail-10)</span>
+            <input class="sch-in" data-ff="maneuvers" value="${esc(f.maneuvers)}" placeholder="e.g. steep turns · SFL · ILS raw data"></label>` : ""}
           <label class="sch-fld grow"><span>Note</span><input class="sch-in" data-ff="note" value="${esc(f.note)}"></label>
         </div>
 
@@ -1168,8 +1304,14 @@
       if (t.dataset.flt) { ui.log.f[t.dataset.flt] = t.value; renderLogTable(); return; }
       if (t.id === "sch-nodesel") {
         ui.log.form.node = t.value;
-        ui.log.form.device = DEVICE_BY_KIND[R().kindOf(t.value)] || ui.log.form.device;
-        if (R().kindOf(t.value) === "exams" && ui.log.form.result === "completed") ui.log.form.result = "score";
+        const spk = spKeyOf(t.value);
+        if (spk) {
+          ui.log.form.scope = "student";
+          ui.log.form.device = "T-6A";
+        } else {
+          ui.log.form.device = DEVICE_BY_KIND[R().kindOf(t.value)] || ui.log.form.device;
+          if (R().kindOf(t.value) === "exams" && ui.log.form.result === "completed") ui.log.form.result = "score";
+        }
         renderForm();
         return;
       }
@@ -1191,24 +1333,40 @@
   function saveEvent() {
     const f = ui.log.form;
     if (!f.node) { S().toast("Pick a node first.", "bad"); return; }
-    const kind = R().kindOf(f.node);
+    const spKey = spKeyOf(f.node);
+    const kind = spKey ? "flights" : R().kindOf(f.node);
     const isLesson = kind === "lessons";
-    if (f.scope === "student" && !f.student) { S().toast("Pick the student.", "bad"); return; }
-    if (f.scope === "class" && !f.class) { S().toast("Pick the class.", "bad"); return; }
+    if (spKey && !f.student) { S().toast("A special sortie is recorded per student.", "bad"); return; }
+    if (spKey && !f.category) { S().toast("Pick the category of the special sortie.", "bad"); return; }
+    if (!spKey && f.scope === "student" && !f.student) { S().toast("Pick the student.", "bad"); return; }
+    if (!spKey && f.scope === "class" && !f.class) { S().toast("Pick the class.", "bad"); return; }
     if (isLesson && !f.start_date && !f.date) { S().toast("A lesson block needs a start date.", "bad"); return; }
     if (!isLesson && !f.date) { S().toast("Pick the date.", "bad"); return; }
     if (f.result === "score" && f.score === "") { S().toast("Enter the score.", "bad"); return; }
 
+    /* apt / dp sorties fly with an evaluator — hard warning, not a block */
+    let evalWarn = "";
+    if (spKey && CQ() && CQ().SPECIAL[spKey] && CQ().SPECIAL[spKey].evaluator) {
+      const ip = f.instructor ? S().find("instructors", f.instructor) : null;
+      if (!ip || !(ip.quals || {}).evaluator) {
+        evalWarn = " ⚠ " + (f.instructor || "no IP") + " is NOT evaluator-qualified (fail-12 — «με Αξιολογητή της Μοίρας»)";
+      }
+    }
+
+    const isFly = kind === "flights" || kind === "fs";
     const rec = {
       id: f.id || S().uid("ev"),
-      node: f.node, kind: kind,
-      scope: f.scope,
-      student: f.scope === "student" ? f.student : "",
-      class: f.scope === "class" ? f.class : "",
+      node: spKey ? "" : f.node, kind: kind,
+      special: spKey || undefined,
+      category: spKey ? f.category : undefined,
+      scope: spKey ? "student" : f.scope,
+      student: (spKey || f.scope === "student") ? f.student : "",
+      class: (!spKey && f.scope === "class") ? f.class : "",
       instructor: f.instructor || "", device: f.device || "",
       result: f.result, score: f.result === "score" ? Number(f.score) : null,
+      maneuvers: isFly && (f.result === "lag" || f.result === "fail") ? (f.maneuvers || "") : "",
       note: f.note || "",
-      absent: f.scope === "class"
+      absent: (!spKey && f.scope === "class")
         ? Object.keys(f.absent).map((c) => ({ student: c, reason: f.absent[c] || "" })) : [],
     };
     if (isLesson) {
@@ -1218,10 +1376,11 @@
     } else {
       rec.date = f.date; rec.start_date = ""; rec.end_date = "";
     }
-    const wasEdit = !!f.id, node = f.node;
+    const wasEdit = !!f.id;
+    const label = spKey ? CQ().SPECIAL[spKey].label : R().label(f.node);
     ui.log.form = blankForm();                       // before the store event re-renders
     S().upsert("trainingLog", rec);
-    S().toast((wasEdit ? "Entry updated — " : "Entry added — ") + R().label(node), "good");
+    S().toast((wasEdit ? "Entry updated — " : "Entry added — ") + label + evalWarn, evalWarn ? "bad" : "good");
   }
 
   function editEvent(id) {
@@ -1230,11 +1389,15 @@
     const abs = {};
     for (const a of ev.absent || []) abs[a.student] = a.reason || "";
     ui.log.form = {
-      id: ev.id, node: evNode(ev), date: ev.date || "", start_date: ev.start_date || "", end_date: ev.end_date || "",
+      id: ev.id, node: ev.special ? SP_PREFIX + ev.special : evNode(ev),
+      date: ev.date || "", start_date: ev.start_date || "", end_date: ev.end_date || "",
       scope: ev.scope || "student", class: ev.class || "", student: ev.student || "",
       instructor: ev.instructor || "", device: ev.device || "",
-      result: ev.result || "completed", score: ev.score == null ? "" : String(ev.score),
+      /* migration on READ: the legacy "repeat" shows as LAG in the form */
+      result: ev.result === "repeat" ? "lag" : (ev.result || "completed"),
+      score: ev.score == null ? "" : String(ev.score),
       note: ev.note || "", absent: abs,
+      category: ev.category || "", maneuvers: ev.maneuvers || "",
     };
     ui.log.open = true;
     renderLog();
@@ -1245,7 +1408,8 @@
   function delEvent(id) {
     const ev = S().find("trainingLog", id);
     if (!ev) return;
-    if (!confirm(`Delete the ${R().label(evNode(ev))} entry of ${ev.date || ev.start_date || "—"}?`)) return;
+    const lbl = ev.special && CQ() && CQ().SPECIAL[ev.special] ? CQ().SPECIAL[ev.special].label : R().label(evNode(ev));
+    if (!confirm(`Delete the ${lbl} entry of ${ev.date || ev.start_date || "—"}?`)) return;
     if (ui.log.form && ui.log.form.id === id) ui.log.form = blankForm();
     S().remove("trainingLog", id);
     S().toast("Entry deleted.", "good");

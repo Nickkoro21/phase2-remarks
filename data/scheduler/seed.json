@@ -22766,8 +22766,33 @@
    "student": "SP-11",
    "instructor": "IP-11",
    "device": "OFT",
-   "result": "repeat",
-   "note": "YSTERISI — repeat, no flight same/next working day (test fixture)"
+   "result": "lag",
+   "maneuvers": "unusual attitude recoveries, VOR tracking",
+   "note": "LAG (YSTERISI) — consequence-engine fixture (fail-10 day math)"
+  },
+  {
+   "id": "EV-2012",
+   "date": "2026-08-06",
+   "node": "s:F4104",
+   "scope": "student",
+   "student": "SP-19",
+   "instructor": "IP-5",
+   "device": "T-6A",
+   "result": "fail",
+   "maneuvers": "rejoin, echelon turns",
+   "note": "FAIL (APOTYXIA) on the section-final sortie — APT EXAM pending (fail-12 fixture)"
+  },
+  {
+   "id": "EV-2013",
+   "date": "2026-08-05",
+   "node": "s:N4690",
+   "scope": "student",
+   "student": "SP-22",
+   "instructor": "IP-2",
+   "device": "T-6A",
+   "result": "fail",
+   "maneuvers": "",
+   "note": "checkride FAIL — PD 29/2020 in force (fail-16 fixture)"
   }
  ],
  "availability": [],
@@ -22783,6 +22808,7 @@
   {
    "student": "SP-23",
    "type": "kepe_entry",
+   "category": "instrument",
    "date": "2026-08-03",
    "outcome": "open",
    "note": "SMS (Special Monitoring Status) — max 1 dual sortie or 1 F/S per day; a 2nd item only as SOLO"

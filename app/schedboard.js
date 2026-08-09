@@ -173,7 +173,14 @@
     "fail-47": "…μία έξοδο συγκυβέρνησης ή μία έξοδο F/S την ημέρα· πέραν της μιας, μόνον εφόσον η δεύτερη είναι πτήση «ΜΟΝΟΣ».",
   };
   const reqW = (sev, text, id) => ({ sev: sev, text: text, req: id.replace(/n$/, ""), vb: REQ[id] || "" });
-  const REQ_SRC = { "st-48": "3-01 §23α", "st-50": "3-01 §23β", "st-51": "3-01 §23ε", "st-52": "3-01 §16", "st-53": "3-01 §22θ", "fail-47": "3-01 §32δ" };
+  const REQ_SRC = {
+    "st-48": "3-01 §23α", "st-50": "3-01 §23β", "st-51": "3-01 §23ε", "st-52": "3-01 §16", "st-53": "3-01 §22θ", "fail-47": "3-01 §32δ",
+    /* Round 2 — the consequence engine (schedconsq.js) cites these */
+    "fail-08": "3-01 §30δ(1)", "fail-09": "3-01 §30δ(2)", "fail-10": "3-01 §30ε", "fail-11": "3-01 §30στ",
+    "fail-12": "3-01 §30ζ", "fail-16": "ΠΔ 29/2020 αρ.3 §1β · 3-01 §58β", "fail-17": "3-01 §22ζ-θ",
+    "fail-19": "3-01 §56", "fail-45": "3-01 §32γ",
+  };
+  const CQ = () => window.SchedConsq || null;
 
   /* EP-profile F/S sections — excluded from the st-52 category count */
   const EP_FS_GROUPS = { "C2101": 1, "C2301-02": 1, "C2501-03": 1 };
@@ -214,20 +221,62 @@
     }
     return best;
   }
-  /* YSTERISI: any repeat-result event for the student dated the same or the
-     previous working day blocks flying (same day + next working day). */
-  function ysterisiBlock(sp, date) {
-    for (const ev of (S().get("trainingLog") || [])) {
-      if (ev.result !== "repeat") continue;
-      const hit = ev.scope === "student" ? ev.student === sp
-        : (ev.scope === "class" && S().membersOf(ev.class || "").indexOf(sp) >= 0);
-      if (!hit) continue;
-      const d = ev.end_date || ev.date || "";
-      if (!d || d > date) continue;
-      if (R().workdaysBetween(d, date) <= 1) return d;
+  /* Round 2 — the per-line consequence warnings (schedconsq.js, spec §3α):
+     day-block windows (fail-08/09/10/11), APT-EXAM category locks (fail-12),
+     the never-re-offered first «ΜΟΝΟΣ» (fail-19), the different-instructor
+     note after a passed progress test, and the fail-17 pre-exam checks on
+     checkride lines. The ΠΔ 29/2020 full block itself comes via blockFor(). */
+  function consqWarn(sp, date, kind, node, ip) {
+    const cq = CQ();
+    if (!cq || !sp) return [];
+    const out = [];
+    const pd = cq.pd(sp);
+    if (!pd) {
+      const b = cq.dayBlock(sp, date, kind);
+      if (b) {
+        out.push({
+          sev: "hard", req: b.req, vb: b.vb,
+          text: sp + " — blocked until " + b.untilPretty + " after the " + b.since + " LAG/FAIL"
+            + (b.srcLabel ? " on " + b.srcLabel : "") + (b.maneuvers ? " · repeat: " + b.maneuvers : ""),
+        });
+      }
     }
-    return null;
+    const note = cq.pdNote(sp);
+    if (note && ip && note.avoidIp && note.avoidIp === ip) {
+      out.push({
+        sev: "soft", req: "fail-16", vb: cq.vb("fail-16"),
+        text: sp + " — continue with a DIFFERENT instructor after the Progress Test — " + ip + " flew the failed checkride",
+      });
+    }
+    if (node) {
+      const d = R().describe(node);
+      if (d) {
+        if (cq.lockedTracks(sp).has(d.track)) {
+          const a = cq.aptPending(sp).find((x) => x.category === d.track);
+          out.push({
+            sev: "hard", req: a ? a.req : "fail-12", vb: cq.vb(a ? a.req : "fail-12"),
+            text: sp + " — " + (d.trackLabel || d.track) + " is locked pending the APT EXAM"
+              + (a ? " (after " + a.srcLabel + ", " + a.since + ")" : ""),
+          });
+        }
+        if (cq.skipUids(sp).has(node)) {
+          out.push({
+            sev: "hard", req: "fail-19", vb: cq.vb("fail-19"),
+            text: sp + " — the first «ΜΟΝΟΣ» is NOT re-offered after a LAG/FAIL — Aptitude Exam instead",
+          });
+        }
+        if (d.checkride && kind === "flights") {
+          cq.preExam(sp, date).forEach((w) => out.push({ sev: w.sev, req: w.req, vb: w.vb, text: sp + " — " + w.text }));
+        }
+      }
+    }
+    return out;
   }
+  /* a blockFor() verdict as a warning row — carries the requirement citation
+     when the consequence engine produced it (ΠΔ 29/2020) */
+  const blkWarn = (sp, blk) => (blk.req
+    ? { sev: "hard", text: sp + " — " + blk.reason, req: blk.req, vb: blk.vb || "" }
+    : { sev: "hard", text: sp + " — " + blk.reason });
   function completion(code) {
     const st = R().state(code);
     let d = 0, t = 0, fd = 0, ft = 0;
@@ -424,8 +473,11 @@
       const mainTrack = l.node ? ((R().describe(l.node) || {}).track || "") : "";
       const pool = alt.filter((o) => o.uid !== l.node);
       const cross = pool.filter((o) => o.track && o.track !== mainTrack);
-      const same = pool.filter((o) => !o.track || o.track === mainTrack);
-      A.alt.set(l.id, cross.concat(same));
+      /* spec §4: the dropdown stays TIGHT — the single most-due sortie of each
+         OTHER track (max 3 options); anything else goes through Custom. */
+      const seenTrack = {};
+      const tops = cross.filter((o) => (seenTrack[o.track] ? false : (seenTrack[o.track] = 1)));
+      A.alt.set(l.id, tops);
       if (l.sp && l.node && !l.alt && !l.altCustomOn && !cross.length) {
         A.altHint.set(l.id, "ALT left empty — no other track open for " + l.sp);
       }
@@ -563,13 +615,12 @@
     if (l.sp && awayOf(l.sp, plan.date)) push("hard", l.sp + " is away (" + awayOf(l.sp, plan.date) + ")");
     if (l.ip && !solo && awayOf(l.ip, plan.date)) push("hard", l.ip + " is away (" + awayOf(l.ip, plan.date) + ")");
 
-    /* gates — spec §3 / §6 (the SMS daily cap lives in the daily-load engine) */
+    /* gates + ΠΔ 29/2020 (the SMS daily cap lives in the daily-load engine) */
     if (l.sp) {
       const blk = R().blockFor(l.sp, "flights");
-      if (blk) push("hard", l.sp + " — " + blk.reason);
-      /* YSTERISI — no flight the same or the next working day */
-      const yd = ysterisiBlock(l.sp, plan.date);
-      if (yd) push("hard", l.sp + " — YSTERISI (repeat) on " + yd + " — no flight the same or the next day");
+      if (blk) out.push(blkWarn(l.sp, blk));
+      /* Round 2 consequence engine — day blocks, category locks, fail-17… */
+      out.push.apply(out, consqWarn(l.sp, plan.date, "flights", l.node, isSolo(l) ? "" : l.ip));
     }
 
     /* clock — T/O outside the slot window is a SOFT warning (the user may
@@ -657,8 +708,11 @@
 
     /* ALT of the same category as MAIN (correction 5) */
     if (l.node && l.alt && !l.altCustomOn) {
-      const dm = R().describe(l.node), da = R().describe(l.alt);
-      if (dm && da && dm.track && dm.track === da.track) push("soft", "ALT same category as MAIN (" + (dm.trackLabel || dm.track) + ")");
+      if (l.alt === l.node) push("soft", "ALT is IDENTICAL to MAIN — pick a different mission or leave ALT empty");
+      else {
+        const dm = R().describe(l.node), da = R().describe(l.alt);
+        if (dm && da && dm.track && dm.track === da.track) push("soft", "ALT same category as MAIN (" + (dm.trackLabel || dm.track) + ")");
+      }
     }
 
     /* readiness */
@@ -711,7 +765,11 @@
 
     if (l.sp && awayOf(l.sp, plan.date)) push("hard", l.sp + " is away (" + awayOf(l.sp, plan.date) + ")");
     if (l.ip && awayOf(l.ip, plan.date)) push("hard", l.ip + " is away (" + awayOf(l.ip, plan.date) + ")");
-    if (l.sp) { const blk = R().blockFor(l.sp, "fs"); if (blk) push("hard", l.sp + " — " + blk.reason); }
+    if (l.sp) {
+      const blk = R().blockFor(l.sp, "fs");
+      if (blk) out.push(blkWarn(l.sp, blk));
+      out.push.apply(out, consqWarn(l.sp, plan.date, "fs", l.node, l.ip));
+    }
 
     if (l.sp && l.slot === 1 && A.spWave1.has(l.sp)) {
       push("soft", l.sp + " has the first F/S slot AND the first flight wave");
@@ -736,6 +794,16 @@
     if (!l.node) push("soft", "no lesson or exam picked");
     if (l.scope === "class" && !l.class) push("soft", "no class");
     if (l.scope === "student" && !l.student) push("soft", "no student");
+    /* ΠΔ 29/2020 blocks EVERYTHING — lessons and exams included (fail-16 §31) */
+    if (l.scope === "student" && l.student) {
+      const blk = R().blockFor(l.student, "lessons");
+      if (blk) out.push(blkWarn(l.student, blk));
+    } else if (l.scope === "class" && l.class) {
+      for (const m of S().membersOf(l.class)) {
+        const blk = R().blockFor(m, "lessons");
+        if (blk) out.push(blkWarn(m, blk));
+      }
+    }
     if (l.instructor && awayOf(l.instructor, plan.date)) push("hard", l.instructor + " is away (" + awayOf(l.instructor, plan.date) + ")");
     /* prefer the duty Ground of the block's wave (Wave A → Ground 1, B → 2) */
     const pref = (l.wave === "B" ? (A.duty.ground_2 || A.duty.ground_1) : (A.duty.ground_1 || A.duty.ground_2)) || "";
@@ -770,10 +838,19 @@
       const pend = R().pendingOtherKinds(s.code);
       const chips = R().KINDS.map((k) => pend[k] && pend[k].chip).filter(Boolean).join(" ");
       const away = awayOf(s.code, date);
+      /* Round 2: blocked students STAY in the picker — with the reason chip */
+      let consq = "";
+      if (CQ()) {
+        const st = CQ().status(s.code, date);
+        if (st.pd) consq = " · ⛔ PD 29/2020";
+        else if (st.blockedFlights) consq = " · ⛔ blocked until " + st.untilFlights + " (" + st.req + ")";
+        else if (st.blockedFs) consq = " · ⛔ F/S until " + st.untilFs + " (" + st.req + ")";
+        else if (st.apt.length) consq = " · APT EXAM pending";
+      }
       return {
         code: s.code, idle: idle == null ? 9999 : idle, away: away,
         text: s.code + " · " + (idle == null ? "never" : idle + "d")
-          + (s.class ? " · " + s.class : "") + (chips ? " · " + chips : "") + (away ? " · " + away : ""),
+          + (s.class ? " · " + s.class : "") + (chips ? " · " + chips : "") + consq + (away ? " · " + away : ""),
       };
     });
     rows.sort((a, b) => (b.idle - a.idle) || a.code.localeCompare(b.code));
@@ -991,6 +1068,7 @@
       </div>
       ${mi.opt && mi.opt.pendingReason ? `<p class="sch-cond">${esc(mi.opt.pendingReason)}</p>` : ""}
       ${A.altHint.has(l.id) ? `<p class="sch-cond">${esc(A.altHint.get(l.id))}</p>` : ""}
+      ${opts.lockedNote ? `<p class="sch-cond is-hard">${esc(opts.lockedNote)}</p>` : ""}
       ${opts.blocked ? `<p class="sch-cond is-hard">${esc(opts.blockReason || "")}</p>` : ""}
     </div>`;
   }
@@ -1058,6 +1136,7 @@
             <button type="button" class="sch-mini danger" data-lb="del" title="remove"${dis}>✕</button></span>
         </div>
         ${mi.opt && mi.opt.pendingReason ? `<p class="sch-cond">${esc(mi.opt.pendingReason)}</p>` : ""}
+        ${opts.lockedNote ? `<p class="sch-cond is-hard">${esc(opts.lockedNote)}</p>` : ""}
         ${opts.blocked ? `<p class="sch-cond is-hard">${esc(opts.blockReason || "")}</p>` : ""}
       </div>`;
     }).join("");
@@ -1146,7 +1225,24 @@
       .map((s) => {
         const idle = R().idleDays(s.code, plan.date);
         const pend = R().pendingOtherKinds(s.code);
-        const chips = R().KINDS.map((k) => pend[k] && pend[k].chip ? `<span class="sch-chip k-${k}" title="${esc(pend[k].title || "")}">${esc(pend[k].chip)}</span>` : "").join("");
+        let chips = R().KINDS.map((k) => pend[k] && pend[k].chip ? `<span class="sch-chip k-${k}" title="${esc(pend[k].title || "")}">${esc(pend[k].chip)}</span>` : "").join("");
+        /* Round 2 — reschedule-day hint for students inside a block window */
+        if (CQ()) {
+          const st = CQ().status(s.code, plan.date);
+          if (st.pd) {
+            chips += `<span class="sch-chip is-hard" title="${esc("fail-16 — " + CQ().vb("fail-16") + " · " + st.pdText)}">PD 29/2020</span>`;
+          } else if (st.blockedFlights) {
+            chips += `<span class="sch-chip is-hard" title="${esc(st.req + " — " + CQ().vb(st.req))}">eligible ${esc(CQ().fmtDay(st.untilFlights))}</span>`;
+          } else if (st.blockedFs) {
+            chips += `<span class="sch-chip is-soft" title="${esc(st.req + " — " + CQ().vb(st.req))}">F/S eligible ${esc(CQ().fmtDay(st.untilFs))}</span>`;
+          }
+          if (st.apt.length) {
+            chips += `<span class="sch-chip is-soft" title="${esc(st.apt.map((a) => a.req + " — after " + a.srcLabel + " (" + a.since + ")").join(" · "))}">APT EXAM pending</span>`;
+          }
+          for (const x of CQ().smsExhausted(s.code)) {
+            chips += `<span class="sch-chip is-soft" title="${esc("SMS entries exhausted for " + x.label + " — student can NOT re-enter (unit ruling 2026-08-09); no other consequence. fail-45")}">SMS✕</span>`;
+          }
+        }
         return { code: s.code, cls: s.class || "—", idle: idle == null ? 9999 : idle, raw: idle, chips: chips };
       })
       .sort((a, b) => (b.idle - a.idle) || a.code.localeCompare(b.code));
@@ -1262,6 +1358,15 @@
           <option value="">— what was actually flown —</option>
           ${kindNodes.map((u) => { const dd = R().describe(u); return `<option value="${esc(u)}"${a.node === u ? " selected" : ""}>${esc(dd.label + " — " + dd.name)}</option>`; }).join("")}
         </select>` : ""}
+        ${a.state === "done" || a.state === "changed" ? `<select class="sch-in sch-actres" data-ab-f="result" data-fk="acres-${esc(x.l.id)}"
+            title="result of the flown sortie — LAG/FAIL feeds the consequence engine (fail-08…12)">
+          <option value="completed"${!a.result || a.result === "completed" ? " selected" : ""}>PASS</option>
+          <option value="lag"${a.result === "lag" ? " selected" : ""}>LAG (YSTERISI)</option>
+          <option value="fail"${a.result === "fail" ? " selected" : ""}>FAIL (APOTYXIA)</option>
+        </select>` : ""}
+        ${(a.state === "done" || a.state === "changed") && (a.result === "lag" || a.result === "fail")
+          ? `<input class="sch-in grow" data-ab-f="maneuvers" data-fk="acman-${esc(x.l.id)}" value="${esc(a.maneuvers || "")}"
+              placeholder="maneuvers that lagged/failed — repeated next sortie (fail-10)">` : ""}
         ${a.eventId && S().find("trainingLog", a.eventId) ? `<span class="sch-badge good" title="${esc(a.eventId)}">logged</span>` : ""}
       </div>`;
     }).join("");
@@ -1292,12 +1397,14 @@
       }
       const node = a.state === "changed" ? (a.node || "") : x.l.node;
       if (!node || !x.l.sp) continue;
+      const res = a.result === "lag" || a.result === "fail" ? a.result : "completed";
       const rec = {
         id: id, node: node, kind: R().kindOf(node) || x.kind, scope: "student",
         student: x.l.sp, class: "", date: plan.date,
         instructor: x.l.ip || "", device: x.blk === "fs" ? (x.l.device || "OFT") : "T-6A",
         solo: isSolo(x.l) || undefined,
-        result: "completed", score: null,
+        result: res, score: null,
+        maneuvers: res === "completed" ? "" : (a.maneuvers || ""),
         note: (a.state === "changed" ? "actualized (changed from " + (missionLabel(x.l.node) || "—") + ")" : "actualized from the day plan")
           + (x.l.remarks ? " · " + x.l.remarks : ""),
         absent: [], start_date: "", end_date: "",
@@ -1596,7 +1703,10 @@
         const id = t.closest("[data-act-l]").dataset.actL;
         const cur = plan.actuals[id] || (plan.actuals[id] = {});
         cur[t.dataset.abF] = t.value;
-        saveSoon(); return;
+        saveSoon();
+        /* PASS ↔ LAG/FAIL toggles the maneuvers free-text — repaint */
+        if (t.dataset.abF === "result") renderBoard(el);
+        return;
       }
       if (t.dataset.lf != null) { fieldChange(el, plan, t, true); return; }
     });
@@ -1820,9 +1930,63 @@
         <input type="search" id="sch-progq" class="sch-in" placeholder="filter nodes…" value="${esc(ui.prog.q)}">
         <button type="button" class="sch-btn" data-pb="close">✕ Close</button>
       </div>
+      ${consqBanner(code)}
       <div id="sch-progbody" class="sch-modalbody"></div>
     </div>`;
     progRenderBody();
+  }
+
+  /* Round 2 — the consequence banner of the Progress editor: ΠΔ 29/2020 state
+     with its resolution path (dp_ae → dp_cdr → board), the pending APT EXAMs,
+     and the fail-45 SMS entry counter (display only). */
+  function consqBanner(code) {
+    const cq = CQ();
+    if (!cq) return "";
+    const bits = [];
+    const pd = cq.pd(code);
+    if (pd) {
+      const path = [
+        { k: "ae", t: "① Progress Test (AE)" },
+        { k: "cdr", t: "② Progress Test (Sq Cdr)" },
+        { k: "board", t: "③ Flight Aptitude Board" },
+      ].map((s) => `<span class="sch-badge${s.k === pd.stage ? " r-fail" : ""}">${esc(s.t)}</span>`).join(" → ");
+      bits.push(`<div class="sch-consqban is-pd">
+        <b>PD 29/2020</b> — ALL activities stop (flights · F/S · exams · lessons) —
+        after ${esc(pd.srcLabel)}${pd.since ? " on " + esc(pd.since) : ""}${pd.failIp ? " with " + esc(pd.failIp) : ""}
+        <em class="sch-wcid" title="${esc((REQ_SRC[pd.req] || "") + " — " + cq.vb(pd.req))}">${esc(pd.req)}</em><br>
+        ${path}${pd.stage === "stopped" ? ` <span class="sch-badge r-fail">STOP — training stopped</span>` : ""}
+        <span class="sch-hint">${esc(cq.pdStageText(pd))}</span>
+        ${pd.stage === "board" ? `
+          <span class="sch-spacer"></span>
+          <button type="button" class="sch-btn primary" data-pb="board-continue">Board: CONTINUE</button>
+          <button type="button" class="sch-btn danger" data-pb="board-stop">Board: STOP</button>` : ""}
+      </div>`);
+    }
+    const note = cq.pdNote(code);
+    if (note && note.avoidIp) {
+      bits.push(`<div class="sch-consqban">Progress Test passed${note.since ? " on " + esc(note.since) : ""} —
+        continue with a <b>DIFFERENT instructor</b> (not ${esc(note.avoidIp)}) <em class="sch-wcid">fail-16</em></div>`);
+    }
+    for (const a of cq.aptPending(code)) {
+      bits.push(`<div class="sch-consqban is-apt"><b>APT EXAM pending</b> — ${esc(cq.CAT_LABEL[a.category] || a.category)}
+        after ${esc(a.srcLabel)} (${esc(a.since)})${a.solo ? " — the «ΜΟΝΟΣ» is NOT re-offered" : ""} —
+        category locked until an Aptitude Exam with result PASS is recorded in the Training Log
+        <em class="sch-wcid" title="${esc((REQ_SRC[a.req] || "") + " — " + cq.vb(a.req))}">${esc(a.req)}</em></div>`);
+    }
+    const lad = cq.fsLadder(code);
+    if (lad) {
+      bits.push(`<div class="sch-consqban is-apt"><b>F/S ladder</b> — ${esc(lad.srcLabel)} failed ×${lad.fails} —
+        ${lad.fails === 1 ? "immediate repeat of the SAME F/S exercise is the only next step (next working day)"
+          : "retry allowed from " + esc(cq.fmtDay(lad.eligible)) + " (≥2 clear calendar days)"} · a 3rd fail ⇒ PD 29/2020
+        <em class="sch-wcid" title="${esc((REQ_SRC["fail-11"] || "") + " — " + cq.vb("fail-11"))}">fail-11</em></div>`);
+    }
+    for (const x of cq.smsStatus(code)) {
+      if (!x.exhausted) continue;
+      bits.push(`<div class="sch-consqban">SMS entries exhausted for <b>${esc(x.label)}</b> (${x.count}/${x.max}) —
+        student can NOT re-enter (unit ruling 2026-08-09); no other consequence
+        <em class="sch-wcid" title="${esc((REQ_SRC["fail-45"] || "") + " — " + cq.vb("fail-45"))}">fail-45</em></div>`);
+    }
+    return bits.join("");
   }
 
   /* Progress editor v2 (correction 10) — compact. Only the sections that hold
@@ -1918,6 +2082,24 @@
     if (act === "close") { progClose(); return; }
     if (act === "cancel") { ui.prog.pending = null; progRenderBody(); return; }
     if (act === "confirm") { progCommit(); return; }
+    /* Round 2 — the board outcome closes (or ends) the ΠΔ 29/2020 path */
+    if (act === "board-continue" || act === "board-stop") {
+      const code = ui.prog.code;
+      const outcome = act === "board-continue" ? "continue" : "stop";
+      if (!confirm("Record the Flight Aptitude Board outcome for " + code + ": " + outcome.toUpperCase() + "?"
+        + (outcome === "stop" ? "\nThe student is set to WITHDRAWN (training stopped)." : "\nAll activities unlock."))) return;
+      S().upsert("gates", {
+        id: "brd:" + code + ":" + today(), student: code, type: "referral",
+        date: today(), outcome: outcome, note: "Flight Aptitude Board (krisi) — " + outcome,
+      });
+      if (outcome === "stop") {
+        const s = S().find("students", code);
+        if (s) S().upsert("students", { code: code, status: "withdrawn" });
+      }
+      S().toast("Board outcome recorded — " + outcome.toUpperCase() + ".", outcome === "stop" ? "bad" : "good");
+      progRender();
+      return;
+    }
     if (b.dataset.psec != null) {
       ui.prog.exp[b.dataset.psec] = b.dataset.pnow !== "1";
       progRenderBody(); return;
@@ -2026,7 +2208,8 @@
       const d = ev.end_date || ev.date || "";
       if (!d || d < rg.from || d > rg.to) continue;
       const node = ev.node || ev.uid || "";
-      const kind = R().kindOf(node);
+      /* Round 2: special out-of-graph sorties (dp/apt/board) count as flights */
+      const kind = R().kindOf(node) || (ev.special ? (ev.kind || "flights") : null);
       if (!kind) continue;
       const abs = new Set((ev.absent || []).map((a) => a.student));
       const credit = (c) => { if (!c || abs.has(c) || !sp.has(c)) return; const r = sRec(c); r[kind]++; r.total++; };

@@ -27,8 +27,12 @@
 | `day_plan` | το board μιας ημέρας (βλ. §7) + κατάσταση {draft \| published \| actualized} |
 | `config` | mass_briefing default, wave template, IFF pool [2443-2445], όρια, στόχοι μίγματος ημέρας, idle threshold |
 
-**Ιδιωτικότητα**: η εφαρμογή δουλεύει ΜΟΝΟ με codes· το mapping code→όνομα ζει σε τοπικό
-αρχείο που κρατά μόνο ο χρήστης.
+**Ιδιωτικότητα** (αναθεώρηση 2026-08-09, απόφαση χρήστη): επιτρέπονται **πραγματικά
+ονόματα** στο Roster. Προστασία: (α) τα δεδομένα ζουν ΜΟΝΟ σε localStorage + **private**
+repo `fdms-data` (sync)· (β) Γύρος 3: **κρυπτογράφηση του sync payload** με passphrase
+(AES-GCM/WebCrypto — το repo κρατά ciphertext) + **κωδικός πρόσβασης** στο Scheduler
+(privacy curtain, ρητά ΟΧΙ κρυπτογράφηση των τοπικών δεδομένων)· (γ) το δοκιμαστικό
+seed παραμένει με κωδικούς SP-x/IP-x.
 
 ## 3. Κατάσταση κόμβου ανά μαθητή
 

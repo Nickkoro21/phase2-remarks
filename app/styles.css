@@ -1090,3 +1090,23 @@ html.light .sch-mini.is-on.danger { background: rgba(187, 64, 52, 0.13); }
 html.light .sch-in.is-amber { background: rgba(169, 100, 16, 0.07); }
 html.light .sch-loggrp td { background: #ffffff; }
 html.light .sch-mini.is-on.warn { background: rgba(169, 100, 16, 0.13); }
+
+/* ── Round 2 — failure recording & consequence engine (spec §3α) ─────────── */
+.sch-badge.r-lag { color: var(--warn); border-color: var(--warn); }
+.sch-badge.r-fail { color: var(--bad); border-color: var(--bad); font-weight: 600; }
+.sch-badge.r-score { color: var(--accent); border-color: var(--accent); }
+.sch-actres { width: 150px; }
+.sch-consqban {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+  font-size: 12px; line-height: 1.5; margin: 8px 14px 0;
+  border: 1px solid var(--line); border-left: 3px solid var(--accent);
+  border-radius: 8px; padding: 7px 10px; background: var(--panel-2, transparent);
+}
+.sch-consqban.is-pd { border-left-color: var(--bad); background: rgba(255, 122, 112, 0.10); }
+.sch-consqban.is-apt { border-left-color: var(--warn); background: rgba(255, 180, 84, 0.08); }
+.sch-consqban .sch-wcid {
+  font-style: normal; font-family: Consolas, monospace; font-size: 10px;
+  border: 1px solid var(--line); border-radius: 999px; padding: 0 5px; color: var(--muted);
+}
+html.light .sch-consqban.is-pd { background: rgba(187, 64, 52, 0.08); }
+html.light .sch-consqban.is-apt { background: rgba(169, 100, 16, 0.08); }

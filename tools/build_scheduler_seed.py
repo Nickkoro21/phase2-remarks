@@ -122,8 +122,9 @@ for s in students:
              "instructor": ip, "device": ("OFT" if j % 2 else "FTD") if srt.get("band") == "fs" else "T-6A",
              "result": "completed", "note": ""})
 
-# YSTERISI test fixture (rule 9c): SP-11 flew a repeat the PREVIOUS workday, so
-# no flight is legal for SP-11 on the same day or the next working day.
+# ── ROUND 2 consequence-engine fixtures (spec §3α) ──────────────────────────
+# LAG fixture (fail-10 general rule): SP-11's existing repeat becomes a "lag"
+# on the LAST workday — no flight the same day, eligible the NEXT working day.
 def next_pending_sortie(sc):
     c = cut[sc]
     for idx, (t, kind, obj, key) in enumerate(GLOBAL):
@@ -135,12 +136,63 @@ sp11_srt = next_pending_sortie("SP-11")
 if sp11_srt is not None:
     add({"date": workday_back(1), "node": "s:" + sp11_srt["id"], "scope": "student", "student": "SP-11",
          "instructor": "IP-11", "device": "OFT" if sp11_srt.get("band") == "fs" else "T-6A",
-         "result": "repeat", "note": "YSTERISI — repeat, no flight same/next working day (test fixture)"})
+         "result": "lag", "maneuvers": "unusual attitude recoveries, VOR tracking",
+         "note": "LAG (YSTERISI) — consequence-engine fixture (fail-10 day math)"})
+
+# APT-EXAM fixture (fail-12): SP-19 FAILS the last sortie of a section already
+# completed up to there (latest non-checkride section-final A/C sortie flown).
+sortie_by_id = {s["id"]: s for s in fc["sorties"]}
+group_last = {}
+for s in fc["sorties"]:
+    group_last[s["group"]] = s["id"]          # file order — last one wins
+
+def last_completed_section_final(sc):
+    best = None
+    for ev in log:
+        if ev.get("student") != sc or ev.get("scope") != "student":
+            continue
+        sid = (ev.get("node") or "")[2:]
+        srt = sortie_by_id.get(sid)
+        if not srt or srt.get("band") == "fs" or srt.get("checkride"):
+            continue
+        if group_last.get(srt["group"]) != sid:
+            continue
+        if best is None or ev["date"] > best[0]:
+            best = (ev["date"], srt)
+    return best[1] if best else None
+
+sp19_final = last_completed_section_final("SP-19")
+if sp19_final is not None:
+    add({"date": workday_back(2), "node": "s:" + sp19_final["id"], "scope": "student", "student": "SP-19",
+         "instructor": "IP-5", "device": "T-6A",
+         "result": "fail", "maneuvers": "rejoin, echelon turns",
+         "note": "FAIL (APOTYXIA) on the section-final sortie — APT EXAM pending (fail-12 fixture)"})
+
+# PD 29/2020 fixture (fail-16): SP-22 fails their upcoming checkride 3 workdays
+# ago — full block of every activity until the dp_ae -> dp_cdr -> board path.
+def checkride_for(sc):
+    c = cut[sc]
+    for idx, (t, kind, obj, key) in enumerate(GLOBAL):
+        if kind == "s" and obj.get("checkride") and idx >= c:
+            return obj                        # the next one they would reach
+    last = None
+    for idx, (t, kind, obj, key) in enumerate(GLOBAL):
+        if kind == "s" and obj.get("checkride") and idx < c:
+            last = obj                        # else the last one they flew
+    return last
+
+sp22_ck = checkride_for("SP-22")
+if sp22_ck is not None:
+    add({"date": workday_back(3), "node": "s:" + sp22_ck["id"], "scope": "student", "student": "SP-22",
+         "instructor": "IP-2", "device": "T-6A",
+         "result": "fail", "maneuvers": "",
+         "note": "checkride FAIL — PD 29/2020 in force (fail-16 fixture)"})
 
 gates = [
     {"student": "SP-14", "type": "progress_test_AE", "date": workday_back(2), "outcome": "pending",
      "note": "Progress test with AE pending — flights blocked until flown"},
-    {"student": "SP-23", "type": "kepe_entry", "date": workday_back(5), "outcome": "open",
+    # category makes the fail-45 SMS counter bite: 1 entry / air category = cap
+    {"student": "SP-23", "type": "kepe_entry", "category": "instrument", "date": workday_back(5), "outcome": "open",
      "note": "SMS (Special Monitoring Status) — max 1 dual sortie or 1 F/S per day; a 2nd item only as SOLO"},
 ]
 
@@ -164,6 +216,11 @@ seed = {"schema": "scheduler-seed-v2", "generated_for_testing": True,
 out = ROOT / "data" / "scheduler" / "seed.json"
 out.write_text(json.dumps(seed, ensure_ascii=False, indent=1), encoding="utf-8")
 print(f"seed v2: {len(log)} log events, cutoffs {min(cut.values())}–{max(cut.values())} of {N} nodes")
+print("round-2 fixtures:",
+      f"SP-11 lag on {sp11_srt['id'] if sp11_srt else '—'} ({workday_back(1)})",
+      f"| SP-19 fail on section-final {sp19_final['id'] if sp19_final else '—'} ({workday_back(2)})",
+      f"| SP-22 checkride fail on {sp22_ck['id'] if sp22_ck else '—'} ({workday_back(3)})",
+      "| SP-23 SMS category=instrument")
 
 # report: which SPs' NEXT flight sortie falls inside a solo-allowed section
 def solo_candidate(srt):

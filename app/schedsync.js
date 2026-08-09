@@ -249,7 +249,7 @@
         <b>that repo only</b>, permission <b>Contents: Read &amp; write</b>. Paste it below —
         it stays in THIS browser only.</p>
         <label>Repository (owner/name)</label>
-        <input id="sync-repo" placeholder="Nickkoro21/fdms-data" value="${esc(c.repo)}">
+        <input id="sync-repo" placeholder="e.g.  Nickkoro21/fdms-data" value="${esc(c.repo)}">
         <label>Branch</label>
         <input id="sync-branch" value="${esc(c.branch || "main")}">
         <label>File path in repo</label>
