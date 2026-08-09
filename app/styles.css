@@ -242,7 +242,10 @@ body {
 .fc-view.hidden,
 #view-flowchart .hidden { display: none; }
 
-.fc-view { flex: 1; display: flex; flex-direction: column; padding: 14px 22px; gap: 12px; position: relative; min-height: 0; }
+/* Προεπιλογή τροχιάς: όποιο κομμάτι δεν κάθεται μέσα σε ράγα/sheet (drawer,
+   legend) να έχει ΠΑΝΤΑ έγκυρο --tk/--tk-rgb και να μη «σβήνει» το rgba().  */
+.fc-view { flex: 1; display: flex; flex-direction: column; padding: 14px 22px; gap: 12px; position: relative; min-height: 0;
+  --tk: var(--fcb-ground); --tk-rgb: var(--fcb-ground-rgb); }
 
 /* ── top bar: breadcrumbs + tools ── */
 .fc-bar { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
@@ -482,7 +485,6 @@ body {
   overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
 }
 .fc-c-m { display: block; font-family: Consolas, monospace; font-size: 10.5px; font-variant-numeric: tabular-nums; color: var(--muted); margin-top: 4px; text-align: right; }
-.fc-c-feeds { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 5px; }
 .fc-bands.is-compact .fc-c-name, .fc-bands.is-compact .fc-c-split { display: none; }
 .fc-bands.spot .fc-card:not(.is-spot) { opacity: 0.3; }
 
@@ -504,13 +506,16 @@ body {
   border-radius: 4px; padding: 0 5px; cursor: pointer; background: transparent;
 }
 .fc-feed:hover { background: rgba(255, 255, 255, 0.06); }
+/* IN-BLOCK EXAM — ίδιο λιτό λεξιλόγιο με την κάρτα (κωδικός · όνομα · μετρικές).
+   Οι πύλες του («gates …») ζουν στο popup του ground κόμβου που το φιλοξενεί. */
 .fc-exchip {
-  display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-family: inherit;
-  background: transparent; border: 1px dashed var(--line); border-radius: 8px;
-  padding: 5px 9px; color: var(--muted); font-size: 11.5px;
+  display: flex; flex-direction: column; width: var(--fc-cw, 190px); flex: 0 0 auto;
+  text-align: left; cursor: pointer; font-family: inherit; color: var(--text);
+  background: transparent; border: 1px dashed var(--line);
+  border-left: 3px solid var(--fcb-exams); border-radius: 8px; padding: 8px 10px;
 }
-.fc-exchip:hover { color: var(--text); border-color: var(--warn); }
-.fc-exchip b { font-family: Consolas, monospace; color: var(--warn); font-weight: 700; }
+.fc-exchip:hover { border-color: var(--warn); }
+.fc-exchip b { font-family: Consolas, monospace; font-size: 13px; color: var(--fcb-exams); font-weight: 700; }
 
 /* ── L2 — side sheet ── */
 .fc-detail {
@@ -524,7 +529,6 @@ body {
 .fc-ul li { margin-bottom: 5px; font-size: 12.5px; line-height: 1.45; }
 .fc-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
 .fc-d-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
-.fc-vb { border-left: 2px solid rgba(var(--tk-rgb), 0.5); padding-left: 9px; margin-bottom: 9px; }
 .fc-vitals-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; margin-top: 8px; }
 .fc-vg { font-family: Consolas, monospace; font-size: 11px; font-variant-numeric: tabular-nums; color: var(--text); }
 .fc-vg span { color: var(--muted); }
@@ -547,6 +551,31 @@ body {
 .fc-tbl td { padding: 4px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
 .fc-tbl td.num { font-family: Consolas, monospace; white-space: nowrap; }
 .fc-scroll-x { overflow-x: auto; }
+
+/* ── ό,τι μετακόμισε από τις κάρτες στο popup ────────────────────────────────
+   σχέσεις (← FED BY / FEEDS →) · σημειώσεις δεδομένων · πηγές σε πίνακα.   */
+.fc-h4-n { font-family: Consolas, monospace; font-size: 10px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 0 6px; margin-left: 5px; letter-spacing: 0; }
+.fc-d-acts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.fc-svbtn { color: var(--good); border-color: var(--line); }
+.fc-svbtn:hover { border-color: var(--good); background: transparent; }
+.fc-rel li { margin-bottom: 8px; }
+.fc-rel-m { display: block; font-family: Consolas, monospace; font-size: 10.5px; color: var(--muted); margin: 2px 0 0 12px; }
+.fc-rel-off { display: inline-block; font-size: 9.5px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; border: 1px dashed var(--line); border-radius: 999px; padding: 0 6px; margin-left: 6px; }
+.fc-rel-more { display: inline-block; font-size: 9.5px; letter-spacing: 0.4px; color: var(--accent); border: 1px solid var(--line); border-radius: 999px; padding: 0 6px; margin-left: 6px; }
+.fc-rel-n { display: block; font-size: 11.5px; color: var(--muted); line-height: 1.45; margin: 3px 0 0 12px; padding-left: 8px; border-left: 2px solid var(--line); }
+.fc-notes li { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 6px; padding-left: 9px; border-left: 2px solid var(--warn); }
+
+/* «Source & verbatim» — ΑΝΑΔΙΠΛΩΜΕΝΟ, ανοίγει σε πίνακα File/Page/Ref/Verbatim */
+.fc-src { margin-top: 12px; border: 1px solid var(--line); border-radius: 8px; background: rgba(var(--tk-rgb), 0.06); }
+.fc-src > summary { cursor: pointer; list-style: none; padding: 6px 10px; font-size: 11.5px; color: var(--muted); font-family: Consolas, monospace; }
+.fc-src > summary::-webkit-details-marker { display: none; }
+.fc-src > summary::before { content: "▸ "; color: var(--accent); }
+.fc-src[open] > summary::before { content: "▾ "; }
+.fc-src > summary:hover { color: var(--text); }
+.fc-src > .fc-scroll-x { padding: 0 10px 10px; }
+.fc-src-tbl th { width: 78px; white-space: nowrap; }
+.fc-src-tbl tr.fc-src-grp th { width: auto; color: var(--accent); font-family: Consolas, monospace; font-size: 11px; text-transform: none; letter-spacing: 0; padding-top: 9px; white-space: normal; }
+.fc-src-tbl td.fc-src-vb { white-space: pre-wrap; color: var(--text); line-height: 1.5; }
 
 /* ── poster / drawer / legend ── */
 .fc-poster {
@@ -624,3 +653,7 @@ html.light .fc-sortie.is-night { border-color: #cc5348; color: #b53a30; }
 html.light .fc-srt.is-night .fc-srt-code { color: #b53a30; }
 html.light .fc-micro-dot.is-solo { border-color: #b9820f; }
 html.light .fc-micro-dot.is-night { background: #cc5348; }
+/* Ό,τι μετακόμισε στο popup: πηγές, σημειώσεις, σχέσεις — σε λευκό φόντο. */
+html.light .fc-src { background: rgba(0, 0, 0, 0.03); }
+html.light .fc-exchip { background: #ffffff; }
+html.light .fc-rel-off { color: var(--muted); }

@@ -73,6 +73,9 @@
   const BAND_ALIAS = { exam: "exams", air: "flights" };
 
   const G = { sec: "●", exam: "▣", ckr: "◆", solo: "★", fin: "⦿", night: "☾", in: "⇤", out: "⇥", warn: "⚠", info: "ⓘ" };
+  /* Πάνω από τόσους χαρακτήρες, η σημείωση ακμής δεν τυπώνεται στη λίστα
+     σχέσεων του popup — ζει ολόκληρη στον πίνακα «Source & verbatim».       */
+  const NOTE_INLINE = 140;
 
   /* ── κατάσταση ── */
   let fc = null;
@@ -94,6 +97,7 @@
     sortie: new Map(),    // sortie id → sortie
     srtOf: new Map(),     // group id  → [sortie, …] στη σειρά του διαγράμματος
     uid: new Map(),       // uid → group | sortie
+    labelPart: new Map(), // τυπωμένο κουτί ("CO 101-105") → group id  (gates mapping)
   };
   const SE = { out: new Map(), in: new Map(), all: [] };  // ΑΚΜΕΣ ΑΝΑ SORTIE (ενωμένες)
 
@@ -155,6 +159,17 @@
       }
     }
 
+    /* ΤΥΠΩΜΕΝΑ ΚΟΥΤΙΑ → κόμβος. Τα in-block exams γράφουν «gates: CO 101-105»,
+       δηλαδή το ΤΥΠΩΜΕΝΟ κουτί, όχι το id. Το ίδιο string είναι ένα από τα
+       κομμάτια του label ενός group (label = «FF 101-108 · CO 101-105 · …»),
+       οπότε η αντιστοίχιση γίνεται ΜΟΝΟ με τα δεδομένα — καμία εικασία.      */
+    for (const n of fc.nodes) {
+      for (const p of String(n.label || "").split(" · ")) {
+        const k = p.trim();
+        if (k && !IX.labelPart.has(k)) IX.labelPart.set(k, n.id);
+      }
+    }
+
     /* sorties + ενωμένες ακμές ανά sortie */
     for (const s of (fc.sorties || [])) {
       IX.sortie.set(s.id, s);
@@ -208,6 +223,79 @@
      οι ακμές ανά sortie φυλάσσονται στο fc.sortieEdges από το fcInit().      */
   function fcSortieEdges() {
     return [].concat(fc.sortieEdges || [], fc.ground_chain_edges || []);
+  }
+
+  /* ══ ΣΧΕΣΕΙΣ ΤΟΥ ΚΟΜΒΟΥ — Η ΜΟΝΑΔΙΚΗ ΠΗΓΗ ΤΟΥ SIDE SHEET ═══════════════════
+     Οι κάρτες δεν κουβαλούν πια τσιπάκια· ΟΛΕΣ οι σχέσεις συγκεντρώνονται εδώ
+     και τυπώνονται μία φορά, στο popup. Τρεις πηγές, ενωμένες ανά «άλλο άκρο»:
+       1. SE  — οι ενωμένες ακμές ανά sortie (edges + ground_chain_edges).
+                Περιέχουν ΚΑΙ group άκρα: ground_entry (g:IN290 → s:I4101) και
+                ground_sequence (g:GT-INSTR → g:IN290) — αυτό έλειπε από το
+                sheet του IN 290, ενώ φαινόταν ως chip πάνω στην κάρτα.
+       2. IX.in/IX.out — οι ομαδικές ακμές v1 (section → section).
+       3. exams[].gates — το «▸ gates CO 101-105» των in-block exam chips.    */
+  function relations(uid) {
+    const bag = { in: new Map(), out: new Map() };
+    const add = (dir, other, kinds, ev) => {
+      if (!other || other === uid || !IX.uid.has(other)) return;
+      let r = bag[dir].get(other);
+      if (!r) { r = { uid: other, kinds: [], ev: [] }; bag[dir].set(other, r); }
+      for (const k of kinds) if (k && r.kinds.indexOf(k) < 0) r.kinds.push(k);
+      for (const e of ev) r.ev.push(e);
+    };
+
+    for (const m of (SE.in.get(uid) || [])) add("in", m.from, m.kinds, m.ev);
+    for (const m of (SE.out.get(uid) || [])) add("out", m.to, m.kinds, m.ev);
+
+    if (!isSortieUid(uid)) {
+      const id = String(uid).slice(2);
+      for (const e of (IX.in.get(id) || []))
+        add("in", "g:" + e.from, [e.kind], [{ kind: e.kind, note: e.note, from_ref: "g:" + e.from, to_ref: uid }]);
+      for (const e of (IX.out.get(id) || []))
+        add("out", "g:" + e.to, [e.kind], [{ kind: e.kind, note: e.note, from_ref: uid, to_ref: "g:" + e.to }]);
+      for (const g of gateRels(id, "out")) add("out", "g:" + g.other, ["exam gate"], [g.ev]);
+      for (const g of gateRels(id, "in"))  add("in",  "g:" + g.other, ["exam gate"], [g.ev]);
+    }
+    return { inn: Array.from(bag.in.values()), out: Array.from(bag.out.values()) };
+  }
+
+  /* «gates» ενός in-block exam που δείχνει ΕΞΩ από το ίδιο του το block.
+     (π.χ. JX 190 / JX 191 μέσα στο GT-METEO-BA ⇒ πύλη για τον κόμβο JP 190*) */
+  function gateRels(gid, dir) {
+    const out = [];
+    const scan = (host) => {
+      for (const x of (host.exams || [])) {
+        for (const t of (x.gates || [])) {
+          const key = String(t).trim();
+          const tgt = IX.labelPart.get(key);
+          if (!tgt || tgt === host.id) continue;                 // πύλη μέσα στο ίδιο block
+          if (dir === "out" && host.id !== gid) continue;
+          if (dir === "in" && tgt !== gid) continue;
+          out.push({
+            other: dir === "out" ? tgt : host.id,
+            ev: {
+              kind: "exam gate",
+              note: x.code + " (in-block exam of " + shortLabel(host) + ") gates the printed box “" + key + "”",
+              from_ref: "g:" + host.id, to_ref: "g:" + tgt,
+            },
+          });
+        }
+      }
+    };
+    if (dir === "out") { const n = IX.byId.get(gid); if (n) scan(n); }
+    else for (const n of fc.nodes) if (n.id !== gid) scan(n);
+    return out;
+  }
+
+  /* ΣΗΜΕΙΩΣΕΙΣ ΔΕΔΟΜΕΝΩΝ — ό,τι σήμαινε το ⚠ της κάρτας, σε κείμενο. */
+  function dataNotes(n) {
+    const out = (n.flags || []).slice();
+    if (n.note) out.push(n.note);
+    if (!isSortieUid(n.uid || "") && n.sorties_total != null && n.hours_total == null) {
+      out.push("No hours printed for this Training Section — it is one of the gaps behind the "
+        + G.info + " mismatch on the band total.");
+    }
+    return out;
   }
 
   /* ΠΡΟΣΟΧΗ: το totals.final_evaluations_verbatim γράφει «Ν4690» με ΕΛΛΗΝΙΚΟ κεφαλαίο Νι.
@@ -311,6 +399,9 @@
     render();
   }
   window.fcInit = fcInit;
+  /* Συμβόλαιο προς schedval.js: ΠΟΙΟ είναι το τρέχον επιλεγμένο uid ("s:"/"g:")
+     ώστε το κουμπί VALIDATE να ανοίγει προφορτωμένο. null = καμία επιλογή.    */
+  window.fcSelectedUid = () => S.sel;
 
   /* ══════════════════════ L0 — ΠΙΝΑΚΑΣ ΣΤΑΔΙΟΥ ══════════════════════ */
   function renderL0() {
@@ -689,18 +780,19 @@
     end: "end of band",
   };
 
-  /* ── ΚΑΡΤΑ TRAINING SECTION (groups) ── */
+  /* ── ΚΑΡΤΑ TRAINING SECTION (groups) ──────────────────────────────────────
+     §3.5 Η ΚΑΡΤΑ ΚΡΑΤΑ ΜΟΝΟ: κωδικό · σύντομο όνομα · ΜΙΑ γραμμή μετρικών ·
+     badges κατάστασης. Τα τσιπάκια αναφοράς, τα in-block exams, οι πύλες και
+     τα data notes ζουν ΟΛΑ στο popup (side sheet) — τίποτα δεν χάνεται.     */
   function card(n, cls, link, noId) {
     const full = n.label + (n.name ? " — " + n.name : "");
-    const fam = n.kind === "sim" && /familiariz/i.test(n.name || "");
     return `<button type="button" class="fc-card ${cls}${spotHit(n) ? " is-spot" : ""}"
       ${noId ? "" : `id="fcn-${esc(n.id)}"`} data-uid="g:${esc(n.id)}" data-n="${esc(n.id)}" data-link="${esc(link)}"
       aria-pressed="false" aria-label="${esc(full)}"
       title="${esc(full + " · " + (LINK_TITLE[link] || ""))}">
-      <span class="fc-c-top"><span class="fc-c-code">${esc(shortLabel(n))}</span>${statusChips(n, fam)}</span>
+      <span class="fc-c-top"><span class="fc-c-code">${esc(shortLabel(n))}</span>${statusChips(n)}</span>
       <span class="fc-c-name">${esc(n.name || "")}</span>
       <span class="fc-c-m">${metrics(n)}</span>
-      ${feedChips(n)}
     </button>`;
   }
 
@@ -731,11 +823,10 @@
         title="${esc(full + " · " + (open ? "click to collapse" : "click to open its sortie chain"))}">
       <span class="fc-c-top">
         <span class="fc-sec-caret" aria-hidden="true">${open ? "▾" : "▸"}</span>
-        <span class="fc-c-code">${esc(shortLabel(g))}</span>${statusChips(g, false)}
+        <span class="fc-c-code">${esc(shortLabel(g))}</span>${statusChips(g)}
       </span>
       <span class="fc-c-name">${esc(g.name || "")}</span>
       <span class="fc-c-m">${metrics(g)}</span>
-      ${feedChips(g)}
     </button>`;
     const body = open
       ? `<div class="fc-sec-body"><div class="fc-sec-chain">${srtChain(g, list)}</div></div>`
@@ -789,7 +880,9 @@
     return parts.length > 1 ? parts[0] + " +" + (parts.length - 1) : n.label;
   }
 
-  function statusChips(n, fam) {
+  /* ΜΟΝΟ κατάσταση: CKR/FINAL · 1st SOLO · SOLO n/m · NIGHT · ⚠ = υπάρχουν
+     σημειώσεις δεδομένων (το ΚΕΙΜΕΝΟ τους ζει στο popup, ενότητα DATA NOTES). */
+  function statusChips(n) {
     const c = [];
     if (n.checkride) {
       c.push(isFinal(n)
@@ -799,9 +892,11 @@
     if (n.solo_required) c.push(`<span class="fc-b fc-b-solo-req">${G.solo} 1st SOLO</span>`);
     else if (n.solo_allowed) c.push(`<span class="fc-b fc-b-solo">${G.solo} SOLO ${n.sorties_solo}/${n.sorties_total}</span>`);
     if (n.night) c.push(`<span class="fc-b fc-b-night">${G.night} NIGHT</span>`);
-    if ((n.exams || []).length) c.push(`<span class="fc-b">+${n.exams.length} IN-BLOCK EXAMS</span>`);
-    if (fam) c.push(`<span class="fc-b">FAM</span>`);
-    if ((n.flags || []).length) c.push(`<span class="fc-b fc-b-warn" title="data note">${G.warn}</span>`);
+    const nn = dataNotes(n).length;
+    if (nn) {
+      c.push(`<span class="fc-b fc-b-warn" title="${esc(nn + (nn === 1 ? " data note" : " data notes")
+        + " — open the card to read them")}">${G.warn}${G.info} ${nn}</span>`);
+    }
     return c.join("");
   }
 
@@ -811,37 +906,29 @@
       if (n.periods_foreign != null) s += " · " + n.periods_foreign + " foreign";
       return esc(s);
     }
-    const h = n.hours_total != null ? fmt(n.hours_total) + " h" : "— h " + G.warn;
+    const h = n.hours_total != null ? fmt(n.hours_total) + " h" : "— h";
     const split = n.sorties_solo
       ? `<span class="fc-c-split"> · ${n.sorties_dual}D+${n.sorties_solo}S</span>`
       : (n.sorties_dual != null ? `<span class="fc-c-split"> · ${n.sorties_dual}D</span>` : "");
     return esc((n.sorties_total != null ? n.sorties_total + " srt · " : "") + h) + split;
   }
 
-  /* §3.5 ΤΣΙΠΑΚΙΑ ΑΝΑΦΟΡΑΣ — ακμή με το άλλο άκρο εκτός DOM ΔΕΝ γίνεται ποτέ
-     γραμμή. Είναι το ιδίωμα της ίδιας της πηγής (dashed reference box).      */
-  function feedChips(n) {
-    const bits = [];
-    for (const e of (IX.in.get(n.id) || [])) if (!S.rendered.has("g:" + e.from)) bits.push(refChip(e.from, "in", e));
-    for (const e of (IX.out.get(n.id) || [])) if (!S.rendered.has("g:" + e.to)) bits.push(refChip(e.to, "out", e));
-    return bits.length ? `<span class="fc-c-feeds">${bits.join("")}</span>` : "";
-  }
-  function refChip(otherId, dir, e) {
-    const o = IX.byId.get(otherId);
-    if (!o) return "";
-    const tk = TRACK_BY[trackOf(o)];
-    const txt = dir === "in" ? G.in + "[" + shortLabel(o) + "]" : "[" + shortLabel(o) + "]" + G.out;
-    return `<span class="fc-feed" role="button" tabindex="-1" data-jump="g:${esc(otherId)}"
-      style="--fk:${tk.hex}" title="${esc((e.note || e.kind) + " · " + tk.label)}">${esc(txt)}</span>`;
-  }
-
+  /* §3.5 IN-BLOCK EXAM — ίδιο λιτό λεξιλόγιο με την κάρτα: κωδικός · όνομα ·
+     ΜΙΑ γραμμή μετρικών. Οι πύλες («gates …») ζουν στο popup του ground
+     κόμβου που τα φιλοξενεί (πίνακας IN-BLOCK EXAMS) — το κλικ πάει εκεί.   */
   function exChip(x) {
     const e = x.ex;
-    const gates = (e.gates || []).length ? " ▸ gates " + e.gates.join(", ") : "";
+    const host = IX.byId.get(x.node);
+    const m = (e.periods == null ? "—" : e.periods + " per.")
+      + (e.periods_foreign != null ? " · " + e.periods_foreign + " foreign" : "");
+    const ttl = e.code + " — " + (e.name || "") + " · inside " + (host ? shortLabel(host) : x.node)
+      + ((e.gates || []).length ? " · gates " + e.gates.join(", ") : "");
     return `<button type="button" class="fc-exchip" data-jump="g:${esc(x.node)}" data-exam="${esc(e.code)}"
-      title="${esc(e.name || "")}" aria-label="${esc(e.code + " — " + (e.name || ""))}">
-      <b>${esc(e.code)}</b> ▸ ${esc(e.periods + " per.")}${e.periods_foreign != null ? esc(" (" + e.periods_foreign + " foreign)") : ""}${esc(gates)}
-      <span aria-hidden="true">↑</span></button>`;
+      title="${esc(ttl)}" aria-label="${esc(ttl)}">
+      <span class="fc-c-top"><b>${esc(e.code)}</b></span>
+      <span class="fc-c-name">${esc(e.name || "")}</span>
+      <span class="fc-c-m">${esc(m)}</span>
+    </button>`;
   }
 
   /* ══════════════════════ L2 — ΕΠΙΛΟΓΗ ══════════════════════ */
@@ -1106,7 +1193,28 @@
     const prev = ci > 0 ? chain[ci - 1] : null;
     const next = ci >= 0 && ci < chain.length - 1 ? chain[ci + 1] : null;
 
-    const inn = SE.in.get(s.uid) || [], out = SE.out.get(s.uid) || [];
+    const rel = relations(s.uid);
+    const srcGroups = [{
+      title: srtLabel(s) + " — this sortie",
+      rows: [
+        ["File", (s.source_files || []).join(" · ")],
+        ["Page", s.page_pdf != null ? "PDF p." + s.page_pdf : ""],
+        ["Ref", s.section_verbatim ? "printed section “" + s.section_verbatim + "”" : ""],
+        ["Hours basis", s.hours_basis || "", "fc-src-vb"],   // υπολογισμός, ΟΧΙ verbatim
+      ],
+    }].concat(
+      (s.also_printed_in || []).map((a) => ({
+        title: "Also printed in" + (a.role ? " · " + a.role : ""),
+        rows: [
+          ["File", a.file || ""],
+          ["Page", a.page_pdf != null ? "PDF p." + a.page_pdf : ""],
+          ["Ref", [a.role, a.cross_category].filter(Boolean).join(" · ")],
+        ],
+      })),
+      srcGroupsOfRels(rel.inn, "in"),
+      srcGroupsOfRels(rel.out, "out")
+    );
+
     box.innerHTML = `
       <div class="fc-d-head">
         <span class="fc-d-code">${esc(srtLabel(s))}</span>
@@ -1118,22 +1226,23 @@
       ${badges.length ? `<div class="fc-d-badges">${badges.join("")}</div>` : ""}
       <div class="fc-vitals-grid">${vg.join("")}</div>
       ${s.hours_basis ? `<p class="fc-cap">${esc(s.hours_basis)}</p>` : ""}
+      <div class="fc-d-acts">
+        <button type="button" class="req-link fc-svbtn" data-schedval="${esc(s.uid)}"
+          title="Open Schedule validation for this sortie">✓ VALIDATE SCHEDULE</button>
+      </div>
       ${g ? `<h4 class="fc-h4">TRAINING SECTION</h4>
         <p class="fc-ul"><button type="button" class="req-link fc-jump" data-jump="g:${esc(g.id)}">${esc(g.label)}</button>
         <span class="hint"> ${esc(g.name || "")}</span></p>
         <p class="fc-cap">${esc(metricsPlain(g))}</p>` : ""}
-      ${edgeList(inn, "in")}
-      ${edgeList(out, "out")}
-      ${verbatimBlock(inn)}
+      ${relList(rel.inn, "in")}
+      ${relList(rel.out, "out")}
+      ${notesBlock(s)}
       <div class="fc-step">
         <button type="button" class="req-link" data-jump="${prev ? esc(prev.uid) : ""}" ${prev ? "" : "disabled"}>◀ PREV</button>
         <button type="button" class="req-link" data-copy="${esc(s.id)}">COPY ${esc(s.id)}</button>
         <button type="button" class="req-link" data-jump="${next ? esc(next.uid) : ""}" ${next ? "" : "disabled"}>NEXT ▶</button>
       </div>
-      ${s.note ? `<details><summary>${G.warn} DATA NOTE</summary><p class="verbatim">${esc(s.note)}</p></details>` : ""}
-      ${(s.also_printed_in || []).length ? `<details><summary>ALSO PRINTED IN (${s.also_printed_in.length})</summary>
-        ${s.also_printed_in.map((a) => `<p class="verbatim">${esc(a.file || "")}${a.page_pdf ? " · PDF p." + esc(String(a.page_pdf)) : ""}${a.role ? " · " + esc(a.role) : ""}${a.cross_category ? " · " + esc(a.cross_category) : ""}</p>`).join("")}</details>` : ""}
-      <p class="req-src">📄 ${esc((s.source_files || []).join(" · "))}${s.page_pdf ? " · PDF p." + esc(String(s.page_pdf)) : ""}</p>`;
+      ${srcDetails(srcGroups)}`;
   }
 
   function metricsPlain(n) {
@@ -1145,55 +1254,106 @@
     return bits.join(" · ");
   }
 
-  /* ΠΡΙΝ / ΜΕΤΑ — μία γραμμή ανά ΕΝΩΜΕΝΗ ακμή, με τα kinds της. */
-  function edgeList(list, dir) {
+  /* ── ← FED BY · BEFORE  /  FEEDS → · AFTER ────────────────────────────────
+     Μία γραμμή ανά ΑΛΛΟ ΑΚΡΟ, με ενωμένα kinds. Το «off-rail» σημαίνει ότι το
+     άλλο άκρο δεν είναι τώρα στη ράγα — ήταν αυτό ακριβώς που τύπωνε το
+     dashed τσιπάκι αναφοράς πάνω στην κάρτα.                                */
+  function relList(list, dir) {
     if (!list.length) return "";
-    const rows = list.map((m) => {
-      const otherUid = dir === "out" ? m.to : m.from;
-      const o = node(otherUid);
+    const rows = list.map((r) => {
+      const o = node(r.uid);
       if (!o) return "";
       const ot = TRACK_BY[trackOf(o)];
-      const off = !S.rendered.has(otherUid);
+      const bd = (BAND_BY[bandOf(o)] || { label: "" }).label;
+      const off = !S.rendered.has(r.uid);
+      /* Η γραμμή μένει ΜΙΑ γραμμή: μόνο οι σύντομες σημειώσεις μπαίνουν εδώ.
+         Οι μακροσκελείς (σημειώσεις ψηφιοποίησης) πάνε ΟΛΕΣ στον αναδιπλωμένο
+         πίνακα «Source & verbatim» — τίποτα δεν χάνεται, τίποτα δεν φωνάζει.  */
+      const seen = {}, notes = [];
+      let long = 0;
+      for (const e of r.ev) {
+        if (!e.note || seen[e.note]) continue;
+        seen[e.note] = 1;
+        if (e.note.length > NOTE_INLINE) long++; else notes.push(e.note);
+      }
+      const lb = isSortieUid(r.uid) ? labelOf(o) : shortLabel(o);   // τα ground labels είναι τεράστια
       return `<li><span class="fc-dot" style="background:${ot.hex}" aria-hidden="true"></span>
-        <button type="button" class="req-link fc-jump" data-jump="${esc(otherUid)}">${esc(labelOf(o))}</button>
-        <span class="hint">${esc(m.kinds.join(" + "))} · ${esc(edgeStyle(m))}${off ? " · " + esc(ot.label) : ""}</span></li>`;
+        <button type="button" class="req-link fc-jump" data-jump="${esc(r.uid)}"
+          title="${esc(labelOf(o) + (o.name ? " — " + o.name : ""))}">${esc(lb)}</button>
+        <span class="hint">${esc(o.name || "")}</span>
+        <span class="fc-rel-m">${esc(r.kinds.join(" + ") + " · " + ot.label + " · " + bd)}${off
+          ? `<span class="fc-rel-off" title="not on the rail right now — it used to print as a dashed reference chip">off-rail</span>` : ""}${long
+          ? `<span class="fc-rel-more">+${long} in Source &amp; verbatim</span>` : ""}</span>
+        ${notes.map((t) => `<span class="fc-rel-n">${esc(t)}</span>`).join("")}</li>`;
     }).join("");
-    return `<h4 class="fc-h4">${dir === "in" ? "← BEFORE" : "AFTER →"}</h4><ul class="fc-ul">${rows}</ul>`;
+    return `<h4 class="fc-h4">${dir === "in" ? "← FED BY · BEFORE" : "FEEDS → · AFTER"}
+      <span class="fc-h4-n">${list.length}</span></h4><ul class="fc-ul fc-rel">${rows}</ul>`;
   }
 
-  /* ΠΗΓΕΣ / VERBATIM των ρητών prerequisites (prereq · feed · before).
-     Μία γραμμή ανά (source, verbatim): η ίδια πρόταση συχνά καλύπτει δύο άκρα
-     («… are I4501 and I3601 …») — απαριθμούνται όλα μαζί.                    */
-  function verbatimBlock(list) {
+  /* ΣΗΜΕΙΩΣΕΙΣ ΔΕΔΟΜΕΝΩΝ — το κείμενο πίσω από το ⚠ⓘ badge της κάρτας. */
+  function notesBlock(n) {
+    const list = dataNotes(n);
+    if (!list.length) return "";
+    return `<h4 class="fc-h4">${G.warn} DATA NOTES <span class="fc-h4-n">${list.length}</span></h4>`
+      + `<ul class="fc-ul fc-notes">${list.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>`;
+  }
+
+  /* ΠΗΓΕΣ / VERBATIM των ακμών → ομάδες γραμμών File / Page / Ref / Verbatim.
+     Μία ομάδα ανά (source, verbatim): η ίδια πρόταση συχνά καλύπτει δύο άκρα
+     («… are I4501 and I3601 …») — τα άκρα απαριθμούνται μαζί στον τίτλο.     */
+  function srcGroupsOfRels(list, dir) {
     const bag = new Map();
-    for (const m of list) {
-      for (const e of m.ev) {
-        if (!e.verbatim && !e.source) continue;
-        const k = (e.source || "") + "|" + (e.verbatim || "");
+    for (const r of list) {
+      for (const e of r.ev) {
+        if (!e.verbatim && !e.source && !e.note) continue;
+        const k = (e.source || "") + "|" + (e.verbatim || "") + "|" + (e.note || "");
         let v = bag.get(k);
-        if (!v) { v = { e: e, froms: [], kinds: [] }; bag.set(k, v); }
-        const from = node(e.from_ref);
-        const lb = from ? labelOf(from) : e.from_ref;
-        if (v.froms.indexOf(lb) < 0) v.froms.push(lb);
-        if (v.kinds.indexOf(e.kind) < 0) v.kinds.push(e.kind);
+        if (!v) { v = { e: e, ends: [], kinds: [] }; bag.set(k, v); }
+        const other = node(dir === "in" ? e.from_ref : e.to_ref) || node(r.uid);
+        const lb = !other ? r.uid
+          : (other.uid && isSortieUid(other.uid) ? labelOf(other) : shortLabel(other));
+        if (v.ends.indexOf(lb) < 0) v.ends.push(lb);
+        if (e.kind && v.kinds.indexOf(e.kind) < 0) v.kinds.push(e.kind);
       }
     }
-    if (!bag.size) return "";
-    const rows = [];
+    const out = [];
     bag.forEach((v) => {
-      rows.push(`<div class="fc-vb">
-        <p class="verbatim">“${esc(v.e.verbatim || "")}”</p>
-        <p class="req-src">📄 ${esc(v.e.source || "")} · ${esc(v.froms.join(" · "))} · ${esc(v.kinds.join(" + "))}</p>
-      </div>`);
+      const e = v.e;
+      out.push({
+        title: (dir === "in" ? "← " : "→ ") + v.ends.join(" · ") + (v.kinds.length ? " · " + v.kinds.join(" + ") : ""),
+        rows: [
+          ["File", (e.origin || []).map((o) => o + ".json").join(" · ")],
+          ["Page", e.page_pdf != null ? "PDF p." + e.page_pdf + (e.page_pdf_target != null ? " → p." + e.page_pdf_target : "") : ""],
+          ["Ref", e.source || ""],
+          ["Note", e.note || "", "fc-src-vb"],
+          ["Verbatim", e.verbatim ? "“" + e.verbatim + "”" : "", "fc-src-vb"],
+        ],
+      });
     });
-    return `<h4 class="fc-h4">PREREQUISITE SOURCES</h4>${rows.join("")}`;
+    return out;
+  }
+
+  /* §3β ΑΝΑΔΙΠΛΩΜΕΝΟ «Source & verbatim» — ΠΙΝΑΚΑΣ, μία ομάδα ανά πηγή/ακμή.
+     groups = [{ title, rows: [[key, value, cssClass?], …] }]                */
+  function srcDetails(groups, opts) {
+    const o = opts || {};
+    const gs = (groups || []).filter((g) => g && (g.rows || []).some((r) => r[1] != null && r[1] !== ""));
+    if (!gs.length) return "";
+    const body = gs.map((g) =>
+      `<tr class="fc-src-grp"><th colspan="2">${esc(g.title || "")}</th></tr>`
+      + g.rows.filter((r) => r[1] != null && r[1] !== "").map((r) =>
+        `<tr><th>${esc(r[0])}</th><td${r[2] ? ` class="${esc(r[2])}"` : ""}>${esc(r[1])}</td></tr>`).join("")
+    ).join("");
+    return `<details class="fc-src"${o.open ? " open" : ""}>
+      <summary>📄 ${esc(o.label || "Source & verbatim")} <span class="fc-h4-n">${gs.length}</span></summary>
+      <div class="fc-scroll-x"><table class="fc-tbl fc-src-tbl"><tbody>${body}</tbody></table></div>
+    </details>`;
   }
 
   /* ── TRAINING SECTION (group) — η v1 συμπεριφορά ── */
   function renderGroupDetail(n) {
     if (!n) return;
     const box = el("fc-detail"), tk = TRACK_BY[trackOf(n)];
-    const out = IX.out.get(n.id) || [], inn = IX.in.get(n.id) || [];
     sheetTint(n);
 
     const vg = [];
@@ -1215,7 +1375,7 @@
 
     let examTbl = "";
     if ((n.exams || []).length) {
-      examTbl = `<h4 class="fc-h4" id="fc-d-exams">${G.exam} IN-BLOCK EXAMS</h4><div class="fc-scroll-x">
+      examTbl = `<h4 class="fc-h4" id="fc-d-exams">${G.exam} IN-BLOCK EXAMS <span class="fc-h4-n">${n.exams.length}</span></h4><div class="fc-scroll-x">
         <table class="fc-tbl"><thead><tr><th>Code</th><th>Name</th><th>Per.</th><th>Foreign</th><th>Gates</th></tr></thead><tbody>
         ${n.exams.map((x) => `<tr><td class="num">${esc(x.code)}</td><td>${esc(x.name || "")}</td>
           <td class="num">${esc(String(x.periods == null ? "—" : x.periods))}</td>
@@ -1232,26 +1392,33 @@
         ${extra ? `<div class="kv-row">${extra}</div>` : ""}`;
     }
 
-    const li = (e, dir) => {
-      const nid = dir === "out" ? e.to : e.from;
-      const o = IX.byId.get(nid);
-      if (!o) return "";
-      const ot = TRACK_BY[trackOf(o)];
-      return `<li><span class="fc-dot" style="background:${ot.hex}" aria-hidden="true"></span>
-        <button type="button" class="req-link fc-jump" data-jump="g:${esc(nid)}">${esc(o.label)}</button>
-        <span class="hint">${esc(e.kind)}${e.note ? " · " + esc(e.note) : ""}</span></li>`;
-    };
-
     const chain = fc.nodes.filter((x) => cellOf(x.id) === cellOf(n.id));
     const ci = chain.findIndex((x) => x.id === n.id);
     const prev = ci > 0 ? chain[ci - 1] : null, next = ci >= 0 && ci < chain.length - 1 ? chain[ci + 1] : null;
 
-    let dur = "";
-    if (n.duration_verbatim) dur = `<p class="req-src">“${esc(n.duration_verbatim)}”</p>`;
-    else if (n.duration_summary) {
-      dur = `<p class="fc-cap">${G.warn} editorial summary — NOT verbatim (legend.notes)</p>
-             <p class="verbatim">${esc(n.duration_summary)}</p>`;
+    /* Οι ΤΡΕΙΣ πηγές σχέσεων (v1 ακμές · ground_chain/ground_entry · gates)
+       ενωμένες — έτσι το IN 290 δείχνει επιτέλους ΠΟΙΟ ΜΑΘΗΜΑ το τροφοδοτεί. */
+    const rel = relations(n.uid || ("g:" + n.id));
+    const srcGroups = [{
+      title: n.label + " — this node",
+      rows: [
+        ["File", (n.source && n.source.file) || ""],
+        ["Page", n.source && n.source.page_pdf != null ? "PDF p." + n.source.page_pdf : ""],
+        ["Ref", (n.source && n.source.ref) || ""],
+        ["Verbatim", n.duration_verbatim ? "“" + n.duration_verbatim + "”" : "", "fc-src-vb"],
+      ],
+    }];
+    if (!n.duration_verbatim && n.duration_summary) {
+      srcGroups.push({
+        title: "Duration — " + G.warn + " editorial summary, NOT verbatim (legend.notes)",
+        rows: [["Summary", n.duration_summary, "fc-src-vb"]],
+      });
     }
+    const svBtn = (bandOf(n) === "fs" || bandOf(n) === "flights") && srtOf(n.id).length
+      ? `<div class="fc-d-acts">
+          <button type="button" class="req-link fc-svbtn" data-schedval="g:${esc(n.id)}"
+            title="Open Schedule validation on the first sortie of this Training Section">✓ VALIDATE SCHEDULE</button>
+        </div>` : "";
 
     box.innerHTML = `
       <div class="fc-d-head">
@@ -1264,19 +1431,18 @@
       ${n.mission_verbatim ? `<p class="verbatim">MISSION — ${esc(n.mission_verbatim)}</p>` : ""}
       ${n.objective_verbatim ? `<p class="verbatim">OBJECTIVE — ${esc(n.objective_verbatim)}</p>` : ""}
       <div class="fc-vitals-grid">${vg.join("")}</div>
+      ${svBtn}
       ${sortieBlock(n)}
       ${examTbl}
       ${cond}
-      ${inn.length ? `<h4 class="fc-h4">← BEFORE</h4><ul class="fc-ul">${inn.map((e) => li(e, "in")).join("")}</ul>` : ""}
-      ${out.length ? `<h4 class="fc-h4">AFTER →</h4><ul class="fc-ul">${out.map((e) => li(e, "out")).join("")}</ul>` : ""}
+      ${relList(rel.inn, "in")}
+      ${relList(rel.out, "out")}
+      ${notesBlock(n)}
       <div class="fc-step">
         <button type="button" class="req-link" data-jump="${prev ? "g:" + esc(prev.id) : ""}" ${prev ? "" : "disabled"}>◀ PREV</button>
         <button type="button" class="req-link" data-jump="${next ? "g:" + esc(next.id) : ""}" ${next ? "" : "disabled"}>NEXT ▶</button>
       </div>
-      ${(n.flags || []).length ? `<details><summary>${G.warn} DATA NOTES (${n.flags.length})</summary>
-        ${n.flags.map((f) => `<p class="verbatim">${esc(f)}</p>`).join("")}</details>` : ""}
-      ${dur}
-      ${n.source ? `<p class="req-src">📄 ${esc(n.source.file || "")}${n.source.page_pdf ? " · p." + esc(String(n.source.page_pdf)) : ""}${n.source.ref ? " · " + esc(n.source.ref) : ""}</p>` : ""}`;
+      ${srcDetails(srcGroups.concat(srcGroupsOfRels(rel.inn, "in"), srcGroupsOfRels(rel.out, "out")))}`;
   }
 
   /* ── ΕΞΟΔΟΙ ΜΕΣΑ ΣΤΟ SHEET ΤΟΥ SECTION ───────────────────────────────────
@@ -1306,19 +1472,31 @@
   function openDrawer(key) {
     const t = fc.totals;
     let title = "", body = "";
-    const vb = (s) => `<p class="verbatim">${esc(s)}</p>`;
-    const src = (o) => o ? `<p class="req-src">📄 ${esc(o.file)} · p.${esc(String(o.page_pdf))} · ${esc(o.ref)}</p>` : "";
+    /* §3β Το μπλοκ πηγής του drawer ζει σε ΑΝΑΔΙΠΛΩΜΕΝΟ details-πίνακα. */
+    const SRC = [];
+    const addSrc = (ttl, o, verbatim) => SRC.push({
+      title: ttl,
+      rows: [
+        ["File", (o && o.file) || ""],
+        ["Page", o && o.page_pdf != null ? "PDF p." + o.page_pdf : ""],
+        ["Ref", (o && o.ref) || ""],
+        ["Verbatim", verbatim ? "“" + verbatim + "”" : "", "fc-src-vb"],
+      ],
+    });
+    let srcOpen = false;
 
     if (key.indexOf("phase:") === 0) {
       const p = (fc.phases || []).find((x) => x.id === key.slice(6));
       if (!p) return;
       title = p.label;
-      body = src(p.source);
+      addSrc(p.label, p.source);
+      srcOpen = true;                       // η πηγή ΕΙΝΑΙ όλο το περιεχόμενο
 
     } else if (key === "ground") {
       title = "GROUND — " + t.ground_training_periods + " periods";
-      body = vb(t.ground_training_verbatim) + vb(t.ground_training_min_duration_verbatim)
-        + flagLike(/ground/i).slice(0, 3).map(vb).join("");
+      addSrc("Ground training", null, t.ground_training_verbatim);
+      addSrc("Minimum duration", null, t.ground_training_min_duration_verbatim);
+      flagLike(/ground/i).slice(0, 3).forEach((f, i) => addSrc("Data note " + (i + 1), null, f));
 
     } else if (key === "exams") {
       const p2 = (fc.phases || []).find((x) => x.id === "p2");
@@ -1333,8 +1511,8 @@
           <td>${esc(v.gate ? "gate (node)" : "inside " + IX.byId.get(v.node).label)}</td>
           <td>${esc((v.ex.gates || []).join(", "))}</td></tr>`);
       });
-      body = src(p2 && p2.source)
-        + `<div class="fc-scroll-x"><table class="fc-tbl"><thead><tr><th>Code</th><th>Name</th><th>Per.</th><th>Foreign</th><th>Position</th><th>Gates</th></tr></thead><tbody>${rows.join("")}</tbody></table></div>`;
+      if (p2 && p2.source) addSrc(p2.label || "Exams", p2.source);
+      body = `<div class="fc-scroll-x"><table class="fc-tbl"><thead><tr><th>Code</th><th>Name</th><th>Per.</th><th>Foreign</th><th>Position</th><th>Gates</th></tr></thead><tbody>${rows.join("")}</tbody></table></div>`;
 
     } else if (key === "fs" || key === "flights") {
       const isFs = key === "fs";
@@ -1348,17 +1526,18 @@
              <td class="num">${esc(t.flight[x.tot].solo)}</td><td class="num">${esc(t.flight[x.tot].total)}</td><td class="num">${n}</td></tr>`;
       }).join("");
       const nAll = fc.sorties.filter((s) => bandOf(s) === (isFs ? "fs" : "flights")).length;
+      addSrc(isFs ? "F/S totals" : "Flight totals", isFs ? t.fs.source : t.flight.source);
       body = isFs
         ? `<div class="fc-scroll-x"><table class="fc-tbl"><thead><tr><th>Track</th><th>Sorties / hours</th><th>Sections</th><th>Sorties here</th></tr></thead><tbody>${rows}
             <tr><td>Familiarization</td><td class="num">${esc(t.fs.familiarization)}</td><td class="num">—</td><td class="num">—</td></tr>
             <tr><td><b>TOTAL</b></td><td class="num"><b>${esc(t.fs.total)}</b></td>
             <td class="num">${fc.nodes.filter((n) => bandOf(n) === "fs").length}</td><td class="num"><b>${nAll}</b></td></tr>
-            </tbody></table></div>` + src(t.fs.source)
+            </tbody></table></div>`
         : `<div class="fc-scroll-x"><table class="fc-tbl"><thead><tr><th>Track</th><th>DUAL</th><th>SOLO</th><th>TOTAL</th><th>Sorties here</th></tr></thead><tbody>${rows}
             <tr><td><b>TOTAL</b></td><td class="num"><b>${esc(t.flight.total.dual)}</b></td>
             <td class="num"><b>${esc(t.flight.total.solo)}</b></td><td class="num"><b>${esc(t.flight.total.total)}</b></td>
             <td class="num"><b>${nAll}</b></td></tr>
-            </tbody></table></div>` + src(t.flight.source);
+            </tbody></table></div>`;
 
     } else if (key === "solo") {
       title = "SOLO — " + t.flight.total.solo;
@@ -1369,8 +1548,8 @@
          <td class="num">${cand.length}</td>
          <td>${esc(cand.map(srtLabel).join(", "))}</td></tr>`;
       }).join("");
-      body = vb(t.minimum_hours_verbatim) + src(t.minimum_hours_source)
-        + `<div class="fc-scroll-x"><table class="fc-tbl"><thead><tr><th>Section</th><th>Mission</th><th>SOLO</th><th>Candidates</th><th>Codes</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+      addSrc("Minimum SOLO hours", t.minimum_hours_source, t.minimum_hours_verbatim);
+      body = `<div class="fc-scroll-x"><table class="fc-tbl"><thead><tr><th>Section</th><th>Mission</th><th>SOLO</th><th>Candidates</th><th>Codes</th></tr></thead><tbody>${rows}</tbody></table></div>`;
 
     } else if (key === "ckr") {
       const ck = fc.sorties.filter((s) => s.checkride);
@@ -1380,8 +1559,9 @@
         return `<tr><td class="num">${esc(srtLabel(s))}</td><td>${esc(TRACK_BY[trackOf(s)].label)}</td>
          <td>${esc(s.name || "")}</td><td>${g && isFinal(g) ? G.fin + " FINAL" : ""}</td></tr>`;
       }).join("");
-      body = vb(t.final_evaluations_verbatim) + vb(t.flight_training_min_duration_verbatim)
-        + `<p class="fc-cap">The FINALs are derived STRUCTURALLY (a checkride with no outgoing sequence inside its own cell) — the source verbatim spells «Ν4690» with a Greek capital Nu.</p>`
+      addSrc("Final evaluations", null, t.final_evaluations_verbatim);
+      addSrc("Minimum flying days", null, t.flight_training_min_duration_verbatim);
+      body = `<p class="fc-cap">The FINALs are derived STRUCTURALLY (a checkride with no outgoing sequence inside its own cell) — the source verbatim spells «Ν4690» with a Greek capital Nu.</p>`
         + `<div class="fc-scroll-x"><table class="fc-tbl"><thead><tr><th>Sortie</th><th>Track</th><th>Mission</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
     } else return;
 
@@ -1389,7 +1569,7 @@
     d.innerHTML = `<div class="fc-drawer-box">
       <div class="fc-drawer-head"><h3>${esc(title)}</h3>
         <button type="button" class="copy-btn" data-close="1">✕ Close</button></div>
-      <div class="fc-drawer-body">${body}</div></div>`;
+      <div class="fc-drawer-body">${body}${srcDetails(SRC, { open: srcOpen })}</div></div>`;
     d.classList.remove("hidden");
   }
 
@@ -1406,9 +1586,13 @@
        + row(gl(G.fin), "FINAL evaluation (last one of the category)")
        + row(gl(G.solo), "SOLO — filled = 1st SOLO, green = candidate sortie")
        + row(gl(G.night), "night sortie")
-       + row(gl(G.in + G.out), "reference chip to another track (dashed reference box)")
-       + row(gl(G.warn), "data note")
+       + row(gl(G.in + G.out), "reference chip — the other end is off the rail (drawn next to the selected sortie)")
+       + row(gl(G.warn + G.info), "data notes exist — the text lives in the card popup, section DATA NOTES")
        + row(gl(G.info), "printed ≠ sum of sections");
+    h += `<h4 class="fc-h4">CARD = HEADLINE · POPUP = EVERYTHING ELSE</h4>`;
+    h += `<p class="fc-cap">A card carries only its code, its short name, one line of metrics and the status
+      badges above. Every relation (← FED BY · BEFORE / FEEDS → · AFTER), the in-block exams, the exam gates,
+      the data notes and the sources move into the popup that opens on click — printed once, never twice.</p>`;
     h += `<h4 class="fc-h4">ZONES — the colour of a single-track view</h4>`;
     for (const b of BANDS) h += row(dot(bandVar(b.id)), b.label + " — " + b.sub);
     h += `<h4 class="fc-h4">TRACKS — the colour of the “All tracks” dashboard</h4>`;
@@ -1640,6 +1824,14 @@
       const cp = t.closest("[data-copy]");
       if (cp) { copyCode(cp, cp.dataset.copy); return; }
 
+      /* Schedule validation ΑΠΕΥΘΕΙΑΣ από το popup του κόμβου (schedval.js). */
+      const sv = t.closest("[data-schedval]");
+      if (sv) {
+        ev.stopPropagation();
+        if (window.openSchedVal) window.openSchedVal(sv.dataset.schedval);
+        return;
+      }
+
       const feed = t.closest("[data-jump]");
       if (feed && feed.dataset.jump) { ev.stopPropagation(); jump(feed.dataset.jump); return; }
 
@@ -1745,6 +1937,8 @@
     if (!fc) return;
     const view = el("view-flowchart");
     if (!view || view.classList.contains("hidden")) return;
+    const svm = el("sv-modal");                       // Schedule validation ανοιχτό
+    if (svm && !svm.classList.contains("hidden")) return;   // → δικά του πλήκτρα
     const tag = (ev.target.tagName || "").toUpperCase();
     if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
     if (ev.ctrlKey || ev.altKey || ev.metaKey) return;

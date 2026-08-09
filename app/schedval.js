@@ -37,7 +37,10 @@
     vfr_navigation: "VFR Navigation", shared: "Shared ground",
   };
 
-  const st = { fc: null, open: false, node: new Map(), rev: new Map(), fwd: new Map(), byGroup: new Map(), groups: [] };
+  const st = {
+    fc: null, open: false, node: new Map(), rev: new Map(), fwd: new Map(),
+    byGroup: new Map(), groups: [], hay: new Map(), cur: "",
+  };
   const $id = (x) => document.getElementById(x);
   const ESC = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ESC[c]);
@@ -50,7 +53,13 @@
   .sv-head{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
   .sv-head h3{font-size:15px;margin-right:auto}
   .sv-body{padding:14px 16px 18px;overflow-y:auto}
+  .sv-pick{display:flex;flex-direction:column;gap:6px}
+  .sv-lbl{font-size:10.5px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted)}
+  .sv-flt{width:100%;padding:8px 10px;background:var(--panel-2);color:var(--text);border:1px solid var(--line);border-radius:8px;font-size:13px;font-family:inherit}
+  .sv-flt:focus{outline:2px solid var(--accent);outline-offset:1px}
   .sv-sel{width:100%;padding:8px 10px;background:var(--panel-2);color:var(--text);border:1px solid var(--line);border-radius:8px;font-size:13px;font-family:Consolas,monospace}
+  .sv-cnt{font-size:11px;color:var(--muted);font-family:Consolas,monospace}
+  .sv-cnt b{color:var(--text)}
   .sv-target{margin-top:12px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--panel-2)}
   .sv-target h4{font-family:Consolas,monospace;font-size:14px;color:var(--accent);display:inline-block;margin-right:8px}
   .sv-target .sv-name{font-size:12.5px}
@@ -65,8 +74,18 @@
   .sv-chip{display:inline-block;font-family:Consolas,monospace;font-size:13px;font-weight:700;color:var(--accent);margin-right:8px}
   .sv-name{font-size:12.5px;color:var(--text)}
   .sv-meta{font-size:11.5px;color:var(--muted);margin-top:2px;font-family:Consolas,monospace}
-  .sv-vb{font-size:12px;color:var(--text);opacity:.9;border-left:2px solid var(--line);padding-left:8px;margin-top:4px;font-style:italic}
-  .sv-src{font-size:11px;color:var(--muted);margin-top:2px;font-family:Consolas,monospace}
+  .sv-det{margin-top:6px;border:1px solid var(--line);border-radius:7px;background:var(--panel)}
+  .sv-det>summary{cursor:pointer;list-style:none;padding:4px 9px;font-size:11px;color:var(--muted);font-family:Consolas,monospace}
+  .sv-det>summary::-webkit-details-marker{display:none}
+  .sv-det>summary::before{content:"▸ ";color:var(--accent)}
+  .sv-det[open]>summary::before{content:"▾ "}
+  .sv-det>summary:hover{color:var(--text)}
+  .sv-det .sv-wrap{overflow-x:auto;padding:0 9px 8px}
+  .sv-tbl{width:100%;border-collapse:collapse;font-size:11.5px}
+  .sv-tbl th,.sv-tbl td{padding:3px 6px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+  .sv-tbl th{width:74px;color:var(--muted);font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;white-space:nowrap}
+  .sv-tbl tr.sv-grp th{width:auto;color:var(--accent);font-family:Consolas,monospace;text-transform:none;letter-spacing:0;font-size:11px;padding-top:7px}
+  .sv-tbl td.sv-vbc{white-space:pre-wrap;color:var(--text);line-height:1.5}
   .sv-seq{font-size:12px;color:var(--muted);margin-top:6px;padding-top:6px;border-top:1px dashed var(--line)}
   .sv-seq b{color:var(--text);font-family:Consolas,monospace}
   .sv-tag{display:inline-block;font-size:10px;text-transform:uppercase;letter-spacing:.6px;border:1px solid var(--line);border-radius:999px;padding:0 6px;margin-left:6px;color:var(--muted)}
@@ -94,7 +113,13 @@
           <button class="sv-btn" id="sv-close">✕ Close</button>
         </div>
         <div class="sv-body">
-          <select class="sv-sel" id="sv-sel"></select>
+          <div class="sv-pick">
+            <label class="sv-lbl" for="sv-flt">Filter — id, name, Training Section, track, night / solo / checkride</label>
+            <input type="search" class="sv-flt" id="sv-flt" autocomplete="off" spellcheck="false"
+                   placeholder="Type to filter…  e.g.  4701   ·   night   ·   I47   ·   formation">
+            <select class="sv-sel" id="sv-sel" aria-label="Sortie"></select>
+            <p class="sv-cnt" id="sv-cnt"></p>
+          </div>
           <div class="sv-grid" id="sv-grid"><p class="sv-note">Pick a sortie to see what must precede it.</p></div>
           <p class="sv-note">Rule: the sortie's own explicit restrictions first (quoted verbatim), then the
           drawn sequence, then the nearest ancestor of each kind walking the stage flow backwards. Where the
@@ -106,7 +131,18 @@
     wrap.addEventListener("click", (e) => { if (e.target === wrap) closeSv(); });
     $id("sv-close").onclick = closeSv;
     document.addEventListener("keydown", (e) => { if (e.key === "Escape" && st.open) closeSv(); });
-    $id("sv-sel").onchange = () => renderResult($id("sv-sel").value);
+    $id("sv-sel").onchange = () => { st.cur = $id("sv-sel").value; renderResult(st.cur); };
+
+    /* type-to-filter: το select ΞΑΝΑΧΤΙΖΕΤΑΙ με ό,τι ταιριάζει — καμία βιβλιοθήκη. */
+    const flt = $id("sv-flt");
+    flt.addEventListener("input", () => fillSelect(flt.value, st.cur));
+    flt.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") { e.preventDefault(); $id("sv-sel").focus(); }
+      else if (e.key === "Escape") {
+        e.stopPropagation();
+        if (flt.value) { flt.value = ""; fillSelect("", st.cur); } else closeSv();
+      }
+    });
   }
   function closeSv() { st.open = false; $id("sv-modal").classList.add("hidden"); }
 
@@ -140,6 +176,34 @@
       if (m.kinds.indexOf(e.kind) < 0) m.kinds.push(e.kind);
       m.ev.push(e);
     }
+
+    /* Άχυρο αναζήτησης ανά sortie — id · τυπωμένο label · αποστολή · Training
+       Section (id + όνομα) · τροχιά · ζώνη · λέξεις κατάστασης.               */
+    for (const s of (fc.sorties || [])) {
+      const g = st.node.get("g:" + s.group);
+      const bits = [
+        s.id, s.label_verbatim, s.name, s.group, s.section_verbatim,
+        g ? g.label : "", g ? g.name : "",
+        TRACK_LABEL[trackOf(s)] || trackOf(s), s.track,
+        s.band === "fs" ? "f/s simulator fs" : "flight flights",
+        s.night ? "night" : "", s.checkride ? "checkride ckr" : "",
+        s.first_solo ? "first solo 1st solo" : "", s.solo_candidate ? "solo candidate" : "",
+      ];
+      st.hay.set(s.uid, bits.filter(Boolean).join(" ").toLowerCase());
+    }
+  }
+
+  /* Το uid μπορεί να είναι sortie ("s:I4701") ή Training Section ("g:I47XX").
+     Το section λύνεται στην ΠΡΩΤΗ του έξοδο — αυτό που δείχνει το select.    */
+  function resolveTarget(uid) {
+    const u = String(uid || "");
+    if (!u) return "";
+    if (isSortie(u) && st.node.has(u)) return u;
+    if (u.charAt(0) === "g") {
+      const list = st.byGroup.get(u.slice(2)) || [];
+      if (list.length) return list[0].uid;
+    }
+    return "";
   }
 
   const isSortie = (uid) => String(uid).charAt(0) === "s";
@@ -241,22 +305,47 @@
     return { rows: res, seq: out.seq };
   }
 
-  /* ── SELECT: ΜΕΜΟΝΩΜΕΝΕΣ ΕΞΟΔΟΙ, ομαδοποιημένες ανά track / section ───── */
-  function fillSelect() {
+  /* ── SELECT: ΜΕΜΟΝΩΜΕΝΕΣ ΕΞΟΔΟΙ, ομαδοποιημένες ανά track / section ──────
+     q = κείμενο φίλτρου. Όλοι οι όροι (χωρισμένοι με κενό) πρέπει να βρεθούν
+     στο άχυρο της εξόδου. keep = uid που κρατιέται επιλεγμένο αν επιβιώσει.  */
+  function fillSelect(q, keep) {
     const sel = $id("sv-sel");
+    const terms = String(q || "").toLowerCase().split(/\s+/).filter(Boolean);
+    const hit = (uid) => {
+      if (!terms.length) return true;
+      const h = st.hay.get(uid) || "";
+      for (const t of terms) if (h.indexOf(t) < 0) return false;
+      return true;
+    };
+
     const parts = [`<option value="">— select a sortie —</option>`];
+    let n = 0, all = 0, only = "";
     for (const g of st.groups) {
       if (g.band !== "fs" && g.band !== "flights") continue;
       const list = st.byGroup.get(g.id) || [];
       if (!list.length) continue;
+      all += list.length;
+      const shown = list.filter((s) => hit(s.uid));
+      if (!shown.length) continue;
+      n += shown.length;
+      only = shown[shown.length - 1].uid;
       const head = (TRACK_LABEL[g.track] || g.track) + " · " + (g.band === "fs" ? "F/S" : "FLIGHTS")
         + " · " + g.id + (g.name ? " — " + g.name : "");
-      parts.push(`<optgroup label="${esc(head)}">` + list.map((s) => {
+      parts.push(`<optgroup label="${esc(head)}">` + shown.map((s) => {
         const tag = (s.checkride ? " ◆" : "") + (s.first_solo ? " ★" : (s.solo_candidate ? " ☆" : "")) + (s.night ? " ☾" : "");
         return `<option value="${esc(s.uid)}">${esc(labelOf(s) + tag + " — " + (s.name || ""))}</option>`;
       }).join("") + `</optgroup>`);
     }
     sel.innerHTML = parts.join("");
+
+    const cnt = $id("sv-cnt");
+    if (!n) cnt.innerHTML = `<b>0</b> of ${all} sorties — nothing matches “${esc(String(q || ""))}”.`;
+    else cnt.innerHTML = `<b>${n}</b> of ${all} sorties${terms.length ? " match this filter" : ""}.`;
+
+    // Ποιο μένει επιλεγμένο: το τρέχον αν επιβίωσε · αλλιώς το μοναδικό εύρημα.
+    const survivor = keep && hit(keep) && st.node.has(keep) ? keep : (n === 1 ? only : "");
+    sel.value = survivor;
+    if (survivor !== st.cur) { st.cur = survivor; renderResult(survivor); }
   }
 
   /* ── ΕΜΦΑΝΙΣΗ ─────────────────────────────────────────────────────────── */
@@ -297,20 +386,43 @@
     return "from the stage flow · " + hit.depth + " step" + (hit.depth === 1 ? "" : "s") + " back";
   }
 
+  /* Οι πηγές των ρητών περιορισμών σε ΑΝΑΔΙΠΛΩΜΕΝΟ details με ΠΙΝΑΚΑ
+     File / Page / Ref / Verbatim — μία ομάδα γραμμών ανά (source, verbatim). */
+  function srcDetails(hit) {
+    const bag = new Map();
+    for (const e of (hit.m.ev || [])) {
+      if (!e.verbatim && !e.source) continue;
+      const k = (e.source || "") + "|" + (e.verbatim || "");
+      if (!bag.has(k)) bag.set(k, { e: e, kinds: [] });
+      const v = bag.get(k);
+      if (e.kind && v.kinds.indexOf(e.kind) < 0) v.kinds.push(e.kind);
+    }
+    if (!bag.size) return "";
+    const rows = [];
+    bag.forEach((v) => {
+      const e = v.e;
+      const line = [
+        ["File", (e.origin || []).map((o) => o + ".json").join(" · ")],
+        ["Page", e.page_pdf != null ? "PDF p." + e.page_pdf : ""],
+        ["Ref", e.source || ""],
+        ["Verbatim", e.verbatim ? "“" + e.verbatim + "”" : "", "sv-vbc"],
+      ].filter((r) => r[1]);
+      if (!line.length) return;
+      rows.push(`<tr class="sv-grp"><th colspan="2">${esc(labelOf(hit.node)
+        + (v.kinds.length ? " · " + v.kinds.join(" + ") : ""))}</th></tr>`
+        + line.map((r) => `<tr><th>${esc(r[0])}</th><td${r[2] ? ` class="${r[2]}"` : ""}>${esc(r[1])}</td></tr>`).join(""));
+    });
+    if (!rows.length) return "";
+    return `<details class="sv-det"><summary>📄 Source &amp; verbatim (${rows.length})</summary>
+      <div class="sv-wrap"><table class="sv-tbl"><tbody>${rows.join("")}</tbody></table></div></details>`;
+  }
+
   function hitHtml(hit) {
     const n = hit.node;
-    let vb = "";
-    const seen = {};
-    for (const e of (hit.m.ev || [])) {
-      if (!e.verbatim || seen[e.verbatim]) continue;
-      seen[e.verbatim] = 1;
-      vb += `<p class="sv-vb">“${esc(e.verbatim)}”</p>`
-          + (e.source ? `<p class="sv-src">📄 ${esc(e.source)}</p>` : "");
-    }
     return `<div class="sv-hit">
       <span class="sv-chip">${esc(labelOf(n))}</span><span class="sv-name">${esc(n.name || "")}</span>${tags(n)}
       <div class="sv-meta">${esc(metaOf(n))} · ${esc(viaText(hit))}</div>
-      ${vb}
+      ${srcDetails(hit)}
     </div>`;
   }
 
@@ -351,19 +463,30 @@
     grid.innerHTML = head + `<div class="sv-grid">${body}</div>`;
   }
 
+  /* uid = sortie ("s:I4701"), Training Section ("g:I47XX") ή τίποτα.
+     Καθαρό φίλτρο σε κάθε άνοιγμα· ο στόχος προεπιλέγεται και αποδίδεται. */
   window.openSchedVal = async (uid) => {
     ensureDom();
     await loadFc();
-    fillSelect();
+    const target = resolveTarget(uid) || (st.node.has(st.cur) ? st.cur : "");
+    $id("sv-flt").value = "";
+    st.cur = "";
+    fillSelect("", target);
     st.open = true;
     $id("sv-modal").classList.remove("hidden");
-    if (uid && nodeOf(uid)) { $id("sv-sel").value = uid; renderResult(uid); }
+    $id("sv-flt").focus();
   };
 
-  // attach to the flowchart toolbar button when present
+  /* Το κουμπί VALIDATE της ράγας ανοίγει ΠΡΟΦΟΡΤΩΜΕΝΟ με την τρέχουσα επιλογή
+     του flowchart (flowchart.js → window.fcSelectedUid). Καμία επιλογή = κενό. */
   const hook = () => {
     const b = $id("fc-schedval-btn");
-    if (b && !b._svWired) { b._svWired = true; b.onclick = () => window.openSchedVal(); }
+    if (b && !b._svWired) {
+      b._svWired = true;
+      b.onclick = () => window.openSchedVal(
+        (window.fcSelectedUid && window.fcSelectedUid()) || ""
+      );
+    }
   };
   document.addEventListener("DOMContentLoaded", hook);
   hook();
