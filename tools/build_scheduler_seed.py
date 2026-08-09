@@ -54,7 +54,7 @@ for t, kind, obj in SEQ:
 # events keep referencing people by CODE (historical facts). Placeholder
 # names/MN/rank/callsign are deterministic.
 ip_oid = lambda n: f"oid-ip-{n:02d}"          # noqa: E731
-IP_RANKS = ["ΥΠΣΓΟΣ", "ΣΓΟΣ", "ΕΠΣΓΟΣ"]      # cycled
+IP_RANKS = ["1Lt", "Capt", "Maj"]            # cycled — English ranks (board is English)
 
 students, cut, prim_code = [], {}, {}
 N = len(GLOBAL)
@@ -65,7 +65,7 @@ for i in range(1, 31):
     students.append({
         "oid": f"oid-sp-{i:02d}", "code": f"SP-{i}",
         "first_name": "Test", "last_name": f"Student{i:02d}",
-        "mn": f"MN-{1000 + i}", "rank": "S.TEN" if cls == "18ITAF" else "ΑΝΘΣΓΟΣ",
+        "mn": f"MN-{1000 + i}", "rank": "S.Ten" if cls == "18ITAF" else "2Lt",
         "class": cls, "status": "active",
         "primary_ip": ip_oid(p), "reserve_ips": [ip_oid(r0), ip_oid(r1)],
         "avoid_ips": [], "notes": ""})

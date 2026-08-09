@@ -820,7 +820,7 @@
   const students = () => (S().get("students") || []).slice();
   const instructors = () => (S().get("instructors") || []).slice();
   const activeIps = () => instructors().filter((i) => (i.status || "active") !== "departed");
-  const RANKS = ["ΑΝΘΣΓΟΣ", "ΥΠΣΓΟΣ", "ΣΓΟΣ", "ΕΠΣΓΟΣ", "S.TEN"];
+  const RANKS = ["Cdt", "2Lt", "1Lt", "Capt", "Maj", "S.Ten", "Lt"];
 
   /* ── boot ───────────────────────────────────────────────────────────────── */
   window.schInit = async function schInit() {
