@@ -781,8 +781,8 @@
   };
 
   /* ── ΚΑΡΤΑ TRAINING SECTION (groups) ──────────────────────────────────────
-     §3.5 Η ΚΑΡΤΑ ΚΡΑΤΑ ΜΟΝΟ: κωδικό · σύντομο όνομα · ΜΙΑ γραμμή μετρικών ·
-     badges κατάστασης. Τα τσιπάκια αναφοράς, τα in-block exams, οι πύλες και
+     §3.5 Η ΚΑΡΤΑ ΚΡΑΤΑ ΜΟΝΟ: κωδικό + badges (user 2026-08-09). Όνομα/μετρικές:
+     tooltip + side sheet. Τα τσιπάκια αναφοράς, τα in-block exams, οι πύλες και
      τα data notes ζουν ΟΛΑ στο popup (side sheet) — τίποτα δεν χάνεται.     */
   function card(n, cls, link, noId) {
     const full = n.label + (n.name ? " — " + n.name : "");
@@ -791,8 +791,6 @@
       aria-pressed="false" aria-label="${esc(full)}"
       title="${esc(full + " · " + (LINK_TITLE[link] || ""))}">
       <span class="fc-c-top"><span class="fc-c-code">${esc(shortLabel(n))}</span>${statusChips(n)}</span>
-      <span class="fc-c-name">${esc(n.name || "")}</span>
-      <span class="fc-c-m">${metrics(n)}</span>
     </button>`;
   }
 
@@ -825,8 +823,6 @@
         <span class="fc-sec-caret" aria-hidden="true">${open ? "▾" : "▸"}</span>
         <span class="fc-c-code">${esc(shortLabel(g))}</span>${statusChips(g)}
       </span>
-      <span class="fc-c-name">${esc(g.name || "")}</span>
-      <span class="fc-c-m">${metrics(g)}</span>
     </button>`;
     const body = open
       ? `<div class="fc-sec-body"><div class="fc-sec-chain">${srtChain(g, list)}</div></div>`
@@ -926,8 +922,6 @@
     return `<button type="button" class="fc-exchip" data-jump="g:${esc(x.node)}" data-exam="${esc(e.code)}"
       title="${esc(ttl)}" aria-label="${esc(ttl)}">
       <span class="fc-c-top"><b>${esc(e.code)}</b></span>
-      <span class="fc-c-name">${esc(e.name || "")}</span>
-      <span class="fc-c-m">${esc(m)}</span>
     </button>`;
   }
 
