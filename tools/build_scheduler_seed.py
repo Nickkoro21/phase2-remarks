@@ -122,11 +122,26 @@ for s in students:
              "instructor": ip, "device": ("OFT" if j % 2 else "FTD") if srt.get("band") == "fs" else "T-6A",
              "result": "completed", "note": ""})
 
+# YSTERISI test fixture (rule 9c): SP-11 flew a repeat the PREVIOUS workday, so
+# no flight is legal for SP-11 on the same day or the next working day.
+def next_pending_sortie(sc):
+    c = cut[sc]
+    for idx, (t, kind, obj, key) in enumerate(GLOBAL):
+        if kind == "s" and idx >= c:
+            return obj
+    return None
+
+sp11_srt = next_pending_sortie("SP-11")
+if sp11_srt is not None:
+    add({"date": workday_back(1), "node": "s:" + sp11_srt["id"], "scope": "student", "student": "SP-11",
+         "instructor": "IP-11", "device": "OFT" if sp11_srt.get("band") == "fs" else "T-6A",
+         "result": "repeat", "note": "YSTERISI — repeat, no flight same/next working day (test fixture)"})
+
 gates = [
     {"student": "SP-14", "type": "progress_test_AE", "date": workday_back(2), "outcome": "pending",
      "note": "Progress test with AE pending — flights blocked until flown"},
     {"student": "SP-23", "type": "kepe_entry", "date": workday_back(5), "outcome": "open",
-     "note": "KEPE — max 1 dual sortie per day"},
+     "note": "SMS (Special Monitoring Status) — max 1 dual sortie or 1 F/S per day; a 2nd item only as SOLO"},
 ]
 
 config = {
@@ -149,3 +164,28 @@ seed = {"schema": "scheduler-seed-v2", "generated_for_testing": True,
 out = ROOT / "data" / "scheduler" / "seed.json"
 out.write_text(json.dumps(seed, ensure_ascii=False, indent=1), encoding="utf-8")
 print(f"seed v2: {len(log)} log events, cutoffs {min(cut.values())}–{max(cut.values())} of {N} nodes")
+
+# report: which SPs' NEXT flight sortie falls inside a solo-allowed section
+def solo_candidate(srt):
+    if srt.get("first_solo") or srt.get("solo_candidate"):
+        return True
+    g = groups.get(srt.get("group", ""))
+    if not g:
+        return False
+    cand = g.get("solo_candidate_sorties")
+    if isinstance(cand, list):
+        return srt["id"] in cand
+    return bool(g.get("solo_allowed"))
+
+def next_flight(sc):
+    for idx, (t, kind, obj, key) in enumerate(GLOBAL):
+        if kind == "s" and obj.get("band") != "fs" and idx >= cut[sc]:
+            return obj
+    return None
+
+solo_next = []
+for s in students:
+    nf = next_flight(s["code"])
+    if nf is not None and solo_candidate(nf):
+        solo_next.append(f"{s['code']}→{nf['id']}")
+print("next flight is a solo-candidate sortie for:", ", ".join(solo_next) if solo_next else "NOBODY")

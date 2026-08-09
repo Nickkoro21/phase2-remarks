@@ -32,8 +32,7 @@ async function init() {
   try {
     const res = await fetch("../data/observations/master_index.json", { cache: "no-store" });
     state.master = await res.json();
-    $("databadge").textContent =
-      `${state.master.totals.observations} observations · ${state.master.totals.items} items · index ${state.master.generated_at}`;
+    $("databadge").textContent = "last revisited July 2026";
     renderCategories();
   } catch (e) {
     $("databadge").textContent = "no index";
@@ -610,6 +609,9 @@ document.addEventListener("click", (e) => {
   const rss = document.createElement("script");
   rss.src = "remarksearch.js?v=" + Date.now();
   document.head.appendChild(rss);
+  const sys = document.createElement("script");
+  sys.src = "schedsync.js?v=" + Date.now();
+  document.head.appendChild(sys);
 }
 
 /* Light / dark theme toggle (persisted) */

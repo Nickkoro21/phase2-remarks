@@ -906,10 +906,16 @@ html.light .sch-no { opacity: 0.35; }
 .sch-ltimes { font-size: 11px; color: var(--muted); padding: 4px 0; display: block; }
 .sch-lact { display: inline-flex; gap: 3px; align-self: flex-end; padding-bottom: 2px; }
 .sch-in.is-bad { border-color: var(--bad); }
+.sch-in.is-amber { border-color: var(--warn); background: rgba(255, 180, 84, 0.08); }
 .sch-in option.cond { font-style: italic; }
 
 .sch-lwarn { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 5px; }
 .sch-wc { font-size: 11px; border-radius: 999px; padding: 1px 8px; border: 1px solid; line-height: 1.55; }
+/* institutional warnings — requirement id chip; the verbatim rides the tooltip */
+.sch-wc .sch-wcid {
+  font-style: normal; font-family: Consolas, monospace; font-size: 9.5px; opacity: 0.85;
+  margin-left: 6px; padding-left: 6px; border-left: 1px solid currentColor;
+}
 .sch-wc.is-soft { color: var(--warn); border-color: var(--warn); background: rgba(255, 180, 84, 0.09); }
 .sch-wc.is-hard { color: var(--bad); border-color: var(--bad); background: rgba(255, 122, 112, 0.11); font-weight: 600; }
 .sch-line:has(.sch-wc.is-soft) { border-left-color: var(--warn); }
@@ -992,6 +998,39 @@ html.light .sch-no { opacity: 0.35; }
   border-radius: 9px; padding: 8px 10px; margin-bottom: 10px;
 }
 
+/* ── progress editor v2 — collapsible sections, inline prerequisites ─────── */
+.sch-psechdr {
+  display: flex; align-items: center; gap: 7px; width: 100%; text-align: left;
+  background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px;
+  color: var(--muted); font-size: 11.5px; font-weight: 600; letter-spacing: 0.3px;
+  padding: 4px 8px; cursor: pointer; margin-bottom: 4px;
+}
+.sch-psechdr:hover { border-color: var(--accent); color: var(--text); }
+.sch-psechdr.is-next { border-left: 3px solid var(--accent); color: var(--text); }
+.sch-psechdr .count { margin-left: auto; }
+.sch-parrow { font-size: 10px; color: var(--accent); width: 12px; }
+.sch-psec.is-closed { margin-bottom: 4px; }
+.sch-pnode { font-size: 11px; padding: 2px 5px; }
+.sch-pnode.is-next { box-shadow: inset 0 0 0 1px var(--accent); }
+.sch-pneeds {
+  flex-basis: 100%; font-size: 10px; color: var(--muted); font-style: italic;
+  padding-top: 1px; border-top: 1px dashed var(--line); margin-top: 2px;
+}
+.sch-pneed.is-completed { color: var(--good); }
+.sch-pneed.is-repeat { color: var(--bad); }
+.sch-pneed.is-absent_makeup { color: var(--warn); }
+.sch-pnode { flex-wrap: wrap; }
+
+/* ── roster live filter · training-log date groups · alternates ──────────── */
+.sch-rosterbar { display: flex; margin-bottom: 10px; }
+.sch-rosterbar .sch-fld { max-width: 460px; flex: 1 1 320px; }
+.sch-loggrp td {
+  background: var(--panel-2); color: var(--accent); font-family: Consolas, monospace;
+  font-size: 11.5px; font-weight: 700; letter-spacing: 0.4px;
+  border-top: 2px solid var(--line); padding: 5px 8px;
+}
+.sch-altwrap { margin-bottom: 5px; }
+
 /* ── balance ─────────────────────────────────────────────────────────────── */
 .sch-seg { display: inline-flex; gap: 4px; }
 .sch-tbl td.is-soft { color: var(--warn); }
@@ -1041,11 +1080,13 @@ html.light .sch-no { opacity: 0.35; }
 
 /* ── Phase B in light theme ── */
 html.light .sch-line, html.light .sch-mixcell, html.light .sch-nsc,
-html.light .sch-kpi, html.light .sch-pnode { background: #ffffff; }
+html.light .sch-kpi, html.light .sch-pnode, html.light .sch-psechdr { background: #ffffff; }
 html.light .sch-modal { background: rgba(26, 39, 51, 0.42); }
 html.light .sch-modalbox { box-shadow: 0 26px 60px rgba(20, 35, 55, 0.22); }
 html.light .sch-wc.is-soft { background: rgba(169, 100, 16, 0.10); }
 html.light .sch-wc.is-hard { background: rgba(187, 64, 52, 0.10); }
 html.light .sch-mini.is-on.good { background: rgba(20, 133, 92, 0.13); }
 html.light .sch-mini.is-on.danger { background: rgba(187, 64, 52, 0.13); }
+html.light .sch-in.is-amber { background: rgba(169, 100, 16, 0.07); }
+html.light .sch-loggrp td { background: #ffffff; }
 html.light .sch-mini.is-on.warn { background: rgba(169, 100, 16, 0.13); }

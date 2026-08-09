@@ -36,9 +36,10 @@
     progress_check_cmdr: "Progress Check (Commander)",
     suitability: "Suitability Examination",
     referral: "Referral",
-    kepe_in: "KEPE — entry",
-    kepe_out: "KEPE — exit",
+    kepe_in: "SMS — entry",                       // SMS = Special Monitoring Status (stored type stays kepe_*)
+    kepe_out: "SMS — exit",
   };
+  const GATE_TITLE = { kepe_in: "Special Monitoring Status", kepe_out: "Special Monitoring Status" };
   const GATE_ALIAS = {
     progress_test_ae: "progress_check_ae", progress_check_ae: "progress_check_ae",
     progress_test_dkti: "progress_check_cmdr", progress_test_cmdr: "progress_check_cmdr",
@@ -305,7 +306,8 @@
       .map((g) => {
         const t = normGate(g.type);
         return Object.assign({}, g, {
-          gateType: t, label: GATE_LABEL[t] || g.type, locksFlying: !!GATE_LOCKS_FLYING[t],
+          gateType: t, label: GATE_LABEL[t] || g.type, title: GATE_TITLE[t] || "",
+          locksFlying: !!GATE_LOCKS_FLYING[t],
           maxDualPerDay: t === "kepe_in" ? 1 : null,
         });
       });
@@ -489,7 +491,11 @@
     }
     for (const r of (window.SchedStore.get("dutyRoster") || [])) {
       if (!r.date) continue;
-      [r.SOF, r.RSU, r.ground_instructor].concat(r.alt_instructors || []).forEach((p) => add(p, r.date));
+      /* duty roster v2 (per-wave duties) with the legacy shape as fallback */
+      const v2 = r.sof_a !== undefined || r.sof_b !== undefined || r.rsu !== undefined
+        || r.ground_1 !== undefined || r.ground_2 !== undefined;
+      const duties = v2 ? [r.sof_a, r.sof_b, r.rsu, r.ground_1, r.ground_2] : [r.SOF, r.RSU, r.ground_instructor];
+      duties.concat(r.alt_instructors || []).forEach((p) => add(p, r.date));
     }
     m.forEach((a) => a.sort());
     actIdx = m;
@@ -552,6 +558,10 @@
 
   const PANES = ["board", "roster", "log", "balance"];
   const STATUS_OPTS = ["active", "hold", "kepe", "withdrawn"];
+  /* "kepe" stays the STORED value for compatibility — the UI says SMS */
+  const STATUS_LABEL = { kepe: "SMS" };
+  const STATUS_TITLE = { kepe: "Special Monitoring Status" };
+  const statusLabel = (s) => STATUS_LABEL[s] || s;
   const AV_CYCLE = ["available", "LV", "AMC", "TO", "SLV"];
   const RESULT_OPTS = [
     { v: "completed", t: "Completed" },
@@ -565,7 +575,7 @@
 
   const ui = {
     booted: false, pane: "board",
-    roster: { editS: null, editI: null, addS: false, addI: false, availDate: "" },
+    roster: { editS: null, editI: null, addS: false, addI: false, availDate: "", q: "" },
     log: { f: { student: "", kind: "", from: "", to: "", q: "" }, form: null, nodeQ: "", open: false },
   };
 
@@ -641,19 +651,34 @@
   }
 
   /* ══ ROSTER ══════════════════════════════════════════════════════════════ */
+  /* one live filter over BOTH tables — code, class, notes; case-insensitive */
+  function rosterMatch(bits) {
+    const q = ui.roster.q.trim().toLowerCase();
+    if (!q) return true;
+    const hay = bits.filter(Boolean).join(" ").toLowerCase();
+    return q.split(/\s+/).every((t) => hay.indexOf(t) >= 0);
+  }
+  const fStudents = () => students().filter((s) => ui.roster.editS === s.code || rosterMatch([s.code, s.class, s.notes, s.status, s.primary_ip]));
+  const fInstructors = () => instructors().filter((i) => ui.roster.editI === i.code || rosterMatch([i.code, i.notes]));
+
   function renderRoster() {
     const el = $id("sch-roster");
     el.innerHTML = `
+      <div class="sch-rosterbar">
+        <label class="sch-fld grow"><span>Filter roster</span>
+          <input type="search" id="sch-rosterq" class="sch-in" value="${esc(ui.roster.q)}"
+                 placeholder="filter students & instructors — code · class · notes" autocomplete="off"></label>
+      </div>
       <div class="sch-grid2">
         <section class="panel sch-panel">
-          <div class="sch-h"><h2>Students <span class="count">${students().length}</span></h2>
+          <div class="sch-h"><h2>Students <span class="count" id="sch-scount">${fStudents().length}/${students().length}</span></h2>
             <button type="button" class="sch-btn" data-act="add-s">+ Student</button></div>
-          <div class="sch-scroll">${studentTable()}</div>
+          <div class="sch-scroll" id="sch-stww">${studentTable()}</div>
         </section>
         <section class="panel sch-panel">
-          <div class="sch-h"><h2>Instructors <span class="count">${instructors().length}</span></h2>
+          <div class="sch-h"><h2>Instructors <span class="count" id="sch-icount">${fInstructors().length}/${instructors().length}</span></h2>
             <button type="button" class="sch-btn" data-act="add-i">+ Instructor</button></div>
-          <div class="sch-scroll">${instructorTable()}</div>
+          <div class="sch-scroll" id="sch-itww">${instructorTable()}</div>
         </section>
       </div>
       <section class="panel sch-panel">
@@ -677,12 +702,12 @@
   }
 
   function studentTable() {
-    const list = students();
+    const list = fStudents();
     const rows = list.map((s) => (ui.roster.editS === s.code ? studentEditRow(s) : studentRow(s))).join("");
     const add = ui.roster.addS ? studentEditRow({ code: "", class: "", status: "active", primary_ip: "", reserve_ips: [], notes: "" }, true) : "";
     return `<table class="sch-tbl">
       <thead><tr><th>Code</th><th>Class</th><th>Status</th><th>Primary IP</th><th>Reserve IPs</th><th>Notes</th><th class="sch-act"></th></tr></thead>
-      <tbody>${rows}${add}${!list.length && !ui.roster.addS ? `<tr><td colspan="7" class="sch-hint">No students yet.</td></tr>` : ""}</tbody></table>`;
+      <tbody>${rows}${add}${!list.length && !ui.roster.addS ? `<tr><td colspan="7" class="sch-hint">${ui.roster.q ? "No student matches the filter." : "No students yet."}</td></tr>` : ""}</tbody></table>`;
   }
 
   function studentRow(s) {
@@ -690,7 +715,7 @@
     return `<tr>
       <td class="sch-code">${esc(s.code)}</td>
       <td>${esc(s.class || "—")}</td>
-      <td><span class="sch-badge st-${esc(s.status || "active")}">${esc(s.status || "active")}</span></td>
+      <td><span class="sch-badge st-${esc(s.status || "active")}"${STATUS_TITLE[s.status] ? ` title="${esc(STATUS_TITLE[s.status])}"` : ""}>${esc(statusLabel(s.status || "active"))}</span></td>
       <td class="sch-mono">${esc(s.primary_ip || "—")}</td>
       <td class="sch-mono">${esc((s.reserve_ips || []).filter(Boolean).join(" · ") || "—")}</td>
       <td class="sch-note">${esc(s.notes || "")}${idle == null ? "" : ` <span class="sch-nd" title="working days since the last recorded event">${idle}d</span>`}</td>
@@ -707,7 +732,7 @@
       <td><input class="sch-in" data-f="code" value="${esc(s.code)}" placeholder="SP-31"${isNew ? "" : " readonly"}></td>
       <td><input class="sch-in" data-f="class" value="${esc(s.class || "")}" list="sch-classlist" placeholder="99HAF-A"></td>
       <td><select class="sch-in" data-f="status">${STATUS_OPTS.map((o) =>
-        `<option value="${o}"${(s.status || "active") === o ? " selected" : ""}>${o}</option>`).join("")}</select></td>
+        `<option value="${o}"${(s.status || "active") === o ? " selected" : ""}>${esc(statusLabel(o))}</option>`).join("")}</select></td>
       <td><select class="sch-in" data-f="primary_ip">${ipOptions(s.primary_ip || "", true)}</select></td>
       <td class="sch-two"><select class="sch-in" data-f="r0">${ipOptions(r[0] || "", true)}</select>
         <select class="sch-in" data-f="r1">${ipOptions(r[1] || "", true)}</select></td>
@@ -718,14 +743,14 @@
   }
 
   function instructorTable() {
-    const list = instructors();
+    const list = fInstructors();
     const rows = list.map((i) => (ui.roster.editI === i.code ? ipEditRow(i) : ipRow(i))).join("");
     const add = ui.roster.addI ? ipEditRow({ code: "", quals: {}, duty_eligible: {}, notes: "" }, true) : "";
     return `<table class="sch-tbl">
       <thead><tr><th>Code</th><th title="Night qualified">Night</th><th title="Evaluator — checkrides">Eval</th>
       <th title="Ground instructor">Ground</th><th title="Duty eligible — Supervisor of Flying">SOF</th>
-      <th title="Duty eligible — Runway Supervisory Unit">RSU</th><th>Notes</th><th class="sch-act"></th></tr></thead>
-      <tbody>${rows}${add}${!list.length && !ui.roster.addI ? `<tr><td colspan="8" class="sch-hint">No instructors yet.</td></tr>` : ""}</tbody></table>`;
+      <th title="Duty eligible — Runway Supervisory Unit (solo supervision)">RSU</th><th>Notes</th><th class="sch-act"></th></tr></thead>
+      <tbody>${rows}${add}${!list.length && !ui.roster.addI ? `<tr><td colspan="8" class="sch-hint">${ui.roster.q ? "No instructor matches the filter." : "No instructors yet."}</td></tr>` : ""}</tbody></table>`;
   }
 
   const yn = (v) => (v ? `<span class="sch-yes">●</span>` : `<span class="sch-no">·</span>`);
@@ -790,6 +815,17 @@
       if (e.target.id !== "sch-avdate") return;
       ui.roster.availDate = e.target.value;
       $id("sch-avgrid").innerHTML = availGrid();
+    });
+    /* live roster filter — only the two tables repaint, the input keeps focus */
+    el.addEventListener("input", (e) => {
+      if (e.target.id !== "sch-rosterq") return;
+      ui.roster.q = e.target.value;
+      const st = $id("sch-stww"), it = $id("sch-itww");
+      if (st) st.innerHTML = studentTable();
+      if (it) it.innerHTML = instructorTable();
+      const sc = $id("sch-scount"), ic = $id("sch-icount");
+      if (sc) sc.textContent = fStudents().length + "/" + students().length;
+      if (ic) ic.textContent = fInstructors().length + "/" + instructors().length;
     });
     el.addEventListener("click", (e) => {
       const av = e.target.closest("[data-av]");
@@ -939,6 +975,14 @@
     });
   }
 
+  const DOW = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  function dayHead(iso, n) {
+    const t = Date.parse(iso + "T00:00:00Z");
+    const dow = isNaN(t) ? "" : " — " + DOW[new Date(t).getUTCDay()];
+    return `<tr class="sch-loggrp"><td colspan="10">${esc(iso)}${esc(dow)} <span class="count">${n} event${n === 1 ? "" : "s"}</span></td></tr>`;
+  }
+
+  /* the log renders GROUPED under date headers, newest date first */
   function renderLogTable() {
     const all = logRows();
     const rows = all.slice(0, LOG_ROW_CAP);
@@ -947,7 +991,26 @@
       cnt.textContent = all.length + " of " + (S().get("trainingLog") || []).length
         + (all.length > rows.length ? " · newest " + rows.length + " shown" : "");
     }
+    const perDay = new Map();
+    for (const ev of rows) {
+      const d = ev.date || ev.start_date || "—";
+      perDay.set(d, (perDay.get(d) || 0) + 1);
+    }
+    let lastDate = null;
     const body = rows.map((ev) => {
+      const gd = ev.date || ev.start_date || "—";
+      const head = gd !== lastDate ? dayHead(gd, perDay.get(gd) || 0) : "";
+      lastDate = gd;
+      return head + logRowHtml(ev);
+    }).join("");
+    const host = $id("sch-logtbl");
+    if (!host) return;
+    host.innerHTML = `<table class="sch-tbl">
+      <thead><tr><th>Date</th><th>Node</th><th>Kind</th><th>Scope</th><th>IP</th><th>Device</th><th>Result</th><th>Absent</th><th>Note</th><th class="sch-act"></th></tr></thead>
+      <tbody>${body || `<tr><td colspan="10" class="sch-hint">No events match.</td></tr>`}</tbody></table>`;
+  }
+
+  function logRowHtml(ev) {
       const d = R().describe(evNode(ev));
       const k = R().kindOf(evNode(ev));
       const when = ev.start_date ? esc(ev.start_date) + " → " + esc(ev.end_date || "…") : esc(ev.date || "—");
@@ -970,12 +1033,6 @@
         <td class="sch-act"><button type="button" class="sch-mini" data-act="edit-ev" data-id="${esc(ev.id)}" title="Edit">✎</button>
           <button type="button" class="sch-mini danger" data-act="del-ev" data-id="${esc(ev.id)}" title="Delete">✕</button></td>
       </tr>`;
-    }).join("");
-    const host = $id("sch-logtbl");
-    if (!host) return;
-    host.innerHTML = `<table class="sch-tbl">
-      <thead><tr><th>Date</th><th>Node</th><th>Kind</th><th>Scope</th><th>IP</th><th>Device</th><th>Result</th><th>Absent</th><th>Note</th><th class="sch-act"></th></tr></thead>
-      <tbody>${body || `<tr><td colspan="10" class="sch-hint">No events match.</td></tr>`}</tbody></table>`;
   }
 
   /* ── the entry form ─────────────────────────────────────────────────────── */
