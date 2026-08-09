@@ -1110,3 +1110,42 @@ html.light .sch-mini.is-on.warn { background: rgba(169, 100, 16, 0.13); }
 }
 html.light .sch-consqban.is-pd { background: rgba(187, 64, 52, 0.08); }
 html.light .sch-consqban.is-apt { background: rgba(169, 100, 16, 0.08); }
+
+/* ── Round 4 — person data model, roster rows, collapsible board ─────────── */
+/* roster: compact summary rows that expand into the full edit form */
+.sch-rrow {
+  border: 1px solid var(--line); border-radius: 9px; background: var(--panel-2);
+  margin-bottom: 6px; overflow: hidden;
+}
+.sch-rrow.is-exp { border-color: var(--accent); }
+.sch-rrow.is-dep { opacity: 0.6; }
+.sch-rrow.is-dep .sch-code { color: var(--muted); }
+.sch-rsum {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 7px;
+  padding: 6px 10px; cursor: pointer; font-size: 12.5px; line-height: 1.6;
+}
+.sch-rsum:hover { background: var(--accent-soft); }
+.sch-rarrow { font-size: 10px; color: var(--accent); width: 12px; flex: 0 0 auto; }
+.sch-rmeta { color: var(--muted); font-size: 11px; letter-spacing: 0.4px; }
+.sch-rname { color: var(--text); font-weight: 600; }
+.sch-rform {
+  border-top: 1px solid var(--line); padding: 10px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.sch-rform .sch-fld { min-width: 118px; }
+.sch-multi { min-height: 66px; }
+/* collapsible board sections — chevron header, aria-expanded */
+.sch-sec {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: transparent; border: 0; padding: 0; cursor: pointer;
+  color: var(--text); font: inherit; text-align: left;
+}
+.sch-sec h2 { font-size: 14px; letter-spacing: 0.4px; margin: 0; display: inline-flex; align-items: center; gap: 8px; }
+.sch-sec:hover h2, .sch-sec:hover > span:not(.sch-secarr) { color: var(--accent); }
+.sch-secarr { font-size: 10px; color: var(--accent); width: 12px; flex: 0 0 auto; }
+.sch-secmini {
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.7px; color: var(--muted);
+}
+.sch-mixwrap { min-width: 0; }
+html.light .sch-rrow { background: #ffffff; }
+html.light .sch-rsum:hover { background: var(--accent-soft); }

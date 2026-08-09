@@ -49,15 +49,26 @@ for t, kind, obj in SEQ:
     seen.add(key)
     GLOBAL.append((t, kind, obj, key))
 
-# ── students: cutoffs spread across the stage ────────────────────────────────
-students, cut = [], {}
+# ── students & instructors — ROUND 4: OIDs are the primary keys ─────────────
+# primary_ip / reserve_ips STORE INSTRUCTOR OIDS ("oid-ip-XX"); training-log
+# events keep referencing people by CODE (historical facts). Placeholder
+# names/MN/rank/callsign are deterministic.
+ip_oid = lambda n: f"oid-ip-{n:02d}"          # noqa: E731
+IP_RANKS = ["ΥΠΣΓΟΣ", "ΣΓΟΣ", "ΕΠΣΓΟΣ"]      # cycled
+
+students, cut, prim_code = [], {}, {}
 N = len(GLOBAL)
 for i in range(1, 31):
     cls = "99HAF-A" if i <= 22 else ("18ITAF" if i <= 26 else "3GAF")
-    students.append({"code": f"SP-{i}", "class": cls, "status": "active",
-                     "primary_ip": f"IP-{((i - 1) % 15) + 1}",
-                     "reserve_ips": [f"IP-{(i % 15) + 1}", f"IP-{((i + 1) % 15) + 1}"],
-                     "notes": ""})
+    p, r0, r1 = ((i - 1) % 15) + 1, (i % 15) + 1, ((i + 1) % 15) + 1
+    prim_code[f"SP-{i}"] = (f"IP-{p}", f"IP-{r0}", f"IP-{r1}")   # codes for the log
+    students.append({
+        "oid": f"oid-sp-{i:02d}", "code": f"SP-{i}",
+        "first_name": "Test", "last_name": f"Student{i:02d}",
+        "mn": f"MN-{1000 + i}", "rank": "S.TEN" if cls == "18ITAF" else "ΑΝΘΣΓΟΣ",
+        "class": cls, "status": "active",
+        "primary_ip": ip_oid(p), "reserve_ips": [ip_oid(r0), ip_oid(r1)],
+        "avoid_ips": [], "notes": ""})
     # spread: SP-1 ~15% ... SP-22 ~85% of the stage; foreigners mid-range
     if cls == "99HAF-A":
         frac = 0.15 + 0.70 * (i - 1) / 21
@@ -67,8 +78,15 @@ for i in range(1, 31):
         frac = 0.50 + 0.10 * (i - 27)
     cut[f"SP-{i}"] = int(N * frac)
 
-instructors = [{"code": f"IP-{i}", "quals": {"night": True, "evaluator": i <= 4, "ground": i in (3, 7, 11)},
-                "duty_eligible": {"SOF": True, "RSU": True}, "notes": ""} for i in range(1, 16)]
+instructors = [{
+    "oid": ip_oid(i), "code": f"IP-{i}",
+    "first_name": "Test", "last_name": f"Instructor{i:02d}",
+    "mn": f"MN-{2000 + i}", "rank": IP_RANKS[(i - 1) % len(IP_RANKS)],
+    "callsign": f"VIPER{i:02d}",
+    "quals": {"night": True, "evaluator": i <= 4, "ground": i in (3, 7, 11),
+              "rsu_solo": i in (2, 5, 9, 13)},
+    "duty_eligible": {"SOF": True, "RSU": True},
+    "status": "active", "notes": ""} for i in range(1, 16)]
 
 # ── build training log ───────────────────────────────────────────────────────
 TODAY = date(2026, 8, 9)
@@ -117,7 +135,8 @@ for s in students:
     my = [(idx, obj) for idx, (t, kind, obj, key) in enumerate(GLOBAL) if kind == "s" and idx < c]
     for j, (idx, srt) in enumerate(my):
         days_ago = max(1, int(50 * (1 - idx / N)) + (0 if j % 3 else 1))
-        ip = s["primary_ip"] if j % 4 else s["reserve_ips"][j % 2]
+        pc, rc0, rc1 = prim_code[sc]                 # events reference CODES
+        ip = pc if j % 4 else (rc0, rc1)[j % 2]
         add({"date": workday_back(days_ago), "node": "s:" + srt["id"], "scope": "student", "student": sc,
              "instructor": ip, "device": ("OFT" if j % 2 else "FTD") if srt.get("band") == "fs" else "T-6A",
              "result": "completed", "note": ""})
@@ -207,7 +226,7 @@ config = {
     "day_mix_default": {"99HAF-A": 10, "18ITAF": 4, "3GAF": 4},
     "absence_codes": ["LV", "SLV", "HLV", "SCL", "OFF", "TO", "AMC"],
 }
-seed = {"schema": "scheduler-seed-v2", "generated_for_testing": True,
+seed = {"schema": "scheduler-seed-v3", "generated_for_testing": True,
         "students": students, "instructors": instructors,
         "classes": [{"id": c, "members": [s["code"] for s in students if s["class"] == c]}
                     for c in ("99HAF-A", "18ITAF", "3GAF")],
@@ -215,7 +234,9 @@ seed = {"schema": "scheduler-seed-v2", "generated_for_testing": True,
         "gates": gates, "day_plans": {}}
 out = ROOT / "data" / "scheduler" / "seed.json"
 out.write_text(json.dumps(seed, ensure_ascii=False, indent=1), encoding="utf-8")
-print(f"seed v2: {len(log)} log events, cutoffs {min(cut.values())}–{max(cut.values())} of {N} nodes")
+print(f"seed v3: {len(students)} students, {len(instructors)} instructors (oid PKs, "
+      f"rsu_solo: IP-2/5/9/13), {len(log)} log events, "
+      f"cutoffs {min(cut.values())}–{max(cut.values())} of {N} nodes")
 print("round-2 fixtures:",
       f"SP-11 lag on {sp11_srt['id'] if sp11_srt else '—'} ({workday_back(1)})",
       f"| SP-19 fail on section-final {sp19_final['id'] if sp19_final else '—'} ({workday_back(2)})",

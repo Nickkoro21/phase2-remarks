@@ -17,8 +17,8 @@
 
 | Πίνακας | Πεδία-κλειδιά |
 |---|---|
-| `students` | code (SP-1…SP-30 για τις δοκιμές), class (π.χ. 99HAF-A, 18ITAF, 3GAF), status, primary_ip, reserve_ips[2], notes |
-| `instructors` | code (IP-1…IP-15), quals {night, evaluator, ground}, duty_eligible {SOF, RSU}, notes |
+| `students` | **oid (PK, σταθερό)**, code (SP-x δοκιμές), **first_name, last_name, mn (ΑΜ), rank**, class, status, **primary_ip: OID, reserve_ips: [OID]** (αναφορές με object id — οι εκπαιδευτές φεύγουν/αλλάζουν, τα OID όχι), notes |
+| `instructors` | **oid (PK)**, code, **first_name, last_name, mn, rank, callsign**, quals {night, evaluator, ground, **rsu_solo**}, duty_eligible {SOF, RSU}, **status {active\|departed}** (ο «χαμένος» εκπαιδευτής ΔΕΝ διαγράφεται — μαρκάρεται departed, τα ιστορικά μένουν ακέραια), notes |
 | `classes` | id, μέλη, ημ/νία έναρξης |
 | `training_events` | date, node (uid flowchart2), scope: class\|student, instructor, device, result {completed \| repeat \| score%}, **absent[] {student, λόγος}** (σε class scope), note. Μαθήματα: **start_date, end_date** |
 | `availability` | person, date, κατάσταση {available \| **LV \| SLV \| HLV \| SCL \| OFF \| TO \| AMC**} |

@@ -46,9 +46,14 @@
     const t = Date.parse(String(iso) + "T00:00:00Z");
     return isNaN(t) ? iso : new Date(t + d * DAY_MS).toISOString().slice(0, 10);
   };
+  const P = () => window.SchedPeople;
   const today = () => R().todayISO();
   const students = () => (S().get("students") || []).slice();
   const instructors = () => (S().get("instructors") || []).slice();
+  /* Round 4: departed instructors are OUT of every picker and every count of
+     the day — they stay only in history (Balance, old logs). */
+  const activeIps = () => instructors().filter((i) => (i.status || "active") !== "departed");
+  const ipDeparted = (code) => { const r = code ? S().find("instructors", code) : null; return !!(r && r.status === "departed"); };
   const AV_CYCLE = ["available", "LV", "SLV", "HLV", "SCL", "OFF", "TO", "AMC"];
   const FS_DEVICES = ["OFT", "FTD"];
 
@@ -172,6 +177,8 @@
     "st-52": "δύο κατηγορίες ασκήσεων το μέγιστο, μη συμπεριλαμβανομένης της εκπαίδευσης F/S στις διαδικασίες ανάγκης.",
     "st-53": "θ. …δεν θα πετάει άλλη έξοδο την ίδια ημέρα (πτήση ή F/S), προκειμένου να έχει επαρκή χρόνο για προετοιμασία.",
     "fail-47": "…μία έξοδο συγκυβέρνησης ή μία έξοδο F/S την ημέρα· πέραν της μιας, μόνον εφόσον η δεύτερη είναι πτήση «ΜΟΝΟΣ».",
+    /* Round 4 — instructor change after ΠΔ 29/2020 + avoid the negative evaluator */
+    "fail-22": "Ο μαθητής δεν θα ίπταται στη συνέχεια του Σταδίου με Εκπαιδευτή που έχει αλλάξει… να αποφεύγεται… και με Αξιολογητή που τον έχει βαθμολογήσει με ΥΣΤΕΡΗΣΗ ή ΑΠΟΤΥΧΙΑ σε πτήση Αξιολόγησης",
   };
   const reqW = (sev, text, id) => ({ sev: sev, text: text, req: id.replace(/n$/, ""), vb: REQ[id] || "" });
   const REQ_SRC = {
@@ -179,7 +186,7 @@
     /* Round 2 — the consequence engine (schedconsq.js) cites these */
     "fail-08": "3-01 §30δ(1)", "fail-09": "3-01 §30δ(2)", "fail-10": "3-01 §30ε", "fail-11": "3-01 §30στ",
     "fail-12": "3-01 §30ζ", "fail-16": "ΠΔ 29/2020 αρ.3 §1β · 3-01 §58β", "fail-17": "3-01 §22ζ-θ",
-    "fail-19": "3-01 §56", "fail-45": "3-01 §32γ",
+    "fail-19": "3-01 §56", "fail-45": "3-01 §32γ", "fail-22": "3-01 §24στ(6)(α),(δ)",
   };
   const CQ = () => window.SchedConsq || null;
 
@@ -242,12 +249,18 @@
         });
       }
     }
-    const note = cq.pdNote(sp);
-    if (note && ip && note.avoidIp && note.avoidIp === ip) {
-      out.push({
-        sev: "soft", req: "fail-16", vb: cq.vb("fail-16"),
-        text: sp + " — continue with a DIFFERENT instructor after the Progress Test — " + ip + " flew the failed checkride",
-      });
+    /* Round 4 — the LOST-INSTRUCTOR rule (fail-22): engine-derived avoided
+       IPs ∪ the student's manual avoid_ips; a hit is a HARD warning. The old
+       soft pdNote hint is covered by this (the failed-checkride IP is part of
+       the derived set). */
+    if (ip && window.SchedPeople) {
+      const hit = window.SchedPeople.avoidMap(sp).get(ip);
+      if (hit) {
+        out.push({
+          sev: "hard", req: "fail-22", vb: REQ["fail-22"],
+          text: sp + " — continue with a DIFFERENT instructor: " + ip + " is avoided — " + hit.reason,
+        });
+      }
     }
     if (node) {
       const d = R().describe(node);
@@ -325,6 +338,11 @@
       if (!l.id) l.id = newId("ln");
       if (l.customOn == null) l.customOn = !!String(l.custom || "").trim();
       if (l.altCustomOn == null) l.altCustomOn = !!String(l.altCustom || "").trim();
+      /* Round 4 flags — pre-Round-4 plans: a typed callsign counts as manual
+         (the old board never auto-filled it); the old auto IFF is handed to
+         the new chronological engine. */
+      if (l.callsignManual == null) l.callsignManual = !!String(l.callsign || "").trim();
+      if (l.iffManual == null) l.iffManual = false;
     };
     out.waves.forEach((w) => {
       if (!w.id) w.id = newId("wv");
@@ -415,6 +433,8 @@
       spWave1: new Set(), spFs1: new Set(), spNonSolo: new Map(), spSoloN: new Map(),
       spDayWarn: new Map(), spTurnWarn: new Map(),
       hard: 0, soft: 0, mixActual: new Map(), onBoard: new Set(),
+      classDual: new Map(), classSolo: new Map(),
+      csWarn: new Map(), iffWarn: new Map(), soloWarn: new Map(),
     };
     const pushSlot = (map, who, rec) => { if (!who) return; let a = map.get(who); if (!a) { a = []; map.set(who, a); } a.push(rec); };
 
@@ -452,6 +472,9 @@
           if (wi === firstIdx) A.spWave1.add(l.sp);
           const cl = S().classOf(l.sp) || "—";
           A.mixActual.set(cl, (A.mixActual.get(cl) || 0) + 1);
+          /* per-class dual/solo split (Round 4 item 6 — planned lines only) */
+          const split = isSolo(l) ? A.classSolo : A.classDual;
+          split.set(cl, (split.get(cl) || 0) + 1);
         }
       });
     });
@@ -464,6 +487,19 @@
         if (l.slot === 1) A.spFs1.add(l.sp);
       }
     });
+
+    /* ── ①b Round 4 engines — dynamic callsigns (personal + formation
+       letters A–F by T/O), IFF strictly chronological from the pool, and the
+       max-2-concurrent-SOLO sweep. The two assignment engines WRITE into the
+       plan only while it is a draft; the derived warnings are always fresh.
+       Editing any T/O re-runs this on the next analyze — live reassignment. */
+    {
+      const commit = plan.status === "draft";
+      const c1 = applyCallsigns(plan, A, commit);
+      const c2 = applyIff(plan, A, commit);
+      soloConcurrency(plan, A);
+      if (commit && (c1 || c2)) saveSoon();
+    }
 
     /* ── ② the mission dropdowns (they also feed the warnings) ───────── */
     for (const w of plan.waves) for (const l of w.lines) {
@@ -594,6 +630,156 @@
     });
   }
 
+  /* ── Round 4 · callsign engine ─────────────────────────────────────────
+     (a) SINGLE-SHIP lines: the IP's PERSONAL callsign auto-fills the field;
+     (b) FORMATION-track lines and TWO-SHIP NAVIGATIONS (N44xx/N45xx —
+         detected from the flowchart2 group name "…Two Ship Formation…") use
+         the standard letters A–F, assigned DYNAMICALLY by T/O across the
+         whole day: 2-ship pairs (same wave + same pair family + T/O within
+         one 5′ step), ordered by T/O, lead "A1" / wing "A2" by line order.
+         A letter is NEVER reused within the day (user ruling) — strictly
+         sequential; a 7th pair draws a soft "callsigns exhausted" warning.
+     Manual callsign edits (callsignManual) are never overwritten; clearing
+     the field hands it back to the engine.                                 */
+  const pushLW = (map, id, w) => { let a = map.get(id); if (!a) { a = []; map.set(id, a); } a.push(w); };
+  const FORM_LETTERS = "ABCDEFGHIJKL";
+  function pairClassOf(l) {
+    if (!l || !l.node || l.customOn) return "";
+    const d = R().describe(l.node);
+    if (!d || d.kind !== "flights") return "";
+    if (d.track === "formation") return "F";
+    if (d.track === "vfr_navigation") {
+      const g = R().node("g:" + d.group);
+      if (g && /two[\s-]?ship/i.test(g.name || "")) return "N";   // s:N4401-03 · s:N4501-03
+    }
+    return "";
+  }
+  function applyCallsigns(plan, A, commit) {
+    let changed = false;
+    const set = (l, v) => { v = String(v); if ((l.callsign || "") !== v) { if (commit) { l.callsign = v; changed = true; } } };
+    const mark = (l, v) => { if ((!!l.callsignAuto) !== v) { if (commit) { l.callsignAuto = v; changed = true; } } };
+    const pairs = [], lone = [], singles = [];
+    plan.waves.forEach((w, wi) => {
+      const forms = [];
+      w.lines.forEach((l, li) => {
+        const cls = pairClassOf(l);
+        if (cls) forms.push({ l: l, wi: wi, li: li, to: (A.t.get(l.id) || {}).to, cls: cls });
+        else singles.push(l);
+      });
+      for (const cls of ["F", "N"]) {
+        const list = forms.filter((f) => f.cls === cls && f.to != null).sort((a, b) => (a.to - b.to) || (a.li - b.li));
+        let i = 0;
+        while (i < list.length) {
+          if (i + 1 < list.length && list[i + 1].to - list[i].to <= A.c.stagger) {
+            pairs.push({ to: list[i].to, wi: wi, ships: [list[i], list[i + 1]] });
+            i += 2;
+          } else { lone.push(list[i]); i += 1; }
+        }
+        forms.filter((f) => f.cls === cls && f.to == null).forEach((f) => lone.push(f));
+      }
+    });
+    pairs.sort((a, b) => (a.to - b.to) || (a.wi - b.wi));
+    pairs.forEach((p, pi) => {
+      const L = FORM_LETTERS[pi] || "?";
+      if (pi >= 6) {
+        p.ships.forEach((sh) => pushLW(A.csWarn, sh.l.id,
+          { sev: "soft", text: "formation callsigns exhausted (A–F) — pair #" + (pi + 1) + " would be “" + L + "”" }));
+      }
+      p.ships.forEach((sh, si) => {
+        if (sh.l.callsignManual) return;               // manual edits are respected
+        set(sh.l, L + (si + 1));
+        mark(sh.l, true);
+      });
+    });
+    lone.forEach((f) => {
+      pushLW(A.csWarn, f.l.id, {
+        sev: "soft",
+        text: "formation sortie without a pair — no auto callsign (a pair = same wave, same kind, T/O within " + A.c.stagger + "′)",
+      });
+      if (!f.l.callsignManual && f.l.callsignAuto) { set(f.l, ""); mark(f.l, false); }
+    });
+    singles.forEach((l) => {
+      if (l.callsignManual || isSolo(l)) return;        // SOLO keeps its manual/default
+      const rec = l.ip ? S().find("instructors", l.ip) : null;
+      const cs = rec && rec.callsign ? String(rec.callsign) : "";
+      if (cs) { set(l, cs); mark(l, true); }
+      else if (l.callsignAuto) { set(l, ""); mark(l, false); }
+    });
+    return changed;
+  }
+
+  /* ── Round 4 · IFF strictly chronological ──────────────────────────────
+     Pool codes (2443-2445) are dealt in POOL ORDER following T/O order over
+     the WHOLE day (all waves + night). A code is reused only by a line whose
+     T/O is at or after the LDG of its previous holder; with everything busy
+     the earliest-freed code is reused under a soft "pool exhausted" warning.
+     Manual IFF values (iffManual) keep their text and only reserve their
+     code's window; lines without a readable T/O get no auto code.          */
+  function applyIff(plan, A, commit) {
+    const pool = A.c.iff;
+    if (!pool.length) return false;
+    let changed = false;
+    const set = (l, v) => { v = String(v); if ((l.iff || "") !== v) { if (commit) { l.iff = v; changed = true; } } };
+    const all = [];
+    plan.waves.forEach((w, wi) => w.lines.forEach((l, li) => {
+      const t = A.t.get(l.id) || {};
+      all.push({ l: l, wi: wi, li: li, to: t.to, ldg: t.ldg });
+    }));
+    const timed = all.filter((x) => x.to != null).sort((a, b) => (a.to - b.to) || (a.wi - b.wi) || (a.li - b.li));
+    const freeAt = new Map();
+    pool.forEach((cd) => freeAt.set(cd, -Infinity));
+    for (const x of timed) {
+      if (x.l.iffManual) {
+        const v = String(x.l.iff || "").trim();
+        if (freeAt.has(v) && x.ldg != null) freeAt.set(v, Math.max(freeAt.get(v), x.ldg));
+        continue;
+      }
+      let pick = "";
+      for (const cd of pool) { if (freeAt.get(cd) <= x.to) { pick = cd; break; } }
+      if (!pick) {
+        pick = pool[0];
+        for (const cd of pool) if (freeAt.get(cd) < freeAt.get(pick)) pick = cd;
+        pushLW(A.iffWarn, x.l.id, {
+          sev: "soft",
+          text: "IFF pool exhausted at " + min2hm(x.to) + " (" + pool.length + " codes, 4+ airborne) — " + pick + " reused while its previous holder is still airborne",
+        });
+      }
+      set(x.l, pick);
+      if (x.ldg != null) freeAt.set(pick, Math.max(freeAt.get(pick), x.ldg));
+    }
+    for (const x of all) {
+      if (x.to == null && !x.l.iffManual && String(x.l.iff || "") !== "") set(x.l, "");
+    }
+    return changed;
+  }
+
+  /* ── Round 4 · max 2 concurrent SOLOs (hard) ───────────────────────────
+     Computed from ACTUAL (T/O, LDG) interval overlap across ALL lines of the
+     day — never from wave membership. The warning lands on the line whose
+     T/O creates the 3rd concurrent solo and names every student involved.  */
+  function soloConcurrency(plan, A) {
+    const solos = [];
+    plan.waves.forEach((w) => w.lines.forEach((l) => {
+      if (!isSolo(l) || !l.sp) return;
+      const t = A.t.get(l.id) || {};
+      if (t.to == null || t.ldg == null) return;
+      solos.push({ l: l, sp: l.sp, to: t.to, ldg: t.ldg });
+    }));
+    solos.sort((a, b) => a.to - b.to);
+    for (let i = 0; i < solos.length; i++) {
+      const cur = solos[i];
+      const overlapping = solos.filter((o, j) => j < i && o.ldg > cur.to);
+      if (overlapping.length < 2) continue;
+      const group = overlapping.concat([cur]);
+      const until = Math.min.apply(null, group.map((o) => o.ldg));
+      pushLW(A.soloWarn, cur.l.id, {
+        sev: "hard",
+        text: group.length + " SOLO students airborne simultaneously (" + group.map((o) => o.sp).join(" · ") + ") "
+          + min2hm(cur.to) + "–" + min2hm(until) + " — maximum 2 concurrent solos",
+      });
+    }
+  }
+
   /* the mission the line actually carries, described */
   function missionInfo(l, opts, planned) {
     const out = { d: null, opt: null, warns: [] };
@@ -615,6 +801,7 @@
 
     if (l.sp && awayOf(l.sp, plan.date)) push("hard", l.sp + " is away (" + awayOf(l.sp, plan.date) + ")");
     if (l.ip && !solo && awayOf(l.ip, plan.date)) push("hard", l.ip + " is away (" + awayOf(l.ip, plan.date) + ")");
+    if (l.ip && !solo && ipDeparted(l.ip)) push("hard", l.ip + " is marked DEPARTED — pick another instructor");
 
     /* gates + ΠΔ 29/2020 (the SMS daily cap lives in the daily-load engine) */
     if (l.sp) {
@@ -710,7 +897,10 @@
       const preSolo = !done47 && !(vd && vd.has && vd.has("s:C4791"));
       if (preSolo) {
         const s = S().find("students", l.sp);
-        const fam = [s && s.primary_ip].concat((s && s.reserve_ips) || []).filter(Boolean);
+        /* primary/reserve now store instructor OIDs — resolve to codes for
+           the comparison and the display (legacy code refs still resolve) */
+        const fam = [s && s.primary_ip].concat((s && s.reserve_ips) || []).filter(Boolean)
+          .map((x) => P().ipCode(x)).filter(Boolean);
         if (fam.length && fam.indexOf(l.ip) < 0) push("soft", l.ip + " is neither primary nor reserve IP of " + l.sp + " (" + fam.join(" / ") + ")");
         const seen = new Set();
         for (const ev of (S().get("trainingLog") || [])) {
@@ -742,6 +932,10 @@
        the per-SP verdict is shown once, on the SP's first line. */
     out.push.apply(out, takeDayWarn(A, l.sp));
     if (A.spTurnWarn.has(l.id)) out.push.apply(out, A.spTurnWarn.get(l.id));
+    /* Round 4 engines — formation pairing/callsigns, IFF pool, solo overlap */
+    if (A.csWarn.has(l.id)) out.push.apply(out, A.csWarn.get(l.id));
+    if (A.iffWarn.has(l.id)) out.push.apply(out, A.iffWarn.get(l.id));
+    if (A.soloWarn.has(l.id)) out.push.apply(out, A.soloWarn.get(l.id));
     return out;
   }
 
@@ -785,6 +979,7 @@
 
     if (l.sp && awayOf(l.sp, plan.date)) push("hard", l.sp + " is away (" + awayOf(l.sp, plan.date) + ")");
     if (l.ip && awayOf(l.ip, plan.date)) push("hard", l.ip + " is away (" + awayOf(l.ip, plan.date) + ")");
+    if (l.ip && ipDeparted(l.ip)) push("hard", l.ip + " is marked DEPARTED — pick another instructor");
     if (l.sp) {
       const blk = R().blockFor(l.sp, "fs");
       if (blk) out.push(blkWarn(l.sp, blk));
@@ -885,8 +1080,14 @@
   function ipOptions(sel, plan, A, ctx) {
     const c = A.c, ok = [], no = [];
     const wname = (wi) => (plan.waves[wi] ? plan.waves[wi].name : "wave " + (wi + 1));
+    /* Round 4: the student's avoided instructors (fail-22) go ineligible */
+    const avoid = ctx.sp && window.SchedPeople ? window.SchedPeople.avoidMap(ctx.sp) : new Map();
     for (const i of instructors()) {
+      const dep = (i.status || "active") === "departed";
+      if (dep && i.code !== sel) continue;      // departed: out of every picker
       const reasons = [];
+      if (dep) reasons.push("DEPARTED");
+      if (avoid.has(i.code)) reasons.push("instructor change after Progress Test (fail-22)");
       const away = awayOf(i.code, plan.date);
       if (away) reasons.push(away);
       const mine = (A.ipSlots.get(i.code) || []).filter((o) => o.id !== ctx.id);
@@ -955,6 +1156,34 @@
     return parts.join("");
   }
 
+  /* ── Round 4 · collapsible board sections ──────────────────────────────
+     Every major block opens/closes from its header (chevron, aria-expanded).
+     Default open = the wave blocks ONLY; everything else starts collapsed.
+     State persists per section in localStorage "p2r-sch-ui-collapse" and
+     survives reloads. The print view is built separately — never affected. */
+  const COLKEY = "p2r-sch-ui-collapse";
+  function colMap() {
+    try { const v = JSON.parse(localStorage.getItem(COLKEY) || "{}"); return v && typeof v === "object" ? v : {}; }
+    catch (e) { return {}; }
+  }
+  function setCol(key, collapsed) {
+    const m = colMap();
+    m[key] = !!collapsed;
+    try { localStorage.setItem(COLKEY, JSON.stringify(m)); } catch (e) { /* private mode */ }
+  }
+  const SEC_DEFAULT_OPEN = { };                       // waves get defOpen via secOpen(key, true)
+  function secOpen(key, defOpen) {
+    const m = colMap();
+    return key in m ? !m[key] : !!(defOpen != null ? defOpen : SEC_DEFAULT_OPEN[key]);
+  }
+  /* the clickable header: chevron + title, aria-expanded, data-sec */
+  function secBtn(key, titleHtml, defOpen) {
+    const open = secOpen(key, defOpen);
+    return `<button type="button" class="sch-sec${open ? " is-open" : ""}" data-sec="${esc(key)}"
+      aria-expanded="${open ? "true" : "false"}" title="${open ? "collapse" : "expand"} this section">
+      <span class="sch-secarr">${open ? "▾" : "▸"}</span><h2>${titleHtml}</h2></button>`;
+  }
+
   function setupBar(plan, A) {
     const c = A.c, locked = plan.status !== "draft";
     const dis = locked ? " disabled" : "";
@@ -984,15 +1213,18 @@
           <input type="time" step="300" class="sch-in" data-b="mass" data-fk="mass" value="${esc(plan.mass_briefing)}"${dis}></label>
         <span class="sch-fld"><span>Line</span>
           <span class="sch-mono sch-hint">brief ${c.brief}′ + ground ops ${c.ground}′ + sortie + debrief = ${dur2hm(c.total)}</span></span>
-        <span class="sch-fld"><span>Day mix — target / on board</span>
-          <span class="sch-mixrow">${cls.map((k) => {
+        <span class="sch-fld sch-mixwrap">
+          <button type="button" class="sch-sec sch-secmini${secOpen("mix") ? " is-open" : ""}" data-sec="mix"
+            aria-expanded="${secOpen("mix") ? "true" : "false"}" title="${secOpen("mix") ? "collapse" : "expand"} the day mix">
+            <span class="sch-secarr">${secOpen("mix") ? "▾" : "▸"}</span><span>Day mix — target / on board</span></button>
+          ${secOpen("mix") ? `<span class="sch-mixrow">${cls.map((k) => {
             const act = A.mixActual.get(k.id) || 0;
             const tgt = num(plan.mix[k.id], 0);
             const cl = tgt && act < tgt ? " is-under" : (tgt && act > tgt ? " is-over" : "");
             return `<span class="sch-mixcell${cl}"><b>${esc(k.id)}</b>
               <input type="number" min="0" class="sch-in sch-num" data-mix="${esc(k.id)}" data-fk="mix-${esc(k.id)}" value="${esc(String(tgt))}"${dis}>
               <span class="sch-mono">/ ${act}</span></span>`;
-          }).join("")}</span></span>
+          }).join("")}</span>` : ""}</span>
         <label class="sch-fld sch-chk"><input type="checkbox" data-b="allip"${ui.allIp ? " checked" : ""}> <span>all IPs</span></label>
       </div>
       <div class="sch-addrow">
@@ -1009,33 +1241,42 @@
     const d = dutyOf(plan.date);
     const locked = plan.status !== "draft";
     const dis = locked ? " disabled" : "";
+    /* pickers offer ACTIVE instructors only; a stored departed/unknown value
+       stays visible on its own option so the day never silently changes */
     const sel = (role, cur, filter) => {
-      const list = instructors().filter(filter || (() => true));
+      const list = activeIps().filter(filter || (() => true));
+      const hasCur = !cur || list.some((i) => i.code === cur);
       return `<select class="sch-in" data-duty="${esc(role)}" data-fk="duty-${esc(role)}"${dis}>
         <option value="">—</option>${list.map((i) => `<option value="${esc(i.code)}"${i.code === cur ? " selected" : ""}>`
-        + esc(i.code + (awayOf(i.code, plan.date) ? " — " + awayOf(i.code, plan.date) : "")) + `</option>`).join("")}</select>`;
+        + esc(i.code + (awayOf(i.code, plan.date) ? " — " + awayOf(i.code, plan.date) : "")) + `</option>`).join("")}
+        ${hasCur ? "" : `<option value="${esc(cur)}" selected>${esc(cur + " — departed/unknown")}</option>`}</select>`;
     };
+    /* RSU A/B filter on the RSU-during-solo qualification (Round 4). The old
+       duty_eligible.RSU stays as the fallback while NO instructor carries
+       quals.rsu_solo yet, so pre-Round-4 data keeps working. */
+    const anyRsuSolo = activeIps().some((i) => (i.quals || {}).rsu_solo);
+    const rsuOK = (i) => (anyRsuSolo ? (i.quals || {}).rsu_solo : (i.duty_eligible || {}).RSU);
     const mark = (code) => {
       const st = S().availabilityOf(code, plan.date);
       return `<button type="button" class="sch-av av-${esc(st)}" data-away="${esc(code)}" title="${esc(code + " — " + st)} · click to cycle"${dis}>
         <span class="sch-code">${esc(code)}</span><span class="sch-avst">${esc(st === "available" ? "OK" : st)}</span></button>`;
     };
-    const away = students().concat(instructors()).filter((p) => awayOf(p.code, plan.date));
+    const away = students().concat(activeIps()).filter((p) => awayOf(p.code, plan.date));
     return `<section class="panel sch-panel">
-      <div class="sch-h"><h2>Duties &amp; absences</h2>
+      <div class="sch-h">${secBtn("duties", `Duties &amp; absences`)}
         <span class="sch-hint">${away.length} away on ${esc(plan.date)}</span></div>
-      <div class="sch-fgrid">
+      ${secOpen("duties") ? `<div class="sch-fgrid">
         <label class="sch-fld" title="Supervisor of Flying — wave 1: must not fly in wave 1"><span>SOF A (wave 1)</span>${sel("sof_a", d.sof_a, (i) => (i.duty_eligible || {}).SOF)}</label>
         <label class="sch-fld" title="Supervisor of Flying — wave 2: must not fly in wave 2"><span>SOF B (wave 2)</span>${sel("sof_b", d.sof_b, (i) => (i.duty_eligible || {}).SOF)}</label>
-        <label class="sch-fld" title="Runway Supervisory Unit — wave 1: must not fly in wave 1"><span>RSU A (wave 1)</span>${sel("rsu_a", d.rsu_a, (i) => (i.duty_eligible || {}).RSU)}</label>
-        <label class="sch-fld" title="Runway Supervisory Unit — wave 2: must not fly in wave 2"><span>RSU B (wave 2)</span>${sel("rsu_b", d.rsu_b, (i) => (i.duty_eligible || {}).RSU)}</label>
+        <label class="sch-fld" title="Runway Supervisory Unit during solo — wave 1: must not fly in wave 1. Filtered on the rsu_solo qualification"><span>RSU A (wave 1)</span>${sel("rsu_a", d.rsu_a, rsuOK)}</label>
+        <label class="sch-fld" title="Runway Supervisory Unit during solo — wave 2: must not fly in wave 2. Filtered on the rsu_solo qualification"><span>RSU B (wave 2)</span>${sel("rsu_b", d.rsu_b, rsuOK)}</label>
         <label class="sch-fld"><span>Ground 1</span>${sel("ground_1", d.ground_1, (i) => (i.quals || {}).ground)}</label>
         <label class="sch-fld"><span>Ground 2</span>${sel("ground_2", d.ground_2, (i) => (i.quals || {}).ground)}</label>
       </div>
       <div class="sch-avgroup"><span class="sch-lbl">Students — one click cycles ${AV_CYCLE.join(" → ")}</span>
         <div class="sch-avrow">${students().map((s) => mark(s.code)).join("")}</div></div>
       <div class="sch-avgroup"><span class="sch-lbl">Instructors</span>
-        <div class="sch-avrow">${instructors().map((i) => mark(i.code)).join("")}</div></div>
+        <div class="sch-avrow">${activeIps().map((i) => mark(i.code)).join("")}</div></div>` : ""}
     </section>`;
   }
 
@@ -1047,7 +1288,7 @@
     const alts = A.alt.get(l.id) || [];
     const mi = missionInfo(l, opts, A.planned);
     const ipCtx = {
-      id: l.id, kind: "flight", wi: wi, firstIdx: firstIdx, to: t.to, dur: t.dur,
+      id: l.id, kind: "flight", wi: wi, firstIdx: firstIdx, to: t.to, dur: t.dur, sp: l.sp,
       checkride: !!(mi.d && mi.d.checkride), night: !!(mi.d && mi.d.night),
       soloOk: !!(l.node && soloAllowed(l.node)),
     };
@@ -1113,19 +1354,24 @@
     const firstIdx = plan.waves.findIndex((w) => w.kind === "wave");
     const locked = plan.status !== "draft";
     const dis = locked ? " disabled" : "";
-    return plan.waves.map((w, wi) => `<section class="panel sch-panel sch-wave${w.kind === "night" ? " is-night" : ""}" data-w="${esc(w.id)}">
+    return plan.waves.map((w, wi) => {
+      const key = "wave:" + w.name;                      // waves default OPEN
+      const open = secOpen(key, true);
+      return `<section class="panel sch-panel sch-wave${w.kind === "night" ? " is-night" : ""}" data-w="${esc(w.id)}">
       <div class="sch-h">
-        <h2>${esc(w.name)}${w.kind === "night" ? " ☾" : ""} <span class="count">${w.lines.length} line${w.lines.length === 1 ? "" : "s"}</span></h2>
+        ${secBtn(key, `${esc(w.name)}${w.kind === "night" ? " ☾" : ""} <span class="count">${w.lines.length} line${w.lines.length === 1 ? "" : "s"}</span>`, true)}
         ${w.kind === "night" ? `<label class="sch-fld"><span>Night briefing</span>
           <input type="time" step="300" class="sch-in" data-wf="brief" data-fk="wb-${esc(w.id)}" value="${esc(w.brief || "")}"${dis}></label>` : ""}
         <span class="sch-spacer"></span>
         <button type="button" class="sch-btn" data-wb="add"${dis}>+ line</button>
         ${plan.waves.length > 1 ? `<button type="button" class="sch-mini danger" data-wb="del" title="remove the wave"${dis}>✕</button>` : ""}
       </div>
-      ${w.lines.length
-      ? w.lines.map((l) => flightLineHtml(plan, w, wi, firstIdx, l, A)).join("")
-      : `<p class="sch-hint">No line yet — “+ line” adds one, or click a student in “Not scheduled today”.</p>`}
-    </section>`).join("");
+      ${!open ? ""
+        : w.lines.length
+          ? w.lines.map((l) => flightLineHtml(plan, w, wi, firstIdx, l, A)).join("")
+          : `<p class="sch-hint">No line yet — “+ line” adds one, or click a student in “Not scheduled today”.</p>`}
+    </section>`;
+    }).join("");
   }
 
   function fsHtml(plan, A) {
@@ -1146,7 +1392,7 @@
           ? `<label class="sch-lf w-cs"><span>Custom</span>
                <input class="sch-in" data-lf="custom" data-fk="fcu-${esc(l.id)}" value="${esc(l.custom || "")}"${dis}></label>` : ""}
           <label class="sch-lf w-ip"><span>IP</span>
-            <select class="sch-in" data-lf="ip" data-fk="fip-${esc(l.id)}"${dis}>${ipOptions(l.ip, plan, A, { id: l.id, kind: "fs", curIp: l.ip })}</select></label>
+            <select class="sch-in" data-lf="ip" data-fk="fip-${esc(l.id)}"${dis}>${ipOptions(l.ip, plan, A, { id: l.id, kind: "fs", curIp: l.ip, sp: l.sp })}</select></label>
           <label class="sch-lf w-dv"><span>Device</span>
             <select class="sch-in" data-lf="device" data-fk="fdv-${esc(l.id)}"${dis}>
               ${FS_DEVICES.map((d) => `<option value="${esc(d)}"${l.device === d ? " selected" : ""}>${esc(d)}</option>`).join("")}</select></label>
@@ -1165,11 +1411,11 @@
     const load = [...A.ipFs.entries()].sort((a, b) => b[1] - a[1])
       .map(([ip, n]) => `<span class="sch-chip${n > A.c.fsMax ? " is-hard" : (n > A.c.fsPref ? " is-soft" : "")}">${esc(ip)} ×${n}</span>`).join("");
     return `<section class="panel sch-panel sch-fsblock">
-      <div class="sch-h"><h2>F/S <span class="count">no clock — slot order and device</span></h2>
+      <div class="sch-h">${secBtn("fs", `F/S <span class="count">${plan.fs.length} · no clock — slot order and device</span>`)}
         <span class="sch-hint">${load || "no F/S load"}</span>
         <span class="sch-spacer"></span>
         <button type="button" class="sch-btn" data-b="add-fs"${dis}>+ F/S line</button></div>
-      ${rows || `<p class="sch-hint">No simulator line today.</p>`}
+      ${secOpen("fs") ? (rows || `<p class="sch-hint">No simulator line today.</p>`) : ""}
     </section>`;
   }
 
@@ -1191,11 +1437,11 @@
       }
       return parts.join("");
     };
-    const gndIps = instructors().filter((i) => (i.quals || {}).ground);
+    const gndIps = activeIps().filter((i) => (i.quals || {}).ground);
     const ipSel = (sel) => `<option value="">—</option>`
       + gndIps.map((i) => `<option value="${esc(i.code)}"${i.code === sel ? " selected" : ""}>${esc(i.code)}</option>`).join("")
       + (sel && !gndIps.some((i) => i.code === sel)
-        ? `<optgroup label="not ground qualified"><option value="${esc(sel)}" selected>${esc(sel)}</option></optgroup>` : "");
+        ? `<optgroup label="not ground qualified / departed"><option value="${esc(sel)}" selected>${esc(sel)}</option></optgroup>` : "");
     const row = (l) => `<div class="sch-line${locked ? " is-locked" : ""}" data-l="${esc(l.id)}" data-blk="ls">
       ${warnHtml(A.lsWarn.get(l.id))}
       <div class="sch-lrow">
@@ -1228,12 +1474,12 @@
     const wA = plan.lessons.filter((l) => (l.wave || "A") === "A");
     const wB = plan.lessons.filter((l) => l.wave === "B");
     return `<section class="panel sch-panel">
-      <div class="sch-h"><h2>Lessons &amp; exams <span class="count">A ${wA.length} · B ${wB.length}</span></h2>
+      <div class="sch-h">${secBtn("lessons", `Lessons &amp; exams <span class="count">A ${wA.length} · B ${wB.length}</span>`)}
         <span class="sch-hint">one block per wave — Ground 1 covers Wave A, Ground 2 Wave B</span>
         <span class="sch-spacer"></span>
         <button type="button" class="sch-btn" data-b="add-lesson"${dis}>+ block</button></div>
-      ${wA.length ? `<p class="sch-lbl">Lessons A</p>` + wA.map(row).join("") : ""}
-      ${wB.length ? `<p class="sch-lbl">Lessons B</p>` + wB.map(row).join("") : ""}
+      ${secOpen("lessons") ? `${wA.length ? `<p class="sch-lbl">Lessons A</p>` + wA.map(row).join("") : ""}
+      ${wB.length ? `<p class="sch-lbl">Lessons B</p>` + wB.map(row).join("") : ""}` : ""}
     </section>`;
   }
 
@@ -1277,9 +1523,9 @@
         <span class="sch-note">${esc(r.cls)}</span>${r.chips}</button>`;
     }).join("");
     return `<section class="panel sch-panel">
-      <div class="sch-h"><h2>Not scheduled today <span class="count">${rows.length}</span></h2>
+      <div class="sch-h">${secBtn("notsched", `Not scheduled today <span class="count">${rows.length}</span>`)}
         <span class="sch-hint">idle working days · amber over ${c.idle} · click to add a line</span></div>
-      <div class="sch-nsgrid">${cells || `<p class="sch-hint">Everyone available is on the board.</p>`}</div>
+      ${secOpen("notsched") ? `<div class="sch-nsgrid">${cells || `<p class="sch-hint">Everyone available is on the board.</p>`}</div>` : ""}
     </section>`;
   }
 
@@ -1297,51 +1543,56 @@
       <button type="button" class="sch-mini danger" data-lb="del"${dis}>✕</button></div></div>`).join("");
     const iRows = plan.alt_instructors.map((a) => `<div class="sch-altrow" data-l="${esc(a.id)}" data-blk="ai">
       <select class="sch-in" data-lf="ip" data-fk="aip-${esc(a.id)}"${dis}><option value="">—</option>
-        ${instructors().map((i) => `<option value="${esc(i.code)}"${a.ip === i.code ? " selected" : ""}>${esc(i.code)}</option>`).join("")}</select>
+        ${activeIps().map((i) => `<option value="${esc(i.code)}"${a.ip === i.code ? " selected" : ""}>${esc(i.code)}</option>`).join("")}
+        ${a.ip && !activeIps().some((i) => i.code === a.ip) ? `<option value="${esc(a.ip)}" selected>${esc(a.ip + " — departed/unknown")}</option>` : ""}</select>
       <input class="sch-in" data-lf="note" data-fk="aint-${esc(a.id)}" value="${esc(a.note || "")}" placeholder="note"${dis}>
       <button type="button" class="sch-mini danger" data-lb="del"${dis}>✕</button></div>`).join("");
     return `<section class="panel sch-panel">
-      <div class="sch-h"><h2>Alternates</h2>
+      <div class="sch-h">${secBtn("alts", `Alternates <span class="count">${plan.alt_students.length} SP · ${plan.alt_instructors.length} IP</span>`)}
         <span class="sch-hint">an alternate counts as one item of its sortie's kind in the SP's daily load</span></div>
-      <div class="sch-grid2">
+      ${secOpen("alts") ? `<div class="sch-grid2">
         <div><div class="sch-h"><span class="sch-lbl">Students (+ sortie)</span>
             <button type="button" class="sch-mini" data-b="add-alt-s"${dis}>+</button></div>
           ${sRows || `<p class="sch-hint">None.</p>`}</div>
         <div><div class="sch-h"><span class="sch-lbl">Instructors</span>
             <button type="button" class="sch-mini" data-b="add-alt-i"${dis}>+</button></div>
           ${iRows || `<p class="sch-hint">None.</p>`}</div>
-      </div>
+      </div>` : ""}
     </section>`;
   }
 
   function summaryHtml(plan, A) {
-    const away = students().concat(instructors())
+    const away = students().concat(activeIps())
       .map((p) => ({ code: p.code, st: awayOf(p.code, plan.date) })).filter((x) => x.st);
     const sAvail = students().filter((s) => (s.status || "active") === "active" && !awayOf(s.code, plan.date)).length;
-    const iAvail = instructors().filter((i) => !awayOf(i.code, plan.date)).length;
+    const iAvail = activeIps().filter((i) => !awayOf(i.code, plan.date)).length;
     const sorties = plan.waves.reduce((n, w) => n + w.lines.length, 0);
     const rows = S().classList().map((k) => {
       let d = 0, t = 0, fd = 0, ft = 0;
       for (const m of k.members) { const c = completion(m); d += c.done; t += c.total; fd += c.fdone; ft += c.ftotal; }
       const pc = t ? Math.round((d / t) * 100) : 0;
       const pf = ft ? Math.round((fd / ft) * 100) : 0;
+      /* Round 4 item 6 — per-class dual/solo split of the planned wave lines
+         (alternates NOT counted here) */
+      const du = A.classDual.get(k.id) || 0, so = A.classSolo.get(k.id) || 0;
       return `<tr><td class="sch-code">${esc(k.id)}</td><td class="sch-mono">${k.members.length}</td>
         <td class="sch-mono">${A.mixActual.get(k.id) || 0} / ${esc(String(num(plan.mix[k.id], 0)))}</td>
+        <td class="sch-mono" title="today's planned wave lines — alternates not counted">${du} dual · ${so} solo</td>
         <td class="sch-mono">${fd}/${ft} · ${pf}%</td><td class="sch-mono">${pc}%</td></tr>`;
     }).join("");
     return `<section class="panel sch-panel">
-      <div class="sch-h"><h2>Manning · absences · completion</h2></div>
-      <div class="sch-fgrid">
+      <div class="sch-h">${secBtn("summary", `Manning · absences · completion`)}</div>
+      ${secOpen("summary") ? `<div class="sch-fgrid">
         <span class="sch-kpi"><b>${sorties}</b><span>sorties</span></span>
         <span class="sch-kpi"><b>${plan.fs.length}</b><span>F/S</span></span>
         <span class="sch-kpi"><b>${A.onBoard.size}</b><span>SP on board</span></span>
         <span class="sch-kpi"><b>${sAvail}</b><span>SP available</span></span>
-        <span class="sch-kpi"><b>${iAvail}/${instructors().length}</b><span>IP available</span></span>
+        <span class="sch-kpi"><b>${iAvail}/${activeIps().length}</b><span>IP available</span></span>
         <span class="sch-kpi${A.hard ? " is-hard" : ""}"><b>${A.hard}</b><span>hard warnings</span></span>
       </div>
       <p class="sch-hint">Away: ${away.length ? away.map((a) => esc(a.code + " (" + a.st + ")")).join(" · ") : "nobody"}</p>
-      <table class="sch-tbl"><thead><tr><th>Class</th><th>SP</th><th>Mix on board / target</th><th>Flights completed</th><th>Overall</th></tr></thead>
-        <tbody>${rows || `<tr><td colspan="5" class="sch-hint">No class.</td></tr>`}</tbody></table>
+      <table class="sch-tbl"><thead><tr><th>Class</th><th>SP</th><th>Mix on board / target</th><th>Today dual · solo</th><th>Flights completed</th><th>Overall</th></tr></thead>
+        <tbody>${rows || `<tr><td colspan="6" class="sch-hint">No class.</td></tr>`}</tbody></table>` : ""}
     </section>`;
   }
 
@@ -1477,9 +1728,9 @@
       + (plan.alt_students.length ? plan.alt_students.map((a) => esc(a.sp + " — " + (customText(a) || missionLabel(a.node)) + (a.note ? " (" + a.note + ")" : ""))).join(" · ") : "—")
       + `</p><p class="pv-p"><b>Instructors:</b> `
       + (plan.alt_instructors.length ? plan.alt_instructors.map((a) => esc(a.ip + (a.note ? " (" + a.note + ")" : ""))).join(" · ") : "—") + `</p>`;
-    const away = students().concat(instructors()).map((p) => ({ c: p.code, s: awayOf(p.code, plan.date) })).filter((x) => x.s);
+    const away = students().concat(activeIps()).map((p) => ({ c: p.code, s: awayOf(p.code, plan.date) })).filter((x) => x.s);
     const sAvail = students().filter((s) => (s.status || "active") === "active" && !awayOf(s.code, plan.date)).length;
-    const iAvail = instructors().filter((i) => !awayOf(i.code, plan.date)).length;
+    const iAvail = activeIps().filter((i) => !awayOf(i.code, plan.date)).length;
     const cls = S().classList().map((k) => {
       let dn = 0, t = 0, fd = 0, ft = 0;
       for (const m of k.members) { const c = completion(m); dn += c.done; t += c.total; fd += c.fdone; ft += c.ftotal; }
@@ -1499,7 +1750,7 @@
       ${plan.waves.map(waveTable).join("")}
       ${fsT}${lsT}${alt}
       ${head("Absences")}<p class="pv-p">${away.length ? away.map((a) => esc(a.c + " " + a.s)).join(" · ") : "—"}</p>
-      ${head("Manning")}<p class="pv-p">SP available ${sAvail}/${students().length} · IP available ${iAvail}/${instructors().length}
+      ${head("Manning")}<p class="pv-p">SP available ${sAvail}/${students().length} · IP available ${iAvail}/${activeIps().length}
         · sorties ${plan.waves.reduce((n, w) => n + w.lines.length, 0)} · F/S ${plan.fs.length}</p>
       ${head("Completion ratio")}<table class="pv-t"><thead><tr><th>CLASS</th><th>SP</th><th>ON BOARD / TARGET</th><th>FLIGHTS</th><th>OVERALL</th></tr></thead>
         <tbody>${cls}</tbody></table>
@@ -1534,17 +1785,6 @@
   /* ══════════════════════════════════════════════════════════════════════
      6 · board mutations
      ══════════════════════════════════════════════════════════════════════ */
-  function nextIff(plan) {
-    const c = CF();
-    if (!c.iff.length) return "";
-    const used = new Set();
-    plan.waves.forEach((w) => w.lines.forEach((l) => { if (l.iff) used.add(l.iff); }));
-    let n = 0;
-    plan.waves.forEach((w) => { n += w.lines.length; });
-    for (const x of c.iff) if (!used.has(x)) return x;
-    return c.iff[n % c.iff.length];
-  }
-
   function suggestTO(plan, wave) {
     const c = CF();
     const wi = plan.waves.indexOf(wave);
@@ -1579,9 +1819,12 @@
   function addLine(plan, wave, sp) {
     const w = wave || firstWave(plan) || plan.waves[0];
     if (!w) return null;
+    /* iff/callsign start empty — the Round 4 engines assign them by T/O on
+       the next analyze; the manual flags start off. */
     const l = {
       id: newId("ln"), sp: sp || "", ip: "", node: "", alt: "", custom: "", altCustom: "", customOn: false, altCustomOn: false,
-      callsign: "", to: suggestTO(plan, w), iff: nextIff(plan), remarks: "",
+      callsign: "", callsignManual: false, callsignAuto: false,
+      to: suggestTO(plan, w), iff: "", iffManual: false, remarks: "",
     };
     w.lines.push(l);
     if (sp) autofill(plan, l, "flights");
@@ -1669,6 +1912,19 @@
         toin.classList.toggle("is-bad", bad);
         toin.classList.toggle("is-amber", amber);
       }
+      /* Round 4 — while a T/O is being typed, the IFF codes and formation
+         callsigns of the OTHER lines rotate live (never under the caret). */
+      if (box.dataset.blk === "w") {
+        const hit = findLine(plan, id);
+        if (hit) {
+          for (const fld of ["iff", "callsign"]) {
+            const inp = box.querySelector(`[data-lf="${fld}"]`);
+            if (inp && document.activeElement !== inp && inp.value !== (hit.line[fld] || "")) {
+              inp.value = hit.line[fld] || "";
+            }
+          }
+        }
+      }
     }
   }
 
@@ -1678,6 +1934,13 @@
 
     el.addEventListener("click", (e) => {
       const plan = ensurePlan();
+      /* Round 4 — collapsible sections: the header button toggles + persists */
+      const sec = e.target.closest("[data-sec]");
+      if (sec) {
+        setCol(sec.dataset.sec, sec.getAttribute("aria-expanded") === "true");
+        renderBoard(el);
+        return;
+      }
       const away = e.target.closest("[data-away]");
       if (away) {
         const code = away.dataset.away;
@@ -1790,6 +2053,16 @@
     } else if (f === "wave") {
       rec.wave = t.value === "B" ? "B" : "A";
       heavy = true;
+    } else if (f === "callsign") {
+      /* Round 4 — a typed callsign is MANUAL and never overwritten by the
+         engine; clearing the field hands it back to auto-assignment. */
+      rec.callsign = t.value;
+      rec.callsignManual = t.value.trim() !== "";
+      if (!rec.callsignManual) rec.callsignAuto = false;
+    } else if (f === "iff") {
+      /* Round 4 — same manual contract for the IFF field */
+      rec.iff = t.value;
+      rec.iffManual = t.value.trim() !== "";
     } else {
       rec[f] = t.value;
     }
@@ -1812,7 +2085,10 @@
     } else if (act === "dup" && blk === "w") {
       const h = findLine(plan, rec.id);
       if (h) {
-        const copy = Object.assign({}, rec, { id: newId("ln"), to: suggestTO(plan, h.wave), iff: nextIff(plan) });
+        const copy = Object.assign({}, rec, {
+          id: newId("ln"), to: suggestTO(plan, h.wave),
+          iff: "", iffManual: false, callsignAuto: false,
+        });
         h.wave.lines.push(copy);
       }
     } else if ((act === "up" || act === "down") && blk === "fs") {
@@ -2088,7 +2364,7 @@
       <span class="sch-lbl">${esc(pend.title)}</span>
       <label class="sch-fld"><span>Date</span><input type="date" class="sch-in" data-pf="date" value="${esc(pend.date)}"></label>
       <label class="sch-fld"><span>Instructor</span><select class="sch-in" data-pf="instructor"><option value="">—</option>
-        ${instructors().map((i) => `<option value="${esc(i.code)}"${pend.instructor === i.code ? " selected" : ""}>${esc(i.code)}</option>`).join("")}</select></label>
+        ${activeIps().map((i) => `<option value="${esc(i.code)}"${pend.instructor === i.code ? " selected" : ""}>${esc(i.code)}</option>`).join("")}</select></label>
       <button type="button" class="sch-btn primary" data-pb="confirm">Save</button>
       <button type="button" class="sch-btn" data-pb="cancel">Cancel</button>
     </div>` : "";
@@ -2319,7 +2595,8 @@
     const ipAvg = ipList.length ? ipList.reduce((n, i) => n + ((D.ip.get(i.code) || {}).total || 0), 0) / ipList.length : 0;
     const ipRows = ipList.map((i) => {
       const r = D.ip.get(i.code) || { flights: 0, fs: 0, ground: 0, sof: 0, rsu: 0, total: 0 };
-      return `<tr><td class="sch-code">${esc(i.code)}</td>
+      /* departed IPs STAY in the Balance history — badged, never dropped */
+      return `<tr><td class="sch-code">${esc(i.code)}${(i.status === "departed") ? ` <span class="sch-badge st-withdrawn" title="departed — kept in history">DEP</span>` : ""}</td>
         <td class="sch-mono">${r.flights}</td>
         <td class="sch-mono${r.fs > c.fsMax ? " is-hard" : (r.fs > c.fsPref ? " is-soft" : "")}">${r.fs}</td>
         <td class="sch-mono">${r.ground}</td>

@@ -606,6 +606,168 @@
 })();
 
 /* ══════════════════════════════════════════════════════════════════════════
+   ①b PEOPLE — window.SchedPeople (Round 4)
+   OIDs are the PRIMARY KEYS of persons. Training events keep referencing
+   people by CODE (historical facts, unchanged); ONLY the student fields
+   primary_ip / reserve_ips / avoid_ips store instructor OIDs. A stored value
+   that still matches an instructor CODE (pre-Round-4 data) resolves on read
+   and is rewritten as an oid on the next save of that student.
+   Also here: the "lost instructor" engine (3-01 §24στ(6) — fail-22): avoided
+   instructors are DERIVED from the training log (Progress-Test path + any
+   evaluator who graded ΥΣΤΕΡΗΣΗ/ΑΠΟΤΥΧΙΑ on an evaluation sortie), returned
+   as oids, and unioned with the student's manual avoid_ips list.
+   ══════════════════════════════════════════════════════════════════════════ */
+(() => {
+  const S = () => window.SchedStore;
+  const R = () => window.SchedReady;
+
+  const cache = { avoid: new Map(), idx: null };
+  function invalidate() { cache.avoid.clear(); cache.idx = null; }
+  const wire = () => {
+    if (window.SchedStore && !window.SchedStore._peopleWired) {
+      window.SchedStore._peopleWired = true;
+      window.SchedStore.subscribe(invalidate);
+    }
+  };
+  wire(); setTimeout(wire, 0);
+
+  function idx() {
+    if (cache.idx) return cache.idx;
+    const byOid = new Map(), byCode = new Map();
+    for (const i of (S().get("instructors") || [])) {
+      if (i.oid) byOid.set(String(i.oid), i);
+      if (i.code) byCode.set(String(i.code), i);
+    }
+    cache.idx = { byOid: byOid, byCode: byCode };
+    return cache.idx;
+  }
+  /* stored ref (oid OR legacy code) → instructor record — migration on READ */
+  function ip(ref) {
+    if (!ref) return null;
+    const x = idx();
+    return x.byOid.get(String(ref)) || x.byCode.get(String(ref)) || null;
+  }
+  const ipOid = (ref) => { const r = ip(ref); return r ? (r.oid || "") : ""; };
+  const ipCode = (ref) => { const r = ip(ref); return r ? (r.code || "") : String(ref == null ? "" : ref); };
+  const departed = (x) => { const r = x && typeof x === "object" ? x : ip(x); return !!(r && r.status === "departed"); };
+  const activeIps = () => (S().get("instructors") || []).filter((i) => (i.status || "active") !== "departed");
+
+  /* one-time boot pass: every person gets a stable oid (never editable) */
+  function ensure() {
+    for (const coll of ["students", "instructors"]) {
+      for (const rec of (S().get(coll) || []).slice()) {
+        if (!rec.oid) S().upsert(coll, { code: rec.code, oid: S().uid("oid") });
+      }
+    }
+  }
+
+  /* how strongly an instructor is referenced — decides delete vs "departed" */
+  function references(rec) {
+    const oid = rec.oid || "", code = rec.code || "";
+    let log = 0, stu = 0, duty = 0;
+    for (const ev of (S().get("trainingLog") || [])) if (ev.instructor === code) log++;
+    for (const s of (S().get("students") || [])) {
+      const refs = [s.primary_ip].concat(s.reserve_ips || [], s.avoid_ips || []).filter(Boolean);
+      if (refs.some((r) => r === code || (oid && r === oid))) stu++;
+    }
+    for (const r of (S().get("dutyRoster") || [])) {
+      const vals = [r.sof_a, r.sof_b, r.rsu_a, r.rsu_b, r.rsu, r.SOF, r.RSU,
+        r.ground_1, r.ground_2, r.ground_instructor].concat(r.alt_instructors || []);
+      if (vals.indexOf(code) >= 0) duty++;
+    }
+    return { log: log, students: stu, duty: duty, any: log + stu + duty > 0 };
+  }
+
+  /* ── the LOST-INSTRUCTOR engine (fail-22, 3-01 §24στ(6)(α),(δ)) ─────────
+     Derived per student from the log:
+       · Progress-Test path: when dp_ae / dp_cdr special sorties exist, the
+         instructors recorded on the lag/fail flying events (same category as
+         the dp, or all when the dp carries none) that led there are avoided;
+       · negative evaluators: the instructor of a FAILED checkride and of any
+         dp/apt/board special graded LAG/FAIL is avoided afterwards;
+       · plus the consequence engine's own avoid note (failed-checkride IP
+         after a passed Progress Test).
+     Returned entries: {code, oid, reason, manual:false}.                   */
+  function avoidedIps(code) {
+    if (cache.avoid.has(code)) return cache.avoid.get(code);
+    const out = new Map();
+    const add = (ref, reason) => {
+      if (!ref || ref === "SOLO") return;
+      const rec = ip(ref);
+      const c = rec ? rec.code : String(ref);
+      if (!out.has(c)) out.set(c, { code: c, oid: rec ? (rec.oid || "") : "", reason: reason, manual: false });
+    };
+    const CQ = window.SchedConsq || null;
+    const isNeg = (ev) => {
+      const r = CQ ? CQ.normRes(ev) : String(ev.result || "");
+      return r === "lag" || r === "fail" || r === "repeat";
+    };
+    const evs = [];
+    (S().get("trainingLog") || []).forEach((ev, i) => {
+      if (ev.scope !== "student" || ev.student !== code) return;
+      const kind = ev.special ? (ev.kind || "flights") : R().kindOf(ev.node || ev.uid || "");
+      if (kind !== "flights" && kind !== "fs") return;
+      evs.push({ ev: ev, i: i, date: ev.end_date || ev.date || "" });
+    });
+    evs.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : a.i - b.i));
+    for (const x of evs) {
+      const ev = x.ev;
+      if (ev.special) {
+        if ((ev.special === "dp_ae" || ev.special === "dp_cdr" || ev.special === "apt" || ev.special === "board") && isNeg(ev)) {
+          add(ev.instructor, "graded LAG/FAIL on the " + ev.special.replace("_", "-").toUpperCase() + " evaluation of " + x.date);
+        }
+      } else {
+        const d = R().describe(ev.node || ev.uid || "");
+        if (d && d.checkride && isNeg(ev)) add(ev.instructor, "graded FAIL on checkride " + d.label + " (" + x.date + ")");
+      }
+    }
+    const dps = evs.filter((x) => x.ev.special === "dp_ae" || x.ev.special === "dp_cdr");
+    for (const dp of dps) {
+      const cat = String(dp.ev.category || "");
+      for (const x of evs) {
+        if (x.ev.special || x.date > dp.date || !isNeg(x.ev)) continue;
+        const d = R().describe(x.ev.node || x.ev.uid || "");
+        if (!d) continue;
+        if (cat && d.track !== cat) continue;
+        add(x.ev.instructor, "instructor on the " + d.label + " LAG/FAIL that led to the Progress Test");
+      }
+    }
+    if (CQ) {
+      const n = CQ.pdNote(code);
+      if (n && n.avoidIp) add(n.avoidIp, "flew the failed sortie — Progress Test passed, continue with another instructor");
+    }
+    const arr = [...out.values()];
+    cache.avoid.set(code, arr);
+    return arr;
+  }
+  /* engine union manual avoid_ips — what every consumer should use */
+  function avoidedAll(code) {
+    const arr = avoidedIps(code).slice();
+    const seen = new Set(arr.map((a) => a.code));
+    const s = S().find("students", code);
+    for (const ref of ((s && s.avoid_ips) || [])) {
+      const rec = ip(ref);
+      const c = rec ? rec.code : String(ref);
+      if (!c || seen.has(c)) continue;
+      seen.add(c);
+      arr.push({ code: c, oid: rec ? (rec.oid || "") : "", reason: "manual avoid list", manual: true });
+    }
+    return arr;
+  }
+  function avoidMap(code) {
+    const m = new Map();
+    if (!code) return m;
+    for (const a of avoidedAll(code)) m.set(a.code, a);
+    return m;
+  }
+
+  window.SchedPeople = {
+    ensure, ip, ipOid, ipCode, departed, activeIps, references,
+    avoidedIps, avoidedAll, avoidMap, invalidate,
+  };
+})();
+
+/* ══════════════════════════════════════════════════════════════════════════
    ② UI — window.schInit()
    ══════════════════════════════════════════════════════════════════════════ */
 (() => {
@@ -653,9 +815,12 @@
     log: { f: { student: "", kind: "", from: "", to: "", q: "" }, form: null, nodeQ: "", open: false },
   };
 
+  const P = () => window.SchedPeople;
   const today = () => R().todayISO();
   const students = () => (S().get("students") || []).slice();
   const instructors = () => (S().get("instructors") || []).slice();
+  const activeIps = () => instructors().filter((i) => (i.status || "active") !== "departed");
+  const RANKS = ["ΑΝΘΣΓΟΣ", "ΥΠΣΓΟΣ", "ΣΓΟΣ", "ΕΠΣΓΟΣ", "S.TEN"];
 
   /* ── boot ───────────────────────────────────────────────────────────────── */
   window.schInit = async function schInit() {
@@ -673,6 +838,7 @@
     try {
       await S().ready();
       await R().load();
+      P().ensure();                       // every person gets a stable OID
     } catch (e) {
       const msg = `<div class="sch-ph"><strong>Scheduler data could not be loaded.</strong>
         <p>${esc(e.message)}${S().seedError() ? " · " + esc(S().seedError()) : ""}</p>
@@ -732,15 +898,19 @@
   }
 
   /* ══ ROSTER ══════════════════════════════════════════════════════════════ */
-  /* one live filter over BOTH tables — code, class, notes; case-insensitive */
+  /* one live filter over BOTH lists — code · class · notes · name · MN ·
+     rank · callsign; case-insensitive */
   function rosterMatch(bits) {
     const q = ui.roster.q.trim().toLowerCase();
     if (!q) return true;
     const hay = bits.filter(Boolean).join(" ").toLowerCase();
     return q.split(/\s+/).every((t) => hay.indexOf(t) >= 0);
   }
-  const fStudents = () => students().filter((s) => ui.roster.editS === s.code || rosterMatch([s.code, s.class, s.notes, s.status, s.primary_ip]));
-  const fInstructors = () => instructors().filter((i) => ui.roster.editI === i.code || rosterMatch([i.code, i.notes]));
+  const fStudents = () => students().filter((s) => ui.roster.editS === s.code
+    || rosterMatch([s.code, s.class, s.notes, s.status, P().ipCode(s.primary_ip),
+      s.first_name, s.last_name, s.mn, s.rank]));
+  const fInstructors = () => instructors().filter((i) => ui.roster.editI === i.code
+    || rosterMatch([i.code, i.notes, i.first_name, i.last_name, i.mn, i.rank, i.callsign, i.status]));
 
   function renderRoster() {
     const el = $id("sch-roster");
@@ -754,14 +924,15 @@
         <section class="panel sch-panel">
           <div class="sch-h"><h2>Students <span class="count" id="sch-scount">${fStudents().length}/${students().length}</span></h2>
             <button type="button" class="sch-btn" data-act="add-s">+ Student</button></div>
-          <div class="sch-scroll" id="sch-stww">${studentTable()}</div>
+          <div class="sch-scroll" id="sch-stww">${studentList()}</div>
         </section>
         <section class="panel sch-panel">
           <div class="sch-h"><h2>Instructors <span class="count" id="sch-icount">${fInstructors().length}/${instructors().length}</span></h2>
             <button type="button" class="sch-btn" data-act="add-i">+ Instructor</button></div>
-          <div class="sch-scroll" id="sch-itww">${instructorTable()}</div>
+          <div class="sch-scroll" id="sch-itww">${instructorList()}</div>
         </section>
       </div>
+      <datalist id="sch-ranklist">${RANKS.map((r) => `<option value="${esc(r)}"></option>`).join("")}</datalist>
       <section class="panel sch-panel">
         <div class="sch-h"><h2>Classes <span class="count">read-only — they follow the members</span></h2></div>
         ${classBlock()}
@@ -777,99 +948,193 @@
     wireRoster(el);
   }
 
-  function ipOptions(sel, blank) {
-    return (blank ? `<option value=""${sel ? "" : " selected"}>—</option>` : "")
-      + instructors().map((i) => `<option value="${esc(i.code)}"${i.code === sel ? " selected" : ""}>${esc(i.code)}</option>`).join("");
+  /* IP reference pickers — the OPTION VALUE is the instructor OID (spec §2:
+     primary/reserve/avoid store oids); the label stays code (+rank/last name).
+     Departed IPs are excluded — kept only when they ARE the current value.  */
+  function ipRefOptions(selRef) {
+    const selRec = selRef ? P().ip(selRef) : null;
+    const parts = [`<option value=""${selRec || selRef ? "" : " selected"}>—</option>`];
+    for (const i of instructors()) {
+      const dep = (i.status || "active") === "departed";
+      const isSel = selRec === i;
+      if (dep && !isSel) continue;
+      const label = i.code + (i.rank ? " · " + i.rank : "") + (i.last_name ? " " + i.last_name : "") + (dep ? " — DEPARTED" : "");
+      parts.push(`<option value="${esc(i.oid || i.code)}"${isSel ? " selected" : ""}>${esc(label)}</option>`);
+    }
+    if (selRef && !selRec) parts.push(`<option value="${esc(selRef)}" selected>${esc(String(selRef) + " — unknown")}</option>`);
+    return parts.join("");
+  }
+  function avoidSelectHtml(s) {
+    const cur = new Set((s.avoid_ips || []).map((x) => { const rec = P().ip(x); return rec ? (rec.oid || rec.code) : String(x); }));
+    return `<select class="sch-in sch-multi" data-f="avoid_ips" multiple size="4"
+      title="manual avoid list — union with the log-derived avoided instructors (fail-22)">`
+      + instructors().map((i) => {
+        const v = i.oid || i.code;
+        return `<option value="${esc(v)}"${cur.has(v) ? " selected" : ""}>${esc(i.code + (i.last_name ? " " + i.last_name : ""))}</option>`;
+      }).join("") + `</select>`;
   }
 
-  function studentTable() {
-    const list = fStudents();
-    const rows = list.map((s) => (ui.roster.editS === s.code ? studentEditRow(s) : studentRow(s))).join("");
-    const add = ui.roster.addS ? studentEditRow({ code: "", class: "", status: "active", primary_ip: "", reserve_ips: [], notes: "" }, true) : "";
-    return `<table class="sch-tbl">
-      <thead><tr><th>Code</th><th>Class</th><th>Status</th><th>Primary IP</th><th>Reserve IPs</th><th>Notes</th><th class="sch-act"></th></tr></thead>
-      <tbody>${rows}${add}${!list.length && !ui.roster.addS ? `<tr><td colspan="7" class="sch-hint">${ui.roster.q ? "No student matches the filter." : "No students yet."}</td></tr>` : ""}</tbody></table>`;
-  }
-
-  function studentRow(s) {
-    const idle = R().idleDays(s.code, today());
-    /* Round 2 badges: ΠΔ 29/2020 (fail-16) + SMS entries exhausted (fail-45 —
-       display only, unit ruling 2026-08-09: no other consequence) */
-    let consq = "";
+  /* warning chips of one student row: PD/SMS (Round 2) + Round 4 "lost
+     instructor" (fail-22) + departed/missing primary/reserve */
+  function studentChips(s) {
+    let chips = "";
     if (CQ()) {
       const pd = CQ().pd(s.code);
-      if (pd) consq += ` <span class="sch-badge r-fail" title="${esc("fail-16 — " + CQ().vb("fail-16") + " · " + CQ().pdStageText(pd))}">PD 29/2020</span>`;
+      if (pd) chips += ` <span class="sch-badge r-fail" title="${esc("fail-16 — " + CQ().vb("fail-16") + " · " + CQ().pdStageText(pd))}">PD 29/2020</span>`;
       for (const x of CQ().smsExhausted(s.code)) {
-        consq += ` <span class="sch-badge warn" title="${esc("SMS entries exhausted for " + x.label + " — student can NOT re-enter (unit ruling 2026-08-09); no other consequence. fail-45 — " + CQ().vb("fail-45"))}">SMS✕ ${esc(x.label)}</span>`;
+        chips += ` <span class="sch-badge warn" title="${esc("SMS entries exhausted for " + x.label + " — student can NOT re-enter (unit ruling 2026-08-09); no other consequence. fail-45 — " + CQ().vb("fail-45"))}">SMS✕ ${esc(x.label)}</span>`;
       }
     }
-    return `<tr>
-      <td class="sch-code">${esc(s.code)}</td>
-      <td>${esc(s.class || "—")}</td>
-      <td><span class="sch-badge st-${esc(s.status || "active")}"${STATUS_TITLE[s.status] ? ` title="${esc(STATUS_TITLE[s.status])}"` : ""}>${esc(statusLabel(s.status || "active"))}</span>${consq}</td>
-      <td class="sch-mono">${esc(s.primary_ip || "—")}</td>
-      <td class="sch-mono">${esc((s.reserve_ips || []).filter(Boolean).join(" · ") || "—")}</td>
-      <td class="sch-note">${esc(s.notes || "")}${idle == null ? "" : ` <span class="sch-nd" title="working days since the last recorded event">${idle}d</span>`}</td>
-      <td class="sch-act"><button type="button" class="sch-mini" data-act="prog-s" data-id="${esc(s.code)}"
+    const prim = s.primary_ip ? P().ip(s.primary_ip) : null;
+    const famCodes = [];
+    if (s.primary_ip && !prim) chips += ` <span class="sch-chip is-hard" title="stored ref ${esc(String(s.primary_ip))} matches no instructor">primary IP missing — reassign</span>`;
+    else if (prim) {
+      famCodes.push(prim.code);
+      if (P().departed(prim)) chips += ` <span class="sch-chip is-hard" title="${esc(prim.code + " is marked DEPARTED")}">primary IP departed — reassign</span>`;
+    }
+    (s.reserve_ips || []).filter(Boolean).forEach((x, k) => {
+      const rec = P().ip(x);
+      if (!rec) chips += ` <span class="sch-chip is-soft">reserve IP ${k + 1} missing</span>`;
+      else {
+        famCodes.push(rec.code);
+        if (P().departed(rec)) chips += ` <span class="sch-chip is-soft" title="${esc(rec.code + " is marked DEPARTED")}">reserve IP departed</span>`;
+      }
+    });
+    let reassign = false;
+    for (const a of P().avoidedAll(s.code)) {
+      chips += ` <span class="sch-chip is-hard" title="${esc("fail-22 (3-01 §24στ(6)) — " + a.reason)}">lost instructor: ${esc(a.code)}${a.manual ? " (manual)" : " (Progress Test)"}</span>`;
+      if (famCodes.indexOf(a.code) >= 0) reassign = true;
+    }
+    if (reassign) chips += ` <span class="sch-chip is-hard" title="an avoided instructor is still this student's primary or reserve IP">reassign primary/reserve IP</span>`;
+    return chips;
+  }
+
+  function studentList() {
+    const list = fStudents();
+    const rows = list.map((s) => studentRow(s)).join("");
+    const add = ui.roster.addS
+      ? `<div class="sch-rrow is-exp">${studentForm({ code: "", class: "", status: "active", primary_ip: "", reserve_ips: [], avoid_ips: [], notes: "" }, true)}</div>` : "";
+    return rows + add + (!list.length && !ui.roster.addS
+      ? `<p class="sch-hint">${ui.roster.q ? "No student matches the filter." : "No students yet."}</p>` : "");
+  }
+
+  /* compact summary line — click expands the full edit form (one at a time) */
+  function studentRow(s) {
+    const exp = ui.roster.editS === s.code;
+    const idle = R().idleDays(s.code, today());
+    return `<div class="sch-rrow${exp ? " is-exp" : ""}">
+      <div class="sch-rsum" data-act="exp-s" data-id="${esc(s.code)}" role="button" tabindex="0"
+           title="click to ${exp ? "close" : "open"} the full form">
+        <span class="sch-rarrow">${exp ? "▾" : "▸"}</span>
+        <span class="sch-code">${esc(s.code)}</span>
+        ${s.rank ? `<span class="sch-rmeta">${esc(s.rank)}</span>` : ""}
+        <span class="sch-rname">${esc((s.last_name || "—") + (s.first_name ? ", " + s.first_name : ""))}</span>
+        ${s.class ? `<span class="sch-badge">${esc(s.class)}</span>` : ""}
+        <span class="sch-badge st-${esc(s.status || "active")}"${STATUS_TITLE[s.status] ? ` title="${esc(STATUS_TITLE[s.status])}"` : ""}>${esc(statusLabel(s.status || "active"))}</span>
+        ${studentChips(s)}
+        ${idle == null ? "" : `<span class="sch-nd" title="working days since the last recorded event">${idle}d</span>`}
+        <span class="sch-spacer"></span>
+        <button type="button" class="sch-mini" data-act="prog-s" data-id="${esc(s.code)}"
           title="Progress — mark nodes completed, undo, close makeups">Progress</button>
-        <button type="button" class="sch-mini" data-act="edit-s" data-id="${esc(s.code)}" title="Edit">✎</button>
-        <button type="button" class="sch-mini danger" data-act="del-s" data-id="${esc(s.code)}" title="Delete">✕</button></td>
-    </tr>`;
+      </div>
+      ${exp ? studentForm(s, false) : ""}
+    </div>`;
   }
 
-  function studentEditRow(s, isNew) {
+  function studentForm(s, isNew) {
     const r = s.reserve_ips || [];
-    return `<tr class="sch-edit" data-newrow="${isNew ? 1 : 0}" data-orig="${esc(s.code)}">
-      <td><input class="sch-in" data-f="code" value="${esc(s.code)}" placeholder="SP-31"${isNew ? "" : " readonly"}></td>
-      <td><input class="sch-in" data-f="class" value="${esc(s.class || "")}" list="sch-classlist" placeholder="99HAF-A"></td>
-      <td><select class="sch-in" data-f="status">${STATUS_OPTS.map((o) =>
-        `<option value="${o}"${(s.status || "active") === o ? " selected" : ""}>${esc(statusLabel(o))}</option>`).join("")}</select></td>
-      <td><select class="sch-in" data-f="primary_ip">${ipOptions(s.primary_ip || "", true)}</select></td>
-      <td class="sch-two"><select class="sch-in" data-f="r0">${ipOptions(r[0] || "", true)}</select>
-        <select class="sch-in" data-f="r1">${ipOptions(r[1] || "", true)}</select></td>
-      <td><input class="sch-in" data-f="notes" value="${esc(s.notes || "")}"></td>
-      <td class="sch-act"><button type="button" class="sch-mini good" data-act="save-s" title="Save">✔</button>
-        <button type="button" class="sch-mini" data-act="cancel" title="Cancel">↩</button></td>
-    </tr>`;
+    return `<div class="sch-rform" data-newrow="${isNew ? 1 : 0}" data-orig="${esc(s.code)}">
+      <div class="sch-fgrid">
+        <label class="sch-fld"><span>OID — read-only</span><input class="sch-in sch-mono" value="${esc(s.oid || "(assigned on save)")}" readonly tabindex="-1"></label>
+        <label class="sch-fld"><span>Code</span><input class="sch-in" data-f="code" value="${esc(s.code)}" placeholder="SP-31"${isNew ? "" : " readonly"}></label>
+        <label class="sch-fld"><span>Last name</span><input class="sch-in" data-f="last_name" value="${esc(s.last_name || "")}"></label>
+        <label class="sch-fld"><span>First name</span><input class="sch-in" data-f="first_name" value="${esc(s.first_name || "")}"></label>
+        <label class="sch-fld"><span>MN (service no)</span><input class="sch-in" data-f="mn" value="${esc(s.mn || "")}"></label>
+        <label class="sch-fld"><span>Rank</span><input class="sch-in" data-f="rank" value="${esc(s.rank || "")}" list="sch-ranklist"></label>
+        <label class="sch-fld"><span>Class</span><input class="sch-in" data-f="class" value="${esc(s.class || "")}" list="sch-classlist" placeholder="99HAF-A"></label>
+        <label class="sch-fld"><span>Status</span><select class="sch-in" data-f="status">${STATUS_OPTS.map((o) =>
+          `<option value="${o}"${(s.status || "active") === o ? " selected" : ""}>${esc(statusLabel(o))}</option>`).join("")}</select></label>
+        <label class="sch-fld"><span>Primary IP</span><select class="sch-in" data-f="primary_ip">${ipRefOptions(s.primary_ip || "")}</select></label>
+        <label class="sch-fld"><span>Reserve IP 1</span><select class="sch-in" data-f="r0">${ipRefOptions(r[0] || "")}</select></label>
+        <label class="sch-fld"><span>Reserve IP 2</span><select class="sch-in" data-f="r1">${ipRefOptions(r[1] || "")}</select></label>
+        <label class="sch-fld"><span>Avoid IPs — manual (fail-22)</span>${avoidSelectHtml(s)}</label>
+        <label class="sch-fld grow"><span>Notes</span><input class="sch-in" data-f="notes" value="${esc(s.notes || "")}"></label>
+      </div>
+      <div class="sch-fbtns">
+        <button type="button" class="sch-btn primary" data-act="save-s">✔ Save</button>
+        <button type="button" class="sch-btn" data-act="cancel">↩ Cancel</button>
+        ${isNew ? "" : `<button type="button" class="sch-btn danger" data-act="del-s" data-id="${esc(s.code)}">✕ Delete</button>`}
+      </div>
+    </div>`;
   }
 
-  function instructorTable() {
+  function instructorList() {
     const list = fInstructors();
-    const rows = list.map((i) => (ui.roster.editI === i.code ? ipEditRow(i) : ipRow(i))).join("");
-    const add = ui.roster.addI ? ipEditRow({ code: "", quals: {}, duty_eligible: {}, notes: "" }, true) : "";
-    return `<table class="sch-tbl">
-      <thead><tr><th>Code</th><th title="Night qualified">Night</th><th title="Evaluator — checkrides">Eval</th>
-      <th title="Ground instructor">Ground</th><th title="Duty eligible — Supervisor of Flying">SOF</th>
-      <th title="Duty eligible — Runway Supervisory Unit (solo supervision)">RSU</th><th>Notes</th><th class="sch-act"></th></tr></thead>
-      <tbody>${rows}${add}${!list.length && !ui.roster.addI ? `<tr><td colspan="8" class="sch-hint">${ui.roster.q ? "No instructor matches the filter." : "No instructors yet."}</td></tr>` : ""}</tbody></table>`;
+    const rows = list.map((i) => ipRow(i)).join("");
+    const add = ui.roster.addI
+      ? `<div class="sch-rrow is-exp">${ipForm({ code: "", quals: {}, duty_eligible: {}, status: "active", notes: "" }, true)}</div>` : "";
+    return rows + add + (!list.length && !ui.roster.addI
+      ? `<p class="sch-hint">${ui.roster.q ? "No instructor matches the filter." : "No instructors yet."}</p>` : "");
   }
-
-  const yn = (v) => (v ? `<span class="sch-yes">●</span>` : `<span class="sch-no">·</span>`);
 
   function ipRow(i) {
+    const exp = ui.roster.editI === i.code;
     const q = i.quals || {}, d = i.duty_eligible || {};
+    const dep = (i.status || "active") === "departed";
     const idle = R().idleDays(i.code, today());
-    return `<tr>
-      <td class="sch-code">${esc(i.code)}</td>
-      <td>${yn(q.night)}</td><td>${yn(q.evaluator)}</td><td>${yn(q.ground)}</td>
-      <td>${yn(d.SOF)}</td><td>${yn(d.RSU)}</td>
-      <td class="sch-note">${esc(i.notes || "")}${idle == null ? "" : ` <span class="sch-nd" title="working days since the last recorded event">${idle}d</span>`}</td>
-      <td class="sch-act"><button type="button" class="sch-mini" data-act="edit-i" data-id="${esc(i.code)}" title="Edit">✎</button>
-        <button type="button" class="sch-mini danger" data-act="del-i" data-id="${esc(i.code)}" title="Delete">✕</button></td>
-    </tr>`;
+    const qb = (t, title) => `<span class="sch-badge" title="${esc(title || t)}">${esc(t)}</span>`;
+    return `<div class="sch-rrow${exp ? " is-exp" : ""}${dep ? " is-dep" : ""}">
+      <div class="sch-rsum" data-act="exp-i" data-id="${esc(i.code)}" role="button" tabindex="0"
+           title="click to ${exp ? "close" : "open"} the full form">
+        <span class="sch-rarrow">${exp ? "▾" : "▸"}</span>
+        <span class="sch-code">${esc(i.code)}</span>
+        ${i.rank ? `<span class="sch-rmeta">${esc(i.rank)}</span>` : ""}
+        <span class="sch-rname">${esc((i.last_name || "—") + (i.first_name ? ", " + i.first_name : ""))}</span>
+        ${i.callsign ? `<span class="sch-badge alt" title="personal callsign — auto-fills single-ship lines">${esc(i.callsign)}</span>` : ""}
+        ${dep ? `<span class="sch-badge st-withdrawn" title="departed — excluded from every picker, kept in Balance history">DEPARTED</span>` : ""}
+        ${q.night ? qb("☾", "night qualified") : ""}${q.evaluator ? qb("EVAL", "evaluator — checkrides") : ""}
+        ${q.ground ? qb("GND", "ground instructor") : ""}${q.rsu_solo ? qb("RSU-solo", "RSU-during-solo qualification — the RSU A/B duty pickers filter on this") : ""}
+        ${d.SOF ? qb("SOF", "duty eligible — Supervisor of Flying") : ""}${d.RSU ? qb("RSU", "duty eligible — Runway Supervisory Unit (compatibility)") : ""}
+        ${idle == null ? "" : `<span class="sch-nd" title="working days since the last recorded event">${idle}d</span>`}
+        <span class="sch-spacer"></span>
+      </div>
+      ${exp ? ipForm(i, false) : ""}
+    </div>`;
   }
 
-  function ipEditRow(i, isNew) {
+  function ipForm(i, isNew) {
     const q = i.quals || {}, d = i.duty_eligible || {};
-    const cb = (f, on) => `<input type="checkbox" data-f="${f}"${on ? " checked" : ""}>`;
-    return `<tr class="sch-edit" data-newrow="${isNew ? 1 : 0}" data-orig="${esc(i.code)}">
-      <td><input class="sch-in" data-f="code" value="${esc(i.code)}" placeholder="IP-16"${isNew ? "" : " readonly"}></td>
-      <td>${cb("night", q.night)}</td><td>${cb("evaluator", q.evaluator)}</td><td>${cb("ground", q.ground)}</td>
-      <td>${cb("SOF", d.SOF)}</td><td>${cb("RSU", d.RSU)}</td>
-      <td><input class="sch-in" data-f="notes" value="${esc(i.notes || "")}"></td>
-      <td class="sch-act"><button type="button" class="sch-mini good" data-act="save-i" title="Save">✔</button>
-        <button type="button" class="sch-mini" data-act="cancel" title="Cancel">↩</button></td>
-    </tr>`;
+    const cb = (f, on, lbl, title) => `<label class="sch-fld sch-chk" title="${esc(title || lbl)}">
+      <input type="checkbox" data-f="${f}"${on ? " checked" : ""}> <span>${esc(lbl)}</span></label>`;
+    const refs = isNew ? null : P().references(i);
+    return `<div class="sch-rform" data-newrow="${isNew ? 1 : 0}" data-orig="${esc(i.code)}">
+      <div class="sch-fgrid">
+        <label class="sch-fld"><span>OID — read-only</span><input class="sch-in sch-mono" value="${esc(i.oid || "(assigned on save)")}" readonly tabindex="-1"></label>
+        <label class="sch-fld"><span>Code</span><input class="sch-in" data-f="code" value="${esc(i.code)}" placeholder="IP-16"${isNew ? "" : " readonly"}></label>
+        <label class="sch-fld"><span>Last name</span><input class="sch-in" data-f="last_name" value="${esc(i.last_name || "")}"></label>
+        <label class="sch-fld"><span>First name</span><input class="sch-in" data-f="first_name" value="${esc(i.first_name || "")}"></label>
+        <label class="sch-fld"><span>MN (service no)</span><input class="sch-in" data-f="mn" value="${esc(i.mn || "")}"></label>
+        <label class="sch-fld"><span>Rank</span><input class="sch-in" data-f="rank" value="${esc(i.rank || "")}" list="sch-ranklist"></label>
+        <label class="sch-fld"><span>Callsign</span><input class="sch-in" data-f="callsign" value="${esc(i.callsign || "")}" placeholder="VIPER01"></label>
+        <label class="sch-fld"><span>Status</span><select class="sch-in" data-f="status">
+          <option value="active"${(i.status || "active") === "active" ? " selected" : ""}>active</option>
+          <option value="departed"${i.status === "departed" ? " selected" : ""}>departed</option></select></label>
+        ${cb("night", q.night, "Night", "night qualified")}
+        ${cb("evaluator", q.evaluator, "Evaluator", "evaluator — checkrides")}
+        ${cb("ground", q.ground, "Ground", "ground instructor")}
+        ${cb("rsu_solo", q.rsu_solo, "RSU (solo)", "RSU-during-solo qualification — the RSU A/B duty pickers filter on this")}
+        ${cb("SOF", d.SOF, "SOF duty", "duty eligible — Supervisor of Flying")}
+        ${cb("RSU", d.RSU, "RSU duty", "duty eligible — Runway Supervisory Unit (kept for compatibility)")}
+        <label class="sch-fld grow"><span>Notes</span><input class="sch-in" data-f="notes" value="${esc(i.notes || "")}"></label>
+      </div>
+      <div class="sch-fbtns">
+        <button type="button" class="sch-btn primary" data-act="save-i">✔ Save</button>
+        <button type="button" class="sch-btn" data-act="cancel">↩ Cancel</button>
+        ${isNew ? "" : `<button type="button" class="sch-btn danger" data-act="del-i" data-id="${esc(i.code)}">
+          ${refs && refs.any ? "✕ Mark departed" : "✕ Delete"}</button>`}
+        ${refs && refs.any ? `<span class="sch-hint">referenced by ${refs.log} log event${refs.log === 1 ? "" : "s"} · ${refs.students} student${refs.students === 1 ? "" : "s"} · ${refs.duty} duty day${refs.duty === 1 ? "" : "s"} — never hard-deleted</span>` : ""}
+      </div>
+    </div>`;
   }
 
   function classBlock() {
@@ -893,7 +1158,7 @@
     const away = [...map.entries()].filter(([, v]) => v && v !== "available").length;
     return `<p class="sch-hint">${esc(date || "—")} · <b>${away}</b> away</p>
       <div class="sch-avgroup"><span class="sch-lbl">Students</span><div class="sch-avrow">${students().map((s) => cell(s.code)).join("")}</div></div>
-      <div class="sch-avgroup"><span class="sch-lbl">Instructors</span><div class="sch-avrow">${instructors().map((i) => cell(i.code)).join("")}</div></div>`;
+      <div class="sch-avgroup"><span class="sch-lbl">Instructors</span><div class="sch-avrow">${activeIps().map((i) => cell(i.code)).join("")}</div></div>`;
   }
 
   /* Wired ONCE per pane element: renderRoster() only swaps innerHTML, so the
@@ -907,13 +1172,13 @@
       ui.roster.availDate = e.target.value;
       $id("sch-avgrid").innerHTML = availGrid();
     });
-    /* live roster filter — only the two tables repaint, the input keeps focus */
+    /* live roster filter — only the two lists repaint, the input keeps focus */
     el.addEventListener("input", (e) => {
       if (e.target.id !== "sch-rosterq") return;
       ui.roster.q = e.target.value;
       const st = $id("sch-stww"), it = $id("sch-itww");
-      if (st) st.innerHTML = studentTable();
-      if (it) it.innerHTML = instructorTable();
+      if (st) st.innerHTML = studentList();
+      if (it) it.innerHTML = instructorList();
       const sc = $id("sch-scount"), ic = $id("sch-icount");
       if (sc) sc.textContent = fStudents().length + "/" + students().length;
       if (ic) ic.textContent = fInstructors().length + "/" + instructors().length;
@@ -935,44 +1200,55 @@
         else S().toast("The progress editor arrives with Phase B.", "bad");
       } else if (act === "add-s") { ui.roster.addS = true; ui.roster.editS = null; renderRoster(); }
       else if (act === "add-i") { ui.roster.addI = true; ui.roster.editI = null; renderRoster(); }
-      else if (act === "edit-s") { ui.roster.editS = id; ui.roster.addS = false; renderRoster(); }
-      else if (act === "edit-i") { ui.roster.editI = id; ui.roster.addI = false; renderRoster(); }
+      else if (act === "exp-s") { ui.roster.editS = ui.roster.editS === id ? null : id; ui.roster.editI = null; ui.roster.addS = false; renderRoster(); }
+      else if (act === "exp-i") { ui.roster.editI = ui.roster.editI === id ? null : id; ui.roster.editS = null; ui.roster.addI = false; renderRoster(); }
       else if (act === "cancel") { ui.roster.editS = ui.roster.editI = null; ui.roster.addS = ui.roster.addI = false; renderRoster(); }
-      else if (act === "save-s") saveStudent(b.closest("tr"));
-      else if (act === "save-i") saveInstructor(b.closest("tr"));
+      else if (act === "save-s") saveStudent(b.closest(".sch-rform"));
+      else if (act === "save-i") saveInstructor(b.closest(".sch-rform"));
       else if (act === "del-s") delStudent(id);
       else if (act === "del-i") delInstructor(id);
     });
   }
 
-  const fval = (tr, f) => { const x = tr.querySelector(`[data-f="${f}"]`); return x ? (x.type === "checkbox" ? x.checked : x.value.trim()) : ""; };
+  const fval = (box, f) => { const x = box.querySelector(`[data-f="${f}"]`); return x ? (x.type === "checkbox" ? x.checked : x.value.trim()) : ""; };
+  const fmulti = (box, f) => { const x = box.querySelector(`[data-f="${f}"]`); return x ? [...x.selectedOptions].map((o) => o.value).filter(Boolean) : []; };
 
-  function saveStudent(tr) {
-    const code = fval(tr, "code");
+  function saveStudent(box) {
+    const code = fval(box, "code");
     if (!code) { S().toast("A student needs a code.", "bad"); return; }
-    const isNew = tr.dataset.newrow === "1";
+    const isNew = box.dataset.newrow === "1";
     if (isNew && S().find("students", code)) { S().toast("Code " + code + " already exists.", "bad"); return; }
-    const r0 = fval(tr, "r0"), r1 = fval(tr, "r1");
+    const prev = S().find("students", code);
+    const r0 = fval(box, "r0"), r1 = fval(box, "r1");
+    /* the form selects carry OIDs — a save REWRITES any legacy code refs */
     const rec = {
-      code: code, class: fval(tr, "class"), status: fval(tr, "status"),
-      primary_ip: fval(tr, "primary_ip"), reserve_ips: [r0, r1].filter(Boolean),
-      notes: fval(tr, "notes"),
+      code: code, oid: (prev && prev.oid) || S().uid("oid"),
+      class: fval(box, "class"), status: fval(box, "status"),
+      first_name: fval(box, "first_name"), last_name: fval(box, "last_name"),
+      mn: fval(box, "mn"), rank: fval(box, "rank"),
+      primary_ip: fval(box, "primary_ip"), reserve_ips: [r0, r1].filter(Boolean),
+      avoid_ips: fmulti(box, "avoid_ips"),
+      notes: fval(box, "notes"),
     };
     ui.roster.editS = null; ui.roster.addS = false;   // before the store event re-renders
     S().upsert("students", rec);
     S().toast("Student " + code + " saved.", "good");
   }
 
-  function saveInstructor(tr) {
-    const code = fval(tr, "code");
+  function saveInstructor(box) {
+    const code = fval(box, "code");
     if (!code) { S().toast("An instructor needs a code.", "bad"); return; }
-    const isNew = tr.dataset.newrow === "1";
+    const isNew = box.dataset.newrow === "1";
     if (isNew && S().find("instructors", code)) { S().toast("Code " + code + " already exists.", "bad"); return; }
+    const prev = S().find("instructors", code);
     const rec = {
-      code: code,
-      quals: { night: fval(tr, "night"), evaluator: fval(tr, "evaluator"), ground: fval(tr, "ground") },
-      duty_eligible: { SOF: fval(tr, "SOF"), RSU: fval(tr, "RSU") },
-      notes: fval(tr, "notes"),
+      code: code, oid: (prev && prev.oid) || S().uid("oid"),
+      first_name: fval(box, "first_name"), last_name: fval(box, "last_name"),
+      mn: fval(box, "mn"), rank: fval(box, "rank"), callsign: fval(box, "callsign"),
+      status: fval(box, "status") || "active",
+      quals: { night: fval(box, "night"), evaluator: fval(box, "evaluator"), ground: fval(box, "ground"), rsu_solo: fval(box, "rsu_solo") },
+      duty_eligible: { SOF: fval(box, "SOF"), RSU: fval(box, "RSU") },
+      notes: fval(box, "notes"),
     };
     ui.roster.editI = null; ui.roster.addI = false;   // before the store event re-renders
     S().upsert("instructors", rec);
@@ -987,9 +1263,23 @@
     S().toast("Student " + code + " deleted.", "good");
   }
 
+  /* a referenced instructor is NEVER hard-deleted — the action becomes "mark
+     departed" (kept in history, excluded from every picker); a real delete is
+     offered only when nothing references them. */
   function delInstructor(code) {
-    const n = (S().get("trainingLog") || []).filter((e) => e.instructor === code).length;
-    if (!confirm(`Delete instructor ${code}?` + (n ? `\n${n} training-log entries name this instructor and stay behind.` : ""))) return;
+    const rec = S().find("instructors", code);
+    if (!rec) return;
+    const refs = P().references(rec);
+    if (refs.any) {
+      if (rec.status === "departed") { S().toast(code + " is referenced (" + refs.log + " log · " + refs.students + " SP · " + refs.duty + " duty) — stays as DEPARTED.", "bad"); return; }
+      if (!confirm(`${code} is referenced by ${refs.log} log event(s), ${refs.students} student(s), ${refs.duty} duty day(s).\n`
+        + `Instructors with history are never hard-deleted.\n\nMark ${code} as DEPARTED instead?`)) return;
+      ui.roster.editI = null;
+      S().upsert("instructors", { code: code, status: "departed" });
+      S().toast("Instructor " + code + " marked DEPARTED — history kept, excluded from pickers.", "good");
+      return;
+    }
+    if (!confirm(`Delete instructor ${code}? Nothing references them.`)) return;
     ui.roster.editI = null;
     S().remove("instructors", code);
     S().toast("Instructor " + code + " deleted.", "good");
@@ -1177,13 +1467,16 @@
     return { html: parts.join(""), n: n };
   }
 
-  /* evaluator-first IP picker for the special dp/apt sorties (spec §3α B) */
+  /* evaluator-first IP picker for the special dp/apt sorties (spec §3α B) —
+     departed instructors are excluded (kept only as the current value) */
   function evalIpOptions(sel) {
-    const ev = instructors().filter((i) => (i.quals || {}).evaluator);
-    const rest = instructors().filter((i) => !(i.quals || {}).evaluator);
+    const pool = activeIps();
+    const ev = pool.filter((i) => (i.quals || {}).evaluator);
+    const rest = pool.filter((i) => !(i.quals || {}).evaluator);
     const opt = (i) => `<option value="${esc(i.code)}"${i.code === sel ? " selected" : ""}>${esc(i.code)}</option>`;
     return `<option value="">—</option>` + ev.map(opt).join("")
-      + (rest.length ? `<optgroup label="not evaluator-qualified — hard warning">${rest.map(opt).join("")}</optgroup>` : "");
+      + (rest.length ? `<optgroup label="not evaluator-qualified — hard warning">${rest.map(opt).join("")}</optgroup>` : "")
+      + (sel && !pool.some((i) => i.code === sel) ? `<optgroup label="departed"><option value="${esc(sel)}" selected>${esc(sel)}</option></optgroup>` : "");
   }
 
   function renderForm() {
@@ -1237,7 +1530,9 @@
           <label class="sch-fld"><span>Instructor${spDef && spDef.evaluator ? " (evaluator)" : ""}</span>
             <select class="sch-in" data-ff="instructor">${spDef && spDef.evaluator
         ? evalIpOptions(f.instructor)
-        : `<option value="">—</option>` + instructors().map((i) => `<option value="${esc(i.code)}"${f.instructor === i.code ? " selected" : ""}>${esc(i.code)}</option>`).join("")}</select></label>
+        : `<option value="">—</option>` + activeIps().map((i) => `<option value="${esc(i.code)}"${f.instructor === i.code ? " selected" : ""}>${esc(i.code)}</option>`).join("")
+          + (f.instructor && !activeIps().some((i) => i.code === f.instructor)
+            ? `<optgroup label="departed"><option value="${esc(f.instructor)}" selected>${esc(f.instructor)}</option></optgroup>` : "")}</select></label>
           <label class="sch-fld"><span>Device</span><input class="sch-in" data-ff="device" value="${esc(f.device)}" list="sch-devlist" placeholder="${esc(DEVICES.join(" · "))}"></label>
           <datalist id="sch-devlist">${DEVICES.map((x) => `<option value="${esc(x)}"></option>`).join("")}</datalist>
           <label class="sch-fld"><span>Result</span><select class="sch-in" data-ff="result">
