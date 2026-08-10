@@ -1,4 +1,14 @@
 "use strict";
+/* Round 6 — the ONE shared date formatter: every date RENDERED as text shows
+   DD/MM/YYYY; storage stays ISO everywhere; native <input type="date"> stays
+   untouched. A leading ISO date in a longer string ("2026-08-10 14:32") is
+   converted and the tail kept. Defined here (first scheduler file loaded) so
+   schedconsq.js and schedboard.js can share it. */
+window.fmtDMY = function fmtDMY(v) {
+  const s = String(v == null ? "" : v);
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s);
+  return m ? m[3] + "/" + m[2] + "/" + m[1] + s.slice(10) : s;
+};
 /* Scheduler — PHASE A of specs/scheduler-spec.md
  *
  *   ① window.SchedReady — the readiness engine that Phase B (schedboard.js)
@@ -538,7 +548,7 @@
       if (pd) {
         return {
           pd: pd, req: pd.req || "fail-16", vb: cq.vb(pd.req || "fail-16"),
-          reason: "PD 29/2020 in force (" + pd.srcLabel + (pd.since ? ", " + pd.since : "")
+          reason: "PD 29/2020 in force (" + pd.srcLabel + (pd.since ? ", " + window.fmtDMY(pd.since) : "")
             + ") — ALL activities stop · " + cq.pdStageText(pd),
         };
       }
@@ -548,7 +558,7 @@
     if (!g) return null;
     return {
       gate: g,
-      reason: "open " + g.label + (g.date ? " of " + g.date : "") + " — flying stays locked until it is closed",
+      reason: "open " + g.label + (g.date ? " of " + window.fmtDMY(g.date) : "") + " — flying stays locked until it is closed",
     };
   }
 
@@ -754,6 +764,7 @@
     const m = new Map();
     const add = (p, d) => { if (!p || !d) return; let a = m.get(p); if (!a) { a = []; m.set(p, a); } a.push(d); };
     for (const ev of (window.SchedStore.get("trainingLog") || [])) {
+      if (ev.special === "nfs") continue;         // Round 6 — a no-fly SHEET is not activity
       const d = evDate(ev);
       if (!d) continue;
       if (ev.instructor) add(ev.instructor, d);
@@ -1025,6 +1036,18 @@
   const SP_PREFIX = "sp:";
   const CQ = () => window.SchedConsq || null;
   const spKeyOf = (node) => (String(node || "").indexOf(SP_PREFIX) === 0 ? String(node).slice(SP_PREFIX.length) : "");
+  /* Round 6 — NFS (Φύλλο Μη Πτήσης, form Α0473) is a recordable ENTRY like the
+     special sorties: {node:"", special:"nfs", kind:"nfs", student, date,
+     category, note, ref?} — no instructor, no result, never a flight
+     (fail-83: it follows a failed written/oral exam or a no-fly by student
+     cause). `ref` optionally names the failed exam node → NFS badge there. */
+  const NFS_KEY = "nfs";
+  const NFS_CATS = [
+    { v: "written", t: "written exam failure" },
+    { v: "oral", t: "oral exam failure" },
+    { v: "other", t: "no-fly — student cause (other)" },
+  ];
+  const NFS_CAT_LABEL = { written: "written exam failure", oral: "oral exam failure", other: "no-fly — student cause" };
   const DEVICE_BY_KIND = { lessons: "GND", exams: "GND", fs: "OFT", flights: "T-6A" };
   const DEVICES = ["T-6A", "OFT", "FTD", "GND"];
   const LOG_ROW_CAP = 400;                  // the seed alone carries ~2 000 events
@@ -1034,7 +1057,7 @@
   const ui = {
     booted: false, pane: "board",
     roster: { editS: null, editI: null, addS: false, addI: false, availDate: "", q: "" },
-    log: { f: { student: "", kind: "", from: "", to: "", q: "" }, form: null, nodeQ: "", open: false },
+    log: { f: { student: "", kind: "", from: "", to: "", q: "" }, form: null, nodeQ: "", open: false, nfsSuggest: null },
   };
 
   const P = () => window.SchedPeople;
@@ -1154,7 +1177,6 @@
           <div class="sch-scroll" id="sch-itww">${instructorList()}</div>
         </section>
       </div>
-      <datalist id="sch-ranklist">${RANKS.map((r) => `<option value="${esc(r)}"></option>`).join("")}</datalist>
       <section class="panel sch-panel">
         <div class="sch-h"><h2>Classes <span class="count">read-only — they follow the members</span></h2></div>
         ${classBlock()}
@@ -1186,15 +1208,27 @@
     if (selRef && !selRec) parts.push(`<option value="${esc(selRef)}" selected>${esc(String(selRef) + " — unknown")}</option>`);
     return parts.join("");
   }
-  function avoidSelectHtml(s) {
+  /* Round 6 — the manual avoid list is TOGGLE CHIPS (the native multi-select
+     needed ctrl-click). Click toggles is-on; the save reads the on-chips.
+     Storage unchanged: an array of instructor OIDs. Departed IPs appear only
+     while they ARE selected (so an old selection never silently vanishes). */
+  function avoidChipsHtml(s) {
     const cur = new Set((s.avoid_ips || []).map((x) => { const rec = P().ip(x); return rec ? (rec.oid || rec.code) : String(x); }));
-    return `<select class="sch-in sch-multi" data-f="avoid_ips" multiple size="4"
-      title="manual avoid list — union with the log-derived avoided instructors (fail-22)">`
-      + instructors().map((i) => {
-        const v = i.oid || i.code;
-        return `<option value="${esc(v)}"${cur.has(v) ? " selected" : ""}>${esc(i.code + (i.last_name ? " " + i.last_name : ""))}</option>`;
-      }).join("") + `</select>`;
+    const chips = instructors().map((i) => {
+      const v = i.oid || i.code;
+      const on = cur.has(v);
+      const dep = (i.status || "active") === "departed";
+      if (dep && !on) return "";
+      const label = i.code + (i.last_name ? " " + i.last_name : "") + (dep ? " — DEPARTED" : "");
+      return `<button type="button" class="sch-tgl${on ? " is-on" : ""}" data-avchip="${esc(v)}"
+        title="${esc((on ? "click to remove from" : "click to add to") + " the manual avoid list (fail-22)")}">${esc(label)}</button>`;
+    }).join("");
+    return `<span class="sch-tglrow" data-avbox
+      title="manual avoid list — union with the log-derived avoided instructors (fail-22)">${chips || `<em class="sch-hint">no instructor</em>`}</span>`;
   }
+  /* Round 6 — rank quick-pick chips under the free-text rank input */
+  const rankChipsHtml = () => `<span class="sch-tglrow sch-rankrow">${RANKS.map((r) =>
+    `<button type="button" class="sch-tgl sch-rankchip" data-rankchip="${esc(r)}" title="fill the rank field with ${esc(r)} — free text stays allowed">${esc(r)}</button>`).join("")}</span>`;
 
   /* warning chips of one student row: PD/SMS (Round 2) + Round 4 "lost
      instructor" (fail-22) + departed/missing primary/reserve */
@@ -1272,14 +1306,14 @@
         <label class="sch-fld"><span>Last name</span><input class="sch-in" data-f="last_name" value="${esc(s.last_name || "")}"></label>
         <label class="sch-fld"><span>First name</span><input class="sch-in" data-f="first_name" value="${esc(s.first_name || "")}"></label>
         <label class="sch-fld"><span>MN (service no)</span><input class="sch-in" data-f="mn" value="${esc(s.mn || "")}"></label>
-        <label class="sch-fld"><span>Rank</span><input class="sch-in" data-f="rank" value="${esc(s.rank || "")}" list="sch-ranklist"></label>
+        <label class="sch-fld"><span>Rank — free text or a chip</span><input class="sch-in" data-f="rank" value="${esc(s.rank || "")}">${rankChipsHtml()}</label>
         <label class="sch-fld"><span>Class</span><input class="sch-in" data-f="class" value="${esc(s.class || "")}" list="sch-classlist" placeholder="99HAF-A"></label>
         <label class="sch-fld"><span>Status</span><select class="sch-in" data-f="status">${STATUS_OPTS.map((o) =>
           `<option value="${o}"${(s.status || "active") === o ? " selected" : ""}>${esc(statusLabel(o))}</option>`).join("")}</select></label>
         <label class="sch-fld"><span>Primary IP</span><select class="sch-in" data-f="primary_ip">${ipRefOptions(s.primary_ip || "")}</select></label>
         <label class="sch-fld"><span>Reserve IP 1</span><select class="sch-in" data-f="r0">${ipRefOptions(r[0] || "")}</select></label>
         <label class="sch-fld"><span>Reserve IP 2</span><select class="sch-in" data-f="r1">${ipRefOptions(r[1] || "")}</select></label>
-        <label class="sch-fld"><span>Avoid IPs — manual (fail-22)</span>${avoidSelectHtml(s)}</label>
+        <label class="sch-fld wide"><span>Avoid IPs — manual (fail-22) · click toggles</span>${avoidChipsHtml(s)}</label>
         <label class="sch-fld grow"><span>Notes</span><input class="sch-in" data-f="notes" value="${esc(s.notes || "")}"></label>
       </div>
       <div class="sch-fbtns">
@@ -1336,7 +1370,7 @@
         <label class="sch-fld"><span>Last name</span><input class="sch-in" data-f="last_name" value="${esc(i.last_name || "")}"></label>
         <label class="sch-fld"><span>First name</span><input class="sch-in" data-f="first_name" value="${esc(i.first_name || "")}"></label>
         <label class="sch-fld"><span>MN (service no)</span><input class="sch-in" data-f="mn" value="${esc(i.mn || "")}"></label>
-        <label class="sch-fld"><span>Rank</span><input class="sch-in" data-f="rank" value="${esc(i.rank || "")}" list="sch-ranklist"></label>
+        <label class="sch-fld"><span>Rank — free text or a chip</span><input class="sch-in" data-f="rank" value="${esc(i.rank || "")}">${rankChipsHtml()}</label>
         <label class="sch-fld"><span>Callsign</span><input class="sch-in" data-f="callsign" value="${esc(i.callsign || "")}" placeholder="VIPER01"></label>
         <label class="sch-fld"><span>Status</span><select class="sch-in" data-f="status">
           <option value="active"${(i.status || "active") === "active" ? " selected" : ""}>active</option>
@@ -1378,7 +1412,7 @@
         <span class="sch-code">${esc(code)}</span><span class="sch-avst">${esc(st === "available" ? "OK" : st)}</span></button>`;
     };
     const away = [...map.entries()].filter(([, v]) => v && v !== "available").length;
-    return `<p class="sch-hint">${esc(date || "—")} · <b>${away}</b> away</p>
+    return `<p class="sch-hint">${esc(date ? window.fmtDMY(date) : "—")} · <b>${away}</b> away</p>
       <div class="sch-avgroup"><span class="sch-lbl">Students</span><div class="sch-avrow">${students().map((s) => cell(s.code)).join("")}</div></div>
       <div class="sch-avgroup"><span class="sch-lbl">Instructors</span><div class="sch-avrow">${activeIps().map((i) => cell(i.code)).join("")}</div></div>`;
   }
@@ -1406,6 +1440,17 @@
       if (ic) ic.textContent = fInstructors().length + "/" + instructors().length;
     });
     el.addEventListener("click", (e) => {
+      /* Round 6 — toggle chips (avoid-ips) and rank quick-pick fill the form
+         in place: the DOM holds the state until Save reads it. */
+      const avc = e.target.closest("[data-avchip]");
+      if (avc) { avc.classList.toggle("is-on"); return; }
+      const rk = e.target.closest("[data-rankchip]");
+      if (rk) {
+        const form = rk.closest(".sch-rform");
+        const inp = form && form.querySelector('[data-f="rank"]');
+        if (inp) { inp.value = rk.dataset.rankchip; inp.focus(); }
+        return;
+      }
       const av = e.target.closest("[data-av]");
       if (av) {
         const code = av.dataset.av;
@@ -1433,7 +1478,8 @@
   }
 
   const fval = (box, f) => { const x = box.querySelector(`[data-f="${f}"]`); return x ? (x.type === "checkbox" ? x.checked : x.value.trim()) : ""; };
-  const fmulti = (box, f) => { const x = box.querySelector(`[data-f="${f}"]`); return x ? [...x.selectedOptions].map((o) => o.value).filter(Boolean) : []; };
+  /* Round 6 — the avoid list reads the ON chips (was: a native multi-select) */
+  const fchips = (box) => [...box.querySelectorAll("[data-avchip].is-on")].map((b) => b.dataset.avchip).filter(Boolean);
 
   function saveStudent(box) {
     const code = fval(box, "code");
@@ -1449,7 +1495,7 @@
       first_name: fval(box, "first_name"), last_name: fval(box, "last_name"),
       mn: fval(box, "mn"), rank: fval(box, "rank"),
       primary_ip: fval(box, "primary_ip"), reserve_ips: [r0, r1].filter(Boolean),
-      avoid_ips: fmulti(box, "avoid_ips"),
+      avoid_ips: fchips(box),
       notes: fval(box, "notes"),
     };
     ui.roster.editS = null; ui.roster.addS = false;   // before the store event re-renders
@@ -1515,6 +1561,7 @@
       result: "completed", score: "", note: "", absent: {},
       category: "", maneuvers: "",
       course: "", periods_done: "",             // Round 5 — per-course lessons
+      nfsRef: "",                               // Round 6 — NFS → failed exam node
     };
   }
 
@@ -1548,6 +1595,14 @@
       <section class="panel sch-panel">
         <div class="sch-h"><h2>New entry</h2>
           <button type="button" class="sch-btn" data-act="toggle-form">${ui.log.open ? "Hide" : "Open"} form</button></div>
+        ${ui.log.nfsSuggest ? `<div class="sch-consqban is-apt"><b>NFS suggested</b> —
+          ground-exam failure of <span class="sch-code">${esc(ui.log.nfsSuggest.student)}</span>
+          on ${esc(window.fmtDMY(ui.log.nfsSuggest.date))} (${esc(ui.log.nfsSuggest.label)}) —
+          a Φύλλο Μη Πτήσης (Α0473) follows an exam failure
+          <em class="sch-wcid" title="${esc("fail-83 — " + (CQ() ? CQ().vb("fail-83") : ""))}">fail-83</em>
+          <span class="sch-spacer"></span>
+          <button type="button" class="sch-btn primary" data-act="nfs-fill">Record the NFS</button>
+          <button type="button" class="sch-mini" data-act="nfs-dismiss" title="dismiss the suggestion">✕</button></div>` : ""}
         <div id="sch-formwrap" class="${ui.log.open ? "" : "hidden"}"></div>
       </section>
       <section class="panel sch-panel">
@@ -1595,7 +1650,9 @@
         const dsc = R().describe(evNode(ev));
         const spd = ev.special && CQ() ? CQ().SPECIAL[ev.special] : null;
         const hay = [evNode(ev), dsc ? dsc.label : "", dsc ? dsc.name : "",
-          spd ? spd.short + " " + spd.label + " special" : "", ev.category,
+          spd ? spd.short + " " + spd.label + " special" : "",
+          ev.special === NFS_KEY ? "nfs φύλλο μη πτήσης no-fly sheet " + (NFS_CAT_LABEL[ev.category] || "") : "",
+          ev.category,
           ev.instructor, ev.device, ev.note, ev.maneuvers, ev.student,
           R().classesOf(ev).join(" "), ev.course]
           .filter(Boolean).join(" ").toLowerCase();
@@ -1612,7 +1669,7 @@
   function dayHead(iso, n) {
     const t = Date.parse(iso + "T00:00:00Z");
     const dow = isNaN(t) ? "" : " — " + DOW[new Date(t).getUTCDay()];
-    return `<tr class="sch-loggrp"><td colspan="10">${esc(iso)}${esc(dow)} <span class="count">${n} event${n === 1 ? "" : "s"}</span></td></tr>`;
+    return `<tr class="sch-loggrp"><td colspan="10">${esc(window.fmtDMY(iso))}${esc(dow)} <span class="count">${n} event${n === 1 ? "" : "s"}</span></td></tr>`;
   }
 
   /* the log renders GROUPED under date headers, newest date first */
@@ -1645,9 +1702,12 @@
 
   function logRowHtml(ev) {
       const d = R().describe(evNode(ev));
-      const spd = ev.special && CQ() ? CQ().SPECIAL[ev.special] : null;
+      const isNfs = ev.special === NFS_KEY;
+      const spd = ev.special && !isNfs && CQ() ? CQ().SPECIAL[ev.special] : null;
       const k = evKind(ev);
-      const when = ev.start_date ? esc(ev.start_date) + " → " + esc(ev.end_date || "…") : esc(ev.date || "—");
+      const when = ev.start_date
+        ? esc(window.fmtDMY(ev.start_date)) + " → " + esc(ev.end_date ? window.fmtDMY(ev.end_date) : "…")
+        : esc(ev.date ? window.fmtDMY(ev.date) : "—");
       const evCls = R().classesOf(ev);
       const who = ev.scope === "class"
         ? `<span class="sch-badge">class${evCls.length > 1 ? " ×" + evCls.length : ""}</span> ${esc(evCls.join(" · ") || "—")}`
@@ -1656,13 +1716,18 @@
       /* PASS / LAG (YSTERISI) / FAIL (APOTYXIA) — legacy repeat renders as LAG */
       const raw = ev.result || "completed";
       const isFly = k === "flights" || k === "fs";
-      const res = raw === "score" ? esc(String(ev.score ?? "")) + "%"
-        : esc(isFly ? (RESULT_LABEL[raw] || raw) : (raw === "repeat" ? "LAG (YSTERISI)" : raw));
-      const rcls = raw === "repeat" ? "lag" : raw;
+      const res = isNfs ? "—"
+        : raw === "score" ? esc(String(ev.score ?? "")) + "%"
+          : esc(isFly ? (RESULT_LABEL[raw] || raw) : (raw === "repeat" ? "LAG (YSTERISI)" : raw));
+      const rcls = isNfs ? "" : raw === "repeat" ? "lag" : raw;
       /* Round 5 — a per-course lesson event shows the COURSE + its periods */
       const crs = ev.course && d ? R().courseOf(evNode(ev), ev.course) : null;
       const per = ev.course ? (ev.periods_done != null ? ev.periods_done : (crs ? crs.periods : "")) : "";
-      const nodeCell = spd
+      const nodeCell = isNfs
+        ? `<span class="sch-code">NFS</span> <span class="sch-note">Φύλλο Μη Πτήσης</span>
+           ${ev.category ? `<span class="sch-badge warn">${esc(NFS_CAT_LABEL[ev.category] || ev.category)}</span>` : ""}
+           ${ev.ref ? `<span class="sch-badge" title="failed exam">${esc(R().label(ev.ref))}</span>` : ""}`
+        : spd
         ? `<span class="sch-code">${esc(spd.short)}</span> <span class="sch-note">${esc(spd.label)}</span>
            ${ev.category && CQ() ? `<span class="sch-badge">${esc(CQ().CAT_LABEL[ev.category] || ev.category)}</span>` : ""}`
         : ev.course && d
@@ -1675,7 +1740,7 @@
       return `<tr>
         <td class="sch-mono">${when}</td>
         <td>${nodeCell}</td>
-        <td><span class="sch-badge k-${esc(k || "x")}">${esc(k ? R().KIND_SHORT[k] : "?")}</span></td>
+        <td><span class="sch-badge ${isNfs ? "warn" : "k-" + esc(k || "x")}">${esc(isNfs ? "NFS" : (k && R().KIND_SHORT[k]) || "?")}</span></td>
         <td>${who}</td>
         <td class="sch-mono">${esc(ev.instructor || "—")}${ipShares}</td>
         <td class="sch-mono">${esc(ev.device || "—")}</td>
@@ -1706,6 +1771,16 @@
         parts.push(`<optgroup label="Special — out of graph">` + sp.map((k) =>
           `<option value="${esc(SP_PREFIX + k)}"${f.node === SP_PREFIX + k ? " selected" : ""}>${esc(CQ().SPECIAL[k].short + " — " + CQ().SPECIAL[k].label)}</option>`
         ).join("") + `</optgroup>`);
+      }
+    }
+    /* Round 6 — NFS record, searchable like everything else */
+    {
+      const q = ui.log.nodeQ.trim().toLowerCase();
+      const hay = "nfs record φύλλο μη πτήσης fylo mi ptisis no-fly sheet a0473 exam failure";
+      if (!q || q.split(/\s+/).every((t) => hay.indexOf(t) >= 0)) {
+        n += 1;
+        parts.push(`<optgroup label="Records — out of graph">
+          <option value="${esc(SP_PREFIX + NFS_KEY)}"${f.node === SP_PREFIX + NFS_KEY ? " selected" : ""}>NFS — Φύλλο Μη Πτήσης (no-fly sheet · fail-83)</option></optgroup>`);
       }
     }
     for (const k of R().KINDS) {
@@ -1765,8 +1840,9 @@
   function renderForm() {
     const f = ui.log.form || (ui.log.form = blankForm());
     const spKey = spKeyOf(f.node);
-    const spDef = spKey && CQ() ? CQ().SPECIAL[spKey] : null;
-    const kind = spKey ? "flights" : R().kindOf(f.node);
+    const isNfs = spKey === NFS_KEY;
+    const spDef = spKey && !isNfs && CQ() ? CQ().SPECIAL[spKey] : null;
+    const kind = isNfs ? "nfs" : (spKey ? "flights" : R().kindOf(f.node));
     const d = f.node && !spKey ? R().describe(f.node) : null;
     const sel = nodeSelectHtml();
     const isLesson = kind === "lessons";
@@ -1797,6 +1873,9 @@
         ${spDef ? `<p class="sch-nodeinfo"><span class="sch-code">${esc(spDef.short)}</span> ${esc(spDef.label)}
           <span class="sch-badge k-flights">Special sortie</span>
           ${spDef.evaluator ? `<span class="sch-badge warn" title="fail-12 / ΠΔ 29/2020 — flown with an evaluator / the AE / the Sq Cdr">evaluator required</span>` : ""}</p>` : ""}
+        ${isNfs ? `<p class="sch-nodeinfo"><span class="sch-code">NFS</span> Φύλλο Μη Πτήσης — no-fly sheet (form Α0473)
+          <span class="sch-badge warn" title="${esc("fail-83 — " + (CQ() ? CQ().vb("fail-83") : ""))}">record — no instructor · no result</span>
+          <span class="sch-hint">follows a failed written/oral ground exam, or a no-fly by student cause (fail-83)</span></p>` : ""}
 
         <div class="sch-fgrid">
           ${isLesson
@@ -1820,9 +1899,11 @@
         }).join("") || `<em class="sch-hint">no class yet</em>`}</span></span>`
         : `<label class="sch-fld"><span>Student</span><select class="sch-in" data-ff="student"><option value="">—</option>
              ${students().map((s) => `<option value="${esc(s.code)}"${f.student === s.code ? " selected" : ""}>${esc(s.code)}${s.class ? " · " + esc(s.class) : ""}</option>`).join("")}</select></label>`}
-          ${spKey ? `<label class="sch-fld"><span>Category</span><select class="sch-in" data-ff="category"><option value="">—</option>
+          ${isNfs ? `<label class="sch-fld"><span>NFS reason</span><select class="sch-in" data-ff="category"><option value="">—</option>
+            ${NFS_CATS.map((o) => `<option value="${esc(o.v)}"${f.category === o.v ? " selected" : ""}>${esc(o.t)}</option>`).join("")}</select></label>`
+        : spKey ? `<label class="sch-fld"><span>Category</span><select class="sch-in" data-ff="category"><option value="">—</option>
             ${CQ().CATS.map((c) => `<option value="${esc(c)}"${f.category === c ? " selected" : ""}>${esc(CQ().CAT_LABEL[c])}</option>`).join("")}</select></label>` : ""}
-          <label class="sch-fld"><span>Instructor${spDef && spDef.evaluator ? " (evaluator)" : ""}</span>
+          ${isNfs ? "" : `<label class="sch-fld"><span>Instructor${spDef && spDef.evaluator ? " (evaluator)" : ""}</span>
             <select class="sch-in" data-ff="instructor">${spDef && spDef.evaluator
         ? evalIpOptions(f.instructor)
         : `<option value="">—</option>` + activeIps().map((i) => `<option value="${esc(i.code)}"${f.instructor === i.code ? " selected" : ""}>${esc(i.code)}</option>`).join("")
@@ -1831,8 +1912,8 @@
           <label class="sch-fld"><span>Device</span><input class="sch-in" data-ff="device" value="${esc(f.device)}" list="sch-devlist" placeholder="${esc(DEVICES.join(" · "))}"></label>
           <datalist id="sch-devlist">${DEVICES.map((x) => `<option value="${esc(x)}"></option>`).join("")}</datalist>
           <label class="sch-fld"><span>Result</span><select class="sch-in" data-ff="result">
-            ${(isFly ? RESULT_OPTS_FLY : RESULT_OPTS_GND).map((o) => `<option value="${o.v}"${f.result === o.v ? " selected" : ""}>${o.t}</option>`).join("")}</select></label>
-          ${f.result === "score" ? `<label class="sch-fld"><span>Score %</span>
+            ${(isFly ? RESULT_OPTS_FLY : RESULT_OPTS_GND).map((o) => `<option value="${o.v}"${f.result === o.v ? " selected" : ""}>${o.t}</option>`).join("")}</select></label>`}
+          ${!isNfs && f.result === "score" ? `<label class="sch-fld"><span>Score %</span>
             <input type="number" min="0" max="100" class="sch-in" data-ff="score" value="${esc(f.score)}"></label>` : ""}
           ${isFly && (f.result === "lag" || f.result === "fail")
         ? `<label class="sch-fld grow"><span>Maneuvers that lagged/failed — repeated on the next sortie (fail-10)</span>
@@ -1889,6 +1970,19 @@
       else if (act === "reset-ev") { ui.log.form = blankForm(); renderForm(); }
       else if (act === "edit-ev") editEvent(b.dataset.id);
       else if (act === "del-ev") delEvent(b.dataset.id);
+      /* Round 6 — the fail-83 suggestion chip prefills an NFS entry */
+      else if (act === "nfs-fill") {
+        const g = ui.log.nfsSuggest;
+        if (!g) return;
+        ui.log.form = Object.assign(blankForm(), {
+          node: SP_PREFIX + NFS_KEY, student: g.student, date: g.date,
+          category: "written", nfsRef: g.node, device: "", result: "",
+          note: "after failed " + g.label + " (fail-83)",
+        });
+        ui.log.nfsSuggest = null;
+        ui.log.open = true;
+        renderLog();
+      } else if (act === "nfs-dismiss") { ui.log.nfsSuggest = null; renderLog(); }
     });
 
     el.addEventListener("input", (e) => {
@@ -1923,7 +2017,14 @@
         ui.log.form.course = "";
         ui.log.form.periods_done = "";
         const spk = spKeyOf(v);
-        if (spk) {
+        if (spk === NFS_KEY) {
+          /* Round 6 — an NFS record: per student, no instructor/device/result */
+          ui.log.form.scope = "student";
+          ui.log.form.device = "";
+          ui.log.form.instructor = "";
+          ui.log.form.result = "";
+          ui.log.form.category = ui.log.form.category && NFS_CAT_LABEL[ui.log.form.category] ? ui.log.form.category : "";
+        } else if (spk) {
           ui.log.form.scope = "student";
           ui.log.form.device = "T-6A";
         } else {
@@ -1971,10 +2072,11 @@
     const f = ui.log.form;
     if (!f.node) { S().toast("Pick a node first.", "bad"); return; }
     const spKey = spKeyOf(f.node);
-    const kind = spKey ? "flights" : R().kindOf(f.node);
+    const isNfs = spKey === NFS_KEY;
+    const kind = isNfs ? "nfs" : (spKey ? "flights" : R().kindOf(f.node));
     const isLesson = kind === "lessons";
-    if (spKey && !f.student) { S().toast("A special sortie is recorded per student.", "bad"); return; }
-    if (spKey && !f.category) { S().toast("Pick the category of the special sortie.", "bad"); return; }
+    if (spKey && !f.student) { S().toast(isNfs ? "An NFS is recorded per student." : "A special sortie is recorded per student.", "bad"); return; }
+    if (spKey && !f.category) { S().toast(isNfs ? "Pick the NFS reason." : "Pick the category of the special sortie.", "bad"); return; }
     if (!spKey && f.scope === "student" && !f.student) { S().toast("Pick the student.", "bad"); return; }
     const fClasses = (f.classes || []).filter(Boolean);
     if (!spKey && f.scope === "class" && !fClasses.length) { S().toast("Pick at least one class.", "bad"); return; }
@@ -2002,10 +2104,11 @@
       /* Round 5 — classes: [] is the storage, class stays the first for compat */
       class: (!spKey && f.scope === "class") ? (fClasses[0] || "") : "",
       classes: (!spKey && f.scope === "class") ? fClasses.slice() : undefined,
-      instructor: f.instructor || "", device: f.device || "",
-      result: f.result, score: f.result === "score" ? Number(f.score) : null,
+      instructor: isNfs ? "" : (f.instructor || ""), device: isNfs ? "" : (f.device || ""),
+      result: isNfs ? "" : f.result, score: !isNfs && f.result === "score" ? Number(f.score) : null,
       maneuvers: isFly && (f.result === "lag" || f.result === "fail") ? (f.maneuvers || "") : "",
       note: f.note || "",
+      ref: isNfs ? (f.nfsRef || undefined) : undefined,   // Round 6 — NFS → exam node
       absent: (!spKey && f.scope === "class")
         ? Object.keys(f.absent).map((c) => ({ student: c, reason: f.absent[c] || "" })) : [],
     };
@@ -2022,11 +2125,25 @@
       rec.date = f.date; rec.start_date = ""; rec.end_date = "";
     }
     const wasEdit = !!f.id;
-    const label = spKey ? CQ().SPECIAL[spKey].label
-      : (isLesson && f.course ? f.course + " (" + R().label(f.node) + ")" : R().label(f.node));
+    const label = isNfs ? "NFS (Φύλλο Μη Πτήσης)"
+      : spKey ? CQ().SPECIAL[spKey].label
+        : (isLesson && f.course ? f.course + " (" + R().label(f.node) + ")" : R().label(f.node));
+    /* Round 6 — fail-83: a FAILED written ground exam suggests recording the
+       NFS; the chip above the form prefills it (soft — never automatic). */
+    let nfsHint = "";
+    if (kind === "exams" && rec.scope === "student" && rec.student) {
+      const ppRaw = Number(S().cfg("exam_pass_pct", 80));
+      const pp = isNaN(ppRaw) || !ppRaw ? 80 : ppRaw;
+      const failed = rec.result === "fail" || (rec.result === "score" && rec.score != null && rec.score < pp);
+      if (failed) {
+        ui.log.nfsSuggest = { student: rec.student, date: rec.date, node: rec.node, label: R().label(rec.node) };
+        nfsHint = " · NFS suggested (fail-83)";
+      }
+    }
+    if (isNfs) ui.log.nfsSuggest = null;             // recorded — the chip is done
     ui.log.form = blankForm();                       // before the store event re-renders
     S().upsert("trainingLog", rec);
-    S().toast((wasEdit ? "Entry updated — " : "Entry added — ") + label + evalWarn, evalWarn ? "bad" : "good");
+    S().toast((wasEdit ? "Entry updated — " : "Entry added — ") + label + evalWarn + nfsHint, evalWarn ? "bad" : "good");
   }
 
   function editEvent(id) {
@@ -2048,6 +2165,7 @@
       score: ev.score == null ? "" : String(ev.score),
       note: ev.note || "", absent: abs,
       category: ev.category || "", maneuvers: ev.maneuvers || "",
+      nfsRef: ev.ref || "",                       // Round 6 — NFS → exam node
     };
     ui.log.open = true;
     renderLog();
@@ -2058,8 +2176,9 @@
   function delEvent(id) {
     const ev = S().find("trainingLog", id);
     if (!ev) return;
-    const lbl = ev.special && CQ() && CQ().SPECIAL[ev.special] ? CQ().SPECIAL[ev.special].label : R().label(evNode(ev));
-    if (!confirm(`Delete the ${lbl} entry of ${ev.date || ev.start_date || "—"}?`)) return;
+    const lbl = ev.special === NFS_KEY ? "NFS (Φύλλο Μη Πτήσης)"
+      : ev.special && CQ() && CQ().SPECIAL[ev.special] ? CQ().SPECIAL[ev.special].label : R().label(evNode(ev));
+    if (!confirm(`Delete the ${lbl} entry of ${window.fmtDMY(ev.date || ev.start_date || "—")}?`)) return;
     if (ui.log.form && ui.log.form.id === id) ui.log.form = blankForm();
     S().remove("trainingLog", id);
     S().toast("Entry deleted.", "good");

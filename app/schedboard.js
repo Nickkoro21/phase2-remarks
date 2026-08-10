@@ -41,6 +41,10 @@
   const num = (v, d) => (v == null || v === "" || isNaN(Number(v)) ? d : Number(v));
   const cssq = (s) => (window.CSS && CSS.escape ? CSS.escape(String(s)) : String(s).replace(/["\\]/g, "\\$&"));
 
+  /* Round 6 — every date rendered as TEXT shows DD/MM/YYYY (shared helper in
+     scheduler.js); native date inputs stay locale-rendered, storage stays ISO. */
+  const dmy = (s) => (window.fmtDMY ? window.fmtDMY(s) : String(s == null ? "" : s));
+
   const DAY_MS = 86400000;
   const isoShift = (iso, d) => {
     const t = Date.parse(String(iso) + "T00:00:00Z");
@@ -244,7 +248,7 @@
       if (b) {
         out.push({
           sev: "hard", req: b.req, vb: b.vb,
-          text: sp + " — blocked until " + b.untilPretty + " after the " + b.since + " LAG/FAIL"
+          text: sp + " — blocked until " + b.untilPretty + " after the " + dmy(b.since) + " LAG/FAIL"
             + (b.srcLabel ? " on " + b.srcLabel : "") + (b.maneuvers ? " · repeat: " + b.maneuvers : ""),
         });
       }
@@ -270,7 +274,7 @@
           out.push({
             sev: "hard", req: a ? a.req : "fail-12", vb: cq.vb(a ? a.req : "fail-12"),
             text: sp + " — " + (d.trackLabel || d.track) + " is locked pending the APT EXAM"
-              + (a ? " (after " + a.srcLabel + ", " + a.since + ")" : ""),
+              + (a ? " (after " + a.srcLabel + ", " + dmy(a.since) + ")" : ""),
           });
         }
         if (cq.skipUids(sp).has(node)) {
@@ -337,7 +341,7 @@
   const ui = {
     date: "", plan: null, loadedFor: "", allIp: false, quiet: false, saveT: null,
     bal: { period: "week", anchor: "" },
-    prog: { code: "", pending: null, q: "" },
+    prog: { code: "", pending: null, q: "", exp: {}, cexp: {} },
     wired: false,
   };
 
@@ -928,7 +932,7 @@
         if ((A.spSoloN.get(l.sp) || 0) > 1) push("hard", l.sp + " — two SOLO sorties on the same day are consecutive solos");
         const prev = lastFlightEvent(l.sp, plan.date);
         if (prev && evIsSolo(prev)) {
-          push("hard", l.sp + " — no 2 consecutive SOLO sorties (last flight " + (prev.date || "") + " was solo)");
+          push("hard", l.sp + " — no 2 consecutive SOLO sorties (last flight " + dmy(prev.date || "") + " was solo)");
         }
       }
     }
@@ -1111,8 +1115,8 @@
       if (CQ()) {
         const st = CQ().status(s.code, date);
         if (st.pd) consq = " · ⛔ PD 29/2020";
-        else if (st.blockedFlights) consq = " · ⛔ blocked until " + st.untilFlights + " (" + st.req + ")";
-        else if (st.blockedFs) consq = " · ⛔ F/S until " + st.untilFs + " (" + st.req + ")";
+        else if (st.blockedFlights) consq = " · ⛔ blocked until " + dmy(st.untilFlights) + " (" + st.req + ")";
+        else if (st.blockedFs) consq = " · ⛔ F/S until " + dmy(st.untilFs) + " (" + st.req + ")";
         else if (st.apt.length) consq = " · APT EXAM pending";
       }
       return {
@@ -1317,7 +1321,7 @@
     const away = students().concat(activeIps()).filter((p) => awayOf(p.code, plan.date));
     return `<section class="panel sch-panel">
       <div class="sch-h">${secBtn("duties", `Duties &amp; absences`)}
-        <span class="sch-hint">${away.length} away on ${esc(plan.date)}</span></div>
+        <span class="sch-hint">${away.length} away on ${esc(dmy(plan.date))}</span></div>
       ${secOpen("duties") ? `<div class="sch-fgrid">
         <label class="sch-fld" title="Supervisor of Flying — wave 1: must not fly in wave 1"><span>SOF A (wave 1)</span>${sel("sof_a", d.sof_a, (i) => (i.duty_eligible || {}).SOF)}</label>
         <label class="sch-fld" title="Supervisor of Flying — wave 2: must not fly in wave 2"><span>SOF B (wave 2)</span>${sel("sof_b", d.sof_b, (i) => (i.duty_eligible || {}).SOF)}</label>
@@ -1621,7 +1625,7 @@
             chips += `<span class="sch-chip is-soft" title="${esc(st.req + " — " + CQ().vb(st.req))}">F/S eligible ${esc(CQ().fmtDay(st.untilFs))}</span>`;
           }
           if (st.apt.length) {
-            chips += `<span class="sch-chip is-soft" title="${esc(st.apt.map((a) => a.req + " — after " + a.srcLabel + " (" + a.since + ")").join(" · "))}">APT EXAM pending</span>`;
+            chips += `<span class="sch-chip is-soft" title="${esc(st.apt.map((a) => a.req + " — after " + a.srcLabel + " (" + dmy(a.since) + ")").join(" · "))}">APT EXAM pending</span>`;
           }
           for (const x of CQ().smsExhausted(s.code)) {
             chips += `<span class="sch-chip is-soft" title="${esc("SMS entries exhausted for " + x.label + " — student can NOT re-enter (unit ruling 2026-08-09); no other consequence. fail-45")}">SMS✕</span>`;
@@ -1773,7 +1777,7 @@
     }).join("");
     const n = Object.values(plan.actuals).filter((a) => a && (a.state === "done" || a.state === "changed")).length;
     return `<section class="panel sch-panel sch-actualize">
-      <div class="sch-h"><h2>Actualize <span class="count">${esc(plan.date)}</span></h2>
+      <div class="sch-h"><h2>Actualize <span class="count">${esc(dmy(plan.date))}</span></h2>
         <span class="sch-hint">✓ and ~ become training-log events — re-running never duplicates them</span>
         <span class="sch-spacer"></span>
         <button type="button" class="sch-btn primary" data-b="commit-actual">Write ${n} event${n === 1 ? "" : "s"} to the log</button>
@@ -1902,8 +1906,8 @@
     return `<div class="pv-page">
       <div class="pv-top">
         <h2>DAILY FLIGHT SCHEDULE</h2>
-        <p class="pv-p"><b>${esc(plan.date)}</b> · mass briefing <b>${esc(plan.mass_briefing)}</b>
-          · status <b>${esc(plan.status)}</b>${plan.published_at ? " · published " + esc(plan.published_at.slice(0, 16).replace("T", " ")) : ""}</p>
+        <p class="pv-p"><b>${esc(dmy(plan.date))}</b> · mass briefing <b>${esc(plan.mass_briefing)}</b>
+          · status <b>${esc(plan.status)}</b>${plan.published_at ? " · published " + esc(dmy(plan.published_at.slice(0, 16).replace("T", " "))) : ""}</p>
         <p class="pv-p"><b>SOF A</b> ${esc(d.sof_a || "—")} &nbsp; <b>SOF B</b> ${esc(d.sof_b || "—")} &nbsp;
           <b>RSU A</b> ${esc(d.rsu_a || "—")} &nbsp; <b>RSU B</b> ${esc(d.rsu_b || "—")} &nbsp;
           <b>GROUND 1</b> ${esc(d.ground_1 || "—")} &nbsp; <b>GROUND 2</b> ${esc(d.ground_2 || "—")}</p>
@@ -2363,7 +2367,7 @@
     if (a === "add-alt-s") { plan.alt_students.push({ id: newId("al"), sp: "", node: "", custom: "", customOn: false, note: "" }); saveNow(); renderBoard(el); return; }
     if (a === "add-alt-i") { plan.alt_instructors.push({ id: newId("al"), ip: "", note: "" }); saveNow(); renderBoard(el); return; }
     if (a === "clear") {
-      if (!confirm("Discard the whole board of " + plan.date + "?")) return;
+      if (!confirm("Discard the whole board of " + dmy(plan.date) + "?")) return;
       ui.plan = null; ui.loadedFor = "";
       S().removeDayPlan(plan.date);
       renderBoard(el);
@@ -2403,6 +2407,20 @@
       document.body.appendChild(h);
       h.addEventListener("click", (e) => {
         if (e.target === h) { progClose(); return; }
+        /* Round 6 — the stepper multi-IP chips: click toggles; click ORDER is
+           the split order (remainder to the LAST selected) */
+        const ipch = e.target.closest("[data-sfip]");
+        if (ipch && ui.prog.stepper) {
+          const stp = ui.prog.stepper;
+          const ans = stp.answers[stp.ix] || (stp.answers[stp.ix] = {});
+          const arr = (ans.ips || (ans.ips = [])).slice();
+          const code = ipch.dataset.sfip;
+          const ix = arr.indexOf(code);
+          if (ix >= 0) arr.splice(ix, 1); else arr.push(code);
+          ans.ips = arr;
+          progRenderBody();                       // refresh chips + split preview
+          return;
+        }
         const b = e.target.closest("[data-pb]");
         if (b) progButton(b);
       });
@@ -2412,10 +2430,9 @@
         if (e.target.dataset.sf != null && ui.prog.stepper) {
           const stp = ui.prog.stepper, ans = stp.answers[stp.ix] || {};
           const f = e.target.dataset.sf;
-          if (f === "ips") ans.ips = [...e.target.selectedOptions].map((o) => o.value).filter(Boolean);
-          else ans[f] = e.target.value;
+          ans[f] = e.target.value;
           stp.answers[stp.ix] = ans;
-          if (f === "ips" || f === "periods") progRenderBody();   // refresh the split preview
+          if (f === "periods") progRenderBody();   // refresh the split preview
         }
       });
       h.addEventListener("input", (e) => {
@@ -2437,12 +2454,12 @@
   function progClose() {
     const h = $id("sch-progmodal");
     if (h) { h.classList.add("hidden"); h.innerHTML = ""; }
-    ui.prog = { code: "", pending: null, stepper: null, q: "", exp: {} };
+    ui.prog = { code: "", pending: null, stepper: null, q: "", exp: {}, cexp: {} };
   }
 
   window.schProgressOpen = function schProgressOpen(code) {
     if (!code) return;
-    ui.prog = { code: code, pending: null, stepper: null, q: "", exp: {} };
+    ui.prog = { code: code, pending: null, stepper: null, q: "", exp: {}, cexp: {} };
     const h = progHost();
     h.classList.remove("hidden");
     progRender();
@@ -2463,11 +2480,12 @@
         <span class="sch-badge">${c.done}/${c.total} nodes · ${c.total ? Math.round((c.done / c.total) * 100) : 0}%</span>
         <span class="sch-badge">flights ${c.fdone}/${c.ftotal}</span>
         <span class="sch-nd">${idle == null ? "never flown" : idle + "d idle"}</span>
-        ${gates.map((g) => `<span class="sch-badge warn" title="${esc(g.note || "")}">${esc(g.label)}${g.date ? " · " + esc(g.date) : ""}</span>`).join("")}
+        ${gates.map((g) => `<span class="sch-badge warn" title="${esc(g.note || "")}">${esc(g.label)}${g.date ? " · " + esc(dmy(g.date)) : ""}</span>`).join("")}
         <span class="sch-spacer"></span>
         <input type="search" id="sch-progq" class="sch-in" placeholder="filter nodes…" value="${esc(ui.prog.q)}">
         <button type="button" class="sch-btn" data-pb="close">✕ Close</button>
       </div>
+      ${countersHtml(code)}
       ${consqBanner(code)}
       <div id="sch-progbody" class="sch-modalbody"></div>
     </div>`;
@@ -2490,7 +2508,7 @@
       ].map((s) => `<span class="sch-badge${s.k === pd.stage ? " r-fail" : ""}">${esc(s.t)}</span>`).join(" → ");
       bits.push(`<div class="sch-consqban is-pd">
         <b>PD 29/2020</b> — ALL activities stop (flights · F/S · exams · lessons) —
-        after ${esc(pd.srcLabel)}${pd.since ? " on " + esc(pd.since) : ""}${pd.failIp ? " with " + esc(pd.failIp) : ""}
+        after ${esc(pd.srcLabel)}${pd.since ? " on " + esc(dmy(pd.since)) : ""}${pd.failIp ? " with " + esc(pd.failIp) : ""}
         <em class="sch-wcid" title="${esc((REQ_SRC[pd.req] || "") + " — " + cq.vb(pd.req))}">${esc(pd.req)}</em><br>
         ${path}${pd.stage === "stopped" ? ` <span class="sch-badge r-fail">STOP — training stopped</span>` : ""}
         <span class="sch-hint">${esc(cq.pdStageText(pd))}</span>
@@ -2502,12 +2520,12 @@
     }
     const note = cq.pdNote(code);
     if (note && note.avoidIp) {
-      bits.push(`<div class="sch-consqban">Progress Test passed${note.since ? " on " + esc(note.since) : ""} —
+      bits.push(`<div class="sch-consqban">Progress Test passed${note.since ? " on " + esc(dmy(note.since)) : ""} —
         continue with a <b>DIFFERENT instructor</b> (not ${esc(note.avoidIp)}) <em class="sch-wcid">fail-16</em></div>`);
     }
     for (const a of cq.aptPending(code)) {
       bits.push(`<div class="sch-consqban is-apt"><b>APT EXAM pending</b> — ${esc(cq.CAT_LABEL[a.category] || a.category)}
-        after ${esc(a.srcLabel)} (${esc(a.since)})${a.solo ? " — the «ΜΟΝΟΣ» is NOT re-offered" : ""} —
+        after ${esc(a.srcLabel)} (${esc(dmy(a.since))})${a.solo ? " — the «ΜΟΝΟΣ» is NOT re-offered" : ""} —
         category locked until an Aptitude Exam with result PASS is recorded in the Training Log
         <em class="sch-wcid" title="${esc((REQ_SRC[a.req] || "") + " — " + cq.vb(a.req))}">${esc(a.req)}</em></div>`);
     }
@@ -2525,6 +2543,82 @@
         <em class="sch-wcid" title="${esc((REQ_SRC["fail-45"] || "") + " — " + cq.vb("fail-45"))}">fail-45</em></div>`);
     }
     return bits.join("");
+  }
+
+  /* ── Round 6 · COUNTERS & ALERTS panel (fail-01/36/38/39/45/76/77/83) ────
+     Derived per student by SchedConsq.counters() from trainingLog + gates.
+     Row = value · threshold · citation chip (verbatim in the tooltip);
+     colour green under, AMBER one step under the threshold, RED at/over.
+     Clicking a row opens the contributing events under it.                 */
+  function countersHtml(code) {
+    const cq = CQ();
+    if (!cq || !cq.counters) return "";
+    const C = cq.counters(code);
+    const rows = [], alerts = [];
+    const row = (key, label, value, thr, req, lvl, events, alertTxt) => {
+      if (lvl > 0 && alertTxt) alerts.push((lvl === 2 ? "RED — " : "amber — ") + alertTxt + (req ? " (" + req + ")" : ""));
+      const open = !!ui.prog.cexp[key];
+      const cls = lvl === 2 ? " is-red" : lvl === 1 ? " is-amber" : "";
+      const tip = req ? req + (cq.SRC[req] ? " · " + cq.SRC[req] : "") + " — " + cq.vb(req) : "";
+      rows.push(`<button type="button" class="sch-ctr${cls}${open ? " is-open" : ""}" data-pb="ctr" data-ck="${esc(key)}"
+          title="${esc(tip)}">
+          <span class="sch-ctr-arrow">${open ? "▾" : "▸"}</span>
+          <span class="sch-ctr-l">${esc(label)}</span>
+          <b class="sch-ctr-v">${esc(String(value))}</b>
+          <span class="sch-ctr-t">${esc(thr)}</span>
+          ${req ? `<em class="sch-wcid">${esc(req)}</em>` : ""}
+        </button>`
+        + (open ? `<div class="sch-ctr-evs">${events && events.length
+          ? events.map((e) => `<div class="sch-ctr-ev"><span class="sch-mono">${esc(dmy(e.date))}</span> ${esc(e.label)}${e.detail ? ` <span class="sch-note">— ${esc(e.detail)}</span>` : ""}</div>`).join("")
+          : `<div class="sch-ctr-ev sch-hint">no contributing event</div>`}</div>` : ""));
+    };
+    /* green under · amber at threshold−1 · red at/over */
+    const lvlOf = (v, limit) => (v >= limit ? 2 : limit > 1 && v === limit - 1 ? 1 : 0);
+    /* percentages: red at/over the limit; amber when ONE more 0-59 flight
+       would cross it ((bad+1)/(total+1) ≥ limit) — the "threshold−1" of a % */
+    const pctLvl = (r) => (!r.total ? 0 : r.pct >= r.limitPct ? 2
+      : ((r.bad + 1) / (r.total + 1)) * 100 >= r.limitPct ? 1 : 0);
+
+    row("lag", "LAG (ΥΣΤΕΡΗΣΗ / ΣΧΕΔΟΝ ΚΑΛΩΣ) — flights + F/S",
+      C.lag.total + " total · streak " + C.lag.streak, "bands per fail-01", "fail-01",
+      lvlOf(C.lag.streak, 3), C.lag.events, "LAG streak " + C.lag.streak + " — a 3rd consecutive 0-59% triggers ΠΔ 1γ");
+    row("fail", "FAIL (ΑΠΟΤΥΧΙΑ) — flights + F/S",
+      C.fail.total + " total · streak " + C.fail.streak, "bands per fail-01", "fail-01",
+      lvlOf(C.fail.streak, 2), C.fail.events, "FAIL streak " + C.fail.streak + " — a 2nd consecutive 0-49% triggers ΠΔ 1γ");
+    row("c049", "ΠΔ 1γ — consecutive A/C flights 0-49%", C.c049.value, "limit " + C.c049.limit + " consecutive", "fail-76",
+      lvlOf(C.c049.value, C.c049.limit), C.c049.events, C.c049.value + " consecutive 0-49% flights (limit " + C.c049.limit + ")");
+    row("c059", "ΠΔ 1γ — consecutive A/C flights 0-59%", C.c059.value, "limit " + C.c059.limit + " consecutive", "fail-76",
+      lvlOf(C.c059.value, C.c059.limit), C.c059.events, C.c059.value + " consecutive 0-59% flights (limit " + C.c059.limit + ")");
+    row("pre", "ΠΔ 1δ — PRE-SOLO flights graded 0-59%",
+      C.preSolo.bad + "/" + C.preSolo.total + " = " + C.preSolo.pct + "%", "limit " + C.preSolo.limitPct + "%", "fail-77",
+      pctLvl(C.preSolo), C.preSolo.events, C.preSolo.pct + "% of pre-solo flights 0-59% (limit " + C.preSolo.limitPct + "%)");
+    row("tot", "ΠΔ 1δ — TOTAL flights graded 0-59%",
+      C.totalFl.bad + "/" + C.totalFl.total + " = " + C.totalFl.pct + "%", "limit " + C.totalFl.limitPct + "%", "fail-77",
+      pctLvl(C.totalFl), C.totalFl.events, C.totalFl.pct + "% of total flights 0-59% (limit " + C.totalFl.limitPct + "%)");
+    row("wr", "Ground exams — WRITTEN failures",
+      C.written.streak + " consecutive · " + C.written.total + " total", "2 consecutive ⇒ ΠΔ 29/2020", "fail-38",
+      lvlOf(C.written.streak, C.written.limit), C.written.events, C.written.streak + " consecutive written-exam failure(s)");
+    row("or", "Ground exams — ORAL failures (from the oral-NFS records)",
+      C.oral.total, "4 consecutive / 8 total ⇒ ΠΔ", "fail-39",
+      lvlOf(C.oral.total, C.oral.limitC), C.oral.events, C.oral.total + " oral failure(s) on record");
+    row("nfs", "NFS — Φύλλο Μη Πτήσης (Α0473)", C.nfs.total, "recorded — no cap", "fail-83", 0, C.nfs.events, "");
+    for (const x of C.sms) {
+      const evs = (S().get("gates") || [])
+        .filter((g) => g.student === code && /kepe/.test(String(g.type || "").toLowerCase())
+          && String(g.category || "").toLowerCase() === x.category)
+        .map((g) => ({ date: g.date || "", label: "SMS entry — " + x.label, detail: g.note || "" }));
+      row("sms:" + x.category, "SMS entries — " + x.label,
+        x.count + "/" + (x.max == null ? "—" : x.max), x.max != null ? "max " + x.max + " per stage" : "uncategorised", "fail-45",
+        x.max == null ? 0 : (x.count >= x.max ? 2 : x.max > 1 && x.count === x.max - 1 ? 1 : 0),
+        evs, "SMS " + x.label + " " + x.count + "/" + x.max + (x.count >= (x.max || Infinity) ? " — exhausted, no re-entry" : ""));
+    }
+    if (cq.pd(code)) alerts.unshift("RED — PD 29/2020 ACTIVE — all activities stop (" + ((cq.pd(code) || {}).req || "fail-16") + ")");
+    return `<div class="sch-ctrpanel">
+      <div class="sch-ctr-h">Counters &amp; alerts
+        <span class="sch-hint">derived from the training log + gates · click a row for its contributing events · green under — amber one step under the threshold — red at/over</span></div>
+      ${alerts.length ? `<div class="sch-ctr-alert">⚠ ${alerts.map((a) => esc(a)).join(" · ")}</div>` : ""}
+      <div class="sch-ctr-grid">${rows.join("")}</div>
+    </div>`;
   }
 
   /* Progress editor v2 (correction 10) — compact. Only the sections that hold
@@ -2549,6 +2643,49 @@
       });
   }
 
+  /* Round 6 — the editor renders GROUPED: Lessons · Ground exams · then the
+     four CATEGORIES in track order, each interleaving its F/S and flight
+     sections in FLOWCHART ORDER (the graph rank mirrors the printed flow
+     chart). Cross-category prerequisites (prereq/before/feed edges crossing
+     tracks) surface as read-only REFERENCE rows right before the first node
+     they gate — the real node stays in its own category.                   */
+  const PROG_TRACKS = ["contact", "instrument", "formation", "vfr_navigation"];
+  function progGroups() {
+    const gs = [
+      { key: "lessons", label: "Lessons", track: "", secs: R().sections("lessons").map((s) => ({ sec: s, kind: "lessons" })) },
+      { key: "exams", label: "Ground exams", track: "", secs: R().sections("exams").map((s) => ({ sec: s, kind: "exams" })) },
+    ];
+    for (const t of PROG_TRACKS) {
+      const secs = [];
+      for (const k of ["fs", "flights"]) {
+        for (const sec of R().sections(k)) if (sec.track === t) secs.push({ sec: sec, kind: k });
+      }
+      secs.sort((a, b) => R().rank(a.sec.uids[0]) - R().rank(b.sec.uids[0]));
+      gs.push({ key: t, label: R().TRACK_LABEL[t] || t, track: t, secs: secs });
+    }
+    return gs;
+  }
+  /* the cross-category pointers of ONE category, deduped on the FIRST node
+     they gate (in flowchart order) */
+  function progCrossRefs(track, secs) {
+    const NEED = { prereq: 1, before: 1, feed: 1 };
+    const map = new Map(), seen = new Set();
+    for (const x of secs) {
+      for (const u of x.sec.uids) {
+        for (const p of R().prereqsOf(u)) {
+          if (p.via !== "edge" || !(p.kinds || []).some((k) => NEED[k])) continue;
+          const pd = R().describe(p.uid);
+          if (!pd || pd.track === track || PROG_TRACKS.indexOf(pd.track) < 0) continue;
+          if (seen.has(p.uid)) continue;
+          seen.add(p.uid);
+          let a = map.get(u); if (!a) { a = []; map.set(u, a); }
+          a.push(p.uid);
+        }
+      }
+    }
+    return map;
+  }
+
   function progRenderBody() {
     const host = $id("sch-progbody");
     if (!host) return;
@@ -2558,11 +2695,30 @@
     const hit = new Set(R().search(q));
     const owed = R().nodes().filter((u) => st[u] && (st[u].status === "absent_makeup" || st[u].status === "repeat"));
     const next = progNextSet(code);
+    const cq = CQ();
+    /* Round 6 — NFS records that name their failed exam → NFS badge there */
+    const nfsRefs = new Set((S().get("trainingLog") || [])
+      .filter((e) => e.special === "nfs" && e.student === code && e.ref).map((e) => e.ref));
+
+    /* Round 6 — the status badge beyond done/makeup: LAG amber · FAIL red ·
+       EXAM FAIL on ground-exam nodes (fail-01 bands; score under the pass
+       mark or a recorded FAIL on an exam node) */
+    const statBadge = (u, s) => {
+      const p = PSTAT[s.status] || PSTAT.pending;
+      if (s.status !== "repeat") return `<span class="sch-badge ${esc(p.c)}">${esc(p.t)}</span>`;
+      const ev = s.eventId ? S().find("trainingLog", s.eventId) : null;
+      if (R().kindOf(u) === "exams") {
+        return `<span class="sch-badge bad" title="ground-exam failure — score under the pass mark or FAIL (fail-36/38)">EXAM FAIL${ev && ev.score != null ? " " + esc(String(ev.score)) + "%" : ""}</span>`;
+      }
+      const band = ev && cq ? cq.bandOf(ev) : "lag";
+      return band === "fail"
+        ? `<span class="sch-badge bad" title="ΑΠΟΤΥΧΙΑ — 0-49% band (fail-01)">FAIL</span>`
+        : `<span class="sch-badge warn" title="ΥΣΤΕΡΗΣΗ — ΣΧΕΔΟΝ ΚΑΛΩΣ 50-59% band (fail-01)">LAG (ALMOST GOOD)</span>`;
+    };
 
     const chip = (u, showNeeds) => {
       const s = st[u] || { status: "pending" };
       const d = R().describe(u);
-      const p = PSTAT[s.status] || PSTAT.pending;
       const done = s.status === "completed";
       const needs = showNeeds && !done && next.has(u) ? progNeeds(u, st) : [];
       /* Round 5 — lesson groups list their per-course coverage inline
@@ -2582,9 +2738,10 @@
       }
       return `<div class="sch-pnode is-${esc(s.status)}${next.has(u) && !done ? " is-next" : ""}" data-uid="${esc(u)}" title="${esc(d.name + (s.reason ? " — " + s.reason : ""))}">
         <span class="sch-code">${esc(d.short)}</span>
-        <span class="sch-badge ${esc(p.c)}">${esc(p.t)}</span>
+        ${statBadge(u, s)}
+        ${nfsRefs.has(u) ? `<span class="sch-badge bad" title="Φύλλο Μη Πτήσης (Α0473) recorded after this exam failure — fail-83">NFS</span>` : ""}
         ${s.reason ? `<span class="sch-nd" title="${esc(s.reason)}">${esc(s.reason)}</span>` : ""}
-        ${s.date ? `<span class="sch-nd">${esc(s.date)}</span>` : ""}
+        ${s.date ? `<span class="sch-nd">${esc(dmy(s.date))}</span>` : ""}
         ${s.instructor ? `<span class="sch-nd">${esc(s.instructor)}</span>` : ""}
         <span class="sch-pact">
           ${done
@@ -2597,24 +2754,67 @@
       </div>`;
     };
 
-    const secs = [];
-    for (const k of R().KINDS) {
-      for (const sec of R().sections(k)) {
+    /* cross-category reference row — a read-only pointer, never a real node */
+    const refHtml = (pu) => {
+      const pd = R().describe(pu);
+      const s = st[pu] || { status: "pending" };
+      const done = s.status === "completed";
+      return `<div class="sch-pref${done ? " is-done" : ""}" title="${esc("cross-category prerequisite — the real node lives under " + (pd ? pd.trackLabel : "?") + "; this row is a read-only pointer")}">
+        needs: <span class="sch-code">${esc(pd ? pd.label : pu)}</span> (${esc(pd ? pd.trackLabel : "?")})
+        — ${done ? "done " + esc(dmy(s.date || "")) : esc(String(s.status).replace("_", " "))}</div>`;
+    };
+
+    /* Round 6 — SMS badge on the category heading its gate touches (fail-45) */
+    const smsByCat = new Map();
+    if (cq) for (const x of cq.smsStatus(code)) smsByCat.set(x.category, x);
+    const smsBadgeFor = (gkey) => {
+      const cats = gkey === "exams" ? ["ground_exam", "ground_exams"]
+        : gkey === "contact" ? ["contact", "adaptation"]
+          : PROG_TRACKS.indexOf(gkey) >= 0 ? [gkey] : [];
+      let html = "";
+      for (const c of cats) {
+        const x = smsByCat.get(c);
+        if (!x) continue;
+        html += ` <span class="sch-badge ${x.exhausted ? "bad" : "warn"}" title="${esc("SMS entries for " + x.label + ": " + x.count + "/"
+          + (x.max == null ? "—" : x.max) + (x.exhausted ? " — exhausted, the student can NOT re-enter (unit ruling 2026-08-09)" : "")
+          + " · fail-45 — " + (cq ? cq.vb("fail-45") : ""))}">SMS ${x.count}/${x.max == null ? "—" : x.max}</span>`;
+      }
+      return html;
+    };
+
+    const groupsOut = [];
+    for (const g of progGroups()) {
+      const refs = g.track ? progCrossRefs(g.track, g.secs) : null;
+      let all = 0, dn = 0;
+      for (const x of g.secs) {
+        all += x.sec.uids.length;
+        dn += x.sec.uids.filter((u) => st[u] && st[u].status === "completed").length;
+      }
+      const secsHtml = [];
+      for (const x of g.secs) {
+        const sec = x.sec, k = x.kind;
         const list = sec.uids.filter((u) => hit.has(u));
         if (!list.length) continue;
-        const all = sec.uids.length;
-        const dn = sec.uids.filter((u) => st[u] && st[u].status === "completed").length;
+        const sAll = sec.uids.length;
+        const sDn = sec.uids.filter((u) => st[u] && st[u].status === "completed").length;
         const isNext = sec.uids.some((u) => next.has(u) && (!st[u] || st[u].status !== "completed"));
         const secKey = k + ":" + sec.id;
         const open = q ? true : (ui.prog.exp[secKey] !== undefined ? ui.prog.exp[secKey] : isNext);
         const head = `<button type="button" class="sch-psechdr${open ? " is-open" : ""}${isNext ? " is-next" : ""}" data-pb="sec" data-psec="${esc(secKey)}" data-pnow="${open ? 1 : 0}">
             <span class="sch-parrow">${open ? "▾" : "▸"}</span>
             <span class="sch-badge k-${esc(k)}">${esc(R().KIND_SHORT[k])}</span> ${esc(sec.label)}
-            <span class="count">${dn}/${all}${dn === all ? " done" : ""}</span></button>`;
-        secs.push(`<section class="sch-psec${open ? "" : " is-closed"}">${head}
-          ${open ? `<div class="sch-pgrid">${list.map((u) => chip(u, true)).join("")}</div>` : ""}</section>`);
+            <span class="count">${sDn}/${sAll}${sDn === sAll ? " done" : ""}</span></button>`;
+        secsHtml.push(`<section class="sch-psec${open ? "" : " is-closed"}">${head}
+          ${open ? `<div class="sch-pgrid">${list.map((u) =>
+            ((refs && refs.get(u)) || []).map(refHtml).join("") + chip(u, true)).join("")}</div>` : ""}</section>`);
       }
+      if (!secsHtml.length) continue;                 // the filter hid the whole group
+      groupsOut.push(`<section class="sch-pcatsec">
+        <div class="sch-pcat"><span class="sch-pcat-t">${esc(g.label)}</span>
+          <span class="count">${dn}/${all}${all && dn === all ? " done" : ""}</span>${smsBadgeFor(g.key)}</div>
+        ${secsHtml.join("")}</section>`);
     }
+    const secs = groupsOut;
 
     const pend = ui.prog.pending;
     const bar = ui.prog.stepper ? stepperBar() : (pend ? `<div class="sch-pbar">
@@ -2641,6 +2841,13 @@
     if (act === "st-back") { const s = ui.prog.stepper; if (s && s.ix > 0) { s.ix--; progRenderBody(); } return; }
     if (act === "st-next" || act === "st-finish") { stepAdvance(act === "st-finish"); return; }
     if (act === "st-cancel") { stepCancel(); return; }
+    /* Round 6 — a counter row opens/closes its contributing-events list */
+    if (act === "ctr") {
+      const k = b.dataset.ck;
+      ui.prog.cexp[k] = !ui.prog.cexp[k];
+      progRender();
+      return;
+    }
     /* Round 2 — the board outcome closes (or ends) the ΠΔ 29/2020 path */
     if (act === "board-continue" || act === "board-stop") {
       const code = ui.prog.code;
@@ -2776,13 +2983,19 @@
     }
     return html;
   }
-  function stepGndOptions(selArr) {
+  /* Round 6 — the multi-IP picker is TOGGLE CHIPS (same pattern as the roster
+     avoid list): ground-qualified first, the rest dimmed; click order decides
+     the split order (remainder to the LAST selected). */
+  function stepGndChips(selArr) {
     const sel = new Set(selArr || []);
-    const g = activeIps().filter((i) => (i.quals || {}).ground);
-    const rest = activeIps().filter((i) => !(i.quals || {}).ground);
-    const opt = (i) => `<option value="${esc(i.code)}"${sel.has(i.code) ? " selected" : ""}>${esc(i.code + (i.last_name ? " · " + i.last_name : ""))}</option>`;
-    return `<optgroup label="ground qualified">${g.map(opt).join("")}</optgroup>`
-      + (rest.length ? `<optgroup label="other instructors">${rest.map(opt).join("")}</optgroup>` : "");
+    const pool = activeIps().slice().sort((a, b) =>
+      (((b.quals || {}).ground ? 1 : 0) - ((a.quals || {}).ground ? 1 : 0)) || a.code.localeCompare(b.code));
+    return `<span class="sch-tglrow">${pool.map((i) => {
+      const gnd = (i.quals || {}).ground;
+      const on = sel.has(i.code);
+      return `<button type="button" class="sch-tgl${on ? " is-on" : ""}${gnd ? "" : " is-dim"}" data-sfip="${esc(i.code)}"
+        title="${esc(i.code + (i.last_name ? " · " + i.last_name : "") + (gnd ? " — ground qualified" : " — NOT ground qualified"))}">${esc(i.code)}</button>`;
+    }).join("") || `<em class="sch-hint">no instructor</em>`}</span>`;
   }
   function stepperBar() {
     const stp = ui.prog.stepper;
@@ -2812,8 +3025,8 @@
         <label class="sch-fld"><span>End date</span><input type="date" class="sch-in" data-sf="end" value="${esc(ans.end)}"></label>
         <label class="sch-fld"><span>Periods (${it.remaining} remaining)</span>
           <input type="number" min="0" class="sch-in" data-sf="periods" value="${esc(String(ans.periods))}"></label>
-        <label class="sch-fld"><span>Instructors — multi</span>
-          <select class="sch-in sch-multi" data-sf="ips" multiple size="4">${stepGndOptions(ans.ips)}</select></label>
+        <span class="sch-fld wide"><span>Instructors — click toggles (multi)</span>
+          ${stepGndChips(ans.ips)}</span>
         <span class="sch-stepsplit sch-hint">${(ans.ips || []).length
         ? "split: " + shares.map((s) => s.ip + " " + s.periods).join(" + ") + " = " + Math.max(0, P || 0) + " per."
         : "pick the instructor(s) — periods split equally in integers, remainder to the last"}</span>`;
@@ -2923,7 +3136,7 @@
       S().toast("Recorded as a class event of " + (ev.class || "—") + " — edit it in the Training Log.", "bad");
       return;
     }
-    if (!confirm("Withdraw the " + R().label(uid) + " completion of " + code + " (" + (ev.date || "—") + ")?")) return;
+    if (!confirm("Withdraw the " + R().label(uid) + " completion of " + code + " (" + dmy(ev.date || "—") + ")?")) return;
     S().remove("trainingLog", s.eventId);
     S().toast("Withdrawn.", "good");
     progRender();
@@ -2938,13 +3151,13 @@
       const from = anchor.slice(0, 8) + "01";
       const y = +anchor.slice(0, 4), m = +anchor.slice(5, 7);
       const last = new Date(Date.UTC(y, m, 0)).getUTCDate();
-      return { from: from, to: anchor.slice(0, 8) + pad2(last), label: anchor.slice(0, 7) };
+      return { from: from, to: anchor.slice(0, 8) + pad2(last), label: anchor.slice(5, 7) + "/" + anchor.slice(0, 4) };
     }
     const t = Date.parse(anchor + "T00:00:00Z");
     const dow = (new Date(t).getUTCDay() + 6) % 7;           // Monday = 0
     const from = new Date(t - dow * DAY_MS).toISOString().slice(0, 10);
     const to = new Date(t + (6 - dow) * DAY_MS).toISOString().slice(0, 10);
-    return { from: from, to: to, label: from + " → " + to };
+    return { from: from, to: to, label: dmy(from) + " → " + dmy(to) };
   }
 
   function balData(rg) {
@@ -2955,6 +3168,7 @@
     instructors().forEach((i) => iRec(i.code));
 
     for (const ev of (S().get("trainingLog") || [])) {
+      if (ev.special === "nfs") continue;      // Round 6 — a no-fly SHEET is no activity
       const d = ev.end_date || ev.date || "";
       if (!d || d < rg.from || d > rg.to) continue;
       const node = ev.node || ev.uid || "";
@@ -3089,7 +3303,7 @@
           <span class="sch-hint">amber under −25% of the cohort average · red under −50% · idle over ${c.idle} working days</span>
         </div>
         ${periodTotal ? "" : `<p class="sch-hint"><b>No event in this period.</b>${lastLog
-        ? " The training log ends on " + esc(lastLog) + " — step back with ‹ or move the anchor." : ""}</p>`}
+        ? " The training log ends on " + esc(dmy(lastLog)) + " — step back with ‹ or move the anchor." : ""}</p>`}
       </section>
       <section class="panel sch-panel">
         <div class="sch-h"><h2>Students</h2><span class="sch-hint">${periodTotal} student events in the period</span></div>

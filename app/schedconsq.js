@@ -58,11 +58,23 @@
     "fail-17b": "έχουν μεσολαβήσει χωρίς πτήση 5 ημερολογιακές ημέρες… Στην περίπτωση αυτή να ίπτανται 1 έξοδο ΕΠΑΝΑΛΗΨΗΣ.",
     "fail-19": "να ίπταται Εξέταση Καταλληλότητας… η πτήση «ΜΟΝΟΣ» δεν θα επαναλαμβάνεται.",
     "fail-45": "Μία φορά λόγω μειωμένης απόδοσης ανά κατηγορία για τις υπόλοιπες κατηγορίες ασκήσεων αέρος και κατηγορίες F/S.",
+    /* Round 6 — the Progress-editor counters cite these */
+    "fail-01": "«ΣΚ» Σχεδόν Καλώς (Βαθμολογία 50%-59%) [=ΥΣΤΕΡΗΣΗ] · «Ε» ΑΠΟΤΥΧΩΝ (Βαθμολογία 0%-49%) [=ΑΠΟΤΥΧΙΑ]",
+    "fail-36": "αποτυγχάνει σε τέσσερις (4) συνεχόμενες ή οκτώ (8) μη συνεχόμενες… προφορικές εξετάσεις… προ πτήσεως ενημέρωση",
+    "fail-38": "να επανεξετάζεται μετά από 2 ημερολογιακές ημέρες… Σε περίπτωση νέας ΑΠΟΤΥΧΙΑΣ, να εφαρμόζεται το ΠΔ 29/2020.",
+    "fail-39": "εξετάζεται από τον ΑΕ της Μοίρας… ΕΠΙΤΥΧΩΝ, συνεχίζει τις πτήσεις· ΑΠΟΤΥΧΩΝ, παραπέμπεται στο Συμβούλιο Πτητικής Ικανότητας",
+    "fail-76": "μετά τις τέσσερις (4) πρώτες εξόδους… σε δύο (2) συνεχόμενες πτήσεις… 0-49% ή σε τρεις (3) συνεχόμενες… 0-59%",
+    "fail-77": "στο σαράντα τοις εκατό (40%) και άνω των πτήσεων της Προ ΜΟΝΟΣ φάσης ή στο είκοσι τοις εκατό (20%)… 0% έως 59%",
+    "fail-83": "τα Φύλλα μη Πτήσης (ΦΜΠ) μετά από ΑΠΟΤΥΧΙΑ του μαθητή σε γραπτή ή προφορική εξέταση (έντυπο Α0473)",
   };
   const SRC = {
     "fail-08": "3-01 §30δ(1)", "fail-09": "3-01 §30δ(2)", "fail-10": "3-01 §30ε",
     "fail-11": "3-01 §30στ", "fail-12": "3-01 §30ζ", "fail-16": "ΠΔ 29/2020 αρ.3 §1β · 3-01 §58β",
     "fail-17": "3-01 §22ζ-θ", "fail-19": "3-01 §56", "fail-45": "3-01 §32γ",
+    "fail-01": "3-01 §29 · ΠΔ 151/13", "fail-36": "ΠΔ 29/2020 αρ.3 §1ζ · 3-01 §58ζ",
+    "fail-38": "3-01 §58η", "fail-39": "ΠΔ 29/2020 αρ.3 §4",
+    "fail-76": "ΠΔ 29/2020 αρ.3 §1γ · 3-01 §58γ", "fail-77": "ΠΔ 29/2020 αρ.3 §1δ · 3-01 §58δ",
+    "fail-83": "3-01 §11 · ΚΕΦ.9",
   };
   const vb = (id) => REQ[id] || "";
 
@@ -435,9 +447,117 @@
         text: "no flight ever recorded — 1 REPETITION sortie required first (fail-17)" });
     } else if (gap >= 5) {
       out.push({ sev: "hard", req: "fail-17", vb: vb("fail-17b"),
-        text: gap + " calendar days since the last flight (" + lastF + ") — 1 REPETITION sortie required first (fail-17)" });
+        text: gap + " calendar days since the last flight (" + (window.fmtDMY ? window.fmtDMY(lastF) : lastF) + ") — 1 REPETITION sortie required first (fail-17)" });
     }
     return out;
+  }
+
+  /* ══ Round 6 — CUMULATIVE COUNTERS for the Progress editor ═══════════════
+     Band mapping (fail-01, documented): with a score, 0-49 = ΑΠΟΤΥΧΙΑ band,
+     50-59 = ΣΧΕΔΟΝ ΚΑΛΩΣ (ΥΣΤΕΡΗΣΗ) band, ≥60 clears. WITHOUT a score the
+     recorded result maps onto the bands: fail → 0-49, lag/repeat → 50-59
+     (the ALMOST-GOOD band), completed → clears. Special sorties (dp/apt/
+     board) are excluded from every cumulative count (3-01 §43 excludes the
+     evaluation/ΑΔΕ flights from the referral counting — fail-88 note).     */
+  function bandOf(ev) {
+    const r = String(ev.result || "completed").toLowerCase();
+    if (r === "score") {
+      const sc = Number(ev.score);
+      if (isNaN(sc)) return "pass";
+      return sc <= 49 ? "fail" : sc <= 59 ? "lag" : "pass";
+    }
+    if (r === "fail") return "fail";
+    if (r === "lag" || r === "repeat") return "lag";
+    return "pass";
+  }
+  /* trailing (= CURRENT) consecutive run of `pred` at the end of the list */
+  function trailStreak(list, pred) {
+    let n = 0;
+    for (let i = list.length - 1; i >= 0; i--) { if (pred(list[i])) n++; else break; }
+    return n;
+  }
+  function counters(code) {
+    const ppRaw = Number(S().cfg("exam_pass_pct", 80));
+    const passPct = isNaN(ppRaw) || !ppRaw ? 80 : ppRaw;
+    const withBand = (x) => {
+      const b = bandOf(x.ev);
+      const d = R().describe(x.uid);
+      return { date: x.date, label: d ? d.label : x.uid,
+        detail: (b === "fail" ? "FAIL band 0-49" : b === "lag" ? "LAG band 50-59" : "PASS")
+          + (x.ev.result === "score" && x.ev.score != null ? " · " + x.ev.score + "%" : "") };
+    };
+
+    /* flying events of the GRAPH (flights + F/S), chronological, no specials */
+    const fly = flightEvents(code).filter((x) => !x.special);
+    const lagEvs = fly.filter((x) => bandOf(x.ev) === "lag");
+    const failEvs = fly.filter((x) => bandOf(x.ev) === "fail");
+    const lag = { total: lagEvs.length, streak: trailStreak(fly, (x) => bandOf(x.ev) === "lag"), events: lagEvs.map(withBand) };
+    const fail = { total: failEvs.length, streak: trailStreak(fly, (x) => bandOf(x.ev) === "fail"), events: failEvs.map(withBand) };
+
+    /* ΠΔ 1γ (fail-76) — A/C flights only; the 4 FIRST sorties of the stage
+       are the grace window and never count toward the streaks. */
+    const ac = fly.filter((x) => x.kind === "flights");
+    const acEff = ac.slice(4);
+    const s049 = trailStreak(acEff, (x) => bandOf(x.ev) === "fail");
+    const s059 = trailStreak(acEff, (x) => bandOf(x.ev) !== "pass");
+    const c049 = { value: s049, limit: 2, events: acEff.slice(acEff.length - s049).map(withBand) };
+    const c059 = { value: s059, limit: 3, events: acEff.slice(acEff.length - s059).map(withBand) };
+
+    /* ΠΔ 1δ (fail-77) — % of EXECUTED A/C flights graded 0-59; pre-solo =
+       the flights flown before the first completed C4791 («ΠΡΟ ΜΟΝΟΣ»);
+       with no solo yet, every flight so far is pre-solo. */
+    let soloIx = -1;
+    ac.forEach((x, i) => { if (soloIx < 0 && x.uid === "s:C4791" && x.res === "completed") soloIx = i; });
+    const pre = soloIx >= 0 ? ac.slice(0, soloIx) : ac.slice();
+    const badOf = (list) => list.filter((x) => bandOf(x.ev) !== "pass");
+    const pctOf = (b, t) => (t ? Math.round((b / t) * 1000) / 10 : 0);
+    const preBad = badOf(pre), acBad = badOf(ac);
+    const preSolo = { bad: preBad.length, total: pre.length, pct: pctOf(preBad.length, pre.length), limitPct: 40, events: preBad.map(withBand) };
+    const totalFl = { bad: acBad.length, total: ac.length, pct: pctOf(acBad.length, ac.length), limitPct: 20, events: acBad.map(withBand) };
+
+    /* ground exams — WRITTEN failures (fail-36/38: the 2nd ⇒ ΠΔ 29/2020).
+       Exam events reach the student per-student OR via class scope (absent
+       students excluded); fail = result fail or score under the pass mark. */
+    const exams = [];
+    (S().get("trainingLog") || []).forEach((ev, i) => {
+      if (evKind(ev) !== "exams") return;
+      let hit = false;
+      if (ev.scope === "student") hit = ev.student === code;
+      else if (ev.scope === "class") {
+        const cls = [];
+        if (Array.isArray(ev.classes)) for (const c of ev.classes) if (c && cls.indexOf(c) < 0) cls.push(c);
+        if (ev.class && cls.indexOf(ev.class) < 0) cls.push(ev.class);
+        hit = cls.some((c) => S().membersOf(c).indexOf(code) >= 0)
+          && !(ev.absent || []).some((a) => a.student === code);
+      }
+      if (hit) exams.push({ ev: ev, i: i, date: evDate(ev), uid: ev.node || ev.uid || "" });
+    });
+    exams.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : a.i - b.i));
+    const exFail = (ev) => ev.result === "fail" || (ev.result === "score" && Number(ev.score) < passPct);
+    const wr = exams.filter((x) => exFail(x.ev));
+    const written = {
+      streak: trailStreak(exams, (x) => exFail(x.ev)), total: wr.length, limit: 2,
+      events: wr.map((x) => {
+        const d = R().describe(x.uid);
+        return { date: x.date, label: d ? d.label : x.uid,
+          detail: x.ev.score != null ? x.ev.score + "% (pass " + passPct + "%)" : "FAIL" };
+      }),
+    };
+
+    /* NFS (fail-83) + the oral ladder (fail-36/39) counted from the NFS
+       records with reason "oral" — with no oral-PASS records to break a run,
+       every recorded oral failure counts as consecutive (conservative). */
+    const nfsEvs = (S().get("trainingLog") || [])
+      .filter((e) => e.special === "nfs" && e.student === code)
+      .sort((a, b) => ((a.date || "") < (b.date || "") ? -1 : 1));
+    const NFS_TXT = { written: "written exam failure", oral: "oral exam failure", other: "no-fly — student cause" };
+    const nfsItem = (e) => ({ date: e.date || "", label: "NFS — " + (NFS_TXT[e.category] || "unspecified"), detail: e.note || "" });
+    const oralEvs = nfsEvs.filter((e) => e.category === "oral");
+    const oral = { total: oralEvs.length, limitC: 4, limitT: 8, events: oralEvs.map(nfsItem) };
+    const nfs = { total: nfsEvs.length, events: nfsEvs.map(nfsItem) };
+
+    return { lag: lag, fail: fail, c049: c049, c059: c059, preSolo: preSolo, totalFl: totalFl,
+      written: written, oral: oral, nfs: nfs, sms: analyze(code).sms };
   }
 
   window.SchedConsq = {
@@ -454,5 +574,7 @@
     smsExhausted: (code) => analyze(code).smsExhausted,
     dayBlock: dayBlock, status: status, preExam: preExam, repeatNoteFor: repeatNoteFor,
     normRes: normRes, evKind: evKind, fmtDay: fmtDay, vb: vb,
+    /* Round 6 — cumulative counters + the fail-01 band mapping */
+    counters: counters, bandOf: bandOf,
   };
 })();
