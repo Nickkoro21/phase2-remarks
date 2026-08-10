@@ -393,6 +393,7 @@
     fc.edges = fc.group_edges_v1 || [];
     fc.sorties = fc.sorties || [];
     buildIndex();
+    restoreOpen();                 // Round 5: τα ανοιχτά sections της session επιστρέφουν
     renderL0();
     wire();
     readHash();
@@ -615,33 +616,42 @@
     return false;
   };
 
-  /* ── ΑΝΟΙΓΜΑ/ΚΛΕΙΣΙΜΟ TRAINING SECTION (accordion ανά ζώνη) ───────────────
-     Χειροκίνητο κλικ = accordion (κλείνει τα υπόλοιπα της ίδιας ζώνης).
-     Αυτόματο άνοιγμα από επιλογή = προσθετικό, ώστε τα δύο άκρα μιας ακμής
-     να φαίνονται ταυτόχρονα.                                                */
-  function openSection(gid, exclusive) {
+  /* ── ΑΝΟΙΓΜΑ/ΚΛΕΙΣΙΜΟ TRAINING SECTION (Round 5: TRUE MULTI-EXPAND) ──────
+     Κάθε αλυσίδα που ανοίγει ο χρήστης ΜΕΝΕΙ ανοιχτή — το κλικ σε ανοιχτό
+     section κλείνει ΜΟΝΟ εκείνο. Το σύνολο των ανοιχτών sections επιμένει
+     στο sessionStorage, ώστε η εναλλαγή tab/πίσω να μην το χάνει.           */
+  const OPEN_KEY = "p2r-fc-open";
+  function saveOpen() {
+    try { sessionStorage.setItem(OPEN_KEY, JSON.stringify(Array.from(S.open))); }
+    catch (e) { /* private mode */ }
+  }
+  function restoreOpen() {
+    try {
+      const a = JSON.parse(sessionStorage.getItem(OPEN_KEY) || "[]");
+      if (Array.isArray(a)) for (const x of a) if (IX.byId.has(String(x))) S.open.add(String(x));
+    } catch (e) { /* corrupt/blocked storage → start closed */ }
+  }
+  function openSection(gid) {
     const g = IX.byId.get(gid);
     if (!g) return;
-    if (exclusive) {
-      const b = bandOf(g);
-      for (const other of Array.from(S.open)) {
-        const og = IX.byId.get(other);
-        if (og && og.id !== gid && bandOf(og) === b) S.open.delete(other);
-      }
-    }
     S.open.add(gid);
+    saveOpen();
+  }
+  function closeSection(gid) {
+    S.open.delete(gid);
+    saveOpen();
   }
   function ensureOpenFor(uid) {
     if (!isSortieUid(uid)) return;
     const s = node(uid);
     if (!s) return;
-    openSection(s.group, true);
+    openSection(s.group);
     const around = [].concat(SE.in.get(uid) || [], SE.out.get(uid) || []);
     for (const m of around) {
       const other = node(m.from === uid ? m.to : m.from);
       if (!other || !isSortieUid(other.uid)) continue;
       if (trackOf(other) !== S.track) continue;          // άλλη τροχιά → chip στο side sheet
-      openSection(other.group, false);
+      openSection(other.group);
     }
   }
 
@@ -1780,6 +1790,7 @@
       const A = agg(S.track);
       for (const g of A.fs.concat(A.flights)) S.open.add(g.id);
     }
+    saveOpen();
     renderBands();
     if (S.sel && S.rendered.has(S.sel)) applySelection(); else clearSelection();
     scheduleEdges();
@@ -1866,7 +1877,8 @@
         const gid = cardEl.dataset.sec;
         if (gid) {                            // κάρτα-γονέας F/S ή FLIGHTS
           if (S.open.has(gid)) {
-            S.open.delete(gid);
+            /* Round 5: toggle-close κλείνει ΜΟΝΟ το πατημένο section */
+            closeSection(gid);
             const wasInside = S.sel && (S.sel === "g:" + gid
               || (isSortieUid(S.sel) && node(S.sel) && node(S.sel).group === gid));
             renderBands();
@@ -1874,7 +1886,7 @@
             else if (S.sel && S.rendered.has(S.sel)) applySelection();
             scheduleEdges();
           } else {
-            openSection(gid, true);
+            openSection(gid);                 // προσθετικό — τα ήδη ανοιχτά μένουν
             S.sel = "g:" + gid;
             S.lv = 2;
             renderBands();

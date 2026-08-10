@@ -291,6 +291,38 @@
   const blkWarn = (sp, blk) => (blk.req
     ? { sev: "hard", text: sp + " — " + blk.reason, req: blk.req, vb: blk.vb || "" }
     : { sev: "hard", text: sp + " — " + blk.reason });
+
+  /* ── Round 5 · lesson helpers — courses, multi-class, coverage ────────── */
+  /* a lesson line may target SEVERAL classes: array `classes` ∪ legacy `class` */
+  function lessonClasses(l) {
+    const out = [];
+    if (l && Array.isArray(l.classes)) for (const c of l.classes) if (c && out.indexOf(c) < 0) out.push(c);
+    if (l && l.class && out.indexOf(l.class) < 0) out.push(l.class);
+    return out;
+  }
+  /* the coverage the line's audience sees: the student's own, or the
+     class-pace (max over members) of every selected class */
+  function lessonCovFor(l) {
+    if (!l || !l.node || R().kindOf(l.node) !== "lessons") return null;
+    if (l.scope === "student") return l.student ? R().courseCoverage(l.student, l.node) : null;
+    const cls = lessonClasses(l);
+    return cls.length ? R().classCoverage(cls, l.node) : null;
+  }
+  function courseRemainOf(l) {
+    const c = l && l.course ? R().courseOf(l.node, l.course) : null;
+    if (!c) return null;
+    const cov = lessonCovFor(l);
+    const row = cov ? cov.courses.find((r) => r.code === c.code) : null;
+    return Math.max(0, c.periods - (row ? row.done : 0));
+  }
+  /* equal INTEGER split of a course's periods over the selected IPs —
+     remainder goes to the LAST selected (17 / 3 → 5 + 5 + 7) */
+  function splitPeriods(total, ips) {
+    const n = (ips || []).length;
+    if (!n) return [];
+    const base = Math.floor(total / n);
+    return ips.map((ip, i) => ({ ip: ip, periods: i === n - 1 ? total - base * (n - 1) : base }));
+  }
   function completion(code) {
     const st = R().state(code);
     let d = 0, t = 0, fd = 0, ft = 0;
@@ -354,7 +386,19 @@
       if (!Array.isArray(out[k])) out[k] = [];
       out[k].forEach(fixCustom);
     });
-    out.lessons.forEach((l) => { if (l && l.wave !== "B") l.wave = "A"; });   // lessons come per wave (A/B)
+    out.lessons.forEach((l) => {
+      if (!l) return;
+      if (l.wave !== "B") l.wave = "A";                                      // lessons come per wave (A/B)
+      /* Round 5 — multi-class + course + per-line absents */
+      if (!Array.isArray(l.classes)) l.classes = l.class ? [l.class] : [];
+      if (l.course == null) l.course = "";
+      if (l.periods == null) l.periods = "";
+      if (!l.absent || typeof l.absent !== "object" || Array.isArray(l.absent)) {
+        const m = {};
+        if (Array.isArray(l.absent)) for (const a of l.absent) if (a && a.student) m[a.student] = a.reason || "";
+        l.absent = m;
+      }
+    });
     if (!out.actuals || typeof out.actuals !== "object") out.actuals = {};
     if (!out.mix || typeof out.mix !== "object") out.mix = Object.assign({}, CF().mix);
     return out;
@@ -406,8 +450,9 @@
     for (const l of plan.fs) add(l.sp, l.node);
     for (const l of plan.lessons) {
       if (!l.node) continue;
-      if (l.scope === "class" && l.class) S().membersOf(l.class).forEach((sp) => add(sp, l.node));
-      else add(l.student, l.node);
+      if (l.scope === "class") {
+        for (const cl of lessonClasses(l)) S().membersOf(cl).forEach((sp) => add(sp, l.node));
+      } else add(l.student, l.node);
     }
     return m;
   }
@@ -1007,16 +1052,24 @@
     const out = [];
     const push = (sev, text) => out.push({ sev: sev, text: text });
     if (!l.node) push("soft", "no lesson or exam picked");
-    if (l.scope === "class" && !l.class) push("soft", "no class");
+    if (l.scope === "class" && !lessonClasses(l).length) push("soft", "no class");
     if (l.scope === "student" && !l.student) push("soft", "no student");
+    /* Round 5 — a lessons COURSE line without periods falls back to the full
+       remaining periods on actualize */
+    if (l.course && (l.periods === "" || l.periods == null)) push("soft", "no periods set — the full remaining count is written on actualize");
     /* ΠΔ 29/2020 blocks EVERYTHING — lessons and exams included (fail-16 §31) */
     if (l.scope === "student" && l.student) {
       const blk = R().blockFor(l.student, "lessons");
       if (blk) out.push(blkWarn(l.student, blk));
-    } else if (l.scope === "class" && l.class) {
-      for (const m of S().membersOf(l.class)) {
-        const blk = R().blockFor(m, "lessons");
-        if (blk) out.push(blkWarn(m, blk));
+    } else if (l.scope === "class") {
+      const seen = new Set();
+      for (const cl of lessonClasses(l)) {
+        for (const m of S().membersOf(cl)) {
+          if (seen.has(m)) continue;
+          seen.add(m);
+          const blk = R().blockFor(m, "lessons");
+          if (blk) out.push(blkWarn(m, blk));
+        }
       }
     }
     if (l.instructor && awayOf(l.instructor, plan.date)) push("hard", l.instructor + " is away (" + awayOf(l.instructor, plan.date) + ")");
@@ -1426,14 +1479,38 @@
     const locked = plan.status !== "draft";
     const dis = locked ? " disabled" : "";
     if (!plan.lessons.length) return "";
-    const nodeOpts = (sel) => {
-      const parts = [`<option value="">— lesson / exam —</option>`];
-      for (const k of ["lessons", "exams"]) {
-        const list = R().nodes(k);
-        parts.push(`<optgroup label="${esc(R().KIND_LABEL[k])}">` + list.map((u) => {
-          const d = R().describe(u);
-          return `<option value="${esc(u)}"${u === sel ? " selected" : ""}>${esc(d.label + " — " + d.name)}</option>`;
+    /* Round 5 — the picker lists each COURSE of every ground group separately
+       ("FF 101-108 — Flying principles (17 periods) · 8/17 covered"); the
+       ground-exam groups stay whole. Option value: "<uid>::<course code>". */
+    const nodeOpts = (l) => {
+      const sel = l.course ? l.node + "::" + l.course : l.node;
+      const cov = new Map();                       // uid -> audience coverage
+      const covOf = (u) => {
+        if (!cov.has(u)) cov.set(u, lessonCovFor(Object.assign({}, l, { node: u, course: "" })));
+        return cov.get(u);
+      };
+      const parts = [`<option value="">— course / exam —</option>`];
+      for (const u of R().nodes("lessons")) {
+        const d = R().describe(u);
+        const courses = R().coursesOf(u);
+        if (!courses.length) continue;
+        const c0 = covOf(u);
+        parts.push(`<optgroup label="${esc(d.label)}">` + courses.map((c) => {
+          const v = u + "::" + c.code;
+          const r = c0 ? c0.courses.find((x) => x.code === c.code) : null;
+          const covTxt = r ? " · " + r.done + "/" + r.periods + " covered" + (r.complete || (c0 && c0.completeLegacy) ? " ✓" : "") : "";
+          return `<option value="${esc(v)}"${v === sel ? " selected" : ""}>${esc(c.code + " — " + c.name
+            + " (" + c.periods + " period" + (c.periods === 1 ? "" : "s") + (c.conditional ? " · foreign SPs" : "") + ")" + covTxt)}</option>`;
         }).join("") + `</optgroup>`);
+      }
+      parts.push(`<optgroup label="${esc(R().KIND_LABEL.exams)}">` + R().nodes("exams").map((u) => {
+        const d = R().describe(u);
+        return `<option value="${esc(u)}"${u === sel ? " selected" : ""}>${esc(d.label + " — " + d.name)}</option>`;
+      }).join("") + `</optgroup>`);
+      /* a legacy whole-group value stays selectable */
+      if (l.node && !l.course && R().kindOf(l.node) === "lessons") {
+        const d = R().describe(l.node);
+        parts.push(`<optgroup label="kept from the plan — whole group"><option value="${esc(l.node)}" selected>${esc(d.label + " — " + d.name)}</option></optgroup>`);
       }
       return parts.join("");
     };
@@ -1442,6 +1519,37 @@
       + gndIps.map((i) => `<option value="${esc(i.code)}"${i.code === sel ? " selected" : ""}>${esc(i.code)}</option>`).join("")
       + (sel && !gndIps.some((i) => i.code === sel)
         ? `<optgroup label="not ground qualified / departed"><option value="${esc(sel)}" selected>${esc(sel)}</option></optgroup>` : "");
+    /* the absent picker offers the members of EVERY selected class, grouped
+       under class headings — stays live after publish (until actualize) */
+    const absHtml = (l) => {
+      const cls = lessonClasses(l);
+      if (l.scope !== "class" || !cls.length) return "";
+      const seen = new Set();
+      const groups = cls.map((cid) => {
+        const mem = S().membersOf(cid).filter((m) => !seen.has(m));
+        mem.forEach((m) => seen.add(m));
+        const rows = mem.map((code) => {
+          const on = Object.prototype.hasOwnProperty.call(l.absent || {}, code);
+          return `<label class="sch-absrow${on ? " is-on" : ""}">
+            <input type="checkbox" data-labs="${esc(code)}"${on ? " checked" : ""}>
+            <span class="sch-code">${esc(code)}</span>
+            <input type="text" class="sch-in sch-absr" data-labsr="${esc(code)}" placeholder="reason"
+                   value="${esc((l.absent || {})[code] || "")}" data-fk="labsr-${esc(l.id)}-${esc(code)}"${on ? "" : " disabled"}></label>`;
+        }).join("");
+        return `<div class="sch-absgrp"><div class="sch-absgrp-h">${esc(cid)} <span class="count">${mem.length}</span></div>
+          ${rows ? `<div class="sch-abs">${rows}</div>` : `<p class="sch-hint">no members</p>`}</div>`;
+      }).join("");
+      const nAbs = Object.keys(l.absent || {}).length;
+      return `<div class="sch-labswrap"><span class="sch-lbl">Absent — they owe ${esc(l.course || "the lesson")} as a makeup${nAbs ? ` (${nAbs})` : ""}</span>${groups}</div>`;
+    };
+    const covLine = (l) => {
+      if (!l.course) return "";
+      const c = R().courseOf(l.node, l.course);
+      const rem = courseRemainOf(l);
+      if (!c || rem == null) return "";
+      const done = Math.max(0, c.periods - rem);
+      return `<p class="sch-cond">${esc(l.course)} — ${done}/${c.periods} covered · ${rem} remaining for ${esc(l.scope === "student" ? (l.student || "—") : lessonClasses(l).join(" + ") || "—")}</p>`;
+    };
     const row = (l) => `<div class="sch-line${locked ? " is-locked" : ""}" data-l="${esc(l.id)}" data-blk="ls">
       ${warnHtml(A.lsWarn.get(l.id))}
       <div class="sch-lrow">
@@ -1450,8 +1558,11 @@
           <select class="sch-in" data-lf="wave" data-fk="lwv-${esc(l.id)}"${dis}>
             <option value="A"${(l.wave || "A") === "A" ? " selected" : ""}>A</option>
             <option value="B"${l.wave === "B" ? " selected" : ""}>B</option></select></label>
-        <label class="sch-lf w-ls"><span>Lesson / exam</span>
-          <select class="sch-in" data-lf="node" data-fk="lnode-${esc(l.id)}"${dis}>${nodeOpts(l.node)}</select></label>
+        <label class="sch-lf w-ls"><span>Course / exam</span>
+          <select class="sch-in" data-lf="node" data-fk="lnode-${esc(l.id)}"${dis}>${nodeOpts(l)}</select></label>
+        ${l.course ? `<label class="sch-lf w-cl"><span>Periods</span>
+          <input type="number" min="0" class="sch-in" data-lf="periods" data-fk="lpd-${esc(l.id)}" value="${esc(l.periods == null ? "" : String(l.periods))}"
+            title="periods covered by this block — default: the remaining ${esc(String(courseRemainOf(l) == null ? "" : courseRemainOf(l)))}"${dis}></label>` : ""}
         <label class="sch-lf w-sp"><span>Scope</span>
           <select class="sch-in" data-lf="scope" data-fk="lsc-${esc(l.id)}"${dis}>
             <option value="class"${l.scope === "class" ? " selected" : ""}>Class</option>
@@ -1459,9 +1570,12 @@
         ${l.scope === "student"
         ? `<label class="sch-lf w-sp"><span>Student</span>
              <select class="sch-in" data-lf="student" data-fk="lst-${esc(l.id)}"${dis}>${spOptions(l.student, plan.date, false)}</select></label>`
-        : `<label class="sch-lf w-sp"><span>Class</span>
-             <select class="sch-in" data-lf="class" data-fk="lcl-${esc(l.id)}"${dis}><option value="">—</option>
-               ${S().classList().map((c) => `<option value="${esc(c.id)}"${l.class === c.id ? " selected" : ""}>${esc(c.id)} (${c.members.length})</option>`).join("")}</select></label>`}
+        : `<span class="sch-lf w-ls"><span>Classes — several at once</span>
+             <span class="sch-clsmulti">${S().classList().map((c) => {
+          const on = lessonClasses(l).indexOf(c.id) >= 0;
+          return `<label class="sch-clspick${on ? " is-on" : ""}"><input type="checkbox" data-lcls="${esc(c.id)}"${on ? " checked" : ""}${dis}>
+               <span>${esc(c.id)} (${c.members.length})</span></label>`;
+        }).join("") || `<em class="sch-hint">no class yet</em>`}</span></span>`}
         <label class="sch-lf w-ip"><span>Ground instructor</span>
           <select class="sch-in" data-lf="instructor" data-fk="lip-${esc(l.id)}"${dis}>${ipSel(l.instructor)}</select></label>
         <label class="sch-lf w-cl"><span>Time</span>
@@ -1470,6 +1584,8 @@
           <input class="sch-in" data-lf="note" data-fk="lnt-${esc(l.id)}" value="${esc(l.note || "")}"${dis}></label>
         <span class="sch-lact"><button type="button" class="sch-mini danger" data-lb="del" title="remove"${dis}>✕</button></span>
       </div>
+      ${covLine(l)}
+      ${absHtml(l)}
     </div>`;
     const wA = plan.lessons.filter((l) => (l.wave || "A") === "A");
     const wB = plan.lessons.filter((l) => l.wave === "B");
@@ -1606,6 +1722,8 @@
     const out = [];
     plan.waves.forEach((w, wi) => w.lines.forEach((l) => out.push({ blk: "w", wave: w, wi: wi, l: l, kind: "flights", device: "T-6A" })));
     plan.fs.forEach((l) => out.push({ blk: "fs", wave: null, wi: -1, l: l, kind: "fs", device: l.device || "OFT" }));
+    /* Round 5 — lesson blocks actualize too: ONE (possibly multi-class) event */
+    plan.lessons.forEach((l) => out.push({ blk: "ls", wave: null, wi: -1, l: l, kind: "lessons", device: "GND" }));
     return out;
   }
 
@@ -1615,29 +1733,39 @@
       const node = a.node || x.l.node;
       const d = node ? R().describe(node) : null;
       const kindNodes = R().nodes(x.kind);
+      const isLs = x.blk === "ls";
+      const who = isLs
+        ? (x.l.scope === "student" ? (x.l.student || "—")
+          : lessonClasses(x.l).join(" · ") || "—")
+        : (x.l.sp || "—");
+      const what = isLs
+        ? (x.l.course ? x.l.course + (d ? " (" + d.label + ")" : "") + (x.l.periods !== "" && x.l.periods != null ? " · " + x.l.periods + " per." : "")
+          : (d ? d.label : "—"))
+        : (d ? d.label : (customText(x.l) || "—"));
+      const nAbs = isLs ? Object.keys(x.l.absent || {}).length : 0;
       return `<div class="sch-actrow" data-act-l="${esc(x.l.id)}">
-        <span class="sch-rank">${x.blk === "fs" ? "S" + x.l.slot : "#" + ((A.t.get(x.l.id) || {}).rank || "?")}</span>
-        <span class="sch-mono">${esc(x.blk === "fs" ? "F/S" : x.wave.name)}</span>
-        <span class="sch-code">${esc(x.l.sp || "—")}</span>
-        <span class="sch-note">${esc(d ? d.label : (customText(x.l) || "—"))}</span>
-        <span class="sch-mono">${esc(x.l.ip || "—")}</span>
+        <span class="sch-rank">${isLs ? "L·" + esc(x.l.wave || "A") : x.blk === "fs" ? "S" + x.l.slot : "#" + ((A.t.get(x.l.id) || {}).rank || "?")}</span>
+        <span class="sch-mono">${esc(isLs ? "Lessons" : x.blk === "fs" ? "F/S" : x.wave.name)}</span>
+        <span class="sch-code">${esc(who)}</span>
+        <span class="sch-note">${esc(what)}${nAbs ? ` <span class="sch-badge warn" title="${esc(Object.keys(x.l.absent).map((c) => c + ((x.l.absent[c] && " — " + x.l.absent[c]) || "")).join(" · "))}">${nAbs} absent</span>` : ""}</span>
+        <span class="sch-mono">${esc((isLs ? x.l.instructor : x.l.ip) || "—")}</span>
         <span class="sch-actbtns">
-          <button type="button" class="sch-mini${a.state === "done" ? " is-on good" : ""}" data-ab="done" title="flown as planned">✓</button>
+          <button type="button" class="sch-mini${a.state === "done" ? " is-on good" : ""}" data-ab="done" title="${isLs ? "held as planned" : "flown as planned"}">✓</button>
           <button type="button" class="sch-mini${a.state === "cancelled" ? " is-on danger" : ""}" data-ab="cancelled" title="cancelled">✗</button>
-          <button type="button" class="sch-mini${a.state === "changed" ? " is-on warn" : ""}" data-ab="changed" title="flown, but another mission">~</button>
+          ${isLs ? "" : `<button type="button" class="sch-mini${a.state === "changed" ? " is-on warn" : ""}" data-ab="changed" title="flown, but another mission">~</button>`}
         </span>
         ${a.state === "cancelled" ? `<input class="sch-in grow" data-ab-f="reason" data-fk="acr-${esc(x.l.id)}" value="${esc(a.reason || "")}" placeholder="reason">` : ""}
         ${a.state === "changed" ? `<select class="sch-in grow" data-ab-f="node" data-fk="acn-${esc(x.l.id)}">
           <option value="">— what was actually flown —</option>
           ${kindNodes.map((u) => { const dd = R().describe(u); return `<option value="${esc(u)}"${a.node === u ? " selected" : ""}>${esc(dd.label + " — " + dd.name)}</option>`; }).join("")}
         </select>` : ""}
-        ${a.state === "done" || a.state === "changed" ? `<select class="sch-in sch-actres" data-ab-f="result" data-fk="acres-${esc(x.l.id)}"
+        ${!isLs && (a.state === "done" || a.state === "changed") ? `<select class="sch-in sch-actres" data-ab-f="result" data-fk="acres-${esc(x.l.id)}"
             title="result of the flown sortie — LAG/FAIL feeds the consequence engine (fail-08…12)">
           <option value="completed"${!a.result || a.result === "completed" ? " selected" : ""}>PASS</option>
           <option value="lag"${a.result === "lag" ? " selected" : ""}>LAG (YSTERISI)</option>
           <option value="fail"${a.result === "fail" ? " selected" : ""}>FAIL (APOTYXIA)</option>
         </select>` : ""}
-        ${(a.state === "done" || a.state === "changed") && (a.result === "lag" || a.result === "fail")
+        ${!isLs && (a.state === "done" || a.state === "changed") && (a.result === "lag" || a.result === "fail")
           ? `<input class="sch-in grow" data-ab-f="maneuvers" data-fk="acman-${esc(x.l.id)}" value="${esc(a.maneuvers || "")}"
               placeholder="maneuvers that lagged/failed — repeated next sortie (fail-10)">` : ""}
         ${a.eventId && S().find("trainingLog", a.eventId) ? `<span class="sch-badge good" title="${esc(a.eventId)}">logged</span>` : ""}
@@ -1666,6 +1794,38 @@
       if (!a || a.state === "cancelled" || !a.state) {
         if (existing) { S().remove("trainingLog", id); removed++; }
         if (a) delete a.eventId;
+        continue;
+      }
+      /* Round 5 — a lesson block writes ONE event: class scope with the
+         classes ARRAY (legacy `class` = the first) + absent[] across them,
+         or a single-student event; per-course lines carry course+periods. */
+      if (x.blk === "ls") {
+        const l = x.l;
+        const cls = l.scope === "class" ? lessonClasses(l) : [];
+        if (!l.node || (l.scope === "class" ? !cls.length : !l.student)) continue;
+        const rec2 = {
+          id: id, node: l.node, kind: "lessons",
+          scope: l.scope === "class" ? "class" : "student",
+          student: l.scope === "student" ? l.student : "",
+          class: cls[0] || "", classes: l.scope === "class" ? cls.slice() : undefined,
+          date: plan.date, start_date: plan.date, end_date: plan.date,
+          instructor: l.instructor || "", device: "GND",
+          result: "completed", score: null, maneuvers: "",
+          note: "actualized from the day plan" + (l.time ? " · " + l.time : "") + (l.note ? " · " + l.note : ""),
+          absent: l.scope === "class"
+            ? Object.keys(l.absent || {}).map((c) => ({ student: c, reason: (l.absent || {})[c] || "" })) : [],
+        };
+        if (l.course) {
+          rec2.course = l.course;
+          const p = l.periods === "" || l.periods == null || isNaN(Number(l.periods)) ? null : Math.max(0, Number(l.periods));
+          /* re-runs stay idempotent: the already-written share is reused, the
+             remaining count is only computed on the FIRST write */
+          rec2.periods_done = p != null ? p
+            : (existing && existing.periods_done != null ? existing.periods_done : courseRemainOf(l));
+        }
+        if (existing) updated++; else added++;
+        a.eventId = id;
+        S().upsert("trainingLog", rec2);
         continue;
       }
       const node = a.state === "changed" ? (a.node || "") : x.l.node;
@@ -1719,8 +1879,9 @@
       + `</tbody></table>` : "";
     const lsTable = (title, list) => (!list.length ? "" : head(title)
       + `<table class="pv-t"><thead><tr><th>TIME</th><th>SUBJECT</th><th>SCOPE</th><th>INSTRUCTOR</th><th>NOTE</th></tr></thead><tbody>`
-      + list.map((l) => `<tr><td>${esc(l.time || "")}</td><td>${esc(missionLabel(l.node))}</td>
-        <td>${esc(l.scope === "student" ? l.student : l.class)}</td><td>${esc(l.instructor || "")}</td><td>${esc(l.note || "")}</td></tr>`).join("")
+      + list.map((l) => `<tr><td>${esc(l.time || "")}</td>
+        <td>${esc(l.course ? l.course + (l.periods !== "" && l.periods != null ? " · " + l.periods + " per." : "") + " (" + missionLabel(l.node) + ")" : missionLabel(l.node))}</td>
+        <td>${esc(l.scope === "student" ? l.student : lessonClasses(l).join(" · "))}</td><td>${esc(l.instructor || "")}</td><td>${esc(l.note || "")}</td></tr>`).join("")
       + `</tbody></table>`);
     const lsT = lsTable("Lessons A", plan.lessons.filter((l) => (l.wave || "A") === "A"))
       + lsTable("Lessons B", plan.lessons.filter((l) => l.wave === "B"));
@@ -1840,7 +2001,8 @@
     const d = dutyOf(plan.date);
     const w = wave === "B" ? "B" : "A";
     plan.lessons.push({
-      id: newId("ln"), wave: w, node: "", scope: "class", class: "", student: "",
+      id: newId("ln"), wave: w, node: "", course: "", periods: "",
+      scope: "class", class: "", classes: [], student: "", absent: {},
       instructor: (w === "B" ? d.ground_2 || d.ground_1 : d.ground_1 || d.ground_2) || "", time: "", note: "",
     });
   }
@@ -1993,12 +2155,60 @@
         if (t.dataset.abF === "result") renderBoard(el);
         return;
       }
+      /* Round 5 — the multi-class checkboxes of a lesson line */
+      if (t.dataset.lcls != null) {
+        const box = t.closest("[data-l]");
+        const l = box && plan.lessons.find((x) => x.id === box.dataset.l);
+        if (!l) return;
+        const id = t.dataset.lcls;
+        if (!Array.isArray(l.classes)) l.classes = l.class ? [l.class] : [];
+        const ix = l.classes.indexOf(id);
+        if (t.checked && ix < 0) l.classes.push(id);
+        else if (!t.checked && ix >= 0) l.classes.splice(ix, 1);
+        l.class = l.classes[0] || "";
+        const mem = new Set();
+        l.classes.forEach((c) => S().membersOf(c).forEach((m) => mem.add(m)));
+        for (const k of Object.keys(l.absent || {})) if (!mem.has(k)) delete l.absent[k];
+        if (l.course && (l.periods === "" || l.periods == null)) {
+          const rem = courseRemainOf(l);
+          l.periods = rem == null ? "" : String(rem);
+        }
+        saveSoon();
+        renderBoard(el);
+        return;
+      }
+      /* Round 5 — the absent checkboxes of a lesson line (grouped per class) */
+      if (t.dataset.labs != null) {
+        const box = t.closest("[data-l]");
+        const l = box && plan.lessons.find((x) => x.id === box.dataset.l);
+        if (!l) return;
+        const code = t.dataset.labs;
+        if (!l.absent || typeof l.absent !== "object") l.absent = {};
+        if (t.checked) {
+          const reason = box.querySelector(`[data-labsr="${cssq(code)}"]`);
+          l.absent[code] = reason ? reason.value : "";
+        } else delete l.absent[code];
+        saveSoon();
+        renderBoard(el);
+        return;
+      }
       if (t.dataset.lf != null) { fieldChange(el, plan, t, true); return; }
     });
 
     el.addEventListener("input", (e) => {
       const plan = ensurePlan();
       const t = e.target;
+      /* Round 5 — absent reason free-text of a lesson line (never re-renders
+         under the caret) */
+      if (t.dataset.labsr != null) {
+        const box = t.closest("[data-l]");
+        const l = box && plan.lessons.find((x) => x.id === box.dataset.l);
+        if (l && l.absent && Object.prototype.hasOwnProperty.call(l.absent, t.dataset.labsr)) {
+          l.absent[t.dataset.labsr] = t.value;
+          saveSoon();
+        }
+        return;
+      }
       if (t.dataset.lf != null && t.tagName === "INPUT" && t.type !== "checkbox") {
         fieldChange(el, plan, t, false);
         return;
@@ -2030,6 +2240,21 @@
     const f = t.dataset.lf, rec = tg.rec;
     let heavy = isChange;
 
+    if (f === "node" && tg.blk === "ls") {
+      /* Round 5 — a lessons COURSE option carries "<uid>::<course code>";
+         node stays the GROUP uid so the readiness graph is untouched. */
+      const v = t.value, ci = v.indexOf("::");
+      rec.node = ci > 0 ? v.slice(0, ci) : v;
+      rec.course = ci > 0 ? v.slice(ci + 2) : "";
+      rec.periods = "";
+      if (rec.course) {
+        const rem = courseRemainOf(rec);
+        rec.periods = rem == null ? "" : String(rem);
+      }
+      saveSoon();
+      renderBoard(el);
+      return;
+    }
     if ((f === "node" || f === "alt") && t.value === "__custom__") {
       rec[f] = "";
       rec[f === "node" ? "customOn" : "altCustomOn"] = true;
@@ -2183,13 +2408,28 @@
       });
       h.addEventListener("change", (e) => {
         if (e.target.dataset.pf != null && ui.prog.pending) ui.prog.pending[e.target.dataset.pf] = e.target.value;
+        /* Round 5 — the stepper fields */
+        if (e.target.dataset.sf != null && ui.prog.stepper) {
+          const stp = ui.prog.stepper, ans = stp.answers[stp.ix] || {};
+          const f = e.target.dataset.sf;
+          if (f === "ips") ans.ips = [...e.target.selectedOptions].map((o) => o.value).filter(Boolean);
+          else ans[f] = e.target.value;
+          stp.answers[stp.ix] = ans;
+          if (f === "ips" || f === "periods") progRenderBody();   // refresh the split preview
+        }
       });
       h.addEventListener("input", (e) => {
         if (e.target.id === "sch-progq") { ui.prog.q = e.target.value; progRenderBody(); }
       });
       if (!window._schProgKey) {
         window._schProgKey = true;
-        document.addEventListener("keydown", (e) => { if (e.key === "Escape") progClose(); });
+        document.addEventListener("keydown", (e) => {
+          if (e.key !== "Escape") return;
+          /* Round 5 — Escape mid-stepper cancels the stepper only: already-
+             written steps stay, nothing after is written */
+          if (ui.prog.stepper) { stepCancel(); return; }
+          progClose();
+        });
       }
     }
     return h;
@@ -2197,12 +2437,12 @@
   function progClose() {
     const h = $id("sch-progmodal");
     if (h) { h.classList.add("hidden"); h.innerHTML = ""; }
-    ui.prog = { code: "", pending: null, q: "", exp: {} };
+    ui.prog = { code: "", pending: null, stepper: null, q: "", exp: {} };
   }
 
   window.schProgressOpen = function schProgressOpen(code) {
     if (!code) return;
-    ui.prog = { code: code, pending: null, q: "", exp: {} };
+    ui.prog = { code: code, pending: null, stepper: null, q: "", exp: {} };
     const h = progHost();
     h.classList.remove("hidden");
     progRender();
@@ -2325,17 +2565,34 @@
       const p = PSTAT[s.status] || PSTAT.pending;
       const done = s.status === "completed";
       const needs = showNeeds && !done && next.has(u) ? progNeeds(u, st) : [];
-      return `<div class="sch-pnode is-${esc(s.status)}${next.has(u) && !done ? " is-next" : ""}" data-uid="${esc(u)}" title="${esc(d.name)}">
+      /* Round 5 — lesson groups list their per-course coverage inline
+         ("FF 101-108 12/17 · CO 101-105 ✓ · …") */
+      let covLine = "";
+      if (R().kindOf(u) === "lessons") {
+        const cov = R().courseCoverage(code, u);
+        if (cov && (!done || cov.anyEvent) && cov.courses.length) {
+          covLine = `<span class="sch-pcov">${cov.courses.map((r) => {
+            const stt2 = (done && !cov.anyEvent) || r.complete ? "done"
+              : r.absent && r.done < r.periods ? r.done + "/" + r.periods + " · makeup"
+                : r.done + "/" + r.periods;
+            const cl = (done && !cov.anyEvent) || r.complete ? " is-done" : (r.absent && r.done < r.periods ? " is-owed" : "");
+            return `<span class="sch-pcov-c${cl}" title="${esc(r.name + (r.conditional ? " — foreign SPs" : ""))}">${esc(r.code)} ${esc(stt2)}${r.conditional ? "*" : ""}</span>`;
+          }).join(" · ")}</span>`;
+        }
+      }
+      return `<div class="sch-pnode is-${esc(s.status)}${next.has(u) && !done ? " is-next" : ""}" data-uid="${esc(u)}" title="${esc(d.name + (s.reason ? " — " + s.reason : ""))}">
         <span class="sch-code">${esc(d.short)}</span>
         <span class="sch-badge ${esc(p.c)}">${esc(p.t)}</span>
+        ${s.reason ? `<span class="sch-nd" title="${esc(s.reason)}">${esc(s.reason)}</span>` : ""}
         ${s.date ? `<span class="sch-nd">${esc(s.date)}</span>` : ""}
         ${s.instructor ? `<span class="sch-nd">${esc(s.instructor)}</span>` : ""}
         <span class="sch-pact">
           ${done
           ? `<button type="button" class="sch-mini danger" data-pb="undo" title="withdraw the completion">↺</button>`
           : `<button type="button" class="sch-mini good" data-pb="done" title="${s.status === "pending" ? "mark completed" : "mark the makeup done"}">✓</button>`}
-          <button type="button" class="sch-mini" data-pb="upto" title="complete everything up to here in this section line">⇥</button>
+          <button type="button" class="sch-mini" data-pb="upto" title="complete everything up to here — a stepper asks each item its own date/instructor">⇥</button>
         </span>
+        ${covLine}
         ${needs.length ? `<span class="sch-pneeds">needs: ${needs.join(" · ")}</span>` : ""}
       </div>`;
     };
@@ -2360,14 +2617,14 @@
     }
 
     const pend = ui.prog.pending;
-    const bar = pend ? `<div class="sch-pbar">
+    const bar = ui.prog.stepper ? stepperBar() : (pend ? `<div class="sch-pbar">
       <span class="sch-lbl">${esc(pend.title)}</span>
       <label class="sch-fld"><span>Date</span><input type="date" class="sch-in" data-pf="date" value="${esc(pend.date)}"></label>
       <label class="sch-fld"><span>Instructor</span><select class="sch-in" data-pf="instructor"><option value="">—</option>
         ${activeIps().map((i) => `<option value="${esc(i.code)}"${pend.instructor === i.code ? " selected" : ""}>${esc(i.code)}</option>`).join("")}</select></label>
       <button type="button" class="sch-btn primary" data-pb="confirm">Save</button>
       <button type="button" class="sch-btn" data-pb="cancel">Cancel</button>
-    </div>` : "";
+    </div>` : "");
 
     host.innerHTML = bar + (owed.length ? `<section class="sch-psec sch-powed">
       <h3>Owed makeups <span class="count">${owed.length}</span></h3>
@@ -2377,9 +2634,13 @@
 
   function progButton(b) {
     const act = b.dataset.pb;
-    if (act === "close") { progClose(); return; }
+    if (act === "close") { if (ui.prog.stepper) { stepCancel(); } progClose(); return; }
     if (act === "cancel") { ui.prog.pending = null; progRenderBody(); return; }
     if (act === "confirm") { progCommit(); return; }
+    /* Round 5 — the stepper buttons */
+    if (act === "st-back") { const s = ui.prog.stepper; if (s && s.ix > 0) { s.ix--; progRenderBody(); } return; }
+    if (act === "st-next" || act === "st-finish") { stepAdvance(act === "st-finish"); return; }
+    if (act === "st-cancel") { stepCancel(); return; }
     /* Round 2 — the board outcome closes (or ends) the ΠΔ 29/2020 path */
     if (act === "board-continue" || act === "board-stop") {
       const code = ui.prog.code;
@@ -2407,6 +2668,15 @@
     const code = ui.prog.code;
     if (act === "undo") { progUndo(code, uid); return; }
     if (act === "done") {
+      /* Round 5 — the ✓ on a LESSONS group opens the lesson variant (start/
+         end dates, multi-IP with integer split, periods) — one step per
+         remaining course; other kinds keep the quick bar. */
+      if (R().kindOf(uid) === "lessons" && R().coursesOf(uid).length) {
+        const items = stepperItems(code, [uid]);
+        if (!items.length) { S().toast("Every course of this group is already covered.", "good"); return; }
+        stepStart(items, R().label(uid));
+        return;
+      }
       const st = R().state(code)[uid] || { status: "pending" };
       ui.prog.pending = {
         mode: "one", uids: [uid], date: today(), instructor: "",
@@ -2417,26 +2687,208 @@
     if (act === "upto") {
       const line = uptoList(code, uid);
       if (!line.length) { S().toast("Everything up to here is already completed.", "good"); return; }
-      if (!confirm("Mark " + line.length + " node(s) of this line as completed, up to and including " + R().label(uid) + "?")) return;
-      ui.prog.pending = { mode: "bulk", uids: line, date: today(), instructor: "", title: "Complete " + line.length + " nodes up to " + R().label(uid) };
-      progRenderBody();
+      const items = stepperItems(code, line);
+      if (!items.length) { S().toast("Everything up to here is already completed.", "good"); return; }
+      if (!confirm("Complete " + items.length + " item(s) up to " + R().label(uid)
+        + " — a stepper asks each one its own date/instructor(s)?")) return;
+      stepStart(items, R().label(uid));
     }
   }
 
-  /* every not-completed node of the same section line, in syllabus order, up
-     to and including the clicked one */
+  /* Round 5 — "up to here" = the not-yet-completed PREREQUISITE CLOSURE of
+     the clicked node (plus itself), in graph order: exactly what must be done
+     before it, lessons + exams + F/S + flights together. */
   function uptoList(code, uid) {
     const st = R().state(code);
+    const seen = new Set();
+    const stack = [uid];
+    while (stack.length) {
+      const u = stack.pop();
+      if (seen.has(u)) continue;
+      seen.add(u);
+      for (const p of R().prereqsOf(u)) if (!seen.has(p.uid)) stack.push(p.uid);
+    }
+    return R().nodes().filter((u) => seen.has(u) && (!st[u] || st[u].status !== "completed"));
+  }
+
+  /* ── Round 5 · the per-item STEPPER ────────────────────────────────────
+     One step per flight / F/S / exam (date + instructor, evaluator enforced
+     on checkrides, SOLO offered where the sortie allows it) and one step per
+     remaining LESSON COURSE (start+end dates, multi-IP, periods split in
+     integers — remainder to the LAST selected). Every "Next" WRITES its step
+     immediately (idempotent "prg:" ids), so cancelling later loses nothing. */
+  function stepperItems(code, range) {
+    const items = [];
+    for (const u of range) {
+      if (R().kindOf(u) === "lessons" && R().coursesOf(u).length) {
+        const cov = R().courseCoverage(code, u);
+        const rows = cov ? cov.courses : R().coursesOf(u).map((c) => ({ code: c.code, name: c.name, periods: c.periods, conditional: c.conditional, done: 0, complete: false }));
+        for (const r of rows) {
+          if (r.complete || r.conditional) continue;      // foreign-only supplements are skipped
+          items.push({ type: "course", uid: u, code: r.code, name: r.name, periods: r.periods, remaining: Math.max(0, r.periods - r.done) });
+        }
+      } else {
+        items.push({ type: "node", uid: u });
+      }
+    }
+    return items;
+  }
+  function stepStart(items, title) {
+    ui.prog.pending = null;
+    ui.prog.stepper = { items: items, ix: 0, answers: [], written: [], title: title };
+    progRenderBody();
+  }
+  function stepAns(ix) {
+    const stp = ui.prog.stepper;
+    if (stp.answers[ix]) return stp.answers[ix];
+    const it = stp.items[ix];
+    /* pre-filled from the previous answer, editable */
+    let prev = null;
+    for (let i = ix - 1; i >= 0; i--) { if (stp.answers[i]) { prev = stp.answers[i]; break; } }
+    const pDate = prev ? (prev.date || prev.end || prev.start) : "";
+    const ans = it.type === "node"
+      ? { date: pDate || today(), instructor: (prev && (prev.instructor || (prev.ips || [])[0])) || "" }
+      : {
+        start: (prev && (prev.start || prev.date)) || pDate || today(),
+        end: (prev && (prev.end || prev.date)) || pDate || today(),
+        ips: prev && prev.ips && prev.ips.length ? prev.ips.slice() : (prev && prev.instructor && prev.instructor !== SOLO ? [prev.instructor] : []),
+        periods: String(it.remaining),
+      };
+    stp.answers[ix] = ans;
+    return ans;
+  }
+  function stepIpOptions(uid, sel) {
+    const d = R().describe(uid) || {};
     const kind = R().kindOf(uid);
-    const pool = R().nodes(kind);
-    const idx = pool.indexOf(uid);
-    if (idx < 0) return [];
-    const d = R().describe(uid);
-    return pool.slice(0, idx + 1).filter((u) => {
-      if (st[u] && st[u].status === "completed") return false;
-      const dd = R().describe(u);
-      return kind === "lessons" || kind === "exams" ? true : dd.track === d.track;
-    });
+    const pool = activeIps();
+    const opt = (i) => `<option value="${esc(i.code)}"${i.code === sel ? " selected" : ""}>${esc(i.code)}</option>`;
+    let html = `<option value=""${sel ? "" : " selected"}>—</option>`;
+    if (kind === "flights" && soloAllowed(uid)) {
+      html += `<option value="${SOLO}"${sel === SOLO ? " selected" : ""}>SOLO («ΜΟΝΟΣ»)</option>`;
+    }
+    if (d.checkride) {
+      const ev = pool.filter((i) => (i.quals || {}).evaluator);
+      const rest = pool.filter((i) => !(i.quals || {}).evaluator);
+      html += ev.map(opt).join("")
+        + (rest.length ? `<optgroup label="not evaluator-qualified — hard warning">${rest.map(opt).join("")}</optgroup>` : "");
+    } else {
+      html += pool.map(opt).join("");
+    }
+    return html;
+  }
+  function stepGndOptions(selArr) {
+    const sel = new Set(selArr || []);
+    const g = activeIps().filter((i) => (i.quals || {}).ground);
+    const rest = activeIps().filter((i) => !(i.quals || {}).ground);
+    const opt = (i) => `<option value="${esc(i.code)}"${sel.has(i.code) ? " selected" : ""}>${esc(i.code + (i.last_name ? " · " + i.last_name : ""))}</option>`;
+    return `<optgroup label="ground qualified">${g.map(opt).join("")}</optgroup>`
+      + (rest.length ? `<optgroup label="other instructors">${rest.map(opt).join("")}</optgroup>` : "");
+  }
+  function stepperBar() {
+    const stp = ui.prog.stepper;
+    const n = stp.items.length;
+    const it = stp.items[stp.ix];
+    const ans = stepAns(stp.ix);
+    const last = stp.ix === n - 1;
+    const written = stp.written.filter(Boolean).length;
+    let body;
+    if (it.type === "node") {
+      const d = R().describe(it.uid);
+      body = `<span class="sch-stepwhat">
+          <span class="sch-badge k-${esc(d.kind)}">${esc(R().KIND_SHORT[d.kind] || d.kind)}</span>
+          <span class="sch-code">${esc(d.short)}</span> <span class="sch-note">${esc(d.name)}</span>
+          ${d.checkride ? `<span class="sch-badge warn">checkride — evaluator</span>` : ""}
+          ${d.night ? `<span class="sch-badge warn">night</span>` : ""}</span>
+        <label class="sch-fld"><span>Date</span><input type="date" class="sch-in" data-sf="date" value="${esc(ans.date)}"></label>
+        <label class="sch-fld"><span>Instructor</span><select class="sch-in" data-sf="instructor">${stepIpOptions(it.uid, ans.instructor)}</select></label>`;
+    } else {
+      const d = R().describe(it.uid);
+      const P = num(ans.periods, it.remaining);
+      const shares = splitPeriods(Math.max(0, P || 0), ans.ips || []);
+      body = `<span class="sch-stepwhat">
+          <span class="sch-badge k-lessons">LSN</span>
+          <span class="sch-code">${esc(it.code)}</span> <span class="sch-note">${esc(it.name)} · group ${esc(d.label)}</span></span>
+        <label class="sch-fld"><span>Start date</span><input type="date" class="sch-in" data-sf="start" value="${esc(ans.start)}"></label>
+        <label class="sch-fld"><span>End date</span><input type="date" class="sch-in" data-sf="end" value="${esc(ans.end)}"></label>
+        <label class="sch-fld"><span>Periods (${it.remaining} remaining)</span>
+          <input type="number" min="0" class="sch-in" data-sf="periods" value="${esc(String(ans.periods))}"></label>
+        <label class="sch-fld"><span>Instructors — multi</span>
+          <select class="sch-in sch-multi" data-sf="ips" multiple size="4">${stepGndOptions(ans.ips)}</select></label>
+        <span class="sch-stepsplit sch-hint">${(ans.ips || []).length
+        ? "split: " + shares.map((s) => s.ip + " " + s.periods).join(" + ") + " = " + Math.max(0, P || 0) + " per."
+        : "pick the instructor(s) — periods split equally in integers, remainder to the last"}</span>`;
+    }
+    return `<div class="sch-pbar sch-stepper">
+      <span class="sch-lbl">Complete up to ${esc(stp.title)} — <b>step ${stp.ix + 1}/${n}</b>${written ? ` · ${written} recorded` : ""}</span>
+      ${body}
+      <span class="sch-stepbtns">
+        <button type="button" class="sch-btn" data-pb="st-back"${stp.ix === 0 ? " disabled" : ""}>‹ Back</button>
+        ${last
+        ? `<button type="button" class="sch-btn primary" data-pb="st-finish">Finish</button>`
+        : `<button type="button" class="sch-btn primary" data-pb="st-next">Next ›</button>`}
+        <button type="button" class="sch-btn" data-pb="st-cancel" title="already-written steps stay — nothing after is written">Cancel</button>
+      </span>
+    </div>`;
+  }
+  function stepWrite(it, ans, code) {
+    if (it.type === "node") {
+      const kind = R().kindOf(it.uid);
+      const solo = ans.instructor === SOLO;
+      S().upsert("trainingLog", {
+        id: "prg:" + code + ":" + it.uid, node: it.uid, kind: kind, scope: "student",
+        student: code, class: "", date: ans.date, instructor: ans.instructor || "",
+        solo: solo || undefined,
+        device: kind === "flights" ? "T-6A" : (kind === "fs" ? "OFT" : "GND"),
+        result: "completed", score: null, note: "progress editor", absent: [],
+        start_date: "", end_date: "",
+      });
+    } else {
+      const ips = (ans.ips || []).filter(Boolean);
+      const P = Math.max(0, num(ans.periods, it.remaining) || 0);
+      const shares = splitPeriods(P, ips);
+      S().upsert("trainingLog", {
+        id: "prg:" + code + ":" + it.uid + ":" + it.code,
+        node: it.uid, course: it.code, periods_done: P,
+        kind: "lessons", scope: "student", student: code, class: "",
+        date: ans.start, start_date: ans.start, end_date: ans.end || ans.start,
+        instructor: ips[0] || "",                    // first IP = compat field
+        instructors: shares.length ? shares : undefined,
+        device: "GND", result: "completed", score: null,
+        note: "progress editor", absent: [],
+      });
+    }
+  }
+  function stepAdvance(finish) {
+    const stp = ui.prog.stepper;
+    if (!stp) return;
+    const it = stp.items[stp.ix];
+    const ans = stepAns(stp.ix);
+    if (it.type === "node") {
+      if (!ans.date) { S().toast("Pick the date.", "bad"); return; }
+    } else {
+      if (!ans.start) { S().toast("Pick the start date.", "bad"); return; }
+      if (ans.end && ans.end < ans.start) { S().toast("End date before start date.", "bad"); return; }
+      if (ans.periods === "" || isNaN(Number(ans.periods)) || Number(ans.periods) < 0) { S().toast("Enter the periods covered.", "bad"); return; }
+    }
+    stepWrite(it, ans, ui.prog.code);
+    stp.written[stp.ix] = true;
+    if (finish || stp.ix === stp.items.length - 1) {
+      const n = stp.written.filter(Boolean).length;
+      ui.prog.stepper = null;
+      S().toast(n + " of " + stp.items.length + " step(s) recorded.", "good");
+      progRender();
+      return;
+    }
+    stp.ix++;
+    progRenderBody();
+  }
+  function stepCancel() {
+    const stp = ui.prog.stepper;
+    if (!stp) return;
+    const n = stp.written.filter(Boolean).length;
+    ui.prog.stepper = null;
+    S().toast(n + " of " + stp.items.length + " step(s) recorded — the rest untouched.", n ? "good" : "bad");
+    progRender();
   }
 
   function progCommit() {
@@ -2511,12 +2963,28 @@
       if (!kind) continue;
       const abs = new Set((ev.absent || []).map((a) => a.student));
       const credit = (c) => { if (!c || abs.has(c) || !sp.has(c)) return; const r = sRec(c); r[kind]++; r.total++; };
-      if (ev.scope === "class") S().membersOf(ev.class || "").forEach(credit);
-      else credit(ev.student);
-      if (ev.instructor && ip.has(ev.instructor)) {
+      /* Round 5 — multi-class events credit the union of their classes */
+      if (ev.scope === "class") {
+        const seen = new Set();
+        for (const cl of R().classesOf(ev)) {
+          for (const m of S().membersOf(cl)) if (!seen.has(m)) { seen.add(m); credit(m); }
+        }
+      } else credit(ev.student);
+      /* Round 5 — multi-IP lessons: the Ground column counts the per-IP
+         PERIOD shares from instructors[]; fallback = whole event as today */
+      const shares = kind === "lessons" && Array.isArray(ev.instructors) && ev.instructors.length
+        ? ev.instructors.filter((s) => s && s.ip && ip.has(s.ip)) : null;
+      if (shares && shares.length) {
+        for (const s of shares) {
+          const r = iRec(s.ip);
+          r.ground += Math.max(0, num(s.periods, 0));
+          r.total++;
+        }
+      } else if (ev.instructor && ip.has(ev.instructor)) {
         const r = iRec(ev.instructor);
         if (kind === "flights") r.flights++;
         else if (kind === "fs") r.fs++;
+        else if (kind === "lessons" && ev.periods_done != null) r.ground += Math.max(0, num(ev.periods_done, 0));
         else r.ground++;
         r.total++;
       }

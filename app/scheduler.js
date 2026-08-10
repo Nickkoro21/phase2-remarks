@@ -68,7 +68,7 @@
     sections: { lessons: [], exams: [], fs: [], flights: [] },
     hay: new Map(),             // uid -> search haystack
   };
-  const cache = { state: new Map(), frontier: new Map() };
+  const cache = { state: new Map(), frontier: new Map(), cov: new Map() };
 
   const num = (x) => (x === "" || x == null || isNaN(Number(x)) ? null : Number(x));
 
@@ -119,9 +119,97 @@
     breakCycles();
     for (const u of G.all) G.prereq.set(u, computePrereq(u));
     buildSections();
+    buildCourses();
     buildHay();
     return G;
   }
+
+  /* ── Round 5 · ground groups decomposed into their COURSES ──────────────
+     Source: duration_summary ("Chapter: Course name | CODE | periods · …"),
+     parsed DEFENSIVELY — segments split on " · ", fields on " | "; segments
+     without a code (OJT, Air Traffic Rules, the General-Briefing subjects)
+     get a synthesized code; "[suppl.]" segments are conditional (foreign SPs)
+     and never block the group's completion. The LABEL codes win over the
+     table codes (flags note the drift: FF 101-108 vs FF 101-107) — matched
+     by prefix/first-number/shared-token. Groups without a duration_summary
+     (WSGES · CO 109 · CO 110) fall back to ONE course = the group itself.  */
+  const GREEK2LAT = { "Α": "A", "Β": "B", "Ε": "E", "Ζ": "Z", "Η": "H", "Ι": "I", "Κ": "K", "Μ": "M", "Ν": "N", "Ο": "O", "Ρ": "P", "Τ": "T", "Υ": "Y", "Χ": "X" };
+  const normTxt = (s) => String(s == null ? "" : s).replace(/[ΑΒΕΖΗΙΚΜΝΟΡΤΥΧ]/g, (c) => GREEK2LAT[c]).replace(/\s+/g, " ").trim().toLowerCase();
+  function synthCode(name, taken) {
+    const m = /^([A-Z]{2,})\b/.exec(String(name || "").trim());
+    let base = m ? m[1]
+      : String(name || "").split(/\s+/).map((w) => (w.charAt(0) || "")).join("").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 4) || "CRS";
+    let code = base, i = 2;
+    while (taken.has(code)) code = base + "-" + (i++);
+    return code;
+  }
+  function parseGroupCourses(g) {
+    const label = String(g.label || "");
+    const parts = label.split(" · ").map((p) => ({ raw: p.trim(), norm: normTxt(p), used: false }));
+    const adopt = (codeRaw, nameRaw) => {
+      const norm = normTxt(codeRaw);
+      let hit = norm ? parts.find((p) => !p.used && p.norm === norm) : null;
+      const toks = norm.split(" ").filter(Boolean);
+      const t0 = toks[0] || "", n0 = (norm.match(/\d+/) || [""])[0];
+      const tokOk = (pt0) => pt0 === t0 || (t0 && (pt0.indexOf(t0) === 0 || t0.indexOf(pt0) === 0));
+      if (!hit && norm && norm.indexOf("-") >= 0) {
+        hit = parts.find((p) => {
+          if (p.used) return false;
+          const pt0 = p.norm.split(" ")[0] || "", pn0 = (p.norm.match(/\d+/) || [""])[0];
+          return tokOk(pt0) && n0 && pn0 === n0;
+        });
+        if (!hit) {
+          const c = parts.filter((p) => !p.used && tokOk(p.norm.split(" ")[0] || ""));
+          if (c.length === 1) hit = c[0];
+        }
+      }
+      if (!hit && norm) {          // shared distinctive token (OPR PL2 → IPR PL2)
+        const c = parts.filter((p) => !p.used && toks.some((t) => t.length >= 3 && p.norm.split(" ").indexOf(t) >= 0));
+        if (c.length === 1) hit = c[0];
+      }
+      if (!hit && !norm && nameRaw) {   // code-less segment that IS a label part (Meteo Briefing)
+        const nn = normTxt(nameRaw);
+        hit = parts.find((p) => !p.used && p.norm === nn);
+      }
+      if (hit) { hit.used = true; return hit.raw; }
+      return "";
+    };
+    const src = String(g.duration_summary || "");
+    const out = [], taken = new Set();
+    for (const seg of src.split(" · ")) {
+      const fields = seg.split("|").map((x) => x.trim()).filter((x) => x !== "");
+      if (fields.length < 2) continue;
+      const rawName = fields[0];
+      const conditional = /^\[suppl\.?\]/i.test(rawName);
+      let name = rawName.replace(/^\[suppl\.?\]\s*/i, "").replace(/^\d+\.\s*/, "");
+      const ci = name.indexOf(": ");
+      if (ci >= 0) name = name.slice(ci + 2);           // drop the chapter header
+      let codeRaw = "", periods = null;
+      if (fields.length >= 3) { codeRaw = fields[1]; periods = parseInt(fields[fields.length - 1], 10); }
+      else { periods = parseInt(fields[1], 10); }
+      if (isNaN(periods)) continue;
+      let code = adopt(codeRaw, codeRaw ? "" : name) || codeRaw || synthCode(name, taken);
+      if (taken.has(code)) code = synthCode(code, taken);
+      taken.add(code);
+      out.push({ code: code, name: name, periods: periods, conditional: conditional, group: g.id, uid: g.uid });
+    }
+    if (!out.length) {              // WSGES · CO 109 · CO 110 — one course = the group
+      out.push({ code: label || g.id, name: g.name || "", periods: g.periods == null ? 0 : g.periods, conditional: false, group: g.id, uid: g.uid });
+    }
+    return out;
+  }
+  function buildCourses() {
+    G.courses = new Map();          // lesson uid -> [course]
+    G.courseIx = new Map();         // uid + "::" + code -> course
+    for (const g of G.groups) {
+      if (G.kind.get(g.uid) !== "lessons") continue;
+      const list = parseGroupCourses(g);
+      G.courses.set(g.uid, list);
+      for (const c of list) G.courseIx.set(g.uid + "::" + c.code, c);
+    }
+  }
+  const coursesOf = (uid) => (G.courses && G.courses.get(uid) ? G.courses.get(uid).slice() : []);
+  const courseOf = (uid, code) => (G.courseIx && G.courseIx.get(uid + "::" + String(code == null ? "" : code))) || null;
 
   /* The printed flow chart draws two legitimate loops, because a ground BLOCK
      is one node here while the chart splits it around its exam:
@@ -204,6 +292,8 @@
         n.night ? "night" : "", n.checkride ? "checkride" : "",
         n.first_solo ? "first solo" : "", n.solo_candidate ? "solo candidate" : "",
       ];
+      /* Round 5 — the group's courses are searchable too */
+      for (const c of (G.courses && G.courses.get(u)) || []) bits.push(c.code, c.name);
       G.hay.set(u, bits.filter(Boolean).join(" ").toLowerCase());
     }
   }
@@ -246,10 +336,21 @@
   const evNode = (ev) => (ev && (ev.node || ev.uid)) || "";
   const evDate = (ev) => ev.end_date || ev.date || "";
 
+  /* Round 5: a class-scope event may carry SEVERAL classes — the new array
+     field `classes` UNION the legacy string field `class`; a student matches
+     if their class is the string OR in the array. */
+  function evClasses(ev) {
+    const out = [];
+    if (ev && Array.isArray(ev.classes)) for (const c of ev.classes) if (c && out.indexOf(c) < 0) out.push(c);
+    if (ev && ev.class && out.indexOf(ev.class) < 0) out.push(ev.class);
+    return out;
+  }
   function appliesTo(ev, code) {
     if (!ev || !evNode(ev)) return false;
     if (ev.scope === "student") return ev.student === code;
-    if (ev.scope === "class") return window.SchedStore.membersOf(ev.class).indexOf(code) >= 0;
+    if (ev.scope === "class") {
+      for (const c of evClasses(ev)) if (window.SchedStore.membersOf(c).indexOf(code) >= 0) return true;
+    }
     return false;
   }
   const absentIn = (ev, code) => (ev.absent || []).find((a) => a.student === code) || null;
@@ -273,10 +374,19 @@
       .filter((x) => appliesTo(x.ev, code))
       .sort((a, b) => (evDate(a.ev) < evDate(b.ev) ? -1 : evDate(a.ev) > evDate(b.ev) ? 1 : a.i - b.i));
 
+    const courseEvs = new Map();                        // Round 5: lesson uid -> [x]
     for (const x of log) {
       const ev = x.ev;
       const u = evNode(ev);
       if (!out[u]) continue;                            // node not in this graph
+      /* Round 5 — a per-COURSE lesson event never flips the group on its own:
+         the group completes when EVERY course reaches its period total (or a
+         legacy group-level event exists — the seed path, handled below). */
+      if (ev.course != null && ev.course !== "" && G.kind.get(u) === "lessons" && G.courses.has(u)) {
+        let a = courseEvs.get(u); if (!a) { a = []; courseEvs.set(u, a); }
+        a.push(x);
+        continue;
+      }
       const abs = absentIn(ev, code);
       const sc = num(ev.score);
       let status;
@@ -292,8 +402,112 @@
         instructor: ev.instructor || null, device: ev.device || null,
       };
     }
+    /* Round 5 — aggregate the course events: (a) a legacy group-level event
+       already completed the group (backward compat — never downgraded);
+       (b) full coverage of every non-conditional course completes it;
+       an absence on a course leaves it owed as a NAMED makeup. */
+    courseEvs.forEach((list, u) => {
+      if (out[u].status === "completed") return;
+      const cov = covCore(u, list, code);
+      if (cov.complete) {
+        out[u] = { status: "completed", date: cov.lastDate, eventId: cov.lastId, score: null,
+          reason: null, instructor: cov.lastIp, device: null };
+      } else if (cov.owed.length) {
+        out[u] = { status: "absent_makeup", date: cov.lastDate, eventId: cov.lastId, score: null,
+          reason: "missed course: " + cov.owed.map((c) => c.code).join(" · "), instructor: null, device: null };
+      }
+      /* partial coverage without absences → the node simply stays pending */
+    });
     cache.state.set(code, out);
     return out;
+  }
+
+  /* ── Round 5 · course coverage ──────────────────────────────────────────
+     covCore aggregates a student's course events of ONE group; done periods
+     clamp at the course total for the summaries. An absent course stays owed
+     until the student's own coverage reaches the total (a later makeup event
+     clears it). periods_done missing/blank counts as the FULL course.       */
+  function covCore(uid, list, code) {
+    const rows = (G.courses.get(uid) || []).map((c) => ({
+      code: c.code, name: c.name, periods: c.periods, conditional: c.conditional,
+      done: 0, absent: false, absentReason: "",
+    }));
+    const by = new Map(rows.map((r) => [r.code, r]));
+    let lastDate = null, lastId = null, lastIp = null;
+    for (const x of list) {
+      const ev = x.ev;
+      const r = by.get(String(ev.course));
+      if (!r) continue;                                 // unknown course code
+      if (absentIn(ev, code)) {
+        const a = absentIn(ev, code);
+        r.absent = true; r.absentReason = a.reason || "";
+        continue;
+      }
+      const p = num(ev.periods_done);
+      r.done += p == null ? r.periods : Math.max(0, p);
+      const d = evDate(ev);
+      if (lastDate == null || d >= lastDate) { lastDate = d; lastId = ev.id; lastIp = ev.instructor || null; }
+    }
+    let done = 0, total = 0, complete = true, anyReq = false;
+    const owed = [];
+    for (const r of rows) {
+      r.done = Math.min(r.done, r.periods);
+      r.complete = r.periods > 0 && r.done >= r.periods;
+      if (r.absent && r.done < r.periods) owed.push(r);
+      if (!r.conditional && r.periods > 0) {
+        anyReq = true;
+        total += r.periods;
+        done += r.done;
+        if (!r.complete) complete = false;
+      }
+    }
+    return { uid: uid, courses: rows, done: done, total: total, owed: owed,
+      complete: anyReq && complete, anyEvent: list.length > 0,
+      lastDate: lastDate, lastId: lastId, lastIp: lastIp };
+  }
+  /* per-STUDENT coverage of one lesson group (cached) */
+  function courseCoverage(code, uid) {
+    if (!G.courses || !G.courses.has(uid)) return null;
+    const key = code + "|" + uid;
+    if (cache.cov.has(key)) return cache.cov.get(key);
+    const list = [];
+    (window.SchedStore.get("trainingLog") || []).forEach((ev, i) => {
+      if (ev.course == null || ev.course === "" || evNode(ev) !== uid) return;
+      if (!appliesTo(ev, code)) return;
+      list.push({ ev: ev, i: i });
+    });
+    const cov = covCore(uid, list, code);
+    /* the legacy group-level completion (seed) shows as complete too */
+    if (!cov.complete && (state(code)[uid] || {}).status === "completed") cov.completeLegacy = true;
+    cache.cov.set(key, cov);
+    return cov;
+  }
+  /* class-pace coverage: per course the MAX over the members of the selected
+     class(es) — absences diverge per student and surface as makeups instead */
+  function classCoverage(classes, uid) {
+    if (!G.courses || !G.courses.has(uid)) return null;
+    const mem = [];
+    for (const cl of [].concat(classes || [])) {
+      for (const m of window.SchedStore.membersOf(cl || "")) if (mem.indexOf(m) < 0) mem.push(m);
+    }
+    const base = covCore(uid, [], "");                  // zeroed skeleton
+    if (!mem.length) return base;
+    let legacy = false;
+    for (const m of mem) {
+      const cov = courseCoverage(m, uid);
+      if (!cov) continue;
+      if (cov.complete || cov.completeLegacy) legacy = legacy || !!cov.completeLegacy;
+      cov.courses.forEach((r, i) => { if (r.done > base.courses[i].done) base.courses[i].done = r.done; });
+    }
+    let done = 0, complete = true, anyReq = false;
+    for (const r of base.courses) {
+      r.complete = r.periods > 0 && r.done >= r.periods;
+      if (!r.conditional && r.periods > 0) { anyReq = true; done += r.done; if (!r.complete) complete = false; }
+    }
+    base.done = done;
+    base.complete = anyReq && complete;
+    base.completeLegacy = legacy;
+    return base;
   }
   const statusOf = (code, uid) => (state(code)[uid] || { status: "pending" }).status;
 
@@ -403,6 +617,7 @@
     d.round = r;
     d.status = s.status;
     d.makeup = s.status === "absent_makeup" || s.status === "repeat";
+    d.reason = s.reason || null;                 // Round 5: names the missed course
     d.lastDate = s.date || null;
     d.missing = miss;
     d.pendingReason = miss.length
@@ -513,7 +728,7 @@
         makeups: makeups, ready: ready, due: makeups.length,
         next: ready[0] || null,
         chip: makeups.length ? KIND_SHORT[k] + " due ×" + makeups.length : null,
-        title: makeups.length ? makeups.map((m) => m.label + " (" + m.status.replace("_", " ") + ")").join(" · ") : null,
+        title: makeups.length ? makeups.map((m) => m.label + (m.reason ? " — " + m.reason : "") + " (" + m.status.replace("_", " ") + ")").join(" · ") : null,
       };
     }
     return out;
@@ -542,10 +757,15 @@
       const d = evDate(ev);
       if (!d) continue;
       if (ev.instructor) add(ev.instructor, d);
+      /* Round 5 — a multi-IP lesson (instructors[]) is activity for each IP */
+      if (Array.isArray(ev.instructors)) for (const s of ev.instructors) if (s && s.ip && s.ip !== ev.instructor) add(s.ip, d);
       if (ev.scope === "student") { if (!absentIn(ev, ev.student)) add(ev.student, d); }
       else if (ev.scope === "class") {
         const abs = new Set((ev.absent || []).map((a) => a.student));
-        for (const c of window.SchedStore.membersOf(ev.class || "")) if (!abs.has(c)) add(c, d);
+        const seen = new Set();
+        for (const cl of evClasses(ev)) {
+          for (const c of window.SchedStore.membersOf(cl)) if (!abs.has(c) && !seen.has(c)) { seen.add(c); add(c, d); }
+        }
       }
     }
     for (const r of (window.SchedStore.get("dutyRoster") || [])) {
@@ -578,7 +798,7 @@
   function todayISO() { const d = new Date(); return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10); }
 
   /* ── cache ──────────────────────────────────────────────────────────────── */
-  function invalidate() { cache.state.clear(); cache.frontier.clear(); actIdx = null; }
+  function invalidate() { cache.state.clear(); cache.frontier.clear(); cache.cov.clear(); actIdx = null; }
   const wire = () => {
     if (window.SchedStore && !window.SchedStore._readyWired) {
       window.SchedStore._readyWired = true;
@@ -601,6 +821,8 @@
     nextFor, frontier, pendingOtherKinds,
     openGates, blockFor,
     idleDays, workdaysBetween, todayISO,
+    /* Round 5 — course decomposition + coverage + multi-class events */
+    coursesOf, courseOf, courseCoverage, classCoverage, classesOf: evClasses,
     _graph: G,
   };
 })();
@@ -1289,11 +1511,36 @@
   function blankForm() {
     return {
       id: "", node: "", date: today(), start_date: "", end_date: "",
-      scope: "student", class: "", student: "", instructor: "", device: "",
+      scope: "student", class: "", classes: [], student: "", instructor: "", device: "",
       result: "completed", score: "", note: "", absent: {},
       category: "", maneuvers: "",
+      course: "", periods_done: "",             // Round 5 — per-course lessons
     };
   }
+
+  /* Round 5 — the coverage the form should show: the selected student's own,
+     or the class-pace (max over members) of the selected classes. */
+  function formAudienceCoverage(uid) {
+    const f = ui.log.form || {};
+    if (f.scope === "student" && f.student) return R().courseCoverage(f.student, uid);
+    const cls = (f.classes || []).filter(Boolean);
+    if (f.scope === "class" && cls.length) return R().classCoverage(cls, uid);
+    return null;
+  }
+  function courseRemaining(uid, code) {
+    const c = R().courseOf(uid, code);
+    if (!c) return 0;
+    const cov = formAudienceCoverage(uid);
+    if (!cov) return c.periods;
+    const row = cov.courses.find((r) => r.code === c.code);
+    return Math.max(0, c.periods - (row ? row.done : 0));
+  }
+  const covSuffix = (cov, code) => {
+    if (!cov) return "";
+    const r = cov.courses.find((x) => x.code === code);
+    if (!r) return "";
+    return " · " + r.done + "/" + r.periods + " covered" + (r.complete || cov.completeLegacy ? " ✓" : "");
+  };
 
   function renderLog() {
     const el = $id("sch-log");
@@ -1336,7 +1583,7 @@
     return (S().get("trainingLog") || []).filter((ev) => {
       if (f.student) {
         const hit = ev.scope === "student" ? ev.student === f.student
-          : S().membersOf(ev.class || "").indexOf(f.student) >= 0;
+          : R().classesOf(ev).some((c) => S().membersOf(c).indexOf(f.student) >= 0);
         if (!hit) return false;
       }
       if (f.kind && evKind(ev) !== f.kind) return false;
@@ -1349,7 +1596,8 @@
         const spd = ev.special && CQ() ? CQ().SPECIAL[ev.special] : null;
         const hay = [evNode(ev), dsc ? dsc.label : "", dsc ? dsc.name : "",
           spd ? spd.short + " " + spd.label + " special" : "", ev.category,
-          ev.instructor, ev.device, ev.note, ev.maneuvers, ev.student, ev.class]
+          ev.instructor, ev.device, ev.note, ev.maneuvers, ev.student,
+          R().classesOf(ev).join(" "), ev.course]
           .filter(Boolean).join(" ").toLowerCase();
         if (hay.indexOf(q) < 0) return false;
       }
@@ -1400,8 +1648,9 @@
       const spd = ev.special && CQ() ? CQ().SPECIAL[ev.special] : null;
       const k = evKind(ev);
       const when = ev.start_date ? esc(ev.start_date) + " → " + esc(ev.end_date || "…") : esc(ev.date || "—");
+      const evCls = R().classesOf(ev);
       const who = ev.scope === "class"
-        ? `<span class="sch-badge">class</span> ${esc(ev.class || "—")}`
+        ? `<span class="sch-badge">class${evCls.length > 1 ? " ×" + evCls.length : ""}</span> ${esc(evCls.join(" · ") || "—")}`
         : `<span class="sch-badge alt">SP</span> ${esc(ev.student || "—")}`;
       const abs = (ev.absent || []).length;
       /* PASS / LAG (YSTERISI) / FAIL (APOTYXIA) — legacy repeat renders as LAG */
@@ -1410,17 +1659,25 @@
       const res = raw === "score" ? esc(String(ev.score ?? "")) + "%"
         : esc(isFly ? (RESULT_LABEL[raw] || raw) : (raw === "repeat" ? "LAG (YSTERISI)" : raw));
       const rcls = raw === "repeat" ? "lag" : raw;
+      /* Round 5 — a per-course lesson event shows the COURSE + its periods */
+      const crs = ev.course && d ? R().courseOf(evNode(ev), ev.course) : null;
+      const per = ev.course ? (ev.periods_done != null ? ev.periods_done : (crs ? crs.periods : "")) : "";
       const nodeCell = spd
         ? `<span class="sch-code">${esc(spd.short)}</span> <span class="sch-note">${esc(spd.label)}</span>
            ${ev.category && CQ() ? `<span class="sch-badge">${esc(CQ().CAT_LABEL[ev.category] || ev.category)}</span>` : ""}`
-        : d ? `<span class="sch-code">${esc(d.short)}</span> <span class="sch-note">${esc(d.name)}</span>`
-          : `<span class="sch-warn">${esc(evNode(ev) || "—")}</span>`;
+        : ev.course && d
+          ? `<span class="sch-code">${esc(ev.course)}</span> <span class="sch-note">${esc(crs ? crs.name : d.name)}</span>
+             <span class="sch-badge" title="${esc("periods covered by this event" + (crs ? " — course total " + crs.periods : "") + " · group " + d.label)}">${esc(String(per))}${crs ? "/" + crs.periods : ""} per.</span>`
+          : d ? `<span class="sch-code">${esc(d.short)}</span> <span class="sch-note">${esc(d.name)}</span>`
+            : `<span class="sch-warn">${esc(evNode(ev) || "—")}</span>`;
+      const ipShares = Array.isArray(ev.instructors) && ev.instructors.length > 1
+        ? ` <span class="sch-badge" title="${esc(ev.instructors.map((s) => s.ip + " " + s.periods + " per.").join(" · "))}">+${ev.instructors.length - 1}</span>` : "";
       return `<tr>
         <td class="sch-mono">${when}</td>
         <td>${nodeCell}</td>
         <td><span class="sch-badge k-${esc(k || "x")}">${esc(k ? R().KIND_SHORT[k] : "?")}</span></td>
         <td>${who}</td>
-        <td class="sch-mono">${esc(ev.instructor || "—")}</td>
+        <td class="sch-mono">${esc(ev.instructor || "—")}${ipShares}</td>
         <td class="sch-mono">${esc(ev.device || "—")}</td>
         <td><span class="sch-badge r-${esc(rcls)}">${res}</span></td>
         <td>${abs ? `<span class="sch-badge warn" title="${esc((ev.absent || []).map((a) => a.student + (a.reason ? " — " + a.reason : "")).join(" · "))}">${abs} absent</span>` : "—"}</td>
@@ -1455,14 +1712,40 @@
       for (const sec of R().sections(k)) {
         const shown = sec.uids.filter((u) => hits.has(u));
         if (!shown.length) continue;
+        /* Round 5 — LESSONS decompose into their COURSES (one optgroup per
+           ground group); ground-exam groups stay whole as before. */
+        if (k === "lessons") {
+          for (const u of shown) {
+            const d = R().describe(u);
+            const courses = R().coursesOf(u);
+            if (!courses.length) continue;
+            const cov = formAudienceCoverage(u);
+            n += courses.length;
+            parts.push(`<optgroup label="${esc("Lessons · " + d.label)}">` + courses.map((c) => {
+              const val = u + "::" + c.code;
+              const sel = f.node === u && f.course === c.code;
+              const txt = c.code + " — " + c.name + " (" + c.periods + " period" + (c.periods === 1 ? "" : "s")
+                + (c.conditional ? " · foreign SPs" : "") + ")" + covSuffix(cov, c.code);
+              return `<option value="${esc(val)}"${sel ? " selected" : ""}>${esc(txt)}</option>`;
+            }).join("") + `</optgroup>`);
+          }
+          continue;
+        }
         n += shown.length;
-        const head = (k === "lessons" || k === "exams" ? R().KIND_LABEL[k] : R().KIND_SHORT[k] + " · " + sec.label);
+        const head = (k === "exams" ? R().KIND_LABEL[k] : R().KIND_SHORT[k] + " · " + sec.label);
         parts.push(`<optgroup label="${esc(head)}">` + shown.map((u) => {
           const d = R().describe(u);
           const tag = (d.checkride ? " ◆" : "") + (d.first_solo ? " ★" : (d.solo_candidate ? " ☆" : "")) + (d.night ? " ☾" : "");
           return `<option value="${esc(u)}"${f.node === u ? " selected" : ""}>${esc(d.short + tag + " — " + d.name)}</option>`;
         }).join("") + `</optgroup>`);
       }
+    }
+    /* editing a LEGACY group-level lesson event (no course): keep it selectable */
+    if (f.node && !f.course && R().kindOf(f.node) === "lessons") {
+      const d = R().describe(f.node);
+      parts.push(`<optgroup label="kept from the log — whole group (legacy)">
+        <option value="${esc(f.node)}" selected>${esc(d ? d.label + " — " + d.name : f.node)}</option></optgroup>`);
+      n += 1;
     }
     return { html: parts.join(""), n: n };
   }
@@ -1499,11 +1782,16 @@
           <label class="sch-fld wide"><span>Node <em>${sel.n} shown</em></span>
             <select class="sch-in sch-mono" id="sch-nodesel">${sel.html}</select></label>
         </div>
-        ${d ? `<p class="sch-nodeinfo"><span class="sch-code">${esc(d.label)}</span> ${esc(d.name)}
+        ${d ? `<p class="sch-nodeinfo"><span class="sch-code">${esc(isLesson && f.course ? f.course : d.label)}</span>
+          ${esc(isLesson && f.course && R().courseOf(f.node, f.course) ? R().courseOf(f.node, f.course).name : d.name)}
           <span class="sch-badge k-${esc(kind)}">${esc(R().KIND_LABEL[kind])}</span>
           <span class="sch-badge">${esc(d.trackLabel)}</span>
+          ${isLesson && f.course ? `<span class="sch-badge" title="group ${esc(d.label)}">${esc(d.label)}</span>` : ""}
           ${d.hours != null ? `<span class="sch-badge">${esc(String(d.hours).replace(".", ","))} h</span>` : ""}
-          ${d.periods != null ? `<span class="sch-badge">${esc(String(d.periods))} periods</span>` : ""}
+          ${isLesson && f.course && R().courseOf(f.node, f.course)
+        ? `<span class="sch-badge">${esc(String(R().courseOf(f.node, f.course).periods))} periods</span>
+           ${(() => { const cov = formAudienceCoverage(f.node); const sfx = covSuffix(cov, f.course); return sfx ? `<span class="sch-badge alt">${esc(sfx.replace(" · ", ""))}</span>` : ""; })()}`
+        : (d.periods != null ? `<span class="sch-badge">${esc(String(d.periods))} periods</span>` : "")}
           ${d.night ? `<span class="sch-badge warn">night</span>` : ""}
           ${d.checkride ? `<span class="sch-badge warn">checkride</span>` : ""}</p>` : ""}
         ${spDef ? `<p class="sch-nodeinfo"><span class="sch-code">${esc(spDef.short)}</span> ${esc(spDef.label)}
@@ -1515,14 +1803,21 @@
         ? `<label class="sch-fld"><span>Start date</span><input type="date" class="sch-in" data-ff="start_date" value="${esc(f.start_date || f.date)}"></label>
              <label class="sch-fld"><span>End date</span><input type="date" class="sch-in" data-ff="end_date" value="${esc(f.end_date)}"></label>`
         : `<label class="sch-fld"><span>Date</span><input type="date" class="sch-in" data-ff="date" value="${esc(f.date)}"></label>`}
+          ${isLesson && f.course ? `<label class="sch-fld"><span>Periods covered</span>
+            <input type="number" min="0" class="sch-in" data-ff="periods_done" value="${esc(f.periods_done)}"
+              title="periods of ${esc(f.course)} covered by this event — default: the remaining ${esc(String(courseRemaining(f.node, f.course)))}"></label>` : ""}
           ${spKey ? `<label class="sch-fld"><span>Scope</span><select class="sch-in" disabled><option>Student</option></select></label>`
         : `<label class="sch-fld"><span>Scope</span>
             <select class="sch-in" data-ff="scope">
               <option value="student"${f.scope === "student" ? " selected" : ""}>Student</option>
               <option value="class"${f.scope === "class" ? " selected" : ""}>Class</option></select></label>`}
           ${!spKey && f.scope === "class"
-        ? `<label class="sch-fld"><span>Class</span><select class="sch-in" data-ff="class"><option value="">—</option>
-             ${S().classList().map((c) => `<option value="${esc(c.id)}"${f.class === c.id ? " selected" : ""}>${esc(c.id)} (${c.members.length})</option>`).join("")}</select></label>`
+        ? `<span class="sch-fld wide"><span>Classes — several at once</span>
+             <span class="sch-clsmulti">${S().classList().map((c) => {
+          const on = (f.classes || []).indexOf(c.id) >= 0;
+          return `<label class="sch-clspick${on ? " is-on" : ""}"><input type="checkbox" data-fcls="${esc(c.id)}"${on ? " checked" : ""}>
+                <span>${esc(c.id)} (${c.members.length})</span></label>`;
+        }).join("") || `<em class="sch-hint">no class yet</em>`}</span></span>`
         : `<label class="sch-fld"><span>Student</span><select class="sch-in" data-ff="student"><option value="">—</option>
              ${students().map((s) => `<option value="${esc(s.code)}"${f.student === s.code ? " selected" : ""}>${esc(s.code)}${s.class ? " · " + esc(s.class) : ""}</option>`).join("")}</select></label>`}
           ${spKey ? `<label class="sch-fld"><span>Category</span><select class="sch-in" data-ff="category"><option value="">—</option>
@@ -1556,19 +1851,27 @@
       </div>`;
   }
 
+  /* Round 5 — the absent picker offers the members of EVERY selected class,
+     grouped under class headings (a student in two selected classes shows once) */
   function absentBox() {
     const f = ui.log.form;
-    if (!f.class) return `<p class="sch-hint">Pick a class first.</p>`;
-    const mem = S().membersOf(f.class);
-    if (!mem.length) return `<p class="sch-hint">This class has no members.</p>`;
-    return `<div class="sch-abs">` + mem.map((code) => {
+    const cls = (f.classes || []).filter(Boolean);
+    if (!cls.length) return `<p class="sch-hint">Pick at least one class first.</p>`;
+    const row = (code) => {
       const on = Object.prototype.hasOwnProperty.call(f.absent, code);
       return `<label class="sch-absrow${on ? " is-on" : ""}">
         <input type="checkbox" data-abs="${esc(code)}"${on ? " checked" : ""}>
         <span class="sch-code">${esc(code)}</span>
         <input type="text" class="sch-in sch-absr" data-absr="${esc(code)}" placeholder="reason"
                value="${esc(f.absent[code] || "")}"${on ? "" : " disabled"}></label>`;
-    }).join("") + `</div>`;
+    };
+    const seen = new Set();
+    return cls.map((cid) => {
+      const mem = S().membersOf(cid).filter((m) => !seen.has(m));
+      mem.forEach((m) => seen.add(m));
+      return `<div class="sch-absgrp"><div class="sch-absgrp-h">${esc(cid)} <span class="count">${mem.length}</span></div>
+        ${mem.length ? `<div class="sch-abs">${mem.map(row).join("")}</div>` : `<p class="sch-hint">no members</p>`}</div>`;
+    }).join("");
   }
 
   function wireLog(el) {
@@ -1605,15 +1908,43 @@
       const t = e.target;
       if (t.dataset.flt) { ui.log.f[t.dataset.flt] = t.value; renderLogTable(); return; }
       if (t.id === "sch-nodesel") {
-        ui.log.form.node = t.value;
-        const spk = spKeyOf(t.value);
+        const v = t.value;
+        const ci = v.indexOf("::");
+        if (ci > 0) {
+          /* Round 5 — a COURSE of a ground group: node stays the GROUP uid */
+          ui.log.form.node = v.slice(0, ci);
+          ui.log.form.course = v.slice(ci + 2);
+          ui.log.form.device = "GND";
+          ui.log.form.periods_done = String(courseRemaining(ui.log.form.node, ui.log.form.course));
+          renderForm();
+          return;
+        }
+        ui.log.form.node = v;
+        ui.log.form.course = "";
+        ui.log.form.periods_done = "";
+        const spk = spKeyOf(v);
         if (spk) {
           ui.log.form.scope = "student";
           ui.log.form.device = "T-6A";
         } else {
-          ui.log.form.device = DEVICE_BY_KIND[R().kindOf(t.value)] || ui.log.form.device;
-          if (R().kindOf(t.value) === "exams" && ui.log.form.result === "completed") ui.log.form.result = "score";
+          ui.log.form.device = DEVICE_BY_KIND[R().kindOf(v)] || ui.log.form.device;
+          if (R().kindOf(v) === "exams" && ui.log.form.result === "completed") ui.log.form.result = "score";
         }
+        renderForm();
+        return;
+      }
+      /* Round 5 — the multi-class checkboxes of a class-scope event */
+      if (t.dataset.fcls != null) {
+        const f = ui.log.form, id = t.dataset.fcls;
+        f.classes = (f.classes || []).slice();
+        const ix = f.classes.indexOf(id);
+        if (t.checked && ix < 0) f.classes.push(id);
+        else if (!t.checked && ix >= 0) f.classes.splice(ix, 1);
+        f.class = f.classes[0] || "";
+        const mem = new Set();
+        f.classes.forEach((c) => S().membersOf(c).forEach((m) => mem.add(m)));
+        for (const k of Object.keys(f.absent)) if (!mem.has(k)) delete f.absent[k];
+        if (f.course) f.periods_done = String(courseRemaining(f.node, f.course));
         renderForm();
         return;
       }
@@ -1628,7 +1959,11 @@
       }
       if (!t.dataset.ff) return;
       ui.log.form[t.dataset.ff] = t.value;
-      if (t.dataset.ff === "scope" || t.dataset.ff === "class" || t.dataset.ff === "result") renderForm();
+      /* Round 5 — a new audience changes the remaining-periods default */
+      if (t.dataset.ff === "student" && ui.log.form.course) {
+        ui.log.form.periods_done = String(courseRemaining(ui.log.form.node, ui.log.form.course));
+      }
+      if (t.dataset.ff === "scope" || t.dataset.ff === "class" || t.dataset.ff === "result" || t.dataset.ff === "student") renderForm();
     });
   }
 
@@ -1641,7 +1976,8 @@
     if (spKey && !f.student) { S().toast("A special sortie is recorded per student.", "bad"); return; }
     if (spKey && !f.category) { S().toast("Pick the category of the special sortie.", "bad"); return; }
     if (!spKey && f.scope === "student" && !f.student) { S().toast("Pick the student.", "bad"); return; }
-    if (!spKey && f.scope === "class" && !f.class) { S().toast("Pick the class.", "bad"); return; }
+    const fClasses = (f.classes || []).filter(Boolean);
+    if (!spKey && f.scope === "class" && !fClasses.length) { S().toast("Pick at least one class.", "bad"); return; }
     if (isLesson && !f.start_date && !f.date) { S().toast("A lesson block needs a start date.", "bad"); return; }
     if (!isLesson && !f.date) { S().toast("Pick the date.", "bad"); return; }
     if (f.result === "score" && f.score === "") { S().toast("Enter the score.", "bad"); return; }
@@ -1663,7 +1999,9 @@
       category: spKey ? f.category : undefined,
       scope: spKey ? "student" : f.scope,
       student: (spKey || f.scope === "student") ? f.student : "",
-      class: (!spKey && f.scope === "class") ? f.class : "",
+      /* Round 5 — classes: [] is the storage, class stays the first for compat */
+      class: (!spKey && f.scope === "class") ? (fClasses[0] || "") : "",
+      classes: (!spKey && f.scope === "class") ? fClasses.slice() : undefined,
       instructor: f.instructor || "", device: f.device || "",
       result: f.result, score: f.result === "score" ? Number(f.score) : null,
       maneuvers: isFly && (f.result === "lag" || f.result === "fail") ? (f.maneuvers || "") : "",
@@ -1675,11 +2013,17 @@
       rec.start_date = f.start_date || f.date;
       rec.end_date = f.end_date || rec.start_date;
       rec.date = rec.start_date;
+      /* Round 5 — per-course lesson event: node stays the GROUP uid */
+      if (f.course) {
+        rec.course = f.course;
+        rec.periods_done = f.periods_done === "" || isNaN(Number(f.periods_done)) ? null : Math.max(0, Number(f.periods_done));
+      }
     } else {
       rec.date = f.date; rec.start_date = ""; rec.end_date = "";
     }
     const wasEdit = !!f.id;
-    const label = spKey ? CQ().SPECIAL[spKey].label : R().label(f.node);
+    const label = spKey ? CQ().SPECIAL[spKey].label
+      : (isLesson && f.course ? f.course + " (" + R().label(f.node) + ")" : R().label(f.node));
     ui.log.form = blankForm();                       // before the store event re-renders
     S().upsert("trainingLog", rec);
     S().toast((wasEdit ? "Entry updated — " : "Entry added — ") + label + evalWarn, evalWarn ? "bad" : "good");
@@ -1693,7 +2037,11 @@
     ui.log.form = {
       id: ev.id, node: ev.special ? SP_PREFIX + ev.special : evNode(ev),
       date: ev.date || "", start_date: ev.start_date || "", end_date: ev.end_date || "",
-      scope: ev.scope || "student", class: ev.class || "", student: ev.student || "",
+      scope: ev.scope || "student", class: ev.class || "",
+      classes: ev.scope === "class" ? R().classesOf(ev) : [],
+      course: ev.course || "",
+      periods_done: ev.periods_done == null ? "" : String(ev.periods_done),
+      student: ev.student || "",
       instructor: ev.instructor || "", device: ev.device || "",
       /* migration on READ: the legacy "repeat" shows as LAG in the form */
       result: ev.result === "repeat" ? "lag" : (ev.result || "completed"),
