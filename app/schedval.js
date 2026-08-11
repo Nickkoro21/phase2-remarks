@@ -39,8 +39,97 @@
 
   const st = {
     fc: null, open: false, node: new Map(), rev: new Map(), fwd: new Map(),
-    byGroup: new Map(), groups: [], hay: new Map(), cur: "",
+    byGroup: new Map(), groups: [], hay: new Map(), cur: "", ret: null,
   };
+
+  /* ══ ΟΡΟΛΟΓΙΑ ΤΗΣ ΜΟΝΑΔΑΣ — ΜΙΑ ΠΗΓΗ ΓΙΑ ΟΛΗ ΤΗΝ ΕΦΑΡΜΟΓΗ (Round 7) ═══════
+     Η μονάδα λέει «TACTICAL navigations» τις ΔΙΘΕΣΙΕΣ (two-ship) πλοηγήσεις.
+     Η λέξη «tactical» ΔΕΝ υπάρχει ΠΟΥΘΕΝΑ στα δεδομένα γι' αυτές (μόνο στα
+     formation «Closed and Tactical»), οπότε η αναζήτηση τις έχανε.
+     ΧΑΡΤΟΓΡΑΦΗΣΗ ΟΡΟΛΟΓΙΑΣ ΜΟΝΑΔΑΣ, ΕΠΙΒΕΒΑΙΩΜΕΝΗ ΑΠΟ ΤΟΝ ΧΡΗΣΤΗ 2026-08-11.
+     Είναι η ΜΟΝΑΔΙΚΗ hardcoded λίστα uid — όλα τα υπόλοιπα συνώνυμα δουλεύουν
+     πάνω σε track / band / flags / kind, δηλαδή πάνω στα ίδια τα δεδομένα.  */
+  const TACTICAL_NAV_UIDS = [
+    "s:N4401", "s:N4402", "s:N4403", "g:N4401-03",   // Medium Level VFR Navigation (Two Ship Formation)
+    "s:N4501", "s:N4502", "s:N4503", "g:N4501-03",   // Low Level VFR Navigation (Two Ship Formation)
+  ];
+  const SYNONYMS = {
+    /* ορολογία μονάδας */
+    tactical:   { uids: TACTICAL_NAV_UIDS },
+    tacnav:     { uids: TACTICAL_NAV_UIDS },
+    tacfor:     { uids: ["g:TACFOR590"], tracks: ["formation"] },
+    twoship:    { uids: TACTICAL_NAV_UIDS, tracks: ["formation"] },
+    pair:       { uids: TACTICAL_NAV_UIDS, tracks: ["formation"] },
+    /* καθαρά data-driven: σημαίες κόμβου */
+    solo:       { flags: ["solo_candidate", "first_solo", "solo_allowed", "solo_required"] },
+    checkride:  { flags: ["checkride"] },
+    ckr:        { flags: ["checkride"] },
+    check:      { flags: ["checkride"] },
+    night:      { flags: ["night"] },
+    /* καθαρά data-driven: τροχιά / ζώνη / είδος */
+    nav:        { tracks: ["vfr_navigation"] },
+    navigation: { tracks: ["vfr_navigation"] },
+    contact:    { tracks: ["contact"] },
+    instrument: { tracks: ["instrument"] },
+    ifr:        { tracks: ["instrument"] },
+    formation:  { tracks: ["formation"] },
+    form:       { tracks: ["formation"] },
+    shared:     { tracks: ["shared"] },
+    sim:        { bands: ["fs"] },
+    simulator:  { bands: ["fs"] },
+    fs:         { bands: ["fs"] },
+    flight:     { bands: ["flights"] },
+    ground:     { bands: ["ground"] },
+    academics:  { bands: ["ground"] },
+    lesson:     { bands: ["ground"] },
+    exam:       { bands: ["exams"], kinds: ["ground_exam"] },
+  };
+  const SYN_FIELDS = ["uids", "tracks", "bands", "flags", "kinds"];
+
+  /* Πολυλεκτικοί όροι → ΕΝΑ token, ώστε να επιβιώσουν του split(/\s+/). */
+  function normQuery(q) {
+    return String(q == null ? "" : q).toLowerCase()
+      .replace(/two[\s-]*ship/g, "twoship")
+      .replace(/formation[\s-]*pair/g, "twoship")
+      .replace(/tac(?:tical)?[\s-]*nav(?:igation)?s?/g, "tacnav")
+      .replace(/tac(?:tical)?[\s-]*form(?:ation)?/g, "tacfor");
+  }
+  /* term → ενωμένη προδιαγραφή (ή null). Ταιριάζει και σε πρόθεμα («tac»,
+     «nav»), ποτέ σε όρους κάτω των 3 χαρακτήρων για να μη «μολύνει» ids.   */
+  function synSpec(term) {
+    const t = String(term == null ? "" : term).toLowerCase();
+    if (t.length < 3) return null;
+    let out = null;
+    for (const k in SYNONYMS) {
+      if (k.indexOf(t) !== 0 && t.indexOf(k) !== 0) continue;
+      const s = SYNONYMS[k];
+      out = out || { uids: [], tracks: [], bands: [], flags: [], kinds: [] };
+      for (const f of SYN_FIELDS) {
+        for (const v of (s[f] || [])) if (out[f].indexOf(v) < 0) out[f].push(v);
+      }
+    }
+    return out;
+  }
+  /* Η προδιαγραφή αποτιμημένη πάνω στους κόμβους ΑΥΤΟΥ του module. */
+  function synSet(term) {
+    const spec = synSpec(term);
+    if (!spec) return null;
+    const set = new Set();
+    for (const u of spec.uids) if (st.node.has(u)) set.add(u);
+    if (spec.tracks.length || spec.bands.length || spec.flags.length || spec.kinds.length) {
+      st.node.forEach((n, uid) => {
+        if (spec.tracks.length && spec.tracks.indexOf(trackOf(n)) < 0) return;
+        if (spec.bands.length && spec.bands.indexOf(n.band) < 0) return;
+        if (spec.kinds.length && spec.kinds.indexOf(n.kind) < 0) return;
+        if (spec.flags.length && !spec.flags.some((f) => !!n[f])) return;
+        set.add(uid);
+      });
+    }
+    return set;
+  }
+  /* Συμβόλαιο προς flowchart.js — ο πίνακας ζει ΜΟΝΟ εδώ. */
+  window.fdmsSynonym = synSpec;
+  window.fdmsNormQuery = normQuery;
   const $id = (x) => document.getElementById(x);
   const ESC = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ESC[c]);
@@ -114,9 +203,9 @@
         </div>
         <div class="sv-body">
           <div class="sv-pick">
-            <label class="sv-lbl" for="sv-flt">Filter — id, name, Training Section, track, night / solo / checkride</label>
+            <label class="sv-lbl" for="sv-flt">Filter — id, name, Training Section, track, night / solo / checkride · unit terms too (tactical, two-ship, nav)</label>
             <input type="search" class="sv-flt" id="sv-flt" autocomplete="off" spellcheck="false"
-                   placeholder="Type to filter…  e.g.  4701   ·   night   ·   I47   ·   formation">
+                   placeholder="Type to filter…  e.g.  4701   ·   night   ·   I47   ·   tactical">
             <select class="sv-sel" id="sv-sel" aria-label="Sortie"></select>
             <p class="sv-cnt" id="sv-cnt"></p>
           </div>
@@ -144,7 +233,16 @@
       }
     });
   }
-  function closeSv() { st.open = false; $id("sv-modal").classList.add("hidden"); }
+  /* Ο διάλογος είναι ΜΟΝΟ overlay: καμία αλλαγή καρτέλας ούτε στο άνοιγμα
+     ούτε στο κλείσιμο — ο χρήστης γυρίζει ακριβώς εκεί που ήταν, και η εστίαση
+     επιστρέφει στο στοιχείο που τον άνοιξε.                                 */
+  function closeSv() {
+    st.open = false;
+    $id("sv-modal").classList.add("hidden");
+    const r = st.ret;
+    st.ret = null;
+    if (r && r.focus && document.contains(r)) { try { r.focus(); } catch (e) { /* noop */ } }
+  }
 
   /* ── ΦΟΡΤΩΣΗ + ΔΕΙΚΤΗΣ ─────────────────────────────────────────────────── */
   async function loadFc() {
@@ -310,11 +408,18 @@
      στο άχυρο της εξόδου. keep = uid που κρατιέται επιλεγμένο αν επιβιώσει.  */
   function fillSelect(q, keep) {
     const sel = $id("sv-sel");
-    const terms = String(q || "").toLowerCase().split(/\s+/).filter(Boolean);
+    const raw = String(q == null ? "" : q).toLowerCase();
+    const terms = normQuery(raw).split(/\s+/).filter(Boolean);
+    /* Ένας όρος «πιάνει» είτε κυριολεκτικά στο άχυρο είτε μέσω ορολογίας. */
+    const extra = terms.map(synSet);
     const hit = (uid) => {
       if (!terms.length) return true;
       const h = st.hay.get(uid) || "";
-      for (const t of terms) if (h.indexOf(t) < 0) return false;
+      for (let i = 0; i < terms.length; i++) {
+        if (h.indexOf(terms[i]) >= 0) continue;
+        if (extra[i] && extra[i].has(uid)) continue;
+        return false;
+      }
       return true;
     };
 
@@ -467,7 +572,16 @@
      Καθαρό φίλτρο σε κάθε άνοιγμα· ο στόχος προεπιλέγεται και αποδίδεται. */
   window.openSchedVal = async (uid) => {
     ensureDom();
-    await loadFc();
+    const a = document.activeElement;
+    st.ret = a && a !== document.body && a.focus ? a : $id("tab-schedval");
+    try {
+      await loadFc();
+    } catch (e) {
+      $id("sv-grid").innerHTML = `<p class="sv-miss">flowchart2.json could not be loaded — validation is unavailable.</p>`;
+      st.open = true;
+      $id("sv-modal").classList.remove("hidden");
+      return;
+    }
     const target = resolveTarget(uid) || (st.node.has(st.cur) ? st.cur : "");
     $id("sv-flt").value = "";
     st.cur = "";
@@ -477,10 +591,12 @@
     $id("sv-flt").focus();
   };
 
-  /* Το κουμπί VALIDATE της ράγας ανοίγει ΠΡΟΦΟΡΤΩΜΕΝΟ με την τρέχουσα επιλογή
-     του flowchart (flowchart.js → window.fcSelectedUid). Καμία επιλογή = κενό. */
+  /* ROUND 7: το VALIDATE ζει στην ΚΥΡΙΑ πλοήγηση (index.html #tab-schedval),
+     δίπλα στο Scheduler, και ανοίγει από ΟΠΟΙΑΔΗΠΟΤΕ καρτέλα. Τα δεδομένα τα
+     φορτώνει ΜΟΝΟ του (loadFc) — δεν προϋποθέτει ότι άνοιξε ποτέ το Flowchart.
+     Αν υπάρχει τρέχουσα επιλογή στο flowchart, ανοίγει προφορτωμένο σε αυτήν. */
   const hook = () => {
-    const b = $id("fc-schedval-btn");
+    const b = $id("tab-schedval");
     if (b && !b._svWired) {
       b._svWired = true;
       b.onclick = () => window.openSchedVal(

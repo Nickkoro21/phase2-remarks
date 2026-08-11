@@ -44,17 +44,24 @@
     return "solid";
   }
 
-  /* ── ταξινομία ── */
+  /* ── ταξινομία ──────────────────────────────────────────────────────────
+     ROUND 7: οι ΤΕΣΣΕΡΙΣ κατηγορίες είναι οι ΜΟΝΕΣ τροχιές. Η «shared» ΔΕΝ
+     είναι πια τροχιά ούτε ζώνη: κάθε κοινό μάθημα τυπώνεται ΜΕΣΑ στη ζώνη
+     GROUND/EXAMS ΚΑΘΕ κατηγορίας που τροφοδοτεί (SHARED_FEEDS) — ένα και το
+     αυτό μάθημα, με ετικέτα SHARED, ποτέ αντίγραφο.                         */
   const TRACKS = [
     { id: "contact",        label: "Contact",        rgb: "88,176,255",  hex: "#58b0ff", tot: "contact" },
     { id: "instrument",     label: "Instrument",     rgb: "157,140,255", hex: "#9d8cff", tot: "instrument" },
     { id: "formation",      label: "Formation",      rgb: "70,209,154",  hex: "#46d19a", tot: "formation" },
     // ΠΡΟΣΟΧΗ: το totals.* κλειδί λέγεται "navigation", όχι "vfr_navigation".
     { id: "vfr_navigation", label: "VFR Navigation", rgb: "255,157,92",  hex: "#ff9d5c", tot: "navigation" },
-    { id: "shared",         label: "Shared ground",  rgb: "125,140,163", hex: "#7d8ca3", tot: null },
   ];
+  /* Ψευδο-τροχιά: ΜΟΝΟ για χρώμα/ετικέτα των κοινών μαθημάτων στα popups. */
+  const SHARED_TK = { id: "shared", label: "Shared ground", rgb: "125,140,163", hex: "#7d8ca3", tot: null };
   const TRACK_BY = {};
   for (const t of TRACKS) TRACK_BY[t.id] = t;
+  TRACK_BY.shared = SHARED_TK;
+  const RAIL_TRACKS = TRACKS.map((t) => t.id);
   const TRACK_ALIAS = { core: "shared", shared: "shared" };
 
   /* ΧΡΩΜΑ ΑΝΑ ΖΩΝΗ (single-track view). Οι τιμές ζουν στο CSS ώστε το light
@@ -82,9 +89,11 @@
   let loaded = false;
   const S = {
     lv: 0, track: null, sel: null,          // sel = uid ("g:X" / "s:X")
-    density: "rich", poster: false,
-    hiddenBands: new Set(), spot: new Set(),
-    open: new Set(),        // ανοιχτά Training Sections (group ids) — accordion ανά ζώνη
+    poster: false,
+    hiddenBands: new Set(),
+    /* ROUND 7: ΟΛΑ τα Training Sections είναι ΑΝΟΙΧΤΑ εξ ορισμού — εδώ
+       κρατιούνται ΜΟΝΟ όσα έκλεισε ρητά ο χρήστης (αντιστροφή του v5 set). */
+    collapsed: new Set(),
     rendered: new Set(),    // uids που βρίσκονται ΤΩΡΑ στο DOM της ράγας
     chev: new Set(),        // "uid>uid" ακμές που ήδη τις λέει ένα chevron
     pulsed: new Set(),
@@ -98,7 +107,12 @@
     srtOf: new Map(),     // group id  → [sortie, …] στη σειρά του διαγράμματος
     uid: new Map(),       // uid → group | sortie
     labelPart: new Map(), // τυπωμένο κουτί ("CO 101-105") → group id  (gates mapping)
+    order: new Map(),     // group id → θέση στο fc.groups (= σειρά syllabus)
   };
+  /* group id ενός κοινού μαθήματος → [κατηγορίες που τροφοδοτεί] */
+  const SHARED_FEEDS = new Map();
+  /* ποιες κατηγορίες ΟΝΤΩΣ πυλώνει (για το tooltip) — η εμφάνιση είναι σε όλες */
+  const SHARED_GATES = new Map();
   const SE = { out: new Map(), in: new Map(), all: [] };  // ΑΚΜΕΣ ΑΝΑ SORTIE (ενωμένες)
 
   const el = (id) => document.getElementById(id);
@@ -140,7 +154,7 @@
 
   /* ── δείκτης ────────────────────────────────────────────────────────────── */
   function buildIndex() {
-    for (const n of fc.nodes) { IX.byId.set(n.id, n); IX.uid.set("g:" + n.id, n); }
+    fc.nodes.forEach((n, i) => { IX.byId.set(n.id, n); IX.uid.set("g:" + n.id, n); IX.order.set(n.id, i); });
     for (const e of fc.edges) {
       if (!IX.out.has(e.from)) IX.out.set(e.from, []);
       IX.out.get(e.from).push(e);
@@ -216,6 +230,62 @@
         sub: (v.gate ? "gate exam" : "exam") + " · " + IX.byId.get(v.node).label,
       });
     });
+    buildSharedFeeds();
+  }
+
+  /* ══ ΠΟΥ ΤΥΠΩΝΕΤΑΙ ΕΝΑ ΚΟΙΝΟ ΜΑΘΗΜΑ (ROUND 7) ════════════════════════════
+     Καμία εικασία — ΜΟΝΟ τα δεδομένα του flowchart2:
+       α) άμεση ακμή (prereq · feed · ground_entry · sequence) προς κόμβο
+          κατηγορίας, σε επίπεδο group ΚΑΙ σε επίπεδο sortie·
+       β) ό,τι φτάνει ΜΕΤΑΒΑΤΙΚΑ μέσα από το ίδιο γράφημα — τα ground
+          academics είναι πύλες ΟΛΟΚΛΗΡΟΥ του σταδίου (ίδιος κανόνας με το
+          schedval.js: ground/exams κληρονομούνται από κατηγορία σε κατηγορία)·
+       γ) κόμβος χωρίς καμία ακμή (ΔΙΑΡΚΩΣ, π.χ. General Briefing) → και στις
+          τέσσερις, γιατί τρέχει σε όλο το στάδιο.                           */
+  function buildSharedFeeds() {
+    for (const g of fc.nodes) {
+      if (trackOf(g) !== "shared") continue;
+      const hit = new Set(), seen = new Set([g.id]), q = [g.id];
+      while (q.length) {
+        const cur = q.shift();
+        for (const e of (IX.out.get(cur) || [])) {
+          const to = IX.byId.get(e.to);
+          if (!to) continue;
+          if (trackOf(to) !== "shared") hit.add(trackOf(to));
+          if (!seen.has(e.to)) { seen.add(e.to); q.push(e.to); }
+        }
+        for (const m of (SE.out.get("g:" + cur) || [])) {
+          const to = node(m.to);
+          if (!to) continue;
+          if (trackOf(to) !== "shared") hit.add(trackOf(to));
+          if (!isSortieUid(m.to)) {
+            const gid = String(m.to).slice(2);
+            if (!seen.has(gid)) { seen.add(gid); q.push(gid); }
+          }
+        }
+      }
+      /* ΑΠΟΦΑΣΗ ΧΡΗΣΤΗ 2026-08-11: τα κοινά μαθήματα τυπώνονται ΚΑΙ ΣΤΙΣ
+         ΤΕΣΣΕΡΙΣ κατηγορίες — είναι κοινά ακαδημαϊκά, όχι ροή. Το ποιες
+         κατηγορίες όντως πυλώνει το λέει το tooltip (feeds), όχι η παρουσία. */
+      const list = RAIL_TRACKS.filter((t) => hit.has(t));
+      SHARED_FEEDS.set(g.id, RAIL_TRACKS.slice());
+      SHARED_GATES.set(g.id, list.length ? list : RAIL_TRACKS.slice());
+    }
+  }
+  const isShared = (n) => !!n && trackOf(n) === "shared";
+  const sharedFeeds = (n) => SHARED_FEEDS.get(n.id) || RAIL_TRACKS;
+  /* για τα tooltips: οι κατηγορίες που ΠΡΑΓΜΑΤΙΚΑ πυλώνονται από το μάθημα */
+  const sharedGates = (n) => SHARED_GATES.get(n.id) || RAIL_TRACKS;
+  /* Σε ΠΟΙΑ ράγα ζει ένας κόμβος: η τροχιά του — ή, για κοινό μάθημα, η
+     ΤΡΕΧΟΥΣΑ ράγα αν το τροφοδοτείται από αυτήν (ΠΟΤΕ αλλαγή τροχιάς). */
+  function belongsTo(n, tid) {
+    return trackOf(n) === tid || (isShared(n) && sharedFeeds(n).indexOf(tid) >= 0);
+  }
+  function homeTrack(n) {
+    if (!isShared(n)) return trackOf(n);
+    const f = sharedFeeds(n);
+    if (S.track && f.indexOf(S.track) >= 0) return S.track;
+    return f[0] || RAIL_TRACKS[0];
   }
   /* Οι ακμές ανά sortie = "edges" + "ground_chain_edges" (η δεύτερη κρατά τα
      ground→ground βέλη ΚΑΙ το μοναδικό sortie→ground: I4501 → CO 109).
@@ -393,7 +463,7 @@
     fc.edges = fc.group_edges_v1 || [];
     fc.sorties = fc.sorties || [];
     buildIndex();
-    restoreOpen();                 // Round 5: τα ανοιχτά sections της session επιστρέφουν
+    restoreCollapsed();            // Round 7: επιστρέφουν ΜΟΝΟ όσα έκλεισε ο χρήστης
     renderL0();
     wire();
     readHash();
@@ -471,41 +541,30 @@
     const skel = BANDS.map((b) => counts[b.id]
       ? `<span class="fc-skel-seg" style="flex:${counts[b.id]};background:${bandVar(b.id)}"></span>` : "").join("");
 
-    let m1, m2 = "";
-    if (tk.id === "shared") {
-      m1 = (A.periodsGround + A.periodsExam) + " periods";
-      const gates = A.exams.map((n) => n.label).join(", ");
-      const ins = A.inline.map((x) => x.ex.code).join(", ");
-      m2 = "EXAMS " + A.examCount + " (" + gates + " gate" + (ins ? " + " + ins + " in-block" : "") + ")";
-    } else {
-      m1 = "GROUND " + A.periodsGround + " per. · EXAMS " + A.examCount
+    const nShared = sharedIn(tk.id, "ground").length + sharedIn(tk.id, "exams").length;
+    const m1 = "GROUND " + A.periodsGround + " per. · EXAMS " + A.examCount
          + " (" + plural(A.exams.length, "gate", "gates")
          + (A.inline.length ? " + " + A.inline.length + " in-block" : "") + ")";
-      const fam = tk.id === "contact" ? " (+FAM " + fc.totals.fs.familiarization + ")" : "";
-      const solo = A.printedFl.solo === "- / -" ? "solo —" : A.printedFl.solo + " S";
-      m2 = "F/S " + A.printedFs + fam + " · FLIGHTS " + A.printedFl.total + " h"
+    const fam = tk.id === "contact" ? " (+FAM " + fc.totals.fs.familiarization + ")" : "";
+    const solo = A.printedFl.solo === "- / -" ? "solo —" : A.printedFl.solo + " S";
+    const m2 = "F/S " + A.printedFs + fam + " · FLIGHTS " + A.printedFl.total + " h"
          + (A.mmAir ? " " + G.info : "") + " — " + A.printedFl.dual + " D · " + solo;
-    }
 
     const chips = [];
-    if (tk.id === "shared") {
-      chips.push(`<span class="fc-b">▤ ${A.ground.length} blocks</span>`);
-      if (A.exams.length) chips.push(`<span class="fc-b fc-b-warn">▣ ${esc(A.exams.map((n) => n.label).join(" · "))}</span>`);
-    } else {
-      if (A.ckr.length) {
-        chips.push(`<span class="fc-b fc-b-ckr">${G.ckr} ${A.ckr.length} CKR${A.ckr.length === A.finals.length ? " FINAL" : ""}</span>`);
-      }
-      if (A.firstSolo.length) chips.push(`<span class="fc-b fc-b-solo-req">${G.solo} 1st SOLO</span>`);
-      if (A.soloSections.length) chips.push(`<span class="fc-b fc-b-solo">SOLO in ${A.soloSections.length} sections</span>`);
-      if (A.nights.length) chips.push(`<span class="fc-b fc-b-night">${G.night} NIGHT ×${A.nights.length}</span>`);
-      if (A.sorties) chips.push(`<span class="fc-b">${A.sorties} sorties</span>`);
+    if (A.ckr.length) {
+      chips.push(`<span class="fc-b fc-b-ckr">${G.ckr} ${A.ckr.length} CKR${A.ckr.length === A.finals.length ? " FINAL" : ""}</span>`);
     }
+    if (A.firstSolo.length) chips.push(`<span class="fc-b fc-b-solo-req">${G.solo} 1st SOLO</span>`);
+    if (A.soloSections.length) chips.push(`<span class="fc-b fc-b-solo">SOLO in ${A.soloSections.length} sections</span>`);
+    if (A.nights.length) chips.push(`<span class="fc-b fc-b-night">${G.night} NIGHT ×${A.nights.length}</span>`);
+    if (A.sorties) chips.push(`<span class="fc-b">${A.sorties} sorties</span>`);
+    if (nShared) chips.push(`<span class="fc-b fc-b-shared">+${nShared} shared</span>`);
 
     const micro = A.flights.length ? `<span class="fc-micro" aria-hidden="true">${microRail(A.flights)}</span>` : "";
-    const feedTxt = Object.keys(A.feeds).map((k) => TRACK_BY[k].label + " ×" + A.feeds[k]).join(" · ");
+    const feedTxt = Object.keys(A.feeds).map((k) => (TRACK_BY[k] || SHARED_TK).label + " ×" + A.feeds[k]).join(" · ");
     const feed = feedTxt ? `<span class="fc-tc-feed">FEEDS → ${esc(feedTxt)}</span>` : "";
 
-    return `<button type="button" class="fc-tc${tk.id === "shared" ? " is-core" : ""}" data-track="${esc(tk.id)}"
+    return `<button type="button" class="fc-tc" data-track="${esc(tk.id)}"
       style="--tk:${tk.hex};--tk-rgb:${tk.rgb}"
       aria-label="${esc(tk.label + " — " + A.all.length + " sections")}"
       title="${esc(m1 + (m2 ? " · " + m2 : ""))}">
@@ -555,13 +614,16 @@
 
   /* ══════════════════════ L1 — ΡΑΓΑ ΤΡΟΧΙΑΣ ══════════════════════ */
   function openTrack(id, keepSel) {
-    const tid = TRACK_ALIAS[id] || id;
-    if (!TRACK_BY[tid]) return;
+    let tid = TRACK_ALIAS[id] || id;
+    /* «shared» δεν ανοίγει ΠΟΤΕ δική της ράγα (παλιά deep links #fc/shared):
+       μένουμε εκεί που είμαστε, αλλιώς πάμε στην πρώτη κατηγορία.           */
+    if (tid === "shared") tid = S.track || RAIL_TRACKS[0];
+    if (RAIL_TRACKS.indexOf(tid) < 0) return;
     S.track = tid;
     if (S.lv < 1) S.lv = 1;
     if (!keepSel && S.sel) {
       const n = node(S.sel);
-      if (!n || trackOf(n) !== tid) { S.sel = null; S.lv = 1; }
+      if (!n || !belongsTo(n, tid)) { S.sel = null; S.lv = 1; }
     }
     if (S.sel) ensureOpenFor(S.sel);
     renderTrackbar();
@@ -579,11 +641,9 @@
       h += `<button type="button" class="fc-pill" data-track="${esc(t.id)}" aria-pressed="${t.id === S.track}"
         style="--tk:${t.hex};--tk-rgb:${t.rgb}">${esc(t.label)}</button>`;
     }
-    const sum = A.printedFl
-      ? "GROUND " + A.periodsGround + " per. · EXAMS " + A.examCount
+    const sum = "GROUND " + A.periodsGround + " per. · EXAMS " + A.examCount
         + " · F/S " + A.printedFs + " · FLIGHTS " + A.printedFl.total + " h · " + A.sorties + " sorties"
-        + (A.mmAir ? "  " + G.info + " " + A.mmAir : "")
-      : (A.periodsGround + A.periodsExam) + " periods · EXAMS " + A.examCount + " · feeds the flying tracks";
+        + (A.mmAir ? "  " + G.info + " " + A.mmAir : "");
     h += `<span class="fc-tb-sum">${esc(sum)}</span>`;
     el("fc-trackbar").innerHTML = h;
     el("fc-trackbar").style.setProperty("--tk", tk.hex);
@@ -597,49 +657,39 @@
       h += `<button type="button" class="fc-fbtn${on ? "" : " is-off"}" data-band="${esc(b.id)}"
         aria-pressed="${on}" style="--bc:${bandVar(b.id)}">${esc(b.label)}</button>`;
     }
-    h += `<span class="fc-fgroup-h">SPOTLIGHT</span>`;
-    const spots = [["solo", G.solo + " SOLO"], ["ckr", G.ckr + " Checkrides"], ["night", G.night + " Night"]];
-    for (const [k, lab] of spots) {
-      h += `<button type="button" class="fc-fbtn" data-spot="${k}" aria-pressed="${S.spot.has(k)}">${esc(lab)}</button>`;
-    }
     h += `<span class="fc-fgroup-h">SECTIONS</span>`
        + `<button type="button" class="fc-fbtn" data-sections="all" title="Expand every Training Section (E)">Expand all</button>`
        + `<button type="button" class="fc-fbtn" data-sections="none" title="Collapse every Training Section (X)">Collapse all</button>`;
     el("fc-filters").innerHTML = h;
   }
 
-  const spotHit = (n) => {
-    const solo = n.solo_allowed || n.solo_required || n.solo_candidate || n.first_solo;
-    if (S.spot.has("solo") && solo) return true;
-    if (S.spot.has("ckr") && n.checkride) return true;
-    if (S.spot.has("night") && n.night) return true;
-    return false;
-  };
-
-  /* ── ΑΝΟΙΓΜΑ/ΚΛΕΙΣΙΜΟ TRAINING SECTION (Round 5: TRUE MULTI-EXPAND) ──────
-     Κάθε αλυσίδα που ανοίγει ο χρήστης ΜΕΝΕΙ ανοιχτή — το κλικ σε ανοιχτό
-     section κλείνει ΜΟΝΟ εκείνο. Το σύνολο των ανοιχτών sections επιμένει
-     στο sessionStorage, ώστε η εναλλαγή tab/πίσω να μην το χάνει.           */
-  const OPEN_KEY = "p2r-fc-open";
-  function saveOpen() {
-    try { sessionStorage.setItem(OPEN_KEY, JSON.stringify(Array.from(S.open))); }
+  /* ── ΑΝΟΙΓΜΑ/ΚΛΕΙΣΙΜΟ TRAINING SECTION (ROUND 7: ΟΛΑ ΑΝΟΙΧΤΑ) ────────────
+     Καμία αλυσίδα δεν κρύβεται πια πίσω από κλικ. Στο sessionStorage
+     αποθηκεύονται ΜΟΝΟ τα sections που ο χρήστης έκλεισε ρητά — το παλιό
+     κλειδί του Round 5 («ανοιχτά») διαγράφεται σιωπηλά στο πρώτο boot.      */
+  const COLLAPSE_KEY = "p2r-fc-collapsed";
+  const LEGACY_OPEN_KEY = "p2r-fc-open";
+  const isOpen = (gid) => !S.collapsed.has(gid);
+  function saveCollapsed() {
+    try { sessionStorage.setItem(COLLAPSE_KEY, JSON.stringify(Array.from(S.collapsed))); }
     catch (e) { /* private mode */ }
   }
-  function restoreOpen() {
+  function restoreCollapsed() {
+    try { sessionStorage.removeItem(LEGACY_OPEN_KEY); } catch (e) { /* blocked */ }
     try {
-      const a = JSON.parse(sessionStorage.getItem(OPEN_KEY) || "[]");
-      if (Array.isArray(a)) for (const x of a) if (IX.byId.has(String(x))) S.open.add(String(x));
-    } catch (e) { /* corrupt/blocked storage → start closed */ }
+      const a = JSON.parse(sessionStorage.getItem(COLLAPSE_KEY) || "[]");
+      if (Array.isArray(a)) for (const x of a) if (IX.byId.has(String(x))) S.collapsed.add(String(x));
+    } catch (e) { /* corrupt/blocked storage → όλα ανοιχτά */ }
   }
   function openSection(gid) {
-    const g = IX.byId.get(gid);
-    if (!g) return;
-    S.open.add(gid);
-    saveOpen();
+    if (!IX.byId.has(gid) || !S.collapsed.has(gid)) return;
+    S.collapsed.delete(gid);
+    saveCollapsed();
   }
   function closeSection(gid) {
-    S.open.delete(gid);
-    saveOpen();
+    if (!IX.byId.has(gid) || S.collapsed.has(gid)) return;
+    S.collapsed.add(gid);
+    saveCollapsed();
   }
   function ensureOpenFor(uid) {
     if (!isSortieUid(uid)) return;
@@ -650,7 +700,7 @@
     for (const m of around) {
       const other = node(m.from === uid ? m.to : m.from);
       if (!other || !isSortieUid(other.uid)) continue;
-      if (trackOf(other) !== S.track) continue;          // άλλη τροχιά → chip στο side sheet
+      if (!belongsTo(other, S.track)) continue;          // άλλη τροχιά → chip στο side sheet
       openSection(other.group);
     }
   }
@@ -662,7 +712,7 @@
     const host = el("fc-bands");
     host.style.setProperty("--tk", tk.hex);
     host.style.setProperty("--tk-rgb", tk.rgb);
-    host.className = "fc-bands" + (S.density === "compact" ? " is-compact" : "") + (S.spot.size ? " spot" : "");
+    host.className = "fc-bands";
 
     // 1) ΠΟΙΟΙ κόμβοι μπαίνουν στο DOM — καθορίζει feed chips ΚΑΙ ακμές.
     S.rendered = new Set();
@@ -670,22 +720,20 @@
     const vis = {};
     for (const b of BANDS) {
       if (S.hiddenBands.has(b.id)) { vis[b.id] = []; continue; }
-      vis[b.id] = A[b.id].slice();
+      vis[b.id] = bandList(t, b.id, A);
       for (const n of vis[b.id]) {
         S.rendered.add("g:" + n.id);
         if (b.id === "fs" || b.id === "flights") {
-          if (S.open.has(n.id)) for (const s of srtOf(n.id)) S.rendered.add(s.uid);
+          if (isOpen(n.id)) for (const s of srtOf(n.id)) S.rendered.add(s.uid);
         }
       }
     }
-    const coreChips = (t !== "shared" && !S.hiddenBands.has("ground")) ? nodesOf("shared") : [];
-    for (const n of coreChips) S.rendered.add("g:" + n.id);
 
     // 2) HTML
     let h = "";
     for (const b of BANDS) {
       if (S.hiddenBands.has(b.id)) continue;
-      const body = bandBody(t, b, A, vis, coreChips);
+      const body = bandBody(t, b, A, vis);
       if (!body.count) continue;
       h += `<section class="fc-band" data-band="${esc(b.id)}"
               style="--bc:${bandVar(b.id)};--tk:${bandVar(b.id)};--tk-rgb:${bandRgb(b.id)}"
@@ -694,7 +742,7 @@
           <span class="fc-band-g" aria-hidden="true">${b.g}</span>
           <span class="fc-band-t">${esc(b.label)}</span>
           <span class="fc-band-n">${body.count}</span>
-          <span class="fc-band-tot">${esc(bandTot(b, A))}</span>
+          <span class="fc-band-tot">${esc(bandTot(b, A, vis[b.id]))}</span>
           ${body.phase ? phaseSrcBtn(body.phase) : ""}
         </div>${body.html}</section>`;
     }
@@ -710,9 +758,16 @@
     }
   }
 
-  function bandTot(b, A) {
-    if (b.id === "ground")  return A.periodsGround + " periods";
-    if (b.id === "exams")   return A.examCount + " exams · ≥80%";
+  /* Τα printed νούμερα της ζώνης μένουν ΤΗΣ ΤΡΟΧΙΑΣ (§0.2) — τα κοινά
+     μαθήματα προστίθενται ΞΕΧΩΡΙΣΤΑ, ώστε να μη νοθεύεται ο τυπωμένος
+     απολογισμός ούτε να χάνεται το φορτίο που όντως κάθεται στη ζώνη.      */
+  function bandTot(b, A, list) {
+    const sh = (list || []).filter(isShared);
+    if (b.id === "ground") {
+      const p = sh.reduce((s, n) => s + (n.periods || 0), 0);
+      return A.periodsGround + " periods" + (sh.length ? " · +" + p + " shared" : "");
+    }
+    if (b.id === "exams")   return A.examCount + " exams · ≥80%" + (sh.length ? " · +" + sh.length + " shared" : "");
     if (b.id === "fs")      return A.printedFs ? "F/S " + A.printedFs + (A.mmFs ? " " + G.info : "") : "—";
     if (b.id === "flights") return A.printedFl ? "FLIGHTS " + A.printedFl.total + " h" + (A.mmAir ? " " + G.info : "") : "—";
     return "";
@@ -725,119 +780,96 @@
       title="${esc(p.source.ref)}">p.${esc(String(p.source.page_pdf))}</button>`;
   }
 
-  function bandBody(t, b, A, vis, coreChips) {
+  /* ΤΙ ΜΠΑΙΝΕΙ ΣΕ ΜΙΑ ΖΩΝΗ: οι κόμβοι της τροχιάς ΚΑΙ — στις ζώνες GROUND /
+     EXAMS — τα κοινά μαθήματα που τροφοδοτούν αυτή την τροχιά, ΣΤΗ ΣΕΙΡΑ ΤΟΥ
+     SYLLABUS (θέση στο fc.groups). Καμία ταξινόμηση δική μας.               */
+  function bandList(track, band, A) {
+    const own = (A[band] || []).slice();
+    if (band !== "ground" && band !== "exams") return own;
+    const sh = sharedIn(track, band);
+    if (!sh.length) return own;
+    return own.concat(sh).sort((a, b) => (IX.order.get(a.id) || 0) - (IX.order.get(b.id) || 0));
+  }
+  function sharedIn(track, band) {
+    const out = [];
+    for (const n of fc.nodes) {
+      if (!isShared(n) || bandOf(n) !== band) continue;
+      if (sharedFeeds(n).indexOf(track) >= 0) out.push(n);
+    }
+    return out;
+  }
+
+  function bandBody(t, b, A, vis) {
     let html = "", count = 0, phase = null;
     const list = vis[b.id];
     if (list.length) phase = list[0].phase;
 
-    if (b.id === "ground") {
-      const main = t === "shared" ? list.filter((n) => !isContinuous(n)) : list;
-      count += main.length;
-      if (main.length) html += `<div class="fc-row">${chainRow(main, "is-ground")}</div>`;
-      if (t === "shared") {
-        const cont = list.filter(isContinuous);
-        if (cont.length) {
-          count += cont.length;
-          html += `<div class="fc-sub"><div class="fc-sub-h">CONTINUOUS <em>— runs throughout the phase · no box in the Training Flow Chart</em></div>
-            <div class="fc-row">${cont.map((n) => card(n, "is-ground", "end")).join("")}</div></div>`;
-        }
-      } else if (coreChips.length) {
-        html += `<div class="fc-sub"><div class="fc-sub-h">SHARED GROUND <em>— common academics · ${G.in} = feeds this track</em></div>
-          <div class="fc-row">${coreChips.map((n) => card(n, "is-core" + (feedsTrack(n, t) ? " is-feed" : ""), "end")).join("")}</div></div>`;
-      }
-
-    } else if (b.id === "exams") {
+    if (b.id === "ground" || b.id === "exams") {
       count += list.length;
-      if (list.length) html += `<div class="fc-row">${chainRow(list, "is-gate")}</div>`;
-      if (A.inline.length) {
+      if (list.length) html += staticRows(list, b.id === "ground" ? "is-ground" : "is-gate");
+      if (b.id === "exams" && A.inline.length) {
         count += A.inline.length;
         html += `<div class="fc-sub"><div class="fc-sub-h">IN-BLOCK <em>— they live inside the ground card</em></div>
           <div class="fc-row">${A.inline.map(exChip).join("")}</div></div>`;
       }
 
-    } else {   // fs · flights → ΑΝΑΔΙΠΛΩΜΕΝΕΣ ΚΑΡΤΕΣ-ΓΟΝΕΙΣ
+    } else {   // fs · flights → ΜΙΑ ΓΡΑΜΜΗ ΑΝΑ SECTION, αλυσίδα πάντα ορατή
       count += list.length;
       if (list.length) {
-        html += `<div class="fc-row fc-secrow">${sectionRow(list)}</div>`;
-        html += `<p class="fc-cap">${esc(list.reduce((s, g) => s + srtOf(g.id).length, 0))} sorties in ${list.length} Training Sections — click a section to open its sortie chain.</p>`;
+        html += `<div class="fc-vrows">${list.map(sectionRow).join("")}</div>`;
+        html += `<p class="fc-cap">${esc(String(list.reduce((s, g) => s + srtOf(g.id).length, 0)))} sorties in ${list.length} Training Sections.</p>`;
       }
     }
     return { html: html, count: count, phase: phase };
   }
 
-  function feedsTrack(coreNode, track) {
-    return (IX.out.get(coreNode.id) || []).some((e) => IX.byId.get(e.to) && trackOf(IX.byId.get(e.to)) === track)
-        || (IX.in.get(coreNode.id) || []).some((e) => IX.byId.get(e.from) && trackOf(IX.byId.get(e.from)) === track);
+  /* ── ΚΑΘΕΤΕΣ ΓΡΑΜΜΕΣ (ROUND 7) ───────────────────────────────────────────
+     Μία γραμμή ανά Training Section: στήλη ετικέτας αριστερά, ό,τι κρέμεται
+     από αυτήν ρέει δεξιά και αναδιπλώνεται. Οι ζώνες GROUND/EXAMS δεν έχουν
+     αλυσίδα — μόνο την κάρτα.                                               */
+  function staticRows(list, cls) {
+    return `<div class="fc-vrows">` + list.map((n) =>
+      `<div class="fc-vrow is-static"><div class="fc-vrow-key">${card(n, cls, "end")}</div></div>`
+    ).join("") + `</div>`;
   }
-
-  function chainRow(list, cls) {
-    return list.map((n, ix) => {
-      const next = list[ix + 1];
-      let link = "end";
-      if (next) {
-        const e = (IX.out.get(n.id) || []).find((x) => x.to === next.id);
-        if (e) { link = e.kind === "implied" ? "implied" : "seq"; S.chev.add("g:" + e.from + ">g:" + e.to); }
-        else link = "none";
-      }
-      return card(n, typeof cls === "function" ? cls(n) : (cls || ""), link);
-    }).join("");
-  }
-
-  const LINK_TITLE = {
-    seq: "chain: arrow drawn in the Training Flow Chart",
-    implied: "order inferred from box placement — no arrow drawn in the flow chart",
-    none: "no connection in the source",
-    end: "end of band",
-  };
 
   /* ── ΚΑΡΤΑ TRAINING SECTION (groups) ──────────────────────────────────────
      §3.5 Η ΚΑΡΤΑ ΚΡΑΤΑ ΜΟΝΟ: κωδικό + badges (user 2026-08-09). Όνομα/μετρικές:
      tooltip + side sheet. Τα τσιπάκια αναφοράς, τα in-block exams, οι πύλες και
      τα data notes ζουν ΟΛΑ στο popup (side sheet) — τίποτα δεν χάνεται.     */
   function card(n, cls, link, noId) {
-    const full = n.label + (n.name ? " — " + n.name : "");
-    return `<button type="button" class="fc-card ${cls}${spotHit(n) ? " is-spot" : ""}"
+    const full = n.label + (n.name ? " — " + n.name : "")
+      + (isShared(n) ? " · shared academics — the same course, printed in every category (gates: "
+          + sharedGates(n).map((k) => TRACK_BY[k].label).join(", ") + ")" : "")
+      + (isContinuous(n) ? " · runs throughout the phase — no box in the Training Flow Chart" : "");
+    return `<button type="button" class="fc-card ${cls}${isShared(n) ? " is-shared" : ""}"
       ${noId ? "" : `id="fcn-${esc(n.id)}"`} data-uid="g:${esc(n.id)}" data-n="${esc(n.id)}" data-link="${esc(link)}"
-      aria-pressed="false" aria-label="${esc(full)}"
-      title="${esc(full + " · " + (LINK_TITLE[link] || ""))}">
+      aria-pressed="false" aria-label="${esc(full)}" title="${esc(full)}">
       <span class="fc-c-top"><span class="fc-c-code">${esc(shortLabel(n))}</span>${statusChips(n)}</span>
     </button>`;
   }
 
-  /* ── ΣΕΙΡΑ ΑΠΟ TRAINING SECTIONS με σταδιακή αποκάλυψη ─────────────────────
-     Κλειστό section = μία κάρτα-γονέας. Ανοιχτό = η κάρτα ΚΑΙ, ΣΤΗ ΘΕΣΗ ΤΗΣ,
-     η αλυσίδα των sorties της (η .is-open πιάνει ολόκληρη τη γραμμή).        */
-  function sectionRow(list) {
-    return list.map((g, ix) => {
-      const next = list[ix + 1];
-      let link = "end";
-      if (next) {
-        const e = (IX.out.get(g.id) || []).find((x) => x.to === next.id);
-        if (e) { link = e.kind === "implied" ? "implied" : "seq"; S.chev.add("g:" + e.from + ">g:" + e.to); }
-        else link = "none";
-      }
-      return sectionCard(g, link);
-    }).join("");
-  }
-
-  function sectionCard(g, link) {
-    const open = S.open.has(g.id);
+  /* Ένα Training Section = μία γραμμή: [▾ collapse] [κάρτα] │ αλυσίδα sorties.
+     ΑΝΟΙΧΤΟ ΕΞ ΟΡΙΣΜΟΥ — το καρέ ▾ είναι η μόνη αφορμή για κλείσιμο και ΔΕΝ
+     ανήκει στην κάρτα, ώστε το κλικ στην κάρτα να ΕΠΙΛΕΓΕΙ (popup) πάντα.   */
+  function sectionRow(g) {
+    const open = isOpen(g.id);
     const list = srtOf(g.id);
     const full = g.label + (g.name ? " — " + g.name : "");
-    const cls = (g.checkride ? "is-ckr " : "") + "is-sec" + (spotHit(g) ? " is-spot" : "");
+    const cls = (g.checkride ? "is-ckr " : "") + "is-sec";
+    const tg = `<button type="button" class="fc-sec-tg" data-sectoggle="${esc(g.id)}"
+        aria-expanded="${open}" title="${esc(open ? "Collapse this sortie chain" : "Expand this sortie chain")}"
+        aria-label="${esc((open ? "Collapse " : "Expand ") + g.label)}">${open ? "▾" : "▸"}</button>`;
     const head = `<button type="button" class="fc-card ${cls}" id="fcn-${esc(g.id)}"
-        data-uid="g:${esc(g.id)}" data-n="${esc(g.id)}" data-sec="${esc(g.id)}" data-link="${esc(link)}"
-        aria-expanded="${open}" aria-pressed="false" aria-label="${esc(full + " — " + list.length + " sorties")}"
-        title="${esc(full + " · " + (open ? "click to collapse" : "click to open its sortie chain"))}">
-      <span class="fc-c-top">
-        <span class="fc-sec-caret" aria-hidden="true">${open ? "▾" : "▸"}</span>
-        <span class="fc-c-code">${esc(shortLabel(g))}</span>${statusChips(g)}
-      </span>
+        data-uid="g:${esc(g.id)}" data-n="${esc(g.id)}" data-link="end"
+        aria-pressed="false" aria-label="${esc(full + " — " + list.length + " sorties")}"
+        title="${esc(full)}">
+      <span class="fc-c-top"><span class="fc-c-code">${esc(shortLabel(g))}</span>${statusChips(g)}</span>
     </button>`;
-    const body = open
-      ? `<div class="fc-sec-body"><div class="fc-sec-chain">${srtChain(g, list)}</div></div>`
-      : "";
-    return `<div class="fc-sec${open ? " is-open" : ""}" data-secwrap="${esc(g.id)}">${head}${body}</div>`;
+    return `<div class="fc-vrow${open ? "" : " is-collapsed"}" data-secwrap="${esc(g.id)}">
+      <div class="fc-vrow-key">${tg}${head}</div>
+      ${open ? `<div class="fc-vrow-chain">${srtChain(g, list)}</div>` : ""}
+    </div>`;
   }
 
   /* ── ΑΛΥΣΙΔΑ SORTIES ── */
@@ -868,8 +900,7 @@
     const cls = "fc-srt"
       + (s.checkride ? " is-ckr" : "")
       + (s.first_solo ? " is-1st" : (s.solo_candidate ? " is-cand" : ""))
-      + (s.night ? " is-night" : "")
-      + (spotHit(s) ? " is-spot" : "");
+      + (s.night ? " is-night" : "");
     const ttl = srtLabel(s) + " — " + (s.name || "") + " · section " + s.group
       + (s.hours != null ? " · " + fmt(s.hours) + " h" : "");
     return `<button type="button" class="${cls}" id="fcs-${esc(s.id)}" data-uid="${esc(s.uid)}" data-s="${esc(s.id)}"
@@ -890,6 +921,11 @@
      σημειώσεις δεδομένων (το ΚΕΙΜΕΝΟ τους ζει στο popup, ενότητα DATA NOTES). */
   function statusChips(n) {
     const c = [];
+    /* ROUND 7: η ετικέτα που λέει «είναι ΤΟ ΙΔΙΟ μάθημα, όχι αντίγραφο». */
+    if (isShared(n)) {
+      c.push(`<span class="fc-b fc-b-shared" title="${esc("common academics — one and the same course, printed inside all four categories · gates: "
+        + sharedGates(n).map((k) => TRACK_BY[k].label).join(", "))}">shared</span>`);
+    }
     if (n.checkride) {
       c.push(isFinal(n)
         ? `<span class="fc-b fc-b-final">${G.fin} FINAL</span>`
@@ -939,7 +975,9 @@
   function select(uid) {
     const n = node(uid);
     if (!n) return;
-    const t = trackOf(n);
+    /* ΚΡΙΣΙΜΟ (ROUND 7): κλικ σε κοινό μάθημα ΔΕΝ αλλάζει ΠΟΤΕ τροχιά — το
+       homeTrack() κρατά την τρέχουσα ράγα όταν το μάθημα ανήκει και σε αυτήν. */
+    const t = homeTrack(n);
     if (S.poster) { S.poster = false; el("fc-poster").setAttribute("aria-pressed", "false"); }
     const needsOpen = isSortieUid(uid) && !S.rendered.has(uid);
     if (S.track !== t || needsOpen || !S.rendered.has(uid)) {
@@ -1051,6 +1089,9 @@
     if (rafId) return;
     const raf = window.requestAnimationFrame || ((f) => setTimeout(f, 16));
     rafId = raf(() => { rafId = 0; drawNow(); });
+    /* Δίχτυ ασφαλείας: σε κρυμμένο/παγωμένο tab το rAF δεν χτυπά ΠΟΤΕ και ο
+       rafId θα έμενε κολλημένος, μπλοκάροντας κάθε επόμενο redraw. */
+    setTimeout(() => { if (rafId) { rafId = 0; drawNow(); } }, 260);
   }
   function clearSvg() { const s = el("fc-svg"); if (s) while (s.firstChild) s.removeChild(s.firstChild); }
 
@@ -1087,8 +1128,13 @@
     const svg = el("fc-svg"), sc = el("fc-rail-scroll");
     if (!svg || !sc) return;
     clearSvg();
-    svg.setAttribute("width", sc.clientWidth);
-    svg.setAttribute("height", sc.scrollHeight);
+    /* Αν το layout δεν έχει γίνει ακόμη (πλάτος 0 — π.χ. πρώτο render με το
+       view μόλις που ξεκρύφτηκε), ένα SVG πλάτους 0 ΚΟΒΕΙ όλα τα βέλη:
+       αναβάλλουμε αντί να ζωγραφίσουμε στο κενό.                            */
+    const w = Math.round(sc.clientWidth || sc.getBoundingClientRect().width || 0);
+    if (!w) { setTimeout(scheduleEdges, 80); return; }
+    svg.setAttribute("width", w);
+    svg.setAttribute("height", Math.max(sc.scrollHeight, sc.clientHeight, 1));
     const n = node(uid);
     if (!n) return;
     const OUT_C = cssVar("--fcb-" + (bandOf(n) || "flights"));
@@ -1123,18 +1169,22 @@
       const a = box(m.from), b = box(m.to);
       if (!a || !b) continue;
       const outgoing = m.from === uid;
+      /* Το «μαξιλάρι» της καμπύλης ΠΟΤΕ μεγαλύτερο από το ίδιο το κενό: στην
+         κάθετη διάταξη δύο διαδοχικές γραμμές απέχουν ~8px και ένα σταθερό
+         floor 28 έφτιαχνε σγουρό ζιγκ-ζαγκ αντί για ίσιο βέλος.             */
+      const pad = (gap) => Math.max(8, Math.min(gap / 2, 90));
       let d;
       if (b.t >= a.b - 6) {                       // b κάτω από το a
-        const y1 = a.b, y2 = b.t, dd = Math.max(28, (y2 - y1) / 2);
+        const y1 = a.b, y2 = b.t, dd = pad(y2 - y1);
         d = `M ${a.cx} ${y1} C ${a.cx} ${y1 + dd}, ${b.cx} ${y2 - dd}, ${b.cx} ${y2}`;
       } else if (a.t >= b.b - 6) {                // b πάνω από το a
-        const y1 = a.t, y2 = b.b, dd = Math.max(28, (y1 - y2) / 2), off = 24;
+        const y1 = a.t, y2 = b.b, dd = pad(y1 - y2), off = 24;
         d = `M ${a.cx} ${y1} C ${a.cx - off} ${y1 - dd}, ${b.cx - off} ${y2 + dd}, ${b.cx} ${y2}`;
       } else if (b.l >= a.r - 6) {                // δίπλα-δεξιά
-        const x1 = a.r, x2 = b.l, dd = Math.max(24, (x2 - x1) / 2);
+        const x1 = a.r, x2 = b.l, dd = pad(x2 - x1);
         d = `M ${x1} ${a.cy} C ${x1 + dd} ${a.cy}, ${x2 - dd} ${b.cy}, ${x2} ${b.cy}`;
       } else {                                    // δίπλα-αριστερά ή επικάλυψη
-        const x1 = a.l, x2 = b.r, dd = Math.max(24, (x1 - x2) / 2);
+        const x1 = a.l, x2 = b.r, dd = pad(x1 - x2);
         d = `M ${x1} ${a.cy} C ${x1 - dd} ${a.cy}, ${x2 + dd} ${b.cy}, ${x2} ${b.cy}`;
       }
       const p = mk("path", {
@@ -1583,8 +1633,9 @@
     const dot = (c) => `<i style="background:${c}"></i>`;
     const gl = (g) => `<b aria-hidden="true">${g}</b>`;
     let h = `<h4 class="fc-h4">SHAPE = MEANING</h4>`;
-    h += row(gl(G.sec), "training section (parent card — click to open its sortie chain)")
-       + row(gl("▸▾"), "section collapsed / expanded")
+    h += row(gl(G.sec), "training section (parent card — its sortie chain is always shown on the same row)")
+       + row(gl("▾▸"), "the small caret button collapses / re-expands one section’s chain")
+       + row(gl("▤"), "“shared” tag — common academics: ONE course, printed inside every category it feeds")
        + row(gl(G.exam), "ground exam (gate)")
        + row(gl(G.ckr), "checkride sortie")
        + row(gl(G.fin), "FINAL evaluation (last one of the category)")
@@ -1601,6 +1652,7 @@
     for (const b of BANDS) h += row(dot(bandVar(b.id)), b.label + " — " + b.sub);
     h += `<h4 class="fc-h4">TRACKS — the colour of the “All tracks” dashboard</h4>`;
     for (const t of TRACKS) h += row(dot(t.hex), t.label);
+    h += row(dot(SHARED_TK.hex), SHARED_TK.label + " — no track of its own: every shared course is printed inside each category it feeds");
     h += `<h4 class="fc-h4">STATUS</h4>`
        + row(dot("#5fe0a8"), "candidate SOLO — green frame")
        + row(dot("#ffd166"), "1st SOLO / evaluation")
@@ -1635,29 +1687,58 @@
   }
 
   /* ══════════════════════ ΑΝΑΖΗΤΗΣΗ ══════════════════════ */
+  /* ── ΣΥΝΩΝΥΜΑ ΤΗΣ ΜΟΝΑΔΑΣ (ROUND 7) ─────────────────────────────────────
+     Το λεξιλόγιο της μονάδας δεν είναι πάντα το λεξιλόγιο του syllabus. Ο
+     πίνακας ζει ΜΙΑ φορά, στο schedval.js (window.fdmsSynonym) — εδώ απλώς
+     μεταφράζεται σε σύνολο uid πάνω στα ίδια τα δεδομένα του flowchart.
+     Χωρίς schedval.js η αναζήτηση δουλεύει ακριβώς όπως πριν.              */
+  function synUids(term) {
+    const set = new Set();
+    const spec = (typeof window.fdmsSynonym === "function" && window.fdmsSynonym(term)) || null;
+    if (!spec) return set;
+    for (const u of (spec.uids || [])) if (IX.uid.has(u)) set.add(u);
+    const tr = spec.tracks || [], bd = spec.bands || [], fl = spec.flags || [], kd = spec.kinds || [];
+    if (!tr.length && !bd.length && !fl.length && !kd.length) return set;
+    const scan = (n, uid) => {
+      if (tr.length && tr.indexOf(trackOf(n)) < 0) return;
+      if (bd.length && bd.indexOf(bandOf(n)) < 0) return;
+      if (kd.length && kd.indexOf(n.kind) < 0) return;
+      if (fl.length && !fl.some((f) => !!n[f])) return;
+      set.add(uid);
+    };
+    for (const n of fc.nodes) scan(n, "g:" + n.id);
+    for (const s of fc.sorties) scan(s, s.uid);
+    return set;
+  }
+
   let qTimer = 0;
+  const SUG_MAX = 10, SUG_SYN_MAX = 8;
   function search(q) {
     const box = el("fc-sug");
     const s = String(q || "").trim().toLowerCase();
     if (!s) { box.classList.add("hidden"); S.sug = []; S.sugIx = -1; return; }
-    const seen = new Set(), hits = [];
+    const norm = typeof window.fdmsNormQuery === "function" ? window.fdmsNormQuery(s) : s;
+    const extra = synUids(norm);
+    /* Πρώτα τα κυριολεκτικά ευρήματα, μετά όσα προσθέτει η ορολογία — αλλιώς
+       το πλαφόν θα έκοβε ακριβώς αυτά που ο χρήστης δεν μπορεί να βρει. */
+    const seen = new Set(), lit = [], syn = [];
     for (const e of IX.search) {
-      if (e.hay.indexOf(s) < 0) continue;
       const k = e.uid + "|" + e.code;
       if (seen.has(k)) continue;
-      seen.add(k);
-      hits.push(e);
-      if (hits.length >= 10) break;
+      const isLit = e.hay.indexOf(s) >= 0 || (norm !== s && e.hay.indexOf(norm) >= 0);
+      if (isLit) { if (lit.length >= SUG_MAX) continue; seen.add(k); lit.push(e); }
+      else if (extra.has(e.uid)) { if (syn.length >= SUG_SYN_MAX) continue; seen.add(k); syn.push({ uid: e.uid, code: e.code, sub: e.sub, syn: true }); }
     }
+    const hits = lit.concat(syn);
     S.sug = hits; S.sugIx = hits.length ? 0 : -1;
     box.innerHTML = hits.length
       ? hits.map((e, i) => {
           const n = node(e.uid);
-          const tk = TRACK_BY[trackOf(n || {})] || TRACK_BY.shared;
+          const tk = TRACK_BY[trackOf(n || {})] || SHARED_TK;
           return `<button type="button" class="fc-sug-item${i === 0 ? " is-on" : ""}" data-jump="${esc(e.uid)}" data-ix="${i}">
             <span class="fc-sug-dot" style="background:${tk.hex}"></span>
             <span class="fc-sug-code">${esc(e.code)}</span>
-            <span class="fc-sug-sub">${esc(e.sub)}</span></button>`;
+            <span class="fc-sug-sub">${esc(e.sub + (e.syn ? " · unit term" : ""))}</span></button>`;
         }).join("")
       : `<p class="fc-sug-empty">No results.</p>`;
     box.classList.remove("hidden");
@@ -1754,23 +1835,18 @@
     if (!m) return;
     if (m[1] === "poster") { setPoster(true); return; }
     const tid = TRACK_ALIAS[m[1]] || m[1];
-    if (tid && TRACK_BY[tid]) {
-      const u = m[2] ? normUid(m[2]) : null;
-      if (u && node(u)) { S.sel = u; ensureOpenFor(u); openTrack(tid, true); }
-      else openTrack(tid);
-    }
+    if (!tid || !TRACK_BY[tid]) return;
+    /* «shared» ΔΕΝ είναι ράγα (παλιά deep links) → null και το αναλαμβάνει ο
+       κόμβος. Γενικά: ο κόμβος ορίζει τη ράγα, όχι το url, ώστε ασύμφωνα
+       ζεύγη τροχιάς/κόμβου να προσγειώνονται εκεί που ΟΝΤΩΣ ζει ο κόμβος.  */
+    const rail = RAIL_TRACKS.indexOf(tid) >= 0 ? tid : null;
+    const u = m[2] ? normUid(m[2]) : null;
+    const n = u ? node(u) : null;
+    if (n) { S.sel = u; ensureOpenFor(u); openTrack(rail && belongsTo(n, rail) ? rail : homeTrack(n), true); }
+    else openTrack(rail || S.track || RAIL_TRACKS[0]);
   }
 
   /* ══════════════════════ ΔΙΑΚΟΠΤΕΣ ══════════════════════ */
-  function setDensity(d) {
-    S.density = d;
-    const b = el("fc-density");
-    b.textContent = d === "compact" ? "COMPACT" : "RICH";
-    b.setAttribute("aria-pressed", d === "compact" ? "true" : "false");
-    if (S.track) renderBands();
-    if (S.sel) applySelection();
-    scheduleEdges();
-  }
   function setPoster(on) {
     S.poster = on;
     el("fc-poster").setAttribute("aria-pressed", on ? "true" : "false");
@@ -1785,12 +1861,12 @@
   }
   function setAllSections(on) {
     if (!S.track) return;
-    S.open = new Set();
-    if (on) {
+    if (on) S.collapsed = new Set();
+    else {
       const A = agg(S.track);
-      for (const g of A.fs.concat(A.flights)) S.open.add(g.id);
+      for (const g of A.fs.concat(A.flights)) S.collapsed.add(g.id);
     }
-    saveOpen();
+    saveCollapsed();
     renderBands();
     if (S.sel && S.rendered.has(S.sel)) applySelection(); else clearSelection();
     scheduleEdges();
@@ -1859,12 +1935,19 @@
       }
       const sa = t.closest("[data-sections]");
       if (sa) { setAllSections(sa.dataset.sections === "all"); return; }
-      const sp = t.closest("[data-spot]");
-      if (sp) {
-        const k = sp.dataset.spot;
-        if (S.spot.has(k)) S.spot.delete(k); else S.spot.add(k);
-        renderFilters(); renderBands();
-        if (S.sel && S.rendered.has(S.sel)) applySelection();
+
+      /* Το ΜΟΝΟ σημείο που κλείνει/ανοίγει αλυσίδα — ποτέ η ίδια η κάρτα. */
+      const tg = t.closest("[data-sectoggle]");
+      if (tg) {
+        ev.stopPropagation();
+        const gid = tg.dataset.sectoggle;
+        if (S.collapsed.has(gid)) openSection(gid); else closeSection(gid);
+        const lost = S.collapsed.has(gid) && S.sel && isSortieUid(S.sel)
+          && node(S.sel) && node(S.sel).group === gid;
+        renderBands();
+        if (lost) clearSelection();
+        else if (S.sel && S.rendered.has(S.sel)) applySelection();
+        scheduleEdges();
         return;
       }
 
@@ -1874,28 +1957,7 @@
       const cardEl = t.closest(".fc-card");   // ΟΧΙ «card» — σκιάζει τη συνάρτηση card()
       if (cardEl) {
         ev.stopPropagation();
-        const gid = cardEl.dataset.sec;
-        if (gid) {                            // κάρτα-γονέας F/S ή FLIGHTS
-          if (S.open.has(gid)) {
-            /* Round 5: toggle-close κλείνει ΜΟΝΟ το πατημένο section */
-            closeSection(gid);
-            const wasInside = S.sel && (S.sel === "g:" + gid
-              || (isSortieUid(S.sel) && node(S.sel) && node(S.sel).group === gid));
-            renderBands();
-            if (wasInside) clearSelection();
-            else if (S.sel && S.rendered.has(S.sel)) applySelection();
-            scheduleEdges();
-          } else {
-            openSection(gid);                 // προσθετικό — τα ήδη ανοιχτά μένουν
-            S.sel = "g:" + gid;
-            S.lv = 2;
-            renderBands();
-            applySelection();
-            render();
-          }
-          return;
-        }
-        select(cardEl.dataset.uid);
+        select(cardEl.dataset.uid);           // ΠΑΝΤΑ επιλογή — ποτέ expand/collapse
         return;
       }
 
@@ -1903,7 +1965,6 @@
       const go = t.closest("[data-go]");
       if (go) { go.dataset.go === "l0" ? goL0() : clearSelection(); return; }
       if (t.id === "fc-back") { goL0(); return; }
-      if (t.id === "fc-density") { setDensity(S.density === "rich" ? "compact" : "rich"); return; }
       if (t.id === "fc-poster") { setPoster(!S.poster); return; }
       if (t.id === "fc-legend-btn") { toggleLegend(); return; }
 
@@ -1958,11 +2019,10 @@
       if (S.sel) clearSelection(); else if (S.lv === 1) goL0();
       return;
     }
-    if (k >= "1" && k <= "5") { ev.preventDefault(); openTrack(TRACKS[+k - 1].id); return; }
+    if (k >= "1" && k <= String(TRACKS.length)) { ev.preventDefault(); openTrack(TRACKS[+k - 1].id); return; }
     if (k === "0") { ev.preventDefault(); goL0(); return; }
     if (k === "l" || k === "L" || k === "λ" || k === "Λ") { toggleLegend(); return; }
     if (k === "p" || k === "P" || k === "π" || k === "Π") { setPoster(!S.poster); return; }
-    if (k === "c" || k === "C" || k === "ψ" || k === "Ψ") { setDensity(S.density === "rich" ? "compact" : "rich"); return; }
     if (S.poster || S.lv === 0) return;
     if (k === "e" || k === "E" || k === "ε" || k === "Ε") { setAllSections(true); return; }
     if (k === "x" || k === "X" || k === "χ" || k === "Χ") { setAllSections(false); return; }
