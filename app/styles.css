@@ -1,30 +1,192 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   PALETTE CATALOGUE  (Round 8)
+   ──────────────────────────────────────────────────────────────────────────
+   Theming is data-driven: <html data-theme="<id>" data-mode="light|dark">.
+   The catalogue lives in TWO adjacent places and nowhere else:
+     · this section  — one CSS block per palette (the token values)
+     · app.js        — const PALETTES (id · label · mode · description · card
+                       swatches), immediately above the gallery popover.
+   ADDING A PALETTE = copy one block below + one entry in PALETTES. Nothing
+   else in the app knows about themes.
+
+   A palette block sets ONLY the raw tokens listed below; everything else is
+   derived once in :root (hex from the rgb triples, tints from --tint), so a
+   colour can never fall out of sync with its own rgba() tint.
+
+     surfaces  --bg --bg-2 --panel --panel-2 --surface --chart-bg --top-bg
+     ink       --text --muted --line
+     brand     --accent-rgb  --on-accent
+     semantic  --good-rgb --warn-rgb --bad-rgb --hf-rgb
+     signal    --gold-rgb --on-gold          (evaluation / 1st SOLO marker)
+     zones     --fcb-{ground,exams,fs,flights}-rgb   (flowchart bands)
+
+   Mode-scoped defaults (categorical identity colours that stay stable across
+   palettes so a track is always recognisable: --tk-* and --mc-*) plus --tint
+   / --hover / --veil / --shadow live in the two blocks after the contract; a
+   palette may override any of them.
+
+   CONTRAST CONTRACT — every palette is verified (tools: throwaway checker):
+   text ≥ 4.5:1 on bg/panel/panel-2/surface/chart, muted ≥ 3:1, every semantic
+   and zone colour ≥ 4.5:1 both on the plain surfaces and on its own tint, and
+   --on-accent / --on-gold ≥ 4.5:1 on their fills. Measured worst case across
+   the eight palettes: 4.53:1.
+   ══════════════════════════════════════════════════════════════════════════ */
+
 :root {
-  --bg: #0e1420;
-  --panel: #16202f;
-  --panel-2: #1c2a3d;
-  --line: #29405c;
-  --text: #e8eef6;
-  --muted: #93a7bd;
-  --accent: #58b0ff;
-  --accent-soft: rgba(88, 176, 255, 0.14);
-  --good: #46d19a;
-  --warn: #ffb454;
-  --bad: #ff7a70;
-  --hf: #c792ea;
+  /* ── derived tokens — NEVER set these in a palette block ── */
+  --accent: rgb(var(--accent-rgb));
+  --good: rgb(var(--good-rgb));
+  --warn: rgb(var(--warn-rgb));
+  --bad: rgb(var(--bad-rgb));
+  --hf: rgb(var(--hf-rgb));
+  --gold: rgb(var(--gold-rgb));
+  --accent-soft: rgba(var(--accent-rgb), var(--tint));
+  /* Phase II flowchart — ΧΡΩΜΑ ΑΝΑ ΖΩΝΗ (single-track view) */
+  --fcb-ground: rgb(var(--fcb-ground-rgb));
+  --fcb-exams: rgb(var(--fcb-exams-rgb));
+  --fcb-fs: rgb(var(--fcb-fs-rgb));
+  --fcb-flights: rgb(var(--fcb-flights-rgb));
+  /* flowchart status channel = the semantic colours, so a palette tunes both
+     at once (candidate SOLO = good · night = bad · evaluation = gold). */
+  --solo: var(--good);   --solo-rgb: var(--good-rgb);
+  --night: var(--bad);   --night-rgb: var(--bad-rgb);
   --radius: 10px;
-  /* Phase II flowchart — ΧΡΩΜΑ ΑΝΑ ΖΩΝΗ (single-track view).
-     Οι τιμές του dark theme είναι αυτές που ζήτησε ο χρήστης· το html.light
-     πιο κάτω τις σκουραίνει ώστε να διαβάζονται πάνω σε λευκό.            */
-  --fcb-ground: #7d8ca3;  --fcb-ground-rgb: 125, 140, 163;
-  --fcb-exams: #ffb454;   --fcb-exams-rgb: 255, 180, 84;
-  --fcb-fs: #3fd0c9;      --fcb-fs-rgb: 63, 208, 201;
-  --fcb-flights: #58b0ff; --fcb-flights-rgb: 88, 176, 255;
   font-size: 15px;
+
+  /* ── dark-mode defaults (overridden by html[data-mode="light"] below) ── */
+  --tint: 0.14;
+  --hover: rgba(255, 255, 255, 0.06);
+  --veil: rgba(4, 9, 16, 0.72);
+  --shadow: rgba(0, 0, 0, 0.5);
+  /* categorical identity — the four tracks (flowchart.js ships them as literal
+     hexes; the remap block further down rewrites those to these tokens). */
+  --tk-contact-rgb: 88, 176, 255;
+  --tk-instrument-rgb: 157, 140, 255;
+  --tk-formation-rgb: 70, 209, 154;
+  --tk-nav-rgb: 255, 157, 92;
+  --tk-shared-rgb: 125, 140, 163;
+  /* categorical identity — MIF chart series (mifchart.js PALETTE, remapped) */
+  --mc-1: #58b0ff; --mc-2: #46d19a; --mc-3: #ffb454; --mc-4: #c792ea;
+  --mc-5: #ff7a70; --mc-6: #3fd0c9; --mc-7: #ffd166; --mc-8: #9d8cff;
 }
+
+html[data-mode="light"] {
+  --tint: 0.10;
+  --hover: rgba(0, 0, 0, 0.05);
+  --veil: rgba(26, 39, 51, 0.42);
+  --shadow: rgba(20, 35, 55, 0.20);
+  --tk-contact-rgb: 21, 94, 166;
+  --tk-instrument-rgb: 82, 61, 168;
+  --tk-formation-rgb: 12, 107, 69;
+  --tk-nav-rgb: 145, 71, 24;
+  --tk-shared-rgb: 71, 89, 111;
+  --mc-1: #155ea6; --mc-2: #0c6b45; --mc-3: #7c5104; --mc-4: #63409f;
+  --mc-5: #a83228; --mc-6: #0a6b66; --mc-7: #8a6a12; --mc-8: #523da8;
+}
+
+/* Obsidian — DARK · the original night deck: cool navy graphite, sky-blue
+   accent. Also the pre-JS default (:root) so the first paint never flashes. */
+:root,
+html[data-theme="obsidian"] {
+  --bg: #0e1420; --bg-2: #0b111b; --panel: #16202f; --panel-2: #1c2a3d; --surface: #1c2a3d;
+  --line: #29405c; --text: #e8eef6; --muted: #93a7bd; --chart-bg: #0b111b; --top-bg: #0e1420;
+  --accent-rgb: 88, 176, 255; --good-rgb: 70, 209, 154; --warn-rgb: 255, 180, 84;
+  --bad-rgb: 255, 122, 112; --hf-rgb: 199, 146, 234; --gold-rgb: 255, 209, 102;
+  --on-accent: #06121f; --on-gold: #06121f;
+  --fcb-ground-rgb: 141, 156, 179; --fcb-exams-rgb: 255, 180, 84;
+  --fcb-fs-rgb: 63, 208, 201; --fcb-flights-rgb: 88, 176, 255;
+}
+
+/* Slate — LIGHT · daylight briefing room: cool grey paper, deep blue accent. */
+html[data-theme="slate"] {
+  --bg: #eef2f7; --bg-2: #e4ebf3; --panel: #ffffff; --panel-2: #f0f4f9; --surface: #ffffff;
+  --line: #c3d0de; --text: #1a2733; --muted: #57687a; --chart-bg: #f7f9fc; --top-bg: #ffffff;
+  --accent-rgb: 27, 95, 166; --good-rgb: 15, 115, 80; --warn-rgb: 143, 85, 16;
+  --bad-rgb: 173, 51, 39; --hf-rgb: 99, 64, 159; --gold-rgb: 124, 81, 4;
+  --on-accent: #ffffff; --on-gold: #ffffff;
+  --fcb-ground-rgb: 71, 89, 111; --fcb-exams-rgb: 138, 87, 9;
+  --fcb-fs-rgb: 10, 107, 102; --fcb-flights-rgb: 21, 94, 166;
+}
+
+/* Summit — LIGHT · alpine white with a steel-blue edge, print-like clarity. */
+html[data-theme="summit"] {
+  --bg: #f6f8fa; --bg-2: #eaeef3; --panel: #ffffff; --panel-2: #eef2f6; --surface: #ffffff;
+  --line: #ccd6e0; --text: #16202a; --muted: #556575; --chart-bg: #f2f5f8; --top-bg: #ffffff;
+  --accent-rgb: 35, 93, 140; --good-rgb: 15, 107, 79; --warn-rgb: 133, 84, 16;
+  --bad-rgb: 165, 50, 40; --hf-rgb: 91, 64, 147; --gold-rgb: 116, 76, 5;
+  --on-accent: #ffffff; --on-gold: #ffffff;
+  --fcb-ground-rgb: 73, 88, 104; --fcb-exams-rgb: 127, 82, 10;
+  --fcb-fs-rgb: 13, 97, 105; --fcb-flights-rgb: 35, 93, 140;
+}
+
+/* Ridgeline — LIGHT · warm green tint, moss accent, low-fatigue daylight.
+   The accent occupies the "good" hue, so --good is pushed to emerald-teal:
+   inside a palette a semantic colour must never be mistaken for the accent. */
+html[data-theme="ridgeline"] {
+  --bg: #f2f5ee; --bg-2: #e8eee0; --panel: #fcfdfa; --panel-2: #edf2e6; --surface: #ffffff;
+  --line: #c8d3bd; --text: #1b2318; --muted: #54614c; --chart-bg: #f4f7ef; --top-bg: #fbfcf8;
+  /* --good pushed to a blue-teal (Δhue ~74° from the sage accent): the Round-8
+     audit measured only ΔE 17 between accent and good, too close for a status. */
+  --accent-rgb: 61, 100, 53; --good-rgb: 0, 112, 110; --warn-rgb: 132, 84, 10;
+  --bad-rgb: 165, 49, 37; --hf-rgb: 96, 61, 149; --gold-rgb: 111, 77, 8;
+  --on-accent: #ffffff; --on-gold: #ffffff;
+  --fcb-ground-rgb: 83, 93, 74; --fcb-exams-rgb: 127, 80, 9;
+  --fcb-fs-rgb: 26, 88, 101; --fcb-flights-rgb: 40, 89, 138;
+}
+
+/* Mesa — LIGHT · sand and ivory, terracotta accent, desert-strip warmth.
+   Terracotta sits between amber and red, so the alarms move away from it:
+   --warn to ochre-yellow (Δhue 31°) and --bad to wine-crimson (Δhue 39°). */
+html[data-theme="mesa"] {
+  --bg: #f7f2e9; --bg-2: #efe7d8; --panel: #fffdf8; --panel-2: #f3ece0; --surface: #ffffff;
+  --line: #d8c9b3; --text: #241b12; --muted: #6a5a48; --chart-bg: #faf6ee; --top-bg: #fffdf8;
+  --accent-rgb: 150, 67, 31; --good-rgb: 15, 98, 71; --warn-rgb: 109, 90, 0;
+  --bad-rgb: 147, 18, 63; --hf-rgb: 88, 58, 146; --gold-rgb: 111, 79, 6;
+  --on-accent: #ffffff; --on-gold: #ffffff;
+  --fcb-ground-rgb: 94, 81, 64; --fcb-exams-rgb: 109, 90, 0;
+  --fcb-fs-rgb: 18, 95, 95; --fcb-flights-rgb: 30, 87, 137;
+}
+
+/* Tidal — DARK · deep navy water, ice-cyan accent, night ops. */
+html[data-theme="tidal"] {
+  --bg: #081727; --bg-2: #05101d; --panel: #0f2439; --panel-2: #163149; --surface: #163149;
+  --line: #25496b; --text: #e6f1fb; --muted: #94b1cc; --chart-bg: #05101d; --top-bg: #081727;
+  --accent-rgb: 99, 211, 236; --good-rgb: 75, 214, 160; --warn-rgb: 255, 190, 92;
+  --bad-rgb: 255, 138, 128; --hf-rgb: 180, 164, 255; --gold-rgb: 255, 209, 102;
+  --on-accent: #04141c; --on-gold: #04141c;
+  --fcb-ground-rgb: 129, 153, 177; --fcb-exams-rgb: 255, 190, 92;
+  --fcb-fs-rgb: 72, 204, 196; --fcb-flights-rgb: 111, 180, 255;
+}
+
+/* Wilderness — DARK · olive field kit, brass-gold accent, dispersal at dusk.
+   The accent is gold, so the two gold-family signals separate by luminance:
+   brass accent (L 0.52) vs pale-straw --gold (L 0.78); --warn is pushed to a
+   vivid orange so an amber warning can never read as an accent chip. */
+html[data-theme="wilderness"] {
+  --bg: #151a12; --bg-2: #10140e; --panel: #1d2318; --panel-2: #252d1f; --surface: #252d1f;
+  --line: #414c34; --text: #eef2e6; --muted: #a4b092; --chart-bg: #10140e; --top-bg: #151a12;
+  --accent-rgb: 216, 187, 82; --good-rgb: 142, 207, 98; --warn-rgb: 255, 143, 51;
+  --bad-rgb: 255, 133, 122; --hf-rgb: 199, 155, 240; --gold-rgb: 255, 231, 163;
+  --on-accent: #141a0c; --on-gold: #141a0c;
+  --fcb-ground-rgb: 152, 164, 135; --fcb-exams-rgb: 255, 143, 51;
+  --fcb-fs-rgb: 84, 207, 174; --fcb-flights-rgb: 127, 184, 232;
+}
+
+/* Aegean — DARK · squadron colours: blue-black sea, white-blue accent. */
+html[data-theme="aegean"] {
+  --bg: #060d1a; --bg-2: #03070f; --panel: #0d1726; --panel-2: #132135; --surface: #132135;
+  --line: #25395a; --text: #eef4ff; --muted: #9cb2ce; --chart-bg: #03070f; --top-bg: #060d1a;
+  --accent-rgb: 168, 212, 255; --good-rgb: 84, 218, 166; --warn-rgb: 255, 196, 107;
+  --bad-rgb: 255, 143, 134; --hf-rgb: 195, 168, 255; --gold-rgb: 255, 217, 128;
+  --on-accent: #041020; --on-gold: #041020;
+  --fcb-ground-rgb: 131, 152, 178; --fcb-exams-rgb: 255, 196, 107;
+  --fcb-fs-rgb: 74, 216, 206; --fcb-flights-rgb: 95, 169, 242;
+}
+/* ══ end of the palette catalogue ═════════════════════════════════════════ */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
   font-family: "Segoe UI", system-ui, sans-serif;
-  background: linear-gradient(180deg, #0b111b 0%, var(--bg) 40%);
+  background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 40%);
   color: var(--text);
   min-height: 100vh;
   display: flex;
@@ -35,7 +197,7 @@ body {
 .topbar {
   display: flex; align-items: center; justify-content: space-between;
   padding: 14px 22px; border-bottom: 1px solid var(--line);
-  background: rgba(14, 20, 32, 0.9); position: sticky; top: 0; z-index: 10;
+  background: var(--top-bg); position: sticky; top: 0; z-index: 10;
 }
 .brand { display: flex; gap: 12px; align-items: center; }
 .brand-icon { font-size: 26px; color: var(--accent); }
@@ -63,7 +225,7 @@ body {
 .step {
   display: inline-flex; width: 22px; height: 22px; margin-right: 6px;
   align-items: center; justify-content: center;
-  background: var(--accent); color: #06121f; border-radius: 50%;
+  background: var(--accent); color: var(--on-accent); border-radius: 50%;
   font-size: 12px; font-weight: 700;
 }
 .hint { color: var(--muted); font-size: 13px; line-height: 1.5; }
@@ -113,7 +275,7 @@ body {
   font-family: Consolas, monospace; font-size: 15px; cursor: pointer;
 }
 .chip:hover:not(:disabled) { border-color: var(--accent); }
-.chip.active { background: var(--accent); color: #06121f; font-weight: 700; border-color: var(--accent); }
+.chip.active { background: var(--accent); color: var(--on-accent); font-weight: 700; border-color: var(--accent); }
 .chip:disabled { opacity: 0.3; cursor: not-allowed; }
 .hidden { display: none; }
 
@@ -146,7 +308,7 @@ body {
 .credit {
   border-top: 1px solid var(--line); padding: 12px 22px; text-align: center;
   color: var(--muted); font-size: 12.5px; letter-spacing: 0.3px;
-  background: rgba(14, 20, 32, 0.9);
+  background: var(--top-bg);
 }
 .credit strong { color: var(--text); }
 .credit .coffee { filter: saturate(1.4); }
@@ -159,14 +321,14 @@ body {
 }
 .info-btn:hover { border-color: var(--accent); background: var(--accent-soft); }
 .modal {
-  position: fixed; inset: 0; background: rgba(5, 10, 18, 0.72);
+  position: fixed; inset: 0; background: var(--veil);
   display: flex; align-items: center; justify-content: center; z-index: 50;
 }
 .modal.hidden { display: none; }
 .modal-box {
   background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
   width: min(860px, 94vw); max-height: 86vh; display: flex; flex-direction: column;
-  box-shadow: 0 18px 60px rgba(0,0,0,0.5);
+  box-shadow: 0 18px 60px var(--shadow);
 }
 .modal-head {
   display: flex; align-items: center; justify-content: space-between;
@@ -276,7 +438,7 @@ body {
 .fc-sug {
   position: absolute; top: calc(100% + 5px); right: 0; width: 340px; max-width: 88vw; z-index: 40;
   background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 5px;
-  box-shadow: 0 16px 44px rgba(0,0,0,0.55); max-height: 320px; overflow-y: auto;
+  box-shadow: 0 16px 44px var(--shadow); max-height: 320px; overflow-y: auto;
 }
 .fc-sug-item {
   display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; cursor: pointer;
@@ -309,7 +471,7 @@ body {
 .fc-gate {
   font-size: 12.5px; color: var(--muted); line-height: 1.5;
   border-left: 3px solid var(--warn); border-radius: 8px;
-  background: rgba(255, 180, 84, 0.06); padding: 8px 12px;
+  background: rgba(var(--warn-rgb), 0.07); padding: 8px 12px;
 }
 .fc-gate .fc-gate-g { color: var(--warn); margin-right: 6px; }
 
@@ -336,23 +498,23 @@ body {
 .fc-tc-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; }
 .fc-micro { display: flex; align-items: center; gap: 3px; margin-top: 9px; flex-wrap: wrap; }
 .fc-micro-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(var(--tk-rgb), 0.75); flex: 0 0 auto; }
-.fc-micro-dot.is-solo { background: transparent; border: 1.5px solid #ffd166; }
-.fc-micro-dot.is-solo-req { background: #ffd166; box-shadow: 0 0 0 2px rgba(255, 209, 102, 0.28); }
-.fc-micro-dot.is-ckr { width: 8px; height: 8px; border-radius: 1px; background: #ffd166; transform: rotate(45deg); }
-.fc-micro-dot.is-night { background: #ff7a70; }
+.fc-micro-dot.is-solo { background: transparent; border: 1.5px solid var(--gold); }
+.fc-micro-dot.is-solo-req { background: var(--gold); box-shadow: 0 0 0 2px rgba(var(--gold-rgb), 0.28); }
+.fc-micro-dot.is-ckr { width: 8px; height: 8px; border-radius: 1px; background: var(--gold); transform: rotate(45deg); }
+.fc-micro-dot.is-night { background: var(--night); }
 .fc-micro-line { height: 1px; flex: 1 1 4px; min-width: 4px; background: rgba(var(--tk-rgb), 0.35); }
 .fc-tc-feed { display: block; margin-top: 9px; font-size: 11px; color: var(--muted); }
 
-.fc-spine { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: rgba(11, 17, 27, 0.45); }
+.fc-spine { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: var(--chart-bg); }
 .fc-spine-h { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.9px; color: var(--muted); margin-right: 4px; }
 .fc-gate-pill {
   display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-family: inherit;
-  background: rgba(255, 209, 102, 0.07); border: 1px solid rgba(255, 209, 102, 0.35);
+  background: rgba(var(--gold-rgb), 0.08); border: 1px solid rgba(var(--gold-rgb), 0.35);
   border-radius: 8px; padding: 5px 10px; color: var(--text);
 }
-.fc-gate-pill:hover { border-color: #ffd166; background: rgba(255, 209, 102, 0.16); }
+.fc-gate-pill:hover { border-color: var(--gold); background: rgba(var(--gold-rgb), 0.16); }
 .fc-gate-pill .fc-gp-code { font-family: Consolas, monospace; font-size: 12px; font-weight: 700; color: var(--tk); }
-.fc-gate-pill .fc-gp-d { color: #ffd166; }
+.fc-gate-pill .fc-gp-d { color: var(--gold); }
 .fc-spine-sep { color: var(--muted); font-size: 12px; opacity: 0.55; }
 
 /* ── L1 — track rail ── */
@@ -387,7 +549,7 @@ body {
 
 .fc-rail-scroll {
   grid-column: 1; grid-row: 3; position: relative; overflow-y: auto; overflow-x: hidden;
-  border: 1px solid var(--line); border-radius: var(--radius); background: rgba(11, 17, 27, 0.55);
+  border: 1px solid var(--line); border-radius: var(--radius); background: var(--chart-bg);
 }
 /* Round 7: οι ακμές περνούν ΠΙΣΩ από τις κάρτες (z-index 0) — στην κάθετη
    διάταξη μια γραμμή μπορεί να διασχίσει ενδιάμεσες γραμμές και δεν πρέπει
@@ -451,10 +613,10 @@ body {
 .fc-srt-code { font-family: Consolas, monospace; font-size: 12px; font-weight: 700; color: var(--tk); white-space: nowrap; }
 .fc-srt-b { display: inline-flex; gap: 3px; }
 .fc-srt-h { font-family: Consolas, monospace; font-size: 10px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.fc-srt.is-ckr { border-color: #ffd166; box-shadow: inset 0 0 0 1px rgba(255, 209, 102, 0.45); }
-.fc-srt.is-cand { border-color: #5fe0a8; box-shadow: inset 0 0 0 1px rgba(95, 224, 168, 0.5); }
-.fc-srt.is-1st { border-color: #ffd166; box-shadow: 0 0 0 1px #ffd166; }
-.fc-srt.is-night .fc-srt-code { color: #ff7a70; }
+.fc-srt.is-ckr { border-color: var(--gold); box-shadow: inset 0 0 0 1px rgba(var(--gold-rgb), 0.45); }
+.fc-srt.is-cand { border-color: var(--solo); box-shadow: inset 0 0 0 1px rgba(var(--solo-rgb), 0.5); }
+.fc-srt.is-1st { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold); }
+.fc-srt.is-night .fc-srt-code { color: var(--night); }
 .fc-srt.fc-sel { outline: 2px solid var(--tk); box-shadow: 0 0 0 1px var(--tk), 0 0 22px -8px var(--tk); }
 .fc-srt.fc-dim { opacity: 0.4; }
 .fc-srt-link { color: var(--muted); font-size: 12px; opacity: 0.65; }
@@ -482,8 +644,8 @@ body {
 .fc-card.is-last::after, .fc-card[data-link="end"]::after { content: none; }
 .fc-card[data-link="implied"]::after { content: "⋯›"; opacity: 0.4; font-size: 13px; margin-top: -8px; right: 3px; }
 .fc-card[data-link="none"]::after { content: "·"; opacity: 0.22; }
-.fc-card.is-ckr { width: 130px; box-shadow: inset 0 0 0 1px rgba(255, 209, 102, 0.55); }
-.fc-card.is-gate { width: 152px; box-shadow: inset 0 0 0 1px rgba(255, 180, 84, 0.5); }
+.fc-card.is-ckr { width: 130px; box-shadow: inset 0 0 0 1px rgba(var(--gold-rgb), 0.55); }
+.fc-card.is-gate { width: 152px; box-shadow: inset 0 0 0 1px rgba(var(--warn-rgb), 0.5); }
 .fc-card.is-ground { width: 208px; }
 /* κοινό μάθημα: ΤΟ ΙΔΙΟ μάθημα μέσα σε κάθε κατηγορία — διακριτικό, ποτέ ξένο */
 .fc-card.is-shared { border-left-style: dashed; background: rgba(var(--tk-rgb), 0.04); }
@@ -505,11 +667,11 @@ body {
   padding: 1px 6px; border-radius: 999px; border: 1px solid var(--line);
   color: var(--muted); vertical-align: middle;
 }
-.fc-b-ckr { color: #ffd166; border-color: #ffd166; }
-.fc-b-final { color: #06121f; background: #ffd166; border-color: #ffd166; }
-.fc-b-solo { color: #5fe0a8; border-color: #5fe0a8; }
-.fc-b-solo-req { color: #06121f; background: #ffd166; border-color: #ffd166; }
-.fc-b-night { color: #ff7a70; border-color: #ff7a70; }
+.fc-b-ckr { color: var(--gold); border-color: var(--gold); }
+.fc-b-final { color: var(--on-gold); background: var(--gold); border-color: var(--gold); }
+.fc-b-solo { color: var(--solo); border-color: var(--solo); }
+.fc-b-solo-req { color: var(--on-gold); background: var(--gold); border-color: var(--gold); }
+.fc-b-night { color: var(--night); border-color: var(--night); }
 .fc-b-warn { color: var(--warn); border-color: var(--warn); }
 .fc-b-shared { color: var(--fcb-ground); border-color: var(--fcb-ground); border-style: dashed; text-transform: uppercase; }
 .fc-feed {
@@ -517,7 +679,7 @@ body {
   border: 1px dashed var(--fk, var(--line)); color: var(--fk, var(--muted));
   border-radius: 4px; padding: 0 5px; cursor: pointer; background: transparent;
 }
-.fc-feed:hover { background: rgba(255, 255, 255, 0.06); }
+.fc-feed:hover { background: var(--hover); }
 /* IN-BLOCK EXAM — ίδιο λιτό λεξιλόγιο με την κάρτα (κωδικός · όνομα · μετρικές).
    Οι πύλες του («gates …») ζουν στο popup του ground κόμβου που το φιλοξενεί. */
 .fc-exchip {
@@ -550,10 +712,10 @@ body {
   border: 1px solid var(--line); background: transparent; color: var(--text); padding: 2px 7px;
 }
 .fc-sortie:hover { border-color: var(--accent); }
-.fc-sortie.is-cand { border-color: #5fe0a8; color: #5fe0a8; }
-.fc-sortie.is-1st { border-color: #ffd166; background: #ffd166; color: #06121f; font-weight: 700; }
-.fc-sortie.is-ckr { border-color: #ffd166; color: #ffd166; }
-.fc-sortie.is-night { border-color: #ff7a70; color: #ff7a70; }
+.fc-sortie.is-cand { border-color: var(--solo); color: var(--solo); }
+.fc-sortie.is-1st { border-color: var(--gold); background: var(--gold); color: var(--on-gold); font-weight: 700; }
+.fc-sortie.is-ckr { border-color: var(--gold); color: var(--gold); }
+.fc-sortie.is-night { border-color: var(--night); color: var(--night); }
 .fc-sortie.copied { border-color: var(--good); color: var(--good); }
 .fc-cap { font-size: 11px; color: var(--muted); margin-top: 5px; }
 .fc-step { display: flex; gap: 6px; margin-top: 12px; }
@@ -593,17 +755,17 @@ body {
 .fc-poster {
   display: grid; grid-template-columns: repeat(7, minmax(190px, 1fr)); gap: 12px;
   overflow: auto; flex: 1; min-height: 0; padding: 14px; align-items: start;
-  border: 1px solid var(--line); border-radius: var(--radius); background: rgba(11, 17, 27, 0.55);
+  border: 1px solid var(--line); border-radius: var(--radius); background: var(--chart-bg);
 }
 .fc-pcol { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .fc-pcol-h { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; color: var(--text); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 7px 9px; }
 .fc-pcol .fc-card { width: 100%; }
-.fc-drawer { position: fixed; inset: 0; background: rgba(5, 10, 18, 0.72); display: flex; align-items: center; justify-content: center; z-index: 60; padding: 20px; }
-.fc-drawer-box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; width: min(760px, 96vw); max-height: 84vh; display: flex; flex-direction: column; box-shadow: 0 18px 60px rgba(0,0,0,0.5); }
+.fc-drawer { position: fixed; inset: 0; background: var(--veil); display: flex; align-items: center; justify-content: center; z-index: 60; padding: 20px; }
+.fc-drawer-box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; width: min(760px, 96vw); max-height: 84vh; display: flex; flex-direction: column; box-shadow: 0 18px 60px var(--shadow); }
 .fc-drawer-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
 .fc-drawer-head h3 { font-size: 15px; }
 .fc-drawer-body { padding: 12px 16px 18px; overflow-y: auto; }
-.fc-pop { position: fixed; right: 22px; top: 92px; width: min(430px, 92vw); max-height: 74vh; overflow-y: auto; z-index: 55; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; box-shadow: 0 18px 54px rgba(0,0,0,0.55); }
+.fc-pop { position: fixed; right: 22px; top: 92px; width: min(430px, 92vw); max-height: 74vh; overflow-y: auto; z-index: 55; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; box-shadow: 0 18px 54px var(--shadow); }
 .fc-leg { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); margin-bottom: 5px; }
 .fc-leg i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; flex: 0 0 auto; }
 .fc-leg b { font-family: Consolas, monospace; color: var(--text); width: 18px; display: inline-block; text-align: center; flex: 0 0 auto; }
@@ -613,7 +775,7 @@ body {
 
 @keyframes fcIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 @keyframes fcSheet { from { opacity: 0; transform: translateX(8px); } to { opacity: 1; transform: none; } }
-@keyframes fcPulse { from { box-shadow: 0 0 0 0 rgba(255, 209, 102, 0.75); } to { box-shadow: 0 0 0 12px rgba(255, 209, 102, 0); } }
+@keyframes fcPulse { from { box-shadow: 0 0 0 0 rgba(var(--gold-rgb), 0.75); } to { box-shadow: 0 0 0 12px rgba(var(--gold-rgb), 0); } }
 @keyframes fcEdge { from { opacity: 0; } to { opacity: 0.9; } }
 
 @media (max-width: 1040px) {
@@ -621,7 +783,7 @@ body {
   .fc-detail {
     position: fixed; left: 0; right: 0; bottom: 0; grid-column: 1; grid-row: 3;
     max-height: 58vh; border-radius: 12px 12px 0 0; z-index: 30;
-    box-shadow: 0 -14px 44px rgba(0,0,0,0.55);
+    box-shadow: 0 -14px 44px var(--shadow);
   }
   .fc-poster { grid-template-columns: repeat(4, minmax(180px, 1fr)); }
 }
@@ -715,7 +877,7 @@ body {
   border-radius: 7px; padding: 5px 12px; font-size: 12.5px; font-family: inherit; cursor: pointer;
 }
 .sch-btn:hover { border-color: var(--accent); }
-.sch-btn.primary { background: var(--accent); color: #06121f; border-color: var(--accent); font-weight: 700; }
+.sch-btn.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); font-weight: 700; }
 .sch-mini {
   background: transparent; border: 1px solid transparent; color: var(--muted);
   border-radius: 6px; padding: 2px 6px; font-size: 13px; cursor: pointer; line-height: 1.2;
@@ -796,7 +958,7 @@ body {
   position: fixed; left: 50%; bottom: 26px; transform: translate(-50%, 18px);
   background: var(--panel); border: 1px solid var(--line); border-radius: 9px;
   padding: 8px 16px; font-size: 12.5px; color: var(--text); z-index: 70;
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45); opacity: 0; pointer-events: none;
+  box-shadow: 0 14px 40px var(--shadow); opacity: 0; pointer-events: none;
   transition: opacity 0.18s, transform 0.18s;
 }
 .sch-toast.is-on { opacity: 1; transform: translate(-50%, 0); }
@@ -813,58 +975,12 @@ body {
 }
 @media (prefers-reduced-motion: reduce) { .sch-toast { transition: none; } }
 
-/* ── Light theme ── */
-html.light {
-  --bg: #eef2f7; --panel: #ffffff; --panel-2: #f0f4f9; --line: #c3d0de;
-  --text: #1a2733; --muted: #57687a; --accent: #1f6fbf; --accent-soft: rgba(31,111,191,0.12);
-  --good: #14855c; --warn: #a96410; --bad: #bb4034; --hf: #6d46b4;
-  /* Ίδιες αποχρώσεις ζωνών, σκουρότερες ώστε να διαβάζονται πάνω σε λευκό. */
-  --fcb-ground: #4d5f76;  --fcb-ground-rgb: 77, 95, 118;
-  --fcb-exams: #96600a;   --fcb-exams-rgb: 150, 96, 10;
-  --fcb-fs: #0c7a74;      --fcb-fs-rgb: 12, 122, 116;
-  --fcb-flights: #1668b8; --fcb-flights-rgb: 22, 104, 184;
-}
-html.light body { background: linear-gradient(180deg, #e4ebf3 0%, var(--bg) 40%); }
-html.light .topbar, html.light .credit { background: rgba(255,255,255,0.92); }
-html.light .fc-wrap, html.light .mc-svg-wrap { background: rgba(255,255,255,0.65); }
-html.light .chip.active, html.light .step { color: #ffffff; }
-html.light .fc-rail-scroll, html.light .fc-spine { background: rgba(255, 255, 255, 0.6); }
-html.light .fc-feed:hover { background: rgba(0, 0, 0, 0.05); }
-html.light .fc-q, html.light .fc-tbtn, html.light .fc-sug { background: #ffffff; }
-/* STATUS σε light theme: τα ίδια σήματα, σε αποχρώσεις που διαβάζονται σε λευκό.
-   Τα γεμάτα badges (1st SOLO / FINAL) μένουν ως έχουν — σκούρο σε χρυσό.      */
-html.light .fc-b-ckr { color: #8a5b05; border-color: #b9820f; }
-html.light .fc-b-solo { color: #0f7a55; border-color: #169268; }
-html.light .fc-b-night { color: #b53a30; border-color: #cc5348; }
-html.light .fc-sortie.is-cand, html.light .fc-srt.is-cand { border-color: #169268; color: #0f7a55; }
-html.light .fc-sortie.is-ckr, html.light .fc-srt.is-ckr { border-color: #b9820f; color: #8a5b05; }
-html.light .fc-sortie.is-night { border-color: #cc5348; color: #b53a30; }
-html.light .fc-srt.is-night .fc-srt-code { color: #b53a30; }
-html.light .fc-micro-dot.is-solo { border-color: #b9820f; }
-html.light .fc-micro-dot.is-night { background: #cc5348; }
-/* Ό,τι μετακόμισε στο popup: πηγές, σημειώσεις, σχέσεις — σε λευκό φόντο. */
-html.light .fc-src { background: rgba(0, 0, 0, 0.03); }
-html.light .fc-exchip { background: #ffffff; }
-html.light .fc-rel-off { color: var(--muted); }
-
-/* ── Scheduler in light theme ──
-   Same signals, tuned so that they read on white: white input/table surfaces,
-   a solid accent on the primary button, softer shadows. */
-html.light .sch-tbtn, html.light .sch-in, html.light .sch-btn,
-html.light .sch-av, html.light .sch-absrow { background: #ffffff; }
-html.light .sch-tbl th { background: #ffffff; }
-html.light .sch-tbl tbody tr:hover { background: var(--panel-2); }
-html.light .sch-clscard, html.light .sch-ph { background: var(--panel-2); }
-html.light .sch-btn.primary { color: #ffffff; }
-html.light .sch-toast { box-shadow: 0 14px 34px rgba(20, 35, 55, 0.18); }
-html.light .sch-av.av-available { opacity: 0.85; }
-html.light .sch-no { opacity: 0.35; }
 
 /* ══════════════════════════════════════════════════════════════════════════
    Scheduler — PHASE B (schedboard.js): the D+1 board, the progress editor,
-   Balance and the print view. Same tokens as the rest of the app, so both
-   themes follow automatically; only the surfaces that must read on white get
-   an html.light override at the end of the block.
+   Balance and the print view. Same tokens as the rest of the app, so every
+   palette follows automatically; only the surfaces that must sit on paper in
+   a light palette are listed once in the MODE LAYER at the end of the file.
    ══════════════════════════════════════════════════════════════════════════ */
 .sch-spacer { flex: 1 1 auto; }
 .sch-setup .sch-fgrid { align-items: flex-end; }
@@ -918,7 +1034,7 @@ html.light .sch-no { opacity: 0.35; }
 .sch-ltimes { font-size: 11px; color: var(--muted); padding: 4px 0; display: block; }
 .sch-lact { display: inline-flex; gap: 3px; align-self: flex-end; padding-bottom: 2px; }
 .sch-in.is-bad { border-color: var(--bad); }
-.sch-in.is-amber { border-color: var(--warn); background: rgba(255, 180, 84, 0.08); }
+.sch-in.is-amber { border-color: var(--warn); background: rgba(var(--warn-rgb), 0.08); }
 .sch-in option.cond { font-style: italic; }
 
 .sch-lwarn { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 5px; }
@@ -928,8 +1044,8 @@ html.light .sch-no { opacity: 0.35; }
   font-style: normal; font-family: Consolas, monospace; font-size: 9.5px; opacity: 0.85;
   margin-left: 6px; padding-left: 6px; border-left: 1px solid currentColor;
 }
-.sch-wc.is-soft { color: var(--warn); border-color: var(--warn); background: rgba(255, 180, 84, 0.09); }
-.sch-wc.is-hard { color: var(--bad); border-color: var(--bad); background: rgba(255, 122, 112, 0.11); font-weight: 600; }
+.sch-wc.is-soft { color: var(--warn); border-color: var(--warn); background: rgba(var(--warn-rgb), 0.09); }
+.sch-wc.is-hard { color: var(--bad); border-color: var(--bad); background: rgba(var(--bad-rgb), 0.11); font-weight: 600; }
 .sch-line:has(.sch-wc.is-soft) { border-left-color: var(--warn); }
 .sch-line:has(.sch-wc.is-hard) { border-left-color: var(--bad); }
 .sch-cond { font-size: 11px; color: var(--muted); font-style: italic; margin-top: 4px; }
@@ -973,20 +1089,20 @@ html.light .sch-no { opacity: 0.35; }
 .sch-actrow .grow { flex: 1 1 180px; }
 .sch-actbtns { display: inline-flex; gap: 3px; }
 .sch-mini.is-on { font-weight: 700; }
-.sch-mini.is-on.good { color: var(--good); border-color: var(--good); background: rgba(70, 209, 154, 0.14); }
-.sch-mini.is-on.danger { color: var(--bad); border-color: var(--bad); background: rgba(255, 122, 112, 0.14); }
-.sch-mini.is-on.warn { color: var(--warn); border-color: var(--warn); background: rgba(255, 180, 84, 0.14); }
+.sch-mini.is-on.good { color: var(--good); border-color: var(--good); background: rgba(var(--good-rgb), var(--tint)); }
+.sch-mini.is-on.danger { color: var(--bad); border-color: var(--bad); background: rgba(var(--bad-rgb), var(--tint)); }
+.sch-mini.is-on.warn { color: var(--warn); border-color: var(--warn); background: rgba(var(--warn-rgb), var(--tint)); }
 
 /* ── progress editor ─────────────────────────────────────────────────────── */
 .sch-modal {
-  position: fixed; inset: 0; z-index: 80; background: rgba(4, 9, 16, 0.72);
+  position: fixed; inset: 0; z-index: 80; background: var(--veil);
   display: flex; align-items: center; justify-content: center; padding: 20px;
 }
 .sch-modal.hidden { display: none; }
 .sch-modalbox {
   background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
   width: min(1180px, 100%); max-height: 88vh; display: flex; flex-direction: column;
-  padding: 12px 14px; box-shadow: 0 26px 70px rgba(0, 0, 0, 0.55);
+  padding: 12px 14px; box-shadow: 0 26px 70px var(--shadow);
 }
 .sch-modalbody { overflow: auto; padding-right: 4px; }
 .sch-psec { margin-bottom: 12px; }
@@ -1090,18 +1206,6 @@ html.light .sch-no { opacity: 0.35; }
   .sch-modalbox { padding: 10px; }
 }
 
-/* ── Phase B in light theme ── */
-html.light .sch-line, html.light .sch-mixcell, html.light .sch-nsc,
-html.light .sch-kpi, html.light .sch-pnode, html.light .sch-psechdr { background: #ffffff; }
-html.light .sch-modal { background: rgba(26, 39, 51, 0.42); }
-html.light .sch-modalbox { box-shadow: 0 26px 60px rgba(20, 35, 55, 0.22); }
-html.light .sch-wc.is-soft { background: rgba(169, 100, 16, 0.10); }
-html.light .sch-wc.is-hard { background: rgba(187, 64, 52, 0.10); }
-html.light .sch-mini.is-on.good { background: rgba(20, 133, 92, 0.13); }
-html.light .sch-mini.is-on.danger { background: rgba(187, 64, 52, 0.13); }
-html.light .sch-in.is-amber { background: rgba(169, 100, 16, 0.07); }
-html.light .sch-loggrp td { background: #ffffff; }
-html.light .sch-mini.is-on.warn { background: rgba(169, 100, 16, 0.13); }
 
 /* ── Round 2 — failure recording & consequence engine (spec §3α) ─────────── */
 .sch-badge.r-lag { color: var(--warn); border-color: var(--warn); }
@@ -1114,14 +1218,14 @@ html.light .sch-mini.is-on.warn { background: rgba(169, 100, 16, 0.13); }
   border: 1px solid var(--line); border-left: 3px solid var(--accent);
   border-radius: 8px; padding: 7px 10px; background: var(--panel-2, transparent);
 }
-.sch-consqban.is-pd { border-left-color: var(--bad); background: rgba(255, 122, 112, 0.10); }
-.sch-consqban.is-apt { border-left-color: var(--warn); background: rgba(255, 180, 84, 0.08); }
+.sch-consqban.is-pd { border-left-color: var(--bad); background: rgba(var(--bad-rgb), 0.10); }
+.sch-consqban.is-apt { border-left-color: var(--warn); background: rgba(var(--warn-rgb), 0.09); }
+/* --text, not --muted: this pill sits on the red/amber wash of the PD & APT
+   banners, where muted drops under 4.5:1 in the light palettes (Round 8 audit) */
 .sch-consqban .sch-wcid {
   font-style: normal; font-family: Consolas, monospace; font-size: 10px;
-  border: 1px solid var(--line); border-radius: 999px; padding: 0 5px; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 999px; padding: 0 5px; color: var(--text);
 }
-html.light .sch-consqban.is-pd { background: rgba(187, 64, 52, 0.08); }
-html.light .sch-consqban.is-apt { background: rgba(169, 100, 16, 0.08); }
 
 /* ── Round 4 — person data model, roster rows, collapsible board ─────────── */
 /* roster: compact summary rows that expand into the full edit form */
@@ -1159,8 +1263,6 @@ html.light .sch-consqban.is-apt { background: rgba(169, 100, 16, 0.08); }
   font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.7px; color: var(--muted);
 }
 .sch-mixwrap { min-width: 0; }
-html.light .sch-rrow { background: #ffffff; }
-html.light .sch-rsum:hover { background: var(--accent-soft); }
 
 /* ── Round 5 — course decomposition · multi-class lessons · stepper ──────── */
 /* multi-class checkbox chips (Training Log form + board lesson lines) */
@@ -1201,8 +1303,6 @@ html.light .sch-rsum:hover { background: var(--accent-soft); }
 .sch-stepbtns { display: inline-flex; gap: 6px; align-items: center; }
 .sch-stepsplit { flex-basis: 100%; font-family: Consolas, monospace; }
 .sch-stepper .sch-multi { min-width: 170px; }
-html.light .sch-clspick { background: #ffffff; }
-html.light .sch-clspick.is-on { background: var(--accent-soft); }
 
 /* ── Round 6 — toggle chips · rank quick-pick · Progress regroup · counters ─ */
 /* generic toggle chip (avoid-ips manual list, stepper multi-IP, rank picks) */
@@ -1247,7 +1347,7 @@ html.light .sch-clspick.is-on { background: var(--accent-soft); }
 }
 .sch-ctr-alert {
   font-size: 12px; line-height: 1.5; color: var(--bad); font-weight: 600;
-  border: 1px solid var(--bad); border-radius: 8px; background: rgba(255, 122, 112, 0.10);
+  border: 1px solid var(--bad); border-radius: 8px; background: rgba(var(--bad-rgb), 0.10);
   padding: 4px 9px; margin-bottom: 6px;
 }
 .sch-ctr-grid { display: flex; flex-direction: column; gap: 2px; }
@@ -1275,8 +1375,221 @@ html.light .sch-clspick.is-on { background: var(--accent-soft); }
 .sch-ctr-ev { font-size: 11.5px; line-height: 1.5; color: var(--text); }
 .sch-ctr-ev .sch-mono { color: var(--muted); margin-right: 5px; }
 
-html.light .sch-tgl { background: #ffffff; }
-html.light .sch-tgl.is-on { background: var(--accent-soft); }
-html.light .sch-ctrpanel { background: var(--panel-2); }
-html.light .sch-ctr:hover { background: #ffffff; }
-html.light .sch-ctr-alert { background: rgba(187, 64, 52, 0.08); }
+/* ══════════════════════════════════════════════════════════════════════════
+   MODE LAYER — what changes between a LIGHT and a DARK palette, once.
+   Everything else is already token-driven, so these are only the surfaces
+   that must sit on "paper" (--surface) instead of the panel tint.
+   ══════════════════════════════════════════════════════════════════════════ */
+html[data-mode="light"] .fc-q,
+html[data-mode="light"] .fc-tbtn,
+html[data-mode="light"] .fc-sug,
+html[data-mode="light"] .fc-exchip,
+html[data-mode="light"] .sch-tbtn,
+html[data-mode="light"] .sch-in,
+html[data-mode="light"] .sch-btn,
+html[data-mode="light"] .sch-av,
+html[data-mode="light"] .sch-absrow,
+html[data-mode="light"] .sch-tbl th,
+html[data-mode="light"] .sch-line,
+html[data-mode="light"] .sch-mixcell,
+html[data-mode="light"] .sch-nsc,
+html[data-mode="light"] .sch-kpi,
+html[data-mode="light"] .sch-pnode,
+html[data-mode="light"] .sch-psechdr,
+html[data-mode="light"] .sch-loggrp td,
+html[data-mode="light"] .sch-rrow,
+html[data-mode="light"] .sch-clspick,
+html[data-mode="light"] .sch-tgl,
+html[data-mode="light"] .sch-ctr:hover { background: var(--surface); }
+html[data-mode="light"] .sch-clscard,
+html[data-mode="light"] .sch-ph { background: var(--panel-2); }
+html[data-mode="light"] .fc-rel-off { color: var(--muted); }
+html[data-mode="light"] .sch-av.av-available { opacity: 0.85; }
+html[data-mode="light"] .sch-no { opacity: 0.35; }
+/* the states the "paper" rule above would otherwise swallow (it is one class
+   more specific than the base state rules) */
+html[data-mode="light"] .sch-btn.primary { background: var(--accent); }
+html[data-mode="light"] .sch-in.is-amber { background: rgba(var(--warn-rgb), 0.09); }
+html[data-mode="light"] .sch-tgl.is-on,
+html[data-mode="light"] .sch-clspick.is-on { background: var(--accent-soft); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   IDENTITY REMAP — the two modules that ship literal hexes inside JS.
+   flowchart.js writes the four track colours into inline styles
+   (style="--tk:#58b0ff;--tk-rgb:88,176,255") and mifchart.js writes its
+   series palette into SVG fill/stroke attributes. Neither file is touched:
+   the literal hex is treated as a KEY and rewritten to a palette token, so a
+   track keeps its identity while staying legible on every background.
+   (Author !important beats a non-important inline declaration.)
+   ══════════════════════════════════════════════════════════════════════════ */
+#view-flowchart [style*="--tk:#58b0ff"],
+#view-flowchart [style*="--tk: #58b0ff"] { --tk: rgb(var(--tk-contact-rgb)) !important; }
+#view-flowchart [style*="--tk-rgb:88,176,255"],
+#view-flowchart [style*="--tk-rgb: 88,176,255"] { --tk-rgb: var(--tk-contact-rgb) !important; }
+#view-flowchart .fc-feed[style*="#58b0ff"] { --fk: rgb(var(--tk-contact-rgb)) !important; }
+#view-flowchart [style*="background:#58b0ff"] { background: rgb(var(--tk-contact-rgb)) !important; }
+#view-flowchart [style*="color:#58b0ff"] { color: rgb(var(--tk-contact-rgb)) !important; }
+#view-flowchart [style*="border-color:#58b0ff"] { border-color: rgb(var(--tk-contact-rgb)) !important; }
+
+#view-flowchart [style*="--tk:#9d8cff"],
+#view-flowchart [style*="--tk: #9d8cff"] { --tk: rgb(var(--tk-instrument-rgb)) !important; }
+#view-flowchart [style*="--tk-rgb:157,140,255"],
+#view-flowchart [style*="--tk-rgb: 157,140,255"] { --tk-rgb: var(--tk-instrument-rgb) !important; }
+#view-flowchart .fc-feed[style*="#9d8cff"] { --fk: rgb(var(--tk-instrument-rgb)) !important; }
+#view-flowchart [style*="background:#9d8cff"] { background: rgb(var(--tk-instrument-rgb)) !important; }
+#view-flowchart [style*="color:#9d8cff"] { color: rgb(var(--tk-instrument-rgb)) !important; }
+#view-flowchart [style*="border-color:#9d8cff"] { border-color: rgb(var(--tk-instrument-rgb)) !important; }
+
+#view-flowchart [style*="--tk:#46d19a"],
+#view-flowchart [style*="--tk: #46d19a"] { --tk: rgb(var(--tk-formation-rgb)) !important; }
+#view-flowchart [style*="--tk-rgb:70,209,154"],
+#view-flowchart [style*="--tk-rgb: 70,209,154"] { --tk-rgb: var(--tk-formation-rgb) !important; }
+#view-flowchart .fc-feed[style*="#46d19a"] { --fk: rgb(var(--tk-formation-rgb)) !important; }
+#view-flowchart [style*="background:#46d19a"] { background: rgb(var(--tk-formation-rgb)) !important; }
+#view-flowchart [style*="color:#46d19a"] { color: rgb(var(--tk-formation-rgb)) !important; }
+#view-flowchart [style*="border-color:#46d19a"] { border-color: rgb(var(--tk-formation-rgb)) !important; }
+
+#view-flowchart [style*="--tk:#ff9d5c"],
+#view-flowchart [style*="--tk: #ff9d5c"] { --tk: rgb(var(--tk-nav-rgb)) !important; }
+#view-flowchart [style*="--tk-rgb:255,157,92"],
+#view-flowchart [style*="--tk-rgb: 255,157,92"] { --tk-rgb: var(--tk-nav-rgb) !important; }
+#view-flowchart .fc-feed[style*="#ff9d5c"] { --fk: rgb(var(--tk-nav-rgb)) !important; }
+#view-flowchart [style*="background:#ff9d5c"] { background: rgb(var(--tk-nav-rgb)) !important; }
+#view-flowchart [style*="color:#ff9d5c"] { color: rgb(var(--tk-nav-rgb)) !important; }
+#view-flowchart [style*="border-color:#ff9d5c"] { border-color: rgb(var(--tk-nav-rgb)) !important; }
+
+#view-flowchart [style*="--tk:#7d8ca3"],
+#view-flowchart [style*="--tk: #7d8ca3"] { --tk: rgb(var(--tk-shared-rgb)) !important; }
+#view-flowchart [style*="--tk-rgb:125,140,163"],
+#view-flowchart [style*="--tk-rgb: 125,140,163"] { --tk-rgb: var(--tk-shared-rgb) !important; }
+#view-flowchart .fc-feed[style*="#7d8ca3"] { --fk: rgb(var(--tk-shared-rgb)) !important; }
+#view-flowchart [style*="background:#7d8ca3"] { background: rgb(var(--tk-shared-rgb)) !important; }
+#view-flowchart [style*="color:#7d8ca3"] { color: rgb(var(--tk-shared-rgb)) !important; }
+#view-flowchart [style*="border-color:#7d8ca3"] { border-color: rgb(var(--tk-shared-rgb)) !important; }
+
+/* status dots printed as literal hexes by the legend / detail sheet */
+#view-flowchart [style*="background:#5fe0a8"] { background: var(--solo) !important; }
+#view-flowchart [style*="background:#ffd166"] { background: var(--gold) !important; }
+#view-flowchart [style*="background:#ff7a70"] { background: var(--night) !important; }
+
+/* MIF chart — the plot canvas follows the palette (this rule is one specificity
+   step above the <style> mifchart.js injects at runtime, hence the html). */
+html .mc-svg-wrap { background: var(--chart-bg); }
+/* mifchart.js bakes --muted / --line into the SVG at draw time, so a chart left
+   open across a palette switch would keep the old axis colours: re-assert them
+   from CSS. The minimum markers keep their own signal colour (rules below). */
+html .mc-svg-wrap text { fill: var(--muted); }
+html .mc-svg-wrap line { stroke: var(--line); }
+html .mc-svg-wrap text[fill="#ffb454"] { fill: var(--mc-3); }
+html .mc-svg-wrap line[stroke="#ffd166"] { stroke: var(--mc-7); }
+/* …and on a light canvas the eight series are re-keyed to their dark twins.
+   [fill="#ffb454"] is also the "minimum" label and [stroke="#ffd166"] the
+   minimum gate line — both want exactly this treatment. */
+html[data-mode="light"] .mc-svg-wrap [fill="#58b0ff"] { fill: var(--mc-1); }
+html[data-mode="light"] .mc-svg-wrap [stroke="#58b0ff"] { stroke: var(--mc-1); }
+html[data-mode="light"] .mc-leg i[style*="#58b0ff"] { background: var(--mc-1) !important; }
+html[data-mode="light"] .mc-svg-wrap [fill="#46d19a"] { fill: var(--mc-2); }
+html[data-mode="light"] .mc-svg-wrap [stroke="#46d19a"] { stroke: var(--mc-2); }
+html[data-mode="light"] .mc-leg i[style*="#46d19a"] { background: var(--mc-2) !important; }
+html[data-mode="light"] .mc-svg-wrap [fill="#ffb454"] { fill: var(--mc-3); }
+html[data-mode="light"] .mc-svg-wrap [stroke="#ffb454"] { stroke: var(--mc-3); }
+html[data-mode="light"] .mc-leg i[style*="#ffb454"] { background: var(--mc-3) !important; }
+html[data-mode="light"] .mc-svg-wrap [fill="#c792ea"] { fill: var(--mc-4); }
+html[data-mode="light"] .mc-svg-wrap [stroke="#c792ea"] { stroke: var(--mc-4); }
+html[data-mode="light"] .mc-leg i[style*="#c792ea"] { background: var(--mc-4) !important; }
+html[data-mode="light"] .mc-svg-wrap [fill="#ff7a70"] { fill: var(--mc-5); }
+html[data-mode="light"] .mc-svg-wrap [stroke="#ff7a70"] { stroke: var(--mc-5); }
+html[data-mode="light"] .mc-leg i[style*="#ff7a70"] { background: var(--mc-5) !important; }
+html[data-mode="light"] .mc-svg-wrap [fill="#3fd0c9"] { fill: var(--mc-6); }
+html[data-mode="light"] .mc-svg-wrap [stroke="#3fd0c9"] { stroke: var(--mc-6); }
+html[data-mode="light"] .mc-leg i[style*="#3fd0c9"] { background: var(--mc-6) !important; }
+html[data-mode="light"] .mc-svg-wrap [fill="#ffd166"] { fill: var(--mc-7); }
+html[data-mode="light"] .mc-svg-wrap [stroke="#ffd166"] { stroke: var(--mc-7); }
+html[data-mode="light"] .mc-leg i[style*="#ffd166"] { background: var(--mc-7) !important; }
+html[data-mode="light"] .mc-svg-wrap [fill="#9d8cff"] { fill: var(--mc-8); }
+html[data-mode="light"] .mc-svg-wrap [stroke="#9d8cff"] { stroke: var(--mc-8); }
+html[data-mode="light"] .mc-leg i[style*="#9d8cff"] { background: var(--mc-8) !important; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   THEME GALLERY — the popover behind the palette button in the topbar.
+   Cards paint their OWN palette (inline swatches), never the active one.
+   ══════════════════════════════════════════════════════════════════════════ */
+.thm-btn { font-size: 13px; letter-spacing: 0.3px; }
+.thm-btn .thm-dot {
+  display: inline-block; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--accent); margin-right: 6px; vertical-align: -1px;
+}
+/* the topbar now carries two theme controls — let it wrap instead of
+   squeezing the brand, and drop the label on a narrow window. */
+.topbar { flex-wrap: wrap; row-gap: 8px; }
+@media (max-width: 1120px) {
+  .thm-btn { padding: 6px 11px; }
+  .thm-btn .thm-dot { margin-right: 0; }
+  .thm-btn .thm-lbl { display: none; }
+}
+.thm-pop {
+  position: fixed; z-index: 100; width: min(430px, 94vw);
+  max-height: min(72vh, 620px); overflow-y: auto;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+  padding: 12px; box-shadow: 0 20px 60px var(--shadow);
+}
+.thm-pop.hidden { display: none; }
+.thm-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.thm-head h3 { font-size: 13px; letter-spacing: 0.4px; margin: 0; }
+.thm-head .thm-sub { font-size: 11px; color: var(--muted); }
+.thm-modebtn {
+  margin-left: auto; background: transparent; border: 1px solid var(--line);
+  color: var(--muted); border-radius: 999px; padding: 3px 11px;
+  font-size: 11.5px; font-family: inherit; cursor: pointer; white-space: nowrap;
+}
+.thm-modebtn:hover { color: var(--text); border-color: var(--accent); }
+.thm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.thm-card {
+  display: flex; flex-direction: column; gap: 6px; text-align: left; cursor: pointer;
+  background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px;
+  padding: 8px; color: var(--text); font: inherit;
+}
+.thm-card:hover { border-color: var(--accent); }
+.thm-card.is-on { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+.thm-sw { display: flex; height: 32px; border-radius: 7px; overflow: hidden; border: 1px solid var(--line); }
+.thm-sw i { flex: 1 1 0; }
+.thm-nm { display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; }
+.thm-tag {
+  font-size: 9px; letter-spacing: 0.7px; text-transform: uppercase; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 999px; padding: 0 5px;
+}
+.thm-tick { margin-left: auto; color: var(--accent); font-size: 12px; }
+.thm-d { font-size: 10.5px; color: var(--muted); line-height: 1.4; }
+.thm-pop :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (max-width: 560px) { .thm-grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .thm-card { transition: none; } }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   PRINT — the one place the palette must NOT apply. The published board is
+   a squadron form: white paper, black ink, whatever theme is on screen.
+   ══════════════════════════════════════════════════════════════════════════ */
+@media print {
+  :root, html, html[data-theme], html[data-mode] {
+    --bg: #ffffff !important; --bg-2: #ffffff !important; --panel: #ffffff !important;
+    --panel-2: #ffffff !important; --surface: #ffffff !important;
+    --chart-bg: #ffffff !important; --top-bg: #ffffff !important;
+    --text: #000000 !important; --muted: #333333 !important; --line: #000000 !important;
+    --accent-rgb: 0, 0, 0 !important; --good-rgb: 0, 0, 0 !important;
+    --warn-rgb: 0, 0, 0 !important; --bad-rgb: 0, 0, 0 !important;
+    --hf-rgb: 0, 0, 0 !important; --gold-rgb: 0, 0, 0 !important;
+    --fcb-ground-rgb: 0, 0, 0 !important; --fcb-exams-rgb: 0, 0, 0 !important;
+    --fcb-fs-rgb: 0, 0, 0 !important; --fcb-flights-rgb: 0, 0, 0 !important;
+    --tk-contact-rgb: 0, 0, 0 !important; --tk-instrument-rgb: 0, 0, 0 !important;
+    --tk-formation-rgb: 0, 0, 0 !important; --tk-nav-rgb: 0, 0, 0 !important;
+    --tk-shared-rgb: 0, 0, 0 !important;
+    --on-accent: #ffffff !important; --on-gold: #ffffff !important;
+    --tint: 0 !important; --hover: transparent !important;
+    --veil: transparent !important; --shadow: transparent !important;
+    color-scheme: light !important;
+  }
+  html, body { background: #ffffff !important; color: #000000 !important; }
+  body { background-image: none !important; }
+  #sch-print, #sch-print .pv-page { background: #ffffff !important; color: #000000 !important; }
+  #sch-print .pv-t th { background: #eeeeee !important; color: #000000 !important; }
+  .thm-pop { display: none !important; }
+}

@@ -4,7 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Phase 2 FDMS — T-6A Texan II</title>
-<link rel="stylesheet" href="styles.css?v=20260811c">
+<link rel="stylesheet" href="styles.css?v=20260811e">
+<script>
+/* Palette before first paint — no flash of the default theme on reload.
+   Mirrors app.js (PALETTES / apply): same keys, same migration of the old
+   "p2r-theme" light|dark value. app.js re-applies it once it runs. */
+(function () {
+  try {
+    var d = document.documentElement,
+        id = localStorage.getItem("p2r-palette"),
+        mode = localStorage.getItem("p2r-palmode"),
+        old = localStorage.getItem("p2r-theme");
+    if (!id) { id = old === "light" ? "slate" : "obsidian"; mode = old === "light" ? "light" : "dark"; }
+    d.setAttribute("data-theme", id);
+    d.setAttribute("data-mode", mode === "light" ? "light" : "dark");
+    d.classList.add("pal-" + id);
+    if (mode === "light") d.classList.add("light");
+  } catch (e) {}
+})();
+</script>
 </head>
 <body>
 <header class="topbar">
@@ -26,6 +44,7 @@
     <button id="tab-schedval" class="viewtab" title="Schedule validation — what the syllabus requires before a sortie">Validate</button>
   </nav>
   <button id="theme-btn" class="viewtab" title="Light / dark theme">☀</button>
+  <button id="theme-gal-btn" class="viewtab thm-btn" title="Theme gallery"><span class="thm-dot"></span><span class="thm-lbl">Theme</span></button>
   <div class="databadge" id="databadge">—</div>
 </header>
 
@@ -148,12 +167,12 @@
   </div>
 </div>
 
-<script src="app.js?v=20260811c"></script>
-<script src="flowchart.js?v=20260811c"></script>
-<script src="schedval.js?v=20260811c"></script>
-<script src="schedstore.js?v=20260811c"></script>
-<script src="scheduler.js?v=20260811c"></script>
-<script src="schedconsq.js?v=20260811c"></script>
-<script src="schedboard.js?v=20260811c"></script>
+<script src="app.js?v=20260811e"></script>
+<script src="flowchart.js?v=20260811e"></script>
+<script src="schedval.js?v=20260811e"></script>
+<script src="schedstore.js?v=20260811e"></script>
+<script src="scheduler.js?v=20260811e"></script>
+<script src="schedconsq.js?v=20260811e"></script>
+<script src="schedboard.js?v=20260811e"></script>
 </body>
 </html>

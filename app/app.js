@@ -597,7 +597,7 @@ document.addEventListener("click", (e) => {
   // A control re-rendered by its own click handler is detached by the time the
   // event bubbles here — that is an inside click, never an "outside" one.
   if (!(e.target instanceof Element) || !e.target.isConnected) return;
-  if (e.target.closest(".panel, .topbar, .modal-box, #info-modal, .credit, .viewtab")) return;
+  if (e.target.closest(".panel, .topbar, .modal-box, #info-modal, .credit, .viewtab, #theme-pop")) return;
   if (state.category) resetRemarks();
 });
 
@@ -614,18 +614,190 @@ document.addEventListener("click", (e) => {
   document.head.appendChild(sys);
 }
 
-/* Light / dark theme toggle (persisted) */
+/* ══════════════════════════════════════════════════════════════════════════
+   THEME GALLERY (Round 8)
+   ──────────────────────────────────────────────────────────────────────────
+   PALETTES is the catalogue — the JS half of the "PALETTE CATALOGUE" section
+   in styles.css (same order, same ids). Each entry only describes the CARD:
+   the token values live in the CSS block. ADDING A PALETTE = one CSS block +
+   one entry here; the gallery, the light/dark quick switch and persistence
+   pick it up with no further code.
+     id    — matches html[data-theme="<id>"]
+     mode  — "light" | "dark"; drives html[data-mode] and the ☀/☾ switch
+     desc  — one line on the card
+     sw    — the four card swatches: bg · panel-2 · text · accent
+   ══════════════════════════════════════════════════════════════════════════ */
+const PALETTES = [
+  { id: "obsidian", label: "Obsidian", mode: "dark",
+    desc: "The original night deck — navy graphite, sky-blue accent.",
+    sw: ["#0e1420", "#1c2a3d", "#e8eef6", "#58b0ff"] },
+  { id: "slate", label: "Slate", mode: "light",
+    desc: "Daylight briefing room — cool grey paper, deep blue accent.",
+    sw: ["#eef2f7", "#f0f4f9", "#1a2733", "#1b5fa6"] },
+  { id: "summit", label: "Summit", mode: "light",
+    desc: "Alpine white with a steel-blue edge — print-like clarity.",
+    sw: ["#f6f8fa", "#eef2f6", "#16202a", "#235d8c"] },
+  { id: "ridgeline", label: "Ridgeline", mode: "light",
+    desc: "Warm green tint, moss accent — the low-fatigue daylight option.",
+    sw: ["#f2f5ee", "#edf2e6", "#1b2318", "#3d6435"] },
+  { id: "mesa", label: "Mesa", mode: "light",
+    desc: "Sand and ivory, terracotta accent — desert-strip warmth.",
+    sw: ["#f7f2e9", "#f3ece0", "#241b12", "#96431f"] },
+  { id: "tidal", label: "Tidal", mode: "dark",
+    desc: "Deep navy water, ice-cyan accent — night ops, high focus.",
+    sw: ["#081727", "#163149", "#e6f1fb", "#63d3ec"] },
+  { id: "wilderness", label: "Wilderness", mode: "dark",
+    desc: "Olive field kit, brass-gold accent — dispersal at dusk.",
+    sw: ["#151a12", "#252d1f", "#eef2e6", "#d8bb52"] },
+  { id: "aegean", label: "Aegean", mode: "dark",
+    desc: "Squadron colours — blue-black sea, white-blue accent.",
+    sw: ["#060d1a", "#132135", "#eef4ff", "#a8d4ff"] },
+];
+
 {
-  const btn = $("theme-btn");
-  const apply = (light) => {
-    document.documentElement.classList.toggle("light", light);
-    btn.textContent = light ? "☾" : "☀";
-    try { localStorage.setItem("p2r-theme", light ? "light" : "dark"); } catch (e) {}
+  const KEY = "p2r-palette", KEY_MODE = "p2r-palmode", KEY_OLD = "p2r-theme";
+  const LAST = { light: "p2r-pal-light", dark: "p2r-pal-dark" };
+  const ls = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
   };
-  let saved = null;
-  try { saved = localStorage.getItem("p2r-theme"); } catch (e) {}
-  apply(saved === "light");
-  btn.onclick = () => apply(!document.documentElement.classList.contains("light"));
+  const byId = (id) => PALETTES.find((p) => p.id === id) || null;
+  const firstOf = (mode) => PALETTES.find((p) => p.mode === mode);
+
+  const btn = $("theme-btn");        // ☀ / ☾  — quick light↔dark flip
+  const gal = $("theme-gal-btn");    // ◑ Theme — opens the gallery
+  let cur = PALETTES[0], pop = null, grid = null, modeBtn = null;
+
+  /* Migration: the old key stored "light" / "dark" only. */
+  function initialId() {
+    const saved = byId(ls.get(KEY));
+    if (saved) return saved.id;
+    const old = ls.get(KEY_OLD);
+    return old === "light" ? "slate" : "obsidian";
+  }
+
+  function apply(id, persist) {
+    const p = byId(id) || PALETTES[0];
+    const root = document.documentElement;
+    root.setAttribute("data-theme", p.id);
+    root.setAttribute("data-mode", p.mode);
+    /* flowchart.js re-draws its SVG edges on a class mutation of <html> (it
+       reads the zone colours from CSS vars) — so every palette switch has to
+       touch the class attribute, not only the data-* ones. */
+    for (const c of Array.from(root.classList)) if (c.indexOf("pal-") === 0) root.classList.remove(c);
+    root.classList.add("pal-" + p.id);
+    root.classList.toggle("light", p.mode === "light");
+    cur = p;
+    btn.textContent = p.mode === "light" ? "☾" : "☀";
+    btn.title = p.mode === "light"
+      ? "Switch to the dark palette (" + (byId(ls.get(LAST.dark)) || firstOf("dark")).label + ")"
+      : "Switch to the light palette (" + (byId(ls.get(LAST.light)) || firstOf("light")).label + ")";
+    if (gal) gal.title = "Theme gallery — " + p.label + " (" + p.mode + ")";
+    if (persist !== false) {
+      ls.set(KEY, p.id);
+      ls.set(KEY_MODE, p.mode);
+      ls.set(LAST[p.mode], p.id);
+    }
+    mark();
+  }
+
+  function flipMode() {
+    const want = cur.mode === "light" ? "dark" : "light";
+    apply((byId(ls.get(LAST[want])) || firstOf(want)).id);
+  }
+
+  function mark() {
+    if (!grid) return;
+    for (const c of grid.children) {
+      const on = c.dataset.pal === cur.id;
+      c.classList.toggle("is-on", on);
+      c.setAttribute("aria-selected", on ? "true" : "false");
+      c.querySelector(".thm-tick").textContent = on ? "✓" : "";
+    }
+    if (modeBtn) {
+      modeBtn.textContent = cur.mode === "light" ? "☾ Dark" : "☀ Light";
+      modeBtn.title = "Quick switch to the last used " + (cur.mode === "light" ? "dark" : "light") + " palette";
+    }
+  }
+
+  function build() {
+    pop = document.createElement("div");
+    pop.id = "theme-pop";
+    pop.className = "thm-pop hidden";
+    pop.setAttribute("role", "dialog");
+    pop.setAttribute("aria-label", "Theme gallery");
+    pop.innerHTML =
+      `<div class="thm-head"><h3 id="thm-h">Theme</h3>
+         <span class="thm-sub">${PALETTES.length} palettes</span>
+         <button type="button" class="thm-modebtn" id="thm-mode"></button></div>
+       <div class="thm-grid" id="thm-grid" role="listbox" aria-labelledby="thm-h"></div>`;
+    document.body.appendChild(pop);
+    grid = $("thm-grid");
+    modeBtn = $("thm-mode");
+    grid.innerHTML = PALETTES.map((p) => `
+      <button type="button" class="thm-card" role="option" aria-selected="false"
+              data-pal="${esc(p.id)}" title="${esc(p.label)} — ${esc(p.desc)}">
+        <span class="thm-sw" aria-hidden="true">${p.sw.map((c) =>
+          `<i style="background:${esc(c)}"></i>`).join("")}</span>
+        <span class="thm-nm">${esc(p.label)}<span class="thm-tag">${esc(p.mode)}</span>
+          <span class="thm-tick"></span></span>
+        <span class="thm-d">${esc(p.desc)}</span>
+      </button>`).join("");
+    grid.addEventListener("click", (ev) => {
+      const card = ev.target.closest(".thm-card");
+      if (card) apply(card.dataset.pal);
+    });
+    grid.addEventListener("keydown", (ev) => {
+      const cards = Array.from(grid.children);
+      const here = document.activeElement && document.activeElement.closest(".thm-card");
+      const i = cards.indexOf(here);
+      if (i < 0) return;
+      const step = { ArrowRight: 1, ArrowDown: 2, ArrowLeft: -1, ArrowUp: -2 }[ev.key];
+      if (!step) return;
+      ev.preventDefault();
+      cards[Math.max(0, Math.min(cards.length - 1, i + step))].focus();
+    });
+    modeBtn.addEventListener("click", flipMode);
+    pop.addEventListener("keydown", (ev) => { if (ev.key === "Escape") { close(); gal.focus(); } });
+    document.addEventListener("click", (ev) => {
+      if (pop.classList.contains("hidden")) return;
+      if (ev.target.closest("#theme-pop, #theme-gal-btn")) return;
+      close();
+    });
+    window.addEventListener("resize", () => { if (!pop.classList.contains("hidden")) place(); });
+  }
+
+  function place() {
+    const r = gal.getBoundingClientRect();
+    pop.style.top = Math.round(r.bottom + 8) + "px";
+    pop.style.right = Math.max(8, Math.round(window.innerWidth - r.right)) + "px";
+  }
+
+  function close() {
+    if (!pop) return;
+    pop.classList.add("hidden");
+    gal.setAttribute("aria-expanded", "false");
+  }
+
+  function toggle() {
+    if (!pop) build();
+    if (pop.classList.contains("hidden")) {
+      mark();
+      pop.classList.remove("hidden");
+      place();
+      gal.setAttribute("aria-expanded", "true");
+      const on = grid.querySelector(".thm-card.is-on") || grid.firstElementChild;
+      if (on) on.focus();
+    } else close();
+  }
+
+  apply(initialId());   /* re-applies what the <head> script already painted */
+  btn.onclick = flipMode;
+  if (gal) {
+    gal.setAttribute("aria-haspopup", "dialog");
+    gal.setAttribute("aria-expanded", "false");
+    gal.onclick = toggle;
+  }
 }
 
 $("item-search").addEventListener("input", renderItems);
