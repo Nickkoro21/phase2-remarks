@@ -1593,3 +1593,14 @@ html[data-mode="light"] .mc-leg i[style*="#9d8cff"] { background: var(--mc-8) !i
   #sch-print .pv-t th { background: #eeeeee !important; color: #000000 !important; }
   .thm-pop { display: none !important; }
 }
+
+/* ── Owed-makeups reference links (no duplicate rows — user ruling 12/08) ── */
+.sch-pgoto {
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+  background: var(--panel-2); color: var(--text); border: 1px dashed var(--line);
+  border-radius: 999px; padding: 3px 11px; font-size: 12px; font-family: Consolas, monospace;
+}
+.sch-pgoto:hover { border-color: var(--accent); color: var(--accent); }
+.sch-pgoto-s { font-size: 10px; color: var(--warn); text-transform: uppercase; letter-spacing: .03em; }
+@keyframes schFlash { 0%, 60% { outline-color: rgba(var(--accent-rgb), .9); } 100% { outline-color: transparent; } }
+#sch-progbody .is-flash { outline: 2px solid transparent; outline-offset: 2px; animation: schFlash 1.8s ease-out; }

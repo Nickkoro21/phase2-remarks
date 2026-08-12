@@ -1,0 +1,9 @@
+{
+  "name": "fdms-offline-build",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Pinned esbuild toolchain for tools/build_offline.py — ES2019 transpile so the offline exports run on the unit's Firefox 72 (closed network). Version is pinned EXACTLY; build_offline.py hard-fails on drift.",
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}

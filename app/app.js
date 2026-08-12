@@ -398,7 +398,8 @@ async function showInfo() {
   if (chartBtn) {
     chartBtn.onclick = () => {
       $("info-modal").classList.add("hidden");
-      if (window.openMifChart) {
+      /* a backdrop click can deselect the item while the modal is still open */
+      if (window.openMifChart && state.item && state.category) {
         const sns = state.item.mif_numbers || [];
         window.openMifChart(state.category, sns.length === 1 ? sns[0] : sns);
       }

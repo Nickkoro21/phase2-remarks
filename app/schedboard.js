@@ -2799,6 +2799,8 @@
         const sDn = sec.uids.filter((u) => st[u] && st[u].status === "completed").length;
         const isNext = sec.uids.some((u) => next.has(u) && (!st[u] || st[u].status !== "completed"));
         const secKey = k + ":" + sec.id;
+        /* a pending goto forces the target's section open (and keeps it open) */
+        if (ui.prog.goto && sec.uids.indexOf(ui.prog.goto) >= 0) ui.prog.exp[secKey] = true;
         const open = q ? true : (ui.prog.exp[secKey] !== undefined ? ui.prog.exp[secKey] : isNext);
         const head = `<button type="button" class="sch-psechdr${open ? " is-open" : ""}${isNext ? " is-next" : ""}" data-pb="sec" data-psec="${esc(secKey)}" data-pnow="${open ? 1 : 0}">
             <span class="sch-parrow">${open ? "▾" : "▸"}</span>
@@ -2826,14 +2828,34 @@
       <button type="button" class="sch-btn" data-pb="cancel">Cancel</button>
     </div>` : "");
 
+    /* User ruling 2026-08-12: NO duplicate rows — the owed list is a set of
+       REFERENCE links that jump to (and flash) the real node in its section. */
     host.innerHTML = bar + (owed.length ? `<section class="sch-psec sch-powed">
       <h3>Owed makeups <span class="count">${owed.length}</span></h3>
-      <div class="sch-pgrid">${owed.map((u) => chip(u, false)).join("")}</div></section>` : "")
+      <div class="sch-pgrid">${owed.map((u) => {
+        const d = R().describe(u) || { label: u, name: "" };
+        const s = st[u] ? String(st[u].status).replace("_", " ") : "";
+        return `<button type="button" class="sch-pgoto" data-pb="goto" data-uid="${esc(u)}"
+          title="${esc((d.name || "") + " — jump to the node")}">↧ ${esc(d.label)}<span class="sch-pgoto-s">${esc(s)}</span></button>`;
+      }).join("")}</div></section>` : "")
       + (secs.join("") || `<p class="sch-hint">No node matches the filter.</p>`);
   }
 
   function progButton(b) {
     const act = b.dataset.pb;
+    if (act === "goto") {
+      /* owed-makeups reference: open the section, scroll to the node, flash it */
+      ui.prog.goto = b.dataset.uid;
+      progRenderBody();
+      const row = document.querySelector('#sch-progbody [data-uid="' + (window.CSS && CSS.escape ? CSS.escape(ui.prog.goto) : ui.prog.goto) + '"]');
+      ui.prog.goto = null;
+      if (row) {
+        row.scrollIntoView({ behavior: "smooth", block: "center" });
+        row.classList.add("is-flash");
+        setTimeout(() => row.classList.remove("is-flash"), 1800);
+      }
+      return;
+    }
     if (act === "close") { if (ui.prog.stepper) { stepCancel(); } progClose(); return; }
     if (act === "cancel") { ui.prog.pending = null; progRenderBody(); return; }
     if (act === "confirm") { progCommit(); return; }
