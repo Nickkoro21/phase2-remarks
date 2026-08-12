@@ -490,3 +490,33 @@ Exit Level και εξαγωγή βαθμολογίας (ΒΠΕ / ΒΠΕΑ / Β�
 > **Γνωστό κενό κάλυψης:** το σκέλος **ΠΤΗΤΙΚΗ ΕΚΠΑΙΔΕΥΣΗ** του Πίνακα 8 (1-3 / έως 3 /
 > έως 5 έξοδοι ανά περίοδο αποχής) **δεν** έχει δική του απαίτηση στο `flight_training.json`.
 > Καλύπτεται έμμεσα από τα `fail-14`, `st-72`, `st-73` και `gt-56`.
+
+---
+
+## 9. `roles_continuation.json` — prefixes `role-` / `cont-` (added 2026-08-13)
+
+**Domain:** instructor taxonomy & privileges, command roles in training, continuation
+(maintenance) programme, and the **S main exercises / E special-exercise items** of the
+3-01 — the source layer for the upcoming **user-roles feature**. English throughout;
+Greek appears only in `verbatim` (exact citations). Aircraft scope: **general and T-6
+provisions only** — every record carries `values.aircraft_scope` (`"general"` | `"T-6"`),
+and where a provision splits by type the M-346 branch is excluded with an explicit flag.
+
+| Prefix | Records | Content |
+|---|--:|---|
+| `role-` | 86 | Definitions (instructor, PIC/PiC, test pilot, night-flight 75% rule, flyer categories, EXPERIENCED thresholds 600/1000+250/300+250/150 h), command chain & approval gates (daily programme, substitutions, flight authorization/supervision, weather & Discomfort-Index gates), formation leadership (physical/tactical, composition minima, lead titles 250/450/650 h, ex-officio MC for COs), Evaluators (2 per squadron, rating B+ & experienced, prep training, Command evaluators), student-instructor assignment (1 primary + 2 reserves, pre-solo cap 3, evaluation scheduling gates 4.0 h/20 d & 5-day rule, solo rules), instructor pipeline SEE→MET→EEP with T-6A volumes, ratings Γ/Β/Α (120-200 h window; 3 y + 300 h + 50 teaching h; pass codes), Test Pilots (B+, 1000/400 h, max 4/MEA, FCF/taxi-test exclusivity), IMC prerequisites, weapons certification, SoF & OED staffing (incl. first-solo rules), Demo team (T-6A), briefings, the full **seminar catalogue (Table 14)** and the Ch.9 per-instructor qualification board. |
+| `cont-` | 17 | Maintenance stage definition & entry, semi-annual F/S (Table 6) and air (Table 9) requirements for posted/attached T-6A instructors, reduction bands (Table 11), **S-exercise catalogue Σ-1/Σ-2/Σ-3/Σ-4/Σ-20** (Table 8), **E-item definition, charging rules and the full EVENTS table** (validity days split inexperienced/experienced, BMC/AMC markings, landing currencies 90 / 45-60 d with automatic renewal chains), E-crediting rules (§52-60), Table 13 instructor E-coverage during student flights, abstention rules (SIM refresh 45/30 d, night recency 15/10 d), loss of type availability (180 d / 1 y) with re-assignment tiers, PR advanced-exercise framework and catalogue (PR-1/2/7/8), and the A0462/A0463 record forms. |
+
+**Totals:** 103 requirements, 48 flags, plus a top-level `open_questions` array (15 items)
+listing everything that needs a **unit ruling** — e.g. the 3-vs-5 F/S-repeat contradiction
+(Ch.2 §17 vs §53), the 3× vs 2× E-4 in-cloud recency contradiction (Ch.8 §54γ vs EVENTS
+note 1), the unassigned day 166 of Table 11, the Air Examiner vs Evaluator distinction,
+and the stale internal cross-references of the source (§48↔§69, §15→§21, App A §8→Ch.8).
+
+**Structural notes (same integrity rules as §7):** unique ids, bidirectional `links`,
+every record with `source.file` + `source.page_pdf` + `source.ref`; where a citation
+spans pages, `source.page_pdf_span` gives the range. `verbatim` is letter-exact,
+including the source's own typos (e.g. the incomplete sentence of Ch.1 §21, the Greek
+omicron inside "tοuch" in Ch.4 §58). Ambiguities live in `flags`/`open_questions` and
+are **never silently resolved**. Assembly/validation script: `assemble_roles.py`
+(session scratchpad); merged from four cross-checked research passes on 2026-08-13.
