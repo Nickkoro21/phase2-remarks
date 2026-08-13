@@ -93,7 +93,7 @@
     "Table 11 reduction bands leave day 166 unassigned (136-165 then 'above 166') — a scheduler needs a ruling for exactly 166 days of non-availability (cont-06).",
     "Terminology variance 'Αξκός Επιχειρήσεων' (Operations Officer) vs 'Α.Ε.' (Training Officer) across parallel provisions — apparently the same squadron post, never reconciled in the source (role-61, role-74).",
     "Stale internal cross-references: Ch.4 §69 points to '§49' for the EVENTS table (actually §48) and §48β points to '§70' for the readiness levels (actually §69); Ch.1 §15 cites 'par. 22' for flight authorization (actually §21); Appendix A §8 refers Test-Pilot training to 'Chapter 5' (actually Chapter 8).",
-    "The EVENTS table's per-row pilot-seat columns (Α/Β/Α&Β) could not be captured reliably from the text layer except where corroborated by §§55-59 and the table notes — the printed table remains the seat authority (cont-09).",
+    "The EVENTS table's per-row pilot-seat columns (Α/Β/Α&Β) could not be captured reliably from the text layer except where corroborated by §§55-59 and the table notes — the printed table remains the seat authority (cont-09). Superseded 2026-08-13: seat columns were captured from a 3x page render (word-coordinate mapping) during the cont-09 re-audit; per-row seat is now recorded on every retained T-6 row.",
     "Day-landing validity '90' and E-40 validity '360' are each printed once spanning the AP/EMP columns — read as applying to both experience levels (cont-08/cont-09).",
     "Ch.2 §22 has two consecutive sub-paragraphs labelled 'ι.' (PDF 42-43) — source numbering defect (role-30).",
     "Abbreviation ΣΟΣΜΕ (MET/EEP ground training, Ch.3 §5 area / Ch.1 §4β) is never expanded in the 3-01 (role-37).",
@@ -3062,7 +3062,7 @@
     {
       "id": "cont-09",
       "topic": "EVENTS catalogue — T-6-relevant rows with validity and readiness markings (Ch.4 table, PDF 105-107)",
-      "requirement": "T-6-relevant Events (validity days as inexperienced/experienced where split): E-1a aerobatics (no expiry); E-1b SPIN — 180/180, T-6 only; E-1c aircraft test (FCF) — programmed, validity '--'/90, renewal from both seats when both are occupied by Test Pilots, re-availability from front seat only (note 2); E-1d DEMO — '--'/15, T-6 only; E-2 practice forced landing — no expiry, T-6 only; E-3 in-cloud flight — recency per note 1 (in the last 60 days: 1 PDO flight OR 1 night flight OR 2 special exercises E-4), FMS renewal allowed; E-4 IFR approach — no expiry, FMS allowed; E-5 formation descent; E-6c approach landing-light OFF (night); E-7 landing/touch-and-go of instructor from REAR seat — 90 days, T-6 only; E-9a no-flaps approach; E-9c heavy-aircraft approach — T-6 only; E-10a landing, touch & go or approach at foreign airfield — programmed; E-10b landing or approach on both runway directions; E-14a live A-G weapons release — programmed, T-6 only; E-14b live A-A weapons release — programmed, T-6 only; E-16 PARS DEMO — programmed, T-6 only; E-18 formation TAKEOFF; E-21 flight at 300 ft — programmed, AMC, 90/120, dual-type renewal; E-30a high-altitude interception day — programmed, dual-type renewal; E-31a low-altitude interception day — programmed, 90/120, dual-type renewal; E-32 BFM — programmed, AMC, 120/150, dual-type renewal; E-33 ACM — programmed, AMC, 120/150, T-6 (auto-renews E-32); E-40 training munitions release — programmed, 360 days (single figure spanning AP/EMP), T-6 only, credited to front seat; E-41a range firing day — programmed, dual-type renewal (T-6: credited to front seat when training munitions released); E-45 visual delivery MED/HI APEX day — programmed, AMC, 120/150, dual-type renewal; E-46 visual delivery LOW APEX day — programmed, AMC, 90/120, dual-type renewal; E-49A HAS day — programmed, dual-type renewal; E-49C LAS day — programmed, 120/150, T-6 only; E-62 OCA (STRIKE) — programmed; E-67 CAS — programmed; E-65 HVAA/SLOMO PROTECT — programmed. Note 3: E-22, E-23, E-31b, E-36, E-37, E-49b, E-61, E-64, E-66, E-69, E-70, E-73 are not currently flown.",
+      "requirement": "T-6-relevant Events (validity days as inexperienced/experienced where split): E-1a aerobatics (no expiry); E-1b SPIN — 180/180, T-6 only; E-1c aircraft test (FCF) — programmed, validity '--'/90, renewal from both seats when both are occupied by Test Pilots, re-availability from front seat only (note 2), FMS renewal allowed; E-1d DEMO — '--'/15, T-6 only; E-2 practice forced landing — no expiry, T-6 only; E-3 in-cloud flight — recency per note 1 (in the last 60 days: 1 PDO flight OR 1 night flight OR 2 special exercises E-4), FMS renewal allowed; E-4 IFR approach — no expiry, FMS allowed; E-5 formation descent; E-6c approach landing-light OFF (night); E-9a no-flaps approach; E-9c heavy-aircraft approach — T-6 only; E-10a landing, touch & go or approach at foreign airfield — programmed; E-10b landing or approach on both runway directions; E-14a live A-G weapons release — programmed, T-6 only; E-14b live A-A weapons release — programmed, T-6 only; E-18 formation TAKEOFF; E-21 flight at 300 ft — programmed, AMC, 90/120, dual-type renewal; E-30a high-altitude interception day — programmed, dual-type renewal; E-31a low-altitude interception day — programmed, 90/120, dual-type renewal; E-32 BFM — programmed, AMC, 120/150, dual-type renewal; E-40 training munitions release — programmed, 360 days (single figure spanning AP/EMP), T-6 only, dual-type renewal marked, credited to front seat; E-41a range firing day — programmed, dual-type renewal (T-6: credited to front seat when training munitions released); E-45 visual delivery MED/HI APEX day — programmed, AMC, 120/150, dual-type renewal; E-46 visual delivery LOW APEX day — programmed, AMC, 90/120, dual-type renewal; E-49A HAS day — programmed, dual-type renewal; E-49C LAS day — programmed, 120/150, T-6 only, dual-type renewal marked; E-62 OCA (STRIKE) — programmed, dual-type renewal; E-67 CAS — programmed, dual-type renewal. Note 3: E-22, E-23, E-31b, E-36, E-37, E-49b, E-61, E-64, E-66, E-69, E-70, E-73 are not currently flown.",
       "verbatim": "Ε-1 [...] β SPIN [...] 180 180 [...] γ Δοκιμή Α/Φ NAI [...] -- 90 [...] δ DEMO [...] -- 15 [...] Ε-7 [...] Π/Γ- Touch & Go Εκπτή από Β' Θ.Χ [...] 90 [...] Ε-10 α Π/Γ, Touch & Go ή προσέγγιση σε ξένα Α/Δ ΝΑΙ [...] β Π/Γ ή προσέγγιση και στους δύο Δ/Μ [...] Ε-18 [...] Α/Γ σε σχηματισμό [...] Ε-21 [...] Πτήση 300' ΝΑΙ [...] ΝΑΙ 90 120 [...] Ε-32 [...] BFM ΝΑΙ [...] NAI 120 150 [...] Ε-33 [...] ACM ΝΑΙ [...] ΝΑΙ 120 150 [...] Ε-40 [...] Άφεση εκπαιδευτικών πυρομαχικών NAI [...] 360 [...] Ε-45 [...] VISUAL DELIVERY MED/HI APEX (H) ΝΑΙ [...] ΝΑΙ 120 150 [...] Ε-46 [...] VISUAL DELIVERY LOW APEX (H) ΝΑΙ [...] ΝΑΙ 90 120 [...] *Σημειώσεις: (1) Ο Ιπτάμενος τις τελευταίες 60 ημέρες να έχει εκτελέσει 1 πτήση ΠΔΟ ή 1 νυκτερινή πτήση ή 2 ειδικές ασκήσεις Ε-4. (2) Η ανανέωση γίνεται και από τις δύο ΘΧ (όταν και οι δύο θέσεις είναι κατειλημμένες από δοκιμαστές). Η επαναδιάθεση γίνεται μόνο από την Α’ ΘΧ. (3) Τα Ε-22, Ε-23, Ε-31β, Ε-36, Ε-37, Ε-49β, Ε-61, Ε-64, Ε-66, Ε-69, Ε-70, Ε-73 δεν εκτελούνται.",
       "values": {
         "aircraft_scope": "T-6",
@@ -3070,14 +3070,16 @@
           {
             "code": "E-1a",
             "name": "aerobatics",
-            "validity": "no expiry"
+            "validity": "no expiry",
+            "seat": "A & B"
           },
           {
             "code": "E-1b",
             "name": "SPIN",
             "validity_days_ap": 180,
             "validity_days_emp": 180,
-            "t6_only": true
+            "t6_only": true,
+            "seat": "A & B"
           },
           {
             "code": "E-1c",
@@ -3085,87 +3087,89 @@
             "programmed": true,
             "validity_days_ap": "--",
             "validity_days_emp": 90,
-            "note": "renewal from both seats when both occupied by Test Pilots; re-availability from front seat only"
+            "note": "renewal from both seats when both occupied by Test Pilots; re-availability from front seat only",
+            "fms_renewal": true,
+            "seat": "A"
           },
           {
             "code": "E-1d",
             "name": "DEMO",
             "validity_days_ap": "--",
             "validity_days_emp": 15,
-            "t6_only": true
+            "t6_only": true,
+            "seat": "A"
           },
           {
             "code": "E-2",
             "name": "practice forced landing",
             "validity": "no expiry",
-            "t6_only": true
+            "t6_only": true,
+            "seat": "A & B"
           },
           {
             "code": "E-3",
             "name": "in-cloud flight",
             "recency": "last 60 days: 1 PDO flight OR 1 night flight OR 2x E-4 (note 1)",
-            "fms_renewal": true
+            "fms_renewal": true,
+            "seat": "A & B"
           },
           {
             "code": "E-4",
             "name": "IFR approach",
             "validity": "no expiry",
-            "fms_renewal": true
+            "fms_renewal": true,
+            "seat": "A & B"
           },
           {
             "code": "E-5",
-            "name": "formation descent"
+            "name": "formation descent",
+            "seat": "A & B"
           },
           {
             "code": "E-6c",
-            "name": "approach landing light OFF (night)"
-          },
-          {
-            "code": "E-7",
-            "name": "instructor landing/T&G from rear seat",
-            "validity_days": 90,
-            "t6_only": true,
-            "seat": "B"
+            "name": "approach landing light OFF (night)",
+            "seat": "A & B"
           },
           {
             "code": "E-9a",
-            "name": "no-flaps approach"
+            "name": "no-flaps approach",
+            "seat": "A & B"
           },
           {
             "code": "E-9c",
             "name": "heavy-aircraft approach",
-            "t6_only": true
+            "t6_only": true,
+            "seat": "A & B"
           },
           {
             "code": "E-10a",
             "name": "landing, touch & go or approach at foreign airfield",
-            "programmed": true
+            "programmed": true,
+            "seat": "A & B"
           },
           {
             "code": "E-10b",
-            "name": "landing or approach on both runway directions"
+            "name": "landing or approach on both runway directions",
+            "seat": "A & B"
           },
           {
             "code": "E-14a",
             "name": "live A-G weapons release",
             "programmed": true,
-            "t6_only": true
+            "t6_only": true,
+            "seat": "A"
           },
           {
             "code": "E-14b",
             "name": "live A-A weapons release",
             "programmed": true,
-            "t6_only": true
-          },
-          {
-            "code": "E-16",
-            "name": "PARS DEMO",
-            "programmed": true,
-            "t6_only": true
+            "t6_only": true,
+            "seat": "A"
           },
           {
             "code": "E-18",
-            "name": "formation takeoff"
+            "name": "formation takeoff",
+            "seat": "A & B"
           },
           {
             "code": "E-21",
@@ -3174,13 +3178,15 @@
             "readiness": "AMC",
             "validity_days_ap": 90,
             "validity_days_emp": 120,
-            "dual_type_renewal": true
+            "dual_type_renewal": true,
+            "seat": "A & B"
           },
           {
             "code": "E-30a",
             "name": "high-altitude interception (day)",
             "programmed": true,
-            "dual_type_renewal": true
+            "dual_type_renewal": true,
+            "seat": "A & B"
           },
           {
             "code": "E-31a",
@@ -3188,7 +3194,8 @@
             "programmed": true,
             "validity_days_ap": 90,
             "validity_days_emp": 120,
-            "dual_type_renewal": true
+            "dual_type_renewal": true,
+            "seat": "A & B"
           },
           {
             "code": "E-32",
@@ -3197,16 +3204,8 @@
             "readiness": "AMC",
             "validity_days_ap": 120,
             "validity_days_emp": 150,
-            "dual_type_renewal": true
-          },
-          {
-            "code": "E-33",
-            "name": "ACM",
-            "programmed": true,
-            "readiness": "AMC",
-            "validity_days_ap": 120,
-            "validity_days_emp": 150,
-            "auto_renews": "E-32"
+            "dual_type_renewal": true,
+            "seat": "A & B"
           },
           {
             "code": "E-40",
@@ -3215,14 +3214,17 @@
             "validity_days": 360,
             "validity_note": "single figure spanning AP/EMP columns",
             "t6_only": true,
-            "credited_to": "front seat"
+            "credited_to": "front seat",
+            "dual_type_renewal": true,
+            "seat": "A"
           },
           {
             "code": "E-41a",
             "name": "range firing (day)",
             "programmed": true,
             "dual_type_renewal": true,
-            "t6_crediting": "front seat when training munitions released"
+            "t6_crediting": "front seat when training munitions released",
+            "seat": "A & B"
           },
           {
             "code": "E-45",
@@ -3231,7 +3233,8 @@
             "readiness": "AMC",
             "validity_days_ap": 120,
             "validity_days_emp": 150,
-            "dual_type_renewal": true
+            "dual_type_renewal": true,
+            "seat": "A & B"
           },
           {
             "code": "E-46",
@@ -3240,13 +3243,15 @@
             "readiness": "AMC",
             "validity_days_ap": 90,
             "validity_days_emp": 120,
-            "dual_type_renewal": true
+            "dual_type_renewal": true,
+            "seat": "A & B"
           },
           {
             "code": "E-49A",
             "name": "HAS (day)",
             "programmed": true,
-            "dual_type_renewal": true
+            "dual_type_renewal": true,
+            "seat": "A & B"
           },
           {
             "code": "E-49C",
@@ -3254,22 +3259,23 @@
             "programmed": true,
             "validity_days_ap": 120,
             "validity_days_emp": 150,
-            "t6_only": true
+            "t6_only": true,
+            "dual_type_renewal": true,
+            "seat": "A & B"
           },
           {
             "code": "E-62",
             "name": "OCA (STRIKE)",
-            "programmed": true
-          },
-          {
-            "code": "E-65",
-            "name": "HVAA/SLOMO PROTECT",
-            "programmed": true
+            "programmed": true,
+            "dual_type_renewal": true,
+            "seat": "A & B"
           },
           {
             "code": "E-67",
             "name": "CAS",
-            "programmed": true
+            "programmed": true,
+            "dual_type_renewal": true,
+            "seat": "A & B"
           }
         ],
         "not_currently_flown": [
@@ -3306,10 +3312,11 @@
         "cont-11"
       ],
       "flags": [
-        "M-346-only rows (e.g. E-6a/b HUD OFF, E-9b single-engine approach, E-30b, E-35 ACT, E-38 DISSIMILAR, E-41b night, E-42, E-43, E-44, E-47, E-49A(H) night variants, E-53 JDAM, E-56 MAVERICK, E-60, E-63, E-68, E-72, E-74) excluded per user scope (T-6 only).",
-        "Per-row SEAT-position columns (Α/Β/Α&Β) were only recorded where corroborated by §§55-59 and the table notes (E-1c, E-7, E-14, E-40) — the linearized text extraction does not allow certain per-row seat attribution for the remaining rows; consult the printed table for seat authority.",
+        "M-346-only rows (e.g. E-6a/b HUD OFF, E-9b single-engine approach, E-30b, E-35 ACT, E-38 DISSIMILAR, E-41b night, E-42, E-43, E-44, E-47, E-49A(H) night variants, E-53 JDAM, E-56 MAVERICK, E-60, E-63, E-68, E-72, E-74, and — per 2026-08-13 re-audit of the type columns — E-7 rear-seat instructor landing, E-16 PARS DEMO, E-33 ACM, E-65 HVAA/SLOMO PROTECT) excluded per user scope (T-6 only).",
+        "Per-row SEAT-position columns (Α/Β/Α&Β) were only recorded where corroborated by §§55-59 and the table notes (E-1c, E-7, E-14, E-40) — the linearized text extraction does not allow certain per-row seat attribution for the remaining rows; consult the printed table for seat authority. Resolved 2026-08-13: seat columns captured from a 3x page render of PDF 105-107; per-row seat now recorded for every retained row.",
         "E-3 note (1) demands 2x E-4 in 60 days while Ch.8 §54γ demands 3x E-4 for in-cloud flight — internal contradiction of the source (also flagged on the IMC-prerequisites record).",
-        "E-65 row's type-column alignment is ambiguous in the text extraction — included as T-6-relevant with reservation."
+        "E-65 row's type-column alignment was ambiguous in the text extraction; resolved 2026-08-13 by page render: ticked only in the M-346 column — excluded from the T-6 list.",
+        "re-audited 2026-08-13 against a 3x render of PDF 105-107 (word-coordinate column mapping + visual check): removed E-7, E-16, E-33 and E-65 (ticked only under M-346 in ΙΣΧΥΕΙ ΓΙΑ Α/Φ — E-7 also seat B only); added fms_renewal to E-1c (ν in ΕΠΑΝ. ΜΕ FMS); added dual_type_renewal to E-40, E-49C, E-62, E-67 (ΝΑΙ printed in ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ); added per-row seat for all retained rows. NOTE: the EVENTS table marks E-7 as M-346-only yet Table 13 (cont-11) lists E-7 as coverable in every Phase II (T-6) category and §56 assumes rear-seat landings — source-internal tension left to a unit ruling."
       ]
     },
     {
@@ -3409,7 +3416,8 @@
         "cont-09"
       ],
       "flags": [
-        "Table 13's Phase III (Προκεχωρημένο) and Phase IV (Επιχειρησιακό) rows concern the M-346 stages — excluded per user scope (T-6 only)."
+        "Table 13's Phase III (Προκεχωρημένο) and Phase IV (Επιχειρησιακό) rows concern the M-346 stages — excluded per user scope (T-6 only).",
+        "re-audited 2026-08-13: Table 13 Phase II rows verified against PDF 109 — no data change; cross-reference tension flagged: Table 13 lists E-7 in all four Phase II (T-6) categories while the EVENTS table (PDF 105) marks E-7 as M-346-only, seat B."
       ]
     },
     {
