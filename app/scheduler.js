@@ -1678,6 +1678,56 @@ window.fmtDMY = function fmtDMY(v) {
     return pre + Date.now();
   }
 
+  /* ── THE MISTYPED-OID WARNING (Round 9 residual) ─────────────────────────
+     Merging is BY OID, which is exactly right and exactly why one wrong digit
+     is invisible: the row arrives as a BRAND-NEW person who happens to carry
+     the surname or the call sign of somebody already here. Neither side can be
+     called wrong from here — the file may legitimately hold two people with
+     one surname — so the merge is NOT touched. The confirm dialog simply says
+     what it noticed, on its own line, and the decision stays the user's.
+     Returns [] when there is nothing to say. */
+  function rosterCollisions(plan) {
+    const norm = (v) => String(v == null ? "" : v).trim().toLowerCase();
+    /* everybody already in the app, indexed by the two handles a human types:
+       the surname, and the call sign (the local `code` counts as one — a new
+       person's call sign BECOMES their code, so a clash there is the same
+       mistake wearing a different hat). */
+    const byName = new Map(), byCall = new Map();
+    const add = (m, k, x) => { if (!k) return; if (!m.has(k)) m.set(k, []); m.get(k).push(x); };
+    for (const coll of ["instructors", "students"]) {
+      for (const x of S().get(coll) || []) {
+        add(byName, norm(x.last_name), x);
+        add(byCall, norm(x.callsign), x);
+        if (norm(x.callsign) !== norm(x.code)) add(byCall, norm(x.code), x);
+      }
+    }
+    const nameOf = (x) => (x.oid
+      ? String(x.oid) + " (" + (x.code || "?") + ")"
+      : (x.code || "?") + " (added by hand — no OID)");
+    const lines = [];
+    for (const p of plan) {
+      if (!p.isNew) continue;                            // an update BY OID is the normal path
+      const hits = new Map();                            // existing record → what it shares
+      const mark = (x, what) => {
+        if (String(x.oid || "") === p.oid) return;       // same person: not a clash
+        if (!hits.has(x)) hits.set(x, []);
+        if (hits.get(x).indexOf(what) < 0) hits.get(x).push(what);
+      };
+      for (const x of byName.get(norm(p.rec.last_name)) || []) mark(x, "the surname");
+      for (const x of byCall.get(norm(p.rec.callsign)) || []) mark(x, "call sign " + p.rec.callsign);
+      for (const [x, what] of hits) {
+        lines.push("⚠ new " + p.oid + " shares " + what.join(" and ")
+          + " with existing " + nameOf(x) + " — check for a mistyped OID");
+      }
+    }
+    if (lines.length > 8) {
+      const extra = lines.length - 8;
+      lines.length = 8;
+      lines.push("⚠ …and " + extra + " more such clash" + (extra === 1 ? "" : "es"));
+    }
+    return lines;
+  }
+
   function mergeRoster(data) {
     if (!data || typeof data !== "object") { S().toast("Roster import failed — unexpected file.", "bad"); return; }
     const plan = [];                                   // [{coll, rec, isNew, name}]
@@ -1705,10 +1755,12 @@ window.fmtDMY = function fmtDMY(v) {
     const seen = new Set(plan.map((p) => p.coll + "|" + p.oid));
     const untouched = ["instructors", "students"].reduce((n, c) =>
       n + (S().get(c) || []).filter((x) => !seen.has(c + "|" + String(x.oid || ""))).length, 0);
+    const warn = rosterCollisions(plan);
     if (!confirm("Import the global roster?\n\n"
       + "· " + upd + " person(s) already here — updated in place, OID unchanged\n"
       + "· " + add + " new person(s) — created\n"
       + "· " + untouched + " person(s) the file does not mention — left untouched\n\n"
+      + (warn.length ? warn.join("\n") + "\n\n" : "")
       + "Nothing is deleted. Everything stays editable afterwards.")) return;
     for (const p of plan) S().upsert(p.coll, p.rec);
     P().invalidate();

@@ -86,10 +86,67 @@ roster δεν μπαίνει ΠΟΤΕ σε αρχείο του repo. Το **δη
 **ΚΛΕΙΣΤΑ ΕΞ ΟΡΙΣΜΟΥ** (δεν είναι ξεχασμένα): ό,τι είναι **αλφάβητο μηχανής**
 και όχι λεξιλόγιο της μονάδας — `result` (PASS/LAG/FAIL/Score· η μηχανή
 συνεπειών κάνει switch πάνω του), `status` μαθητή/εκπαιδευτή, `scope`
-(class/student), `wave` (A/B), κωδικοί απουσίας (ήδη παραμετρικοί μέσω
-`config.absence_codes`). Ελεύθερη τιμή εκεί θα σήμαινε κανόνας που δεν
+(class/student), `wave` (A/B), κωδικοί απουσίας (`AV_CYCLE` — δες τη σημείωση
+κάτω από τον πίνακα). Ελεύθερη τιμή εκεί θα σήμαινε κανόνας που δεν
 εφαρμόζεται. Τα pickers οντοτήτων (SP/IP/κόμβος/αποστολή) έχουν ήδη τη δική
 τους διαφυγή: **ελεύθερο κείμενο αποστολής**, callsign, IFF, remarks.
+
+### ΠΙΝΑΚΑΣ ΕΛΕΓΧΟΥ — ΚΑΘΕ dropdown ΤΗΣ ΕΦΑΡΜΟΓΗΣ
+
+Ο κανόνας δεν είναι δήλωση προθέσεων: παρακάτω απαριθμούνται **όλα** τα
+`<select>` και `<datalist>` του scheduler, διαβασμένα από τον κώδικα —
+**43 rendered `<select>` + 4 `<datalist>`** (`app/scheduler.js`: 15 literal
+`<select>` + 3 κλήσεις `otherSelect()` + 2 datalists · `app/schedboard.js`:
+19 literal `<select>` + 6 κλήσεις του helper `sel()` των duties + 2 datalists).
+Ο εντοπισμός γίνεται με τον **selector**, όχι με αριθμό γραμμής, ώστε ο πίνακας
+να παραμένει επαληθεύσιμος με ένα grep μετά από κάθε αλλαγή.
+
+| # | Dropdown (πάνελ · πεδίο) | Selector (αρχείο) | Τιμές | «Other…»; | Αν ΚΛΕΙΣΤΟ — γιατί |
+|---|---|---|---|---|---|
+| 1 | Roster · μαθητής — Class | `input[list=sch-classlist]` (scheduler.js) | τα class ids που ήδη υπάρχουν | **ΝΑΙ** — το ίδιο το πεδίο είναι ελεύθερο κείμενο· το datalist είναι quick-pick | — |
+| 2 | Roster · μαθητής — Status | `select[data-f=status]` · `STATUS_OPTS` | active · hold · SMS (αποθηκεύεται `kepe`) · withdrawn | ΟΧΙ | **αλφάβητο μηχανής** — η μηχανή ετοιμότητας και οι counters κάνουν switch πάνω του |
+| 3 | Roster · μαθητής — Primary IP / Reserve IP 1 / Reserve IP 2 | `select[data-f=primary_ip‖r0‖r1]` · `ipRefOptions()` | οι IP του μητρώου (η αποθηκευμένη τιμή κρατιέται ορατή κι όταν ο IP έφυγε) | ΟΧΙ | **picker οντότητας** — δείχνει σε εγγραφή του μητρώου· ελεύθερο κείμενο θα ήταν σπασμένη αναφορά |
+| 4 | Roster · εκπαιδευτής — Country | `select[data-other=country]` · `COUNTRIES` | HAF · ITAF | **ΝΑΙ** | — |
+| 5 | Roster · εκπαιδευτής — Duty | `select[data-other=duty]` · `DUTIES` | Squadron Commander · DO · Flight Commander · Evaluator · Instructor | **ΝΑΙ** | — |
+| 6 | Roster · εκπαιδευτής — Leadership | `select[data-other=leadership]` · `LEADERSHIPS` | Wingman · 2-ship · 4-ship · Mission Commander | **ΝΑΙ** | — |
+| 7 | Roster · εκπαιδευτής — Status | `select[data-f=status]` | active · departed | ΟΧΙ | **αλφάβητο μηχανής** — το `departed` φιλτράρει ΚΑΘΕ picker και εμποδίζει το hard delete |
+| 8 | Roster · Rank (μαθητή & εκπαιδευτή) | `input[data-f=rank]` + chips `RANKS` | Cdt · 2Lt · 1Lt · Capt · Maj · Lt Col · S.Ten · Lt | **ΝΑΙ** — το πεδίο είναι εξαρχής ελεύθερο· τα chips είναι quick-pick | — |
+| 9 | Training log · Node | `select#sch-nodesel` | κόμβοι συλλαβού (lessons ανά course) + special sorties + NFS | ΟΧΙ | **picker οντότητας** — η διαφυγή ζει στο board (`Custom…` αποστολή) |
+| 10 | Training log · Scope | `select[data-ff=scope]` (και μία disabled μονο-επιλογή στα special sorties) | Student · Class | ΟΧΙ | **αλφάβητο μηχανής** — καθορίζει σε πόσες εγγραφές γράφεται το γεγονός |
+| 11 | Training log · Student | `select[data-ff=student]` | οι μαθητές του μητρώου | ΟΧΙ | **picker οντότητας** |
+| 12 | Training log · NFS reason | `select[data-ff=category]` · `NFS_CATS` | written exam failure · oral exam failure · **no-fly — student cause (other)** | **ΝΑΙ** — η τρίτη τιμή είναι η ίδια η τυπωμένη «άλλη αιτία» του Α0473, με ελεύθερο `Note` δίπλα | — |
+| 13 | Training log · Category (special sortie) | `select[data-ff=category]` · `SchedConsq.CATS` | Contact · Instrument · Formation · VFR Navigation | ΟΧΙ | **λεξιλόγιο συλλαβού** — η μηχανή συνεπειών μετρά ανά track· πέμπτο track δεν υπάρχει |
+| 14 | Training log · Instructor | `select[data-ff=instructor]` (`evalIpOptions()` στα evaluator sorties) | ενεργοί IP· evaluator-qualified πρώτοι | ΟΧΙ | **picker οντότητας** |
+| 15 | Training log · Device | `input[data-ff=device][list=sch-devlist]` · `DEVICES` | T-6A · OFT · FTD · GND | **ΝΑΙ** — ελεύθερο πεδίο με datalist | — |
+| 16 | Training log · Result | `select[data-ff=result]` · `RESULT_OPTS_FLY` / `_GND` | πτήσεις: PASS · LAG · FAIL · Score % — εδάφους: Completed · Score % | ΟΧΙ | **αλφάβητο μηχανής** — fail-08…12 κάνουν switch πάνω του |
+| 17 | Training log · φίλτρο Student | `select[data-flt=student]` | All + οι μαθητές | ΟΧΙ | **picker οντότητας** (φίλτρο) |
+| 18 | Training log · φίλτρο Kind | `select[data-flt=kind]` · `KINDS` | All · Lessons · Ground exams · F/S · Flights | ΟΧΙ | **αλφάβητο μηχανής** — τα τέσσερα είδη κόμβου του γράφου |
+| 19 | Board · Duties — SOF A · SOF B · RSU A · RSU B · Ground 1 · Ground 2 (6 selects) | `select[data-duty]` (schedboard.js) | ενεργοί IP φιλτραρισμένοι στο προσόν (SOF / rsu_solo / ground) | ΟΧΙ | **picker οντότητας** |
+| 20 | Board · Wave line — SP | `select[data-lf=sp]` · `spOptions()` | όλοι οι μη-withdrawn μαθητές — ο μπλοκαρισμένος/απών μένει στη λίστα με τον λόγο γραμμένο δίπλα του | ΟΧΙ | **picker οντότητας** |
+| 21 | Board · Wave line — Main mission / Alt mission | `select[data-lf=node‖alt]` · `missionOptions()` | οι επιτρεπτές αποστολές του SP + η αποθηκευμένη | **ΝΑΙ** — επιλογή `Custom…` ⇒ ελεύθερο κείμενο αποστολής | — |
+| 22 | Board · Wave line — IP | `select[data-lf=ip]` · `ipOptions()` | ενεργοί IP με τα φορτία/συγκρούσεις τους | ΟΧΙ | **picker οντότητας** |
+| 23 | Board · Wave line — T/O | `input[data-lf=to][list=sch-todl]` | πλέγμα από 05:00 ως το τέλος της ημέρας με βήμα `config.round_min` (default 5′) | **ΝΑΙ** — ελεύθερη πληκτρολόγηση HH:MM | — |
+| 24 | Board · F/S — SP / Mission / IP | `select[data-lf=sp‖node‖ip]` | ό,τι και στη wave line | Mission: **ΝΑΙ** (`Custom…`) | picker οντότητας για SP/IP |
+| 25 | Board · F/S — Device | `input[data-lf=device][list=sch-fsdev]` · `FS_DEVICES` | OFT · FTD | **ΝΑΙ** — ελεύθερο πεδίο· νέος προσομοιωτής δεν χρειάζεται release | — |
+| 26 | Board · Lessons — Wave | `select[data-lf=wave]` | A · B | ΟΧΙ | **αλφάβητο μηχανής** — Ground 1 καλύπτει το wave A, Ground 2 το B· τρίτο κύμα δεν υπάρχει |
+| 27 | Board · Lessons — Course / exam | `select[data-lf=node]` · `nodeOpts()` | courses ανά ground group + ground exams (+ legacy whole-group) | ΟΧΙ | **picker οντότητας** |
+| 28 | Board · Lessons — Scope | `select[data-lf=scope]` | Class · Student | ΟΧΙ | **αλφάβητο μηχανής** (ίδιο με #10) |
+| 29 | Board · Lessons — Student | `select[data-lf=student]` | οι μαθητές | ΟΧΙ | **picker οντότητας** |
+| 30 | Board · Lessons — Ground instructor | `select[data-lf=instructor]` | IP με `quals.ground` (+ η αποθηκευμένη τιμή) | ΟΧΙ | **picker οντότητας** |
+| 31 | Board · Alternates — SP / sortie / IP | `select[data-lf=sp‖node‖ip]` | ό,τι και στη wave line | sortie: **ΝΑΙ** (`Custom…`) | picker οντότητας για SP/IP |
+| 32 | Board · Actualize — «what was actually flown» | `select[data-ab-f=node]` | οι κόμβοι του ίδιου είδους | ΟΧΙ | **picker οντότητας** |
+| 33 | Board · Actualize — Result | `select[data-ab-f=result]` | PASS · LAG · FAIL | ΟΧΙ | **αλφάβητο μηχανής** (ίδιο με #16) |
+| 34 | Progress · Instructor (γρήγορη καταχώρηση) | `select[data-pf=instructor]` | ενεργοί IP | ΟΧΙ | **picker οντότητας** |
+| 35 | Progress · Instructor (stepper) | `select[data-sf=instructor]` · `stepIpOptions()` | ενεργοί IP, evaluator πρώτοι στα checkrides | ΟΧΙ | **picker οντότητας** |
+
+**Τι ΔΕΝ είναι dropdown** (και γι' αυτό δεν έχει σειρά στον πίνακα): η λίστα
+`Avoid IPs` και τα `Rank` chips είναι **toggle chips**, το `absent` των lessons
+είναι checkbox + **ελεύθερο** πεδίο αιτίας, και η διαθεσιμότητα είναι **κουμπί
+κύκλου** πάνω στο `AV_CYCLE` (`available → LV → SLV → HLV → SCL → OFF → TO →
+AMC`). Ακρίβεια που οφείλει ένας πίνακας ελέγχου: το `AV_CYCLE` είναι σήμερα
+**σταθερά του κώδικα** και στα δύο panes — το `config.absence_codes` του seed
+δεν διαβάζεται από το UI, άρα η παραμετροποίηση των κωδικών απουσίας είναι
+**ανοιχτό**, όχι υλοποιημένο.
 
 ## 3. Κατάσταση κόμβου ανά μαθητή
 
