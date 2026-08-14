@@ -1,0 +1,2505 @@
+{
+  "schema": "currency-catalog-v1",
+  "scope": "T-6 instructors",
+  "description": "Definitive catalog of everything that expires over time for a T-6A flight instructor under the 3-01/2025 ΔΑΕ, split by experience level (ΑΠ inexperienced / ΕΜΠ experienced). Built to drive a per-instructor currency card with a colour-scale availability view in the FDMS scheduler. English throughout; Greek appears only in `verbatim`, letter-exact as printed.",
+  "generated": "2026-08-14",
+  "sources": [
+    {
+      "file": "3-01_2025_ΔΑΕ.pdf",
+      "path": "D:\\FDMS\\3-01_2025_ΔΑΕ.pdf",
+      "pages_total": 253,
+      "chapters_used": [
+        "Ch.2 §14 (PDF 39) — 4-monthly body-weight check",
+        "Ch.3 §§65-66 + Πίνακας 7 (PDF 90-91) — trainee abstention tier",
+        "Ch.4 §§6-18 (PDF 94-95) — ΠΡ advanced-exercise framework",
+        "Ch.4 §§21-27 + Πίνακας 6 (PDF 97-98) — semi-annual F/S programme",
+        "Ch.4 §§30-35 (PDF 98-99) — evaluations, employment limits, programming priorities",
+        "Ch.4 §§37-40 + Πίνακες 9, 11 (PDF 100-102) — semi-annual air programme and reduction bands",
+        "Ch.4 §§41-48 + EVENTS table (PDF 103-107) — E-item catalogue and column semantics",
+        "Ch.4 §§49-61 + Πίνακας 13 (PDF 108-109) — abstention, renewal chains, crediting, student-flight coverage",
+        "Ch.4 §§67-73 (PDF 110-114) — record forms, readiness levels, loss of type availability, re-assignment, monthly exams",
+        "Ch.4 §75 Πίνακας 14 + §§76-99 (PDF 115-119) — seminars and recurring trainings",
+        "Ch.5 §§6, 17-21, 27, 38-39 (PDF 122-128) — T-6A display flying",
+        "Ch.8 §§18-21, 35-40, 54-56 (PDF 147-155) — test pilots, weapons certification, in-cloud flight",
+        "Annex A §10 (PDF 241) — test pilot re-assignment",
+        "Annex B §§13-17 (PDF 245-246) — flyer categories and experience level"
+      ]
+    }
+  ],
+  "method": {
+    "process": "Two independent research passes (ALPHA and BRAVO) built the catalog separately; this file is the refereed merge. Matched by meaning, then compared field by field. Agreements passed through; every disagreement and every singleton was adjudicated by the referee opening the cited PDF page, with the printed page as the only authority.",
+    "extraction": "The EVENTS table (PDF 105-107) was re-extracted with PyMuPDF word coordinates so that merged cells and column membership are decided by geometry, not by reading order. Verified column centres: ΠΡΟΓΡ. 307.8 | BMC 348.8 | AMC 384.2 | ΑΠ 422.4 | ΕΜΠ 468.4 | merged ΑΠ+ΕΜΠ 446.0 | Τ-6 506.5 | Μ-346 539.9 | ΕΠΑΝ. ΜΕ FMS 578.9 | ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ 630.3 | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α 680.1 / Β 715.4 / Α&Β 750.9.",
+    "sweep": "An independent regex sweep for expiry language (απώλεια/χάνει τη διαθεσιμότητα, τελευταίες N ημέρες, κάθε N ημερολογιακές, αποχή, ισχύ N έτη/μήνες, χρονικό όριο, επαναδιάθεση, ανά έτος) was run over all 253 pages to catch anything both passes missed. It produced the two referee additions listed in dispute D-10; every other hit outside the chapters above concerns students (μαθητές) or radionavigators and is out of scope for an instructor currency card.",
+    "verbatim_fidelity": "`verbatim` reproduces the source letter-exact, including its own inconsistencies — e.g. the source alternates the Greek «ΝΑΙ» and the Latin-N «NAI» inside the same table column, and prints «tοuch» with a Greek omicron in §58. EVENTS rows are transcribed cell by cell with the column labels supplied from the printed header, because a linear text dump of a table row is not interpretable.",
+    "project_law": "T-6 only: rows ticked exclusively under Μ-346 are excluded; where a provision splits by type the T-6 branch is kept with a flag. Numbers exactly as printed — never inferred, never converted (periods printed in years or months stay null in validity_days with the printed period recorded in `printed_period` / `printed_as`). Ambiguities are flagged, never silently resolved."
+  },
+  "agreement_stats": {
+    "matched_concepts": 67,
+    "agreed_outright": 65,
+    "numeric_disagreements": 2,
+    "field_or_taxonomy_disagreements": 4,
+    "agreement_rate_on_matched_pairs": "65/67 = 97.0% on the numbers; 61/67 = 91.0% counting the taxonomy and structural divergences",
+    "singletons_alpha_only": 20,
+    "singletons_bravo_only": 3,
+    "referee_additions": 2,
+    "disputes_logged": 10,
+    "final_item_count": 91,
+    "items_by_kind": {
+      "e-item": 28,
+      "landing": 3,
+      "other": 29,
+      "recency": 16,
+      "s-category": 7,
+      "sim": 8
+    },
+    "caveat": "BRAVO's delivered payload was TRUNCATED in mid-record at `monthly-knowledge-exams`. Records present only in ALPHA after that point cannot be proven to be true singletons — they may exist in BRAVO's undelivered tail. Every one of them was therefore verified directly against the cited PDF page by the referee rather than accepted on ALPHA's authority; the singleton counts above are upper bounds for ALPHA and lower bounds for BRAVO."
+  },
+  "disputes": [
+    {
+      "id": "D-01",
+      "topic": "demo-500ft-currency — validity_days",
+      "alpha": "inexperienced null, experienced 15 — imported the «--» / 15 split printed on the EVENTS row Ε-1δ.",
+      "bravo": "15 / 15 — Ch.5 §17 prints one figure with no experience split.",
+      "page": "PDF 125, Ch.5 §17: «...να πετά μία τουλάχιστον, πτήση επίδειξης στα 500΄ AGL (high, low profile or combined, πραγματική ή για εξάσκηση) κάθε 15 ημερολογιακές ημέρες.» Chapter 5 has no ΑΠ/ΕΜΠ columns anywhere.",
+      "ruling": "BRAVO. 15/15. The record is sourced to Ch.5 §17, which prints a single figure; importing the split from a different provision on a different page would infer a number the page does not print, against project law. The Ε-1δ reading is preserved separately on record e-1d-demo (--/15), and each record flags the other."
+    },
+    {
+      "id": "D-02",
+      "topic": "demo-above-1000ft-availability — validity_days",
+      "alpha": "inexperienced null, experienced 90.",
+      "bravo": "90 / 90 — §19 prints a single limit.",
+      "page": "PDF 125, Ch.5 §19: «Για την απώλεια διαθεσιμότητας του Ιπταμένου στους ελιγμούς της επίδειξης, σε ύψος πάνω από τα 1000΄ AGL, καθορίζεται χρονικό όριο 90 ημερών.» No experience split printed.",
+      "ruling": "BRAVO. 90/90, same reasoning as D-01."
+    },
+    {
+      "id": "D-03",
+      "topic": "Ε-7 (rear-seat instructor landing / touch-and-go) — include as a T-6 item or not",
+      "alpha": "Included as an item with an «EXCLUDED-BY-TYPE-COLUMN» flag; 90/90 merged, seat Β.",
+      "bravo": "Excluded from the item list; the Table 13 tension recorded on the landing-seat-renewal-chain record.",
+      "page": "PDF 105, row Ε-7 (y=354): the ΙΣΧΥΕΙ ΓΙΑ Α/Φ row carries a mark at x=539.9 (Μ-346) and NO mark at x=506.5 (Τ-6). Validity 90 at x=446.0 (merged ΑΠ+ΕΜΠ), seat mark at x=715.4 (Β). Table 13 on PDF 109 nevertheless lists «7» in all four Phase II (T-6) categories.",
+      "ruling": "BRAVO. Ε-7 is ticked ONLY under Μ-346; it is not a split provision, so the T-6-only project law excludes it from the item list. This also matches the previous re-audit decision recorded in the repository history. The Table 13 contradiction is carried as an open flag on e-coverage-during-student-flights and on landing-seat-renewal-chain, and appears in open_flags — it needs a unit ruling before a scheduler treats Ε-7 as a live T-6 currency. Note in passing that ALPHA's merged-cell reading of the Ε-7 figure (90 for both experience levels, not ΕΜΠ-only) is the correct one and corrects the earlier digitization."
+    },
+    {
+      "id": "D-04",
+      "topic": "How many AMC-marked rows apply to the T-6",
+      "alpha": "Six: Π/Γ ημέρας, Π/Γ νύκτας, Ε-21, Ε-32, Ε-45, Ε-46.",
+      "bravo": "Wrote «three of the five AMC-marked currencies» on its Σ-3 record, implying five.",
+      "page": "PDF 105-107, marks in the AMC column (x-centre 384.2-385.4): Π/Γ ημέρας, Π/Γ νύκτας, Ε-21, Ε-32, Ε-33, Ε-45, Ε-46 — seven rows, of which Ε-33 is ticked Μ-346 only.",
+      "ruling": "ALPHA. Six AMC-marked rows apply to the T-6. BRAVO's «five» is an arithmetic slip in prose; its own row data were correct. Corrected on amc-readiness and on s-3-air-to-ground."
+    },
+    {
+      "id": "D-05",
+      "topic": "Demo restoration — one record or three",
+      "alpha": "Separate records for the §18 grace band (15-30 days) and the §20 programme (beyond 30 days), plus the §6 tenure limit.",
+      "bravo": "Folded both restoration paths into the renewal_notes of demo-500ft-currency; no tenure record.",
+      "page": "PDF 125-126: §17 (15 days), §18 (up to 30 days, two options), §19 (90 days above 1000 ft), §20 (beyond 30 days, four steps) are four distinct numbered provisions.",
+      "ruling": "ALPHA's decomposition, with BRAVO's non-split numbers. A colour scale needs the band edges as distinct states (in date <15 d; simple restoration 15-30 d; full programme >30 d), and each band is anchored to its own paragraph. §18's band edge is printed without an experience split, so it is recorded 30/30."
+    },
+    {
+      "id": "D-06",
+      "topic": "Ε-1γ (FCF) — scope of the ΕΠΑΝ. ΜΕ FMS tick",
+      "alpha": "Silent — recorded only that the FMS column is ticked.",
+      "bravo": "Flagged a tension: Annex A §10 grants the FMS option for the Μ-346 only.",
+      "page": "PDF 241, Annex A §10: «Η επαναδιάθεση των Δοκιμαστών γίνεται με 1 πτήση Δοκιμής, με διαθέσιμο Δοκιμαστή στη Β΄ ΘΧ. Για τα Α/Φ Μ-346 δύναται να εκτελεστεί σε πτήση στο FMS.» The EVENTS row ticks ΕΠΑΝ. ΜΕ FMS while both type columns are marked.",
+      "ruling": "BRAVO. Verified verbatim by the referee. For the T-6 the printed re-assignment route for a Test Pilot is 1 test flight with an available Test Pilot in the rear seat. The tension is carried as a flag on e-1c-aircraft-test-fcf and is not resolved."
+    },
+    {
+      "id": "D-07",
+      "topic": "kind of the Table 14 seminars and recurring trainings",
+      "alpha": "kind = «other» for all of them.",
+      "bravo": "kind = «recency».",
+      "page": "PDF 115, Table 14 prints an ΙΣΧΥΣ (validity) column: Ετήσια / Τριμηνιαία / 3-ετής for the seven training rows, and a dash for the instructor conferences.",
+      "ruling": "BRAVO for the seven rows that carry a printed validity (they expire and belong on a currency card, so «recency»), ALPHA for the three rows that are not individual currencies — instructor conferences (dash in ΙΣΧΥΣ), cross/staff visits and the commanders' conference — which stay «other»."
+    },
+    {
+      "id": "D-08",
+      "topic": "kind of the Table 9 air-programme total",
+      "alpha": "kind = «s-category».",
+      "bravo": "kind = «other».",
+      "page": "PDF 101, Πίνακας 9: the totals line (ΣΥΝΟΛΟ ΕΞΟΔΩΝ 6 / 3, ΣΥΝΟΛΟ ΩΡΩΝ 7,2 / 3,6) is the roll-up of the Σ rows of the same table.",
+      "ruling": "ALPHA, for symmetry: both catalogs already classify the Table 6 F/S total as «sim» alongside its SIM rows, so the Table 9 total is classified «s-category» alongside its Σ rows."
+    },
+    {
+      "id": "D-09",
+      "topic": "Scope note on the trainee abstention rules (Ch.3 §§65-66)",
+      "alpha": "Included both, flagged as applying to εκπαιδευόμενοι and «not to maintenance-stage instructors, who are governed by §70».",
+      "bravo": "Not present in the delivered payload (see the truncation caveat in agreement_stats).",
+      "page": "PDF 245, Annex B §13: «Εκπαιδευόμενος: Είναι ο Αξιωματικός που εκπαιδεύεται στη ΜΕΑΕ/ΣΜΕΤ για να ορισθεί Εκπαιδευτής ή για να διατεθεί ή επαναδιατεθεί στον τύπο.»",
+      "ruling": "Both records retained, but ALPHA's scope flag is REFINED against the page: because Annex B §13 includes the officer being re-assigned to the type, a qualified maintenance-stage instructor IS an εκπαιδευόμενος while he is in §71 re-assignment training, and the 20-day and 30-day rules bite on him then. In normal maintenance-stage service §70 (180 days / 1 year) governs."
+    },
+    {
+      "id": "D-10",
+      "topic": "Two records found by neither research pass (referee additions)",
+      "alpha": "Absent.",
+      "bravo": "Absent.",
+      "page": "PDF 99, Ch.4 §35β: «Τις ανάγκες προγραμματισμού (επικείμενη λήξη του Εκπαιδευτή στην άσκηση, κλπ)» — impending expiry as a printed input to daily programming and seat allocation. PDF 245, Annex B §§14-15: the posted (ΤΟΠΟΘΕΤΗΜΕΝΟΣ) vs attached (ΠΡΟΣΚΟΛΛΗΜΕΝΟΣ) definition, including the attached groups for whom BMC or type availability is MANDATORY.",
+      "ruling": "Both ADDED, each marked «REFEREE ADDITION» in its flags. Found by an independent regex sweep of all 253 pages for expiry language. §35 is the only place in the 3-01 that names impending expiry as a scheduling driver — directly load-bearing for this feature. Annex B §§14-15 is needed to read Tables 6 and 9 correctly, since posted/attached is a different axis from inexperienced/experienced."
+    }
+  ],
+  "open_flags": [
+    "Ε-4 count for the in-cloud recency: the EVENTS note (1) on PDF 107 requires 2 special exercises Ε-4 in the last 60 days, while Ch.8 §54γ on PDF 155 requires 3 for the same permission. Both verified verbatim by the referee; the 60-day window is identical in both places. UNIT RULING NEEDED.",
+    "Ε-7 versus Table 13: the EVENTS type column ticks Ε-7 only under Μ-346, yet Table 13 lists Ε-7 in all four Phase II (T-6) categories and §56 assumes a rear-seat/front-seat landing distinction on any type. Ε-7 is excluded from the item list per project law. UNIT RULING NEEDED before a scheduler treats it as a live T-6 currency.",
+    "The «--» printed in the ΑΠ column of Ε-1γ (FCF) and Ε-1δ (DEMO) is nowhere defined by the source and is NOT the blank that §48γ maps to «availability retained forever». Read literally it means inexperienced flyers are not eligible, which is consistent with the Test Pilot criteria of Ch.8 §18, but the source does not say so. UNIT RULING NEEDED.",
+    "Ch.5 §17 prints the 15-day demo currency with no experience split while the EVENTS row Ε-1δ prints «--» / 15. Whether an inexperienced instructor may hold the demo currency at all is unresolved.",
+    "Π.ΠΔΟ rating validity and the Tactical / Τ-Α evaluation time limits gate combat-ready status via §69δ but carry NO day count in the 3-01 — they are set by KPA Β-6/ΓΕΑ. THE CURRENCY CARD CANNOT BE COMPLETED FROM THIS DOCUMENT ALONE.",
+    "Every Table 14 validity is printed as a period word (Ετήσια, Τριμηνιαία, 3-ετής) and §§83/85/93 as «once per year» / «3 years» / «one year». No day counts were inferred; validity_days is null with the printed period recorded. A project ruling is needed on how to convert them for a colour scale.",
+    "§70 gives the maintenance-stage loss threshold as 180 days for inexperienced flyers but «πάνω από 1 έτος» for experienced — a units mismatch inside one paragraph. No conversion made; the experienced branch needs a project ruling.",
+    "Table 11 leaves calendar day 166 unassigned: the bands run to 136-165 and resume at «Πάνω από 166» (from 167). Reproduced as printed.",
+    "The BMC column carries exactly ONE tick in the whole EVENTS table (the day landing), so §69δ(3) reduces in practice to a single currency. This may be a source omission rather than intent. UNIT RULING RECOMMENDED.",
+    "Ε-40 and Ε-49Γ are ticked Τ-6 ONLY yet carry ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ = ΝΑΙ, which by §48στ means renewal by flying the 2nd type — an event executable only on the T-6 cannot be renewed on the Μ-346. Recorded as printed.",
+    "Ε-32 (BFM) is renewed automatically by Ε-33 (ACM) under §60, but Ε-33 is ticked Μ-346 only, so the chain is unreachable for a single-type T-6 instructor and applies only to dual-availability flyers. The source does not state this.",
+    "Note (3) declares Ε-22 and Ε-23 not executed, yet both rows still carry a ΠΡΟΓΡ. = ΝΑΙ tick. Printed inconsistency.",
+    "Ε-1γ: the EVENTS table ticks ΕΠΑΝ. ΜΕ FMS across both type columns while Annex A §10 grants the FMS option for the Μ-346 only. Unresolved.",
+    "Whether the «requirements are minima» sentence (§25) extends from the F/S subsection to the Table 9 air sorties. No equivalent sentence exists in §§28-40; extending it would be an extrapolation.",
+    "The §40 reduction is permissive («δύνανται να μειωθούν»), not automatic, and reduces the SEMI-ANNUAL quotas only — it does not extend any day-count currency. A scheduler must treat it as a decision, not a computation.",
+    "No definition of «Άπειρος» (inexperienced) is printed anywhere in the 3-01 — Annex B §17 defines only «Έμπειρος», and inexperienced is the complement by implication.",
+    "Stale internal cross-references: §48β points to «παράγραφος 70» for the readiness levels (actually §69); §69β/γ/δ point to «παράγραφος 49» for the EVENTS table (actually §48); §83 points to «Παρ. 76» for re-servicing (the PDO seminar paragraph). None affects a value, but citations generated from the document text will be wrong.",
+    "The 90-day limit for display manoeuvres above 1000 ft AGL (Ch.5 §19) has no printed restoration path — §§18 and 20 are written for the 500 ft currency and themselves rely on 1000/2000/5000 ft flying."
+  ],
+  "items": [
+    {
+      "id": "day-landing",
+      "name": "Day landing currency (Π/Γ ημέρας)",
+      "kind": "landing",
+      "validity_days": {
+        "inexperienced": 90,
+        "experienced": 90,
+        "printed_as": "a single figure 90 in a cell merged across the ΑΠ and ΕΜΠ columns (x-centre 446.0 = midpoint of ΑΠ 422.4 / ΕΜΠ 468.4) — same for both experience levels"
+      },
+      "renews": [],
+      "renewal_notes": "Renewed by flying any day landing. Renewed AUTOMATICALLY by a night landing (§55) and by a landing from the rear seat, which automatically renews the front-seat landing too (§56). Executable from both seats. Not renewable in the FMS and not renewable via the 2nd type. May also be covered during flights with students or trainees when the exercise is akin to the category flown and is logged in the flight log (§61, Table 13).",
+      "lapse_consequence": "Loss of availability in the day landing. Because this is the ONLY row in the entire EVENTS table carrying a «BMC» mark, its lapse drops the instructor to Partially Combat Ready under §69δ(3) — BMC and AMC both fall.",
+      "bmc_amc": "Required for BOTH BMC and AMC — the single BMC-ticked row in the table.",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 105,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Π/Γ ημέρας | ΕΤΟΙΜΟΠΟΛ. BMC: ΝΑΙ | AMC: ΝΑΙ | ΔΙΑΘΕΣΙΜΟΤΗΤΑ (ΗΜΕΡΕΣ): 90 (merged ΑΠ+ΕΜΠ) | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν || 55. Η νυχτερινή Π/Γ, ανανεώνει αυτόματα και την ημερήσια. || 56. Η Π/Γ από τη Β΄ ΘΧ, ανανεώνει αυτόματα και την Π/Γ από την Α΄ θέση.",
+      "flags": [
+        "Unnumbered row — the first row of the EVENTS table carries no exercise code.",
+        "The 90 applies to both experience levels by the printed table geometry (single centred figure, no ΑΠ|ΕΜΠ divider drawn on this row); the source never states it in words.",
+        "REFEREE-VERIFIED: the BMC column (x 329-369.5) carries exactly ONE tick across PDF 105-107, on this row. §69δ(3) therefore reduces in practice to the day landing."
+      ],
+      "unit": "days"
+    },
+    {
+      "id": "night-landing",
+      "name": "Night landing currency (Π/Γ νύκτας)",
+      "kind": "landing",
+      "validity_days": {
+        "inexperienced": 45,
+        "experienced": 60
+      },
+      "renews": [
+        "day-landing"
+      ],
+      "renewal_notes": "Renewed by flying a night landing. A night landing automatically renews the day landing as well (§55); a rear-seat landing automatically renews the front-seat landing (§56). Executable from both seats. Not renewable in the FMS, not renewable via the 2nd type. To be programmed for a night flight at all the instructor must additionally satisfy the day-flying recency of §50 — an in-date night landing does not substitute for it.",
+      "lapse_consequence": "Loss of availability for night landings and hence for night flying; being AMC-marked, its lapse costs the AMC characterisation (§69γ) and also closes the automatic day-landing renewal path.",
+      "bmc_amc": "Required for AMC (BMC column blank).",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 105,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Π/Γ νύκτας | ΕΤΟΙΜΟΠΟΛ. AMC: ΝΑΙ | ΔΙΑΘΕΣΙΜΟΤΗΤΑ (ΗΜΕΡΕΣ) ΑΠ: 45 | ΕΜΠ: 60 | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν",
+      "flags": [
+        "Unnumbered row (no exercise code).",
+        "The 45/60 split is printed in two separate ΑΠ and ΕΜΠ cells (divider present) — unambiguous."
+      ],
+      "unit": "days"
+    },
+    {
+      "id": "landing-seat-renewal-chain",
+      "name": "Rear-seat landing renews the front-seat landing",
+      "kind": "landing",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "a crediting rule, not a window"
+      },
+      "renews": [
+        "day-landing",
+        "night-landing"
+      ],
+      "renewal_notes": "A landing flown from the rear seat (Β΄ ΘΧ) automatically renews the landing from the front seat (Α΄ θέση). The chain runs one way only — nothing in the source says a front-seat landing renews a rear-seat landing.",
+      "lapse_consequence": "Not applicable — a crediting rule that prevents an avoidable lapse.",
+      "bmc_amc": "Feeds the day/night landing currencies and therefore BMC/AMC indirectly.",
+      "seat": "B credits A",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 108,
+        "ref": "Ch.4 §56 (typ. p. 90)"
+      },
+      "verbatim": "56. Η Π/Γ από τη Β΄ ΘΧ, ανανεώνει αυτόματα και την Π/Γ από την Α΄ θέση.",
+      "flags": [
+        "The two T-6 landing rows are printed with a single seat mark «Α & Β» — the printed table carries NO separate front-seat and rear-seat landing currencies for the T-6. The only seat-specific landing row (Ε-7, «Π/Γ- Touch & Go Εκπτή από Β' Θ.Χ», 90 days merged, seat Β) is ticked ONLY under Μ-346 and is out of T-6 scope, yet §56 presupposes a rear-seat/front-seat distinction on any type. Source-internal tension — unit ruling needed."
+      ],
+      "unit": "days"
+    },
+    {
+      "id": "e-1a-aerobatics",
+      "name": "Ε-1α — Aerobatics (Ακροβατικά)",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "no number printed in either ΔΙΑΘΕΣΙΜΟΤΗΤΑ column → availability retained permanently (§48γ)"
+      },
+      "renews": [],
+      "renewal_notes": "Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Not renewable via the 2nd type (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ blank). Valid on both T-6 and M-346 (ΙΣΧΥΕΙ ΓΙΑ Α/Φ).",
+      "lapse_consequence": "None printed — where no number appears in the ΔΙΑΘΕΣΙΜΟΤΗΤΑ columns the instructor keeps his availability permanently (§48γ).",
+      "bmc_amc": "no BMC or AMC tick",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 105,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-1 α Ακροβατικά | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν",
+      "flags": [],
+      "unit": "days"
+    },
+    {
+      "id": "e-1b-spin",
+      "name": "Ε-1β — SPIN",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": 180,
+        "experienced": 180
+      },
+      "renews": [],
+      "renewal_notes": "180 printed in the ΑΠ and ΕΜΠ cells separately (divider present) — identical for the two experience levels. Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Not renewable via the 2nd type (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ blank). T-6 only — the Μ-346 column is blank on this row.",
+      "lapse_consequence": "Loses availability to fly or instruct the spin exercise until re-availed.",
+      "bmc_amc": "no BMC or AMC tick",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 105,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-1 β SPIN | ΔΙΑΘΕΣΙΜΟΤΗΤΑ (ΗΜΕΡΕΣ) ΑΠ: 180 | ΕΜΠ: 180 | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν",
+      "flags": [],
+      "unit": "days"
+    },
+    {
+      "id": "e-1c-aircraft-test-fcf",
+      "name": "Ε-1γ — Aircraft test flight (FCF / Δοκιμή Α/Φ)",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": 90,
+        "inexperienced_printed": "--"
+      },
+      "renews": [
+        "sim-da"
+      ],
+      "renewal_notes": "Note (2): renewal is made from BOTH seats when both are occupied by Test Pilots; RE-AVAILABILITY is made only from the front seat. Annex A §10: re-assignment of Test Pilots is by 1 test flight with an available Test Pilot in the rear seat. Test Pilots are appointed by Unit order, maximum 4 per MEA excluding the MEA COs and AEs (Ch.8 §§19-21). Test Pilots also carry the semi-annual SIM-ΔΑ requirement, which may be counted in place of SIM-1. Renewable in the FMS (ΕΠΑΝ. ΜΕ FMS ticked) — re-availability and renewal both. Not renewable via the 2nd type (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ blank). Valid on both T-6 and M-346 (ΙΣΧΥΕΙ ΓΙΑ Α/Φ).",
+      "lapse_consequence": "Loses availability for aircraft-test (FCF) flights; the squadron loses one of its (maximum 4) Test Pilots until re-availability from the front seat.",
+      "bmc_amc": "programmed event (ΠΡΟΓΡ. ticked)",
+      "seat": "A",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 105,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-1 γ Δοκιμή Α/Φ | ΠΡΟΓΡ.: NAI | ΑΠ: -- | ΕΜΠ: 90 | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΕΠΑΝ. ΜΕ FMS: ν | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α: ν | Α & Β: *(2) || (2) Η ανανέωση γίνεται και από τις δύο ΘΧ (όταν και οι δύο θέσεις είναι κατειλημμένες από δοκιμαστές). Η επαναδιάθεση γίνεται μόνο από την Α’ ΘΧ. || 10. Η επαναδιάθεση των Δοκιμαστών γίνεται με 1 πτήση Δοκιμής, με διαθέσιμο Δοκιμαστή στη Β΄ ΘΧ. Για τα Α/Φ Μ-346 δύναται να εκτελεστεί σε πτήση στο FMS.",
+      "flags": [
+        "The ΑΠ column prints «--», which is neither a blank nor a number and is nowhere defined by the source. It is NOT the blank that §48γ maps to «availability retained forever». Read literally it marks non-applicability (the Test Pilot criteria of Ch.8 §18 demand a category «Β»+ rating, 1000 h total and 400 h on type), but that is an inference and is deliberately not made.",
+        "The footnote marker *(2) sits in the Α & Β seat column, not in a validity column.",
+        "TENSION (referee-verified on PDF 241): the EVENTS table ticks ΕΠΑΝ. ΜΕ FMS for this row across BOTH type columns, whereas Annex A §10 grants the FMS option for the Μ-346 only. For the T-6 the printed re-assignment route is 1 test flight with an available Test Pilot in the rear seat. Not resolved."
+      ],
+      "unit": "days"
+    },
+    {
+      "id": "e-1d-demo",
+      "name": "Ε-1δ — DEMO (display flight)",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": 15,
+        "inexperienced_printed": "--"
+      },
+      "renews": [
+        "demo-500ft-currency"
+      ],
+      "renewal_notes": "The 15-day figure matches the display currency of Ch.5 §17 (at least one 500 ft AGL display flight — high, low profile or combined, real or practice — every 15 calendar days). Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Not renewable via the 2nd type (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ blank). T-6 only — the Μ-346 column is blank on this row.",
+      "lapse_consequence": "Loss of demo availability; restoration per Ch.5 §18 (15-30 days) or §20 (beyond 30 days).",
+      "bmc_amc": "no BMC or AMC tick",
+      "seat": "A",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 105,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-1 δ DEMO | ΑΠ: -- | ΕΜΠ: 15 | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α: ν",
+      "flags": [
+        "The ΑΠ column prints «--» — undefined by the source (see e-1c-aircraft-test-fcf).",
+        "Ch.5 §17 states the 15 calendar days with NO experience split, while this row prints 15 only in the ΕΜΠ column. Both readings are kept, each on its own record; not resolved."
+      ],
+      "unit": "days"
+    },
+    {
+      "id": "e-2-practice-forced-landing",
+      "name": "Ε-2 — Practice forced landing (Εικονική Αναγκαστική Π/Γ)",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "no number printed in either ΔΙΑΘΕΣΙΜΟΤΗΤΑ column → availability retained permanently (§48γ)"
+      },
+      "renews": [],
+      "renewal_notes": "Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Not renewable via the 2nd type (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ blank). T-6 only — the Μ-346 column is blank on this row.",
+      "lapse_consequence": "None printed — where no number appears in the ΔΙΑΘΕΣΙΜΟΤΗΤΑ columns the instructor keeps his availability permanently (§48γ).",
+      "bmc_amc": "no BMC or AMC tick",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 105,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "E-2 Εικονική Αναγκαστική Π/Γ | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν",
+      "flags": [],
+      "unit": "days"
+    },
+    {
+      "id": "e-3-in-cloud-flight",
+      "name": "Ε-3 — Flight inside cloud (Πτήση εντός νεφών)",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": 60,
+        "experienced": 60,
+        "printed_as": "no plain day-figure is printed; the cell carries the marker *(1) centred at x=446.0, i.e. merged across the ΑΠ and ΕΜΠ columns. The 60 days come from note (1) itself and are not experience-split"
+      },
+      "renews": [
+        "in-cloud-recency-60d"
+      ],
+      "renewal_notes": "Availability is governed by the rolling 60-day recency of note (1) rather than by a fixed expiry date: in the last 60 days the flyer must have flown 1 PDO flight OR 1 night flight OR 2 special exercises Ε-4. Two standing prerequisites do not run on this clock — a valid Π.ΠΔΟ rating and in-cloud certification (Ch.8 §54α, §54β). Renewable in the FMS (ΕΠΑΝ. ΜΕ FMS ticked) — re-availability and renewal both. Not renewable via the 2nd type (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ blank). Valid on both T-6 and M-346 (ΙΣΧΥΕΙ ΓΙΑ Α/Φ).",
+      "lapse_consequence": "May not fly inside cloud, neither with a student or trainee nor on maintenance-stage sorties.",
+      "bmc_amc": "no BMC or AMC tick",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 105,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "E-3 Πτήση εντός νεφών | ΔΙΑΘΕΣΙΜΟΤΗΤΑ: *(1) (merged ΑΠ+ΕΜΠ) | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΕΠΑΝ. ΜΕ FMS: ν | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν || (1) Ο Ιπτάμενος τις τελευταίες 60 ημέρες να έχει εκτελέσει 1 πτήση ΠΔΟ ή 1 νυκτερινή πτήση ή 2 ειδικές ασκήσεις Ε-4.",
+      "flags": [
+        "See the 2-versus-3 Ε-4 contradiction recorded on in-cloud-recency-60d."
+      ],
+      "unit": "days"
+    },
+    {
+      "id": "e-4-ifr-approach",
+      "name": "Ε-4 — IFR approach (Προσέγγιση IFR)",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "no number printed in either ΔΙΑΘΕΣΙΜΟΤΗΤΑ column → availability retained permanently (§48γ)"
+      },
+      "renews": [
+        "in-cloud-recency-60d"
+      ],
+      "renewal_notes": "Credited to the TACTICAL LEADER (§57). Ε-4 repetitions are one of the three ways to satisfy the 60-day in-cloud recency. Renewable in the FMS (ΕΠΑΝ. ΜΕ FMS ticked) — re-availability and renewal both. Not renewable via the 2nd type (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ blank). Valid on both T-6 and M-346 (ΙΣΧΥΕΙ ΓΙΑ Α/Φ).",
+      "lapse_consequence": "None printed — where no number appears in the ΔΙΑΘΕΣΙΜΟΤΗΤΑ columns the instructor keeps his availability permanently (§48γ). The Ε-4 count nevertheless feeds the Ε-3 in-cloud recency.",
+      "bmc_amc": "no BMC or AMC tick",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 105,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "E-4 Προσέγγιση IFR | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΕΠΑΝ. ΜΕ FMS: ν | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν || 57. Το Ε-4 να χρεώνεται στον Τακτικό Αρχηγό, ενώ το Ε-5 στον σχηματιζόμενο.",
+      "flags": [],
+      "unit": "days"
+    },
+    {
+      "id": "e-5-formation-descent",
+      "name": "Ε-5 — Descent in formation (Κάθοδος σε σχηματισμό)",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "no number printed in either ΔΙΑΘΕΣΙΜΟΤΗΤΑ column → availability retained permanently (§48γ)"
+      },
+      "renews": [],
+      "renewal_notes": "Credited to the WINGMAN / forming pilot (§57). Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Not renewable via the 2nd type (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ blank). Valid on both T-6 and M-346 (ΙΣΧΥΕΙ ΓΙΑ Α/Φ).",
+      "lapse_consequence": "None printed — where no number appears in the ΔΙΑΘΕΣΙΜΟΤΗΤΑ columns the instructor keeps his availability permanently (§48γ).",
+      "bmc_amc": "no BMC or AMC tick",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 105,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "E-5 Κάθοδος σε σχηματισμό | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν || 57. Το Ε-4 να χρεώνεται στον Τακτικό Αρχηγό, ενώ το Ε-5 στον σχηματιζόμενο.",
+      "flags": [],
+      "unit": "days"
+    },
+    {
+      "id": "e-6c-landing-light-off-night",
+      "name": "Ε-6γ — Approach with landing light OFF (night)",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "no number printed in either ΔΙΑΘΕΣΙΜΟΤΗΤΑ column → availability retained permanently (§48γ)"
+      },
+      "renews": [],
+      "renewal_notes": "Being a night event it is reachable only while the day-flying recency of §50 holds. Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Not renewable via the 2nd type (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ blank). Valid on both T-6 and M-346 (ΙΣΧΥΕΙ ΓΙΑ Α/Φ).",
+      "lapse_consequence": "None printed — where no number appears in the ΔΙΑΘΕΣΙΜΟΤΗΤΑ columns the instructor keeps his availability permanently (§48γ).",
+      "bmc_amc": "no BMC or AMC tick",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 105,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-6 γ Προσέγγιση Landing Light ΟFF (Ν) | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν",
+      "flags": [
+        "Sibling rows Ε-6α and Ε-6β (Προσέγγιση HUD OFF day/night) are ticked only under Μ-346 — excluded per T-6-only scope."
+      ],
+      "unit": "days"
+    },
+    {
+      "id": "e-9a-no-flap-approach",
+      "name": "Ε-9α — Approach without FLAPS",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "no number printed in either ΔΙΑΘΕΣΙΜΟΤΗΤΑ column → availability retained permanently (§48γ)"
+      },
+      "renews": [],
+      "renewal_notes": "Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Not renewable via the 2nd type (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ blank). Valid on both T-6 and M-346 (ΙΣΧΥΕΙ ΓΙΑ Α/Φ).",
+      "lapse_consequence": "None printed — where no number appears in the ΔΙΑΘΕΣΙΜΟΤΗΤΑ columns the instructor keeps his availability permanently (§48γ).",
+      "bmc_amc": "no BMC or AMC tick",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 105,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-9 α Προσέγγιση χωρίς FLAPS | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν",
+      "flags": [
+        "Sibling row Ε-9β (Προσέγγιση με ένα Κ/Τ — single-engine approach) is ticked only under Μ-346 — excluded per T-6-only scope."
+      ],
+      "unit": "days"
+    },
+    {
+      "id": "e-9c-heavy-aircraft-approach",
+      "name": "Ε-9γ — Approach with a heavy aircraft (Προσέγγιση με βαρύ Α/Φ)",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "no number printed in either ΔΙΑΘΕΣΙΜΟΤΗΤΑ column → availability retained permanently (§48γ)"
+      },
+      "renews": [],
+      "renewal_notes": "Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Not renewable via the 2nd type (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ blank). T-6 only — the Μ-346 column is blank on this row.",
+      "lapse_consequence": "None printed — where no number appears in the ΔΙΑΘΕΣΙΜΟΤΗΤΑ columns the instructor keeps his availability permanently (§48γ).",
+      "bmc_amc": "no BMC or AMC tick",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 105,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-9 γ Προσέγγιση με βαρύ Α/Φ | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν",
+      "flags": [],
+      "unit": "days"
+    },
+    {
+      "id": "e-10a-foreign-airfield",
+      "name": "Ε-10α — Landing, touch & go or approach at a foreign airfield",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "no number printed in either ΔΙΑΘΕΣΙΜΟΤΗΤΑ column → availability retained permanently (§48γ)"
+      },
+      "renews": [],
+      "renewal_notes": "May be flown as touch-and-go or full stop according to squadron requirements (§58). Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Not renewable via the 2nd type (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ blank). Valid on both T-6 and M-346 (ΙΣΧΥΕΙ ΓΙΑ Α/Φ).",
+      "lapse_consequence": "None printed — where no number appears in the ΔΙΑΘΕΣΙΜΟΤΗΤΑ columns the instructor keeps his availability permanently (§48γ). It remains a programmed event the squadron must schedule.",
+      "bmc_amc": "programmed event (ΠΡΟΓΡ. ticked)",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 105,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-10 α Π/Γ, Touch & Go ή προσέγγιση σε ξένα Α/Δ | ΠΡΟΓΡ.: ΝΑΙ | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν || 58. Το Ε-10 (Π/Γ - προσέγγιση σε ξένο Α/Δ) μπορεί να είναι tοuch and go ή full stop, ανάλογα με τις απαιτήσεις της Μοίρας.",
+      "flags": [],
+      "unit": "days"
+    },
+    {
+      "id": "e-10b-both-runway-directions",
+      "name": "Ε-10β — Landing or approach on both runway directions",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "no number printed in either ΔΙΑΘΕΣΙΜΟΤΗΤΑ column → availability retained permanently (§48γ)"
+      },
+      "renews": [],
+      "renewal_notes": "Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Not renewable via the 2nd type (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ blank). Valid on both T-6 and M-346 (ΙΣΧΥΕΙ ΓΙΑ Α/Φ).",
+      "lapse_consequence": "None printed — where no number appears in the ΔΙΑΘΕΣΙΜΟΤΗΤΑ columns the instructor keeps his availability permanently (§48γ).",
+      "bmc_amc": "no BMC or AMC tick",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 105,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-10 β Π/Γ ή προσέγγιση και στους δύο Δ/Μ | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν",
+      "flags": [],
+      "unit": "days"
+    },
+    {
+      "id": "e-14a-live-weapons-air-to-ground",
+      "name": "Ε-14α — Release of live air-to-ground weapons",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "no number printed in either ΔΙΑΘΕΣΙΜΟΤΗΤΑ column → availability retained permanently (§48γ)"
+      },
+      "renews": [],
+      "renewal_notes": "The underlying weapons certification does NOT require continuous availability (Ch.8 §40) and weapons training is given to flyers already characterised BMC (Ch.8 §28). Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Not renewable via the 2nd type (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ blank). T-6 only — the Μ-346 column is blank on this row.",
+      "lapse_consequence": "None printed — where no number appears in the ΔΙΑΘΕΣΙΜΟΤΗΤΑ columns the instructor keeps his availability permanently (§48γ).",
+      "bmc_amc": "programmed event (ΠΡΟΓΡ. ticked)",
+      "seat": "A",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 105,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-14 α Άφεση πραγματικών όπλων Α-Ε | ΠΡΟΓΡ.: NAI | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α: ν",
+      "flags": [],
+      "unit": "days"
+    },
+    {
+      "id": "e-14b-live-weapons-air-to-air",
+      "name": "Ε-14β — Release of live air-to-air weapons",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "no number printed in either ΔΙΑΘΕΣΙΜΟΤΗΤΑ column → availability retained permanently (§48γ)"
+      },
+      "renews": [],
+      "renewal_notes": "Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Not renewable via the 2nd type (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ blank). T-6 only — the Μ-346 column is blank on this row.",
+      "lapse_consequence": "None printed — where no number appears in the ΔΙΑΘΕΣΙΜΟΤΗΤΑ columns the instructor keeps his availability permanently (§48γ).",
+      "bmc_amc": "programmed event (ΠΡΟΓΡ. ticked)",
+      "seat": "A",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 105,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-14 β Άφεση πραγματικών όπλων Α-Α | ΠΡΟΓΡ.: NAI | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α: ν",
+      "flags": [],
+      "unit": "days"
+    },
+    {
+      "id": "e-18-formation-takeoff",
+      "name": "Ε-18 — Formation takeoff (Α/Γ σε σχηματισμό)",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "no number printed in either ΔΙΑΘΕΣΙΜΟΤΗΤΑ column → availability retained permanently (§48γ)"
+      },
+      "renews": [],
+      "renewal_notes": "Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Not renewable via the 2nd type (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ blank). Valid on both T-6 and M-346 (ΙΣΧΥΕΙ ΓΙΑ Α/Φ).",
+      "lapse_consequence": "None printed — where no number appears in the ΔΙΑΘΕΣΙΜΟΤΗΤΑ columns the instructor keeps his availability permanently (§48γ).",
+      "bmc_amc": "no BMC or AMC tick",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 105,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-18 Α/Γ σε σχηματισμό | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν",
+      "flags": [],
+      "unit": "days"
+    },
+    {
+      "id": "e-21-flight-300ft",
+      "name": "Ε-21 — Flight at 300 ft (LOW ALTITUDE)",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": 90,
+        "experienced": 120
+      },
+      "renews": [],
+      "renewal_notes": "Ε-21 and Ε-46 may be flown simultaneously within one Σ-3 sortie (§52). Requires the corresponding advanced-exercise training ΠΡ-1 to have been completed (§47). Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Renewable by a flight on the 2nd aircraft type for dual-availability instructors (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ ticked). Valid on both T-6 and M-346 (ΙΣΧΥΕΙ ΓΙΑ Α/Φ).",
+      "lapse_consequence": "AMC not retained until re-availed (§69γ); all 300 ft low-level work stops.",
+      "bmc_amc": "programmed event (ΠΡΟΓΡ. ticked); required for AMC",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 106,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-21 Πτήση 300' | ΠΡΟΓΡ.: ΝΑΙ | ΕΤΟΙΜΟΠΟΛ. AMC: ΝΑΙ | ΑΠ: 90 | ΕΜΠ: 120 | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ: ΝΑΙ | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν || 52. Τα Ε-21, Ε-46 μπορούν να εκτελούνται ταυτόχρονα στην έξοδο Σ-3.",
+      "flags": [],
+      "unit": "days"
+    },
+    {
+      "id": "e-30a-high-altitude-intercept-day",
+      "name": "Ε-30α — High-altitude interception, day (Υ.Α.Η.)",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "no number printed in either ΔΙΑΘΕΣΙΜΟΤΗΤΑ column → availability retained permanently (§48γ)"
+      },
+      "renews": [],
+      "renewal_notes": "Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Renewable by a flight on the 2nd aircraft type for dual-availability instructors (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ ticked). Valid on both T-6 and M-346 (ΙΣΧΥΕΙ ΓΙΑ Α/Φ).",
+      "lapse_consequence": "None printed — where no number appears in the ΔΙΑΘΕΣΙΜΟΤΗΤΑ columns the instructor keeps his availability permanently (§48γ).",
+      "bmc_amc": "programmed event (ΠΡΟΓΡ. ticked)",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 106,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-30 α Υ.Α.Η. | ΠΡΟΓΡ.: NAI | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ: ΝΑΙ | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν",
+      "flags": [
+        "Sibling row Ε-30β (Υ.Α.Ν., night) is ticked only under Μ-346 — excluded per T-6-only scope."
+      ],
+      "unit": "days"
+    },
+    {
+      "id": "e-31a-low-altitude-intercept-day",
+      "name": "Ε-31α — Low-altitude interception, day (Χ.Α.Η.)",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": 90,
+        "experienced": 120
+      },
+      "renews": [],
+      "renewal_notes": "Requires the corresponding ΠΡ training where one exists (§47). Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Renewable by a flight on the 2nd aircraft type for dual-availability instructors (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ ticked). Valid on both T-6 and M-346 (ΙΣΧΥΕΙ ΓΙΑ Α/Φ).",
+      "lapse_consequence": "Loses availability for low-altitude interception until re-availed.",
+      "bmc_amc": "programmed event (ΠΡΟΓΡ. ticked)",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 106,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-31 α Χ.Α.Η. | ΠΡΟΓΡ.: NAI | ΑΠ: 90 | ΕΜΠ: 120 | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ: ΝΑΙ | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν",
+      "flags": [
+        "Sibling row Ε-31β (Χ.Α.Ν., night) is printed entirely blank and appears in the note-(3) not-flown list."
+      ],
+      "unit": "days"
+    },
+    {
+      "id": "e-32-bfm",
+      "name": "Ε-32 — BFM (Basic Fighter Manoeuvres)",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": 120,
+        "experienced": 150
+      },
+      "renews": [],
+      "renewal_notes": "Ε-33 (ACM) automatically renews Ε-32 as well (§60). Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Renewable by a flight on the 2nd aircraft type for dual-availability instructors (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ ticked). Valid on both T-6 and M-346 (ΙΣΧΥΕΙ ΓΙΑ Α/Φ).",
+      "lapse_consequence": "AMC not retained until re-availed (§69γ); BFM work stops.",
+      "bmc_amc": "programmed event (ΠΡΟΓΡ. ticked); required for AMC",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 106,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-32 BFM | ΠΡΟΓΡ.: ΝΑΙ | ΕΤΟΙΜΟΠΟΛ. AMC: NAI | ΑΠ: 120 | ΕΜΠ: 150 | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ: ΝΑΙ | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν || 60. Το Ε-33 (ΑCM) ανανεώνει αυτόματα και το Ε-32 (BFM).",
+      "flags": [
+        "Ε-33 (ACM, 120/150, AMC-marked) is ticked ONLY under Μ-346, so the §60 renewal chain is unreachable for a single-type T-6 instructor and applies only to dual-availability flyers. The source does not say this explicitly."
+      ],
+      "unit": "days"
+    },
+    {
+      "id": "e-40-training-munitions-release",
+      "name": "Ε-40 — Release of training munitions (Άφεση εκπαιδευτικών πυρομαχικών)",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": 360,
+        "experienced": 360,
+        "printed_as": "a single figure 360 in a cell merged across the ΑΠ and ΕΜΠ columns (x-centre 446.0) — same for both experience levels"
+      },
+      "renews": [],
+      "renewal_notes": "Front seat only. Per §59, when training munitions are released on Ε-41 and Ε-49 the event is credited to the front-seat pilots of the T-6A. Initial availability for the T-6A is with training munitions upon assignment of the relevant Operational Requirement (Ch.8 §36). Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Renewable by a flight on the 2nd aircraft type for dual-availability instructors (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ ticked). T-6 only — the Μ-346 column is blank on this row.",
+      "lapse_consequence": "Loses availability to release training munitions; cannot be programmed on live-drop range work until re-availed.",
+      "bmc_amc": "programmed event (ΠΡΟΓΡ. ticked)",
+      "seat": "A",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 106,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-40 Άφεση εκπαιδευτικών πυρομαχικών | ΠΡΟΓΡ.: NAI | ΔΙΑΘΕΣΙΜΟΤΗΤΑ (ΗΜΕΡΕΣ): 360 (merged ΑΠ+ΕΜΠ) | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ: ΝΑΙ | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α: ν || 59. Για τα Ε-41 και Ε-49, εφόσον γίνεται άφεση εκπαιδευτικών πυρομαχικών, να χρεώνονται στους Ιπταμένους της εμπρόσθιας θέσης των Α/Φ Τ-6Α.",
+      "flags": [
+        "The 360 applies to both experience levels by the printed table geometry; the source never states it in words.",
+        "ANOMALY: the row is ticked Τ-6 ONLY yet carries ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ = ΝΑΙ, which by §48στ means renewal by flying the 2nd type — an event executable only on the T-6 cannot be renewed on the Μ-346. Same anomaly on Ε-49Γ. Recorded as printed, not resolved."
+      ],
+      "unit": "days"
+    },
+    {
+      "id": "e-41a-range-firing-day",
+      "name": "Ε-41α — Range firing, day (Π.ΒΟΛΗΣ (Η))",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "no number printed in either ΔΙΑΘΕΣΙΜΟΤΗΤΑ column → availability retained permanently (§48γ)"
+      },
+      "renews": [],
+      "renewal_notes": "The seat column reads Α & Β, but when training munitions are released the event is credited to the FRONT-seat pilots of the T-6A (§59). Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Renewable by a flight on the 2nd aircraft type for dual-availability instructors (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ ticked). Valid on both T-6 and M-346 (ΙΣΧΥΕΙ ΓΙΑ Α/Φ).",
+      "lapse_consequence": "None printed — where no number appears in the ΔΙΑΘΕΣΙΜΟΤΗΤΑ columns the instructor keeps his availability permanently (§48γ).",
+      "bmc_amc": "programmed event (ΠΡΟΓΡ. ticked)",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 106,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-41 α Π.ΒΟΛΗΣ (Η) | ΠΡΟΓΡ.: ΝΑΙ | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ: ΝΑΙ | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν || 59. Για τα Ε-41 και Ε-49, εφόσον γίνεται άφεση εκπαιδευτικών πυρομαχικών, να χρεώνονται στους Ιπταμένους της εμπρόσθιας θέσης των Α/Φ Τ-6Α.",
+      "flags": [
+        "Sibling row Ε-41β (night) is ticked only under Μ-346 — excluded per T-6-only scope.",
+        "Seat column (Α & Β) and the §59 crediting rule (front seat when munitions are released) are in tension for the munitions case; both are recorded."
+      ],
+      "unit": "days"
+    },
+    {
+      "id": "e-45-visual-delivery-med-hi-apex-day",
+      "name": "Ε-45 — VISUAL DELIVERY MED/HI APEX, day",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": 120,
+        "experienced": 150
+      },
+      "renews": [],
+      "renewal_notes": "Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Renewable by a flight on the 2nd aircraft type for dual-availability instructors (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ ticked). Valid on both T-6 and M-346 (ΙΣΧΥΕΙ ΓΙΑ Α/Φ).",
+      "lapse_consequence": "AMC not retained until re-availed (§69γ); medium/high apex visual delivery work stops.",
+      "bmc_amc": "programmed event (ΠΡΟΓΡ. ticked); required for AMC",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 107,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-45 VISUAL DELIVERY MED/HI APEX (H) | ΠΡΟΓΡ.: ΝΑΙ | ΕΤΟΙΜΟΠΟΛ. AMC: ΝΑΙ | ΑΠ: 120 | ΕΜΠ: 150 | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ: ΝΑΙ | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν",
+      "flags": [],
+      "unit": "days"
+    },
+    {
+      "id": "e-46-visual-delivery-low-apex-day",
+      "name": "Ε-46 — VISUAL DELIVERY LOW APEX, day",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": 90,
+        "experienced": 120
+      },
+      "renews": [],
+      "renewal_notes": "Ε-21 and Ε-46 may be flown simultaneously within one Σ-3 sortie (§52). LOW APEX attacks at the Karavia range are flown only by Pair Leaders and above (§53). Requires completed ΠΡ-1 training (§47). Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Renewable by a flight on the 2nd aircraft type for dual-availability instructors (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ ticked). Valid on both T-6 and M-346 (ΙΣΧΥΕΙ ΓΙΑ Α/Φ).",
+      "lapse_consequence": "AMC not retained until re-availed (§69γ); low apex visual delivery work stops.",
+      "bmc_amc": "programmed event (ΠΡΟΓΡ. ticked); required for AMC",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 107,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-46 VISUAL DELIVERY LOW APEX (H) | ΠΡΟΓΡ.: ΝΑΙ | ΕΤΟΙΜΟΠΟΛ. AMC: ΝΑΙ | ΑΠ: 90 | ΕΜΠ: 120 | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ: ΝΑΙ | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν || 53. Προσβολές LOW APEX (Ε-46) στο Π.Β. Καράβια, να πραγματοποιούνται από Ιπταμένους Αρχηγούς Ζεύγους και πάνω.",
+      "flags": [],
+      "unit": "days"
+    },
+    {
+      "id": "e-49a-has-day",
+      "name": "Ε-49Α — HAS (High Angle Strafe), day",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "no number printed in either ΔΙΑΘΕΣΙΜΟΤΗΤΑ column → availability retained permanently (§48γ)"
+      },
+      "renews": [],
+      "renewal_notes": "Credited to the FRONT seat when training munitions are released (§59). Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Renewable by a flight on the 2nd aircraft type for dual-availability instructors (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ ticked). Valid on both T-6 and M-346 (ΙΣΧΥΕΙ ΓΙΑ Α/Φ).",
+      "lapse_consequence": "None printed — where no number appears in the ΔΙΑΘΕΣΙΜΟΤΗΤΑ columns the instructor keeps his availability permanently (§48γ).",
+      "bmc_amc": "programmed event (ΠΡΟΓΡ. ticked)",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 107,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-49 Α HAS (H) | ΠΡΟΓΡ.: ΝΑΙ | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ: ΝΑΙ | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν",
+      "flags": [
+        "Sibling row Ε-49Β (HAS night) is printed entirely blank and appears in the note-(3) not-flown list."
+      ],
+      "unit": "days"
+    },
+    {
+      "id": "e-49c-las-day",
+      "name": "Ε-49Γ — LAS (Low Angle Strafe), day",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": 120,
+        "experienced": 150
+      },
+      "renews": [],
+      "renewal_notes": "Credited to the FRONT seat when training munitions are released (§59). Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Renewable by a flight on the 2nd aircraft type for dual-availability instructors (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ ticked). T-6 only — the Μ-346 column is blank on this row.",
+      "lapse_consequence": "Loses availability for low angle strafe until re-availed.",
+      "bmc_amc": "programmed event (ΠΡΟΓΡ. ticked)",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 107,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "Ε-49 Γ LAS (H) | ΠΡΟΓΡ.: NAI | ΑΠ: 120 | ΕΜΠ: 150 | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ: ΝΑΙ | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν",
+      "flags": [
+        "Same anomaly as Ε-40: ticked Τ-6 only yet marked for dual-type renewal. Recorded as printed."
+      ],
+      "unit": "days"
+    },
+    {
+      "id": "e-62-oca-strike",
+      "name": "Ε-62 — OCA (STRIKE)",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "no number printed in either ΔΙΑΘΕΣΙΜΟΤΗΤΑ column → availability retained permanently (§48γ)"
+      },
+      "renews": [],
+      "renewal_notes": "Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Renewable by a flight on the 2nd aircraft type for dual-availability instructors (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ ticked). Valid on both T-6 and M-346 (ΙΣΧΥΕΙ ΓΙΑ Α/Φ).",
+      "lapse_consequence": "None printed — where no number appears in the ΔΙΑΘΕΣΙΜΟΤΗΤΑ columns the instructor keeps his availability permanently (§48γ).",
+      "bmc_amc": "programmed event (ΠΡΟΓΡ. ticked)",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 107,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "E-62 OCA (STRIKE) | ΠΡΟΓΡ.: ΝΑΙ | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ: ΝΑΙ | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν",
+      "flags": [],
+      "unit": "days"
+    },
+    {
+      "id": "e-67-cas",
+      "name": "Ε-67 — CAS (Close Air Support)",
+      "kind": "e-item",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "no number printed in either ΔΙΑΘΕΣΙΜΟΤΗΤΑ column → availability retained permanently (§48γ)"
+      },
+      "renews": [],
+      "renewal_notes": "Requires completed ΠΡ-8 training (CAS-SCAR / tactical air-to-ground mission) where a corresponding ΠΡ exists (§47). Not renewable in the FMS (ΕΠΑΝ. ΜΕ FMS blank). Renewable by a flight on the 2nd aircraft type for dual-availability instructors (ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ ticked). Valid on both T-6 and M-346 (ΙΣΧΥΕΙ ΓΙΑ Α/Φ).",
+      "lapse_consequence": "None printed — where no number appears in the ΔΙΑΘΕΣΙΜΟΤΗΤΑ columns the instructor keeps his availability permanently (§48γ).",
+      "bmc_amc": "programmed event (ΠΡΟΓΡ. ticked)",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 107,
+        "ref": "Ch.4 §48 EVENTS table (typ. p. 87-89); column semantics §48α-ζ, PDF 103-104"
+      },
+      "verbatim": "E-67 CAS | ΠΡΟΓΡ.: NAI | ΙΣΧΥΕΙ ΓΙΑ Α/Φ Τ-6: ν | Μ-346: ν | ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ: ΝΑΙ | ΘΕΣΗ ΧΕΙΡΙΣΤΗ Α & Β: ν",
+      "flags": [],
+      "unit": "days"
+    },
+    {
+      "id": "sim-refresh-after-abstention",
+      "name": "Simulator refresh required before the next air flight after an abstention",
+      "kind": "sim",
+      "validity_days": {
+        "inexperienced": 30,
+        "experienced": 45,
+        "note": "the number is the abstention threshold in days ABOVE which the refresh is triggered — «πάνω από»"
+      },
+      "renews": [
+        "reset by any air flight"
+      ],
+      "renewal_notes": "Abstention of more than 45 days (experienced) or more than 30 days (inexperienced) requires 1 SIM-1 sortie in the F/S (experienced) or 2 SIM-1 sorties (inexperienced) BEFORE the next air flight. This is a threshold, not a rolling currency; the clock resets on each air flight.",
+      "lapse_consequence": "The instructor may not be programmed for an air flight until the SIM-1 sortie(s) are flown. If that is impossible the Unit requests «exceptional» programming approval for that specific flyer from DAE/B6.",
+      "bmc_amc": "No direct BMC/AMC marking; gates air-flight availability entirely.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 108,
+        "ref": "Ch.4 §49 (typ. p. 90)"
+      },
+      "verbatim": "49. Οι Ιπτάμενοι οι οποίοι έχουν αποχή από πτήσεις, (πάνω από 45 ημέρες οι έμπειροι και 30 ημέρες οι άπειροι), να εκτελούν 1 έξοδο SIM-1 στο F/S οι έμπειροι και 2 οι άπειροι, πριν από την επόμενη πτήση αέρος. Σε περίπτωση αδυναμίας εφαρμογής της ανωτέρω πρόβλεψης, η Μονάδα να ζητά «κατ’ εξαίρεση» έγκριση προγραμματισμού του συγκεκριμένου Ιπταμένου από τη ΔΑΕ/Β6.",
+      "flags": [
+        "The threshold is «πάνω από» (strictly greater than) 45/30 days — day 45 exactly does not trigger it for an experienced instructor."
+      ],
+      "unit": "days",
+      "seat": null
+    },
+    {
+      "id": "night-flight-day-recency",
+      "name": "Day-flying recency required before a night flight",
+      "kind": "recency",
+      "validity_days": {
+        "inexperienced": 10,
+        "experienced": 15,
+        "note": "maximum permitted abstention from DAY flying in order to be programmed for a night flight"
+      },
+      "renews": [
+        "reset by any day flight"
+      ],
+      "renewal_notes": "Reset by flying any day flight. Applies on top of the night-landing currency — an in-date night landing does not substitute for it.",
+      "lapse_consequence": "The instructor cannot be programmed for a night flight until he flies a day flight; consequently the night-landing currency and every night event (and the AMC characterisation depending on them) become unreachable.",
+      "bmc_amc": "Indirectly gates AMC — the night landing is AMC-marked.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 108,
+        "ref": "Ch.4 §50 (typ. p. 90)"
+      },
+      "verbatim": "50. Προκειμένου ένας Εκπαιδευτής να ιπταθεί νυχτερινή πτήση, θα πρέπει να μην έχει αποχή από τις ημερήσιες πτήσεις για χρονικό διάστημα μεγαλύτερο των 10 ημερών για τους Άπειρους και 15 ημερών για τους Έμπειρους.",
+      "unit": "days",
+      "seat": null,
+      "flags": []
+    },
+    {
+      "id": "in-cloud-recency-60d",
+      "name": "In-cloud (IMC) flight recency — 60-day rolling window",
+      "kind": "recency",
+      "validity_days": {
+        "inexperienced": 60,
+        "experienced": 60,
+        "note": "both provisions print a single 60-day window with no experience split"
+      },
+      "renews": [
+        "e-3-in-cloud-flight",
+        "1 PDO flight in the last 60 days",
+        "1 night flight in the last 60 days",
+        "E-4 IFR approaches in the last 60 days (2 per Ch.4 EVENTS note 1 / 3 per Ch.8 §54γ)"
+      ],
+      "renewal_notes": "Rolling 60-day window satisfied by ANY ONE of: 1 PDO (instrument) flight, OR 1 night flight, OR the Ε-4 IFR-approach option. Renewable in the FMS (Ε-3 carries ν in the ΕΠΑΝ. ΜΕ FMS column). Two further standing prerequisites do not run on this clock: a valid Π.ΠΔΟ rating and in-cloud certification (Ch.8 §54α, §54β).",
+      "lapse_consequence": "The instructor may not fly inside cloud — neither with a student or trainee nor on maintenance-stage sorties. All IMC-dependent work becomes unavailable.",
+      "bmc_amc": "No BMC/AMC mark on Ε-3; gates IMC employment. Tied to the Π.ΠΔΟ rating, which does gate readiness via §69δ(1).",
+      "seat": "A&B",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 107,
+        "ref": "Ch.4 §48 EVENTS note (1) (typ. p. 89); Ch.8 §54 (PDF 155, typ. p. 137)",
+        "page_pdf_span": "105-107, 155"
+      },
+      "verbatim": "(1) Ο Ιπτάμενος τις τελευταίες 60 ημέρες να έχει εκτελέσει 1 πτήση ΠΔΟ ή 1 νυκτερινή πτήση ή 2 ειδικές ασκήσεις Ε-4. || 54. Προκειμένου οι Εκπαιδευτές να ιπταθούν (με μαθητή / εκπαιδευόμενο ή στο στάδιο Συντήρησης) μέσα στα νέφη, πρέπει να πληρούν τις παρακάτω προϋποθέσεις: α. Να έχουν σε ισχύ Π. ΠΔΟ. β. Να είναι πιστοποιημένοι στην πτήση μέσα στα νέφη. γ. Τις τελευταίες 60 ημέρες να έχουν πετάξει 1 πτήση ΠΔΟ ή 1 νυκτερινή πτήση ή να έχουν εκτελέσει 3 Ειδικές Ασκήσεις Ε-4.",
+      "flags": [
+        "INTERNAL CONTRADICTION, referee-verified verbatim on both pages: the EVENTS note (1) (PDF 107) requires 2 special exercises Ε-4 in the last 60 days, while Ch.8 §54γ (PDF 155) requires 3 Ειδικές Ασκήσεις Ε-4 for the same in-cloud permission. The 60-day window itself is identical in both places; only the Ε-4 count differs. Not resolved — unit ruling needed."
+      ],
+      "unit": "days"
+    },
+    {
+      "id": "in-cloud-certification",
+      "name": "In-cloud flight certification (one-off, no expiry printed)",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "a one-off certification — no validity period printed"
+      },
+      "renews": [],
+      "renewal_notes": "Certification requires: a valid Π.ΠΔΟ rating; at least 30 hours on the MEA type as pilot-in-command; 2 successful in-cloud sorties with an instructor, at least 1 of them in formation as No.2. Flyers previously available for in-cloud flight on another type fly 1 sortie in a pair instead. Maximum 3 aircraft may fly in formation inside cloud (§56).",
+      "lapse_consequence": "No expiry is printed for the certification itself — only the 60-day recency and the Π.ΠΔΟ rating expire.",
+      "bmc_amc": "Standing prerequisite for IMC instruction.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 155,
+        "ref": "Ch.8 §§55-56 (typ. p. 137)"
+      },
+      "verbatim": "55. Για την πιστοποίηση των Εκπαιδευτών σε πτήσεις μέσα στα νέφη απαιτείται: α. Να έχουν σε ισχύ Π. ΠΔΟ. β. Να έχουν συμπληρώσει 30 τουλάχιστον ώρες στον τύπο της ΜΕΑ ως Κυβερνήτες. γ. Να ιπταθούν με επιτυχία σε 2 εξόδους μέσα στα νέφη με Εκπαιδευτή. Η 1 τουλάχιστον έξοδος να είναι σε σχηματισμό ως Νο2. δ. Σε περίπτωση που στο παρελθόν ήταν διαθέσιμοι σε πτήση εντός νεφών σε άλλο τύπο Α/Φ, τότε να εκτελούν 1 πτήση σε ζεύγος Α/Φ.",
+      "unit": "days",
+      "seat": null,
+      "flags": []
+    },
+    {
+      "id": "type-availability-loss",
+      "name": "Loss of availability on the aircraft type (maintenance-stage instructor)",
+      "kind": "recency",
+      "validity_days": {
+        "inexperienced": 180,
+        "experienced": null,
+        "experienced_printed": "πάνω από 1 έτος — more than 1 year; the source prints a period in years, NOT a day count. 365 is not printed and is deliberately not inferred.",
+        "note": "the number is the abstention threshold ABOVE which type availability is lost"
+      },
+      "renews": [
+        "type-reassignment-programme"
+      ],
+      "renewal_notes": "The clock is flying abstention and is reset by flying. Once lost, availability is regained only through the formal re-assignment training at the MEAE/ΣΜΕΤ (§71). All re-assignments are flown as co-pilot sorties with an available instructor in the rear seat (§51).",
+      "lapse_consequence": "The instructor loses «availability on the type» of the squadron aircraft entirely and cannot be scheduled on the T-6A in any role until the re-assignment programme is completed and the MEA has submitted the Re-assignment Completion Report and obtained approval to employ him.",
+      "bmc_amc": "Total loss — no BMC or AMC characterisation can be held while unavailable on type.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 112,
+        "ref": "Ch.4 §70 (typ. p. 94)"
+      },
+      "verbatim": "70. Απώλεια Διαθεσιμότητας — Ιπτάμενος στη φάση τη συντήρησης χάνει την «Διαθεσιμότητά του στον τύπο» του Α/Φ της ΜΕΑ, όταν έχει αποχή από τις πτήσεις πάνω από: α. 180 ημέρες για άπειρους Ιπταμένους, β. πάνω από 1 έτος για έμπειρους Ιπταμένους.",
+      "flags": [
+        "Units mismatch inside one paragraph: the inexperienced threshold is printed in days (180) and the experienced one in years («πάνω από 1 έτος»). No conversion made — the scheduler needs a project ruling on how to evaluate the experienced branch."
+      ],
+      "unit": "days",
+      "seat": null
+    },
+    {
+      "id": "type-reassignment-programme",
+      "name": "Type re-assignment programme after loss of availability",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "a restoration programme, not a window"
+      },
+      "renews": [
+        "type-availability-loss"
+      ],
+      "renewal_notes": "Delivered at the MEAE/ΣΜΕΤ, scaled by experience and length of abstention. EXPERIENCED 1-2 years: abbreviated systems course at the ΜΕΑΕ/ΣΕΤ; GBTS check on normal and emergency procedures; 50-question closed-book systems exam; at least 15% of the ΜΕΤ+ΕΕΠ air programme (base percentage at the MEAE Commander's discretion, according to the abstention and experience of the returning flyer); at least 25% of the GBTS programme plus a proportionate ground programme. EXPERIENCED over 2 years: abbreviated course; GBTS checks; 50-question systems + 50-question professional + 25-question open-book exams; at least 15% of the air programme increased by 5% per extra year of abstention beyond 2 years, up to 30%, at the Unit's discretion; 50% of the GBTS sorties. INEXPERIENCED 180 days to 1 year: items (α), (β), (γ) of the 1-2 year tier plus at least 15% air at the MEAE Commander's discretion and at least 25% GBTS. INEXPERIENCED over 1 year: abbreviated course; normal and emergency procedures check in the F/S or GBTS plus a 100-question closed-book systems exam; 20% of the air programme increased by at least 10% per year of abstention beyond one year, up to 50%, at the Unit's discretion; 50% of the GBTS sorties. Exception: rating «Α» holders posted to positions of responsibility may have the ΜΕΤ/ΕΕΠ programme reduced further on Unit recommendation.",
+      "lapse_consequence": "Until completion the instructor stays unavailable on the type. On completion the MEA submits a Re-assignment Completion Report and requests approval to employ him; the report also goes to DAE when a rating extension is involved.",
+      "bmc_amc": "Restores type availability; BMC/AMC then rebuild through the E-item currencies and ΠΡ completion.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 112,
+        "ref": "Ch.4 §71 (typ. p. 94-96)",
+        "page_pdf_span": "112-114"
+      },
+      "verbatim": "71. Επαναδιάθεση στον Τύπο του Α/Φ — Η εκπαίδευση για την επαναδιάθεση στον τύπο, παρέχεται στα αντίστοιχα ΣΜΕΤ της ΜΕΑΕ. [...] (δ) Εκτελούν τουλάχιστον το 15% του προβλεπόμενου προγράμματος Αέρος των Σταδίων ΜΕΤ και ΕΕΠ (Εκπαιδευτές), κατά την κρίση του Διοικητή ΜΕΑΕ και ανάλογα με την αποχή και την εμπειρία του επαναδιατιθέμενου. [...] προσαυξανόμενο κατά 5% για κάθε επιπλέον έτος αποχής πάνω από τα 2 έτη και μέχρι 30%, κατά την κρίση της Μονάδας. [...] (γ) Εκτελούν το 20% του προβλεπόμενου προγράμματος αέρος του Σταδίου ΜET και ΕΕΠ (Εκπαιδευτές), προσαυξανόμενο τουλάχιστον κατά 10% για κάθε έτος αποχής πάνω από το ένα έτος και μέχρι 50%, κατά την κρίση της Μονάδας. [...] (ε) Κατ’ εξαίρεση για Ιπταμένους κατόχους Πτυχίου «Α» που τοποθετούνται σε θέσεις ευθύνης, το πρόγραμμα σταδίων ΜΕΤ και ΕΕΠ, δύναται να μειωθεί περαιτέρω, μετά από εισήγηση της Μονάδας.",
+      "flags": [
+        "Every percentage is a floor set at a named authority's discretion (MEAE Commander for the base percentage, Unit for the escalation and its cap) — the programme size is not deterministic and a scheduler cannot compute it."
+      ],
+      "unit": "days",
+      "seat": null
+    },
+    {
+      "id": "reassignment-seat-rule",
+      "name": "All re-assignments flown as co-pilot with an instructor in the rear seat",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "a procedural constraint, not a window"
+      },
+      "renewal_notes": "Applies to ALL re-assignments, whatever the event or type.",
+      "lapse_consequence": "Not applicable — a constraint on how restoration sorties are flown.",
+      "bmc_amc": "Not applicable.",
+      "seat": "B (available instructor)",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 108,
+        "ref": "Ch.4 §51 (typ. p. 90)"
+      },
+      "verbatim": "51. Όλες οι επαναδιαθέσεις γίνονται με έξοδο συγκυβέρνησης, με διαθέσιμο Εκπαιδευτή στην Β΄ ΘΧ.",
+      "unit": "days",
+      "renews": [],
+      "flags": []
+    },
+    {
+      "id": "semester-basis",
+      "name": "Semester basis for every semi-annual requirement",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "semester — 1 January (Α) and 1 July (Β); no day count printed"
+      },
+      "renewal_notes": "All Σ-category and F/S (SIM) semi-annual requirements are counted against fixed semesters starting 1 January (1st semester) and 1 July (2nd semester) of each year. This is a HARD-RESET window, unlike every rolling day-count currency in this catalog. Coverage should be spread uniformly over the semester (§21, §41).",
+      "lapse_consequence": "Requirements not met by semester end are handled through the end-of-semester reduction bands of §40.",
+      "bmc_amc": "Governs the counting window of every Σ and SIM requirement.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 101,
+        "ref": "Ch.4 §38 (typ. p. 83)"
+      },
+      "verbatim": "38. Βάση για την εφαρμογή των προγραμμάτων, είναι το εξάμηνο που αρχίζει την 1η Ιανουαρίου (Α΄ εξάμηνο) και την 1η Ιουλίου (Β΄ εξάμηνο) κάθε έτους.",
+      "unit": "days",
+      "renews": [],
+      "seat": null,
+      "flags": []
+    },
+    {
+      "id": "semiannual-air-total-t6",
+      "name": "Semi-annual maintenance air programme, T-6A (Table 9) — totals",
+      "kind": "s-category",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "per semester; the split printed is POSTED (ΤΟΠΟΘ.) vs ATTACHED (ΠΡΟΣΚΟΛ.), NOT inexperienced vs experienced"
+      },
+      "renews": [
+        "s-1-general-adaptation",
+        "s-2-pdo-day",
+        "s-2-pdo-night",
+        "s-3-air-to-ground",
+        "s-4-air-to-air"
+      ],
+      "renewal_notes": "Per flyer per semester on the T-6A: 6 sorties / 7.2 hours for POSTED instructors, 3 sorties / 3.6 hours for ATTACHED instructors; average sortie duration 1.2 h. When for special reasons (weather, aircraft abort etc.) neither the main nor the reserve exercise is flown, a PDO exercise (Σ-2) may be flown instead (§39). Instructors may cover part of the requirement through E exercises flown during student or trainee sorties (§61).",
+      "lapse_consequence": "A shortfall at semester end is absorbed by the §40 reduction bands where non-availability justifies it; otherwise it is a training-task deficiency tracked through the squadron records and the instructors' individual files (§46).",
+      "bmc_amc": "Maintenance-stage requirement; feeds the Σ and E currencies behind both readiness levels.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 101,
+        "ref": "Ch.4 §§38-39, Πίνακας 9 (typ. p. 83-84)",
+        "page_pdf_span": "101-102"
+      },
+      "verbatim": "ΕΞΑΜΗΝΙΑΙΟ ΠΡΟΓΡΑΜΜΑ ΕΞΟΔΩΝ ΣΤΑΔΙΟΥ ΣΥΝΤΗΡΗΣΗΣ Α/Φ Τ-6Α | ΜΕΣΗ ΔΙΑΡΚΕΙΑ ΠΤΗΣΕΩΣ 1,2 1,2 [...] ΣΥΝΟΛΟ ΕΞΟΔΩΝ 6 3 | ΣΥΝΟΛΟ ΩΡΩΝ 7,2 3,6 || 39. Όταν για ειδικούς λόγους (καιρός, ματαίωση Α/Φ κλπ), δεν εκτελείται η κύρια ή η εφεδρική άσκηση, δύναται να εκτελεσθεί άσκηση ΠΔΟ (Σ-2).",
+      "flags": [
+        "The split in Tables 6 and 9 is POSTED vs ATTACHED — NOT inexperienced vs experienced. A currency card must not merge the two axes.",
+        "The sentence «Ο αριθμός των εξαμηνιαίων απαιτήσεων θεωρείται ως ελάχιστος» (§25) is printed only inside the F/S subsection; no equivalent minima sentence exists for the air table. Applying it to Table 9 would be an extrapolation.",
+        "The Μ-346 variant (Table 10: 7/4 sorties, 7,0/4,0 h) is excluded per T-6-only scope."
+      ],
+      "unit": "days",
+      "seat": null
+    },
+    {
+      "id": "s-1-general-adaptation",
+      "name": "Σ-1 — General Adaptation",
+      "kind": "s-category",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "1 sortie(s) per semester (posted) / 1 (attached)"
+      },
+      "renews": [],
+      "renewal_notes": "Retention of handling skills at continuously changing attitudes, angles of attack and speeds. For those available, FCF (aircraft test) and DEMO flights are counted in this category (§37α).",
+      "lapse_consequence": "Semi-annual shortfall against Table 9.",
+      "bmc_amc": "Maintenance requirement; the vehicle for Ε-1α/1β/1γ/1δ and general handling currencies.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 101,
+        "ref": "Ch.4 §37α, Πίνακας 8 (PDF 100) and Πίνακας 9 (PDF 101, typ. p. 82-83)"
+      },
+      "verbatim": "1 Σ-1 ΓΕΝΙΚΗ ΠΡΟΣΑΡΜΟΓΗ 1 1 || Στην κατηγορία αυτή να συμπεριλαμβάνονται, για τους διαθέσιμους, οι πτήσεις Δοκιμής Α/Φ (FCF) και DEMO.",
+      "unit": "days",
+      "seat": null,
+      "flags": []
+    },
+    {
+      "id": "s-2-pdo-day",
+      "name": "Σ-2 — Instrument flight (PDO), day",
+      "kind": "s-category",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "1 sortie(s) per semester (posted) / 1 (attached)"
+      },
+      "renews": [
+        "in-cloud-recency-60d",
+        "pdo-instrument-rating-validity"
+      ],
+      "renewal_notes": "Instrument departure, navigation and approach procedures at airfields with radio aids suitable for the type, by day, in VMC or IMC. Also the fallback exercise: when for special reasons neither the main nor the reserve exercise is flown, a Σ-2 may be flown instead (§39). The programme must ensure proper preparation before the PDO evaluation prescribed by KPA Β-6/ΓΕΑ.",
+      "lapse_consequence": "Semi-annual shortfall; also removes the easiest renewal path for the 60-day in-cloud recency and the preparation for the KPA Β-6 PDO evaluation.",
+      "bmc_amc": "Underpins the Π.ΠΔΟ rating, whose absence makes the instructor Partially Combat Ready (§69δ(1)).",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 101,
+        "ref": "Ch.4 Πίνακας 9 (typ. p. 83)"
+      },
+      "verbatim": "2 Σ-2 ΠΔΟ ΗΜΕΡΑΣ 1 1",
+      "unit": "days",
+      "seat": null,
+      "flags": []
+    },
+    {
+      "id": "s-2-pdo-night",
+      "name": "Σ-2 — Instrument flight (PDO), night",
+      "kind": "s-category",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "1 sortie(s) per semester (posted) / none — a dash «-» is printed (attached)"
+      },
+      "renews": [
+        "night-landing",
+        "day-landing",
+        "in-cloud-recency-60d"
+      ],
+      "renewal_notes": "A night flight renews the night landing (45/60 days) and, through §55, the day landing; it also satisfies one of the three options in the 60-day in-cloud recency. To be programmed at all, the day-flying recency of §50 (10/15 days) must hold.",
+      "lapse_consequence": "Semi-annual shortfall and, for scheduling, the loss of the principal opportunity to renew the AMC-critical night landing.",
+      "bmc_amc": "Primary vehicle for the AMC-marked night-landing currency.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 101,
+        "ref": "Ch.4 Πίνακας 9 (typ. p. 83)"
+      },
+      "verbatim": "2 Σ-2 ΠΔΟ ΝΥΧΤΑΣ 1 -",
+      "unit": "days",
+      "seat": null,
+      "flags": []
+    },
+    {
+      "id": "s-3-air-to-ground",
+      "name": "Σ-3 — Air-to-Ground missions, day/night",
+      "kind": "s-category",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "2 sortie(s) per semester (posted) / 1 (attached)"
+      },
+      "renews": [
+        "e-21-flight-300ft",
+        "e-45-visual-delivery-med-hi-apex-day",
+        "e-46-visual-delivery-low-apex-day",
+        "e-40-training-munitions-release",
+        "e-41a-range-firing-day",
+        "e-49a-has-day",
+        "e-49c-las-day",
+        "e-62-oca-strike",
+        "e-67-cas"
+      ],
+      "renewal_notes": "The principal carrier of the AMC-critical low-level and delivery currencies: Ε-21 and Ε-46 may be flown simultaneously in one Σ-3 sortie (§52).",
+      "lapse_consequence": "Semi-annual shortfall and loss of the main renewal vehicle for Ε-21/Ε-45/Ε-46 — three of the six AMC-marked currencies.",
+      "bmc_amc": "Main vehicle for three of the six AMC-marked T-6 currencies.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 101,
+        "ref": "Ch.4 Πίνακας 9 (typ. p. 83)"
+      },
+      "verbatim": "3 Σ-3 ΑΠΟΣΤΟΛΕΣ ΑΕΡΟΣ-ΕΔΑΦΟΥΣ 2 1 || 52. Τα Ε-21, Ε-46 μπορούν να εκτελούνται ταυτόχρονα στην έξοδο Σ-3.",
+      "unit": "days",
+      "seat": null,
+      "flags": []
+    },
+    {
+      "id": "s-4-air-to-air",
+      "name": "Σ-4 — Air-to-Air missions, day/night",
+      "kind": "s-category",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "1 sortie(s) per semester (posted) / none — a dash «-» is printed (attached)"
+      },
+      "renews": [
+        "e-30a-high-altitude-intercept-day",
+        "e-31a-low-altitude-intercept-day",
+        "e-32-bfm"
+      ],
+      "renewal_notes": "Carrier of the interception and BFM currencies including the AMC-marked Ε-32.",
+      "lapse_consequence": "Semi-annual shortfall and loss of the renewal vehicle for Ε-32 (AMC-marked), Ε-31α and Ε-30α.",
+      "bmc_amc": "Main vehicle for the AMC-marked Ε-32 (BFM).",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 101,
+        "ref": "Ch.4 Πίνακας 9 (typ. p. 83)"
+      },
+      "verbatim": "4 Σ-4 ΑΠΟΣΤΟΛΕΣ ΑΕΡΟΣ-ΑΕΡΟΣ 1 -",
+      "unit": "days",
+      "seat": null,
+      "flags": []
+    },
+    {
+      "id": "s-20-no-requirements",
+      "name": "Σ-20 — No-requirements missions",
+      "kind": "s-category",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "none — a dash «-» is printed sortie(s) per semester (posted) / none — a dash «-» is printed (attached)"
+      },
+      "renews": [],
+      "renewal_notes": "Carries ferry flights, crew transport and failure-recovery actions. A flight covering less than 75% of the exercise requirements is not valid and is logged as Σ-20. A sortie is valid when at least 75% of the requirements set in the daily flying programme are covered (§34); any takeoff counts towards the daily sortie cap whether or not the sortie is valid (§33).",
+      "lapse_consequence": "Not a currency — but a sortie downgraded to Σ-20 does NOT credit the intended Σ or E currencies, so the underlying currency does not renew.",
+      "bmc_amc": "No credit towards BMC/AMC beyond any E actually flown and logged.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 101,
+        "ref": "Ch.4 Πίνακας 9 (typ. p. 83)"
+      },
+      "verbatim": "5 Σ-20 ΑΝΕΥ ΑΠΑΙΤΗΣΕΩΝ - - || (1) Στην ενότητα αυτή να χρεώνονται οι πτήσεις μεταφοράς Α/Φ, πληρωμάτων, ενέργειες αποκατάστασης βλάβης Α/Φ, κλπ. (2) Πτήση κατά την οποία δεν καλύπτεται τουλάχιστον το 75% των απαιτήσεων της άσκησης (ΑΔΕ), δε θεωρείται έγκυρη και καταχωρείται ως Σ-20.",
+      "unit": "days",
+      "seat": null,
+      "flags": []
+    },
+    {
+      "id": "semiannual-fs-total-t6",
+      "name": "Semi-annual F/S (simulator) maintenance programme, T-6A (Table 6) — totals",
+      "kind": "sim",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "per semester; the split printed is POSTED (ΤΟΠΟΘ.) vs ATTACHED (ΠΡΟΣΚ.), NOT inexperienced vs experienced"
+      },
+      "renews": [
+        "sim-1",
+        "sim-2",
+        "sim-3",
+        "sim-5"
+      ],
+      "renewal_notes": "Totals per semester on the T-6A: 4 sorties for POSTED, 3 for ATTACHED. Coverage must be evenly distributed across the semester provided student-training requirements allow (§21). Each sortie lasts at least one hour (§22). The semi-annual numbers are MINIMA; extra capacity is allocated to the squadrons for distribution by need (§25). The Analytical Maintenance Programmes must state in which device each exercise may be performed (§26). Instructor monitoring in the F/S uses the maintenance-stage air forms Α0462 and Α0463 (§27).",
+      "lapse_consequence": "Semi-annual shortfall. Note that the F/S is also the only vehicle for the mandatory SIM-1 refresh after an abstention (§49).",
+      "bmc_amc": "Maintenance requirement; the FMS is also the renewal device for Ε-1γ, Ε-3 and Ε-4.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 97,
+        "ref": "Ch.4 §§21-27, Πίνακας 6 (typ. p. 79-80)",
+        "page_pdf_span": "97-98"
+      },
+      "verbatim": "ΕΞΑΜΗΝΙΑΙΟ ΠΡΟΓΡΑΜΜΑ ΣΥΝΤΗΡΗΣΗΣ F/S Α/Φ Τ-6Α [...] ΣΥΝΟΛΑ 4 3 || 22. Κάθε έξοδος να είναι διάρκειας κατ’ ελάχιστον μίας ώρας. || 25. Ο αριθμός των εξαμηνιαίων απαιτήσεων θεωρείται ως ελάχιστος.",
+      "flags": [
+        "Split is POSTED vs ATTACHED, not by experience level.",
+        "The Μ-346 variant (Table 7: totals 5/3) is excluded per T-6-only scope."
+      ],
+      "unit": "days",
+      "seat": null
+    },
+    {
+      "id": "sim-1",
+      "name": "SIM-1 — Precision handling / ACRO (F/S)",
+      "kind": "sim",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "1 sortie(s) per semester (posted) / 1 (attached)"
+      },
+      "renews": [
+        "sim-refresh-after-abstention"
+      ],
+      "renewal_notes": "Doubles as the mandatory refresh sortie after an abstention of more than 45 days (experienced: 1 sortie) or more than 30 days (inexperienced: 2 sorties) before the next air flight (§49). SIM-ΔΑ may be counted in its place for Test Pilots (§24). Each F/S sortie lasts at least one hour (§22).",
+      "lapse_consequence": "Semi-annual shortfall; and without it an instructor returning from a long abstention cannot be released to air flying.",
+      "bmc_amc": "Gate on returning to air flying after an abstention.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 97,
+        "ref": "Ch.4 Πίνακας 6 (typ. p. 79)"
+      },
+      "verbatim": "1. SIM-1 ΧΕΙΡ. ΑΚΡΙΒΕΙΑΣ – ACRO 1 1",
+      "flags": [],
+      "unit": "days",
+      "seat": null
+    },
+    {
+      "id": "sim-2",
+      "name": "SIM-2 — IFR (F/S)",
+      "kind": "sim",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "1 sortie(s) per semester (posted) / 1 (attached)"
+      },
+      "renews": [
+        "e-3-in-cloud-flight",
+        "e-4-ifr-approach"
+      ],
+      "renewal_notes": "Ε-3 (in-cloud flight) and Ε-4 (IFR approach) carry ν in the ΕΠΑΝ. ΜΕ FMS column, so their re-availability and renewal may be done in the FMS. Each F/S sortie lasts at least one hour (§22).",
+      "lapse_consequence": "Semi-annual shortfall against Table 6.",
+      "bmc_amc": "Supports the instrument currencies behind the Π.ΠΔΟ rating.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 97,
+        "ref": "Ch.4 Πίνακας 6 (typ. p. 79)"
+      },
+      "verbatim": "2. SIM-2 IFR 1 1",
+      "flags": [],
+      "unit": "days",
+      "seat": null
+    },
+    {
+      "id": "sim-3",
+      "name": "SIM-3 — Air-to-Ground missions (F/S)",
+      "kind": "sim",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "1 sortie(s) per semester (posted) / none — a dash «-» is printed (attached)"
+      },
+      "renews": [],
+      "renewal_notes": "Each F/S sortie lasts at least one hour (§22).",
+      "lapse_consequence": "Semi-annual shortfall against Table 6.",
+      "bmc_amc": "Maintenance requirement.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 97,
+        "ref": "Ch.4 Πίνακας 6 (typ. p. 79)"
+      },
+      "verbatim": "3. SIM-3 ΑΠΟΣΤΟΛΕΣ Α-Ε 1 -",
+      "flags": [],
+      "unit": "days",
+      "seat": null
+    },
+    {
+      "id": "sim-4",
+      "name": "SIM-4 — Air-to-Air missions (F/S)",
+      "kind": "sim",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "none — a dash «-» is printed sortie(s) per semester (posted) / none — a dash «-» is printed (attached)"
+      },
+      "renews": [],
+      "renewal_notes": "No T-6A semi-annual requirement: dashes are printed in both the posted and attached columns. Each F/S sortie lasts at least one hour (§22).",
+      "lapse_consequence": "Not applicable — no requirement on the T-6A.",
+      "bmc_amc": "Maintenance requirement.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 97,
+        "ref": "Ch.4 Πίνακας 6 (typ. p. 79)"
+      },
+      "verbatim": "4. SIM-4 ΑΠΟΣΤΟΛΕΣ Α-Α - -",
+      "flags": [
+        "The exercise code exists on the T-6A table with zero required sorties (the Μ-346 Table 7 prints 1 for posted). Do not schedule it as a currency."
+      ],
+      "unit": "days",
+      "seat": null
+    },
+    {
+      "id": "sim-5",
+      "name": "SIM-5 — Emergency procedures (F/S)",
+      "kind": "sim",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "1 sortie(s) per semester (posted) / 1 (attached)"
+      },
+      "renews": [],
+      "renewal_notes": "Complements the monthly BOLD FACE / CAPs emergency-procedures questionnaires of §73. Each F/S sortie lasts at least one hour (§22).",
+      "lapse_consequence": "Semi-annual shortfall against Table 6.",
+      "bmc_amc": "Maintenance requirement.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 97,
+        "ref": "Ch.4 Πίνακας 6 (typ. p. 79)"
+      },
+      "verbatim": "5. SIM-5 ΔΙΑΔΙΚΑΣΙΕΣ ΑΝΑΓΚΗΣ 1 1",
+      "flags": [],
+      "unit": "days",
+      "seat": null
+    },
+    {
+      "id": "sim-da",
+      "name": "SIM-ΔΑ — Aircraft test in the simulator (Test Pilots only)",
+      "kind": "sim",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "1 sortie(s) per semester (posted) / 1 (attached)"
+      },
+      "renews": [
+        "e-1c-aircraft-test-fcf",
+        "sim-1"
+      ],
+      "renewal_notes": "Applies only to the squadron's Test Pilots and to those attached Test Pilots who may fly aircraft tests. May be counted towards the total requirements in place of SIM-1 (§24). Each F/S sortie lasts at least one hour (§22).",
+      "lapse_consequence": "Semi-annual shortfall for Test Pilots only; no effect on non-Test-Pilot instructors.",
+      "bmc_amc": "Supports the Ε-1γ (FCF) currency, 90 days for experienced.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 97,
+        "ref": "Ch.4 Πίνακας 6 and §24 (typ. p. 79-80)"
+      },
+      "verbatim": "* SIM-ΔΑ ΔΟΚΙΜΗ Α/Φ (Μόνο για Δοκιμαστές) 1 1 || 24. Η έξοδος SIM-ΔΑ ισχύει μόνο για τους Δοκιμαστές της Μοίρας και για όσους από τους προσκολλημένους Δοκιμαστές, δύναται να πετάξουν δοκιμή Α/Φ. Επιπλέον, η SIM-ΔΑ, μπορεί να προσμετρηθεί στο σύνολο των απαιτήσεων σε αντικατάσταση της SIM-1.",
+      "flags": [],
+      "unit": "days",
+      "seat": null
+    },
+    {
+      "id": "semiannual-requirement-reduction-bands",
+      "name": "End-of-semester reduction of maintenance requirements for non-availability (Table 11)",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "bands measured in total calendar days of non-availability within the semester — identical for both experience levels"
+      },
+      "renewal_notes": "At semester end the prescribed requirements MAY be reduced according to the sum of the periods in which the flyer was not available for flying (travel orders, schools, grounded or duty-free, etc.). Ordinary leave does NOT count towards non-availability. Bands (total calendar days of non-availability → reduction of the semi-annual requirements): 0-45 → 0%; 46-75 → 20%; 76-105 → 40%; 106-135 → 60%; 136-165 → 80%; above 166 → 100%.",
+      "lapse_consequence": "Not a lapse — this is the relief mechanism. It reduces the SEMI-ANNUAL requirement counts only; it does NOT extend any of the day-count currencies (landings, E items), which keep running regardless.",
+      "bmc_amc": "Applies to the semi-annual Σ/E/F-S quotas, not to the per-event day currencies.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 102,
+        "ref": "Ch.4 §40, Πίνακας 11 (typ. p. 84)"
+      },
+      "verbatim": "40. Στο τέλος του εξαμήνου, οι προβλεπόμενες απαιτήσεις δύνανται να μειωθούν, ανάλογα με το άθροισμα των περιόδων κατά τις οποίες ο Ιπτάμενος δεν ήταν διαθέσιμος για πτήσεις (φύλλα πορείας, σχολεία, ελεύθερος πτήσεων ή υπηρεσίας, κλπ). Η απουσία σε κανονική άδεια, δεν θα συνυπολογίζεται στις περιόδους μη διαθεσιμότητας για πτήσεις. [...] ΣΥΝΟΛΟ ΗΜΕΡΩΝ (ΗΜΕΡΟΛΟΓΙΑΚΩΝ) ΜΗ ΔΙΑΘΕΣΙΜΟΤΗΤΑΣ ΓΙΑ ΠΤΗΣΕΙΣ / ΜΕΙΩΣΗ ΕΞΑΜΗΝΙΑΙΩΝ ΑΠΑΙΤΗΣΕΩΝ: 0-45 → 0 | 46-75 → 20% | 76-105 → 40% | 106-135 → 60% | 136-165 → 80% | Πάνω από 166 → 100%",
+      "flags": [
+        "Table 11 leaves calendar day 166 unassigned: the bands run to 136-165 and then resume at «Πάνω από 166» (i.e. from 167). Day 166 belongs to no band as printed.",
+        "The reduction is permissive («δύνανται να μειωθούν»), not automatic — a scheduler must treat it as a decision, not a computation."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "demo-500ft-currency",
+      "name": "Demo pilot — 500 ft AGL display currency (T-6A)",
+      "kind": "recency",
+      "validity_days": {
+        "inexperienced": 15,
+        "experienced": 15,
+        "printed_as": "Ch.5 §17 prints «κάθε 15 ημερολογιακές ημέρες» as a single figure with NO experience split — Chapter 5 has no ΑΠ/ΕΜΠ columns at all"
+      },
+      "renews": [
+        "e-1d-demo"
+      ],
+      "renewal_notes": "Renewed by at least one display flight at 500 ft AGL (high, low profile or combined; real or practice) every 15 calendar days. Display flights during maintenance, re-availability and real shows are flown OVER AND ABOVE the semi-annual maintenance programme (Ch.5 §38), and all training, maintenance and re-availability display flights are flown in VMC (Ch.5 §39).",
+      "lapse_consequence": "At 15 days the demo pilot is no longer available for 500 ft AGL display flying and must be restored through the §18 path (up to 30 days) or the §20 programme (beyond 30 days).",
+      "bmc_amc": "No BMC/AMC marking — a separate qualification track. Maximum 2 T-6A demo pilots exist (Ch.5 §27) and at least one available pilot with 1 year of T-6A display experience must be kept (Ch.5 §21).",
+      "seat": "A",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 125,
+        "ref": "Ch.5 §17 (typ. p. 107)"
+      },
+      "verbatim": "17. Προκειμένου ο Ιπτάμενος Επίδειξης να διατηρήσει τη διαθεσιμότητά του στην αεροπορική επίδειξη, να πετά μία τουλάχιστον, πτήση επίδειξης στα 500΄ AGL (high, low profile or combined, πραγματική ή για εξάσκηση) κάθε 15 ημερολογιακές ημέρες.",
+      "flags": [
+        "T-6A only (Chapter 5 is the T-6A display chapter).",
+        "Ch.5 §17 prints no experience split, while the EVENTS row Ε-1δ prints «--» for ΑΠ and 15 for ΕΜΠ. Whether an inexperienced instructor may hold this currency at all is NOT resolved by the source; both readings are kept on their own records (see e-1d-demo)."
+      ],
+      "unit": "days"
+    },
+    {
+      "id": "demo-reavailability-15-to-30-days",
+      "name": "Demo pilot — simplified re-availability window (15 to 30 days)",
+      "kind": "recency",
+      "validity_days": {
+        "inexperienced": 30,
+        "experienced": 30,
+        "printed_as": "«μέχρι τις 30 ημέρες» — a single band edge with no experience split"
+      },
+      "renews": [
+        "demo-500ft-currency"
+      ],
+      "renewal_notes": "Once the 15-day interval has elapsed and up to 30 days, the demo pilot may be re-availed by EITHER (α) one display flight at 500 ft with an available Demo Instructor, OR (β) one display flight at a minimum of 1000 ft AGL in the presence of the MEA Commander, with approval for a gradual descent to 500 ft AGL, when no Demo Instructor is available.",
+      "lapse_consequence": "Beyond 30 days this simplified route closes and the full §20 programme applies.",
+      "bmc_amc": "Not applicable.",
+      "seat": "A",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 125,
+        "ref": "Ch.5 §18 (typ. p. 107)"
+      },
+      "verbatim": "18. Στην περίπτωση που το παραπάνω διάστημα παρέλθει και μέχρι τις 30 ημέρες, ο Ιπτάμενος Επίδειξης μπορεί να διατεθεί με έναν από τους ακόλουθους τρόπους: α. Μία πτήση επίδειξης στα 500΄, με διαθέσιμο Εκπαιδευτή Επιδείξεων. β. Μία πτήση επίδειξης με ελάχιστο ύψος τα 1000΄ AGL, παρουσία του Δκτή της ΜΕΑ και με έγκριση να γίνεται σταδιακή κάθοδος στα 500΄ AGL, εφόσον δεν υπάρχει διαθέσιμος Εκπαιδευτής Επιδείξεων.",
+      "flags": [
+        "T-6A only."
+      ],
+      "unit": "days"
+    },
+    {
+      "id": "demo-above-1000ft-availability",
+      "name": "Demo pilot — availability limit for display manoeuvres above 1000 ft AGL",
+      "kind": "recency",
+      "validity_days": {
+        "inexperienced": 90,
+        "experienced": 90,
+        "printed_as": "«χρονικό όριο 90 ημερών» — a single figure with no experience split"
+      },
+      "renews": [
+        "demo-500ft-currency"
+      ],
+      "renewal_notes": "A separate, longer clock: availability in the display manoeuvres flown ABOVE 1000 ft AGL is lost after 90 days. It therefore outlives the 15-day 500 ft currency, which is why the §18 and §20 restoration paths can be flown at 1000 ft AGL.",
+      "lapse_consequence": "Loss of availability in the display manoeuvres above 1000 ft AGL.",
+      "bmc_amc": "Not applicable.",
+      "seat": "A",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 125,
+        "ref": "Ch.5 §19 (typ. p. 107)"
+      },
+      "verbatim": "19. Για την απώλεια διαθεσιμότητας του Ιπταμένου στους ελιγμούς της επίδειξης, σε ύψος πάνω από τα 1000΄ AGL, καθορίζεται χρονικό όριο 90 ημερών.",
+      "flags": [
+        "T-6A only.",
+        "The source does not state what happens once the 90-day limit is exceeded — the restoration paths of §18 and §20 are written for the 500 ft currency only and themselves rely on 1000/2000/5000 ft flying. Gap flagged, not resolved."
+      ],
+      "unit": "days"
+    },
+    {
+      "id": "demo-reavailability-after-30-days",
+      "name": "Demo pilot — re-availability programme beyond 30 days",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "a restoration programme, not a window"
+      },
+      "renews": [
+        "demo-500ft-currency"
+      ],
+      "renewal_notes": "After the 30-day period, re-availability at 500 ft AGL requires: (α) one full-profile flight in the FTD or OFT; (β) one practice flight starting at 5000 ft AGL in the airfield area, then a gradual descent first to 2000 ft AGL and then to 1000 ft AGL; (γ) if a Demo Instructor is available, one display flight at 500 ft AGL; (δ) if none is available, 2 flights at 1000 ft AGL in the presence of the MEA Commander and the OAE Ground Safety Observer, the gradual descent to 500 ft AGL being made on the 2nd sortie with the MEA Commander's approval.",
+      "lapse_consequence": "Until completed, no display flying at 500 ft AGL.",
+      "bmc_amc": "Not applicable.",
+      "seat": "A",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 125,
+        "ref": "Ch.5 §20 (typ. p. 107-108); §39 on PDF 128",
+        "page_pdf_span": "125-126"
+      },
+      "verbatim": "20. Μετά την πάροδο του διαστήματος των 30 ημερών, για την επαναδιάθεση του Ιπταμένου στα 500΄ AGL, πρέπει να εκτελεστεί: α. Μία πτήση πλήρους profile στο FTD ή OFT. β. Μία πτήση για εξάσκηση, αρχικά στα 5000΄ AGL στην περιοχή του Α/Δ και στη συνέχεια σταδιακή κάθοδος αρχικά στα 2000΄ AGL και στη συνέχεια στα 1000΄ AGL. γ. Εφόσον υπάρχει διαθέσιμος Εκπαιδευτής Επιδείξεων, θα εκτελείται μία πτήση επίδειξης στα 500΄ AGL. δ. Εφόσον δεν υπάρχει διαθέσιμος Εκπαιδευτής Επιδείξεων, θα εκτελούνται 2 πτήσεις στα 1000΄ AGL παρουσία του Δκτή της ΜΕΑ και του Ground Safety Observer της ΟΑΕ. Η σταδιακή κάθοδος στα 500΄ AGL θα γίνεται στη 2η έξοδο, με έγκριση του Δκτή της ΜΕΑ.",
+      "flags": [
+        "T-6A only."
+      ],
+      "unit": "days"
+    },
+    {
+      "id": "demo-pilot-tenure",
+      "name": "Demo pilot — maximum tenure in the post",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "2 έτη, με δυνατότητα παράτασης σε 3 έτη — 2 years, extendable to 3; printed in years, not days"
+      },
+      "renewal_notes": "Maximum time in the display-pilot post is 2 years from appointment, extendable to 3 years with Command approval; the successor's training must be complete before it expires.",
+      "lapse_consequence": "The post must be handed over.",
+      "bmc_amc": "Not applicable.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 122,
+        "ref": "Ch.5 §6 (typ. p. 104)"
+      },
+      "verbatim": "6. Μέγιστος χρόνος παραμονής κάθε Ιπταμένου Πτήσεων Επίδειξης καθορίζονται τα 2 έτη από τον ορισμό του, με δυνατότητα παράτασης σε 3 έτη κατόπιν έγκρισης από τη Διοίκηση. Πριν το πέρας του υπόψη χρονικού διαστήματος, θα πρέπει να έχει ολοκληρωθεί η εκπαίδευση του διάδοχου σχήματος.",
+      "flags": [
+        "A tenure limit, not a currency; printed in years."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "bmc-readiness",
+      "name": "BMC (Basic Mission Capable) — retention condition",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "a status; its clock is the clock of the BMC-marked E items"
+      },
+      "renews": [
+        "day-landing"
+      ],
+      "renewal_notes": "Reached after completing the ΜΕΤ and ΕΕΠ air training and the ΠΡ-1 module. Retention requires availability in the E exercises marked «BMC» in the EVENTS table — which, verified tick by tick across PDF 105-107, is the day landing alone.",
+      "lapse_consequence": "Falls to Partially Combat Ready (§69δ(3)).",
+      "bmc_amc": "Defines BMC itself.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 111,
+        "ref": "Ch.4 §69β (typ. p. 93)"
+      },
+      "verbatim": "β. Ετοιμοπόλεμος Α ή Basic Mission Capable (BMC) — Είναι ο Ιπτάμενος, ο οποίος έχει συμπληρώσει την εκπαίδευση αέρος του σταδίου ΜΕΤ και ΕΕΠ και έχει ολοκληρώσει την εκπαίδευσή του στο ΠΡ-1. Είναι ικανός να εκτελέσει την κύρια επιχειρησιακή αποστολή της ΜΕΑ. Για τη διατήρηση της ετοιμότητας απαιτείται να είναι διαθέσιμος στις Ειδικές Ασκήσεις «Ε» που έχουν την ένδειξη «BMC» στον αντίστοιχο Πίνακα (παράγραφος 49, του παρόντος Κεφαλαίου).",
+      "flags": [
+        "REFEREE-VERIFIED by enumerating every mark in the BMC column (x 329-369.5) across PDF 105-107: exactly ONE row is ticked, Π/Γ ημέρας. Whether the source intended a wider BMC set is a possible omission — unit ruling needed.",
+        "Stale internal cross-reference: §69β points to «παράγραφος 49» for the EVENTS table, which is actually §48."
+      ],
+      "unit": "days",
+      "seat": null
+    },
+    {
+      "id": "amc-readiness",
+      "name": "AMC (Advanced Mission Capable) — retention condition",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "a status; its clock is the clock of the AMC-marked E items"
+      },
+      "renews": [
+        "day-landing",
+        "night-landing",
+        "e-21-flight-300ft",
+        "e-32-bfm",
+        "e-45-visual-delivery-med-hi-apex-day",
+        "e-46-visual-delivery-low-apex-day"
+      ],
+      "renewal_notes": "Reached after completing training in the whole set of advanced exercises (ΠΡ). Retention requires availability in the E exercises marked «AMC» — verified tick by tick, SIX rows apply to the T-6: Π/Γ ημέρας, Π/Γ νύκτας, Ε-21, Ε-32, Ε-45 and Ε-46. A seventh AMC-marked row, Ε-33 (ACM), is ticked only under Μ-346 and is out of T-6 scope.",
+      "lapse_consequence": "AMC not retained; the instructor falls back towards BMC, and to Partially Combat Ready if the BMC day landing also lapses.",
+      "bmc_amc": "Defines AMC itself.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 111,
+        "ref": "Ch.4 §69γ (typ. p. 93)"
+      },
+      "verbatim": "γ. Ετοιμοπόλεμος Β ή Advanced Mission Capable (AMC) — Είναι ο Ιπτάμενος, ο οποίος έχει ολοκληρώσει την εκπαίδευσή του στο σύνολο των προκεχωρημένων ασκήσεων (ΠΡ). [...] Για τη διατήρηση της ετοιμότητας απαιτείται να είναι διαθέσιμος στις Ειδικές Ασκήσεις «Ε» που έχουν την ένδειξη «ΑMC» στον αντίστοιχο Πίνακα (παράγραφος 49, του παρόντος Κεφαλαίου).",
+      "flags": [
+        "Referee-verified count: SIX AMC-ticked rows apply to the T-6 (marks at x-centre 384.2-385.4 across PDF 105-107).",
+        "Same stale cross-reference to «παράγραφος 49» as §69β."
+      ],
+      "unit": "days",
+      "seat": null
+    },
+    {
+      "id": "partially-combat-ready",
+      "name": "Partially Combat Ready — the three triggers",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "the failure state; no clock of its own"
+      },
+      "renewal_notes": "An instructor is Partially Combat Ready when he: (1) does not hold a valid Π.ΠΔΟ rating; (2) is not successful in the Tactical or Τ-Α ground and air evaluations, or has not been evaluated within the time limits prescribed by KPA Β-6/ΓΕΑ; (3) has lost availability in the E exercises marked «BMC».",
+      "lapse_consequence": "Downgrade from BMC/AMC — the top-level availability state a scheduler colour scale should surface.",
+      "bmc_amc": "The failure state of both BMC and AMC.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 111,
+        "ref": "Ch.4 §69δ (typ. p. 93-94)",
+        "page_pdf_span": "111-112"
+      },
+      "verbatim": "δ. Μερικώς Ετοιμοπόλεμος: Είναι ο Ιπτάμενος ο οποίος: (1) Δεν έχει σε ισχύ Π. ΠΔΟ. (2) Δεν είναι ΕΠΙΤΥΧΩΝ στις Τακτικές ή Τ-Α αξιολογήσεις εδάφους-αέρος ή δεν έχει αξιολογηθεί εντός των προβλεπόμενων χρονικών ορίων σύμφωνα με τον ΚΠΑ Β-6/ΓΕΑ. (3) Έχει απολέσει τη διαθεσιμότητά του στις Ειδικές Ασκήσεις «Ε» που έχουν την ένδειξη «BMC» στον αντίστοιχο Πίνακα (παράγραφος 49, του παρόντος Κεφαλαίου).",
+      "unit": "days",
+      "renews": [],
+      "seat": null,
+      "flags": []
+    },
+    {
+      "id": "pdo-instrument-rating-validity",
+      "name": "Π.ΠΔΟ instrument rating must be in force",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_as": "NO validity period is printed anywhere in the 3-01 — the period is set externally by KPA Β-6/ΓΕΑ"
+      },
+      "renews": [
+        "s-2-pdo-day",
+        "seminar-pdo"
+      ],
+      "renewal_notes": "The 3-01 requires the Π.ΠΔΟ rating to be «in force» for full combat-ready status (§69δ(1)) and as a prerequisite for in-cloud flight (Ch.8 §54α), but prints no validity period — it is set by KPA Β-6/ΓΕΑ. Maintenance-stage evaluations are likewise prescribed by KPA Β-6. Flyers available on two or more types take their PDO evaluation on the type with the most navigation aids (§30).",
+      "lapse_consequence": "Partially Combat Ready (§69δ(1)) and no in-cloud flying (Ch.8 §54α).",
+      "bmc_amc": "Gates both BMC and AMC via §69δ.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 98,
+        "ref": "Ch.4 §30 (typ. p. 80-81); §69δ(1) on PDF 111; Ch.8 §54α on PDF 155",
+        "page_pdf_span": "98-99"
+      },
+      "verbatim": "30. Οι αξιολογήσεις των Ιπταμένων του Σταδίου Συντήρησης προβλέπονται στον ΚΠΑ Β-6. Επισημαίνεται ότι, Ιπτάμενοι διαθέσιμοι σε δύο ή περισσότερους τύπους Α/Φ ή Ε/Π, θα υφίστανται Αξιολόγηση ΠΔΟ στον τύπο που διαθέτει τα περισσότερα βοηθήματα ναυτιλίας.",
+      "flags": [
+        "EXTERNAL VALIDITY: no day count is printed in the 3-01. The currency card must source the Π.ΠΔΟ period from KPA Β-6/ΓΕΑ — this catalog cannot be completed from the 3-01 alone."
+      ],
+      "unit": "days",
+      "seat": null
+    },
+    {
+      "id": "tactical-ta-evaluations",
+      "name": "Tactical / Τ-Α ground and air evaluations within prescribed time limits",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_as": "NO time limits are printed in the 3-01 — they are set by KPA Β-6/ΓΕΑ"
+      },
+      "renews": [
+        "seminar-tactics"
+      ],
+      "renewal_notes": "Being unsuccessful, OR not being evaluated within the time limits prescribed by KPA Β-6/ΓΕΑ, makes the instructor Partially Combat Ready. No time limits are printed in the 3-01.",
+      "lapse_consequence": "Partially Combat Ready (§69δ(2)).",
+      "bmc_amc": "Gates BMC/AMC via §69δ.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 111,
+        "ref": "Ch.4 §69δ(2) (typ. p. 93)"
+      },
+      "verbatim": "(2) Δεν είναι ΕΠΙΤΥΧΩΝ στις Τακτικές ή Τ-Α αξιολογήσεις εδάφους-αέρος ή δεν έχει αξιολογηθεί εντός των προβλεπόμενων χρονικών ορίων σύμφωνα με τον ΚΠΑ Β-6/ΓΕΑ.",
+      "flags": [
+        "EXTERNAL VALIDITY: the time limits live in KPA Β-6/ΓΕΑ, not in the 3-01."
+      ],
+      "unit": "days",
+      "seat": null
+    },
+    {
+      "id": "weapons-certification-no-expiry",
+      "name": "Weapons certification — explicitly does NOT expire",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "explicit negative finding: continuous availability-certification is NOT required"
+      },
+      "renewal_notes": "Initial availability/certification is achieved when the flyer scores within STANDARDS on 2 consecutive Visual or System releases; for the T-6A initial availability is with training munitions upon assignment of the relevant Operational Requirement. §40 states expressly that continuous availability-certification is NOT required. Training is given to flyers already characterised BMC (Ch.8 §28).",
+      "lapse_consequence": "None — the certification itself does not lapse. The related EVENTS currencies (Ε-40, Ε-45, Ε-46, Ε-49Γ) DO lapse and must be tracked separately.",
+      "bmc_amc": "Requires BMC to enter the programme; carries no expiry of its own.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 152,
+        "ref": "Ch.8 §§35-36, §40 (typ. p. 134)"
+      },
+      "verbatim": "35. Η αρχική διάθεση - πιστοποίηση επιτυγχάνεται όταν ο Ιπτάμενος επιτύχει βολή εντός STANDARDS σε 2 συνεχόμενες Visual ή System αφέσεις. 36. Η αρχική διάθεση για τα Α/Φ Τ-6Α να γίνεται με εκπαιδευτικά πυρομαχικά σε υλοποίηση σχετικής Επιχειρησιακής Απαίτησης όταν αυτή τους ανατεθεί. [...] 40. Δεν απαιτείται συνεχομένη διάθεση - πιστοποίηση.",
+      "flags": [
+        "Important NEGATIVE finding for the currency card: do not model weapons certification as an expiring item."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "experience-level-definition",
+      "name": "Experience level (experienced vs inexperienced) — the axis every validity column splits on",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "not a validity — the definition that decides WHICH validity column applies"
+      },
+      "renewal_notes": "An instructor is EXPERIENCED (ΕΜΠ) if any ONE of four cases holds: (α) 600 h on the squadron type as instructor with no previous fighter experience; (β) 1000 h grand total of which 250 h on the squadron type as flight instructor; (γ) 300 h as pilot-in-command on fighters or other jet/turboprop trainers plus 250 h on the squadron type as instructor — and if he has fewer than 300 h of combat-type, the squadron hours increase by 2 for every 1 hour short of 300; (δ) 150 h on the squadron type as instructor when he was previously characterised experienced on fighters or an experienced instructor on jet/turboprop aircraft.",
+      "lapse_consequence": "Not applicable — a status, not a currency. Until the instructor meets one of the four cases he is treated as inexperienced (ΑΠ) and every ΑΠ column in this catalog applies to him.",
+      "bmc_amc": "Selects which validity column (ΑΠ / ΕΜΠ) applies to every landing, event, abstention and SIM-refresh threshold in this catalog.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 245,
+        "ref": "Annex B §17 (typ. B-3/B-4)",
+        "page_pdf_span": "245-246"
+      },
+      "verbatim": "Επίπεδο Εμπειρίας Ιπταμένων — 17. Έμπειρος: Χαρακτηρίζεται ο Εκπαιδευτής ο οποίος ανήκει σε μία από τις παρακάτω περιπτώσεις: α. 600 ώρες στον τύπο της Μοίρας ως Εκπαιδευτής, χωρίς προηγούμενη εμπειρία σε μαχητικά Α/Φ. β. 1.000 ώρες Γενικό Σύνολο, από τις οποίες 250 ώρες στον τύπο της Μοίρας ως Εκπαιδευτής Πτήσεων. γ. 300 ώρες ως Κυβερνήτης σε μαχητικά ή άλλου τύπου εκπαιδευτικά Α/Φ jet ή Turboprop και 250 ώρες στον τύπο της Μοίρας ως Εκπαιδευτής. Σε περίπτωση που έχει λιγότερες από 300 ώρες πολεμικού τύπου, οι ώρες της Μοίρας θα αυξάνονται κατά 2 για κάθε 1 ώρα που υπολείπεται από τις 300 πολεμικού ή άλλου τύπου εκπαιδευτικού Α/Φ jet ή Turboprop. δ. 150 ώρες στον τύπο της Μοίρας ως Εκπαιδευτής, όταν στο παρελθόν έχει χαρακτηρισθεί ως έμπειρος σε μαχητικά Α/Φ ή έμπειρος εκπαιδευτής σε Α/Φ jet ή Turboprop.",
+      "flags": [
+        "The order defines only «Έμπειρος». NO definition of «Άπειρος» (inexperienced) is printed anywhere in the 3-01 — inexperienced is the complement by implication. Flagged, not resolved.",
+        "Case (γ) contains a compensation formula (2 squadron hours per missing combat hour) with no printed ceiling."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "posted-vs-attached-definition",
+      "name": "Posted vs attached instructor — the axis Tables 6 and 9 split on",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "not a validity — the definition that decides which COLUMN of Tables 6 and 9 applies"
+      },
+      "renewal_notes": "ΤΟΠΟΘΕΤΗΜΕΝΟΣ (posted) is the flight instructor belonging to the squadron's strength. ΠΡΟΣΚΟΛΛΗΜΕΝΟΣ (attached) is the instructor officer who does NOT belong to the squadron's strength and is attached to it by GEA order, solely for maintenance on the aircraft type or to assist its work. For attached flyers the order further fixes two mandatory statuses: (α) MANDATORILY BMC — those attached under the «ΙΚΑΡΟΣ» Plan belonging to Phase «Α», the attached flyers appointed GEA/DAE Air Evaluators, and the instructors posted to the ΣOT; (β) MANDATORILY AVAILABLE ON TYPE — the Wing Commander, Deputy Commander, ΔΕΕ and ΔΠΔ of the Combat/Air Training Wing, who fly as attached, and those enrolled in the «ΙΚΑΡΟΣ» Plan under Phases «Β» and «Γ».",
+      "lapse_consequence": "Not applicable — a status. It selects the semi-annual quota column, and for the two named groups it makes BMC or type-availability mandatory rather than optional.",
+      "bmc_amc": "Determines the semi-annual Σ / F-S quotas AND, for the named attached groups, imposes BMC or type availability as an obligation.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 245,
+        "ref": "Annex B §§14-15 (typ. B-3)"
+      },
+      "verbatim": "14. Τοποθετημένος Ιπτάμενος: Είναι ο Εκπαιδευτής Πτήσεων που ανήκει στη δύναμη της Μοίρας. 15. Προσκολλημένος Ιπτάμενος: Είναι ο Αξιωματικός Εκπαιδευτής, που δεν ανήκει στη δύναμη της Μοίρας και προσκολλάται σε αυτή σύμφωνα με διαταγή του ΓΕΑ, μόνο για συντήρηση στον τύπο του Α/Φ ή και προς υποβοήθηση του έργου της. [...] α. Υποχρεωτικά Ετοιμοπόλεμοι επιπέδου Α (BMC) θα συντηρούνται όσοι από τους προσκολλημένοι του Σχεδίου «ΙΚΑΡΟΣ», ανήκουν στη Φάση «Α», καθώς και οι προσκολλημένοι που έχουν οριστεί Αξιολογητές - Αέρος ΓΕΑ, ΔΑΕ και οι τοποθετημένοι Εκπαιδευτές στο ΣOT. β. Υποχρεωτικά Διαθέσιμοι στον τύπο θα συντηρούνται οι: Δκτής, Υδκτής, ΔΕΕ, ΔΠΔ της Πτέρυγας Μάχης/Εκπαίδευσης Αέρος, οι οποίοι θα ίπτανται ως προσκολλημένοι και όσοι είναι εγγεγραμμένοι στο Σχέδιο «ΙΚΑΡΟΣ», στις Φάσεις «Β» και «Γ».",
+      "flags": [
+        "REFEREE ADDITION — found by neither research pass. It is required to read Tables 6 and 9 correctly: posted/attached is a DIFFERENT axis from inexperienced/experienced, and a currency card must not merge them.",
+        "Attached instructors have no printed night requirement in Table 9 (a dash for Σ-2 night), yet the night-landing currency of the EVENTS table applies to every instructor regardless of posting status. Do not infer that attached instructors are exempt from night-landing currency."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "events-table-column-semantics",
+      "name": "EVENTS table — what each column means (validity, types, FMS, dual-type, seat)",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "defines how every e-item record in this catalog must be read"
+      },
+      "renewal_notes": "ΠΡΟΓΡ. = the events that must appear on the programme. ΕΤΟΙΜΟΠΟΛ. BMC/AMC = the events needed for the corresponding combat-readiness characterisation. ΔΙΑΘΕΣΙΜΟΤΗΤΑ (ΗΜΕΡΕΣ), split ΑΠ (inexperienced) / ΕΜΠ (experienced) = how long the instructor stays available in that event in relation to his experience; WHERE NO NUMBER APPEARS he keeps his availability forever. ΙΣΧΥΕΙ ΓΙΑ Α/Φ = which aircraft can execute the event — capability does not imply obligation. ΕΠΑΝ. ΜΕ FMS = the events whose re-availability AND renewal may be done in the FMS. ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ = for instructors available on two types, renewal may also be done by a flight on the 2nd type. The last columns give the seat (Α / Β / Α & Β) from which each event may be executed.",
+      "lapse_consequence": "Not applicable.",
+      "bmc_amc": "Defines the BMC/AMC marking convention for every event row.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 103,
+        "ref": "Ch.4 §48α-ζ (typ. p. 85-86)",
+        "page_pdf_span": "103-104"
+      },
+      "verbatim": "48. Στον ακόλουθο Πίνακα, απεικονίζονται τα εξής: α. Στη στήλη «ΠΡΟΓΡ.», απεικονίζονται τα Event τα οποία απαιτείται να είναι προγραμματισμένα. β. Στις στήλες «ΕΤΟΙΜΟΠΟΛ.», φαίνονται τα Event τα οποία είναι απαραίτητα για να χαρακτηριστεί ένας Εκπαιδευτής ετοιμοπόλεμος επιπέδου BMC ή AMC (τα επίπεδα ετοιμοπόλεμου αναλύονται στην παράγραφο 70, του παρόντος Κεφαλαίου). γ. Στις στήλες «ΔΙΑΘΕΣΙΜΟΤΗΤΑ», εμφανίζονται η διάρκεια για την οποία παραμένει διαθέσιμος ο Εκπαιδευτής στο εν λόγω Event, σε σχέση με την εμπειρία του. Όπου δεν υπάρχει αριθμός, ο Εκπαιδευτής διατηρεί για πάντα τη διαθεσιμότητά του. δ. Στις στήλες «ΙΣΧΥΕΙ ΓΙΑ Α/Φ», απεικονίζεται ποια Α/Φ μπορούν να εκτελέσουν κάθε Event. Η δυνατότητα εκτέλεσης δεν συνεπάγεται και την υποχρεωτικότητα εκτέλεσης. ε. Στη στήλη «ΕΠΑΝ. ΜΕ FMS», απεικονίζονται τα Event στα οποία η επαναδιάθεση καθώς και η ανανέωση μπορεί να γίνει στο FMS. στ. Στη στήλη «ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ», απεικονίζονται τα Event στα οποία, για όσους Ιπτάμενους διατηρούν διάθεση σε δύο τύπους Α/Φ, η ανανέωση μπορεί να γίνει και με πτήση στον 2ο τύπο Α/Φ. ζ. Στις τελευταίες στήλες εμφανίζεται από ποια θέση μπορεί να εκτελεστεί κάθε Event.",
+      "flags": [
+        "§48β points to «παράγραφος 70» for the readiness definitions, which are actually in §69 — stale internal cross-reference. Mirror error: §69β/γ/δ point back to «παράγραφος 49» for this table, which is actually §48. Neither affects any value, but citations generated from the document text will be wrong."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "e-item-crediting-rules",
+      "name": "E-item execution, crediting and the 25% non-akin time rule",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "crediting rules, not a window"
+      },
+      "renewal_notes": "E items may be flown within ANY main exercise (Σ) provided the aircraft configuration and the flying area permit and the restrictions of EE 3-18/ΔΑΕ are kept (§42). The Special Instructions of each Σ analysis list the akin E exercises; if the E is NOT akin to the Σ being flown, the time given to it may not exceed 25% of total sortie time (§43). An E that by its nature consumes a large part or all of a sortie is charged to the nearest akin main exercise (Σ) as well as to the corresponding E (§44). Planned E items are briefed pre-flight, logged in the flight log and archived for flying-task control (§45). Covering the minimum E requirements is the parallel responsibility of the flyer himself and of the squadron (§46). For any Event with a corresponding ΠΡ module, the instructor must have completed that ΠΡ training before he may execute it (§47).",
+      "lapse_consequence": "An E flown outside these rules cannot be credited, so the underlying currency does not renew.",
+      "bmc_amc": "Governs how every E currency is renewed in practice and therefore both readiness levels.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 103,
+        "ref": "Ch.4 §§41-47 (typ. p. 85)"
+      },
+      "verbatim": "42. Τα «Ε» μπορούν να εκτελεστούν μέσω όλων των ασκήσεων (Σ), με την προϋπόθεση ότι, το επιτρέπει η διαμόρφωση του Α/Φ, η περιοχή πτήσεων και τηρούνται οι περιορισμοί όπως περιγράφονται στο ΕΕ 3-18/ΔΑΕ. 43. [...] Αν οι ασκήσεις (Ε) δεν είναι συναφείς των ασκήσεων (Σ), τότε ο χρόνος που θα διατίθεται για αυτές, δεν θα υπερβαίνει το 25% του συνολικού χρόνου της εξόδου. [...] 46. Η κάλυψη των ελάχιστων απαιτήσεων σε ειδικές ασκήσεις (Ε) αποτελεί παράλληλη ευθύνη του ίδιου του Ιπτάμενου και της Μοίρας. [...] 47. Για όποια Event υπάρχει αντίστοιχο ΠΡ, θα πρέπει ο Εκπαιδευτής να έχει ολοκληρώσει την αντίστοιχη εκπαίδευση για να το εκτελέσει.",
+      "unit": "days",
+      "renews": [],
+      "seat": null,
+      "flags": []
+    },
+    {
+      "id": "e-coverage-during-student-flights",
+      "name": "E items an instructor may cover while flying with students (Table 13, Phase II / T-6)",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "a crediting allowance, not a window"
+      },
+      "renews": [
+        "all e-item currencies listed in Table 13 for the category being flown"
+      ],
+      "renewal_notes": "To retain availability and to cover part of the semi-annual maintenance requirements, instructors may cover E exercises DURING flights with students or trainees, provided the E is executed by the instructor himself, is akin to the exercise category being flown, and is logged in the flight log. In the ΜΕΤ and ΕΕΠ stages ANY E exercise may be flown. Phase II (T-6) coverable sets — ΠΡΟΣΑΡΜΟΓΗ (Adaptation): 1α,β, 2, 3, 4, 6γ, 7, 9α,γ, 10α,β; ΟΡΓΑΝΑ (Instruments): 3, 4, 6γ, 7, 9α, 10α,β; ΣΧΗΜΑΤΙΣΜΟΣ (Formation): 1α, 2, 3, 4, 5, 7, 9α, 10β, 18; ΝΑΥΤΙΛΙΑ (Navigation): 2, 3, 4, 5, 7, 9α, 10α,β, 18.",
+      "lapse_consequence": "Not applicable — this is the main practical channel by which a busy instructor keeps his E currencies alive without dedicated maintenance sorties. A scheduler should credit it.",
+      "bmc_amc": "Feeds the E currencies behind both readiness levels, including the BMC day landing.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 108,
+        "ref": "Ch.4 §61 (PDF 108, typ. p. 90) and Πίνακας 13 (PDF 109, typ. p. 91)",
+        "page_pdf_span": "108-109"
+      },
+      "verbatim": "61. Για τη διατήρηση της διαθεσιμότητας και την κάλυψη μέρους των εξαμηνιαίων απαιτήσεων συντήρησης, οι Εκπαιδευτές δύναται να καλύπτουν ασκήσεις (Ε) κατά τη διάρκεια πτήσης με μαθητές ή εκπαιδευόμενους, εφόσον εκτελούνται από τους Εκπαιδευτές, οι οποίες να αναγράφονται στο βιβλίο πτήσεων. Οι ασκήσεις (Ε) πρέπει να είναι συναφείς με την εκτελούμενη κατηγορία ασκήσεων. Στα στάδια ΜΕΤ - ΕΕΠ δύναται να εκτελεστεί οποιαδήποτε άσκηση (Ε). || ΒΑΣΙΚΟ (Phase II) — ΠΡΟΣΑΡΜΟΓΗ 1α,β, 2, 3, 4, 6γ, 7, 9α,γ, 10α,β | ΟΡΓΑΝΑ 3, 4, 6γ, 7, 9α, 10α,β | ΣΧΗΜΑΤΙΣΜΟΣ 1α, 2, 3, 4, 5, 7, 9α, 10β, 18 | ΝΑΥΤΙΛΙΑ 2, 3, 4, 5, 7, 9α,10α,β, 18",
+      "flags": [
+        "CONTRADICTION: Table 13 lists Ε-7 in ALL FOUR Phase II (T-6) categories, while the EVENTS table ticks Ε-7 only under Μ-346 (seat Β, 90 days merged). Ε-7 is therefore EXCLUDED from this catalog's item list under the T-6-only project law, and the contradiction is carried here as an open flag. Unit ruling needed before a scheduler treats Ε-7 as a live T-6 currency.",
+        "Table 13's Phase III (Προκεχωρημένο) and Phase IV (Επιχειρησιακό) rows concern the Μ-346 stages — excluded per T-6-only scope."
+      ],
+      "unit": "days",
+      "seat": null
+    },
+    {
+      "id": "events-not-currently-flown",
+      "name": "EVENTS declared not currently flown (note 3)",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "not a currency — an exclusion list"
+      },
+      "renewal_notes": "Ε-22, Ε-23, Ε-31β, Ε-36, Ε-37, Ε-49β, Ε-61, Ε-64, Ε-66, Ε-69, Ε-70 and Ε-73 are not executed. Their table rows are otherwise blank, except that Ε-22 and Ε-23 still carry a ΠΡΟΓΡ. = ΝΑΙ mark. Treat all of them as non-schedulable regardless of any ΠΡΟΓΡ. tick still printed.",
+      "lapse_consequence": "Not applicable — these must not be scheduled and must not appear on a currency card.",
+      "bmc_amc": "None of these carries a BMC or AMC tick.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 107,
+        "ref": "Ch.4 §48 EVENTS table, note (3) (typ. p. 89)"
+      },
+      "verbatim": "(3) Τα Ε-22, Ε-23, Ε-31β, Ε-36, Ε-37, Ε-49β, Ε-61, Ε-64, Ε-66, Ε-69, Ε-70, Ε-73 δεν εκτελούνται.",
+      "flags": [
+        "Ε-22 (Π.Χ.Π) and Ε-23 (TERRAIN MASKING) carry ΠΡΟΓΡ. = ΝΑΙ (must be programmed) while simultaneously appearing in the not-flown list — printed inconsistency, recorded as printed."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "programming-priority-impending-expiry",
+      "name": "Impending currency expiry is a printed driver of daily programming and seat allocation",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "a programming rule, not a window"
+      },
+      "renewal_notes": "During maintenance-stage training the squadron may, through the daily programme, fix the seat each instructor will occupy in the cockpit, taking into account: (α) seniority among the flyers; (β) THE PROGRAMMING NEEDS — the impending expiry of the instructor in the exercise, etc.; (γ) re-assignment in a specific exercise or Event (E); (δ) the difference between the front and rear seat. Employment context: maintenance-stage instructors may fly a maximum of 3 sorties per day (3 day, or 2 day and 1 night), an F/S sortie as a trainee counting as an air sortie, with a 4th sortie in the rear seat only by exception with the Unit Commander's approval (§31); at least 2 hours must separate two sorties of the same flyer, from landing to takeoff, with the exceptions of §32.",
+      "lapse_consequence": "Not applicable — this is the source's own instruction that a currency about to expire should drive the programme, which is precisely what a per-instructor currency card exists to surface.",
+      "bmc_amc": "Not a readiness mark; it is the scheduling hook for every currency in this catalog.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 99,
+        "ref": "Ch.4 §35 (typ. p. 81); employment limits §§31-33 on the same page"
+      },
+      "verbatim": "35. Κατά την εκπαίδευση του σταδίου Συντήρησης η Μοίρα μέσω του ημερήσιου προγραμματισμού, δύναται να καθορίσει τη θέση που θα καταλαμβάνει ο κάθε Εκπαιδευτής στο cockpit, λαμβάνοντας υπόψη τις παρακάτω παραμέτρους: α. Την αρχαιότητα μεταξύ των Ιπταμένων. β. Τις ανάγκες προγραμματισμού (επικείμενη λήξη του Εκπαιδευτή στην άσκηση, κλπ). γ. Την επαναδιάθεση σε συγκεκριμένη άσκηση ή Event (E). δ. Τη διαφορετικότητα μεταξύ Α΄ και Β΄ θέσης.",
+      "flags": [
+        "REFEREE ADDITION — found by neither research pass. It is the only place in the 3-01 that names «επικείμενη λήξη» (impending expiry) as a programming input, and it ties currency state directly to seat allocation."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "pr-sortie-interval",
+      "name": "Advanced exercises (ΠΡ) — maximum interval between sorties of a module",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": 10,
+        "experienced": 10,
+        "printed_as": "«10 ημερολογιακές ημέρες το μέγιστο» — 10 calendar days, printed once with no experience split"
+      },
+      "renewal_notes": "In the distinct ΠΡ modules each sortie must fall at most 10 calendar days after the previous one (e.g. ΠΡ-1β after ΠΡ-1α). If the limit is not met, the previous sortie is repeated.",
+      "lapse_consequence": "The previous sortie must be repeated — a real scheduling penalty during ΠΡ training.",
+      "bmc_amc": "ΠΡ-1 gates BMC; the whole ΠΡ set gates AMC (§69β, §69γ).",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 94,
+        "ref": "Ch.4 §12 (typ. p. 76)"
+      },
+      "verbatim": "12. Στις διακριτές ενότητες ΠΡ, η κάθε έξοδος θα απέχει χρονικά από την προηγούμενη 10 ημερολογιακές ημέρες το μέγιστο (π.χ. ΠΡ-1β από ΠΡ-1α). Εάν δεν ικανοποιείται ο εν λόγω περιορισμός, θα επαναλαμβάνεται η προηγούμενη έξοδος.",
+      "flags": [
+        "Applies only while a ΠΡ module is in progress — it is not a standing currency."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "pr-programme-completion",
+      "name": "Advanced exercises (ΠΡ) — entry gate and overall completion deadline",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "εντός 7 μηνών — within 7 months of the start; printed in months, not days"
+      },
+      "renewal_notes": "ΠΡ training may begin only after the instructor completes 10 sorties following his posting to the squadron (except the ΠΡ modules that require a formation-lead title) and finishes according to experience, performance and the squadron's other requirements (§7). Ground training precedes flying and comprises theory plus one F/S sortie per module (§10). The whole ΠΡ programme completes within 7 months of its start, with the same formation-lead exception (§11). Instructors used for ΠΡ training must be at least Four-ship Leaders and available in the exercises concerned (§13). In the last sortie of each module a certification for that ΠΡ is performed and recorded in the grade sheet; the certification flight is flown by the Flight Commander, the Training Officer (Α.Ε.), the Squadron Commander or the Unit Τ-Α Officer (§14). After initial assignment, flyers retain availability in these exercises through the semi-annual training programmes (§6).",
+      "lapse_consequence": "A completion deadline for the programme, not a recurring currency.",
+      "bmc_amc": "ΠΡ-1 completion is the BMC gate; completing the whole ΠΡ set is the AMC gate.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 94,
+        "ref": "Ch.4 §§6-7, 10-14 (typ. p. 76)"
+      },
+      "verbatim": "7. Η εκπαίδευση στις ασκήσεις αυτές δύναται να εκτελείται αφού ο Εκπαιδευτής συμπληρώσει 10 εξόδους μετά την τοποθέτησή του στη Μοίρα (εκτός από τις ΠΡ που απαιτούν τίτλο Αρχηγού σχηματισμού) [...] 11. Το συνολικό πρόγραμμα των ΠΡ, θα ολοκληρώνεται εντός 7 μηνών από την έναρξή του (εκτός από τις ΠΡ που απαιτούν τίτλο Αρχηγού σχηματισμού). [...] 13. Οι χρησιμοποιούμενοι ως Εκπαιδευτές πτήσεων πρέπει να είναι κατ΄ ελάχιστο Αρχηγοί Τετράδας και διαθέσιμοι στις υπόψη ασκήσεις.",
+      "flags": [
+        "The period is printed in months, not days — no conversion made."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "pr-abstention-reduced-programme",
+      "name": "Advanced exercises (ΠΡ) — reduced programme after up to 2 years' abstention",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "αποχή έως 2 έτη — abstention of up to 2 years; printed in years, not days"
+      },
+      "renewal_notes": "Flyers previously assigned to such exercises as pilot-in-command on a fighter, or with up to 2 years' abstention from exercises of this kind on the same type, may follow a reduced training programme at the squadron's discretion, not below 1/3 of the total programme pro rata, prioritising the co-pilot sorties.",
+      "lapse_consequence": "Beyond that, the full initial-assignment route applies.",
+      "bmc_amc": "Restores the ΠΡ availability underlying BMC/AMC.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 94,
+        "ref": "Ch.4 §15 (typ. p. 76-77)",
+        "page_pdf_span": "94-95"
+      },
+      "verbatim": "15. Ιπτάμενοι που στο παρελθόν διατέθηκαν ως κυβερνήτες σε αυτές τις ασκήσεις σε μαχητικό Α/Φ ή έχουν αποχή έως 2 έτη σε τέτοιου είδους ασκήσεις στον ίδιο τύπο Α/Φ, δύναται να ακολουθούν μειωμένο πρόγραμμα εκπαίδευσης, κατά την κρίση της Μοίρας και όχι λιγότερο από το 1/3 του συνολικού προγράμματος αναλογικά.",
+      "flags": [
+        "The period is printed in years, not days."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "pr-availability-loss-restoration",
+      "name": "Advanced exercises (ΠΡ) — restoration after loss of availability",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "no day threshold is printed for «loss of availability in the ΠΡ»"
+      },
+      "renewal_notes": "If crews have LOST availability in the advanced exercises, the method of initial re-assignment is determined on the Unit's proposal with Command approval. There is no standing recipe.",
+      "lapse_consequence": "Each case is decided by the Unit and the Command; until then the ΠΡ availability underlying AMC is not restored.",
+      "bmc_amc": "Loss of ΠΡ availability undermines the AMC basis.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 95,
+        "ref": "Ch.4 §18 (typ. p. 77); §6 on PDF 94"
+      },
+      "verbatim": "18. Εάν τα πληρώματα έχουν χάσει τη διαθεσιμότητα στις παραπάνω ασκήσεις, ο τρόπος αρχικής διάθεσης να καθορίζεται κατόπιν πρότασης της Μονάδας και έγκρισης από τη Διοίκηση.",
+      "flags": [
+        "No day threshold is printed for «loss of availability in the ΠΡ» — the per-Event validities (Ε-21, Ε-31α, Ε-32, Ε-45, Ε-46, Ε-49Γ) are the only printed clocks."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "seminar-pdo",
+      "name": "PDO (instrument procedures) seminar",
+      "kind": "recency",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "annual («Ετήσια») — no day count printed"
+      },
+      "renewal_notes": "Validity ANNUAL, held every AUTUMN, organised by the Unit Τ-Α office and delivered by ΚΕΕΠ. Covers PDO procedures, FLIPS aeronautical publications and meteorology. After the seminar all maintenance-stage instructors who attended are examined on questionnaires per KPA Β-6/ΓΕΑ. Attendance is COMPULSORY for all instructors except those on long absence (schools, ordinary and sick leave), who are examined on a questionnaire WITHIN ONE MONTH of their return date. Attendance percentages are reported in writing to DAE/B7.",
+      "lapse_consequence": "Not printed as an availability loss in the 3-01, but the seminar and its examination feed the Π.ΠΔΟ regime of KPA Β-6/ΓΕΑ, and §69δ(1) makes an instructor without a valid Π.ΠΔΟ Partially Combat Ready.",
+      "bmc_amc": "Indirect — supports the Π.ΠΔΟ rating whose absence causes Partially Combat Ready status.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 115,
+        "ref": "Ch.4 §75 Πίνακας 14 and §§76-77 (typ. p. 97-98)",
+        "page_pdf_span": "115-116"
+      },
+      "verbatim": "ΠΔΟ | ΙΣΧΥΣ: Ετήσια | ΕΚΤΕΛΕΣΗ: Φθινόπωρο | ΦΟΡΕΑΣ: Τ-Α Μονάδας || 77. [...] Η παρακολούθηση του Σεμιναρίου είναι υποχρεωτική για όλους τους Εκπαιδευτές (Ιπταμένους), εκτός αυτών που βρίσκονται σε μακρά απουσία (σχολεία, κανονικές και αναρρωτικές άδειες) οι οποίοι να εξετάζονται σε ερωτηματολόγιο εντός μηνός από την ημερομηνία επιστροφής τους.",
+      "flags": [
+        "Validity is printed as a period word, not as a day count — no conversion made."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "seminar-tactics",
+      "name": "Tactics seminar",
+      "kind": "recency",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "annual («Ετήσια») — no day count printed"
+      },
+      "renewal_notes": "Validity ANNUAL, held in SPRING, organised by the Unit Τ-Α office; external lecturers from combat squadrons, combat wings or ΚΕΑΤ may take part. Content: T-6A and M-346 air-to-air and air-to-ground missions, mission planning, and the tactical/operational capabilities of the aircraft the Unit uses. A questionnaire is completed after the seminar.",
+      "lapse_consequence": "Not printed as an availability loss; the related tactical evaluations are governed by KPA Β-6/ΓΕΑ and failing them (or not being evaluated in time) makes the instructor Partially Combat Ready under §69δ(2).",
+      "bmc_amc": "Indirect — supports the tactical evaluations behind §69δ(2).",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 115,
+        "ref": "Ch.4 §75 Πίνακας 14 and §§78-79 (typ. p. 97-98)",
+        "page_pdf_span": "115-116"
+      },
+      "verbatim": "Τακτικής | ΙΣΧΥΣ: Ετήσια | ΕΚΤΕΛΕΣΗ: Άνοιξη | ΦΟΡΕΑΣ: Τ-Α Μονάδας || 78. Το Σεμινάριο Τακτικής, πραγματοποιείται την Άνοιξη, με μέριμνα του Γραφείου Τ-Α Μονάδας. [...] 79. Μετά το πέρας του Σεμιναρίου, να συμπληρώνεται ερωτηματολόγιο.",
+      "flags": [
+        "Validity is printed as a period word, not as a day count — no conversion made."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "seminar-sea-survival",
+      "name": "Sea Survival seminar (Θαλάσσιας Επιβίωσης)",
+      "kind": "recency",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "annual («Ετήσια») — no day count printed"
+      },
+      "renewal_notes": "Validity ANNUAL, held every SUMMER, organised by the Unit ΓΑΠΕ in cooperation with ΣΕΘΕ, 5 hours long. Technicians who take part in aircraft test flights attend as well. Content: aircraft abandonment procedures, parachute use, survival after the fall, SAR procedures and first aid.",
+      "lapse_consequence": "No availability loss is printed in the 3-01.",
+      "bmc_amc": "No BMC/AMC marking.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 115,
+        "ref": "Ch.4 §75 Πίνακας 14 and §80 (typ. p. 97-98)",
+        "page_pdf_span": "115-116"
+      },
+      "verbatim": "Θαλάσσιας Επιβίωσης | ΙΣΧΥΣ: Ετήσια | ΕΚΤΕΛΕΣΗ: Καλοκαίρι | ΦΟΡΕΑΣ: ΓΑΠΕ Μονάδας ΣΕΘΕ || 80. Το Σεμινάριο ΘΕ, πραγματοποιείται κάθε Καλοκαίρι, με μέριμνα του ΓΑΠΕ της Μονάδας, σε συνεργασία με το ΣΕΘΕ και είναι διαρκείας 5 ωρών. Το Σεμινάριο να παρακολουθούν και οι Τεχνικοί που συμμετέχουν σε πτήσεις Δοκιμής Α/Φ.",
+      "flags": [
+        "Validity is printed as a period word, not as a day count — no conversion made.",
+        "No lapse consequence is printed — whether an out-of-date sea-survival seminar grounds an instructor is not stated."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "training-egress-survival",
+      "name": "Egress and survival procedures training",
+      "kind": "recency",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "quarterly («Τριμηνιαία»; §82 «κάθε 3 μήνες») — no day count printed"
+      },
+      "renewal_notes": "Validity QUARTERLY — delivered every 3 months in the flyers' briefing room of the MEA/MEAE, minimum 2 hours, under MEA/MEAE responsibility. After the lecture all flyers are examined by the MEA/MEAE «Τ» officer (technicians by the Unit Τ-Α office) and form Α0470 is completed. Content: use of survival equipment and training in egress and survival procedures.",
+      "lapse_consequence": "No availability loss is printed in the 3-01.",
+      "bmc_amc": "No BMC/AMC marking.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 115,
+        "ref": "Ch.4 §75 Πίνακας 14, §81 (PDF 116) and §82 (PDF 117) (typ. p. 97-99)",
+        "page_pdf_span": "115-117"
+      },
+      "verbatim": "Εκπση στις Διαδικασίες Εγκατάλειψης - Επιβίωσης | ΙΣΧΥΣ: Τριμηνιαία | ΕΚΤΕΛΕΣΗ: - | ΦΟΡΕΑΣ: MEA/ΜΕΑΕ || 82. Να εκτελείται κάθε 3 μήνες στην Αίθουσα Ενημέρωσης Ιπταμένων των ΜΕΑ/ΜΕΑΕ. Μετά το πέρας της διάλεξης, να εξετάζονται από τον «Τ» της ΜΕΑ/ΜΕΑΕ όλοι οι Ιπτάμενοι και από το Γραφείο Τ-Α της Μονάδας οι Τεχνικοί και να συμπληρώνεται το έντυπο (Α0470), του Κεφαλαίου 9, της παρούσας.",
+      "flags": [
+        "Validity is printed as a period word, not as a day count — no conversion made.",
+        "This is the shortest-period recurring ground requirement for a T-6A instructor and the one most likely to be out of date on any given day.",
+        "No lapse consequence printed."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "training-aircraft-re-servicing",
+      "name": "Aircraft re-servicing training (Επανεξυπηρέτηση Α/Φ)",
+      "kind": "recency",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "annual («Ετήσια»; §83 «μία φορά ανά έτος») — no day count printed"
+      },
+      "renewal_notes": "Validity ANNUAL. Every instructor attends, once per year and under squadron/MEAE responsibility, a re-servicing with fuel and lubricants plus a re-arming of the aircraft, in the spirit of KPA Γ-4/ΓΕΑ.",
+      "lapse_consequence": "No availability loss is printed in the 3-01.",
+      "bmc_amc": "No BMC/AMC marking.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 115,
+        "ref": "Ch.4 §75 Πίνακας 14 and §83 (PDF 117) (typ. p. 97, 99)",
+        "page_pdf_span": "115, 117"
+      },
+      "verbatim": "Επανεξυπηρέτησης Α/Φ | ΙΣΧΥΣ: Ετήσια | ΕΚΤΕΛΕΣΗ: - | ΦΟΡΕΑΣ: MEA/ΜΕΑΕ || 83. Κάθε Εκπαιδευτής, με ευθύνη των Μοιρών/ΜΕΑΕ, να παρακολουθεί μία φορά ανά έτος, επανεξυπηρέτηση με καύσιμα και λιπαντικά, καθώς και επανεξοπλισμό του Α/Φ, σύμφωνα με το πνεύμα του ΚΠΑ Γ-4/ΓΕΑ και της Παρ. 76, του παρόντος Κεφαλαίου.",
+      "flags": [
+        "Validity is printed as a period word, not as a day count — no conversion made.",
+        "§83's cross-reference to «Παρ. 76 του παρόντος Κεφαλαίου» points at the PDO seminar paragraph, which has no evident connection to re-servicing — likely a stale internal pointer."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "seminar-flight-physiology",
+      "name": "Flight Physiology (Φ.Π.) training",
+      "kind": "recency",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "3 years («3-ετής»; §85 «έχει ισχύ για 3 έτη») — no day count printed"
+      },
+      "renewal_notes": "Validity THREE YEARS, stated expressly in §85. All flyers take initial and recurrent training (theoretical and practical) compulsorily and as a minimum. Theory is delivered at the Unit by specialised personnel; the practical part is done at ΚΑΙ and is tailored to each flyer's aircraft category. Units programme their flying personnel according to ΚΑΙ's current semi-annual schedule, keep the flyers' ΑΦΕΙ updated and inform DAE.",
+      "lapse_consequence": "No availability loss is printed in the 3-01.",
+      "bmc_amc": "No BMC/AMC marking.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 115,
+        "ref": "Ch.4 §75 Πίνακας 14 and §§84-86 (PDF 117) (typ. p. 97, 99)",
+        "page_pdf_span": "115, 117"
+      },
+      "verbatim": "Φυσιολογίας Πτήσεων (Φ.Π.) | ΙΣΧΥΣ: 3-ετής | ΕΚΤΕΛΕΣΗ: - | ΦΟΡΕΑΣ: ΚΑΙ || 85. Η θεωρητική εκπαίδευση να πραγματοποιείται στη Μονάδα από εξειδικευμένο προσωπικό, ενώ η πρακτική στο ΚΑΙ, και να είναι προσαρμοσμένη στην κατηγορία του Α/Φ κάθε Ιπταμένου και έχει ισχύ για 3 έτη.",
+      "flags": [
+        "Validity is printed as a period word, not as a day count — no conversion made.",
+        "Printed as «3 έτη» / «3-ετής» — 1095 days is not printed and is not inferred.",
+        "The underlying obligation stems from a GEA Standing Order, not from the 3-01 itself."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "seminar-hpma-crm-orm",
+      "name": "HPMA / CRM / ORM seminar",
+      "kind": "recency",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "annual («Ετήσια»; §93 «να έχει ισχύ ένα έτος») — no day count printed"
+      },
+      "renewal_notes": "Validity ONE YEAR, stated expressly in §93. Held in the 4th quarter of each year, organised by ΓΑΠΕ. Attended by all Unit flyers (instructors and flight surgeons); students and trainees receive it per class during pre-flight preparation. Content: the human factor in aviation accidents (HFACS), the decision-making process, effective communication and crew cooperation, and lessons identified from the previous year's accidents and incidents.",
+      "lapse_consequence": "No availability loss is printed in the 3-01.",
+      "bmc_amc": "No BMC/AMC marking.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 115,
+        "ref": "Ch.4 §75 Πίνακας 14 and §§92-95 (PDF 118-119) (typ. p. 97, 100-101)",
+        "page_pdf_span": "115, 118"
+      },
+      "verbatim": "HPMA/CRM/ORM | ΙΣΧΥΣ: Ετήσια | ΕΚΤΕΛΕΣΗ: 4ο Τρίμηνο | ΦΟΡΕΑΣ: ΓΑΠΕ Μονάδας || 93. Την εκπαίδευση, να παρακολουθούν όλοι οι Ιπτάμενοι της Μονάδας (Εκπαιδευτές και Ιπτάμενοι Ιατροί) και να έχει ισχύ ένα έτος.",
+      "flags": [
+        "Validity is printed as a period word, not as a day count — no conversion made."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "monthly-knowledge-exams",
+      "name": "Monthly closed/open-book and BOLD FACE / CAPs questionnaires",
+      "kind": "recency",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "monthly («Μηνιαίες εξετάσεις») — no day count printed; cadence and content governed by KPA Β-6/ΓΕΑ"
+      },
+      "renewal_notes": "The theoretical standard of maintenance-stage instructors is monitored by MONTHLY questionnaires (closed and open book, emergency procedures BOLD FACE/CAPs) as prescribed by KPA Β-6/ΓΕΑ, and also at scheduled and extraordinary Command- or Wing-level evaluations and inspections. Each aircraft type keeps a questionnaire archive.",
+      "lapse_consequence": "No availability loss is printed in the 3-01.",
+      "bmc_amc": "Ground-knowledge monitoring; feeds the KPA Β-6 evaluation regime that gates combat-ready status.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 114,
+        "ref": "Ch.4 §73 (typ. p. 96)"
+      },
+      "verbatim": "73. Το επίπεδο της θεωρητικής κατάρτισης των Εκπαιδευτών του σταδίου Συντήρησης, να παρακολουθείται με τις Μηνιαίες εξετάσεις επί ερωτηματολογίων Κλειστού - Ανοικτού βιβλίου, Διαδικασιών Ανάγκης (BOLD FACE-CAPs) όπως καθορίζεται στον ΚΠΑ Β-6/ΓΕΑ και στην παρούσα Διαταγή. Επίσης, το επίπεδο αυτό, να παρακολουθείται κατά τις προγραμματισμένες και έκτακτες Αξιολογήσεις - Επιθεωρήσεις επιπέδου Διοίκησης ή Πτέρυγας. Για το σκοπό αυτό, κάθε τύπος Α/Φ, να έχει αρχείο ερωτηματολογίων, όπως προβλέπεται από τον ΚΠΑ Β-6/ΓΕΑ.",
+      "flags": [
+        "Validity is printed as a period word, not as a day count — no conversion made."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "instructor-flight-conferences",
+      "name": "Flight instructors' conferences (Συσκέψεις Εκπαιδευτών Πτήσεων)",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "NO validity printed — the ΙΣΧΥΣ cell carries a dash «-»; held at the start or end of each training class"
+      },
+      "renewal_notes": "No validity period is printed. Held at the start or end of each training class, organised by the Unit Τ-Α office; instructors from squadrons of another aircraft type in the Command are invited. Within these conferences sorties BETWEEN instructors of the same or a different MEA of the same type may also be flown; the flights are approved by the Unit and charged to the squadron of the aircraft captain.",
+      "lapse_consequence": "Not a currency — no lapse.",
+      "bmc_amc": "No BMC/AMC marking.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 115,
+        "ref": "Ch.4 §75 Πίνακας 14 and §§87-91 (PDF 117-119) (typ. p. 97, 99-101)",
+        "page_pdf_span": "115, 117-118"
+      },
+      "verbatim": "Συσκέψεις Εκπτών Πτήσεων | ΙΣΧΥΣ: - | ΕΚΤΕΛΕΣΗ: Με την Έναρξη ή το Πέρας κάθε Εκπαιδευτικής Σειράς | ΦΟΡΕΑΣ: Τ-Α Μονάδας || 87. Μετά το πέρας των σταδίων Εκπαίδευσης, Βασικού (Phase II), Προκεχωρημένου (Phase III) και Επιχειρησιακού (Phase IV) ή οποτεδήποτε κριθεί σκόπιμο από την Μονάδα, να οργανώνονται Συσκέψεις μεταξύ Εκπαιδευτών με ευθύνη του Τ-Α της Μονάδας.",
+      "flags": [
+        "Validity is printed as a period word, not as a day count — no conversion made.",
+        "Included for completeness of Table 14: the only row with no printed validity. It is an event, not an individual currency."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "cross-staff-visits-ata-day",
+      "name": "Cross / staff visits of 120ΠΕΑ personnel to ATA and ΔΑΥ units",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "annual («Ετήσια»), throughout the year"
+      },
+      "renewal_notes": "Validity ANNUAL, held throughout the year, organised by DAE after coordination with ATA and ΔΑΥ and GEA/B2 approval. Selected 120ΠΕΑ personnel (ΔΕΕ, squadron/MEAE commanders, ΑΕ, flight commanders, Τ-Α officers) visit HQ and ΔΑΥ squadrons; during these visits 120ΠΕΑ instructors may fly on fighter or transport aircraft.",
+      "lapse_consequence": "Not an individual currency — no lapse for the instructor.",
+      "bmc_amc": "No BMC/AMC marking.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 115,
+        "ref": "Ch.4 §75 Πίνακας 14 and §§96-98 (PDF 119) (typ. p. 97, 101)",
+        "page_pdf_span": "115, 119"
+      },
+      "verbatim": "Διασταυρωτικές/Επιτελικές Επισκέψεις Στελεχών της 120ΠΕΑ σε Μονάδες ΑΤΑ και ΔΑΥ | ΙΣΧΥΣ: Ετήσια | ΕΚΤΕΛΕΣΗ: Καθ’ όλη τη διάρκεια του έτους | ΦΟΡΕΑΣ: ΔΑΕ κατόπιν συντονισμού με ΑΤΑ - ΔΑΥ και έγκριση ΓΕΑ/Β2",
+      "flags": [
+        "Validity is printed as a period word, not as a day count — no conversion made.",
+        "Unit/command-level activity listed in Table 14, applying only to the named post-holders. Should not drive a per-instructor colour scale."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "squadron-commanders-conference",
+      "name": "Conference of 120ΠΕΑ squadron commanders and ATA/ΔΑΥ MEAE commanders",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "annual («Ετήσια»), 2nd quarter"
+      },
+      "renewal_notes": "Validity ANNUAL, held in the 2nd quarter (April, May, June). Time, location and participants (in person or by VTC) are set by GEA/B2. Purpose: analysis of the observations recorded during the training of new 2nd Lieutenants (Ι) at the MEAE of HQ and ΔΑΥ units, and feedback to the flying training given at ΔΕΚΠ (120ΠΕΑ).",
+      "lapse_consequence": "Not an individual currency — no lapse for the instructor.",
+      "bmc_amc": "No BMC/AMC marking.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 115,
+        "ref": "Ch.4 §75 Πίνακας 14 and §99 (PDF 119) (typ. p. 97, 101)",
+        "page_pdf_span": "115, 119"
+      },
+      "verbatim": "Σύσκεψη Δκτών Μοιρών 120ΠΕΑ-Δκτών ΜΕΑΕ ΑΤΑ και ΔΑΥ | ΙΣΧΥΣ: Ετήσια | ΕΚΤΕΛΕΣΗ: 2ο Τρίμηνο | ΦΟΡΕΑΣ: ΓΕΑ/Β2",
+      "flags": [
+        "Validity is printed as a period word, not as a day count — no conversion made.",
+        "Command-level activity listed in Table 14, applying to commanders only."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "trainee-20day-unscored-flight",
+      "name": "Trainee (ΜΕΤ/ΕΕΠ) — unscored flight required after 20 days' abstention",
+      "kind": "recency",
+      "validity_days": {
+        "inexperienced": 20,
+        "experienced": 20,
+        "printed_as": "«αποχή άνω των 20 ημερών» — printed once, with no experience split"
+      },
+      "renewal_notes": "A trainee with more than 20 days' abstention flies 1 unscored manoeuvres flight, at the MEAE Commander's discretion, before he flies a scored exercise.",
+      "lapse_consequence": "Cannot fly a scored exercise until the unscored flight is done.",
+      "bmc_amc": "Pre-BMC tier (instructor under training).",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 90,
+        "ref": "Ch.3 §65 (typ. p. 72)"
+      },
+      "verbatim": "65. Η μακρά αποχή του εκπαιδευόμενου από τις πτήσεις επιδρά αρνητικά, τόσο στη συνέχεια της εκπαίδευσης, όσο και στην απόδοσή του. Για το σκοπό αυτό εκπαιδευόμενος που θα έχει αποχή άνω των 20 ημερών, πριν πετάξει βαθμολογούμενη άσκηση, να ίπταται χωρίς βαθμολόγηση 1 πτήση σε ελιγμούς κατά την κρίση του Διοικητή ΜΕΑΕ.",
+      "flags": [
+        "SCOPE, referee-refined: this applies to «εκπαιδευόμενοι», and Annex B §13 defines an εκπαιδευόμενος as the officer training at the ΜΕΑΕ/ΣΜΕΤ «για να ορισθεί Εκπαιδευτής ή για να διατεθεί ή επαναδιατεθεί στον τύπο». A qualified maintenance-stage instructor therefore falls under this rule WHILE HE IS IN RE-ASSIGNMENT TRAINING under §71; in normal maintenance-stage service he is governed by §70 (180 days / 1 year) instead."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    },
+    {
+      "id": "trainee-30day-type-availability-loss",
+      "name": "Trainee (ΜΕΤ/ΕΕΠ) — loss of type availability after 30 days",
+      "kind": "recency",
+      "validity_days": {
+        "inexperienced": 30,
+        "experienced": 30,
+        "printed_as": "«περισσότερες από 30 ημέρες» — printed once, with no experience split"
+      },
+      "renews": [
+        "Table 7 recovery programme (Ch.3)"
+      ],
+      "renewal_notes": "A trainee with more than 30 days' abstention loses type availability and must follow the Table 7 recovery programme, banded 1-3 months / 3-6 months / 6-12 months: theory totals 7:00 / 12:00 / 22:00 hours; F/S 2 sorties 2:00 h / 4 sorties 4:00 h / 5 sorties 5:00 h; air 1 sortie / 2 sorties / 3-4 sorties. Written exam: 50 closed-book questions for 1-3 months, 100 closed-book above 3 months. Air sorties are flown as co-pilot, unscored, of one hour, and must not exceed 1/3 of the training delivered up to the loss, with a minimum of 1 flight.",
+      "lapse_consequence": "Loses type availability; training halts until the recovery programme is flown.",
+      "bmc_amc": "Pre-BMC tier.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 90,
+        "ref": "Ch.3 §66 and Πίνακας 7 (typ. p. 72-73)",
+        "page_pdf_span": "90-91"
+      },
+      "verbatim": "66. Εκπαιδευόμενος που έχει αποχή από τις πτήσεις για περισσότερες από 30 ημέρες, χάνει τη διαθεσιμότητα στον τύπο του Α/Φ και για την επανάκτησή της πρέπει να παρακολουθήσει του πρόγραμμα του Πίνακα 7 [...] ΠΕΡΙΟΔΟΙ ΑΠΟΧΗΣ: 1 - 3 ΜΗΝΕΣ | 3 - 6 ΜΗΝΕΣ | 6 - 12 ΜΗΝΕΣ",
+      "flags": [
+        "SCOPE, referee-refined: same Annex B §13 reading as trainee-20day-unscored-flight — it bites on a qualified instructor only while he is an εκπαιδευόμενος in re-assignment training. A maintenance-stage instructor in normal service is governed by §70 (180 days / 1 year)."
+      ],
+      "unit": "days",
+      "seat": null
+    },
+    {
+      "id": "maintenance-record-forms",
+      "name": "Maintenance-stage flight record forms Α0462 / Α0463",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "note": "the evidence trail behind every currency, not a window"
+      },
+      "renewal_notes": "For maintenance-stage flights the Maintenance Stage Flight Record Sheet (Α0462) replaces the grade sheet. It is completed by the Formation Leader for all formation members after each successful sortie and presents each instructor's picture for the sorties and special (E) exercises flown — i.e. it is the audit trail behind every currency on the card. Single-ship flights are recorded by the most senior instructor available in the E exercise. If the flyer's performance corresponds to ΣΚΕ «Ι3» or lower, an analytic grade sheet (Α0463) is also completed. It is completed for rear-seat occupants as well. The Formation Leader does not complete a record for himself; holders of the «Αρχηγός Αποστολής» title need not record their flights unless serious observations arose, in which case the Flight Commander, the ΑΕ or the MEA/MEAE-ΣΜΕΤ Commander completes it. The same forms are used to monitor instructors in the F/S (§27).",
+      "lapse_consequence": "Not applicable — an evidence source, not a currency.",
+      "bmc_amc": "The record from which E-exercise availability is tracked.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 110,
+        "ref": "Ch.4 §§67-68 (typ. p. 92-93); §27 on PDF 98",
+        "page_pdf_span": "110-111"
+      },
+      "verbatim": "68. Για τις πτήσεις του σταδίου Συντήρησης, συμπληρώνεται αντί Φ.Β., το Φύλλο Καταχώρησης Πτήσεων Σταδίου Συντήρησης (Α0462) [...] δ. Αν η απόδοση του Ιπταμένου αντιστοιχεί σε ΣΚΕ «Ι3» ή μικρότερο να γίνεται και αναλυτικό Φ.Β. ε. Συμπληρώνεται και για όσους καταλαμβάνουν τη Β΄ ΘΧ. στ. Ο Αρχηγός Σχηματισμού δεν συμπληρώνει ΦΒ για τον εαυτό του.",
+      "unit": "days",
+      "renews": [],
+      "seat": null,
+      "flags": []
+    },
+    {
+      "id": "body-weight-check",
+      "name": "Body-weight check of flying personnel",
+      "kind": "other",
+      "validity_days": {
+        "inexperienced": null,
+        "experienced": null,
+        "printed_period": "κάθε 4 μήνες — every 4 months; no day count printed"
+      },
+      "renewal_notes": "The Unit Physical Fitness Office, together with the Unit Medical Service, checks the body weight of the Unit's flyers (students/trainees, instructors, and technicians who take part in test flights) every 4 months per the criteria of ΠΔ 133/02, and informs DAE/B2-ΔΑΠΕ.",
+      "lapse_consequence": "No consequence is printed in the 3-01.",
+      "bmc_amc": "None printed.",
+      "source": {
+        "file": "3-01_2025_ΔΑΕ.pdf",
+        "page_pdf": 39,
+        "ref": "Ch.2 §14, Athletic Training section (typ. p. 21)"
+      },
+      "verbatim": "14. Παράλληλα, το Γραφείο Φυσικής Κατάστασης σε συνεργασία με την Υγειονομική Υπηρεσία της Μονάδας θα πρέπει κάθε 4 μήνες να ελέγχει το σωματικό βάρος των Ιπταμένων της Μονάδας (μαθητών / εκπαιδευομένων, εκπαιδευτών και τεχνικών που συμμετέχουν σε πτήσεις δοκιμών) σύμφωνα με τα κριτήρια του ΠΔ 133/02 και να ενημερώνει σχετικά τη ΔΑΕ/Β2 - ΔΑΠΕ.",
+      "flags": [
+        "A recurring administrative check performed BY the Unit, not a currency the instructor holds; no lapse consequence printed. Put it on the card only as an informational timer.",
+        "Printed as a period in months, not days."
+      ],
+      "unit": "days",
+      "renews": [],
+      "seat": null
+    }
+  ]
+}
