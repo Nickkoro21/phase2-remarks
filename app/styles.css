@@ -1319,6 +1319,11 @@ body {
 .sch-rankrow { margin-top: 3px; }
 .sch-rankchip { font-size: 10.5px; padding: 1px 7px; }
 
+/* Round 9 — the "Other…" free-text escape sits directly under its select and
+   appears only when "Other…" is the chosen option (scheduler.js toggles
+   .hidden on it, never a re-render, so what is typed survives until Save). */
+.sch-otherin { margin-top: 3px; }
+
 /* Progress editor — category groups + cross-category reference rows */
 .sch-pcatsec { margin-bottom: 14px; }
 .sch-pcat {

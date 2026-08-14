@@ -54,7 +54,15 @@ for t, kind, obj in SEQ:
 # events keep referencing people by CODE (historical facts). Placeholder
 # names/MN/rank/callsign are deterministic.
 ip_oid = lambda n: f"oid-ip-{n:02d}"          # noqa: E731
-IP_RANKS = ["1Lt", "Capt", "Maj"]            # cycled — English ranks (board is English)
+IP_RANKS = ["1Lt", "Capt", "Maj", "Lt Col"]  # cycled — English ranks (board is English)
+# ROUND 9 — the PUBLIC seed keeps its IP-x / SP-x fakes FOREVER (privacy gate:
+# no real name, call sign or roster-derived string may ever reach this repo).
+# The two NEW roster fields are seeded with FAKE values only, so that the UI
+# that renders them (country badge, TP badge, Balance tooltip) has something to
+# render out of the box. "Other" is seeded on purpose: it is the free-text
+# escape of the country dropdown and must be seen to work.
+IP_COUNTRIES = ["HAF", "HAF", "ITAF", "Other"]   # cycled
+IP_TEST_PILOTS = {1, 3, 4, 10}                   # one TP per seeded country
 
 students, cut, prim_code = [], {}, {}
 N = len(GLOBAL)
@@ -83,6 +91,8 @@ instructors = [{
     "first_name": "Test", "last_name": f"Instructor{i:02d}",
     "mn": f"MN-{2000 + i}", "rank": IP_RANKS[(i - 1) % len(IP_RANKS)],
     "callsign": f"VIPER{i:02d}",
+    "country": IP_COUNTRIES[(i - 1) % len(IP_COUNTRIES)],
+    "test_pilot": i in IP_TEST_PILOTS,
     "quals": {"night": True, "evaluator": i <= 4, "ground": i in (3, 7, 11),
               "rsu_solo": i in (2, 5, 9, 13)},
     "duty_eligible": {"SOF": True, "RSU": True},
@@ -235,7 +245,9 @@ seed = {"schema": "scheduler-seed-v3", "generated_for_testing": True,
 out = ROOT / "data" / "scheduler" / "seed.json"
 out.write_text(json.dumps(seed, ensure_ascii=False, indent=1), encoding="utf-8")
 print(f"seed v3: {len(students)} students, {len(instructors)} instructors (oid PKs, "
-      f"rsu_solo: IP-2/5/9/13), {len(log)} log events, "
+      f"rsu_solo: IP-2/5/9/13, TP: "
+      f"{'/'.join('IP-%d' % n for n in sorted(IP_TEST_PILOTS))}, "
+      f"countries: {'/'.join(sorted(set(IP_COUNTRIES)))}), {len(log)} log events, "
       f"cutoffs {min(cut.values())}–{max(cut.values())} of {N} nodes")
 print("round-2 fixtures:",
       f"SP-11 lag on {sp11_srt['id'] if sp11_srt else '—'} ({workday_back(1)})",

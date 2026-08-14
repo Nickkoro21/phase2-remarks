@@ -1451,8 +1451,9 @@
           <label class="sch-lf w-ip"><span>IP</span>
             <select class="sch-in" data-lf="ip" data-fk="fip-${esc(l.id)}"${dis}>${ipOptions(l.ip, plan, A, { id: l.id, kind: "fs", curIp: l.ip, sp: l.sp })}</select></label>
           <label class="sch-lf w-dv"><span>Device</span>
-            <select class="sch-in" data-lf="device" data-fk="fdv-${esc(l.id)}"${dis}>
-              ${FS_DEVICES.map((d) => `<option value="${esc(d)}"${l.device === d ? " selected" : ""}>${esc(d)}</option>`).join("")}</select></label>
+            <input class="sch-in" data-lf="device" data-fk="fdv-${esc(l.id)}" list="sch-fsdev"
+                   value="${esc(l.device || "")}" placeholder="${esc(FS_DEVICES.join(" · "))}"
+                   title="the squadron's two simulators are offered — Round 9: the box is free text, so a device that arrives tomorrow needs no release"${dis}></label>
           <label class="sch-lf grow"><span>Remarks</span>
             <input class="sch-in" data-lf="remarks" data-fk="frm-${esc(l.id)}" value="${esc(l.remarks || "")}"${dis}></label>
           <span class="sch-lact">
@@ -1468,6 +1469,7 @@
     const load = [...A.ipFs.entries()].sort((a, b) => b[1] - a[1])
       .map(([ip, n]) => `<span class="sch-chip${n > A.c.fsMax ? " is-hard" : (n > A.c.fsPref ? " is-soft" : "")}">${esc(ip)} ×${n}</span>`).join("");
     return `<section class="panel sch-panel sch-fsblock">
+      <datalist id="sch-fsdev">${FS_DEVICES.map((d) => `<option value="${esc(d)}"></option>`).join("")}</datalist>
       <div class="sch-h">${secBtn("fs", `F/S <span class="count">${plan.fs.length} · no clock — slot order and device</span>`)}
         <span class="sch-hint">${load || "no F/S load"}</span>
         <span class="sch-spacer"></span>
@@ -3299,8 +3301,15 @@
     const ipAvg = ipList.length ? ipList.reduce((n, i) => n + ((D.ip.get(i.code) || {}).total || 0), 0) / ipList.length : 0;
     const ipRows = ipList.map((i) => {
       const r = D.ip.get(i.code) || { flights: 0, fs: 0, ground: 0, sof: 0, rsu: 0, total: 0 };
-      /* departed IPs STAY in the Balance history — badged, never dropped */
-      return `<tr><td class="sch-code">${esc(i.code)}${(i.status === "departed") ? ` <span class="sch-badge st-withdrawn" title="departed — kept in history">DEP</span>` : ""}</td>
+      /* departed IPs STAY in the Balance history — badged, never dropped.
+         Round 9 — the load cell names the person the way the roster does:
+         call sign · country · TP, so the CO reading a light week knows WHO is
+         light without leaving the table. */
+      const who = [i.rank, i.last_name].filter(Boolean).join(" ")
+        + (i.callsign ? " (" + i.callsign + ")" : "")
+        + (i.country ? " · " + i.country : "")
+        + (i.test_pilot ? " · test pilot" : "");
+      return `<tr><td class="sch-code"${who.trim() ? ` title="${esc(who)}"` : ""}>${esc(i.code)}${(i.status === "departed") ? ` <span class="sch-badge st-withdrawn" title="departed — kept in history">DEP</span>` : ""}${i.test_pilot ? ` <span class="sch-badge" title="test pilot">TP</span>` : ""}</td>
         <td class="sch-mono">${r.flights}</td>
         <td class="sch-mono${r.fs > c.fsMax ? " is-hard" : (r.fs > c.fsPref ? " is-soft" : "")}">${r.fs}</td>
         <td class="sch-mono">${r.ground}</td>

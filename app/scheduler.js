@@ -1065,7 +1065,20 @@ window.fmtDMY = function fmtDMY(v) {
   const students = () => (S().get("students") || []).slice();
   const instructors = () => (S().get("instructors") || []).slice();
   const activeIps = () => instructors().filter((i) => (i.status || "active") !== "departed");
-  const RANKS = ["Cdt", "2Lt", "1Lt", "Capt", "Maj", "S.Ten", "Lt"];
+  /* Round 9 — the rank chips are a QUICK PICK over a free-text field, so the
+     free text has always been the "Other…" escape. "Lt Col" joins them because
+     the global roster carries two (one HAF, one ITAF). */
+  const RANKS = ["Cdt", "2Lt", "1Lt", "Capt", "Maj", "Lt Col", "S.Ten", "Lt"];
+  /* Round 9 — country of the instructor. A closed pair PLUS the "Other…"
+     free-text escape (the audit rule of this round): the squadron flies with
+     HAF and ITAF today, and the third air force that arrives tomorrow must not
+     need a code change to be recorded. */
+  const COUNTRIES = ["HAF", "ITAF"];
+  /* Round 9 — the global roster's own two vocabularies, so that what the file
+     carries stays EDITABLE here (and identical to the Wings Ahead lists). */
+  const DUTIES = ["Squadron Commander", "DO", "Flight Commander", "Evaluator", "Instructor"];
+  const LEADERSHIPS = ["Wingman", "2-ship", "4-ship", "Mission Commander"];
+  const OTHER = "__other";
 
   /* ── boot ───────────────────────────────────────────────────────────────── */
   window.schInit = async function schInit() {
@@ -1155,7 +1168,8 @@ window.fmtDMY = function fmtDMY(v) {
     || rosterMatch([s.code, s.class, s.notes, s.status, P().ipCode(s.primary_ip),
       s.first_name, s.last_name, s.mn, s.rank]));
   const fInstructors = () => instructors().filter((i) => ui.roster.editI === i.code
-    || rosterMatch([i.code, i.notes, i.first_name, i.last_name, i.mn, i.rank, i.callsign, i.status]));
+    || rosterMatch([i.code, i.notes, i.first_name, i.last_name, i.mn, i.rank, i.callsign, i.status,
+      i.country, i.duty, i.leadership, i.test_pilot ? "TP test pilot" : ""]));
 
   function renderRoster() {
     const el = $id("sch-roster");
@@ -1163,7 +1177,14 @@ window.fmtDMY = function fmtDMY(v) {
       <div class="sch-rosterbar">
         <label class="sch-fld grow"><span>Filter roster</span>
           <input type="search" id="sch-rosterq" class="sch-in" value="${esc(ui.roster.q)}"
-                 placeholder="filter students & instructors — code · class · notes" autocomplete="off"></label>
+                 placeholder="filter students & instructors — code · class · rank · callsign · country · notes" autocomplete="off"></label>
+        <span class="sch-fld">
+          <span>Global roster</span>
+          <span class="sch-tglrow">
+            <button type="button" class="sch-btn" data-act="imp-roster"
+              title="Import the shared roster.json — merge BY OID: an OID already here is updated in place, a new OID is created, and anybody the file does not mention is left untouched">⭱ Import roster</button>
+            <input type="file" accept="application/json,.json" id="sch-rosterfile" class="sch-file" hidden>
+          </span></span>
       </div>
       <div class="sch-grid2">
         <section class="panel sch-panel">
@@ -1229,6 +1250,24 @@ window.fmtDMY = function fmtDMY(v) {
   /* Round 6 — rank quick-pick chips under the free-text rank input */
   const rankChipsHtml = () => `<span class="sch-tglrow sch-rankrow">${RANKS.map((r) =>
     `<button type="button" class="sch-tgl sch-rankchip" data-rankchip="${esc(r)}" title="fill the rank field with ${esc(r)} — free text stays allowed">${esc(r)}</button>`).join("")}</span>`;
+
+  /* Round 9 — THE "OTHER…" ESCAPE, one helper for every closed list of this
+     pane. A real <select> over the values the unit actually uses, plus one
+     "Other…" option that reveals a free-text box holding the stored value.
+     fvalOther() below reads the pair back as ONE string, so the record shape
+     never learns that the widget has two halves. */
+  function otherSelect(field, values, cur, placeholder) {
+    const v = String(cur == null ? "" : cur);
+    const known = v !== "" && values.indexOf(v) >= 0;
+    const isOther = v !== "" && !known;
+    return `<select class="sch-in" data-f="${esc(field)}" data-other="${esc(field)}">
+        <option value=""${v === "" ? " selected" : ""}>—</option>
+        ${values.map((o) => `<option value="${esc(o)}"${known && v === o ? " selected" : ""}>${esc(o)}</option>`).join("")}
+        <option value="${OTHER}"${isOther ? " selected" : ""}>Other…</option>
+      </select>
+      <input class="sch-in sch-otherin${isOther ? "" : " hidden"}" data-fother="${esc(field)}"
+             value="${esc(isOther ? v : "")}" placeholder="${esc(placeholder || "type it")}">`;
+  }
 
   /* warning chips of one student row: PD/SMS (Round 2) + Round 4 "lost
      instructor" (fail-22) + departed/missing primary/reserve */
@@ -1347,6 +1386,10 @@ window.fmtDMY = function fmtDMY(v) {
         ${i.rank ? `<span class="sch-rmeta">${esc(i.rank)}</span>` : ""}
         <span class="sch-rname">${esc((i.last_name || "—") + (i.first_name ? ", " + i.first_name : ""))}</span>
         ${i.callsign ? `<span class="sch-badge alt" title="personal callsign — auto-fills single-ship lines">${esc(i.callsign)}</span>` : ""}
+        ${i.country ? `<span class="sch-badge" title="air force">${esc(i.country)}</span>` : ""}
+        ${i.test_pilot ? qb("TP", "test pilot") : ""}
+        ${i.duty ? qb(i.duty, "duty — from the global roster") : ""}
+        ${i.leadership ? qb(i.leadership, "leadership qualification — from the global roster") : ""}
         ${dep ? `<span class="sch-badge st-withdrawn" title="departed — excluded from every picker, kept in Balance history">DEPARTED</span>` : ""}
         ${q.night ? qb("☾", "night qualified") : ""}${q.evaluator ? qb("EVAL", "evaluator — checkrides") : ""}
         ${q.ground ? qb("GND", "ground instructor") : ""}${q.rsu_solo ? qb("RSU-solo", "RSU-during-solo qualification — the RSU A/B duty pickers filter on this") : ""}
@@ -1372,6 +1415,10 @@ window.fmtDMY = function fmtDMY(v) {
         <label class="sch-fld"><span>MN (service no)</span><input class="sch-in" data-f="mn" value="${esc(i.mn || "")}"></label>
         <label class="sch-fld"><span>Rank — free text or a chip</span><input class="sch-in" data-f="rank" value="${esc(i.rank || "")}">${rankChipsHtml()}</label>
         <label class="sch-fld"><span>Callsign</span><input class="sch-in" data-f="callsign" value="${esc(i.callsign || "")}" placeholder="VIPER01"></label>
+        <label class="sch-fld"><span>Country — air force</span>${otherSelect("country", COUNTRIES, i.country || "", "e.g. FAF")}</label>
+        <label class="sch-fld"><span>Duty</span>${otherSelect("duty", DUTIES, i.duty || "", "type the duty")}</label>
+        <label class="sch-fld"><span>Leadership</span>${otherSelect("leadership", LEADERSHIPS, i.leadership || "", "type the qualification")}</label>
+        ${cb("test_pilot", i.test_pilot, "Test pilot", "test pilot — badged TP in the roster row and in the Balance load table")}
         <label class="sch-fld"><span>Status</span><select class="sch-in" data-f="status">
           <option value="active"${(i.status || "active") === "active" ? " selected" : ""}>active</option>
           <option value="departed"${i.status === "departed" ? " selected" : ""}>departed</option></select></label>
@@ -1424,6 +1471,25 @@ window.fmtDMY = function fmtDMY(v) {
     if (el._wired) return;
     el._wired = true;
     el.addEventListener("change", (e) => {
+      /* Round 9 — the "Other…" option reveals its free-text box in place; the
+         form is never re-rendered, so what is typed survives until Save. */
+      const os = e.target.closest ? e.target.closest("[data-other]") : null;
+      if (os) {
+        const box = os.closest(".sch-rform");
+        const inp = box && box.querySelector(`[data-fother="${os.dataset.other}"]`);
+        if (inp) {
+          const on = os.value === OTHER;
+          inp.classList.toggle("hidden", !on);
+          if (on) inp.focus(); else inp.value = "";
+        }
+        return;
+      }
+      if (e.target.id === "sch-rosterfile") {
+        const f = e.target;
+        if (f.files && f.files[0]) importRosterFile(f.files[0]).then(() => { f.value = ""; });
+        else f.value = "";
+        return;
+      }
       if (e.target.id !== "sch-avdate") return;
       ui.roster.availDate = e.target.value;
       $id("sch-avgrid").innerHTML = availGrid();
@@ -1462,6 +1528,7 @@ window.fmtDMY = function fmtDMY(v) {
       const b = e.target.closest("[data-act]");
       if (!b) return;
       const act = b.dataset.act, id = b.dataset.id;
+      if (act === "imp-roster") { const f = $id("sch-rosterfile"); if (f) f.click(); return; }
       if (act === "prog-s") {
         if (window.schProgressOpen) window.schProgressOpen(id);
         else S().toast("The progress editor arrives with Phase B.", "bad");
@@ -1478,6 +1545,14 @@ window.fmtDMY = function fmtDMY(v) {
   }
 
   const fval = (box, f) => { const x = box.querySelector(`[data-f="${f}"]`); return x ? (x.type === "checkbox" ? x.checked : x.value.trim()) : ""; };
+  /* Round 9 — reads an otherSelect() pair as one value: the picked option, or
+     what was typed into the box "Other…" reveals (empty typed = no value). */
+  const fvalOther = (box, f) => {
+    const v = fval(box, f);
+    if (v !== OTHER) return v;
+    const x = box.querySelector(`[data-fother="${f}"]`);
+    return x ? x.value.trim() : "";
+  };
   /* Round 6 — the avoid list reads the ON chips (was: a native multi-select) */
   const fchips = (box) => [...box.querySelectorAll("[data-avchip].is-on")].map((b) => b.dataset.avchip).filter(Boolean);
 
@@ -1513,6 +1588,8 @@ window.fmtDMY = function fmtDMY(v) {
       code: code, oid: (prev && prev.oid) || S().uid("oid"),
       first_name: fval(box, "first_name"), last_name: fval(box, "last_name"),
       mn: fval(box, "mn"), rank: fval(box, "rank"), callsign: fval(box, "callsign"),
+      country: fvalOther(box, "country"), test_pilot: !!fval(box, "test_pilot"),
+      duty: fvalOther(box, "duty"), leadership: fvalOther(box, "leadership"),
       status: fval(box, "status") || "active",
       quals: { night: fval(box, "night"), evaluator: fval(box, "evaluator"), ground: fval(box, "ground"), rsu_solo: fval(box, "rsu_solo") },
       duty_eligible: { SOF: fval(box, "SOF"), RSU: fval(box, "RSU") },
@@ -1521,6 +1598,141 @@ window.fmtDMY = function fmtDMY(v) {
     ui.roster.editI = null; ui.roster.addI = false;   // before the store event re-renders
     S().upsert("instructors", rec);
     S().toast("Instructor " + code + " saved.", "good");
+  }
+
+  /* ══ GLOBAL ROSTER IMPORT (Round 9) ══════════════════════════════════════
+     ONE roster feeds every FDMS app. The file is PRIVATE and lives outside
+     both repos; the public seed of this repo keeps its SP-x / IP-x fakes for
+     ever. What arrives here is merged, never replaces:
+
+       · THE OID IS THE IDENTITY and it is IMMUTABLE. An OID already in the
+         store is UPDATED IN PLACE — the local `code` (which the training log
+         references as a historical fact) is never rewritten. A new OID is
+         CREATED. Somebody the file does not mention is LEFT UNTOUCHED:
+         departures stay a manual decision, exactly as they were.
+       · A field the roster says NOTHING about (null / absent — `mn` is null
+         for everyone until the user supplies them) leaves the local value
+         alone. Only what the file actually carries is written, so an import
+         can never blank a field the CO typed in the UI.
+       · Everything stays editable in the UI afterwards, as usual.           */
+  const ROSTER_STATUS = { Departed: "departed" };      // everything else flies
+  const ROSTER_ST_SP = { Departed: "withdrawn" };
+
+  /* the roster's own field names → the store's, for ONE person. Returns only
+     the keys the file actually carries (see the null rule above). */
+  function rosterPatch(r, coll) {
+    const p = {};
+    const put = (k, v) => { if (v !== null && v !== undefined) p[k] = v; };
+    const txt = (v) => (v === null || v === undefined ? undefined : String(v).trim());
+    put("last_name", txt(r.last_name));
+    put("first_name", txt(r.first_name));
+    put("mn", txt(r.mn));
+    put("rank", txt(r.rank));
+    if (r.status != null) {
+      const map = coll === "students" ? ROSTER_ST_SP : ROSTER_STATUS;
+      p.status = map[String(r.status)] || (coll === "students" ? "active" : "active");
+    }
+    if (coll === "students") {
+      put("class", txt(r.class || r.class_id));
+      return p;
+    }
+    put("callsign", txt(r.call_sign != null ? r.call_sign : r.callsign));
+    put("country", txt(r.country));
+    if (r.test_pilot != null) p.test_pilot = !!r.test_pilot;
+    put("duty", txt(r.duty));
+    put("leadership", txt(r.leadership));
+    if (r.experienced != null) p.experienced = !!r.experienced;
+    return p;
+  }
+
+  /* quals / duty_eligible are OBJECTS: upsert() merges records shallowly, so
+     they must be rebuilt from the stored one or the untouched halves vanish.
+     The roster carries SOF / RSU / RSU_solo and a `duty`; the qualifications
+     it does NOT carry (night, ground) are left exactly as they are, and
+     `evaluator` may only be ADDED by an import — an Evaluator by duty gets the
+     qualification, and a qualification the CO set by hand is never taken away
+     by a file that has no opinion about it. */
+  function rosterQuals(r, prev) {
+    const q = Object.assign({}, (prev && prev.quals) || {});
+    const d = Object.assign({}, (prev && prev.duty_eligible) || {});
+    const de = r.duty_eligible || {};
+    if (de.RSU_solo != null) q.rsu_solo = !!de.RSU_solo;
+    if (de.SOF != null) d.SOF = !!de.SOF;
+    if (de.RSU != null) d.RSU = !!de.RSU;
+    if (String(r.duty || "") === "Evaluator") q.evaluator = true;
+    return { quals: q, duty_eligible: d };
+  }
+
+  /* a NEW person needs a local code (the store's key, and what the board and
+     the printed sheet show). The call sign is the code the squadron already
+     says out loud; if it is missing or taken, fall back to the next free
+     IP-n / SP-n. */
+  function mintCode(coll, want, taken) {
+    const w = String(want || "").trim();
+    if (w && !taken.has(w)) { taken.add(w); return w; }
+    const pre = coll === "students" ? "SP-" : "IP-";
+    for (let n = 1; n < 10000; n++) {
+      const c = pre + n;
+      if (!taken.has(c)) { taken.add(c); return c; }
+    }
+    return pre + Date.now();
+  }
+
+  function mergeRoster(data) {
+    if (!data || typeof data !== "object") { S().toast("Roster import failed — unexpected file.", "bad"); return; }
+    const plan = [];                                   // [{coll, rec, isNew, name}]
+    for (const coll of ["instructors", "students"]) {
+      const list = Array.isArray(data[coll]) ? data[coll] : [];
+      const cur = S().get(coll) || [];
+      const byOid = new Map();
+      const taken = new Set();
+      for (const x of cur) { if (x.oid) byOid.set(String(x.oid), x); if (x.code) taken.add(String(x.code)); }
+      for (const r of list) {
+        const oid = r && r.oid != null ? String(r.oid).trim() : "";
+        if (!oid) continue;                            // no OID, no identity
+        const prev = byOid.get(oid) || null;
+        const patch = rosterPatch(r, coll);
+        const rec = prev
+          ? Object.assign({ code: prev.code }, patch)  // OID untouched: it is already on the row
+          : Object.assign({ code: mintCode(coll, r.call_sign, taken), oid: oid }, patch);
+        if (coll === "instructors") Object.assign(rec, rosterQuals(r, prev));
+        plan.push({ coll: coll, oid: oid, rec: rec, isNew: !prev,
+          name: (rec.rank ? rec.rank + " " : "") + (rec.last_name || rec.code) });
+      }
+    }
+    if (!plan.length) { S().toast("Roster import failed — no person with an OID inside.", "bad"); return; }
+    const upd = plan.filter((p) => !p.isNew).length, add = plan.length - upd;
+    const seen = new Set(plan.map((p) => p.coll + "|" + p.oid));
+    const untouched = ["instructors", "students"].reduce((n, c) =>
+      n + (S().get(c) || []).filter((x) => !seen.has(c + "|" + String(x.oid || ""))).length, 0);
+    if (!confirm("Import the global roster?\n\n"
+      + "· " + upd + " person(s) already here — updated in place, OID unchanged\n"
+      + "· " + add + " new person(s) — created\n"
+      + "· " + untouched + " person(s) the file does not mention — left untouched\n\n"
+      + "Nothing is deleted. Everything stays editable afterwards.")) return;
+    for (const p of plan) S().upsert(p.coll, p.rec);
+    P().invalidate();
+    S().toast("Roster imported — " + upd + " updated · " + add + " created · " + untouched + " untouched.", "good");
+  }
+
+  /* Blob.text() with the FileReader fallback the store already uses — the
+     offline package targets an old Firefox and must not lose the feature. */
+  function readTextFile(file) {
+    if (file.text) return file.text();
+    return new Promise((res, rej) => {
+      const fr = new FileReader();
+      fr.onload = () => res(String(fr.result));
+      fr.onerror = () => rej(new Error("read failed"));
+      fr.readAsText(file);
+    });
+  }
+
+  async function importRosterFile(file) {
+    if (!file) return;
+    let data;
+    try { data = JSON.parse(await readTextFile(file)); }
+    catch (e) { S().toast("Roster import failed — not valid JSON.", "bad"); return; }
+    mergeRoster(data);
   }
 
   function delStudent(code) {

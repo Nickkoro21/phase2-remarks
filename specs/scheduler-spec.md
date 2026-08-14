@@ -18,7 +18,7 @@
 | Πίνακας | Πεδία-κλειδιά |
 |---|---|
 | `students` | **oid (PK, σταθερό)**, code (SP-x δοκιμές), **first_name, last_name, mn (ΑΜ), rank**, class, status, **primary_ip: OID, reserve_ips: [OID]** (αναφορές με object id — οι εκπαιδευτές φεύγουν/αλλάζουν, τα OID όχι), notes |
-| `instructors` | **oid (PK)**, code, **first_name, last_name, mn, rank, callsign**, quals {night, evaluator, ground, **rsu_solo**}, duty_eligible {SOF, RSU}, **status {active\|departed}** (ο «χαμένος» εκπαιδευτής ΔΕΝ διαγράφεται — μαρκάρεται departed, τα ιστορικά μένουν ακέραια), notes |
+| `instructors` | **oid (PK)**, code, **first_name, last_name, mn, rank, callsign**, **country {HAF\|ITAF\|Other…}**, **test_pilot (bool)**, **duty, leadership** (Γύρος 9 — από το global roster), quals {night, evaluator, ground, **rsu_solo**}, duty_eligible {SOF, RSU}, **status {active\|departed}** (ο «χαμένος» εκπαιδευτής ΔΕΝ διαγράφεται — μαρκάρεται departed, τα ιστορικά μένουν ακέραια), notes |
 | `classes` | id, μέλη, ημ/νία έναρξης |
 | `training_events` | date, node (uid flowchart2), scope: class\|student, instructor, device, result {completed \| repeat \| score%}, **absent[] {student, λόγος}** (σε class scope), note. Μαθήματα: **start_date, end_date** |
 | `availability` | person, date, κατάσταση {available \| **LV \| SLV \| HLV \| SCL \| OFF \| TO \| AMC**} |
@@ -33,6 +33,63 @@ repo `fdms-data` (sync)· (β) Γύρος 3: **κρυπτογράφηση του
 (AES-GCM/WebCrypto — το repo κρατά ciphertext) + **κωδικός πρόσβασης** στο Scheduler
 (privacy curtain, ρητά ΟΧΙ κρυπτογράφηση των τοπικών δεδομένων)· (γ) το δοκιμαστικό
 seed παραμένει με κωδικούς SP-x/IP-x.
+
+## 2α. GLOBAL ROSTER — ένα μητρώο για ΟΛΕΣ τις εφαρμογές FDMS (Γύρος 9, 2026-08-14)
+
+Μέχρι τώρα κάθε εφαρμογή κρατούσε δικό της αντίγραφο της μοίρας. Ο Γύρος 9 κάνει
+τη μοίρα **ένα ιδιωτικό αρχείο** που το διαβάζουν όλες.
+
+**ΤΟ ΑΡΧΕΙΟ.** `D:\FDMS-roster\roster.json`, schema `global-roster-v1`. Ζει
+**ΕΞΩ** και από τα δύο δημόσια repos και εκεί θα μείνει. Ανά άτομο: `oid`
+(αμετάβλητο), `mn` (null μέχρι να δοθούν), `rank`, `last_name`, `first_name`,
+`duty`, `leadership`, `call_sign`, `country`, `test_pilot`, `status`,
+`duty_eligible {SOF, RSU, RSU_solo}`, `experienced`. Το `students[]` είναι προς
+το παρόν κενό (έρχονται την επόμενη εβδομάδα) — ο import τα υποστηρίζει ήδη.
+
+**ΤΟ OID ΕΙΝΑΙ Η ΤΑΥΤΟΤΗΤΑ ΚΑΙ ΕΙΝΑΙ ΑΜΕΤΑΒΛΗΤΟ.** Οι άνθρωποι
+μετατίθενται, προάγονται, αλλάζουν call sign και φεύγουν· το object id όχι.
+Άρα είναι το κλειδί κάθε εισαγωγής και το ΜΟΝΟ πεδίο που δεν ξαναγράφεται.
+
+**«Import roster»** (κουμπί στο Roster, file picker): **MERGE BY OID** —
+- OID που υπάρχει ⇒ **ενημέρωση επί τόπου**· ο τοπικός `code` (τον οποίο
+  αναφέρει το training log ως ιστορικό γεγονός) **δεν ξαναγράφεται ποτέ**·
+- OID που δεν υπάρχει ⇒ **δημιουργία**· ο νέος `code` παίρνει το **call sign**
+  (αυτό λέει ήδη η μοίρα), αλλιώς το επόμενο ελεύθερο `IP-n` / `SP-n`·
+- όποιος **δεν αναφέρεται** στο αρχείο ⇒ **μένει ανέγγιχτος** (οι αποχωρήσεις
+  παραμένουν χειροκίνητη απόφαση, ποτέ παρενέργεια αρχείου)·
+- πεδίο για το οποίο το roster **σιωπά** (null/απόν — π.χ. το `mn` σήμερα)
+  **δεν γράφεται**: μια εισαγωγή δεν σβήνει ό,τι πληκτρολόγησε ο ΑΕ·
+- αντιστοιχίσεις: `call_sign→callsign`, `duty_eligible.RSU_solo→quals.rsu_solo`,
+  `SOF/RSU→duty_eligible`, `status: Departed→departed, αλλιώς active`. Το
+  `quals.evaluator` **μόνο προστίθεται** (duty = Evaluator) — ένα προσόν που
+  όρισε ο χρήστης δεν το αφαιρεί αρχείο που δεν έχει άποψη γι' αυτό.
+- Μετά την εισαγωγή **όλα παραμένουν επεξεργάσιμα** από το UI ως συνήθως.
+
+**Η ΠΥΛΗ ΙΔΙΩΤΙΚΟΤΗΤΑΣ.** Κανένα πραγματικό όνομα, call sign ή παράγωγο του
+roster δεν μπαίνει ΠΟΤΕ σε αρχείο του repo. Το **δημόσιο seed**
+(`tools/build_scheduler_seed.py` → `data/scheduler/seed.json`) κρατά για πάντα
+τα ψεύτικα SP-x/IP-x — ο Γύρος 9 του πρόσθεσε μόνο τα **νέα πεδία με ψεύτικες
+τιμές** (country HAF/ITAF/Other, test_pilot σε 4 IP), ώστε το UI που τα
+εμφανίζει να έχει τι να δείξει. Τα αληθινά δεδομένα ζουν μόνο στο localStorage
+του χρήστη και στο ιδιωτικό `fdms-data`.
+
+## 2β. DROPDOWNS — ο κανόνας (Γύρος 9)
+
+**Κάθε dropdown έχει ΜΟΝΟ τις τιμές που χρειάζεται ΣΥΝ ένα «Other…» ελεύθερο
+κείμενο.** Ο helper `otherSelect()`/`fvalOther()` του Roster το υλοποιεί μία
+φορά: επιλογή «Other…» ⇒ αποκαλύπτεται πεδίο κειμένου, το ζεύγος διαβάζεται ως
+**μία** τιμή, η εγγραφή δεν μαθαίνει ποτέ ότι το widget έχει δύο μισά.
+Έτσι: **country** (HAF/ITAF/Other…), **duty**, **leadership**, **rank** (chips
+πάνω σε ελεύθερο πεδίο — προστέθηκε **Lt Col**, το roster έχει δύο),
+**device** F/S (datalist OFT/FTD πάνω σε ελεύθερο πεδίο).
+
+**ΚΛΕΙΣΤΑ ΕΞ ΟΡΙΣΜΟΥ** (δεν είναι ξεχασμένα): ό,τι είναι **αλφάβητο μηχανής**
+και όχι λεξιλόγιο της μονάδας — `result` (PASS/LAG/FAIL/Score· η μηχανή
+συνεπειών κάνει switch πάνω του), `status` μαθητή/εκπαιδευτή, `scope`
+(class/student), `wave` (A/B), κωδικοί απουσίας (ήδη παραμετρικοί μέσω
+`config.absence_codes`). Ελεύθερη τιμή εκεί θα σήμαινε κανόνας που δεν
+εφαρμόζεται. Τα pickers οντοτήτων (SP/IP/κόμβος/αποστολή) έχουν ήδη τη δική
+τους διαφυγή: **ελεύθερο κείμενο αποστολής**, callsign, IFF, remarks.
 
 ## 3. Κατάσταση κόμβου ανά μαθητή
 
