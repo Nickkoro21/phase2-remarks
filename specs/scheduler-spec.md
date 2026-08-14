@@ -280,3 +280,87 @@ instructors** · Absents analysis · Manning · Completion ratio ανά cohort.
 min debrief 15' · idle threshold 3 εργάσιμες · duty roster: εισαγωγή από χρήστη (όχι
 πρόταση συστήματος, v1) · αποθήκευση: JSON αρχεία σε φάκελο επιλογής χρήστη · βάθος
 lookahead 3 (σταθερό v1).
+
+## 11. INSTRUCTOR CURRENCY — καρτέλα εκπαιδευτή (Γύρος 10b· split & χρώμα Γύρος 10c)
+
+Πηγή: `data/requirements/instructor_currency.json` (91 ελεγμένα items από το 3-01/2025
+ΔΑΕ). Αποθήκευση: `instructorCurrency` (κλειδί = OID), **μία ημερομηνία ανά item**.
+Μηχανή: `window.SchedCurrency` (app/scheduler.js § ③). Η καρτέλα δείχνει **και τις 91
+γραμμές** — καμία δεν κρύβεται, όλες παραμένουν επεξεργάσιμες.
+
+### 11α. ΔΙΑΘΕΣΙΜΟΤΗΤΑ vs ΚΑΤΑΓΕΓΡΑΜΜΕΝΕΣ ΥΠΟΧΡΕΩΣΕΙΣ (ο διαχωρισμός)
+
+Δύο **ξεχωριστά** αθροίσματα, ποτέ ανακατεμένα:
+
+- **counted (διαθεσιμότητα)** — κάθε γραμμή με μετρήσιμο παράθυρο που, αν λήξει,
+  **κοστίζει διαθεσιμότητα** στον εκπαιδευτή. Μόνο αυτές οδηγούν την **τελεία** στο
+  roster, το **«owes N»** και το **pill** της κεφαλίδας. Σύνολο: **23 (ΕΜΠ) / 21 (ΑΠ)**.
+- **obligations (καταγεγραμμένες υποχρεώσεις)** — **13** γραμμές με παράθυρο, για τις
+  οποίες το ίδιο το catalog λέει ότι **δεν τυπώνεται απώλεια διαθεσιμότητας**. Μένουν
+  στη θέση τους, με τη δική τους χρωματική κατάσταση γραμμής και επεξεργάσιμη
+  ημερομηνία, αλλά **εκτός** τελείας / «owes» / pill. Μετριούνται μόνες τους:
+  δεύτερη μικρή γραμμή «**obligations overdue: N**» (ουδέτερο στυλ, τα chips πηδούν
+  στη γραμμή όπως τα owed chips) — εμφανίζεται **μόνο** όταν N > 0.
+- **no counter** — ό,τι δεν έχει παράθυρο (χωρίς όριο §48γ · KPA Β-6/ΓΕΑ · «--»).
+  Ταυτότητα ελέγχου: `counted + obligations + no counter = 91`.
+
+**overdue ≠ κενό**: υποχρέωση χωρίς ημερομηνία **δεν** είναι overdue — απλώς δεν έχει
+καταγραφεί (στο έντυπο τυπώνεται «—»).
+
+Η λίστα είναι **χειροκίνητη, ανά id** (όχι keyword sniff) μέσα στη μηχανή, με τη
+δικαιολόγηση από το catalog σε σχόλιο δίπλα σε κάθε id, και **ελέγχεται στο load**
+(`console.warn` αν κάποιο id λείπει από το catalog):
+
+| id | βάση από το catalog |
+|---|---|
+| `cross-staff-visits-ata-day` | «Not an individual currency — no lapse for the instructor» · flag «Should not drive a per-instructor colour scale» |
+| `squadron-commanders-conference` | «Not an individual currency — no lapse for the instructor» (μόνο διοικητές) |
+| `demo-pilot-tenure` | «The post must be handed over» · flag «A tenure limit, not a currency» |
+| `pr-programme-completion` | «A completion deadline for the programme, not a recurring currency» |
+| `body-weight-check` | «No consequence is printed in the 3-01» · flag «not a currency the instructor holds» |
+| `monthly-knowledge-exams` | «No availability loss is printed in the 3-01» |
+| `seminar-sea-survival` | «No availability loss is printed in the 3-01» |
+| `training-egress-survival` | «No availability loss is printed in the 3-01» |
+| `training-aircraft-re-servicing` | «No availability loss is printed in the 3-01» |
+| `seminar-flight-physiology` | «No availability loss is printed in the 3-01» |
+| `seminar-hpma-crm-orm` | «No availability loss is printed in the 3-01» |
+| `trainee-20day-unscored-flight` | flag SCOPE: αφορά **εκπαιδευόμενο** (ΜΕΤ/ΕΕΠ) σε επαναδιάθεση· ο εκπαιδευτής σε κανονική υπηρεσία διέπεται από §70 |
+| `trainee-30day-type-availability-loss` | flag SCOPE: ίδια ανάγνωση Annex B §13 |
+
+**Δεν** μπαίνουν εδώ το `seminar-pdo` και το `seminar-tactics`: το lapse τους ονομάζει
+ρητά §69δ(1)/(2) και **Partially Combat Ready**, άρα κοστίζουν διαθεσιμότητα και
+μετρώνται κανονικά.
+
+### 11β. ΧΡΩΜΑ — ΕΝΑΣ κανόνας, χωρίς εξαιρέσεις
+
+```
+AMBER  days_left <= min(round(validity × 25%), 45)
+RED    ληγμένο ή ποτέ καταγεγραμμένο
+GREEN  οτιδήποτε άλλο
+GREY   δεν υπάρχει παράθυρο να μετρηθεί
+```
+
+Με λόγια — και το legend της καρτέλας **και** του εντύπου λένε ακριβώς αυτό: *amber όταν
+απομένει ένα τέταρτο του παραθύρου — το πολύ 45 ημέρες*. Το πλαφόν των 45 ημερών
+εμποδίζει ένα ετήσιο παράθυρο να στέκεται amber επί τρίμηνο· το ποσοστό κρατά ένα
+10ήμερο παράθυρο πράσινο ως τις τελευταίες 3 ημέρες. Παραδείγματα κατωφλίου:
+10d→3 · 15d→4 · 30d→8 · 45d→11 · 60d→15 · 90d→23 · 120d→30 · 180d→45 · 365d→45 · 1095d→45.
+
+### 11γ. Η ΜΙΑ ΡΑΦΗ ΕΓΓΡΑΦΗΣ
+
+`bump(oid, item_id, date, src)` είναι ο μοναδικός writer:
+
+- `""` ή `null` **καθαρίζει** — και **μόνο** με `src="manual"`.
+- Οτιδήποτε άλλο δεν διαβάζεται ως πραγματική ημερομηνία (λάθος μορφή, «2026-02-30»,
+  «14/08/2026», `undefined`, αντικείμενο) **απορρίπτεται**: `null` + `console.warn`,
+  **χωρίς να αγγίξει** την αποθηκευμένη τιμή. Ένα buggy μελλοντικό call δεν σβήνει ποτέ.
+- `manual` υπερισχύει και πάει και πίσω· κάθε άλλο `src` είναι **αυτόματη** πηγή: μόνο
+  εμπρός, ποτέ δεν καθαρίζει.
+
+### 11δ. Έντυπο (squadron binder)
+
+Ένας εκπαιδευτής ανά φύλλο, μονόχρωμο. `@page` περιθώρια 12/10 mm, οι τίτλοι στηλών
+επαναλαμβάνονται (`display: table-header-group`), καμία γραμμή δεν κόβεται στη μέση και
+καμία κεφαλίδα ομάδας δεν μένει μόνη στο κάτω μέρος σελίδας (`break-after: avoid`).
+Οι υποχρεώσεις τυπώνουν **«overdue» / «recorded» / «—»** — ποτέ «EXPIRED» — και το
+legend εξηγεί τον διαχωρισμό σε μία πρόταση.

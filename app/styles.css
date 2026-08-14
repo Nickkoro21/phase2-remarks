@@ -1188,13 +1188,27 @@ body {
 #sch-print .pv-t th { font-size: 9px; letter-spacing: 0.7px; background: #eeeeee; }
 #sch-print .sch-hint { color: #444444; }
 
+/* Paper margins for every printed sheet (Round 10c — the currency sheet is
+   four A4 pages and had none). No `size` is set on purpose: the board sheet is
+   wide and its orientation stays the print dialog's business. */
+@page { margin: 12mm 10mm; }
+
 @media print {
   html.sch-printing body > *:not(#sch-print) { display: none !important; }
   html.sch-printing #sch-print { position: static; padding: 0; overflow: visible; }
   html.sch-printing #sch-print .pv-bar { display: none !important; }
   html.sch-printing #sch-print .pv-page { border: 0; max-width: none; padding: 0; }
   html.sch-printing #sch-print .pv-t { page-break-inside: auto; }
-  html.sch-printing #sch-print .pv-t tr { page-break-inside: avoid; }
+  /* the column titles repeat on every page … */
+  html.sch-printing #sch-print .pv-t thead { display: table-header-group; }
+  html.sch-printing #sch-print .pv-t tfoot { display: table-footer-group; }
+  /* … no row is ever cut in half … */
+  html.sch-printing #sch-print .pv-t tr { page-break-inside: avoid; break-inside: avoid; }
+  /* … and a kind-group header never dangles alone at the foot of a page: it is
+     glued to the row after it, so the break falls BEFORE the header instead. */
+  html.sch-printing #sch-print .pv-t tr.pv-grp { page-break-after: avoid; break-after: avoid; }
+  /* the page-1 header block stays with the start of the table */
+  html.sch-printing #sch-print .pv-top { page-break-after: avoid; break-after: avoid; }
 }
 
 @media (max-width: 1200px) {
@@ -1653,6 +1667,19 @@ html[data-mode="light"] .mc-leg i[style*="#9d8cff"] { background: var(--mc-8) !i
 /* the owed / expiring shortcut chips — click jumps to the row and flashes it */
 .sch-curowed { display: flex; flex-wrap: wrap; gap: 5px; }
 .sch-curowed .sch-pgoto { font-family: inherit; font-size: 11.5px; padding: 2px 10px; }
+
+/* ROUND 10c — recorded obligations. They are NOT an availability state, so
+   they get no status colour of their own: the tag and the second header line
+   are --muted, and the chips drop the amber accent the owed chips carry. */
+.sch-curoblline { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+.sch-curoblline .sch-pgoto { font-family: inherit; font-size: 11.5px; padding: 2px 10px; }
+.sch-pgoto.is-obl { border-style: dotted; }
+.sch-pgoto.is-obl .sch-pgoto-s { color: var(--muted); }
+.sch-curobl {
+  flex: 0 0 auto; font-size: 9.5px; letter-spacing: 0.4px; text-transform: uppercase;
+  color: var(--muted); border: 1px dotted var(--line); border-radius: 999px;
+  padding: 0 6px; cursor: help;
+}
 
 /* the table */
 .sch-curscroll { max-height: 52vh; }

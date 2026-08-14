@@ -1436,16 +1436,32 @@ window.fmtDMY = function fmtDMY(v) {
     ok: "current", expiring: "expiring", expired: "EXPIRED",
     never: "never recorded", neutral: "no counter",
   };
+  /* Round 10c — an obligation has no availability state to lose, so it never
+     says EXPIRED: on paper it is only "overdue", "recorded" or "—". */
+  const CUR_OBL_PRINT = {
+    ok: "recorded", expiring: "recorded", expired: "overdue",
+    never: "—", neutral: "—",
+  };
+  const OBL_WHY = "recorded obligation — the 3-01 prints no availability loss for it, "
+    + "so it is tracked here but stays out of the dot, the pill and “owes”";
+  const oblTitle = (st) => (st.state === "expired" ? "overdue"
+    : st.state === "never" ? "not recorded"
+      : st.state === "expiring" ? "recorded — due soon"
+        : st.state === "ok" ? "recorded" : "no counter") + " · " + OBL_WHY;
+  const stateTitle = (st) => (st.obligation ? oblTitle(st) : CUR_STATE_TXT[st.state]);
 
-  /* the roster-row aggregate: one dot + an "owes N" chip */
+  /* the roster-row aggregate: one dot + an "owes N" chip. Round 10c — both
+     read the AVAILABILITY tally only; obligations are named in the tooltip. */
   function currencyTag(i) {
     if (!CUR().loaded() || !i.oid) return "";
     const s = CUR().summary(i.oid, !!i.experienced);
-    const tip = s.owes
+    const tip = (s.owes
       ? "currency — NOT current: " + s.owes + " item" + (s.owes === 1 ? "" : "s") + " expired or never recorded"
       : s.expiring
         ? "currency — available, " + s.expiring + " item" + (s.expiring === 1 ? "" : "s") + " expiring"
-        : "currency — available: " + s.counted + " counted items all in date";
+        : "currency — available: " + s.counted + " counted items all in date")
+      + (s.obl.overdue ? " · plus " + s.obl.overdue + " recorded obligation"
+        + (s.obl.overdue === 1 ? "" : "s") + " overdue (no availability loss — not counted here)" : "");
     return `<span class="sch-cdot st-${esc(s.state)}" title="${esc(tip)}"></span>`
       + (s.owes ? `<span class="sch-badge cur-expired" title="${esc(tip)}">owes ${s.owes}</span>` : "")
       + (!s.owes && s.expiring ? `<span class="sch-badge cur-expiring" title="${esc(tip)}">exp ${s.expiring}</span>` : "");
@@ -1465,14 +1481,14 @@ window.fmtDMY = function fmtDMY(v) {
     const pill = s.owes ? { c: "expired", t: "NOT current: " + s.owes + " item" + (s.owes === 1 ? "" : "s") }
       : s.expiring ? { c: "expiring", t: "Expiring: " + s.expiring }
         : { c: "ok", t: "Available" };
-    const chip = (st) => `<button type="button" class="sch-pgoto" data-act="cur-goto" data-id="${esc(st.item.id)}"
-      title="${esc(st.item.name)} — ${esc(CUR_STATE_TXT[st.state])}. Click to jump to the row.">${esc(shortName(st.item))}
+    const chip = (st) => `<button type="button" class="sch-pgoto${st.obligation ? " is-obl" : ""}" data-act="cur-goto" data-id="${esc(st.item.id)}"
+      title="${esc(st.item.name)} — ${esc(stateTitle(st))}. Click to jump to the row.">${esc(shortName(st.item))}
       <span class="sch-pgoto-s">${esc(st.state === "never" ? "no date" : st.left + "d")}</span></button>`;
     const owed = s.red.concat(s.amber);
     return `<div class="sch-rform sch-curcard" data-oid="${esc(i.oid || "")}">
       <div class="sch-curhead">
         <span class="sch-curpill st-${pill.c}">${esc(pill.t)}</span>
-        <span class="sch-nd" title="items with a validity that can be counted / items the 3-01 gives no counter for">${s.counted} counted · ${s.neutral} no counter</span>
+        <span class="sch-nd" title="items whose window is counted for availability / recorded obligations the 3-01 prints no availability loss for / items the 3-01 gives no counter for">${s.counted} counted · ${s.obl.counted} obligations · ${s.neutral} no counter</span>
         <label class="sch-curexp" title="Annex B §17 — an EXPERIENCED (ΕΜΠ) flyer reads the ΕΜΠ validity column, an inexperienced (ΑΠ) one the ΑΠ column. Saved on the instructor; switching it recomputes the whole card.">
           <input type="checkbox" data-curexp="1"${exp ? " checked" : ""}>
           <span>Experienced (ΕΜΠ)</span></label>
@@ -1481,12 +1497,17 @@ window.fmtDMY = function fmtDMY(v) {
                 title="one instructor per page, plain monochrome table for the squadron binder">🖨 Print</button>
         <button type="button" class="sch-btn" data-act="cur-close">✕ Close</button>
       </div>
+      ${s.obl.overdue ? `<div class="sch-curoblline">
+        <span class="sch-nd" title="${esc(OBL_WHY)}">obligations overdue: ${s.obl.overdue}</span>
+        ${s.obl.overdueRows.map(chip).join("")}</div>` : ""}
       <p class="sch-hint sch-curlegend">
-        <span class="sch-cdot st-ok"></span> more than 25% of the validity left <b>and</b> more than 14 days ·
-        <span class="sch-cdot st-expiring"></span> 25% or less, or 14 days or less ·
+        <span class="sch-cdot st-ok"></span> in date ·
+        <span class="sch-cdot st-expiring"></span> amber when a quarter of the window — at most ${CUR().AMBER_MAX_DAYS} days — remains ·
         <span class="sch-cdot st-expired"></span> expired or never recorded ·
         <span class="sch-cdot st-neutral"></span> no counter (no limit · set outside the 3-01 · n/a).
         <b>≈</b> project conversion of a printed period (${esc(CUR().CONV_LEGEND)}) · <b>⚠</b> a printed contradiction — hover it.
+        The ${CUR().OBLIGATIONS.size} rows tagged <b>obligation</b> keep their own colour but are left out of the dot,
+        the pill and “owes”: the 3-01 prints no availability loss for them.
       </p>
       ${owed.length ? `<div class="sch-curowed">${owed.map(chip).join("")}</div>` : ""}
       <div class="sch-scroll sch-curscroll">
@@ -1518,7 +1539,9 @@ window.fmtDMY = function fmtDMY(v) {
   function curRowHtml(it, oid, exp) {
     const st = CUR().statusOf(oid, it, exp);
     const src = it.source || {};
-    const tip = String(it.lapse_consequence || "—") + "\n\nIf it lapses — see " + (src.ref || "3-01")
+    const tip = (st.obligation ? "RECORDED OBLIGATION — no availability loss is printed for this row, so it is "
+      + "excluded from the availability dot, from “owes N” and from the header pill.\n\n" : "")
+      + String(it.lapse_consequence || "—") + "\n\nIf it lapses — see " + (src.ref || "3-01")
       + (src.page_pdf ? " · PDF p." + src.page_pdf : "");
     const left = st.v.days == null ? "—"
       : st.state === "never" ? "no date"
@@ -1527,6 +1550,7 @@ window.fmtDMY = function fmtDMY(v) {
       <td class="sch-curname">
         <span class="sch-curinfo" title="${esc(tip)}">ⓘ</span>
         <span>${esc(it.name)}</span>
+        ${st.obligation ? `<span class="sch-curobl" title="${esc(OBL_WHY)}">obligation</span>` : ""}
         ${st.v.warn ? `<span class="sch-curwarn" title="${esc(st.v.warn)}">⚠</span>` : ""}
       </td>
       <td class="sch-mono${st.v.days == null ? " sch-no" : ""}"${st.v.tip ? ` title="${esc(st.v.tip)}"` : ""}>${esc(st.v.text)}</td>
@@ -1534,7 +1558,7 @@ window.fmtDMY = function fmtDMY(v) {
                  title="last done — empty means never recorded"></td>
       <td class="sch-mono">${st.expires ? esc(window.fmtDMY(st.expires)) : "—"}</td>
       <td class="sch-mono cur-left">${esc(left)}</td>
-      <td><span class="sch-cdot st-${esc(st.state)}" title="${esc(CUR_STATE_TXT[st.state])}"></span></td>
+      <td><span class="sch-cdot st-${esc(st.state)}" title="${esc(stateTitle(st))}"></span></td>
     </tr>`;
   }
 
@@ -1554,10 +1578,12 @@ window.fmtDMY = function fmtDMY(v) {
         <td>${st.last ? esc(window.fmtDMY(st.last)) : "—"}</td>
         <td>${st.expires ? esc(window.fmtDMY(st.expires)) : "—"}</td>
         <td>${esc(left)}</td>
-        <td>${esc(CUR_STATE_TXT[st.state])}</td></tr>`;
+        <td>${esc((st.obligation ? CUR_OBL_PRINT : CUR_STATE_TXT)[st.state])}</td></tr>`;
     };
+    /* pv-grp is what the print stylesheet keeps glued to the first row of its
+       group, so a kind header can never dangle alone at the foot of a page */
     const body = CUR().groups().map((g) =>
-      `<tr><th colspan="6">${esc(g.label.toUpperCase())}</th></tr>` + g.items.map(row).join("")).join("");
+      `<tr class="pv-grp"><th colspan="6">${esc(g.label.toUpperCase())}</th></tr>` + g.items.map(row).join("")).join("");
     const old = $id("sch-print");
     if (old) old.remove();
     const host = document.createElement("div");
@@ -1576,10 +1602,14 @@ window.fmtDMY = function fmtDMY(v) {
             · printed <b>${esc(window.fmtDMY(CUR().todayISO()))}</b></p>
           <p class="pv-p">${s.owes ? "<b>NOT CURRENT — " + s.owes + " item" + (s.owes === 1 ? "" : "s") + " expired or never recorded.</b>"
             : s.expiring ? "<b>Available</b> — " + s.expiring + " item" + (s.expiring === 1 ? "" : "s") + " expiring."
-              : "<b>Available</b> — all " + s.counted + " counted items in date."}</p>
-          <p class="pv-p">Colour scale: current = more than 25% of the validity left and more than 14 days ·
-            expiring = 25% or less, or 14 days or less · EXPIRED / never recorded = not current ·
+              : "<b>Available</b> — all " + s.counted + " counted items in date."}
+            ${"Recorded obligations: " + s.obl.counted + " row" + (s.obl.counted === 1 ? "" : "s") + " outside that count"
+              + (s.obl.overdue ? ", <b>" + s.obl.overdue + " overdue</b>." : ", none overdue.")}</p>
+          <p class="pv-p">Colour scale: expiring = a quarter of the window — at most ${CUR().AMBER_MAX_DAYS} days — or less remaining ·
+            current = anything more · EXPIRED / never recorded = not current ·
             no counter = the 3-01 prints no validity. ≈ = project conversion of a printed period. ⚠ = printed contradiction.</p>
+          <p class="pv-p">Rows whose STATUS reads <b>recorded</b>, <b>overdue</b> or <b>—</b> are recorded obligations: the 3-01
+            prints no loss of availability for them, so they are tracked on this sheet but left out of the availability count above.</p>
         </div>
         <table class="pv-t"><thead><tr><th>ITEM</th><th>VALIDITY</th><th>LAST DONE</th><th>EXPIRES</th><th>DAYS LEFT</th><th>STATUS</th></tr></thead>
           <tbody>${body}</tbody></table>
@@ -2694,21 +2724,35 @@ window.fmtDMY = function fmtDMY(v) {
      manual entry). NOTHING auto-maps today — no sortie, no E-item, no
      exercise code is wired to any catalog row.
 
-   COLOUR SCALE (the legend line inside the card says the same thing)
-     GREEN   more than 25% of the validity left AND more than 14 days left
-     AMBER   25% or less left, or 14 days or less left
+   AVAILABILITY vs RECORDED OBLIGATIONS            (Round 10c — finding 1)
+     Not every dated row costs the instructor his availability. Thirteen of
+     them — see OBLIGATIONS below — are things the catalog itself says carry
+     no printed availability loss (unit conferences, a tenure clock, a
+     programme deadline, the ground seminars the 3-01 attaches no consequence
+     to, and the two TRAINEE-scoped rules). They keep their row and their row
+     colour, but they are OUT of the availability dot, out of "owes N" and
+     out of the header pill; the card counts them on their own line.
+
+   COLOUR SCALE — ONE rule, no exceptions       (Round 10c — finding 2)
+     AMBER   days_left <= min(round(validity × 25%), 45)
      RED     expired, or never recorded
+     GREEN   anything else
      GREY    no validity to count (no limit · set outside the 3-01 · n/a)
-     The absolute 14-day guard applies only to windows LONGER than 14 days —
-     a 10-day window would otherwise be amber from the day it is flown.
+     In words, the same words the card legend and the printed sheet use:
+     amber when a quarter of the window — at most 45 days — remains. The 45-day
+     ceiling stops a 1-year window from sitting amber for three months; the
+     proportional quarter keeps a 10-day window green until its last 3 days.
      ══════════════════════════════════════════════════════════════════════ */
 (() => {
   const CAT_URL = "../data/requirements/instructor_currency.json";
   const COLL = "instructorCurrency";
   const S = () => window.SchedStore;
 
-  const AMBER_DAYS = 14;          // absolute guard   (windows > 14 days only)
-  const AMBER_FRACTION = 0.25;    // proportional guard
+  /* THE colour rule, in two numbers: a quarter of the window, ceilinged at 45
+     days. amberAt(days) is the whole rule — nothing else may add a guard. */
+  const AMBER_FRACTION = 0.25;    // a quarter of the printed window …
+  const AMBER_MAX_DAYS = 45;      // … but never more than 45 days of amber
+  const amberAt = (days) => Math.min(Math.round(days * AMBER_FRACTION), AMBER_MAX_DAYS);
 
   /* the five groups of the card, in card order; every catalog kind maps here */
   const GROUPS = [
@@ -2719,6 +2763,39 @@ window.fmtDMY = function fmtDMY(v) {
     { key: "e-item", label: "E-items", kinds: ["e-item"], note: "" },
     { key: "other", label: "Other", kinds: ["other"], note: "" },
   ];
+
+  /* ── RECORDED OBLIGATIONS (Round 10c) ────────────────────────────────────
+     Rows that DO have a countable window but whose lapse costs the instructor
+     NO availability — the catalog says so itself, in the quoted line after
+     each id. They stay on the card, they stay editable and they keep their row
+     colour; they are excluded from the availability dot, from "owes N" and
+     from the header pill, and are tallied separately as obligations.
+     Curated by id (not by a keyword sniff) so the list stays auditable against
+     the catalog; every id is checked against it at load.                     */
+  const OBLIGATIONS = new Set([
+    /* the two unit/command conferences of Table 14 */
+    "cross-staff-visits-ata-day",      // «Not an individual currency — no lapse for the instructor.» + flag: «Should not drive a per-instructor colour scale.»
+    "squadron-commanders-conference",  // «Not an individual currency — no lapse for the instructor.» (commanders only)
+    /* a tenure clock and a programme deadline — neither is a currency */
+    "demo-pilot-tenure",               // «The post must be handed over.» + flag: «A tenure limit, not a currency; printed in years.»
+    "pr-programme-completion",         // «A completion deadline for the programme, not a recurring currency.»
+    /* administrative recurrences the 3-01 attaches no consequence to */
+    "body-weight-check",               // «No consequence is printed in the 3-01.» + flag: «not a currency the instructor holds … informational timer.»
+    "monthly-knowledge-exams",         // «No availability loss is printed in the 3-01.»
+    /* the five ground seminars / trainings that print no availability loss.
+       Π.ΠΔΟ and Tactics are NOT here: their lapse lines name §69δ(1)/(2) and
+       Partially Combat Ready, so those two stay counted. */
+    "seminar-sea-survival",            // «No availability loss is printed in the 3-01.»
+    "training-egress-survival",        // «No availability loss is printed in the 3-01.»
+    "training-aircraft-re-servicing",  // «No availability loss is printed in the 3-01.»
+    "seminar-flight-physiology",       // «No availability loss is printed in the 3-01.»
+    "seminar-hpma-crm-orm",            // «No availability loss is printed in the 3-01.»
+    /* TRAINEE-scoped (ΜΕΤ/ΕΕΠ): they bite on an εκπαιδευόμενος in re-assignment
+       training, not on a maintenance-stage instructor in normal service (§70). */
+    "trainee-20day-unscored-flight",   // flag: «SCOPE … applies to «εκπαιδευόμενοι» … in normal maintenance-stage service he is governed by §70».
+    "trainee-30day-type-availability-loss", // flag: «SCOPE … bites on a qualified instructor only while he is an εκπαιδευόμενος in re-assignment training».
+  ]);
+  const isObligation = (id) => OBLIGATIONS.has(id);
 
   /* ── PROJECT CONVERSIONS (catalog open flag 6) ───────────────────────────
      Table 14 and §§83/85/93 print their validity as a PERIOD WORD, never as
@@ -2793,6 +2870,12 @@ window.fmtDMY = function fmtDMY(v) {
       C.groups = GROUPS.map((g) => Object.assign({}, g, {
         items: j.items.filter((it) => g.kinds.indexOf(it.kind) >= 0),
       })).filter((g) => g.items.length);
+      /* Round 10c — the obligation list is curated by hand against the catalog;
+         if the catalog ever renames or drops an id, say so instead of silently
+         counting the row back into the availability dot. */
+      for (const id of OBLIGATIONS) {
+        if (!C.byId.has(id)) console.warn("SchedCurrency: obligation id is not in the catalog — " + id);
+      }
       return j;
     } catch (e) {
       C.err = "instructor_currency.json — " + e.message;
@@ -2858,6 +2941,10 @@ window.fmtDMY = function fmtDMY(v) {
   const DAY = 86400000;
   const addDays = (iso, n) => new Date(utc(iso) + n * DAY).toISOString().slice(0, 10);
   const daysBetween = (a, b) => Math.round((utc(b) - utc(a)) / DAY);
+  /* ISO_RE only checks the SHAPE, so "2026-13-45" passes it and Date.UTC would
+     roll it over into an invented day (2027-02-14). The seam refuses anything
+     that does not survive the round trip. */
+  const realISO = (iso) => !!iso && new Date(utc(iso)).toISOString().slice(0, 10) === iso;
   const todayISO = () => (window.SchedReady ? window.SchedReady.todayISO()
     : new Date().toISOString().slice(0, 10));
 
@@ -2874,17 +2961,25 @@ window.fmtDMY = function fmtDMY(v) {
 
   /* ══ THE SEAM ══════════════════════════════════════════════════════════
      bump(oid, item_id, date, src) — the single writer.
-       date ""   clears the row (back to "never recorded")
+       date ""   (or null) CLEARS the row, and only from src "manual"
        src  "manual" (the card) always wins and may move a date backwards;
             anything else is an AUTOMATIC source: it may only push the date
             forward and it never clears.
+     A date that is neither empty nor readable is a BUG IN THE CALLER, never
+     an instruction to erase: it is refused loudly and the stored date is left
+     untouched (Round 10c — finding 4).
      Returns the stored record, or null when the call was refused.        */
   function bump(oid, itemId, date, src) {
     if (!oid || !itemId) return null;
     if (loaded() && !byId(itemId)) { console.warn("SchedCurrency.bump: unknown item " + itemId); return null; }
-    const iso = normISO(date);
     const from = String(src || "manual");
     const manual = from === "manual";
+    const blank = date === "" || date === null;       // the only two ways to clear
+    const iso = blank ? "" : normISO(date);
+    if (!blank && !realISO(iso)) {
+      console.warn("SchedCurrency.bump: refused an unreadable date for " + itemId + " — " + JSON.stringify(date));
+      return null;                                    // nothing is written, nothing is cleared
+    }
     const prev = record(oid);
     const rec = { oid: oid, items: Object.assign({}, (prev && prev.items) || {}) };
     const old = rec.items[itemId] || null;
@@ -2905,40 +3000,54 @@ window.fmtDMY = function fmtDMY(v) {
   function statusOf(oid, it, experienced, ref) {
     const v = resolve(it, experienced);
     const last = dateOf(oid, it.id);
-    const out = { item: it, v: v, last: last, expires: "", left: null, state: "neutral" };
+    const out = { item: it, v: v, last: last, expires: "", left: null,
+      state: "neutral", obligation: isObligation(it.id) };
     if (v.days == null) return out;                    // nothing to count
     if (!last) { out.state = "never"; return out; }
     out.expires = addDays(last, v.days);
     out.left = daysBetween(ref || todayISO(), out.expires);
     if (out.left < 0) out.state = "expired";
-    else if (out.left <= v.days * AMBER_FRACTION
-      || (v.days > AMBER_DAYS && out.left <= AMBER_DAYS)) out.state = "expiring";
+    else if (out.left <= amberAt(v.days)) out.state = "expiring";
     else out.state = "ok";
     return out;
   }
 
   /* ── the instructor's aggregate ─────────────────────────────────────────
-     owes = expired + never, counted ONLY over items that HAVE a validity. */
+     Two tallies, never mixed (Round 10c):
+       AVAILABILITY  every counted row that is not an obligation. owes =
+                     expired + never; it drives the dot, the chip and the pill.
+       OBLIGATIONS   the counted rows of OBLIGATIONS. overdue = expired only —
+                     a row with no date is not overdue, it is simply not
+                     recorded, and nothing about the instructor is unavailable.
+     counted + obl.counted + neutral === every item in the catalog.          */
   function summary(oid, experienced) {
     const ref = todayISO();
+    const obl = { counted: 0, ok: 0, expiring: 0, expired: 0, never: 0,
+      overdue: 0, rows: [], overdueRows: [] };
     const out = { ok: 0, expiring: 0, expired: 0, never: 0, neutral: 0, counted: 0,
-      owes: 0, state: "ok", red: [], amber: [], ready: loaded() };
+      owes: 0, state: "ok", red: [], amber: [], obl: obl, ready: loaded() };
     for (const it of items()) {
       const st = statusOf(oid, it, experienced, ref);
+      if (st.state === "neutral") { out.neutral += 1; continue; }
+      if (st.obligation) {
+        obl.counted += 1; obl[st.state] += 1; obl.rows.push(st);
+        if (st.state === "expired") obl.overdueRows.push(st);
+        continue;
+      }
       out[st.state] += 1;
-      if (st.state === "neutral") continue;
       out.counted += 1;
       if (st.state === "expired" || st.state === "never") out.red.push(st);
       else if (st.state === "expiring") out.amber.push(st);
     }
+    obl.overdue = obl.expired;
     out.owes = out.expired + out.never;
     out.state = out.owes ? "expired" : (out.expiring ? "expiring" : "ok");
     return out;
   }
 
   window.SchedCurrency = {
-    CAT_URL, COLL, GROUPS, PERIOD_CONV, CONV_LEGEND, CONTRA,
-    AMBER_DAYS, AMBER_FRACTION,
+    CAT_URL, COLL, GROUPS, PERIOD_CONV, CONV_LEGEND, CONTRA, OBLIGATIONS,
+    AMBER_FRACTION, AMBER_MAX_DAYS, amberAt, isObligation,
     load, loaded, error, items, groups, byId, stats,
     resolve, statusOf, summary,
     record, cellOf, dateOf, bump,
