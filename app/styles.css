@@ -1201,7 +1201,6 @@ body {
   html.sch-printing #sch-print .pv-t { page-break-inside: auto; }
   /* the column titles repeat on every page … */
   html.sch-printing #sch-print .pv-t thead { display: table-header-group; }
-  html.sch-printing #sch-print .pv-t tfoot { display: table-footer-group; }
   /* … no row is ever cut in half … */
   html.sch-printing #sch-print .pv-t tr { page-break-inside: avoid; break-inside: avoid; }
   /* … and a kind-group header never dangles alone at the foot of a page: it is

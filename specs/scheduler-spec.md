@@ -294,11 +294,15 @@ lookahead 3 (σταθερό v1).
 
 - **counted (διαθεσιμότητα)** — κάθε γραμμή με μετρήσιμο παράθυρο που, αν λήξει,
   **κοστίζει διαθεσιμότητα** στον εκπαιδευτή. Μόνο αυτές οδηγούν την **τελεία** στο
-  roster, το **«owes N»** και το **pill** της κεφαλίδας. Σύνολο: **23 (ΕΜΠ) / 21 (ΑΠ)**.
-- **obligations (καταγεγραμμένες υποχρεώσεις)** — **13** γραμμές με παράθυρο, για τις
-  οποίες το ίδιο το catalog λέει ότι **δεν τυπώνεται απώλεια διαθεσιμότητας**. Μένουν
-  στη θέση τους, με τη δική τους χρωματική κατάσταση γραμμής και επεξεργάσιμη
-  ημερομηνία, αλλά **εκτός** τελείας / «owes» / pill. Μετριούνται μόνες τους:
+  roster, το **«owes N»** και το **pill** της κεφαλίδας. Σύνολο: **21 (ΕΜΠ) / 19 (ΑΠ)**
+  (Γύρος 10δ — βλ. τις 2 μετατάξεις στον πίνακα).
+- **obligations (καταγεγραμμένες υποχρεώσεις)** — **15** γραμμές με παράθυρο που το
+  ίδιο το catalog λέει ότι **δεν δεσμεύουν τη διαθεσιμότητα του εν ενεργεία εκπαιδευτή** —
+  ο λόγος διαφέρει ανά γραμμή (καμία τυπωμένη απώλεια · πεδίο εκπαιδευομένου · προθεσμία/
+  θητεία · μόνο εντός ΠΡ module) και **κάθε tag/tooltip τυπώνει τον δικό της λόγο**
+  (Γύρος 10δ — το ενιαίο «no availability loss» αποδείχθηκε ψευδές για το ζεύγος
+  εκπαιδευομένου). Μένουν στη θέση τους, με τη δική τους χρωματική κατάσταση γραμμής
+  και επεξεργάσιμη ημερομηνία, αλλά **εκτός** τελείας / «owes» / pill. Μετριούνται μόνες τους:
   δεύτερη μικρή γραμμή «**obligations overdue: N**» (ουδέτερο στυλ, τα chips πηδούν
   στη γραμμή όπως τα owed chips) — εμφανίζεται **μόνο** όταν N > 0.
 - **no counter** — ό,τι δεν έχει παράθυρο (χωρίς όριο §48γ · KPA Β-6/ΓΕΑ · «--»).
@@ -311,21 +315,29 @@ lookahead 3 (σταθερό v1).
 δικαιολόγηση από το catalog σε σχόλιο δίπλα σε κάθε id, και **ελέγχεται στο load**
 (`console.warn` αν κάποιο id λείπει από το catalog):
 
-| id | βάση από το catalog |
-|---|---|
-| `cross-staff-visits-ata-day` | «Not an individual currency — no lapse for the instructor» · flag «Should not drive a per-instructor colour scale» |
-| `squadron-commanders-conference` | «Not an individual currency — no lapse for the instructor» (μόνο διοικητές) |
-| `demo-pilot-tenure` | «The post must be handed over» · flag «A tenure limit, not a currency» |
-| `pr-programme-completion` | «A completion deadline for the programme, not a recurring currency» |
-| `body-weight-check` | «No consequence is printed in the 3-01» · flag «not a currency the instructor holds» |
-| `monthly-knowledge-exams` | «No availability loss is printed in the 3-01» |
-| `seminar-sea-survival` | «No availability loss is printed in the 3-01» |
-| `training-egress-survival` | «No availability loss is printed in the 3-01» |
-| `training-aircraft-re-servicing` | «No availability loss is printed in the 3-01» |
-| `seminar-flight-physiology` | «No availability loss is printed in the 3-01» |
-| `seminar-hpma-crm-orm` | «No availability loss is printed in the 3-01» |
-| `trainee-20day-unscored-flight` | flag SCOPE: αφορά **εκπαιδευόμενο** (ΜΕΤ/ΕΕΠ) σε επαναδιάθεση· ο εκπαιδευτής σε κανονική υπηρεσία διέπεται από §70 |
-| `trainee-30day-type-availability-loss` | flag SCOPE: ίδια ανάγνωση Annex B §13 |
+| id | κατηγορία λόγου (10δ) | βάση από το catalog |
+|---|---|---|
+| `cross-staff-visits-ata-day` | καμία απώλεια | «Not an individual currency — no lapse for the instructor» · flag «Should not drive a per-instructor colour scale» |
+| `squadron-commanders-conference` | καμία απώλεια | «Not an individual currency — no lapse for the instructor» (μόνο διοικητές) |
+| `demo-pilot-tenure` | προθεσμία/θητεία | «The post must be handed over» · flag «A tenure limit, not a currency» |
+| `pr-programme-completion` | προθεσμία/θητεία | «A completion deadline for the programme, not a recurring currency» |
+| `demo-reavailability-15-to-30-days` | προθεσμία/θητεία | **10δ** — «Beyond 30 days this simplified route closes and the full §20 programme applies»: προθεσμία διαδρομής επαναδιάθεσης, ίδια φύση με το `pr-programme-completion` (R10c verify #8) |
+| `pr-sortie-interval` | μόνο εντός ΠΡ module | **10δ** — flag «Applies only while a ΠΡ module is in progress — it is not a standing currency»: μετρούσε σιωπηλά +1 στο «owes» κάθε εκπαιδευτή (R10c verify #8) |
+| `body-weight-check` | καμία απώλεια | «No consequence is printed in the 3-01» · flag «not a currency the instructor holds» |
+| `monthly-knowledge-exams` | καμία απώλεια | «No availability loss is printed in the 3-01» |
+| `seminar-sea-survival` | καμία απώλεια | «No availability loss is printed in the 3-01» |
+| `training-egress-survival` | καμία απώλεια | «No availability loss is printed in the 3-01» |
+| `training-aircraft-re-servicing` | καμία απώλεια | «No availability loss is printed in the 3-01» |
+| `seminar-flight-physiology` | καμία απώλεια | «No availability loss is printed in the 3-01» |
+| `seminar-hpma-crm-orm` | καμία απώλεια | «No availability loss is printed in the 3-01» |
+| `trainee-20day-unscored-flight` | πεδίο εκπαιδευομένου | flag SCOPE: αφορά **εκπαιδευόμενο** (ΜΕΤ/ΕΕΠ) σε επαναδιάθεση· ο εκπαιδευτής σε κανονική υπηρεσία διέπεται από §70 |
+| `trainee-30day-type-availability-loss` | πεδίο εκπαιδευομένου | flag SCOPE: ίδια ανάγνωση Annex B §13 |
+
+**Εκκρεμεί απόφανση χρήστη** (R10c verify #8, δεύτερο σκέλος): οι 4 γραμμές `demo-*`
+αφορούν μόνο πιλότους επίδειξης (θέση max-4, Κεφ. 5) αλλά μετρώνται/εμφανίζονται για
+όλους — χρειάζεται μελλοντικό flag «display pilot» ανά εκπαιδευτή για να κρυφτούν ή να
+εξαιρεθούν στοχευμένα. Στο έντυπο οι υποχρεώσεις τυπώνουν πλέον και **due soon** (10δ)
+ώστε το χαρτί να μη χάνει το σήμα «πλησιάζει» — recorded / due soon / overdue / —.
 
 **Δεν** μπαίνουν εδώ το `seminar-pdo` και το `seminar-tactics`: το lapse τους ονομάζει
 ρητά §69δ(1)/(2) και **Partially Combat Ready**, άρα κοστίζουν διαθεσιμότητα και

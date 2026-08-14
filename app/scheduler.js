@@ -1437,17 +1437,21 @@ window.fmtDMY = function fmtDMY(v) {
     never: "never recorded", neutral: "no counter",
   };
   /* Round 10c — an obligation has no availability state to lose, so it never
-     says EXPIRED: on paper it is only "overdue", "recorded" or "—". */
+     says EXPIRED: on paper it is "recorded", "due soon", "overdue" or "—"
+     (10d — "due soon" keeps the binder sheet's early-warning signal). */
   const CUR_OBL_PRINT = {
-    ok: "recorded", expiring: "recorded", expired: "overdue",
+    ok: "recorded", expiring: "due soon", expired: "overdue",
     never: "—", neutral: "—",
   };
-  const OBL_WHY = "recorded obligation — the 3-01 prints no availability loss for it, "
-    + "so it is tracked here but stays out of the dot, the pill and “owes”";
+  /* 10d — the WHY differs per id (no printed loss / trainee scope / deadline
+     / ΠΡ module); the engine's curated map carries the per-id sentence. */
+  const oblWhy = (id) => "recorded obligation — " + (CUR().oblWhy(id) || "outside the availability count")
+    + ", so it is tracked here but stays out of the dot, the pill and “owes”";
+  const OBL_LINE = "recorded obligations are tracked but stay out of the dot, the pill and “owes” — hover each chip for its reason";
   const oblTitle = (st) => (st.state === "expired" ? "overdue"
     : st.state === "never" ? "not recorded"
       : st.state === "expiring" ? "recorded — due soon"
-        : st.state === "ok" ? "recorded" : "no counter") + " · " + OBL_WHY;
+        : st.state === "ok" ? "recorded" : "no counter") + " · " + oblWhy(st.item.id);
   const stateTitle = (st) => (st.obligation ? oblTitle(st) : CUR_STATE_TXT[st.state]);
 
   /* the roster-row aggregate: one dot + an "owes N" chip. Round 10c — both
@@ -1488,7 +1492,7 @@ window.fmtDMY = function fmtDMY(v) {
     return `<div class="sch-rform sch-curcard" data-oid="${esc(i.oid || "")}">
       <div class="sch-curhead">
         <span class="sch-curpill st-${pill.c}">${esc(pill.t)}</span>
-        <span class="sch-nd" title="items whose window is counted for availability / recorded obligations the 3-01 prints no availability loss for / items the 3-01 gives no counter for">${s.counted} counted · ${s.obl.counted} obligations · ${s.neutral} no counter</span>
+        <span class="sch-nd" title="items whose window is counted for availability / recorded obligations (no printed availability loss · trainee-scoped · a deadline, tenure or ΠΡ-module clock — hover each row for its reason) / items the 3-01 gives no counter for">${s.counted} counted · ${s.obl.counted} obligations · ${s.neutral} no counter</span>
         <label class="sch-curexp" title="Annex B §17 — an EXPERIENCED (ΕΜΠ) flyer reads the ΕΜΠ validity column, an inexperienced (ΑΠ) one the ΑΠ column. Saved on the instructor; switching it recomputes the whole card.">
           <input type="checkbox" data-curexp="1"${exp ? " checked" : ""}>
           <span>Experienced (ΕΜΠ)</span></label>
@@ -1498,7 +1502,7 @@ window.fmtDMY = function fmtDMY(v) {
         <button type="button" class="sch-btn" data-act="cur-close">✕ Close</button>
       </div>
       ${s.obl.overdue ? `<div class="sch-curoblline">
-        <span class="sch-nd" title="${esc(OBL_WHY)}">obligations overdue: ${s.obl.overdue}</span>
+        <span class="sch-nd" title="${esc(OBL_LINE)}">obligations overdue: ${s.obl.overdue}</span>
         ${s.obl.overdueRows.map(chip).join("")}</div>` : ""}
       <p class="sch-hint sch-curlegend">
         <span class="sch-cdot st-ok"></span> in date ·
@@ -1506,8 +1510,8 @@ window.fmtDMY = function fmtDMY(v) {
         <span class="sch-cdot st-expired"></span> expired or never recorded ·
         <span class="sch-cdot st-neutral"></span> no counter (no limit · set outside the 3-01 · n/a).
         <b>≈</b> project conversion of a printed period (${esc(CUR().CONV_LEGEND)}) · <b>⚠</b> a printed contradiction — hover it.
-        The ${CUR().OBLIGATIONS.size} rows tagged <b>obligation</b> keep their own colour but are left out of the dot,
-        the pill and “owes”: the 3-01 prints no availability loss for them.
+        Rows tagged <b>obligation</b> keep their own colour but are left out of the dot, the pill and
+        “owes” — each tag states why (no printed availability loss · trainee-scoped · a deadline, tenure or ΠΡ-module clock).
       </p>
       ${owed.length ? `<div class="sch-curowed">${owed.map(chip).join("")}</div>` : ""}
       <div class="sch-scroll sch-curscroll">
@@ -1539,8 +1543,8 @@ window.fmtDMY = function fmtDMY(v) {
   function curRowHtml(it, oid, exp) {
     const st = CUR().statusOf(oid, it, exp);
     const src = it.source || {};
-    const tip = (st.obligation ? "RECORDED OBLIGATION — no availability loss is printed for this row, so it is "
-      + "excluded from the availability dot, from “owes N” and from the header pill.\n\n" : "")
+    const tip = (st.obligation ? "RECORDED OBLIGATION — " + (CUR().oblWhy(it.id) || "outside the availability count")
+      + "; excluded from the availability dot, from “owes N” and from the header pill.\n\n" : "")
       + String(it.lapse_consequence || "—") + "\n\nIf it lapses — see " + (src.ref || "3-01")
       + (src.page_pdf ? " · PDF p." + src.page_pdf : "");
     const left = st.v.days == null ? "—"
@@ -1550,7 +1554,7 @@ window.fmtDMY = function fmtDMY(v) {
       <td class="sch-curname">
         <span class="sch-curinfo" title="${esc(tip)}">ⓘ</span>
         <span>${esc(it.name)}</span>
-        ${st.obligation ? `<span class="sch-curobl" title="${esc(OBL_WHY)}">obligation</span>` : ""}
+        ${st.obligation ? `<span class="sch-curobl" title="${esc(oblWhy(it.id))}">obligation</span>` : ""}
         ${st.v.warn ? `<span class="sch-curwarn" title="${esc(st.v.warn)}">⚠</span>` : ""}
       </td>
       <td class="sch-mono${st.v.days == null ? " sch-no" : ""}"${st.v.tip ? ` title="${esc(st.v.tip)}"` : ""}>${esc(st.v.text)}</td>
@@ -1608,8 +1612,9 @@ window.fmtDMY = function fmtDMY(v) {
           <p class="pv-p">Colour scale: expiring = a quarter of the window — at most ${CUR().AMBER_MAX_DAYS} days — or less remaining ·
             current = anything more · EXPIRED / never recorded = not current ·
             no counter = the 3-01 prints no validity. ≈ = project conversion of a printed period. ⚠ = printed contradiction.</p>
-          <p class="pv-p">Rows whose STATUS reads <b>recorded</b>, <b>overdue</b> or <b>—</b> are recorded obligations: the 3-01
-            prints no loss of availability for them, so they are tracked on this sheet but left out of the availability count above.</p>
+          <p class="pv-p">Rows whose STATUS reads <b>recorded</b>, <b>due soon</b>, <b>overdue</b> or <b>—</b> are recorded
+            obligations, left out of the availability count above — each is either printed with no availability loss,
+            scoped to the trainee rather than the serving instructor, or a one-off deadline / tenure / ΠΡ-module clock.</p>
         </div>
         <table class="pv-t"><thead><tr><th>ITEM</th><th>VALIDITY</th><th>LAST DONE</th><th>EXPIRES</th><th>DAYS LEFT</th><th>STATUS</th></tr></thead>
           <tbody>${body}</tbody></table>
@@ -2724,14 +2729,17 @@ window.fmtDMY = function fmtDMY(v) {
      manual entry). NOTHING auto-maps today — no sortie, no E-item, no
      exercise code is wired to any catalog row.
 
-   AVAILABILITY vs RECORDED OBLIGATIONS            (Round 10c — finding 1)
-     Not every dated row costs the instructor his availability. Thirteen of
-     them — see OBLIGATIONS below — are things the catalog itself says carry
-     no printed availability loss (unit conferences, a tenure clock, a
-     programme deadline, the ground seminars the 3-01 attaches no consequence
-     to, and the two TRAINEE-scoped rules). They keep their row and their row
-     colour, but they are OUT of the availability dot, out of "owes N" and
-     out of the header pill; the card counts them on their own line.
+   AVAILABILITY vs RECORDED OBLIGATIONS            (Round 10c/10d — finding 1)
+     Not every dated row costs the instructor his availability. Fifteen of
+     them — see OBLIGATIONS below — are things the catalog itself says do not
+     gate the serving instructor (unit conferences, a tenure clock, one-off
+     deadlines, the ΠΡ sortie interval that only exists inside a ΠΡ module,
+     the ground seminars the 3-01 attaches no consequence to, and the two
+     TRAINEE-scoped rules). Each id carries its own user-facing reason — a
+     blanket "no availability loss" sentence was proven wrong for the trainee
+     pair. They keep their row and their row colour, but they are OUT of the
+     availability dot, out of "owes N" and out of the header pill; the card
+     counts them on their own line.
 
    COLOUR SCALE — ONE rule, no exceptions       (Round 10c — finding 2)
      AMBER   days_left <= min(round(validity × 25%), 45)
@@ -2764,38 +2772,47 @@ window.fmtDMY = function fmtDMY(v) {
     { key: "other", label: "Other", kinds: ["other"], note: "" },
   ];
 
-  /* ── RECORDED OBLIGATIONS (Round 10c) ────────────────────────────────────
-     Rows that DO have a countable window but whose lapse costs the instructor
-     NO availability — the catalog says so itself, in the quoted line after
-     each id. They stay on the card, they stay editable and they keep their row
-     colour; they are excluded from the availability dot, from "owes N" and
-     from the header pill, and are tallied separately as obligations.
-     Curated by id (not by a keyword sniff) so the list stays auditable against
-     the catalog; every id is checked against it at load.                     */
-  const OBLIGATIONS = new Set([
+  /* ── RECORDED OBLIGATIONS (Round 10c; per-id reasons + 2 ids in 10d) ─────
+     Rows that DO have a countable window but that the catalog itself says do
+     not gate the SERVING instructor's availability. Each id carries its own
+     user-facing WHY — the R10b/10c verifiers proved a blanket "no availability
+     loss" sentence is factually wrong for the trainee-scoped pair. They stay
+     on the card, stay editable and keep their row colour; they are excluded
+     from the availability dot, from "owes N" and from the header pill, and
+     are tallied separately as obligations. Curated by id (not by a keyword
+     sniff) so the list stays auditable; every id is checked at load.        */
+  const W_NOLOSS = "the 3-01 prints no availability loss for it";
+  const W_TRAINEE = "it binds the trainee (εκπαιδευόμενος) in re-assignment training, not the serving instructor — §70 governs him";
+  const W_DEADLINE = "it is a one-off deadline / tenure clock, not a recurring currency";
+  const W_MODULE = "it applies only while a ΠΡ module is in progress — not a standing currency";
+  const OBLIGATIONS = new Map([
     /* the two unit/command conferences of Table 14 */
-    "cross-staff-visits-ata-day",      // «Not an individual currency — no lapse for the instructor.» + flag: «Should not drive a per-instructor colour scale.»
-    "squadron-commanders-conference",  // «Not an individual currency — no lapse for the instructor.» (commanders only)
-    /* a tenure clock and a programme deadline — neither is a currency */
-    "demo-pilot-tenure",               // «The post must be handed over.» + flag: «A tenure limit, not a currency; printed in years.»
-    "pr-programme-completion",         // «A completion deadline for the programme, not a recurring currency.»
+    ["cross-staff-visits-ata-day", W_NOLOSS],      // «Not an individual currency — no lapse for the instructor.» + flag: «Should not drive a per-instructor colour scale.»
+    ["squadron-commanders-conference", W_NOLOSS],  // «Not an individual currency — no lapse for the instructor.» (commanders only)
+    /* tenure clock and one-off deadlines — none is a recurring currency */
+    ["demo-pilot-tenure", W_DEADLINE],             // «The post must be handed over.» + flag: «A tenure limit, not a currency; printed in years.»
+    ["pr-programme-completion", W_DEADLINE],       // «A completion deadline for the programme, not a recurring currency.»
+    ["demo-reavailability-15-to-30-days", W_DEADLINE], // 10d — «Beyond 30 days this simplified route closes and the full §20 programme applies.» A restoration-route deadline, same nature as pr-programme-completion (R10c verify item 8).
+    /* ΠΡ-module scope — 10d, same argument the catalog itself makes */
+    ["pr-sortie-interval", W_MODULE],              // 10d — flag: «Applies only while a ΠΡ module is in progress — it is not a standing currency.» Was silently +1 on every instructor's "owes" (R10c verify item 8).
     /* administrative recurrences the 3-01 attaches no consequence to */
-    "body-weight-check",               // «No consequence is printed in the 3-01.» + flag: «not a currency the instructor holds … informational timer.»
-    "monthly-knowledge-exams",         // «No availability loss is printed in the 3-01.»
+    ["body-weight-check", W_NOLOSS],               // «No consequence is printed in the 3-01.» + flag: «not a currency the instructor holds … informational timer.»
+    ["monthly-knowledge-exams", W_NOLOSS],         // «No availability loss is printed in the 3-01.»
     /* the five ground seminars / trainings that print no availability loss.
        Π.ΠΔΟ and Tactics are NOT here: their lapse lines name §69δ(1)/(2) and
        Partially Combat Ready, so those two stay counted. */
-    "seminar-sea-survival",            // «No availability loss is printed in the 3-01.»
-    "training-egress-survival",        // «No availability loss is printed in the 3-01.»
-    "training-aircraft-re-servicing",  // «No availability loss is printed in the 3-01.»
-    "seminar-flight-physiology",       // «No availability loss is printed in the 3-01.»
-    "seminar-hpma-crm-orm",            // «No availability loss is printed in the 3-01.»
+    ["seminar-sea-survival", W_NOLOSS],            // «No availability loss is printed in the 3-01.»
+    ["training-egress-survival", W_NOLOSS],        // «No availability loss is printed in the 3-01.»
+    ["training-aircraft-re-servicing", W_NOLOSS],  // «No availability loss is printed in the 3-01.»
+    ["seminar-flight-physiology", W_NOLOSS],       // «No availability loss is printed in the 3-01.»
+    ["seminar-hpma-crm-orm", W_NOLOSS],            // «No availability loss is printed in the 3-01.»
     /* TRAINEE-scoped (ΜΕΤ/ΕΕΠ): they bite on an εκπαιδευόμενος in re-assignment
        training, not on a maintenance-stage instructor in normal service (§70). */
-    "trainee-20day-unscored-flight",   // flag: «SCOPE … applies to «εκπαιδευόμενοι» … in normal maintenance-stage service he is governed by §70».
-    "trainee-30day-type-availability-loss", // flag: «SCOPE … bites on a qualified instructor only while he is an εκπαιδευόμενος in re-assignment training».
+    ["trainee-20day-unscored-flight", W_TRAINEE],  // flag: «SCOPE … applies to «εκπαιδευόμενοι» … in normal maintenance-stage service he is governed by §70».
+    ["trainee-30day-type-availability-loss", W_TRAINEE], // flag: «SCOPE … bites on a qualified instructor only while he is an εκπαιδευόμενος in re-assignment training».
   ]);
   const isObligation = (id) => OBLIGATIONS.has(id);
+  const oblWhy = (id) => OBLIGATIONS.get(id) || "";
 
   /* ── PROJECT CONVERSIONS (catalog open flag 6) ───────────────────────────
      Table 14 and §§83/85/93 print their validity as a PERIOD WORD, never as
@@ -2873,7 +2890,7 @@ window.fmtDMY = function fmtDMY(v) {
       /* Round 10c — the obligation list is curated by hand against the catalog;
          if the catalog ever renames or drops an id, say so instead of silently
          counting the row back into the availability dot. */
-      for (const id of OBLIGATIONS) {
+      for (const id of OBLIGATIONS.keys()) {
         if (!C.byId.has(id)) console.warn("SchedCurrency: obligation id is not in the catalog — " + id);
       }
       return j;
@@ -3047,7 +3064,7 @@ window.fmtDMY = function fmtDMY(v) {
 
   window.SchedCurrency = {
     CAT_URL, COLL, GROUPS, PERIOD_CONV, CONV_LEGEND, CONTRA, OBLIGATIONS,
-    AMBER_FRACTION, AMBER_MAX_DAYS, amberAt, isObligation,
+    AMBER_FRACTION, AMBER_MAX_DAYS, amberAt, isObligation, oblWhy,
     load, loaded, error, items, groups, byId, stats,
     resolve, statusOf, summary,
     record, cellOf, dateOf, bump,
