@@ -2,9 +2,10 @@
 /* SchedStore — the Scheduler's persistence layer (Phase A of specs/scheduler-spec.md).
  *
  * MODEL
- *   Nine collections, each in its own localStorage key under the "p2r-sch-" prefix:
+ *   Ten collections, each in its own localStorage key under the "p2r-sch-" prefix:
  *     students · instructors · classes · trainingLog · availability · dutyRoster ·
- *     gates            → lists of records addressed by a per-collection key field
+ *     gates · instructorCurrency
+ *                      → lists of records addressed by a per-collection key field
  *     config           → one object
  *     dayPlans         → one map { "YYYY-MM-DD": plan }        (Phase B writes it)
  *
@@ -43,6 +44,10 @@
     availability: { type: "list", key: "id",   seed: "availability" },
     dutyRoster:   { type: "list", key: "date", seed: "duty_roster" },
     gates:        { type: "list", key: "id",   seed: "gates" },
+    /* Round 10b — one row per INSTRUCTOR OID:
+       { oid, items: { <catalog_item_id>: { last_date: "YYYY-MM-DD", src?, note? } }, updated_at }
+       Written only through SchedCurrency.bump() (scheduler.js § ③). */
+    instructorCurrency: { type: "list", key: "oid", seed: "instructor_currency" },
     config:       { type: "obj",  seed: "config" },
     dayPlans:     { type: "map",  seed: "day_plans" },
   };

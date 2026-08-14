@@ -1609,3 +1609,88 @@ html[data-mode="light"] .mc-leg i[style*="#9d8cff"] { background: var(--mc-8) !i
 .sch-pgoto-s { font-size: 10px; color: var(--warn); text-transform: uppercase; letter-spacing: .03em; }
 @keyframes schFlash { 0%, 60% { outline-color: rgba(var(--accent-rgb), .9); } 100% { outline-color: transparent; } }
 #sch-progbody .is-flash { outline: 2px solid transparent; outline-offset: 2px; animation: schFlash 1.8s ease-out; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ROUND 10b — INSTRUCTOR CURRENCY CARD
+   Tokens only (--good / --warn / --bad / --muted), so every one of the eight
+   palettes and both modes get it for free, and the print block that flattens
+   the palette to black-on-white already covers the printed sheet.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* the one status dot — roster row, card header legend and every table row */
+.sch-cdot {
+  display: inline-block; width: 9px; height: 9px; border-radius: 50%;
+  flex: 0 0 auto; vertical-align: middle;
+  border: 1px solid var(--line); background: var(--muted); opacity: 0.5;
+}
+.sch-cdot.st-ok { background: var(--good); border-color: var(--good); opacity: 1; }
+.sch-cdot.st-expiring { background: var(--warn); border-color: var(--warn); opacity: 1; }
+.sch-cdot.st-expired, .sch-cdot.st-never { background: var(--bad); border-color: var(--bad); opacity: 1; }
+.sch-cdot.st-neutral { background: transparent; }
+
+.sch-badge.cur-expired { color: var(--bad); border-color: var(--bad); }
+.sch-badge.cur-expiring { color: var(--warn); border-color: var(--warn); }
+
+/* card head — pill · counters · experienced toggle · print / close */
+.sch-curcard { gap: 7px; }
+.sch-curhead { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.sch-curpill {
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px;
+  border: 1px solid var(--line); border-radius: 999px; padding: 2px 11px; color: var(--muted);
+}
+.sch-curpill.st-ok { color: var(--good); border-color: var(--good); background: rgba(var(--good-rgb), 0.08); }
+.sch-curpill.st-expiring { color: var(--warn); border-color: var(--warn); background: rgba(var(--warn-rgb), 0.08); }
+.sch-curpill.st-expired { color: var(--bad); border-color: var(--bad); background: rgba(var(--bad-rgb), 0.08); }
+.sch-curexp {
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+  border: 1px solid var(--line); border-radius: 999px; padding: 2px 11px 2px 8px;
+  font-size: 11.5px; color: var(--text); background: var(--panel-2);
+}
+.sch-curexp:hover { border-color: var(--accent); }
+.sch-curexp input { margin: 0; }
+.sch-curlegend { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; font-size: 11.5px; }
+
+/* the owed / expiring shortcut chips — click jumps to the row and flashes it */
+.sch-curowed { display: flex; flex-wrap: wrap; gap: 5px; }
+.sch-curowed .sch-pgoto { font-family: inherit; font-size: 11.5px; padding: 2px 10px; }
+
+/* the table */
+.sch-curscroll { max-height: 52vh; }
+.sch-curtbl { font-size: 12px; }
+.sch-curtbl td { vertical-align: middle; }
+.sch-curtbl tr.sch-curgrp > td {
+  background: var(--panel); position: sticky; top: 26px; z-index: 1;
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--accent);
+  font-weight: 700; padding-top: 9px;
+}
+.sch-curgnote { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--muted); margin-left: 8px; }
+.sch-curname { display: flex; align-items: baseline; gap: 6px; min-width: 250px; }
+.sch-curinfo { color: var(--accent); cursor: help; font-size: 11px; flex: 0 0 auto; }
+.sch-curwarn { color: var(--warn); cursor: help; flex: 0 0 auto; }
+.sch-curdate { width: 138px; padding: 3px 6px; font-size: 12px; }
+.sch-curtbl .cur-left { white-space: nowrap; }
+.sch-curtbl tr.cur-expired .cur-left, .sch-curtbl tr.cur-never .cur-left { color: var(--bad); font-weight: 700; }
+.sch-curtbl tr.cur-expiring .cur-left { color: var(--warn); font-weight: 700; }
+.sch-curtbl tr.cur-ok .cur-left { color: var(--good); }
+.sch-curtbl tr.cur-neutral td { color: var(--muted); }
+.sch-curtbl tr.cur-expired { background: rgba(var(--bad-rgb), 0.06); }
+.sch-curtbl tr.cur-never { background: rgba(var(--bad-rgb), 0.03); }
+.sch-curtbl tr.cur-expiring { background: rgba(var(--warn-rgb), 0.05); }
+.sch-curtbl tr.is-flash { outline: 2px solid transparent; outline-offset: -2px; animation: schFlash 1.8s ease-out; }
+
+@media (max-width: 900px) {
+  .sch-curname { min-width: 160px; }
+  .sch-curdate { width: 122px; }
+}
+
+/* The supported path to paper is the card's 🖨 Print button (the #sch-print
+   sheet, which says the status in words). A plain Ctrl+P of the open card
+   still has to be readable, and the print block flattens every colour token
+   to black — so the dot falls back to a SHAPE. */
+@media print {
+  .sch-cdot { background: #ffffff !important; border: 1.5px solid #000000 !important; opacity: 1 !important; }
+  .sch-cdot.st-expired, .sch-cdot.st-never { background: #000000 !important; }
+  .sch-cdot.st-expiring { background: #ffffff !important; box-shadow: inset 0 -4px 0 #000000; }
+  .sch-cdot.st-neutral { border-style: dotted !important; }
+  .sch-curscroll { max-height: none !important; overflow: visible !important; }
+}

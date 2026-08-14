@@ -1009,6 +1009,7 @@ window.fmtDMY = function fmtDMY(v) {
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ESC[c]);
   const S = () => window.SchedStore;
   const R = () => window.SchedReady;
+  const CUR = () => window.SchedCurrency;              // Round 10b — § ③
 
   const PANES = ["board", "roster", "log", "balance"];
   const STATUS_OPTS = ["active", "hold", "kepe", "withdrawn"];
@@ -1056,7 +1057,11 @@ window.fmtDMY = function fmtDMY(v) {
 
   const ui = {
     booted: false, pane: "board",
-    roster: { editS: null, editI: null, addS: false, addI: false, availDate: "", q: "" },
+    /* Round 10b — curI is the instructor whose CURRENCY CARD is open. It uses
+       the same one-row-at-a-time expansion as editI (a row shows the edit form
+       OR the card, never both) and `curFocus` puts the caret back on the date
+       input the store event just re-rendered away under the user's hands. */
+    roster: { editS: null, editI: null, addS: false, addI: false, availDate: "", q: "", curI: null, curFocus: "" },
     log: { f: { student: "", kind: "", from: "", to: "", q: "" }, form: null, nodeQ: "", open: false, nfsSuggest: null },
   };
 
@@ -1097,6 +1102,9 @@ window.fmtDMY = function fmtDMY(v) {
       await S().ready();
       await R().load();
       P().ensure();                       // every person gets a stable OID
+      /* Round 10b — the expiring-items catalog. Never fatal: SchedCurrency
+         swallows its own fetch error and the Roster simply shows no dots. */
+      await CUR().load();
     } catch (e) {
       const msg = `<div class="sch-ph"><strong>Scheduler data could not be loaded.</strong>
         <p>${esc(e.message)}${S().seedError() ? " · " + esc(S().seedError()) : ""}</p>
@@ -1168,6 +1176,7 @@ window.fmtDMY = function fmtDMY(v) {
     || rosterMatch([s.code, s.class, s.notes, s.status, P().ipCode(s.primary_ip),
       s.first_name, s.last_name, s.mn, s.rank]));
   const fInstructors = () => instructors().filter((i) => ui.roster.editI === i.code
+    || ui.roster.curI === i.code
     || rosterMatch([i.code, i.notes, i.first_name, i.last_name, i.mn, i.rank, i.callsign, i.status,
       i.country, i.duty, i.leadership, i.test_pilot ? "TP test pilot" : ""]));
 
@@ -1211,6 +1220,18 @@ window.fmtDMY = function fmtDMY(v) {
         <div id="sch-avgrid">${availGrid()}</div>
       </section>`;
     wireRoster(el);
+    restoreCurFocus(el);
+  }
+
+  /* Round 10b — a currency date is stored on `change`, the store event repaints
+     the whole pane, and the input the user was standing on disappears with it.
+     The item id is a plain kebab-case slug, so the attribute selector is safe. */
+  function restoreCurFocus(el) {
+    const id = ui.roster.curFocus;
+    ui.roster.curFocus = "";
+    if (!id) return;
+    const inp = el.querySelector(`[data-curdate="${id}"]`);
+    if (inp) inp.focus();
   }
 
   /* IP reference pickers — the OPTION VALUE is the instructor OID (spec §2:
@@ -1374,11 +1395,12 @@ window.fmtDMY = function fmtDMY(v) {
 
   function ipRow(i) {
     const exp = ui.roster.editI === i.code;
+    const cur = ui.roster.curI === i.code;
     const q = i.quals || {}, d = i.duty_eligible || {};
     const dep = (i.status || "active") === "departed";
     const idle = R().idleDays(i.code, today());
     const qb = (t, title) => `<span class="sch-badge" title="${esc(title || t)}">${esc(t)}</span>`;
-    return `<div class="sch-rrow${exp ? " is-exp" : ""}${dep ? " is-dep" : ""}">
+    return `<div class="sch-rrow${exp || cur ? " is-exp" : ""}${dep ? " is-dep" : ""}">
       <div class="sch-rsum" data-act="exp-i" data-id="${esc(i.code)}" role="button" tabindex="0"
            title="click to ${exp ? "close" : "open"} the full form">
         <span class="sch-rarrow">${exp ? "▾" : "▸"}</span>
@@ -1391,14 +1413,185 @@ window.fmtDMY = function fmtDMY(v) {
         ${i.duty ? qb(i.duty, "duty — from the global roster") : ""}
         ${i.leadership ? qb(i.leadership, "leadership qualification — from the global roster") : ""}
         ${dep ? `<span class="sch-badge st-withdrawn" title="departed — excluded from every picker, kept in Balance history">DEPARTED</span>` : ""}
+        ${i.experienced ? qb("ΕΜΠ", "experienced flyer (Annex B §17) — the card reads the ΕΜΠ validity column") : ""}
         ${q.night ? qb("☾", "night qualified") : ""}${q.evaluator ? qb("EVAL", "evaluator — checkrides") : ""}
         ${q.ground ? qb("GND", "ground instructor") : ""}${q.rsu_solo ? qb("RSU-solo", "RSU-during-solo qualification — the RSU A/B duty pickers filter on this") : ""}
         ${d.SOF ? qb("SOF", "duty eligible — Supervisor of Flying") : ""}${d.RSU ? qb("RSU", "duty eligible — Runway Supervisory Unit (compatibility)") : ""}
         ${idle == null ? "" : `<span class="sch-nd" title="working days since the last recorded event">${idle}d</span>`}
         <span class="sch-spacer"></span>
+        ${currencyTag(i)}
+        <button type="button" class="sch-mini" data-act="cur-i" data-id="${esc(i.code)}"
+                title="Currency — everything that expires for this instructor under the 3-01">${cur ? "▾" : "▸"} Currency</button>
       </div>
-      ${exp ? ipForm(i, false) : ""}
+      ${exp ? ipForm(i, false) : cur ? currencyCard(i) : ""}
     </div>`;
+  }
+
+  /* ══ CURRENCY CARD (Round 10b) ═══════════════════════════════════════════
+     The card is a ROW EXPANSION, exactly like the edit form: one open at a
+     time, no modal, no scroll lock. Everything it shows is computed by
+     window.SchedCurrency (§ ③) out of the catalog and ONE stored date per
+     item; the only thing this code owns is the HTML.                       */
+  const CUR_STATE_TXT = {
+    ok: "current", expiring: "expiring", expired: "EXPIRED",
+    never: "never recorded", neutral: "no counter",
+  };
+
+  /* the roster-row aggregate: one dot + an "owes N" chip */
+  function currencyTag(i) {
+    if (!CUR().loaded() || !i.oid) return "";
+    const s = CUR().summary(i.oid, !!i.experienced);
+    const tip = s.owes
+      ? "currency — NOT current: " + s.owes + " item" + (s.owes === 1 ? "" : "s") + " expired or never recorded"
+      : s.expiring
+        ? "currency — available, " + s.expiring + " item" + (s.expiring === 1 ? "" : "s") + " expiring"
+        : "currency — available: " + s.counted + " counted items all in date";
+    return `<span class="sch-cdot st-${esc(s.state)}" title="${esc(tip)}"></span>`
+      + (s.owes ? `<span class="sch-badge cur-expired" title="${esc(tip)}">owes ${s.owes}</span>` : "")
+      + (!s.owes && s.expiring ? `<span class="sch-badge cur-expiring" title="${esc(tip)}">exp ${s.expiring}</span>` : "");
+  }
+
+  function currencyCard(i) {
+    if (!CUR().loaded()) {
+      return `<div class="sch-rform"><p class="sch-hint">The expiring-items catalog could not be read
+        — expected <code>${esc(CUR().CAT_URL)}</code>.${CUR().error() ? " " + esc(CUR().error()) : ""}</p></div>`;
+    }
+    if (!i.oid) {
+      return `<div class="sch-rform"><p class="sch-hint">This instructor has no OID yet — the currency
+        record is addressed by OID. Open the form and save the row once.</p></div>`;
+    }
+    const exp = !!i.experienced;
+    const s = CUR().summary(i.oid, exp);
+    const pill = s.owes ? { c: "expired", t: "NOT current: " + s.owes + " item" + (s.owes === 1 ? "" : "s") }
+      : s.expiring ? { c: "expiring", t: "Expiring: " + s.expiring }
+        : { c: "ok", t: "Available" };
+    const chip = (st) => `<button type="button" class="sch-pgoto" data-act="cur-goto" data-id="${esc(st.item.id)}"
+      title="${esc(st.item.name)} — ${esc(CUR_STATE_TXT[st.state])}. Click to jump to the row.">${esc(shortName(st.item))}
+      <span class="sch-pgoto-s">${esc(st.state === "never" ? "no date" : st.left + "d")}</span></button>`;
+    const owed = s.red.concat(s.amber);
+    return `<div class="sch-rform sch-curcard" data-oid="${esc(i.oid || "")}">
+      <div class="sch-curhead">
+        <span class="sch-curpill st-${pill.c}">${esc(pill.t)}</span>
+        <span class="sch-nd" title="items with a validity that can be counted / items the 3-01 gives no counter for">${s.counted} counted · ${s.neutral} no counter</span>
+        <label class="sch-curexp" title="Annex B §17 — an EXPERIENCED (ΕΜΠ) flyer reads the ΕΜΠ validity column, an inexperienced (ΑΠ) one the ΑΠ column. Saved on the instructor; switching it recomputes the whole card.">
+          <input type="checkbox" data-curexp="1"${exp ? " checked" : ""}>
+          <span>Experienced (ΕΜΠ)</span></label>
+        <span class="sch-spacer"></span>
+        <button type="button" class="sch-btn" data-act="cur-print" data-id="${esc(i.code)}"
+                title="one instructor per page, plain monochrome table for the squadron binder">🖨 Print</button>
+        <button type="button" class="sch-btn" data-act="cur-close">✕ Close</button>
+      </div>
+      <p class="sch-hint sch-curlegend">
+        <span class="sch-cdot st-ok"></span> more than 25% of the validity left <b>and</b> more than 14 days ·
+        <span class="sch-cdot st-expiring"></span> 25% or less, or 14 days or less ·
+        <span class="sch-cdot st-expired"></span> expired or never recorded ·
+        <span class="sch-cdot st-neutral"></span> no counter (no limit · set outside the 3-01 · n/a).
+        <b>≈</b> project conversion of a printed period (${esc(CUR().CONV_LEGEND)}) · <b>⚠</b> a printed contradiction — hover it.
+      </p>
+      ${owed.length ? `<div class="sch-curowed">${owed.map(chip).join("")}</div>` : ""}
+      <div class="sch-scroll sch-curscroll">
+        <table class="sch-tbl sch-curtbl">
+          <thead><tr><th>Item</th><th>Validity</th><th>Last done</th><th>Expires</th><th>Days left</th><th>Status</th></tr></thead>
+          <tbody>${CUR().groups().map((g) => curGroupHtml(g, i.oid, exp)).join("")}</tbody>
+        </table>
+      </div>
+      <p class="sch-hint">Dates are the source of truth and are typed here by hand — nothing is filled in from the
+        training log yet. Source: <code>${esc(CUR().CAT_URL)}</code> · 3-01/2025 ΔΑΕ.</p>
+    </div>`;
+  }
+
+  /* the printed name is long ("Ε-45 — Visual delivery, medium/high apex, day");
+     the chips and the print sheet want the head of it */
+  function shortName(it) {
+    const n = String(it.name || it.id);
+    const cut = n.split(" — ")[0];
+    return cut.length > 26 ? cut.slice(0, 25) + "…" : cut;
+  }
+
+  function curGroupHtml(g, oid, exp) {
+    const rows = g.items.map((it) => curRowHtml(it, oid, exp)).join("");
+    return `<tr class="sch-curgrp"><td colspan="6">${esc(g.label)}
+      <span class="sch-nd">${g.items.length}</span>
+      ${g.note ? `<span class="sch-curgnote">${esc(g.note)}</span>` : ""}</td></tr>` + rows;
+  }
+
+  function curRowHtml(it, oid, exp) {
+    const st = CUR().statusOf(oid, it, exp);
+    const src = it.source || {};
+    const tip = String(it.lapse_consequence || "—") + "\n\nIf it lapses — see " + (src.ref || "3-01")
+      + (src.page_pdf ? " · PDF p." + src.page_pdf : "");
+    const left = st.v.days == null ? "—"
+      : st.state === "never" ? "no date"
+        : (st.left > 0 ? "+" : "") + st.left + " d";
+    return `<tr class="cur-${esc(st.state)}" data-currow="${esc(it.id)}">
+      <td class="sch-curname">
+        <span class="sch-curinfo" title="${esc(tip)}">ⓘ</span>
+        <span>${esc(it.name)}</span>
+        ${st.v.warn ? `<span class="sch-curwarn" title="${esc(st.v.warn)}">⚠</span>` : ""}
+      </td>
+      <td class="sch-mono${st.v.days == null ? " sch-no" : ""}"${st.v.tip ? ` title="${esc(st.v.tip)}"` : ""}>${esc(st.v.text)}</td>
+      <td><input type="date" class="sch-in sch-curdate" data-curdate="${esc(it.id)}" value="${esc(st.last)}"
+                 title="last done — empty means never recorded"></td>
+      <td class="sch-mono">${st.expires ? esc(window.fmtDMY(st.expires)) : "—"}</td>
+      <td class="sch-mono cur-left">${esc(left)}</td>
+      <td><span class="sch-cdot st-${esc(st.state)}" title="${esc(CUR_STATE_TXT[st.state])}"></span></td>
+    </tr>`;
+  }
+
+  /* ── the squadron binder sheet: ONE instructor per page, plain monochrome
+     table, no colour to read. Reuses the board's #sch-print host and its
+     print stylesheet, so the palette is forced to black on white.        */
+  function printCurrency(code) {
+    const i = S().find("instructors", code);
+    if (!i || !CUR().loaded()) { S().toast("Nothing to print — the catalog is not loaded.", "bad"); return; }
+    const exp = !!i.experienced;
+    const s = CUR().summary(i.oid, exp);
+    const row = (it) => {
+      const st = CUR().statusOf(i.oid, it, exp);
+      const left = st.v.days == null ? "—" : st.state === "never" ? "—" : (st.left > 0 ? "+" : "") + st.left;
+      return `<tr><td>${esc(it.name)}${st.v.warn ? " ⚠" : ""}</td>
+        <td>${esc(st.v.text)}</td>
+        <td>${st.last ? esc(window.fmtDMY(st.last)) : "—"}</td>
+        <td>${st.expires ? esc(window.fmtDMY(st.expires)) : "—"}</td>
+        <td>${esc(left)}</td>
+        <td>${esc(CUR_STATE_TXT[st.state])}</td></tr>`;
+    };
+    const body = CUR().groups().map((g) =>
+      `<tr><th colspan="6">${esc(g.label.toUpperCase())}</th></tr>` + g.items.map(row).join("")).join("");
+    const old = $id("sch-print");
+    if (old) old.remove();
+    const host = document.createElement("div");
+    host.id = "sch-print";
+    host.innerHTML = `<div class="pv-bar">
+        <button type="button" class="sch-btn" data-pv="close">✕ Close</button>
+        <button type="button" class="sch-btn primary" data-pv="print">🖨 Print</button>
+        <span class="sch-hint">the printed sheet drops this bar and the app chrome</span>
+      </div>
+      <div class="pv-page">
+        <div class="pv-top">
+          <h2>INSTRUCTOR CURRENCY</h2>
+          <p class="pv-p"><b>${esc(i.code)}</b> ${esc(i.rank || "")} ${esc((i.last_name || "") + (i.first_name ? ", " + i.first_name : ""))}
+            ${i.callsign ? " · " + esc(i.callsign) : ""}${i.country ? " · " + esc(i.country) : ""}</p>
+          <p class="pv-p">Experience level <b>${exp ? "EXPERIENCED (ΕΜΠ)" : "INEXPERIENCED (ΑΠ)"}</b>
+            · printed <b>${esc(window.fmtDMY(CUR().todayISO()))}</b></p>
+          <p class="pv-p">${s.owes ? "<b>NOT CURRENT — " + s.owes + " item" + (s.owes === 1 ? "" : "s") + " expired or never recorded.</b>"
+            : s.expiring ? "<b>Available</b> — " + s.expiring + " item" + (s.expiring === 1 ? "" : "s") + " expiring."
+              : "<b>Available</b> — all " + s.counted + " counted items in date."}</p>
+          <p class="pv-p">Colour scale: current = more than 25% of the validity left and more than 14 days ·
+            expiring = 25% or less, or 14 days or less · EXPIRED / never recorded = not current ·
+            no counter = the 3-01 prints no validity. ≈ = project conversion of a printed period. ⚠ = printed contradiction.</p>
+        </div>
+        <table class="pv-t"><thead><tr><th>ITEM</th><th>VALIDITY</th><th>LAST DONE</th><th>EXPIRES</th><th>DAYS LEFT</th><th>STATUS</th></tr></thead>
+          <tbody>${body}</tbody></table>
+      </div>`;
+    document.body.appendChild(host);
+    document.documentElement.classList.add("sch-printing");
+    host.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-pv]");
+      if (!b) return;
+      if (b.dataset.pv === "close") { host.remove(); document.documentElement.classList.remove("sch-printing"); }
+      else window.print();
+    });
   }
 
   function ipForm(i, isNew) {
@@ -1490,6 +1683,22 @@ window.fmtDMY = function fmtDMY(v) {
         else f.value = "";
         return;
       }
+      /* Round 10b — the currency card writes STRAIGHT THROUGH: every date is
+         stored the moment it changes (no Save button on this card), and the
+         store event repaints the row, the aggregates and the roster dot. */
+      const cd = e.target.closest ? e.target.closest("[data-curdate]") : null;
+      if (cd) {
+        const card = cd.closest(".sch-curcard");
+        if (!card) return;
+        ui.roster.curFocus = cd.dataset.curdate;        // put the caret back after the repaint
+        CUR().bump(card.dataset.oid, cd.dataset.curdate, cd.value, "manual");
+        return;
+      }
+      if (e.target.matches && e.target.matches("[data-curexp]")) {
+        const ip = S().find("instructors", ui.roster.curI);
+        if (ip) S().upsert("instructors", { code: ip.code, experienced: !!e.target.checked });
+        return;
+      }
       if (e.target.id !== "sch-avdate") return;
       ui.roster.availDate = e.target.value;
       $id("sch-avgrid").innerHTML = availGrid();
@@ -1529,13 +1738,30 @@ window.fmtDMY = function fmtDMY(v) {
       if (!b) return;
       const act = b.dataset.act, id = b.dataset.id;
       if (act === "imp-roster") { const f = $id("sch-rosterfile"); if (f) f.click(); return; }
+      /* Round 10b — currency card */
+      if (act === "cur-i") {
+        ui.roster.curI = ui.roster.curI === id ? null : id;
+        ui.roster.editI = null; ui.roster.editS = null; ui.roster.addI = false; ui.roster.addS = false;
+        renderRoster(); return;
+      }
+      if (act === "cur-close") { ui.roster.curI = null; renderRoster(); return; }
+      if (act === "cur-print") { printCurrency(id); return; }
+      if (act === "cur-goto") {
+        const row = b.closest(".sch-curcard").querySelector(`[data-currow="${id}"]`);
+        if (!row) return;
+        row.scrollIntoView({ block: "center", behavior: "smooth" });
+        row.classList.remove("is-flash");
+        void row.offsetWidth;                            // restart the animation
+        row.classList.add("is-flash");
+        return;
+      }
       if (act === "prog-s") {
         if (window.schProgressOpen) window.schProgressOpen(id);
         else S().toast("The progress editor arrives with Phase B.", "bad");
       } else if (act === "add-s") { ui.roster.addS = true; ui.roster.editS = null; renderRoster(); }
       else if (act === "add-i") { ui.roster.addI = true; ui.roster.editI = null; renderRoster(); }
       else if (act === "exp-s") { ui.roster.editS = ui.roster.editS === id ? null : id; ui.roster.editI = null; ui.roster.addS = false; renderRoster(); }
-      else if (act === "exp-i") { ui.roster.editI = ui.roster.editI === id ? null : id; ui.roster.editS = null; ui.roster.addI = false; renderRoster(); }
+      else if (act === "exp-i") { ui.roster.editI = ui.roster.editI === id ? null : id; ui.roster.editS = null; ui.roster.addI = false; ui.roster.curI = null; renderRoster(); }
       else if (act === "cancel") { ui.roster.editS = ui.roster.editI = null; ui.roster.addS = ui.roster.addI = false; renderRoster(); }
       else if (act === "save-s") saveStudent(b.closest(".sch-rform"));
       else if (act === "save-i") saveInstructor(b.closest(".sch-rform"));
@@ -2447,4 +2673,275 @@ window.fmtDMY = function fmtDMY(v) {
     S().remove("trainingLog", id);
     S().toast("Entry deleted.", "good");
   }
+})();
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ③ INSTRUCTOR CURRENCY — window.SchedCurrency          (Round 10b)
+   ══════════════════════════════════════════════════════════════════════════
+   WHAT IT IS
+     Everything that EXPIRES for a T-6A instructor under the 3-01/2025 ΔΑΕ,
+     read from the referee-verified catalog
+     data/requirements/instructor_currency.json (91 items; its header carries
+     the two-pass agreement stats). This module resolves each catalog item
+     against ONE instructor's experience level and ONE recorded date and hands
+     the UI a status. It computes; it never guesses at the source.
+
+   THE ONE WRITE SEAM
+     bump(oid, item_id, date, src) is the ONLY way a date is written. Today
+     the Currency card calls it with src="manual"; a future flight-logging
+     pass can call it with src="log:<event id>" and the manual date stays the
+     truth (an automatic source may only move a date FORWARD and never over a
+     manual entry). NOTHING auto-maps today — no sortie, no E-item, no
+     exercise code is wired to any catalog row.
+
+   COLOUR SCALE (the legend line inside the card says the same thing)
+     GREEN   more than 25% of the validity left AND more than 14 days left
+     AMBER   25% or less left, or 14 days or less left
+     RED     expired, or never recorded
+     GREY    no validity to count (no limit · set outside the 3-01 · n/a)
+     The absolute 14-day guard applies only to windows LONGER than 14 days —
+     a 10-day window would otherwise be amber from the day it is flown.
+     ══════════════════════════════════════════════════════════════════════ */
+(() => {
+  const CAT_URL = "../data/requirements/instructor_currency.json";
+  const COLL = "instructorCurrency";
+  const S = () => window.SchedStore;
+
+  const AMBER_DAYS = 14;          // absolute guard   (windows > 14 days only)
+  const AMBER_FRACTION = 0.25;    // proportional guard
+
+  /* the five groups of the card, in card order; every catalog kind maps here */
+  const GROUPS = [
+    { key: "landing", label: "Landings", kinds: ["landing"], note: "" },
+    { key: "sim", label: "SIM / F-S", kinds: ["sim", "s-category"],
+      note: "semester QUOTAS (sorties per semester), not rolling windows — the date is recorded, nothing counts down" },
+    { key: "recency", label: "Recency", kinds: ["recency"], note: "" },
+    { key: "e-item", label: "E-items", kinds: ["e-item"], note: "" },
+    { key: "other", label: "Other", kinds: ["other"], note: "" },
+  ];
+
+  /* ── PROJECT CONVERSIONS (catalog open flag 6) ───────────────────────────
+     Table 14 and §§83/85/93 print their validity as a PERIOD WORD, never as
+     a day count, and the catalog deliberately refused to infer one. The
+     colour scale needs a number, so the project converts — pragmatically,
+     visibly (every converted row is marked ≈) and ONLY where the printed
+     period really is a validity window. Rows whose printed period is a QUOTA
+     (s-* / sim-* — "1 sortie per semester"), a THRESHOLD (abstention up to 2
+     years) or a definition are NOT converted: they stay grey. Keyed by item
+     id so the list stays auditable against the catalog.                    */
+  const PERIOD_CONV = {
+    "seminar-pdo": 365,                    // Ετήσια
+    "seminar-tactics": 365,                // Ετήσια
+    "seminar-sea-survival": 365,           // Ετήσια
+    "seminar-hpma-crm-orm": 365,           // Ετήσια · §93 «ισχύ ένα έτος»
+    "training-aircraft-re-servicing": 365, // Ετήσια · §83 «μία φορά ανά έτος»
+    "training-egress-survival": 92,        // Τριμηνιαία · §82 «κάθε 3 μήνες»
+    "seminar-flight-physiology": 1095,     // 3-ετής · §85 «ισχύ για 3 έτη»
+    "monthly-knowledge-exams": 30,         // Μηνιαίες εξετάσεις
+    "body-weight-check": 122,              // κάθε 4 μήνες
+    "cross-staff-visits-ata-day": 365,     // Ετήσια
+    "squadron-commanders-conference": 365, // Ετήσια
+    "demo-pilot-tenure": 730,              // 2 έτη (παράταση σε 3)
+    "pr-programme-completion": 213,        // εντός 7 μηνών
+  };
+  const CONV_LEGEND = "annual 365 · semi-annual 183 · quarterly 92 · monthly 30 · "
+    + "4-monthly 122 · 7-month 213 · 2-year 730 · 3-year 1095";
+  const CONV_TIP = "≈ project conversion of the printed period — pending unit ruling. Printed: ";
+
+  /* ── THE KNOWN CONTRADICTIONS (catalog open flags 1 and 7) ───────────────
+     The stricter reading is applied and the row carries a ⚠ naming BOTH
+     printed figures. Nothing is hidden and nothing is silently averaged.  */
+  const CONTRA = {
+    "type-availability-loss": {
+      experienced: 180,
+      note: "§70 prints 180 days for an inexperienced flyer and «πάνω από 1 έτος» (≈365) for an "
+        + "experienced one INSIDE THE SAME PARAGRAPH — a units mismatch. The stricter 180-day "
+        + "reading is applied to both levels. Unit ruling needed.",
+    },
+    "in-cloud-recency-60d": {
+      note: "The 60-day window agrees in both places, but EVENTS note (1) (PDF 107) asks for 2 × Ε-4 "
+        + "inside it while Ch.8 §54γ (PDF 155) asks for 3 for the very same permission. The stricter "
+        + "reading (3 × Ε-4) is the one to fly. Unit ruling needed.",
+    },
+    "e-3-in-cloud-flight": {
+      note: "Tied to the 2-versus-3 Ε-4 contradiction on the in-cloud recency row: EVENTS note (1) "
+        + "asks for 2 × Ε-4 in 60 days, Ch.8 §54γ for 3. Unit ruling needed.",
+    },
+  };
+
+  const EXTERNAL_TIP = "Validity set by KPA Β-6/ΓΕΑ — outside the 3-01. The date is recorded here, "
+    + "but nothing counts down: this document prints no period.";
+  const NA_TIP = "The ΑΠ column prints «--», which the 3-01 nowhere defines and which is NOT the "
+    + "blank that §48γ maps to «availability retained for ever». Read literally it marks "
+    + "non-applicability for an inexperienced flyer. Unit ruling needed — nothing is counted.";
+
+  /* ── catalog ────────────────────────────────────────────────────────────── */
+  const C = { cat: null, loadP: null, byId: new Map(), groups: [], err: "" };
+
+  function load() {
+    if (!C.loadP) C.loadP = fetchCat();
+    return C.loadP;
+  }
+  async function fetchCat() {
+    try {
+      const r = await fetch(CAT_URL, { cache: "no-store" });
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      const j = await r.json();
+      if (!j || !Array.isArray(j.items)) throw new Error("no items[] inside");
+      C.cat = j;
+      for (const it of j.items) C.byId.set(it.id, it);
+      C.groups = GROUPS.map((g) => Object.assign({}, g, {
+        items: j.items.filter((it) => g.kinds.indexOf(it.kind) >= 0),
+      })).filter((g) => g.items.length);
+      return j;
+    } catch (e) {
+      C.err = "instructor_currency.json — " + e.message;
+      console.warn("SchedCurrency: " + C.err);
+      return null;
+    }
+  }
+  const loaded = () => !!C.cat;
+  const items = () => (C.cat ? C.cat.items : []);
+  const groups = () => C.groups;
+  const byId = (id) => C.byId.get(id) || null;
+  const stats = () => (C.cat && C.cat.agreement_stats) || null;
+  const error = () => C.err;
+
+  const isExternal = (it) => (it.flags || []).some((f) => String(f).indexOf("EXTERNAL VALIDITY") === 0);
+
+  /* ── the resolution: ONE catalog item + ONE experience level → a window ──
+     mode  exact    a day count printed in the 3-01           → counted
+           approx   a printed period converted by the project → counted, ≈
+           external validity lives in KPA Β-6/ΓΕΑ             → grey
+           na       the ΑΠ column prints «--»                 → grey, ⚠
+           none     no validity printed at all (§48γ blank)   → grey          */
+  function resolve(it, experienced) {
+    const lvl = experienced ? "experienced" : "inexperienced";
+    const v = it.validity_days || {};
+    const c = CONTRA[it.id] || null;
+    const warn = c ? c.note : "";
+    if (isExternal(it)) {
+      return { days: null, mode: "external", warn: warn, tip: EXTERNAL_TIP, text: "set by KPA Β-6/ΓΕΑ" };
+    }
+    if (c && typeof c[lvl] === "number") {
+      return { days: c[lvl], mode: "exact", warn: warn, tip: "", text: c[lvl] + " d" };
+    }
+    if (v[lvl + "_printed"] === "--") {
+      return { days: null, mode: "na", warn: NA_TIP, tip: NA_TIP, text: "n/a («--»)" };
+    }
+    if (typeof v[lvl] === "number") {
+      return { days: v[lvl], mode: "exact", warn: warn, tip: "", text: v[lvl] + " d" };
+    }
+    if (typeof PERIOD_CONV[it.id] === "number") {
+      const d = PERIOD_CONV[it.id];
+      return { days: d, mode: "approx", warn: warn,
+        tip: CONV_TIP + (v.printed_period || "—"), text: "≈ " + d + " d" };
+    }
+    /* a printed period that was deliberately NOT converted is a quota, a
+       threshold or a definition — say so instead of calling it "no limit" */
+    if (v.printed_period) {
+      return { days: null, mode: "none", warn: warn, text: "— not a window",
+        tip: "The 3-01 prints: " + v.printed_period + "\n\nThat is not a rolling validity window (it is a "
+          + "per-semester quota, a threshold or a definition), so nothing is counted down. The date is "
+          + "still recorded here." };
+    }
+    return { days: null, mode: "none", warn: warn, text: "— no limit",
+      tip: "No validity is printed. Under §48γ a blank validity cell means the availability is retained "
+        + "for ever once held." };
+  }
+
+  /* ── dates ──────────────────────────────────────────────────────────────── */
+  const ISO_RE = /^\d{4}-\d{2}-\d{2}$/;
+  const normISO = (v) => { const s = String(v == null ? "" : v).slice(0, 10); return ISO_RE.test(s) ? s : ""; };
+  /* UTC midnight everywhere: no DST hour can ever shift a day count */
+  const utc = (iso) => Date.UTC(+iso.slice(0, 4), +iso.slice(5, 7) - 1, +iso.slice(8, 10));
+  const DAY = 86400000;
+  const addDays = (iso, n) => new Date(utc(iso) + n * DAY).toISOString().slice(0, 10);
+  const daysBetween = (a, b) => Math.round((utc(b) - utc(a)) / DAY);
+  const todayISO = () => (window.SchedReady ? window.SchedReady.todayISO()
+    : new Date().toISOString().slice(0, 10));
+
+  /* ── store access ───────────────────────────────────────────────────────── */
+  function record(oid) { return oid ? S().find(COLL, oid) : null; }
+  function cellOf(oid, itemId) {
+    const r = record(oid);
+    return (r && r.items && r.items[itemId]) || null;
+  }
+  function dateOf(oid, itemId) {
+    const c = cellOf(oid, itemId);
+    return c ? normISO(c.last_date) : "";
+  }
+
+  /* ══ THE SEAM ══════════════════════════════════════════════════════════
+     bump(oid, item_id, date, src) — the single writer.
+       date ""   clears the row (back to "never recorded")
+       src  "manual" (the card) always wins and may move a date backwards;
+            anything else is an AUTOMATIC source: it may only push the date
+            forward and it never clears.
+     Returns the stored record, or null when the call was refused.        */
+  function bump(oid, itemId, date, src) {
+    if (!oid || !itemId) return null;
+    if (loaded() && !byId(itemId)) { console.warn("SchedCurrency.bump: unknown item " + itemId); return null; }
+    const iso = normISO(date);
+    const from = String(src || "manual");
+    const manual = from === "manual";
+    const prev = record(oid);
+    const rec = { oid: oid, items: Object.assign({}, (prev && prev.items) || {}) };
+    const old = rec.items[itemId] || null;
+    const oldISO = old ? normISO(old.last_date) : "";
+    if (!iso) {
+      if (!manual || !old) return prev;               // an automatic source never clears
+      delete rec.items[itemId];
+    } else {
+      if (!manual && oldISO && oldISO >= iso) return prev;
+      if (oldISO === iso && old && old.src === from) return prev;
+      rec.items[itemId] = Object.assign({}, old, { last_date: iso, src: from });
+    }
+    rec.updated_at = new Date().toISOString();
+    return S().upsert(COLL, rec);
+  }
+
+  /* ── status of ONE row ──────────────────────────────────────────────────── */
+  function statusOf(oid, it, experienced, ref) {
+    const v = resolve(it, experienced);
+    const last = dateOf(oid, it.id);
+    const out = { item: it, v: v, last: last, expires: "", left: null, state: "neutral" };
+    if (v.days == null) return out;                    // nothing to count
+    if (!last) { out.state = "never"; return out; }
+    out.expires = addDays(last, v.days);
+    out.left = daysBetween(ref || todayISO(), out.expires);
+    if (out.left < 0) out.state = "expired";
+    else if (out.left <= v.days * AMBER_FRACTION
+      || (v.days > AMBER_DAYS && out.left <= AMBER_DAYS)) out.state = "expiring";
+    else out.state = "ok";
+    return out;
+  }
+
+  /* ── the instructor's aggregate ─────────────────────────────────────────
+     owes = expired + never, counted ONLY over items that HAVE a validity. */
+  function summary(oid, experienced) {
+    const ref = todayISO();
+    const out = { ok: 0, expiring: 0, expired: 0, never: 0, neutral: 0, counted: 0,
+      owes: 0, state: "ok", red: [], amber: [], ready: loaded() };
+    for (const it of items()) {
+      const st = statusOf(oid, it, experienced, ref);
+      out[st.state] += 1;
+      if (st.state === "neutral") continue;
+      out.counted += 1;
+      if (st.state === "expired" || st.state === "never") out.red.push(st);
+      else if (st.state === "expiring") out.amber.push(st);
+    }
+    out.owes = out.expired + out.never;
+    out.state = out.owes ? "expired" : (out.expiring ? "expiring" : "ok");
+    return out;
+  }
+
+  window.SchedCurrency = {
+    CAT_URL, COLL, GROUPS, PERIOD_CONV, CONV_LEGEND, CONTRA,
+    AMBER_DAYS, AMBER_FRACTION,
+    load, loaded, error, items, groups, byId, stats,
+    resolve, statusOf, summary,
+    record, cellOf, dateOf, bump,
+    addDays, daysBetween, todayISO, normISO,
+  };
 })();
