@@ -1130,6 +1130,13 @@ window.fmtDMY = function fmtDMY(v) {
     S().mountTools($id("sch-tools"));
     wireSubtabs();
     S().subscribe(() => { if (ui.booted) render(); });
+    /* ROUND 14 — the currency catalog is fetched at boot because night
+       capability is derived from it (see currency.js). It is a race the board
+       usually wins, but "usually" is not a guarantee: if the catalog lands
+       AFTER this pane painted, the night badges and the night warnings would
+       be showing "unknown" until the next store write. One repaint, once. */
+    window.addEventListener((window.SchedCurrency || {}).READY_EVENT || "sched-currency-ready",
+      () => { if (ui.booted) render(); }, { once: true });
     render();
   };
 
@@ -1203,11 +1210,20 @@ window.fmtDMY = function fmtDMY(v) {
           <span class="sch-tglrow">
             <button type="button" class="sch-btn" data-act="imp-roster"
               title="Import the shared roster.json — merge BY OID: an OID already here is updated in place, a new OID is created, and anybody the file does not mention is left untouched">⭱ Import roster</button>
-            ${canEdit() ? `<button type="button" class="sch-btn${brokenN() ? " danger" : ""}" data-act="fix-codes"
-              title="${esc(brokenN()
-                ? brokenN() + " person(s) carry a code shaped like a store record id (stu-…/ins-…) — a mid-refactor import minted them from the record key. This re-mints proper codes (call sign, else IP-n/SP-n) and rewrites every reference in the log, availability, gates, duties and day plans. OIDs never change."
-                : "Every code is a proper one. This button re-mints codes shaped like a store record id (stu-…/ins-…) and rewrites every reference — there is nothing to do right now.")}"
-              >🛠 Repair codes${brokenN() ? " (" + brokenN() + ")" : ""}</button>` : ""}
+            ${canEdit() ? (() => {
+              /* Round 14 — the badge counts BOTH passes, so a squadron whose
+                 codes are all proper but none of them a call sign still sees
+                 there is something to do. */
+              const n = repairN();
+              return `<button type="button" class="sch-btn${n.total ? " danger" : ""}" data-act="fix-codes"
+              title="${esc(n.total
+                ? "TWO passes, one transaction — " + n.p1 + " code(s) shaped like a store record id (stu-…/ins-…) "
+                  + "and " + n.p2 + " active instructor code(s) that are not the call sign. Both are re-minted and EVERY "
+                  + "reference in the log, availability, gates, duties and day plans is rewritten with them. OIDs never change."
+                : "Nothing to repair: no code is shaped like a store record id, and every active instructor's code is "
+                  + "already his call sign. The button runs both passes and rewrites every reference when there is something to do.")}"
+              >🛠 Repair codes${n.total ? " (" + n.total + ")" : ""}</button>`;
+            })() : ""}
             <input type="file" accept="application/json,.json" id="sch-rosterfile" class="sch-file" hidden>
           </span></span>
       </div>
@@ -1433,7 +1449,8 @@ window.fmtDMY = function fmtDMY(v) {
         ${i.leadership ? qb(i.leadership, "leadership qualification — from the global roster") : ""}
         ${dep ? `<span class="sch-badge st-withdrawn" title="departed — excluded from every picker, kept in Balance history">DEPARTED</span>` : ""}
         ${i.experienced ? qb("ΕΜΠ", "experienced flyer (Annex B §17) — the ΕΜΠ column of the 3-01 applies to him") : ""}
-        ${q.night ? qb("☾", "night qualified") : ""}${q.evaluator ? qb("EVAL", "evaluator — checkrides") : ""}
+        ${i.demo_pilot ? qb("✈ DEMO", "demo pilot (Ιπτάμενος Επίδειξης) — the Chapter 5 rows of the ✈ table in Currency are his") : ""}
+        ${nightBadge(i) ? qb("☾", "NIGHT — " + nightBadge(i)) : ""}${q.evaluator ? qb("EVAL", "evaluator — checkrides") : ""}
         ${q.ground ? qb("GND", "ground instructor") : ""}${q.rsu_solo ? qb("RSU-solo", "RSU-during-solo qualification — the RSU A/B duty pickers filter on this") : ""}
         ${d.SOF ? qb("SOF", "duty eligible — Supervisor of Flying") : ""}${d.RSU ? qb("RSU", "duty eligible — Runway Supervisory Unit (compatibility)") : ""}
         ${idle == null ? "" : `<span class="sch-nd" title="working days since the last recorded event">${idle}d</span>`}
@@ -1441,6 +1458,55 @@ window.fmtDMY = function fmtDMY(v) {
       </div>
       ${exp ? ipForm(i, false) : ""}
     </div>`;
+  }
+
+  /* ══ NIGHT IS NOT A CHECKBOX ANY MORE ═══════════════════ (Round 14) ════
+     User directive, verbatim: «το night δεν θα το επιλεγουμε εμεις, αλλα θα
+     ενημερωνεται αυτοματα απο το Currency. θα βαζω εγω ημερομηνια τελευταιας
+     νυχτερινης πτησης και θα ξεκιναει countdown αναλογα.»
+
+     So the roster no longer OWNS night capability, it REPORTS it: the single
+     source is SchedCurrency.nightOf(), the `night-landing` row of this man read
+     against his own ΕΜΠ/ΑΠ column (60 / 45 days). The form shows a badge, not
+     an input; the badge is a link into the very cell that decides it. Nothing
+     here writes `quals.night` any more — saveInstructor carries the stored
+     value through untouched so an old export still round-trips.
+
+     The badge is marked `data-nav`: it moves the VIEW and writes nothing, so
+     the edit lock lets it through on a view-only device (schedstore's NAV list
+     honours the attribute) — a locked screen may read where the truth lives. */
+  const NIGHT_STATE = {
+    ok: { cls: "is-ok", txt: (n) => "auto from Currency: current (+" + n.left + " d)" },
+    expiring: { cls: "is-warn", txt: (n) => "auto from Currency: current (+" + n.left + " d)" },
+    expired: { cls: "is-bad", txt: () => "not current — enter the last night flight in Currency" },
+    never: { cls: "is-bad", txt: () => "not current — enter the last night flight in Currency" },
+    unknown: { cls: "is-none", txt: () => "auto from Currency — reading the catalog…" },
+  };
+  /* the roster ROW badge: a one-line reason, or "" when he is not night-capable
+     (the row badges are a list of what a man HAS, exactly as before) */
+  function nightBadge(i) {
+    const CU = window.SchedCurrency;
+    if (!CU || !i.oid) return "";
+    const n = CU.nightOf(i);
+    return n.ok ? n.text + " · derived from the Currency night-landing row, never typed in the roster" : "";
+  }
+  function nightFld(i, isNew) {
+    const CU = window.SchedCurrency;
+    const why = "\n\nNIGHT IS DERIVED, NOT SET HERE. It is the state of his night-landing row in the "
+      + "Currency tab, read against his own experience level — the 3-01 prints 60 days for an ΕΜΠ flyer "
+      + "and 45 for an ΑΠ one. Record the last night flight there and the countdown starts by itself; "
+      + "in date (or expiring) means night-capable, expired or never recorded means not.";
+    if (isNew || !i.oid || !CU) {
+      return `<div class="sch-fld sch-nightfld"><span>Night</span>
+        <span class="sch-nightbadge is-none" title="${esc("NIGHT — nothing to read yet: save the row once so it gets "
+          + "an OID, then record his last night landing in the Currency tab." + why)}">NIGHT — auto from Currency: save the row first</span></div>`;
+    }
+    const n = CU.nightOf(i);
+    const s = NIGHT_STATE[n.state] || NIGHT_STATE.unknown;
+    return `<div class="sch-fld sch-nightfld"><span>Night</span>
+      <button type="button" class="sch-nightbadge ${s.cls}" data-nav data-act="night-jump" data-id="${esc(i.code)}"
+        title="${esc(n.text + why + "\n\nClick to open the Currency matrix at his night-landing cell.")}"
+        >NIGHT — ${esc(s.txt(n))}</button></div>`;
   }
 
   function ipForm(i, isNew) {
@@ -1460,12 +1526,13 @@ window.fmtDMY = function fmtDMY(v) {
         <label class="sch-fld"><span>Country — air force</span>${otherSelect("country", COUNTRIES, i.country || "", "e.g. FAF")}</label>
         <label class="sch-fld"><span>Duty</span>${otherSelect("duty", DUTIES, i.duty || "", "type the duty")}</label>
         <label class="sch-fld"><span>Leadership</span>${otherSelect("leadership", LEADERSHIPS, i.leadership || "", "type the qualification")}</label>
-        ${cb("test_pilot", i.test_pilot, "Test pilot", "test pilot — badged TP in the roster row and in the Balance load table")}
+        ${cb("test_pilot", i.test_pilot, "Test pilot", "test pilot — badged TP in the roster row and in the Balance load table; the SIM-ΔΑ semester quota (§24) applies to him alone")}
+        ${cb("demo_pilot", i.demo_pilot, "Demo pilot", "DEMO PILOT — Ιπτάμενος Επίδειξης. Chapter 5 of the 3-01 (the 500 ft display currency, the two restoration routes, the 1000 ft limit, the Ε-1δ DEMO event and the 2-year tenure) binds the display pilot and nobody else. Tick this and the ✈ section of the Currency tab appears, with him in it; untick it and those six rows leave his availability count and the screen. Same mechanism as Test pilot — one flag on the person")}
         ${cb("experienced", i.experienced, "Experienced (ΕΜΠ)", "experienced flyer, Annex B §17 — his Currency row reads the ΕΜΠ validity column of the 3-01 instead of the ΑΠ one. Round 12a moved the switch here: the matrix has no single current instructor, and this is a property of the person, not of a view")}
         <label class="sch-fld"><span>Status</span><select class="sch-in" data-f="status">
           <option value="active"${(i.status || "active") === "active" ? " selected" : ""}>active</option>
           <option value="departed"${i.status === "departed" ? " selected" : ""}>departed</option></select></label>
-        ${cb("night", q.night, "Night", "night qualified")}
+        ${nightFld(i, isNew)}
         ${cb("evaluator", q.evaluator, "Evaluator", "evaluator — checkrides")}
         ${cb("ground", q.ground, "Ground", "ground instructor")}
         ${cb("rsu_solo", q.rsu_solo, "RSU (solo)", "RSU-during-solo qualification — the RSU A/B duty pickers filter on this")}
@@ -1493,6 +1560,32 @@ window.fmtDMY = function fmtDMY(v) {
       </div>`).join("")}</div>`;
   }
 
+  /* ══ THE PRESENCE STRIP, GROUPED PER CLASS ═════════════ (Round 14) ═════
+     User directive, verbatim: «τους μαθητες στους αποντες, παροντες να τους
+     χωριζει ανα class.» One long mixed strip of thirty chips answered "who is
+     away" but never "which class is short today", which is the question a
+     scheduler actually asks. So the STUDENTS block becomes one labelled row per
+     class; the instructors block is untouched (they have no class).
+
+     The class list comes from SchedStore.classList() — the ONE place a class
+     list is built in this app, already sorted alphabetically and already
+     bucketing a student with no class under «—», so nobody is dropped and no
+     class is invented here. `cell` is the caller's own chip renderer, so the
+     board and the roster share this shape without sharing a chip.
+     The same helper exists in schedboard.js for the board's day panel: two
+     views, two renderers, ONE grouping rule.                                */
+  function avByClass(cell) {
+    const seen = new Set(students().map((s) => s.code));
+    const groups = S().classList()
+      .map((c) => ({ id: c.id, members: c.members.filter((m) => seen.has(m)) }))
+      .filter((g) => g.members.length);
+    if (!groups.length) return `<p class="sch-hint">No students yet.</p>`;
+    return groups.map((g) => `<div class="sch-avcls">
+      <span class="sch-avclsid" title="${esc("class " + g.id + " — " + g.members.length
+        + " student" + (g.members.length === 1 ? "" : "s") + " on the roster")}">${esc(g.id)}</span>
+      <div class="sch-avrow">${g.members.map(cell).join("")}</div></div>`).join("");
+  }
+
   function availGrid() {
     const date = ui.roster.availDate;
     const map = S().availabilityFor(date);
@@ -1503,7 +1596,7 @@ window.fmtDMY = function fmtDMY(v) {
     };
     const away = [...map.entries()].filter(([, v]) => v && v !== "available").length;
     return `<p class="sch-hint">${esc(date ? window.fmtDMY(date) : "—")} · <b>${away}</b> away</p>
-      <div class="sch-avgroup"><span class="sch-lbl">Students</span><div class="sch-avrow">${students().map((s) => cell(s.code)).join("")}</div></div>
+      <div class="sch-avgroup"><span class="sch-lbl">Students — per class</span>${avByClass(cell)}</div>
       <div class="sch-avgroup"><span class="sch-lbl">Instructors</span><div class="sch-avrow">${activeIps().map((i) => cell(i.code)).join("")}</div></div>`;
   }
 
@@ -1573,6 +1666,14 @@ window.fmtDMY = function fmtDMY(v) {
       const act = b.dataset.act, id = b.dataset.id;
       if (act === "imp-roster") { const f = $id("sch-rosterfile"); if (f) f.click(); return; }
       if (act === "fix-codes") { repairCodes(); return; }
+      /* Round 14 — the NIGHT badge is a reading of ONE currency cell, so it is
+         also the door to it: the Currency tab opens at that cell. Read-only on
+         purpose (see nightFld) — it changes nothing on the way. */
+      if (act === "night-jump") {
+        if (window.curFocusCell) window.curFocusCell(id, (window.SchedCurrency || {}).NIGHT_ITEM || "night-landing");
+        else S().toast("The Currency tab is not loaded.", "bad");
+        return;
+      }
       if (act === "prog-s") {
         if (window.schProgressOpen) window.schProgressOpen(id);
         else S().toast("The progress editor arrives with Phase B.", "bad");
@@ -1638,10 +1739,16 @@ window.fmtDMY = function fmtDMY(v) {
       first_name: fval(box, "first_name"), last_name: fval(box, "last_name"),
       mn: fval(box, "mn"), rank: fval(box, "rank"), callsign: fval(box, "callsign"),
       country: fvalOther(box, "country"), test_pilot: !!fval(box, "test_pilot"),
-      experienced: !!fval(box, "experienced"),
+      experienced: !!fval(box, "experienced"), demo_pilot: !!fval(box, "demo_pilot"),
       duty: fvalOther(box, "duty"), leadership: fvalOther(box, "leadership"),
       status: fval(box, "status") || "active",
-      quals: { night: fval(box, "night"), evaluator: fval(box, "evaluator"), ground: fval(box, "ground"), rsu_solo: fval(box, "rsu_solo") },
+      /* Round 14 — `night` is no longer a control on this form, so there is
+         nothing to read: the STORED value is carried through untouched. Reading
+         a checkbox that is not there would have returned "" and quietly wiped
+         the key on the first save; nothing consumes it any more either way
+         (SchedCurrency.nightOk is the truth), but a save must not destroy data
+         it does not own. */
+      quals: { night: !!((prev && prev.quals) || {}).night, evaluator: fval(box, "evaluator"), ground: fval(box, "ground"), rsu_solo: fval(box, "rsu_solo") },
       duty_eligible: { SOF: fval(box, "SOF"), RSU: fval(box, "RSU") },
       notes: fval(box, "notes"),
     };
@@ -1708,6 +1815,11 @@ window.fmtDMY = function fmtDMY(v) {
     }
     put("callsign", txt(r.call_sign != null ? r.call_sign : r.callsign));
     if (r.test_pilot != null) p.test_pilot = !!r.test_pilot;
+    /* Round 14 — the display-pilot post, mapped exactly like test_pilot: a
+       boolean the file states, or nothing at all (and then the local value is
+       left alone, like every other field here). It is what scopes the six
+       Chapter 5 rows of the Currency tab to the man who holds the post. */
+    if (r.demo_pilot != null) p.demo_pilot = !!r.demo_pilot;
     put("duty", txt(r.duty));
     put("leadership", txt(r.leadership));
     if (r.experienced != null) p.experienced = !!r.experienced;
@@ -1720,7 +1832,12 @@ window.fmtDMY = function fmtDMY(v) {
      it does NOT carry (night, ground) are left exactly as they are, and
      `evaluator` may only be ADDED by an import — an Evaluator by duty gets the
      qualification, and a qualification the CO set by hand is never taken away
-     by a file that has no opinion about it. */
+     by a file that has no opinion about it.
+     ROUND 14 — `night` in particular must STAY out of here for a new reason as
+     well as the old one: it is no longer an opinion anybody may hold. Night
+     capability is derived from the Currency night-landing row
+     (SchedCurrency.nightOk), so a roster file that wrote it would be writing a
+     value nothing reads and contradicting the one thing that does. */
   function rosterQuals(r, prev) {
     const q = Object.assign({}, (prev && prev.quals) || {});
     const d = Object.assign({}, (prev && prev.duty_eligible) || {});
@@ -1783,28 +1900,87 @@ window.fmtDMY = function fmtDMY(v) {
   const ID_CODE_RE = /^(stu|ins)-[a-z0-9]+-[a-z0-9]+$/;
   const isIdShaped = (code) => ID_CODE_RE.test(String(code == null ? "" : code));
   /* how many people carry one right now — the button wears the number, so the
-     normal state of a healthy store is a quiet button that says nothing */
-  const brokenN = () => ["students", "instructors"]
-    .reduce((n, c) => n + (S().get(c) || []).filter((r) => isIdShaped(r.code)).length, 0);
+     normal state of a healthy store is a quiet button that says nothing.
+     Round 14: the badge is the WHOLE plan, both passes, because the second one
+     can have work to do while the first has none. repairPlan() walks the two
+     roster lists and nothing else, which is 45 records in this squadron. */
+  const repairN = () => { const p = repairPlan(); return { p1: p.p1, p2: p.p2, total: p.rows.length }; };
+
+  /* ══ PASS 2 — CODE = CALL SIGN ═══════════════════════════ (Round 14) ════
+     What happened, in the user's own account: Repair ran while the call signs
+     were still empty, so pass 1 could not use them and fell back to IP-n. The
+     call signs are filled in now, and «IP-7» is not what anybody says on the
+     radio. So the button gets a SECOND pass with the same machinery:
+
+       an ACTIVE instructor
+       whose callsign is set,
+       whose callsign differs from his code,
+       and whose callsign is not already SOMEBODY ELSE'S code
+     gets his code renamed to the call sign, and every reference in the store
+     is rewritten in the same transaction (rewriteAll — the one rewriter).
+
+     WHY EACH CONDITION IS THERE, not one of them decorative:
+       ACTIVE      a departed man's code is a historical label on log rows
+                   nobody will type again; renaming it buys nothing and churns
+                   the log. He keeps what he had.
+       DIFFERS     the no-op case, and what makes the whole button idempotent:
+                   after a run every renamed code IS the call sign, so a second
+                   click finds nothing.
+       NOT TAKEN   a collision would merge two people into one key. The taken
+                   set is seeded with EVERY code in the store — students too,
+                   because the two share one namespace in `availability`
+                   (person|date) and in the day plans. A blocked rename is
+                   simply not offered; nothing is silently renamed to a
+                   near-miss like "VIPER01-2", which would be a new handle
+                   nobody asked for.
+     STUDENTS ARE NOT TOUCHED BY PASS 2 — they have no call sign, and inventing
+     one would be inventing data.
+     Pass 1 (id-shaped keys) runs first and its results are already in `taken`,
+     so a fresh IP-n minted by pass 1 can never be stolen by pass 2.          */
+  const callsignOf = (rec) => String((rec && rec.callsign) || "").trim();
 
   function repairPlan() {
     const map = { students: new Map(), instructors: new Map() };
     const rows = [];
+    /* one namespace for both collections: a code is a code (see NOT TAKEN) */
+    const taken = new Set();
     for (const coll of ["instructors", "students"]) {
-      const list = S().get(coll) || [];
-      const taken = new Set(list.map((r) => String(r.code)));
-      for (const rec of list) {
+      for (const r of S().get(coll) || []) taken.add(String(r.code));
+    }
+    /* ── pass 1 — id-shaped keys that were never codes at all (Round 12b) ── */
+    for (const coll of ["instructors", "students"]) {
+      for (const rec of S().get(coll) || []) {
         if (!isIdShaped(rec.code)) continue;
         /* the call sign is the code the squadron already says out loud —
            the same first choice the roster import makes for a new person */
-        const want = coll === "instructors" ? String(rec.callsign || "").trim() : "";
+        const want = coll === "instructors" ? callsignOf(rec) : "";
+        taken.delete(String(rec.code));            // the old key is freed by the rename
         const next = mintCode(coll, want, taken);
         map[coll].set(String(rec.code), next);
-        rows.push({ coll: coll, from: String(rec.code), to: next,
+        rows.push({ pass: 1, coll: coll, from: String(rec.code), to: next,
           who: S().baseLabel(rec) || next, oid: rec.oid || "" });
       }
     }
-    return { map: map, rows: rows };
+    /* ── pass 2 — a proper code that is not the call sign (Round 14) ─────── */
+    const blocked = [];
+    for (const rec of S().get("instructors") || []) {
+      const from = String(rec.code);
+      if (map.instructors.has(from)) continue;     // pass 1 already renamed him
+      if ((rec.status || "active") === "departed") continue;
+      const cs = callsignOf(rec);
+      if (!cs || cs === from) continue;
+      if (taken.has(cs)) {
+        blocked.push({ who: S().baseLabel(rec) || from, from: from, cs: cs });
+        continue;
+      }
+      taken.delete(from);
+      taken.add(cs);
+      map.instructors.set(from, cs);
+      rows.push({ pass: 2, coll: "instructors", from: from, to: cs,
+        who: S().baseLabel(rec) || cs, oid: rec.oid || "" });
+    }
+    return { map: map, rows: rows, blocked: blocked,
+      p1: rows.filter((r) => r.pass === 1).length, p2: rows.filter((r) => r.pass === 2).length };
   }
 
   function repairCodes() {
@@ -1816,7 +1992,9 @@ window.fmtDMY = function fmtDMY(v) {
     }
     const plan = repairPlan();
     if (!plan.rows.length) {
-      S().toast("Nothing to repair — every code is already a proper one.", "good");
+      S().toast(plan.blocked.length
+        ? "Nothing to repair — " + plan.blocked.length + " call sign(s) are already another person's code and were left alone."
+        : "Nothing to repair — every code is a proper one and every active instructor's code is his call sign.", "good");
       return;
     }
     let hits = 0;
@@ -1839,11 +2017,27 @@ window.fmtDMY = function fmtDMY(v) {
     };
     const refs = dry();
 
-    const list = plan.rows.slice(0, 10).map((r) =>
-      "· " + r.from + "  →  " + r.to + "   (" + r.who + (r.oid ? ", OID " + r.oid : ", no OID") + ")").join("\n");
-    const more = plan.rows.length > 10 ? "\n· …and " + (plan.rows.length - 10) + " more" : "";
+    /* Round 14 — the two passes are previewed SEPARATELY. They are different
+       promises: pass 1 repairs a key that was never a code, pass 2 changes a
+       perfectly valid code into the name the squadron actually uses. A user
+       must be able to see which of the two he is agreeing to. */
+    const block = (pass, title) => {
+      const rows = plan.rows.filter((r) => r.pass === pass);
+      if (!rows.length) return "";
+      const list = rows.slice(0, 10).map((r) =>
+        "· " + r.from + "  →  " + r.to + "   (" + r.who + (r.oid ? ", OID " + r.oid : ", no OID") + ")").join("\n");
+      return title + " — " + rows.length + "\n" + list
+        + (rows.length > 10 ? "\n· …and " + (rows.length - 10) + " more" : "") + "\n\n";
+    };
+    const blockedTxt = plan.blocked.length
+      ? "NOT renamed — the call sign is already another person's code:\n"
+        + plan.blocked.slice(0, 5).map((b) => "· " + b.who + " keeps " + b.from + " (call sign " + b.cs + " is taken)").join("\n")
+        + (plan.blocked.length > 5 ? "\n· …and " + (plan.blocked.length - 5) + " more" : "") + "\n\n"
+      : "";
     if (!confirm("Repair " + plan.rows.length + " code" + (plan.rows.length === 1 ? "" : "s") + "?\n\n"
-      + list + more + "\n\n"
+      + block(1, "id-shaped codes")
+      + block(2, "codes aligned to call signs")
+      + blockedTxt
       + refs + " reference(s) in the training log, availability, gates, duties and day plans are rewritten "
       + "in the same pass. OIDs are NOT touched — identity does not change.\n\n"
       + "Export a backup first if you want a way back.")) return;
@@ -1878,8 +2072,10 @@ window.fmtDMY = function fmtDMY(v) {
     }
     if (window.schBoardReset) window.schBoardReset();
     P().invalidate();
-    S().toast(plan.rows.length + " code(s) repaired · " + refs + " reference(s) rewritten. "
-      + "Re-import the roster file now — it re-applies call sign, names and fields BY OID.", "good");
+    S().toast(plan.rows.length + " code(s) repaired (" + plan.p1 + " id-shaped · " + plan.p2
+      + " aligned to call signs) · " + refs + " reference(s) rewritten"
+      + (plan.blocked.length ? " · " + plan.blocked.length + " left alone: the call sign is another person's code" : "")
+      + ". Re-import the roster file now — it re-applies call sign, names and fields BY OID.", "good");
   }
 
   /* the one rewriter, used twice: once on a throwaway copy to COUNT and once

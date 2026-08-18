@@ -133,7 +133,19 @@ instructors = [{
     "callsign": f"VIPER{i:02d}",
     "country": IP_COUNTRIES[(i - 1) % len(IP_COUNTRIES)],
     "test_pilot": i in IP_TEST_PILOTS,
+    # ROUND 14 — the display-pilot post. NOBODY holds it in the public seed, on
+    # purpose: the user's ruling is «Αυτη τη στιγμη δεν ειναι κανενας», so the
+    # ✈ Chapter 5 section of the Currency tab is absent out of the box and the
+    # six demo-* items are out of scope for everyone. The key is written
+    # explicitly (rather than left absent) so the field is discoverable in the
+    # seed and an import round-trips it like test_pilot.
+    "demo_pilot": False,
     "experienced": i in IP_EXPERIENCED,
+    # `night` is DEAD as an input since Round 14 — night capability is derived
+    # from the night-landing currency row (SchedCurrency.nightOk), and nothing
+    # reads this key any more. It is left in the seed exactly as an old export
+    # would carry it, which is precisely what the migration promises: stored,
+    # ignored, harmless.
     "quals": {"night": True, "evaluator": i <= 4, "ground": i in (3, 7, 11),
               "rsu_solo": i in (2, 5, 9, 13)},
     "duty_eligible": {"SOF": True, "RSU": True},
@@ -267,9 +279,10 @@ gates = [
 ]
 
 # ── INSTRUCTOR CURRENCY — FAKE demo data (Round 10b, semesters in Round 11) ──
-# THE PUBLIC SEED STAYS FAKE. These are the three placeholder instructors
-# IP-1/IP-2/IP-3 (oid-ip-01..03) and nothing here comes from a real logbook:
-# the point is only that the Currency tab has something to draw out of the box.
+# THE PUBLIC SEED STAYS FAKE. These are the placeholder instructors IP-1..IP-4
+# (oid-ip-01..04) and nothing here comes from a real logbook: the point is only
+# that the Currency tab has something to draw out of the box. Round 14 adds the
+# fourth record — one item, the night fixture, see CUR_ITEMS below.
 #
 #   items      one DATE per catalog item of data/requirements/instructor_currency.json,
 #              written here as DAYS BEFORE CUR_ANCHOR so the file regenerates
@@ -345,6 +358,18 @@ CUR_ITEMS = {
         "trainee-20day-unscored-flight": 5, "trainee-30day-type-availability-loss": 10,
         "body-weight-check": 42,
     },
+    # ── ROUND 14 · THE NIGHT FIXTURE ────────────────────────────────────────
+    # «θα βαζω εγω ημερομηνια τελευταιας νυχτερινης πτησης και θα ξεκιναει
+    # countdown αναλογα.» Night capability is no longer a checkbox: it is the
+    # state of THIS row, read against the man's own experience column (60 days
+    # ΕΜΠ / 45 ΑΠ). One record with a single item, so every derived state is on
+    # screen out of the box on 18/08/2026:
+    #   IP-1  ΕΜΠ, 21 d ago → expires 22/09, +35 d ...... CURRENT
+    #   IP-2  ΑΠ,  15 d ago → expires 13/09, +26 d ...... CURRENT
+    #   IP-3  ΕΜΠ, 54 d ago → expires 20/08,  +2 d ...... CURRENT, expiring
+    #   IP-4  ΕΜΠ, 90 d ago → expired 15/07, −34 d ...... NOT CURRENT  ← here
+    #   IP-5…IP-15 no record at all ..................... NOT CURRENT (never)
+    "oid-ip-04": {"night-landing": 90},
 }
 
 # The POSTED (ΤΟΠΟΘΕΤΗΜΕΝΟΣ) requirement of Πίνακας 6 / Πίνακας 9, for reference

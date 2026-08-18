@@ -8,7 +8,8 @@
    να κοιτάω κάθε εκπαιδευτή ξεχωριστά. Rows τα ονόματα, στήλες τα events.
    Φτιάξε περισσότερους από έναν πίνακες.» — so the one-instructor-at-a-time
    card is gone and the view is a MATRIX: rows = instructors, columns = the
-   catalog events, split across FOUR collapsible tables (see the second IIFE).
+   catalog events, split across FIVE collapsible tables plus the conditional ✈
+   demo-pilot section of Round 14 (see the second IIFE).
 
    WHAT MOVED HERE
      § ③ of scheduler.js — window.SchedCurrency — moved VERBATIM (Round 10b/
@@ -24,9 +25,17 @@
      DATED   the other 76 items, exactly as Round 10c/10d left them: one date
        each, the min(round(v×25%), 45) colour rule, recorded obligations with
        per-id reasons, ≈ conversions and ⚠ flags.
-     15 + 76 = 91 = the whole catalog; every id is rendered exactly once —
-     asserted at boot by curCoverage() over the five tables (Round 13 split the
-     semester block into ΑΕΡΟΣ first and F/S last; see the second IIFE).
+     15 + 76 = 91 = the whole catalog; every id is CLAIMED by exactly one table
+     — asserted at boot by curCoverage() (Round 13 split the semester block into
+     ΑΕΡΟΣ first and F/S last; see the second IIFE).
+
+   THE ONE CONDITIONAL SCOPE                                       (Round 14)
+     Six of the 91 are Chapter 5 — the ΙΠΤΑΜΕΝΟΣ ΕΠΙΔΕΙΞΗΣ (demo pilot). They
+     are shown to, and counted for, the instructors flagged `demo_pilot` and
+     nobody else (DEMO_IDS below). With no demo pilot on the roster they are
+     out of scope, not missing: 85 of 91 render and curCoverage() says so on
+     its own line. Same mechanism as the Test Pilots' SIM-ΔΑ, one flag on the
+     person.
 
    THE ONE EXCEPTION, NAMED OUT LOUD
      `sim-refresh-after-abstention` is of kind "sim", so the kind split puts it
@@ -144,6 +153,63 @@
   const isObligation = (id) => OBLIGATIONS.has(id);
   const oblWhy = (id) => OBLIGATIONS.get(id) || "";
 
+  /* ── DEMO-PILOT SCOPE ─────────────────────────── (Round 14 · ΑΠΟΦΑΝΣΗ) ──
+     User ruling of 18/08/2026, verbatim: «θα βαλουμε πεδιο demo pilot. Αυτη τη
+     στιγμη δεν ειναι κανενας. Αν εχουμε ορισει καποιον demo pilot, μονο τοτε
+     και μονο για αυτον θα εχουμε τον αντιστοιχο πινακα στο currency.» — this
+     resolves the flag left pending by R10c/R11 (spec § 11γ).
+
+     Chapter 5 of the 3-01 is written for the ΙΠΤΑΜΕΝΟΣ ΕΠΙΔΕΙΞΗΣ (the display /
+     demo pilot) and for nobody else, so these rows are neither SHOWN to nor
+     COUNTED against an instructor who does not hold the post — the same
+     mechanism `sim-da` already uses for the Test Pilots, one flag on the
+     person. With no demo pilot on the roster they are simply not on screen.
+
+     THE LIST IS READ OUT OF THE CATALOG, id by id, each with the verbatim or
+     the flag that puts it inside Chapter 5; auditDemo() re-checks at load that
+     every id is still there AND that no other "demo-" id has appeared:
+       e-1d-demo ....................... EVENTS row «Ε-1 δ DEMO»; lapse «Loss of
+           demo availability; restoration per Ch.5 §18 (15-30 days) or §20».
+       demo-500ft-currency ............. §17 «Προκειμένου ο Ιπτάμενος Επίδειξης
+           να διατηρήσει τη διαθεσιμότητά του … κάθε 15 ημερολογιακές ημέρες».
+       demo-reavailability-15-to-30-days §18 «… ο Ιπτάμενος Επίδειξης μπορεί να
+           διατεθεί …» — the simplified restoration route.
+       demo-above-1000ft-availability .. §19 «Για την απώλεια διαθεσιμότητας του
+           Ιπταμένου στους ελιγμούς της επίδειξης … 90 ημερών».
+       demo-reavailability-after-30-days §20 «Μετά την πάροδο … για την
+           επαναδιάθεση του Ιπταμένου στα 500΄ AGL» — the full programme.
+       demo-pilot-tenure ............... §6 «Μέγιστος χρόνος παραμονής κάθε
+           Ιπταμένου Πτήσεων Επίδειξης … τα 2 έτη».
+     SIX ids, not the five the directive listed from memory: the §20 programme
+     is exactly as demo-scoped as its §18 sibling (its verbatim names the same
+     Ιπτάμενος), and leaving it behind would have shown every instructor in the
+     squadron a restoration programme for a post he does not hold.            */
+  const DEMO_IDS = new Set([
+    "e-1d-demo",
+    "demo-500ft-currency",
+    "demo-reavailability-15-to-30-days",
+    "demo-above-1000ft-availability",
+    "demo-reavailability-after-30-days",
+    "demo-pilot-tenure",
+  ]);
+  const isDemoItem = (id) => DEMO_IDS.has(id);
+  const demoItems = () => items().filter((it) => DEMO_IDS.has(it.id));
+  const isDemoPilot = (ip) => !!(ip && ip.demo_pilot);
+  const demoPilots = () => (S().get("instructors") || [])
+    .filter((i) => (i.status || "active") !== "departed" && i.demo_pilot);
+  const anyDemoPilot = () => demoPilots().length > 0;
+
+  /* the instructor RECORD behind an OID. The engine is handed an OID by every
+     caller, but two of its answers — which validity column to read, and
+     whether Chapter 5 applies at all — are properties of the PERSON. Accepts a
+     record as well, so a caller that already holds one pays for no lookup. */
+  function ipOf(x) {
+    if (x && typeof x === "object") return x;
+    const oid = String(x == null ? "" : x);
+    if (!oid) return null;
+    return (S().get("instructors") || []).find((i) => String(i.oid || "") === oid) || null;
+  }
+
   /* ── PROJECT CONVERSIONS (catalog open flag 6) ───────────────────────────
      Table 14 and §§83/85/93 print their validity as a PERIOD WORD, never as
      a day count, and the catalog deliberately refused to infer one. The
@@ -224,6 +290,7 @@
         if (!C.byId.has(id)) console.warn("SchedCurrency: obligation id is not in the catalog — " + id);
       }
       auditQuotas();                       // Round 11 — same rule for the quota map
+      auditDemo();                         // Round 14 — and for the demo-pilot scope
       return j;
     } catch (e) {
       C.err = "instructor_currency.json — " + e.message;
@@ -367,14 +434,23 @@
        OBLIGATIONS   the counted rows of OBLIGATIONS. overdue = expired only —
                      a row with no date is not overdue, it is simply not
                      recorded, and nothing about the instructor is unavailable.
-     counted + obl.counted + neutral === every item in the catalog.          */
-  function summary(oid, experienced) {
+     Round 14 adds a THIRD exit, before either tally: the Chapter 5 rows of a
+     man who is not a demo pilot are not his to hold. They are not shown to him
+     (the ✈ section renders for demo pilots only), so counting them would have
+     been an invisible «owes N» he cannot see and must not fix. `demo` may be
+     passed in by a caller that already holds the record; left out, it is read
+     off the person behind the OID.
+     counted + obl.counted + neutral + demoOut === every item in the catalog. */
+  function summary(oid, experienced, demo) {
     const ref = todayISO();
+    const isDemo = demo === undefined ? isDemoPilot(ipOf(oid)) : !!demo;
     const obl = { counted: 0, ok: 0, expiring: 0, expired: 0, never: 0,
       overdue: 0, rows: [], overdueRows: [] };
     const out = { ok: 0, expiring: 0, expired: 0, never: 0, neutral: 0, counted: 0,
-      owes: 0, state: "ok", red: [], amber: [], obl: obl, ready: loaded() };
+      owes: 0, state: "ok", red: [], amber: [], obl: obl, ready: loaded(),
+      demo: isDemo, demoOut: 0 };
     for (const it of items()) {
+      if (!isDemo && isDemoItem(it.id)) { out.demoOut += 1; continue; }
       const st = statusOf(oid, it, experienced, ref);
       if (st.state === "neutral") { out.neutral += 1; continue; }
       if (st.obligation) {
@@ -392,6 +468,52 @@
     out.state = out.owes ? "expired" : (out.expiring ? "expiring" : "ok");
     return out;
   }
+
+  /* ══ NIGHT — DERIVED, NEVER TYPED ═══════════════════════ (Round 14) ════
+     User directive of 18/08/2026, verbatim: «το night δεν θα το επιλεγουμε
+     εμεις, αλλα θα ενημερωνεται αυτοματα απο το Currency. θα βαζω εγω
+     ημερομηνια τελευταιας νυχτερινης πτησης και θα ξεκιναει countdown
+     αναλογα.»
+
+     ONE SOURCE, ONE HELPER. Night capability is the state of THIS instructor's
+     `night-landing` row read against HIS OWN experience level — Πίνακας 1
+     prints 60 days for an ΕΜΠ flyer and 45 for an ΑΠ one — and nothing else:
+         ok · expiring  → night-capable          expired · never → not
+     `quals.night` is dead as an input. No consumer reads it any more; the
+     stored key is deliberately left where it is (harmless, and an older export
+     still opens), and the roster form shows a READING of this helper instead
+     of a checkbox.
+
+     READY. The catalog is fetched at boot (see the bottom of this IIFE), but a
+     caller can still ask in the milliseconds before it lands. It then gets
+     ready:false and state "unknown", and NO consumer may turn that into a
+     refusal: an unknown is not a "no". The one-shot ready event repaints the
+     views that painted too early.                                           */
+  const NIGHT_ITEM = "night-landing";
+  const dmyOf = (v) => (v && window.fmtDMY ? window.fmtDMY(v) : v || "—");
+  function nightOf(x) {
+    const ip = ipOf(x);
+    const oid = ip ? String(ip.oid || "") : String(x == null ? "" : x);
+    const it = byId(NIGHT_ITEM);
+    if (!it) {
+      return { ready: false, ok: false, state: "unknown", left: null, last: "", expires: "",
+        days: null, item: NIGHT_ITEM, oid: oid, short: "unknown",
+        text: "night capability is not known yet — the currency catalog has not been read" };
+    }
+    const st = statusOf(oid, it, !!(ip && ip.experienced));
+    const ok = st.state === "ok" || st.state === "expiring";
+    return { ready: true, ok: ok, state: st.state, left: st.left, last: st.last,
+      expires: st.expires, days: st.v.days, item: NIGHT_ITEM, oid: oid,
+      short: ok ? "current (+" + st.left + " d)" : "not current",
+      text: st.state === "never"
+        ? "not night current — no night landing has ever been recorded for him"
+        : st.state === "expired"
+          ? "not night current — his last night landing was " + dmyOf(st.last) + " and the "
+            + st.v.days + "-day window ran out " + (-st.left) + " day" + (st.left === -1 ? "" : "s") + " ago"
+          : "night current — last night landing " + dmyOf(st.last) + ", expires " + dmyOf(st.expires)
+            + " (" + st.left + " day" + (st.left === 1 ? "" : "s") + " of the " + st.v.days + "-day window left)" };
+  }
+  const nightOk = (x) => nightOf(x).ok;
 
   /* ══════════════════════════════════════════════════════════════════════
      ΑΝΑ ΕΞΑΜΗΝΟ — THE SEMESTER QUOTAS                          (Round 11)
@@ -499,6 +621,21 @@
     }
     for (const id of cat) {
       if (!isSemItem(id)) console.warn("SchedCurrency: a sim/s-category item has no quota entry — " + id);
+    }
+  }
+
+  /* Round 14 — the demo scope is curated by hand (see DEMO_IDS), so it is
+     audited in both directions: an id that left the catalog would silently
+     stop being scoped, and a NEW "demo-" id that nobody listed would be shown
+     to the whole squadron. Neither is allowed to happen quietly. */
+  function auditDemo() {
+    for (const id of DEMO_IDS) {
+      if (!C.byId.has(id)) console.warn("SchedCurrency: demo-scoped id is not in the catalog — " + id);
+    }
+    for (const it of items()) {
+      if (String(it.id).indexOf("demo-") === 0 && !DEMO_IDS.has(it.id)) {
+        console.warn("SchedCurrency: a «demo-» catalog id is not on the demo-scope list — " + it.id);
+      }
     }
   }
 
@@ -677,6 +814,20 @@
     return out;
   }
 
+  /* ── THE CATALOG IS NO LONGER OPTIONAL ─────────────────── (Round 14) ────
+     Until Round 13 it was fetched by the Currency tab, on demand: a user who
+     never opened that tab never needed it. Night capability is DERIVED from it
+     now, and the board asks for night capability whether or not that tab was
+     ever opened — so the fetch starts at boot, once, through the same load()
+     promise the tab awaits (nothing is fetched twice).
+     When it lands, ONE window event tells the views that already painted to
+     paint again; a view that boots later simply reads a loaded catalog. */
+  const READY_EVENT = "sched-currency-ready";
+  load().then(() => {
+    try { window.dispatchEvent(new CustomEvent(READY_EVENT, { detail: { ok: loaded() } })); }
+    catch (e) { /* no CustomEvent: the views repaint on the next store write */ }
+  });
+
   window.SchedCurrency = {
     CAT_URL, COLL, GROUPS, PERIOD_CONV, CONV_LEGEND, CONTRA, OBLIGATIONS,
     AMBER_FRACTION, AMBER_MAX_DAYS, amberAt, isObligation, oblWhy,
@@ -688,6 +839,9 @@
     SEM_QUOTA, SEM_GRP, SEM_KINDS, SEM_RED_DAYS, MAX_COUNT,
     isSemItem, semItems, semGroups, datedItems, semKeyOf, semOf, curSem,
     quotaOf, countsOf, countOf, bumpCount, semStatusOf, semSummary,
+    /* Round 14 — the derived night flag, the demo-pilot scope, the boot event */
+    NIGHT_ITEM, nightOf, nightOk, READY_EVENT, ipOf,
+    DEMO_IDS, isDemoItem, demoItems, isDemoPilot, demoPilots, anyDemoPilot,
   };
 })();
 /* ══════════════════════════════════════════════════════════════════════════
@@ -703,13 +857,18 @@
                SchedStore.personLabel — no internal handle is rendered anywhere.
                Round 13: the name is NEVER clipped (see .cur-whobox in the CSS).
      COLUMNS   the catalog events, split across FIVE tables so a column stays
-               readable and no table is wider than ~30 columns:
+               readable and no table is wider than ~30 columns, plus ONE
+               conditional section (Round 14):
                  ① ΑΝΑ ΕΞΑΜΗΝΟ — ΑΕΡΟΣ   7
-                 ② Landings + Recency    19
-                 ③ Ε-items               28
-                 ④ Other                 29
+                 ② Landings + Recency    16
+                 ③ Ε-items               27
+                 ④ Other                 27
                  ⑤ ΑΝΑ ΕΞΑΜΗΝΟ — F/S      8 (the SIM quotas + the §49 threshold)
-               Every catalog id sits in EXACTLY ONE table: 7+19+28+29+8 = 91,
+                 ✈ Demo pilot (Κεφ. 5)    6 — RENDERED ONLY when an active
+                                            instructor carries `demo_pilot`,
+                                            and then with the demo pilots as
+                                            its only rows
+               Every catalog id sits in EXACTLY ONE table: 7+16+27+27+8+6 = 91,
                asserted at boot by curCoverage() — a silent gap would mean an
                instructor holds something the app never shows him.
                Round 13 directive, in the user's words: «Ξεχωριστό section για
@@ -745,7 +904,7 @@
   /* «SURNAME N.» — the one display-name helper of the whole app (Round 12a) */
   const who = (rec) => S().personLabel(rec);
 
-  /* ── THE FIVE TABLES ─────────────────────────────────────────────────────
+  /* ── THE FIVE TABLES, AND THE SIXTH THAT IS USUALLY NOT THERE ────────────
      Round 13 directive: «Ξεχωριστό section για F/S και πτήσεις. Τα F/S στο
      τέλος.» The single semester block of Round 12 held both printed tables at
      once, so the simulator and the aircraft shared one screen, one legend and
@@ -753,16 +912,21 @@
      tab: what he FLIES opens the page, what he flies IN THE BOX closes it.
 
        ① ΑΝΑ ΕΞΑΜΗΝΟ — ΑΕΡΟΣ   7   Πίνακας 9, the Σ categories + its ΣΥΝΟΛΟ
-       ② Landings + Recency    19
-       ③ Ε-items               28
-       ④ Other                 29
+       ② Landings + Recency    16
+       ③ Ε-items               27
+       ④ Other                 27
        ⑤ ΑΝΑ ΕΞΑΜΗΝΟ — F/S     8   Πίνακας 6, the SIM rows + its ΣΥΝΟΛΑ, and
                                    the ONE §49 threshold row (see the file
                                    header): it is not a quota, it keeps its
                                    date and it keeps counting for availability,
                                    and it travels with the F/S table because
                                    §49 is answered with SIM-1 sorties.
-     7+19+28+29+8 = 91, every id exactly once — asserted by curCoverage().
+       ✈ Demo pilot            6   ROUND 14 · Chapter 5 — rendered only when
+                                   somebody carries the flag, rows = only the
+                                   demo pilots (see SchedCurrency.DEMO_IDS).
+     7+16+27+27+8+6 = 91, every id exactly once — asserted by curCoverage().
+     Round 13's ②③④ read 19/28/27 because they still held the six Chapter 5
+     ids; those moved to ✈ and nothing else changed.
 
      `semgrp` picks ONE group of the engine's SEM_GRP (the engine is untouched:
      it still knows the printed tables in printed order, and each section here
@@ -788,6 +952,14 @@
       note: "sorties per semester IN THE SIMULATOR (§22 each at least one hour · §25 the figures are a "
         + "MINIMUM), plus the §49 refresh threshold — the one column here that is not a quota and does "
         + "count for availability" },
+    /* ⑥ — ROUND 14, and the only conditional section of the tab. Its rows are
+       the demo pilots and nothing else, its columns are the six Chapter 5 ids
+       (SchedCurrency.DEMO_IDS), and it is not rendered at all while no active
+       instructor carries the flag: «Αυτη τη στιγμη δεν ειναι κανενας.» */
+    { key: "demo", n: "✈", demo: true, label: "Demo pilot — Ιπτάμενος Επίδειξης (Κεφ. 5)",
+      note: "Chapter 5 of the 3-01 is written for the display pilot and for nobody else, so these rows "
+        + "are shown to — and counted for — the instructors flagged DEMO PILOT in the roster, and to no "
+        + "one else" },
   ];
 
   /* ui.edit  the ONE cell currently showing a native input, as {code, id, kind}.
@@ -836,7 +1008,8 @@
      head of every table asks for them. Cleared at the top of render().       */
   const memo = { s: new Map(), sem: new Map() };
   function sumOf(i) {
-    if (!memo.s.has(i.code)) memo.s.set(i.code, CUR().summary(i.oid, !!i.experienced));
+    /* the demo flag is passed IN, not looked up: the record is already here */
+    if (!memo.s.has(i.code)) memo.s.set(i.code, CUR().summary(i.oid, !!i.experienced, !!i.demo_pilot));
     return memo.s.get(i.code);
   }
   function semOf(i) {
@@ -883,7 +1056,7 @@
     /* an editor whose person or item vanished (a roster edit, a catalog reload)
        must not survive as a ghost */
     if (ui.edit && !all.some((i) => i.code === ui.edit.code)) ui.edit = null;
-    $id("cur-main").innerHTML = headHtml(all) + TABLES.map((t) => tableHtml(t, all)).join("");
+    $id("cur-main").innerHTML = headHtml(all) + shownTables().map((t) => tableHtml(t, all)).join("");
     const inp = $id("cur-editing");
     if (inp) { inp.focus(); if (inp.select && ui.edit && ui.edit.kind === "q") inp.select(); }
   }
@@ -896,10 +1069,27 @@
     }
     const w = CUR().curSem();
     const dep = departedN();
+    /* the catalog line is HONEST about the demo scope in both states: with no
+       demo pilot the six Chapter 5 ids are not missing, they are out of scope,
+       and the tooltip names them (Round 14 · curCoverage() asserts the same) */
+    const shown = shownTables().length;
+    const nDemo = CUR().DEMO_IDS.size;
+    const demoNote = demoOn()
+      ? ` <span class="sch-badge" title="${esc("the ✈ section is on screen: " + CUR().demoPilots().length
+        + " active instructor(s) carry the DEMO PILOT flag, so the " + nDemo + " Chapter 5 items are rendered for them "
+        + "and counted in their availability")}">✈ demo pilot</span>`
+      : "";
     return `<div class="cur-head">
       <h2>Instructor currency <span class="count">${all.length} instructor${all.length === 1 ? "" : "s"}</span></h2>
       <span class="sch-nd" title="project ruling: the semester is a calendar half — H1 = 01/01-30/06, H2 = 01/07-31/12. The stored key is «${esc(w.key)}», so 01/01 rolls over instead of overwriting.">${esc(w.label)} — ends ${esc(dmy(w.end))} (${w.left} days left)</span>
-      <span class="sch-nd" title="the referee-verified catalog of everything the 3-01/2025 ΔΑΕ makes a T-6A instructor hold">${CUR().items().length} catalog items in ${TABLES.length} tables</span>
+      <span class="sch-nd" title="${esc("the referee-verified catalog of everything the 3-01/2025 ΔΑΕ makes a T-6A instructor hold. "
+        + (demoOn()
+          ? "All " + CUR().items().length + " are on screen: somebody carries the DEMO PILOT flag, so the ✈ section renders."
+          : "Of them, " + nDemo + " belong to Chapter 5 (the Ιπτάμενος Επίδειξης) and NOBODY on the roster is flagged DEMO PILOT, "
+            + "so they are out of scope — not missing: " + [...CUR().DEMO_IDS].join(" · ")))}">${
+        demoOn() ? CUR().items().length + " catalog items" : (CUR().items().length - nDemo) + " of "
+          + CUR().items().length + " catalog items"} in ${shown} table${shown === 1 ? "" : "s"}${
+        demoOn() ? "" : " · " + nDemo + " demo-pilot items out of scope"}</span>${demoNote}
       ${dep ? `<span class="sch-badge" title="a departed instructor keeps his stored dates but leaves the matrix — he is still in the Scheduler roster">${dep} departed, not listed</span>` : ""}
       <span class="sch-spacer"></span>
       <span class="sch-hint">rows are instructors, columns are the catalog items${canEdit()
@@ -913,28 +1103,42 @@
   /* ══ ONE TABLE ══════════════════════════════════════════════════════════ */
   function itemsOf(t) {
     if (!CUR().loaded()) return [];
+    /* ⑥ owns the Chapter 5 ids and every other table is stripped of them
+       (Round 14): an id lives in exactly ONE section, as it always has. */
+    if (t.demo) return CUR().demoItems();
+    const notDemo = (list) => list.filter((it) => !CUR().isDemoItem(it.id));
     /* ONE printed table per section (Round 13). semGroups() keeps the printed
        ROW order inside the group — the ΣΥΝΟΛΑ line closes its own table, as on
        paper — and the §49 threshold row rides along in the sim group. */
-    if (t.sem) return [].concat.apply([], CUR().semGroups()
-      .filter((g) => g.key === t.semgrp).map((g) => g.items));
-    return [].concat.apply([], CUR().groups()
+    if (t.sem) return notDemo([].concat.apply([], CUR().semGroups()
+      .filter((g) => g.key === t.semgrp).map((g) => g.items)));
+    return notDemo([].concat.apply([], CUR().groups()
       .filter((g) => g.kinds.some((k) => t.kinds.indexOf(k) >= 0))
-      .map((g) => g.items));
+      .map((g) => g.items)));
   }
+
+  /* WHICH TABLES ARE ON SCREEN, and WHOSE rows each one holds (Round 14).
+     ⑥ is the only conditional section, and it is conditional twice over: the
+     section itself appears only when somebody carries the flag, and inside it
+     only those people are rows. Everything else is unchanged. */
+  const demoOn = () => CUR().anyDemoPilot();
+  const shownTables = () => TABLES.filter((t) => !t.demo || demoOn());
+  const rowsOf = (t, all) => (t.demo ? all.filter((i) => i.demo_pilot) : all);
 
   function tableHtml(t, all) {
     if (!CUR().loaded()) return "";
     const its = itemsOf(t);
+    const rows = rowsOf(t, all);
     const open = tblOpen(t.key);
-    const r = rollup(t, its, all);
-    return `<section class="panel sch-panel cur-sec cur-mx" data-tbl="${esc(t.key)}">
+    const r = rollup(t, its, rows);
+    return `<section class="panel sch-panel cur-sec cur-mx${t.demo ? " cur-demo" : ""}" data-tbl="${esc(t.key)}">
       <div class="sch-h cur-mxh">
-        ${secBtn(t.key, `${t.n} ${esc(t.label)} <span class="count">${its.length} item${its.length === 1 ? "" : "s"}</span>`)}
+        ${secBtn(t.key, `${t.n} ${esc(t.label)} <span class="count">${its.length} item${its.length === 1 ? "" : "s"}</span>`
+          + (t.demo ? ` <span class="count">${rows.length} demo pilot${rows.length === 1 ? "" : "s"}</span>` : ""))}
         <span class="sch-cdot st-${esc(r.state)}" title="${esc(r.tip)}"></span>
         <span class="sch-nd cur-roll" title="${esc(r.tip)}">${esc(r.txt)}</span>
       </div>
-      ${open ? legendHtml(t, its) + gridHtml(t, its, all) : ""}
+      ${open ? legendHtml(t, its) + gridHtml(t, its, rows) : ""}
     </section>`;
   }
 
@@ -1067,6 +1271,14 @@
       </p>`;
     }
     const f = tableStats(its);
+    /* Round 14 — the ✈ table says on its own face WHY it is here and who is in
+       it, because its rows are a subset of the roster and nothing else on the
+       tab is. Its columns count for the men in it exactly as any other column
+       counts for anyone: the scope is the only thing that changed. */
+    const demoLine = !t.demo ? "" : `<br><b>Scope:</b> Chapter 5 of the 3-01 (§§6, 17-20 and the Ε-1δ EVENTS row)
+      binds the <b>Ιπτάμενος Επίδειξης</b> only. Rows here are the instructors flagged <b>DEMO PILOT</b> in the
+      Scheduler roster form; for them these columns count in the availability dot and in “owes” like any other,
+      and for everyone else they are not shown and not counted.`;
     return `<p class="sch-hint sch-curlegend">
       <span class="sch-cdot st-ok"></span> in date ·
       <span class="sch-cdot st-expiring"></span> amber when a quarter of the window — at most ${CUR().AMBER_MAX_DAYS} days — remains ·
@@ -1077,31 +1289,31 @@
       ${esc(bothFig(f.e.neutral, f.a.neutral))} with no counter${f.e.counted === f.a.counted && f.e.neutral === f.a.neutral ? ""
         : " (the two figures differ because the ΑΠ column prints «--» on some rows — see the ⚠ in the header)"}.
       <b>≈</b> project conversion of a printed period (${esc(CUR().CONV_LEGEND)}) · <b>⚠</b> a printed contradiction — hover the column.
-      Columns tagged <b>obligation</b> keep their colour but stay out of the dot, the chips and “owes” — each header states why.
+      Columns tagged <b>obligation</b> keep their colour but stay out of the dot, the chips and “owes” — each header states why.${demoLine}
     </p>`;
   }
 
   /* ── column headers ──────────────────────────────────────────────────────
      The printed names are long ("Ε-45 — VISUAL DELIVERY MED/HI APEX, day"), so
-     the header shows the HEAD of the name — Round 13 sets it HORIZONTALLY and
-     lets it WRAP over two or three lines («Τα ονόματα από τις στήλες wrap και
-     οριζόντια γραφή»); the rotated writing-mode is gone. The 30-character clip
-     below is what keeps a wrapped head to three lines, and the full name (with
-     everything else the row knows) stays in the tooltip. When two items of the
-     same table share a head — the four ΠΡ rows all start «Advanced exercises
-     (ΠΡ)» — the tail is appended, because two identical column titles would be
-     a lie about which one the user is typing into.                          */
-  /* How much of the head a wrapped column can hold. Measured, not guessed: at
-     10px in the 106-112px column of the CSS a line takes ~18 characters and
-     the wrap loses part of every line end, so 38 characters is what actually
-     lands inside THREE lines — the ceiling the directive sets — with room for
-     the « ⚠» / « °» markers the header appends after the clip. Round 12 clipped
-     at 30 because ONE vertical line was all there was; wrapping bought two
-     more. What is still too long keeps its «…», and the full name stays in the
-     tooltip: the column head is a label, never the source.                   */
-  const COL_CHARS = 38;         // a plain head
-  const COL_CHARS2 = 40;        // a head + the tail that tells two rows apart
-  const clip = (s, n) => (s.length > n ? s.slice(0, n - 1) + "…" : s);
+     the header shows the HEAD of the name, set HORIZONTALLY and wrapped over as
+     many lines as it needs (Round 13: «Τα ονόματα από τις στήλες wrap και
+     οριζόντια γραφή»). When two items of the same table share a head — the four
+     ΠΡ rows all start «Advanced exercises (ΠΡ)» — the tail is appended, because
+     two identical column titles would be a lie about which one the user is
+     typing into.
+
+     ROUND 14 — NOTHING IS CLIPPED, AT ALL. The user's words: «Μερικα item απο
+     στηλες τα εμφανιζει με τελιτσες. Δεν το θελουμε... θελουμε το κειμενο χωρις
+     τελιτσες. Διαμορφωσε αναλογως για να χωραει, χωρις να μικρυνουμε
+     γραμματοσειρα.» Round 13's 38-character ceiling produced «…» on 26 of the
+     91 heads — the longest is 86 characters — so the ceiling is GONE and no
+     «…» is ever inserted here. The head grows DOWNWARDS instead: five or six
+     wrapped lines at the SAME font size, and the thead simply gets taller.
+     The width is handled where widths belong, in the CSS: the column keeps its
+     112px, and because the label is allowed to break only BETWEEN words, a
+     single word wider than that widens ITS column to the word (min-content) —
+     the minimum widening the directive asks for, never a shrink and never a
+     cut. The full name is still in the tooltip; the head is a label.        */
   const headOf = (it) => String(it.name || it.id).split(" — ")[0].trim();
   const tailOf = (it) => String(it.name || it.id).split(" — ").slice(1).join(" — ").trim();
   function colLabels(its) {
@@ -1113,19 +1325,17 @@
     }
     const out = new Map();
     for (const [h, list] of bag) {
-      if (list.length === 1) { out.set(list[0].id, clip(h, COL_CHARS)); continue; }
-      /* The head repeats. Appending the whole tail is not enough: «Σ-2 —
-         Instrument flight (PDO), day» and «…, night» differ in their LAST word,
-         which is exactly the word a clip throws away. So the common opening of
-         the tails — which by definition tells nothing apart — is dropped, and
-         what is left is what the reader needs: «Σ-2 · day» / «Σ-2 · night». */
+      if (list.length === 1) { out.set(list[0].id, h); continue; }
+      /* The head repeats. The common OPENING of the tails tells nothing apart
+         by definition — «Σ-2 — Instrument flight (PDO), day» / «…, night» — so
+         it is dropped and what the reader needs is what is kept:
+         «Σ-2 · day» / «Σ-2 · night». Nothing is truncated on either side. */
       const tails = list.map(tailOf);
       const first = tails[0];
       let n = 0;
       while (n < first.length && tails.every((t) => t[n] === first[n])) n += 1;
       const keep = Math.max(0, first.slice(0, n).lastIndexOf(" ") + 1);   // never cut a word in half
-      list.forEach((it, k) => out.set(it.id,
-        clip(clip(h, 20) + " · " + (tails[k].slice(keep) || tails[k]), COL_CHARS2)));
+      list.forEach((it, k) => out.set(it.id, h + " · " + (tails[k].slice(keep) || tails[k])));
     }
     return out;
   }
@@ -1217,6 +1427,7 @@
     const idTip = "code " + (i.code || "—") + (i.rank ? " · " + i.rank : "")
       + (i.callsign ? " · " + i.callsign : "") + (i.country ? " · " + i.country : "")
       + (i.test_pilot ? " · TEST PILOT (the SIM-ΔΑ quota applies to him)" : "")
+      + (i.demo_pilot ? " · DEMO PILOT (the Chapter 5 rows of the ✈ table apply to him)" : "")
       + "\n\nThe code is the stored key — it stays in the roster form, in the pickers and in search.";
     const lvl = i.experienced
       ? { t: "ΕΜΠ", why: "EXPERIENCED (Annex B §17) — every row of this line reads the ΕΜΠ validity column" }
@@ -1224,7 +1435,10 @@
     const chips = !s ? "" : (s.owes
       ? `<span class="sch-badge cur-expired" title="${esc(availTip(s))}">owes ${s.owes}</span>`
       : s.expiring ? `<span class="sch-badge cur-expiring" title="${esc(availTip(s))}">exp ${s.expiring}</span>` : "")
-      + (sm ? `<span class="sch-badge cur-sem st-${esc(sm.state)}" title="${esc(semTip(sm))}">sem ${sm.done}/${sm.total}</span>` : "");
+      + (sm ? `<span class="sch-badge cur-sem st-${esc(sm.state)}" title="${esc(semTip(sm))}">sem ${sm.done}/${sm.total}</span>` : "")
+      + (i.demo_pilot ? `<span class="sch-curobl" title="${esc("DEMO PILOT (Ιπτάμενος Επίδειξης) — the "
+        + CUR().DEMO_IDS.size + " Chapter 5 rows of the ✈ table are his and count in the figures on this line. "
+        + "The flag is edited in the Scheduler roster form.")}">✈</span>` : "");
     return `<span class="cur-wholine cur-wholine-n">${s
         ? `<span class="sch-cdot st-${esc(s.state)}" title="${esc(availTip(s))}"></span>`
         : `<span class="sch-cdot st-neutral" title="no OID — nothing is computed for this row"></span>`}
@@ -1245,7 +1459,9 @@
       : "availability — available: " + s.counted + " counted items all in date")
     + " (the whole catalog, not just this table)"
     + (s.obl.overdue ? " · plus " + s.obl.overdue + " recorded obligation"
-      + (s.obl.overdue === 1 ? "" : "s") + " overdue (no availability loss — not counted here)" : "");
+      + (s.obl.overdue === 1 ? "" : "s") + " overdue (no availability loss — not counted here)" : "")
+    + (s.demoOut ? " · " + s.demoOut + " Chapter 5 (demo-pilot) row" + (s.demoOut === 1 ? "" : "s")
+      + " are out of scope for him and are neither shown nor counted" : "");
 
   const semTip = (sem) => "semester quotas — " + sem.done + " of " + sem.total + " met in "
     + sem.sem.label + " (ends " + dmy(sem.sem.end) + ", " + sem.sem.left + " days left)"
@@ -1395,6 +1611,32 @@
     });
   }
 
+  /* ── the deep link from the roster's NIGHT badge ────────── (Round 14) ────
+     The badge in the Scheduler roster form is a READING of one cell of this
+     matrix, so it is also the way in: one click opens this tab, opens the
+     table that holds the column, brings the cell into view and flashes it. It
+     never opens the editor — a locked device gets the reading, not a refusal,
+     and the cell's own click does the rest when Editor mode is on.
+     The cell is found by walking the rendered cells and comparing datasets:
+     a code is user data and has no business inside a CSS selector.          */
+  window.curFocusCell = function curFocusCell(code, itemId) {
+    if (!code || !itemId) return;
+    const t = shownTables().filter((x) => itemsOf(x).some((it) => it.id === itemId))[0];
+    if (t && !tblOpen(t.key)) setCol(t.key, false);
+    const tab = $id("tab-currency");
+    if (tab) tab.click(); else void window.curInit();
+    setTimeout(() => {
+      const host = $id("cur-main");
+      if (!host) return;
+      const hit = [...host.querySelectorAll("[data-cell]")]
+        .filter((c) => c.dataset.cell === itemId && c.dataset.code === code)[0];
+      if (!hit) return;
+      if (hit.scrollIntoView) hit.scrollIntoView({ block: "center", inline: "center" });
+      hit.classList.add("is-flash");
+      setTimeout(() => hit.classList.remove("is-flash"), 1800);
+    }, 80);
+  };
+
   function openCell(cell) {
     const code = cell.dataset.code, id = cell.dataset.cell;
     if (!code || !id) return;                       // an is-off cell carries neither
@@ -1428,7 +1670,8 @@
     const i = S().find("instructors", code);
     if (!i || !i.oid || !CUR().loaded()) { S().toast("Nothing to print — no instructor or catalog.", "bad"); return; }
     const exp = !!i.experienced;
-    const s = CUR().summary(i.oid, exp);
+    const isDemo = !!i.demo_pilot;
+    const s = CUR().summary(i.oid, exp, isDemo);
     const sem = CUR().semSummary(i.oid, i);
     const w = sem.sem;
 
@@ -1469,9 +1712,25 @@
         <td>${esc((st.obligation ? CUR_OBL_PRINT : CUR_STATE_TXT)[st.state])}</td></tr>`;
     };
     /* pv-grp is what the print stylesheet keeps glued to the first row of its
-       group, so a kind header can never dangle alone at the foot of a page */
-    const body = datedGroups().map((g) =>
-      `<tr class="pv-grp"><th colspan="6">${esc(g.label.toUpperCase())}</th></tr>` + g.items.map(row).join("")).join("");
+       group, so a kind header can never dangle alone at the foot of a page.
+       Round 14 — the Chapter 5 ids leave section ② here exactly as they leave
+       the general tables on screen: they print in their own section, and only
+       on the sheet of a man who holds the post. A group emptied by that split
+       prints no header either. */
+    const body = datedGroups().map((g) => {
+      const its = g.items.filter((it) => !CUR().isDemoItem(it.id));
+      return its.length
+        ? `<tr class="pv-grp"><th colspan="6">${esc(g.label.toUpperCase())}</th></tr>` + its.map(row).join("")
+        : "";
+    }).join("");
+    const demoBody = isDemo ? CUR().demoItems().map(row).join("") : "";
+    const demoSec = !isDemo ? "" : `
+        <p class="pv-h">④ ✈ ΙΠΤΑΜΕΝΟΣ ΕΠΙΔΕΙΞΗΣ — DEMO PILOT (ΚΕΦ. 5)</p>
+        <p class="pv-p">Chapter 5 binds the display pilot only. These ${CUR().DEMO_IDS.size} rows print on this sheet
+          because ${esc(who(i))} is flagged DEMO PILOT in the roster, and they are counted in the availability figures
+          above like every other row; an instructor who does not hold the post neither sees them nor owes them.</p>
+        <table class="pv-t"><thead><tr><th>ITEM</th><th>VALIDITY</th><th>LAST DONE</th><th>EXPIRES</th><th>DAYS LEFT</th><th>STATUS</th></tr></thead>
+          <tbody>${demoBody}</tbody></table>`;
 
     const old = $id("sch-print");
     if (old) old.remove();
@@ -1486,7 +1745,7 @@
         <div class="pv-top">
           <h2>INSTRUCTOR CURRENCY</h2>
           <p class="pv-p"><b>${esc(who(i))}</b> ${esc(i.rank || "")}
-            ${i.callsign ? " · " + esc(i.callsign) : ""}${i.country ? " · " + esc(i.country) : ""}${i.test_pilot ? " · TEST PILOT" : ""}
+            ${i.callsign ? " · " + esc(i.callsign) : ""}${i.country ? " · " + esc(i.country) : ""}${i.test_pilot ? " · TEST PILOT" : ""}${isDemo ? " · DEMO PILOT" : ""}
             · code ${esc(i.code)}</p>
           <p class="pv-p">Experience level <b>${exp ? "EXPERIENCED (ΕΜΠ)" : "INEXPERIENCED (ΑΠ)"}</b>
             · printed <b>${esc(dmy(CUR().todayISO()))}</b></p>
@@ -1503,6 +1762,8 @@
           <p class="pv-p">Rows whose STATUS reads <b>recorded</b>, <b>due soon</b>, <b>overdue</b> or <b>—</b> are recorded
             obligations, left out of the availability count above — each is either printed with no availability loss,
             scoped to the trainee rather than the serving instructor, or a one-off deadline / tenure / ΠΡ-module clock.</p>
+          ${isDemo ? "" : `<p class="pv-p">The ${CUR().DEMO_IDS.size} rows of Chapter 5 (Ιπτάμενος Επίδειξης) are neither
+            printed nor counted on this sheet: ${esc(who(i))} does not hold the display-pilot post.</p>`}
         </div>
         <p class="pv-h">① ΑΝΑ ΕΞΑΜΗΝΟ — ΑΕΡΟΣ (Σ), ΠΙΝΑΚΑΣ 9 · ${esc(w.label.toUpperCase())} · ENDS ${esc(dmy(w.end))} (${w.left} DAYS LEFT)</p>
         <p class="pv-p">REQUIRED is the ΤΟΠΟΘΕΤΗΜΕΝΟΣ (POSTED) column of Πίνακας 9 — the printed split is
@@ -1518,7 +1779,7 @@
           §25 the figures are a MINIMUM). The last row is the §49 REFRESH THRESHOLD, not a quota: it carries a DATE and it
           does count for availability — its VALIDITY, LAST DONE and DAYS LEFT are printed in the quota columns.</p>
         <table class="pv-t"><thead><tr><th>ITEM</th><th>REQUIRED</th><th>RECORDED</th><th>PROGRESS</th><th>STATUS</th></tr></thead>
-          <tbody>${semFsBody}</tbody></table>
+          <tbody>${semFsBody}</tbody></table>${demoSec}
       </div>`;
     document.body.appendChild(host);
     document.documentElement.classList.add("sch-printing");
@@ -1531,21 +1792,39 @@
   }
 
   /* ── the coverage identity, checked at boot ─────────────────────────────
-     The FIVE tables must be the whole catalog with no id rendered twice —
-     7 + 19 + 28 + 29 + 8 = 91 after the Round 13 split. A silent gap here
-     would mean an instructor holds something the app never shows him, so it
-     is asserted rather than assumed.                                        */
+     The tables must be the whole catalog with no id rendered twice. A silent
+     gap would mean an instructor holds something the app never shows him, so
+     it is asserted rather than assumed.
+
+     ROUND 14 — TWO FIGURES, AND THE DIFFERENCE BETWEEN THEM IS NAMED.
+       `total` / `missing`   the identity over ALL tables, ⑥ included:
+                             7 + 16 + 27 + 27 + 8 + 6 = 91, always, whether or
+                             not anybody is a demo pilot. This is the one that
+                             warns: an id nobody claims is a bug.
+       `rendered` / `demoHidden`  what is on screen right now. With no demo
+                             pilot the six Chapter 5 ids are OUT OF SCOPE, not
+                             missing — they are listed by name in demoHidden
+                             and `rendered` reads 85. Flag one instructor and
+                             `rendered` is 91 again with demoHidden empty.
+     Reporting an out-of-scope row as "missing" would be a false alarm every
+     day of the year the squadron has no display pilot; reporting it as covered
+     without saying it is hidden would be the silent gap this check exists to
+     catch. So both are printed, and only the first one warns.               */
   function curCoverage() {
-    const per = TABLES.map((t) => ({ key: t.key, ids: itemsOf(t).map((it) => it.id) }));
+    const per = TABLES.map((t) => ({ key: t.key, demo: !!t.demo, ids: itemsOf(t).map((it) => it.id) }));
     const seen = new Set();
     const dup = [];
     for (const p of per) for (const id of p.ids) { if (seen.has(id)) dup.push(id); seen.add(id); }
     const all = CUR().items().map((it) => it.id);
+    const on = demoOn();
+    const hidden = on ? [] : per.filter((p) => p.demo).reduce((a, p) => a.concat(p.ids), []);
     const out = { total: all.length, seen: seen.size, duplicated: dup,
-      missing: all.filter((id) => !seen.has(id)) };
+      missing: all.filter((id) => !seen.has(id)),
+      demoPilots: CUR().demoPilots().length, demoHidden: hidden,
+      rendered: seen.size - hidden.length };
     per.forEach((p) => { out[p.key] = p.ids.length; });
     if (dup.length || out.missing.length || out.seen !== out.total) {
-      console.warn("SchedCurrency: the five tables do not cover the catalog exactly", out);
+      console.warn("SchedCurrency: the tables do not cover the catalog exactly", out);
     }
     return out;
   }

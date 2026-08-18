@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Phase 2 FDMS — T-6A Texan II</title>
-<link rel="stylesheet" href="styles.css?v=20260818f">
+<link rel="stylesheet" href="styles.css?v=20260818g">
 <script>
 /* Palette before first paint — no flash of the default theme on reload.
    Mirrors app.js (PALETTES / apply): same keys, same migration of the old
@@ -153,9 +153,16 @@
 
 <!-- INSTRUCTOR CURRENCY (Γύρος 11 · MATRIX στον 12a) — δική της καρτέλα.
      ΟΛΗ η μοίρα σε μία οθόνη: γραμμές οι εκπαιδευτές («SURNAME N.»), στήλες
-     τα item του καταλόγου, σε ΤΕΣΣΕΡΙΣ πίνακες που ανοιγοκλείνουν —
-     ① ΑΝΑ ΕΞΑΜΗΝΟ (15) · ② Landings + Recency (19) · ③ Ε-items (28) ·
-     ④ Other (29) = 91. Όλο το HTML το γράφει το app/currency.js. -->
+     τα item του καταλόγου, σε ΠΕΝΤΕ πίνακες που ανοιγοκλείνουν (Γύρος 13:
+     χωριστά ΑΕΡΟΣ και F/S, τα F/S στο τέλος) —
+     ① ΑΝΑ ΕΞΑΜΗΝΟ ΑΕΡΟΣ, Πίν. 9 (7) · ② Landings + Recency (16) ·
+     ③ Ε-items (27) · ④ Other (27) · ⑤ ΑΝΑ ΕΞΑΜΗΝΟ F/S, Πίν. 6 (8, μαζί το
+     κατώφλι §49) = 7+16+27+27+8 = 85 στην οθόνη.
+     ΚΑΙ ΕΝΑ ΕΚΤΟ, ΥΠΟ ΟΡΟ (Γύρος 14): ✈ Demo pilot (6 γραμμές Κεφ. 5) που
+     εμφανίζεται ΜΟΝΟ όταν κάποιος ενεργός εκπαιδευτής έχει demo_pilot, και
+     τότε μόνο με αυτούς ως γραμμές. 85 + 6 = 91 — κάθε id ακριβώς σε έναν
+     πίνακα· το ελέγχει στο boot η curCoverage().
+     Όλο το HTML το γράφει το app/currency.js. -->
 <main class="cur-view hidden" id="view-currency">
   <section class="cur-main" id="cur-main"></section>
 </main>
@@ -177,13 +184,13 @@
   </div>
 </div>
 
-<script src="app.js?v=20260818f"></script>
-<script src="flowchart.js?v=20260818f"></script>
-<script src="schedval.js?v=20260818f"></script>
-<script src="schedstore.js?v=20260818f"></script>
-<script src="scheduler.js?v=20260818f"></script>
-<script src="schedconsq.js?v=20260818f"></script>
-<script src="schedboard.js?v=20260818f"></script>
-<script src="currency.js?v=20260818f"></script>
+<script src="app.js?v=20260818g"></script>
+<script src="flowchart.js?v=20260818g"></script>
+<script src="schedval.js?v=20260818g"></script>
+<script src="schedstore.js?v=20260818g"></script>
+<script src="scheduler.js?v=20260818g"></script>
+<script src="schedconsq.js?v=20260818g"></script>
+<script src="schedboard.js?v=20260818g"></script>
+<script src="currency.js?v=20260818g"></script>
 </body>
 </html>

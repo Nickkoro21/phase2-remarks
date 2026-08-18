@@ -917,6 +917,25 @@ body {
 /* availability */
 .sch-avgroup { margin-top: 8px; }
 .sch-avrow { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+/* ROUND 14 — «τους μαθητες … να τους χωριζει ανα class». One labelled row per
+   class: the label is a fixed-width gutter on a wide screen so the chips of
+   every class start on the same vertical line and the eye can compare two
+   classes at a glance; under 700px it drops above its row instead of squeezing
+   the chips. Instructors keep the plain single strip — they have no class. */
+.sch-avcls {
+  display: flex; align-items: flex-start; gap: 8px; margin-top: 6px;
+  padding-top: 6px; border-top: 1px dashed var(--line);
+}
+.sch-avcls:first-child { border-top: 0; padding-top: 0; }
+.sch-avcls > .sch-avrow { flex: 1 1 auto; min-width: 0; margin-top: 0; }
+.sch-avclsid {
+  flex: 0 0 auto; min-width: 78px; padding-top: 4px; cursor: help;
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.6px; color: var(--muted);
+}
+@media (max-width: 700px) {
+  .sch-avcls { flex-direction: column; gap: 3px; }
+  .sch-avclsid { padding-top: 0; }
+}
 .sch-av {
   display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-family: inherit;
   background: var(--panel-2); border: 1px solid var(--line); border-radius: 7px; padding: 3px 8px; color: var(--text);
@@ -989,6 +1008,26 @@ body {
 .sch-num { width: 54px; text-align: center; }
 .sch-chk { flex-direction: row; align-items: center; gap: 5px; min-width: 0; }
 .sch-chk > span { font-size: 11px; }
+
+/* ── THE NIGHT READING (Round 14) ─────────────────────────────────────────
+   Night stopped being a checkbox and became a READING of the Currency
+   night-landing row, so it must not LOOK like a control that can be set: no
+   box, no switch, a chip that wears the state and opens the cell that owns it.
+   The four states use the same three tokens as every status in the app, and
+   `is-none` (nothing to read yet) stays deliberately colourless — an unknown
+   is not a failure. Colour is never the only signal: the text says the state
+   in words, which is also what a print-out and a screen reader get.        */
+.sch-nightfld { min-width: 220px; }
+.sch-nightbadge {
+  display: inline-block; text-align: left; font-family: inherit; font-size: 11px;
+  padding: 4px 8px; border-radius: 7px; cursor: pointer;
+  background: var(--panel-2); border: 1px dashed var(--line); color: var(--muted);
+}
+button.sch-nightbadge:hover { border-style: solid; border-color: var(--accent); }
+.sch-nightbadge.is-ok { color: var(--good); border-color: var(--good); }
+.sch-nightbadge.is-warn { color: var(--warn); border-color: var(--warn); }
+.sch-nightbadge.is-bad { color: var(--bad); border-color: var(--bad); }
+.sch-nightbadge.is-none { cursor: help; }
 .sch-hard { color: var(--bad); }
 
 .sch-mixrow { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -1689,20 +1728,31 @@ html[data-mode="light"] .mc-leg i[style*="#9d8cff"] { background: var(--mc-8) !i
   box-shadow: inset 0 -1px 0 var(--line);
 }
 .cur-mxtbl th.cur-col {
-  /* one width for every column: wide enough for the longest unbreakable word of
-     the catalog («Επανεξυπηρέτηση», «certification») and for the clipped head
-     to land in three lines, and still under the 130px a DATA cell must not
-     exceed — the cells themselves read «+123» or «3/4» and never ask for more */
+  /* ROUND 14 — «θελουμε το κειμενο χωρις τελιτσες. Διαμορφωσε αναλογως για να
+     χωραει, χωρις να μικρυνουμε γραμματοσειρα.» Nothing is clipped in the head
+     any more (the 38-character ceiling is gone from currency.js) and the font
+     size is untouched at 10px: a long name simply wraps over more lines and the
+     thead grows. 112px is therefore a WORKING width, not a cap —
+     `table-layout: auto` treats it as a preference and can never go below the
+     cell's min-content, which (see .cur-collbl) is the LONGEST WORD. So a
+     column whose longest word does not fit widens by exactly that word and no
+     more, which is the minimal widening the directive asks for.
+     `overflow: visible` is explicit: with no clip there is nothing to hide, and
+     a stray `hidden` here is the one thing that could bring the ellipsis back. */
   min-width: 112px; width: 112px; padding: 5px 5px 6px; text-align: center; vertical-align: bottom;
   font-size: 10px; text-transform: none; letter-spacing: 0; color: var(--muted); font-weight: 600;
-  border-left: 1px solid var(--line); cursor: help; white-space: normal;
+  border-left: 1px solid var(--line); cursor: help; white-space: normal; overflow: visible;
 }
 .cur-mxtbl th.cur-col .cur-collbl {
-  /* hyphenless wrap: break BETWEEN words (and at the hyphens the catalog itself
-     prints), never with an inserted hyphen and never mid-word unless a single
-     word is wider than the column on its own */
-  display: block; width: 100%; white-space: normal; line-height: 1.25;
-  overflow-wrap: break-word; word-break: normal; hyphens: none;
+  /* Wrap BETWEEN words only (and at the hyphens the catalog itself prints):
+     no inserted hyphen, and — Round 14 — no mid-word break either. Breaking a
+     word in half is the same lie as an ellipsis: «Επανεξυπηρέ / τηση» is not
+     the word. `overflow-wrap: normal` is what makes the cell's min-content the
+     longest word, so the column widens for it instead of cutting it.
+     No `width: 100%` here: a percentage width would stop the text from
+     contributing that min-content in the first place. */
+  display: block; white-space: normal; line-height: 1.25;
+  overflow-wrap: normal; word-break: normal; hyphens: none; overflow: visible;
 }
 .cur-mxtbl th.cur-col:hover { color: var(--accent); }
 /* the spacer that eats a narrow table's slack (see gridHtml) — it must not be
@@ -1757,6 +1807,20 @@ html[data-mode="light"] .mc-leg i[style*="#9d8cff"] { background: var(--mc-8) !i
 .cur-cell.st-expiring { background: rgba(var(--warn-rgb), 0.16); color: var(--warn); font-weight: 700; }
 .cur-cell.st-expired, .cur-cell.st-never { background: rgba(var(--bad-rgb), 0.18); color: var(--bad); font-weight: 700; }
 .cur-cell.st-neutral { background: transparent; }
+
+/* ROUND 14 — the landing spot of the roster's NIGHT badge (curFocusCell): the
+   cell is scrolled into view and flashes twice, so the eye finds it in a grid
+   of 1 300 cells. Colour only — no layout shift, nothing to undo. */
+.cur-cell.is-flash { animation: curflash 0.6s ease-in-out 3; }
+@keyframes curflash {
+  0%, 100% { box-shadow: inset 0 0 0 0 var(--accent); }
+  50% { box-shadow: inset 0 0 0 2px var(--accent); }
+}
+
+/* the ✈ demo-pilot section (Round 14) — it is a conditional scope, not a state,
+   so it is marked with the same dotted-label vocabulary as an obligation tag:
+   a quiet accent edge that says "these rows are a subset", never a warning. */
+.cur-sec.cur-demo { border-left: 2px solid var(--accent); }
 
 /* the editor: ONE cell at a time. A date box is wider than its column, so the
    cell is positioned — a positioned element paints over its plain siblings,
@@ -1833,6 +1897,13 @@ html[data-mode="light"] .mc-leg i[style*="#9d8cff"] { background: var(--mc-8) !i
    offline builder's CSS gate rejects for Firefox 72.
    ══════════════════════════════════════════════════════════════════════════ */
 .ed-btn { font-family: inherit; }
+/* ROUND 14 — the one-click way OUT of Editor mode. Smaller than its neighbour
+   on purpose: it is a shortcut, not a mode switch of its own, and it sits next
+   to the button that already says which mode you are in. The explicit
+   `.hidden` rule is belt and braces — `.viewtab` sets no display today, but a
+   button that quietly reappears while the device is locked would be a lie. */
+.ed-view { padding: 6px 11px; font-size: 12px; }
+.ed-view.hidden { display: none; }
 .ed-btn.is-on { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
 .ed-btn.is-shake { animation: edshake 0.45s; }
 @keyframes edshake {

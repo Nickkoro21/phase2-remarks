@@ -806,7 +806,14 @@
      can never re-trigger itself into a loop. */
   const mo = new MutationObserver(scheduleSweep);
 
-  /* ── the topbar button + its dialog ─────────────────────────────────────── */
+  /* ── the topbar buttons + the dialog ─────────────────────────────────────
+     TWO buttons, and the second one exists because of Round 14: «Προσθεσε
+     κουμπι να βλεπουμε το view mode, δηλαδη εξοδο απο τον editor.» Leaving
+     Editor mode used to cost three clicks through a dialog that also offers
+     "change the code" — one 👁 does it now. It is the SAME lock() the dialog
+     calls, so there is no second way out of Editor mode, only a shorter one;
+     and it is hidden while the device is already locked, because a button that
+     does nothing is worse than no button.                                    */
   function paint() {
     const live = on();
     document.documentElement.setAttribute("data-edit", live ? "on" : "off");
@@ -821,6 +828,12 @@
           ? "View-only. Click and type the editor code to change anything."
           : "View-only. No editor code has been set yet — click to set one.");
     }
+    const v = $("edit-view-btn");
+    if (v) {
+      v.classList.toggle("hidden", !live);
+      v.setAttribute("aria-hidden", live ? "false" : "true");
+      v.tabIndex = live ? 0 : -1;
+    }
     sweep();
   }
 
@@ -832,9 +845,22 @@
     b.type = "button";
     b.id = "edit-btn";
     b.className = "viewtab ed-btn";
+    const v = document.createElement("button");
+    v.type = "button";
+    v.id = "edit-view-btn";
+    v.className = "viewtab ed-btn ed-view hidden";
+    v.textContent = "👁 View";
+    v.title = "ONE CLICK: lock this device back to view-only. Exactly what “🔒 Lock this device” "
+      + "does in the Editor dialog, without the dialog. It is shown only while Editor mode is on.";
     const badge = $("databadge");
-    if (badge) bar.insertBefore(b, badge); else bar.appendChild(b);
+    if (badge) { bar.insertBefore(b, badge); bar.insertBefore(v, badge); } else { bar.appendChild(b); bar.appendChild(v); }
     b.addEventListener("click", openPop);
+    v.addEventListener("click", () => {
+      if (!on()) return;                       // already locked: nothing to say
+      lock();
+      closePop();                              // if the dialog happened to be open
+      S().toast("Locked — view-only on this device.", "good");
+    });
     paint();
     return true;
   }

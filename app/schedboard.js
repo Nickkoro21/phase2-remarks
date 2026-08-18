@@ -931,7 +931,20 @@
     if (mi.d && ipRec) {
       const q = ipRec.quals || {};
       if (mi.d.checkride && !q.evaluator) push("hard", "checkride — " + nm(l.ip) + " is not an evaluator");
-      if (mi.d.night && !q.night) push("hard", "night sortie — " + nm(l.ip) + " is not night qualified");
+      /* ROUND 14 — night capability is DERIVED from the Currency night-landing
+         row, never from a checkbox somebody ticked once (`quals.night` is dead
+         as an input). The reason is spelled out because it is now actionable:
+         a date in the Currency tab clears the warning.
+         An UNREADY catalog is not a "no": while it is still loading nothing is
+         known, and refusing an instructor for a fact the app has not read yet
+         would be a hard warning about itself. It says so softly instead — and
+         the board repaints when the catalog lands (see schInit). */
+      if (mi.d.night) {
+        const CU = window.SchedCurrency;
+        const n = CU ? CU.nightOf(ipRec) : null;
+        if (!n || !n.ready) push("soft", "night sortie — night currency cannot be checked yet: the currency catalog has not been read");
+        else if (!n.ok) push("hard", "night sortie — " + nm(l.ip) + " is " + n.text);
+      }
     }
     if (mi.d && mi.d.night && w.kind !== "night") push("soft", "night sortie planned in a day wave");
     if (mi.d && !mi.d.night && w.kind === "night") push("soft", "day sortie planned in the night wave");
@@ -1184,7 +1197,17 @@
           else if (mine.length >= c.sofMax) reasons.push(role + " duty — " + c.sofMax + " sortie used");
         }
         if (ctx.checkride && !((i.quals || {}).evaluator)) reasons.push("not an evaluator");
-        if (ctx.night && !((i.quals || {}).night)) reasons.push("not night qualified");
+        /* Round 14 — same single source as the warning above: the derived
+           night-landing state, with the countdown in the option text so the
+           picker says WHY and by how much. Silent while the catalog is still
+           loading: an unknown must not filter a man out of a slot. */
+        if (ctx.night) {
+          const n = window.SchedCurrency ? window.SchedCurrency.nightOf(i) : null;
+          if (n && n.ready && !n.ok) {
+            reasons.push(n.state === "never" ? "no night landing ever recorded"
+              : "night landing expired " + (-n.left) + "d ago");
+          }
+        }
       } else {
         /* the load this candidate would carry: their current F/S count, minus
            this very line when they are already on it. */
@@ -1310,6 +1333,27 @@
     </section>`;
   }
 
+  /* ══ THE PRESENCE STRIP, GROUPED PER CLASS ═════════════ (Round 14) ═════
+     User directive, verbatim: «τους μαθητες στους αποντες, παροντες να τους
+     χωριζει ανα class.» The same rule as the Roster's Availability strip (see
+     avByClass in scheduler.js): the STUDENTS block becomes one labelled row per
+     class, alphabetically, students inside in their existing order; the
+     instructors block is untouched. SchedStore.classList() is the ONE builder
+     of a class list in this app — already sorted, already bucketing a student
+     with no class under «—» — so nothing is invented and nobody is dropped.
+     `mark` is this view's own chip renderer, handed in.                     */
+  function avByClass(mark) {
+    const seen = new Set(students().map((s) => s.code));
+    const groups = S().classList()
+      .map((c) => ({ id: c.id, members: c.members.filter((m) => seen.has(m)) }))
+      .filter((g) => g.members.length);
+    if (!groups.length) return `<p class="sch-hint">No students yet.</p>`;
+    return groups.map((g) => `<div class="sch-avcls">
+      <span class="sch-avclsid" title="${esc("class " + g.id + " — " + g.members.length
+        + " student" + (g.members.length === 1 ? "" : "s") + " on the roster")}">${esc(g.id)}</span>
+      <div class="sch-avrow">${g.members.map(mark).join("")}</div></div>`).join("");
+  }
+
   function dutiesPanel(plan) {
     const d = dutyOf(plan.date);
     const locked = plan.status !== "draft";
@@ -1346,8 +1390,8 @@
         <label class="sch-fld"><span>Ground 1</span>${sel("ground_1", d.ground_1, (i) => (i.quals || {}).ground)}</label>
         <label class="sch-fld"><span>Ground 2</span>${sel("ground_2", d.ground_2, (i) => (i.quals || {}).ground)}</label>
       </div>
-      <div class="sch-avgroup"><span class="sch-lbl">Students — one click cycles ${AV_CYCLE.join(" → ")}</span>
-        <div class="sch-avrow">${students().map((s) => mark(s.code)).join("")}</div></div>
+      <div class="sch-avgroup"><span class="sch-lbl">Students — per class · one click cycles ${AV_CYCLE.join(" → ")}</span>
+        ${avByClass(mark)}</div>
       <div class="sch-avgroup"><span class="sch-lbl">Instructors</span>
         <div class="sch-avrow">${activeIps().map((i) => mark(i.code)).join("")}</div></div>` : ""}
     </section>`;
