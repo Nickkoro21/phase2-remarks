@@ -373,38 +373,110 @@ CUR_ITEMS = {
 }
 
 # The POSTED (ΤΟΠΟΘΕΤΗΜΕΝΟΣ) requirement of Πίνακας 6 / Πίνακας 9, for reference
-# while reading the fake counters below — the app reads it from the catalog, not
+# while reading the fake sorties below — the app reads it from the catalog, not
 # from here:  sim-1 1 · sim-2 1 · sim-3 1 · sim-4 — · sim-5 1 · sim-ΔΑ 1 (TP only)
 #             ΣΥΝΟΛΑ 4 || Σ-1 1 · Σ-2 day 1 · Σ-2 night 1 · Σ-3 2 · Σ-4 1 · Σ-20 —
 #             ΣΥΝΟΛΟ ΕΞΟΔΩΝ 6
+#
+# ── ROUND 15 — A CELL IS A LIST OF FLIGHTS ───────────────────────────────────
+# «Στις πτησεις, Σ ανα εξαμηνο να βαζουμε οταν προσθετουμε και ημερομηνια.»
+# Each entry is {date, eids}: WHEN the sortie was flown and WHICH Ε it covered.
+# Written here as DAYS BEFORE CUR_ANCHOR, exactly like the item dates above, so
+# the file regenerates identically.
+#
+# TWO THINGS THAT ARE DELIBERATELY NOT HERE ANY MORE
+#   · the ΣΥΝΟΛΑ/ΣΥΝΟΛΟ keys. They were double counts: the app derives the two
+#     totals from their component columns now (6 = 1+1+1+2+1, 4 = 1+1+1+1) and
+#     refuses to store anything in them. A seed that still carried them would
+#     hand every fresh install the very migration warning this round adds.
+#   · any eid that is not in data/requirements/instructor_currency.json — the
+#     seam drops unknown ids, and a seed must not need that safety net.
+# The x-* recording columns («Νυχτερινή με μαθητές», FCF) are left EMPTY on
+# purpose: they are aids for the squadron to fill, not something the demo data
+# should invent a history for.
 CUR_SEMESTERS = {
-    # IP-1 — every posted quota met, SIM-ΔΑ included (he carries the TP flag)
+    # IP-1 — every posted quota met, SIM-ΔΑ included (he carries the TP flag).
+    # The Σ-2 night sortie and the Ε it covered are the same day as his
+    # night-landing item date (21 d), so the derived night flag and the flight
+    # log tell the same story.
     "oid-ip-01": {
-        CUR_SEM: {"sim-1": 1, "sim-2": 1, "sim-3": 1, "sim-5": 1, "sim-da": 1,
-                  "semiannual-fs-total-t6": 4,
-                  "s-1-general-adaptation": 1, "s-2-pdo-day": 1, "s-2-pdo-night": 1,
-                  "s-3-air-to-ground": 2, "s-4-air-to-air": 1,
-                  "semiannual-air-total-t6": 6},
+        CUR_SEM: {
+            "sim-1": [(37, [])], "sim-2": [(30, [])], "sim-3": [(16, [])],
+            "sim-5": [(9, [])], "sim-da": [(23, [])],
+            "s-1-general-adaptation": [(44, [])],
+            "s-2-pdo-day": [(35, ["e-4-ifr-approach"])],
+            "s-2-pdo-night": [(21, ["e-6c-landing-light-off-night"])],
+                "s-3-air-to-ground": [(38, ["e-45-visual-delivery-med-hi-apex-day", "e-49c-las-day"]),
+                                  (42, ["e-46-visual-delivery-low-apex-day"])],
+            "s-4-air-to-air": [(42, ["e-31a-low-altitude-intercept-day"])],
+        },
         # last semester, kept on purpose: the key is per semester, so a rollover
         # never overwrites what was already flown
-        "2026-H1": {"sim-1": 1, "sim-2": 1, "sim-5": 1, "semiannual-fs-total-t6": 3,
-                    "s-1-general-adaptation": 1, "s-3-air-to-ground": 2,
-                    "semiannual-air-total-t6": 5},
+        "2026-H1": {
+            "sim-1": [(140, [])], "sim-2": [(133, [])], "sim-5": [(120, [])],
+            "s-1-general-adaptation": [(152, [])],
+            "s-3-air-to-ground": [(125, ["e-40-training-munitions-release"]), (110, [])],
+        },
     },
     # IP-2 — behind: five of the eleven quotas that apply to him are met
     # (no TP flag, so SIM-ΔΑ prints no requirement for him at all)
     "oid-ip-02": {
-        CUR_SEM: {"sim-1": 1, "sim-2": 1, "sim-5": 1, "semiannual-fs-total-t6": 2,
-                  "s-1-general-adaptation": 1, "s-2-pdo-day": 1,
-                  "s-3-air-to-ground": 1, "semiannual-air-total-t6": 3},
+        CUR_SEM: {
+            "sim-1": [(33, [])], "sim-2": [(26, [])], "sim-5": [(12, [])],
+            "s-1-general-adaptation": [(40, [])],
+            "s-2-pdo-day": [(31, ["e-3-in-cloud-flight"])],
+            "s-3-air-to-ground": [(42, ["e-45-visual-delivery-med-hi-apex-day"])],
+        },
     },
     # IP-3 — nothing recorded this semester: the "missing key reads as 0" path
 }
 
+
+def cur_entries(bag):
+    """{item: [(days_before_anchor, [eids])]} → {item: [{date, eids}]}"""
+    return {k: [{"date": cur_day(n), "eids": list(e)} for n, e in v] for k, v in bag.items()}
+
+
+def cur_sem_key(iso):
+    """the app's own rule: calendar halves, H1 = 01/01-30/06, H2 = 01/07-31/12"""
+    return iso[:4] + ("-H1" if int(iso[5:7]) <= 6 else "-H2")
+
+
+# what a column proves BY ITSELF when a flight is recorded in it (Round 15,
+# SchedCurrency.FLIGHT_DERIVE) — the seed applies the same table so the demo
+# store is one the app itself could have produced
+CUR_DERIVE = {"s-2-pdo-night": ["night-landing"], "x-night-students": ["night-landing"],
+              "x-fcf-flight": ["e-1c-aircraft-test-fcf"]}
+
+
+def cur_items_of(oid, items_days):
+    """The Ε dates, AFTER the recorded flights have had their say.
+
+    A sortie that covered Ε-45 dates Ε-45 — that is what SchedCurrency.addEntry
+    does through bump(), forward only and never over a later date. Doing it here
+    too is what keeps the seed HONEST: without it the demo store would show a
+    Σ-3 flight of 07/07 listing Ε-45 while the Ε-45 column still read 23/06,
+    which is a state the app cannot produce and a reviewer cannot explain.
+    It also asserts that every entry really is inside the semester it is filed
+    under — «Αυτα να μετρουνται στην βαση του ημερολογιακου εξαμηνου.»
+    """
+    out = {k: {"last_date": cur_day(n), "src": "manual"} for k, n in items_days.items()}
+    for sem, bag in CUR_SEMESTERS.get(oid, {}).items():
+        for item, entries in bag.items():
+            for n, eids in entries:
+                iso = cur_day(n)
+                assert cur_sem_key(iso) == sem, f"{oid} {item}: {iso} is not inside {sem}"
+                for eid in list(eids) + CUR_DERIVE.get(item, []):
+                    if out.get(eid, {}).get("last_date", "") < iso:
+                        out[eid] = {"last_date": iso, "src": f"flight:{sem}"}
+    return out
+
+
 instructor_currency = [
     {"oid": oid,
-     "items": {k: {"last_date": cur_day(n), "src": "manual"} for k, n in items.items()},
-     **({"semesters": CUR_SEMESTERS[oid]} if oid in CUR_SEMESTERS else {}),
+     "items": cur_items_of(oid, items),
+     **({"semesters": {sem: cur_entries(bag) for sem, bag in CUR_SEMESTERS[oid].items()}}
+        if oid in CUR_SEMESTERS else {}),
      "updated_at": f"2026-08-14T07:{10 + i:02d}:00.000Z"}
     for i, (oid, items) in enumerate(CUR_ITEMS.items())
 ]

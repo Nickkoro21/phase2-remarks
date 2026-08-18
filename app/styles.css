@@ -1830,6 +1830,92 @@ html[data-mode="light"] .mc-leg i[style*="#9d8cff"] { background: var(--mc-8) !i
 .cur-cin[type="number"] { width: 100%; min-width: 42px; }
 .cur-cdate { width: 132px; text-align: left; }
 
+/* ══════════════════════════════════════════════════════════════════════════
+   ROUND 15 — THE MAINTENANCE FLIGHT
+   ① the ⓘ that took the legend off the header bar
+   ② the derived ΣΥΝΟΛΑ cell and the two recording columns
+   ③ the popover the ⓘ and a semester cell open
+   Tokens only, both modes, no modern selector function (the offline builder's
+   CSS gate rejects them for Firefox 72).
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ① — same size and weight as the collapse chevron beside it: it opens a
+   READING, so it must not look like an action with consequences. */
+.cur-i {
+  flex: 0 0 auto; background: transparent; border: 1px solid var(--line);
+  color: var(--muted); border-radius: 999px; width: 20px; height: 20px; line-height: 1;
+  font-family: inherit; font-size: 12px; cursor: pointer; padding: 0;
+}
+.cur-i:hover { color: var(--accent); border-color: var(--accent); }
+.cur-i[aria-expanded="true"] { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+
+/* ② — a DERIVED cell is data, not a control: it keeps its status colour and
+   loses the pointer. The dotted underline is the same "computed, not typed"
+   vocabulary the obligation tag uses. */
+.cur-cell.cur-derived { cursor: help; }
+.cur-cell.cur-derived .cur-cv { border-bottom: 1px dotted currentColor; }
+.cur-cell.cur-derived:hover { outline: none; }
+/* a RECORDING column (x-*) — no quota, so no colour; it is a place to write, and
+   the header is marked with the same quiet dotted edge as the cells. */
+.cur-mxtbl th.cur-xcol { border-left: 1px dashed var(--line); font-style: italic; }
+.cur-cell.cur-xcell { border-left: 1px dashed var(--line); }
+/* the ° that says "some of these sorties carry no date" */
+.cur-undated { color: var(--muted); font-size: 9px; vertical-align: super; margin-left: 1px; }
+/* the + affordance appears on hover only: 1 365 permanent plus signs would be
+   noise, and a cell that cannot be recorded into must not offer one */
+html[data-edit="on"] .cur-cell.is-rec:hover .cur-cv::after {
+  content: " +"; color: var(--accent); font-weight: 700;
+}
+
+/* ③ — ONE popover, two contents. Fixed, because it is anchored to a cell that
+   lives inside a scroller: `absolute` would ride away with the scroll. */
+.cur-pop {
+  position: fixed; z-index: 60; width: min(380px, 94vw);
+  max-height: min(74vh, 620px); overflow-y: auto;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+  padding: 10px 12px; box-shadow: 0 18px 54px var(--shadow);
+}
+.cur-pop.hidden { display: none; }
+.cur-poph { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.cur-poph strong { font-size: 12.5px; letter-spacing: 0.3px; }
+.cur-popsub { font-size: 12px; color: var(--text); margin: 0 0 8px; }
+.cur-popnote { font-size: 11px; color: var(--muted); line-height: 1.45; margin: 6px 0; }
+.cur-poplbl {
+  font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em;
+}
+.cur-popgrid { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cur-popgrid input { flex: 1 1 150px; min-width: 140px; }
+.cur-popbar { display: flex; align-items: center; gap: 8px; margin: 10px 0 4px; }
+.cur-popbar .sch-badge { margin-left: auto; }
+.cur-popq { width: 100%; box-sizing: border-box; margin-bottom: 6px; }
+.cur-popbtns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.cur-pophr { border: 0; border-top: 1px solid var(--line); margin: 12px 0 8px; }
+/* the Ε multi-select — a scrolling list of real checkboxes, so the keyboard,
+   the screen reader and the "space toggles" reflex all work for free */
+.cur-elist {
+  max-height: 190px; overflow-y: auto; border: 1px solid var(--line); border-radius: 8px;
+  padding: 4px; background: var(--panel-2);
+}
+.cur-echk {
+  display: flex; align-items: flex-start; gap: 6px; padding: 3px 5px; border-radius: 6px;
+  font-size: 11.5px; line-height: 1.35; cursor: pointer; color: var(--text);
+}
+.cur-echk:hover { background: var(--accent-soft); }
+.cur-echk input { margin: 1px 0 0; flex: 0 0 auto; }
+/* the sorties already recorded in this cell */
+.cur-entries { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 3px; }
+.cur-entry {
+  display: flex; align-items: center; gap: 8px; font-size: 11.5px;
+  border: 1px solid var(--line); border-radius: 7px; padding: 3px 6px;
+}
+.cur-entryd { font-family: Consolas, monospace; font-variant-numeric: tabular-nums; color: var(--text); }
+.cur-entryd.is-undated { color: var(--muted); font-style: italic; font-family: inherit; }
+.cur-entrye { color: var(--muted); }
+.cur-entryx { margin-left: auto; }
+.cur-pop :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* a popover is a screen affordance: paper carries the same words in the sheet */
+@media print { .cur-pop, .cur-i { display: none !important; } }
+
 /* the semester chip — its own colour, never the availability dot's */
 .sch-badge.cur-sem { color: var(--muted); }
 .sch-badge.cur-sem.st-ok { color: var(--good); border-color: var(--good); }

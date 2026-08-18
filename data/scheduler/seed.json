@@ -23312,16 +23312,16 @@
      "src": "manual"
     },
     "e-45-visual-delivery-med-hi-apex-day": {
-     "last_date": "2026-06-23",
-     "src": "manual"
+     "last_date": "2026-07-07",
+     "src": "flight:2026-H2"
     },
     "e-46-visual-delivery-low-apex-day": {
      "last_date": "2026-07-03",
      "src": "manual"
     },
     "e-49c-las-day": {
-     "last_date": "2026-06-23",
-     "src": "manual"
+     "last_date": "2026-07-07",
+     "src": "flight:2026-H2"
     },
     "sim-refresh-after-abstention": {
      "last_date": "2026-07-30",
@@ -23414,31 +23414,131 @@
     "body-weight-check": {
      "last_date": "2026-07-03",
      "src": "manual"
+    },
+    "e-4-ifr-approach": {
+     "last_date": "2026-07-10",
+     "src": "flight:2026-H2"
+    },
+    "e-6c-landing-light-off-night": {
+     "last_date": "2026-07-24",
+     "src": "flight:2026-H2"
     }
    },
    "semesters": {
     "2026-H2": {
-     "sim-1": 1,
-     "sim-2": 1,
-     "sim-3": 1,
-     "sim-5": 1,
-     "sim-da": 1,
-     "semiannual-fs-total-t6": 4,
-     "s-1-general-adaptation": 1,
-     "s-2-pdo-day": 1,
-     "s-2-pdo-night": 1,
-     "s-3-air-to-ground": 2,
-     "s-4-air-to-air": 1,
-     "semiannual-air-total-t6": 6
+     "sim-1": [
+      {
+       "date": "2026-07-08",
+       "eids": []
+      }
+     ],
+     "sim-2": [
+      {
+       "date": "2026-07-15",
+       "eids": []
+      }
+     ],
+     "sim-3": [
+      {
+       "date": "2026-07-29",
+       "eids": []
+      }
+     ],
+     "sim-5": [
+      {
+       "date": "2026-08-05",
+       "eids": []
+      }
+     ],
+     "sim-da": [
+      {
+       "date": "2026-07-22",
+       "eids": []
+      }
+     ],
+     "s-1-general-adaptation": [
+      {
+       "date": "2026-07-01",
+       "eids": []
+      }
+     ],
+     "s-2-pdo-day": [
+      {
+       "date": "2026-07-10",
+       "eids": [
+        "e-4-ifr-approach"
+       ]
+      }
+     ],
+     "s-2-pdo-night": [
+      {
+       "date": "2026-07-24",
+       "eids": [
+        "e-6c-landing-light-off-night"
+       ]
+      }
+     ],
+     "s-3-air-to-ground": [
+      {
+       "date": "2026-07-07",
+       "eids": [
+        "e-45-visual-delivery-med-hi-apex-day",
+        "e-49c-las-day"
+       ]
+      },
+      {
+       "date": "2026-07-03",
+       "eids": [
+        "e-46-visual-delivery-low-apex-day"
+       ]
+      }
+     ],
+     "s-4-air-to-air": [
+      {
+       "date": "2026-07-03",
+       "eids": [
+        "e-31a-low-altitude-intercept-day"
+       ]
+      }
+     ]
     },
     "2026-H1": {
-     "sim-1": 1,
-     "sim-2": 1,
-     "sim-5": 1,
-     "semiannual-fs-total-t6": 3,
-     "s-1-general-adaptation": 1,
-     "s-3-air-to-ground": 2,
-     "semiannual-air-total-t6": 5
+     "sim-1": [
+      {
+       "date": "2026-03-27",
+       "eids": []
+      }
+     ],
+     "sim-2": [
+      {
+       "date": "2026-04-03",
+       "eids": []
+      }
+     ],
+     "sim-5": [
+      {
+       "date": "2026-04-16",
+       "eids": []
+      }
+     ],
+     "s-1-general-adaptation": [
+      {
+       "date": "2026-03-15",
+       "eids": []
+      }
+     ],
+     "s-3-air-to-ground": [
+      {
+       "date": "2026-04-11",
+       "eids": [
+        "e-40-training-munitions-release"
+       ]
+      },
+      {
+       "date": "2026-04-26",
+       "eids": []
+      }
+     ]
     }
    },
    "updated_at": "2026-08-14T07:10:00.000Z"
@@ -23585,14 +23685,46 @@
    },
    "semesters": {
     "2026-H2": {
-     "sim-1": 1,
-     "sim-2": 1,
-     "sim-5": 1,
-     "semiannual-fs-total-t6": 2,
-     "s-1-general-adaptation": 1,
-     "s-2-pdo-day": 1,
-     "s-3-air-to-ground": 1,
-     "semiannual-air-total-t6": 3
+     "sim-1": [
+      {
+       "date": "2026-07-12",
+       "eids": []
+      }
+     ],
+     "sim-2": [
+      {
+       "date": "2026-07-19",
+       "eids": []
+      }
+     ],
+     "sim-5": [
+      {
+       "date": "2026-08-02",
+       "eids": []
+      }
+     ],
+     "s-1-general-adaptation": [
+      {
+       "date": "2026-07-05",
+       "eids": []
+      }
+     ],
+     "s-2-pdo-day": [
+      {
+       "date": "2026-07-14",
+       "eids": [
+        "e-3-in-cloud-flight"
+       ]
+      }
+     ],
+     "s-3-air-to-ground": [
+      {
+       "date": "2026-07-03",
+       "eids": [
+        "e-45-visual-delivery-med-hi-apex-day"
+       ]
+      }
+     ]
     }
    },
    "updated_at": "2026-08-14T07:11:00.000Z"

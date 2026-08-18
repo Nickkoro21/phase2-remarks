@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Phase 2 FDMS — T-6A Texan II</title>
-<link rel="stylesheet" href="styles.css?v=20260818g">
+<link rel="stylesheet" href="styles.css?v=20260818h">
 <script>
 /* Palette before first paint — no flash of the default theme on reload.
    Mirrors app.js (PALETTES / apply): same keys, same migration of the old
@@ -162,6 +162,11 @@
      εμφανίζεται ΜΟΝΟ όταν κάποιος ενεργός εκπαιδευτής έχει demo_pilot, και
      τότε μόνο με αυτούς ως γραμμές. 85 + 6 = 91 — κάθε id ακριβώς σε έναν
      πίνακα· το ελέγχει στο boot η curCoverage().
+     ΓΥΡΟΣ 15: το κελί του εξαμήνου είναι ΛΙΣΤΑ ΠΤΗΣΕΩΝ (ημερομηνία + ποια Ε
+     εκτελέστηκαν) — ανοίγει φόρμα, όχι κουτί αριθμού· τα ΣΥΝΟΛΑ υπολογίζονται
+     και δεν πληκτρολογούνται· ο ① έχει ΔΥΟ ΕΠΙΠΛΕΟΝ ΣΤΗΛΕΣ ΚΑΤΑΓΡΑΦΗΣ
+     («Νυχτερινή με μαθητές», «Πτήση δοκιμής (FCF)» — ids x-*, ΕΚΤΟΣ των 91)·
+     οι επεξηγήσεις κάθε πίνακα πήγαν πίσω από ⓘ.
      Όλο το HTML το γράφει το app/currency.js. -->
 <main class="cur-view hidden" id="view-currency">
   <section class="cur-main" id="cur-main"></section>
@@ -184,13 +189,13 @@
   </div>
 </div>
 
-<script src="app.js?v=20260818g"></script>
-<script src="flowchart.js?v=20260818g"></script>
-<script src="schedval.js?v=20260818g"></script>
-<script src="schedstore.js?v=20260818g"></script>
-<script src="scheduler.js?v=20260818g"></script>
-<script src="schedconsq.js?v=20260818g"></script>
-<script src="schedboard.js?v=20260818g"></script>
-<script src="currency.js?v=20260818g"></script>
+<script src="app.js?v=20260818h"></script>
+<script src="flowchart.js?v=20260818h"></script>
+<script src="schedval.js?v=20260818h"></script>
+<script src="schedstore.js?v=20260818h"></script>
+<script src="scheduler.js?v=20260818h"></script>
+<script src="schedconsq.js?v=20260818h"></script>
+<script src="schedboard.js?v=20260818h"></script>
+<script src="currency.js?v=20260818h"></script>
 </body>
 </html>
