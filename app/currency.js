@@ -1492,7 +1492,11 @@
     if (pop.kind === "flight" && !all.some((i) => i.code === pop.code)) popClose();
     $id("cur-main").innerHTML = headHtml(all) + shownTables().map((t) => tableHtml(t, all)).join("");
     const inp = $id("cur-editing");
-    if (inp) inp.focus();
+    /* preventScroll — Round 15b. A plain focus() SCROLLS the document to the
+       matrix editor, and the popover below is then placed against an anchor
+       that has just been carried off-screen (R15 verify, notes fix 2): the
+       flight form vanished after every save. The caret still lands here. */
+    if (inp) inp.focus({ preventScroll: true });
     /* the popover survives the repaint (it lives outside #cur-main), but its
        anchor was just re-created: re-render its body — the entry list is a
        reading of the store that just changed — and hang it off the new cell.
@@ -2312,7 +2316,13 @@
     const w = el.offsetWidth || 340, h = el.offsetHeight || 240, pad = 8;
     const left = Math.max(pad, Math.min(r.left, window.innerWidth - w - pad));
     let top = r.bottom + 6;
-    if (top + h > window.innerHeight - pad) top = Math.max(pad, r.top - h - 6);
+    if (top + h > window.innerHeight - pad) top = r.top - h - 6;
+    /* BOTH branches are clamped since Round 15b. The "below the anchor" one was
+       not, so an anchor that had scrolled out of the viewport for ANY reason
+       drew the popover at a negative top — off-screen, with the entry list and
+       its ✕ out of reach. A popover is never worth less than visible: it is
+       pinned inside the viewport and scrolls its own body (max-height). */
+    top = Math.max(pad, Math.min(top, window.innerHeight - h - pad));
     el.style.left = Math.round(left) + "px";
     el.style.top = Math.round(top) + "px";
   }
@@ -2367,23 +2377,31 @@
     <button type="button" class="sch-mini" data-nav data-pop="close" title="close (Esc)">✕</button></div>`;
 
   /* ── THE FLIGHT FORM ──────────────────────────────────────── (Round 15) ─
-     Date + which Ε were flown, and under it the sorties already recorded in
-     this cell's semester, each with its own ✕. The list is the CURRENT
-     semester's — the same set the cell counts — and any other semester this
-     instructor has entries in is named underneath rather than hidden.      */
+     Date + which Ε were flown, and under it EVERY sortie recorded in this cell,
+     grouped by the semester its own date filed it under — this half first, then
+     the others newest first, each entry with its own ✕.
+     ROUND 15b: the list used to be the current half only, which made a sortie
+     mis-typed into 30/06 or into 2027 readable but UNDELETABLE (R15 verify item
+     1.i) — the form wrote into any semester by date and deleted from one. Every
+     ✕ now carries the key of the group it sits in, so it deletes out of the half
+     that actually holds it; an emptied cell and an emptied semester still drop
+     their keys (writeBag), so nothing accumulates.                          */
   function popFlightHtml() {
     const ip = S().find("instructors", pop.code);
     const it = CUR().byId(pop.id) || CUR().synthItems().filter((x) => x.id === pop.id)[0];
     if (!ip || !ip.oid || !it) return "";
     const w = CUR().curSem();
     const q = CUR().quotaOf(it, ip);
-    const list = CUR().entriesOf(ip.oid, pop.id);
-    const rows = list.map((e, k) => ({ e: e, i: k }))
+    /* the stored index is what delEntry() takes, so it is captured BEFORE the
+       display sort (newest first) — the two orders are not the same */
+    const rowsOf = (k) => CUR().entriesOf(ip.oid, pop.id, k).map((e, i) => ({ e: e, i: i }))
       .sort((a, b) => String(b.e.date || "").localeCompare(String(a.e.date || "")));
     const eids = pop.eids || new Set();
     const es = eItemsFor(ip);
     const auto = CUR().flightDerive(pop.id);
     const other = CUR().semKeysOf(ip.oid).filter((k) => k !== w.key && CUR().entriesOf(ip.oid, pop.id, k).length);
+    const bags = [{ key: w.key, label: w.label, cur: true, rows: rowsOf(w.key) }]
+      .concat(other.map((k) => ({ key: k, label: CUR().semOf(k).label, cur: false, rows: rowsOf(k) })));
     const ro = !canEdit();
     return popHead("✈ Record a maintenance flight")
       + `<p class="cur-popsub"><b>${esc(who(ip))}</b> · ${esc(it.name)}</p>
@@ -2412,15 +2430,18 @@
         <button type="button" class="sch-btn" data-pop="close">Cancel</button>
       </div>`}
       <hr class="cur-pophr">
-      <p class="cur-poplbl">Recorded in ${esc(w.label)} — ${rows.length} sortie${rows.length === 1 ? "" : "s"}</p>
-      ${rows.length ? `<ul class="cur-entries">${rows.map((r) => entryLi(r.e, r.i, ro)).join("")}</ul>`
-        : `<p class="cur-popnote">Nothing recorded in this cell yet.</p>`}
-      ${other.length ? `<p class="cur-popnote">Also recorded in ${other.map((k) => esc(CUR().semOf(k).label)
-        + " (" + CUR().entriesOf(ip.oid, pop.id, k).length + ")").join(" · ")} — a past semester is never overwritten
-        and is not shown in this cell.</p>` : ""}`;
+      ${bags.map((b) => `<p class="cur-poplbl${b.cur ? "" : " cur-semh"}">${b.cur ? "Recorded in " : ""}${esc(b.label)}
+        — ${b.rows.length} sortie${b.rows.length === 1 ? "" : "s"}${b.cur ? "" : " · counted in that half"}</p>
+      ${b.rows.length ? `<ul class="cur-entries">${b.rows.map((r) => entryLi(r.e, r.i, ro, b.key)).join("")}</ul>`
+        : `<p class="cur-popnote">Nothing recorded in this cell yet.</p>`}`).join("")}
+      ${other.length ? `<p class="cur-popnote">A sortie is filed by <b>its own date</b>, so the ${other.length === 1
+        ? "half listed above is <b>another semester</b> — counted in <b>its own half</b>"
+        : "halves listed above are <b>other semesters</b> — each counted in <b>its own half</b>"}, not in this cell.
+        ${ro ? "Shown so that nothing is hidden from a reader."
+        : "Each carries its own ✕, so a sortie typed on the wrong day can be taken out of the half that holds it."}</p>` : ""}`;
   }
 
-  function entryLi(e, idx, ro) {
+  function entryLi(e, idx, ro, semKey) {
     const names = (e.eids || []).map((id) => (CUR().byId(id) || {}).name || id);
     return `<li class="cur-entry">
       <span class="cur-entryd${e.date ? "" : " is-undated"}"
@@ -2428,7 +2449,7 @@
         >${e.date ? esc(dmy(e.date).slice(0, 5)) : "undated"}</span>
       <span class="cur-entrye" title="${esc(names.length ? names.join("\n") : "no Ε exercise was recorded on this sortie")}"
         >${e.eids && e.eids.length ? e.eids.length + " Ε" : "—"}</span>
-      ${ro ? "" : `<button type="button" class="sch-mini cur-entryx" data-pop="del" data-i="${idx}"
+      ${ro ? "" : `<button type="button" class="sch-mini cur-entryx" data-pop="del" data-i="${idx}" data-k="${esc(semKey || "")}"
         title="delete this recorded sortie — the Ε dates it wrote are NOT rolled back, they are the truth of what was flown">✕</button>`}
     </li>`;
   }
@@ -2465,18 +2486,23 @@
       }
       const src = "flight:" + r.key;
       const seen = Object.create(null);
+      /* ROUND 15b — the two families are counted BY ORIGIN, not by item kind.
+         Round 15 asked «is this row an e-item?», which is a question about the
+         catalog, not about what the user did: an FCF flight with nothing ticked
+         dates Ε-1γ by itself and the toast said «1 Ε updated» (R15 verify item
+         2, NIT) — the man ticked no Ε at all. TICKED is Ε; what the COLUMN
+         implies by itself (a night landing, the Ε-1γ of an FCF) is a row dated,
+         whatever kind the catalog gives it. */
+      const ticked = Object.create(null);
+      for (const id of chosen) ticked[id] = 1;
       let movedE = 0, movedOther = 0, kept = 0;
       for (const id of CUR().flightDerive(pop.id).concat(chosen)) {
         if (seen[id]) continue;
         seen[id] = 1;
         const before = CUR().dateOf(ip.oid, id);
         CUR().bump(ip.oid, id, date, src);
-        /* the two families are counted apart: what the user TICKED is Ε, what
-           the COLUMN itself implies (a night landing, the Ε-1γ of an FCF) is
-           not, and calling a night-landing row «1 Ε updated» would be a small
-           untruth in the one line he actually reads. */
         if (CUR().dateOf(ip.oid, id) === before) kept += 1;
-        else if ((CUR().byId(id) || {}).kind === "e-item") movedE += 1;
+        else if (ticked[id]) movedE += 1;
         else movedOther += 1;
       }
       const item = CUR().byId(pop.id) || CUR().synthItems().filter((x) => x.id === pop.id)[0] || { name: pop.id };
@@ -2492,12 +2518,19 @@
     }
   }
 
-  function popDel(idx) {
+  /* the ✕ carries the semester it belongs to (Round 15b) — an entry filed by
+     its own date into another half is deleted out of THAT half, never out of
+     the current one by accident. A missing key still means «the current one»,
+     which is exactly what semKeyOrNull() reads a blank as. */
+  function popDel(idx, semKey) {
     const ip = S().find("instructors", pop.code);
     if (!ip || !ip.oid) return;
-    const ok = CUR().delEntry(ip.oid, pop.id, null, idx);
+    const key = semKey || null;
+    const ok = CUR().delEntry(ip.oid, pop.id, key, idx);
     if (!ok) { S().toast("Nothing deleted.", "bad"); return; }
-    S().toast("Recorded sortie deleted. The Ε dates it wrote stay — they are what was flown.", "good");
+    S().toast("Recorded sortie deleted"
+      + (key && key !== CUR().curSem().key ? " from " + CUR().semOf(key).label : "")
+      + ". The Ε dates it wrote stay — they are what was flown.", "good");
   }
 
   /* every click inside the popover, in one place */
@@ -2507,7 +2540,7 @@
     const act = b.dataset.pop;
     if (act === "close") { popClose(); return; }
     if (act === "save") { popSave(); return; }
-    if (act === "del") { popDel(b.dataset.i); return; }
+    if (act === "del") { popDel(b.dataset.i, b.dataset.k); return; }
   }
 
   /* ══ wiring — attached ONCE to the view element ═════════════════════════
@@ -2650,6 +2683,11 @@
        second click on the same cell closes it again. */
     if (cell.dataset.k === "q") {
       if (pop.kind === "flight" && pop.code === code && pop.id === id) { popClose(); return; }
+      /* ROUND 15b — a flight form and a matrix date editor are never open at
+         the same time. Two reasons, and the second is the bug: they are two
+         edits of two different things, and the editor's focus() steals the
+         scroll on EVERY repaint, dragging the form's anchor out of view. */
+      if (ui.edit) { ui.edit = null; popClose(); render(); }
       popOpenFlight(code, id);
       return;
     }

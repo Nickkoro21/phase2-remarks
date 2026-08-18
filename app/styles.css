@@ -1902,7 +1902,10 @@ html[data-edit="on"] .cur-cell.is-rec:hover .cur-cv::after {
 }
 .cur-echk:hover { background: var(--accent-soft); }
 .cur-echk input { margin: 1px 0 0; flex: 0 0 auto; }
-/* the sorties already recorded in this cell */
+/* the sorties already recorded in this cell — Round 15b groups them by the
+   semester their own date filed them under, so a mis-dated one can be deleted;
+   the heading of a group that is NOT this half is set apart, never hidden */
+.cur-semh { display: block; margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--line); }
 .cur-entries { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 3px; }
 .cur-entry {
   display: flex; align-items: center; gap: 8px; font-size: 11.5px;
