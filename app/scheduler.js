@@ -363,7 +363,7 @@ window.fmtDMY = function fmtDMY(v) {
     }
     return false;
   }
-  const absentIn = (ev, code) => (ev.absent || []).find((a) => a.student === code) || null;
+  const absentIn = (ev, code) => (Array.isArray(ev.absent) ? ev.absent : []).find((a) => a.student === code) || null;
 
   function passPct() { return num(window.SchedStore.cfg("exam_pass_pct", 80)) || 80; }
 
@@ -1808,6 +1808,12 @@ window.fmtDMY = function fmtDMY(v) {
   }
 
   function repairCodes() {
+    /* R12 verify item 21 — the button is already gated out of the DOM while
+       locked, but a seam-level refusal must never read as a success toast */
+    if (window.SchedEdit && !window.SchedEdit.on()) {
+      window.SchedEdit.refuse("repair codes");
+      return;
+    }
     const plan = repairPlan();
     if (!plan.rows.length) {
       S().toast("Nothing to repair — every code is already a proper one.", "good");

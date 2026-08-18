@@ -2526,7 +2526,7 @@
       ].map((s) => `<span class="sch-badge${s.k === pd.stage ? " r-fail" : ""}">${esc(s.t)}</span>`).join(" → ");
       bits.push(`<div class="sch-consqban is-pd">
         <b>PD 29/2020</b> — ALL activities stop (flights · F/S · exams · lessons) —
-        after ${esc(pd.srcLabel)}${pd.since ? " on " + esc(dmy(pd.since)) : ""}${pd.failIp ? " with " + esc(pd.failIp) : ""}
+        after ${esc(pd.srcLabel)}${pd.since ? " on " + esc(dmy(pd.since)) : ""}${pd.failIp ? " with " + esc(nm(pd.failIp)) : ""}
         <em class="sch-wcid" title="${esc((REQ_SRC[pd.req] || "") + " — " + cq.vb(pd.req))}">${esc(pd.req)}</em><br>
         ${path}${pd.stage === "stopped" ? ` <span class="sch-badge r-fail">STOP — training stopped</span>` : ""}
         <span class="sch-hint">${esc(cq.pdStageText(pd))}</span>
@@ -2539,7 +2539,7 @@
     const note = cq.pdNote(code);
     if (note && note.avoidIp) {
       bits.push(`<div class="sch-consqban">Progress Test passed${note.since ? " on " + esc(dmy(note.since)) : ""} —
-        continue with a <b>DIFFERENT instructor</b> (not ${esc(note.avoidIp)}) <em class="sch-wcid">fail-16</em></div>`);
+        continue with a <b>DIFFERENT instructor</b> (not ${esc(nm(note.avoidIp))}) <em class="sch-wcid">fail-16</em></div>`);
     }
     for (const a of cq.aptPending(code)) {
       bits.push(`<div class="sch-consqban is-apt"><b>APT EXAM pending</b> — ${esc(cq.CAT_LABEL[a.category] || a.category)}
