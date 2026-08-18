@@ -1624,7 +1624,8 @@ html[data-mode="light"] .mc-leg i[style*="#9d8cff"] { background: var(--mc-8) !i
 #sch-progbody .is-flash { outline: 2px solid transparent; outline-offset: 2px; animation: schFlash 1.8s ease-out; }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   INSTRUCTOR CURRENCY — Round 10b (the card), 11 (its own tab), 12a (MATRIX)
+   INSTRUCTOR CURRENCY — Round 10b (the card), 11 (its own tab), 12a (MATRIX),
+   13 (whole names · horizontal wrapped column heads · ΑΕΡΟΣ first, F/S last)
    Tokens only (--good / --warn / --bad / --muted / --accent / --line), so all
    eight palettes and both modes get it for free, and the print block that
    flattens the palette to black-on-white already covers the printed sheet.
@@ -1633,7 +1634,7 @@ html[data-mode="light"] .mc-leg i[style*="#9d8cff"] { background: var(--mc-8) !i
    goes with it instead of rotting.
    ══════════════════════════════════════════════════════════════════════════ */
 
-/* ── the tab shell — ONE column now: the four matrices sit under each other,
+/* ── the tab shell — ONE column now: the five matrices sit under each other,
    each with its own horizontal scroller. .hidden must beat the display rule. */
 .cur-view.hidden, #view-currency .hidden { display: none; }
 .cur-view {
@@ -1672,27 +1673,50 @@ html[data-mode="light"] .mc-leg i[style*="#9d8cff"] { background: var(--mc-8) !i
   padding: 3px 4px; border-bottom: 1px solid var(--line); vertical-align: middle;
 }
 
-/* COLUMN HEADS — the head of the item name, set vertically so a 29-column
-   table still fits on one screen. The full name lives in the title tooltip. */
-.cur-mxtbl thead th {
+/* COLUMN HEADS — ROUND 13: «Τα ονόματα από τις στήλες wrap και οριζόντια
+   γραφή». The head of the item name is set HORIZONTALLY and wraps over two or
+   three lines; the vertical writing-mode and its rotation are gone, and with
+   them the 212px-tall header band. The column is therefore ~7 characters wide
+   instead of ~3, the table scrolls further sideways (its scroller already owns
+   that axis) and the DATA cells stay as narrow as their reading: they hold
+   «+123» or «3/4», so the header width is the only thing setting the column.
+   The full name still lives in the title tooltip. */
+/* the spacer of the head row is a <td>, so it is named here as well: left out,
+   it would be the one transparent patch of an otherwise opaque sticky header
+   and the rows would scroll visibly through it */
+.cur-mxtbl thead th, .cur-mxtbl thead .cur-pad {
   position: sticky; top: 0; z-index: 2; background: var(--panel);
   box-shadow: inset 0 -1px 0 var(--line);
 }
 .cur-mxtbl th.cur-col {
-  min-width: 46px; width: 46px; height: 212px; padding: 5px 1px 6px; text-align: center; vertical-align: bottom;
+  /* one width for every column: wide enough for the longest unbreakable word of
+     the catalog («Επανεξυπηρέτηση», «certification») and for the clipped head
+     to land in three lines, and still under the 130px a DATA cell must not
+     exceed — the cells themselves read «+123» or «3/4» and never ask for more */
+  min-width: 112px; width: 112px; padding: 5px 5px 6px; text-align: center; vertical-align: bottom;
   font-size: 10px; text-transform: none; letter-spacing: 0; color: var(--muted); font-weight: 600;
   border-left: 1px solid var(--line); cursor: help; white-space: normal;
 }
 .cur-mxtbl th.cur-col .cur-collbl {
-  writing-mode: vertical-rl; transform: rotate(180deg);
-  display: inline-block; white-space: nowrap; max-height: 200px; overflow: hidden;
+  /* hyphenless wrap: break BETWEEN words (and at the hyphens the catalog itself
+     prints), never with an inserted hyphen and never mid-word unless a single
+     word is wider than the column on its own */
+  display: block; width: 100%; white-space: normal; line-height: 1.25;
+  overflow-wrap: break-word; word-break: normal; hyphens: none;
 }
 .cur-mxtbl th.cur-col:hover { color: var(--accent); }
+/* the spacer that eats a narrow table's slack (see gridHtml) — it must not be
+   allowed to take a minimum of its own, or it would widen the table it pads */
+.cur-mxtbl .cur-pad { width: 100%; min-width: 0; padding: 0; border-left: 1px solid var(--line); }
 
 /* THE FROZEN NAME COLUMN — it must stay above both the row cells and the
-   column heads, so it carries the highest z-index of the table. */
+   column heads, so it carries the highest z-index of the table.
+   ROUND 13: «Στο Currency να φαίνονται ολόκληρα τα ονόματα». The width is a
+   MINIMUM, never a maximum, and nothing inside clips: a name longer than the
+   minimum widens the column instead of losing its tail. Every table shows the
+   same rows, so they all land on the same width. */
 .cur-mxtbl th.cur-who {
-  position: sticky; left: 0; z-index: 4; min-width: 268px; width: 268px; background: var(--panel);
+  position: sticky; left: 0; z-index: 4; min-width: 208px; background: var(--panel);
   text-align: left; text-transform: none; letter-spacing: 0; font-weight: 400;
   color: var(--text); box-shadow: inset -1px 0 0 var(--line);
 }
@@ -1701,13 +1725,15 @@ html[data-mode="light"] .mc-leg i[style*="#9d8cff"] { background: var(--mc-8) !i
   color: var(--muted); font-weight: 600; vertical-align: bottom;
 }
 .cur-whobox {
-  /* a fixed box, so the column keeps ONE width in all four tables and a long
-     name ellipsises instead of pushing the grid sideways */
-  display: flex; align-items: center; gap: 5px; min-width: 0; width: 262px;
+  /* TWO LINES: the dot + the whole name, then the chips and the 🖨 under it.
+     Stacking is what buys the name its full width while the row stays one line
+     taller — never two rows of grid. */
+  display: flex; flex-direction: column; align-items: stretch; gap: 1px; min-width: 0;
 }
+.cur-wholine { display: flex; align-items: center; gap: 5px; min-width: 0; }
 .cur-who-n {
   font-size: 12px; font-weight: 600; color: var(--text); cursor: help;
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  white-space: nowrap;                 /* one line — and never cut: no clip here */
 }
 .cur-lvl { align-self: center; }
 .cur-mxtbl tbody tr:hover .cur-who { background: var(--panel-2); }
@@ -1771,8 +1797,10 @@ html[data-mode="light"] .mc-leg i[style*="#9d8cff"] { background: var(--mc-8) !i
 
 @media (max-width: 1100px) {
   .cur-view { padding: 12px 10px; }
-  .cur-mxtbl th.cur-who { min-width: 200px; width: 200px; }
-  .cur-whobox { width: 194px; }
+  /* a smaller minimum only — the name still sets the real width, so a narrow
+     screen scrolls the grid instead of eating the surname */
+  .cur-mxtbl th.cur-who { min-width: 178px; }
+  .cur-mxtbl th.cur-col { min-width: 106px; width: 106px; }
 }
 
 /* The supported path to paper is the row's 🖨 (the #sch-print sheet, which

@@ -25,11 +25,12 @@
        each, the min(round(v×25%), 45) colour rule, recorded obligations with
        per-id reasons, ≈ conversions and ⚠ flags.
      15 + 76 = 91 = the whole catalog; every id is rendered exactly once —
-     asserted at boot by curCoverage() over the four tables.
+     asserted at boot by curCoverage() over the five tables (Round 13 split the
+     semester block into ΑΕΡΟΣ first and F/S last; see the second IIFE).
 
    THE ONE EXCEPTION, NAMED OUT LOUD
      `sim-refresh-after-abstention` is of kind "sim", so the kind split puts it
-     in table ①, but it is NOT a quota: §49 prints a THRESHOLD IN DAYS (45
+     in the F/S table (⑤), but it is NOT a quota: §49 prints a THRESHOLD IN DAYS (45
      experienced / 30 inexperienced) above which a SIM-1 refresh is required
      before the next air flight, and it really does gate availability. It
      therefore keeps its DATE input, keeps its window colour and keeps counting
@@ -438,7 +439,9 @@
         + "the semester figures a MINIMUM, so the squadron's own total is the honest number to type" },
     "sim-refresh-after-abstention": { grp: "sim", posted: null, attached: null, window: true,
       src: "Ch.4 §49 (PDF p.108)",
-      why: "not a quota at all — §49 prints a THRESHOLD IN DAYS (more than 45 for an experienced flyer, "
+      /* the reason reads straight after colTip's own «THRESHOLD, NOT A QUOTA —»
+         prefix, so it does not repeat the words (Round 13) */
+      why: "§49 prints a THRESHOLD IN DAYS (more than 45 for an experienced flyer, "
         + "more than 30 for an inexperienced one) above which 1 (or 2) SIM-1 sorties are required BEFORE "
         + "the next air flight. It keeps its date, its window colour and its place in the availability count" },
     /* ── Πίνακας 9 — ΕΞΑΜΗΝΙΑΙΟ ΠΡΟΓΡΑΜΜΑ ΕΞΟΔΩΝ ΣΤΑΔΙΟΥ ΣΥΝΤΗΡΗΣΗΣ Α/Φ Τ-6Α  */
@@ -698,15 +701,21 @@
 
      ROWS      every ACTIVE instructor, one row each, named «SURNAME N.» through
                SchedStore.personLabel — no internal handle is rendered anywhere.
-     COLUMNS   the catalog events, split across FOUR tables so a column stays
+               Round 13: the name is NEVER clipped (see .cur-whobox in the CSS).
+     COLUMNS   the catalog events, split across FIVE tables so a column stays
                readable and no table is wider than ~30 columns:
-                 ① ΑΝΑ ΕΞΑΜΗΝΟ        15 (the quota rows + the §49 threshold)
-                 ② Landings + Recency 19
-                 ③ Ε-items            28
-                 ④ Other              29
-               Every catalog id sits in EXACTLY ONE table: 15+19+28+29 = 91,
+                 ① ΑΝΑ ΕΞΑΜΗΝΟ — ΑΕΡΟΣ   7
+                 ② Landings + Recency    19
+                 ③ Ε-items               28
+                 ④ Other                 29
+                 ⑤ ΑΝΑ ΕΞΑΜΗΝΟ — F/S      8 (the SIM quotas + the §49 threshold)
+               Every catalog id sits in EXACTLY ONE table: 7+19+28+29+8 = 91,
                asserted at boot by curCoverage() — a silent gap would mean an
                instructor holds something the app never shows him.
+               Round 13 directive, in the user's words: «Ξεχωριστό section για
+               F/S και πτήσεις. Τα F/S στο τέλος.» — so what he flies opens the
+               tab and the simulator closes it, each with its own legend, its
+               own rollup and its own collapse state.
      CELLS     one compact reading — «x/N» for a quota, signed days-left for a
                dated item — that becomes the REAL native input (number / date)
                on click. The write goes through the SAME two seams as Round 11,
@@ -736,23 +745,50 @@
   /* «SURNAME N.» — the one display-name helper of the whole app (Round 12a) */
   const who = (rec) => S().personLabel(rec);
 
-  /* ── THE FOUR TABLES ─────────────────────────────────────────────────────
-     ① is the semester block in PRINTED table order (Πίνακας 6, then Πίνακας 9),
-     ②③④ split the 76 dated ids by catalog kind. The kinds are named, never
+  /* ── THE FIVE TABLES ─────────────────────────────────────────────────────
+     Round 13 directive: «Ξεχωριστό section για F/S και πτήσεις. Τα F/S στο
+     τέλος.» The single semester block of Round 12 held both printed tables at
+     once, so the simulator and the aircraft shared one screen, one legend and
+     one rollup. They are now TWO sections and they sit at the two ends of the
+     tab: what he FLIES opens the page, what he flies IN THE BOX closes it.
+
+       ① ΑΝΑ ΕΞΑΜΗΝΟ — ΑΕΡΟΣ   7   Πίνακας 9, the Σ categories + its ΣΥΝΟΛΟ
+       ② Landings + Recency    19
+       ③ Ε-items               28
+       ④ Other                 29
+       ⑤ ΑΝΑ ΕΞΑΜΗΝΟ — F/S     8   Πίνακας 6, the SIM rows + its ΣΥΝΟΛΑ, and
+                                   the ONE §49 threshold row (see the file
+                                   header): it is not a quota, it keeps its
+                                   date and it keeps counting for availability,
+                                   and it travels with the F/S table because
+                                   §49 is answered with SIM-1 sorties.
+     7+19+28+29+8 = 91, every id exactly once — asserted by curCoverage().
+
+     `semgrp` picks ONE group of the engine's SEM_GRP (the engine is untouched:
+     it still knows the printed tables in printed order, and each section here
+     reads its own). ②③④ split the dated ids by catalog kind — named, never
      sniffed, so a new catalog kind shows up as a coverage warning instead of
-     quietly disappearing from the screen.                                    */
+     quietly disappearing from the screen.
+
+     COLLAPSE KEYS — "sem" is deliberately kept for ① so a user who had the
+     semester block closed before Round 13 finds the air table closed; "semfs"
+     is new and therefore opens by default. A stale key nobody reads any more
+     is harmless (colMap only ever answers questions it is asked).            */
   const TABLES = [
-    { key: "sem", n: "①", sem: true, label: "ΑΝΑ ΕΞΑΜΗΝΟ — semester quotas",
-      note: "sorties per semester — Πίνακας 6 (F/S) and Πίνακας 9 (air). A quota is not a window: "
-        + "nothing counts down and a shortfall costs no availability (§40 · §46)" },
+    { key: "sem", n: "①", sem: true, semgrp: "s", label: "ΑΝΑ ΕΞΑΜΗΝΟ — ΑΕΡΟΣ (Σ categories), Πίνακας 9",
+      note: "sorties per semester ON THE AIRCRAFT. A quota is not a window: nothing counts down and a "
+        + "shortfall costs no availability (§40 absorbs a justified one · §46 records the rest)" },
     { key: "ldg", n: "②", kinds: ["landing", "recency"], label: "Landings + Recency",
       note: "the rolling windows that decide whether he may fly tonight" },
     { key: "e", n: "③", kinds: ["e-item"], label: "Ε-items (EVENTS)",
       note: "the EVENTS table of the 3-01 — one date each" },
     { key: "oth", n: "④", kinds: ["other"], label: "Other",
       note: "readiness conditions, seminars, definitions and the ΠΡ clocks" },
+    { key: "semfs", n: "⑤", sem: true, semgrp: "sim", label: "ΑΝΑ ΕΞΑΜΗΝΟ — F/S (SIM), Πίνακας 6",
+      note: "sorties per semester IN THE SIMULATOR (§22 each at least one hour · §25 the figures are a "
+        + "MINIMUM), plus the §49 refresh threshold — the one column here that is not a quota and does "
+        + "count for availability" },
   ];
-  const TBL = new Map(TABLES.map((t) => [t.key, t]));
 
   /* ui.edit  the ONE cell currently showing a native input, as {code, id, kind}.
               Exactly one at a time, so the input carries id="cur-editing" and
@@ -877,7 +913,11 @@
   /* ══ ONE TABLE ══════════════════════════════════════════════════════════ */
   function itemsOf(t) {
     if (!CUR().loaded()) return [];
-    if (t.sem) return [].concat.apply([], CUR().semGroups().map((g) => g.items));
+    /* ONE printed table per section (Round 13). semGroups() keeps the printed
+       ROW order inside the group — the ΣΥΝΟΛΑ line closes its own table, as on
+       paper — and the §49 threshold row rides along in the sim group. */
+    if (t.sem) return [].concat.apply([], CUR().semGroups()
+      .filter((g) => g.key === t.semgrp).map((g) => g.items));
     return [].concat.apply([], CUR().groups()
       .filter((g) => g.kinds.some((k) => t.kinds.indexOf(k) >= 0))
       .map((g) => g.items));
@@ -900,40 +940,63 @@
 
   /* ── the one-line rollup of the header bar ────────────────────────────────
      It answers "is anything wrong in THIS table?" over the whole squadron, and
-     it counts what the table actually holds — never the whole catalog.       */
+     it counts what the table actually holds — never the whole catalog.
+
+     Round 13: one code path for both families, because table ⑤ now holds BOTH
+     — the seven F/S quota columns and the one §49 threshold column, which is a
+     dated row that really does gate availability. Splitting the ids here (a
+     quota is a SEM_QUOTA entry that is not the `window` one) means the F/S
+     header bar can say «every quota met · threshold column: 2 owed» instead of
+     hiding half of its own table behind the other half.                      */
+  const ppl = (n) => n + " instructor" + (n === 1 ? "" : "s");
   function rollup(t, its, all) {
-    if (t.sem) {
+    const quotaIds = new Set(), dateIds = new Set();
+    for (const it of its) {
+      const q = CUR().SEM_QUOTA[it.id];
+      if (q && !q.window) quotaIds.add(it.id); else dateIds.add(it.id);
+    }
+    const parts = [], tips = [];
+    let worst = "ok";
+    const worsen = (s) => { if (s === "expired" || (s === "expiring" && worst === "ok")) worst = s; };
+
+    if (quotaIds.size) {
       let owed = 0, behind = 0;
       for (const i of all) {
         if (!i.oid) continue;
-        const sm = semOf(i);
-        if (sm.short) { owed += sm.short; behind += 1; }
+        let mine = 0;
+        for (const r of semOf(i).rows) if (quotaIds.has(r.item.id) && r.n != null && !r.done) mine += r.short;
+        if (mine) { owed += mine; behind += 1; }
       }
-      const st = !behind ? "ok" : (CUR().curSem().left > CUR().SEM_RED_DAYS ? "expiring" : "expired");
-      return { state: st, txt: behind ? owed + " sortie" + (owed === 1 ? "" : "s") + " owed by " + behind + " instructor" + (behind === 1 ? "" : "s")
-        : "every quota met",
-        tip: "the semester quotas of this table across the whole squadron. A shortfall is NOT an availability loss "
-          + "(§40 absorbs a justified one, §46 records the rest) — it never enters the dot or “owes”." };
+      worsen(!behind ? "ok" : (CUR().curSem().left > CUR().SEM_RED_DAYS ? "expiring" : "expired"));
+      parts.push(behind ? owed + " sortie" + (owed === 1 ? "" : "s") + " owed by " + ppl(behind) : "every quota met");
+      tips.push("the semester quotas of THIS table across the whole squadron. A shortfall is NOT an availability "
+        + "loss (§40 absorbs a justified one, §46 records the rest) — it never enters the dot or “owes”.");
     }
-    const ids = new Set(its.map((it) => it.id));
-    let red = 0, amber = 0, oblOver = 0, people = 0;
-    for (const i of all) {
-      if (!i.oid) continue;
-      const s = sumOf(i);
-      const mine = s.red.filter((x) => ids.has(x.item.id)).length;
-      red += mine;
-      amber += s.amber.filter((x) => ids.has(x.item.id)).length;
-      oblOver += s.obl.overdueRows.filter((x) => ids.has(x.item.id)).length;
-      if (mine) people += 1;
-    }
-    return {
-      state: red ? "expired" : (amber ? "expiring" : "ok"),
-      txt: (red ? red + " owed by " + people + " instructor" + (people === 1 ? "" : "s") : "nothing owed")
+
+    if (dateIds.size) {
+      let red = 0, amber = 0, oblOver = 0, people = 0;
+      for (const i of all) {
+        if (!i.oid) continue;
+        const s = sumOf(i);
+        const mine = s.red.filter((x) => dateIds.has(x.item.id)).length;
+        red += mine;
+        amber += s.amber.filter((x) => dateIds.has(x.item.id)).length;
+        oblOver += s.obl.overdueRows.filter((x) => dateIds.has(x.item.id)).length;
+        if (mine) people += 1;
+      }
+      worsen(red ? "expired" : (amber ? "expiring" : "ok"));
+      /* in a mixed table the second half must say WHICH columns it is about,
+         or «2 owed» reads as a quota figure it is not */
+      const pre = !quotaIds.size ? ""
+        : (dateIds.size === 1 ? "threshold column: " : "dated columns: ");
+      parts.push(pre + (red ? red + " owed by " + ppl(people) : "nothing owed")
         + (amber ? " · " + amber + " expiring" : "")
-        + (oblOver ? " · " + oblOver + " obligation" + (oblOver === 1 ? "" : "s") + " overdue" : ""),
-      tip: "counted rows of THIS table only, across the whole squadron: expired or never recorded = owed. "
-        + "Recorded obligations are counted on their own — they never enter the dot, the chips or “owes”.",
-    };
+        + (oblOver ? " · " + oblOver + " obligation" + (oblOver === 1 ? "" : "s") + " overdue" : ""));
+      tips.push("counted rows of THIS table only, across the whole squadron: expired or never recorded = owed. "
+        + "Recorded obligations are counted on their own — they never enter the dot, the chips or “owes”.");
+    }
+
+    return { state: worst, txt: parts.join(" · ") || "nothing in this table", tip: tips.join("\n\n") };
   }
 
   /* ── the legend — ONE line per table, with THAT table's own figures ───────
@@ -972,17 +1035,34 @@
 
   function legendHtml(t, its) {
     if (t.sem) {
+      /* Round 13 — the two semester tables no longer hold the same columns, so
+         every clause is built from THIS table's own figures and a clause with
+         nothing to say is dropped: the air table has no Test-Pilot row and no
+         threshold column, and printing «0 Test-Pilot only» under it would be
+         noise at best and a hint at a column that is not there at worst. */
       const f = semStats(its);
+      const inner = [f.tot + " of them the printed <b>ΣΥΝΟΛΑ</b> total" + (f.tot === 1 ? "" : "s")]
+        .concat(f.tp ? [f.tp + " Test-Pilot only"] : []).join(", ");
+      const clauses = [
+        f.printed + " column" + (f.printed === 1 ? "" : "s") + " with a printed requirement"
+          + (f.tot || f.tp ? " (" + inner + ")" : ""),
+      ];
+      if (f.dash) {
+        clauses.push(f.dash + (f.dash === 1 ? " that prints a dash and requires" : " that print a dash and require")
+          + " nothing");
+      }
+      if (f.win) {
+        clauses.push(f.win + " <b>threshold</b> column" + (f.win === 1 ? " that is" : "s that are")
+          + " not a quota at all and DO" + (f.win === 1 ? "ES" : "") + " count for availability (§49) — "
+          + "coloured by the DATED rule (a quarter of the window, at most " + CUR().AMBER_MAX_DAYS + " days), not by the quota rule above");
+      }
       return `<p class="sch-hint sch-curlegend">
         <span class="sch-cdot st-ok"></span> met (x ≥ N) ·
         <span class="sch-cdot st-expiring"></span> short with more than ${CUR().SEM_RED_DAYS} days of the semester left ·
         <span class="sch-cdot st-expired"></span> short with ${CUR().SEM_RED_DAYS} days or less left ·
         <span class="sch-cdot st-neutral"></span> nothing required.
-        <b>In this table:</b> ${f.printed} column${f.printed === 1 ? "" : "s"} with a printed requirement
-        (${f.tot} of them the printed <b>ΣΥΝΟΛΑ</b> totals, ${f.tp} Test-Pilot only) ·
-        ${f.dash} that print a dash and require nothing ·
-        ${f.win} <b>threshold</b> column that is not a quota at all and DOES count for availability (§49).
-        <b>N</b> is the <b>ΤΟΠΟΘΕΤΗΜΕΝΟΣ (POSTED)</b> column of Πίνακας 6/9 — the printed split is posted vs attached,
+        <b>In this table:</b> ${clauses.join(" · ")}.
+        <b>N</b> is the <b>ΤΟΠΟΘΕΤΗΜΕΝΟΣ (POSTED)</b> column of ${t.semgrp === "sim" ? "Πίνακας 6" : "Πίνακας 9"} — the printed split is posted vs attached,
         <b>not</b> experienced vs inexperienced, so a row's ΕΜΠ/ΑΠ tag does not move it (an <i>attached</i> flag is a future axis).
       </p>`;
     }
@@ -1003,11 +1083,24 @@
 
   /* ── column headers ──────────────────────────────────────────────────────
      The printed names are long ("Ε-45 — VISUAL DELIVERY MED/HI APEX, day"), so
-     the header shows the HEAD of the name, set vertically, with the full name
-     (and everything else the row knows) in the tooltip. When two items of the
+     the header shows the HEAD of the name — Round 13 sets it HORIZONTALLY and
+     lets it WRAP over two or three lines («Τα ονόματα από τις στήλες wrap και
+     οριζόντια γραφή»); the rotated writing-mode is gone. The 30-character clip
+     below is what keeps a wrapped head to three lines, and the full name (with
+     everything else the row knows) stays in the tooltip. When two items of the
      same table share a head — the four ΠΡ rows all start «Advanced exercises
      (ΠΡ)» — the tail is appended, because two identical column titles would be
      a lie about which one the user is typing into.                          */
+  /* How much of the head a wrapped column can hold. Measured, not guessed: at
+     10px in the 106-112px column of the CSS a line takes ~18 characters and
+     the wrap loses part of every line end, so 38 characters is what actually
+     lands inside THREE lines — the ceiling the directive sets — with room for
+     the « ⚠» / « °» markers the header appends after the clip. Round 12 clipped
+     at 30 because ONE vertical line was all there was; wrapping bought two
+     more. What is still too long keeps its «…», and the full name stays in the
+     tooltip: the column head is a label, never the source.                   */
+  const COL_CHARS = 38;         // a plain head
+  const COL_CHARS2 = 40;        // a head + the tail that tells two rows apart
   const clip = (s, n) => (s.length > n ? s.slice(0, n - 1) + "…" : s);
   const headOf = (it) => String(it.name || it.id).split(" — ")[0].trim();
   const tailOf = (it) => String(it.name || it.id).split(" — ").slice(1).join(" — ").trim();
@@ -1020,7 +1113,7 @@
     }
     const out = new Map();
     for (const [h, list] of bag) {
-      if (list.length === 1) { out.set(list[0].id, clip(h, 30)); continue; }
+      if (list.length === 1) { out.set(list[0].id, clip(h, COL_CHARS)); continue; }
       /* The head repeats. Appending the whole tail is not enough: «Σ-2 —
          Instrument flight (PDO), day» and «…, night» differ in their LAST word,
          which is exactly the word a clip throws away. So the common opening of
@@ -1032,7 +1125,7 @@
       while (n < first.length && tails.every((t) => t[n] === first[n])) n += 1;
       const keep = Math.max(0, first.slice(0, n).lastIndexOf(" ") + 1);   // never cut a word in half
       list.forEach((it, k) => out.set(it.id,
-        clip(clip(h, 12) + " · " + (tails[k].slice(keep) || tails[k]), 34)));
+        clip(clip(h, 20) + " · " + (tails[k].slice(keep) || tails[k]), COL_CHARS2)));
     }
     return out;
   }
@@ -1069,12 +1162,22 @@
     if (!all.length) return "";
     const labs = colLabels(its);
     const warn = (it) => (CUR().resolve(it, true).warn ? " ⚠" : "");
-    const obl = (it) => (!t.sem && CUR().isObligation(it.id) ? " °" : "");
+    /* an obligation is by definition a DATED row; no quota id is on the list.
+       Asking the engine directly (instead of «not a semester table») keeps the
+       marker honest now that table ⑤ mixes a dated column in. */
+    const obl = (it) => (CUR().isObligation(it.id) ? " °" : "");
+    /* THE SPACER COLUMN (Round 13). The table is `min-width: 100%` with AUTO
+       layout, so a table narrower than the panel — ① has seven columns — has
+       slack to hand out, and an auto-width first column takes all of it: the
+       frozen name column measured 392px in ① against 208px in ③, which is the
+       eye losing its anchor between two tables of the same rows. One empty
+       cell at the end, `width: 100%`, eats the slack instead, and every table
+       keeps the same name column. It carries no data and no header text.   */
     const head = `<tr><th class="cur-who cur-corner" scope="col">Instructor
         <span class="sch-nd">${all.length}</span></th>`
       + its.map((it) => `<th class="cur-col" scope="col" title="${esc(colTip(it, t))}"
           ><span class="cur-collbl">${esc(labs.get(it.id))}${esc(warn(it))}${esc(obl(it))}</span></th>`).join("")
-      + `</tr>`;
+      + `<td class="cur-pad"></td></tr>`;
     return `<div class="sch-scroll cur-mxscroll">
       <table class="sch-tbl cur-mxtbl">
         <thead>${head}</thead>
@@ -1086,18 +1189,29 @@
   function rowHtml(t, its, i) {
     if (!i.oid) {
       return `<tr class="cur-row"><th class="cur-who" scope="row"><span class="cur-whobox">${whoHtml(i, null, null)}</span></th>
-        <td class="cur-cell is-off" colspan="${its.length}">no OID yet — open the roster form in the Scheduler and save the row once</td></tr>`;
+        <td class="cur-cell is-off" colspan="${its.length + 1}">no OID yet — open the roster form in the Scheduler and save the row once</td></tr>`;
     }
     const s = sumOf(i), sm = semOf(i), exp = !!i.experienced;
     return `<tr class="cur-row">
       <th class="cur-who" scope="row"><span class="cur-whobox">${whoHtml(i, s, sm)}</span></th>
       ${its.map((it) => cellHtml(t, it, i, exp)).join("")}
+      <td class="cur-pad"></td>
     </tr>`;
   }
 
   /* the row head — the person, then everything the old left-hand list carried:
      the availability dot, the ΕΜΠ/ΑΠ tag, "owes N", "sem x/M" and the 🖨 that
-     prints his binder sheet (printCurrency is Round 11's, untouched).        */
+     prints his binder sheet (printCurrency is Round 11's, untouched).
+
+     ROUND 13 — «Στο Currency να φαίνονται ολόκληρα τα ονόματα». It is written
+     on TWO LINES inside the one frozen cell: the dot and the WHOLE name first,
+     the chips under it. One line would have had to carry a disambiguated label
+     — the seed's own worst case is «Instructor01 T. (IP-14)» — plus four chips
+     and a button, which is exactly the ~320px column that made the name
+     ellipsise in the first place. Nothing is ellipsised now: a longer name
+     WIDENS the column (the CSS pins a minimum, never a maximum) and every
+     table widens with it, because every table shows the same rows.
+     (Every example name in this file comes from the FAKE public seed.)      */
   function whoHtml(i, s, sm) {
     const nm = who(i);
     const idTip = "code " + (i.code || "—") + (i.rank ? " · " + i.rank : "")
@@ -1111,14 +1225,17 @@
       ? `<span class="sch-badge cur-expired" title="${esc(availTip(s))}">owes ${s.owes}</span>`
       : s.expiring ? `<span class="sch-badge cur-expiring" title="${esc(availTip(s))}">exp ${s.expiring}</span>` : "")
       + (sm ? `<span class="sch-badge cur-sem st-${esc(sm.state)}" title="${esc(semTip(sm))}">sem ${sm.done}/${sm.total}</span>` : "");
-    return `${s ? `<span class="sch-cdot st-${esc(s.state)}" title="${esc(availTip(s))}"></span>`
-      : `<span class="sch-cdot st-neutral" title="no OID — nothing is computed for this row"></span>`}
-      <span class="cur-who-n" title="${esc(idTip)}">${esc(nm)}</span>
-      <span class="sch-curobl cur-lvl" title="${esc(lvl.why + ". Edit the flag in the Scheduler roster form — it is a property of the instructor, not of this view.")}">${esc(lvl.t)}</span>
-      ${chips}
-      <span class="sch-spacer"></span>
-      <button type="button" class="sch-mini cur-pr" data-act="cur-print" data-code="${esc(i.code)}"
-        title="print the binder sheet of ${esc(nm)} — one instructor per sheet, both tables, plain monochrome">🖨</button>`;
+    return `<span class="cur-wholine cur-wholine-n">${s
+        ? `<span class="sch-cdot st-${esc(s.state)}" title="${esc(availTip(s))}"></span>`
+        : `<span class="sch-cdot st-neutral" title="no OID — nothing is computed for this row"></span>`}
+        <span class="cur-who-n" title="${esc(idTip)}">${esc(nm)}</span></span>
+      <span class="cur-wholine cur-wholine-c">
+        <span class="sch-curobl cur-lvl" title="${esc(lvl.why + ". Edit the flag in the Scheduler roster form — it is a property of the instructor, not of this view.")}">${esc(lvl.t)}</span>
+        ${chips}
+        <span class="sch-spacer"></span>
+        <button type="button" class="sch-mini cur-pr" data-act="cur-print" data-code="${esc(i.code)}"
+          title="print the binder sheet of ${esc(nm)} — one instructor per sheet, the ΑΕΡΟΣ semester table, the dated items and the F/S semester table last, plain monochrome">🖨</button>
+      </span>`;
   }
 
   const availTip = (s) => (s.owes
@@ -1290,11 +1407,13 @@
     render();
   }
 
-  /* ══ the squadron binder sheet — ONE instructor, BOTH tables ════════════
-     Round 11's sheet, kept exactly as it was (the user asked for the per-row 🖨
-     to print «the EXISTING per-instructor binder sheet»); only the identity
-     line now reads the display name. Plain monochrome, the semester table
-     first, on the board's #sch-print host and its print stylesheet.         */
+  /* ══ the squadron binder sheet — ONE instructor, THREE sections ═════════
+     Round 11's sheet, kept as it was (the user asked for the per-row 🖨 to
+     print «the EXISTING per-instructor binder sheet»); the identity line reads
+     the display name and Round 13 puts the sections in the SAME order as the
+     screen — ① ΑΕΡΟΣ semester, ② the dated items, ③ F/S semester last — so a
+     binder page and the tab can be read side by side without re-sorting.
+     Plain monochrome, on the board's #sch-print host and its print sheet.   */
   const CUR_OBL_PRINT = {
     ok: "recorded", expiring: "due soon", expired: "overdue",
     never: "—", neutral: "—",
@@ -1331,9 +1450,13 @@
         <td>${st.x} / ${q.n == null ? "—" : q.n}</td>
         <td>${esc(SEM_PRINT(st))}</td></tr>`;
     };
-    const semBody = CUR().semGroups().map((g) =>
-      `<tr class="pv-grp"><th colspan="5">${esc(g.label.toUpperCase())}</th></tr>`
-      + g.items.map(semRow).join("")).join("");
+    /* Round 13 — the sheet mirrors the screen: ΑΕΡΟΣ opens it, F/S closes it.
+       One printed table per section, so the group header row of Round 11/12
+       (which now only repeated its own section title) is gone.              */
+    const semBodyOf = (key) => [].concat.apply([], CUR().semGroups()
+      .filter((g) => g.key === key).map((g) => g.items)).map(semRow).join("");
+    const semAirBody = semBodyOf("s");
+    const semFsBody = semBodyOf("sim");
 
     const row = (it) => {
       const st = CUR().statusOf(i.oid, it, exp);
@@ -1381,15 +1504,21 @@
             obligations, left out of the availability count above — each is either printed with no availability loss,
             scoped to the trainee rather than the serving instructor, or a one-off deadline / tenure / ΠΡ-module clock.</p>
         </div>
-        <p class="pv-h">① ΑΝΑ ΕΞΑΜΗΝΟ — SEMESTER QUOTAS · ${esc(w.label.toUpperCase())} · ENDS ${esc(dmy(w.end))} (${w.left} DAYS LEFT)</p>
-        <p class="pv-p">REQUIRED is the ΤΟΠΟΘΕΤΗΜΕΝΟΣ (POSTED) column of Πίνακας 6 / Πίνακας 9 — the printed split is
+        <p class="pv-h">① ΑΝΑ ΕΞΑΜΗΝΟ — ΑΕΡΟΣ (Σ), ΠΙΝΑΚΑΣ 9 · ${esc(w.label.toUpperCase())} · ENDS ${esc(dmy(w.end))} (${w.left} DAYS LEFT)</p>
+        <p class="pv-p">REQUIRED is the ΤΟΠΟΘΕΤΗΜΕΝΟΣ (POSTED) column of Πίνακας 9 — the printed split is
           posted vs attached, not experienced vs inexperienced. A quota is not a window: nothing counts down and a
           shortfall costs no availability (§40 · §46).</p>
         <table class="pv-t"><thead><tr><th>ITEM</th><th>REQUIRED</th><th>RECORDED</th><th>PROGRESS</th><th>STATUS</th></tr></thead>
-          <tbody>${semBody}</tbody></table>
+          <tbody>${semAirBody}</tbody></table>
         <p class="pv-h">② ΛΗΓΟΥΝ / ΔΕΝ ΛΗΓΟΥΝ — DATED ITEMS</p>
         <table class="pv-t"><thead><tr><th>ITEM</th><th>VALIDITY</th><th>LAST DONE</th><th>EXPIRES</th><th>DAYS LEFT</th><th>STATUS</th></tr></thead>
           <tbody>${body}</tbody></table>
+        <p class="pv-h">③ ΑΝΑ ΕΞΑΜΗΝΟ — F/S (SIM), ΠΙΝΑΚΑΣ 6 · ${esc(w.label.toUpperCase())}</p>
+        <p class="pv-p">REQUIRED is the ΤΟΠΟΘΕΤΗΜΕΝΟΣ (POSTED) column of Πίνακας 6 (§22 each sortie at least one hour ·
+          §25 the figures are a MINIMUM). The last row is the §49 REFRESH THRESHOLD, not a quota: it carries a DATE and it
+          does count for availability — its VALIDITY, LAST DONE and DAYS LEFT are printed in the quota columns.</p>
+        <table class="pv-t"><thead><tr><th>ITEM</th><th>REQUIRED</th><th>RECORDED</th><th>PROGRESS</th><th>STATUS</th></tr></thead>
+          <tbody>${semFsBody}</tbody></table>
       </div>`;
     document.body.appendChild(host);
     document.documentElement.classList.add("sch-printing");
@@ -1402,9 +1531,10 @@
   }
 
   /* ── the coverage identity, checked at boot ─────────────────────────────
-     The FOUR tables must be the whole catalog with no id rendered twice. A
-     silent gap here would mean an instructor holds something the app never
-     shows him, so it is asserted rather than assumed.                       */
+     The FIVE tables must be the whole catalog with no id rendered twice —
+     7 + 19 + 28 + 29 + 8 = 91 after the Round 13 split. A silent gap here
+     would mean an instructor holds something the app never shows him, so it
+     is asserted rather than assumed.                                        */
   function curCoverage() {
     const per = TABLES.map((t) => ({ key: t.key, ids: itemsOf(t).map((it) => it.id) }));
     const seen = new Set();
@@ -1415,7 +1545,7 @@
       missing: all.filter((id) => !seen.has(id)) };
     per.forEach((p) => { out[p.key] = p.ids.length; });
     if (dup.length || out.missing.length || out.seen !== out.total) {
-      console.warn("SchedCurrency: the four tables do not cover the catalog exactly", out);
+      console.warn("SchedCurrency: the five tables do not cover the catalog exactly", out);
     }
     return out;
   }
