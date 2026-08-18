@@ -42,12 +42,15 @@
   const TOK_KEY = "p2r-sync-token";
   const SHA_KEY = "p2r-sync-sha";
   const DIRTY_KEY = "p2r-sync-dirty"; /* survives reloads — a fresh page must NOT look "clean" */
+  const ENC_KEY = "p2r-sync-enc";     /* "1" = the remote we last saw was ciphertext */
   const LOCK_KEY = "p2r-lock-verifier";
   const LOCK_OPEN = "p2r-lock-open"; /* sessionStorage: curtain already passed this session */
   const API = "https://api.github.com";
   const ITER = 310000; /* PBKDF2-SHA256 iterations for both payload key and lock verifier */
+  const AUTO_MS = 5000;              /* debounce: 5 s after the LAST change of a burst */
 
-  const st = { dirty: 0, applying: false, busy: false, lastMsg: "", lockMsg: "", timer: null };
+  const st = { dirty: 0, applying: false, busy: false, lastMsg: "", lockMsg: "", timer: null,
+    auto: { t: null, state: "", at: "", failed: "" } };
   /* memory-only session secrets — never localStorage/sessionStorage */
   const sess = { pass: null, key: null, keyId: "", unlocked: false };
 
@@ -141,10 +144,12 @@
     if (!p) return;
     if (p !== sess.pass) { sess.pass = p; sess.key = null; sess.keyId = ""; }
     refreshPassNote();
+    hint();                    // arming the key can be what turns auto-sync on
   }
   function clearPass() {
     sess.pass = null; sess.key = null; sess.keyId = "";
     refreshPassNote();
+    hint();
   }
   function fieldPass() { const el = $("sync-pass"); return el ? el.value.trim() : ""; }
   function clearPassField() { const el = $("sync-pass"); if (el) el.value = ""; }
@@ -219,15 +224,22 @@
     return { sha: out.content && out.content.sha };
   }
 
-  /* ── apply a pulled snapshot (silent — no confirm(); callers decide) ────── */
+  /* ── apply a pulled snapshot (silent — no confirm(); callers decide) ──────
+     Round 12b — this is REPLICATION, not editing: the owner's own device is
+     copying the owner's own repo file into itself, and it must keep working
+     while the app is in view-only mode (that is the normal state of a second
+     device). So it runs inside SchedStore.system(), the one named hole in the
+     edit lock — see the SchedEdit block in schedstore.js.                    */
   function applySnapshot(snap) {
     const S = window.SchedStore;
     st.applying = true;
     try {
-      for (const name of S.COLLECTIONS) {
-        const v = snap[name];
-        if (v !== undefined) S.put(name, v);
-      }
+      S.system(() => {
+        for (const name of S.COLLECTIONS) {
+          const v = snap[name];
+          if (v !== undefined) S.put(name, v);
+        }
+      });
     } finally { st.applying = false; }
     setDirty(0);
   }
@@ -236,6 +248,7 @@
     st.dirty = n;
     if (n > 0) lsSet(DIRTY_KEY, String(n)); else lsDel(DIRTY_KEY);
     refreshBtn();
+    hint();
   }
 
   /* ── high-level flows ───────────────────────────────────────────────────── */
@@ -262,6 +275,10 @@
         catch (e) { setStatus("decrypted payload is not valid JSON — nothing was changed"); return; }
         armPass(pass); clearPassField();
       }
+      /* what the remote LOOKS like decides whether an automatic push is safe:
+         pushing plaintext over a ciphertext remote would silently downgrade
+         the repo copy, so auto-sync refuses to do it without the passphrase */
+      lsSet(ENC_KEY, isEnvelope(remote.json) ? "1" : "0");
       if (st.dirty > 0 && interactive) {
         if (!confirm("Pull replaces this browser's scheduler data.\nYou have " + st.dirty +
           " local change(s) not pushed — they will be LOST.\n\nContinue?")) { setStatus(st.dirty + " local changes"); return; }
@@ -274,7 +291,10 @@
     finally { st.busy = false; }
   }
 
-  async function doPush(force) {
+  /* auto = an unattended push scheduled by the debounce below: it must never
+     open a dialog and never toast a success, or a working evening would be one
+     long stream of pop-ups. It reports through the topbar hint instead.     */
+  async function doPush(force, auto) {
     if (!configured() || st.busy) return;
     st.busy = true; setStatus("pushing…");
     try {
@@ -288,6 +308,7 @@
       const out = await pushRemote(sha);
       if (out.conflict) {
         setStatus("⚠ conflict — remote changed");
+        if (auto) return;                       // the hint says so; the user decides in ☁ Sync
         if (confirm("Another device pushed newer data to the repo.\n\nOK = PULL theirs (discards your " + st.dirty +
           " local change(s))\nCancel = keep working locally (use 'Force push' to overwrite them).")) {
           setDirty(0); st.busy = false; await doPull(false); return;
@@ -295,11 +316,100 @@
         return;
       }
       if (out.sha) lsSet(SHA_KEY, out.sha);
+      lsSet(ENC_KEY, sess.pass ? "1" : "0");
       setDirty(0);
       setStatus("pushed ✓ " + nowHM() + (sess.pass ? " (encrypted)" : ""));
-      window.SchedStore.toast("Sync: pushed to GitHub.", "good");
+      if (!auto) window.SchedStore.toast("Sync: pushed to GitHub.", "good");
     } catch (e) { setStatus("push failed: " + e.message); }
     finally { st.busy = false; }
+  }
+
+  /* ══ AUTO-SYNC ON CHANGE ═══════════════════════════════════════════════
+     User directive, 18/08/2026: «Οταν περασω μεταβολη να γινεται sync το
+     αρχειο.» Every store mutation re-arms a 5-second timer; a burst of edits
+     coalesces into ONE commit five seconds after the last of them.
+
+     WHEN IT STAYS OFF — and it says so instead of pretending
+       · sync not configured (no repo / no token on this device);
+       · the remote copy is ciphertext and the passphrase is not in this
+         session. Pushing then would replace the encrypted repo file with
+         PLAINTEXT — a silent security downgrade — so it refuses and asks.
+       · a previous automatic push failed or hit a conflict: it stops, toasts
+         ONCE and waits for the user in ☁ Sync. It never retries in a loop.
+     Nothing here changes how the passphrase is handled: it stays memory-only.
+     The manual Pull / Push / Force push buttons are untouched.             */
+  function autoReason() {
+    const c = cfg();
+    if (!c || !c.repo) return "auto-sync off — no repository is configured yet (open ☁ Sync).";
+    if (!token()) return "auto-sync off — this browser holds no token (paste it in ☁ Sync).";
+    if (lsGet(ENC_KEY) === "1" && !sess.pass) {
+      return "auto-sync off — the repo copy is encrypted and the passphrase is not in this session; "
+        + "type it in ☁ Sync so a push cannot silently write plaintext.";
+    }
+    if (st.auto.failed) return st.auto.failed;
+    return "";
+  }
+  const autoOn = () => !autoReason();
+
+  function autoSchedule() {
+    if (!autoOn()) { hint(); return; }
+    clearTimeout(st.auto.t);
+    st.auto.state = "pending";
+    hint();
+    st.auto.t = setTimeout(() => { void autoRun(); }, AUTO_MS);
+  }
+
+  async function autoRun() {
+    st.auto.t = null;
+    if (!autoOn() || !st.dirty) { hint(); return; }
+    if (st.busy) { st.auto.t = setTimeout(() => { void autoRun(); }, 1500); return; }  // a manual op is running
+    st.auto.state = "busy";
+    hint();
+    await doPush(false, true);
+    if (st.dirty > 0) {
+      st.auto.state = "failed";
+      st.auto.failed = "auto-sync stopped — " + (st.lastMsg || "the last push did not go through")
+        + ". Use ☁ Sync, then it re-arms itself.";
+      window.SchedStore.toast("Auto-sync stopped — " + (st.lastMsg || "push failed"), "bad");
+    } else {
+      st.auto.state = "done";
+      st.auto.at = nowHM();
+      st.auto.failed = "";
+    }
+    hint();
+  }
+  /* a manual Pull / Push / Save clears the stop flag: the user has just been
+     told what happened and has acted on it */
+  function autoRearm() { st.auto.failed = ""; st.auto.state = st.dirty ? "pending" : st.auto.state; hint(); }
+
+  /* the hint lives beside the databadge — the one place in the topbar that
+     already talks about data freshness */
+  function hintEl() {
+    let el = $("sync-hint");
+    if (el) return el;
+    const badge = $("databadge");
+    if (!badge || !badge.parentNode) return null;
+    el = document.createElement("span");
+    el.id = "sync-hint";
+    el.className = "sync-hint";
+    badge.parentNode.insertBefore(el, badge);
+    return el;
+  }
+  function hint() {
+    const el = hintEl();
+    if (!el) return;
+    const why = autoReason();
+    let txt = "", cls = "sync-hint";
+    if (why) { txt = why; cls += st.auto.failed ? " is-bad" : " is-off"; }
+    else if (st.auto.state === "busy") { txt = "syncing…"; cls += " is-on"; }
+    else if (st.auto.state === "pending") { txt = "syncing…"; cls += " is-on"; }
+    else if (st.auto.state === "done") { txt = "synced " + st.auto.at; cls += " is-ok"; }
+    else txt = st.dirty ? "auto-sync armed" : "";
+    el.textContent = txt;
+    el.className = cls;
+    el.title = why || (st.auto.state === "done"
+      ? "the whole store was pushed to the GitHub repo at " + st.auto.at
+      : "every change is pushed automatically, " + (AUTO_MS / 1000) + " s after the last one");
   }
 
   /* ── access-code curtain (privacy veil, honest: NOT encryption) ─────────── */
@@ -509,12 +619,14 @@
       if (e.target === pop || e.target.closest("[data-s=close]")) { pop.classList.add("hidden"); return; }
       const b = e.target.closest("[data-s]");
       if (!b) return;
-      if (b.dataset.s === "save") saveForm();
-      else if (b.dataset.s === "pull") doPull(true);
-      else if (b.dataset.s === "push") doPush(false);
-      else if (b.dataset.s === "force") { if (confirm("Force push OVERWRITES the repo version with this browser's data. Continue?")) doPush(true); }
-      else if (b.dataset.s === "forget") { lsDel(TOK_KEY); lsDel(SHA_KEY); renderPop(); setStatus("token forgotten"); }
-      else if (b.dataset.s === "pass-clear") { clearPass(); renderPop(); setStatus("passphrase cleared — next push will be PLAINTEXT"); }
+      /* every manual act clears the auto-sync stop flag: the user has just been
+         told what went wrong and has done something about it */
+      if (b.dataset.s === "save") { saveForm(); autoRearm(); }
+      else if (b.dataset.s === "pull") { autoRearm(); doPull(true); }
+      else if (b.dataset.s === "push") { autoRearm(); doPush(false); }
+      else if (b.dataset.s === "force") { if (confirm("Force push OVERWRITES the repo version with this browser's data. Continue?")) { autoRearm(); doPush(true); } }
+      else if (b.dataset.s === "forget") { lsDel(TOK_KEY); lsDel(SHA_KEY); renderPop(); setStatus("token forgotten"); hint(); }
+      else if (b.dataset.s === "pass-clear") { clearPass(); renderPop(); setStatus("passphrase cleared — next push will be PLAINTEXT"); hint(); }
       else if (b.dataset.s === "lock-set") void lockSetNew();
       else if (b.dataset.s === "lock-change") void lockChangeCode();
       else if (b.dataset.s === "lock-remove") void lockRemoveCode();
@@ -560,6 +672,9 @@
           <button type="button" class="sch-tbtn" data-s="close">✕ Close</button>
         </div>
         <div class="sync-status" id="sync-status">${esc(st.lastMsg)}</div>
+        <p class="hint"><b>Auto-sync:</b> ${autoOn()
+          ? "on — every change is pushed " + (AUTO_MS / 1000) + " s after the last one of a burst, as one commit."
+          : esc(autoReason())}</p>
         <hr class="sync-hr">
         <h3>🔒 Scheduler lock ${lk ? '<span class="sync-tok-note">— code active ✓</span>' : ""}</h3>
         <p class="hint">Privacy curtain for shared screens — local data is <b>NOT</b> encrypted;
@@ -644,8 +759,12 @@
     window.SchedStore.subscribe(() => {
       if (st.applying) return;
       setDirty(st.dirty + 1);
+      autoSchedule();                 // Round 12b — every mutation re-arms the 5 s debounce
     });
     if (configured()) doPull(false); // silent: applies only when no local changes
+    /* changes that survived a reload without ever being pushed still owe a
+       push — arm the same timer instead of waiting for the next keystroke */
+    if (st.dirty > 0) autoSchedule(); else hint();
     armMount();
   }
   /* mountTools() (scheduler tab open) REPLACES #sch-tools' innerHTML — wait for

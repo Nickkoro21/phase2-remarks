@@ -45,6 +45,16 @@
 | `Phase2-Validate.html` | **ΜΟΝΟ το Schedule Validation** (schedval + flowchart2 inline + συνώνυμα μονάδας + παλέτες)· ελαφρύ, ~1-2MB |
 | `README-IT.txt` | ελληνικό σημείωμα, ενημερωμένο: Firefox 72 συμβατό, feedback = τοπικό export |
 
+## 4β. Τι ΔΕΝ ταξιδεύει — και τι σημαίνει για το edit lock (Γύρος 12b)
+
+Ο Scheduler, το Currency και το `app/schedstore.js` **δεν μπαίνουν** στα πακέτα:
+τα δύο `<main>` γίνονται κενά stubs και η αλυσίδα scripts του offline build δεν
+τα περιλαμβάνει. Άρα στο κλειστό δίκτυο **δεν υπάρχει store για να κλειδωθεί**
+ούτε κουμπί «Editor» — αυστηρά ισχυρότερο από «ξεκινά κλειδωμένο». Το κουμπί
+δεν προστίθεται στο `app/index.html` (θα χαλούσε τα counts της πύλης: 5 tab
+stubs / 3 main stubs / 8 εξωτερικά `<script src>`) — το **γράφει το
+`schedstore.js`** στην μπάρα, οπότε εκεί που δεν φορτώνεται, δεν υπάρχει.
+
 ## 5. Επαλήθευση κάθε build
 
 1. esbuild parse με target es2019 = πράσινο για κάθε inline script.

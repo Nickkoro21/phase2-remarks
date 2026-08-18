@@ -511,6 +511,13 @@
   };
   const ORD = { 1: "1st", 2: "2nd" };
   function semOf(key) {
+    /* a LABEL helper: it must always return a semester to render, so it keeps
+       its fallback — but it no longer keeps quiet about a key that is neither
+       blank nor real (Round 12b, same reasoning as semKeyOrNull below). */
+    if (!(key === "" || key == null) && !SEM_RE.test(String(key))) {
+      console.warn("SchedCurrency.semOf: malformed semester key " + JSON.stringify(key)
+        + " — falling back to the current semester for DISPLAY only; nothing is written under it");
+    }
     const k = SEM_RE.test(String(key || "")) ? String(key) : semKeyOf(todayISO());
     const year = k.slice(0, 4), half = +k.slice(6, 7);
     const start = year + (half === 1 ? "-01-01" : "-07-01");
@@ -548,10 +555,29 @@
      Keyed BY SEMESTER on purpose: 01/01 rolls the key over and last semester's
      figures survive untouched instead of being reset or overwritten. A missing
      key and a missing item both read as 0.                                  */
+  /* ── THE SEMESTER KEY, READ AND WRITTEN THE SAME WAY ────────────────────
+     Round 12b (R11 verify residual). "" / null / undefined means «the current
+     semester» and is the normal call from the card. ANYTHING ELSE that is not
+     a real key is a BUG IN THE CALLER — «2026-H9», «2026H1», a Date object —
+     and silently answering with the current half would hand back the wrong
+     instructor's wrong semester under a name that was never asked for. Both
+     the read and the write now say so and refuse: the read returns an empty
+     bag (every count reads 0, nothing is invented) and the write returns null
+     without touching the store. Valid «2026-H1» keys are untouched.        */
+  const semKeyBlank = (k) => k === "" || k === null || k === undefined;
+  function semKeyOrNull(semKey, who) {
+    if (semKeyBlank(semKey)) return curSem().key;
+    const k = String(semKey);
+    if (SEM_RE.test(k)) return k;
+    console.warn("SchedCurrency." + who + ": refused a malformed semester key — "
+      + JSON.stringify(semKey) + " (expected YYYY-H1 / YYYY-H2, or nothing for the current one)");
+    return null;
+  }
   function countsOf(oid, semKey) {
+    const k = semKeyOrNull(semKey, "countsOf");
+    if (k === null) return {};
     const r = record(oid);
     const s = r && r.semesters;
-    const k = SEM_RE.test(String(semKey || "")) ? semKey : curSem().key;
     return (s && s[k]) || {};
   }
   function countOf(oid, itemId, semKey) {
@@ -587,7 +613,11 @@
         + " — " + JSON.stringify(count));
       return null;
     }
-    const key = SEM_RE.test(String(semKey || "")) ? String(semKey) : curSem().key;
+    /* Round 12b — a malformed key is refused, never coerced (see semKeyOrNull
+       above): writing 2 sorties into «the current semester» because the caller
+       asked for «2026-H9» would file them under a semester nobody named. */
+    const key = semKeyOrNull(semKey, "bumpCount");
+    if (key === null) return null;
     const from = String(src || "manual");
     const manual = from === "manual";
     const prev = record(oid);
@@ -836,7 +866,9 @@
       <span class="sch-nd" title="the referee-verified catalog of everything the 3-01/2025 ΔΑΕ makes a T-6A instructor hold">${CUR().items().length} catalog items in ${TABLES.length} tables</span>
       ${dep ? `<span class="sch-badge" title="a departed instructor keeps his stored dates but leaves the matrix — he is still in the Scheduler roster">${dep} departed, not listed</span>` : ""}
       <span class="sch-spacer"></span>
-      <span class="sch-hint">rows are instructors, columns are the catalog items — click any cell to type its date or count</span>
+      <span class="sch-hint">rows are instructors, columns are the catalog items${canEdit()
+        ? " — click any cell to type its date or count"
+        : " — view-only until Editor mode is unlocked in the topbar"}</span>
     </div>`
       + (all.length ? "" : `<div class="sch-ph"><strong>No active instructor.</strong>
         <p>Add them in the Scheduler roster — this tab reads the same records.</p></div>`);
@@ -1109,6 +1141,14 @@
      (Round 11 verify item 19: the sim-4 / Σ-20 columns print a dash in the
      3-01 — offering a counter there would invent a requirement).            */
   const isEditing = (code, id) => !!(ui.edit && ui.edit.code === code && ui.edit.id === id);
+  /* Round 12b — the edit lock. A locked matrix is a READING: the cells keep
+     their colour and their tooltip but take no tabindex and claim no
+     role="button", so 1 365 dead tab stops never appear and no screen reader
+     is told a cell is actionable when it is not. The seam in SchedStore
+     refuses the write anyway; this is only what the user sees. */
+  const canEdit = () => !window.SchedEdit || window.SchedEdit.on();
+  const CELL_CLICK = "\n\nClick to type it.";
+  const CELL_RO = "\n\nView-only — unlock Editor mode in the topbar to change it.";
   const CUR_STATE_TXT = {
     ok: "current", expiring: "expiring", expired: "EXPIRED",
     never: "never recorded", neutral: "no counter",
@@ -1133,10 +1173,10 @@
     const tip = nm + " · " + it.name + "\n\n" + st.x + " of " + q.n + " sortie"
       + (q.n === 1 ? "" : "s") + " recorded in " + st.sem.label
       + (st.done ? " — met" : " — " + st.short + " still owed, " + st.sem.left + " days of the semester left")
-      + "\n\nClick to type the count. A shortfall is not an availability loss.";
+      + "\nA shortfall is not an availability loss." + (canEdit() ? CELL_CLICK : CELL_RO);
     return `<td class="cur-cell st-${esc(st.state)}${isEditing(i.code, it.id) ? " is-edit" : ""}"
       data-cell="${esc(it.id)}" data-code="${esc(i.code)}" data-k="q"
-      ${isEditing(i.code, it.id) ? "" : `tabindex="0" role="button"`} title="${esc(tip)}">
+      ${isEditing(i.code, it.id) || !canEdit() ? "" : `tabindex="0" role="button"`} title="${esc(tip)}">
       ${isEditing(i.code, it.id)
         ? `<input id="cur-editing" type="number" class="sch-in cur-cin" data-curcount="${esc(it.id)}"
              data-code="${esc(i.code)}" min="0" max="${CUR().MAX_COUNT}" step="1" value="${st.x}" inputmode="numeric"
@@ -1159,10 +1199,10 @@
       + (st.expires ? " · expires " + dmy(st.expires) + " (" + (st.left > 0 ? "+" : "") + st.left + " days)" : "")
       + "\n" + CUR_STATE_TXT[st.state] + (st.obligation ? " — outside the availability count" : "")
       + (st.v.warn ? "\n\n⚠ " + st.v.warn : "")
-      + "\n\nClick to type the date.";
+      + (canEdit() ? CELL_CLICK : CELL_RO);
     return `<td class="cur-cell st-${esc(st.state)}${isEditing(i.code, it.id) ? " is-edit" : ""}"
       data-cell="${esc(it.id)}" data-code="${esc(i.code)}" data-k="d"
-      ${isEditing(i.code, it.id) ? "" : `tabindex="0" role="button"`} title="${esc(tip)}">
+      ${isEditing(i.code, it.id) || !canEdit() ? "" : `tabindex="0" role="button"`} title="${esc(tip)}">
       ${isEditing(i.code, it.id)
         ? `<input id="cur-editing" type="date" class="sch-in cur-cin cur-cdate" data-curdate="${esc(it.id)}"
              data-code="${esc(i.code)}" value="${esc(st.last)}"
@@ -1241,6 +1281,10 @@
   function openCell(cell) {
     const code = cell.dataset.code, id = cell.dataset.cell;
     if (!code || !id) return;                       // an is-off cell carries neither
+    /* belt and braces: the capture guard in SchedEdit already swallows the
+       click, and the seam would refuse the write — this simply never opens an
+       input the user cannot save */
+    if (!canEdit()) { window.SchedEdit.refuse("record a currency date or count"); return; }
     if (isEditing(code, id)) return;
     ui.edit = { code: code, id: id, kind: cell.dataset.k === "q" ? "q" : "d" };
     render();

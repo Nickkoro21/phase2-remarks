@@ -414,6 +414,16 @@
     return out;
   }
 
+  /* Round 12b — the board keeps the day plan in memory and writes it back on
+     the next keystroke. Anything that rewrites plans UNDER it (today: the
+     roster's "Repair codes" pass) must drop that copy, or the old codes would
+     be resurrected by the next autosave. */
+  window.schBoardReset = function schBoardReset() {
+    clearTimeout(ui.saveT);
+    ui.plan = null;
+    ui.loadedFor = "";
+  };
+
   function ensurePlan() {
     if (!ui.date) ui.date = isoShift(today(), 1);              // default D+1
     if (ui.plan && ui.loadedFor === ui.date) return ui.plan;

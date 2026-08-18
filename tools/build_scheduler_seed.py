@@ -83,6 +83,25 @@ def ip_name(n):
     """(last, first) of fake instructor n — the clash pair included."""
     return NAME_CLASH.get(n, (f"Instructor{n:02d}", "Test"))
 
+
+# ROUND 12b — the three student fields the global roster now carries
+# (date_of_birth · phase2_start_date · country). All FAKE and deterministic,
+# like every other value in this file: the dates are derived from the index so
+# that a regen is byte-stable, and the countries follow the class the student
+# is already in (99HAF-A → HAF, 18ITAF → ITAF, 3GAF → Other, which is also the
+# free-text escape of the country dropdown and must be seen working).
+SP_COUNTRY = {"99HAF-A": "HAF", "18ITAF": "ITAF", "3GAF": "Other"}
+# one Phase II start per class, all comfortably BEFORE the oldest seeded log
+# event (TODAY below is 2026-08-09 and the log reaches ~55 workdays back), so
+# the reading «Phase II from …» is never in the future of its own history.
+SP_PHASE2 = {"99HAF-A": "2026-04-06", "18ITAF": "2026-05-04", "3GAF": "2026-06-01"}
+
+
+def sp_dob(i):
+    """A fake date of birth: 1998-2002, spread over the months, day 1-28."""
+    return f"{1998 + (i % 5)}-{(i % 12) + 1:02d}-{(i % 28) + 1:02d}"
+
+
 students, cut, prim_code = [], {}, {}
 N = len(GLOBAL)
 for i in range(1, 31):
@@ -94,6 +113,8 @@ for i in range(1, 31):
         "first_name": "Test", "last_name": f"Student{i:02d}",
         "mn": f"MN-{1000 + i}", "rank": "S.Ten" if cls == "18ITAF" else "2Lt",
         "class": cls, "status": "active",
+        "date_of_birth": sp_dob(i), "phase2_start_date": SP_PHASE2[cls],
+        "country": SP_COUNTRY[cls],
         "primary_ip": ip_oid(p), "reserve_ips": [ip_oid(r0), ip_oid(r1)],
         "avoid_ips": [], "notes": ""})
     # spread: SP-1 ~15% ... SP-22 ~85% of the stage; foreigners mid-range

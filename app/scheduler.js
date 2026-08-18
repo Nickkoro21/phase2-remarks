@@ -885,13 +885,19 @@ window.fmtDMY = function fmtDMY(v) {
   const departed = (x) => { const r = x && typeof x === "object" ? x : ip(x); return !!(r && r.status === "departed"); };
   const activeIps = () => (S().get("instructors") || []).filter((i) => (i.status || "active") !== "departed");
 
-  /* one-time boot pass: every person gets a stable oid (never editable) */
+  /* one-time boot pass: every person gets a stable oid (never editable).
+     Round 12b — bookkeeping, not an edit: it runs on every boot, invents no
+     fact and changes nothing the user typed, so it goes through the store's
+     system() hole rather than being refused in view-only mode (a roster with
+     no OIDs would break the Currency matrix for a reader who may not edit). */
   function ensure() {
-    for (const coll of ["students", "instructors"]) {
-      for (const rec of (S().get(coll) || []).slice()) {
-        if (!rec.oid) S().upsert(coll, { code: rec.code, oid: S().uid("oid") });
+    S().system(() => {
+      for (const coll of ["students", "instructors"]) {
+        for (const rec of (S().get(coll) || []).slice()) {
+          if (!rec.oid) S().upsert(coll, { code: rec.code, oid: S().uid("oid") });
+        }
       }
-    }
+    });
   }
 
   /* how strongly an instructor is referenced — decides delete vs "departed" */
@@ -1072,6 +1078,9 @@ window.fmtDMY = function fmtDMY(v) {
   };
 
   const P = () => window.SchedPeople;
+  /* Round 12b — the edit lock (schedstore.js). Every mutating control of this
+     pane is inert while it is off; the seam refuses the write in any case. */
+  const canEdit = () => !window.SchedEdit || window.SchedEdit.on();
   const today = () => R().todayISO();
   const students = () => (S().get("students") || []).slice();
   const instructors = () => (S().get("instructors") || []).slice();
@@ -1177,7 +1186,7 @@ window.fmtDMY = function fmtDMY(v) {
   }
   const fStudents = () => students().filter((s) => ui.roster.editS === s.code
     || rosterMatch([s.code, s.class, s.notes, s.status, P().ipCode(s.primary_ip),
-      s.first_name, s.last_name, s.mn, s.rank]));
+      s.first_name, s.last_name, s.mn, s.rank, s.country]));
   const fInstructors = () => instructors().filter((i) => ui.roster.editI === i.code
     || rosterMatch([i.code, i.notes, i.first_name, i.last_name, i.mn, i.rank, i.callsign, i.status,
       i.country, i.duty, i.leadership, i.test_pilot ? "TP test pilot" : ""]));
@@ -1194,6 +1203,11 @@ window.fmtDMY = function fmtDMY(v) {
           <span class="sch-tglrow">
             <button type="button" class="sch-btn" data-act="imp-roster"
               title="Import the shared roster.json — merge BY OID: an OID already here is updated in place, a new OID is created, and anybody the file does not mention is left untouched">⭱ Import roster</button>
+            ${canEdit() ? `<button type="button" class="sch-btn${brokenN() ? " danger" : ""}" data-act="fix-codes"
+              title="${esc(brokenN()
+                ? brokenN() + " person(s) carry a code shaped like a store record id (stu-…/ins-…) — a mid-refactor import minted them from the record key. This re-mints proper codes (call sign, else IP-n/SP-n) and rewrites every reference in the log, availability, gates, duties and day plans. OIDs never change."
+                : "Every code is a proper one. This button re-mints codes shaped like a store record id (stu-…/ins-…) and rewrites every reference — there is nothing to do right now.")}"
+              >🛠 Repair codes${brokenN() ? " (" + brokenN() + ")" : ""}</button>` : ""}
             <input type="file" accept="application/json,.json" id="sch-rosterfile" class="sch-file" hidden>
           </span></span>
       </div>
@@ -1335,6 +1349,7 @@ window.fmtDMY = function fmtDMY(v) {
         ${s.rank ? `<span class="sch-rmeta">${esc(s.rank)}</span>` : ""}
         <span class="sch-rname" title="${esc("code " + s.code + " — the stored key; it stays in this form and in every search")}">${esc(S().personLabel(s))}</span>
         ${s.class ? `<span class="sch-badge">${esc(s.class)}</span>` : ""}
+        ${s.country ? `<span class="sch-badge" title="air force">${esc(s.country)}</span>` : ""}
         <span class="sch-badge st-${esc(s.status || "active")}"${STATUS_TITLE[s.status] ? ` title="${esc(STATUS_TITLE[s.status])}"` : ""}>${esc(statusLabel(s.status || "active"))}</span>
         ${studentChips(s)}
         ${idle == null ? "" : `<span class="sch-nd" title="working days since the last recorded event">${idle}d</span>`}
@@ -1344,6 +1359,17 @@ window.fmtDMY = function fmtDMY(v) {
       </div>
       ${exp ? studentForm(s, false) : ""}
     </div>`;
+  }
+
+  /* Round 12b — the two dates the roster file carries for a student, read back
+     as DD/MM/YYYY under the form. It reports the STORED record, not the boxes
+     above it, so it is the "what is filed" line, not a preview of the edit. */
+  function personLine(s) {
+    const bits = [];
+    if (s.date_of_birth) bits.push("DOB " + window.fmtDMY(s.date_of_birth));
+    if (s.phase2_start_date) bits.push("Phase II from " + window.fmtDMY(s.phase2_start_date));
+    if (!bits.length) return "";
+    return `<p class="sch-hint sch-pline" title="as recorded — the global roster file supplies both by OID on import">${esc(bits.join(" · "))}</p>`;
   }
 
   function studentForm(s, isNew) {
@@ -1357,6 +1383,11 @@ window.fmtDMY = function fmtDMY(v) {
         <label class="sch-fld"><span>MN (service no)</span><input class="sch-in" data-f="mn" value="${esc(s.mn || "")}"></label>
         <label class="sch-fld"><span>Rank — free text or a chip</span><input class="sch-in" data-f="rank" value="${esc(s.rank || "")}">${rankChipsHtml()}</label>
         <label class="sch-fld"><span>Class</span><input class="sch-in" data-f="class" value="${esc(s.class || "")}" list="sch-classlist" placeholder="99HAF-A"></label>
+        <label class="sch-fld"><span>Date of birth</span><input type="date" class="sch-in" data-f="date_of_birth" value="${esc(s.date_of_birth || "")}"
+          title="stored ISO, read DD/MM/YYYY like every other date in the app"></label>
+        <label class="sch-fld"><span>Phase II start</span><input type="date" class="sch-in" data-f="phase2_start_date" value="${esc(s.phase2_start_date || "")}"
+          title="the day this student entered Phase II — the reference date of the whole syllabus clock"></label>
+        <label class="sch-fld"><span>Country — air force</span>${otherSelect("country", COUNTRIES, s.country || "HAF", "e.g. FAF")}</label>
         <label class="sch-fld"><span>Status</span><select class="sch-in" data-f="status">${STATUS_OPTS.map((o) =>
           `<option value="${o}"${(s.status || "active") === o ? " selected" : ""}>${esc(statusLabel(o))}</option>`).join("")}</select></label>
         <label class="sch-fld"><span>Primary IP</span><select class="sch-in" data-f="primary_ip">${ipRefOptions(s.primary_ip || "")}</select></label>
@@ -1365,6 +1396,7 @@ window.fmtDMY = function fmtDMY(v) {
         <label class="sch-fld wide"><span>Avoid IPs — manual (fail-22) · click toggles</span>${avoidChipsHtml(s)}</label>
         <label class="sch-fld grow"><span>Notes</span><input class="sch-in" data-f="notes" value="${esc(s.notes || "")}"></label>
       </div>
+      ${personLine(s)}
       <div class="sch-fbtns">
         <button type="button" class="sch-btn primary" data-act="save-s">✔ Save</button>
         <button type="button" class="sch-btn" data-act="cancel">↩ Cancel</button>
@@ -1540,6 +1572,7 @@ window.fmtDMY = function fmtDMY(v) {
       if (!b) return;
       const act = b.dataset.act, id = b.dataset.id;
       if (act === "imp-roster") { const f = $id("sch-rosterfile"); if (f) f.click(); return; }
+      if (act === "fix-codes") { repairCodes(); return; }
       if (act === "prog-s") {
         if (window.schProgressOpen) window.schProgressOpen(id);
         else S().toast("The progress editor arrives with Phase B.", "bad");
@@ -1580,6 +1613,11 @@ window.fmtDMY = function fmtDMY(v) {
       class: fval(box, "class"), status: fval(box, "status"),
       first_name: fval(box, "first_name"), last_name: fval(box, "last_name"),
       mn: fval(box, "mn"), rank: fval(box, "rank"),
+      /* Round 12b — the three fields the global roster now carries for a
+         student. Dates stay ISO in the store; the form is a native date box
+         and the reading under it is DD/MM/YYYY, like everywhere else. */
+      date_of_birth: fval(box, "date_of_birth"), phase2_start_date: fval(box, "phase2_start_date"),
+      country: fvalOther(box, "country"),
       primary_ip: fval(box, "primary_ip"), reserve_ips: [r0, r1].filter(Boolean),
       avoid_ips: fchips(box),
       notes: fval(box, "notes"),
@@ -1632,10 +1670,22 @@ window.fmtDMY = function fmtDMY(v) {
 
   /* the roster's own field names → the store's, for ONE person. Returns only
      the keys the file actually carries (see the null rule above). */
+  const ISO_DAY = /^\d{4}-\d{2}-\d{2}$/;
   function rosterPatch(r, coll) {
     const p = {};
     const put = (k, v) => { if (v !== null && v !== undefined) p[k] = v; };
     const txt = (v) => (v === null || v === undefined ? undefined : String(v).trim());
+    /* a date the file spells wrong is DROPPED, not stored: a half-parsed
+       "12/05/1999" in an ISO field would print as garbage everywhere. The
+       import summary counts the person either way — nothing else is lost. */
+    const isoOnly = (v) => {
+      const s = txt(v);
+      if (s === undefined || s === "") return undefined;
+      const d = s.slice(0, 10);
+      if (ISO_DAY.test(d)) return d;
+      console.warn("Roster import: ignored a date that is not ISO YYYY-MM-DD — " + JSON.stringify(v));
+      return undefined;
+    };
     put("last_name", txt(r.last_name));
     put("first_name", txt(r.first_name));
     put("mn", txt(r.mn));
@@ -1644,12 +1694,19 @@ window.fmtDMY = function fmtDMY(v) {
       const map = coll === "students" ? ROSTER_ST_SP : ROSTER_STATUS;
       p.status = map[String(r.status)] || (coll === "students" ? "active" : "active");
     }
+    /* Round 12b — the three student fields. `country` is shared with the
+       instructor branch below, so it is mapped before the split; the two dates
+       are ISO in the file and ISO in the store (the UI is what says DD/MM). A
+       date the file does not carry leaves the local value alone, exactly like
+       every other field here. */
+    put("country", txt(r.country));
     if (coll === "students") {
       put("class", txt(r.class || r.class_id));
+      put("date_of_birth", isoOnly(r.date_of_birth != null ? r.date_of_birth : r.dob));
+      put("phase2_start_date", isoOnly(r.phase2_start_date != null ? r.phase2_start_date : r.phase_2_start_date));
       return p;
     }
     put("callsign", txt(r.call_sign != null ? r.call_sign : r.callsign));
-    put("country", txt(r.country));
     if (r.test_pilot != null) p.test_pilot = !!r.test_pilot;
     put("duty", txt(r.duty));
     put("leadership", txt(r.leadership));
@@ -1688,6 +1745,187 @@ window.fmtDMY = function fmtDMY(v) {
       if (!taken.has(c)) { taken.add(c); return c; }
     }
     return pre + Date.now();
+  }
+
+  /* ══ CODE REPAIR ═════════════════════════════════════════════════════════
+     Round 12b. On 18/08/2026 a mid-refactor import minted a handful of people
+     with a code shaped like a STORE RECORD ID — "stu-m9x2k1-7", "ins-m9x2k1-3"
+     — because a caller handed upsert() a record with no `code` and the store's
+     own uid(name.slice(0,3)) filled the key in (schedstore.js, normalize/
+     upsert). Those are keys, not codes: they are unreadable on the board and
+     on paper, and they are what the training log has been referencing ever
+     since. This button re-mints them and rewrites EVERY reference in one pass.
+
+     WHAT A PROPER CODE IS — the same rule as the roster import (mintCode):
+     an instructor's own CALL SIGN when he has one and it is free, otherwise
+     the next free IP-n / SP-n. The OID never changes: identity is the OID, and
+     the roster merges by it, which is why re-importing the roster file
+     afterwards re-applies the call sign and the rest by OID and costs nothing.
+
+     WHAT GETS REWRITTEN — enumerated from the store, not guessed:
+       trainingLog   ev.student · ev.instructor · ev.absent[].student
+       availability  a.person AND a.id (the id IS "person|date")
+       gates         g.student
+       dutyRoster    sof_a/sof_b/rsu_a/rsu_b/rsu/SOF/RSU/ground_1/ground_2/
+                     ground_instructor/alt_instructors[]
+       dayPlans      waves[].lines[].sp/.ip · fs[].sp/.ip · lessons[].student/
+                     .instructor/.absent{code:reason} · alt_students[].sp ·
+                     alt_instructors[].ip
+       students      primary_ip · reserve_ips[] · avoid_ips[] — these hold OIDs
+                     since Round 4, but a pre-Round-4 value can still be a CODE
+                     (SchedPeople.ip() resolves both), so they are remapped too
+       ui            the log filter, the open form and the board's in-memory
+                     copy of the day plan — the last one matters: it would be
+                     written back with the OLD codes on the next keystroke.
+     instructorCurrency is keyed by OID and needs nothing.
+     IDEMPOTENT: after a run no code matches the shape, so a second click says
+     there is nothing to repair.                                             */
+  const ID_CODE_RE = /^(stu|ins)-[a-z0-9]+-[a-z0-9]+$/;
+  const isIdShaped = (code) => ID_CODE_RE.test(String(code == null ? "" : code));
+  /* how many people carry one right now — the button wears the number, so the
+     normal state of a healthy store is a quiet button that says nothing */
+  const brokenN = () => ["students", "instructors"]
+    .reduce((n, c) => n + (S().get(c) || []).filter((r) => isIdShaped(r.code)).length, 0);
+
+  function repairPlan() {
+    const map = { students: new Map(), instructors: new Map() };
+    const rows = [];
+    for (const coll of ["instructors", "students"]) {
+      const list = S().get(coll) || [];
+      const taken = new Set(list.map((r) => String(r.code)));
+      for (const rec of list) {
+        if (!isIdShaped(rec.code)) continue;
+        /* the call sign is the code the squadron already says out loud —
+           the same first choice the roster import makes for a new person */
+        const want = coll === "instructors" ? String(rec.callsign || "").trim() : "";
+        const next = mintCode(coll, want, taken);
+        map[coll].set(String(rec.code), next);
+        rows.push({ coll: coll, from: String(rec.code), to: next,
+          who: S().baseLabel(rec) || next, oid: rec.oid || "" });
+      }
+    }
+    return { map: map, rows: rows };
+  }
+
+  function repairCodes() {
+    const plan = repairPlan();
+    if (!plan.rows.length) {
+      S().toast("Nothing to repair — every code is already a proper one.", "good");
+      return;
+    }
+    let hits = 0;
+    const spM = plan.map.students, ipM = plan.map.instructors;
+    const sp = (v) => { const k = String(v == null ? "" : v); if (!spM.has(k)) return v; hits += 1; return spM.get(k); };
+    const ip = (v) => { const k = String(v == null ? "" : v); if (!ipM.has(k)) return v; hits += 1; return ipM.get(k); };
+    const person = (v) => { const k = String(v == null ? "" : v); return spM.has(k) ? sp(v) : (ipM.has(k) ? ip(v) : v); };
+
+    /* count first, on a THROWAWAY copy, so the dialog can promise a number */
+    const dry = () => {
+      const before = hits;
+      rewriteAll(JSON.parse(JSON.stringify({
+        trainingLog: S().get("trainingLog") || [], availability: S().get("availability") || [],
+        gates: S().get("gates") || [], dutyRoster: S().get("dutyRoster") || [],
+        dayPlans: S().get("dayPlans") || {}, students: S().get("students") || [],
+      })), sp, ip, person);
+      const n = hits - before;
+      hits = before;
+      return n;
+    };
+    const refs = dry();
+
+    const list = plan.rows.slice(0, 10).map((r) =>
+      "· " + r.from + "  →  " + r.to + "   (" + r.who + (r.oid ? ", OID " + r.oid : ", no OID") + ")").join("\n");
+    const more = plan.rows.length > 10 ? "\n· …and " + (plan.rows.length - 10) + " more" : "";
+    if (!confirm("Repair " + plan.rows.length + " code" + (plan.rows.length === 1 ? "" : "s") + "?\n\n"
+      + list + more + "\n\n"
+      + refs + " reference(s) in the training log, availability, gates, duties and day plans are rewritten "
+      + "in the same pass. OIDs are NOT touched — identity does not change.\n\n"
+      + "Export a backup first if you want a way back.")) return;
+
+    /* ONE deep copy, rewritten, then written back collection by collection */
+    const next = JSON.parse(JSON.stringify({
+      trainingLog: S().get("trainingLog") || [], availability: S().get("availability") || [],
+      gates: S().get("gates") || [], dutyRoster: S().get("dutyRoster") || [],
+      dayPlans: S().get("dayPlans") || {}, students: S().get("students") || [],
+    }));
+    rewriteAll(next, sp, ip, person);
+    /* the people themselves: the code IS the key, so the whole list is put.
+       The students list is put in every case — even with no student renamed
+       its IP references may have been rewritten above. */
+    const recode = (list, m) => list.map((r) =>
+      (m.has(String(r.code)) ? Object.assign({}, r, { code: m.get(String(r.code)) }) : r));
+    if (ipM.size) S().put("instructors", recode(S().get("instructors") || [], ipM));
+    S().put("students", recode(next.students, spM));
+    S().put("trainingLog", next.trainingLog);
+    S().put("availability", next.availability);
+    S().put("gates", next.gates);
+    S().put("dutyRoster", next.dutyRoster);
+    S().put("dayPlans", next.dayPlans);
+
+    /* ui that still names an old code (see the header note on the board) */
+    ui.roster.editS = ui.roster.editI = null;
+    ui.roster.addS = ui.roster.addI = false;
+    if (ui.log.f.student) ui.log.f.student = sp(ui.log.f.student);
+    if (ui.log.form) {
+      if (ui.log.form.student) ui.log.form.student = sp(ui.log.form.student);
+      if (ui.log.form.instructor) ui.log.form.instructor = ip(ui.log.form.instructor);
+    }
+    if (window.schBoardReset) window.schBoardReset();
+    P().invalidate();
+    S().toast(plan.rows.length + " code(s) repaired · " + refs + " reference(s) rewritten. "
+      + "Re-import the roster file now — it re-applies call sign, names and fields BY OID.", "good");
+  }
+
+  /* the one rewriter, used twice: once on a throwaway copy to COUNT and once
+     for real. Mutates in place; every substitution goes through sp/ip/person,
+     which are what keep the tally honest.                                    */
+  function rewriteAll(d, sp, ip, person) {
+    for (const ev of d.trainingLog || []) {
+      if (ev.student) ev.student = sp(ev.student);
+      if (ev.instructor) ev.instructor = ip(ev.instructor);
+      for (const a of ev.absent || []) if (a && a.student) a.student = sp(a.student);
+    }
+    for (const a of d.availability || []) {
+      if (!a || !a.person) continue;
+      const was = String(a.person);
+      a.person = person(a.person);
+      if (String(a.person) !== was) a.id = a.person + "|" + a.date;   // the id IS person|date
+    }
+    for (const g of d.gates || []) if (g && g.student) g.student = sp(g.student);
+    const DUTY_ONE = ["sof_a", "sof_b", "rsu_a", "rsu_b", "rsu", "SOF", "RSU", "ground_1", "ground_2", "ground_instructor", "ground"];
+    for (const r of d.dutyRoster || []) {
+      if (!r) continue;
+      for (const k of DUTY_ONE) if (r[k]) r[k] = ip(r[k]);
+      if (Array.isArray(r.alt_instructors)) r.alt_instructors = r.alt_instructors.map((x) => (x ? ip(x) : x));
+    }
+    const plans = d.dayPlans || {};
+    for (const date of Object.keys(plans)) {
+      const p = plans[date];
+      if (!p || typeof p !== "object") continue;
+      const flightLine = (l) => { if (!l) return; if (l.sp) l.sp = sp(l.sp); if (l.ip) l.ip = ip(l.ip); };
+      for (const w of p.waves || []) for (const l of (w && w.lines) || []) flightLine(l);
+      for (const l of p.fs || []) flightLine(l);
+      for (const a of p.alt_students || []) if (a && a.sp) a.sp = sp(a.sp);
+      for (const a of p.alt_instructors || []) if (a && a.ip) a.ip = ip(a.ip);
+      for (const l of p.lessons || []) {
+        if (!l) continue;
+        if (l.student) l.student = sp(l.student);
+        if (l.instructor) l.instructor = ip(l.instructor);
+        if (l.absent && typeof l.absent === "object" && !Array.isArray(l.absent)) {
+          const out = {};
+          for (const k of Object.keys(l.absent)) out[sp(k)] = l.absent[k];
+          l.absent = out;
+        }
+      }
+    }
+    /* Round 4 stores OIDs here; a pre-Round-4 value can still be a code */
+    for (const s of d.students || []) {
+      if (!s) continue;
+      if (s.primary_ip) s.primary_ip = ip(s.primary_ip);
+      if (Array.isArray(s.reserve_ips)) s.reserve_ips = s.reserve_ips.map((x) => (x ? ip(x) : x));
+      if (Array.isArray(s.avoid_ips)) s.avoid_ips = s.avoid_ips.map((x) => (x ? ip(x) : x));
+    }
+    return d;
   }
 
   /* ── THE MISTYPED-OID WARNING (Round 9 residual) ─────────────────────────

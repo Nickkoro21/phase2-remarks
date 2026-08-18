@@ -28,6 +28,16 @@
  *   get() hands back the LIVE in-memory object, not a copy — treat it as
  *   read-only and route every change through put/upsert/remove so that the
  *   write to localStorage and the notification actually happen.
+ *
+ * EDIT LOCK (Round 12b — user directive «Τα edit και save να μπορω να τα κανω
+ *   μονο εγω.»)
+ *   VIEW-ONLY IS THE DEFAULT. Every mutating entry point below asks
+ *   window.SchedEdit first and REFUSES (toast + null) while the lock is on —
+ *   the UI veneer is a courtesy, this is the wall. system(fn) is the one
+ *   named hole: replication and bookkeeping the owner's own devices do to
+ *   each other (the sync applying a pulled snapshot, the boot pass that mints
+ *   OIDs). It never runs from a UI event. See the SchedEdit block at the
+ *   bottom of this file and specs/scheduler-spec.md § 13.
  */
 (() => {
   const PREFIX = "p2r-sch-";
@@ -143,23 +153,24 @@
     return (tag || "r") + "-" + Date.now().toString(36) + "-" + seq.toString(36);
   }
 
-  /* ══ DISPLAY NAMES — "Koroniadis N."          (Round 12a, 18/08/2026) ═════
+  /* ══ DISPLAY NAMES — "Instructor01 T."          (Round 12a, 18/08/2026) ═════
      User ruling: «Αντί να φαίνεται το object id να φαίνεται το Surname,
-     Name (πρώτο γράμμα). Δηλαδή για εμένα θα έβλεπα Koroniadis N.» — repeated
+     Name (πρώτο γράμμα). Δηλαδή για εμένα θα έβλεπα <Επώνυμο> Ν.» — repeated
      a second time («Όχι object id, αλλά ονόματα όπως είπαμε»), so it is an
      acceptance criterion, not a preference: NOTHING outside an edit form
      renders an internal handle any more.
 
      THE RULE, in order
-       1. last name + first initial + "."          → "Koroniadis N."
-       2. the last name alone, when no first name  → "Koroniadis"
+       1. last name + first initial + "."          → "Instructor01 T."
+       2. the last name alone, when no first name  → "Instructor01"
        3. the code, when the record carries no name at all → "IP-7"
 
      DISAMBIGUATION IS COMPUTED, NOT HOPED FOR
-       Two people can honestly land on the same label ("Koroniadis N." twice).
+       Two people can honestly land on the same label ("Instructor01 T." twice).
        When they do, EVERY member of that clash carries its code —
-       "Koroniadis N. (IP-3)" · "Koroniadis N. (IP-9)" — so the reader is never
-       shown two identical names for two different pilots. Students and
+       "Instructor01 T. (IP-1)" · "Instructor01 T. (IP-14)" — so the reader is
+       never shown two identical names for two different pilots (that pair is
+       the collision the PUBLIC SEED carries on purpose). Students and
        instructors are ONE pool for this purpose: a board line, a duty cell and
        a log row put both on the same screen.
        The index is rebuilt on every store write (emit → invalidate), so a
@@ -167,7 +178,7 @@
 
      CODES REMAIN THE KEYS
        Nothing about storage changes. Codes stay in the edit forms, in the
-       tooltips, in every dropdown option ("Koroniadis N. (IP-3)") and in every
+       tooltips, in every dropdown option ("Instructor01 T. (IP-1)") and in every
        search/filter — only the READING changes.                            */
   const NAMED = ["instructors", "students"];
   const labels = { clash: null };
@@ -236,11 +247,36 @@
     return rec ? personOption(rec) : nameTrim(id);
   }
 
+  /* ══ THE WRITE GATE ═══════════════════════════════════════════════════════
+     Round 12b. Reads are never gated; every WRITE passes here first.
+       · system(fn) runs fn with the gate suspended. Two callers only, both
+         machine-to-machine and neither of them a UI event: SchedSync applying
+         a snapshot it just pulled from the owner's own repo, and the boot pass
+         that mints a missing OID. fn must be SYNCHRONOUS — the depth counter
+         would be decremented before an async body finished.
+       · mayWrite(what) is what every seam calls. With no SchedEdit loaded at
+         all it allows the write (the module below always loads with this file;
+         the guard is for a hand-assembled bundle that dropped it, where the
+         honest failure mode is a working app, not a bricked one).            */
+  let sysDepth = 0;
+  function system(fn) {
+    sysDepth += 1;
+    try { return fn(); } finally { sysDepth -= 1; }
+  }
+  function mayWrite(what) {
+    if (sysDepth > 0) return true;
+    const E = window.SchedEdit;
+    if (!E || E.on()) return true;
+    E.refuse(what);
+    return false;
+  }
+
   /* ── CRUD ───────────────────────────────────────────────────────────────── */
   function get(name) { return db[name]; }
 
   function put(name, data) {
     if (!COLLS[name]) throw new Error("SchedStore: unknown collection " + name);
+    if (!mayWrite("replace " + name)) return null;
     const t = COLLS[name].type;
     db[name] = t === "list" ? (Array.isArray(data) ? data : []) : (data && typeof data === "object" ? data : {});
     normalize();
@@ -261,6 +297,7 @@
     const c = COLLS[name];
     if (!c || c.type !== "list") throw new Error("SchedStore: upsert needs a list collection, got " + name);
     if (!rec || typeof rec !== "object") throw new Error("SchedStore: upsert needs a record");
+    if (!mayWrite("save")) return null;
     if (rec[c.key] == null || rec[c.key] === "") rec[c.key] = uid(name.slice(0, 3));
     const list = db[name];
     const i = list.findIndex((r) => String(r[c.key]) === String(rec[c.key]));
@@ -274,6 +311,7 @@
   function remove(name, id) {
     const c = COLLS[name];
     if (!c || c.type !== "list") throw new Error("SchedStore: remove needs a list collection, got " + name);
+    if (!mayWrite("delete")) return null;
     const list = db[name];
     const i = list.findIndex((r) => String(r[c.key]) === String(id));
     if (i < 0) return false;
@@ -295,6 +333,7 @@
     return v === undefined ? fallback : v;
   }
   function setConfig(patch) {
+    if (!mayWrite("change a setting")) return null;
     db.config = Object.assign({}, db.config, patch || {});
     persist("config");
     emit("config", "put", null);
@@ -335,6 +374,7 @@
     return a ? a.status : "available";
   }
   function setAvailability(person, date, status) {
+    if (!mayWrite("change availability")) return null;
     const id = availId(person, date);
     if (!status || status === "available") { remove("availability", id); return "available"; }
     upsert("availability", { id: id, person: person, date: date, status: status });
@@ -344,12 +384,14 @@
   /* ── day plans (Phase B) ────────────────────────────────────────────────── */
   function dayPlan(date) { return (db.dayPlans || {})[date] || null; }
   function putDayPlan(date, plan) {
+    if (!mayWrite("save the day plan")) return null;
     db.dayPlans[date] = plan;
     persist("dayPlans");
     emit("dayPlans", "put", plan);
     return plan;
   }
   function removeDayPlan(date) {
+    if (!mayWrite("clear the day plan")) return null;
     if (!(date in (db.dayPlans || {}))) return false;
     delete db.dayPlans[date];
     persist("dayPlans");
@@ -392,6 +434,7 @@
      seed file (snake_case keys) so a hand-written seed can be imported too.   */
   async function importAll(file) {
     if (!file) return false;
+    if (!mayWrite("import a backup")) return false;
     let data;
     try { data = JSON.parse(await readFile(file)); }
     catch (e) { toast("Import failed — not valid JSON.", "bad"); return false; }
@@ -422,6 +465,7 @@
   }
 
   async function resetToSeed() {
+    if (!mayWrite("reset the store")) return false;
     if (!confirm("Reset the scheduler to the seed file?\n"
       + "Roster, training log, availability, duties, gates and day plans are all discarded.\n\nContinue?")) return false;
     const ok = await seedFresh(true);
@@ -480,8 +524,462 @@
     dayPlan, putDayPlan, removeDayPlan,
     snapshot, exportAll, importAll, resetToSeed, mountTools,
     uid, toast,
-    /* Round 12a — display names ("Koroniadis N."), one helper for the whole app */
+    /* Round 12b — the edit lock's one hole (see mayWrite above) */
+    system, mayWrite,
+    /* Round 12a — display names ("Instructor01 T."), one helper for the whole app */
     personLabel, personLabelOf, personOption, personOptionOf, personOf, baseLabel,
     seedError: () => seedError,
   };
+})();
+
+/* ══════════════════════════════════════════════════════════════════════════
+   EDIT LOCK — window.SchedEdit                                  (Round 12b)
+   ══════════════════════════════════════════════════════════════════════════
+   USER DIRECTIVE, 18/08/2026: «Τα edit και save να μπορω να τα κανω μονο εγω.»
+
+   VIEW-ONLY IS THE DEFAULT — everywhere, from the first paint, on every device
+   and after every reload. Nothing in the Scheduler, the Currency matrix, the
+   Progress editor, the Training Log, the duty roster or the imports may change
+   a record until EDITOR MODE is unlocked with the owner's code.
+
+   THREE LAYERS, IN THE ORDER THAT MATTERS
+     1 · THE SEAM     SchedStore.put / upsert / remove / setConfig /
+                      setAvailability / putDayPlan / removeDayPlan / importAll /
+                      resetToSeed refuse and return null. This is the layer that
+                      actually holds: it does not care whether a button was
+                      disabled, whether the DOM is stale, whether a render
+                      forgot a case or whether the call came from the console.
+     2 · THE GUARD    ONE capture-phase listener swallows click / Enter / Space /
+                      change inside the guarded views unless the target is on
+                      the NAVIGATION list, and says why. It exists so that
+                      nothing half-happens in the UI before the seam refuses.
+     3 · THE VENEER   a MutationObserver disables the real form controls after
+                      every repaint, so the screen LOOKS like what it is. It is
+                      the courtesy layer, never the protection.
+
+   HONEST LIMITATION — printed here and in specs/scheduler-spec.md § 13
+     This is a DETERRENT for shared screens, borrowed laptops and exported
+     files. It is NOT cryptography: everything runs client-side, so whoever
+     opens devtools can flip a flag, and the localStorage copy of the data is
+     readable to anyone sitting at that keyboard. What actually protects the
+     data is the ACCESS-CODE CURTAIN (privacy veil, schedsync.js) and the
+     AES-GCM encryption of the cloud copy. The edit lock protects the DATA'S
+     INTEGRITY against the honest passer-by, not its confidentiality against an
+     attacker.
+
+   THE VERIFIER — where it lives and why
+     PBKDF2-SHA256, 310 000 iterations, 16-byte random salt: the same shape as
+     the curtain's verifier, and deliberately NOT a bare SHA-256 of a short
+     code (a 4-6 character code hashed once is a rainbow-table lookup; the
+     directive's «SHA-256 hash» is honoured as the hash FAMILY, hardened).
+     It is stored in the STORE CONFIG — so it travels to the owner's other
+     devices inside the encrypted sync, exactly as asked — and it is a
+     VERIFIER: it never yields the code back.
+     Per device the unlock is remembered in localStorage as the FINGERPRINT of
+     the verifier it was granted for. Change the code anywhere and every other
+     device drops back to view-only by itself the next time it reads the store.
+
+   FIRST-EVER ENABLE (trust on first use)
+     With no verifier in the config, the button offers to SET one. That is the
+     honest bootstrap: before the owner sets a code there is nothing to check
+     against. Once set and synced, every other device must type it.
+   ══════════════════════════════════════════════════════════════════════════ */
+(() => {
+  const S = () => window.SchedStore;
+  const CFG_KEY = "editor_lock";          // inside the SYNCED store config
+  const OPEN_KEY = "p2r-edit-open";       // localStorage: this device, this verifier
+  const ITER = 310000;
+  const MIN_LEN = 4;
+
+  const $ = (id) => document.getElementById(id);
+  const ESC = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ESC[c]);
+  const lsGet = (k) => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+  const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
+  const lsDel = (k) => { try { localStorage.removeItem(k); } catch (e) {} };
+
+  /* WebCrypto helpers — a deliberate 20-line duplicate of schedsync.js's.
+     This file must not depend on schedsync.js: that module is injected
+     dynamically by app.js and is absent from the offline bundle, while the
+     write gate above has to work from the very first paint.                 */
+  function bytesToB64(u8) {
+    let bin = "";
+    for (let i = 0; i < u8.length; i += 0x8000) bin += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000));
+    return btoa(bin);
+  }
+  function b64ToBytes(b64) {
+    const bin = atob(String(b64 || "").replace(/\n/g, ""));
+    const u8 = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+    return u8;
+  }
+  async function verifierHash(secret, saltU8, iter) {
+    if (!(window.crypto && crypto.subtle)) throw new Error("WebCrypto unavailable in this context");
+    const mat = await crypto.subtle.importKey("raw", new TextEncoder().encode(secret), "PBKDF2", false, ["deriveBits"]);
+    const bits = await crypto.subtle.deriveBits(
+      { name: "PBKDF2", hash: "SHA-256", salt: saltU8, iterations: iter }, mat, 256);
+    return bytesToB64(new Uint8Array(bits));
+  }
+
+  /* ── state ──────────────────────────────────────────────────────────────── */
+  const st = { open: false, msg: "", busy: false };
+  const subs = new Set();
+
+  const verifier = () => { const v = S() ? S().cfg(CFG_KEY, null) : null; return v && v.hash ? v : null; };
+  const fingerprint = (v) => (v ? String(v.hash).slice(0, 24) : "");
+  const hasCode = () => !!verifier();
+
+  /* The device flag is only worth anything while it still names THIS verifier:
+     a code changed on another device re-locks this one on the next read. */
+  function on() {
+    if (!st.open) return false;
+    const v = verifier();
+    if (!v) { st.open = false; return false; }          // the code was removed / reset away
+    if (lsGet(OPEN_KEY) !== fingerprint(v)) { st.open = false; return false; }
+    return true;
+  }
+
+  function boot() {
+    const v = verifier();
+    st.open = !!v && lsGet(OPEN_KEY) === fingerprint(v);
+  }
+
+  function emit() {
+    paint();
+    subs.forEach((fn) => { try { fn(on()); } catch (e) { console.error(e); } });
+    repaintViews();
+  }
+  const subscribe = (fn) => { if (typeof fn === "function") subs.add(fn); return () => subs.delete(fn); };
+
+  /* the views own their own HTML; they are asked to redraw, never patched */
+  function repaintViews() {
+    const live = (id) => { const el = $(id); return !!el && !el.classList.contains("hidden"); };
+    if (live("view-scheduler") && window.schInit) { try { window.schInit(); } catch (e) { console.error(e); } }
+    if (live("view-currency") && window.curInit) { try { window.curInit(); } catch (e) { console.error(e); } }
+  }
+
+  /* ── the three write actions ────────────────────────────────────────────── */
+  async function setCode(code, oldCode) {
+    const v = verifier();
+    if (v) {                                            // changing an existing code
+      if (!(await matches(oldCode))) return "the current code is wrong";
+    }
+    if (String(code || "").length < MIN_LEN) return "the code must be at least " + MIN_LEN + " characters";
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const rec = { v: 1, kdf: "PBKDF2-SHA256", iter: ITER, salt: bytesToB64(salt),
+      hash: await verifierHash(code, salt, ITER), set_at: new Date().toISOString() };
+    /* the write that installs the lock is itself gated by the lock — the one
+       place where that would be a deadlock, so it goes through system() */
+    S().system(() => S().setConfig({ [CFG_KEY]: rec }));
+    lsSet(OPEN_KEY, fingerprint(rec));
+    st.open = true;
+    emit();
+    return "";
+  }
+
+  async function matches(code) {
+    const v = verifier();
+    if (!v) return true;
+    if (!code) return false;
+    return (await verifierHash(code, b64ToBytes(v.salt), (v.iter | 0) || ITER)) === v.hash;
+  }
+
+  async function unlock(code) {
+    const v = verifier();
+    if (!v) return "no editor code is set yet";
+    if (!(await matches(code))) return "wrong code";
+    lsSet(OPEN_KEY, fingerprint(v));
+    st.open = true;
+    emit();
+    return "";
+  }
+
+  function lock() {
+    lsDel(OPEN_KEY);
+    st.open = false;
+    emit();
+  }
+
+  /* ── the refusal ────────────────────────────────────────────────────────── */
+  let lastToast = 0;
+  function refuse(what) {
+    const now = Date.now();
+    if (now - lastToast > 1200) {                       // one burst = one toast
+      lastToast = now;
+      if (S() && S().toast) {
+        S().toast("View-only — unlock Editor mode to " + (what || "change anything") + ".", "bad");
+      }
+    }
+    const b = $("edit-btn");
+    if (b) { b.classList.remove("is-shake"); void b.offsetWidth; b.classList.add("is-shake"); }
+    return false;
+  }
+
+  /* ══ THE NAVIGATION LIST ═════════════════════════════════════════════════
+     Deny by default: inside a guarded view every control is treated as a
+     mutation UNLESS it is named here. A missed navigation control is an
+     annoyance the user reports; a missed mutation control would be data
+     changing while the app says it cannot — the directive's whole point.
+     Every entry below reads or moves the VIEW and writes no record.        */
+  const NAV = [
+    ".sch-subtab", "[data-sec]", "[data-cursec]", "[data-pv]", "[data-bal]",  // panes, sections, print bar, balance period
+    "#sch-rosterq", "#sch-avdate", "#sch-progq", "[data-flt]",                // filters and searches
+    '[data-act="exp-s"]', '[data-act="exp-i"]', '[data-act="cancel"]',        // open / close a row
+    '[data-act="prog-s"]', '[data-act="toggle-form"]', '[data-act="nfs-dismiss"]',
+    '[data-pb="close"]', '[data-pb="cancel"]', '[data-pb="sec"]',             // the progress panel's own navigation
+    '[data-pb="ctr"]', '[data-pb="goto"]', '[data-pb="st-cancel"]',
+    '[data-b="date"]', '[data-b="day-1"]', '[data-b="day+1"]',                // which day the board SHOWS
+    '[data-b="day-today"]', '[data-b="print"]', '[data-b="allip"]',
+    '[data-t="export"]', "#sync-open", '[data-act="cur-print"]',              // read-only exits: backup, sync dialog, binder sheet
+    "[data-nav]",                                                             // anything a view marks explicitly
+  ].join(",");
+  /* the three hosts the guard covers. #sch-progmodal is created lazily on
+     document.body, so it is looked up every time instead of cached. */
+  const SCOPE = "#view-scheduler, #view-currency, #sch-progmodal";
+  const FORMS = "button, input, select, textarea";
+  const ACTIVE = FORMS + ', [role="button"], [tabindex], [data-cell], [data-act], [data-b],'
+    + " [data-lb], [data-wb], [data-ab], [data-pb], [data-av], [data-away], [data-avchip],"
+    + " [data-rankchip], [data-add-sp], [data-sfip], [data-t], [data-duty], [data-mix]";
+
+  function guarded(t) {
+    if (!t || !t.closest) return null;
+    if (!t.closest(SCOPE)) return null;
+    if (t.closest(NAV)) return null;
+    return t.closest(ACTIVE);
+  }
+  function onCapture(e) {
+    if (on()) return;
+    /* a click may have just OPENED a lazily-created host (the Progress panel
+       is appended to <body> the first time it is asked for), so the veneer is
+       re-queued from here as well as from the observer */
+    scheduleSweep();
+    if (!guarded(e.target)) return;
+    e.preventDefault();
+    e.stopPropagation();
+    refuse("");
+  }
+
+  /* ── the veneer ─────────────────────────────────────────────────────────
+     Only real form controls are touched: `disabled` is native, keyboard-safe
+     and needs no CSS to be honest. Everything else (the matrix cells, the
+     summary rows) is left to the guard and to the stylesheet, which is why
+     1 365 currency cells cost nothing here.
+     Marked with data-edlk so that unlocking re-enables exactly what THIS
+     module disabled and never what the app disabled for its own reasons
+     (a published board, a step that is not reachable yet).                 */
+  const observed = new WeakSet();
+  let sweepQ = 0;
+  function roots() {
+    const out = [];
+    for (const sel of SCOPE.split(",")) { const el = document.querySelector(sel.trim()); if (el) out.push(el); }
+    return out;
+  }
+  function sweep() {
+    const live = on();
+    for (const root of roots()) {
+      if (!observed.has(root)) { observed.add(root); mo.observe(root, { childList: true, subtree: true }); }
+      if (live) {
+        for (const el of root.querySelectorAll("[data-edlk]")) {
+          el.disabled = false;
+          el.removeAttribute("data-edlk");
+          el.classList.remove("is-edlk");
+        }
+      } else {
+        for (const el of root.querySelectorAll(FORMS)) {
+          if (el.disabled || el.closest(NAV)) continue;
+          el.disabled = true;
+          el.setAttribute("data-edlk", "1");
+          el.classList.add("is-edlk");
+        }
+      }
+    }
+  }
+  /* setTimeout, NOT requestAnimationFrame: a background tab never paints, and
+     "the veneer only appears once you look at it" would be a lie about when a
+     control became inert. A 0-timeout still coalesces one repaint's worth of
+     mutations into a single sweep.                                          */
+  function scheduleSweep() {
+    if (sweepQ) return;
+    sweepQ = setTimeout(() => { sweepQ = 0; sweep(); }, 0);
+  }
+  /* childList only: setting `disabled` is an ATTRIBUTE change, so the veneer
+     can never re-trigger itself into a loop. */
+  const mo = new MutationObserver(scheduleSweep);
+
+  /* ── the topbar button + its dialog ─────────────────────────────────────── */
+  function paint() {
+    const live = on();
+    document.documentElement.setAttribute("data-edit", live ? "on" : "off");
+    const b = $("edit-btn");
+    if (b) {
+      b.textContent = live ? "✎ Editor" : "🔒 View-only";
+      b.classList.toggle("is-on", live);
+      b.setAttribute("aria-pressed", live ? "true" : "false");
+      b.title = live
+        ? "EDITOR MODE is on for this device — click to lock it again"
+        : (hasCode()
+          ? "View-only. Click and type the editor code to change anything."
+          : "View-only. No editor code has been set yet — click to set one.");
+    }
+    sweep();
+  }
+
+  function mount() {
+    if ($("edit-btn")) return true;
+    const bar = document.querySelector(".topbar");
+    if (!bar) return false;
+    const b = document.createElement("button");
+    b.type = "button";
+    b.id = "edit-btn";
+    b.className = "viewtab ed-btn";
+    const badge = $("databadge");
+    if (badge) bar.insertBefore(b, badge); else bar.appendChild(b);
+    b.addEventListener("click", openPop);
+    paint();
+    return true;
+  }
+
+  function popHost() {
+    let p = $("ed-pop");
+    if (p) return p;
+    p = document.createElement("div");
+    p.id = "ed-pop";
+    p.className = "ed-pop hidden";
+    document.body.appendChild(p);
+    p.addEventListener("click", (e) => {
+      if (e.target === p || e.target.closest('[data-e="close"]')) { closePop(); return; }
+      const b = e.target.closest("[data-e]");
+      if (b) void act(b.dataset.e);
+    });
+    p.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") { closePop(); return; }
+      if (e.key === "Enter" && e.target.tagName === "INPUT") {
+        e.preventDefault();
+        void act(hasCode() ? (on() ? "change" : "unlock") : "set");
+      }
+    });
+    return p;
+  }
+  function closePop() { const p = $("ed-pop"); if (p) p.classList.add("hidden"); }
+
+  function openPop() {
+    st.msg = "";
+    renderPop();
+    popHost().classList.remove("hidden");
+    const f = $("ed-in1");
+    if (f) setTimeout(() => f.focus(), 50);
+  }
+
+  function renderPop() {
+    const p = popHost();
+    const live = on();
+    const has = hasCode();
+    const v = verifier();
+    p.innerHTML = `<div class="ed-box" role="dialog" aria-modal="true" aria-label="Editor mode">
+      <div class="ed-ico" aria-hidden="true">${live ? "✎" : "🔒"}</div>
+      <h3>${live ? "Editor mode is ON" : "View-only"}</h3>
+      <p class="hint">${live
+        ? "This device may save, delete and import. Lock it again when you hand the screen over."
+        : has
+          ? "Everything is readable; nothing can be changed. Type the editor code to unlock this device — it stays unlocked until you lock it."
+          : "No editor code has been set yet. Set one now: it is stored as a salted PBKDF2-SHA256 verifier inside the store, so it travels to your other devices with the sync — never as plain text, and never recoverable from here."}</p>
+      ${live ? "" : (has
+        ? `<label class="ed-lbl" for="ed-in1">Editor code</label>
+           <input id="ed-in1" type="password" autocomplete="off" placeholder="the code you set">`
+        : `<label class="ed-lbl" for="ed-in1">New editor code</label>
+           <input id="ed-in1" type="password" autocomplete="off" placeholder="min ${MIN_LEN} characters">
+           <label class="ed-lbl" for="ed-in2">Repeat it</label>
+           <input id="ed-in2" type="password" autocomplete="off" placeholder="the same code again">`)}
+      ${live && has ? `<hr class="ed-hr">
+        <h3>Change the code</h3>
+        <p class="hint">Every other device falls back to view-only until the new code is typed there.</p>
+        <label class="ed-lbl" for="ed-in1">Current code</label>
+        <input id="ed-in1" type="password" autocomplete="off">
+        <label class="ed-lbl" for="ed-in2">New code</label>
+        <input id="ed-in2" type="password" autocomplete="off" placeholder="min ${MIN_LEN} characters">` : ""}
+      <div class="ed-row">
+        ${live
+          ? `<button type="button" class="sch-tbtn" data-e="lock">🔒 Lock this device</button>
+             <button type="button" class="sch-tbtn" data-e="change">Change code</button>`
+          : (has
+            ? `<button type="button" class="sch-tbtn ed-go" data-e="unlock">Unlock</button>`
+            : `<button type="button" class="sch-tbtn ed-go" data-e="set">Set the code</button>`)}
+        <button type="button" class="sch-tbtn" data-e="close">✕ Close</button>
+      </div>
+      <div class="ed-status" id="ed-status">${esc(st.msg)}</div>
+      <p class="hint ed-fine">Honest about what this is: a deterrent for shared screens and borrowed
+        laptops, <b>not</b> cryptography — everything here runs in the browser. Privacy is the 🔒 access-code
+        curtain; the cloud copy is what the AES-GCM sync passphrase encrypts.${v && v.set_at
+          ? " Code set " + esc(window.fmtDMY ? window.fmtDMY(String(v.set_at).slice(0, 10)) : String(v.set_at).slice(0, 10)) + "."
+          : ""}</p>
+    </div>`;
+  }
+
+  function say(msg) {
+    st.msg = msg;
+    const el = $("ed-status");
+    if (el) el.textContent = msg;
+  }
+  const val = (id) => { const el = $(id); return el ? el.value.trim() : ""; };
+
+  async function act(what) {
+    if (st.busy) return;
+    st.busy = true;
+    try {
+      if (what === "lock") { lock(); closePop(); S().toast("Locked — view-only on this device.", "good"); return; }
+      if (what === "set") {
+        const a = val("ed-in1"), b = val("ed-in2");
+        if (a !== b) { say("the two codes do not match"); return; }
+        say("deriving the verifier…");
+        const err = await setCode(a, "");
+        if (err) { say(err); return; }
+        closePop();
+        S().toast("Editor code set — this device is unlocked.", "good");
+        return;
+      }
+      if (what === "unlock") {
+        say("checking…");
+        const err = await unlock(val("ed-in1"));
+        if (err) { say(err); return; }
+        closePop();
+        S().toast("Editor mode ON.", "good");
+        return;
+      }
+      if (what === "change") {
+        const oldC = val("ed-in1"), newC = val("ed-in2");
+        if (!oldC || !newC) { say("type the current code and the new one"); return; }
+        say("deriving the verifier…");
+        const err = await setCode(newC, oldC);
+        if (err) { say(err); return; }
+        renderPop();
+        say("code changed ✓ — other devices must type the new one");
+        return;
+      }
+    } catch (e) { say(e.message); }
+    finally { st.busy = false; }
+  }
+
+  /* ── boot ───────────────────────────────────────────────────────────────── */
+  document.addEventListener("click", onCapture, true);
+  document.addEventListener("change", onCapture, true);
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    if (e.target && e.target.tagName === "INPUT") return;      // typing, not activating
+    onCapture(e);
+  }, true);
+
+  window.SchedEdit = { on, hasCode, refuse, lock, unlock, setCode, subscribe, sweep, MIN_LEN };
+
+  function start() {
+    boot();
+    if (!mount()) setTimeout(start, 300);
+    /* the verifier lives in the store: re-read it after the seed loads and
+       after every pull, so a code set on another device takes effect here */
+    if (S()) {
+      S().ready().then(() => { boot(); paint(); });
+      S().subscribe((coll) => { if (coll === "config" || coll === "*") { boot(); paint(); } });
+    }
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
 })();
