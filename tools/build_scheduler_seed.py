@@ -63,6 +63,12 @@ IP_RANKS = ["1Lt", "Capt", "Maj", "Lt Col"]  # cycled — English ranks (board i
 # escape of the country dropdown and must be seen to work.
 IP_COUNTRIES = ["HAF", "HAF", "ITAF", "Other"]   # cycled
 IP_TEST_PILOTS = {1, 3, 4, 10}                   # one TP per seeded country
+# ROUND 11 — `experienced` (ΕΜΠ, Annex B §17) decides which validity column the
+# Currency tab reads, so the seed carries BOTH levels: without a mix, half the
+# 3-01's printed table would never be seen working. Fake, like everything here.
+# (It had been hand-written into seed.json in Round 10b and the builder did not
+# know about it — a regen used to drop it silently.)
+IP_EXPERIENCED = {1, 3, 4, 7, 10, 13}
 
 students, cut, prim_code = [], {}, {}
 N = len(GLOBAL)
@@ -93,6 +99,7 @@ instructors = [{
     "callsign": f"VIPER{i:02d}",
     "country": IP_COUNTRIES[(i - 1) % len(IP_COUNTRIES)],
     "test_pilot": i in IP_TEST_PILOTS,
+    "experienced": i in IP_EXPERIENCED,
     "quals": {"night": True, "evaluator": i <= 4, "ground": i in (3, 7, 11),
               "rsu_solo": i in (2, 5, 9, 13)},
     "duty_eligible": {"SOF": True, "RSU": True},
@@ -225,6 +232,124 @@ gates = [
      "note": "SMS (Special Monitoring Status) — max 1 dual sortie or 1 F/S per day; a 2nd item only as SOLO"},
 ]
 
+# ── INSTRUCTOR CURRENCY — FAKE demo data (Round 10b, semesters in Round 11) ──
+# THE PUBLIC SEED STAYS FAKE. These are the three placeholder instructors
+# IP-1/IP-2/IP-3 (oid-ip-01..03) and nothing here comes from a real logbook:
+# the point is only that the Currency tab has something to draw out of the box.
+#
+#   items      one DATE per catalog item of data/requirements/instructor_currency.json,
+#              written here as DAYS BEFORE CUR_ANCHOR so the file regenerates
+#              identically and the spread of green / amber / red stays readable.
+#   semesters  Round 11 — the ΑΝΑ ΕΞΑΜΗΝΟ counters, keyed BY SEMESTER
+#              ("2026-H2") so 01/01 rolls over instead of overwriting.
+#
+# WHY NO RED SEMESTER ROW IS SEEDED: a quota row only turns red when 30 days or
+# less of the semester remain. H2 2026 ends 31/12, so on 18/08/2026 there are
+# 135 days left and red is simply not reachable — it becomes reachable on
+# 01/12/2026 with the very same data. The seed does NOT fake the clock to force
+# the colour; it seeds one complete (green), one behind (amber) and one with no
+# counters recorded at all.
+CUR_ANCHOR = date(2026, 8, 14)
+CUR_SEM = "2026-H2"          # H2 = 01/07 – 31/12, the project's calendar half
+
+
+def cur_day(n):
+    return (CUR_ANCHOR - timedelta(days=n)).isoformat()
+
+
+# days before CUR_ANCHOR, per instructor OID
+CUR_ITEMS = {
+    "oid-ip-01": {
+        "day-landing": 31, "night-landing": 21, "e-1b-spin": 62,
+        "e-1c-aircraft-test-fcf": 31, "e-1d-demo": 0, "e-3-in-cloud-flight": 21,
+        "e-21-flight-300ft": 42, "e-31a-low-altitude-intercept-day": 42, "e-32-bfm": 52,
+        "e-40-training-munitions-release": 125, "e-45-visual-delivery-med-hi-apex-day": 52,
+        "e-46-visual-delivery-low-apex-day": 42, "e-49c-las-day": 52,
+        "sim-refresh-after-abstention": 15, "night-flight-day-recency": 0,
+        "in-cloud-recency-60d": 21, "type-availability-loss": 62,
+        "demo-500ft-currency": 0, "demo-reavailability-15-to-30-days": 10,
+        "demo-above-1000ft-availability": 31, "demo-pilot-tenure": 255,
+        "pr-sortie-interval": 0, "pr-programme-completion": 74,
+        "seminar-pdo": 127, "seminar-tactics": 127, "seminar-sea-survival": 127,
+        "training-egress-survival": 32, "training-aircraft-re-servicing": 127,
+        "seminar-flight-physiology": 383, "seminar-hpma-crm-orm": 127,
+        "monthly-knowledge-exams": 10, "cross-staff-visits-ata-day": 127,
+        "squadron-commanders-conference": 127, "trainee-20day-unscored-flight": 5,
+        "trainee-30day-type-availability-loss": 10, "body-weight-check": 42,
+    },
+    "oid-ip-02": {
+        "day-landing": 86, "night-landing": 15, "e-1b-spin": 62,
+        "e-3-in-cloud-flight": 21, "e-21-flight-300ft": 31,
+        "e-31a-low-altitude-intercept-day": 31, "e-32-bfm": 116,
+        "e-40-training-munitions-release": 125, "e-45-visual-delivery-med-hi-apex-day": 42,
+        "e-46-visual-delivery-low-apex-day": 31, "e-49c-las-day": 42,
+        "sim-refresh-after-abstention": 10, "night-flight-day-recency": 0,
+        "in-cloud-recency-60d": 21, "type-availability-loss": 62,
+        "demo-500ft-currency": 0, "demo-reavailability-15-to-30-days": 10,
+        "demo-above-1000ft-availability": 31, "demo-pilot-tenure": 255,
+        "pr-sortie-interval": 0, "pr-programme-completion": 74,
+        "seminar-pdo": 361, "seminar-tactics": 127, "seminar-sea-survival": 127,
+        "training-egress-survival": 32, "training-aircraft-re-servicing": 127,
+        "seminar-flight-physiology": 383, "seminar-hpma-crm-orm": 127,
+        "monthly-knowledge-exams": 10, "cross-staff-visits-ata-day": 127,
+        "squadron-commanders-conference": 127, "trainee-20day-unscored-flight": 5,
+        "trainee-30day-type-availability-loss": 10, "body-weight-check": 42,
+    },
+    "oid-ip-03": {
+        "day-landing": 31, "night-landing": 54, "e-3-in-cloud-flight": 21,
+        "e-21-flight-300ft": 99, "e-31a-low-altitude-intercept-day": 31, "e-32-bfm": 42,
+        "e-40-training-munitions-release": 125, "e-45-visual-delivery-med-hi-apex-day": 42,
+        "e-46-visual-delivery-low-apex-day": 31, "e-49c-las-day": 42,
+        "sim-refresh-after-abstention": 10, "night-flight-day-recency": 0,
+        "in-cloud-recency-60d": 21, "type-availability-loss": 62,
+        "demo-reavailability-15-to-30-days": 10, "demo-above-1000ft-availability": 31,
+        "demo-pilot-tenure": 255, "pr-sortie-interval": 0, "pr-programme-completion": 74,
+        "seminar-pdo": 127, "seminar-tactics": 127, "training-egress-survival": 32,
+        "training-aircraft-re-servicing": 127, "seminar-flight-physiology": 383,
+        "seminar-hpma-crm-orm": 127, "monthly-knowledge-exams": 10,
+        "cross-staff-visits-ata-day": 127, "squadron-commanders-conference": 127,
+        "trainee-20day-unscored-flight": 5, "trainee-30day-type-availability-loss": 10,
+        "body-weight-check": 42,
+    },
+}
+
+# The POSTED (ΤΟΠΟΘΕΤΗΜΕΝΟΣ) requirement of Πίνακας 6 / Πίνακας 9, for reference
+# while reading the fake counters below — the app reads it from the catalog, not
+# from here:  sim-1 1 · sim-2 1 · sim-3 1 · sim-4 — · sim-5 1 · sim-ΔΑ 1 (TP only)
+#             ΣΥΝΟΛΑ 4 || Σ-1 1 · Σ-2 day 1 · Σ-2 night 1 · Σ-3 2 · Σ-4 1 · Σ-20 —
+#             ΣΥΝΟΛΟ ΕΞΟΔΩΝ 6
+CUR_SEMESTERS = {
+    # IP-1 — every posted quota met, SIM-ΔΑ included (he carries the TP flag)
+    "oid-ip-01": {
+        CUR_SEM: {"sim-1": 1, "sim-2": 1, "sim-3": 1, "sim-5": 1, "sim-da": 1,
+                  "semiannual-fs-total-t6": 4,
+                  "s-1-general-adaptation": 1, "s-2-pdo-day": 1, "s-2-pdo-night": 1,
+                  "s-3-air-to-ground": 2, "s-4-air-to-air": 1,
+                  "semiannual-air-total-t6": 6},
+        # last semester, kept on purpose: the key is per semester, so a rollover
+        # never overwrites what was already flown
+        "2026-H1": {"sim-1": 1, "sim-2": 1, "sim-5": 1, "semiannual-fs-total-t6": 3,
+                    "s-1-general-adaptation": 1, "s-3-air-to-ground": 2,
+                    "semiannual-air-total-t6": 5},
+    },
+    # IP-2 — behind: five of the eleven quotas that apply to him are met
+    # (no TP flag, so SIM-ΔΑ prints no requirement for him at all)
+    "oid-ip-02": {
+        CUR_SEM: {"sim-1": 1, "sim-2": 1, "sim-5": 1, "semiannual-fs-total-t6": 2,
+                  "s-1-general-adaptation": 1, "s-2-pdo-day": 1,
+                  "s-3-air-to-ground": 1, "semiannual-air-total-t6": 3},
+    },
+    # IP-3 — nothing recorded this semester: the "missing key reads as 0" path
+}
+
+instructor_currency = [
+    {"oid": oid,
+     "items": {k: {"last_date": cur_day(n), "src": "manual"} for k, n in items.items()},
+     **({"semesters": CUR_SEMESTERS[oid]} if oid in CUR_SEMESTERS else {}),
+     "updated_at": f"2026-08-14T07:{10 + i:02d}:00.000Z"}
+    for i, (oid, items) in enumerate(CUR_ITEMS.items())
+]
+
 config = {
     "mass_briefing_default": "06:00",
     "wave_template": {"brief_min": 30, "ground_ops_min": 45, "debrief_min_min": 15, "total_min": 195, "round_min": 5},
@@ -241,7 +366,7 @@ seed = {"schema": "scheduler-seed-v3", "generated_for_testing": True,
         "classes": [{"id": c, "members": [s["code"] for s in students if s["class"] == c]}
                     for c in ("99HAF-A", "18ITAF", "3GAF")],
         "config": config, "training_log": log, "availability": [], "duty_roster": [],
-        "gates": gates, "day_plans": {}}
+        "gates": gates, "instructor_currency": instructor_currency, "day_plans": {}}
 out = ROOT / "data" / "scheduler" / "seed.json"
 out.write_text(json.dumps(seed, ensure_ascii=False, indent=1), encoding="utf-8")
 print(f"seed v3: {len(students)} students, {len(instructors)} instructors (oid PKs, "

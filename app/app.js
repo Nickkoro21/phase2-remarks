@@ -487,7 +487,7 @@ const REQ_DOMAINS = [
 const reqState = { domain: null, cache: {} };
 
 function switchView(view) {
-  for (const v of ["remarks", "requirements", "flowchart", "scheduler"]) {
+  for (const v of ["remarks", "requirements", "flowchart", "scheduler", "currency"]) {
     $(`view-${v}`).classList.toggle("hidden", v !== view);
     $(`tab-${v}`).classList.toggle("active", v === view);
   }
@@ -497,6 +497,9 @@ $("tab-remarks").onclick = () => switchView("remarks");
 $("tab-requirements").onclick = () => switchView("requirements");
 $("tab-flowchart").onclick = () => switchView("flowchart");
 $("tab-scheduler").onclick = () => { switchView("scheduler"); if (window.schInit) window.schInit(); };
+/* Round 11 — Instructor Currency is a view of its own (app/currency.js), booted
+   on first open exactly like the Scheduler and behind the same access curtain. */
+$("tab-currency").onclick = () => { switchView("currency"); if (window.curInit) window.curInit(); };
 
 function renderReqDomains() {
   const grid = $("req-domain-grid");

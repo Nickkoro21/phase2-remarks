@@ -524,7 +524,8 @@ def gate_selftest() -> None:
 def patch_css(css: str) -> str:
     # :focus-visible (Fx85) → :focus — in Fx72 the unknown pseudo-class would
     # invalidate the whole rule; :focus is the graceful export behaviour.
-    css = sub1(r":focus-visible", lambda m: ":focus", css, ":focus-visible → :focus", count=3)
+    # (4 since Round 11 added .cur-ip:focus-visible on the Currency tab.)
+    css = sub1(r":focus-visible", lambda m: ":focus", css, ":focus-visible → :focus", count=4)
     # :has() rules (Fx121, scheduler-only) — the rule would be dropped silently
     # anyway; strip it explicitly so the gate stays clean.
     css = sub1(
@@ -1142,9 +1143,12 @@ def build_main_html(css: str, emblem_uri: str, prepaint_js: str, scripts: str) -
 
     # hide the removed view tabs (app.js binds by id — keep as hidden stubs).
     # tab-schedval is hidden too: Schedule Validation ships as its own file.
-    html = sub1(r'(<button id="tab-(?:requirements|flowchart|scheduler|schedval)" class="viewtab"[^>]*)>',
+    # tab-currency (Round 11) is hidden for the same reason as the Scheduler:
+    # it reads the ROSTER, and nothing roster-derived travels to the closed
+    # network in a file — the offline bundle stays a syllabus tool.
+    html = sub1(r'(<button id="tab-(?:requirements|flowchart|scheduler|currency|schedval)" class="viewtab"[^>]*)>',
                 lambda m: m.group(1) + ' style="display:none">', html,
-                "hidden viewtab stubs", count=4)
+                "hidden viewtab stubs", count=5)
 
     # flowchart & scheduler <main> sections -> hidden empty stubs
     html = sub1(r'<main class="fc-view hidden" id="view-flowchart"[\s\S]*?</main>',
@@ -1155,12 +1159,18 @@ def build_main_html(css: str, emblem_uri: str, prepaint_js: str, scripts: str) -
                 lambda m: '<main id="view-scheduler" class="hidden" style="display:none"></main>'
                           '<!-- stub: id required by app.js switchView -->',
                 html, "scheduler main stub")
+    html = sub1(r'<main class="cur-view hidden" id="view-currency"[\s\S]*?</main>',
+                lambda m: '<main id="view-currency" class="hidden" style="display:none"></main>'
+                          '<!-- stub: id required by app.js switchView -->',
+                html, "currency main stub")
     # NOTE: #view-requirements stays intact (hidden by default) — reachable
     # through the Info-modal "Related requirements" links.
 
     # drop all external <script src> tags, then inline our chain before </body>
+    # (8 since Round 11 added currency.js — none of them travels; the offline
+    # build inlines its own shorter chain, without the scheduler or currency.)
     html = sub1(r'[ \t]*<script src="[^"]+"></script>\n', lambda m: "", html,
-                "external script tags", count=7)
+                "external script tags", count=8)
     html = sub1(r"</body>", lambda m: scripts + "\n</body>", html, "</body>")
 
     html = sub1(r"<!DOCTYPE html>",

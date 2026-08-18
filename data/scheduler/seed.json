@@ -548,6 +548,7 @@
    "callsign": "VIPER02",
    "country": "HAF",
    "test_pilot": false,
+   "experienced": false,
    "quals": {
     "night": true,
     "evaluator": true,
@@ -571,6 +572,7 @@
    "callsign": "VIPER03",
    "country": "ITAF",
    "test_pilot": true,
+   "experienced": true,
    "quals": {
     "night": true,
     "evaluator": true,
@@ -594,6 +596,7 @@
    "callsign": "VIPER04",
    "country": "Other",
    "test_pilot": true,
+   "experienced": true,
    "quals": {
     "night": true,
     "evaluator": true,
@@ -617,6 +620,7 @@
    "callsign": "VIPER05",
    "country": "HAF",
    "test_pilot": false,
+   "experienced": false,
    "quals": {
     "night": true,
     "evaluator": false,
@@ -640,6 +644,7 @@
    "callsign": "VIPER06",
    "country": "HAF",
    "test_pilot": false,
+   "experienced": false,
    "quals": {
     "night": true,
     "evaluator": false,
@@ -663,6 +668,7 @@
    "callsign": "VIPER07",
    "country": "ITAF",
    "test_pilot": false,
+   "experienced": true,
    "quals": {
     "night": true,
     "evaluator": false,
@@ -686,6 +692,7 @@
    "callsign": "VIPER08",
    "country": "Other",
    "test_pilot": false,
+   "experienced": false,
    "quals": {
     "night": true,
     "evaluator": false,
@@ -709,6 +716,7 @@
    "callsign": "VIPER09",
    "country": "HAF",
    "test_pilot": false,
+   "experienced": false,
    "quals": {
     "night": true,
     "evaluator": false,
@@ -732,6 +740,7 @@
    "callsign": "VIPER10",
    "country": "HAF",
    "test_pilot": true,
+   "experienced": true,
    "quals": {
     "night": true,
     "evaluator": false,
@@ -755,6 +764,7 @@
    "callsign": "VIPER11",
    "country": "ITAF",
    "test_pilot": false,
+   "experienced": false,
    "quals": {
     "night": true,
     "evaluator": false,
@@ -778,6 +788,7 @@
    "callsign": "VIPER12",
    "country": "Other",
    "test_pilot": false,
+   "experienced": false,
    "quals": {
     "night": true,
     "evaluator": false,
@@ -801,6 +812,7 @@
    "callsign": "VIPER13",
    "country": "HAF",
    "test_pilot": false,
+   "experienced": true,
    "quals": {
     "night": true,
     "evaluator": false,
@@ -824,6 +836,7 @@
    "callsign": "VIPER14",
    "country": "HAF",
    "test_pilot": false,
+   "experienced": false,
    "quals": {
     "night": true,
     "evaluator": false,
@@ -847,6 +860,7 @@
    "callsign": "VIPER15",
    "country": "ITAF",
    "test_pilot": false,
+   "experienced": false,
    "quals": {
     "night": true,
     "evaluator": false,
@@ -23148,7 +23162,7 @@
    "note": "SMS (Special Monitoring Status) — max 1 dual sortie or 1 F/S per day; a 2nd item only as SOLO"
   }
  ],
- "instructor_currency":[
+ "instructor_currency": [
   {
    "oid": "oid-ip-01",
    "items": {
@@ -23297,6 +23311,31 @@
      "src": "manual"
     }
    },
+   "semesters": {
+    "2026-H2": {
+     "sim-1": 1,
+     "sim-2": 1,
+     "sim-3": 1,
+     "sim-5": 1,
+     "sim-da": 1,
+     "semiannual-fs-total-t6": 4,
+     "s-1-general-adaptation": 1,
+     "s-2-pdo-day": 1,
+     "s-2-pdo-night": 1,
+     "s-3-air-to-ground": 2,
+     "s-4-air-to-air": 1,
+     "semiannual-air-total-t6": 6
+    },
+    "2026-H1": {
+     "sim-1": 1,
+     "sim-2": 1,
+     "sim-5": 1,
+     "semiannual-fs-total-t6": 3,
+     "s-1-general-adaptation": 1,
+     "s-3-air-to-ground": 2,
+     "semiannual-air-total-t6": 5
+    }
+   },
    "updated_at": "2026-08-14T07:10:00.000Z"
   },
   {
@@ -23437,6 +23476,18 @@
     "body-weight-check": {
      "last_date": "2026-07-03",
      "src": "manual"
+    }
+   },
+   "semesters": {
+    "2026-H2": {
+     "sim-1": 1,
+     "sim-2": 1,
+     "sim-5": 1,
+     "semiannual-fs-total-t6": 2,
+     "s-1-general-adaptation": 1,
+     "s-2-pdo-day": 1,
+     "s-3-air-to-ground": 1,
+     "semiannual-air-total-t6": 3
     }
    },
    "updated_at": "2026-08-14T07:11:00.000Z"
