@@ -51,6 +51,12 @@
     return isNaN(t) ? iso : new Date(t + d * DAY_MS).toISOString().slice(0, 10);
   };
   const P = () => window.SchedPeople;
+  /* Round 12a — DISPLAY NAMES. Every person on screen reads «SURNAME N.»
+     (SchedStore.personLabel, disambiguated with "(code)" when two people
+     collide). nm() renders a stored CODE, nmOpt() the picker form that also
+     names the code, because a dropdown is where the CO still needs the key. */
+  const nm = (code) => S().personLabelOf(null, code);
+  const nmOpt = (coll, code) => S().personOptionOf(coll, code);
   const today = () => R().todayISO();
   const students = () => (S().get("students") || []).slice();
   const instructors = () => (S().get("instructors") || []).slice();
@@ -248,7 +254,7 @@
       if (b) {
         out.push({
           sev: "hard", req: b.req, vb: b.vb,
-          text: sp + " — blocked until " + b.untilPretty + " after the " + dmy(b.since) + " LAG/FAIL"
+          text: nm(sp) + " — blocked until " + b.untilPretty + " after the " + dmy(b.since) + " LAG/FAIL"
             + (b.srcLabel ? " on " + b.srcLabel : "") + (b.maneuvers ? " · repeat: " + b.maneuvers : ""),
         });
       }
@@ -262,7 +268,7 @@
       if (hit) {
         out.push({
           sev: "hard", req: "fail-22", vb: REQ["fail-22"],
-          text: sp + " — continue with a DIFFERENT instructor: " + ip + " is avoided — " + hit.reason,
+          text: nm(sp) + " — continue with a DIFFERENT instructor: " + nm(ip) + " is avoided — " + hit.reason,
         });
       }
     }
@@ -273,18 +279,18 @@
           const a = cq.aptPending(sp).find((x) => x.category === d.track);
           out.push({
             sev: "hard", req: a ? a.req : "fail-12", vb: cq.vb(a ? a.req : "fail-12"),
-            text: sp + " — " + (d.trackLabel || d.track) + " is locked pending the APT EXAM"
+            text: nm(sp) + " — " + (d.trackLabel || d.track) + " is locked pending the APT EXAM"
               + (a ? " (after " + a.srcLabel + ", " + dmy(a.since) + ")" : ""),
           });
         }
         if (cq.skipUids(sp).has(node)) {
           out.push({
             sev: "hard", req: "fail-19", vb: cq.vb("fail-19"),
-            text: sp + " — the first «ΜΟΝΟΣ» is NOT re-offered after a LAG/FAIL — Aptitude Exam instead",
+            text: nm(sp) + " — the first «ΜΟΝΟΣ» is NOT re-offered after a LAG/FAIL — Aptitude Exam instead",
           });
         }
         if (d.checkride && kind === "flights") {
-          cq.preExam(sp, date).forEach((w) => out.push({ sev: w.sev, req: w.req, vb: w.vb, text: sp + " — " + w.text }));
+          cq.preExam(sp, date).forEach((w) => out.push({ sev: w.sev, req: w.req, vb: w.vb, text: nm(sp) + " — " + w.text }));
         }
       }
     }
@@ -293,8 +299,8 @@
   /* a blockFor() verdict as a warning row — carries the requirement citation
      when the consequence engine produced it (ΠΔ 29/2020) */
   const blkWarn = (sp, blk) => (blk.req
-    ? { sev: "hard", text: sp + " — " + blk.reason, req: blk.req, vb: blk.vb || "" }
-    : { sev: "hard", text: sp + " — " + blk.reason });
+    ? { sev: "hard", text: nm(sp) + " — " + blk.reason, req: blk.req, vb: blk.vb || "" }
+    : { sev: "hard", text: nm(sp) + " — " + blk.reason });
 
   /* ── Round 5 · lesson helpers — courses, multi-class, coverage ────────── */
   /* a lesson line may target SEVERAL classes: array `classes` ∪ legacy `class` */
@@ -565,7 +571,7 @@
       const tops = cross.filter((o) => (seenTrack[o.track] ? false : (seenTrack[o.track] = 1)));
       A.alt.set(l.id, tops);
       if (l.sp && l.node && !l.alt && !l.altCustomOn && !cross.length) {
-        A.altHint.set(l.id, "ALT left empty — no other track open for " + l.sp);
+        A.altHint.set(l.id, "ALT left empty — no other track open for " + nm(l.sp));
       }
     }
     for (const l of plan.fs) A.fsOpts.set(l.id, optionsFor(l.sp, "fs", A.planned, l.node, c.depth));
@@ -848,9 +854,9 @@
     if (!l.ip) push("soft", "no instructor on this line");
     if (!l.node && !customText(l)) push("soft", "no mission on this line");
 
-    if (l.sp && awayOf(l.sp, plan.date)) push("hard", l.sp + " is away (" + awayOf(l.sp, plan.date) + ")");
-    if (l.ip && !solo && awayOf(l.ip, plan.date)) push("hard", l.ip + " is away (" + awayOf(l.ip, plan.date) + ")");
-    if (l.ip && !solo && ipDeparted(l.ip)) push("hard", l.ip + " is marked DEPARTED — pick another instructor");
+    if (l.sp && awayOf(l.sp, plan.date)) push("hard", nm(l.sp) + " is away (" + awayOf(l.sp, plan.date) + ")");
+    if (l.ip && !solo && awayOf(l.ip, plan.date)) push("hard", nm(l.ip) + " is away (" + awayOf(l.ip, plan.date) + ")");
+    if (l.ip && !solo && ipDeparted(l.ip)) push("hard", nm(l.ip) + " is marked DEPARTED — pick another instructor");
 
     /* gates + ΠΔ 29/2020 (the SMS daily cap lives in the daily-load engine) */
     if (l.sp) {
@@ -880,15 +886,15 @@
     const mine = solo ? [] : (A.ipSlots.get(l.ip) || []);
     for (const o of mine) {
       if (o.id === l.id) continue;
-      if (o.wi === wi) { push("hard", l.ip + " already flies #" + o.rank + " of this wave"); continue; }
+      if (o.wi === wi) { push("hard", nm(l.ip) + " already flies #" + o.rank + " of this wave"); continue; }
       if (t.to == null || o.ldg == null) continue;
       if (o.to < t.to && t.to - o.ldg < c.turn) {
-        push("hard", l.ip + " turnaround " + dur2hm(t.to - o.ldg) + " after the " + min2hm(o.ldg)
+        push("hard", nm(l.ip) + " turnaround " + dur2hm(t.to - o.ldg) + " after the " + min2hm(o.ldg)
           + " LDG — " + dur2hm(c.turn) + " required");
       }
     }
     for (const o of (A.spSlots.get(l.sp) || [])) {
-      if (o.id !== l.id && o.wi === wi) push("hard", l.sp + " already flies #" + o.rank + " of this wave");
+      if (o.id !== l.id && o.wi === wi) push("hard", nm(l.sp) + " already flies #" + o.rank + " of this wave");
     }
 
     /* duties per wave — SOF/RSU A must not fly in wave 1, SOF/RSU B not in
@@ -898,14 +904,14 @@
         : A.duty.rsu_a === l.ip ? "RSU A" : A.duty.rsu_b === l.ip ? "RSU B" : "";
       if (role) {
         const dutyIdx = (role === "SOF B" || role === "RSU B") ? A.secondIdx : firstIdx;
-        if (mine.length > c.sofMax) push("hard", l.ip + " is on " + role + " duty — " + c.sofMax + " sortie max, " + mine.length + " on the board");
-        if (wi === dutyIdx) push("hard", l.ip + " is on " + role + " duty — must not fly in " + (plan.waves[wi] ? plan.waves[wi].name : "this wave"));
+        if (mine.length > c.sofMax) push("hard", nm(l.ip) + " is on " + role + " duty — " + c.sofMax + " sortie max, " + mine.length + " on the board");
+        if (wi === dutyIdx) push("hard", nm(l.ip) + " is on " + role + " duty — must not fly in " + (plan.waves[wi] ? plan.waves[wi].name : "this wave"));
         else if (dutyIdx >= 0 && wi < dutyIdx && plan.waves[wi] && plan.waves[wi].kind === "wave") {
-          push("hard", l.ip + " is on " + role + " duty — the sortie comes after the duty wave");
+          push("hard", nm(l.ip) + " is on " + role + " duty — the sortie comes after the duty wave");
         }
       }
-      if (A.duty.ground_1 === l.ip) push("soft", l.ip + " is Ground 1 of the day");
-      else if (A.duty.ground_2 === l.ip) push("soft", l.ip + " is Ground 2 of the day");
+      if (A.duty.ground_1 === l.ip) push("soft", nm(l.ip) + " is Ground 1 of the day");
+      else if (A.duty.ground_2 === l.ip) push("soft", nm(l.ip) + " is Ground 2 of the day");
     }
 
     /* qualifications */
@@ -914,8 +920,8 @@
     const ipRec = l.ip && !solo ? S().find("instructors", l.ip) : null;
     if (mi.d && ipRec) {
       const q = ipRec.quals || {};
-      if (mi.d.checkride && !q.evaluator) push("hard", "checkride — " + l.ip + " is not an evaluator");
-      if (mi.d.night && !q.night) push("hard", "night sortie — " + l.ip + " is not night qualified");
+      if (mi.d.checkride && !q.evaluator) push("hard", "checkride — " + nm(l.ip) + " is not an evaluator");
+      if (mi.d.night && !q.night) push("hard", "night sortie — " + nm(l.ip) + " is not night qualified");
     }
     if (mi.d && mi.d.night && w.kind !== "night") push("soft", "night sortie planned in a day wave");
     if (mi.d && !mi.d.night && w.kind === "night") push("soft", "day sortie planned in the night wave");
@@ -929,10 +935,10 @@
         push("hard", "SOLO — the LAST sortie of a section must never be flown solo");
       if (mi.d && mi.d.checkride) push("hard", "SOLO — a checkride cannot be flown solo");
       if (l.sp) {
-        if ((A.spSoloN.get(l.sp) || 0) > 1) push("hard", l.sp + " — two SOLO sorties on the same day are consecutive solos");
+        if ((A.spSoloN.get(l.sp) || 0) > 1) push("hard", nm(l.sp) + " — two SOLO sorties on the same day are consecutive solos");
         const prev = lastFlightEvent(l.sp, plan.date);
         if (prev && evIsSolo(prev)) {
-          push("hard", l.sp + " — no 2 consecutive SOLO sorties (last flight " + dmy(prev.date || "") + " was solo)");
+          push("hard", nm(l.sp) + " — no 2 consecutive SOLO sorties (last flight " + dmy(prev.date || "") + " was solo)");
         }
       }
     }
@@ -950,7 +956,7 @@
            the comparison and the display (legacy code refs still resolve) */
         const fam = [s && s.primary_ip].concat((s && s.reserve_ips) || []).filter(Boolean)
           .map((x) => P().ipCode(x)).filter(Boolean);
-        if (fam.length && fam.indexOf(l.ip) < 0) push("soft", l.ip + " is neither primary nor reserve IP of " + l.sp + " (" + fam.join(" / ") + ")");
+        if (fam.length && fam.indexOf(l.ip) < 0) push("soft", nm(l.ip) + " is neither primary nor reserve IP of " + nm(l.sp) + " (" + fam.join(" / ") + ")");
         const seen = new Set();
         for (const ev of (S().get("trainingLog") || [])) {
           if (ev.scope === "student" && ev.student === l.sp && ev.kind === "flights"
@@ -960,7 +966,7 @@
           if (o.id !== l.id && o.sp === l.sp && o.ip && o.ip !== SOLO) seen.add(o.ip);
         }
         if (!seen.has(l.ip) && seen.size >= 4)
-          push("soft", l.sp + " — " + l.ip + " would be instructor #" + (seen.size + 1)
+          push("soft", nm(l.sp) + " — " + nm(l.ip) + " would be instructor #" + (seen.size + 1)
             + " before the first solo (C4791) — max 4 different IPs");
       }
     }
@@ -1002,7 +1008,7 @@
     if (opts.blocked) return out;                          // the gate warning already said it
     if (!mi.opt) {
       const st = R().statusOf(l.sp, l.node);
-      if (st === "completed") out.push({ sev: "soft", text: l.sp + " already completed " + mi.d.label });
+      if (st === "completed") out.push({ sev: "soft", text: nm(l.sp) + " already completed " + mi.d.label });
       else out.push({ sev: "soft", text: "off-flow — " + mi.d.label + " is not among the next options of " + l.sp });
       return out;
     }
@@ -1026,9 +1032,9 @@
     if (!l.node && !customText(l)) push("soft", "no mission on this F/S line");
     if (!l.device) push("soft", "no device");
 
-    if (l.sp && awayOf(l.sp, plan.date)) push("hard", l.sp + " is away (" + awayOf(l.sp, plan.date) + ")");
-    if (l.ip && awayOf(l.ip, plan.date)) push("hard", l.ip + " is away (" + awayOf(l.ip, plan.date) + ")");
-    if (l.ip && ipDeparted(l.ip)) push("hard", l.ip + " is marked DEPARTED — pick another instructor");
+    if (l.sp && awayOf(l.sp, plan.date)) push("hard", nm(l.sp) + " is away (" + awayOf(l.sp, plan.date) + ")");
+    if (l.ip && awayOf(l.ip, plan.date)) push("hard", nm(l.ip) + " is away (" + awayOf(l.ip, plan.date) + ")");
+    if (l.ip && ipDeparted(l.ip)) push("hard", nm(l.ip) + " is marked DEPARTED — pick another instructor");
     if (l.sp) {
       const blk = R().blockFor(l.sp, "fs");
       if (blk) out.push(blkWarn(l.sp, blk));
@@ -1036,12 +1042,12 @@
     }
 
     if (l.sp && l.slot === 1 && A.spWave1.has(l.sp)) {
-      push("soft", l.sp + " has the first F/S slot AND the first flight wave");
+      push("soft", nm(l.sp) + " has the first F/S slot AND the first flight wave");
     }
     if (l.ip) {
       const n = A.ipFs.get(l.ip) || 0;
-      if (n > c.fsMax) push("hard", l.ip + " carries " + n + " F/S — over the maximum of " + c.fsMax);
-      else if (n > c.fsPref) push("soft", l.ip + " carries " + n + " F/S — the preference is " + c.fsPref);
+      if (n > c.fsMax) push("hard", nm(l.ip) + " carries " + n + " F/S — over the maximum of " + c.fsMax);
+      else if (n > c.fsPref) push("soft", nm(l.ip) + " carries " + n + " F/S — the preference is " + c.fsPref);
     }
     const mi = missionInfo(l, A.fsOpts.get(l.id), A.planned);
     mi.warns.forEach((x) => out.push(x));
@@ -1076,7 +1082,7 @@
         }
       }
     }
-    if (l.instructor && awayOf(l.instructor, plan.date)) push("hard", l.instructor + " is away (" + awayOf(l.instructor, plan.date) + ")");
+    if (l.instructor && awayOf(l.instructor, plan.date)) push("hard", nm(l.instructor) + " is away (" + awayOf(l.instructor, plan.date) + ")");
     /* prefer the duty Ground of the block's wave (Wave A → Ground 1, B → 2) */
     const pref = (l.wave === "B" ? (A.duty.ground_2 || A.duty.ground_1) : (A.duty.ground_1 || A.duty.ground_2)) || "";
     if (l.instructor && pref && l.instructor !== pref) {
@@ -1084,7 +1090,7 @@
     }
     if (l.instructor) {
       const rec = S().find("instructors", l.instructor);
-      if (rec && !(rec.quals || {}).ground) push("soft", l.instructor + " is not ground qualified");
+      if (rec && !(rec.quals || {}).ground) push("soft", nm(l.instructor) + " is not ground qualified");
     }
     const twin = plan.lessons.find((x) => x.id !== l.id && (x.wave || "A") === (l.wave || "A"));
     if (twin) push("soft", "two lesson blocks in Wave " + (l.wave || "A") + " — one block per wave");
@@ -1121,7 +1127,7 @@
       }
       return {
         code: s.code, idle: idle == null ? 9999 : idle, away: away,
-        text: s.code + " · " + (idle == null ? "never" : idle + "d")
+        text: S().personOption(s) + " · " + (idle == null ? "never" : idle + "d")
           + (s.class ? " · " + s.class : "") + (chips ? " · " + chips : "") + consq + (away ? " · " + away : ""),
       };
     });
@@ -1183,7 +1189,7 @@
       html += `<option value="${SOLO}"${sel === SOLO ? " selected" : ""} title="ΜΟΝΟΣ — solo flight, no instructor on board">SOLO («ΜΟΝΟΣ»)</option>`;
     }
     const opt = (r, dim) => `<option value="${esc(r.code)}"${r.code === sel ? " selected" : ""}${dim ? ' class="cond"' : ""}>`
-      + esc(r.code + (r.why ? " — " + r.why : "")) + `</option>`;
+      + esc(nmOpt("instructors", r.code) + (r.why ? " — " + r.why : "")) + `</option>`;
     html += ok.map((r) => opt(r, false)).join("");
     if (no.length && (ui.allIp || no.some((r) => r.code === sel))) {
       html += `<optgroup label="not eligible for this slot">` + no.map((r) => opt(r, true)).join("") + `</optgroup>`;
@@ -1305,8 +1311,8 @@
       const hasCur = !cur || list.some((i) => i.code === cur);
       return `<select class="sch-in" data-duty="${esc(role)}" data-fk="duty-${esc(role)}"${dis}>
         <option value="">—</option>${list.map((i) => `<option value="${esc(i.code)}"${i.code === cur ? " selected" : ""}>`
-        + esc(i.code + (awayOf(i.code, plan.date) ? " — " + awayOf(i.code, plan.date) : "")) + `</option>`).join("")}
-        ${hasCur ? "" : `<option value="${esc(cur)}" selected>${esc(cur + " — departed/unknown")}</option>`}</select>`;
+        + esc(S().personOption(i) + (awayOf(i.code, plan.date) ? " — " + awayOf(i.code, plan.date) : "")) + `</option>`).join("")}
+        ${hasCur ? "" : `<option value="${esc(cur)}" selected>${esc(nmOpt("instructors", cur) + " — departed/unknown")}</option>`}</select>`;
     };
     /* RSU A/B filter on the RSU-during-solo qualification (Round 4). The old
        duty_eligible.RSU stays as the fallback while NO instructor carries
@@ -1315,8 +1321,8 @@
     const rsuOK = (i) => (anyRsuSolo ? (i.quals || {}).rsu_solo : (i.duty_eligible || {}).RSU);
     const mark = (code) => {
       const st = S().availabilityOf(code, plan.date);
-      return `<button type="button" class="sch-av av-${esc(st)}" data-away="${esc(code)}" title="${esc(code + " — " + st)} · click to cycle"${dis}>
-        <span class="sch-code">${esc(code)}</span><span class="sch-avst">${esc(st === "available" ? "OK" : st)}</span></button>`;
+      return `<button type="button" class="sch-av av-${esc(st)}" data-away="${esc(code)}" title="${esc(nmOpt(null, code) + " — " + st)} · click to cycle"${dis}>
+        <span class="sch-code">${esc(nm(code))}</span><span class="sch-avst">${esc(st === "available" ? "OK" : st)}</span></button>`;
     };
     const away = students().concat(activeIps()).filter((p) => awayOf(p.code, plan.date));
     return `<section class="panel sch-panel">
@@ -1522,9 +1528,9 @@
     };
     const gndIps = activeIps().filter((i) => (i.quals || {}).ground);
     const ipSel = (sel) => `<option value="">—</option>`
-      + gndIps.map((i) => `<option value="${esc(i.code)}"${i.code === sel ? " selected" : ""}>${esc(i.code)}</option>`).join("")
+      + gndIps.map((i) => `<option value="${esc(i.code)}"${i.code === sel ? " selected" : ""}>${esc(S().personOption(i))}</option>`).join("")
       + (sel && !gndIps.some((i) => i.code === sel)
-        ? `<optgroup label="not ground qualified / departed"><option value="${esc(sel)}" selected>${esc(sel)}</option></optgroup>` : "");
+        ? `<optgroup label="not ground qualified / departed"><option value="${esc(sel)}" selected>${esc(nmOpt("instructors", sel))}</option></optgroup>` : "");
     /* the absent picker offers the members of EVERY selected class, grouped
        under class headings — stays live after publish (until actualize) */
     const absHtml = (l) => {
@@ -1538,7 +1544,7 @@
           const on = Object.prototype.hasOwnProperty.call(l.absent || {}, code);
           return `<label class="sch-absrow${on ? " is-on" : ""}">
             <input type="checkbox" data-labs="${esc(code)}"${on ? " checked" : ""}>
-            <span class="sch-code">${esc(code)}</span>
+            <span class="sch-code" title="${esc(nmOpt("students", code))}">${esc(nm(code))}</span>
             <input type="text" class="sch-in sch-absr" data-labsr="${esc(code)}" placeholder="reason"
                    value="${esc((l.absent || {})[code] || "")}" data-fk="labsr-${esc(l.id)}-${esc(code)}"${on ? "" : " disabled"}></label>`;
         }).join("");
@@ -1639,8 +1645,8 @@
     const cells = rows.map((r) => {
       const hot = r.raw == null || r.raw > c.idle * 2 ? " is-hard" : (r.raw > c.idle ? " is-soft" : "");
       return `<button type="button" class="sch-nsc${hot}" data-add-sp="${esc(r.code)}"${locked ? " disabled" : ""}
-        title="add a wave line for ${esc(r.code)}">
-        <span class="sch-code">${esc(r.code)}</span>
+        title="add a wave line for ${esc(nmOpt("students", r.code))}">
+        <span class="sch-code">${esc(nm(r.code))}</span>
         <span class="sch-nd">${r.raw == null ? "never" : r.raw + "d"}</span>
         <span class="sch-note">${esc(r.cls)}</span>${r.chips}</button>`;
     }).join("");
@@ -1665,8 +1671,8 @@
       <button type="button" class="sch-mini danger" data-lb="del"${dis}>✕</button></div></div>`).join("");
     const iRows = plan.alt_instructors.map((a) => `<div class="sch-altrow" data-l="${esc(a.id)}" data-blk="ai">
       <select class="sch-in" data-lf="ip" data-fk="aip-${esc(a.id)}"${dis}><option value="">—</option>
-        ${activeIps().map((i) => `<option value="${esc(i.code)}"${a.ip === i.code ? " selected" : ""}>${esc(i.code)}</option>`).join("")}
-        ${a.ip && !activeIps().some((i) => i.code === a.ip) ? `<option value="${esc(a.ip)}" selected>${esc(a.ip + " — departed/unknown")}</option>` : ""}</select>
+        ${activeIps().map((i) => `<option value="${esc(i.code)}"${a.ip === i.code ? " selected" : ""}>${esc(S().personOption(i))}</option>`).join("")}
+        ${a.ip && !activeIps().some((i) => i.code === a.ip) ? `<option value="${esc(a.ip)}" selected>${esc(nmOpt("instructors", a.ip) + " — departed/unknown")}</option>` : ""}</select>
       <input class="sch-in" data-lf="note" data-fk="aint-${esc(a.id)}" value="${esc(a.note || "")}" placeholder="note"${dis}>
       <button type="button" class="sch-mini danger" data-lb="del"${dis}>✕</button></div>`).join("");
     return `<section class="panel sch-panel">
@@ -1741,9 +1747,9 @@
       const kindNodes = R().nodes(x.kind);
       const isLs = x.blk === "ls";
       const who = isLs
-        ? (x.l.scope === "student" ? (x.l.student || "—")
+        ? (x.l.scope === "student" ? (nm(x.l.student) || "—")
           : lessonClasses(x.l).join(" · ") || "—")
-        : (x.l.sp || "—");
+        : (nm(x.l.sp) || "—");
       const what = isLs
         ? (x.l.course ? x.l.course + (d ? " (" + d.label + ")" : "") + (x.l.periods !== "" && x.l.periods != null ? " · " + x.l.periods + " per." : "")
           : (d ? d.label : "—"))
@@ -1754,7 +1760,7 @@
         <span class="sch-mono">${esc(isLs ? "Lessons" : x.blk === "fs" ? "F/S" : x.wave.name)}</span>
         <span class="sch-code">${esc(who)}</span>
         <span class="sch-note">${esc(what)}${nAbs ? ` <span class="sch-badge warn" title="${esc(Object.keys(x.l.absent).map((c) => c + ((x.l.absent[c] && " — " + x.l.absent[c]) || "")).join(" · "))}">${nAbs} absent</span>` : ""}</span>
-        <span class="sch-mono">${esc((isLs ? x.l.instructor : x.l.ip) || "—")}</span>
+        <span class="sch-mono">${esc(nm(isLs ? x.l.instructor : x.l.ip) || "—")}</span>
         <span class="sch-actbtns">
           <button type="button" class="sch-mini${a.state === "done" ? " is-on good" : ""}" data-ab="done" title="${isLs ? "held as planned" : "flown as planned"}">✓</button>
           <button type="button" class="sch-mini${a.state === "cancelled" ? " is-on danger" : ""}" data-ab="cancelled" title="cancelled">✗</button>
@@ -1871,8 +1877,8 @@
         <th>BRIEF</th><th>T/O</th><th>LDG</th><th>DBRF</th><th>IFF</th><th>REMARKS</th></tr></thead><tbody>`
         + w.lines.map((l) => {
           const t = A.t.get(l.id) || {};
-          return `<tr><td>${t.rank || ""}</td><td>${esc(l.callsign || "")}</td><td>${esc(l.ip || "")}</td>
-            <td>${esc(l.sp || "")}</td>
+          return `<tr><td>${t.rank || ""}</td><td>${esc(l.callsign || "")}</td><td>${esc(nm(l.ip))}</td>
+            <td>${esc(nm(l.sp))}</td>
             <td>${esc(customText(l) || missionLabel(l.node))}</td>
             <td>${esc((l.altCustomOn ? String(l.altCustom || "").trim() : "") || missionLabel(l.alt))}</td>
             <td>${esc(min2hm(t.brief))}</td><td>${esc(min2hm(t.to))}</td><td>${esc(min2hm(t.ldg))}</td>
@@ -1880,21 +1886,21 @@
         }).join("") + `</tbody></table>`;
     };
     const fsT = plan.fs.length ? head("F/S") + `<table class="pv-t"><thead><tr><th>SLOT</th><th>DEVICE</th><th>IP</th><th>SP</th><th>MISSION</th><th>REMARKS</th></tr></thead><tbody>`
-      + plan.fs.map((l) => `<tr><td>${l.slot}</td><td>${esc(l.device || "")}</td><td>${esc(l.ip || "")}</td>
-        <td>${esc(l.sp || "")}</td><td>${esc(customText(l) || missionLabel(l.node))}</td><td>${esc(l.remarks || "")}</td></tr>`).join("")
+      + plan.fs.map((l) => `<tr><td>${l.slot}</td><td>${esc(l.device || "")}</td><td>${esc(nm(l.ip))}</td>
+        <td>${esc(nm(l.sp))}</td><td>${esc(customText(l) || missionLabel(l.node))}</td><td>${esc(l.remarks || "")}</td></tr>`).join("")
       + `</tbody></table>` : "";
     const lsTable = (title, list) => (!list.length ? "" : head(title)
       + `<table class="pv-t"><thead><tr><th>TIME</th><th>SUBJECT</th><th>SCOPE</th><th>INSTRUCTOR</th><th>NOTE</th></tr></thead><tbody>`
       + list.map((l) => `<tr><td>${esc(l.time || "")}</td>
         <td>${esc(l.course ? l.course + (l.periods !== "" && l.periods != null ? " · " + l.periods + " per." : "") + " (" + missionLabel(l.node) + ")" : missionLabel(l.node))}</td>
-        <td>${esc(l.scope === "student" ? l.student : lessonClasses(l).join(" · "))}</td><td>${esc(l.instructor || "")}</td><td>${esc(l.note || "")}</td></tr>`).join("")
+        <td>${esc(l.scope === "student" ? nm(l.student) : lessonClasses(l).join(" · "))}</td><td>${esc(nm(l.instructor))}</td><td>${esc(l.note || "")}</td></tr>`).join("")
       + `</tbody></table>`);
     const lsT = lsTable("Lessons A", plan.lessons.filter((l) => (l.wave || "A") === "A"))
       + lsTable("Lessons B", plan.lessons.filter((l) => l.wave === "B"));
     const alt = head("Alternates") + `<p class="pv-p"><b>Students:</b> `
-      + (plan.alt_students.length ? plan.alt_students.map((a) => esc(a.sp + " — " + (customText(a) || missionLabel(a.node)) + (a.note ? " (" + a.note + ")" : ""))).join(" · ") : "—")
+      + (plan.alt_students.length ? plan.alt_students.map((a) => esc(nm(a.sp) + " — " + (customText(a) || missionLabel(a.node)) + (a.note ? " (" + a.note + ")" : ""))).join(" · ") : "—")
       + `</p><p class="pv-p"><b>Instructors:</b> `
-      + (plan.alt_instructors.length ? plan.alt_instructors.map((a) => esc(a.ip + (a.note ? " (" + a.note + ")" : ""))).join(" · ") : "—") + `</p>`;
+      + (plan.alt_instructors.length ? plan.alt_instructors.map((a) => esc(nm(a.ip) + (a.note ? " (" + a.note + ")" : ""))).join(" · ") : "—") + `</p>`;
     const away = students().concat(activeIps()).map((p) => ({ c: p.code, s: awayOf(p.code, plan.date) })).filter((x) => x.s);
     const sAvail = students().filter((s) => (s.status || "active") === "active" && !awayOf(s.code, plan.date)).length;
     const iAvail = activeIps().filter((i) => !awayOf(i.code, plan.date)).length;
@@ -1910,13 +1916,13 @@
         <h2>DAILY FLIGHT SCHEDULE</h2>
         <p class="pv-p"><b>${esc(dmy(plan.date))}</b> · mass briefing <b>${esc(plan.mass_briefing)}</b>
           · status <b>${esc(plan.status)}</b>${plan.published_at ? " · published " + esc(dmy(plan.published_at.slice(0, 16).replace("T", " "))) : ""}</p>
-        <p class="pv-p"><b>SOF A</b> ${esc(d.sof_a || "—")} &nbsp; <b>SOF B</b> ${esc(d.sof_b || "—")} &nbsp;
-          <b>RSU A</b> ${esc(d.rsu_a || "—")} &nbsp; <b>RSU B</b> ${esc(d.rsu_b || "—")} &nbsp;
-          <b>GROUND 1</b> ${esc(d.ground_1 || "—")} &nbsp; <b>GROUND 2</b> ${esc(d.ground_2 || "—")}</p>
+        <p class="pv-p"><b>SOF A</b> ${esc(nm(d.sof_a) || "—")} &nbsp; <b>SOF B</b> ${esc(nm(d.sof_b) || "—")} &nbsp;
+          <b>RSU A</b> ${esc(nm(d.rsu_a) || "—")} &nbsp; <b>RSU B</b> ${esc(nm(d.rsu_b) || "—")} &nbsp;
+          <b>GROUND 1</b> ${esc(nm(d.ground_1) || "—")} &nbsp; <b>GROUND 2</b> ${esc(nm(d.ground_2) || "—")}</p>
       </div>
       ${plan.waves.map(waveTable).join("")}
       ${fsT}${lsT}${alt}
-      ${head("Absences")}<p class="pv-p">${away.length ? away.map((a) => esc(a.c + " " + a.s)).join(" · ") : "—"}</p>
+      ${head("Absences")}<p class="pv-p">${away.length ? away.map((a) => esc(nm(a.c) + " " + a.s)).join(" · ") : "—"}</p>
       ${head("Manning")}<p class="pv-p">SP available ${sAvail}/${students().length} · IP available ${iAvail}/${activeIps().length}
         · sorties ${plan.waves.reduce((n, w) => n + w.lines.length, 0)} · F/S ${plan.fs.length}</p>
       ${head("Completion ratio")}<table class="pv-t"><thead><tr><th>CLASS</th><th>SP</th><th>ON BOARD / TARGET</th><th>FLIGHTS</th><th>OVERALL</th></tr></thead>
@@ -2477,7 +2483,7 @@
     const gates = R().openGates(code);
     h.innerHTML = `<div class="sch-modalbox">
       <div class="sch-h">
-        <h2>Progress — <span class="sch-code">${esc(code)}</span></h2>
+        <h2>Progress — <span class="sch-code" title="${esc(nmOpt("students", code))}">${esc(nm(code))}</span></h2>
         <span class="sch-badge">${esc(s.class || "—")}</span>
         <span class="sch-badge">${c.done}/${c.total} nodes · ${c.total ? Math.round((c.done / c.total) * 100) : 0}%</span>
         <span class="sch-badge">flights ${c.fdone}/${c.ftotal}</span>
@@ -3018,7 +3024,7 @@
       const gnd = (i.quals || {}).ground;
       const on = sel.has(i.code);
       return `<button type="button" class="sch-tgl${on ? " is-on" : ""}${gnd ? "" : " is-dim"}" data-sfip="${esc(i.code)}"
-        title="${esc(i.code + (i.last_name ? " · " + i.last_name : "") + (gnd ? " — ground qualified" : " — NOT ground qualified"))}">${esc(i.code)}</button>`;
+        title="${esc(S().personOption(i) + (gnd ? " — ground qualified" : " — NOT ground qualified"))}">${esc(S().personLabel(i))}</button>`;
     }).join("") || `<em class="sch-hint">no instructor</em>`}</span>`;
   }
   function stepperBar() {
@@ -3052,7 +3058,7 @@
         <span class="sch-fld wide"><span>Instructors — click toggles (multi)</span>
           ${stepGndChips(ans.ips)}</span>
         <span class="sch-stepsplit sch-hint">${(ans.ips || []).length
-        ? "split: " + shares.map((s) => s.ip + " " + s.periods).join(" + ") + " = " + Math.max(0, P || 0) + " per."
+        ? "split: " + shares.map((s) => nm(s.ip) + " " + s.periods).join(" + ") + " = " + Math.max(0, P || 0) + " per."
         : "pick the instructor(s) — periods split equally in integers, remainder to the last"}</span>`;
     }
     return `<div class="sch-pbar sch-stepper">
@@ -3289,7 +3295,7 @@
       const owed = R().nodes().filter((u) => st[u] && (st[u].status === "absent_makeup" || st[u].status === "repeat")).length;
       const avg = classAvg.get(s.class || "—") || 0;
       const idleCl = idle == null || idle > c.idle * 2 ? " is-hard" : (idle > c.idle ? " is-soft" : "");
-      return `<tr><td class="sch-code">${esc(s.code)}</td><td>${esc(s.class || "—")}</td>
+      return `<tr><td class="sch-code" title="${esc(S().personOption(s))}">${esc(S().personLabel(s))}</td><td>${esc(s.class || "—")}</td>
         <td class="sch-mono">${r.lessons}</td><td class="sch-mono">${r.exams}</td>
         <td class="sch-mono">${r.fs}</td><td class="sch-mono">${r.flights}</td>
         ${balCell(r.total, avg)}
@@ -3305,11 +3311,11 @@
          Round 9 — the load cell names the person the way the roster does:
          call sign · country · TP, so the CO reading a light week knows WHO is
          light without leaving the table. */
-      const who = [i.rank, i.last_name].filter(Boolean).join(" ")
+      const who = "code " + i.code + (i.rank ? " · " + i.rank : "")
         + (i.callsign ? " (" + i.callsign + ")" : "")
         + (i.country ? " · " + i.country : "")
         + (i.test_pilot ? " · test pilot" : "");
-      return `<tr><td class="sch-code"${who.trim() ? ` title="${esc(who)}"` : ""}>${esc(i.code)}${(i.status === "departed") ? ` <span class="sch-badge st-withdrawn" title="departed — kept in history">DEP</span>` : ""}${i.test_pilot ? ` <span class="sch-badge" title="test pilot">TP</span>` : ""}</td>
+      return `<tr><td class="sch-code"${who.trim() ? ` title="${esc(who)}"` : ""}>${esc(S().personLabel(i))}${(i.status === "departed") ? ` <span class="sch-badge st-withdrawn" title="departed — kept in history">DEP</span>` : ""}${i.test_pilot ? ` <span class="sch-badge" title="test pilot">TP</span>` : ""}</td>
         <td class="sch-mono">${r.flights}</td>
         <td class="sch-mono${r.fs > c.fsMax ? " is-hard" : (r.fs > c.fsPref ? " is-soft" : "")}">${r.fs}</td>
         <td class="sch-mono">${r.ground}</td>

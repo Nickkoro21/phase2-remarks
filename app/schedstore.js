@@ -79,6 +79,7 @@
   function persistAll() { NAMES.forEach(persist); }
 
   function emit(coll, action, rec) {
+    labels.clash = null;                 // a rename must re-decide the "(code)" tags
     subs.forEach((fn) => { try { fn(coll, action, rec); } catch (e) { console.error(e); } });
   }
 
@@ -140,6 +141,99 @@
   function uid(tag) {
     seq += 1;
     return (tag || "r") + "-" + Date.now().toString(36) + "-" + seq.toString(36);
+  }
+
+  /* ══ DISPLAY NAMES — "Koroniadis N."          (Round 12a, 18/08/2026) ═════
+     User ruling: «Αντί να φαίνεται το object id να φαίνεται το Surname,
+     Name (πρώτο γράμμα). Δηλαδή για εμένα θα έβλεπα Koroniadis N.» — repeated
+     a second time («Όχι object id, αλλά ονόματα όπως είπαμε»), so it is an
+     acceptance criterion, not a preference: NOTHING outside an edit form
+     renders an internal handle any more.
+
+     THE RULE, in order
+       1. last name + first initial + "."          → "Koroniadis N."
+       2. the last name alone, when no first name  → "Koroniadis"
+       3. the code, when the record carries no name at all → "IP-7"
+
+     DISAMBIGUATION IS COMPUTED, NOT HOPED FOR
+       Two people can honestly land on the same label ("Koroniadis N." twice).
+       When they do, EVERY member of that clash carries its code —
+       "Koroniadis N. (IP-3)" · "Koroniadis N. (IP-9)" — so the reader is never
+       shown two identical names for two different pilots. Students and
+       instructors are ONE pool for this purpose: a board line, a duty cell and
+       a log row put both on the same screen.
+       The index is rebuilt on every store write (emit → invalidate), so a
+       rename creates or clears the tag immediately.
+
+     CODES REMAIN THE KEYS
+       Nothing about storage changes. Codes stay in the edit forms, in the
+       tooltips, in every dropdown option ("Koroniadis N. (IP-3)") and in every
+       search/filter — only the READING changes.                            */
+  const NAMED = ["instructors", "students"];
+  const labels = { clash: null };
+  const nameTrim = (v) => String(v == null ? "" : v).trim();
+
+  /* the label BEFORE any disambiguation — pure, so it can be called on a
+     record that is not in the store yet (an import preview, a form draft) */
+  function baseLabel(rec) {
+    if (!rec || typeof rec !== "object") return "";
+    const last = nameTrim(rec.last_name);
+    if (!last) return nameTrim(rec.code);
+    const first = nameTrim(rec.first_name);
+    /* [...first][0] and not first[0]: a surrogate pair must not be cut in half */
+    const ini = first ? [...first][0] : "";
+    return ini ? last + " " + ini.toLocaleUpperCase() + "." : last;
+  }
+
+  /* normalised label → the set of CODES wearing it. size > 1 = a real clash. */
+  function clashIndex() {
+    if (labels.clash) return labels.clash;
+    const m = new Map();
+    for (const coll of NAMED) {
+      for (const rec of db[coll] || []) {
+        const b = baseLabel(rec);
+        if (!b) continue;
+        const k = b.toLocaleLowerCase();
+        if (!m.has(k)) m.set(k, new Set());
+        m.get(k).add(nameTrim(rec.code));
+      }
+    }
+    labels.clash = m;
+    return m;
+  }
+
+  function personLabel(rec) {
+    const b = baseLabel(rec);
+    if (!b) return "";
+    const code = nameTrim(rec && rec.code);
+    if (!code || b === code) return b;              // the code already IS the label
+    const set = clashIndex().get(b.toLocaleLowerCase());
+    return set && set.size > 1 ? b + " (" + code + ")" : b;
+  }
+
+  /* a stored reference (a code) → the label. An id the roster does not know is
+     handed back verbatim: a historical log row must never lose its person. */
+  function personLabelOf(coll, id) {
+    const rec = coll ? find(coll, id) : personOf(id);
+    return rec ? personLabel(rec) : nameTrim(id);
+  }
+  function personOf(id) {
+    if (id == null || id === "") return null;
+    for (const coll of NAMED) { const r = find(coll, id); if (r) return r; }
+    return null;
+  }
+  /* every person dropdown says the same thing: the name, then the code that is
+     actually stored — so the CO can still read the key he types elsewhere. */
+  function personOption(rec) {
+    const b = personLabel(rec);
+    const code = nameTrim(rec && rec.code);
+    if (!b) return code;
+    if (!code || b === code || b.indexOf("(" + code + ")") >= 0) return b;
+    return b + " (" + code + ")";
+  }
+  function personOptionOf(coll, id) {
+    const rec = coll ? find(coll, id) : personOf(id);
+    return rec ? personOption(rec) : nameTrim(id);
   }
 
   /* ── CRUD ───────────────────────────────────────────────────────────────── */
@@ -386,6 +480,8 @@
     dayPlan, putDayPlan, removeDayPlan,
     snapshot, exportAll, importAll, resetToSeed, mountTools,
     uid, toast,
+    /* Round 12a — display names ("Koroniadis N."), one helper for the whole app */
+    personLabel, personLabelOf, personOption, personOptionOf, personOf, baseLabel,
     seedError: () => seedError,
   };
 })();

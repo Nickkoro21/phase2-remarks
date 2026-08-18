@@ -69,6 +69,19 @@ IP_TEST_PILOTS = {1, 3, 4, 10}                   # one TP per seeded country
 # (It had been hand-written into seed.json in Round 10b and the builder did not
 # know about it — a regen used to drop it silently.)
 IP_EXPERIENCED = {1, 3, 4, 7, 10, 13}
+# ROUND 12a — DISPLAY NAMES. The app now renders every person as «SURNAME N.»
+# and appends "(code)" ONLY when two people really collide on that label. A
+# disambiguation nobody can see is a disambiguation nobody has tested, so the
+# public seed carries the collision on purpose: IP-14 is a SECOND
+# "Instructor01 T.", and the roster, the pickers, the board, the log and the
+# currency matrix must all read "Instructor01 T. (IP-1)" / "(IP-14)" while
+# every other fake stays a plain "InstructorNN T.". Fake, like every name here.
+NAME_CLASH = {14: ("Instructor01", "Tychon")}
+
+
+def ip_name(n):
+    """(last, first) of fake instructor n — the clash pair included."""
+    return NAME_CLASH.get(n, (f"Instructor{n:02d}", "Test"))
 
 students, cut, prim_code = [], {}, {}
 N = len(GLOBAL)
@@ -94,7 +107,7 @@ for i in range(1, 31):
 
 instructors = [{
     "oid": ip_oid(i), "code": f"IP-{i}",
-    "first_name": "Test", "last_name": f"Instructor{i:02d}",
+    "first_name": ip_name(i)[1], "last_name": ip_name(i)[0],
     "mn": f"MN-{2000 + i}", "rank": IP_RANKS[(i - 1) % len(IP_RANKS)],
     "callsign": f"VIPER{i:02d}",
     "country": IP_COUNTRIES[(i - 1) % len(IP_COUNTRIES)],

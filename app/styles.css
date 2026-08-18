@@ -1624,81 +1624,131 @@ html[data-mode="light"] .mc-leg i[style*="#9d8cff"] { background: var(--mc-8) !i
 #sch-progbody .is-flash { outline: 2px solid transparent; outline-offset: 2px; animation: schFlash 1.8s ease-out; }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   INSTRUCTOR CURRENCY — Round 10b (the card), Round 11 (its own tab)
-   Tokens only (--good / --warn / --bad / --muted), so every one of the eight
-   palettes and both modes get it for free, and the print block that flattens
-   the palette to black-on-white already covers the printed sheet.
+   INSTRUCTOR CURRENCY — Round 10b (the card), 11 (its own tab), 12a (MATRIX)
+   Tokens only (--good / --warn / --bad / --muted / --accent / --line), so all
+   eight palettes and both modes get it for free, and the print block that
+   flattens the palette to black-on-white already covers the printed sheet.
+   Round 12a deleted the master-detail rules (.cur-list / .cur-ip* / the two
+   single-instructor tables): the markup that used them is gone, so the CSS
+   goes with it instead of rotting.
    ══════════════════════════════════════════════════════════════════════════ */
 
-/* ── ROUND 11 — the tab shell: list on the left, the two tables on the right.
-   Same idiom as .sch-view, and .hidden must beat the display rule below. */
+/* ── the tab shell — ONE column now: the four matrices sit under each other,
+   each with its own horizontal scroller. .hidden must beat the display rule. */
 .cur-view.hidden, #view-currency .hidden { display: none; }
 .cur-view {
-  flex: 1; display: grid; grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
-  gap: 12px; padding: 14px 22px; align-items: start; min-height: 0;
+  flex: 1; display: flex; flex-direction: column; gap: 12px;
+  padding: 14px 22px; min-height: 0; min-width: 0;
 }
-.cur-list { position: sticky; top: 14px; max-height: calc(100vh - 120px); overflow: auto; }
 .cur-main { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 .cur-sec { min-width: 0; }
 
-/* the instructor list — one button per row, the dot and the chips inline */
-.cur-iplist { display: flex; flex-direction: column; gap: 4px; }
-.cur-ip {
-  display: flex; align-items: center; gap: 7px; width: 100%; text-align: left;
-  background: transparent; color: var(--text); border: 1px solid transparent;
-  border-radius: 8px; padding: 5px 8px; font: inherit; font-size: 12.5px; cursor: pointer;
-}
-.cur-ip:hover { background: var(--accent-soft); border-color: var(--line); }
-.cur-ip.is-on { background: var(--accent-soft); border-color: var(--accent); font-weight: 600; }
-.cur-ip.is-dep { opacity: 0.55; }
-.cur-ip.is-dep .sch-code { color: var(--muted); }
-.cur-ip-rank { color: var(--muted); font-size: 11px; letter-spacing: 0.4px; flex: 0 0 auto; }
-.cur-ip-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.cur-ip:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
-
-/* the header of the selected instructor */
+/* the page head — who/how many, which semester, how to use the grid */
 .cur-head {
   display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
   background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
   padding: 9px 12px;
 }
-.cur-hname { font-size: 13.5px; font-weight: 600; }
+.cur-head h2 { font-size: 14px; letter-spacing: 0.4px; margin: 0; }
+
+/* ── one matrix table ───────────────────────────────────────────────────── */
+.cur-mxh { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.cur-roll { font-size: 11.5px; }
+.sch-curlegend { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; font-size: 11.5px; }
+
+/* the scroller owns BOTH axes, so the sticky head pins against it and the
+   sticky name column slides under nothing but itself */
+.cur-mxscroll { overflow: auto; max-height: 74vh; }
+.cur-mxtbl {
+  /* separate, not collapse: a collapsed border under a sticky cell is painted
+     by the cell it belongs to and disappears while scrolling.
+     AUTO layout, not fixed: with `fixed` the browser sizes the table against
+     the scroller instead of against the columns and every cell shrinks to
+     illegible. The columns are pinned by min-width on the header cells. */
+  width: auto; min-width: 100%; table-layout: auto;
+  border-collapse: separate; border-spacing: 0; font-size: 11.5px;
+}
+.cur-mxtbl th, .cur-mxtbl td {
+  padding: 3px 4px; border-bottom: 1px solid var(--line); vertical-align: middle;
+}
+
+/* COLUMN HEADS — the head of the item name, set vertically so a 29-column
+   table still fits on one screen. The full name lives in the title tooltip. */
+.cur-mxtbl thead th {
+  position: sticky; top: 0; z-index: 2; background: var(--panel);
+  box-shadow: inset 0 -1px 0 var(--line);
+}
+.cur-mxtbl th.cur-col {
+  min-width: 46px; width: 46px; height: 212px; padding: 5px 1px 6px; text-align: center; vertical-align: bottom;
+  font-size: 10px; text-transform: none; letter-spacing: 0; color: var(--muted); font-weight: 600;
+  border-left: 1px solid var(--line); cursor: help; white-space: normal;
+}
+.cur-mxtbl th.cur-col .cur-collbl {
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  display: inline-block; white-space: nowrap; max-height: 200px; overflow: hidden;
+}
+.cur-mxtbl th.cur-col:hover { color: var(--accent); }
+
+/* THE FROZEN NAME COLUMN — it must stay above both the row cells and the
+   column heads, so it carries the highest z-index of the table. */
+.cur-mxtbl th.cur-who {
+  position: sticky; left: 0; z-index: 4; min-width: 268px; width: 268px; background: var(--panel);
+  text-align: left; text-transform: none; letter-spacing: 0; font-weight: 400;
+  color: var(--text); box-shadow: inset -1px 0 0 var(--line);
+}
+.cur-mxtbl thead .cur-corner {
+  z-index: 6; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.6px;
+  color: var(--muted); font-weight: 600; vertical-align: bottom;
+}
+.cur-whobox {
+  /* a fixed box, so the column keeps ONE width in all four tables and a long
+     name ellipsises instead of pushing the grid sideways */
+  display: flex; align-items: center; gap: 5px; min-width: 0; width: 262px;
+}
+.cur-who-n {
+  font-size: 12px; font-weight: 600; color: var(--text); cursor: help;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.cur-lvl { align-self: center; }
+.cur-mxtbl tbody tr:hover .cur-who { background: var(--panel-2); }
+.cur-pr { font-size: 12px; padding: 0 5px; }
+
+/* ── THE CELL — one compact reading, the real input on click ─────────────── */
+.cur-cell {
+  text-align: center; cursor: pointer; white-space: nowrap;
+  font-family: Consolas, monospace; font-variant-numeric: tabular-nums;
+  border-left: 1px solid var(--line); color: var(--muted);
+}
+.cur-cell:hover:not(.is-off) { outline: 1px solid var(--accent); outline-offset: -1px; }
+.cur-cell:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.cur-cell.is-off { cursor: default; opacity: 0.55; }
+.cur-cv { pointer-events: none; }
+.cur-slash { color: var(--muted); opacity: 0.7; }
+
+/* the ONE colour rule of the engine, as a cell wash — same four states, same
+   tokens and the same names the legends and the printed sheet use */
+.cur-cell.st-ok { background: rgba(var(--good-rgb), 0.10); color: var(--good); }
+.cur-cell.st-expiring { background: rgba(var(--warn-rgb), 0.16); color: var(--warn); font-weight: 700; }
+.cur-cell.st-expired, .cur-cell.st-never { background: rgba(var(--bad-rgb), 0.18); color: var(--bad); font-weight: 700; }
+.cur-cell.st-neutral { background: transparent; }
+
+/* the editor: ONE cell at a time. A date box is wider than its column, so the
+   cell is positioned — a positioned element paints over its plain siblings,
+   while the sticky head (z 2) and the sticky name column (z 4) stay above it. */
+.cur-cell.is-edit { position: relative; padding: 1px 2px; background: var(--accent-soft); }
+.cur-cin { padding: 2px 4px; font-size: 11px; text-align: center; }
+.cur-cin[type="number"] { width: 100%; min-width: 42px; }
+.cur-cdate { width: 132px; text-align: left; }
 
 /* the semester chip — its own colour, never the availability dot's */
 .sch-badge.cur-sem { color: var(--muted); }
 .sch-badge.cur-sem.st-ok { color: var(--good); border-color: var(--good); }
 .sch-badge.cur-sem.st-expiring { color: var(--warn); border-color: var(--warn); }
 .sch-badge.cur-sem.st-expired { color: var(--bad); border-color: var(--bad); }
+.sch-badge.cur-expired { color: var(--bad); border-color: var(--bad); }
+.sch-badge.cur-expiring { color: var(--warn); border-color: var(--warn); }
 
-/* ── TABLE ① — the semester quotas ─────────────────────────────────────── */
-.cur-semscroll { max-height: 44vh; }
-.sch-semtbl .sch-curname { min-width: 280px; }
-.sch-curcnt { width: 74px; padding: 3px 6px; font-size: 12px; text-align: right; }
-.cur-unit { color: var(--muted); font-size: 11px; }
-.cur-slash { color: var(--muted); }
-.cur-prog { white-space: nowrap; }
-.sch-semtbl tr.cur-ok .cur-prog { color: var(--good); font-weight: 700; }
-.sch-semtbl tr.cur-expiring .cur-prog { color: var(--warn); font-weight: 700; }
-.sch-semtbl tr.cur-expired .cur-prog { color: var(--bad); font-weight: 700; }
-/* the bar is a second reading of the same number, never the only one */
-.cur-bar {
-  display: inline-block; width: 46px; height: 5px; vertical-align: middle; margin-left: 6px;
-  border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--panel-2);
-}
-.cur-bar i { display: block; height: 100%; background: var(--muted); }
-.sch-semtbl tr.cur-ok .cur-bar i { background: var(--good); }
-.sch-semtbl tr.cur-expiring .cur-bar i { background: var(--warn); }
-.sch-semtbl tr.cur-expired .cur-bar i { background: var(--bad); }
-
-@media (max-width: 1100px) {
-  /* narrow: the list becomes a top strip and the tables take the full width */
-  .cur-view { grid-template-columns: minmax(0, 1fr); }
-  .cur-list { position: static; max-height: 240px; }
-  .cur-iplist { flex-direction: row; flex-wrap: wrap; }
-  .cur-ip { width: auto; border-color: var(--line); }
-}
-
-/* the one status dot — instructor list, both legends and every table row */
+/* the one status dot — page head, row heads, table rollups and every legend */
 .sch-cdot {
   display: inline-block; width: 9px; height: 9px; border-radius: 50%;
   flex: 0 0 auto; vertical-align: middle;
@@ -1709,89 +1759,37 @@ html[data-mode="light"] .mc-leg i[style*="#9d8cff"] { background: var(--mc-8) !i
 .sch-cdot.st-expired, .sch-cdot.st-never { background: var(--bad); border-color: var(--bad); opacity: 1; }
 .sch-cdot.st-neutral { background: transparent; }
 
-.sch-badge.cur-expired { color: var(--bad); border-color: var(--bad); }
-.sch-badge.cur-expiring { color: var(--warn); border-color: var(--warn); }
-
-/* card head — pill · counters · experienced toggle · print / close */
-.sch-curcard { gap: 7px; }
-.sch-curhead { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-.sch-curpill {
-  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px;
-  border: 1px solid var(--line); border-radius: 999px; padding: 2px 11px; color: var(--muted);
-}
-.sch-curpill.st-ok { color: var(--good); border-color: var(--good); background: rgba(var(--good-rgb), 0.08); }
-.sch-curpill.st-expiring { color: var(--warn); border-color: var(--warn); background: rgba(var(--warn-rgb), 0.08); }
-.sch-curpill.st-expired { color: var(--bad); border-color: var(--bad); background: rgba(var(--bad-rgb), 0.08); }
-.sch-curexp {
-  display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
-  border: 1px solid var(--line); border-radius: 999px; padding: 2px 11px 2px 8px;
-  font-size: 11.5px; color: var(--text); background: var(--panel-2);
-}
-.sch-curexp:hover { border-color: var(--accent); }
-.sch-curexp input { margin: 0; }
-.sch-curlegend { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; font-size: 11.5px; }
-
-/* the owed / expiring shortcut chips — click jumps to the row and flashes it */
-.sch-curowed { display: flex; flex-wrap: wrap; gap: 5px; }
-.sch-curowed .sch-pgoto { font-family: inherit; font-size: 11.5px; padding: 2px 10px; }
-
-/* ROUND 10c — recorded obligations. They are NOT an availability state, so
-   they get no status colour of their own: the tag and the second header line
-   are --muted, and the chips drop the amber accent the owed chips carry. */
-.sch-curoblline { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
-.sch-curoblline .sch-pgoto { font-family: inherit; font-size: 11.5px; padding: 2px 10px; }
-.sch-pgoto.is-obl { border-style: dotted; }
-.sch-pgoto.is-obl .sch-pgoto-s { color: var(--muted); }
+/* ROUND 10c — recorded obligations are NOT an availability state, so they get
+   no status colour of their own: the tag stays --muted and dotted. Round 12a
+   reuses it for the ΕΜΠ / ΑΠ tag of a row head — same "this is a label, not a
+   state" reading. */
 .sch-curobl {
   flex: 0 0 auto; font-size: 9.5px; letter-spacing: 0.4px; text-transform: uppercase;
   color: var(--muted); border: 1px dotted var(--line); border-radius: 999px;
   padding: 0 6px; cursor: help;
 }
 
-/* the table */
-.sch-curscroll { max-height: 52vh; }
-.sch-curtbl { font-size: 12px; }
-.sch-curtbl td { vertical-align: middle; }
-.sch-curtbl tr.sch-curgrp > td {
-  background: var(--panel); position: sticky; top: 26px; z-index: 1;
-  font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--accent);
-  font-weight: 700; padding-top: 9px;
-}
-.sch-curgnote { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--muted); margin-left: 8px; }
-.sch-curname { display: flex; align-items: baseline; gap: 6px; min-width: 250px; }
-.sch-curinfo { color: var(--accent); cursor: help; font-size: 11px; flex: 0 0 auto; }
-.sch-curwarn { color: var(--warn); cursor: help; flex: 0 0 auto; }
-.sch-curdate { width: 138px; padding: 3px 6px; font-size: 12px; }
-.sch-curtbl .cur-left { white-space: nowrap; }
-.sch-curtbl tr.cur-expired .cur-left, .sch-curtbl tr.cur-never .cur-left { color: var(--bad); font-weight: 700; }
-.sch-curtbl tr.cur-expiring .cur-left { color: var(--warn); font-weight: 700; }
-.sch-curtbl tr.cur-ok .cur-left { color: var(--good); }
-.sch-curtbl tr.cur-neutral td { color: var(--muted); }
-.sch-curtbl tr.cur-expired { background: rgba(var(--bad-rgb), 0.06); }
-.sch-curtbl tr.cur-never { background: rgba(var(--bad-rgb), 0.03); }
-.sch-curtbl tr.cur-expiring { background: rgba(var(--warn-rgb), 0.05); }
-.sch-curtbl tr.is-flash { outline: 2px solid transparent; outline-offset: -2px; animation: schFlash 1.8s ease-out; }
-
-@media (max-width: 900px) {
-  .sch-curname { min-width: 160px; }
-  .sch-curdate { width: 122px; }
+@media (max-width: 1100px) {
+  .cur-view { padding: 12px 10px; }
+  .cur-mxtbl th.cur-who { min-width: 200px; width: 200px; }
+  .cur-whobox { width: 194px; }
 }
 
-/* The supported path to paper is the card's 🖨 Print button (the #sch-print
-   sheet, which says the status in words). A plain Ctrl+P of the open card
-   still has to be readable, and the print block flattens every colour token
-   to black — so the dot falls back to a SHAPE. */
+/* The supported path to paper is the row's 🖨 (the #sch-print sheet, which
+   says the status in words). A plain Ctrl+P of the open matrix still has to be
+   readable, and the print block flattens every colour token to black — so the
+   dot falls back to a SHAPE and the frozen column stops floating. */
 @media print {
   .sch-cdot { background: #ffffff !important; border: 1.5px solid #000000 !important; opacity: 1 !important; }
   .sch-cdot.st-expired, .sch-cdot.st-never { background: #000000 !important; }
   .sch-cdot.st-expiring { background: #ffffff !important; box-shadow: inset 0 -4px 0 #000000; }
   .sch-cdot.st-neutral { border-style: dotted !important; }
-  .sch-curscroll, .cur-semscroll { max-height: none !important; overflow: visible !important; }
-  /* Round 11 — the tab itself: the sticky list and the progress bars are
-     screen furniture; on paper the x/N figure next to them is the reading. */
-  .cur-view { display: block !important; }
-  .cur-list { position: static !important; max-height: none !important; }
-  .cur-bar { display: none !important; }
-  /* the printed sheet carries TWO tables now: a section title never dangles */
+  .cur-mxscroll { max-height: none !important; overflow: visible !important; }
+  .cur-mxtbl th.cur-who, .cur-mxtbl thead th { position: static !important; }
+  .cur-cell.st-expired, .cur-cell.st-never, .cur-cell.st-expiring, .cur-cell.st-ok {
+    background: transparent !important;
+  }
+  .cur-pr { display: none !important; }
+  /* the printed sheet carries TWO tables: a section title never dangles */
   html.sch-printing #sch-print .pv-h { page-break-after: avoid; break-after: avoid; }
 }

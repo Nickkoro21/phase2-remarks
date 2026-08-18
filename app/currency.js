@@ -1,27 +1,31 @@
 "use strict";
 /* ══════════════════════════════════════════════════════════════════════════
-   INSTRUCTOR CURRENCY — its own top-level tab            (Round 11, 18/08/2026)
+   INSTRUCTOR CURRENCY — its own top-level tab   (Round 11 · MATRIX in 12a)
    ══════════════════════════════════════════════════════════════════════════
-   User directive of 18/08/2026: «Εγώ το θέλω σε ξεχωριστή καρτέλα όπως είναι
-   το scheduler, validate, κλπ. Αρχικά θα έχουμε τους εκπαιδευτές και δύο
-   πίνακες, αυτούς ανά εξάμηνο που θα μπορούμε να βάλουμε πληροφορίες και μετά
-   τα υπόλοιπα item που λήγουν ή δε λήγουν.»
+   Round 11 directive: «Εγώ το θέλω σε ξεχωριστή καρτέλα όπως είναι το
+   scheduler, validate, κλπ.» — this tab.
+   Round 12a directive (18/08/2026): «Όπως είναι στημένο τώρα το currency πρέπει
+   να κοιτάω κάθε εκπαιδευτή ξεχωριστά. Rows τα ονόματα, στήλες τα events.
+   Φτιάξε περισσότερους από έναν πίνακες.» — so the one-instructor-at-a-time
+   card is gone and the view is a MATRIX: rows = instructors, columns = the
+   catalog events, split across FOUR collapsible tables (see the second IIFE).
 
    WHAT MOVED HERE
      § ③ of scheduler.js — window.SchedCurrency — moved VERBATIM (Round 10b/
      10c/10d behaviour untouched) and extended with the semester model below.
      The Roster keeps NOTHING currency-related any more (user ruling: «Τίποτα»):
-     the dot, the "owes N" chip and the card all live in this tab.
+     the dot, the "owes N" chip and everything else live in this tab.
 
-   THE TWO TABLES
-     ① ΑΝΑ ΕΞΑΜΗΝΟ — the 15 sim / s-category items. These are semester QUOTAS
-       (Πίνακας 6 = F/S, Πίνακας 9 = air), i.e. "how many sorties this
-       semester", NOT rolling windows. They carry an editable COUNTER per
-       semester and never touch the availability tally.
-     ② ΛΗΓΟΥΝ / ΔΕΝ ΛΗΓΟΥΝ — the other 76 items, exactly as Round 10c/10d
-       left them: one date each, the min(round(v×25%), 45) colour rule,
-       recorded obligations with per-id reasons, ≈ conversions and ⚠ flags.
-     15 + 76 = 91 = the whole catalog; every id is rendered exactly once.
+   THE TWO FAMILIES OF ITEM — one engine, two shapes
+     QUOTAS  the 15 sim / s-category items. Πίνακας 6 (F/S) and Πίνακας 9 (air)
+       print, per flyer per SEMESTER, HOW MANY sorties are required. That is a
+       quota, not a rolling window: it carries an editable COUNTER per semester
+       and never touches the availability tally.
+     DATED   the other 76 items, exactly as Round 10c/10d left them: one date
+       each, the min(round(v×25%), 45) colour rule, recorded obligations with
+       per-id reasons, ≈ conversions and ⚠ flags.
+     15 + 76 = 91 = the whole catalog; every id is rendered exactly once —
+     asserted at boot by curCoverage() over the four tables.
 
    THE ONE EXCEPTION, NAMED OUT LOUD
      `sim-refresh-after-abstention` is of kind "sim", so the kind split puts it
@@ -653,19 +657,45 @@
     quotaOf, countsOf, countOf, bumpCount, semStatusOf, semSummary,
   };
 })();
-
 /* ══════════════════════════════════════════════════════════════════════════
-   THE TAB — window.curInit()                                    (Round 11)
+   THE TAB — window.curInit()                        (Round 11 · MATRIX in 12a)
    ══════════════════════════════════════════════════════════════════════════
-   A top-level view like Scheduler or the Flowchart, not a row expansion:
-   LEFT   the instructor list — availability dot, "owes N", semester chip.
-          Clicking selects; the selection survives every repaint and every
-          tab switch (module ui state, exactly like the Scheduler's panes).
-   RIGHT  the selected instructor: header (identity · pill · counters ·
-          EXPERIENCED toggle · Print) and the TWO tables.
-   Everything shown is computed by SchedCurrency out of the catalog, ONE date
-   per dated item and ONE counter per quota item per semester. This module
-   owns the HTML and nothing else — no number is decided here.              */
+   User directive of 18/08/2026: «Όπως είναι στημένο τώρα το currency πρέπει να
+   κοιτάω κάθε εκπαιδευτή ξεχωριστά. Rows τα ονόματα, στήλες τα events. Φτιάξε
+   περισσότερους από έναν πίνακες.» The Round-11 master-detail card (one
+   instructor at a time, list on the left) is GONE. The whole squadron is on
+   screen at once:
+
+     ROWS      every ACTIVE instructor, one row each, named «SURNAME N.» through
+               SchedStore.personLabel — no internal handle is rendered anywhere.
+     COLUMNS   the catalog events, split across FOUR tables so a column stays
+               readable and no table is wider than ~30 columns:
+                 ① ΑΝΑ ΕΞΑΜΗΝΟ        15 (the quota rows + the §49 threshold)
+                 ② Landings + Recency 19
+                 ③ Ε-items            28
+                 ④ Other              29
+               Every catalog id sits in EXACTLY ONE table: 15+19+28+29 = 91,
+               asserted at boot by curCoverage() — a silent gap would mean an
+               instructor holds something the app never shows him.
+     CELLS     one compact reading — «x/N» for a quota, signed days-left for a
+               dated item — that becomes the REAL native input (number / date)
+               on click. The write goes through the SAME two seams as Round 11,
+               bump() and bumpCount(), with the same guards; the store event
+               repaints and the cell, the row chips and the table rollup are
+               recomputed together.
+     TABLES    collapse from their header bar (chevron · item count · a one-line
+               rollup), remembered per table in localStorage. Default: all open.
+
+   WHAT THIS MODULE DOES NOT DO
+     It owns the HTML and nothing else. Every number is computed by
+     SchedCurrency out of the catalog, ONE date per dated item and ONE counter
+     per quota item per semester. No figure is decided here.
+
+   THE ΕΜΠ / ΑΠ AXIS
+     Round 11 had a global toggle on the card. A matrix has no "current
+     instructor", so each ROW reads that instructor's OWN `experienced` flag and
+     wears it as a tag; the flag is edited where it belongs — the roster form in
+     the Scheduler (Round 12a added the checkbox there).                       */
 (() => {
   const $id = (x) => document.getElementById(x);
   const ESC = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
@@ -673,24 +703,80 @@
   const S = () => window.SchedStore;
   const CUR = () => window.SchedCurrency;
   const dmy = (v) => window.fmtDMY(v);
+  /* «SURNAME N.» — the one display-name helper of the whole app (Round 12a) */
+  const who = (rec) => S().personLabel(rec);
 
-  /* sel   the SELECTED instructor code — it persists across repaints and tab
-           switches. focus puts the caret back on the input the store event
-           repainted away under the user's hands (kind + item id).          */
-  const ui = { booted: false, sel: "", focus: null };
+  /* ── THE FOUR TABLES ─────────────────────────────────────────────────────
+     ① is the semester block in PRINTED table order (Πίνακας 6, then Πίνακας 9),
+     ②③④ split the 76 dated ids by catalog kind. The kinds are named, never
+     sniffed, so a new catalog kind shows up as a coverage warning instead of
+     quietly disappearing from the screen.                                    */
+  const TABLES = [
+    { key: "sem", n: "①", sem: true, label: "ΑΝΑ ΕΞΑΜΗΝΟ — semester quotas",
+      note: "sorties per semester — Πίνακας 6 (F/S) and Πίνακας 9 (air). A quota is not a window: "
+        + "nothing counts down and a shortfall costs no availability (§40 · §46)" },
+    { key: "ldg", n: "②", kinds: ["landing", "recency"], label: "Landings + Recency",
+      note: "the rolling windows that decide whether he may fly tonight" },
+    { key: "e", n: "③", kinds: ["e-item"], label: "Ε-items (EVENTS)",
+      note: "the EVENTS table of the 3-01 — one date each" },
+    { key: "oth", n: "④", kinds: ["other"], label: "Other",
+      note: "readiness conditions, seminars, definitions and the ΠΡ clocks" },
+  ];
+  const TBL = new Map(TABLES.map((t) => [t.key, t]));
 
-  const instructors = () => (S().get("instructors") || []).slice();
-  /* active first, then natural order on the code ("IP-2" before "IP-10") */
+  /* ui.edit  the ONE cell currently showing a native input, as {code, id, kind}.
+              Exactly one at a time, so the input carries id="cur-editing" and
+              the repaint puts the caret straight back on it.
+     ui.dirty a store write that landed while another tab was open — the matrix
+              is 1 365 cells, so it is repainted on activation, not blindly.  */
+  const ui = { booted: false, edit: null, dirty: false };
+
+  /* ── collapse state — the board's pattern, this tab's own key ─────────────
+     Default OPEN for every table (user ruling: «Οι Πίνακες να μπορούν να
+     κλείσουν και να ανοίξουν για ευκολία» — closed is the exception).        */
+  const COLKEY = "p2r-cur-collapse";
+  function colMap() {
+    try { const v = JSON.parse(localStorage.getItem(COLKEY) || "{}"); return v && typeof v === "object" ? v : {}; }
+    catch (e) { return {}; }
+  }
+  function setCol(key, collapsed) {
+    const m = colMap();
+    m[key] = !!collapsed;
+    try { localStorage.setItem(COLKEY, JSON.stringify(m)); } catch (e) { /* private mode */ }
+  }
+  const tblOpen = (key) => { const m = colMap(); return key in m ? !m[key] : true; };
+
+  /* the collapsible header button — chevron + title, aria-expanded, data-cursec */
+  function secBtn(key, titleHtml) {
+    const open = tblOpen(key);
+    return `<button type="button" class="sch-sec${open ? " is-open" : ""}" data-cursec="${esc(key)}"
+      aria-expanded="${open ? "true" : "false"}" title="${open ? "collapse" : "expand"} this table">
+      <span class="sch-secarr">${open ? "▾" : "▸"}</span><h2>${titleHtml}</h2></button>`;
+  }
+
+  /* ── the people ──────────────────────────────────────────────────────────
+     ROWS = the ACTIVE instructors (the directive's own words). A departed one
+     keeps his stored dates but leaves the matrix; the header says how many, so
+     nobody silently disappears.                                              */
   const natural = (a, b) => String(a).replace(/\d+/g, (n) => n.padStart(6, "0"))
     .localeCompare(String(b).replace(/\d+/g, (n) => n.padStart(6, "0")));
-  function listed() {
-    return instructors().sort((a, b) => {
-      const da = (a.status || "active") === "departed" ? 1 : 0;
-      const db = (b.status || "active") === "departed" ? 1 : 0;
-      return da - db || natural(a.code, b.code);
-    });
+  const allIps = () => (S().get("instructors") || []).slice();
+  const departedN = () => allIps().filter((i) => (i.status || "active") === "departed").length;
+  /* sorted by the NAME the user reads, not by the code he no longer sees */
+  const listed = () => allIps().filter((i) => (i.status || "active") !== "departed")
+    .sort((a, b) => String(who(a)).localeCompare(String(who(b))) || natural(a.code, b.code));
+
+  /* per-render memo: summary()/semSummary() walk all 91 items, and every row
+     head of every table asks for them. Cleared at the top of render().       */
+  const memo = { s: new Map(), sem: new Map() };
+  function sumOf(i) {
+    if (!memo.s.has(i.code)) memo.s.set(i.code, CUR().summary(i.oid, !!i.experienced));
+    return memo.s.get(i.code);
   }
-  const selected = () => (ui.sel ? S().find("instructors", ui.sel) : null) || null;
+  function semOf(i) {
+    if (!memo.sem.has(i.code)) memo.sem.set(i.code, CUR().semSummary(i.oid, i));
+    return memo.sem.get(i.code);
+  }
 
   /* ── boot ───────────────────────────────────────────────────────────────── */
   window.curInit = async function curInit() {
@@ -713,70 +799,294 @@
       return;
     }
     ui.booted = true;
-    S().subscribe(() => { if (ui.booted) render(); });
+    S().subscribe(() => {
+      if (!ui.booted) return;
+      if (visible()) render(); else ui.dirty = true;
+    });
     wire($id("view-currency"));
     render();
-    curCoverage();                       // the 15 + 76 = 91 identity, asserted once
+    curCoverage();                       // the 15 + 19 + 28 + 29 = 91 identity
   };
 
+  const visible = () => { const v = $id("view-currency"); return !!v && !v.classList.contains("hidden"); };
+
   function render() {
+    ui.dirty = false;
+    memo.s.clear(); memo.sem.clear();
     const all = listed();
-    if (!all.length) ui.sel = "";
-    else if (!all.some((i) => i.code === ui.sel)) ui.sel = all[0].code;
-    $id("cur-list").innerHTML = listHtml(all);
-    $id("cur-main").innerHTML = mainHtml(selected());
-    restoreFocus($id("view-currency"));
+    /* an editor whose person or item vanished (a roster edit, a catalog reload)
+       must not survive as a ghost */
+    if (ui.edit && !all.some((i) => i.code === ui.edit.code)) ui.edit = null;
+    $id("cur-main").innerHTML = headHtml(all) + TABLES.map((t) => tableHtml(t, all)).join("");
+    const inp = $id("cur-editing");
+    if (inp) { inp.focus(); if (inp.select && ui.edit && ui.edit.kind === "q") inp.select(); }
   }
 
-  /* a counter/date is written on `change`, the store event repaints the whole
-     view, and the input the user was standing on disappears with it. Item ids
-     are plain kebab-case slugs, so the attribute selector is safe. */
-  function restoreFocus(el) {
-    const f = ui.focus;
-    ui.focus = null;
-    if (!f) return;
-    const inp = el.querySelector(`[data-${f.kind}="${f.id}"]`);
-    if (!inp) return;
-    inp.focus();
-    if (inp.select && f.kind === "curcount") inp.select();
-  }
-
-  /* ══ LEFT — the instructor list ═════════════════════════════════════════ */
-  function listHtml(all) {
-    const head = `<div class="sch-h"><h2>Instructors <span class="count">${all.length}</span></h2></div>`;
-    if (!all.length) return head + `<p class="sch-hint">No instructors yet — add them in the Scheduler roster.</p>`;
+  /* ══ THE PAGE HEAD ══════════════════════════════════════════════════════ */
+  function headHtml(all) {
     if (!CUR().loaded()) {
-      return head + `<p class="sch-hint">The expiring-items catalog could not be read — expected
-        <code>${esc(CUR().CAT_URL)}</code>.${CUR().error() ? " " + esc(CUR().error()) : ""}</p>`;
+      return `<div class="sch-ph"><strong>The expiring-items catalog could not be read.</strong>
+        <p>Expected <code>${esc(CUR().CAT_URL)}</code>.${CUR().error() ? " " + esc(CUR().error()) : ""}</p></div>`;
     }
-    return head + `<div class="cur-iplist">${all.map(ipRowHtml).join("")}</div>
-      <p class="sch-hint">The dot and “owes N” read the DATED table only. “sem” is the semester quotas —
-      a separate count, because a quota is not a window.</p>`;
+    const w = CUR().curSem();
+    const dep = departedN();
+    return `<div class="cur-head">
+      <h2>Instructor currency <span class="count">${all.length} instructor${all.length === 1 ? "" : "s"}</span></h2>
+      <span class="sch-nd" title="project ruling: the semester is a calendar half — H1 = 01/01-30/06, H2 = 01/07-31/12. The stored key is «${esc(w.key)}», so 01/01 rolls over instead of overwriting.">${esc(w.label)} — ends ${esc(dmy(w.end))} (${w.left} days left)</span>
+      <span class="sch-nd" title="the referee-verified catalog of everything the 3-01/2025 ΔΑΕ makes a T-6A instructor hold">${CUR().items().length} catalog items in ${TABLES.length} tables</span>
+      ${dep ? `<span class="sch-badge" title="a departed instructor keeps his stored dates but leaves the matrix — he is still in the Scheduler roster">${dep} departed, not listed</span>` : ""}
+      <span class="sch-spacer"></span>
+      <span class="sch-hint">rows are instructors, columns are the catalog items — click any cell to type its date or count</span>
+    </div>`
+      + (all.length ? "" : `<div class="sch-ph"><strong>No active instructor.</strong>
+        <p>Add them in the Scheduler roster — this tab reads the same records.</p></div>`);
   }
 
-  function ipRowHtml(i) {
-    const on = i.code === ui.sel;
-    const dep = (i.status || "active") === "departed";
-    const name = (i.last_name || "—") + (i.first_name ? ", " + i.first_name : "");
-    let dot = "", chips = "";
-    if (!i.oid) {
-      chips = `<span class="sch-badge" title="no OID yet — the currency record is addressed by OID. Open the roster form in the Scheduler and save the row once.">no OID</span>`;
-    } else {
-      const s = CUR().summary(i.oid, !!i.experienced);
-      const sem = CUR().semSummary(i.oid, i);
-      dot = `<span class="sch-cdot st-${esc(s.state)}" title="${esc(availTip(s))}"></span>`;
-      chips = (s.owes ? `<span class="sch-badge cur-expired" title="${esc(availTip(s))}">owes ${s.owes}</span>`
-        : s.expiring ? `<span class="sch-badge cur-expiring" title="${esc(availTip(s))}">exp ${s.expiring}</span>` : "")
-        + `<span class="sch-badge cur-sem st-${esc(sem.state)}" title="${esc(semTip(sem))}">sem ${sem.done}/${sem.total}</span>`;
+  /* ══ ONE TABLE ══════════════════════════════════════════════════════════ */
+  function itemsOf(t) {
+    if (!CUR().loaded()) return [];
+    if (t.sem) return [].concat.apply([], CUR().semGroups().map((g) => g.items));
+    return [].concat.apply([], CUR().groups()
+      .filter((g) => g.kinds.some((k) => t.kinds.indexOf(k) >= 0))
+      .map((g) => g.items));
+  }
+
+  function tableHtml(t, all) {
+    if (!CUR().loaded()) return "";
+    const its = itemsOf(t);
+    const open = tblOpen(t.key);
+    const r = rollup(t, its, all);
+    return `<section class="panel sch-panel cur-sec cur-mx" data-tbl="${esc(t.key)}">
+      <div class="sch-h cur-mxh">
+        ${secBtn(t.key, `${t.n} ${esc(t.label)} <span class="count">${its.length} item${its.length === 1 ? "" : "s"}</span>`)}
+        <span class="sch-cdot st-${esc(r.state)}" title="${esc(r.tip)}"></span>
+        <span class="sch-nd cur-roll" title="${esc(r.tip)}">${esc(r.txt)}</span>
+      </div>
+      ${open ? legendHtml(t, its) + gridHtml(t, its, all) : ""}
+    </section>`;
+  }
+
+  /* ── the one-line rollup of the header bar ────────────────────────────────
+     It answers "is anything wrong in THIS table?" over the whole squadron, and
+     it counts what the table actually holds — never the whole catalog.       */
+  function rollup(t, its, all) {
+    if (t.sem) {
+      let owed = 0, behind = 0;
+      for (const i of all) {
+        if (!i.oid) continue;
+        const sm = semOf(i);
+        if (sm.short) { owed += sm.short; behind += 1; }
+      }
+      const st = !behind ? "ok" : (CUR().curSem().left > CUR().SEM_RED_DAYS ? "expiring" : "expired");
+      return { state: st, txt: behind ? owed + " sortie" + (owed === 1 ? "" : "s") + " owed by " + behind + " instructor" + (behind === 1 ? "" : "s")
+        : "every quota met",
+        tip: "the semester quotas of this table across the whole squadron. A shortfall is NOT an availability loss "
+          + "(§40 absorbs a justified one, §46 records the rest) — it never enters the dot or “owes”." };
     }
-    return `<button type="button" class="cur-ip${on ? " is-on" : ""}${dep ? " is-dep" : ""}"
-      data-cur-ip="${esc(i.code)}" aria-pressed="${on ? "true" : "false"}">
-      ${dot}
-      <span class="sch-code">${esc(i.code)}</span>
-      ${i.rank ? `<span class="cur-ip-rank">${esc(i.rank)}</span>` : ""}
-      <span class="cur-ip-name">${esc(name)}</span>
-      ${dep ? `<span class="sch-badge st-withdrawn" title="departed — kept for history">DEP</span>` : ""}
-      <span class="sch-spacer"></span>${chips}</button>`;
+    const ids = new Set(its.map((it) => it.id));
+    let red = 0, amber = 0, oblOver = 0, people = 0;
+    for (const i of all) {
+      if (!i.oid) continue;
+      const s = sumOf(i);
+      const mine = s.red.filter((x) => ids.has(x.item.id)).length;
+      red += mine;
+      amber += s.amber.filter((x) => ids.has(x.item.id)).length;
+      oblOver += s.obl.overdueRows.filter((x) => ids.has(x.item.id)).length;
+      if (mine) people += 1;
+    }
+    return {
+      state: red ? "expired" : (amber ? "expiring" : "ok"),
+      txt: (red ? red + " owed by " + people + " instructor" + (people === 1 ? "" : "s") : "nothing owed")
+        + (amber ? " · " + amber + " expiring" : "")
+        + (oblOver ? " · " + oblOver + " obligation" + (oblOver === 1 ? "" : "s") + " overdue" : ""),
+      tip: "counted rows of THIS table only, across the whole squadron: expired or never recorded = owed. "
+        + "Recorded obligations are counted on their own — they never enter the dot, the chips or “owes”.",
+    };
+  }
+
+  /* ── the legend — ONE line per table, with THAT table's own figures ───────
+     Round 11 verify item 17: the card printed the whole catalog's
+     counted/obligation/no-counter split under every block, which was false for
+     the block it sat under. Every figure below is computed over the items of
+     this table alone. counted / no-counter depend on which validity column the
+     row reads, so both levels are printed whenever they disagree.            */
+  function tableStats(its) {
+    const out = { e: { counted: 0, obl: 0, neutral: 0 }, a: { counted: 0, obl: 0, neutral: 0 } };
+    for (const it of its) {
+      for (const lvl of [true, false]) {
+        const bag = lvl ? out.e : out.a;
+        const v = CUR().resolve(it, lvl);
+        if (v.days == null) bag.neutral += 1;         // same order as summary(): neutral first
+        else if (CUR().isObligation(it.id)) bag.obl += 1;
+        else bag.counted += 1;
+      }
+    }
+    return out;
+  }
+  const bothFig = (e, a) => (e === a ? String(e) : e + " ΕΜΠ / " + a + " ΑΠ");
+
+  function semStats(its) {
+    const Q = CUR().SEM_QUOTA;
+    let printed = 0, dash = 0, win = 0, tp = 0, tot = 0;
+    for (const it of its) {
+      const q = Q[it.id] || {};
+      if (q.window) { win += 1; continue; }
+      if (q.posted == null) dash += 1; else printed += 1;
+      if (q.tp_only) tp += 1;
+      if (q.total) tot += 1;
+    }
+    return { printed, dash, win, tp, tot };
+  }
+
+  function legendHtml(t, its) {
+    if (t.sem) {
+      const f = semStats(its);
+      return `<p class="sch-hint sch-curlegend">
+        <span class="sch-cdot st-ok"></span> met (x ≥ N) ·
+        <span class="sch-cdot st-expiring"></span> short with more than ${CUR().SEM_RED_DAYS} days of the semester left ·
+        <span class="sch-cdot st-expired"></span> short with ${CUR().SEM_RED_DAYS} days or less left ·
+        <span class="sch-cdot st-neutral"></span> nothing required.
+        <b>In this table:</b> ${f.printed} column${f.printed === 1 ? "" : "s"} with a printed requirement
+        (${f.tot} of them the printed <b>ΣΥΝΟΛΑ</b> totals, ${f.tp} Test-Pilot only) ·
+        ${f.dash} that print a dash and require nothing ·
+        ${f.win} <b>threshold</b> column that is not a quota at all and DOES count for availability (§49).
+        <b>N</b> is the <b>ΤΟΠΟΘΕΤΗΜΕΝΟΣ (POSTED)</b> column of Πίνακας 6/9 — the printed split is posted vs attached,
+        <b>not</b> experienced vs inexperienced, so a row's ΕΜΠ/ΑΠ tag does not move it (an <i>attached</i> flag is a future axis).
+      </p>`;
+    }
+    const f = tableStats(its);
+    return `<p class="sch-hint sch-curlegend">
+      <span class="sch-cdot st-ok"></span> in date ·
+      <span class="sch-cdot st-expiring"></span> amber when a quarter of the window — at most ${CUR().AMBER_MAX_DAYS} days — remains ·
+      <span class="sch-cdot st-expired"></span> expired or never recorded ·
+      <span class="sch-cdot st-neutral"></span> no counter (no limit · set outside the 3-01 · n/a).
+      <b>In this table:</b> ${esc(bothFig(f.e.counted, f.a.counted))} counted for availability ·
+      ${esc(bothFig(f.e.obl, f.a.obl))} recorded obligation${f.e.obl === 1 && f.a.obl === 1 ? "" : "s"} ·
+      ${esc(bothFig(f.e.neutral, f.a.neutral))} with no counter${f.e.counted === f.a.counted && f.e.neutral === f.a.neutral ? ""
+        : " (the two figures differ because the ΑΠ column prints «--» on some rows — see the ⚠ in the header)"}.
+      <b>≈</b> project conversion of a printed period (${esc(CUR().CONV_LEGEND)}) · <b>⚠</b> a printed contradiction — hover the column.
+      Columns tagged <b>obligation</b> keep their colour but stay out of the dot, the chips and “owes” — each header states why.
+    </p>`;
+  }
+
+  /* ── column headers ──────────────────────────────────────────────────────
+     The printed names are long ("Ε-45 — VISUAL DELIVERY MED/HI APEX, day"), so
+     the header shows the HEAD of the name, set vertically, with the full name
+     (and everything else the row knows) in the tooltip. When two items of the
+     same table share a head — the four ΠΡ rows all start «Advanced exercises
+     (ΠΡ)» — the tail is appended, because two identical column titles would be
+     a lie about which one the user is typing into.                          */
+  const clip = (s, n) => (s.length > n ? s.slice(0, n - 1) + "…" : s);
+  const headOf = (it) => String(it.name || it.id).split(" — ")[0].trim();
+  const tailOf = (it) => String(it.name || it.id).split(" — ").slice(1).join(" — ").trim();
+  function colLabels(its) {
+    const bag = new Map();
+    for (const it of its) {
+      const h = headOf(it);
+      if (!bag.has(h)) bag.set(h, []);
+      bag.get(h).push(it);
+    }
+    const out = new Map();
+    for (const [h, list] of bag) {
+      if (list.length === 1) { out.set(list[0].id, clip(h, 30)); continue; }
+      /* The head repeats. Appending the whole tail is not enough: «Σ-2 —
+         Instrument flight (PDO), day» and «…, night» differ in their LAST word,
+         which is exactly the word a clip throws away. So the common opening of
+         the tails — which by definition tells nothing apart — is dropped, and
+         what is left is what the reader needs: «Σ-2 · day» / «Σ-2 · night». */
+      const tails = list.map(tailOf);
+      const first = tails[0];
+      let n = 0;
+      while (n < first.length && tails.every((t) => t[n] === first[n])) n += 1;
+      const keep = Math.max(0, first.slice(0, n).lastIndexOf(" ") + 1);   // never cut a word in half
+      list.forEach((it, k) => out.set(it.id,
+        clip(clip(h, 12) + " · " + (tails[k].slice(keep) || tails[k]), 34)));
+    }
+    return out;
+  }
+
+  function colTip(it, t) {
+    const src = it.source || {};
+    const q = t.sem ? (CUR().SEM_QUOTA[it.id] || {}) : null;
+    const lines = [String(it.name || it.id)];
+    if (q && q.window) {
+      lines.push("THRESHOLD, NOT A QUOTA — " + (q.why || ""));
+    } else if (q) {
+      lines.push(q.printed ? "PRINTED: " + q.printed : "");
+      lines.push(q.posted == null ? (q.why || "nothing is printed for this column")
+        : "ΤΟΠΟΘΕΤΗΜΕΝΟΣ (posted): " + q.posted + " · ΠΡΟΣΚΟΛΛΗΜΕΝΟΣ (attached): "
+          + (q.attached == null ? "none — a dash is printed" : q.attached));
+      if (q.note) lines.push(q.note);
+    }
+    if (!q || q.window) {
+      const e = CUR().resolve(it, true), a = CUR().resolve(it, false);
+      lines.push("Validity — " + (e.text === a.text ? e.text : "ΕΜΠ " + e.text + " · ΑΠ " + a.text));
+      if (e.tip || a.tip) lines.push(e.tip || a.tip);
+      if (e.warn) lines.push("⚠ " + e.warn);
+      if (CUR().isObligation(it.id)) {
+        lines.push("RECORDED OBLIGATION — " + CUR().oblWhy(it.id)
+          + "; it keeps its colour but stays out of the availability dot, the chips and “owes”.");
+      }
+      lines.push("If it lapses — " + String(it.lapse_consequence || "—"));
+    }
+    lines.push("Source: " + ((q && q.src) || (src.ref || "3-01") + (src.page_pdf ? " · PDF p." + src.page_pdf : "")));
+    return lines.filter(Boolean).join("\n\n");
+  }
+
+  function gridHtml(t, its, all) {
+    if (!all.length) return "";
+    const labs = colLabels(its);
+    const warn = (it) => (CUR().resolve(it, true).warn ? " ⚠" : "");
+    const obl = (it) => (!t.sem && CUR().isObligation(it.id) ? " °" : "");
+    const head = `<tr><th class="cur-who cur-corner" scope="col">Instructor
+        <span class="sch-nd">${all.length}</span></th>`
+      + its.map((it) => `<th class="cur-col" scope="col" title="${esc(colTip(it, t))}"
+          ><span class="cur-collbl">${esc(labs.get(it.id))}${esc(warn(it))}${esc(obl(it))}</span></th>`).join("")
+      + `</tr>`;
+    return `<div class="sch-scroll cur-mxscroll">
+      <table class="sch-tbl cur-mxtbl">
+        <thead>${head}</thead>
+        <tbody>${all.map((i) => rowHtml(t, its, i)).join("")}</tbody>
+      </table></div>`;
+  }
+
+  /* ══ ONE ROW = ONE INSTRUCTOR ═══════════════════════════════════════════ */
+  function rowHtml(t, its, i) {
+    if (!i.oid) {
+      return `<tr class="cur-row"><th class="cur-who" scope="row"><span class="cur-whobox">${whoHtml(i, null, null)}</span></th>
+        <td class="cur-cell is-off" colspan="${its.length}">no OID yet — open the roster form in the Scheduler and save the row once</td></tr>`;
+    }
+    const s = sumOf(i), sm = semOf(i), exp = !!i.experienced;
+    return `<tr class="cur-row">
+      <th class="cur-who" scope="row"><span class="cur-whobox">${whoHtml(i, s, sm)}</span></th>
+      ${its.map((it) => cellHtml(t, it, i, exp)).join("")}
+    </tr>`;
+  }
+
+  /* the row head — the person, then everything the old left-hand list carried:
+     the availability dot, the ΕΜΠ/ΑΠ tag, "owes N", "sem x/M" and the 🖨 that
+     prints his binder sheet (printCurrency is Round 11's, untouched).        */
+  function whoHtml(i, s, sm) {
+    const nm = who(i);
+    const idTip = "code " + (i.code || "—") + (i.rank ? " · " + i.rank : "")
+      + (i.callsign ? " · " + i.callsign : "") + (i.country ? " · " + i.country : "")
+      + (i.test_pilot ? " · TEST PILOT (the SIM-ΔΑ quota applies to him)" : "")
+      + "\n\nThe code is the stored key — it stays in the roster form, in the pickers and in search.";
+    const lvl = i.experienced
+      ? { t: "ΕΜΠ", why: "EXPERIENCED (Annex B §17) — every row of this line reads the ΕΜΠ validity column" }
+      : { t: "ΑΠ", why: "INEXPERIENCED (Annex B §17) — every row of this line reads the ΑΠ validity column" };
+    const chips = !s ? "" : (s.owes
+      ? `<span class="sch-badge cur-expired" title="${esc(availTip(s))}">owes ${s.owes}</span>`
+      : s.expiring ? `<span class="sch-badge cur-expiring" title="${esc(availTip(s))}">exp ${s.expiring}</span>` : "")
+      + (sm ? `<span class="sch-badge cur-sem st-${esc(sm.state)}" title="${esc(semTip(sm))}">sem ${sm.done}/${sm.total}</span>` : "");
+    return `${s ? `<span class="sch-cdot st-${esc(s.state)}" title="${esc(availTip(s))}"></span>`
+      : `<span class="sch-cdot st-neutral" title="no OID — nothing is computed for this row"></span>`}
+      <span class="cur-who-n" title="${esc(idTip)}">${esc(nm)}</span>
+      <span class="sch-curobl cur-lvl" title="${esc(lvl.why + ". Edit the flag in the Scheduler roster form — it is a property of the instructor, not of this view.")}">${esc(lvl.t)}</span>
+      ${chips}
+      <span class="sch-spacer"></span>
+      <button type="button" class="sch-mini cur-pr" data-act="cur-print" data-code="${esc(i.code)}"
+        title="print the binder sheet of ${esc(nm)} — one instructor per sheet, both tables, plain monochrome">🖨</button>`;
   }
 
   const availTip = (s) => (s.owes
@@ -784,6 +1094,7 @@
     : s.expiring
       ? "availability — available, " + s.expiring + " item" + (s.expiring === 1 ? "" : "s") + " expiring"
       : "availability — available: " + s.counted + " counted items all in date")
+    + " (the whole catalog, not just this table)"
     + (s.obl.overdue ? " · plus " + s.obl.overdue + " recorded obligation"
       + (s.obl.overdue === 1 ? "" : "s") + " overdue (no availability loss — not counted here)" : "");
 
@@ -792,249 +1103,160 @@
     + (sem.short ? " · " + sem.short + " sortie" + (sem.short === 1 ? "" : "s") + " still owed" : "")
     + ". A quota is not a window: it never touches the availability dot or “owes”.";
 
-  /* ══ RIGHT — the selected instructor ════════════════════════════════════ */
-  function mainHtml(i) {
-    if (!CUR().loaded()) {
-      return `<div class="sch-ph"><strong>The expiring-items catalog could not be read.</strong>
-        <p>Expected <code>${esc(CUR().CAT_URL)}</code>.${CUR().error() ? " " + esc(CUR().error()) : ""}</p></div>`;
-    }
-    if (!i) return `<div class="sch-ph"><strong>Pick an instructor on the left.</strong>
-      <p>Everything the 3-01/2025 ΔΑΕ makes an instructor hold is here: the semester quotas of
-      Πίνακας 6 / Πίνακας 9, and the ${CUR().datedItems().length} dated items that either expire or do not.</p></div>`;
-    if (!i.oid) return `<div class="sch-ph"><strong>${esc(i.code)} has no OID yet.</strong>
-      <p>The currency record is addressed by OID. Open the roster form in the Scheduler and save the row once.</p></div>`;
-
-    const exp = !!i.experienced;
-    const s = CUR().summary(i.oid, exp);
-    const sem = CUR().semSummary(i.oid, i);
-    const pill = s.owes ? { c: "expired", t: "NOT current: " + s.owes + " item" + (s.owes === 1 ? "" : "s") }
-      : s.expiring ? { c: "expiring", t: "Expiring: " + s.expiring }
-        : { c: "ok", t: "Available" };
-    const name = (i.last_name || "—") + (i.first_name ? ", " + i.first_name : "");
-    return `<div class="cur-head">
-        <span class="sch-code">${esc(i.code)}</span>
-        ${i.rank ? `<span class="sch-rmeta">${esc(i.rank)}</span>` : ""}
-        <span class="cur-hname">${esc(name)}</span>
-        ${i.callsign ? `<span class="sch-badge alt" title="personal callsign">${esc(i.callsign)}</span>` : ""}
-        ${i.country ? `<span class="sch-badge" title="air force">${esc(i.country)}</span>` : ""}
-        ${i.test_pilot ? `<span class="sch-badge" title="test pilot — the SIM-ΔΑ semester quota applies to him">TP</span>` : ""}
-        <span class="sch-curpill st-${pill.c}" title="${esc(availTip(s))}">${esc(pill.t)}</span>
-        <span class="sch-badge cur-sem st-${esc(sem.state)}" title="${esc(semTip(sem))}">semester: ${sem.done} of ${sem.total} done</span>
-        <span class="sch-spacer"></span>
-        <label class="sch-curexp" title="Annex B §17 — an EXPERIENCED (ΕΜΠ) flyer reads the ΕΜΠ validity column, an inexperienced (ΑΠ) one the ΑΠ column. Saved on the instructor; switching it recomputes both tables. The semester quotas do not move: their axis is POSTED vs ATTACHED, not experience.">
-          <input type="checkbox" data-curexp="1"${exp ? " checked" : ""}>
-          <span>Experienced (ΕΜΠ)</span></label>
-        <button type="button" class="sch-btn" data-act="cur-print"
-                title="one instructor per sheet, both tables, plain monochrome for the squadron binder">🖨 Print</button>
-      </div>
-      ${semBlock(i, sem)}
-      ${datedBlock(i, s, exp)}`;
-  }
-
-  /* ══ TABLE ① — ΑΝΑ ΕΞΑΜΗΝΟ ══════════════════════════════════════════════ */
-  function semBlock(i, sem) {
-    const w = sem.sem;
-    return `<section class="panel sch-panel cur-sec">
-      <div class="sch-h"><h2>① ΑΝΑ ΕΞΑΜΗΝΟ — semester quotas
-        <span class="count">${CUR().semItems().length} items</span></h2>
-        <span class="sch-nd" title="project ruling: the semester is a calendar half — H1 = 01/01-30/06, H2 = 01/07-31/12. The stored key is «${esc(w.key)}», so 01/01 rolls over instead of overwriting.">${esc(w.label)} — ends ${esc(dmy(w.end))} (${w.left} days left)</span>
-        <span class="sch-badge cur-sem st-${esc(sem.state)}">${sem.done}/${sem.total} met${sem.short ? " · " + sem.short + " owed" : ""}</span>
-      </div>
-      <p class="sch-hint sch-curlegend">
-        <span class="sch-cdot st-ok"></span> met (x ≥ N) ·
-        <span class="sch-cdot st-expiring"></span> short with more than ${CUR().SEM_RED_DAYS} days of the semester left ·
-        <span class="sch-cdot st-expired"></span> short with ${CUR().SEM_RED_DAYS} days or less left ·
-        <span class="sch-cdot st-neutral"></span> no printed quota.
-        <b>N</b> is the <b>ΤΟΠΟΘΕΤΗΜΕΝΟΣ (POSTED)</b> column of the printed table — the split in Πίνακας 6/9 is
-        posted vs attached, <b>not</b> experienced vs inexperienced, so the ΕΜΠ toggle does not move it
-        (an <i>attached</i> flag on the instructor is a future axis). A shortfall here is <b>not</b> an availability
-        loss — §40 absorbs a justified one, §46 records the rest — so these rows never enter the dot, the pill or “owes”.
-      </p>
-      <div class="sch-scroll cur-semscroll">
-        <table class="sch-tbl sch-curtbl sch-semtbl">
-          <thead><tr><th>Item</th><th>Required this semester</th><th>Recorded</th><th>Progress</th><th>Status</th></tr></thead>
-          <tbody>${CUR().semGroups().map((g) => semGroupHtml(g, i)).join("")}</tbody>
-        </table>
-      </div>
-    </section>`;
-  }
-
-  function semGroupHtml(g, i) {
-    return `<tr class="sch-curgrp"><td colspan="5">${esc(g.label)}
-      <span class="sch-nd">${g.items.length}</span>
-      ${g.note ? `<span class="sch-curgnote">${esc(g.note)}</span>` : ""}</td></tr>`
-      + g.items.map((it) => semRowHtml(it, i)).join("");
-  }
-
-  /* ONE quota row — or, for the single §49 threshold, one dated row that keeps
-     its window and its place in the availability count (see the file header). */
-  function semRowHtml(it, i) {
-    const q = CUR().quotaOf(it, i);
-    if (q.window) return semWindowRowHtml(it, i, q);
-    const st = CUR().semStatusOf(i.oid, it, i);
-    const src = it.source || {};
-    const tip = String(it.lapse_consequence || "—") + "\n\nIf it lapses — see " + (src.ref || "3-01")
-      + (src.page_pdf ? " · PDF p." + src.page_pdf : "");
-    const need = q.n == null
-      ? `<span title="${esc(q.why || "no number is printed for this row")}">—</span>`
-      : `<b>${q.n}</b> <span class="cur-unit">sortie${q.n === 1 ? "" : "s"}</span>`;
-    const needTip = (q.printed ? "PRINTED: " + q.printed + "\n\n" : "")
-      + (q.n == null ? q.why : "Required of a ΤΟΠΟΘΕΤΗΜΕΝΟΣ (posted) instructor: " + q.n
-        + " · ΠΡΟΣΚΟΛΛΗΜΕΝΟΣ (attached): " + (q.attached == null ? "none — a dash is printed" : q.attached))
-      + (q.note ? "\n\n" + q.note : "") + "\n\nSource: " + (q.src || "3-01");
-    const pct = q.n ? Math.min(100, Math.round((st.x / q.n) * 100)) : 0;
-    return `<tr class="cur-${esc(st.state)}" data-semrow="${esc(it.id)}">
-      <td class="sch-curname">
-        <span class="sch-curinfo" title="${esc(tip)}">ⓘ</span>
-        <span>${esc(it.name)}</span>
-        ${q.total ? `<span class="sch-curobl" title="${esc(q.note)}">total</span>` : ""}
-        ${q.tp ? `<span class="sch-curobl" title="${esc(q.why)}">TP only</span>` : ""}
-      </td>
-      <td class="sch-mono${q.n == null ? " sch-no" : ""}" title="${esc(needTip)}">${need}</td>
-      <td><input type="number" class="sch-in sch-curcnt" data-curcount="${esc(it.id)}"
-                 min="0" max="${CUR().MAX_COUNT}" step="1" value="${st.x}" inputmode="numeric"
-                 title="sorties recorded in ${esc(st.sem.label)} — typed here by hand, nothing is counted from the training log yet"></td>
-      <td class="sch-mono cur-prog">${st.x}<span class="cur-slash">/</span>${q.n == null ? "—" : q.n}
-        ${q.n == null ? "" : `<span class="cur-bar"><i style="width:${pct}%"></i></span>`}</td>
-      <td><span class="sch-cdot st-${esc(st.state)}" title="${esc(semStateTitle(st))}"></span></td>
-    </tr>`;
-  }
-
-  const semStateTitle = (st) => (st.n == null ? "no printed quota — nothing to meet"
-    : st.done ? "met — " + st.x + " of " + st.n + " recorded this semester"
-      : st.short + " sortie" + (st.short === 1 ? "" : "s") + " still owed · "
-        + st.sem.left + " days of " + st.sem.label + " left");
-
-  /* the §49 threshold, rendered inside table ① because its KIND is "sim" —
-     but it is a window, so it keeps its date input, its window colour and its
-     place in the availability tally. The row says exactly that. */
-  function semWindowRowHtml(it, i, q) {
-    const st = CUR().statusOf(i.oid, it, !!i.experienced);
-    const src = it.source || {};
-    const tip = String(it.lapse_consequence || "—") + "\n\nIf it lapses — see " + (src.ref || "3-01")
-      + (src.page_pdf ? " · PDF p." + src.page_pdf : "");
-    const left = st.v.days == null ? "—" : st.state === "never" ? "no date" : (st.left > 0 ? "+" : "") + st.left + " d";
-    return `<tr class="cur-${esc(st.state)}" data-semrow="${esc(it.id)}" data-currow="${esc(it.id)}">
-      <td class="sch-curname">
-        <span class="sch-curinfo" title="${esc(tip)}">ⓘ</span>
-        <span>${esc(it.name)}</span>
-        <span class="sch-curobl" title="${esc(q.why)}">threshold, not a quota</span>
-        ${st.v.warn ? `<span class="sch-curwarn" title="${esc(st.v.warn)}">⚠</span>` : ""}
-      </td>
-      <td class="sch-mono" title="${esc(q.why + "\n\nSource: " + (q.src || "3-01"))}">${esc(st.v.text)}</td>
-      <td><input type="date" class="sch-in sch-curdate" data-curdate="${esc(it.id)}" value="${esc(st.last)}"
-                 title="the last air flight — the clock resets on each one; empty means never recorded"></td>
-      <td class="sch-mono cur-left">${esc(left)}${st.expires ? ` <span class="cur-slash">exp ${esc(dmy(st.expires))}</span>` : ""}</td>
-      <td><span class="sch-cdot st-${esc(st.state)}" title="${esc(CUR_STATE_TXT[st.state])} · counted for availability"></span></td>
-    </tr>`;
-  }
-
-  /* ══ TABLE ② — ΛΗΓΟΥΝ / ΔΕΝ ΛΗΓΟΥΝ (Round 10c/10d, unchanged) ═══════════ */
+  /* ══ ONE CELL ═══════════════════════════════════════════════════════════
+     Two kinds, one behaviour: a compact reading that becomes the REAL native
+     input on click. A cell with nothing to record is NOT editable and says so
+     (Round 11 verify item 19: the sim-4 / Σ-20 columns print a dash in the
+     3-01 — offering a counter there would invent a requirement).            */
+  const isEditing = (code, id) => !!(ui.edit && ui.edit.code === code && ui.edit.id === id);
   const CUR_STATE_TXT = {
     ok: "current", expiring: "expiring", expired: "EXPIRED",
     never: "never recorded", neutral: "no counter",
   };
-  /* an obligation has no availability state to lose, so it never says EXPIRED:
-     on paper it is "recorded", "due soon", "overdue" or "—" (10d). */
+
+  function cellHtml(t, it, i, exp) {
+    if (t.sem) {
+      const q = CUR().quotaOf(it, i);
+      if (!q.window) return quotaCell(it, i, q);
+    }
+    return dateCell(it, i, exp);
+  }
+
+  function quotaCell(it, i, q) {
+    const st = CUR().semStatusOf(i.oid, it, i);
+    const nm = who(i);
+    if (q.n == null) {
+      return `<td class="cur-cell st-neutral is-off"
+        title="${esc(nm + " · " + it.name + "\n\nNothing is required: " + (q.why || "no number is printed for this row")
+          + "\n\nSo there is nothing to type here.")}">—</td>`;
+    }
+    const tip = nm + " · " + it.name + "\n\n" + st.x + " of " + q.n + " sortie"
+      + (q.n === 1 ? "" : "s") + " recorded in " + st.sem.label
+      + (st.done ? " — met" : " — " + st.short + " still owed, " + st.sem.left + " days of the semester left")
+      + "\n\nClick to type the count. A shortfall is not an availability loss.";
+    return `<td class="cur-cell st-${esc(st.state)}${isEditing(i.code, it.id) ? " is-edit" : ""}"
+      data-cell="${esc(it.id)}" data-code="${esc(i.code)}" data-k="q"
+      ${isEditing(i.code, it.id) ? "" : `tabindex="0" role="button"`} title="${esc(tip)}">
+      ${isEditing(i.code, it.id)
+        ? `<input id="cur-editing" type="number" class="sch-in cur-cin" data-curcount="${esc(it.id)}"
+             data-code="${esc(i.code)}" min="0" max="${CUR().MAX_COUNT}" step="1" value="${st.x}" inputmode="numeric"
+             title="sorties recorded in ${esc(st.sem.label)} — typed by hand, nothing is counted from the training log yet">`
+        : `<span class="cur-cv">${st.x}<span class="cur-slash">/</span>${q.n}</span>`}</td>`;
+  }
+
+  function dateCell(it, i, exp) {
+    const st = CUR().statusOf(i.oid, it, exp);
+    const nm = who(i);
+    /* the reading, in four words: signed days for a live window, «none» when a
+       counted row was never recorded, the DD/MM of a row that has no counter,
+       and «—» when there is neither a window nor a date. */
+    const txt = st.v.days == null ? (st.last ? dmy(st.last).slice(0, 5) : "—")
+      : st.state === "never" ? "none" : (st.left > 0 ? "+" : "") + st.left;
+    const tip = nm + " · " + it.name + "\n\n"
+      + (st.obligation ? "RECORDED OBLIGATION — " + CUR().oblWhy(it.id) + "\n" : "")
+      + "validity " + st.v.text
+      + " · last done " + (st.last ? dmy(st.last) : "never recorded")
+      + (st.expires ? " · expires " + dmy(st.expires) + " (" + (st.left > 0 ? "+" : "") + st.left + " days)" : "")
+      + "\n" + CUR_STATE_TXT[st.state] + (st.obligation ? " — outside the availability count" : "")
+      + (st.v.warn ? "\n\n⚠ " + st.v.warn : "")
+      + "\n\nClick to type the date.";
+    return `<td class="cur-cell st-${esc(st.state)}${isEditing(i.code, it.id) ? " is-edit" : ""}"
+      data-cell="${esc(it.id)}" data-code="${esc(i.code)}" data-k="d"
+      ${isEditing(i.code, it.id) ? "" : `tabindex="0" role="button"`} title="${esc(tip)}">
+      ${isEditing(i.code, it.id)
+        ? `<input id="cur-editing" type="date" class="sch-in cur-cin cur-cdate" data-curdate="${esc(it.id)}"
+             data-code="${esc(i.code)}" value="${esc(st.last)}"
+             title="last done — clearing the box means never recorded">`
+        : `<span class="cur-cv">${esc(txt)}</span>`}</td>`;
+  }
+
+  /* ══ wiring — attached ONCE to the view element ═════════════════════════
+     render() only swaps the innerHTML of #cur-main, so these delegated
+     listeners survive every repaint.                                        */
+  function wire(el) {
+    if (el._wired) return;
+    el._wired = true;
+
+    /* both seams write STRAIGHT THROUGH: there is no Save button on this tab.
+       The store event repaints and the caret goes back on the same input. */
+    el.addEventListener("change", (e) => {
+      const t = e.target;
+      const cd = t.closest ? t.closest("[data-curdate]") : null;
+      if (cd) {
+        const ip = S().find("instructors", cd.dataset.code);
+        if (!ip || !ip.oid) return;
+        CUR().bump(ip.oid, cd.dataset.curdate, cd.value, "manual");
+        /* a refused date (the seam's own guard) leaves the store untouched and
+           the box showing something that was never accepted — repaint anyway */
+        if (CUR().dateOf(ip.oid, cd.dataset.curdate) !== CUR().normISO(cd.value)) render();
+        return;
+      }
+      const cc = t.closest ? t.closest("[data-curcount]") : null;
+      if (cc) {
+        const ip = S().find("instructors", cc.dataset.code);
+        if (!ip || !ip.oid) return;
+        const id = cc.dataset.curcount;
+        /* an empty box means "none recorded", which is 0 — the seam refuses
+           anything else and leaves the stored figure untouched. The STORED
+           FIGURE, not the return value, decides whether a repaint is still
+           owed: a refusal ("150", "two") and a no-op ("02" for a stored 2) both
+           leave the box showing something the store never accepted. */
+        const raw = String(cc.value).trim();
+        const before = CUR().countOf(ip.oid, id);
+        CUR().bumpCount(ip.oid, id, raw === "" ? 0 : raw, null, "manual");
+        if (CUR().countOf(ip.oid, id) === before) render();     // put the stored truth back
+      }
+    });
+
+    /* the grid is keyboard-reachable: a cell is role="button" + tabindex, and
+       Enter / Space opens its editor. Escape closes it and gives the cell its
+       reading back. Once the input is there the keys belong to IT — a Space
+       swallowed inside a native date box would be this handler's fault. */
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && ui.edit) { ui.edit = null; render(); return; }
+      if (e.target && e.target.tagName === "INPUT") return;
+      const cell = e.target.closest ? e.target.closest("[data-cell]") : null;
+      if (!cell || (e.key !== "Enter" && e.key !== " ")) return;
+      e.preventDefault();
+      openCell(cell);
+    });
+
+    el.addEventListener("click", (e) => {
+      const sec = e.target.closest("[data-cursec]");
+      if (sec) {
+        setCol(sec.dataset.cursec, sec.getAttribute("aria-expanded") === "true");
+        render();
+        return;
+      }
+      const b = e.target.closest("[data-act]");
+      if (b && b.dataset.act === "cur-print") { printCurrency(b.dataset.code); return; }
+      const cell = e.target.closest("[data-cell]");
+      if (cell) { openCell(cell); return; }
+      /* a click anywhere else inside the tab closes the open editor — the cell
+         goes back to showing its computed reading */
+      if (ui.edit && !e.target.closest("#cur-editing")) { ui.edit = null; render(); }
+    });
+  }
+
+  function openCell(cell) {
+    const code = cell.dataset.code, id = cell.dataset.cell;
+    if (!code || !id) return;                       // an is-off cell carries neither
+    if (isEditing(code, id)) return;
+    ui.edit = { code: code, id: id, kind: cell.dataset.k === "q" ? "q" : "d" };
+    render();
+  }
+
+  /* ══ the squadron binder sheet — ONE instructor, BOTH tables ════════════
+     Round 11's sheet, kept exactly as it was (the user asked for the per-row 🖨
+     to print «the EXISTING per-instructor binder sheet»); only the identity
+     line now reads the display name. Plain monochrome, the semester table
+     first, on the board's #sch-print host and its print stylesheet.         */
   const CUR_OBL_PRINT = {
     ok: "recorded", expiring: "due soon", expired: "overdue",
     never: "—", neutral: "—",
   };
-  /* 10d — the WHY differs per id (no printed loss / trainee scope / deadline /
-     ΠΡ module); the engine's curated map carries the per-id sentence. */
-  const oblWhy = (id) => "recorded obligation — " + (CUR().oblWhy(id) || "outside the availability count")
-    + ", so it is tracked here but stays out of the dot, the pill and “owes”";
-  const OBL_LINE = "recorded obligations are tracked but stay out of the dot, the pill and “owes” — hover each chip for its reason";
-  const oblTitle = (st) => (st.state === "expired" ? "overdue"
-    : st.state === "never" ? "not recorded"
-      : st.state === "expiring" ? "recorded — due soon"
-        : st.state === "ok" ? "recorded" : "no counter") + " · " + oblWhy(st.item.id);
-  const stateTitle = (st) => (st.obligation ? oblTitle(st) : CUR_STATE_TXT[st.state]);
-
-  /* table ② groups = every catalog group whose kinds are not semester kinds */
   const datedGroups = () => CUR().groups()
     .filter((g) => !g.kinds.some((k) => CUR().SEM_KINDS.indexOf(k) >= 0));
-
-  function datedBlock(i, s, exp) {
-    const chip = (st) => `<button type="button" class="sch-pgoto${st.obligation ? " is-obl" : ""}" data-act="cur-goto" data-id="${esc(st.item.id)}"
-      title="${esc(st.item.name)} — ${esc(stateTitle(st))}. Click to jump to the row.">${esc(shortName(st.item))}
-      <span class="sch-pgoto-s">${esc(st.state === "never" ? "no date" : st.left + "d")}</span></button>`;
-    const owed = s.red.concat(s.amber);
-    const n = CUR().datedItems().length;
-    return `<section class="panel sch-panel cur-sec">
-      <div class="sch-h"><h2>② ΛΗΓΟΥΝ / ΔΕΝ ΛΗΓΟΥΝ — dated items <span class="count">${n} items</span></h2>
-        <span class="sch-nd" title="items whose window is counted for availability / recorded obligations (no printed availability loss · trainee-scoped · a deadline, tenure or ΠΡ-module clock — hover each row for its reason) / items the 3-01 gives no counter for">${s.counted} counted · ${s.obl.counted} obligations · ${s.neutral} no counter</span>
-      </div>
-      ${s.obl.overdue ? `<div class="sch-curoblline">
-        <span class="sch-nd" title="${esc(OBL_LINE)}">obligations overdue: ${s.obl.overdue}</span>
-        ${s.obl.overdueRows.map(chip).join("")}</div>` : ""}
-      <p class="sch-hint sch-curlegend">
-        <span class="sch-cdot st-ok"></span> in date ·
-        <span class="sch-cdot st-expiring"></span> amber when a quarter of the window — at most ${CUR().AMBER_MAX_DAYS} days — remains ·
-        <span class="sch-cdot st-expired"></span> expired or never recorded ·
-        <span class="sch-cdot st-neutral"></span> no counter (no limit · set outside the 3-01 · n/a).
-        <b>≈</b> project conversion of a printed period (${esc(CUR().CONV_LEGEND)}) · <b>⚠</b> a printed contradiction — hover it.
-        Rows tagged <b>obligation</b> keep their own colour but are left out of the dot, the pill and
-        “owes” — each tag states why (no printed availability loss · trainee-scoped · a deadline, tenure or ΠΡ-module clock).
-      </p>
-      ${owed.length ? `<div class="sch-curowed">${owed.map(chip).join("")}</div>` : ""}
-      <div class="sch-scroll sch-curscroll">
-        <table class="sch-tbl sch-curtbl">
-          <thead><tr><th>Item</th><th>Validity</th><th>Last done</th><th>Expires</th><th>Days left</th><th>Status</th></tr></thead>
-          <tbody>${datedGroups().map((g) => curGroupHtml(g, i.oid, exp)).join("")}</tbody>
-        </table>
-      </div>
-      <p class="sch-hint">Dates and counters are the source of truth and are typed here by hand — nothing is filled in
-        from the training log yet. Source: <code>${esc(CUR().CAT_URL)}</code> · 3-01/2025 ΔΑΕ.</p>
-    </section>`;
-  }
-
-  /* the printed name is long ("Ε-45 — Visual delivery, medium/high apex, day");
-     the chips and the print sheet want the head of it */
-  function shortName(it) {
-    const n = String(it.name || it.id);
-    const cut = n.split(" — ")[0];
-    return cut.length > 26 ? cut.slice(0, 25) + "…" : cut;
-  }
-
-  function curGroupHtml(g, oid, exp) {
-    const rows = g.items.map((it) => curRowHtml(it, oid, exp)).join("");
-    return `<tr class="sch-curgrp"><td colspan="6">${esc(g.label)}
-      <span class="sch-nd">${g.items.length}</span>
-      ${g.note ? `<span class="sch-curgnote">${esc(g.note)}</span>` : ""}</td></tr>` + rows;
-  }
-
-  function curRowHtml(it, oid, exp) {
-    const st = CUR().statusOf(oid, it, exp);
-    const src = it.source || {};
-    const tip = (st.obligation ? "RECORDED OBLIGATION — " + (CUR().oblWhy(it.id) || "outside the availability count")
-      + "; excluded from the availability dot, from “owes N” and from the header pill.\n\n" : "")
-      + String(it.lapse_consequence || "—") + "\n\nIf it lapses — see " + (src.ref || "3-01")
-      + (src.page_pdf ? " · PDF p." + src.page_pdf : "");
-    const left = st.v.days == null ? "—"
-      : st.state === "never" ? "no date"
-        : (st.left > 0 ? "+" : "") + st.left + " d";
-    return `<tr class="cur-${esc(st.state)}" data-currow="${esc(it.id)}">
-      <td class="sch-curname">
-        <span class="sch-curinfo" title="${esc(tip)}">ⓘ</span>
-        <span>${esc(it.name)}</span>
-        ${st.obligation ? `<span class="sch-curobl" title="${esc(oblWhy(it.id))}">obligation</span>` : ""}
-        ${st.v.warn ? `<span class="sch-curwarn" title="${esc(st.v.warn)}">⚠</span>` : ""}
-      </td>
-      <td class="sch-mono${st.v.days == null ? " sch-no" : ""}"${st.v.tip ? ` title="${esc(st.v.tip)}"` : ""}>${esc(st.v.text)}</td>
-      <td><input type="date" class="sch-in sch-curdate" data-curdate="${esc(it.id)}" value="${esc(st.last)}"
-                 title="last done — empty means never recorded"></td>
-      <td class="sch-mono">${st.expires ? esc(dmy(st.expires)) : "—"}</td>
-      <td class="sch-mono cur-left">${esc(left)}</td>
-      <td><span class="sch-cdot st-${esc(st.state)}" title="${esc(stateTitle(st))}"></span></td>
-    </tr>`;
-  }
-
-  /* ══ the squadron binder sheet — ONE instructor, BOTH tables ════════════
-     Plain monochrome, the semester table first. Reuses the board's #sch-print
-     host and its print stylesheet, so the palette is forced to black on white
-     and the 10c pagination rules (repeating header, no split row, no dangling
-     group title) apply to both tables for free.                            */
   const SEM_PRINT = (st) => (st.n == null ? "—"
     : st.done ? "met"
       : "short " + st.short + (st.sem.left <= CUR().SEM_RED_DAYS ? " — semester ends " + dmy(st.sem.end) : ""));
@@ -1096,8 +1318,9 @@
       <div class="pv-page">
         <div class="pv-top">
           <h2>INSTRUCTOR CURRENCY</h2>
-          <p class="pv-p"><b>${esc(i.code)}</b> ${esc(i.rank || "")} ${esc((i.last_name || "") + (i.first_name ? ", " + i.first_name : ""))}
-            ${i.callsign ? " · " + esc(i.callsign) : ""}${i.country ? " · " + esc(i.country) : ""}${i.test_pilot ? " · TEST PILOT" : ""}</p>
+          <p class="pv-p"><b>${esc(who(i))}</b> ${esc(i.rank || "")}
+            ${i.callsign ? " · " + esc(i.callsign) : ""}${i.country ? " · " + esc(i.country) : ""}${i.test_pilot ? " · TEST PILOT" : ""}
+            · code ${esc(i.code)}</p>
           <p class="pv-p">Experience level <b>${exp ? "EXPERIENCED (ΕΜΠ)" : "INEXPERIENCED (ΑΠ)"}</b>
             · printed <b>${esc(dmy(CUR().todayISO()))}</b></p>
           <p class="pv-p">${s.owes ? "<b>NOT CURRENT — " + s.owes + " item" + (s.owes === 1 ? "" : "s") + " expired or never recorded.</b>"
@@ -1134,79 +1357,21 @@
     });
   }
 
-  /* ══ wiring — attached ONCE to the view element ═════════════════════════
-     render() only swaps the innerHTML of #cur-list / #cur-main, so these
-     delegated listeners survive every repaint. */
-  function wire(el) {
-    if (el._wired) return;
-    el._wired = true;
-
-    el.addEventListener("change", (e) => {
-      const t = e.target;
-      const ip = selected();
-      /* both seams write STRAIGHT THROUGH: there is no Save button on this
-         tab, the store event repaints and the caret is put back. */
-      const cd = t.closest ? t.closest("[data-curdate]") : null;
-      if (cd) {
-        if (!ip || !ip.oid) return;
-        ui.focus = { kind: "curdate", id: cd.dataset.curdate };
-        CUR().bump(ip.oid, cd.dataset.curdate, cd.value, "manual");
-        return;
-      }
-      const cc = t.closest ? t.closest("[data-curcount]") : null;
-      if (cc) {
-        if (!ip || !ip.oid) return;
-        const id = cc.dataset.curcount;
-        ui.focus = { kind: "curcount", id: id };
-        /* an empty box means "none recorded", which is 0 — the seam refuses
-           anything else and leaves the stored figure untouched.
-           The STORED FIGURE, not the return value, is what decides whether a
-           repaint is still owed: a write emits and the store event repaints,
-           while a refusal ("150", "two") and a no-op ("02" for a stored 2)
-           both leave the box showing something the store never accepted. */
-        const raw = String(cc.value).trim();
-        const before = CUR().countOf(ip.oid, id);
-        CUR().bumpCount(ip.oid, id, raw === "" ? 0 : raw, null, "manual");
-        if (CUR().countOf(ip.oid, id) === before) render();   // put the stored truth back
-        return;
-      }
-      if (t.matches && t.matches("[data-curexp]")) {
-        if (ip) S().upsert("instructors", { code: ip.code, experienced: !!t.checked });
-      }
-    });
-
-    el.addEventListener("click", (e) => {
-      const pick = e.target.closest("[data-cur-ip]");
-      if (pick) { ui.sel = pick.dataset.curIp; ui.focus = null; render(); return; }
-      const b = e.target.closest("[data-act]");
-      if (!b) return;
-      const act = b.dataset.act;
-      if (act === "cur-print") { printCurrency(ui.sel); return; }
-      if (act === "cur-goto") {
-        const row = el.querySelector(`[data-currow="${b.dataset.id}"]`);
-        if (!row) return;
-        row.scrollIntoView({ block: "center", behavior: "smooth" });
-        row.classList.remove("is-flash");
-        void row.offsetWidth;                            // restart the animation
-        row.classList.add("is-flash");
-      }
-    });
-  }
-
   /* ── the coverage identity, checked at boot ─────────────────────────────
-     table ① + table ② must be the whole catalog with no id rendered twice.
-     A silent gap here would mean an instructor holds something the app never
+     The FOUR tables must be the whole catalog with no id rendered twice. A
+     silent gap here would mean an instructor holds something the app never
      shows him, so it is asserted rather than assumed.                       */
   function curCoverage() {
-    const sem = CUR().semItems().map((it) => it.id);
-    const dated = [].concat.apply([], datedGroups().map((g) => g.items.map((it) => it.id)));
+    const per = TABLES.map((t) => ({ key: t.key, ids: itemsOf(t).map((it) => it.id) }));
+    const seen = new Set();
+    const dup = [];
+    for (const p of per) for (const id of p.ids) { if (seen.has(id)) dup.push(id); seen.add(id); }
     const all = CUR().items().map((it) => it.id);
-    const seen = new Set(sem.concat(dated));
-    const out = { sem: sem.length, dated: dated.length, total: all.length,
-      duplicated: sem.concat(dated).length - seen.size,
+    const out = { total: all.length, seen: seen.size, duplicated: dup,
       missing: all.filter((id) => !seen.has(id)) };
-    if (out.duplicated || out.missing.length || out.sem + out.dated !== out.total) {
-      console.warn("SchedCurrency: the two tables do not cover the catalog exactly", out);
+    per.forEach((p) => { out[p.key] = p.ids.length; });
+    if (dup.length || out.missing.length || out.seen !== out.total) {
+      console.warn("SchedCurrency: the four tables do not cover the catalog exactly", out);
     }
     return out;
   }

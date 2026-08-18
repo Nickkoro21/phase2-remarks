@@ -1010,6 +1010,14 @@ window.fmtDMY = function fmtDMY(v) {
   const S = () => window.SchedStore;
   const R = () => window.SchedReady;
 
+  /* Round 12a — DISPLAY NAMES. Every person on screen reads «SURNAME N.»
+     (SchedStore.personLabel, disambiguated with "(code)" when two people
+     collide). nm() renders a stored CODE; nmOpt() is the picker form, which
+     also names the code because a dropdown is where the CO still needs the
+     key. Codes stay in the edit forms, in the tooltips and in the search. */
+  const nm = (code) => S().personLabelOf(null, code);
+  const nmOpt = (coll, code) => S().personOptionOf(coll, code);
+
   const PANES = ["board", "roster", "log", "balance"];
   const STATUS_OPTS = ["active", "hold", "kepe", "withdrawn"];
   /* "kepe" stays the STORED value for compatibility — the UI says SMS */
@@ -1226,10 +1234,10 @@ window.fmtDMY = function fmtDMY(v) {
       const dep = (i.status || "active") === "departed";
       const isSel = selRec === i;
       if (dep && !isSel) continue;
-      const label = i.code + (i.rank ? " · " + i.rank : "") + (i.last_name ? " " + i.last_name : "") + (dep ? " — DEPARTED" : "");
+      const label = S().personOption(i) + (i.rank ? " · " + i.rank : "") + (dep ? " — DEPARTED" : "");
       parts.push(`<option value="${esc(i.oid || i.code)}"${isSel ? " selected" : ""}>${esc(label)}</option>`);
     }
-    if (selRef && !selRec) parts.push(`<option value="${esc(selRef)}" selected>${esc(String(selRef) + " — unknown")}</option>`);
+    if (selRef && !selRec) parts.push(`<option value="${esc(selRef)}" selected>${esc("unknown reference — not on the roster")}</option>`);
     return parts.join("");
   }
   /* Round 6 — the manual avoid list is TOGGLE CHIPS (the native multi-select
@@ -1243,7 +1251,7 @@ window.fmtDMY = function fmtDMY(v) {
       const on = cur.has(v);
       const dep = (i.status || "active") === "departed";
       if (dep && !on) return "";
-      const label = i.code + (i.last_name ? " " + i.last_name : "") + (dep ? " — DEPARTED" : "");
+      const label = S().personLabel(i) + (dep ? " — DEPARTED" : "");
       return `<button type="button" class="sch-tgl${on ? " is-on" : ""}" data-avchip="${esc(v)}"
         title="${esc((on ? "click to remove from" : "click to add to") + " the manual avoid list (fail-22)")}">${esc(label)}</button>`;
     }).join("");
@@ -1288,19 +1296,19 @@ window.fmtDMY = function fmtDMY(v) {
     if (s.primary_ip && !prim) chips += ` <span class="sch-chip is-hard" title="stored ref ${esc(String(s.primary_ip))} matches no instructor">primary IP missing — reassign</span>`;
     else if (prim) {
       famCodes.push(prim.code);
-      if (P().departed(prim)) chips += ` <span class="sch-chip is-hard" title="${esc(prim.code + " is marked DEPARTED")}">primary IP departed — reassign</span>`;
+      if (P().departed(prim)) chips += ` <span class="sch-chip is-hard" title="${esc(S().personOption(prim) + " is marked DEPARTED")}">primary IP departed — reassign</span>`;
     }
     (s.reserve_ips || []).filter(Boolean).forEach((x, k) => {
       const rec = P().ip(x);
       if (!rec) chips += ` <span class="sch-chip is-soft">reserve IP ${k + 1} missing</span>`;
       else {
         famCodes.push(rec.code);
-        if (P().departed(rec)) chips += ` <span class="sch-chip is-soft" title="${esc(rec.code + " is marked DEPARTED")}">reserve IP departed</span>`;
+        if (P().departed(rec)) chips += ` <span class="sch-chip is-soft" title="${esc(S().personOption(rec) + " is marked DEPARTED")}">reserve IP departed</span>`;
       }
     });
     let reassign = false;
     for (const a of P().avoidedAll(s.code)) {
-      chips += ` <span class="sch-chip is-hard" title="${esc("fail-22 (3-01 §24στ(6)) — " + a.reason)}">lost instructor: ${esc(a.code)}${a.manual ? " (manual)" : " (Progress Test)"}</span>`;
+      chips += ` <span class="sch-chip is-hard" title="${esc("fail-22 (3-01 §24στ(6)) — " + a.reason)}">lost instructor: ${esc(nm(a.code))}${a.manual ? " (manual)" : " (Progress Test)"}</span>`;
       if (famCodes.indexOf(a.code) >= 0) reassign = true;
     }
     if (reassign) chips += ` <span class="sch-chip is-hard" title="an avoided instructor is still this student's primary or reserve IP">reassign primary/reserve IP</span>`;
@@ -1324,9 +1332,8 @@ window.fmtDMY = function fmtDMY(v) {
       <div class="sch-rsum" data-act="exp-s" data-id="${esc(s.code)}" role="button" tabindex="0"
            title="click to ${exp ? "close" : "open"} the full form">
         <span class="sch-rarrow">${exp ? "▾" : "▸"}</span>
-        <span class="sch-code">${esc(s.code)}</span>
         ${s.rank ? `<span class="sch-rmeta">${esc(s.rank)}</span>` : ""}
-        <span class="sch-rname">${esc((s.last_name || "—") + (s.first_name ? ", " + s.first_name : ""))}</span>
+        <span class="sch-rname" title="${esc("code " + s.code + " — the stored key; it stays in this form and in every search")}">${esc(S().personLabel(s))}</span>
         ${s.class ? `<span class="sch-badge">${esc(s.class)}</span>` : ""}
         <span class="sch-badge st-${esc(s.status || "active")}"${STATUS_TITLE[s.status] ? ` title="${esc(STATUS_TITLE[s.status])}"` : ""}>${esc(statusLabel(s.status || "active"))}</span>
         ${studentChips(s)}
@@ -1385,9 +1392,8 @@ window.fmtDMY = function fmtDMY(v) {
       <div class="sch-rsum" data-act="exp-i" data-id="${esc(i.code)}" role="button" tabindex="0"
            title="click to ${exp ? "close" : "open"} the full form">
         <span class="sch-rarrow">${exp ? "▾" : "▸"}</span>
-        <span class="sch-code">${esc(i.code)}</span>
         ${i.rank ? `<span class="sch-rmeta">${esc(i.rank)}</span>` : ""}
-        <span class="sch-rname">${esc((i.last_name || "—") + (i.first_name ? ", " + i.first_name : ""))}</span>
+        <span class="sch-rname" title="${esc("code " + i.code + " — the stored key; it stays in this form and in every search")}">${esc(S().personLabel(i))}</span>
         ${i.callsign ? `<span class="sch-badge alt" title="personal callsign — auto-fills single-ship lines">${esc(i.callsign)}</span>` : ""}
         ${i.country ? `<span class="sch-badge" title="air force">${esc(i.country)}</span>` : ""}
         ${i.test_pilot ? qb("TP", "test pilot") : ""}
@@ -1423,6 +1429,7 @@ window.fmtDMY = function fmtDMY(v) {
         <label class="sch-fld"><span>Duty</span>${otherSelect("duty", DUTIES, i.duty || "", "type the duty")}</label>
         <label class="sch-fld"><span>Leadership</span>${otherSelect("leadership", LEADERSHIPS, i.leadership || "", "type the qualification")}</label>
         ${cb("test_pilot", i.test_pilot, "Test pilot", "test pilot — badged TP in the roster row and in the Balance load table")}
+        ${cb("experienced", i.experienced, "Experienced (ΕΜΠ)", "experienced flyer, Annex B §17 — his Currency row reads the ΕΜΠ validity column of the 3-01 instead of the ΑΠ one. Round 12a moved the switch here: the matrix has no single current instructor, and this is a property of the person, not of a view")}
         <label class="sch-fld"><span>Status</span><select class="sch-in" data-f="status">
           <option value="active"${(i.status || "active") === "active" ? " selected" : ""}>active</option>
           <option value="departed"${i.status === "departed" ? " selected" : ""}>departed</option></select></label>
@@ -1450,7 +1457,7 @@ window.fmtDMY = function fmtDMY(v) {
     return `<datalist id="sch-classlist">${cl.map((c) => `<option value="${esc(c.id)}"></option>`).join("")}</datalist>
       <div class="sch-cls">${cl.map((c) => `<div class="sch-clscard">
         <div class="sch-clsid">${esc(c.id)}<span class="sch-badge">${c.members.length}</span></div>
-        <div class="sch-clsm">${c.members.map((m) => `<span class="sch-chip">${esc(m)}</span>`).join("")}</div>
+        <div class="sch-clsm">${c.members.map((m) => `<span class="sch-chip" title="${esc(nmOpt("students", m))}">${esc(nm(m))}</span>`).join("")}</div>
       </div>`).join("")}</div>`;
   }
 
@@ -1459,8 +1466,8 @@ window.fmtDMY = function fmtDMY(v) {
     const map = S().availabilityFor(date);
     const cell = (code) => {
       const st = map.get(code) || "available";
-      return `<button type="button" class="sch-av av-${esc(st)}" data-av="${esc(code)}" title="${esc(code)} — ${esc(st)} · click to cycle">
-        <span class="sch-code">${esc(code)}</span><span class="sch-avst">${esc(st === "available" ? "OK" : st)}</span></button>`;
+      return `<button type="button" class="sch-av av-${esc(st)}" data-av="${esc(code)}" title="${esc(nmOpt(null, code))} — ${esc(st)} · click to cycle">
+        <span class="sch-code">${esc(nm(code))}</span><span class="sch-avst">${esc(st === "available" ? "OK" : st)}</span></button>`;
     };
     const away = [...map.entries()].filter(([, v]) => v && v !== "available").length;
     return `<p class="sch-hint">${esc(date ? window.fmtDMY(date) : "—")} · <b>${away}</b> away</p>
@@ -1593,6 +1600,7 @@ window.fmtDMY = function fmtDMY(v) {
       first_name: fval(box, "first_name"), last_name: fval(box, "last_name"),
       mn: fval(box, "mn"), rank: fval(box, "rank"), callsign: fval(box, "callsign"),
       country: fvalOther(box, "country"), test_pilot: !!fval(box, "test_pilot"),
+      experienced: !!fval(box, "experienced"),
       duty: fvalOther(box, "duty"), leadership: fvalOther(box, "leadership"),
       status: fval(box, "status") || "active",
       quals: { night: fval(box, "night"), evaluator: fval(box, "evaluator"), ground: fval(box, "ground"), rsu_solo: fval(box, "rsu_solo") },
@@ -1705,9 +1713,10 @@ window.fmtDMY = function fmtDMY(v) {
         if (norm(x.callsign) !== norm(x.code)) add(byCall, norm(x.code), x);
       }
     }
-    const nameOf = (x) => (x.oid
-      ? String(x.oid) + " (" + (x.code || "?") + ")"
-      : (x.code || "?") + " (added by hand — no OID)");
+    /* Round 12a — the warning names PEOPLE, not handles: the OID is what the
+       user is being asked to check, so it stays, but it now follows a name he
+       can recognise instead of standing alone. */
+    const nameOf = (x) => S().personOption(x) + (x.oid ? "" : " — added by hand, no OID");
     const lines = [];
     for (const p of plan) {
       if (!p.isNew) continue;                            // an update BY OID is the normal path
@@ -1720,7 +1729,7 @@ window.fmtDMY = function fmtDMY(v) {
       for (const x of byName.get(norm(p.rec.last_name)) || []) mark(x, "the surname");
       for (const x of byCall.get(norm(p.rec.callsign)) || []) mark(x, "call sign " + p.rec.callsign);
       for (const [x, what] of hits) {
-        lines.push("⚠ new " + p.oid + " shares " + what.join(" and ")
+        lines.push("⚠ new " + S().baseLabel(p.rec) + " (OID " + p.oid + ") shares " + what.join(" and ")
           + " with existing " + nameOf(x) + " — check for a mistyped OID");
       }
     }
@@ -1751,7 +1760,7 @@ window.fmtDMY = function fmtDMY(v) {
           : Object.assign({ code: mintCode(coll, r.call_sign, taken), oid: oid }, patch);
         if (coll === "instructors") Object.assign(rec, rosterQuals(r, prev));
         plan.push({ coll: coll, oid: oid, rec: rec, isNew: !prev,
-          name: (rec.rank ? rec.rank + " " : "") + (rec.last_name || rec.code) });
+          name: (rec.rank ? rec.rank + " " : "") + (S().baseLabel(rec) || rec.code) });
       }
     }
     if (!plan.length) { S().toast("Roster import failed — no person with an OID inside.", "bad"); return; }
@@ -1864,7 +1873,7 @@ window.fmtDMY = function fmtDMY(v) {
         <div class="sch-h"><h2>New entry</h2>
           <button type="button" class="sch-btn" data-act="toggle-form">${ui.log.open ? "Hide" : "Open"} form</button></div>
         ${ui.log.nfsSuggest ? `<div class="sch-consqban is-apt"><b>NFS suggested</b> —
-          ground-exam failure of <span class="sch-code">${esc(ui.log.nfsSuggest.student)}</span>
+          ground-exam failure of <span class="sch-code">${esc(nm(ui.log.nfsSuggest.student))}</span>
           on ${esc(window.fmtDMY(ui.log.nfsSuggest.date))} (${esc(ui.log.nfsSuggest.label)}) —
           a Φύλλο Μη Πτήσης (Α0473) follows an exam failure
           <em class="sch-wcid" title="${esc("fail-83 — " + (CQ() ? CQ().vb("fail-83") : ""))}">fail-83</em>
@@ -1888,7 +1897,7 @@ window.fmtDMY = function fmtDMY(v) {
     return `<div class="sch-filters">
       <label class="sch-fld"><span>Student</span>
         <select class="sch-in" data-flt="student"><option value="">All</option>
-          ${students().map((s) => `<option value="${esc(s.code)}"${f.student === s.code ? " selected" : ""}>${esc(s.code)}</option>`).join("")}
+          ${students().map((s) => `<option value="${esc(s.code)}"${f.student === s.code ? " selected" : ""}>${esc(S().personOption(s))}</option>`).join("")}
         </select></label>
       <label class="sch-fld"><span>Kind</span>
         <select class="sch-in" data-flt="kind"><option value="">All</option>
@@ -1979,7 +1988,7 @@ window.fmtDMY = function fmtDMY(v) {
       const evCls = R().classesOf(ev);
       const who = ev.scope === "class"
         ? `<span class="sch-badge">class${evCls.length > 1 ? " ×" + evCls.length : ""}</span> ${esc(evCls.join(" · ") || "—")}`
-        : `<span class="sch-badge alt">SP</span> ${esc(ev.student || "—")}`;
+        : `<span class="sch-badge alt">SP</span> ${esc(nm(ev.student) || "—")}`;
       const abs = (ev.absent || []).length;
       /* PASS / LAG (YSTERISI) / FAIL (APOTYXIA) — legacy repeat renders as LAG */
       const raw = ev.result || "completed";
@@ -2004,16 +2013,16 @@ window.fmtDMY = function fmtDMY(v) {
           : d ? `<span class="sch-code">${esc(d.short)}</span> <span class="sch-note">${esc(d.name)}</span>`
             : `<span class="sch-warn">${esc(evNode(ev) || "—")}</span>`;
       const ipShares = Array.isArray(ev.instructors) && ev.instructors.length > 1
-        ? ` <span class="sch-badge" title="${esc(ev.instructors.map((s) => s.ip + " " + s.periods + " per.").join(" · "))}">+${ev.instructors.length - 1}</span>` : "";
+        ? ` <span class="sch-badge" title="${esc(ev.instructors.map((s) => nm(s.ip) + " " + s.periods + " per.").join(" · "))}">+${ev.instructors.length - 1}</span>` : "";
       return `<tr>
         <td class="sch-mono">${when}</td>
         <td>${nodeCell}</td>
         <td><span class="sch-badge ${isNfs ? "warn" : "k-" + esc(k || "x")}">${esc(isNfs ? "NFS" : (k && R().KIND_SHORT[k]) || "?")}</span></td>
         <td>${who}</td>
-        <td class="sch-mono">${esc(ev.instructor || "—")}${ipShares}</td>
+        <td class="sch-mono">${esc(nm(ev.instructor) || "—")}${ipShares}</td>
         <td class="sch-mono">${esc(ev.device || "—")}</td>
         <td><span class="sch-badge r-${esc(rcls)}">${res}</span></td>
-        <td>${abs ? `<span class="sch-badge warn" title="${esc((ev.absent || []).map((a) => a.student + (a.reason ? " — " + a.reason : "")).join(" · "))}">${abs} absent</span>` : "—"}</td>
+        <td>${abs ? `<span class="sch-badge warn" title="${esc((ev.absent || []).map((a) => nm(a.student) + (a.reason ? " — " + a.reason : "")).join(" · "))}">${abs} absent</span>` : "—"}</td>
         <td class="sch-note">${ev.maneuvers ? `<span class="sch-badge warn" title="maneuvers to repeat (fail-10)">repeat: ${esc(ev.maneuvers)}</span> ` : ""}${esc(ev.note || "")}</td>
         <td class="sch-act"><button type="button" class="sch-mini" data-act="edit-ev" data-id="${esc(ev.id)}" title="Edit">✎</button>
           <button type="button" class="sch-mini danger" data-act="del-ev" data-id="${esc(ev.id)}" title="Delete">✕</button></td>
@@ -2099,10 +2108,10 @@ window.fmtDMY = function fmtDMY(v) {
     const pool = activeIps();
     const ev = pool.filter((i) => (i.quals || {}).evaluator);
     const rest = pool.filter((i) => !(i.quals || {}).evaluator);
-    const opt = (i) => `<option value="${esc(i.code)}"${i.code === sel ? " selected" : ""}>${esc(i.code)}</option>`;
+    const opt = (i) => `<option value="${esc(i.code)}"${i.code === sel ? " selected" : ""}>${esc(S().personOption(i))}</option>`;
     return `<option value="">—</option>` + ev.map(opt).join("")
       + (rest.length ? `<optgroup label="not evaluator-qualified — hard warning">${rest.map(opt).join("")}</optgroup>` : "")
-      + (sel && !pool.some((i) => i.code === sel) ? `<optgroup label="departed"><option value="${esc(sel)}" selected>${esc(sel)}</option></optgroup>` : "");
+      + (sel && !pool.some((i) => i.code === sel) ? `<optgroup label="departed"><option value="${esc(sel)}" selected>${esc(nmOpt("instructors", sel))}</option></optgroup>` : "");
   }
 
   function renderForm() {
@@ -2166,7 +2175,7 @@ window.fmtDMY = function fmtDMY(v) {
                 <span>${esc(c.id)} (${c.members.length})</span></label>`;
         }).join("") || `<em class="sch-hint">no class yet</em>`}</span></span>`
         : `<label class="sch-fld"><span>Student</span><select class="sch-in" data-ff="student"><option value="">—</option>
-             ${students().map((s) => `<option value="${esc(s.code)}"${f.student === s.code ? " selected" : ""}>${esc(s.code)}${s.class ? " · " + esc(s.class) : ""}</option>`).join("")}</select></label>`}
+             ${students().map((s) => `<option value="${esc(s.code)}"${f.student === s.code ? " selected" : ""}>${esc(S().personOption(s))}${s.class ? " · " + esc(s.class) : ""}</option>`).join("")}</select></label>`}
           ${isNfs ? `<label class="sch-fld"><span>NFS reason</span><select class="sch-in" data-ff="category"><option value="">—</option>
             ${NFS_CATS.map((o) => `<option value="${esc(o.v)}"${f.category === o.v ? " selected" : ""}>${esc(o.t)}</option>`).join("")}</select></label>`
         : spKey ? `<label class="sch-fld"><span>Category</span><select class="sch-in" data-ff="category"><option value="">—</option>
@@ -2174,9 +2183,9 @@ window.fmtDMY = function fmtDMY(v) {
           ${isNfs ? "" : `<label class="sch-fld"><span>Instructor${spDef && spDef.evaluator ? " (evaluator)" : ""}</span>
             <select class="sch-in" data-ff="instructor">${spDef && spDef.evaluator
         ? evalIpOptions(f.instructor)
-        : `<option value="">—</option>` + activeIps().map((i) => `<option value="${esc(i.code)}"${f.instructor === i.code ? " selected" : ""}>${esc(i.code)}</option>`).join("")
+        : `<option value="">—</option>` + activeIps().map((i) => `<option value="${esc(i.code)}"${f.instructor === i.code ? " selected" : ""}>${esc(S().personOption(i))}</option>`).join("")
           + (f.instructor && !activeIps().some((i) => i.code === f.instructor)
-            ? `<optgroup label="departed"><option value="${esc(f.instructor)}" selected>${esc(f.instructor)}</option></optgroup>` : "")}</select></label>
+            ? `<optgroup label="departed"><option value="${esc(f.instructor)}" selected>${esc(nmOpt("instructors", f.instructor))}</option></optgroup>` : "")}</select></label>
           <label class="sch-fld"><span>Device</span><input class="sch-in" data-ff="device" value="${esc(f.device)}" list="sch-devlist" placeholder="${esc(DEVICES.join(" · "))}"></label>
           <datalist id="sch-devlist">${DEVICES.map((x) => `<option value="${esc(x)}"></option>`).join("")}</datalist>
           <label class="sch-fld"><span>Result</span><select class="sch-in" data-ff="result">
@@ -2210,7 +2219,7 @@ window.fmtDMY = function fmtDMY(v) {
       const on = Object.prototype.hasOwnProperty.call(f.absent, code);
       return `<label class="sch-absrow${on ? " is-on" : ""}">
         <input type="checkbox" data-abs="${esc(code)}"${on ? " checked" : ""}>
-        <span class="sch-code">${esc(code)}</span>
+        <span class="sch-code" title="${esc(nmOpt("students", code))}">${esc(nm(code))}</span>
         <input type="text" class="sch-in sch-absr" data-absr="${esc(code)}" placeholder="reason"
                value="${esc(f.absent[code] || "")}"${on ? "" : " disabled"}></label>`;
     };
