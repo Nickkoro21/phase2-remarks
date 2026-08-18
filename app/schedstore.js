@@ -440,6 +440,20 @@
     catch (e) { toast("Import failed — not valid JSON.", "bad"); return false; }
     if (!data || typeof data !== "object") { toast("Import failed — unexpected file.", "bad"); return false; }
 
+    /* THE TWO-IMPORTS TRAP (2026-08-18, live incident): this button restores a
+       FULL STORE BACKUP. Handed the global roster file it would obediently
+       replace the whole store with two raw collections — codes minted from
+       record ids, callsigns/quals wiped, config (and the editor lock) gone.
+       That exact accident ate an evening. The roster has its own merge that
+       never destroys anything: Roster pane → "⭱ Import roster".            */
+    if (data.schema === "global-roster-v1"
+        || (Array.isArray(data.instructors)
+            && data.instructors.some((r) => r && r.call_sign !== undefined)
+            && data.trainingLog === undefined && data.config === undefined)) {
+      toast("This file is the GLOBAL ROSTER, not a store backup — use Roster → “⭱ Import roster”, which merges by OID and never wipes anything.", "bad");
+      return false;
+    }
+
     const pick = (n) => {
       const c = COLLS[n];
       const v = data[n] !== undefined ? data[n] : data[c.seed];

@@ -524,8 +524,10 @@ def gate_selftest() -> None:
 def patch_css(css: str) -> str:
     # :focus-visible (Fx85) → :focus — in Fx72 the unknown pseudo-class would
     # invalidate the whole rule; :focus is the graceful export behaviour.
-    # (4 since Round 11 added .cur-ip:focus-visible on the Currency tab.)
-    css = sub1(r":focus-visible", lambda m: ":focus", css, ":focus-visible → :focus", count=4)
+    # (5 since Round 15 added .cur-pop :focus-visible for the flight popover;
+    #  4 was Round 11's .cur-ip. The exact count IS the tripwire: a new focus
+    #  ring must be looked at once for Fx72 before the number moves.)
+    css = sub1(r":focus-visible", lambda m: ":focus", css, ":focus-visible → :focus", count=5)
     # :has() rules (Fx121, scheduler-only) — the rule would be dropped silently
     # anyway; strip it explicitly so the gate stays clean.
     css = sub1(
@@ -550,6 +552,11 @@ def patch_css(css: str) -> str:
          "width: 430px; max-width: 94vw; width: min(430px, 94vw);"),
         (r"max-height: min\(72vh, 620px\);",
          "max-height: 72vh; max-height: min(72vh, 620px);"),
+        # Round 15 — the flight/legend popover (.cur-pop)
+        (r"width: min\(380px, 94vw\);",
+         "width: 380px; max-width: 94vw; width: min(380px, 94vw);"),
+        (r"max-height: min\(74vh, 620px\);",
+         "max-height: 74vh; max-height: min(74vh, 620px);"),
     ]
     for pat, repl in minmax_fixes:
         css = sub1(pat, lambda m, r=repl: r, css, f"CSS fallback for `{pat}`")
