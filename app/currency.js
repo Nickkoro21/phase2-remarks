@@ -1432,9 +1432,18 @@
     .localeCompare(String(b).replace(/\d+/g, (n) => n.padStart(6, "0")));
   const allIps = () => (S().get("instructors") || []).slice();
   const departedN = () => allIps().filter((i) => (i.status || "active") === "departed").length;
-  /* sorted by the NAME the user reads, not by the code he no longer sees */
+  /* sorted by CALL SIGN — the squadron's own hierarchy: VIPER01 IS the CO and
+     VIPER02 the DO, and the alphabet was burying them mid-table (user directive
+     2026-08-19: «σειρά με το call sign — δεν μπορεί ο CO να είναι στη μέση»).
+     natural() keeps P-9 before VIPER01; flyers without a call sign go last, by
+     the name the user reads. */
   const listed = () => allIps().filter((i) => (i.status || "active") !== "departed")
-    .sort((a, b) => String(who(a)).localeCompare(String(who(b))) || natural(a.code, b.code));
+    .sort((a, b) => {
+      const ca = String(a.callsign || "").trim(), cb = String(b.callsign || "").trim();
+      if (ca && cb) return natural(ca, cb) || String(who(a)).localeCompare(String(who(b)));
+      if (!ca !== !cb) return ca ? -1 : 1;       /* with a call sign before without */
+      return String(who(a)).localeCompare(String(who(b))) || natural(a.code, b.code);
+    });
 
   /* per-render memo: summary()/semSummary() walk all 91 items, and every row
      head of every table asks for them. Cleared at the top of render().       */
