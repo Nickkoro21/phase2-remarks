@@ -320,10 +320,13 @@ async function loadCriteria(cat) {
   return data;
 }
 
+/* Round 16b — the house escaper. The old body was `div.textContent -> innerHTML`,
+   which escapes & < > but NOT the quote characters, so any value carrying a `"`
+   broke out of the attribute it was interpolated into. Same five-character map
+   as currency.js / flowchart.js / scheduler.js — safe for text AND attributes. */
+const ESC_HTML = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
 function esc(s) {
-  const d = document.createElement("div");
-  d.textContent = s ?? "";
-  return d.innerHTML;
+  return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ESC_HTML[c]);
 }
 
 function specTableHtml(params, sourceTag) {

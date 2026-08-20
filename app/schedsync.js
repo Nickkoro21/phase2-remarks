@@ -55,7 +55,11 @@
   const sess = { pass: null, key: null, keyId: "", unlocked: false };
 
   const $ = (id) => document.getElementById(id);
-  const esc = (s) => { const d = document.createElement("div"); d.textContent = s ?? ""; return d.innerHTML; };
+  /* Round 16b — quote-safe: the repo / branch / path / device values below are
+     typed by the user and land inside value="…". The old textContent helper let
+     a `"` escape the attribute. */
+  const ESC = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ESC[c]);
   const nowHM = () => new Date().toTimeString().slice(0, 5);
 
   const lsGet = (k) => { try { return localStorage.getItem(k); } catch (e) { return null; } };

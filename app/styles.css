@@ -2117,6 +2117,17 @@ html[data-edit="off"] .cur-head::after {
 .desc-draft ul { margin: 5px 0 0 18px; }
 .desc-draft li { margin-bottom: 3px; }
 
+/* ── SOLO NEXT (Round 16b) — the authorization is never left to memory ──── */
+.desc-solonext {
+  margin: 10px 0 2px; padding: 9px 12px; border-radius: 8px;
+  background: rgba(var(--good-rgb), var(--tint));
+  border: 1px solid var(--good); color: var(--text); font-size: 12.5px; line-height: 1.55;
+}
+.desc-solonext b { color: var(--good); letter-spacing: .03em; }
+.desc-solonext.is-soft { border-style: dashed; border-color: var(--muted); background: transparent; }
+.desc-solonext.is-soft b { color: var(--muted); }
+.desc-hidden { color: var(--muted); }
+
 /* ── THE SENTENCE — the live template, blanks and all ───────────────────── */
 .desc-sent {
   background: var(--panel-2); border: 1px solid var(--line); border-left: 4px solid var(--accent);
@@ -2210,6 +2221,10 @@ html[data-edit="off"] .cur-head::after {
 .desc-num.on { background: var(--accent); color: var(--on-accent); border-color: var(--accent); font-weight: 700; }
 .desc-num.np { opacity: .38; }
 .desc-num.ban { text-decoration: line-through; color: var(--bad); }
+/* Round 16b — the standing MIF of this item is still below the Code «2» that
+   3-01 §28θ sets as the minimum for a solo. Offered, but marked. */
+.desc-num.low { border-style: dashed; border-color: var(--warn); color: var(--muted); }
+.desc-num.low.on { color: var(--on-accent); }
 .desc-numlegend { margin-top: 7px; font-size: 11.5px; }
 
 /* ── the emergency-procedures line ──────────────────────────────────────── */

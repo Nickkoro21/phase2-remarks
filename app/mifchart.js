@@ -16,7 +16,9 @@
     selected: new Set(), mif: {}, minimums: undefined, // undefined = not fetched
   };
   const $id = (x) => document.getElementById(x);
-  const esc = (s) => { const d = document.createElement("div"); d.textContent = s ?? ""; return d.innerHTML; };
+  /* Round 16b — the house escaper, quote-safe (data-k="…" is an attribute). */
+  const ESC = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ESC[c]);
 
   /* ── styles ── */
   const CSS = `

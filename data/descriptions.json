@@ -341,6 +341,13 @@
       "label": "CONTACT F/S SORTIE.",
       "status": "draft",
       "why": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+     },
+     {
+      "id": "fs_night",
+      "text": "NIGHT CONTACT F/S SORTIE.",
+      "label": "NIGHT CONTACT F/S SORTIE.",
+      "status": "draft",
+      "why": "No F/S template was supplied AND no printed template names the night — this opening combines both PROPOSED variants for the one sortie of Phase II that is both (I3601, the F/S night IFR navigation). Everything below the opening line is unchanged: the item numbering, the EP item and the MIF tables are identical for F/S."
      }
     ]
    },
@@ -553,6 +560,13 @@
       "label": "INSTRUMENT F/S SORTIE.",
       "status": "draft",
       "why": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+     },
+     {
+      "id": "fs_night",
+      "text": "NIGHT INSTRUMENT F/S SORTIE.",
+      "label": "NIGHT INSTRUMENT F/S SORTIE.",
+      "status": "draft",
+      "why": "No F/S template was supplied AND no printed template names the night — this opening combines both PROPOSED variants for the one sortie of Phase II that is both (I3601, the F/S night IFR navigation). Everything below the opening line is unchanged: the item numbering, the EP item and the MIF tables are identical for F/S."
      }
     ]
    },
@@ -886,6 +900,13 @@
       "label": "FORMATION F/S SORTIE.",
       "status": "draft",
       "why": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+     },
+     {
+      "id": "fs_night",
+      "text": "NIGHT FORMATION F/S SORTIE.",
+      "label": "NIGHT FORMATION F/S SORTIE.",
+      "status": "draft",
+      "why": "No F/S template was supplied AND no printed template names the night — this opening combines both PROPOSED variants for the one sortie of Phase II that is both (I3601, the F/S night IFR navigation). Everything below the opening line is unchanged: the item numbering, the EP item and the MIF tables are identical for F/S."
      }
     ]
    },
@@ -1160,6 +1181,13 @@
       "label": "NAVIGATION F/S SORTIE.",
       "status": "draft",
       "why": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+     },
+     {
+      "id": "fs_night",
+      "text": "NIGHT NAVIGATION F/S SORTIE.",
+      "label": "NIGHT NAVIGATION F/S SORTIE.",
+      "status": "draft",
+      "why": "No F/S template was supplied AND no printed template names the night — this opening combines both PROPOSED variants for the one sortie of Phase II that is both (I3601, the F/S night IFR navigation). Everything below the opening line is unchanged: the item numbering, the EP item and the MIF tables are identical for F/S."
      }
     ]
    },
@@ -1690,7 +1718,7 @@
   },
   "fs-instrument-route-night": {
    "tpl": "instrument",
-   "head": "fs",
+   "head": "fs_night",
    "choice": {
     "work": "route"
    },

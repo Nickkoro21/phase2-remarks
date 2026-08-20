@@ -10,7 +10,10 @@
   const LEVELS = ["0", "1", "2", "3", "4", "marginal"];
   const st = { index: null, loading: false };
   const $id = (x) => document.getElementById(x);
-  const esc = (s) => { const d = document.createElement("div"); d.textContent = s ?? ""; return d.innerHTML; };
+  /* Round 16b — the house escaper. Every call here is text content today, but
+     the helper is now quote-safe so the next attribute added cannot open a hole. */
+  const ESC = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ESC[c]);
 
   const CSS = `
   .rs-panel{grid-column:1/-1;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px}
@@ -102,13 +105,17 @@
     const hits = st.index.filter((h) => terms.every((t) => h.low.includes(t) ||
       h.mode.toLowerCase().includes(t) || h.item.toLowerCase().includes(t)));
     $id("rs-cnt").textContent = `${hits.length} of ${st.index.length}`;
+    /* Round 16b — mark FIRST on the raw text with two control-character
+       sentinels, escape SECOND. Marking the escaped string let a query hit the
+       inside of an entity («#39» inside `&#39;`) and split it into visible junk;
+       it also meant a query containing a quote or an ampersand never lit up. */
     const mark = (txt) => {
-      let out = esc(txt);
+      let out = String(txt == null ? "" : txt);
       for (const t of terms) {
         if (!t) continue;
-        out = out.replace(new RegExp(`(${t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi"), "<mark>$1</mark>");
+        out = out.replace(new RegExp(`(${t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi"), "\u0001$1\u0002");
       }
-      return out;
+      return esc(out).replace(/\u0001/g, "<mark>").replace(/\u0002/g, "</mark>");
     };
     res.innerHTML = hits.slice(0, 60).map((h, i) => `
       <div class="rs-hit">

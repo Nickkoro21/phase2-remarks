@@ -35,19 +35,26 @@
 (() => {
   const REPO = "Nickkoro21/phase2-remarks";
   const $ = (id) => document.getElementById(id);
-  const esc = (s) => { const d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; };
+  /* Round 16b — the house escaper (currency.js / flowchart.js / scheduler.js all
+     carry the same five-character map). The Round 16 body was
+     `div.textContent -> innerHTML`, which escapes & < > but leaves BOTH quote
+     characters alone: a `"` typed into any free-text blank walked straight out of
+     the value="…" it is interpolated into and ate the rest of the input. */
+  const ESC = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ESC[c]);
   const up = (s) => String(s == null ? "" : s).trim().toUpperCase();
 
   const CAT_ORDER = ["contact", "instrument", "formation", "vfr_navigation"];
 
   const st = {
     ready: false, booted: false, loading: false,
-    data: null, areas: null, routes: null, eps: null, fc: null,
+    data: null, areas: null, routes: null, eps: null, fc: null, mif: null, flow: null,
     cat: null, band: "flights", sortie: null, tpl: null, fam: null, hint: null,
     q: "",
     head: "sortie",
     on: {}, choice: {}, slot: {}, free: {}, customs: [], nCustom: 0, apprCount: 2,
     outcome: "standard", grade: "VERY GOOD", pct: "",
+    ramp: null, soloNext: null,
     tailOn: {}, itemsBy: { fail: [], solo: [] }, seeded: {},
     ep: { on: true, d: "3", a: "3", picks: [], short: false },
     flash: "",
@@ -64,19 +71,170 @@
         if (!r.ok) throw new Error(p);
         return r.json();
       };
-      const [d, a, r, e, f] = await Promise.all([
+      const [d, a, r, e, f, m6, mfs] = await Promise.all([
         get("../data/descriptions.json"), get("../data/areas.json"),
         get("../data/routes.json"), get("../data/ep_list.json"),
         get("../data/flowchart2.json"),
+        get("../data/mif/t6a.json"), get("../data/mif/fs.json"),
       ]);
       st.data = d;
       st.areas = a.areas || [];
       st.routes = r.routes || [];
       st.eps = e.procedures || [];
       st.fc = f;
+      st.mif = { flights: m6, fs: mfs };
+      buildFlow();
       st.ready = true;
     } finally { st.loading = false; }
   }
+
+  /* ── THE FLOW INDEX — Round 16b, the two user addenda of 20/08/2026 ──────
+     The MIF tables (data/mif/t6a.json = aircraft, data/mif/fs.json = F/S) are
+     the SAME files mifchart.js and app.js already read and the builder already
+     bundles: no second copy of a MIF cell is made here, the tables are read.
+
+     Their COLUMNS are the training sections, printed in syllabus order, so the
+     concatenated column list of a category IS that category's section order
+     (CONTACT aircraft spans two printed tables — pre-solo then post-solo — and
+     they concatenate in file order). Sorties are then ordered section-column
+     first, sortie code second, which is the flow order the Training Flow Chart
+     draws; it differs from the raw flowchart2 array in exactly one place
+     (I4701 is printed beside I4603 and lands before it in the array, while its
+     own MIF column sits after I4601-03).
+
+     Per band+category the index holds:
+       cols   the ordered section columns
+       ep     the EP item's MIF per column        → A1, the desired code
+       items  every item's MIF per column         → A2, what may be cleared
+       order  the sorties of that band+category in flow order  → both */
+  function buildFlow() {
+    const flow = {};
+    for (const band of ["flights", "fs"]) {
+      const src = st.mif[band];
+      for (const tb of (src.tables || [])) {
+        const cat = st.data.categories[tb.category];
+        if (!cat) continue;
+        const key = band + "." + tb.category;
+        const f = flow[key] || (flow[key] = { cols: [], ep: {}, items: {}, order: [] });
+        const epRow = tb.items.find((x) => x.sn === cat.ep_item);
+        for (const c of tb.columns) {
+          f.cols.push(c.unit);
+          f.ep[c.unit] = epRow ? epRow.codes[c.unit] : null;
+        }
+        for (const it of tb.items) {
+          const m = f.items[it.sn] || (f.items[it.sn] = {});
+          for (const c of tb.columns) m[c.unit] = it.codes[c.unit];
+        }
+      }
+    }
+    for (const id of Object.keys(st.data.sorties)) {
+      const h = st.data.sorties[id];
+      const f = flow[h.band + "." + h.cat];
+      if (f) f.order.push(id);
+    }
+    for (const k of Object.keys(flow)) {
+      const f = flow[k];
+      f.order.sort((a, b) => {
+        const ia = f.cols.indexOf(st.data.sorties[a].section);
+        const ib = f.cols.indexOf(st.data.sorties[b].section);
+        return ia !== ib ? ia - ib : (a < b ? -1 : (a > b ? 1 : 0));
+      });
+    }
+    st.flow = flow;
+  }
+
+  const flowOf = (h) => (st.flow && h) ? st.flow[h.band + "." + h.cat] : null;
+
+  /* A1 — «Για τα emergency procedures ο κωδικας θα ειναι οτι υπηρχε στην
+     προηγουμενη ενοτητα … Στην τελευταια πτηση πρεπει να πιασει κωδικα τελους
+     ενοτητας.» (user, 20/08/2026). So the DESIRED code of the «#N. (x) -> (y)»
+     line does NOT ramp per sortie: every sortie of a section is preset to the EP
+     item's MIF of the PREVIOUS section, and only the category's LAST FLIGHT is
+     preset to the end-of-section MIF (the last column of the category).
+     The first section of a category has no previous one — it presets to its own
+     starting MIF. Hand-editable everywhere, both bands. */
+  function epRamp(id) {
+    const h = st.data.sorties[id];
+    const f = flowOf(h);
+    if (!f || !f.cols.length) {
+      const own = h && h.ep_mif && h.ep_mif !== "null" ? String(h.ep_mif) : "3";
+      return { preset: own, own: own, prevSec: null, prevCode: null,
+               endSec: null, endCode: null, lastOfCat: false };
+    }
+    const i = f.cols.indexOf(h.section);
+    const endSec = f.cols[f.cols.length - 1];
+    const prevSec = i > 0 ? f.cols[i - 1] : null;
+    const lastOfCat = f.order[f.order.length - 1] === id;
+    const own = f.ep[h.section];
+    const preset = lastOfCat ? f.ep[endSec] : (prevSec ? f.ep[prevSec] : f.ep[f.cols[0]]);
+    return {
+      preset: preset == null ? (own == null ? "3" : String(own)) : String(preset),
+      own: own == null ? null : String(own),
+      prevSec: prevSec, prevCode: prevSec ? String(f.ep[prevSec]) : null,
+      endSec: endSec, endCode: f.ep[endSec] == null ? null : String(f.ep[endSec]),
+      lastOfCat: lastOfCat,
+    };
+  }
+
+  /* A2 — «για πτησεις που επιτρεπεται solo στην επομενη πρεπει να γραφουμε οτι
+     τον εξουσιοδοτουμε και ποια item μπορει να κανει στο solo» (user,
+     20/08/2026). flowchart2 carries no node of kind «solo»: the syllabus marks a
+     potential SOLO with a GREEN FRAME on the sortie itself, digitised as
+     solo_candidate / first_solo (legend.notes of flowchart2 says exactly that).
+     So «followed by a solo» = the NEXT sortie in flow order wears a green frame.
+       · the current sortie is NOT itself green-framed → it is a DUAL before a
+         SOLO: the clearance is auto-surfaced (outcome preset + banner);
+       · the current sortie IS green-framed too (a run of candidates inside one
+         section) → the app cannot know whether THIS one was flown dual or solo,
+         so it only says so in a line and preselects nothing. */
+  function soloNext(id) {
+    const h = st.data.sorties[id];
+    const f = flowOf(h);
+    if (!f) return null;
+    const i = f.order.indexOf(id);
+    const nx = f.order[i + 1];
+    if (!nx) return null;
+    const g = (x) => {
+      const s = (st.fc.sorties || []).find((y) => y.id === x);
+      return !!(s && (s.solo_candidate || s.first_solo));
+    };
+    if (!g(nx)) return null;
+    const n = st.data.sorties[nx] || {};
+    return { next: nx, name: n.name || "", first: !!n.first_solo, self: g(id) };
+  }
+
+  /* A2, the picker — three levels: category (the item list) → training section
+     (an item with NO MIF yet at this section never appears) → the flight (the
+     empty cells of this very column are greyed «not planned»). `mif` is the
+     STANDING desired level: the last non-empty cell up to and including this
+     section, which is what 3-01 §21α reads off the previous grade sheets. */
+  function itemLevels(h) {
+    const f = flowOf(h);
+    const cat = st.data.categories[h.cat];
+    const out = [];
+    if (!f) {
+      for (const it of cat.items) out.push({ n: it.n, label: it.gs || it.label, mif: null, here: null });
+      return out;
+    }
+    const i = f.cols.indexOf(h.section);
+    for (const it of cat.items) {
+      const row = f.items[it.n] || {};
+      let standing = null;
+      for (let j = 0; j <= i; j++) {
+        const v = row[f.cols[j]];
+        if (v != null) standing = String(v);
+      }
+      if (standing === null) continue;                 // no MIF yet — not offered
+      const here = row[h.section];
+      out.push({ n: it.n, label: it.gs || it.label, mif: standing,
+                 here: here == null ? null : String(here) });
+    }
+    return out;
+  }
+
+  /* «2» is the minimum performance code that allows a maneuver to be flown solo
+     (3-01 §28θ) — «E» and «0»/«1» are below it. */
+  const soloReady = (code) => code === "2" || code === "3" || code === "4";
 
   /* ── number ranges — «#1-3, #5, #22-24, #34-38» ───────────────────────── */
 
@@ -321,6 +479,7 @@
   function pickCategory(cat) {
     st.cat = cat;
     st.sortie = null; st.tpl = null; st.hint = null; st.fam = null;
+    st.ramp = null; st.soloNext = null;
     st.q = "";
     render();
   }
@@ -328,6 +487,7 @@
   function pickBand(band) {
     st.band = band;
     st.sortie = null; st.tpl = null; st.hint = null; st.fam = null;
+    st.ramp = null; st.soloNext = null;
     render();
   }
 
@@ -347,10 +507,15 @@
     st.tailOn = {}; st.itemsBy = { fail: [], solo: [] }; st.seeded = {};
     st.outcome = "standard"; st.pct = "";
     st.grade = "VERY GOOD";
+    /* the opening sentence. Round 16b: the F/S test used to swallow the night
+       test, so I3601 — the F/S night sortie — opened «INSTRUMENT F/S SORTIE.»
+       while §6 of the spec promised the night wording. The combined variant
+       exists now and is tried FIRST, in both the family override and here. */
     st.head = fam.head || st.tpl.head.def;
+    const hasV = (v) => st.tpl.head.variants.some((x) => x.id === v);
     if (!fam.head) {
-      const hasV = (id) => st.tpl.head.variants.some((v) => v.id === id);
-      if (h.band === "fs" && hasV("fs")) st.head = "fs";
+      if (h.band === "fs" && h.night && hasV("fs_night")) st.head = "fs_night";
+      else if (h.band === "fs" && hasV("fs")) st.head = "fs";
       else if (h.night && hasV("night")) st.head = "night";
       else if (h.checkride && hasV("checkride")) st.head = "checkride";
     }
@@ -372,8 +537,20 @@
     st.tailOn["out.standard.eob"] = !!h.end_of_block;
     st.tailOn["out.solo.eob"] = !!h.end_of_block;
 
-    const mif = h.ep_mif && h.ep_mif !== "null" ? String(h.ep_mif) : "3";
+    /* A1 — the desired code is the PREVIOUS section's MIF for the EP item, and
+       the end-of-section MIF on the category's last flight. The achieved code
+       starts equal to it (both filled samples print «(3) -> (3)» / «(1) -> (1)»)
+       and both stay hand-editable. */
+    st.ramp = epRamp(id);
+    const mif = st.ramp.preset;
     st.ep = { on: true, d: mif, a: mif, picks: [], short: false };
+
+    /* A2 — a DUAL flown immediately before a green-framed SOLO must carry the
+       authorization, so the clearance outcome is preset here and announced by
+       the banner in buildHtml(). One click on «Standard» undoes it. */
+    st.soloNext = soloNext(id);
+    if (st.soloNext && !st.soloNext.self) st.outcome = "solo";
+
     rollEp();
     render();
   }
@@ -386,7 +563,9 @@
     st.seeded.solo = true;
     const h = st.hint, cat = st.data.categories[st.cat];
     const banned = new Set(expand(h.not_planned).concat(cat.solo_forbidden || []));
-    st.itemsBy.solo = expand(h.solo_seed).filter((n) => !banned.has(n));
+    /* the seed can never reach outside the offered set (Round 16b, A2) */
+    const offered = new Set(itemLevels(h).map((x) => x.n));
+    st.itemsBy.solo = expand(h.solo_seed).filter((n) => !banned.has(n) && offered.has(n));
   }
 
   /* ── draft markers ────────────────────────────────────────────────────── */
@@ -535,30 +714,55 @@
 
   /* ── rendering: item picker ───────────────────────────────────────────── */
 
+  /* Round 16b — for the SOLO clearance the grid is the THREE-LEVEL set of A2:
+     category → training section → this flight. Items the syllabus has not
+     introduced by this section have no MIF to clear and are not drawn at all;
+     what is drawn carries its standing MIF, so «below Code 2» is visible.
+     The FAIL grid is unchanged: it is about the items of THIS sortie, and the
+     empty cells of this column are already greyed. */
   function pickerHtml(which) {
     const cat = st.data.categories[st.cat];
+    const solo = which === "solo";
     const np = new Set(expand(st.hint.not_planned));
-    const forbidden = new Set(which === "solo" ? (cat.solo_forbidden || []) : []);
+    const forbidden = new Set(solo ? (cat.solo_forbidden || []) : []);
     const chosen = new Set(st.itemsBy[which]);
+    const lv = itemLevels(st.hint);
+    const byN = {};
+    for (const x of lv) byN[x.n] = x;
+    const rows = solo ? lv : cat.items.map((it) => byN[it.n]
+      || { n: it.n, label: it.gs || it.label, mif: null, here: null });
     let grid = "";
-    for (const it of cat.items) {
-      const n = it.n;
+    for (const r of rows) {
+      const n = r.n;
       const off = np.has(n);
       const ban = forbidden.has(n);
+      const low = solo && !ban && !soloReady(r.mif);
       const cls = ["desc-num"];
       if (chosen.has(n)) cls.push("on");
       if (off) cls.push("np");
       if (ban) cls.push("ban");
-      const tip = (it.gs || it.label) + (off ? " — not planned in this sortie" : "")
-        + (ban ? " — never cleared for SOLO (Syllabus §14b(6))" : "");
+      if (low) cls.push("low");
+      const tip = "#" + n + " " + r.label
+        + (r.mif ? " — MIF " + r.mif + " at " + st.hint.section : "")
+        + (off ? " · not planned in this sortie" : "")
+        + (ban ? " · never cleared for SOLO (Syllabus §14b(6))" : "")
+        + (low ? " · below the Code «2» SOLO minimum (3-01 §28θ)" : "");
       grid += '<button class="' + cls.join(" ") + '" data-num="' + n + '" title="' + esc(tip) + '">'
         + n + "</button>";
     }
+    const hidden = solo ? cat.items.length - rows.length : 0;
     return '<div class="desc-numgrid">' + grid + "</div>"
       + '<p class="hint desc-numlegend">Grey = not planned in this sortie (MIF cell empty) · '
-      + 'struck = never cleared for SOLO · click to include. '
+      + 'struck = never cleared for SOLO · '
+      + (solo ? 'dashed = standing MIF below Code «2» · ' : "")
+      + 'click to include. '
       + '<button class="desc-mini" data-numclear="1">clear</button>'
-      + (which === "solo" ? ' <button class="desc-mini" data-numseed="1">re-seed from MIF ≥ 2</button>' : "")
+      + (solo ? ' <button class="desc-mini" data-numseed="1">re-seed from MIF ≥ 2</button>' : "")
+      + (hidden > 0
+          ? ' <span class="desc-hidden">' + hidden + " item"
+            + (hidden === 1 ? "" : "s") + " of the " + cat.items.length
+            + " hidden: no MIF yet at " + esc(st.hint.section) + " — nothing to clear.</span>"
+          : "")
       + "</p>";
   }
 
@@ -577,6 +781,7 @@
       + (h.night ? '<span class="badge is-night">night</span>' : "")
       + (h.first_solo ? '<span class="badge is-solo">1st solo</span>' : "")
       + (h.solo_candidate ? '<span class="badge is-solo">solo candidate</span>' : "")
+      + (st.soloNext ? '<span class="badge is-solo">solo next: ' + esc(st.soloNext.next) + "</span>" : "")
       + (h.end_of_block ? '<span class="badge">end of block</span>' : "")
       + (h.band === "fs" ? '<span class="badge">F/S</span>' : "")
       + '<button class="info-btn" id="desc-canon-btn" title="The printed template this sentence is built from, verbatim">ℹ Template</button>'
@@ -587,6 +792,23 @@
     if (drafts.length) {
       out += '<div class="desc-draft"><b>DRAFT — proposed variant.</b><ul>'
         + drafts.map((d) => "<li>" + esc(d) + "</li>").join("") + "</ul></div>";
+    }
+
+    /* A2 — the authorization is never left to memory */
+    if (st.soloNext && !st.soloNext.self) {
+      out += '<div class="desc-solonext"><b>SOLO NEXT.</b> The next sortie of this '
+        + "category, <b>" + esc(st.soloNext.next) + "</b>"
+        + (st.soloNext.first ? " — the 1st SOLO" : "")
+        + ", is flown SOLO, so this grade sheet has to say that the SP is authorized "
+        + "and exactly which items he may execute. The outcome below is preset to "
+        + "<b>Solo clearance</b> and the item picker offers only what is clearable at "
+        + esc(h.section) + ". One click on <b>Standard</b> undoes it.</div>";
+    } else if (st.soloNext) {
+      out += '<div class="desc-solonext is-soft"><b>SOLO NEXT — if this one was flown DUAL.</b> '
+        + esc(st.sortie) + " and " + esc(st.soloNext.next)
+        + " are both green-framed in the flow chart (one of the run is the SOLO), so the app "
+        + "cannot tell which seat was filled. If you flew it, pick <b>Solo clearance</b> "
+        + "and the picker will offer what is clearable at " + esc(h.section) + ".</div>";
     }
 
     out += '<label class="lbl">The sentence — click a blank to fill it</label>'
@@ -672,10 +894,21 @@
       + '<button class="desc-mini" data-epadd="1" title="Add one more procedure">+</button>'
       + '<button class="desc-mini' + (st.ep.short ? " on" : "") + '" data-epshort="1" title="Squadron short form — only the four proven by the sample photos have one">short form</button>'
       + "</div>";
-    if (st.hint.ep_mif) {
-      out += '<p class="hint desc-epmif">MIF for item #' + cat.ep_item + " in "
-        + esc(st.hint.section) + ": <b>" + esc(st.hint.ep_mif) + "</b> — the desired code above is preset from it.</p>";
-    }
+    /* A1 — the whole ramp on one line, so the preset is checkable at a glance */
+    const rp = st.ramp || epRamp(st.sortie);
+    out += '<p class="hint desc-epmif">MIF ramp for item #' + cat.ep_item + " — "
+      + (rp.prevSec
+          ? "previous section <b>" + esc(rp.prevSec) + "</b> = <b>" + esc(rp.prevCode) + "</b>"
+          : "<b>first section of the category</b>, no previous one")
+      + " · this section " + esc(st.hint.section) + " = <b>" + esc(rp.own || "—") + "</b>"
+      + (rp.endSec ? " · end of " + esc(cat.label) + " (" + esc(rp.endSec) + ") = <b>"
+          + esc(rp.endCode) + "</b>" : "")
+      + ". Desired preset <b>" + esc(rp.preset) + "</b> — "
+      + (rp.lastOfCat
+          ? "the LAST FLIGHT of the category, so it has to reach the end-of-section code"
+          : (rp.prevSec ? "the code that stood in the previous section"
+                        : "the section's own starting MIF"))
+      + ". Change either code by hand whenever the sortie says otherwise.</p>";
     out += '<div class="desc-eplist">' + st.ep.picks.map((id, i) =>
       '<span class="desc-eprow"><select class="desc-slot desc-epsel" data-epsel="' + i + '">'
       + st.eps.map((p) => '<option value="' + esc(p.id) + '"' + (p.id === id ? " selected" : "") + ">"
@@ -729,6 +962,9 @@
   function showCanon() {
     const t = st.tpl, h = st.hint;
     const cat = st.data.categories[st.cat];
+    const rp = st.ramp || epRamp(st.sortie);
+    const f = flowOf(h) || { cols: [], ep: {} };
+    const offered = itemLevels(h);
     $("info-title").textContent = t.label + " — the printed template";
     let html = "<h4>Template, verbatim</h4><p class=\"verbatim\">" + esc(t.canon) + "</p>"
       + '<p class="req-src">📄 ' + esc(t.canon_source) + "</p>"
@@ -740,9 +976,32 @@
       + "<tr><td>Family</td><td>" + esc(h.family) + "</td></tr>"
       + "<tr><td>EP gradesheet item</td><td>#" + cat.ep_item + " · MIF in this section: "
         + esc(h.ep_mif || "—") + "</td></tr>"
+      + "<tr><td>EP desired code</td><td><b>" + esc(rp.preset) + "</b> — "
+        + (rp.lastOfCat
+            ? "last flight of the category, so the end-of-section code of " + esc(rp.endSec)
+            : (rp.prevSec ? "the MIF of the previous section, " + esc(rp.prevSec)
+                          : "first section of the category — its own starting MIF"))
+        + " <span class=\"badge\">user ruling 20/08/2026</span></td></tr>"
+      + "<tr><td>Section ramp</td><td>" + f.cols.map((c) =>
+          esc(c) + " = " + esc(String(f.ep[c])) + (c === h.section ? " ←" : "")).join(" · ")
+        + "</td></tr>"
       + "<tr><td>Items planned</td><td>" + cat.items_total + " total"
         + (h.not_planned && h.not_planned !== "-" ? " · not planned here: " + esc(h.not_planned) : "")
         + "</td></tr>"
+      + "<tr><td>Offered for SOLO</td><td>" + offered.length + " of " + cat.items.length
+        + " item(s) have a MIF by " + esc(h.section)
+        + (cat.items.length - offered.length
+            ? " · " + (cat.items.length - offered.length) + " not taught yet, hidden from the picker"
+            : "")
+        + "</td></tr>"
+      + (st.soloNext
+          ? "<tr><td>Solo next</td><td>" + esc(st.soloNext.next)
+            + (st.soloNext.first ? " — 1st SOLO" : "")
+            + (st.soloNext.self
+                ? " · this sortie is green-framed too, so the clearance is offered, not preset"
+                : " · DUAL before a SOLO — the clearance is preset")
+            + "</td></tr>"
+          : "")
       + (h.solo_seed ? "<tr><td>Cleared at MIF ≥ 2</td><td>" + esc(h.solo_seed) + "</td></tr>" : "")
       + (h.page ? '<tr><td>Syllabus</td><td>PART IV, PDF p.' + esc(String(h.page)) + "</td></tr>" : "")
       + "</tbody></table>"
@@ -876,7 +1135,11 @@
         ev.stopPropagation();
         const [key, d] = el.dataset.mv.split("|");
         const c = st.customs.find((x) => x.key === key);
-        if (c) c.pos = Math.max(0, c.pos + Number(d));
+        /* Round 16b — clamp at BOTH ends on write. profileEls() already clamps
+           the read to the length of the canon list, so an unclamped write let ▶
+           run off the end: ten over-clicks banked ten invisible steps and the
+           first ◀ moved nothing. Same bound as the read, so ◀ answers at once. */
+        if (c) c.pos = Math.max(0, Math.min(canonFlat().length, c.pos + Number(d)));
         return render();
       }
       if ((el = hit("[data-tog]"))) {
