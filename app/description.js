@@ -844,7 +844,14 @@
       + (marks.length ? esc(marks.join(" / ")) + " = footnote of the printed table, not a code · " : "")
       + 'click to include. '
       + '<button class="desc-mini" data-numclear="1">clear</button>'
-      + (solo ? ' <button class="desc-mini" data-numseed="1">re-seed from MIF ≥ 2</button>' : "")
+      /* Round 16c — the button used to say «re-seed from MIF ≥ 2». It never ran a
+         MIF ≥ 2 filter: it re-runs the sortie's curated solo_seed, and since this
+         round that list is unioned with the footnote-marked items, which are not
+         «MIF ≥ 2» at all. It says what it does now. */
+      + (solo ? ' <button class="desc-mini" data-numseed="1" title="Put the seeded '
+          + 'set back: this sortie&#39;s curated list plus the items whose MIF cell carries a '
+          + 'footnote marker, minus what is not planned here and what is never cleared for SOLO"'
+          + ">↺ re-seed</button>" : "")
       + (hidden > 0
           ? ' <span class="desc-hidden">' + hidden + " item"
             + (hidden === 1 ? "" : "s") + " of the " + cat.items.length
@@ -1099,7 +1106,19 @@
                 : " · DUAL before a SOLO — the clearance is preset")
             + "</td></tr>"
           : "")
-      + (h.solo_seed ? "<tr><td>Cleared at MIF ≥ 2</td><td>" + esc(h.solo_seed) + "</td></tr>" : "")
+      /* Round 16c — this row used to be labelled «Cleared at MIF ≥ 2» and printed
+         the curated string raw, which is neither what the list is nor what the
+         picker seeds. Both halves are now said out loud. */
+      + (h.solo_seed
+          ? "<tr><td>Curated solo seed</td><td><code>" + esc(h.solo_seed) + "</code> — the list "
+            + "carried by this sortie in <code>data/descriptions.json</code>. The picker seeds it "
+            + "MINUS what is not planned here and what is never cleared for SOLO, PLUS the items "
+            + "whose MIF cell carries a footnote marker"
+            + (offered.some((x) => isFnote(x.mif))
+                ? " (here: " + offered.filter((x) => isFnote(x.mif)).map((x) => "#" + x.n).join(", ") + ")"
+                : "")
+            + ".</td></tr>"
+          : "")
       + (h.page ? '<tr><td>Syllabus</td><td>PART IV, PDF p.' + esc(String(h.page)) + "</td></tr>" : "")
       + "</tbody></table>"
       + "<h4>Grade scale — 3-01 §29</h4>"
