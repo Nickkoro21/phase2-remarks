@@ -2225,7 +2225,21 @@ html[data-edit="off"] .cur-head::after {
    3-01 §28θ sets as the minimum for a solo. Offered, but marked. */
 .desc-num.low { border-style: dashed; border-color: var(--warn); color: var(--muted); }
 .desc-num.low.on { color: var(--on-accent); }
+/* Round 16c — «*» / «**» in the MIF table are FOOTNOTE MARKERS, not codes: the
+   item is fully clearable, it just carries the Training Section's own standard.
+   Tagged with the marker itself, never struck and never dashed. */
+.desc-num.fn { position: relative; border-color: rgba(var(--accent-rgb), .55); }
+.desc-num.fn::after {
+  content: attr(data-fn); position: absolute; top: 0; right: 3px;
+  font-size: 9px; line-height: 1.35; letter-spacing: -.5px; color: var(--accent);
+}
+.desc-num.fn.on::after { color: var(--on-accent); }
 .desc-numlegend { margin-top: 7px; font-size: 11.5px; }
+.desc-fnote {
+  margin-top: 5px; font-size: 11.5px; line-height: 1.55;
+  border-left: 3px solid rgba(var(--accent-rgb), .55); padding-left: 8px;
+}
+.desc-fnote i { color: var(--text); }
 
 /* ── the emergency-procedures line ──────────────────────────────────────── */
 .desc-eplist { display: flex; flex-direction: column; gap: 5px; margin-top: 7px; }

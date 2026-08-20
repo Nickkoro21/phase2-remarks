@@ -49,6 +49,7 @@
   const st = {
     ready: false, booted: false, loading: false,
     data: null, areas: null, routes: null, eps: null, fc: null, mif: null, flow: null,
+    fnote: null, fnoteOwn: null,
     cat: null, band: "flights", sortie: null, tpl: null, fam: null, hint: null,
     q: "",
     head: "sortie",
@@ -109,6 +110,7 @@
        order  the sorties of that band+category in flow order  → both */
   function buildFlow() {
     const flow = {};
+    const fnote = {}, fnoteOwn = {};
     for (const band of ["flights", "fs"]) {
       const src = st.mif[band];
       for (const tb of (src.tables || [])) {
@@ -116,6 +118,20 @@
         if (!cat) continue;
         const key = band + "." + tb.category;
         const f = flow[key] || (flow[key] = { cols: [], ep: {}, items: {}, order: [] });
+        /* Round 16c — the printed notes that explain the «*» / «**» markers, kept
+           verbatim and indexed by CATEGORY, because the F/S NAVIGATION page prints
+           its markers with no note at all (data/mif/fs.json says so in its own
+           flags) and is explained by the NAVIGATION / Τ-6A note. `fnoteOwn` records
+           which table actually prints it, so the tab can say which page it read. */
+        for (const nt of (tb.notes_verbatim || [])) {
+          for (const m of ["**", "*"]) {
+            if (String(nt).indexOf("(" + m + ")") < 0) continue;
+            if (!fnote[tb.category + "." + m]) {
+              fnote[tb.category + "." + m] = { text: String(nt), table: tb.title_verbatim || tb.table_id };
+            }
+            fnoteOwn[key + "." + m] = true;
+          }
+        }
         const epRow = tb.items.find((x) => x.sn === cat.ep_item);
         for (const c of tb.columns) {
           f.cols.push(c.unit);
@@ -141,9 +157,40 @@
       });
     }
     st.flow = flow;
+    st.fnote = fnote;
+    st.fnoteOwn = fnoteOwn;
   }
 
   const flowOf = (h) => (st.flow && h) ? st.flow[h.band + "." + h.cat] : null;
+
+  /* ── the MIF footnote markers «*» and «**» — Round 16c ────────────────────
+     They are NOT performance codes. The printed tables use them as FOOTNOTE
+     MARKERS and explain them in their own words, right under the table
+     (data/mif/t6a.json → notes_verbatim):
+       NAVIGATION / Τ-6A  «(1) (*) According to the standard of the Training
+                           Section SP is flying.»
+       INSTRUMENT / Τ-6A  «Note: (**) According to the standard of the Contact
+                           Training Section SP is flying.»
+     So a starred cell says «this item carries no interval code here — the SP
+     flies it to the standard of the Training Section he is in». That is a
+     STANDARD, not a level below Code «2». Round 16b read the markers as codes,
+     found neither 2 nor 3 nor 4, and struck 11 item/section combinations as
+     «below the Code «2» SOLO minimum» — a NAVIGATION clearance told the
+     instructor his student was below minimum for Take-off and Landing.
+     Here they are offered, seeded and range-compressed like any other item and
+     carry the note, verbatim, in the tooltip and under the grid. */
+  const isFnote = (code) => code === "*" || code === "**";
+
+  /* the note that explains a marker for this sortie's category, and whether the
+     sortie's own printed table is the one that carries it. Never invented: if no
+     table of the category prints a note, the tab says only what the marker is. */
+  function footnote(marker, h) {
+    if (!isFnote(marker) || !h || !st.fnote) return null;
+    const n = st.fnote[h.cat + "." + marker];
+    if (!n) return null;
+    return { text: n.text, table: n.table,
+             own: !!(st.fnoteOwn && st.fnoteOwn[h.band + "." + h.cat + "." + marker]) };
+  }
 
   /* A1 — «Για τα emergency procedures ο κωδικας θα ειναι οτι υπηρχε στην
      προηγουμενη ενοτητα … Στην τελευταια πτηση πρεπει να πιασει κωδικα τελους
@@ -233,8 +280,10 @@
   }
 
   /* «2» is the minimum performance code that allows a maneuver to be flown solo
-     (3-01 §28θ) — «E» and «0»/«1» are below it. */
-  const soloReady = (code) => code === "2" || code === "3" || code === "4";
+     (3-01 §28θ) — «E» and «0»/«1» are below it. «*» / «**» are not codes at all
+     (see isFnote above): they carry the Training Section's own standard, so they
+     are not below anything and are never struck. */
+  const soloReady = (code) => isFnote(code) || code === "2" || code === "3" || code === "4";
 
   /* ── number ranges — «#1-3, #5, #22-24, #34-38» ───────────────────────── */
 
@@ -564,8 +613,19 @@
     const h = st.hint, cat = st.data.categories[st.cat];
     const banned = new Set(expand(h.not_planned).concat(cat.solo_forbidden || []));
     /* the seed can never reach outside the offered set (Round 16b, A2) */
-    const offered = new Set(itemLevels(h).map((x) => x.n));
-    st.itemsBy.solo = expand(h.solo_seed).filter((n) => !banned.has(n) && offered.has(n));
+    const lv = itemLevels(h);
+    const offered = new Set(lv.map((x) => x.n));
+    /* Round 16c — the curated `solo_seed` lists were written as «the items with
+       MIF ≥ 2» while «*» / «**» were still being read as codes, so every footnote
+       item fell out of them: a NAVIGATION clearance came seeded WITHOUT Take-off
+       and Landing. Under the tables' own notes those items are clearable — they
+       carry the Training Section's standard — so they join the seed here, derived
+       live from the MIF tables, never a second copy. Not planned in this sortie
+       and never-solo items are still cut, the same as the curated ones. */
+    const seed = expand(h.solo_seed).concat(lv.filter((x) => isFnote(x.mif)).map((x) => x.n));
+    st.itemsBy.solo = Array.from(new Set(seed))
+      .filter((n) => !banned.has(n) && offered.has(n))
+      .sort((a, b) => a - b);
   }
 
   /* ── draft markers ────────────────────────────────────────────────────── */
@@ -736,25 +796,52 @@
       const n = r.n;
       const off = np.has(n);
       const ban = forbidden.has(n);
+      /* Round 16c — a footnote marker is not a code, so it is never «low» */
+      const fn = solo && isFnote(r.mif);
       const low = solo && !ban && !soloReady(r.mif);
       const cls = ["desc-num"];
       if (chosen.has(n)) cls.push("on");
       if (off) cls.push("np");
       if (ban) cls.push("ban");
       if (low) cls.push("low");
+      if (fn) cls.push("fn");
+      const note = fn ? footnote(r.mif, st.hint) : null;
       const tip = "#" + n + " " + r.label
         + (r.mif ? " — MIF " + r.mif + " at " + st.hint.section : "")
+        + (fn ? " · «" + r.mif + "» is a FOOTNOTE MARKER of the printed table, not a code"
+              + (note ? ": " + note.text + (note.own ? "" : " (printed under " + note.table + ")") : "")
+            : "")
         + (off ? " · not planned in this sortie" : "")
         + (ban ? " · never cleared for SOLO (Syllabus §14b(6))" : "")
         + (low ? " · below the Code «2» SOLO minimum (3-01 §28θ)" : "");
-      grid += '<button class="' + cls.join(" ") + '" data-num="' + n + '" title="' + esc(tip) + '">'
-        + n + "</button>";
+      grid += '<button class="' + cls.join(" ") + '" data-num="' + n + '"'
+        + (fn ? ' data-fn="' + esc(r.mif) + '"' : "")
+        + ' title="' + esc(tip) + '">' + n + "</button>";
     }
+    /* the markers actually drawn in THIS grid, each quoted once underneath */
+    const marks = [];
+    if (solo) for (const r of rows) if (isFnote(r.mif) && marks.indexOf(r.mif) < 0) marks.push(r.mif);
+    const fnotes = marks.map((m) => {
+      const note = footnote(m, st.hint);
+      const mine = rows.filter((r) => r.mif === m);
+      const who = mine.map((r) => "#" + r.n).join(", ");
+      return '<p class="hint desc-fnote"><b>' + esc(m) + "</b> — a <b>footnote marker</b> of the "
+        + "printed MIF table, <b>not</b> a performance code, so " + esc(who)
+        + (mine.length === 1 ? " carries" : " carry") + " no Code «2» minimum to fall short of"
+        + (note
+            ? ': <i>«' + esc(note.text) + '»</i>'
+              + (note.own ? ""
+                  : " — the page of this table prints no note, so this is the one printed under <b>"
+                    + esc(note.table) + "</b>.")
+            : ". The printed tables carry no note for it, so nothing more is claimed here.")
+        + "</p>";
+    }).join("");
     const hidden = solo ? cat.items.length - rows.length : 0;
     return '<div class="desc-numgrid">' + grid + "</div>"
       + '<p class="hint desc-numlegend">Grey = not planned in this sortie (MIF cell empty) · '
       + 'struck = never cleared for SOLO · '
       + (solo ? 'dashed = standing MIF below Code «2» · ' : "")
+      + (marks.length ? esc(marks.join(" / ")) + " = footnote of the printed table, not a code · " : "")
       + 'click to include. '
       + '<button class="desc-mini" data-numclear="1">clear</button>'
       + (solo ? ' <button class="desc-mini" data-numseed="1">re-seed from MIF ≥ 2</button>' : "")
@@ -763,7 +850,8 @@
             + (hidden === 1 ? "" : "s") + " of the " + cat.items.length
             + " hidden: no MIF yet at " + esc(st.hint.section) + " — nothing to clear.</span>"
           : "")
-      + "</p>";
+      + "</p>"
+      + fnotes;
   }
 
   /* ── rendering: the whole build panel ─────────────────────────────────── */
@@ -771,6 +859,15 @@
   function buildHtml() {
     const h = st.hint;
     const o = outcomeObj();
+    /* Round 16c — SEED FIRST, then render. The editable sentence prints the item
+       ranges too, so seeding down in the picker block (as Round 16b did) left the
+       sentence one render behind the copy block: the FIRST click on «Solo
+       clearance» showed «#__» in the editor while the block below already read
+       «… TO EXECUTE ITEMS #1-6, #8-12, …». Same condition as the picker below,
+       and seedItems() is a once-only no-op after that, so nothing is re-seeded. */
+    if (st.outcome !== "fail" && (o.tail || []).some((t) => t.picker === "items" && tailIsOn(t))) {
+      seedItems("solo");
+    }
     const drafts = draftNotes();
     let out = "";
 
@@ -869,7 +966,7 @@
     }
     if ((o.tail || []).some((t) => t.picker === "items" && tailIsOn(t))) {
       const which = st.outcome === "fail" ? "fail" : "solo";
-      if (which === "solo") seedItems("solo");
+      /* (the solo seed already ran at the top of buildHtml — Round 16c) */
       out += '<label class="lbl">Items ' + (which === "fail" ? "NOT achieved" : "cleared for SOLO")
         + ' <span class="count">' + ranges(st.itemsBy[which]).length + " group(s) · "
         + st.itemsBy[which].length + " item(s)</span></label>" + pickerHtml(which);
