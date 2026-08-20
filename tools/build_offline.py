@@ -576,6 +576,7 @@ def collect_data() -> dict:
         # (no roster data of any kind), so unlike the Scheduler and the Currency
         # matrix it DOES travel to the closed network.
         DATA / "descriptions.json",                    # description.js — the grammar
+        DATA / "sections.json",                        # description.js — R17 MISSION/OBJECTIVE per section
         DATA / "areas.json",                           # description.js — working areas
         DATA / "routes.json",                          # description.js — CPM routes
         DATA / "ep_list.json",                         # description.js — the 71 EPs

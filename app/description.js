@@ -49,6 +49,7 @@
   const st = {
     ready: false, booted: false, loading: false,
     data: null, areas: null, routes: null, eps: null, fc: null, mif: null, flow: null,
+    sec: null,
     fnote: null, fnoteOwn: null,
     cat: null, band: "flights", sortie: null, tpl: null, fam: null, hint: null,
     q: "",
@@ -72,11 +73,12 @@
         if (!r.ok) throw new Error(p);
         return r.json();
       };
-      const [d, a, r, e, f, m6, mfs] = await Promise.all([
+      const [d, a, r, e, f, m6, mfs, sc] = await Promise.all([
         get("../data/descriptions.json"), get("../data/areas.json"),
         get("../data/routes.json"), get("../data/ep_list.json"),
         get("../data/flowchart2.json"),
         get("../data/mif/t6a.json"), get("../data/mif/fs.json"),
+        get("../data/sections.json"),
       ]);
       st.data = d;
       st.areas = a.areas || [];
@@ -84,6 +86,14 @@
       st.eps = e.procedures || [];
       st.fc = f;
       st.mif = { flights: m6, fs: mfs };
+      /* R17 — the per-section MISSION/OBJECTIVE (data/sections.json, verbatim
+         from the syllabus PART IV blocks), indexed by sortie id. It renders as
+         the info line under the sortie bar and is the source the enriched
+         MISSION-sentence seeds were derived from. */
+      st.sec = {};
+      for (const s of (sc.sections || [])) {
+        for (const sid of (s.sortie_ids || [])) st.sec[sid] = s;
+      }
       buildFlow();
       st.ready = true;
     } finally { st.loading = false; }
@@ -416,12 +426,42 @@
   }
 
   /* post = the sentences that follow the profile («__ OUT - __ BACK.», «SP
-     OCCUPIED REAR COCKPIT.»). Same element shape, so they get the same _key. */
+     OCCUPIED REAR COCKPIT.»). Same element shape, so they get the same _key.
+     R17: a post element may carry `fam:[…]` — it is then offered ONLY to those
+     families (the Contact-Car sentence belongs to the 1st solo alone). */
   function postEls() {
-    return (st.tpl.post || []).map((e) => Object.assign({}, e, { _key: e.id, _label: e.label }));
+    return (st.tpl.post || [])
+      .filter((e) => !e.fam || (st.hint && e.fam.indexOf(st.hint.family) >= 0))
+      .map((e) => Object.assign({}, e, { _key: e.id, _label: e.label }));
   }
 
-  const isOn = (e) => (st.on[e._key] === undefined ? !!e.on : !!st.on[e._key]);
+  /* ── R17 — the MISSION sentence ──────────────────────────────────────────
+     The panel's mechanism (draft B, adopted): a sentence element of its own,
+     rendered BETWEEN the head and the profile and never comma-joined into the
+     profile chips. Families carry it (`families.<id>.mission`) as a normal
+     choice element — per-section seeds preselect via the sortie hint `m`, the
+     free choice is the custom escape, the chip toggles it. */
+  function missionEl() {
+    const fm = st.fam && st.fam.mission;
+    if (!fm) return null;
+    return {
+      id: "mission", _key: "mission", _label: fm.label || "MISSION",
+      opt: true, on: fm.on !== false,
+      status: fm.status, why: fm.why || null, note: fm.src || fm.note,
+      choice: fm.choice,
+      def: (st.hint && st.hint.m && fm.choice.some((c) => c.id === st.hint.m))
+        ? st.hint.m : fm.def,
+    };
+  }
+
+  /* R17 — §14b(6) locks: a family may carry `lock:[keys]` — those elements are
+     forced OFF and their chips are disabled (ELP is FORBIDDEN in SOLO flights,
+     §14b(6)(d), so a solo sheet must not even offer it). */
+  const isLocked = (k) => !!(st.fam && st.fam.lock && st.fam.lock.indexOf(k) >= 0);
+
+  const isOn = (e) => isLocked(e._key)
+    ? false
+    : (st.on[e._key] === undefined ? !!e.on : !!st.on[e._key]);
 
   function joinEls(els) {
     if (!els.length) return "";
@@ -466,6 +506,12 @@
     const out = [];
     const h = headText();
     if (h) out.push(h);
+    /* R17 — the MISSION sentence: its own sentence between head and profile */
+    const m = missionEl();
+    if (m && isOn(m)) {
+      const mt = elText(m).trim();
+      if (mt) out.push(dot(mt));
+    }
     const pf = joinEls(profileEls().filter(isOn));
     if (pf) out.push(pf);
     for (const e of postEls()) if (isOn(e)) out.push(dot(elText(e)));
@@ -577,10 +623,17 @@
       else if (h.night && hasV("night")) st.head = "night";
       else if (h.checkride && hasV("checkride")) st.head = "checkride";
     }
+    /* R17 — a sortie may name its own head (the printed mission name of ITS
+       section: C5490 FINAL, C4790 FOR SOLO, I41XX BASIC, N44XX TWO-SHIP …) —
+       it wins over the family and the auto-detection. */
+    if (h.head && hasV(h.head)) st.head = h.head;
 
     if (fam.all_off) for (const e of canonFlat()) st.on[e._key] = false;
     if (fam.on) for (const k of Object.keys(fam.on)) st.on[k] = fam.on[k];
     if (fam.choice) for (const k of Object.keys(fam.choice)) st.choice[k] = fam.choice[k];
+    /* R17 — per-sortie toggle overrides, applied AFTER the family (the C48XX
+       solo rows are pattern-only, so their solo sheets open without area work) */
+    if (h.on) for (const k of Object.keys(h.on)) st.on[k] = h.on[k];
 
     /* per-sortie preselects the research derived, applied only where the family
        has not already spoken: take-off type · area-vs-route · low level · ELP ·
@@ -601,7 +654,10 @@
        and both stay hand-editable. */
     st.ramp = epRamp(id);
     const mif = st.ramp.preset;
-    st.ep = { on: true, d: mif, a: mif, picks: [], short: false };
+    /* R17 — on a SOLO sheet the EP drill line starts OFF (no IP aboard to run
+       drills — panel catch, all three seats). The desired/achieved preset ramp
+       is untouched and one click on the «#… LINE» chip brings the line back. */
+    st.ep = { on: !fam.ep_off, d: mif, a: mif, picks: [], short: false };
 
     /* A2 — a DUAL flown immediately before a green-framed SOLO must carry the
        authorization, so the clearance outcome is preset here and announced by
@@ -642,15 +698,23 @@
   function draftNotes() {
     const out = [];
     if (st.fam && st.fam.draft) out.push(st.fam.draft);
+    /* R17 — a sortie hint may carry its own open question (N4401-03 medium/low) */
+    if (st.hint && st.hint.draft && out.indexOf(st.hint.draft) < 0) out.push(st.hint.draft);
     const h = st.tpl.head;
     const hv = h && h.variants.find((x) => x.id === st.head);
     if (hv && hv.status === "draft" && hv.why && out.indexOf(hv.why) < 0) out.push(hv.why);
-    for (const e of profileEls()) {
-      if (isOn(e) && e.status === "draft" && e.why && out.indexOf(e.why) < 0) out.push(e.why);
-    }
-    for (const e of postEls()) {
-      if (isOn(e) && e.status === "draft" && e.why && out.indexOf(e.why) < 0) out.push(e.why);
-    }
+    /* R17 — an element's ACTIVE CHOICE may itself be a draft (the «EP TRAINING»
+       short form); the marker follows the picked variant, not the element. */
+    const chDraft = (e) => {
+      if (!isOn(e)) return;
+      if (e.status === "draft" && e.why && out.indexOf(e.why) < 0) out.push(e.why);
+      const c = activeChoice(e);
+      if (c && c.status === "draft" && c.why && out.indexOf(c.why) < 0) out.push(c.why);
+    };
+    const m = missionEl();
+    if (m) chDraft(m);
+    for (const e of profileEls()) chDraft(e);
+    for (const e of postEls()) chDraft(e);
     const o = outcomeObj();
     if (o.status === "draft" && o.why && out.indexOf(o.why) < 0) out.push(o.why);
     if (profileEls().some((e) => isOn(e) && e._custom)) {
@@ -715,6 +779,9 @@
           + ">" + esc(v.label) + (v.status === "draft" ? " ·draft" : "") + "</option>").join("")
         + "</select> ";
     }
+    /* R17 — the MISSION sentence, between the head and the profile */
+    const m = missionEl();
+    if (m && isOn(m)) out += elHtml(m) + '<span class="desc-sep">.</span> ';
     const els = profileEls().filter(isOn);
     els.forEach((e, i) => {
       if (i) out += '<span class="desc-sep">' + esc(e.join || (i === els.length - 1 ? " & " : ", ")) + "</span>";
@@ -755,18 +822,33 @@
     const els = profileEls();
     let out = "";
     let rep = null;
+    /* R17 — the MISSION sentence chip leads the row: it is a sentence of its
+       own (never comma-joined), so it stands apart from the profile chips. */
+    const m = missionEl();
+    if (m) {
+      out += '<button class="desc-chip opt' + (isOn(m) ? "" : " off")
+        + (m.status === "draft" ? " draft" : "") + '" data-tog="mission"'
+        + (m.note ? ' title="' + esc(m.note) + '"' : "") + ">"
+        + esc(m._label) + (m.note ? ' <i class="desc-i">ⓘ</i>' : "") + "</button>";
+    }
     els.forEach((e) => {
       if (e._rep && e._inst !== rep) {
         rep = e._inst;
         out += '<span class="desc-grp">block ' + rep + "</span>";
       } else if (!e._rep) { rep = null; }
       const cls = ["desc-chip"];
+      const lk = isLocked(e._key);
       if (!isOn(e)) cls.push("off");
       if (e.opt) cls.push("opt");
       if (e.status === "draft") cls.push("draft");
+      /* R17 — §14b(6) lock: the chip is shown struck and dead, with the reason */
+      const tip = lk ? ((st.fam.lock_note || "Locked off on a solo sheet.")
+                        + (e.note ? " · " + e.note : ""))
+                     : e.note;
       out += '<button class="' + cls.join(" ") + '" data-tog="' + esc(e._key) + '"'
-        + (e.note ? ' title="' + esc(e.note) + '"' : "") + ">"
-        + esc(e._label) + (e.note ? ' <i class="desc-i">ⓘ</i>' : "")
+        + (lk ? " disabled" : "")
+        + (tip ? ' title="' + esc(tip) + '"' : "") + ">"
+        + (lk ? "🔒 " : "") + esc(e._label) + (tip ? ' <i class="desc-i">ⓘ</i>' : "")
         + (e._custom ? ' <i class="desc-x" data-del="' + esc(e._key) + '">✕</i>'
             + '<i class="desc-x" data-mv="' + esc(e._key) + '|-1">◀</i>'
             + '<i class="desc-x" data-mv="' + esc(e._key) + '|1">▶</i>' : "")
@@ -902,9 +984,38 @@
       + '<p class="hint desc-sortiename">' + esc(h.name || "")
       + (h.note ? " — " + esc(h.note) : "") + "</p>";
 
+    /* R17 — the section's own MISSION / OBJECTIVE, verbatim from the syllabus
+       (data/sections.json). The info line under the sortie bar; the enriched
+       MISSION-sentence seeds were derived from exactly these texts. */
+    const sec = st.sec && st.sec[st.sortie];
+    if (sec) {
+      out += '<p class="hint desc-secinfo"><b>MISSION:</b> ' + esc(sec.mission || "—")
+        + ' <b>OBJECTIVE:</b> ' + esc(sec.objective || "—")
+        + ' <span class="badge">Syllabus · ' + esc(sec.section_id_range || h.section) + "</span></p>";
+    }
+
     if (drafts.length) {
       out += '<div class="desc-draft"><b>DRAFT — proposed variant.</b><ul>'
         + drafts.map((d) => "<li>" + esc(d) + "</li>").join("") + "</ul></div>";
+    }
+
+    /* R17 — «Οταν ειναι solo πρεπει να το γραφουμε στην περιγραφη» (user,
+       20/08/2026): solo sorties open with their SOLO wording. The banner says
+       what was preset and how a dual-flown candidate steps back. */
+    if (h.first_solo) {
+      out += '<div class="desc-solonext"><b>1ST SOLO.</b> This is the SP’s first solo '
+        + "(C4790 is the checkride that cleared it), so the description opens with the "
+        + "<b>1ST SOLO</b> wording, ELP is <b>locked off</b> (Syllabus §14b(6): forbidden in "
+        + "SOLO flights), the EP drill line starts <b>OFF</b> (no IP aboard) and the "
+        + "Contact-Car sentence (§14c(5)) is on by default.</div>";
+    } else if (h.solo_candidate) {
+      out += '<div class="desc-solonext is-soft"><b>SOLO CANDIDATE — green frame.</b> '
+        + "This sheet opens with the <b>SOLO</b> wording (the user’s ruling: when it is "
+        + "solo, the description says so)"
+        + (isLocked("elp") ? " — ELP locked off (§14b(6))" : "")
+        + (st.fam.ep_off ? ", EP drill line OFF (no IP aboard)" : "")
+        + ". If <b>this</b> one was flown DUAL, switch the head to the plain variant and "
+        + "the MISSION sentence to a dual seed (or off) — the dual wording is one click away.</div>";
     }
 
     /* A2 — the authorization is never left to memory */
@@ -1082,11 +1193,18 @@
     let html = "<h4>Template, verbatim</h4><p class=\"verbatim\">" + esc(t.canon) + "</p>"
       + '<p class="req-src">📄 ' + esc(t.canon_source) + "</p>"
       + "<h4>How it is read</h4><p class=\"hint\">" + esc(st.data.note) + "</p>"
+      + (st.data.enriched_note
+          ? "<h4>R17 — enriched defaults vs canon</h4><p class=\"hint\">" + esc(st.data.enriched_note) + "</p>"
+          : "")
       + "<h4>This sortie</h4>"
       + '<table class="spec-table"><tbody>'
       + "<tr><td>Sortie</td><td>" + esc(st.sortie) + " · " + esc(h.name || "") + "</td></tr>"
       + "<tr><td>Section</td><td>" + esc(h.section) + " · " + esc(h.band === "fs" ? "F/S" : "aircraft") + "</td></tr>"
       + "<tr><td>Family</td><td>" + esc(h.family) + "</td></tr>"
+      + (st.sec && st.sec[st.sortie]
+          ? "<tr><td>Printed MISSION</td><td>" + esc(st.sec[st.sortie].mission || "—") + "</td></tr>"
+            + "<tr><td>Printed OBJECTIVE</td><td>" + esc(st.sec[st.sortie].objective || "—") + "</td></tr>"
+          : "")
       + "<tr><td>EP gradesheet item</td><td>#" + cat.ep_item + " · MIF in this section: "
         + esc(h.ep_mif || "—") + "</td></tr>"
       + "<tr><td>EP desired code</td><td><b>" + esc(rp.preset) + "</b> — "
@@ -1176,6 +1294,7 @@
             + '" data-sortie="' + esc(s.id) + '"><span class="sn">' + esc(s.id) + "</span>"
             + esc(s.name || "") + '<span class="obs-n">'
             + (s.checkride ? "CHK " : "") + (s.night ? "NGT " : "") + (s.first_solo ? "1st SOLO" : "")
+            + (s.solo_candidate && !s.first_solo ? "SOLO" : "")
             + "</span></button>").join("")
         : '<p class="hint">No ' + (st.band === "fs" ? "F/S" : "aircraft") + " sorties match.</p>";
     }
@@ -1269,8 +1388,11 @@
       }
       if ((el = hit("[data-tog]"))) {
         const k = el.dataset.tog;
+        if (isLocked(k)) return;                       // R17 — §14b(6) lock
         const cur = st.on[k];
-        const src = profileEls().concat(postEls()).find((x) => x._key === k);
+        const m = missionEl();
+        const src = profileEls().concat(postEls()).concat(m ? [m] : [])
+          .find((x) => x._key === k);
         st.on[k] = cur === undefined ? !(src && src.on) : !cur;
         return render();
       }

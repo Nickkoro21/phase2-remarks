@@ -1,7 +1,7 @@
 {
  "schema": "descriptions-v1",
  "generated": "2026-08-20",
- "round": "R16",
+ "round": "R17",
  "note": "THE GRAMMAR OF THE SORTIE DESCRIPTION BLOCK — the twin of the remarks catalogue. `templates` carry the four squadron templates the user photographed on 2026-08-20, verbatim in `canon`, decomposed into ordered profile elements. A PARENTHESIS IN THE PRINTED TEMPLATE MEANS «OPTIONAL», NOT «PRINT THESE BRACKETS» — the sample photos prove it: the canon writes «(ELP)» and the filled sample writes «ELP». So every element with opt:true renders WITHOUT its brackets when it is on, and disappears when it is off. Anything the four photos do not prove carries status:\"draft\" plus a `why` — the tab shows those as «DRAFT — proposed variant» and never renders them silently.",
  "sources": [
   "user photos, 2026-08-20 — the four squadron description templates + 2 filled samples",
@@ -281,6 +281,17 @@
      "v": "4"
     }
    ]
+  },
+  "positions": {
+   "note": "the SP's ship position on a formation solo. LEADER is the syllabus's own word (F43XX: «interval T/O as Leader»).",
+   "values": [
+    {
+     "v": "LEADER"
+    },
+    {
+     "v": "WINGMAN"
+    }
+   ]
   }
  },
  "external_lists": {
@@ -325,8 +336,41 @@
       "id": "checkride",
       "text": "CONTACT CHECKRIDE.",
       "label": "CONTACT CHECKRIDE.",
-      "status": "draft",
-      "why": "The printed CONTACT / NAVIGATION / INSTRUMENT templates only spell «SORTIE». The FORMATION template prints «FORMATION (SORTIE/CHECKRIDE).», which is the squadron's own proof that the alternation exists — so the same alternation is PROPOSED for the other three. Awaiting the user's ruling."
+      "status": "enriched",
+      "why": null,
+      "src": "R17 panel: the FORMATION canon prints «FORMATION (SORTIE/CHECKRIDE).» — the squadron's own proof of the alternation; adopted for the other three categories with the syllabus's printed mission names."
+     },
+     {
+      "id": "final",
+      "text": "FINAL CONTACT CHECKRIDE.",
+      "label": "FINAL CONTACT CHECKRIDE.",
+      "status": "enriched",
+      "why": null,
+      "src": "C5490 printed MISSION «Final Contact Checkride.» — panel B variant, adopted R17."
+     },
+     {
+      "id": "chk_solo",
+      "text": "CONTACT CHECKRIDE FOR SOLO.",
+      "label": "CONTACT CHECKRIDE FOR SOLO.",
+      "status": "enriched",
+      "why": null,
+      "src": "C4790 printed MISSION «Contact checkride for SOLO …» — panel C winner, adopted R17."
+     },
+     {
+      "id": "solo_first",
+      "text": "1ST SOLO CONTACT SORTIE.",
+      "label": "1ST SOLO CONTACT SORTIE.",
+      "status": "enriched",
+      "why": null,
+      "src": "C4791 — panel B head grafted onto the C-winner family (SQUADRON+LANGUAGE): the category noun stays in the head."
+     },
+     {
+      "id": "solo",
+      "text": "CONTACT SOLO SORTIE.",
+      "label": "CONTACT SOLO SORTIE.",
+      "status": "enriched",
+      "why": null,
+      "src": "Area/pattern solos — panel A head (canon-shaped), grafted by the DOCTRINE seat; «SOLO» is in the head per the user's ruling."
      },
      {
       "id": "night",
@@ -339,15 +383,17 @@
       "id": "fs",
       "text": "CONTACT F/S SORTIE.",
       "label": "CONTACT F/S SORTIE.",
-      "status": "draft",
-      "why": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+      "status": "enriched",
+      "why": null,
+      "src": "R17 panel: no printed F/S template exists; the «… F/S SORTIE.» opening was adopted as the enriched default (item numbering, EP item and MIF tables are identical for F/S)."
      },
      {
       "id": "fs_night",
       "text": "NIGHT CONTACT F/S SORTIE.",
       "label": "NIGHT CONTACT F/S SORTIE.",
-      "status": "draft",
-      "why": "No F/S template was supplied AND no printed template names the night — this opening combines both PROPOSED variants for the one sortie of Phase II that is both (I3601, the F/S night IFR navigation). Everything below the opening line is unchanged: the item numbering, the EP item and the MIF tables are identical for F/S."
+      "status": "enriched",
+      "why": null,
+      "src": "R17 panel: no printed F/S template exists; the «… F/S SORTIE.» opening was adopted as the enriched default (item numbering, EP item and MIF tables are identical for F/S)."
      }
     ]
    },
@@ -371,11 +417,12 @@
        "v": " TO"
       }
      ],
-     "status": "canon"
+     "status": "canon",
+     "note": "The photographed CONTACT and FORMATION templates print «TO» where INSTRUMENT and NAVIGATION print «T/O». Normalizing TO -> T/O is a one-character ruling for the user, NOT taken by the R17 panel — kept as photographed."
     },
     {
      "id": "dep",
-     "label": "VFR DEP.",
+     "label": "VFR DEPARTURE",
      "opt": false,
      "on": true,
      "parts": [
@@ -389,10 +436,11 @@
       },
       {
        "t": "lit",
-       "v": " DEP."
+       "v": " DEPARTURE"
       }
      ],
-     "status": "canon"
+     "status": "canon",
+     "note": "Rendered per the user's full-words ruling (2026-08-20): the photographed canon prints the clipped form (see templates.<id>.canon, kept verbatim); the rendered string spells the full word. Canon prints «DEP.»."
     },
     {
      "id": "fence_in",
@@ -513,7 +561,25 @@
      "status": "canon"
     }
    ],
-   "post": [],
+   "post": [
+    {
+     "id": "contact_car",
+     "label": "SOLO LANDING SUPERVISED … CONTACT CAR.",
+     "opt": true,
+     "on": true,
+     "fam": [
+      "contact-solo-1st"
+     ],
+     "parts": [
+      {
+       "t": "lit",
+       "v": "SOLO LANDING SUPERVISED AND GRADED FROM THE CONTACT CAR."
+      }
+     ],
+     "status": "enriched",
+     "note": "Syllabus PDF p.165 §14c(5), verbatim: «The evaluator of the C4790 will supervise and grade SP's landing from the Contact Car.» — the clause binds the LANDING (panel B wording; the DOCTRINE seat barred extending supervise-and-grade to the whole sortie)."
+    }
+   ],
    "graded": "THE ABOVE GRADED PROFILE WAS FLOWN.",
    "overall": "SORTIE OVERALL GRADED AS {grade}."
   },
@@ -537,15 +603,48 @@
       "id": "sortie",
       "text": "INSTRUMENT SORTIE.",
       "label": "INSTRUMENT SORTIE.",
-      "status": "draft",
-      "why": "The printed CONTACT / NAVIGATION / INSTRUMENT templates only spell «SORTIE». The FORMATION template prints «FORMATION (SORTIE/CHECKRIDE).», which is the squadron's own proof that the alternation exists — so the same alternation is PROPOSED for the other three. Awaiting the user's ruling."
+      "status": "enriched",
+      "why": null,
+      "src": "R17 panel: the FORMATION canon prints «FORMATION (SORTIE/CHECKRIDE).» — the squadron's own proof of the alternation; adopted for the other three categories with the syllabus's printed mission names."
+     },
+     {
+      "id": "basic",
+      "text": "BASIC INSTRUMENT SORTIE.",
+      "label": "BASIC INSTRUMENT SORTIE.",
+      "status": "enriched",
+      "why": null,
+      "src": "I41XX printed MISSION «Basic Instrument.» — panel A winner (instrument-area): the head IS the printed mission plus one word."
+     },
+     {
+      "id": "advanced",
+      "text": "ADVANCED INSTRUMENT SORTIE.",
+      "label": "ADVANCED INSTRUMENT SORTIE.",
+      "status": "enriched",
+      "why": null,
+      "src": "I42XX/I43XX printed MISSION «Advanced Instrument.» — panel A winner (instrument-area)."
+     },
+     {
+      "id": "ifr_nav",
+      "text": "IFR NAVIGATION SORTIE.",
+      "label": "IFR NAVIGATION SORTIE.",
+      "status": "enriched",
+      "why": null,
+      "src": "I45XX/I46XX printed MISSION noun — panel A graft onto the C-winner family (instrument-route): the head renamed to the mission's own noun."
      },
      {
       "id": "checkride",
       "text": "INSTRUMENT CHECKRIDE.",
       "label": "INSTRUMENT CHECKRIDE.",
+      "status": "enriched",
+      "why": null,
+      "src": "R17 panel: the FORMATION canon prints «FORMATION (SORTIE/CHECKRIDE).» — the squadron's own proof of the alternation; adopted for the other three categories with the syllabus's printed mission names."
+     },
+     {
+      "id": "final",
+      "text": "FINAL INSTRUMENTS CHECKRIDE.",
+      "label": "FINAL INSTRUMENTS CHECKRIDE.",
       "status": "draft",
-      "why": "The printed CONTACT / NAVIGATION / INSTRUMENT templates only spell «SORTIE». The FORMATION template prints «FORMATION (SORTIE/CHECKRIDE).», which is the squadron's own proof that the alternation exists — so the same alternation is PROPOSED for the other three. Awaiting the user's ruling."
+      "why": "OPEN QUESTION (R17 panel, 2-1): I4890's printed MISSION is «Final Instruments Checkride.» and the squadron's own template heading prints «INSTRUMENTS» — the plural is house style (SQUADRON + DOCTRINE seats). «FINAL INSTRUMENT CHECKRIDE.» would match the app's singular heads instead (LANGUAGE seat). Singular vs plural is a NAMING ruling for the user; the printed plural ships as the draft default."
      },
      {
       "id": "night",
@@ -555,18 +654,44 @@
       "why": "Night wording is PROPOSED. Phase II has exactly two night sorties — I3601 (F/S) and I4701 (aircraft) — and no printed template names the night."
      },
      {
+      "id": "night_airways",
+      "text": "NIGHT IFR NAVIGATION SORTIE THROUGH AIRWAYS.",
+      "label": "NIGHT IFR NAVIGATION SORTIE THROUGH AIRWAYS.",
+      "status": "enriched",
+      "why": null,
+      "src": "I4701 printed MISSION «Night IFR navigation flight through airways.» — panel A winner: the mission sentence IS the head."
+     },
+     {
       "id": "fs",
       "text": "INSTRUMENT F/S SORTIE.",
       "label": "INSTRUMENT F/S SORTIE.",
-      "status": "draft",
-      "why": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+      "status": "enriched",
+      "why": null,
+      "src": "R17 panel: no printed F/S template exists; the «… F/S SORTIE.» opening was adopted as the enriched default (item numbering, EP item and MIF tables are identical for F/S)."
+     },
+     {
+      "id": "fs_ifr_nav",
+      "text": "IFR NAVIGATION F/S SORTIE.",
+      "label": "IFR NAVIGATION F/S SORTIE.",
+      "status": "enriched",
+      "why": null,
+      "src": "I34XX/I35XX printed MISSION «IFR Navigation.» — panel A head (fs-instrument-route): the rename is the entire enrichment."
      },
      {
       "id": "fs_night",
       "text": "NIGHT INSTRUMENT F/S SORTIE.",
       "label": "NIGHT INSTRUMENT F/S SORTIE.",
-      "status": "draft",
-      "why": "No F/S template was supplied AND no printed template names the night — this opening combines both PROPOSED variants for the one sortie of Phase II that is both (I3601, the F/S night IFR navigation). Everything below the opening line is unchanged: the item numbering, the EP item and the MIF tables are identical for F/S."
+      "status": "enriched",
+      "why": null,
+      "src": "R17 panel: no printed F/S template exists; the «… F/S SORTIE.» opening was adopted as the enriched default (item numbering, EP item and MIF tables are identical for F/S)."
+     },
+     {
+      "id": "fs_night_ifr",
+      "text": "NIGHT IFR NAVIGATION F/S SORTIE.",
+      "label": "NIGHT IFR NAVIGATION F/S SORTIE.",
+      "status": "enriched",
+      "why": null,
+      "src": "I3601 printed MISSION «Night IFR Navigation.» — panel A head (fs-instrument-route-night); night once in the head."
      }
     ]
    },
@@ -594,7 +719,7 @@
     },
     {
      "id": "dep",
-     "label": "IFR DEP.",
+     "label": "IFR DEPARTURE",
      "opt": false,
      "on": true,
      "parts": [
@@ -608,10 +733,11 @@
       },
       {
        "t": "lit",
-       "v": " DEP."
+       "v": " DEPARTURE"
       }
      ],
-     "status": "canon"
+     "status": "canon",
+     "note": "Rendered per the user's full-words ruling (2026-08-20): the photographed canon prints the clipped form (see templates.<id>.canon, kept verbatim); the rendered string spells the full word. Canon prints «DEP.»."
     },
     {
      "id": "sid",
@@ -772,17 +898,17 @@
       },
       {
        "id": "missed",
-       "label": "MISSED APPR. / TOUCH&GO",
+       "label": "MISSED APPROACH / TOUCH&GO",
        "opt": true,
        "on": true,
        "choice": [
         {
          "id": "missed",
-         "label": "MISSED APPR.",
+         "label": "MISSED APPROACH",
          "parts": [
           {
            "t": "lit",
-           "v": "MISSED APPR."
+           "v": "MISSED APPROACH"
           }
          ]
         },
@@ -798,7 +924,8 @@
         }
        ],
        "def": "missed",
-       "status": "canon"
+       "status": "canon",
+       "note": "Rendered per the user's full-words ruling (2026-08-20): the photographed canon prints the clipped form (see templates.<id>.canon, kept verbatim); the rendered string spells the full word. Canon prints «MISSED APPR.»."
       }
      ]
     },
@@ -881,11 +1008,35 @@
       "why": null
      },
      {
+      "id": "two_ship",
+      "text": "TWO-SHIP FORMATION SORTIE.",
+      "label": "TWO-SHIP FORMATION SORTIE.",
+      "status": "enriched",
+      "why": null,
+      "src": "F41XX-F45XX printed MISSION «Two-ship Formation.» — panel A head, offered as a variant (SQUADRON graft); the photographed «FORMATION SORTIE.» stays the default (DOCTRINE)."
+     },
+     {
       "id": "checkride",
       "text": "FORMATION CHECKRIDE.",
       "label": "FORMATION CHECKRIDE.",
       "status": "canon",
       "why": null
+     },
+     {
+      "id": "final",
+      "text": "FINAL FORMATION CHECKRIDE.",
+      "label": "FINAL FORMATION CHECKRIDE.",
+      "status": "enriched",
+      "why": null,
+      "src": "F4690 printed MISSION «Final Formation Checkride.» — panel C default (2-1; DOCTRINE dissent kept the plain canon opener as default). The canon «FORMATION CHECKRIDE.» stays one click away."
+     },
+     {
+      "id": "solo",
+      "text": "FORMATION SOLO SORTIE.",
+      "label": "FORMATION SOLO SORTIE.",
+      "status": "enriched",
+      "why": null,
+      "src": "Formation solos — canon-shaped solo head; «SOLO» is in the head per the user's ruling (the formation solo is the case where solo is least visible from the profile — panel C)."
      },
      {
       "id": "night",
@@ -898,15 +1049,25 @@
       "id": "fs",
       "text": "FORMATION F/S SORTIE.",
       "label": "FORMATION F/S SORTIE.",
-      "status": "draft",
-      "why": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+      "status": "enriched",
+      "why": null,
+      "src": "R17 panel: no printed F/S template exists; the «… F/S SORTIE.» opening was adopted as the enriched default (item numbering, EP item and MIF tables are identical for F/S)."
+     },
+     {
+      "id": "fs_two_ship",
+      "text": "TWO-SHIP FORMATION F/S SORTIE.",
+      "label": "TWO-SHIP FORMATION F/S SORTIE.",
+      "status": "enriched",
+      "why": null,
+      "src": "F31XX/F32XX printed MISSION «Two-ship Formation» — panel A head (fs-formation): head-only enrichment, a clause would be padding."
      },
      {
       "id": "fs_night",
       "text": "NIGHT FORMATION F/S SORTIE.",
       "label": "NIGHT FORMATION F/S SORTIE.",
-      "status": "draft",
-      "why": "No F/S template was supplied AND no printed template names the night — this opening combines both PROPOSED variants for the one sortie of Phase II that is both (I3601, the F/S night IFR navigation). Everything below the opening line is unchanged: the item numbering, the EP item and the MIF tables are identical for F/S."
+      "status": "enriched",
+      "why": null,
+      "src": "R17 panel: no printed F/S template exists; the «… F/S SORTIE.» opening was adopted as the enriched default (item numbering, EP item and MIF tables are identical for F/S)."
      }
     ]
    },
@@ -931,11 +1092,11 @@
       }
      ],
      "status": "canon",
-     "note": "the canon leaves the take-off blank; the syllabus makes INTERVAL the normal formation departure (F41XX §1)."
+     "note": "the canon leaves the take-off blank; the syllabus makes INTERVAL the normal formation departure (F41XX §1). The photographed CONTACT and FORMATION templates print «TO» where INSTRUMENT and NAVIGATION print «T/O». Normalizing TO -> T/O is a one-character ruling for the user, NOT taken by the R17 panel — kept as photographed."
     },
     {
      "id": "dep",
-     "label": "VFR DEP.",
+     "label": "VFR DEPARTURE",
      "opt": false,
      "on": true,
      "parts": [
@@ -949,10 +1110,11 @@
       },
       {
        "t": "lit",
-       "v": " DEP."
+       "v": " DEPARTURE"
       }
      ],
-     "status": "canon"
+     "status": "canon",
+     "note": "Rendered per the user's full-words ruling (2026-08-20): the photographed canon prints the clipped form (see templates.<id>.canon, kept verbatim); the rendered string spells the full word. Canon prints «DEP.»."
     },
     {
      "id": "fence_in",
@@ -1040,7 +1202,7 @@
     },
     {
      "id": "rtb_appr",
-     "label": "_FR RTB, ____ APPR.",
+     "label": "_FR RTB, ____ APPROACH",
      "opt": true,
      "on": false,
      "parts": [
@@ -1066,10 +1228,11 @@
       },
       {
        "t": "lit",
-       "v": " APPR."
+       "v": " APPROACH"
       }
      ],
-     "status": "canon"
+     "status": "canon",
+     "note": "Rendered per the user's full-words ruling (2026-08-20): the photographed canon prints the clipped form (see templates.<id>.canon, kept verbatim); the rendered string spells the full word. Canon prints «APPR.»."
     },
     {
      "id": "pattern",
@@ -1133,6 +1296,31 @@
      ],
      "status": "canon",
      "note": "read as the ship count that departed and recovered — every Phase II formation section prints «NUMBER OF AIRCRAFT: Sorties will be performed with two A/C». Free text stays open in case the squadron writes times here instead; AWAITING THE USER'S RULING."
+    },
+    {
+     "id": "sp_pos",
+     "label": "SP SOLO AS LEADER / WINGMAN.",
+     "opt": true,
+     "on": false,
+     "fam": [
+      "formation-solo"
+     ],
+     "parts": [
+      {
+       "t": "lit",
+       "v": "SP SOLO AS "
+      },
+      {
+       "t": "slot",
+       "id": "position",
+       "list": "positions",
+       "free": true,
+       "ph": "____",
+       "def": "LEADER"
+      }
+     ],
+     "status": "enriched",
+     "note": "Optional position clause — panel A graft. LEADER is the syllabus's own word: F43XX «first SOLO T/O = INTERVAL as Leader from RWY centre»."
     }
    ],
    "graded": "THE ABOVE GRADED PROFILE WAS FLOWN.",
@@ -1165,8 +1353,40 @@
       "id": "checkride",
       "text": "NAVIGATION CHECKRIDE.",
       "label": "NAVIGATION CHECKRIDE.",
+      "status": "enriched",
+      "why": null,
+      "src": "R17 panel: the FORMATION canon prints «FORMATION (SORTIE/CHECKRIDE).» — the squadron's own proof of the alternation; adopted for the other three categories with the syllabus's printed mission names."
+     },
+     {
+      "id": "vfr_chk",
+      "text": "VFR NAVIGATION CHECKRIDE.",
+      "label": "VFR NAVIGATION CHECKRIDE.",
+      "status": "enriched",
+      "why": null,
+      "src": "N4690 printed MISSION «VFR Navigation Checkride.» — panel A opener, grafted by LANGUAGE + DOCTRINE onto the B-winner family."
+     },
+     {
+      "id": "final_chk",
+      "text": "FINAL NAVIGATION CHECKRIDE.",
+      "label": "FINAL NAVIGATION CHECKRIDE.",
       "status": "draft",
-      "why": "The printed CONTACT / NAVIGATION / INSTRUMENT templates only spell «SORTIE». The FORMATION template prints «FORMATION (SORTIE/CHECKRIDE).», which is the squadron's own proof that the alternation exists — so the same alternation is PROPOSED for the other three. Awaiting the user's ruling."
+      "why": "OPEN QUESTION (R17 panel): the roster hint names N4690 «Final Navigation Checkride», the syllabus page prints MISSION «VFR Navigation Checkride.» — both heads are offered, the user rules which name the head carries. The page's own name is the default."
+     },
+     {
+      "id": "two_ship_medium",
+      "text": "TWO-SHIP MEDIUM LEVEL VFR NAVIGATION SORTIE.",
+      "label": "TWO-SHIP MEDIUM LEVEL VFR NAVIGATION SORTIE.",
+      "status": "enriched",
+      "why": null,
+      "src": "N44XX printed MISSION «Medium Level VFR Navigation (Two Ship Formation).» — panel A head grafted onto the C-winner family: the head carries the two-ship and the level, so the sentence does not echo."
+     },
+     {
+      "id": "two_ship_low",
+      "text": "TWO-SHIP LOW LEVEL VFR NAVIGATION SORTIE.",
+      "label": "TWO-SHIP LOW LEVEL VFR NAVIGATION SORTIE.",
+      "status": "enriched",
+      "why": null,
+      "src": "N45XX printed MISSION «Low Level VFR Navigation (Two Ship Formation)» — panel A head grafted onto the C-winner family."
      },
      {
       "id": "night",
@@ -1179,8 +1399,9 @@
       "id": "fs",
       "text": "NAVIGATION F/S SORTIE.",
       "label": "NAVIGATION F/S SORTIE.",
-      "status": "draft",
-      "why": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+      "status": "enriched",
+      "why": null,
+      "src": "R17 panel: no printed F/S template exists; the «… F/S SORTIE.» opening was adopted as the enriched default (item numbering, EP item and MIF tables are identical for F/S)."
      },
      {
       "id": "fs_night",
@@ -1215,7 +1436,7 @@
     },
     {
      "id": "dep",
-     "label": "VFR DEP.",
+     "label": "VFR DEPARTURE",
      "opt": false,
      "on": true,
      "parts": [
@@ -1229,10 +1450,11 @@
       },
       {
        "t": "lit",
-       "v": " DEP."
+       "v": " DEPARTURE"
       }
      ],
-     "status": "canon"
+     "status": "canon",
+     "note": "Rendered per the user's full-words ruling (2026-08-20): the photographed canon prints the clipped form (see templates.<id>.canon, kept verbatim); the rendered string spells the full word. Canon prints «DEP.»."
     },
     {
      "id": "cpm",
@@ -1265,8 +1487,9 @@
        "v": "LOW LEVEL"
       }
      ],
-     "status": "draft",
-     "why": "The printed NAVIGATION template has one route blank and does not name the altitude band, but the syllabus splits N41-N43 (medium altitude) from N44-N46 (LOW LEVEL, PDF p.19). PROPOSED marker for the low-level sections."
+     "status": "enriched",
+     "why": null,
+     "src": "The printed NAVIGATION template has one route blank and does not name the altitude band; the syllabus splits medium from LOW LEVEL sections. Adopted R17 — the marker is preset from the sortie hint alone (work: ROUTE_LOW), never from the family (the R16 family preset put LOW LEVEL on the three medium N44XX sorties — panel C catch, fixed)."
     },
     {
      "id": "rtb",
@@ -1348,8 +1571,9 @@
        "v": " BACK."
       }
      ],
-     "status": "draft",
-     "why": "The printed NAVIGATION template is a single-ship template, but N44XX-N46XX are flown two-ship. The OUT/BACK sentence is borrowed VERBATIM from the FORMATION template — the squadron's own multi-ship wording. PROPOSED."
+     "status": "enriched",
+     "why": null,
+     "src": "The printed NAVIGATION template is a single-ship template; N44XX-N46XX are flown two-ship, and the «__ OUT - __ BACK.» sentence is the FORMATION template's own multi-ship wording — confirmed in the squadron's own formation wording (panel A rationale, adopted R17)."
     }
    ],
    "graded": "THE ABOVE GRADED PROFILE WAS FLOWN.",
@@ -1592,22 +1816,190 @@
  ],
  "families": {
   "contact": {
-   "tpl": "contact"
+   "tpl": "contact",
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": true,
+    "def": "c42",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "c41",
+      "label": "C4101 · FLOWN FOR DEMONSTRATION OF THE LOCAL FLYING AREAS AND GROUND REFERENCE POINTS.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN FOR DEMONSTRATION OF THE LOCAL FLYING AREAS AND GROUND REFERENCE POINTS"
+       }
+      ]
+     },
+     {
+      "id": "c42",
+      "label": "C42-C44 · FLOWN FOR FAMILIARIZATION WITH THE A/C FLIGHT CHARACTERISTICS AND FOR DEMONSTRATION AND PRACTICE OF FUNDAMENTAL FLIGHT MANEUVERS.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN FOR FAMILIARIZATION WITH THE A/C FLIGHT CHARACTERISTICS AND FOR DEMONSTRATION AND PRACTICE OF FUNDAMENTAL FLIGHT MANEUVERS"
+       }
+      ]
+     },
+     {
+      "id": "c48",
+      "label": "C48-C49 · FLOWN FOR CONTINUED FAMILIARIZATION WITH THE A/C FLIGHT CHARACTERISTICS AND PRACTICE ON BASIC AND ADVANCED CONTACT MANEUVERS.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN FOR CONTINUED FAMILIARIZATION WITH THE A/C FLIGHT CHARACTERISTICS AND PRACTICE ON BASIC AND ADVANCED CONTACT MANEUVERS"
+       }
+      ]
+     },
+     {
+      "id": "c51",
+      "label": "C51-C53 · FLOWN FOR CONTINUED FAMILIARIZATION WITH THE A/C FLIGHT CHARACTERISTICS AND PRACTICE ON BASIC AND ADVANCED FLIGHT MANEUVERS.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN FOR CONTINUED FAMILIARIZATION WITH THE A/C FLIGHT CHARACTERISTICS AND PRACTICE ON BASIC AND ADVANCED FLIGHT MANEUVERS"
+       }
+      ]
+     },
+     {
+      "id": "short_c",
+      "label": "short · PRACTICE ON BASIC AND ADVANCED CONTACT MANEUVERS.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "PRACTICE ON BASIC AND ADVANCED CONTACT MANEUVERS"
+       }
+      ]
+     },
+     {
+      "id": "short_f",
+      "label": "short · PRACTICE ON BASIC AND ADVANCED FLIGHT MANEUVERS.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "PRACTICE ON BASIC AND ADVANCED FLIGHT MANEUVERS"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "Seeded per section from the printed OBJECTIVEs (data/sections.json): the C48/C49 «contact maneuvers» vs C51-C53 «flight Maneuvers» split is the syllabus's own and is kept (panel B graft, demanded by all three seats). «CONTINUED» tells the reader where in the course the SP stands (panel C, SQUADRON seat). The short forms are the panel-A payload-first graft."
+   }
   },
   "contact-checkride": {
    "tpl": "contact",
    "head": "checkride",
-   "draft": "The printed CONTACT / NAVIGATION / INSTRUMENT templates only spell «SORTIE». The FORMATION template prints «FORMATION (SORTIE/CHECKRIDE).», which is the squadron's own proof that the alternation exists — so the same alternation is PROPOSED for the other three. Awaiting the user's ruling."
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": true,
+    "def": "chk",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "chk",
+      "label": "FLOWN TO DEMONSTRATE THE REQUIRED PROFICIENCY LEVEL IAW MIFS IN A REPRESENTATIVE CROSS SECTION OF CONTACT MANEUVERS AND PROCEDURES.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN TO DEMONSTRATE THE REQUIRED PROFICIENCY LEVEL IAW MIFS IN A REPRESENTATIVE CROSS SECTION OF CONTACT MANEUVERS AND PROCEDURES"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "Checkride OBJECTIVE recast as a PURPOSE clause — intent, not verdict; the verdict stays in the canon grade sentence, so the sentence is true under a FAIL outcome too (panel ruling, all three seats — the A-draft's «PROFICIENCY DEMONSTRATED» form was barred)."
+   }
   },
   "contact-pattern": {
    "tpl": "contact",
-   "draft": "C46XX / C47XX are PATTERN-ONLY sections — the syllabus profile is ground procedures, traffic pattern, basic A/C control, ELP, patterns, straight-in, go around, closed pattern (PDF p.173, p.175). The printed CONTACT template's mandatory «AREA WORK IN ____ FL100-200» does not apply, so AREA WORK / FENCE IN / FENCE OUT start OFF. PROPOSED reading — awaiting the user's ruling.",
    "on": {
     "area": false,
     "fence_in": false,
     "fence_out": false,
     "elp": true
-   }
+   },
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": true,
+    "def": "c46",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "c46",
+      "label": "C46XX · FLOWN FOR FAMILIARIZATION WITH THE A/C FLIGHT CHARACTERISTICS AND PRACTICE ON OVERHEAD TRAFFIC PATTERNS.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN FOR FAMILIARIZATION WITH THE A/C FLIGHT CHARACTERISTICS AND PRACTICE ON OVERHEAD TRAFFIC PATTERNS"
+       }
+      ]
+     },
+     {
+      "id": "c46_short",
+      "label": "short · PRACTICE ON OVERHEAD TRAFFIC PATTERNS.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "PRACTICE ON OVERHEAD TRAFFIC PATTERNS"
+       }
+      ]
+     },
+     {
+      "id": "chk_solo",
+      "label": "C4790 · FLOWN TO DEMONSTRATE THE REQUIRED PROFICIENCY LEVEL IAW MIFS IN A REPRESENTATIVE CROSS SECTION OF CONTACT MANEUVERS AND PROCEDURES PRIOR TO THE 1ST SOLO.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN TO DEMONSTRATE THE REQUIRED PROFICIENCY LEVEL IAW MIFS IN A REPRESENTATIVE CROSS SECTION OF CONTACT MANEUVERS AND PROCEDURES PRIOR TO THE 1ST SOLO"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "C46XX seed in the printed OBJECTIVE's own word order (panel B graft via DOCTRINE); the mission sentence says why there is no area work, so the short profile reads as intent, not omission (panel A rationale, adopted). C4790: the intent form anchored «PRIOR TO THE 1ST SOLO» (panel C winner). Checkride OBJECTIVE recast as a PURPOSE clause — intent, not verdict; the verdict stays in the canon grade sentence, so the sentence is true under a FAIL outcome too (panel ruling, all three seats — the A-draft's «PROFICIENCY DEMONSTRATED» form was barred)."
+   },
+   "note": "C46XX / C47XX are PATTERN-ONLY sections — the syllabus profile is ground procedures, traffic pattern, basic A/C control, ELP, patterns, straight-in, go around, closed pattern (PDF p.173, p.175); AREA WORK / FENCE IN / FENCE OUT start OFF. Reading adopted R17 (the C46XX mission sentence states the reason)."
   },
   "instrument-area": {
    "tpl": "instrument",
@@ -1616,6 +2008,49 @@
    },
    "on": {
     "work": true
+   },
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": false,
+    "def": "basic",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "basic",
+      "label": "I41XX · FLOWN FOR FAMILIARIZATION WITH INSTRUMENT FLIGHT AND PRACTICE ON BASIC INSTRUMENTS.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN FOR FAMILIARIZATION WITH INSTRUMENT FLIGHT AND PRACTICE ON BASIC INSTRUMENTS"
+       }
+      ]
+     },
+     {
+      "id": "advanced",
+      "label": "I42XX-I43XX · FLOWN FOR FAMILIARIZATION WITH INSTRUMENT FLIGHT AND PRACTICE ON ADVANCED INSTRUMENTS.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN FOR FAMILIARIZATION WITH INSTRUMENT FLIGHT AND PRACTICE ON ADVANCED INSTRUMENTS"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "Panel A winner: the whole default enrichment is the head («{BASIC|ADVANCED} INSTRUMENT SORTIE.» — the printed mission adjective in a head the photograph left empty), so the clause starts OFF. The printed OBJECTIVE's clipped «with Instrument» is read as «instrument flight» — a reading, not an invention (panel B honesty note, filed on adoption)."
    }
   },
   "instrument-route": {
@@ -1625,6 +2060,70 @@
    },
    "on": {
     "work": true
+   },
+   "head": "ifr_nav",
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": true,
+    "def": "atoa",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "atoa",
+      "label": "FLOWN APPROACH TO APPROACH FOR PRACTICE ON IFR NAVIGATION PROCEDURES.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN APPROACH TO APPROACH FOR PRACTICE ON IFR NAVIGATION PROCEDURES"
+       }
+      ]
+     },
+     {
+      "id": "airways",
+      "label": "FLOWN THROUGH THE AIRWAYS FOR PRACTICE ON IFR NAVIGATION PROCEDURES.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN THROUGH THE AIRWAYS FOR PRACTICE ON IFR NAVIGATION PROCEDURES"
+       }
+      ]
+     },
+     {
+      "id": "atoa_short",
+      "label": "short · FLOWN APPROACH TO APPROACH.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN APPROACH TO APPROACH"
+       }
+      ]
+     },
+     {
+      "id": "airways_short",
+      "label": "short · FLOWN THROUGH THE AIRWAYS.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN THROUGH THE AIRWAYS"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "The printed MISSION is an either/or («…through airways or Approach to Approach») — a description tells ONE flight, so the OR becomes two variants and the block states which kind this one was (panel C winner). «APPROACH TO APPROACH» attaches only to FLOWN (panel language ruling). The short forms are the LANGUAGE seat's echo-trim for use under the renamed IFR NAVIGATION head."
    }
   },
   "instrument-route-night": {
@@ -1635,57 +2134,456 @@
    "on": {
     "work": true
    },
-   "head": "night",
-   "draft": "Night wording is PROPOSED. Phase II has exactly two night sorties — I3601 (F/S) and I4701 (aircraft) — and no printed template names the night."
+   "head": "night_airways",
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": true,
+    "def": "night",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "night",
+      "label": "FLOWN FOR PRACTICE ON NIGHT IFR NAVIGATION PROCEDURES.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN FOR PRACTICE ON NIGHT IFR NAVIGATION PROCEDURES"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "Panel A winner head + C's objective tail as the second sentence. Night is stated twice ON PURPOSE — once as the sortie's identity in the head, once inside the objective weave — and never a third time (panel C principle, filed on adoption). The DOCTRINE seat's print-faithful tail «…NIGHT IFR NAVIGATION FLIGHT AND PROCEDURES» is recorded as the dissent in the spec."
+   }
   },
   "instrument-checkride": {
    "tpl": "instrument",
    "head": "checkride",
-   "draft": "The printed CONTACT / NAVIGATION / INSTRUMENT templates only spell «SORTIE». The FORMATION template prints «FORMATION (SORTIE/CHECKRIDE).», which is the squadron's own proof that the alternation exists — so the same alternation is PROPOSED for the other three. Awaiting the user's ruling."
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": true,
+    "def": "chk_inst",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "chk_inst",
+      "label": "I4490 · FLOWN TO DEMONSTRATE THE REQUIRED PROFICIENCY LEVEL IAW MIFS IN A REPRESENTATIVE CROSS SECTION OF INSTRUMENT MANEUVERS AND PROCEDURES.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN TO DEMONSTRATE THE REQUIRED PROFICIENCY LEVEL IAW MIFS IN A REPRESENTATIVE CROSS SECTION OF INSTRUMENT MANEUVERS AND PROCEDURES"
+       }
+      ]
+     },
+     {
+      "id": "chk_ifrnav",
+      "label": "I4890 · FLOWN TO DEMONSTRATE THE REQUIRED PROFICIENCY LEVEL IAW MIFS IN A REPRESENTATIVE CROSS SECTION OF IFR NAVIGATION MANEUVERS AND PROCEDURES.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN TO DEMONSTRATE THE REQUIRED PROFICIENCY LEVEL IAW MIFS IN A REPRESENTATIVE CROSS SECTION OF IFR NAVIGATION MANEUVERS AND PROCEDURES"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "The two printed checkride OBJECTIVEs differ in exactly one noun phrase, so the domain is a 2-value choice (panel B mechanism). Checkride OBJECTIVE recast as a PURPOSE clause — intent, not verdict; the verdict stays in the canon grade sentence, so the sentence is true under a FAIL outcome too (panel ruling, all three seats — the A-draft's «PROFICIENCY DEMONSTRATED» form was barred)."
+   }
   },
   "formation": {
-   "tpl": "formation"
+   "tpl": "formation",
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": true,
+    "def": "fam",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "fam",
+      "label": "F41-F43 · FLOWN AS A TWO-SHIP FOR THE SP'S FAMILIARIZATION WITH FORMATION MANEUVERS.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN AS A TWO-SHIP FOR THE SP'S FAMILIARIZATION WITH FORMATION MANEUVERS"
+       }
+      ]
+     },
+     {
+      "id": "closed",
+      "label": "F44-F45 · FLOWN AS A TWO-SHIP FOR THE SP'S FAMILIARIZATION WITH CLOSED AND TACTICAL FORMATION MANEUVERS.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN AS A TWO-SHIP FOR THE SP'S FAMILIARIZATION WITH CLOSED AND TACTICAL FORMATION MANEUVERS"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "Panel C winner (2-1) in B's single-family economy: one sentence, a 2-value maneuver noun (the F44 «Closed and Tactical» split is the printed OBJECTIVE's own). LANGUAGE dissent recorded in the spec: clause OFF for F41-F43 (tautology risk) with the two-ship carried by the head — the «TWO-SHIP FORMATION SORTIE.» head variant exists for exactly that composite."
+   }
   },
   "formation-checkride": {
    "tpl": "formation",
-   "head": "checkride"
+   "head": "final",
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": true,
+    "def": "chk",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "chk",
+      "label": "FLOWN TO DEMONSTRATE THE REQUIRED PROFICIENCY LEVEL IAW MIFS IN A REPRESENTATIVE CROSS SECTION OF CLOSED AND TACTICAL FORMATION MANEUVERS AND PROCEDURES.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN TO DEMONSTRATE THE REQUIRED PROFICIENCY LEVEL IAW MIFS IN A REPRESENTATIVE CROSS SECTION OF CLOSED AND TACTICAL FORMATION MANEUVERS AND PROCEDURES"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "«CLOSED AND TACTICAL» names the cross-section, which the absent reader cannot get from the profile list alone (panel C). Checkride OBJECTIVE recast as a PURPOSE clause — intent, not verdict; the verdict stays in the canon grade sentence, so the sentence is true under a FAIL outcome too (panel ruling, all three seats — the A-draft's «PROFICIENCY DEMONSTRATED» form was barred). DOCTRINE dissent on the head default (canon «FORMATION CHECKRIDE.» first) recorded in the spec — the canon opener stays one click away."
+   }
   },
   "nav-single": {
-   "tpl": "navigation"
+   "tpl": "navigation",
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": true,
+    "def": "med",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "med",
+      "label": "N41XX · FLOWN AT MEDIUM ALTITUDE TO FAMILIARIZE THE SP WITH VFR NAVIGATION PROCEDURES.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN AT MEDIUM ALTITUDE TO FAMILIARIZE THE SP WITH VFR NAVIGATION PROCEDURES"
+       }
+      ]
+     },
+     {
+      "id": "low",
+      "label": "N42XX-N43XX · FLOWN AT LOW ALTITUDE TO FAMILIARIZE THE SP WITH VFR NAVIGATION PROCEDURES.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN AT LOW ALTITUDE TO FAMILIARIZE THE SP WITH VFR NAVIGATION PROCEDURES"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "Panel C winner. Page discipline (panel B ledger, filed on adoption): the A/C nav pages print «Altitude», the F/S nav pages print «Level» — each family uses its own pages' word."
+   }
   },
   "nav-2ship": {
    "tpl": "navigation",
    "on": {
-    "outback": true,
-    "low": true
+    "outback": true
    },
-   "draft": "N44XX-N46XX are flown TWO-SHIP (low level). The printed NAVIGATION template is a single-ship template; the «__ OUT - __ BACK.» sentence is borrowed from the FORMATION template. PROPOSED."
+   "fix_note": "R17 fix (panel C catch, verified): the family used to force «low: true», and description.js applies family presets before the per-sortie guard — N4401-03 (ROUTE_MEDIUM) opened as LOW LEVEL. The LOW LEVEL marker is now driven by the sortie hint (work: ROUTE_LOW) alone.",
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": false,
+    "def": "two_ship",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "two_ship",
+      "label": "FLOWN FOR FAMILIARIZATION WITH TWO-SHIP VFR NAVIGATION PROCEDURES.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN FOR FAMILIARIZATION WITH TWO-SHIP VFR NAVIGATION PROCEDURES"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "The enriched head (TWO-SHIP {MEDIUM|LOW} LEVEL VFR NAVIGATION SORTIE.) already carries mission and level — panel A head grafted so the sentence does not echo TWO-SHIP (LANGUAGE); the objective weave stays one click away."
+   },
+   "note": "N44XX-N45XX are flown TWO-SHIP; the «__ OUT - __ BACK.» sentence is the FORMATION template's own multi-ship wording — confirmed in the squadron's own formation wording (panel A rationale, adopted R17)."
   },
   "nav-checkride-2ship": {
    "tpl": "navigation",
-   "head": "checkride",
+   "head": "vfr_chk",
    "on": {
-    "outback": true,
-    "low": true
+    "outback": true
    },
-   "draft": "N44XX-N46XX are flown TWO-SHIP (low level). The printed NAVIGATION template is a single-ship template; the «__ OUT - __ BACK.» sentence is borrowed from the FORMATION template. PROPOSED. The printed CONTACT / NAVIGATION / INSTRUMENT templates only spell «SORTIE». The FORMATION template prints «FORMATION (SORTIE/CHECKRIDE).», which is the squadron's own proof that the alternation exists — so the same alternation is PROPOSED for the other three. Awaiting the user's ruling."
+   "draft": "OPEN QUESTION (R17 panel): the head. The syllabus page prints MISSION «VFR Navigation Checkride.» (the default), the roster hint names it «Final Navigation Checkride» (offered as FINAL NAVIGATION CHECKRIDE.) — the user rules which name the head carries.",
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": true,
+    "def": "chk",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "chk",
+      "label": "FLOWN TO DEMONSTRATE THE REQUIRED PROFICIENCY LEVEL IAW MIFS IN A REPRESENTATIVE CROSS SECTION OF LOW LEVEL NAVIGATION AND TWO-SHIP FORMATION MANEUVERS AND PROCEDURES.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN TO DEMONSTRATE THE REQUIRED PROFICIENCY LEVEL IAW MIFS IN A REPRESENTATIVE CROSS SECTION OF LOW LEVEL NAVIGATION AND TWO-SHIP FORMATION MANEUVERS AND PROCEDURES"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "The only double-domain objective — kept whole, since trimming either half would misquote the checkride's scope (panel B winner). Checkride OBJECTIVE recast as a PURPOSE clause — intent, not verdict; the verdict stays in the canon grade sentence, so the sentence is true under a FAIL outcome too (panel ruling, all three seats — the A-draft's «PROFICIENCY DEMONSTRATED» form was barred)."
+   }
   },
   "fs-cockpit": {
    "tpl": "contact",
    "head": "fs",
    "all_off": true,
-   "draft": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged. This F/S sortie has NO flight profile at all (cockpit familiarization / emergency-procedure drills — Syllabus PART IV section blocks). No printed template covers it, so every profile element starts OFF: build the sentence from the chips, or use «+ custom» for wording the templates do not carry."
+   "note": "No printed F/S template exists — the «… F/S SORTIE.» opening is the R17 enriched default (item numbering, EP item and MIF tables are identical for F/S). B10XX has NO flight profile (cockpit familiarization, UTD or in the A/C) — every profile element starts OFF and the MISSION sentence is the description's substance (panel B).",
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": true,
+    "def": "fam",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "fam",
+      "label": "FRONT SEAT PRACTICE FOR FAMILIARIZATION WITH SWITCHES, LEVERS, CONTROLS AND NORMAL PROCEDURES.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FRONT SEAT PRACTICE FOR FAMILIARIZATION WITH SWITCHES, LEVERS, CONTROLS AND NORMAL PROCEDURES"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "Lifted from the printed OBJECTIVE's own opening («Front seat practice aims at familiarizing SP with switches, levers, controls and procedures»), NORMAL woven from the MISSION line (panel B origination + C possessive drop). The device (UTD or in the A/C — the section's own pair) goes in via the free-text escape when it needs saying."
+   }
   },
   "fs-ep-drill": {
    "tpl": "contact",
    "head": "fs",
    "all_off": true,
-   "draft": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged. This F/S sortie has NO flight profile at all (cockpit familiarization / emergency-procedure drills — Syllabus PART IV section blocks). No printed template covers it, so every profile element starts OFF: build the sentence from the chips, or use «+ custom» for wording the templates do not carry."
+   "note": "No printed F/S template exists — the «… F/S SORTIE.» opening is the R17 enriched default (item numbering, EP item and MIF tables are identical for F/S). C2101/C23XX are pure EP drills — no flight profile; the MISSION sentence is the description's substance.",
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": true,
+    "def": "ep_profile",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "ep",
+      "label": "C2101 · EMERGENCY PROCEDURES TRAINING.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "EMERGENCY PROCEDURES TRAINING"
+       }
+      ]
+     },
+     {
+      "id": "ep_profile",
+      "label": "C23XX · EMERGENCY PROCEDURES TRAINING IN A MISSION PROFILE.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "EMERGENCY PROCEDURES TRAINING IN A MISSION PROFILE"
+       }
+      ]
+     },
+     {
+      "id": "ep_short",
+      "label": "EP TRAINING IN A MISSION PROFILE.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "EP TRAINING IN A MISSION PROFILE"
+       }
+      ],
+      "status": "draft",
+      "why": "OPEN QUESTION (R17 panel, LANGUAGE vs DOCTRINE): «EP» — the LANGUAGE seat reads it as established house style (the canon EP line itself prints EP), the DOCTRINE seat reads the user's full-words ruling as requiring EMERGENCY PROCEDURES here. The full form is the default; awaiting the user's ruling."
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "The printed mission title, verbatim incl. the preposition «in» (panel B mechanism — the two drill sections differ by one fragment; DOCTRINE's «IN» kept over C's «WITHIN»). The EP line itself already prints WHICH procedures were drilled, so the sentence only says THAT it was EP training (panel A rationale)."
+   }
   },
   "fs-contact": {
    "tpl": "contact",
    "head": "fs",
-   "draft": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+   "note": "No printed F/S template exists — the «… F/S SORTIE.» opening is the R17 enriched default (item numbering, EP item and MIF tables are identical for F/S).",
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": true,
+    "def": "c22",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "c11",
+      "label": "C1101 · FLOWN FOR THE SP'S TRAINING IN BASIC A/C CONTROL AND FAMILIARIZATION WITH THE A/C FLIGHT CHARACTERISTICS.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN FOR THE SP'S TRAINING IN BASIC A/C CONTROL AND FAMILIARIZATION WITH THE A/C FLIGHT CHARACTERISTICS"
+       }
+      ]
+     },
+     {
+      "id": "c22",
+      "label": "C22XX · FLOWN FOR THE SP'S FAMILIARIZATION WITH THE A/C FLIGHT CHARACTERISTICS AND FOR DEMONSTRATION AND PRACTICE OF FUNDAMENTAL FLIGHT MANEUVERS.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN FOR THE SP'S FAMILIARIZATION WITH THE A/C FLIGHT CHARACTERISTICS AND FOR DEMONSTRATION AND PRACTICE OF FUNDAMENTAL FLIGHT MANEUVERS"
+       }
+      ]
+     },
+     {
+      "id": "c24",
+      "label": "C24XX/C26XX · FLOWN FOR PRACTICE ON FUNDAMENTAL FLIGHT MANEUVERS AND LANDINGS.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN FOR PRACTICE ON FUNDAMENTAL FLIGHT MANEUVERS AND LANDINGS"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "Per-section seeds in the printed OBJECTIVEs' own words (panel B discipline): C22XX has no «landings», C24XX/C26XX is the objective verbatim — «AND LANDINGS» is the objective's own addition for the F/S maneuver sections (panel A reading, adopted)."
+   }
   },
   "fs-contact-ep": {
    "tpl": "contact",
@@ -1693,12 +2591,90 @@
    "on": {
     "elp": true
    },
-   "draft": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+   "note": "No printed F/S template exists — the «… F/S SORTIE.» opening is the R17 enriched default (item numbering, EP item and MIF tables are identical for F/S).",
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": true,
+    "def": "ep_profile",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "ep_profile",
+      "label": "EMERGENCY PROCEDURES TRAINING IN A MISSION PROFILE.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "EMERGENCY PROCEDURES TRAINING IN A MISSION PROFILE"
+       }
+      ]
+     },
+     {
+      "id": "ep_short",
+      "label": "EP TRAINING IN A MISSION PROFILE.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "EP TRAINING IN A MISSION PROFILE"
+       }
+      ],
+      "status": "draft",
+      "why": "OPEN QUESTION (R17 panel, LANGUAGE vs DOCTRINE): «EP» — the LANGUAGE seat reads it as established house style (the canon EP line itself prints EP), the DOCTRINE seat reads the user's full-words ruling as requiring EMERGENCY PROCEDURES here. The full form is the default; awaiting the user's ruling."
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "The printed mission title of C25XX, verbatim incl. «in» — the closest-to-print form (panel A instinct, spelled out by DOCTRINE)."
+   }
   },
   "fs-formation": {
    "tpl": "formation",
-   "head": "fs",
-   "draft": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+   "head": "fs_two_ship",
+   "note": "No printed F/S template exists — the «… F/S SORTIE.» opening is the R17 enriched default (item numbering, EP item and MIF tables are identical for F/S).",
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": false,
+    "def": "fam",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "fam",
+      "label": "FLOWN FOR THE SP'S FAMILIARIZATION WITH FORMATION MANEUVERS.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN FOR THE SP'S FAMILIARIZATION WITH FORMATION MANEUVERS"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "Panel A: head-only — «TWO-SHIP FORMATION F/S SORTIE.» lifts the printed mission into the head and a clause would be padding; the objective clause stays one click away (the DOCTRINE seat's sentence)."
+   }
   },
   "fs-instrument-area": {
    "tpl": "instrument",
@@ -1706,28 +2682,321 @@
    "choice": {
     "work": "area"
    },
-   "draft": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+   "note": "No printed F/S template exists — the «… F/S SORTIE.» opening is the R17 enriched default (item numbering, EP item and MIF tables are identical for F/S).",
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": true,
+    "def": "i31",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "i31",
+      "label": "I31XX · FLOWN FOR THE SP'S FAMILIARIZATION WITH INSTRUMENT FLYING AND PRACTICE ON BASIC INSTRUMENTS.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN FOR THE SP'S FAMILIARIZATION WITH INSTRUMENT FLYING AND PRACTICE ON BASIC INSTRUMENTS"
+       }
+      ]
+     },
+     {
+      "id": "i32",
+      "label": "I32XX · FLOWN FOR PRACTICE ON BASIC AND ADVANCED INSTRUMENTS AND INTRODUCTION TO INSTRUMENT APPROACH PROCEDURES.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN FOR PRACTICE ON BASIC AND ADVANCED INSTRUMENTS AND INTRODUCTION TO INSTRUMENT APPROACH PROCEDURES"
+       }
+      ]
+     },
+     {
+      "id": "i33",
+      "label": "I33XX · FLOWN FOR PRACTICE ON BASIC AND ADVANCED INSTRUMENTS AND INSTRUMENT APPROACH PROCEDURES.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN FOR PRACTICE ON BASIC AND ADVANCED INSTRUMENTS AND INSTRUMENT APPROACH PROCEDURES"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "Keeps the syllabus's own progression (panel C): I32XX «Introduction to Instrument Approach procedures» vs I33XX «…and Instrument Approach procedures»."
+   }
   },
   "fs-instrument-route": {
    "tpl": "instrument",
-   "head": "fs",
+   "head": "fs_ifr_nav",
    "choice": {
     "work": "route"
    },
-   "draft": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+   "note": "No printed F/S template exists — the «… F/S SORTIE.» opening is the R17 enriched default (item numbering, EP item and MIF tables are identical for F/S).",
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": false,
+    "def": "fam",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "fam",
+      "label": "FLOWN FOR THE SP'S FAMILIARIZATION WITH IFR NAVIGATION PROCEDURES.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN FOR THE SP'S FAMILIARIZATION WITH IFR NAVIGATION PROCEDURES"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "Panel A: renaming the head to the printed mission noun IS the entire enrichment — zero added words; the objective clause stays one click away."
+   }
   },
   "fs-instrument-route-night": {
    "tpl": "instrument",
-   "head": "fs_night",
+   "head": "fs_night_ifr",
    "choice": {
     "work": "route"
    },
-   "draft": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged. Night wording is PROPOSED. Phase II has exactly two night sorties — I3601 (F/S) and I4701 (aircraft) — and no printed template names the night."
+   "note": "No printed F/S template exists — the «… F/S SORTIE.» opening is the R17 enriched default (item numbering, EP item and MIF tables are identical for F/S).",
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": true,
+    "def": "night",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "night",
+      "label": "FLOWN FOR THE SP'S FAMILIARIZATION WITH IFR NAVIGATION PROCEDURES DURING NIGHT FLIGHT.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN FOR THE SP'S FAMILIARIZATION WITH IFR NAVIGATION PROCEDURES DURING NIGHT FLIGHT"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "I3601 — objective verbatim («…during night flight»). Night twice on purpose: once in the head, once in the weave, never a third time (the I4701 principle applied here — panel A head; C's own rule turned on C's triple-NIGHT text)."
+   }
   },
   "fs-nav-single": {
    "tpl": "navigation",
    "head": "fs",
-   "draft": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+   "note": "No printed F/S template exists — the «… F/S SORTIE.» opening is the R17 enriched default (item numbering, EP item and MIF tables are identical for F/S).",
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": true,
+    "def": "med",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "med",
+      "label": "N21XX · FLOWN AT MEDIUM LEVEL TO FAMILIARIZE THE SP WITH VFR NAVIGATION PROCEDURES.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN AT MEDIUM LEVEL TO FAMILIARIZE THE SP WITH VFR NAVIGATION PROCEDURES"
+       }
+      ]
+     },
+     {
+      "id": "low",
+      "label": "N22XX-N23XX · FLOWN AT LOW LEVEL TO FAMILIARIZE THE SP WITH VFR NAVIGATION PROCEDURES.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN AT LOW LEVEL TO FAMILIARIZE THE SP WITH VFR NAVIGATION PROCEDURES"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "The F/S nav pages print «(Medium Level)» / «(Low Level)» — LEVEL is the page's own word (panel A catch grafted onto the C frame; the A/C pages print ALTITUDE and the A/C family uses that)."
+   }
+  },
+  "contact-solo-1st": {
+   "tpl": "contact",
+   "head": "solo_first",
+   "on": {
+    "area": false,
+    "fence_in": false,
+    "fence_out": false,
+    "elp": false
+   },
+   "lock": [
+    "elp"
+   ],
+   "lock_note": "Syllabus PDF p.163 §14b(6)(d): ELP is FORBIDDEN in SOLO flights — locked off on a solo sheet (the R16 preset had ELP ON here; panel C catch, adopted by all three seats).",
+   "ep_off": true,
+   "ep_off_note": "The EP drill line starts OFF on a solo sheet — no IP aboard to run drills (panel C catch, adopted by all three seats). The desired/achieved preset ramp is unchanged and one click brings the line back.",
+   "note": "C4791 — the 1st SOLO: one airport traffic pattern within the airport ATZ and one normal landing (Syllabus p.175). The head says 1ST SOLO per the user's ruling («Οταν ειναι solo πρεπει να το γραφουμε στην περιγραφη»); the Contact-Car sentence (p.165 §14c(5)) is on by default."
+  },
+  "contact-solo": {
+   "tpl": "contact",
+   "head": "solo",
+   "on": {
+    "elp": false
+   },
+   "lock": [
+    "elp"
+   ],
+   "lock_note": "Syllabus PDF p.163 §14b(6)(d): ELP is FORBIDDEN in SOLO flights — locked off on a solo sheet.",
+   "ep_off": true,
+   "ep_off_note": "The EP drill line starts OFF on a solo sheet — no IP aboard to run drills. The desired/achieved preset ramp is unchanged.",
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": true,
+    "def": "solo",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "solo",
+      "label": "SOLO PRACTICE ON CLEARED CONTACT MANEUVERS.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "SOLO PRACTICE ON CLEARED CONTACT MANEUVERS"
+       }
+      ]
+     },
+     {
+      "id": "solo_scope",
+      "label": "SOLO PRACTICE ON CLEARED CONTACT MANEUVERS + scope…",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "SOLO PRACTICE ON CLEARED CONTACT MANEUVERS "
+       },
+       {
+        "t": "slot",
+        "id": "scope",
+        "list": "solo_scopes",
+        "free": true,
+        "ph": "____",
+        "def": "IN THE AREA"
+       }
+      ]
+     },
+     {
+      "id": "consolidation",
+      "label": "long · FLOWN SOLO FOR CONSOLIDATION OF THE BASIC AND ADVANCED CONTACT MANEUVERS PREVIOUSLY CLEARED FOR SOLO.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN SOLO FOR CONSOLIDATION OF THE BASIC AND ADVANCED CONTACT MANEUVERS PREVIOUSLY CLEARED FOR SOLO"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "Default = panel A's eight words (SQUADRON mandatory graft + LANGUAGE winner): «SOLO» lands twice at zero padding cost and «CLEARED» ties the sortie to the 3-01 §28θ clearance — scope-safe for the pattern-only C48XX solos too (DOCTRINE). The scope variant reuses lists.solo_scopes (panel B graft); the long consolidation form is panel C's (it overstates the C48XX pattern-only solo — DOCTRINE — so it is not the default)."
+   }
+  },
+  "formation-solo": {
+   "tpl": "formation",
+   "head": "solo",
+   "ep_off": true,
+   "ep_off_note": "The EP drill line starts OFF on a solo sheet — no IP aboard to run drills. The desired/achieved preset ramp is unchanged.",
+   "mission": {
+    "label": "MISSION",
+    "opt": true,
+    "on": true,
+    "def": "solo",
+    "status": "enriched",
+    "choice": [
+     {
+      "id": "solo",
+      "label": "FLOWN SOLO BY THE SP AS ONE SHIP OF THE TWO-SHIP FORMATION FOR PRACTICE ON FORMATION MANEUVERS CLEARED FOR SOLO.",
+      "parts": [
+       {
+        "t": "lit",
+        "v": "FLOWN SOLO BY THE SP AS ONE SHIP OF THE TWO-SHIP FORMATION FOR PRACTICE ON FORMATION MANEUVERS CLEARED FOR SOLO"
+       }
+      ]
+     },
+     {
+      "id": "free",
+      "label": "✎ custom sentence…",
+      "parts": [
+       {
+        "t": "slot",
+        "id": "txt",
+        "list": null,
+        "free": true,
+        "ph": "MISSION SENTENCE"
+       }
+      ]
+     }
+    ],
+    "src": "Panel C winner (3-0): the formation solo is the case where «solo» is least visible from the profile — the sentence tells the reader the SP flew ONE ship of the two-ship (the other ship was crewed). Clearance anchor in the flying-training idiom «CLEARED FOR SOLO» (panel B graft, reworded per the LANGUAGE ruling — «AUTHORIZED AT THE SOLO CLEARANCE» is a calque). The optional «SP SOLO AS LEADER/WINGMAN.» post sentence is the panel A graft."
+   },
+   "note": "Green-framed formation solos (F43XX, F45XX). The dual two-ship wording stays reachable: head -> FORMATION SORTIE. / TWO-SHIP FORMATION SORTIE., MISSION -> the F41-F43 or F44-F45 seed."
   }
  },
  "categories": {
@@ -2404,7 +3673,8 @@
    "ep_mif": "0",
    "hours": 1.3,
    "page": 11,
-   "label": "C 1101"
+   "label": "C 1101",
+   "m": "c11"
   },
   "C2101": {
    "cat": "contact",
@@ -2424,7 +3694,8 @@
    "hours": 1.3,
    "note": "pure BOLD FACE / checklist drill, no mission profile",
    "page": 11,
-   "label": "C 2101"
+   "label": "C 2101",
+   "m": "ep"
   },
   "C2201": {
    "cat": "contact",
@@ -2516,7 +3787,8 @@
    "ep_mif": "3",
    "note": "at least 2 landings with 10-20 kt crosswind",
    "page": 12,
-   "label": "C 2401"
+   "label": "C 2401",
+   "m": "c24"
   },
   "C2402": {
    "cat": "contact",
@@ -2534,7 +3806,8 @@
    "ep_mif": "3",
    "note": "at least 2 landings with 10-20 kt crosswind",
    "page": 12,
-   "label": "C 2402"
+   "label": "C 2402",
+   "m": "c24"
   },
   "C2403": {
    "cat": "contact",
@@ -2553,7 +3826,8 @@
    "ep_mif": "3",
    "note": "at least 2 landings with 10-20 kt crosswind",
    "page": 12,
-   "label": "C 2403"
+   "label": "C 2403",
+   "m": "c24"
   },
   "C2501": {
    "cat": "contact",
@@ -2625,7 +3899,8 @@
    "not_planned": "",
    "ep_mif": "3",
    "page": 13,
-   "label": "C 2601"
+   "label": "C 2601",
+   "m": "c24"
   },
   "C2602": {
    "cat": "contact",
@@ -2642,7 +3917,8 @@
    "not_planned": "",
    "ep_mif": "3",
    "page": 13,
-   "label": "C 2602"
+   "label": "C 2602",
+   "m": "c24"
   },
   "C2603": {
    "cat": "contact",
@@ -2659,7 +3935,8 @@
    "not_planned": "",
    "ep_mif": "3",
    "page": 14,
-   "label": "C 2603"
+   "label": "C 2603",
+   "m": "c24"
   },
   "C2604": {
    "cat": "contact",
@@ -2677,7 +3954,8 @@
    "end_of_block": true,
    "ep_mif": "3",
    "page": 14,
-   "label": "C 2604"
+   "label": "C 2604",
+   "m": "c24"
   },
   "C4101": {
    "cat": "contact",
@@ -2697,7 +3975,8 @@
    "hours": 1.0,
    "note": "NG - not graded in general performance (syllabus PDF165 PART IV 14c(1))",
    "page": 12,
-   "label": "C 4101"
+   "label": "C 4101",
+   "m": "c41"
   },
   "C4201": {
    "cat": "contact",
@@ -2938,13 +4217,15 @@
    "hours": 0.8,
    "note": "C4790 checkride-for-solo; C4791 FIRST SOLO = 1 airport pattern + 1 normal landing",
    "page": 12,
-   "label": "C 4790"
+   "label": "C 4790",
+   "head": "chk_solo",
+   "m": "chk_solo"
   },
   "C4791": {
    "cat": "contact",
    "band": "flights",
    "section": "C4790-91",
-   "family": "contact-pattern",
+   "family": "contact-solo-1st",
    "name": "Contact checkride for SOLO (C4790) and 1st SOLO (C4791)",
    "work": "PATTERN_ONLY",
    "to": "STATIC",
@@ -2977,13 +4258,14 @@
    "ep_mif": "3",
    "note": "full aerobatics; SOLO row = airport pattern only",
    "page": 13,
-   "label": "C 4801"
+   "label": "C 4801",
+   "m": "c48"
   },
   "C4802": {
    "cat": "contact",
    "band": "flights",
    "section": "C4801-04",
-   "family": "contact",
+   "family": "contact-solo",
    "name": "Contact – Basic/Advanced Maneuvers",
    "work": "AREA",
    "to": "STATIC",
@@ -2996,13 +4278,19 @@
    "ep_mif": "3",
    "note": "full aerobatics; SOLO row = airport pattern only",
    "page": 13,
-   "label": "C 4802"
+   "label": "C 4802",
+   "on": {
+    "area": false,
+    "fence_in": false,
+    "fence_out": false
+   },
+   "on_note": "C4801-04 SOLO row = airport pattern only (section note) — AREA WORK / FENCE IN / FENCE OUT start OFF on the solo sheet."
   },
   "C4803": {
    "cat": "contact",
    "band": "flights",
    "section": "C4801-04",
-   "family": "contact",
+   "family": "contact-solo",
    "name": "Contact – Basic/Advanced Maneuvers",
    "work": "AREA",
    "to": "STATIC",
@@ -3015,7 +4303,13 @@
    "ep_mif": "3",
    "note": "full aerobatics; SOLO row = airport pattern only",
    "page": 13,
-   "label": "C 4803"
+   "label": "C 4803",
+   "on": {
+    "area": false,
+    "fence_in": false,
+    "fence_out": false
+   },
+   "on_note": "C4801-04 SOLO row = airport pattern only (section note) — AREA WORK / FENCE IN / FENCE OUT start OFF on the solo sheet."
   },
   "C4804": {
    "cat": "contact",
@@ -3034,7 +4328,8 @@
    "ep_mif": "3",
    "note": "full aerobatics; SOLO row = airport pattern only",
    "page": 13,
-   "label": "C 4804"
+   "label": "C 4804",
+   "m": "c48"
   },
   "C4901": {
    "cat": "contact",
@@ -3052,13 +4347,14 @@
    "ep_mif": "3",
    "note": "SRC-6; SOLO row = local area (aileron roll, chandelle, lazy 8) + pattern",
    "page": 13,
-   "label": "C 4901"
+   "label": "C 4901",
+   "m": "c48"
   },
   "C4902": {
    "cat": "contact",
    "band": "flights",
    "section": "C4901-05",
-   "family": "contact",
+   "family": "contact-solo",
    "name": "Contact – Basic/Advanced Maneuvers",
    "work": "AREA",
    "to": "STATIC",
@@ -3077,7 +4373,7 @@
    "cat": "contact",
    "band": "flights",
    "section": "C4901-05",
-   "family": "contact",
+   "family": "contact-solo",
    "name": "Contact – Basic/Advanced Maneuvers",
    "work": "AREA",
    "to": "STATIC",
@@ -3096,7 +4392,7 @@
    "cat": "contact",
    "band": "flights",
    "section": "C4901-05",
-   "family": "contact",
+   "family": "contact-solo",
    "name": "Contact – Basic/Advanced Maneuvers",
    "work": "AREA",
    "to": "STATIC",
@@ -3128,7 +4424,8 @@
    "ep_mif": "3",
    "note": "SRC-6; SOLO row = local area (aileron roll, chandelle, lazy 8) + pattern",
    "page": 13,
-   "label": "C 4905"
+   "label": "C 4905",
+   "m": "c48"
   },
   "C5090": {
    "cat": "contact",
@@ -3167,7 +4464,8 @@
    "ep_mif": "3",
    "note": "AOA pattern/landing enter; SRC-10 stalls with AOA out",
    "page": 13,
-   "label": "C 5101"
+   "label": "C 5101",
+   "m": "c51"
   },
   "C5102": {
    "cat": "contact",
@@ -3186,7 +4484,8 @@
    "ep_mif": "3",
    "note": "AOA pattern/landing enter; SRC-10 stalls with AOA out",
    "page": 13,
-   "label": "C 5102"
+   "label": "C 5102",
+   "m": "c51"
   },
   "C5201": {
    "cat": "contact",
@@ -3204,13 +4503,14 @@
    "ep_mif": "3",
    "note": "SRC-8 OUT AND BACK to alternate; SOLO row = area + pattern",
    "page": 13,
-   "label": "C 5201"
+   "label": "C 5201",
+   "m": "c51"
   },
   "C5202": {
    "cat": "contact",
    "band": "flights",
    "section": "C5201-04",
-   "family": "contact",
+   "family": "contact-solo",
    "name": "Contact – Basic/Advanced Maneuvers",
    "work": "AREA",
    "to": "STATIC",
@@ -3229,7 +4529,7 @@
    "cat": "contact",
    "band": "flights",
    "section": "C5201-04",
-   "family": "contact",
+   "family": "contact-solo",
    "name": "Contact – Basic/Advanced Maneuvers",
    "work": "AREA",
    "to": "STATIC",
@@ -3261,7 +4561,8 @@
    "ep_mif": "3",
    "note": "SRC-8 OUT AND BACK to alternate; SOLO row = area + pattern",
    "page": 13,
-   "label": "C 5204"
+   "label": "C 5204",
+   "m": "c51"
   },
   "C5301": {
    "cat": "contact",
@@ -3279,13 +4580,14 @@
    "ep_mif": "3",
    "note": "SRC-11 ELP with IDLE; SOLO row = area + pattern",
    "page": 14,
-   "label": "C 5301"
+   "label": "C 5301",
+   "m": "c51"
   },
   "C5302": {
    "cat": "contact",
    "band": "flights",
    "section": "C5301-04",
-   "family": "contact",
+   "family": "contact-solo",
    "name": "Contact – Basic/Advanced Maneuvers",
    "work": "AREA",
    "to": "STATIC",
@@ -3304,7 +4606,7 @@
    "cat": "contact",
    "band": "flights",
    "section": "C5301-04",
-   "family": "contact",
+   "family": "contact-solo",
    "name": "Contact – Basic/Advanced Maneuvers",
    "work": "AREA",
    "to": "STATIC",
@@ -3336,7 +4638,8 @@
    "ep_mif": "3",
    "note": "SRC-11 ELP with IDLE; SOLO row = area + pattern",
    "page": 14,
-   "label": "C 5304"
+   "label": "C 5304",
+   "m": "c51"
   },
   "C5490": {
    "cat": "contact",
@@ -3357,7 +4660,8 @@
    "hours": 1.3,
    "note": "FINAL examination of the Contact category",
    "page": 14,
-   "label": "C 5490"
+   "label": "C 5490",
+   "head": "final"
   },
   "I3101": {
    "cat": "instrument",
@@ -3409,7 +4713,8 @@
    "not_planned": "2,25,28",
    "ep_mif": "2",
    "page": 15,
-   "label": "I 3201"
+   "label": "I 3201",
+   "m": "i32"
   },
   "I3202": {
    "cat": "instrument",
@@ -3426,7 +4731,8 @@
    "not_planned": "2,25,28",
    "ep_mif": "2",
    "page": 15,
-   "label": "I 3202"
+   "label": "I 3202",
+   "m": "i32"
   },
   "I3203": {
    "cat": "instrument",
@@ -3444,7 +4750,8 @@
    "end_of_block": true,
    "ep_mif": "2",
    "page": 15,
-   "label": "I 3203"
+   "label": "I 3203",
+   "m": "i32"
   },
   "I3301": {
    "cat": "instrument",
@@ -3461,7 +4768,8 @@
    "not_planned": "2,25,28,34",
    "ep_mif": "3",
    "page": 15,
-   "label": "I 3301"
+   "label": "I 3301",
+   "m": "i33"
   },
   "I3302": {
    "cat": "instrument",
@@ -3478,7 +4786,8 @@
    "not_planned": "2,25,28,34",
    "ep_mif": "3",
    "page": 15,
-   "label": "I 3302"
+   "label": "I 3302",
+   "m": "i33"
   },
   "I3303": {
    "cat": "instrument",
@@ -3495,7 +4804,8 @@
    "not_planned": "2,25,28,34",
    "ep_mif": "3",
    "page": 15,
-   "label": "I 3303"
+   "label": "I 3303",
+   "m": "i33"
   },
   "I3304": {
    "cat": "instrument",
@@ -3513,7 +4823,8 @@
    "end_of_block": true,
    "ep_mif": "3",
    "page": 15,
-   "label": "I 3304"
+   "label": "I 3304",
+   "m": "i33"
   },
   "I3401": {
    "cat": "instrument",
@@ -3700,7 +5011,8 @@
    "approach_hint": "CIRCLING(1)",
    "note": "SRI-1 spatial disorientation",
    "page": 15,
-   "label": "I 4101"
+   "label": "I 4101",
+   "head": "basic"
   },
   "I4102": {
    "cat": "instrument",
@@ -3720,7 +5032,8 @@
    "approach_hint": "CIRCLING(1)",
    "note": "SRI-1 spatial disorientation",
    "page": 15,
-   "label": "I 4102"
+   "label": "I 4102",
+   "head": "basic"
   },
   "I4201": {
    "cat": "instrument",
@@ -3739,7 +5052,9 @@
    "approach_hint": "VOR/DME-TACAN(1) ILS/LOC(1) GCA PAR/ASR(2) GCA no-GYRO(1) STBY(1) CIRCLING(1) MISSED(2)",
    "note": "SRI-2 time / magnetic compass turns",
    "page": 15,
-   "label": "I 4201"
+   "label": "I 4201",
+   "head": "advanced",
+   "m": "advanced"
   },
   "I4202": {
    "cat": "instrument",
@@ -3759,7 +5074,9 @@
    "approach_hint": "VOR/DME-TACAN(1) ILS/LOC(1) GCA PAR/ASR(2) GCA no-GYRO(1) STBY(1) CIRCLING(1) MISSED(2)",
    "note": "SRI-2 time / magnetic compass turns",
    "page": 15,
-   "label": "I 4202"
+   "label": "I 4202",
+   "head": "advanced",
+   "m": "advanced"
   },
   "I4301": {
    "cat": "instrument",
@@ -3777,7 +5094,9 @@
    "ep_mif": "3",
    "approach_hint": "VOR/DME-TACAN(1) ILS/LOC(1) GCA PAR/ASR(2) GCA no-GYRO(1) STBY(1) CIRCLING(1) MISSED(2)",
    "page": 15,
-   "label": "I 4301"
+   "label": "I 4301",
+   "head": "advanced",
+   "m": "advanced"
   },
   "I4302": {
    "cat": "instrument",
@@ -3796,7 +5115,9 @@
    "ep_mif": "3",
    "approach_hint": "VOR/DME-TACAN(1) ILS/LOC(1) GCA PAR/ASR(2) GCA no-GYRO(1) STBY(1) CIRCLING(1) MISSED(2)",
    "page": 15,
-   "label": "I 4302"
+   "label": "I 4302",
+   "head": "advanced",
+   "m": "advanced"
   },
   "I4490": {
    "cat": "instrument",
@@ -3959,7 +5280,9 @@
    "approach_hint": "IFR navigation + instrument approach at a strange airport",
    "note": "FINAL; EFT option",
    "page": 16,
-   "label": "I 4890"
+   "label": "I 4890",
+   "head": "final",
+   "m": "chk_ifrnav"
   },
   "F3101": {
    "cat": "formation",
@@ -4207,7 +5530,7 @@
    "cat": "formation",
    "band": "flights",
    "section": "F4301-06",
-   "family": "formation",
+   "family": "formation-solo",
    "name": "Two-ship Formation",
    "work": "AREA",
    "to": "INTERVAL",
@@ -4227,7 +5550,7 @@
    "cat": "formation",
    "band": "flights",
    "section": "F4301-06",
-   "family": "formation",
+   "family": "formation-solo",
    "name": "Two-ship Formation",
    "work": "AREA",
    "to": "INTERVAL",
@@ -4247,7 +5570,7 @@
    "cat": "formation",
    "band": "flights",
    "section": "F4301-06",
-   "family": "formation",
+   "family": "formation-solo",
    "name": "Two-ship Formation",
    "work": "AREA",
    "to": "INTERVAL",
@@ -4267,7 +5590,7 @@
    "cat": "formation",
    "band": "flights",
    "section": "F4301-06",
-   "family": "formation",
+   "family": "formation-solo",
    "name": "Two-ship Formation",
    "work": "AREA",
    "to": "INTERVAL",
@@ -4287,7 +5610,7 @@
    "cat": "formation",
    "band": "flights",
    "section": "F4301-06",
-   "family": "formation",
+   "family": "formation-solo",
    "name": "Two-ship Formation",
    "work": "AREA",
    "to": "INTERVAL",
@@ -4340,7 +5663,8 @@
    "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
    "note": "closed + tactical",
    "page": 18,
-   "label": "F 4401"
+   "label": "F 4401",
+   "m": "closed"
   },
   "F4402": {
    "cat": "formation",
@@ -4359,7 +5683,8 @@
    "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
    "note": "closed + tactical",
    "page": 18,
-   "label": "F 4402"
+   "label": "F 4402",
+   "m": "closed"
   },
   "F4403": {
    "cat": "formation",
@@ -4378,7 +5703,8 @@
    "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
    "note": "closed + tactical",
    "page": 18,
-   "label": "F 4403"
+   "label": "F 4403",
+   "m": "closed"
   },
   "F4404": {
    "cat": "formation",
@@ -4398,13 +5724,14 @@
    "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
    "note": "closed + tactical",
    "page": 18,
-   "label": "F 4404"
+   "label": "F 4404",
+   "m": "closed"
   },
   "F4501": {
    "cat": "formation",
    "band": "flights",
    "section": "F4501-03",
-   "family": "formation",
+   "family": "formation-solo",
    "name": "Two-ship Formation (Closed and Tactical)",
    "work": "AREA",
    "to": "INTERVAL",
@@ -4424,7 +5751,7 @@
    "cat": "formation",
    "band": "flights",
    "section": "F4501-03",
-   "family": "formation",
+   "family": "formation-solo",
    "name": "Two-ship Formation (Closed and Tactical)",
    "work": "AREA",
    "to": "INTERVAL",
@@ -4458,7 +5785,8 @@
    "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
    "note": "closed + tactical; SOLO rows",
    "page": 18,
-   "label": "F 4503"
+   "label": "F 4503",
+   "m": "closed"
   },
   "F4690": {
    "cat": "formation",
@@ -4516,7 +5844,8 @@
    "ep_mif": "2",
    "approach_hint": "instrument approach on RTB in at least 1 sortie",
    "page": 19,
-   "label": "N 2201"
+   "label": "N 2201",
+   "m": "low"
   },
   "N2202": {
    "cat": "vfr_navigation",
@@ -4535,7 +5864,8 @@
    "ep_mif": "2",
    "approach_hint": "instrument approach on RTB in at least 1 sortie",
    "page": 19,
-   "label": "N 2202"
+   "label": "N 2202",
+   "m": "low"
   },
   "N2301": {
    "cat": "vfr_navigation",
@@ -4553,7 +5883,8 @@
    "ep_mif": "3",
    "approach_hint": "instrument approach on RTB in at least 2 sorties",
    "page": 19,
-   "label": "N 2301"
+   "label": "N 2301",
+   "m": "low"
   },
   "N2302": {
    "cat": "vfr_navigation",
@@ -4571,7 +5902,8 @@
    "ep_mif": "3",
    "approach_hint": "instrument approach on RTB in at least 2 sorties",
    "page": 19,
-   "label": "N 2302"
+   "label": "N 2302",
+   "m": "low"
   },
   "N2303": {
    "cat": "vfr_navigation",
@@ -4589,7 +5921,8 @@
    "ep_mif": "3",
    "approach_hint": "instrument approach on RTB in at least 2 sorties",
    "page": 19,
-   "label": "N 2303"
+   "label": "N 2303",
+   "m": "low"
   },
   "N2304": {
    "cat": "vfr_navigation",
@@ -4608,7 +5941,8 @@
    "ep_mif": "3",
    "approach_hint": "instrument approach on RTB in at least 2 sorties",
    "page": 19,
-   "label": "N 2304"
+   "label": "N 2304",
+   "m": "low"
   },
   "N4101": {
    "cat": "vfr_navigation",
@@ -4666,7 +6000,8 @@
    "approach_hint": "1 instrument approach on RTB in at least 1 sortie",
    "note": "GPS legs at most half the legs, over sea",
    "page": 19,
-   "label": "N 4201"
+   "label": "N 4201",
+   "m": "low"
   },
   "N4202": {
    "cat": "vfr_navigation",
@@ -4686,7 +6021,8 @@
    "approach_hint": "1 instrument approach on RTB in at least 1 sortie",
    "note": "GPS legs at most half the legs, over sea",
    "page": 19,
-   "label": "N 4202"
+   "label": "N 4202",
+   "m": "low"
   },
   "N4301": {
    "cat": "vfr_navigation",
@@ -4705,7 +6041,8 @@
    "approach_hint": "1 instrument approach on RTB in at least 1 sortie",
    "note": "SRN-1: IP demonstrates one leg at 500ft AGL",
    "page": 19,
-   "label": "N 4301"
+   "label": "N 4301",
+   "m": "low"
   },
   "N4302": {
    "cat": "vfr_navigation",
@@ -4725,7 +6062,8 @@
    "approach_hint": "1 instrument approach on RTB in at least 1 sortie",
    "note": "SRN-1: IP demonstrates one leg at 500ft AGL",
    "page": 19,
-   "label": "N 4302"
+   "label": "N 4302",
+   "m": "low"
   },
   "N4401": {
    "cat": "vfr_navigation",
@@ -4744,7 +6082,9 @@
    "approach_hint": "instrument approach + formation approach",
    "note": "CONFLICT: section MISSION line says Medium Level, the VFR Navigation table says LOW LEVEL (FORMATION)",
    "page": 19,
-   "label": "N 4401"
+   "label": "N 4401",
+   "head": "two_ship_medium",
+   "draft": "OPEN QUESTION (R17 panel, verified in both sources): the section MISSION line prints «Medium Level VFR Navigation (Two Ship Formation)» while the category MIF table prints «LOW LEVEL (FORMATION)» for N4401-03. The R17 defaults follow the MISSION line (medium — LOW LEVEL chip off; the preset is now driven by the sortie hint, not the family). If the user rules for the table, N4401-03 flip to LOW."
   },
   "N4402": {
    "cat": "vfr_navigation",
@@ -4763,7 +6103,9 @@
    "approach_hint": "instrument approach + formation approach",
    "note": "CONFLICT: section MISSION line says Medium Level, the VFR Navigation table says LOW LEVEL (FORMATION)",
    "page": 19,
-   "label": "N 4402"
+   "label": "N 4402",
+   "head": "two_ship_medium",
+   "draft": "OPEN QUESTION (R17 panel, verified in both sources): the section MISSION line prints «Medium Level VFR Navigation (Two Ship Formation)» while the category MIF table prints «LOW LEVEL (FORMATION)» for N4401-03. The R17 defaults follow the MISSION line (medium — LOW LEVEL chip off; the preset is now driven by the sortie hint, not the family). If the user rules for the table, N4401-03 flip to LOW."
   },
   "N4403": {
    "cat": "vfr_navigation",
@@ -4783,7 +6125,9 @@
    "approach_hint": "instrument approach + formation approach",
    "note": "CONFLICT: section MISSION line says Medium Level, the VFR Navigation table says LOW LEVEL (FORMATION)",
    "page": 19,
-   "label": "N 4403"
+   "label": "N 4403",
+   "head": "two_ship_medium",
+   "draft": "OPEN QUESTION (R17 panel, verified in both sources): the section MISSION line prints «Medium Level VFR Navigation (Two Ship Formation)» while the category MIF table prints «LOW LEVEL (FORMATION)» for N4401-03. The R17 defaults follow the MISSION line (medium — LOW LEVEL chip off; the preset is now driven by the sortie hint, not the family). If the user rules for the table, N4401-03 flip to LOW."
   },
   "N4501": {
    "cat": "vfr_navigation",
@@ -4802,7 +6146,8 @@
    "approach_hint": "instrument approach + formation approach",
    "note": "SRN-1: one leg at 500ft AGL",
    "page": 19,
-   "label": "N 4501"
+   "label": "N 4501",
+   "head": "two_ship_low"
   },
   "N4502": {
    "cat": "vfr_navigation",
@@ -4821,7 +6166,8 @@
    "approach_hint": "instrument approach + formation approach",
    "note": "SRN-1: one leg at 500ft AGL",
    "page": 19,
-   "label": "N 4502"
+   "label": "N 4502",
+   "head": "two_ship_low"
   },
   "N4503": {
    "cat": "vfr_navigation",
@@ -4841,7 +6187,8 @@
    "approach_hint": "instrument approach + formation approach",
    "note": "SRN-1: one leg at 500ft AGL",
    "page": 19,
-   "label": "N 4503"
+   "label": "N 4503",
+   "head": "two_ship_low"
   },
   "N4690": {
    "cat": "vfr_navigation",
@@ -4865,5 +6212,13 @@
    "page": 19,
    "label": "N 4690"
   }
- }
+ },
+ "rulings_r17": [
+  "user 2026-08-20 (verbatim): «Οταν ειναι solo πρεπει να το γραφουμε στην περιγραφη.» — a SOLO sortie's description must SAY it is a solo; C4791 gets its 1st SOLO wording.",
+  "user 2026-08-20 (verbatim): «Χρησιμοποιησε και καπως το objective καθε αποστολης και το Mission με φυσικη και ορθη εκφορα λογου για να το παμε ενα level παρακατω.» — each section's MISSION and OBJECTIVE are woven into the description in natural, correct English.",
+  "user 2026-08-20 (verbatim): «Μην κοβεις λεξεις οπως το departure με τελεια DEP.» — FULL WORDS in every rendered string (DEPARTURE, APPROACH, MISSED APPROACH); established abbreviations read as letters (VFR, IFR, RTB, ELP, T/O, F/S, GCA, SP, MIF, CPM, SID) stay.",
+  "user 2026-08-20 (verbatim): «Προσθεσε και το circling αν δεν υπάρχει ηδη.» — CIRCLING joins the approach types (already present since R16: lists.approaches, MIF item 27 — verified, nothing added).",
+  "user 2026-08-20 (verbatim): «LLM as judge, για να αποτυπωνουμε το καλυτερο δυνατο description.» — three drafts (A/B/C), three judge seats (SQUADRON READER, LANGUAGE, DOCTRINE), majority per family, dissents recorded in specs/description-spec.md."
+ ],
+ "enriched_note": "R17 ENRICHED LAYER — the defaults now open with the panel-winning enriched wording (mission-name heads + a MISSION sentence between head and profile, seeded per section from data/sections.json). THE PHOTOGRAPHED CANON IS UNTOUCHED: templates.<id>.canon keeps the four photographed templates verbatim, every canon element keeps status 'canon', and a canon-faithful block stays reachable by hand (head -> the canon variant, MISSION chip -> off, element toggles at canon defaults) with exactly one systematic delta: the user's full-words ruling spells DEPARTURE / APPROACH / MISSED APPROACH where the photographs print DEP. / APPR. — that ruling applies to every rendered string, canon-faithful mode included. status 'enriched' = adopted by the R17 panel (not photographed, not a draft); status 'draft' now marks ONLY the open questions the panel left for the user."
 }

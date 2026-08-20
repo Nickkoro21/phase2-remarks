@@ -1,4 +1,4 @@
-# Description — προδιαγραφή (Γύροι 16 · 16b · 16c)
+# Description — προδιαγραφή (Γύροι 16 · 16b · 16c · 17)
 
 > Ο **δίδυμος του Remarks**. Το Remarks φτιάχνει **μία γραμμή για ένα αντικείμενο**·
 > το Description φτιάχνει **ολόκληρο το μπλοκ της εξόδου**: την πρόταση της
@@ -641,3 +641,186 @@ section N2301-04 = 3 · end of VFR Navigation (N2301-04) = 3*».
 > πίνακας έγραφε για την N2304 «προηγούμενη = 3» (είναι **2**), και το μήνυμα
 > έλεγε ότι το payload δοκιμάστηκε «σε όλα τα 7 ελεύθερα πεδία» ενώ η I4601 μόνη
 > της εκθέτει **12**.
+
+---
+
+## 13. ΓΥΡΟΣ 17 — ΤΟ ΕΜΠΛΟΥΤΙΣΜΕΝΟ ΣΤΡΩΜΑ (LLM-as-judge panel, 20/08/2026 βράδυ)
+
+### 13.1 Οι πέντε αποφάνσεις του χρήστη (verbatim)
+
+1. «**Οταν ειναι solo πρεπει να το γραφουμε στην περιγραφη.**» — η περιγραφή μιας
+   SOLO εξόδου ΛΕΕΙ ότι είναι solo· η C4791 παίρνει τη δική της διατύπωση 1st SOLO.
+2. «**Χρησιμοποιησε και καπως το objective καθε αποστολης και το Mission με φυσικη
+   και ορθη εκφορα λογου για να το παμε ενα level παρακατω.**» — το MISSION και το
+   OBJECTIVE κάθε ενότητας υφαίνονται στην περιγραφή, σε φυσικά και σωστά αγγλικά.
+3. «**Μην κοβεις λεξεις οπως το departure με τελεια DEP.**» — ΠΛΗΡΕΙΣ ΛΕΞΕΙΣ σε κάθε
+   κείμενο που ΑΠΟΔΙΔΕΤΑΙ (DEPARTURE, APPROACH, MISSED APPROACH)· οι καθιερωμένες
+   συντομογραφίες που διαβάζονται ως γράμματα (VFR, IFR, RTB, ELP, T/O, F/S, GCA,
+   SP, MIF, CPM, SID) μένουν.
+4. «**Προσθεσε και το circling αν δεν υπάρχει ηδη.**» — υπήρχε ήδη από τον Γύρο 16
+   (`lists.approaches`, MIF item 27)· επαληθεύτηκε, δεν προστέθηκε τίποτα.
+5. «**LLM as judge, για να αποτυπωνουμε το καλυτερο δυνατο description.**» — §13.2.
+
+### 13.2 Η διαδικασία του panel
+
+Τρία ανεξάρτητα προσχέδια (**A** / **B** / **C**) εμπλουτισμένων προτύπων ανά
+οικογένεια, κρίθηκαν από **τρεις έδρες-φακούς**, καθεμία με υποχρέωση να
+επαληθεύσει τις πηγές πριν βαθμολογήσει (data/descriptions.json, app/description.js,
+το συμφωνημένο αρχείο MISSION/OBJECTIVE, και το ίδιο το Syllabus PDF — σ.163, 165,
+175, 176, 185 ξανατραβηγμένες το ίδιο βράδυ):
+
+| Έδρα | Φακός |
+|---|---|
+| **SQUADRON READER** | τι χρειάζεται πραγματικά ο διοικητής και ο επόμενος εκπαιδευτής που διαβάζει το φύλλο |
+| **LANGUAGE** | πιστότητα στον κανόνα, φυσικά/ορθά αεροπορικά αγγλικά, ύφανση MISSION-OBJECTIVE, ετοιμότητα επικόλλησης |
+| **DOCTRINE** | συμφωνία με 3-01 και Syllabus — τίποτα που να μπορεί να διαψευστεί από το ίδιο το φύλλο |
+
+Κάθε οικογένεια πήρε νικητή με **πλειοψηφία 2-1 ή 3-0**· τα καλύτερα στοιχεία των
+ηττημένων **μπολιάστηκαν** (grafts)· οι διαφωνίες καταγράφονται εδώ. Όπου οι έδρες
+που αποφάνθηκαν ήταν δύο και μοιράστηκαν 1-1 (η SQUADRON κάλυψε 12/23 οικογένειες
+— το κείμενό της κόπηκε στη μετάδοση), ο υλοποιητής συνέθεσε από τα κοινά σημεία
+των δύο και το σημειώνει.
+
+### 13.3 Οριζόντιες αποφάνσεις του panel (ομόφωνες)
+
+* **Η πρόταση checkride είναι ΣΚΟΠΟΣ, όχι ετυμηγορία.** Το «FLOWN TO DEMONSTRATE
+  THE REQUIRED PROFICIENCY LEVEL IAW MIFS IN A REPRESENTATIVE CROSS SECTION OF …»
+  ισχύει και σε FAIL· η μορφή του A («PROFICIENCY DEMONSTRATED …») θα αυτοδιαψευδόταν
+  δίπλα στο «SORTIE OVERALL GRADED AS FAIL.» και **απαγορεύτηκε** παντού (3 έδρες).
+* **Ο μηχανισμός είναι του B**: η πρόταση MISSION είναι **δική της πρόταση** ανάμεσα
+  στην κεφαλή και το προφίλ — ποτέ profile chip, ποτέ μέσα στο κόμμα-join (ο A την
+  έστελνε στα customs, που κολλάνε «…, FLOWN FOR X., STATIC TO, …» και σκάνε το
+  custom-tripwire). Υλοποιήθηκε ως στοιχείο-choice με per-section σπόρους
+  (`families.<id>.mission` + `sorties.<id>.m`) και chip «MISSION» πρώτο στη σειρά.
+* **TO vs T/O**: τα φωτογραφημένα CONTACT/FORMATION γράφουν «TO» — η εξομάλυνση σε
+  «T/O» είναι απόφαση ενός χαρακτήρα **του χρήστη** και ΔΕΝ πάρθηκε (στάση του A,
+  υιοθετήθηκε· σημείωση στο tooltip του στοιχείου, όχι draft).
+* **«WITHIN {fl}» απορρίφθηκε** — το φωτογραφημένο προφίλ παραθέτει («AREA WORK IN
+  ____ FL100-200»), δεν συνδέει με πρόθεση.
+* **Χωρίς παύλες em-dash και χωρίς τυπωμένες αγκύλες** στις κεφαλές — τελείες και
+  παρενθέσεις μόνο, όπως ο κανόνας.
+* **Ιδίωμα solo**: «CLEARED FOR SOLO» / «CLEARED …» — το «AUTHORIZED AT THE SOLO
+  CLEARANCE» του B είναι calque και ξαναγράφτηκε.
+* **«APPROACH TO APPROACH» δένει μόνο με FLOWN** — μόνο έτσι αρθρώνεται σωστά και
+  στις δύο τιμές του printed either/or.
+
+### 13.4 Τα τρία ευρήματα κώδικα/δεδομένων (μπήκαν ανεξαρτήτως νικητών)
+
+1. **nav-2ship `low` preset** (εύρημα C, επαληθευμένο): η οικογένεια επέβαλλε
+   `low:true` πριν από τον per-sortie έλεγχο (το `description.js` εφαρμόζει τα
+   `fam.on` πριν το guard `st.on.low === undefined`), οπότε οι N4401-03
+   (ROUTE_MEDIUM) άνοιγαν «LOW LEVEL». **Διόρθωση**: το LOW LEVEL προεπιλέγεται
+   ΜΟΝΟ από το hint (`work: ROUTE_LOW`)· το `low:true` αφαιρέθηκε και από τις δύο
+   nav οικογένειες.
+2. **C4791 + ELP**: το section-level hint `elp:true` (από το checkride C4790) άναβε
+   ELP στο προφίλ του 1ου SOLO, ενώ το ELP είναι **(d)** της απαγορευτικής λίστας
+   SOLO του §14b(6). Οι solo οικογένειες CONTACT κλειδώνουν το ELP **OFF και
+   ανενεργό** (`lock:["elp"]` — chip 🔒 disabled με την αιτία στο tooltip).
+3. **Γραμμή EP σε solo φύλλο**: default **OFF** στις solo οικογένειες — δεν υπάρχει
+   IP στο αεροσκάφος για drills. Η ράμπα επιθυμητού/επιτευχθέντος κωδικού μένει
+   **ανέγγιχτη** (ο κανόνας «κάθε ενότητας» του Γύρου 16d) και ένα κλικ την ανάβει.
+
+Και ένα τέταρτο, από τις σημειώσεις των ίδιων των δεδομένων: το SOLO row των
+C4801-04 είναι **μόνο πεδίο κυκλοφορίας** — τα solo φύλλα C4802/C4803 ανοίγουν
+χωρίς AREA WORK / FENCE IN / FENCE OUT (per-sortie `on` override στο hint)· τα
+C49XX/C52XX/C53XX solos κρατούν και περιοχή (οι σημειώσεις τους λένε area+pattern).
+
+### 13.5 Νικητές ανά οικογένεια και μπολιάσματα (σύνοψη ετυμηγοριών)
+
+Σκορ ανά έδρα σε (a) πιστότητα κανόνα / (b) αγγλικά / (c) ύφανση / (d) ετοιμότητα.
+Σ = SQUADRON, Λ = LANGUAGE, Δ = DOCTRINE. Πλήρη κείμενα: `data/descriptions.json`.
+
+| Οικογένεια | Ψήφοι | Νικητής | Τι μπήκε (νικητής + μπολιάσματα) | Διαφωνία |
+|---|---|---|---|---|
+| contact | Σ:C Λ:C Δ:B | **C** | «FLOWN FOR (CONTINUED) FAMILIARIZATION …» με το τετραπλό per-section σπόρισμα του B — το split C48/49 «contact» vs C51-53 «flight Maneuvers» είναι του ίδιου του syllabus· σύντομες μορφές του A· C4101 το ονοματικό του A | Δ ήθελε τον B πρώτο για τους σπόρους — οι σπόροι του B μπήκαν ούτως ή άλλως |
+| contact-checkride | 3-0 | **B** | η πρόταση-σκοπός· κεφαλή C5490 «FINAL CONTACT CHECKRIDE.» | — |
+| contact-pattern | 3-0 | **C** | C4790 κεφαλή «CONTACT CHECKRIDE FOR SOLO.» + «…PRIOR TO THE 1ST SOLO.»· C46XX με τη σειρά λέξεων του τυπωμένου objective (B), χωρίς το «CONTINUED» του C· σύντομη μορφή του A· το σκεπτικό του A («η πρόταση λέει γιατί δεν υπάρχει area work») στο src | — |
+| contact-solo-1st (ΝΕΑ, C4791) | Σ:C Λ:C Δ:B | **C**+B | κεφαλή του B «1ST SOLO CONTACT SORTIE.»· Contact-Car ως προαιρετική post πρόταση στη διατύπωση του B «SOLO LANDING SUPERVISED AND GRADED FROM THE CONTACT CAR.» (το §14c(5) δένει την ΠΡΟΣΓΕΙΩΣΗ — η μορφή του C που άπλωνε το supervise-and-grade σε όλη την έξοδο κόπηκε από τη Δ)· χωρίς πρόταση MISSION (η κεφαλή + το προφίλ τα λένε ήδη — η επανάληψη του pattern από τον B κόπηκε) | — |
+| contact-solo (ΝΕΑ) | Σ:C Λ:A Δ:B (1-1-1) | σύνθεση | κεφαλή A «CONTACT SOLO SORTIE.»· default το οκτάλεξο του A «SOLO PRACTICE ON CLEARED CONTACT MANEUVERS.» (Σ: υποχρεωτικό graft, Λ: νικητής, Δ: scope-safe)· παραλλαγή με scope από `solo_scopes` (B)· μακρά μορφή consolidation του C ως παραλλαγή· ELP lock + EP off του C | τριπλή διάσπαση — καταγράφεται· τα κοινά όλων υλοποιήθηκαν |
+| instrument-area | Σ:A Λ:A Δ:B | **A** | κεφαλή = το τυπωμένο mission επίθετο «{BASIC/ADVANCED} INSTRUMENT SORTIE.» σε κεφαλή που το φωτογραφημένο άφηνε κενή· clause προαιρετικό OFF· η σημείωση-ειλικρίνειας του B («with Instrument» → «instrument flight», ανάγνωση, όχι επινόηση) στο src | Δ ήθελε B για τη σημαία-ειλικρίνειας — μπήκε ως σημείωση |
+| instrument-route | 3-0 | **C** | «ένα description αφηγείται ΜΙΑ πτήση, άρα το printed either/or γίνεται δύο παραλλαγές»: FLOWN APPROACH TO APPROACH / THROUGH THE AIRWAYS «FOR PRACTICE ON IFR NAVIGATION PROCEDURES»· κεφαλή A «IFR NAVIGATION SORTIE.»· σύντομες μορφές της Λ για το echo | — |
+| instrument-route-night (I4701) | Σ:A Λ:A Δ:C | **A** | κεφαλή «NIGHT IFR NAVIGATION SORTIE THROUGH AIRWAYS.» + ουρά objective του C «FLOWN FOR PRACTICE ON NIGHT IFR NAVIGATION PROCEDURES.»· η αρχή «το NIGHT δύο φορές επίτηδες — ποτέ τρίτη» (C) στο src | Δ: πιστότερη ουρά «…FLIGHT AND PROCEDURES» — καταγράφεται |
+| instrument-checkride | Σ:B Λ:C Δ:B | **B** | μία πρόταση, ο τομέας 2-τιμών {INSTRUMENT/IFR NAVIGATION} όπως τα δύο τυπωμένα objectives· I4890 κεφαλή «FINAL INSTRUMENTS CHECKRIDE.» (πληθυντικός του syllabus ΚΑΙ της επικεφαλίδας του ίδιου του squadron template) — **DRAFT, ανοιχτό ερώτημα** | Λ: ο ενικός ταιριάζει με τις κεφαλές της εφαρμογής — στο draft why |
+| formation | Σ:C Λ:A Δ:C | **C** | «FLOWN AS A TWO-SHIP FOR THE SP'S FAMILIARIZATION WITH {…/CLOSED AND TACTICAL} FORMATION MANEUVERS.» με την οικονομία 2-τιμών του B· κεφαλή-παραλλαγή «TWO-SHIP FORMATION SORTIE.» (graft Σ/A) — το φωτογραφημένο «FORMATION SORTIE.» μένει default (βέτο Δ σε αλλαγή φωτογραφημένης κεφαλής) | Λ: clause OFF στα F41-43 (ταυτολογία)· η σύνθεσή της είναι διαθέσιμη με δύο κλικ |
+| formation-checkride (F4690) | Σ:C Λ:C Δ:B | **C** | κεφαλή default «FINAL FORMATION CHECKRIDE.» (το τυπωμένο mission ΤΗΣ μοναδικής εξεταστικής της κατηγορίας)· το canon «FORMATION CHECKRIDE.» μένει παραλλαγή· πρόταση-σκοπός με «CLOSED AND TACTICAL» (το cross-section που ο απών αναγνώστης δεν παίρνει από το προφίλ) | Δ: canon default, FINAL ως draft — καταγράφεται |
+| formation-solo (ΝΕΑ) | 3-0 | **C** | «FLOWN SOLO BY THE SP AS ONE SHIP OF THE TWO-SHIP FORMATION FOR PRACTICE ON FORMATION MANEUVERS CLEARED FOR SOLO.» — το formation solo είναι όπου το solo φαίνεται λιγότερο από το προφίλ· άγκυρα clearance του B στο ιδίωμα της Λ· προαιρετικό «SP SOLO AS {LEADER/WINGMAN}.» του A (LEADER: η λέξη του ίδιου του syllabus, F43XX) | — |
+| nav-single | Λ:C Δ:C | **C** | «FLOWN AT {MEDIUM/LOW} ALTITUDE TO FAMILIARIZE THE SP WITH VFR NAVIGATION PROCEDURES.» — ALTITUDE είναι η λέξη των σελίδων αεροσκάφους (ledger του B στο src)· option κεφαλής-επιπέδου της Λ σημειώνεται εδώ | Σ κομμένη |
+| nav-2ship | Λ:C Δ:C | **C**+A | η διόρθωση low-preset (§13.4)· κεφαλή A «TWO-SHIP {MEDIUM/LOW} LEVEL VFR NAVIGATION SORTIE.» (οι λέξεις του τυπωμένου MISSION) ώστε η πρόταση να μην ηχεί TWO-SHIP δύο φορές — γι' αυτό το MISSION clause εδώ default OFF, διαθέσιμο | Σ κομμένη |
+| nav-checkride-2ship (N4690) | Λ:B Δ:B | **B** | το μοναδικό objective δύο τομέων «κρατημένο ολόκληρο — κάθε κόψιμο θα παρέθετε λάθος την εμβέλεια»· κεφαλή A «VFR NAVIGATION CHECKRIDE.» (το τυπωμένο mission) default, «FINAL NAVIGATION CHECKRIDE.» (το όνομα του hint) — **DRAFT, ανοιχτό ερώτημα** | ο χρήστης αποφασίζει το όνομα |
+| fs-cockpit (B10XX) | Λ:B Δ:C | ταυτόσημα | «FRONT SEAT PRACTICE FOR FAMILIARIZATION WITH SWITCHES, LEVERS, CONTROLS AND NORMAL PROCEDURES.» (ο B το ανέδειξε, ο C έριξε το possessive)· συσκευή = «UTD or in the A/C» (το ζεύγος της ίδιας της ενότητας — ποτέ η global λίστα του A, ποτέ χωρίς LEVERS)· ελεύθερο κείμενο ως escape | — |
+| fs-ep-drill | Λ:B Δ:C | σύνθεση | «EMERGENCY PROCEDURES TRAINING{ IN A MISSION PROFILE}» — ο μηχανισμός ενός-θραύσματος του B, το τυπωμένο «in» (Δ) αντί του «WITHIN» του C· η γραμμή EP ήδη λέει ΠΟΙΑ έκτακτα, η πρόταση λέει μόνο ΟΤΙ ήταν EP training (A) | «EP TRAINING …» ως **DRAFT** παραλλαγή — §13.7 |
+| fs-contact | Λ:C Δ:C | **C**+B | σπόροι ανά ενότητα με την πειθαρχία του B: C1101 πιστό, C22XX χωρίς «landings», C24/C26 «PRACTICE ON FUNDAMENTAL FLIGHT MANEUVERS AND LANDINGS.» (το «AND LANDINGS» είναι προσθήκη του ίδιου του objective — A) | B κόπηκε μεσοσειράς στη μετάδοση |
+| fs-contact-ep (C25XX) | Λ:A Δ:C (1-1) | σύνθεση | «EMERGENCY PROCEDURES TRAINING IN A MISSION PROFILE.» — το ένστικτο τίτλου-verbatim του A, γραμμένο πλήρες από τη Δ· σύντομη μορφή EP ως **DRAFT** | §13.7 |
+| fs-formation | Λ:A Δ:C (1-1) | σύνθεση | κεφαλή A «TWO-SHIP FORMATION F/S SORTIE.» default («clause = padding»)· η πρόταση του C διαθέσιμη OFF | καταγράφεται |
+| fs-instrument-area | Λ:C Δ:C | **C** | κρατά τη διαβάθμιση του syllabus: I32XX «INTRODUCTION TO INSTRUMENT APPROACH PROCEDURES» vs I33XX «…AND INSTRUMENT APPROACH PROCEDURES» | — |
+| fs-instrument-route | Λ:A Δ:C (1-1) | σύνθεση | κεφαλή «IFR NAVIGATION F/S SORTIE.» default (A: «η μετονομασία ΕΙΝΑΙ όλος ο εμπλουτισμός»)· η πρόταση του C διαθέσιμη OFF | καταγράφεται |
+| fs-instrument-route-night (I3601) | Λ:A Δ:C (1-1) | σύνθεση | κεφαλή A «NIGHT IFR NAVIGATION F/S SORTIE.» + ουρά objective verbatim «…DURING NIGHT FLIGHT.» — NIGHT δύο φορές, ποτέ τρίτη (ο κανόνας του ίδιου του C έκοψε το τριπλό NIGHT του C) | καταγράφεται |
+| fs-nav-single | Λ:A Δ:C+A | σύνθεση | το πλαίσιο του C με τη λέξη του A: οι F/S σελίδες τυπώνουν «(Medium **Level**)» → «FLOWN AT {MEDIUM/LOW} LEVEL TO FAMILIARIZE …» | καταγράφεται |
+
+### 13.6 Το συμβόλαιο εμπλουτισμένου-vs-κανόνα
+
+* Τα τέσσερα φωτογραφημένα κείμενα μένουν **αυτούσια** στο
+  `templates.<id>.canon` — το ιστορικό αρχείο του χρήστη. Κάθε canon στοιχείο
+  κρατά `status:"canon"`.
+* Νέο status **`enriched`** = υιοθετημένο από το panel R17 — ούτε φωτογραφημένο,
+  ούτε πρόταση προς έγκριση. ΔΕΝ εμφανίζει σήμανση DRAFT.
+* **Canon-πιστή λειτουργία — τι επιλέχθηκε**: παραμένει προσβάσιμη με το χέρι —
+  chip **MISSION → off**, κεφαλή → η canon παραλλαγή, τα toggles στις canon
+  προεπιλογές. Αποδίδει το φωτογραφημένο κείμενο με **ακριβώς μία** συστηματική
+  απόκλιση: την απόφανση πλήρων λέξεων (DEPARTURE / APPROACH / MISSED APPROACH
+  όπου η φωτογραφία γράφει DEP. / APPR.), που ο χρήστης όρισε για **κάθε**
+  αποδιδόμενο κείμενο. Απόδειξη ζωντανά (§13.8): το δείγμα FAIL αναπαράχθηκε
+  χαρακτήρα-χαρακτήρα με μόνη διαφορά «VFR DEPARTURE» αντί «VFR DEP.».
+* Το `data/sections.json` (ουδέτερο όνομα, ψηφιοποίηση των MISSION/OBJECTIVE
+  του PART IV — υλικό μαθήματος, κανένα προσωπικό δεδομένο) τροφοδοτεί: (α) τη
+  γραμμή «MISSION: … OBJECTIVE: …» κάτω από την μπάρα εξόδου, (β) τις σειρές
+  Printed MISSION / OBJECTIVE στο ⓘ Template, (γ) τους σπόρους των εμπλουτισμένων
+  προτάσεων. Ο builder το πακετάρει (144 αρχεία δεδομένων).
+
+### 13.7 Ανοιχτά ερωτήματα — τα ΜΟΝΑ σημεία με σήμανση DRAFT
+
+Η σάρωση των 133 εξόδων βρίσκει σήμανση «DRAFT — proposed variant» ΜΟΝΟ εδώ:
+
+| Πού | Το ερώτημα για τον χρήστη |
+|---|---|
+| **I4890** (κεφαλή default) | «FINAL **INSTRUMENTS** CHECKRIDE.» (τυπωμένο mission + επικεφαλίδα του squadron template) ή «FINAL **INSTRUMENT** CHECKRIDE.» (ενικός, όπως οι άλλες κεφαλές της εφαρμογής); |
+| **N4690** (οικογένεια) | κεφαλή «VFR NAVIGATION CHECKRIDE.» (η τυπωμένη σελίδα — default) ή «FINAL NAVIGATION CHECKRIDE.» (το όνομα του hint); |
+| **N4401-03** (hint draft) | ΣΥΓΚΡΟΥΣΗ πηγών: το MISSION της ενότητας λέει **Medium Level**, ο πίνακας MIF της κατηγορίας **LOW LEVEL (FORMATION)**. Τα defaults ακολουθούν το MISSION (medium)· αν ο χρήστης αποφανθεί υπέρ του πίνακα, γυρίζουν LOW. |
+| **fs-ep-drill / fs-contact-ep** (παραλλαγή «EP TRAINING …», μόνο αν επιλεγεί) | «EP» ως καθιερωμένη σύντμηση (Λ — η ίδια η γραμμή EP του κανόνα γράφει EP) ή πλήρες «EMERGENCY PROCEDURES» κατά την απόφανση πλήρων λέξεων (Δ); Default το πλήρες. |
+
+Εκτός panel και **αμετάβλητα draft** (καμία απόδειξη δεν προστέθηκε): οι εκβάσεις
+MIC και NG, οι δύο προτεινόμενες τιμές του `solo_scopes`, η κενή κεφαλή «— no
+opening sentence —» των CONTACT/FORMATION/NAVIGATION, και οι night κεφαλές που δεν
+χρησιμοποιεί καμία έξοδος. Το TO vs T/O είναι σημείωση tooltip, όχι draft (§13.3).
+
+### 13.8 Επαλήθευση (ζωντανά στο :8123, ?v=20260820f)
+
+1. **Σάρωση 133/133 — 0 προβλήματα**: πλήρεις λέξεις παντού (κανένα «DEP.» /
+   «APPR.» σε μπλοκ, chips ή επεξεργάσιμη πρόταση), γραμμή MISSION/OBJECTIVE σε
+   όλες, «THE ABOVE GRADED PROFILE WAS FLOWN.» σε όλες.
+2. **Τα γεγονότα των δύο φωτογραφημένων δειγμάτων** αναπαράγονται στις
+   εμπλουτισμένες προεπιλογές: FAIL στη C4203 (canon-πιστή λειτουργία, §13.6) →
+   «CONTACT SORTIE. STATIC TO, VFR DEPARTURE, FENCE IN, AREA WORK IN METHONI
+   F100-F200, FENCE OUT, VFR RTB, ELP, PATTERN WORK & FULL STOP. THE ABOVE GRADED
+   PROFILE WAS FLOWN. SORTIE OVERALL GRADED AS FAIL. END OF BLOCK. ALL ITEMS
+   COMPLETE AND MIFs ACHIEVED EXCEPT #1, 5, 34. SMS ENTRY.» + «#39. (1) -> (1):
+   FUEL BALANCE, TAD FAIL.» — μόνη διαφορά από τη φωτογραφία το DEPARTURE. Άδεια
+   SOLO στη C4790 → «SORTIE OVERALL GRADED AS VERY GOOD. THE SP IS CLEAR TO FLY
+   SOLO IN THE TRAFFIC PATTERN AND TO EXECUTE ITEMS #1-3, #5, #22-24, #34-38.»
+   με EP «#39. (3) -> (3): …» — οι κωδικοί του δείγματος.
+3. **Οι 17 solo έξοδοι ΛΕΝΕ solo** (C4791 «1ST SOLO CONTACT SORTIE.»· C4802,
+   C4803, C4902, C4903, C4904, C5202, C5203, C5302, C5303 «CONTACT SOLO SORTIE.»·
+   F4301-F4305, F4501, F4502 «FORMATION SOLO SORTIE.») — όλες με EP γραμμή OFF,
+   οι CONTACT με ELP 🔒· C4802/03 χωρίς AREA WORK (pattern-only SOLO row).
+4. **EP presets αμετάβλητα** (ο κανόνας ενότητας 16d): C4203→1, C4303→1, C4403→2,
+   N2301→2, N2304→3, F3203→1, C4790/91→3, B1001→0.
+5. **CIRCLING** στον επιλογέα προσεγγίσεων (I4501: VOR, VOR/DME, TACAN, ILS, LOC,
+   GCA ASR, GCA PAR, GCA NO-GYRO, STANDBY INSTRUMENTS, **CIRCLING**, ✎).
+6. **MISSION/OBJECTIVE** γραμμή = το data/sections.json και στα 6 δείγματα
+   (B1001, C4790, I4501, F4401, N4501, C5301).
+7. **Οι 7 αυτόματες αναδείξεις solo-next αμετάβλητες** (C4790, C4801, C4901,
+   C5201, C5301, F4204, F4404 → προεπιλογή Solo clearance).
+8. Σημάνσεις DRAFT **μόνο** στον πίνακα του §13.7 (I4890, N4401-03, N4690).
+9. `node --check app/description.js` καθαρό· **0 σφάλματα κονσόλας** μετά από
+   πλήρη σάρωση· offline builder **exit 0** (144 αρχεία δεδομένων, το
+   sections.json μέσα, κανένα νέο min()/focus-visible στο CSS — δεν προστέθηκε CSS).

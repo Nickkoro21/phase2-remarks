@@ -1,0 +1,918 @@
+{
+ "schema": "sections-v1",
+ "generated": "2026-08-20",
+ "round": "R17",
+ "note": "Per-TRAINING-SECTION MISSION and OBJECTIVE, verbatim from the Phase 2 Syllabus PART IV section blocks (printed typos kept). Read by app/description.js: the MISSION/OBJECTIVE line under the sortie bar and the seeds of the R17 enriched mission sentences derive from these texts. Course material only - no person data.",
+ "referee_note": "Reconciled 2026-08-20 from two blind extractions (ALPHA, BRAVO) against the PDF. BRAVO's output truncated after C51XX, so the 23 post-C51XX sections were single-source; the referee page-verified all 23 (zero ALPHA errors found). The 30 fully overlapping sections had zero substantive disagreements; 7/30 (23%) re-verified on the printed page (pdf pp. 141, 148, 156, 161, 167, 175, 178) plus all category mission tables and general-program tables (pdf pp. 139, 163, 166, 191, 207, 223) as cross-checks. Printed page number = pdf page - 8. Category totals reconcile with the section pages everywhere except the known I41XX conflict (see its note).",
+ "hours_note": "hours normalized to dot-decimals (PDF mixes comma and dot); MISSION/OBJECTIVE verbatim from PDF incl. printed typos (label variants MISSIONS/OBJECTIVES exist on some pages); the text layer prints Greek homoglyphs inside some codes (e.g. B10XX, N23XX, N4690 with Greek Nu/Chi) - codes here are normalized ASCII; sortie_ids expanded from the XX pattern as 01..NN (convention confirmed by printed ids B1001, B1002, C1101, C2101, C4101, C4602, C5201, I3201, I3601, I4501, I4603, F4301, F4501, C4790, C4791); F/S 'device' field from the BRAVO extraction, page-verified on B10XX, C2501, I36XX, N23XX; instrument and navigation A/C section pages print no SOLO line at all (solo_sorties_hours null there), contact and formation pages print an explicit 0/0 or 0/0.0",
+ "source_doc": "Phase_2_Syllabus_2025.pdf",
+ "sections": [
+  {
+   "band": "F/S",
+   "category": "FAMILIARIZATION",
+   "section_id_range": "B10XX",
+   "sortie_ids": [
+    "B1001",
+    "B1002"
+   ],
+   "sorties_hours_total": "2/2.0",
+   "dual_sorties_hours": null,
+   "solo_sorties_hours": null,
+   "mission": "Basic exercises category, normal procedures.",
+   "objective": "Front seat practice aims at familiarizing SP with switches, levers, controls and procedures.",
+   "device": "UTD or in the A/C.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 141
+  },
+  {
+   "band": "F/S",
+   "category": "CONTACT",
+   "section_id_range": "C11XX",
+   "sortie_ids": [
+    "C1101"
+   ],
+   "sorties_hours_total": "1/1.3",
+   "dual_sorties_hours": null,
+   "solo_sorties_hours": null,
+   "mission": "Contact.",
+   "objective": "SP’s training in Basic A/C Control and familiarization with A/C flight characteristics.",
+   "device": "PTT/OFT/FTD.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 143
+  },
+  {
+   "band": "F/S",
+   "category": "CONTACT",
+   "section_id_range": "C21XX",
+   "sortie_ids": [
+    "C2101"
+   ],
+   "sorties_hours_total": "1/1.3",
+   "dual_sorties_hours": null,
+   "solo_sorties_hours": null,
+   "mission": "Emergency Procedures.",
+   "objective": "SP’s training in Emergency Procedures.",
+   "device": "OFT/UTD/FTD.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 144
+  },
+  {
+   "band": "F/S",
+   "category": "CONTACT",
+   "section_id_range": "C22XX",
+   "sortie_ids": [
+    "C2201",
+    "C2202"
+   ],
+   "sorties_hours_total": "2/2.6",
+   "dual_sorties_hours": null,
+   "solo_sorties_hours": null,
+   "mission": "Contact.",
+   "objective": "SP’s familiarization with A/C flight characteristics and demonstration/practice of fundamental flight maneuvers.",
+   "device": "PTT/OFT/FTD.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 145
+  },
+  {
+   "band": "F/S",
+   "category": "CONTACT",
+   "section_id_range": "C23XX",
+   "sortie_ids": [
+    "C2301",
+    "C2302"
+   ],
+   "sorties_hours_total": "2/2.6",
+   "dual_sorties_hours": null,
+   "solo_sorties_hours": null,
+   "mission": "Emergency Procedures Training in a Mission Profile.",
+   "objective": "SP’s training in Emergency Procedures.",
+   "device": "UTD/OFT/FTD.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 146
+  },
+  {
+   "band": "F/S",
+   "category": "CONTACT",
+   "section_id_range": "C24XX",
+   "sortie_ids": [
+    "C2401",
+    "C2402",
+    "C2403"
+   ],
+   "sorties_hours_total": "3/3.9",
+   "dual_sorties_hours": null,
+   "solo_sorties_hours": null,
+   "mission": "Contact.",
+   "objective": "Practice on fundamental flight maneuvers and landings.",
+   "device": "PTT/OFT/FTD.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 147
+  },
+  {
+   "band": "F/S",
+   "category": "CONTACT",
+   "section_id_range": "C2501",
+   "sortie_ids": [
+    "C2501",
+    "C2502",
+    "C2503"
+   ],
+   "sorties_hours_total": "3/3.9",
+   "dual_sorties_hours": null,
+   "solo_sorties_hours": null,
+   "mission": "Emergency Procedures Training in a Mission Profile.",
+   "objective": "SPs’ practice on Emergency procedures.",
+   "device": "UTD/OFT/FTD.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 148,
+   "note": "header prints explicit id C2501 although the section holds 3 sorties (pattern C25XX expected); the F/S contact totals 16/20.8 (pdf 139) only balance with 3 sorties here - verified on the printed page"
+  },
+  {
+   "band": "F/S",
+   "category": "CONTACT",
+   "section_id_range": "C26XX",
+   "sortie_ids": [
+    "C2601",
+    "C2602",
+    "C2603",
+    "C2604"
+   ],
+   "sorties_hours_total": "4/5.2",
+   "dual_sorties_hours": null,
+   "solo_sorties_hours": null,
+   "mission": "Contact.",
+   "objective": "Practice on fundamental flight maneuvers and landings.",
+   "device": "PTT/OFT/FTD.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 149
+  },
+  {
+   "band": "F/S",
+   "category": "INSTRUMENT",
+   "section_id_range": "I31XX",
+   "sortie_ids": [
+    "I3101",
+    "I3102"
+   ],
+   "sorties_hours_total": "2/2.4",
+   "dual_sorties_hours": null,
+   "solo_sorties_hours": null,
+   "mission": "Basic Instruments Procedures",
+   "objective": "The familiarization of SP with instruments flying and his/her practice in Basic Instruments.",
+   "device": "UTD/OFT/FTD/PTT.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 151
+  },
+  {
+   "band": "F/S",
+   "category": "INSTRUMENT",
+   "section_id_range": "I32XX",
+   "sortie_ids": [
+    "I3201",
+    "I3202",
+    "I3203"
+   ],
+   "sorties_hours_total": "3/3.9",
+   "dual_sorties_hours": null,
+   "solo_sorties_hours": null,
+   "mission": "Basic and Advanced Instruments.",
+   "objective": "Familiarization of SP with instrument flights and his/her practice in Basic and Advanced Instruments. Introduction to Instrument Approach procedures.",
+   "device": "UTD/OFT/FTD/PTT.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 152
+  },
+  {
+   "band": "F/S",
+   "category": "INSTRUMENT",
+   "section_id_range": "I33XX",
+   "sortie_ids": [
+    "I3301",
+    "I3302",
+    "I3303",
+    "I3304"
+   ],
+   "sorties_hours_total": "4/5.2",
+   "dual_sorties_hours": null,
+   "solo_sorties_hours": null,
+   "mission": "Basic and Advanced Instruments.",
+   "objective": "Familiarization of SP with instrument flying and his/her practice in Basic and Advanced Instruments and Instrument Approach procedures.",
+   "device": "UTD/OFT/FTD/PTT.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 153
+  },
+  {
+   "band": "F/S",
+   "category": "INSTRUMENT",
+   "section_id_range": "I34XX",
+   "sortie_ids": [
+    "I3401",
+    "I3402",
+    "I3403",
+    "I3404"
+   ],
+   "sorties_hours_total": "4/5.2",
+   "dual_sorties_hours": null,
+   "solo_sorties_hours": null,
+   "mission": "IFR Navigation.",
+   "objective": "Familiarization of SP with IFR navigation procedures.",
+   "device": "UTD/OFT/FTD/PTT.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 154
+  },
+  {
+   "band": "F/S",
+   "category": "INSTRUMENT",
+   "section_id_range": "I35XX",
+   "sortie_ids": [
+    "I3501",
+    "I3502",
+    "I3503",
+    "I3504"
+   ],
+   "sorties_hours_total": "4/5.2",
+   "dual_sorties_hours": null,
+   "solo_sorties_hours": null,
+   "mission": "IFR Navigation",
+   "objective": "Familiarization of SP with IFR navigation procedures.",
+   "device": "UTD/OFT/FTD/PTT.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 155
+  },
+  {
+   "band": "F/S",
+   "category": "INSTRUMENT",
+   "section_id_range": "I36XX",
+   "sortie_ids": [
+    "I3601"
+   ],
+   "sorties_hours_total": "1/1.3",
+   "dual_sorties_hours": null,
+   "solo_sorties_hours": null,
+   "mission": "Night IFR Navigation.",
+   "objective": "Familiarization of SP with IFR navigation procedures during night flight.",
+   "device": "OFT/FTD/PTT.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 156,
+   "note": "night F/S sortie, executed with night flying conditions (OFT/FTD); prerequisite (with I4501) for the night air sortie I4701 (pdf 191)"
+  },
+  {
+   "band": "F/S",
+   "category": "FORMATION",
+   "section_id_range": "F31XX",
+   "sortie_ids": [
+    "F3101",
+    "F3102"
+   ],
+   "sorties_hours_total": "2/2.6",
+   "dual_sorties_hours": null,
+   "solo_sorties_hours": null,
+   "mission": "Two-ship Formation",
+   "objective": "Familiarization of SP with formation maneuvers.",
+   "device": "PTT/OFT/FTD.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 157
+  },
+  {
+   "band": "F/S",
+   "category": "FORMATION",
+   "section_id_range": "F32XX",
+   "sortie_ids": [
+    "F3201",
+    "F3202",
+    "F3203"
+   ],
+   "sorties_hours_total": "3/3.9",
+   "dual_sorties_hours": null,
+   "solo_sorties_hours": null,
+   "mission": "Two-ship Formation.",
+   "objective": "Familiarization of SP with formation maneuvers.",
+   "device": "PTT/OFT/FTD.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 158
+  },
+  {
+   "band": "F/S",
+   "category": "NAVIGATION",
+   "section_id_range": "N21XX",
+   "sortie_ids": [
+    "N2101"
+   ],
+   "sorties_hours_total": "1/1.3",
+   "dual_sorties_hours": null,
+   "solo_sorties_hours": null,
+   "mission": "VFR Navigation (Medium Level).",
+   "objective": "Familiarization of SP with VFR Navigation Procedures.",
+   "device": "PTT/OFT/FTD.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 159
+  },
+  {
+   "band": "F/S",
+   "category": "NAVIGATION",
+   "section_id_range": "N22XX",
+   "sortie_ids": [
+    "N2201",
+    "N2202"
+   ],
+   "sorties_hours_total": "2/2.6",
+   "dual_sorties_hours": null,
+   "solo_sorties_hours": null,
+   "mission": "VFR Navigation (Low Level).",
+   "objective": "Familiarization of SP with VFR Navigation Procedures.",
+   "device": "PTT/OFT/FTD.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 160
+  },
+  {
+   "band": "F/S",
+   "category": "NAVIGATION",
+   "section_id_range": "N23XX",
+   "sortie_ids": [
+    "N2301",
+    "N2302",
+    "N2303",
+    "N2304"
+   ],
+   "sorties_hours_total": "4/5.2",
+   "dual_sorties_hours": null,
+   "solo_sorties_hours": null,
+   "mission": "VFR Navigation (Low Level).",
+   "objective": "Familiarization of SP with VFR Navigation Procedures.",
+   "device": "PTT/OFT/FTD.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 161
+  },
+  {
+   "band": "A/C",
+   "category": "CONTACT",
+   "section_id_range": "C41XX",
+   "sortie_ids": [
+    "C4101"
+   ],
+   "sorties_hours_total": "1/1.0",
+   "dual_sorties_hours": "1/1.0",
+   "solo_sorties_hours": "0/0.0",
+   "mission": "Contact – Familiarization.",
+   "objective": "The demonstration to SP of the local flights areas, the ground reference points and his/her familiarization with the A/C flight characteristics.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 167,
+   "note": "C4101 not graded in General performance (NG) except in case of Air Sickness (pdf 165)"
+  },
+  {
+   "band": "A/C",
+   "category": "CONTACT",
+   "section_id_range": "C42XX",
+   "sortie_ids": [
+    "C4201",
+    "C4202",
+    "C4203"
+   ],
+   "sorties_hours_total": "3/3.9",
+   "dual_sorties_hours": "3/3.9",
+   "solo_sorties_hours": "0/0.0",
+   "mission": "Contact.",
+   "objective": "Familiarization of SP with the A/C flight characteristics, demonstration and practice on fundamental flight maneuvers.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 168
+  },
+  {
+   "band": "A/C",
+   "category": "CONTACT",
+   "section_id_range": "C43XX",
+   "sortie_ids": [
+    "C4301",
+    "C4302",
+    "C4303"
+   ],
+   "sorties_hours_total": "3/3.9",
+   "dual_sorties_hours": "3/3.9",
+   "solo_sorties_hours": "0/0.0",
+   "mission": "Contact – Basic Maneuvers",
+   "objective": "Familiarization of SP with the A/C flight characteristics, the demonstration and practice on fundamental flight maneuvers.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 169
+  },
+  {
+   "band": "A/C",
+   "category": "CONTACT",
+   "section_id_range": "C44XX",
+   "sortie_ids": [
+    "C4401",
+    "C4402",
+    "C4403"
+   ],
+   "sorties_hours_total": "3/3.9",
+   "dual_sorties_hours": "3/3.9",
+   "solo_sorties_hours": "0/0.0",
+   "mission": "Contact – Basic Maneuvers.",
+   "objective": "Familiarization of SP with the A/C flight characteristics, the demonstration and practice on fundamental flight maneuvers.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 170
+  },
+  {
+   "band": "A/C",
+   "category": "CONTACT",
+   "section_id_range": "C4590",
+   "sortie_ids": [
+    "C4590"
+   ],
+   "sorties_hours_total": "1/1.4",
+   "dual_sorties_hours": "1/1.4",
+   "solo_sorties_hours": "0/0.0",
+   "mission": "Contact checkride.",
+   "objective": "Demonstrate the required proficiency level IAW MIFS in a representative cross section of Contact maneuvers and procedures.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 172
+  },
+  {
+   "band": "A/C",
+   "category": "CONTACT",
+   "section_id_range": "C46XX",
+   "sortie_ids": [
+    "C4601",
+    "C4602"
+   ],
+   "sorties_hours_total": "2/2.6",
+   "dual_sorties_hours": "2/2.6",
+   "solo_sorties_hours": "0/0.0",
+   "mission": "Contact – Overhead Traffic Pattern.",
+   "objective": "Familiarization of SP with the A/C flight characteristics and practice on Overhead Traffic Patterns.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 173
+  },
+  {
+   "band": "A/C",
+   "category": "CONTACT",
+   "section_id_range": "C4790-C4791",
+   "sortie_ids": [
+    "C4790",
+    "C4791"
+   ],
+   "sorties_hours_total": "2/1.1",
+   "dual_sorties_hours": "1/0.8",
+   "solo_sorties_hours": "1/0.3",
+   "mission": "Contact checkride for SOLO (C4790) and 1st SOLO (C4791).",
+   "objective": "Demonstrate the required proficiency level IAW MIFS in a representative cross section of Contact maneuvers and procedures and execution of the 1st SOLO flight.",
+   "solo_ids_in_mission": [
+    "C4791"
+   ],
+   "page_pdf": 175,
+   "note": "both sorties flown the same day with the same A/C; the C4790 evaluator supervises and grades the SOLO landing from the Contact Car (pdf 165); at the SOLO sortie SP performs one airport traffic pattern within the airport ATZ and one normal landing, minimum A/C fuel 550 lbs (pdf 175)"
+  },
+  {
+   "band": "A/C",
+   "category": "CONTACT",
+   "section_id_range": "C48XX",
+   "sortie_ids": [
+    "C4801",
+    "C4802",
+    "C4803",
+    "C4804"
+   ],
+   "sorties_hours_total": "4/4.9",
+   "dual_sorties_hours": "3/3.9",
+   "solo_sorties_hours": "1/1.0",
+   "mission": "Contact – Basic/Advanced Maneuvers.",
+   "objective": "Familiarization of SP with the A/C flight characteristics and practice on Basic and Advanced contact maneuvers.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 176
+  },
+  {
+   "band": "A/C",
+   "category": "CONTACT",
+   "section_id_range": "C49XX",
+   "sortie_ids": [
+    "C4901",
+    "C4902",
+    "C4903",
+    "C4904",
+    "C4905"
+   ],
+   "sorties_hours_total": "5/6.2",
+   "dual_sorties_hours": "4/5.2",
+   "solo_sorties_hours": "1/1.0",
+   "mission": "Contact – Basic/Advanced Maneuvers.",
+   "objective": "Familiarization of SP with the A/C flight characteristics and practice on Basic and Advanced contact maneuvers.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 178
+  },
+  {
+   "band": "A/C",
+   "category": "CONTACT",
+   "section_id_range": "C5090",
+   "sortie_ids": [
+    "C5090"
+   ],
+   "sorties_hours_total": "1/1.4",
+   "dual_sorties_hours": "1/1.4",
+   "solo_sorties_hours": "0/0.0",
+   "mission": "Contact Checkride.",
+   "objective": "Demonstrate the required proficiency level IAW MIFS in a representative cross section of Contact maneuvers and procedures.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 181
+  },
+  {
+   "band": "A/C",
+   "category": "CONTACT",
+   "section_id_range": "C51XX",
+   "sortie_ids": [
+    "C5101",
+    "C5102"
+   ],
+   "sorties_hours_total": "2/2.4",
+   "dual_sorties_hours": "2/2.4",
+   "solo_sorties_hours": "0/0.0",
+   "mission": "Contact – Basic/Advanced Maneuvers",
+   "objective": "Familiarization of SP with the A/C flight characteristics and practice on Basic and Advanced Flight Maneuvers.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 183
+  },
+  {
+   "band": "A/C",
+   "category": "CONTACT",
+   "section_id_range": "C52XX",
+   "sortie_ids": [
+    "C5201",
+    "C5202",
+    "C5203",
+    "C5204"
+   ],
+   "sorties_hours_total": "4/4.6",
+   "dual_sorties_hours": "3/3.6",
+   "solo_sorties_hours": "1/1.0",
+   "mission": "Contact – Basic/Advanced Maneuvers.",
+   "objective": "Familiarization of SP with the A/C flight characteristics and practice on Basic and Advanced flight Maneuvers.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 185
+  },
+  {
+   "band": "A/C",
+   "category": "CONTACT",
+   "section_id_range": "C53XX",
+   "sortie_ids": [
+    "C5301",
+    "C5302",
+    "C5303",
+    "C5304"
+   ],
+   "sorties_hours_total": "4/4.6",
+   "dual_sorties_hours": "3/3.6",
+   "solo_sorties_hours": "1/1.0",
+   "mission": "Contact – Basic/Advanced Maneuvers.",
+   "objective": "Familiarization of SP with with the A/C flight characteristics and practice on Basic and Advanced Flight Maneuvers.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 187,
+   "note": "objective prints doubled 'with with' verbatim - confirmed on the printed page"
+  },
+  {
+   "band": "A/C",
+   "category": "CONTACT",
+   "section_id_range": "C5490",
+   "sortie_ids": [
+    "C5490"
+   ],
+   "sorties_hours_total": "1/1.3",
+   "dual_sorties_hours": "1/1.3",
+   "solo_sorties_hours": "0/0",
+   "mission": "Final Contact Checkride.",
+   "objective": "Demonstrate the required proficiency level IAW MIFS in a representative cross section of Contact maneuvers and procedures.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 189
+  },
+  {
+   "band": "A/C",
+   "category": "INSTRUMENT",
+   "section_id_range": "I41XX",
+   "sortie_ids": [
+    "I4101",
+    "I4102",
+    "I4103"
+   ],
+   "sorties_hours_total": "3/3.9",
+   "dual_sorties_hours": "3/3.9",
+   "solo_sorties_hours": null,
+   "mission": "Basic Instrument.",
+   "objective": "Familiarization of SP with Instrument flight and practice Basic Instruments.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 193,
+   "note": "PDF-internal conflict, ruled on the printed pages: the section page (pdf 193) prints TOTAL and DUAL 3/3.9, but the instrument mission table (pdf 191) prints I41 as 2/2.6, and the instrument category totals (14/18.4 on pdf 191 and in the general program pdf 163) only reconcile with 2/2.6; the section-page value is kept as canonical"
+  },
+  {
+   "band": "A/C",
+   "category": "INSTRUMENT",
+   "section_id_range": "I42XX",
+   "sortie_ids": [
+    "I4201",
+    "I4202"
+   ],
+   "sorties_hours_total": "2/2.6",
+   "dual_sorties_hours": "2/2.6",
+   "solo_sorties_hours": null,
+   "mission": "Advanced Instrument.",
+   "objective": "Familiarization of SP with Instrument and practice on Advanced Instruments.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 194
+  },
+  {
+   "band": "A/C",
+   "category": "INSTRUMENT",
+   "section_id_range": "I43XX",
+   "sortie_ids": [
+    "I4301",
+    "I4302"
+   ],
+   "sorties_hours_total": "2/2.6",
+   "dual_sorties_hours": "2/2.6",
+   "solo_sorties_hours": null,
+   "mission": "Advanced Instrument.",
+   "objective": "Familiarization of SP with Instrument and practice of Advanced Instruments.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 196
+  },
+  {
+   "band": "A/C",
+   "category": "INSTRUMENT",
+   "section_id_range": "I4490",
+   "sortie_ids": [
+    "I4490"
+   ],
+   "sorties_hours_total": "1/1.4",
+   "dual_sorties_hours": "1/1.4",
+   "solo_sorties_hours": null,
+   "mission": "Instrument Checkride.",
+   "objective": "Demonstrate the required proficiency level IAW MIFS in a representative cross section of Instrument maneuvers and procedures.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 199
+  },
+  {
+   "band": "A/C",
+   "category": "INSTRUMENT",
+   "section_id_range": "I45XX",
+   "sortie_ids": [
+    "I4501",
+    "I4502"
+   ],
+   "sorties_hours_total": "2/2.6",
+   "dual_sorties_hours": "2/2.6",
+   "solo_sorties_hours": null,
+   "mission": "IFR navigation flights through airways or Approach to Approach.",
+   "objective": "SP’s practice on IFR navigation flights and procedures.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 201
+  },
+  {
+   "band": "A/C",
+   "category": "INSTRUMENT",
+   "section_id_range": "I46XX",
+   "sortie_ids": [
+    "I4601",
+    "I4602",
+    "I4603"
+   ],
+   "sorties_hours_total": "3/3.9",
+   "dual_sorties_hours": "3/3.9",
+   "solo_sorties_hours": null,
+   "mission": "IFR navigation flights through airways or Approach to Approach.",
+   "objective": "SP’s practice on IFR navigation flights and procedures.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 202
+  },
+  {
+   "band": "A/C",
+   "category": "INSTRUMENT",
+   "section_id_range": "I4701",
+   "sortie_ids": [
+    "I4701"
+   ],
+   "sorties_hours_total": "1/1.4",
+   "dual_sorties_hours": "1/1.4",
+   "solo_sorties_hours": null,
+   "mission": "Night IFR navigation flight through airways.",
+   "objective": "SP’s practice on Night IFR navigation flight and procedures.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 203,
+   "note": "prerequisites are I4501 and I3601 in night conditions; completed before I4603 (pdf 191)"
+  },
+  {
+   "band": "A/C",
+   "category": "INSTRUMENT",
+   "section_id_range": "I4890",
+   "sortie_ids": [
+    "I4890"
+   ],
+   "sorties_hours_total": "1/1.3",
+   "dual_sorties_hours": "1/1.3",
+   "solo_sorties_hours": null,
+   "mission": "Final Instruments Checkride.",
+   "objective": "Demonstrate the required proficiency level IAW MIFS in a representative cross section of IFR navigation maneuvers and procedures.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 205
+  },
+  {
+   "band": "A/C",
+   "category": "FORMATION",
+   "section_id_range": "F41XX",
+   "sortie_ids": [
+    "F4101",
+    "F4102",
+    "F4103",
+    "F4104"
+   ],
+   "sorties_hours_total": "4/4.8",
+   "dual_sorties_hours": "4/4.8",
+   "solo_sorties_hours": "0/0",
+   "mission": "Two-ship Formation.",
+   "objective": "Familiarization of SP with Formation Maneuvers.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 209
+  },
+  {
+   "band": "A/C",
+   "category": "FORMATION",
+   "section_id_range": "F42XX",
+   "sortie_ids": [
+    "F4201",
+    "F4202",
+    "F4203",
+    "F4204"
+   ],
+   "sorties_hours_total": "4/4.8",
+   "dual_sorties_hours": "4/4.8",
+   "solo_sorties_hours": "0/0",
+   "mission": "Two-ship Formation",
+   "objective": "Familiarization of SP with Formation Maneuvers.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 211
+  },
+  {
+   "band": "A/C",
+   "category": "FORMATION",
+   "section_id_range": "F43XX",
+   "sortie_ids": [
+    "F4301",
+    "F4302",
+    "F4303",
+    "F4304",
+    "F4305",
+    "F4306"
+   ],
+   "sorties_hours_total": "6/7.2",
+   "dual_sorties_hours": "4/4.8",
+   "solo_sorties_hours": "2/2.4",
+   "mission": "Two-ship Formation.",
+   "objective": "Familiarization of SP with Formation Maneuvers.",
+   "solo_ids_in_mission": [],
+   "solo_id_note": "first SOLO of F43XX can be executed at F4301, same or next day after the last dual formation flight, with interval T/O as Leader from the center of the RWY; the next F43XX SOLO within four calendar days of the last dual formation flight (pdf 207; Restrictions pdf 214)",
+   "page_pdf": 213
+  },
+  {
+   "band": "A/C",
+   "category": "FORMATION",
+   "section_id_range": "F44XX",
+   "sortie_ids": [
+    "F4401",
+    "F4402",
+    "F4403",
+    "F4404"
+   ],
+   "sorties_hours_total": "4/4.8",
+   "dual_sorties_hours": "4/4.8",
+   "solo_sorties_hours": "0/0",
+   "mission": "Two-ship Formation.",
+   "objective": "Familiarization of SP with Closed and Tactical Formation Maneuvers.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 215
+  },
+  {
+   "band": "A/C",
+   "category": "FORMATION",
+   "section_id_range": "F45XX",
+   "sortie_ids": [
+    "F4501",
+    "F4502",
+    "F4503"
+   ],
+   "sorties_hours_total": "3/3.6",
+   "dual_sorties_hours": "2/2.4",
+   "solo_sorties_hours": "1/1.2",
+   "mission": "Two-ship Formation.",
+   "objective": "Familiarization of SP with Closed and Tactical Formation Maneuvers.",
+   "solo_ids_in_mission": [],
+   "solo_id_note": "the SOLO can be executed at F4501, same or next day after the last dual formation flight (pdf 207; Restrictions pdf 219)",
+   "page_pdf": 217
+  },
+  {
+   "band": "A/C",
+   "category": "FORMATION",
+   "section_id_range": "F4690",
+   "sortie_ids": [
+    "F4690"
+   ],
+   "sorties_hours_total": "1/1.3",
+   "dual_sorties_hours": "1/1.3",
+   "solo_sorties_hours": "0/0",
+   "mission": "Final Formation Checkride.",
+   "objective": "Demonstrate the required proficiency level IAW MIFS in a representative cross section of Closed and Tactical Formation maneuvers and procedures.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 221,
+   "note": "naming conflict ruled on the printed pages: the formation mission table (pdf 207) names the final checkride F4790, but the section page (pdf 221) and the General Directives final-examinations list (pdf 101) both print F4690; F4690 is canonical"
+  },
+  {
+   "band": "A/C",
+   "category": "NAVIGATION",
+   "section_id_range": "N41XX",
+   "sortie_ids": [
+    "N4101",
+    "N4102"
+   ],
+   "sorties_hours_total": "2/2.2",
+   "dual_sorties_hours": "2/2.2",
+   "solo_sorties_hours": null,
+   "mission": "VFR Navigation (Medium Altitude).",
+   "objective": "Familiarization of SP with VFR Navigation procedures.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 225
+  },
+  {
+   "band": "A/C",
+   "category": "NAVIGATION",
+   "section_id_range": "N42XX",
+   "sortie_ids": [
+    "N4201",
+    "N4202"
+   ],
+   "sorties_hours_total": "2/2.2",
+   "dual_sorties_hours": "2/2.2",
+   "solo_sorties_hours": null,
+   "mission": "VFR Navigation (Low Altitude).",
+   "objective": "Familiarization of SP with VFR Navigation procedures.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 226
+  },
+  {
+   "band": "A/C",
+   "category": "NAVIGATION",
+   "section_id_range": "N43XX",
+   "sortie_ids": [
+    "N4301",
+    "N4302"
+   ],
+   "sorties_hours_total": "2/2.2",
+   "dual_sorties_hours": "2/2.2",
+   "solo_sorties_hours": null,
+   "mission": "VFR Navigation (Low Altitude).",
+   "objective": "Familiarization of SP with VFR Navigation procedures.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 227
+  },
+  {
+   "band": "A/C",
+   "category": "NAVIGATION",
+   "section_id_range": "N44XX",
+   "sortie_ids": [
+    "N4401",
+    "N4402",
+    "N4403"
+   ],
+   "sorties_hours_total": "3/3.3",
+   "dual_sorties_hours": "3/3.3",
+   "solo_sorties_hours": null,
+   "mission": "Medium Level VFR Navigation (Two Ship Formation).",
+   "objective": "Familiarization of SP with Two-Ship VFR Navigation procedures (Medium Altitude).",
+   "solo_ids_in_mission": [],
+   "page_pdf": 228
+  },
+  {
+   "band": "A/C",
+   "category": "NAVIGATION",
+   "section_id_range": "N45XX",
+   "sortie_ids": [
+    "N4501",
+    "N4502",
+    "N4503"
+   ],
+   "sorties_hours_total": "3/3.3",
+   "dual_sorties_hours": "3/3.3",
+   "solo_sorties_hours": null,
+   "mission": "Low Level VFR Navigation (Two Ship Formation)",
+   "objective": "Familiarization of SP with Two-Ship VFR Navigation procedures (Low Altitude).",
+   "solo_ids_in_mission": [],
+   "page_pdf": 229
+  },
+  {
+   "band": "A/C",
+   "category": "NAVIGATION",
+   "section_id_range": "N4690",
+   "sortie_ids": [
+    "N4690"
+   ],
+   "sorties_hours_total": "1/1.2",
+   "dual_sorties_hours": "1/1.2",
+   "solo_sorties_hours": null,
+   "mission": "VFR Navigation Checkride.",
+   "objective": "Demonstrate the required proficiency level IAW MIFS in a representative cross section of low level navigation and two-ship formation maneuvers and procedures.",
+   "solo_ids_in_mission": [],
+   "page_pdf": 231
+  }
+ ]
+}
