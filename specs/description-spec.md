@@ -806,7 +806,10 @@ opening sentence —» των CONTACT/FORMATION/NAVIGATION, και οι night κ
    COMPLETE AND MIFs ACHIEVED EXCEPT #1, 5, 34. SMS ENTRY.» + «#39. (1) -> (1):
    FUEL BALANCE, TAD FAIL.» — μόνη διαφορά από τη φωτογραφία το DEPARTURE. Άδεια
    SOLO στη C4790 → «SORTIE OVERALL GRADED AS VERY GOOD. THE SP IS CLEAR TO FLY
-   SOLO IN THE TRAFFIC PATTERN AND TO EXECUTE ITEMS #1-3, #5, #22-24, #34-38.»
+   SOLO IN THE TRAFFIC PATTERN AND TO EXECUTE ITEMS #1-2, #5, #22-24, #27-28,
+   #34-40.» — το ΖΩΝΤΑΝΟ seed του §10.2 (το #3 είναι not_planned στη C4790-91,
+   τα #27-28/#39-40 είναι seedable), ΟΧΙ η χειροδιαλεγμένη λίστα της φωτογραφίας
+   του §2 (διόρθωση 17β — το R17 verify έπιασε την αντίφαση §13.8↔§10.2)·
    με EP «#39. (3) -> (3): …» — οι κωδικοί του δείγματος.
 3. **Οι 17 solo έξοδοι ΛΕΝΕ solo** (C4791 «1ST SOLO CONTACT SORTIE.»· C4802,
    C4803, C4902, C4903, C4904, C5202, C5203, C5302, C5303 «CONTACT SOLO SORTIE.»·
