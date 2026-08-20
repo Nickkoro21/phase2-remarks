@@ -292,6 +292,17 @@
      "v": "WINGMAN"
     }
    ]
+  },
+  "roles": {
+   "note": "APOFANSI 20/08/2026: the OUT/BACK blanks are the SP's ROLE on each leg — «Δεν ειναι 2, 2. ειναι wing out, lead back ή το αντιθετο» — the LEAD CHANGE mid-sortie swaps them. Not ship counts (ship_counts stays as vocabulary only).",
+   "values": [
+    {
+     "v": "WING"
+    },
+    {
+     "v": "LEAD"
+    }
+   ]
   }
  },
  "external_lists": {
@@ -400,7 +411,7 @@
    "profile": [
     {
      "id": "to",
-     "label": "STATIC TO",
+     "label": "STATIC T/O",
      "opt": false,
      "on": true,
      "parts": [
@@ -414,11 +425,11 @@
       },
       {
        "t": "lit",
-       "v": " TO"
+       "v": " T/O"
       }
      ],
      "status": "canon",
-     "note": "The photographed CONTACT and FORMATION templates print «TO» where INSTRUMENT and NAVIGATION print «T/O». Normalizing TO -> T/O is a one-character ruling for the user, NOT taken by the R17 panel — kept as photographed."
+     "note": "APOFANSI 20/08/2026: «T/O» — normalized across all four templates (the photographed TO stays only inside the canon record)."
     },
     {
      "id": "dep",
@@ -641,10 +652,10 @@
      },
      {
       "id": "final",
-      "text": "FINAL INSTRUMENTS CHECKRIDE.",
-      "label": "FINAL INSTRUMENTS CHECKRIDE.",
-      "status": "draft",
-      "why": "OPEN QUESTION (R17 panel, 2-1): I4890's printed MISSION is «Final Instruments Checkride.» and the squadron's own template heading prints «INSTRUMENTS» — the plural is house style (SQUADRON + DOCTRINE seats). «FINAL INSTRUMENT CHECKRIDE.» would match the app's singular heads instead (LANGUAGE seat). Singular vs plural is a NAMING ruling for the user; the printed plural ships as the draft default."
+      "text": "FINAL INSTRUMENT CHECKRIDE.",
+      "label": "FINAL INSTRUMENT CHECKRIDE.",
+      "status": "enriched",
+      "why": "APOFANSI 20/08/2026: «Σωστη ορθογραφια» — the syllabus's printed plural «Instruments» is treated as a typo; the head prints FINAL INSTRUMENT CHECKRIDE."
      },
      {
       "id": "night",
@@ -1074,7 +1085,7 @@
    "profile": [
     {
      "id": "to",
-     "label": "____ TO",
+     "label": "____ T/O",
      "opt": false,
      "on": true,
      "parts": [
@@ -1088,11 +1099,11 @@
       },
       {
        "t": "lit",
-       "v": " TO"
+       "v": " T/O"
       }
      ],
      "status": "canon",
-     "note": "the canon leaves the take-off blank; the syllabus makes INTERVAL the normal formation departure (F41XX §1). The photographed CONTACT and FORMATION templates print «TO» where INSTRUMENT and NAVIGATION print «T/O». Normalizing TO -> T/O is a one-character ruling for the user, NOT taken by the R17 panel — kept as photographed."
+     "note": "APOFANSI 20/08/2026: «T/O» — normalized across all four templates (the photographed TO stays only inside the canon record)."
     },
     {
      "id": "dep",
@@ -1272,10 +1283,10 @@
       {
        "t": "slot",
        "id": "out_n",
-       "list": "ship_counts",
+       "list": "roles",
        "free": true,
        "ph": "__",
-       "def": "2"
+       "def": "WING"
       },
       {
        "t": "lit",
@@ -1284,10 +1295,10 @@
       {
        "t": "slot",
        "id": "back_n",
-       "list": "ship_counts",
+       "list": "roles",
        "free": true,
        "ph": "__",
-       "def": "2"
+       "def": "LEAD"
       },
       {
        "t": "lit",
@@ -1295,7 +1306,7 @@
       }
      ],
      "status": "canon",
-     "note": "read as the ship count that departed and recovered — every Phase II formation section prints «NUMBER OF AIRCRAFT: Sorties will be performed with two A/C». Free text stays open in case the squadron writes times here instead; AWAITING THE USER'S RULING."
+     "note": "APOFANSI 20/08/2026 — role, not count: WING OUT - LEAD BACK (or the reverse); applies wherever two aircraft fly."
     },
     {
      "id": "sp_pos",
@@ -1549,10 +1560,10 @@
       {
        "t": "slot",
        "id": "out_n",
-       "list": "ship_counts",
+       "list": "roles",
        "free": true,
        "ph": "__",
-       "def": "2"
+       "def": "WING"
       },
       {
        "t": "lit",
@@ -1561,10 +1572,10 @@
       {
        "t": "slot",
        "id": "back_n",
-       "list": "ship_counts",
+       "list": "roles",
        "free": true,
        "ph": "__",
-       "def": "2"
+       "def": "LEAD"
       },
       {
        "t": "lit",
@@ -1573,7 +1584,8 @@
      ],
      "status": "enriched",
      "why": null,
-     "src": "The printed NAVIGATION template is a single-ship template; N44XX-N46XX are flown two-ship, and the «__ OUT - __ BACK.» sentence is the FORMATION template's own multi-ship wording — confirmed in the squadron's own formation wording (panel A rationale, adopted R17)."
+     "src": "The printed NAVIGATION template is a single-ship template; N44XX-N46XX are flown two-ship, and the «__ OUT - __ BACK.» sentence is the FORMATION template's own multi-ship wording — confirmed in the squadron's own formation wording (panel A rationale, adopted R17).",
+     "note": "APOFANSI 20/08/2026 — role, not count: WING OUT - LEAD BACK (or the reverse); applies wherever two aircraft fly."
     }
    ],
    "graded": "THE ABOVE GRADED PROFILE WAS FLOWN.",
@@ -6080,11 +6092,11 @@
    "not_planned": "26",
    "ep_mif": "3",
    "approach_hint": "instrument approach + formation approach",
-   "note": "CONFLICT: section MISSION line says Medium Level, the VFR Navigation table says LOW LEVEL (FORMATION)",
+   "note": "APOFANSI 20/08/2026: «medium» — the section MISSION line wins; the category table's LOW LEVEL (FORMATION) stays recorded as the printed conflict in data/sections.json.",
    "page": 19,
    "label": "N 4401",
    "head": "two_ship_medium",
-   "draft": "OPEN QUESTION (R17 panel, verified in both sources): the section MISSION line prints «Medium Level VFR Navigation (Two Ship Formation)» while the category MIF table prints «LOW LEVEL (FORMATION)» for N4401-03. The R17 defaults follow the MISSION line (medium — LOW LEVEL chip off; the preset is now driven by the sortie hint, not the family). If the user rules for the table, N4401-03 flip to LOW."
+   "draft": null
   },
   "N4402": {
    "cat": "vfr_navigation",
@@ -6101,11 +6113,11 @@
    "not_planned": "26",
    "ep_mif": "3",
    "approach_hint": "instrument approach + formation approach",
-   "note": "CONFLICT: section MISSION line says Medium Level, the VFR Navigation table says LOW LEVEL (FORMATION)",
+   "note": "APOFANSI 20/08/2026: «medium» — the section MISSION line wins; the category table's LOW LEVEL (FORMATION) stays recorded as the printed conflict in data/sections.json.",
    "page": 19,
    "label": "N 4402",
    "head": "two_ship_medium",
-   "draft": "OPEN QUESTION (R17 panel, verified in both sources): the section MISSION line prints «Medium Level VFR Navigation (Two Ship Formation)» while the category MIF table prints «LOW LEVEL (FORMATION)» for N4401-03. The R17 defaults follow the MISSION line (medium — LOW LEVEL chip off; the preset is now driven by the sortie hint, not the family). If the user rules for the table, N4401-03 flip to LOW."
+   "draft": null
   },
   "N4403": {
    "cat": "vfr_navigation",
@@ -6123,11 +6135,11 @@
    "end_of_block": true,
    "ep_mif": "3",
    "approach_hint": "instrument approach + formation approach",
-   "note": "CONFLICT: section MISSION line says Medium Level, the VFR Navigation table says LOW LEVEL (FORMATION)",
+   "note": "APOFANSI 20/08/2026: «medium» — the section MISSION line wins; the category table's LOW LEVEL (FORMATION) stays recorded as the printed conflict in data/sections.json.",
    "page": 19,
    "label": "N 4403",
    "head": "two_ship_medium",
-   "draft": "OPEN QUESTION (R17 panel, verified in both sources): the section MISSION line prints «Medium Level VFR Navigation (Two Ship Formation)» while the category MIF table prints «LOW LEVEL (FORMATION)» for N4401-03. The R17 defaults follow the MISSION line (medium — LOW LEVEL chip off; the preset is now driven by the sortie hint, not the family). If the user rules for the table, N4401-03 flip to LOW."
+   "draft": null
   },
   "N4501": {
    "cat": "vfr_navigation",
