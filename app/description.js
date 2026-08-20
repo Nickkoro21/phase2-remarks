@@ -194,12 +194,14 @@
 
   /* A1 — «Για τα emergency procedures ο κωδικας θα ειναι οτι υπηρχε στην
      προηγουμενη ενοτητα … Στην τελευταια πτηση πρεπει να πιασει κωδικα τελους
-     ενοτητας.» (user, 20/08/2026). So the DESIRED code of the «#N. (x) -> (y)»
-     line does NOT ramp per sortie: every sortie of a section is preset to the EP
-     item's MIF of the PREVIOUS section, and only the category's LAST FLIGHT is
-     preset to the end-of-section MIF (the last column of the category).
-     The first section of a category has no previous one — it presets to its own
-     starting MIF. Hand-editable everywhere, both bands. */
+     ενοτητας.» (user, 20/08/2026). ΑΠΟΦΑΝΣΗ 20/08/2026 (η δεύτερη): «κάθε
+     ΕΝΟΤΗΤΑΣ» — the DESIRED code does NOT ramp per sortie: every sortie of a
+     section is preset to the EP item's MIF of the PREVIOUS section, and the
+     LAST SORTIE OF EACH SECTION is preset to that section's OWN code (the
+     ramp is "caught" at every section boundary; the category's last flight is
+     simply the special case of its own last section). The first section of a
+     category has no previous one — it presets to its own starting MIF.
+     Hand-editable everywhere, both bands. */
   function epRamp(id) {
     const h = st.data.sorties[id];
     const f = flowOf(h);
@@ -212,14 +214,21 @@
     const endSec = f.cols[f.cols.length - 1];
     const prevSec = i > 0 ? f.cols[i - 1] : null;
     const lastOfCat = f.order[f.order.length - 1] === id;
+    /* «κάθε ΕΝΟΤΗΤΑΣ» — last sortie OF ITS SECTION catches the section's own
+       code; the category-last is just the last section's last sortie. */
+    const mates = f.order.filter((sid) => {
+      const s = st.data.sorties[sid];
+      return s && s.section === h.section;
+    });
+    const lastOfSec = mates.length > 0 && mates[mates.length - 1] === id;
     const own = f.ep[h.section];
-    const preset = lastOfCat ? f.ep[endSec] : (prevSec ? f.ep[prevSec] : f.ep[f.cols[0]]);
+    const preset = lastOfSec ? own : (prevSec ? f.ep[prevSec] : f.ep[f.cols[0]]);
     return {
       preset: preset == null ? (own == null ? "3" : String(own)) : String(preset),
       own: own == null ? null : String(own),
       prevSec: prevSec, prevCode: prevSec ? String(f.ep[prevSec]) : null,
       endSec: endSec, endCode: f.ep[endSec] == null ? null : String(f.ep[endSec]),
-      lastOfCat: lastOfCat,
+      lastOfCat: lastOfCat, lastOfSec: lastOfSec,
     };
   }
 
@@ -1008,8 +1017,8 @@
       + (rp.endSec ? " · end of " + esc(cat.label) + " (" + esc(rp.endSec) + ") = <b>"
           + esc(rp.endCode) + "</b>" : "")
       + ". Desired preset <b>" + esc(rp.preset) + "</b> — "
-      + (rp.lastOfCat
-          ? "the LAST FLIGHT of the category, so it has to reach the end-of-section code"
+      + (rp.lastOfSec
+          ? "the LAST SORTIE OF ITS SECTION, so it catches the section's own code (ΑΠΟΦΑΝΣΗ «κάθε ενότητας», 20/08/2026)"
           : (rp.prevSec ? "the code that stood in the previous section"
                         : "the section's own starting MIF"))
       + ". Change either code by hand whenever the sortie says otherwise.</p>";
@@ -1081,11 +1090,11 @@
       + "<tr><td>EP gradesheet item</td><td>#" + cat.ep_item + " · MIF in this section: "
         + esc(h.ep_mif || "—") + "</td></tr>"
       + "<tr><td>EP desired code</td><td><b>" + esc(rp.preset) + "</b> — "
-        + (rp.lastOfCat
-            ? "last flight of the category, so the end-of-section code of " + esc(rp.endSec)
+        + (rp.lastOfSec
+            ? "last sortie of its section — catches the section's own code"
             : (rp.prevSec ? "the MIF of the previous section, " + esc(rp.prevSec)
                           : "first section of the category — its own starting MIF"))
-        + " <span class=\"badge\">user ruling 20/08/2026</span></td></tr>"
+        + " <span class=\"badge\">ΑΠΟΦΑΝΣΗ «κάθε ενότητας» 20/08/2026</span></td></tr>"
       + "<tr><td>Section ramp</td><td>" + f.cols.map((c) =>
           esc(c) + " = " + esc(String(f.ep[c])) + (c === h.section ? " ←" : "")).join(" · ")
         + "</td></tr>"
