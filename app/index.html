@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Phase 2 FDMS — T-6A Texan II</title>
-<link rel="stylesheet" href="styles.css?v=20260819a">
+<link rel="stylesheet" href="styles.css?v=20260820a">
 <script>
 /* Palette before first paint — no flash of the default theme on reload.
    Mirrors app.js (PALETTES / apply): same keys, same migration of the old
@@ -36,6 +36,7 @@
   </div>
   <nav class="viewtabs">
     <button id="tab-remarks" class="viewtab active">Remarks</button>
+    <button id="tab-description" class="viewtab" title="Description — the sortie block that goes in the gradesheet: pick the sortie, toggle the profile, copy the finished text">Description</button>
     <button id="tab-requirements" class="viewtab">Requirements</button>
     <button id="tab-flowchart" class="viewtab">Phase II Flowchart</button>
     <button id="tab-scheduler" class="viewtab">Scheduler</button>
@@ -82,6 +83,40 @@
   <section class="panel wide hidden" id="panel-results">
     <h2><span class="step">4</span> Remarks <span id="result-count" class="count"></span></h2>
     <div id="results"><p class="hint">Pick a category, an item and the codes to see the available remarks.</p></div>
+  </section>
+</main>
+
+<!-- DESCRIPTION (Γύρος 16) — ο δίδυμος του Remarks. Το Remarks φτιάχνει ΜΙΑ
+     γραμμή για ΕΝΑ αντικείμενο· εδώ φτιάχνεται ΟΛΟ ΤΟ ΜΠΛΟΚ της εξόδου: η
+     πρόταση της αποστολής (τα «παρενθετικά» κομμάτια ανάβουν/σβήνουν σαν
+     chips, τα κενά γεμίζουν από μικρά inline dropdown), το κλείσιμο ανάλογα με
+     την έκβαση (κανονικό / FAIL / άδεια SOLO) και η γραμμή «#39. (3) -> (3):»
+     των εκτάκτων. Έξοδος: ΕΝΑ κείμενο κεφαλαία, έτοιμο για επικόλληση στο
+     πρόγραμμα των gradesheet. Όλο το HTML των πάνελ το γράφει το
+     app/description.js — εδώ μένουν μόνο τα κελύφη, ώστε το grid να τα βλέπει
+     ως άμεσα παιδιά (ίδιο μοτίβο με το Remarks). -->
+<main class="layout desc-layout hidden" id="view-description">
+  <section class="panel" id="panel-desc-cat">
+    <h2><span class="step">1</span> Category</h2>
+    <div class="cat-grid" id="desc-cat-grid"></div>
+    <label class="lbl" style="margin-top:14px">Flown in</label>
+    <div class="chips" id="desc-band"></div>
+  </section>
+
+  <section class="panel hidden" id="panel-desc-sortie">
+    <h2><span class="step">2</span> Sortie <span id="desc-sortie-count" class="count"></span></h2>
+    <input type="search" id="desc-sortie-search" placeholder="Search sorties…" autocomplete="off" disabled>
+    <div class="item-list" id="desc-sortie-list"><p class="hint">Select a category first.</p></div>
+  </section>
+
+  <section class="panel hidden" id="panel-desc-build">
+    <h2><span class="step">3</span> The sentence</h2>
+    <div id="desc-build"></div>
+  </section>
+
+  <section class="panel wide hidden" id="panel-desc-out">
+    <h2><span class="step">4</span> Copy-ready block</h2>
+    <div id="desc-out"></div>
   </section>
 </main>
 
@@ -189,13 +224,14 @@
   </div>
 </div>
 
-<script src="app.js?v=20260819a"></script>
-<script src="flowchart.js?v=20260819a"></script>
-<script src="schedval.js?v=20260819a"></script>
-<script src="schedstore.js?v=20260819a"></script>
-<script src="scheduler.js?v=20260819a"></script>
-<script src="schedconsq.js?v=20260819a"></script>
-<script src="schedboard.js?v=20260819a"></script>
-<script src="currency.js?v=20260819a"></script>
+<script src="app.js?v=20260820a"></script>
+<script src="description.js?v=20260820a"></script>
+<script src="flowchart.js?v=20260820a"></script>
+<script src="schedval.js?v=20260820a"></script>
+<script src="schedstore.js?v=20260820a"></script>
+<script src="scheduler.js?v=20260820a"></script>
+<script src="schedconsq.js?v=20260820a"></script>
+<script src="schedboard.js?v=20260820a"></script>
+<script src="currency.js?v=20260820a"></script>
 </body>
 </html>

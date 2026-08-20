@@ -1,0 +1,4841 @@
+{
+ "schema": "descriptions-v1",
+ "generated": "2026-08-20",
+ "round": "R16",
+ "note": "THE GRAMMAR OF THE SORTIE DESCRIPTION BLOCK — the twin of the remarks catalogue. `templates` carry the four squadron templates the user photographed on 2026-08-20, verbatim in `canon`, decomposed into ordered profile elements. A PARENTHESIS IN THE PRINTED TEMPLATE MEANS «OPTIONAL», NOT «PRINT THESE BRACKETS» — the sample photos prove it: the canon writes «(ELP)» and the filled sample writes «ELP». So every element with opt:true renders WITHOUT its brackets when it is on, and disappears when it is off. Anything the four photos do not prove carries status:\"draft\" plus a `why` — the tab shows those as «DRAFT — proposed variant» and never renders them silently.",
+ "sources": [
+  "user photos, 2026-08-20 — the four squadron description templates + 2 filled samples",
+  "user rulings, 2026-08-20 — areas / CPM routes / EP randomiser / uppercase paste output",
+  "Phase_2_Syllabus_2025.pdf — PART IV section blocks (PDF 141-232), the four printed grade sheets (PDF 235-238), MIF tables (PDF 91-99), §14b-14c (PDF 163-165)",
+  "3-01_2025_ΔΑΕ.pdf — §29 (grade scale, PDF 50-51), §28θ + §21α (solo clearance), §21γ",
+  "data/mif/t6a.json · data/mif/fs.json · data/flowchart2.json · data/criteria/*.json"
+ ],
+ "arrow": "->",
+ "codes": [
+  "E",
+  "0",
+  "1",
+  "2",
+  "3",
+  "4"
+ ],
+ "codes_note": "the remarks grammar — desired (MIF) code -> achieved code. «E» is the failing characterisation code of 3-01 §29.",
+ "pass_threshold": 60,
+ "grades": [
+  {
+   "code": "Α",
+   "greek": "Άριστα",
+   "en": "EXCELLENT",
+   "band": [
+    90,
+    100
+   ],
+   "printed_en": false
+  },
+  {
+   "code": "ΛΚ",
+   "greek": "Λίαν Καλώς",
+   "en": "VERY GOOD",
+   "band": [
+    75,
+    89
+   ],
+   "printed_en": false
+  },
+  {
+   "code": "Κ",
+   "greek": "Καλώς",
+   "en": "GOOD",
+   "band": [
+    60,
+    74
+   ],
+   "printed_en": false
+  },
+  {
+   "code": "ΣΚ",
+   "greek": "Σχεδόν Καλώς",
+   "en": "ALMOST GOOD",
+   "band": [
+    50,
+    59
+   ],
+   "printed_en": true,
+   "aliases": [
+    "FAIR"
+   ],
+   "alias_note": "the same syllabus calls this band FAIR at PDF p.165 §14c(1) (air sickness, 59%) and ALMOST GOOD at PDF p.163 §14b(3). ALMOST GOOD is treated as canonical, FAIR as its alias."
+  },
+  {
+   "code": "Ε",
+   "greek": "ΑΠΟΤΥΧΩΝ",
+   "en": "FAIL",
+   "band": [
+    0,
+    49
+   ],
+   "printed_en": true
+  }
+ ],
+ "grades_source": "3-01_2025_ΔΑΕ.pdf §29 (PDF p.50-51), digitized as data/requirements/failure_procedures.json → fail-01. The Greek scale is the printed one; the English words are the block's own vocabulary — ALMOST GOOD and FAIL are printed in the syllabus (PDF p.163 §14b(3)), EXCELLENT / VERY GOOD / GOOD are the translations of Α / ΛΚ / Κ (VERY GOOD is confirmed by the user's solo-clearance sample photo).",
+ "solo_forbidden_note": "Syllabus PDF p.163 PART IV §14b(6), verbatim: «(a) All kind of STALLS. (b) SPINS (including Spin Prevention) (c) Unusual Attitudes. (d) ELP. (e) Straight in approach. (f) Slow Flight. (g) No Flap Overhead Patterns/ Landings (h) Simulated Lost Wingman Procedures.» — mapped onto the item numbers of each category.",
+ "ep_line": {
+  "label": "Emergency procedures line",
+  "note": "«#39. (1) -> (1): FUEL BALANCE, TAD FAIL.» — the EP gradesheet item of the category, then desired code -> achieved code, then the procedures that were drilled. The item NUMBER differs per category (contact 39 · instrument 32 · formation 36 · navigation 24) and is identical for aircraft and F/S.",
+  "picks": [
+   2,
+   3
+  ],
+  "picks_note": "the app draws 2 or 3 at random from data/ep_list.json each time, with a reroll; every pick stays individually replaceable.",
+  "pool": "data/ep_list.json",
+  "fmt": "#{n}. ({d}) {arrow} ({a}): {list}.",
+  "sep": ", ",
+  "default_on": true
+ },
+ "lists": {
+  "rules": {
+   "note": "the flight-rule blank in \"____ DEP.\" / \"____ RTB\" (canon prints VFR/IFR).",
+   "values": [
+    {
+     "v": "VFR"
+    },
+    {
+     "v": "IFR"
+    }
+   ]
+  },
+  "to_types": {
+   "note": "the take-off blank. CONTACT/INSTRUMENT/NAVIGATION canon print STATIC; the FORMATION canon leaves it blank («____ TO») and the syllabus makes INTERVAL the normal formation departure (F41XX §1: T/O interval except two demo flights).",
+   "values": [
+    {
+     "v": "STATIC"
+    },
+    {
+     "v": "INTERVAL"
+    },
+    {
+     "v": "FORMATION"
+    }
+   ]
+  },
+  "fl_blocks": {
+   "note": "the altitude block. CONTACT canon prints FL100-200, FORMATION F100-200, INSTRUMENT F200-220; the FAIL sample photo writes F100-F200 — all three spellings are offered verbatim, free text stays open.",
+   "values": [
+    {
+     "v": "FL100-200"
+    },
+    {
+     "v": "F100-200"
+    },
+    {
+     "v": "F100-F200"
+    },
+    {
+     "v": "F200-220"
+    },
+    {
+     "v": "FL200-220"
+    }
+   ]
+  },
+  "gca": {
+   "note": "the GCA blank — the printed grade sheet counts ASR and PAR separately.",
+   "values": [
+    {
+     "v": "ASR"
+    },
+    {
+     "v": "PAR"
+    },
+    {
+     "v": "ASR/PAR"
+    }
+   ]
+  },
+  "approaches": {
+   "note": "grounded in TWO printed sources and nothing else: the six approach counters on the printed INSTRUMENT grade sheet (VOR · TACAN · PAR · ASR · ILS · LOC, Syllabus PDF p.235-238) and INSTRUMENT MIF items 20-27 (VOR/TACAN, ILS, Localizer, GCA ASR, GCA PAR, GCA Gyro Out, Standby Instruments, Circling). RNAV appears in NEITHER source, so it is not offered as a preset — the free-text escape covers it if the squadron flies one.",
+   "values": [
+    {
+     "v": "VOR",
+     "mif": 20
+    },
+    {
+     "v": "VOR/DME",
+     "mif": 20
+    },
+    {
+     "v": "TACAN",
+     "mif": 20
+    },
+    {
+     "v": "ILS",
+     "mif": 21
+    },
+    {
+     "v": "LOC",
+     "mif": 22
+    },
+    {
+     "v": "GCA ASR",
+     "mif": 23
+    },
+    {
+     "v": "GCA PAR",
+     "mif": 24
+    },
+    {
+     "v": "GCA NO-GYRO",
+     "mif": 25
+    },
+    {
+     "v": "STANDBY INSTRUMENTS",
+     "mif": 26
+    },
+    {
+     "v": "CIRCLING",
+     "mif": 27
+    }
+   ]
+  },
+  "destinations": {
+   "note": "the «AT (DESTINATION)» blank. The airfields the syllabus names for Phase II instrument work (PART IV section blocks) plus the home base. Free text stays open; \"(none)\" drops the whole \"AT …\" fragment, which is what the canon's parentheses mean.",
+   "values": [
+    {
+     "v": "KALAMATA",
+     "icao": "LGKL"
+    },
+    {
+     "v": "ANDRAVIDA",
+     "icao": "LGAD"
+    },
+    {
+     "v": "ARAXOS",
+     "icao": "LGRX"
+    },
+    {
+     "v": "CHANIA",
+     "icao": "LGSA"
+    },
+    {
+     "v": "TANAGRA",
+     "icao": "LGTG"
+    },
+    {
+     "v": "NEA ANCHIALOS",
+     "icao": "LGBL"
+    },
+    {
+     "v": "SKYROS",
+     "icao": "LGSY"
+    }
+   ]
+  },
+  "solo_scopes": {
+   "note": "the scope of the solo clearance. Only the first is proven by the sample photo; the other two are proposed.",
+   "values": [
+    {
+     "v": "IN THE TRAFFIC PATTERN"
+    },
+    {
+     "v": "IN THE AREA",
+     "status": "draft"
+    },
+    {
+     "v": "IN THE TRAFFIC PATTERN AND IN THE AREA",
+     "status": "draft"
+    }
+   ]
+  },
+  "mic_reasons": {
+   "note": "verbatim from Syllabus PDF p.165 PART IV §14c(2): «…apart from the instance of an aborting mission, after becoming airborne, due to adverse weather or A/C malfunction (MIC)».",
+   "values": [
+    {
+     "v": "ADVERSE WEATHER"
+    },
+    {
+     "v": "A/C MALFUNCTION"
+    }
+   ]
+  },
+  "ng_reasons": {
+   "note": "NG = not graded. Syllabus PDF p.165 §14c(1): «Sortie C4101 will not be graded in the General performance (NG), except in case of an Air Sickness; in this case SP performance will be graded as \"FAIR\" (59%)».",
+   "values": [
+    {
+     "v": "FIRST FAMILIARIZATION SORTIE"
+    },
+    {
+     "v": "AIR SICKNESS"
+    }
+   ]
+  },
+  "ship_counts": {
+   "note": "the OUT/BACK blanks — every Phase II formation section prints «two A/C».",
+   "values": [
+    {
+     "v": "2"
+    },
+    {
+     "v": "3"
+    },
+    {
+     "v": "4"
+    }
+   ]
+  }
+ },
+ "external_lists": {
+  "areas": {
+   "file": "data/areas.json",
+   "key": "areas",
+   "value": "name",
+   "label": "full"
+  },
+  "routes": {
+   "file": "data/routes.json",
+   "key": "routes",
+   "value": "n",
+   "label": "label"
+  }
+ },
+ "templates": {
+  "contact": {
+   "id": "contact",
+   "label": "CONTACT",
+   "canon": "CONTACT SORTIE. STATIC TO, VFR DEP., FENCE IN, AREA WORK IN ____ FL100-200, FENCE OUT, VFR RTB, (ELP), PATTERN WORK & FULL STOP. THE ABOVE GRADED PROFILE WAS FLOWN. SORTIE OVERALL GRADED AS __. (END OF BLOCK. MINIMUM NUMBER OF MANEUVERS WAS FLOWN AND REQUIRED MIF LEVELS WERE MET.)",
+   "canon_source": "user photo, 2026-08-20 — the squadron's printed description template (1/4)",
+   "head": {
+    "opt": true,
+    "on": true,
+    "def": "sortie",
+    "variants": [
+     {
+      "id": "none",
+      "text": "",
+      "label": "— no opening sentence —",
+      "status": "draft"
+     },
+     {
+      "id": "sortie",
+      "text": "CONTACT SORTIE.",
+      "label": "CONTACT SORTIE.",
+      "status": "canon",
+      "why": null
+     },
+     {
+      "id": "checkride",
+      "text": "CONTACT CHECKRIDE.",
+      "label": "CONTACT CHECKRIDE.",
+      "status": "draft",
+      "why": "The printed CONTACT / NAVIGATION / INSTRUMENT templates only spell «SORTIE». The FORMATION template prints «FORMATION (SORTIE/CHECKRIDE).», which is the squadron's own proof that the alternation exists — so the same alternation is PROPOSED for the other three. Awaiting the user's ruling."
+     },
+     {
+      "id": "night",
+      "text": "NIGHT CONTACT SORTIE.",
+      "label": "NIGHT CONTACT SORTIE.",
+      "status": "draft",
+      "why": "Night wording is PROPOSED. Phase II has exactly two night sorties — I3601 (F/S) and I4701 (aircraft) — and no printed template names the night."
+     },
+     {
+      "id": "fs",
+      "text": "CONTACT F/S SORTIE.",
+      "label": "CONTACT F/S SORTIE.",
+      "status": "draft",
+      "why": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+     }
+    ]
+   },
+   "profile": [
+    {
+     "id": "to",
+     "label": "STATIC TO",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "slot",
+       "id": "to_type",
+       "list": "to_types",
+       "free": true,
+       "ph": "____",
+       "def": "STATIC"
+      },
+      {
+       "t": "lit",
+       "v": " TO"
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "dep",
+     "label": "VFR DEP.",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "slot",
+       "id": "rule_dep",
+       "list": "rules",
+       "free": true,
+       "ph": "____",
+       "def": "VFR"
+      },
+      {
+       "t": "lit",
+       "v": " DEP."
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "fence_in",
+     "label": "FENCE IN",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "FENCE IN"
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "area",
+     "label": "AREA WORK",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "AREA WORK IN "
+      },
+      {
+       "t": "slot",
+       "id": "area",
+       "list": "areas",
+       "free": true,
+       "ph": "____"
+      },
+      {
+       "t": "lit",
+       "v": " "
+      },
+      {
+       "t": "slot",
+       "id": "fl",
+       "list": "fl_blocks",
+       "free": true,
+       "ph": "____",
+       "def": "FL100-200"
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "fence_out",
+     "label": "FENCE OUT",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "FENCE OUT"
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "rtb",
+     "label": "VFR RTB",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "slot",
+       "id": "rule_rtb",
+       "list": "rules",
+       "free": true,
+       "ph": "____",
+       "def": "VFR"
+      },
+      {
+       "t": "lit",
+       "v": " RTB"
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "elp",
+     "label": "ELP",
+     "opt": true,
+     "on": false,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "ELP"
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "pattern",
+     "label": "PATTERN WORK",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "PATTERN WORK"
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "full_stop",
+     "label": "FULL STOP",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "FULL STOP"
+      }
+     ],
+     "status": "canon"
+    }
+   ],
+   "post": [],
+   "graded": "THE ABOVE GRADED PROFILE WAS FLOWN.",
+   "overall": "SORTIE OVERALL GRADED AS {grade}."
+  },
+  "instrument": {
+   "id": "instrument",
+   "label": "INSTRUMENT",
+   "canon": "STATIC T/O, IFR DEP., (SID ____), (AREA WORK IN ____ F200-220 / ROUTE), HOLDING, ____ APPROACH AT (DESTINATION) (WITH GCA ASR / PAR), (MISSED APPR. / TOUCH&GO), (ROUTE), HOLDING, ____ APPROACH AT (DESTINATION) (WITH GCA ASR/PAR), (MISSED APPR. / TOUCH&GO), (CLOSED GCA ASR/PAR), & F/S. (SP OCCUPIED REAR COCKPIT.) THE ABOVE GRADED PROFILE WAS FLOWN. SORTIE GRADED OVERALL AS ____. (END OF BLOCK. MINIMUM NUMBER OF MANEUVERS WAS FLOWN AND REQUIRED MIF LEVELS WERE MET.)",
+   "canon_source": "user photo, 2026-08-20 — the squadron's printed description template (3/4) — headed «INSTRUMENTS (SORTIE/CHECKRIDE)»",
+   "head": {
+    "opt": true,
+    "on": false,
+    "def": "none",
+    "variants": [
+     {
+      "id": "none",
+      "text": "",
+      "label": "— no opening sentence —",
+      "status": "canon"
+     },
+     {
+      "id": "sortie",
+      "text": "INSTRUMENT SORTIE.",
+      "label": "INSTRUMENT SORTIE.",
+      "status": "draft",
+      "why": "The printed CONTACT / NAVIGATION / INSTRUMENT templates only spell «SORTIE». The FORMATION template prints «FORMATION (SORTIE/CHECKRIDE).», which is the squadron's own proof that the alternation exists — so the same alternation is PROPOSED for the other three. Awaiting the user's ruling."
+     },
+     {
+      "id": "checkride",
+      "text": "INSTRUMENT CHECKRIDE.",
+      "label": "INSTRUMENT CHECKRIDE.",
+      "status": "draft",
+      "why": "The printed CONTACT / NAVIGATION / INSTRUMENT templates only spell «SORTIE». The FORMATION template prints «FORMATION (SORTIE/CHECKRIDE).», which is the squadron's own proof that the alternation exists — so the same alternation is PROPOSED for the other three. Awaiting the user's ruling."
+     },
+     {
+      "id": "night",
+      "text": "NIGHT INSTRUMENT SORTIE.",
+      "label": "NIGHT INSTRUMENT SORTIE.",
+      "status": "draft",
+      "why": "Night wording is PROPOSED. Phase II has exactly two night sorties — I3601 (F/S) and I4701 (aircraft) — and no printed template names the night."
+     },
+     {
+      "id": "fs",
+      "text": "INSTRUMENT F/S SORTIE.",
+      "label": "INSTRUMENT F/S SORTIE.",
+      "status": "draft",
+      "why": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+     }
+    ]
+   },
+   "profile": [
+    {
+     "id": "to",
+     "label": "STATIC T/O",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "slot",
+       "id": "to_type",
+       "list": "to_types",
+       "free": true,
+       "ph": "____",
+       "def": "STATIC"
+      },
+      {
+       "t": "lit",
+       "v": " T/O"
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "dep",
+     "label": "IFR DEP.",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "slot",
+       "id": "rule_dep",
+       "list": "rules",
+       "free": true,
+       "ph": "____",
+       "def": "IFR"
+      },
+      {
+       "t": "lit",
+       "v": " DEP."
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "sid",
+     "label": "SID",
+     "opt": true,
+     "on": false,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "SID "
+      },
+      {
+       "t": "slot",
+       "id": "sid",
+       "list": null,
+       "free": true,
+       "ph": "____"
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "work",
+     "label": "AREA WORK / ROUTE",
+     "opt": true,
+     "on": true,
+     "choice": [
+      {
+       "id": "area",
+       "label": "AREA WORK",
+       "parts": [
+        {
+         "t": "lit",
+         "v": "AREA WORK IN "
+        },
+        {
+         "t": "slot",
+         "id": "area",
+         "list": "areas",
+         "free": true,
+         "ph": "____"
+        },
+        {
+         "t": "lit",
+         "v": " "
+        },
+        {
+         "t": "slot",
+         "id": "fl",
+         "list": "fl_blocks",
+         "free": true,
+         "ph": "____",
+         "def": "F200-220"
+        }
+       ]
+      },
+      {
+       "id": "route",
+       "label": "ROUTE",
+       "parts": [
+        {
+         "t": "lit",
+         "v": "ROUTE"
+        }
+       ]
+      }
+     ],
+     "def": "area",
+     "status": "canon"
+    },
+    {
+     "id": "appr",
+     "kind": "repeat",
+     "label": "APPROACH BLOCK",
+     "count": 2,
+     "min": 0,
+     "max": 4,
+     "status": "canon",
+     "note": "the canon prints TWO approach blocks; add or drop blocks to match the sortie.",
+     "block": [
+      {
+       "id": "route",
+       "label": "ROUTE",
+       "opt": true,
+       "on": true,
+       "on_first": false,
+       "status": "canon",
+       "parts": [
+        {
+         "t": "lit",
+         "v": "ROUTE"
+        }
+       ]
+      },
+      {
+       "id": "hold",
+       "label": "HOLDING",
+       "opt": false,
+       "on": true,
+       "parts": [
+        {
+         "t": "lit",
+         "v": "HOLDING"
+        }
+       ],
+       "status": "canon"
+      },
+      {
+       "id": "app",
+       "label": "APPROACH",
+       "opt": false,
+       "on": true,
+       "parts": [
+        {
+         "t": "slot",
+         "id": "appr_type",
+         "list": "approaches",
+         "free": true,
+         "ph": "____",
+         "def": "VOR/DME"
+        },
+        {
+         "t": "lit",
+         "v": " APPROACH"
+        },
+        {
+         "t": "slot",
+         "id": "dest",
+         "list": "destinations",
+         "free": true,
+         "ph": "____",
+         "pre": " AT ",
+         "empty": "(none)"
+        }
+       ],
+       "status": "canon"
+      },
+      {
+       "id": "gca",
+       "label": "WITH GCA",
+       "opt": true,
+       "on": false,
+       "parts": [
+        {
+         "t": "lit",
+         "v": "WITH GCA "
+        },
+        {
+         "t": "slot",
+         "id": "gca",
+         "list": "gca",
+         "free": true,
+         "ph": "____",
+         "def": "ASR"
+        }
+       ],
+       "status": "canon"
+      },
+      {
+       "id": "missed",
+       "label": "MISSED APPR. / TOUCH&GO",
+       "opt": true,
+       "on": true,
+       "choice": [
+        {
+         "id": "missed",
+         "label": "MISSED APPR.",
+         "parts": [
+          {
+           "t": "lit",
+           "v": "MISSED APPR."
+          }
+         ]
+        },
+        {
+         "id": "tg",
+         "label": "TOUCH&GO",
+         "parts": [
+          {
+           "t": "lit",
+           "v": "TOUCH&GO"
+          }
+         ]
+        }
+       ],
+       "def": "missed",
+       "status": "canon"
+      }
+     ]
+    },
+    {
+     "id": "closed_gca",
+     "label": "CLOSED GCA",
+     "opt": true,
+     "on": false,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "CLOSED GCA "
+      },
+      {
+       "t": "slot",
+       "id": "closed_gca",
+       "list": "gca",
+       "free": true,
+       "ph": "____",
+       "def": "ASR"
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "fs",
+     "label": "F/S (FULL STOP)",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "F/S"
+      }
+     ],
+     "status": "canon",
+     "join": ", & ",
+     "note": "the canon prints «, & F/S.» — comma AND ampersand; kept verbatim."
+    }
+   ],
+   "post": [
+    {
+     "id": "sp_rear",
+     "label": "SP OCCUPIED REAR COCKPIT.",
+     "opt": true,
+     "on": false,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "SP OCCUPIED REAR COCKPIT."
+      }
+     ],
+     "status": "canon"
+    }
+   ],
+   "graded": "THE ABOVE GRADED PROFILE WAS FLOWN.",
+   "overall": "SORTIE GRADED OVERALL AS {grade}."
+  },
+  "formation": {
+   "id": "formation",
+   "label": "FORMATION",
+   "canon": "FORMATION (SORTIE/CHECKRIDE). ____ TO, VFR DEP., FENCE IN, AREA WORK IN ____ F100-200, LEAD CHANGE, SAME PROFILE, FENCE OUT, ( _FR RTB, ____ APPR.), (PATTERN WORK (only if landings exceed 1)) & F/S. ____ OUT - ____ BACK. THE ABOVE GRADED PROFILE WAS FLOWN. SORTIE OVERALL GRADED AS ____. (END OF BLOCK. MINIMUM NUMBER OF MANEUVERS WAS FLOWN AND REQUIRED MIF LEVELS WERE MET.)",
+   "canon_source": "user photo, 2026-08-20 — the squadron's printed description template (4/4)",
+   "head": {
+    "opt": true,
+    "on": true,
+    "def": "sortie",
+    "variants": [
+     {
+      "id": "none",
+      "text": "",
+      "label": "— no opening sentence —",
+      "status": "draft"
+     },
+     {
+      "id": "sortie",
+      "text": "FORMATION SORTIE.",
+      "label": "FORMATION SORTIE.",
+      "status": "canon",
+      "why": null
+     },
+     {
+      "id": "checkride",
+      "text": "FORMATION CHECKRIDE.",
+      "label": "FORMATION CHECKRIDE.",
+      "status": "canon",
+      "why": null
+     },
+     {
+      "id": "night",
+      "text": "NIGHT FORMATION SORTIE.",
+      "label": "NIGHT FORMATION SORTIE.",
+      "status": "draft",
+      "why": "Night wording is PROPOSED. Phase II has exactly two night sorties — I3601 (F/S) and I4701 (aircraft) — and no printed template names the night."
+     },
+     {
+      "id": "fs",
+      "text": "FORMATION F/S SORTIE.",
+      "label": "FORMATION F/S SORTIE.",
+      "status": "draft",
+      "why": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+     }
+    ]
+   },
+   "profile": [
+    {
+     "id": "to",
+     "label": "____ TO",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "slot",
+       "id": "to_type",
+       "list": "to_types",
+       "free": true,
+       "ph": "____",
+       "def": "INTERVAL"
+      },
+      {
+       "t": "lit",
+       "v": " TO"
+      }
+     ],
+     "status": "canon",
+     "note": "the canon leaves the take-off blank; the syllabus makes INTERVAL the normal formation departure (F41XX §1)."
+    },
+    {
+     "id": "dep",
+     "label": "VFR DEP.",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "slot",
+       "id": "rule_dep",
+       "list": "rules",
+       "free": true,
+       "ph": "____",
+       "def": "VFR"
+      },
+      {
+       "t": "lit",
+       "v": " DEP."
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "fence_in",
+     "label": "FENCE IN",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "FENCE IN"
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "area",
+     "label": "AREA WORK",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "AREA WORK IN "
+      },
+      {
+       "t": "slot",
+       "id": "area",
+       "list": "areas",
+       "free": true,
+       "ph": "____"
+      },
+      {
+       "t": "lit",
+       "v": " "
+      },
+      {
+       "t": "slot",
+       "id": "fl",
+       "list": "fl_blocks",
+       "free": true,
+       "ph": "____",
+       "def": "F100-200"
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "lead_change",
+     "label": "LEAD CHANGE",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "LEAD CHANGE"
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "same_profile",
+     "label": "SAME PROFILE",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "SAME PROFILE"
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "fence_out",
+     "label": "FENCE OUT",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "FENCE OUT"
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "rtb_appr",
+     "label": "_FR RTB, ____ APPR.",
+     "opt": true,
+     "on": false,
+     "parts": [
+      {
+       "t": "slot",
+       "id": "rule_rtb",
+       "list": "rules",
+       "free": true,
+       "ph": "____",
+       "def": "VFR"
+      },
+      {
+       "t": "lit",
+       "v": " RTB, "
+      },
+      {
+       "t": "slot",
+       "id": "appr_type",
+       "list": "approaches",
+       "free": true,
+       "ph": "____",
+       "def": "VOR/DME"
+      },
+      {
+       "t": "lit",
+       "v": " APPR."
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "pattern",
+     "label": "PATTERN WORK",
+     "opt": true,
+     "on": false,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "PATTERN WORK"
+      }
+     ],
+     "status": "canon",
+     "note": "canon: «only if landings exceed 1»."
+    },
+    {
+     "id": "fs",
+     "label": "F/S (FULL STOP)",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "F/S"
+      }
+     ],
+     "status": "canon"
+    }
+   ],
+   "post": [
+    {
+     "id": "outback",
+     "label": "____ OUT - ____ BACK.",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "slot",
+       "id": "out_n",
+       "list": "ship_counts",
+       "free": true,
+       "ph": "__",
+       "def": "2"
+      },
+      {
+       "t": "lit",
+       "v": " OUT - "
+      },
+      {
+       "t": "slot",
+       "id": "back_n",
+       "list": "ship_counts",
+       "free": true,
+       "ph": "__",
+       "def": "2"
+      },
+      {
+       "t": "lit",
+       "v": " BACK."
+      }
+     ],
+     "status": "canon",
+     "note": "read as the ship count that departed and recovered — every Phase II formation section prints «NUMBER OF AIRCRAFT: Sorties will be performed with two A/C». Free text stays open in case the squadron writes times here instead; AWAITING THE USER'S RULING."
+    }
+   ],
+   "graded": "THE ABOVE GRADED PROFILE WAS FLOWN.",
+   "overall": "SORTIE OVERALL GRADED AS {grade}."
+  },
+  "navigation": {
+   "id": "navigation",
+   "label": "NAVIGATION",
+   "canon": "NAVIGATION SORTIE. STATIC T/O, VFR DEP., CPM ____, VFR/IFR RTB, (PATTERN WORK) & F/S. THE ABOVE GRADED PROFILE WAS FLOWN. SORTIE GRADED OVERALL AS ____. (END OF BLOCK. MINIMUM NUMBER OF MANEUVERS WAS FLOWN AND REQUIRED MIF LEVELS WERE MET.)",
+   "canon_source": "user photo, 2026-08-20 — the squadron's printed description template (2/4)",
+   "head": {
+    "opt": true,
+    "on": true,
+    "def": "sortie",
+    "variants": [
+     {
+      "id": "none",
+      "text": "",
+      "label": "— no opening sentence —",
+      "status": "draft"
+     },
+     {
+      "id": "sortie",
+      "text": "NAVIGATION SORTIE.",
+      "label": "NAVIGATION SORTIE.",
+      "status": "canon",
+      "why": null
+     },
+     {
+      "id": "checkride",
+      "text": "NAVIGATION CHECKRIDE.",
+      "label": "NAVIGATION CHECKRIDE.",
+      "status": "draft",
+      "why": "The printed CONTACT / NAVIGATION / INSTRUMENT templates only spell «SORTIE». The FORMATION template prints «FORMATION (SORTIE/CHECKRIDE).», which is the squadron's own proof that the alternation exists — so the same alternation is PROPOSED for the other three. Awaiting the user's ruling."
+     },
+     {
+      "id": "night",
+      "text": "NIGHT NAVIGATION SORTIE.",
+      "label": "NIGHT NAVIGATION SORTIE.",
+      "status": "draft",
+      "why": "Night wording is PROPOSED. Phase II has exactly two night sorties — I3601 (F/S) and I4701 (aircraft) — and no printed template names the night."
+     },
+     {
+      "id": "fs",
+      "text": "NAVIGATION F/S SORTIE.",
+      "label": "NAVIGATION F/S SORTIE.",
+      "status": "draft",
+      "why": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+     }
+    ]
+   },
+   "profile": [
+    {
+     "id": "to",
+     "label": "STATIC T/O",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "slot",
+       "id": "to_type",
+       "list": "to_types",
+       "free": true,
+       "ph": "____",
+       "def": "STATIC"
+      },
+      {
+       "t": "lit",
+       "v": " T/O"
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "dep",
+     "label": "VFR DEP.",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "slot",
+       "id": "rule_dep",
+       "list": "rules",
+       "free": true,
+       "ph": "____",
+       "def": "VFR"
+      },
+      {
+       "t": "lit",
+       "v": " DEP."
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "cpm",
+     "label": "CPM ____",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "CPM "
+      },
+      {
+       "t": "slot",
+       "id": "cpm",
+       "list": "routes",
+       "free": true,
+       "ph": "____"
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "low",
+     "label": "LOW LEVEL",
+     "opt": true,
+     "on": false,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "LOW LEVEL"
+      }
+     ],
+     "status": "draft",
+     "why": "The printed NAVIGATION template has one route blank and does not name the altitude band, but the syllabus splits N41-N43 (medium altitude) from N44-N46 (LOW LEVEL, PDF p.19). PROPOSED marker for the low-level sections."
+    },
+    {
+     "id": "rtb",
+     "label": "VFR/IFR RTB",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "slot",
+       "id": "rule_rtb",
+       "list": "rules",
+       "free": true,
+       "ph": "____",
+       "def": "VFR"
+      },
+      {
+       "t": "lit",
+       "v": " RTB"
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "pattern",
+     "label": "PATTERN WORK",
+     "opt": true,
+     "on": false,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "PATTERN WORK"
+      }
+     ],
+     "status": "canon"
+    },
+    {
+     "id": "fs",
+     "label": "F/S (FULL STOP)",
+     "opt": false,
+     "on": true,
+     "parts": [
+      {
+       "t": "lit",
+       "v": "F/S"
+      }
+     ],
+     "status": "canon"
+    }
+   ],
+   "post": [
+    {
+     "id": "outback",
+     "label": "____ OUT - ____ BACK.",
+     "opt": true,
+     "on": false,
+     "parts": [
+      {
+       "t": "slot",
+       "id": "out_n",
+       "list": "ship_counts",
+       "free": true,
+       "ph": "__",
+       "def": "2"
+      },
+      {
+       "t": "lit",
+       "v": " OUT - "
+      },
+      {
+       "t": "slot",
+       "id": "back_n",
+       "list": "ship_counts",
+       "free": true,
+       "ph": "__",
+       "def": "2"
+      },
+      {
+       "t": "lit",
+       "v": " BACK."
+      }
+     ],
+     "status": "draft",
+     "why": "The printed NAVIGATION template is a single-ship template, but N44XX-N46XX are flown two-ship. The OUT/BACK sentence is borrowed VERBATIM from the FORMATION template — the squadron's own multi-ship wording. PROPOSED."
+    }
+   ],
+   "graded": "THE ABOVE GRADED PROFILE WAS FLOWN.",
+   "overall": "SORTIE GRADED OVERALL AS {grade}."
+  }
+ },
+ "outcomes": [
+  {
+   "id": "standard",
+   "label": "Standard",
+   "status": "canon",
+   "hint": "the printed closing of all four templates.",
+   "tail": [
+    {
+     "id": "eob",
+     "label": "END OF BLOCK",
+     "opt": true,
+     "on": false,
+     "status": "canon",
+     "parts": [
+      {
+       "t": "lit",
+       "v": "END OF BLOCK. MINIMUM NUMBER OF MANEUVERS WAS FLOWN AND REQUIRED MIF LEVELS WERE MET."
+      }
+     ],
+     "note": "auto-armed on the last non-solo sortie of a MIF block (3-01 §21γ); the sentence itself is Syllabus PDF p.164 §14b(9) / p.165 §14c(7)."
+    }
+   ]
+  },
+  {
+   "id": "fail",
+   "label": "Fail",
+   "status": "canon",
+   "force_grade": "FAIL",
+   "hint": "the sample photo: «… SORTIE OVERALL GRADED AS FAIL. END OF BLOCK. ALL ITEMS COMPLETE AND MIFs ACHIEVED EXCEPT #1, 5, 34. SMS ENTRY.»",
+   "tail": [
+    {
+     "id": "eob",
+     "label": "END OF BLOCK.",
+     "opt": true,
+     "on": true,
+     "status": "canon",
+     "parts": [
+      {
+       "t": "lit",
+       "v": "END OF BLOCK."
+      }
+     ]
+    },
+    {
+     "id": "except",
+     "label": "ALL ITEMS COMPLETE … EXCEPT #…",
+     "opt": true,
+     "on": true,
+     "status": "canon",
+     "picker": "items",
+     "parts": [
+      {
+       "t": "lit",
+       "v": "ALL ITEMS COMPLETE AND MIFs ACHIEVED EXCEPT "
+      },
+      {
+       "t": "items",
+       "fmt": "lead"
+      },
+      {
+       "t": "lit",
+       "v": "."
+      }
+     ],
+     "note": "«MIFs» is kept in the sample's own mixed case — the block is otherwise uppercase, and the photo shows MIFs."
+    },
+    {
+     "id": "sms",
+     "label": "SMS ENTRY.",
+     "opt": true,
+     "on": true,
+     "status": "canon",
+     "parts": [
+      {
+       "t": "lit",
+       "v": "SMS ENTRY."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "solo",
+   "label": "Solo clearance",
+   "status": "canon",
+   "hint": "the sample photo: «… SORTIE OVERALL GRADED AS VERY GOOD. THE SP IS CLEAR TO FLY SOLO IN THE TRAFFIC PATTERN AND TO EXECUTE ITEMS #1-3, #5, #22-24, #34-38.»",
+   "seed": "solo",
+   "tail": [
+    {
+     "id": "clear",
+     "label": "THE SP IS CLEAR TO FLY SOLO …",
+     "opt": false,
+     "on": true,
+     "status": "canon",
+     "picker": "items",
+     "parts": [
+      {
+       "t": "lit",
+       "v": "THE SP IS CLEAR TO FLY SOLO "
+      },
+      {
+       "t": "slot",
+       "id": "scope",
+       "list": "solo_scopes",
+       "free": true,
+       "ph": "____",
+       "def": "IN THE TRAFFIC PATTERN"
+      },
+      {
+       "t": "lit",
+       "v": " AND TO EXECUTE ITEMS "
+      },
+      {
+       "t": "items",
+       "fmt": "each"
+      },
+      {
+       "t": "lit",
+       "v": "."
+      }
+     ],
+     "note": "3-01 §28θ + §21α: the clearance lists exactly the maneuvers graded at Code «2» or better, so the picker is seeded from the MIF column and the SOLO-forbidden maneuvers are struck out of it."
+    },
+    {
+     "id": "eob",
+     "label": "END OF BLOCK",
+     "opt": true,
+     "on": false,
+     "status": "canon",
+     "parts": [
+      {
+       "t": "lit",
+       "v": "END OF BLOCK. MINIMUM NUMBER OF MANEUVERS WAS FLOWN AND REQUIRED MIF LEVELS WERE MET."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mic",
+   "label": "Mission incomplete (MIC)",
+   "status": "draft",
+   "why": "MIC is a printed box on all four grade sheets (Syllabus PDF p.235-238) and the syllabus defines it at PDF p.165 §14c(2) — «an aborting mission, after becoming airborne, due to adverse weather or A/C malfunction (MIC)». No printed DESCRIPTION wording for it was supplied, so the sentence below is PROPOSED.",
+   "hint": "for a sortie that got airborne and was cut short.",
+   "tail": [
+    {
+     "id": "mic",
+     "label": "MISSION INCOMPLETE (MIC) — …",
+     "opt": false,
+     "on": true,
+     "status": "draft",
+     "parts": [
+      {
+       "t": "lit",
+       "v": "MISSION INCOMPLETE (MIC) — "
+      },
+      {
+       "t": "slot",
+       "id": "mic_reason",
+       "list": "mic_reasons",
+       "free": true,
+       "ph": "____",
+       "def": "ADVERSE WEATHER"
+      },
+      {
+       "t": "lit",
+       "v": "."
+      }
+     ]
+    },
+    {
+     "id": "eob",
+     "label": "END OF BLOCK",
+     "opt": true,
+     "on": false,
+     "status": "canon",
+     "parts": [
+      {
+       "t": "lit",
+       "v": "END OF BLOCK. MINIMUM NUMBER OF MANEUVERS WAS FLOWN AND REQUIRED MIF LEVELS WERE MET."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ng",
+   "label": "Not graded (NG)",
+   "status": "draft",
+   "why": "NG is printed at Syllabus PDF p.133 and p.165 and is the required handling of C4101 («will not be graded in the General performance (NG)»). No printed DESCRIPTION wording was supplied, so the sentence below is PROPOSED.",
+   "hint": "C4101, and any sortie the syllabus leaves ungraded.",
+   "overall_override": "SORTIE NOT GRADED (NG).",
+   "tail": [
+    {
+     "id": "ng",
+     "label": "NOT GRADED IN GENERAL PERFORMANCE (NG) — …",
+     "opt": true,
+     "on": true,
+     "status": "draft",
+     "parts": [
+      {
+       "t": "lit",
+       "v": "NOT GRADED IN GENERAL PERFORMANCE (NG) — "
+      },
+      {
+       "t": "slot",
+       "id": "ng_reason",
+       "list": "ng_reasons",
+       "free": true,
+       "ph": "____",
+       "def": "FIRST FAMILIARIZATION SORTIE"
+      },
+      {
+       "t": "lit",
+       "v": "."
+      }
+     ]
+    },
+    {
+     "id": "eob",
+     "label": "END OF BLOCK",
+     "opt": true,
+     "on": false,
+     "status": "canon",
+     "parts": [
+      {
+       "t": "lit",
+       "v": "END OF BLOCK. MINIMUM NUMBER OF MANEUVERS WAS FLOWN AND REQUIRED MIF LEVELS WERE MET."
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "families": {
+  "contact": {
+   "tpl": "contact"
+  },
+  "contact-checkride": {
+   "tpl": "contact",
+   "head": "checkride",
+   "draft": "The printed CONTACT / NAVIGATION / INSTRUMENT templates only spell «SORTIE». The FORMATION template prints «FORMATION (SORTIE/CHECKRIDE).», which is the squadron's own proof that the alternation exists — so the same alternation is PROPOSED for the other three. Awaiting the user's ruling."
+  },
+  "contact-pattern": {
+   "tpl": "contact",
+   "draft": "C46XX / C47XX are PATTERN-ONLY sections — the syllabus profile is ground procedures, traffic pattern, basic A/C control, ELP, patterns, straight-in, go around, closed pattern (PDF p.173, p.175). The printed CONTACT template's mandatory «AREA WORK IN ____ FL100-200» does not apply, so AREA WORK / FENCE IN / FENCE OUT start OFF. PROPOSED reading — awaiting the user's ruling.",
+   "on": {
+    "area": false,
+    "fence_in": false,
+    "fence_out": false,
+    "elp": true
+   }
+  },
+  "instrument-area": {
+   "tpl": "instrument",
+   "choice": {
+    "work": "area"
+   },
+   "on": {
+    "work": true
+   }
+  },
+  "instrument-route": {
+   "tpl": "instrument",
+   "choice": {
+    "work": "route"
+   },
+   "on": {
+    "work": true
+   }
+  },
+  "instrument-route-night": {
+   "tpl": "instrument",
+   "choice": {
+    "work": "route"
+   },
+   "on": {
+    "work": true
+   },
+   "head": "night",
+   "draft": "Night wording is PROPOSED. Phase II has exactly two night sorties — I3601 (F/S) and I4701 (aircraft) — and no printed template names the night."
+  },
+  "instrument-checkride": {
+   "tpl": "instrument",
+   "head": "checkride",
+   "draft": "The printed CONTACT / NAVIGATION / INSTRUMENT templates only spell «SORTIE». The FORMATION template prints «FORMATION (SORTIE/CHECKRIDE).», which is the squadron's own proof that the alternation exists — so the same alternation is PROPOSED for the other three. Awaiting the user's ruling."
+  },
+  "formation": {
+   "tpl": "formation"
+  },
+  "formation-checkride": {
+   "tpl": "formation",
+   "head": "checkride"
+  },
+  "nav-single": {
+   "tpl": "navigation"
+  },
+  "nav-2ship": {
+   "tpl": "navigation",
+   "on": {
+    "outback": true,
+    "low": true
+   },
+   "draft": "N44XX-N46XX are flown TWO-SHIP (low level). The printed NAVIGATION template is a single-ship template; the «__ OUT - __ BACK.» sentence is borrowed from the FORMATION template. PROPOSED."
+  },
+  "nav-checkride-2ship": {
+   "tpl": "navigation",
+   "head": "checkride",
+   "on": {
+    "outback": true,
+    "low": true
+   },
+   "draft": "N44XX-N46XX are flown TWO-SHIP (low level). The printed NAVIGATION template is a single-ship template; the «__ OUT - __ BACK.» sentence is borrowed from the FORMATION template. PROPOSED. The printed CONTACT / NAVIGATION / INSTRUMENT templates only spell «SORTIE». The FORMATION template prints «FORMATION (SORTIE/CHECKRIDE).», which is the squadron's own proof that the alternation exists — so the same alternation is PROPOSED for the other three. Awaiting the user's ruling."
+  },
+  "fs-cockpit": {
+   "tpl": "contact",
+   "head": "fs",
+   "all_off": true,
+   "draft": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged. This F/S sortie has NO flight profile at all (cockpit familiarization / emergency-procedure drills — Syllabus PART IV section blocks). No printed template covers it, so every profile element starts OFF: build the sentence from the chips, or use «+ custom» for wording the templates do not carry."
+  },
+  "fs-ep-drill": {
+   "tpl": "contact",
+   "head": "fs",
+   "all_off": true,
+   "draft": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged. This F/S sortie has NO flight profile at all (cockpit familiarization / emergency-procedure drills — Syllabus PART IV section blocks). No printed template covers it, so every profile element starts OFF: build the sentence from the chips, or use «+ custom» for wording the templates do not carry."
+  },
+  "fs-contact": {
+   "tpl": "contact",
+   "head": "fs",
+   "draft": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+  },
+  "fs-contact-ep": {
+   "tpl": "contact",
+   "head": "fs",
+   "on": {
+    "elp": true
+   },
+   "draft": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+  },
+  "fs-formation": {
+   "tpl": "formation",
+   "head": "fs",
+   "draft": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+  },
+  "fs-instrument-area": {
+   "tpl": "instrument",
+   "head": "fs",
+   "choice": {
+    "work": "area"
+   },
+   "draft": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+  },
+  "fs-instrument-route": {
+   "tpl": "instrument",
+   "head": "fs",
+   "choice": {
+    "work": "route"
+   },
+   "draft": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+  },
+  "fs-instrument-route-night": {
+   "tpl": "instrument",
+   "head": "fs",
+   "choice": {
+    "work": "route"
+   },
+   "draft": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged. Night wording is PROPOSED. Phase II has exactly two night sorties — I3601 (F/S) and I4701 (aircraft) — and no printed template names the night."
+  },
+  "fs-nav-single": {
+   "tpl": "navigation",
+   "head": "fs",
+   "draft": "No F/S template was supplied — the four printed templates are aircraft templates. The «… F/S SORTIE.» opening is a PROPOSED variant. The item numbering, the EP item and the MIF tables are identical for F/S (same 41/34/38/26 tables), so everything below the opening line is unchanged."
+  }
+ },
+ "categories": {
+  "contact": {
+   "label": "Contact",
+   "template": "contact",
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_forbidden": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    25,
+    26,
+    29,
+    30,
+    31
+   ],
+   "items": [
+    {
+     "n": 1,
+     "label": "Ground Procedures"
+    },
+    {
+     "n": 2,
+     "label": "T/O"
+    },
+    {
+     "n": 3,
+     "label": "VFR Departure / Transition to Flight Areas"
+    },
+    {
+     "n": 4,
+     "label": "Area Awareness"
+    },
+    {
+     "n": 5,
+     "label": "Basic A/C Control"
+    },
+    {
+     "n": 6,
+     "label": "G-X Awareness"
+    },
+    {
+     "n": 7,
+     "label": "Slow Flight"
+    },
+    {
+     "n": 8,
+     "label": "Power ON / ELP Stalls"
+    },
+    {
+     "n": 9,
+     "label": "T/P Stalls"
+    },
+    {
+     "n": 10,
+     "label": "Spin Prevention / Spin Recovery"
+    },
+    {
+     "n": 11,
+     "label": "Unusual Attitudes Recovery"
+    },
+    {
+     "n": 12,
+     "label": "Chandelle"
+    },
+    {
+     "n": 13,
+     "label": "Lazy Eight"
+    },
+    {
+     "n": 14,
+     "label": "Aileron Roll"
+    },
+    {
+     "n": 15,
+     "label": "Barrel Roll"
+    },
+    {
+     "n": 16,
+     "label": "Loop"
+    },
+    {
+     "n": 17,
+     "label": "Cuban Eight"
+    },
+    {
+     "n": 18,
+     "label": "Immelman"
+    },
+    {
+     "n": 19,
+     "label": "Split S"
+    },
+    {
+     "n": 20,
+     "label": "Cloverleaf"
+    },
+    {
+     "n": 21,
+     "label": "Descend – Traffic Pattern Entry"
+    },
+    {
+     "n": 22,
+     "label": "Airport’s Traffic Pattern",
+     "gs": "Airport Traffic Pattern"
+    },
+    {
+     "n": 23,
+     "label": "Normal Overhead Pattern"
+    },
+    {
+     "n": 24,
+     "label": "Normal Landing"
+    },
+    {
+     "n": 25,
+     "label": "No Flap Overhead Pattern"
+    },
+    {
+     "n": 26,
+     "label": "No-Flap Landing"
+    },
+    {
+     "n": 27,
+     "label": "Flaps TO Overhead Pattern"
+    },
+    {
+     "n": 28,
+     "label": "Flaps TO Landing"
+    },
+    {
+     "n": 29,
+     "label": "Straight-In Approach"
+    },
+    {
+     "n": 30,
+     "label": "ELP",
+     "gs": "Emergency Landing Pattern (ELP)"
+    },
+    {
+     "n": 31,
+     "label": "ELP Landing",
+     "gs": "ELP Landing (touch and go)"
+    },
+    {
+     "n": 32,
+     "label": "AOA Overhead Pattern"
+    },
+    {
+     "n": 33,
+     "label": "AOA Landing"
+    },
+    {
+     "n": 34,
+     "label": "Go Around"
+    },
+    {
+     "n": 35,
+     "label": "Closed Pattern"
+    },
+    {
+     "n": 36,
+     "label": "Clearing"
+    },
+    {
+     "n": 37,
+     "label": "Radio Comm."
+    },
+    {
+     "n": 38,
+     "label": "Airmanship"
+    },
+    {
+     "n": 39,
+     "label": "Emergency Procedures"
+    },
+    {
+     "n": 40,
+     "label": "General Knowledge"
+    },
+    {
+     "n": 41,
+     "label": "Special Requirements"
+    }
+   ]
+  },
+  "instrument": {
+   "label": "Instrument",
+   "template": "instrument",
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_forbidden": [
+    10
+   ],
+   "items": [
+    {
+     "n": 1,
+     "label": "Ground Procedures"
+    },
+    {
+     "n": 2,
+     "label": "T/O"
+    },
+    {
+     "n": 3,
+     "label": "Standard Instrument Departure",
+     "gs": "SID"
+    },
+    {
+     "n": 4,
+     "label": "Basic A/C Control"
+    },
+    {
+     "n": 5,
+     "label": "Steep Turns"
+    },
+    {
+     "n": 6,
+     "label": "Airspeed Changes"
+    },
+    {
+     "n": 7,
+     "label": "Constant Speed Climb and Descent"
+    },
+    {
+     "n": 8,
+     "label": "Constant Rate Climb and Descent"
+    },
+    {
+     "n": 9,
+     "label": "Vertical “S”"
+    },
+    {
+     "n": 10,
+     "label": "Unusual Attitudes Recovery"
+    },
+    {
+     "n": 11,
+     "label": "Confidence Maneuvers",
+     "gs": "Aileron roll - Wingover"
+    },
+    {
+     "n": 12,
+     "label": "Course Intercepts"
+    },
+    {
+     "n": 13,
+     "label": "Maintaining Course"
+    },
+    {
+     "n": 14,
+     "label": "Arc Intercept"
+    },
+    {
+     "n": 15,
+     "label": "Maintaining Arc"
+    },
+    {
+     "n": 16,
+     "label": "Point to Point"
+    },
+    {
+     "n": 17,
+     "label": "Holding"
+    },
+    {
+     "n": 18,
+     "label": "Instrument Descent (Penetration)"
+    },
+    {
+     "n": 19,
+     "label": "En-Route Descent"
+    },
+    {
+     "n": 20,
+     "label": "VOR / TACAN Approach"
+    },
+    {
+     "n": 21,
+     "label": "ILS Approach"
+    },
+    {
+     "n": 22,
+     "label": "Localizer Approach"
+    },
+    {
+     "n": 23,
+     "label": "GCA Approach (ASR)"
+    },
+    {
+     "n": 24,
+     "label": "GCA Approach (PAR)"
+    },
+    {
+     "n": 25,
+     "label": "GCA Approach (Gyro Out)"
+    },
+    {
+     "n": 26,
+     "label": "Standby Instruments Approach"
+    },
+    {
+     "n": 27,
+     "label": "Circling Approach"
+    },
+    {
+     "n": 28,
+     "label": "Landing"
+    },
+    {
+     "n": 29,
+     "label": "Missed Approach"
+    },
+    {
+     "n": 30,
+     "label": "Radio Comm."
+    },
+    {
+     "n": 31,
+     "label": "Airmanship"
+    },
+    {
+     "n": 32,
+     "label": "Emergency Procedures"
+    },
+    {
+     "n": 33,
+     "label": "General Knowledge"
+    },
+    {
+     "n": 34,
+     "label": "Special Requirements"
+    }
+   ]
+  },
+  "formation": {
+   "label": "Formation",
+   "template": "formation",
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_forbidden": [],
+   "items": [
+    {
+     "n": 1,
+     "label": "Formation T/O"
+    },
+    {
+     "n": 2,
+     "label": "Interval T/O"
+    },
+    {
+     "n": 3,
+     "label": "Departure"
+    },
+    {
+     "n": 4,
+     "label": "In flight Planning/ Formation Consistency"
+    },
+    {
+     "n": 5,
+     "label": "Descent – Traffic Pattern Entry"
+    },
+    {
+     "n": 6,
+     "label": "Formation Approach"
+    },
+    {
+     "n": 7,
+     "label": "Formation T/O"
+    },
+    {
+     "n": 8,
+     "label": "Interval T/O"
+    },
+    {
+     "n": 9,
+     "label": "Turning Rejoin"
+    },
+    {
+     "n": 10,
+     "label": "Straight Ahead Rejoin"
+    },
+    {
+     "n": 11,
+     "label": "Overshoot"
+    },
+    {
+     "n": 12,
+     "label": "Breakout"
+    },
+    {
+     "n": 13,
+     "label": "Formation Approach"
+    },
+    {
+     "n": 14,
+     "label": "Mission Planning - Briefing"
+    },
+    {
+     "n": 15,
+     "label": "Ground Procedures"
+    },
+    {
+     "n": 16,
+     "label": "Pitch Out / Spacing"
+    },
+    {
+     "n": 17,
+     "label": "Fingertip"
+    },
+    {
+     "n": 18,
+     "label": "Route / Fighting Wing"
+    },
+    {
+     "n": 19,
+     "label": "Echelon Turn"
+    },
+    {
+     "n": 20,
+     "label": "Position Change (Cross Under)",
+     "gs": "Position Change"
+    },
+    {
+     "n": 21,
+     "label": "Lead Change"
+    },
+    {
+     "n": 22,
+     "label": "Close Trail"
+    },
+    {
+     "n": 23,
+     "label": "Extended Trail (Leader/ Wingman)"
+    },
+    {
+     "n": 24,
+     "label": "Tactical Formation"
+    },
+    {
+     "n": 25,
+     "label": "Delay 90°",
+     "gs": "90° Delay"
+    },
+    {
+     "n": 26,
+     "label": "Delay 45°",
+     "gs": "45° Delay"
+    },
+    {
+     "n": 27,
+     "label": "In Place"
+    },
+    {
+     "n": 28,
+     "label": "Cross/ Hook/ Shackle/ Check turns",
+     "gs": "Hook / Cross / Shackle/ Check turns"
+    },
+    {
+     "n": 29,
+     "label": "Basic A/C – Formation Control"
+    },
+    {
+     "n": 30,
+     "label": "Landing Pattern"
+    },
+    {
+     "n": 31,
+     "label": "Landing"
+    },
+    {
+     "n": 32,
+     "label": "Visual Signals"
+    },
+    {
+     "n": 33,
+     "label": "Clearing"
+    },
+    {
+     "n": 34,
+     "label": "Radio Comm."
+    },
+    {
+     "n": 35,
+     "label": "Airmanship"
+    },
+    {
+     "n": 36,
+     "label": "Emergency Procedures"
+    },
+    {
+     "n": 37,
+     "label": "General Knowledge"
+    },
+    {
+     "n": 38,
+     "label": "Special Requirements"
+    }
+   ]
+  },
+  "vfr_navigation": {
+   "label": "VFR Navigation",
+   "template": "navigation",
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_forbidden": [],
+   "items": [
+    {
+     "n": 1,
+     "label": "Mission Planning/ Briefing - Debriefing"
+    },
+    {
+     "n": 2,
+     "label": "Ground Procedures"
+    },
+    {
+     "n": 3,
+     "label": "T/O"
+    },
+    {
+     "n": 4,
+     "label": "VFR / SID Departure"
+    },
+    {
+     "n": 5,
+     "label": "Basic A/C control"
+    },
+    {
+     "n": 6,
+     "label": "In flight Planning/ Formation Consistency"
+    },
+    {
+     "n": 7,
+     "label": "Fingertip"
+    },
+    {
+     "n": 8,
+     "label": "Tactical Formation"
+    },
+    {
+     "n": 9,
+     "label": "Tactical Turns"
+    },
+    {
+     "n": 10,
+     "label": "Maintaining Course"
+    },
+    {
+     "n": 11,
+     "label": "Map Reading"
+    },
+    {
+     "n": 12,
+     "label": "Turning Points Recognition",
+     "gs": "Pilotage"
+    },
+    {
+     "n": 13,
+     "label": "GPS Use"
+    },
+    {
+     "n": 14,
+     "label": "VFR Arrival / Traffic Pattern Entry"
+    },
+    {
+     "n": 15,
+     "label": "Instrument Procedures"
+    },
+    {
+     "n": 16,
+     "label": "Formation Approach"
+    },
+    {
+     "n": 17,
+     "label": "Airport Traffic Pattern",
+     "gs": "Airport Traffic Pattern"
+    },
+    {
+     "n": 18,
+     "label": "Landing Pattern",
+     "gs": "Landing Pattern"
+    },
+    {
+     "n": 19,
+     "label": "Landing"
+    },
+    {
+     "n": 20,
+     "label": "Instrument Procedures"
+    },
+    {
+     "n": 21,
+     "label": "Clearing"
+    },
+    {
+     "n": 22,
+     "label": "Radio Comm."
+    },
+    {
+     "n": 23,
+     "label": "Airmanship"
+    },
+    {
+     "n": 24,
+     "label": "Emergency Procedures"
+    },
+    {
+     "n": 25,
+     "label": "General Knowledge"
+    },
+    {
+     "n": 26,
+     "label": "Special Requirements"
+    }
+   ]
+  }
+ },
+ "sorties": {
+  "B1001": {
+   "cat": "contact",
+   "band": "fs",
+   "section": "B1001-02",
+   "family": "fs-cockpit",
+   "name": "Basic exercises (Familiarization) — normal procedures",
+   "work": "NONE",
+   "to": "NONE",
+   "elp": false,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "",
+   "not_planned": "2-4,6-38,41",
+   "ep_mif": "0",
+   "note": "UTD or in the A/C: survival gear, exterior inspection, strap-in, switches. NO flight profile.",
+   "page": 11,
+   "label": "B 1001"
+  },
+  "B1002": {
+   "cat": "contact",
+   "band": "fs",
+   "section": "B1001-02",
+   "family": "fs-cockpit",
+   "name": "Basic exercises (Familiarization) — normal procedures",
+   "work": "NONE",
+   "to": "NONE",
+   "elp": false,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "",
+   "not_planned": "2-4,6-38,41",
+   "end_of_block": true,
+   "ep_mif": "0",
+   "note": "UTD or in the A/C: survival gear, exterior inspection, strap-in, switches. NO flight profile.",
+   "page": 11,
+   "label": "B 1002"
+  },
+  "C1101": {
+   "cat": "contact",
+   "band": "fs",
+   "section": "C1101",
+   "family": "fs-contact",
+   "name": "Contact — basic A/C control and familiarization with flight characteristics",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "",
+   "not_planned": "6-7,10,12-20,22,25-28,32-33,41",
+   "end_of_block": true,
+   "ep_mif": "0",
+   "hours": 1.3,
+   "page": 11,
+   "label": "C 1101"
+  },
+  "C2101": {
+   "cat": "contact",
+   "band": "fs",
+   "section": "C2101",
+   "family": "fs-ep-drill",
+   "name": "Emergency Procedures",
+   "work": "NONE",
+   "to": "NONE",
+   "elp": false,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "",
+   "not_planned": "4,6-36,41",
+   "end_of_block": true,
+   "ep_mif": "1",
+   "hours": 1.3,
+   "note": "pure BOLD FACE / checklist drill, no mission profile",
+   "page": 11,
+   "label": "C 2101"
+  },
+  "C2201": {
+   "cat": "contact",
+   "band": "fs",
+   "section": "C2201-02",
+   "family": "fs-contact",
+   "name": "Contact — fundamental flight maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "39-40",
+   "not_planned": "6,11,15,17-20,22,32-33",
+   "ep_mif": "2",
+   "note": "SRC-2",
+   "page": 12,
+   "label": "C 2201"
+  },
+  "C2202": {
+   "cat": "contact",
+   "band": "fs",
+   "section": "C2201-02",
+   "family": "fs-contact",
+   "name": "Contact — fundamental flight maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "39-40",
+   "not_planned": "6,11,15,17-20,22,32-33",
+   "end_of_block": true,
+   "ep_mif": "2",
+   "note": "SRC-2",
+   "page": 12,
+   "label": "C 2202"
+  },
+  "C2301": {
+   "cat": "contact",
+   "band": "fs",
+   "section": "C2301-02",
+   "family": "fs-ep-drill",
+   "name": "Emergency Procedures training in a mission profile",
+   "work": "NONE",
+   "to": "NONE",
+   "elp": false,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-3,5,37,39-40",
+   "not_planned": "4,6-35,41",
+   "ep_mif": "2",
+   "note": "pure drill; airstart emphasis",
+   "page": 12,
+   "label": "C 2301"
+  },
+  "C2302": {
+   "cat": "contact",
+   "band": "fs",
+   "section": "C2301-02",
+   "family": "fs-ep-drill",
+   "name": "Emergency Procedures training in a mission profile",
+   "work": "NONE",
+   "to": "NONE",
+   "elp": false,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-3,5,37,39-40",
+   "not_planned": "4,6-35,41",
+   "end_of_block": true,
+   "ep_mif": "2",
+   "note": "pure drill; airstart emphasis",
+   "page": 12,
+   "label": "C 2302"
+  },
+  "C2401": {
+   "cat": "contact",
+   "band": "fs",
+   "section": "C2401-03",
+   "family": "fs-contact",
+   "name": "Contact — fundamental flight maneuvers and landings",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-6,22-24,27-29,34-40",
+   "not_planned": "15,32-33",
+   "ep_mif": "3",
+   "note": "at least 2 landings with 10-20 kt crosswind",
+   "page": 12,
+   "label": "C 2401"
+  },
+  "C2402": {
+   "cat": "contact",
+   "band": "fs",
+   "section": "C2401-03",
+   "family": "fs-contact",
+   "name": "Contact — fundamental flight maneuvers and landings",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-6,22-24,27-29,34-40",
+   "not_planned": "15,32-33",
+   "ep_mif": "3",
+   "note": "at least 2 landings with 10-20 kt crosswind",
+   "page": 12,
+   "label": "C 2402"
+  },
+  "C2403": {
+   "cat": "contact",
+   "band": "fs",
+   "section": "C2401-03",
+   "family": "fs-contact",
+   "name": "Contact — fundamental flight maneuvers and landings",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-6,22-24,27-29,34-40",
+   "not_planned": "15,32-33",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "note": "at least 2 landings with 10-20 kt crosswind",
+   "page": 12,
+   "label": "C 2403"
+  },
+  "C2501": {
+   "cat": "contact",
+   "band": "fs",
+   "section": "C2501-03",
+   "family": "fs-contact-ep",
+   "name": "Emergency Procedures training in a mission profile",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-3,5,36-40",
+   "not_planned": "4,6-35,41",
+   "ep_mif": "3",
+   "note": "EP handling while contact flying + ELP / ELP landing; at least 1 sortie on OFT/FTD",
+   "page": 12,
+   "label": "C 2501"
+  },
+  "C2502": {
+   "cat": "contact",
+   "band": "fs",
+   "section": "C2501-03",
+   "family": "fs-contact-ep",
+   "name": "Emergency Procedures training in a mission profile",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-3,5,36-40",
+   "not_planned": "4,6-35,41",
+   "ep_mif": "3",
+   "note": "EP handling while contact flying + ELP / ELP landing; at least 1 sortie on OFT/FTD",
+   "page": 12,
+   "label": "C 2502"
+  },
+  "C2503": {
+   "cat": "contact",
+   "band": "fs",
+   "section": "C2501-03",
+   "family": "fs-contact-ep",
+   "name": "Emergency Procedures training in a mission profile",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-3,5,36-40",
+   "not_planned": "4,6-35,41",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "note": "EP handling while contact flying + ELP / ELP landing; at least 1 sortie on OFT/FTD",
+   "page": 13,
+   "label": "C 2503"
+  },
+  "C2601": {
+   "cat": "contact",
+   "band": "fs",
+   "section": "C2601-04",
+   "family": "fs-contact",
+   "name": "Contact — fundamental flight maneuvers and landings",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-9,11-14,16,21-31,34-41",
+   "not_planned": "",
+   "ep_mif": "3",
+   "page": 13,
+   "label": "C 2601"
+  },
+  "C2602": {
+   "cat": "contact",
+   "band": "fs",
+   "section": "C2601-04",
+   "family": "fs-contact",
+   "name": "Contact — fundamental flight maneuvers and landings",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-9,11-14,16,21-31,34-41",
+   "not_planned": "",
+   "ep_mif": "3",
+   "page": 13,
+   "label": "C 2602"
+  },
+  "C2603": {
+   "cat": "contact",
+   "band": "fs",
+   "section": "C2601-04",
+   "family": "fs-contact",
+   "name": "Contact — fundamental flight maneuvers and landings",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-9,11-14,16,21-31,34-41",
+   "not_planned": "",
+   "ep_mif": "3",
+   "page": 14,
+   "label": "C 2603"
+  },
+  "C2604": {
+   "cat": "contact",
+   "band": "fs",
+   "section": "C2601-04",
+   "family": "fs-contact",
+   "name": "Contact — fundamental flight maneuvers and landings",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-9,11-14,16,21-31,34-41",
+   "not_planned": "",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "page": 14,
+   "label": "C 2604"
+  },
+  "C4101": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4101",
+   "family": "contact",
+   "name": "Contact – Familiarization",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "",
+   "not_planned": "6-20,25-33,35,41",
+   "end_of_block": true,
+   "ep_mif": "E",
+   "hours": 1.0,
+   "note": "NG - not graded in general performance (syllabus PDF165 PART IV 14c(1))",
+   "page": 12,
+   "label": "C 4101"
+  },
+  "C4201": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4201-03",
+   "family": "contact",
+   "name": "Contact – fundamental flight maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "",
+   "not_planned": "7,10,12-20,25-29,31-33",
+   "ep_mif": "1",
+   "page": 12,
+   "label": "C 4201"
+  },
+  "C4202": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4201-03",
+   "family": "contact",
+   "name": "Contact – fundamental flight maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "",
+   "not_planned": "7,10,12-20,25-29,31-33",
+   "ep_mif": "1",
+   "page": 12,
+   "label": "C 4202"
+  },
+  "C4203": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4201-03",
+   "family": "contact",
+   "name": "Contact – fundamental flight maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "",
+   "not_planned": "7,10,12-20,25-29,31-33",
+   "end_of_block": true,
+   "ep_mif": "1",
+   "page": 12,
+   "label": "C 4203"
+  },
+  "C4301": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4301-03",
+   "family": "contact",
+   "name": "Contact – Basic Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1",
+   "not_planned": "12-20,32-33",
+   "ep_mif": "1",
+   "note": "adds straight-in / no-flap / flaps-TO patterns",
+   "page": 12,
+   "label": "C 4301"
+  },
+  "C4302": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4301-03",
+   "family": "contact",
+   "name": "Contact – Basic Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1",
+   "not_planned": "12-20,32-33",
+   "ep_mif": "1",
+   "note": "adds straight-in / no-flap / flaps-TO patterns",
+   "page": 12,
+   "label": "C 4302"
+  },
+  "C4303": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4301-03",
+   "family": "contact",
+   "name": "Contact – Basic Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1",
+   "not_planned": "12-20,32-33",
+   "end_of_block": true,
+   "ep_mif": "1",
+   "note": "adds straight-in / no-flap / flaps-TO patterns",
+   "page": 12,
+   "label": "C 4303"
+  },
+  "C4401": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4401-03",
+   "family": "contact",
+   "name": "Contact – Basic Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-6,34,39-40",
+   "not_planned": "15,17-20,32-33",
+   "ep_mif": "2",
+   "note": "first aerobatics; SRC-2 / SRC-5 / SRC-8 demo",
+   "page": 12,
+   "label": "C 4401"
+  },
+  "C4402": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4401-03",
+   "family": "contact",
+   "name": "Contact – Basic Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-6,34,39-40",
+   "not_planned": "15,17-20,32-33",
+   "ep_mif": "2",
+   "note": "first aerobatics; SRC-2 / SRC-5 / SRC-8 demo",
+   "page": 12,
+   "label": "C 4402"
+  },
+  "C4403": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4401-03",
+   "family": "contact",
+   "name": "Contact – Basic Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-6,34,39-40",
+   "not_planned": "15,17-20,32-33",
+   "end_of_block": true,
+   "ep_mif": "2",
+   "note": "first aerobatics; SRC-2 / SRC-5 / SRC-8 demo",
+   "page": 12,
+   "label": "C 4403"
+  },
+  "C4590": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4590",
+   "family": "contact-checkride",
+   "name": "Contact checkride",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-6,34,39-40",
+   "not_planned": "15,17-20,32-33,41",
+   "checkride": true,
+   "end_of_block": true,
+   "ep_mif": "2",
+   "hours": 1.4,
+   "note": "evaluation",
+   "page": 12,
+   "label": "C 4590"
+  },
+  "C4601": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4601-02",
+   "family": "contact-pattern",
+   "name": "Contact – Overhead Traffic Pattern",
+   "work": "PATTERN_ONLY",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-2,5,22-24,27-29,34-40",
+   "not_planned": "3-4,6-21,32-33",
+   "ep_mif": "3",
+   "note": "NO area work; SRC-6 / SRC-7; blind check reported with C4602",
+   "page": 12,
+   "label": "C 4601"
+  },
+  "C4602": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4601-02",
+   "family": "contact-pattern",
+   "name": "Contact – Overhead Traffic Pattern",
+   "work": "PATTERN_ONLY",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-2,5,22-24,27-29,34-40",
+   "not_planned": "3-4,6-21,32-33",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "note": "NO area work; SRC-6 / SRC-7; blind check reported with C4602",
+   "page": 12,
+   "label": "C 4602"
+  },
+  "C4790": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4790-91",
+   "family": "contact-pattern",
+   "name": "Contact checkride for SOLO (C4790) and 1st SOLO (C4791)",
+   "work": "PATTERN_ONLY",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-2,5,22-24,27-29,34-40",
+   "not_planned": "3-4,6-21,25-26,32-33,41",
+   "checkride": true,
+   "end_of_block": true,
+   "ep_mif": "3",
+   "hours": 0.8,
+   "note": "C4790 checkride-for-solo; C4791 FIRST SOLO = 1 airport pattern + 1 normal landing",
+   "page": 12,
+   "label": "C 4790"
+  },
+  "C4791": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4790-91",
+   "family": "contact-pattern",
+   "name": "Contact checkride for SOLO (C4790) and 1st SOLO (C4791)",
+   "work": "PATTERN_ONLY",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-2,5,22-24,27-29,34-40",
+   "not_planned": "3-4,6-21,25-26,32-33,41",
+   "first_solo": true,
+   "solo_candidate": true,
+   "ep_mif": "3",
+   "hours": 0.3,
+   "note": "C4790 checkride-for-solo; C4791 FIRST SOLO = 1 airport pattern + 1 normal landing",
+   "page": 12,
+   "label": "C 4791"
+  },
+  "C4801": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4801-04",
+   "family": "contact",
+   "name": "Contact – Basic/Advanced Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-9,11,21-31,34-40",
+   "not_planned": "32-33,41",
+   "ep_mif": "3",
+   "note": "full aerobatics; SOLO row = airport pattern only",
+   "page": 13,
+   "label": "C 4801"
+  },
+  "C4802": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4801-04",
+   "family": "contact",
+   "name": "Contact – Basic/Advanced Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-9,11,21-31,34-40",
+   "not_planned": "32-33,41",
+   "solo_candidate": true,
+   "ep_mif": "3",
+   "note": "full aerobatics; SOLO row = airport pattern only",
+   "page": 13,
+   "label": "C 4802"
+  },
+  "C4803": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4801-04",
+   "family": "contact",
+   "name": "Contact – Basic/Advanced Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-9,11,21-31,34-40",
+   "not_planned": "32-33,41",
+   "solo_candidate": true,
+   "ep_mif": "3",
+   "note": "full aerobatics; SOLO row = airport pattern only",
+   "page": 13,
+   "label": "C 4803"
+  },
+  "C4804": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4801-04",
+   "family": "contact",
+   "name": "Contact – Basic/Advanced Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-9,11,21-31,34-40",
+   "not_planned": "32-33,41",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "note": "full aerobatics; SOLO row = airport pattern only",
+   "page": 13,
+   "label": "C 4804"
+  },
+  "C4901": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4901-05",
+   "family": "contact",
+   "name": "Contact – Basic/Advanced Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1,3-9,11-16,19,21-31,34-40",
+   "not_planned": "2,32-33",
+   "ep_mif": "3",
+   "note": "SRC-6; SOLO row = local area (aileron roll, chandelle, lazy 8) + pattern",
+   "page": 13,
+   "label": "C 4901"
+  },
+  "C4902": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4901-05",
+   "family": "contact",
+   "name": "Contact – Basic/Advanced Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1,3-9,11-16,19,21-31,34-40",
+   "not_planned": "2,32-33",
+   "solo_candidate": true,
+   "ep_mif": "3",
+   "note": "SRC-6; SOLO row = local area (aileron roll, chandelle, lazy 8) + pattern",
+   "page": 13,
+   "label": "C 4902"
+  },
+  "C4903": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4901-05",
+   "family": "contact",
+   "name": "Contact – Basic/Advanced Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1,3-9,11-16,19,21-31,34-40",
+   "not_planned": "2,32-33",
+   "solo_candidate": true,
+   "ep_mif": "3",
+   "note": "SRC-6; SOLO row = local area (aileron roll, chandelle, lazy 8) + pattern",
+   "page": 13,
+   "label": "C 4903"
+  },
+  "C4904": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4901-05",
+   "family": "contact",
+   "name": "Contact – Basic/Advanced Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1,3-9,11-16,19,21-31,34-40",
+   "not_planned": "2,32-33",
+   "solo_candidate": true,
+   "ep_mif": "3",
+   "note": "SRC-6; SOLO row = local area (aileron roll, chandelle, lazy 8) + pattern",
+   "page": 13,
+   "label": "C 4904"
+  },
+  "C4905": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C4901-05",
+   "family": "contact",
+   "name": "Contact – Basic/Advanced Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1,3-9,11-16,19,21-31,34-40",
+   "not_planned": "2,32-33",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "note": "SRC-6; SOLO row = local area (aileron roll, chandelle, lazy 8) + pattern",
+   "page": 13,
+   "label": "C 4905"
+  },
+  "C5090": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C5090",
+   "family": "contact-checkride",
+   "name": "Contact Checkride",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-9,11-16,19,21-31,34-40",
+   "not_planned": "32-33,41",
+   "checkride": true,
+   "end_of_block": true,
+   "ep_mif": "3",
+   "hours": 1.4,
+   "note": "evaluation",
+   "page": 13,
+   "label": "C 5090"
+  },
+  "C5101": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C5101-02",
+   "family": "contact",
+   "name": "Contact – Basic/Advanced Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-9,11-16,19,21-31,34-40",
+   "not_planned": "",
+   "ep_mif": "3",
+   "note": "AOA pattern/landing enter; SRC-10 stalls with AOA out",
+   "page": 13,
+   "label": "C 5101"
+  },
+  "C5102": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C5101-02",
+   "family": "contact",
+   "name": "Contact – Basic/Advanced Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-9,11-16,19,21-31,34-40",
+   "not_planned": "",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "note": "AOA pattern/landing enter; SRC-10 stalls with AOA out",
+   "page": 13,
+   "label": "C 5102"
+  },
+  "C5201": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C5201-04",
+   "family": "contact",
+   "name": "Contact – Basic/Advanced Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-31,34-40",
+   "not_planned": "",
+   "ep_mif": "3",
+   "note": "SRC-8 OUT AND BACK to alternate; SOLO row = area + pattern",
+   "page": 13,
+   "label": "C 5201"
+  },
+  "C5202": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C5201-04",
+   "family": "contact",
+   "name": "Contact – Basic/Advanced Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-31,34-40",
+   "not_planned": "",
+   "solo_candidate": true,
+   "ep_mif": "3",
+   "note": "SRC-8 OUT AND BACK to alternate; SOLO row = area + pattern",
+   "page": 13,
+   "label": "C 5202"
+  },
+  "C5203": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C5201-04",
+   "family": "contact",
+   "name": "Contact – Basic/Advanced Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-31,34-40",
+   "not_planned": "",
+   "solo_candidate": true,
+   "ep_mif": "3",
+   "note": "SRC-8 OUT AND BACK to alternate; SOLO row = area + pattern",
+   "page": 13,
+   "label": "C 5203"
+  },
+  "C5204": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C5201-04",
+   "family": "contact",
+   "name": "Contact – Basic/Advanced Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-31,34-40",
+   "not_planned": "",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "note": "SRC-8 OUT AND BACK to alternate; SOLO row = area + pattern",
+   "page": 13,
+   "label": "C 5204"
+  },
+  "C5301": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C5301-04",
+   "family": "contact",
+   "name": "Contact – Basic/Advanced Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-40",
+   "not_planned": "",
+   "ep_mif": "3",
+   "note": "SRC-11 ELP with IDLE; SOLO row = area + pattern",
+   "page": 14,
+   "label": "C 5301"
+  },
+  "C5302": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C5301-04",
+   "family": "contact",
+   "name": "Contact – Basic/Advanced Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-40",
+   "not_planned": "",
+   "solo_candidate": true,
+   "ep_mif": "3",
+   "note": "SRC-11 ELP with IDLE; SOLO row = area + pattern",
+   "page": 14,
+   "label": "C 5302"
+  },
+  "C5303": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C5301-04",
+   "family": "contact",
+   "name": "Contact – Basic/Advanced Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-40",
+   "not_planned": "",
+   "solo_candidate": true,
+   "ep_mif": "3",
+   "note": "SRC-11 ELP with IDLE; SOLO row = area + pattern",
+   "page": 14,
+   "label": "C 5303"
+  },
+  "C5304": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C5301-04",
+   "family": "contact",
+   "name": "Contact – Basic/Advanced Maneuvers",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-40",
+   "not_planned": "",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "note": "SRC-11 ELP with IDLE; SOLO row = area + pattern",
+   "page": 14,
+   "label": "C 5304"
+  },
+  "C5490": {
+   "cat": "contact",
+   "band": "flights",
+   "section": "C5490",
+   "family": "contact-checkride",
+   "name": "Final Contact Checkride",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": true,
+   "ep_item": 39,
+   "items_total": 41,
+   "solo_seed": "1-40",
+   "not_planned": "41",
+   "checkride": true,
+   "end_of_block": true,
+   "ep_mif": "3",
+   "hours": 1.3,
+   "note": "FINAL examination of the Contact category",
+   "page": 14,
+   "label": "C 5490"
+  },
+  "I3101": {
+   "cat": "instrument",
+   "band": "fs",
+   "section": "I3101-02",
+   "family": "fs-instrument-area",
+   "name": "Basic Instruments procedures",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "",
+   "not_planned": "2,17-29,34",
+   "ep_mif": "1",
+   "page": 15,
+   "label": "I 3101"
+  },
+  "I3102": {
+   "cat": "instrument",
+   "band": "fs",
+   "section": "I3101-02",
+   "family": "fs-instrument-area",
+   "name": "Basic Instruments procedures",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "",
+   "not_planned": "2,17-29,34",
+   "end_of_block": true,
+   "ep_mif": "1",
+   "page": 15,
+   "label": "I 3102"
+  },
+  "I3201": {
+   "cat": "instrument",
+   "band": "fs",
+   "section": "I3201-03",
+   "family": "fs-instrument-area",
+   "name": "Basic and Advanced Instruments",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1,32-33",
+   "not_planned": "2,25,28",
+   "ep_mif": "2",
+   "page": 15,
+   "label": "I 3201"
+  },
+  "I3202": {
+   "cat": "instrument",
+   "band": "fs",
+   "section": "I3201-03",
+   "family": "fs-instrument-area",
+   "name": "Basic and Advanced Instruments",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1,32-33",
+   "not_planned": "2,25,28",
+   "ep_mif": "2",
+   "page": 15,
+   "label": "I 3202"
+  },
+  "I3203": {
+   "cat": "instrument",
+   "band": "fs",
+   "section": "I3201-03",
+   "family": "fs-instrument-area",
+   "name": "Basic and Advanced Instruments",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1,32-33",
+   "not_planned": "2,25,28",
+   "end_of_block": true,
+   "ep_mif": "2",
+   "page": 15,
+   "label": "I 3203"
+  },
+  "I3301": {
+   "cat": "instrument",
+   "band": "fs",
+   "section": "I3301-04",
+   "family": "fs-instrument-area",
+   "name": "Basic and Advanced Instruments",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1,3-16,29-33",
+   "not_planned": "2,25,28,34",
+   "ep_mif": "3",
+   "page": 15,
+   "label": "I 3301"
+  },
+  "I3302": {
+   "cat": "instrument",
+   "band": "fs",
+   "section": "I3301-04",
+   "family": "fs-instrument-area",
+   "name": "Basic and Advanced Instruments",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1,3-16,29-33",
+   "not_planned": "2,25,28,34",
+   "ep_mif": "3",
+   "page": 15,
+   "label": "I 3302"
+  },
+  "I3303": {
+   "cat": "instrument",
+   "band": "fs",
+   "section": "I3301-04",
+   "family": "fs-instrument-area",
+   "name": "Basic and Advanced Instruments",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1,3-16,29-33",
+   "not_planned": "2,25,28,34",
+   "ep_mif": "3",
+   "page": 15,
+   "label": "I 3303"
+  },
+  "I3304": {
+   "cat": "instrument",
+   "band": "fs",
+   "section": "I3301-04",
+   "family": "fs-instrument-area",
+   "name": "Basic and Advanced Instruments",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1,3-16,29-33",
+   "not_planned": "2,25,28,34",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "page": 15,
+   "label": "I 3304"
+  },
+  "I3401": {
+   "cat": "instrument",
+   "band": "fs",
+   "section": "I3401-04",
+   "family": "fs-instrument-route",
+   "name": "IFR Navigation",
+   "work": "ROUTE",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1,3-4,6,8,10,12-22,27,29-33",
+   "not_planned": "2,5,7,9,11,28,34",
+   "ep_mif": "3",
+   "approach_hint": "VOR/TACAN or ILS/LOC or GCA PAR/ASR; at least 1 approach at LGAD, LGRX or LGSA (LGTG, LGBL, LGSY if possible)",
+   "page": 15,
+   "label": "I 3401"
+  },
+  "I3402": {
+   "cat": "instrument",
+   "band": "fs",
+   "section": "I3401-04",
+   "family": "fs-instrument-route",
+   "name": "IFR Navigation",
+   "work": "ROUTE",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1,3-4,6,8,10,12-22,27,29-33",
+   "not_planned": "2,5,7,9,11,28,34",
+   "ep_mif": "3",
+   "approach_hint": "VOR/TACAN or ILS/LOC or GCA PAR/ASR; at least 1 approach at LGAD, LGRX or LGSA (LGTG, LGBL, LGSY if possible)",
+   "page": 15,
+   "label": "I 3402"
+  },
+  "I3403": {
+   "cat": "instrument",
+   "band": "fs",
+   "section": "I3401-04",
+   "family": "fs-instrument-route",
+   "name": "IFR Navigation",
+   "work": "ROUTE",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1,3-4,6,8,10,12-22,27,29-33",
+   "not_planned": "2,5,7,9,11,28,34",
+   "ep_mif": "3",
+   "approach_hint": "VOR/TACAN or ILS/LOC or GCA PAR/ASR; at least 1 approach at LGAD, LGRX or LGSA (LGTG, LGBL, LGSY if possible)",
+   "page": 15,
+   "label": "I 3403"
+  },
+  "I3404": {
+   "cat": "instrument",
+   "band": "fs",
+   "section": "I3401-04",
+   "family": "fs-instrument-route",
+   "name": "IFR Navigation",
+   "work": "ROUTE",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1,3-4,6,8,10,12-22,27,29-33",
+   "not_planned": "2,5,7,9,11,28,34",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "approach_hint": "VOR/TACAN or ILS/LOC or GCA PAR/ASR; at least 1 approach at LGAD, LGRX or LGSA (LGTG, LGBL, LGSY if possible)",
+   "page": 15,
+   "label": "I 3404"
+  },
+  "I3501": {
+   "cat": "instrument",
+   "band": "fs",
+   "section": "I3501-04",
+   "family": "fs-instrument-route",
+   "name": "IFR Navigation",
+   "work": "ROUTE",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1,3-4,6-8,10,12-27,29-33",
+   "not_planned": "2,5,9,11,28,34",
+   "ep_mif": "3",
+   "approach_hint": "VOR/TACAN or ILS/LOC or GCA PAR/ASR; at least 1 approach at LGAD, LGRX or LGSA (LGTG, LGBL, LGSY if possible)",
+   "page": 16,
+   "label": "I 3501"
+  },
+  "I3502": {
+   "cat": "instrument",
+   "band": "fs",
+   "section": "I3501-04",
+   "family": "fs-instrument-route",
+   "name": "IFR Navigation",
+   "work": "ROUTE",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1,3-4,6-8,10,12-27,29-33",
+   "not_planned": "2,5,9,11,28,34",
+   "ep_mif": "3",
+   "approach_hint": "VOR/TACAN or ILS/LOC or GCA PAR/ASR; at least 1 approach at LGAD, LGRX or LGSA (LGTG, LGBL, LGSY if possible)",
+   "page": 16,
+   "label": "I 3502"
+  },
+  "I3503": {
+   "cat": "instrument",
+   "band": "fs",
+   "section": "I3501-04",
+   "family": "fs-instrument-route",
+   "name": "IFR Navigation",
+   "work": "ROUTE",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1,3-4,6-8,10,12-27,29-33",
+   "not_planned": "2,5,9,11,28,34",
+   "ep_mif": "3",
+   "approach_hint": "VOR/TACAN or ILS/LOC or GCA PAR/ASR; at least 1 approach at LGAD, LGRX or LGSA (LGTG, LGBL, LGSY if possible)",
+   "page": 16,
+   "label": "I 3503"
+  },
+  "I3504": {
+   "cat": "instrument",
+   "band": "fs",
+   "section": "I3501-04",
+   "family": "fs-instrument-route",
+   "name": "IFR Navigation",
+   "work": "ROUTE",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1,3-4,6-8,10,12-27,29-33",
+   "not_planned": "2,5,9,11,28,34",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "approach_hint": "VOR/TACAN or ILS/LOC or GCA PAR/ASR; at least 1 approach at LGAD, LGRX or LGSA (LGTG, LGBL, LGSY if possible)",
+   "page": 16,
+   "label": "I 3504"
+  },
+  "I3601": {
+   "cat": "instrument",
+   "band": "fs",
+   "section": "I3601",
+   "family": "fs-instrument-route-night",
+   "name": "Night IFR Navigation",
+   "work": "ROUTE",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1,3-4,6-8,10,12-27,29-33",
+   "not_planned": "2,5,9,11,28,34",
+   "night": true,
+   "end_of_block": true,
+   "ep_mif": "3",
+   "hours": 1.3,
+   "approach_hint": "at least 1 approach at LGAD, LGRX or LGSA",
+   "note": "NIGHT flying conditions (OFT/FTD)",
+   "page": 16,
+   "label": "I 3601"
+  },
+  "I4101": {
+   "cat": "instrument",
+   "band": "flights",
+   "section": "I4101-02",
+   "family": "instrument-area",
+   "name": "Basic Instrument",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1",
+   "not_planned": "2,14-16,19,21-26,28-29",
+   "ep_mif": "1",
+   "approach_hint": "CIRCLING(1)",
+   "note": "SRI-1 spatial disorientation",
+   "page": 15,
+   "label": "I 4101"
+  },
+  "I4102": {
+   "cat": "instrument",
+   "band": "flights",
+   "section": "I4101-02",
+   "family": "instrument-area",
+   "name": "Basic Instrument",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1",
+   "not_planned": "2,14-16,19,21-26,28-29",
+   "end_of_block": true,
+   "ep_mif": "1",
+   "approach_hint": "CIRCLING(1)",
+   "note": "SRI-1 spatial disorientation",
+   "page": 15,
+   "label": "I 4102"
+  },
+  "I4201": {
+   "cat": "instrument",
+   "band": "flights",
+   "section": "I4201-02",
+   "family": "instrument-area",
+   "name": "Advanced Instrument",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1-6,30-33",
+   "not_planned": "19",
+   "ep_mif": "2",
+   "approach_hint": "VOR/DME-TACAN(1) ILS/LOC(1) GCA PAR/ASR(2) GCA no-GYRO(1) STBY(1) CIRCLING(1) MISSED(2)",
+   "note": "SRI-2 time / magnetic compass turns",
+   "page": 15,
+   "label": "I 4201"
+  },
+  "I4202": {
+   "cat": "instrument",
+   "band": "flights",
+   "section": "I4201-02",
+   "family": "instrument-area",
+   "name": "Advanced Instrument",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1-6,30-33",
+   "not_planned": "19",
+   "end_of_block": true,
+   "ep_mif": "2",
+   "approach_hint": "VOR/DME-TACAN(1) ILS/LOC(1) GCA PAR/ASR(2) GCA no-GYRO(1) STBY(1) CIRCLING(1) MISSED(2)",
+   "note": "SRI-2 time / magnetic compass turns",
+   "page": 15,
+   "label": "I 4202"
+  },
+  "I4301": {
+   "cat": "instrument",
+   "band": "flights",
+   "section": "I4301-02",
+   "family": "instrument-area",
+   "name": "Advanced Instrument",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1-17,29-33",
+   "not_planned": "19,34",
+   "ep_mif": "3",
+   "approach_hint": "VOR/DME-TACAN(1) ILS/LOC(1) GCA PAR/ASR(2) GCA no-GYRO(1) STBY(1) CIRCLING(1) MISSED(2)",
+   "page": 15,
+   "label": "I 4301"
+  },
+  "I4302": {
+   "cat": "instrument",
+   "band": "flights",
+   "section": "I4301-02",
+   "family": "instrument-area",
+   "name": "Advanced Instrument",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1-17,29-33",
+   "not_planned": "19,34",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "approach_hint": "VOR/DME-TACAN(1) ILS/LOC(1) GCA PAR/ASR(2) GCA no-GYRO(1) STBY(1) CIRCLING(1) MISSED(2)",
+   "page": 15,
+   "label": "I 4302"
+  },
+  "I4490": {
+   "cat": "instrument",
+   "band": "flights",
+   "section": "I4490",
+   "family": "instrument-checkride",
+   "name": "Instrument Checkride",
+   "work": "AREA",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1-17,29-33",
+   "not_planned": "19,26,34",
+   "checkride": true,
+   "end_of_block": true,
+   "ep_mif": "3",
+   "hours": 1.4,
+   "approach_hint": "at least 1 instrument descent + 1 final approach",
+   "note": "evaluation; EP examined under IMC at brief/debrief",
+   "page": 15,
+   "label": "I 4490"
+  },
+  "I4501": {
+   "cat": "instrument",
+   "band": "flights",
+   "section": "I4501-02",
+   "family": "instrument-route",
+   "name": "IFR navigation flights through airways or Approach to Approach",
+   "work": "ROUTE",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1-4,6-8,12-33",
+   "not_planned": "5,9-11,34",
+   "ep_mif": "3",
+   "approach_hint": "VOR/DME-TACAN(2) ILS/LOC(1) GCA(1) STBY(1) CIRCLING(1) MISSED(1)",
+   "note": "IFR NAV; strange airfield; EFT option; Italy/Cyprus possible",
+   "page": 15,
+   "label": "I 4501"
+  },
+  "I4502": {
+   "cat": "instrument",
+   "band": "flights",
+   "section": "I4501-02",
+   "family": "instrument-route",
+   "name": "IFR navigation flights through airways or Approach to Approach",
+   "work": "ROUTE",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1-4,6-8,12-33",
+   "not_planned": "5,9-11,34",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "approach_hint": "VOR/DME-TACAN(2) ILS/LOC(1) GCA(1) STBY(1) CIRCLING(1) MISSED(1)",
+   "note": "IFR NAV; strange airfield; EFT option; Italy/Cyprus possible",
+   "page": 15,
+   "label": "I 4502"
+  },
+  "I4601": {
+   "cat": "instrument",
+   "band": "flights",
+   "section": "I4601-03",
+   "family": "instrument-route",
+   "name": "IFR navigation flights through airways or Approach to Approach",
+   "work": "ROUTE",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1-4,6-8,12-33",
+   "not_planned": "5,9-11,34",
+   "ep_mif": "3",
+   "approach_hint": "VOR/DME-TACAN(3) ILS/LOC(1) GCA(1) STBY(1) CIRCLING(1) MISSED(1)",
+   "note": "IFR NAV; strange airfield; EFT option; Italy/Cyprus possible",
+   "page": 16,
+   "label": "I 4601"
+  },
+  "I4602": {
+   "cat": "instrument",
+   "band": "flights",
+   "section": "I4601-03",
+   "family": "instrument-route",
+   "name": "IFR navigation flights through airways or Approach to Approach",
+   "work": "ROUTE",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1-4,6-8,12-33",
+   "not_planned": "5,9-11,34",
+   "ep_mif": "3",
+   "approach_hint": "VOR/DME-TACAN(3) ILS/LOC(1) GCA(1) STBY(1) CIRCLING(1) MISSED(1)",
+   "note": "IFR NAV; strange airfield; EFT option; Italy/Cyprus possible",
+   "page": 16,
+   "label": "I 4602"
+  },
+  "I4603": {
+   "cat": "instrument",
+   "band": "flights",
+   "section": "I4601-03",
+   "family": "instrument-route",
+   "name": "IFR navigation flights through airways or Approach to Approach",
+   "work": "ROUTE",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1-4,6-8,12-33",
+   "not_planned": "5,9-11,34",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "approach_hint": "VOR/DME-TACAN(3) ILS/LOC(1) GCA(1) STBY(1) CIRCLING(1) MISSED(1)",
+   "note": "IFR NAV; strange airfield; EFT option; Italy/Cyprus possible",
+   "page": 16,
+   "label": "I 4603"
+  },
+  "I4701": {
+   "cat": "instrument",
+   "band": "flights",
+   "section": "I4701",
+   "family": "instrument-route-night",
+   "name": "Night IFR navigation flight through airways",
+   "work": "ROUTE",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1-4,6-8,12-24,27,29-33",
+   "not_planned": "5,9-11,25-26,34",
+   "night": true,
+   "end_of_block": true,
+   "ep_mif": "3",
+   "hours": 1.4,
+   "approach_hint": "VOR/DME-TACAN(1)",
+   "note": "NIGHT; strange-airfield approach if possible; may be flown inside Kalamata MTMA in bad wx",
+   "page": 16,
+   "label": "I 4701"
+  },
+  "I4890": {
+   "cat": "instrument",
+   "band": "flights",
+   "section": "I4890",
+   "family": "instrument-checkride",
+   "name": "Final Instruments Checkride",
+   "work": "ROUTE",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 32,
+   "items_total": 34,
+   "solo_seed": "1-4,6-8,12-33",
+   "not_planned": "5,9-11,34",
+   "checkride": true,
+   "end_of_block": true,
+   "ep_mif": "3",
+   "hours": 1.3,
+   "approach_hint": "IFR navigation + instrument approach at a strange airport",
+   "note": "FINAL; EFT option",
+   "page": 16,
+   "label": "I 4890"
+  },
+  "F3101": {
+   "cat": "formation",
+   "band": "fs",
+   "section": "F3101-2",
+   "family": "fs-formation",
+   "name": "Two-ship Formation",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "2,8,15,29-31",
+   "not_planned": "21,23-28,32-33,38",
+   "ep_mif": "0",
+   "note": "SP flies as No2 only",
+   "page": 17,
+   "label": "F 3101"
+  },
+  "F3102": {
+   "cat": "formation",
+   "band": "fs",
+   "section": "F3101-2",
+   "family": "fs-formation",
+   "name": "Two-ship Formation",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "2,8,15,29-31",
+   "not_planned": "21,23-28,32-33,38",
+   "end_of_block": true,
+   "ep_mif": "0",
+   "note": "SP flies as No2 only",
+   "page": 17,
+   "label": "F 3102"
+  },
+  "F3201": {
+   "cat": "formation",
+   "band": "fs",
+   "section": "F3201-3",
+   "family": "fs-formation",
+   "name": "Two-ship Formation",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "2-6,8,14-15,29-31,37",
+   "not_planned": "21,23-28,32-33,38",
+   "ep_mif": "1",
+   "note": "SP flies as No2 only",
+   "page": 17,
+   "label": "F 3201"
+  },
+  "F3202": {
+   "cat": "formation",
+   "band": "fs",
+   "section": "F3201-3",
+   "family": "fs-formation",
+   "name": "Two-ship Formation",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "2-6,8,14-15,29-31,37",
+   "not_planned": "21,23-28,32-33,38",
+   "ep_mif": "1",
+   "note": "SP flies as No2 only",
+   "page": 17,
+   "label": "F 3202"
+  },
+  "F3203": {
+   "cat": "formation",
+   "band": "fs",
+   "section": "F3201-3",
+   "family": "fs-formation",
+   "name": "Two-ship Formation",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "2-6,8,14-15,29-31,37",
+   "not_planned": "21,23-28,32-33,38",
+   "end_of_block": true,
+   "ep_mif": "1",
+   "note": "SP flies as No2 only",
+   "page": 17,
+   "label": "F 3203"
+  },
+  "F4101": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4101-04",
+   "family": "formation",
+   "name": "Two-ship Formation",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "2,8,15,30-31,33-34,36-37",
+   "not_planned": "23-28,38",
+   "ep_mif": "2",
+   "note": "T/O interval except two flights where IP demonstrates FORMATION T/O",
+   "page": 17,
+   "label": "F 4101"
+  },
+  "F4102": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4101-04",
+   "family": "formation",
+   "name": "Two-ship Formation",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "2,8,15,30-31,33-34,36-37",
+   "not_planned": "23-28,38",
+   "ep_mif": "2",
+   "note": "T/O interval except two flights where IP demonstrates FORMATION T/O",
+   "page": 17,
+   "label": "F 4102"
+  },
+  "F4103": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4101-04",
+   "family": "formation",
+   "name": "Two-ship Formation",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "2,8,15,30-31,33-34,36-37",
+   "not_planned": "23-28,38",
+   "ep_mif": "2",
+   "note": "T/O interval except two flights where IP demonstrates FORMATION T/O",
+   "page": 17,
+   "label": "F 4103"
+  },
+  "F4104": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4101-04",
+   "family": "formation",
+   "name": "Two-ship Formation",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "2,8,15,30-31,33-34,36-37",
+   "not_planned": "23-28,38",
+   "end_of_block": true,
+   "ep_mif": "2",
+   "note": "T/O interval except two flights where IP demonstrates FORMATION T/O",
+   "page": 17,
+   "label": "F 4104"
+  },
+  "F4201": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4201-04",
+   "family": "formation",
+   "name": "Two-ship Formation",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "1-6,8-12,15-22,29-37",
+   "not_planned": "24-28",
+   "ep_mif": "2",
+   "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
+   "note": "SRF-1 simulated lost wingman",
+   "page": 17,
+   "label": "F 4201"
+  },
+  "F4202": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4201-04",
+   "family": "formation",
+   "name": "Two-ship Formation",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "1-6,8-12,15-22,29-37",
+   "not_planned": "24-28",
+   "ep_mif": "2",
+   "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
+   "note": "SRF-1 simulated lost wingman",
+   "page": 17,
+   "label": "F 4202"
+  },
+  "F4203": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4201-04",
+   "family": "formation",
+   "name": "Two-ship Formation",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "1-6,8-12,15-22,29-37",
+   "not_planned": "24-28",
+   "ep_mif": "2",
+   "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
+   "note": "SRF-1 simulated lost wingman",
+   "page": 17,
+   "label": "F 4203"
+  },
+  "F4204": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4201-04",
+   "family": "formation",
+   "name": "Two-ship Formation",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "1-6,8-12,15-22,29-37",
+   "not_planned": "24-28",
+   "end_of_block": true,
+   "ep_mif": "2",
+   "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
+   "note": "SRF-1 simulated lost wingman",
+   "page": 17,
+   "label": "F 4204"
+  },
+  "F4301": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4301-06",
+   "family": "formation",
+   "name": "Two-ship Formation",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "1-23,29-37",
+   "not_planned": "24-28,38",
+   "solo_candidate": true,
+   "ep_mif": "3",
+   "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
+   "note": "SOLO rows; first SOLO T/O = INTERVAL as Leader from RWY centre",
+   "page": 17,
+   "label": "F 4301"
+  },
+  "F4302": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4301-06",
+   "family": "formation",
+   "name": "Two-ship Formation",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "1-23,29-37",
+   "not_planned": "24-28,38",
+   "solo_candidate": true,
+   "ep_mif": "3",
+   "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
+   "note": "SOLO rows; first SOLO T/O = INTERVAL as Leader from RWY centre",
+   "page": 17,
+   "label": "F 4302"
+  },
+  "F4303": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4301-06",
+   "family": "formation",
+   "name": "Two-ship Formation",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "1-23,29-37",
+   "not_planned": "24-28,38",
+   "solo_candidate": true,
+   "ep_mif": "3",
+   "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
+   "note": "SOLO rows; first SOLO T/O = INTERVAL as Leader from RWY centre",
+   "page": 17,
+   "label": "F 4303"
+  },
+  "F4304": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4301-06",
+   "family": "formation",
+   "name": "Two-ship Formation",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "1-23,29-37",
+   "not_planned": "24-28,38",
+   "solo_candidate": true,
+   "ep_mif": "3",
+   "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
+   "note": "SOLO rows; first SOLO T/O = INTERVAL as Leader from RWY centre",
+   "page": 17,
+   "label": "F 4304"
+  },
+  "F4305": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4301-06",
+   "family": "formation",
+   "name": "Two-ship Formation",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "1-23,29-37",
+   "not_planned": "24-28,38",
+   "solo_candidate": true,
+   "ep_mif": "3",
+   "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
+   "note": "SOLO rows; first SOLO T/O = INTERVAL as Leader from RWY centre",
+   "page": 17,
+   "label": "F 4305"
+  },
+  "F4306": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4301-06",
+   "family": "formation",
+   "name": "Two-ship Formation",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "1-23,29-37",
+   "not_planned": "24-28,38",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
+   "note": "SOLO rows; first SOLO T/O = INTERVAL as Leader from RWY centre",
+   "page": 18,
+   "label": "F 4306"
+  },
+  "F4401": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4401-04",
+   "family": "formation",
+   "name": "Two-ship Formation (Closed and Tactical)",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "1-37",
+   "not_planned": "38",
+   "ep_mif": "3",
+   "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
+   "note": "closed + tactical",
+   "page": 18,
+   "label": "F 4401"
+  },
+  "F4402": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4401-04",
+   "family": "formation",
+   "name": "Two-ship Formation (Closed and Tactical)",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "1-37",
+   "not_planned": "38",
+   "ep_mif": "3",
+   "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
+   "note": "closed + tactical",
+   "page": 18,
+   "label": "F 4402"
+  },
+  "F4403": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4401-04",
+   "family": "formation",
+   "name": "Two-ship Formation (Closed and Tactical)",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "1-37",
+   "not_planned": "38",
+   "ep_mif": "3",
+   "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
+   "note": "closed + tactical",
+   "page": 18,
+   "label": "F 4403"
+  },
+  "F4404": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4401-04",
+   "family": "formation",
+   "name": "Two-ship Formation (Closed and Tactical)",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "1-37",
+   "not_planned": "38",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
+   "note": "closed + tactical",
+   "page": 18,
+   "label": "F 4404"
+  },
+  "F4501": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4501-03",
+   "family": "formation",
+   "name": "Two-ship Formation (Closed and Tactical)",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "1-37",
+   "not_planned": "38",
+   "solo_candidate": true,
+   "ep_mif": "3",
+   "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
+   "note": "closed + tactical; SOLO rows",
+   "page": 18,
+   "label": "F 4501"
+  },
+  "F4502": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4501-03",
+   "family": "formation",
+   "name": "Two-ship Formation (Closed and Tactical)",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "1-37",
+   "not_planned": "38",
+   "solo_candidate": true,
+   "ep_mif": "3",
+   "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
+   "note": "closed + tactical; SOLO rows",
+   "page": 18,
+   "label": "F 4502"
+  },
+  "F4503": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4501-03",
+   "family": "formation",
+   "name": "Two-ship Formation (Closed and Tactical)",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "1-37",
+   "not_planned": "38",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "approach_hint": "VOR/DME or TACAN with or without GCA; CLOSED GCA may replace it",
+   "note": "closed + tactical; SOLO rows",
+   "page": 18,
+   "label": "F 4503"
+  },
+  "F4690": {
+   "cat": "formation",
+   "band": "flights",
+   "section": "F4690",
+   "family": "formation-checkride",
+   "name": "Final Formation Checkride",
+   "work": "AREA",
+   "to": "INTERVAL",
+   "elp": false,
+   "ep_item": 36,
+   "items_total": 38,
+   "solo_seed": "1-37",
+   "not_planned": "38",
+   "checkride": true,
+   "end_of_block": true,
+   "ep_mif": "3",
+   "hours": 1.3,
+   "note": "FINAL examination of the Formation category",
+   "page": 18,
+   "label": "F 4690"
+  },
+  "N2101": {
+   "cat": "vfr_navigation",
+   "band": "fs",
+   "section": "N2101",
+   "family": "fs-nav-single",
+   "name": "VFR Navigation (Medium Level)",
+   "work": "ROUTE_MEDIUM",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_seed": "4-5,14",
+   "not_planned": "7-9,13,16,20,26",
+   "end_of_block": true,
+   "ep_mif": "1",
+   "hours": 1.3,
+   "page": 19,
+   "label": "N 2101"
+  },
+  "N2201": {
+   "cat": "vfr_navigation",
+   "band": "fs",
+   "section": "N2201-02",
+   "family": "fs-nav-single",
+   "name": "VFR Navigation (Low Level)",
+   "work": "ROUTE_LOW",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_seed": "1-2,4-6,10-12,14,21-25",
+   "not_planned": "7-9,13,16,20,26",
+   "ep_mif": "2",
+   "approach_hint": "instrument approach on RTB in at least 1 sortie",
+   "page": 19,
+   "label": "N 2201"
+  },
+  "N2202": {
+   "cat": "vfr_navigation",
+   "band": "fs",
+   "section": "N2201-02",
+   "family": "fs-nav-single",
+   "name": "VFR Navigation (Low Level)",
+   "work": "ROUTE_LOW",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_seed": "1-2,4-6,10-12,14,21-25",
+   "not_planned": "7-9,13,16,20,26",
+   "end_of_block": true,
+   "ep_mif": "2",
+   "approach_hint": "instrument approach on RTB in at least 1 sortie",
+   "page": 19,
+   "label": "N 2202"
+  },
+  "N2301": {
+   "cat": "vfr_navigation",
+   "band": "fs",
+   "section": "N2301-04",
+   "family": "fs-nav-single",
+   "name": "VFR Navigation (Low Level)",
+   "work": "ROUTE_LOW",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_seed": "1-2,4-6,10-12,14,21-25",
+   "not_planned": "7-9,13,16,20,26",
+   "ep_mif": "3",
+   "approach_hint": "instrument approach on RTB in at least 2 sorties",
+   "page": 19,
+   "label": "N 2301"
+  },
+  "N2302": {
+   "cat": "vfr_navigation",
+   "band": "fs",
+   "section": "N2301-04",
+   "family": "fs-nav-single",
+   "name": "VFR Navigation (Low Level)",
+   "work": "ROUTE_LOW",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_seed": "1-2,4-6,10-12,14,21-25",
+   "not_planned": "7-9,13,16,20,26",
+   "ep_mif": "3",
+   "approach_hint": "instrument approach on RTB in at least 2 sorties",
+   "page": 19,
+   "label": "N 2302"
+  },
+  "N2303": {
+   "cat": "vfr_navigation",
+   "band": "fs",
+   "section": "N2301-04",
+   "family": "fs-nav-single",
+   "name": "VFR Navigation (Low Level)",
+   "work": "ROUTE_LOW",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_seed": "1-2,4-6,10-12,14,21-25",
+   "not_planned": "7-9,13,16,20,26",
+   "ep_mif": "3",
+   "approach_hint": "instrument approach on RTB in at least 2 sorties",
+   "page": 19,
+   "label": "N 2303"
+  },
+  "N2304": {
+   "cat": "vfr_navigation",
+   "band": "fs",
+   "section": "N2301-04",
+   "family": "fs-nav-single",
+   "name": "VFR Navigation (Low Level)",
+   "work": "ROUTE_LOW",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_seed": "1-2,4-6,10-12,14,21-25",
+   "not_planned": "7-9,13,16,20,26",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "approach_hint": "instrument approach on RTB in at least 2 sorties",
+   "page": 19,
+   "label": "N 2304"
+  },
+  "N4101": {
+   "cat": "vfr_navigation",
+   "band": "flights",
+   "section": "N4101-02",
+   "family": "nav-single",
+   "name": "VFR Navigation (Medium Altitude)",
+   "work": "ROUTE_MEDIUM",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_seed": "4,14,17-19,21",
+   "not_planned": "7-9,13,16,20,26",
+   "ep_mif": "1",
+   "approach_hint": "1 instrument approach on RTB in at least 1 sortie",
+   "note": "at or above MSA, semi-circular rule",
+   "page": 19,
+   "label": "N 4101"
+  },
+  "N4102": {
+   "cat": "vfr_navigation",
+   "band": "flights",
+   "section": "N4101-02",
+   "family": "nav-single",
+   "name": "VFR Navigation (Medium Altitude)",
+   "work": "ROUTE_MEDIUM",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_seed": "4,14,17-19,21",
+   "not_planned": "7-9,13,16,20,26",
+   "end_of_block": true,
+   "ep_mif": "1",
+   "approach_hint": "1 instrument approach on RTB in at least 1 sortie",
+   "note": "at or above MSA, semi-circular rule",
+   "page": 19,
+   "label": "N 4102"
+  },
+  "N4201": {
+   "cat": "vfr_navigation",
+   "band": "flights",
+   "section": "N4201-02",
+   "family": "nav-single",
+   "name": "VFR Navigation (Low Altitude)",
+   "work": "ROUTE_LOW",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_seed": "1-2,4-6,10-12,14,17-19,21-25",
+   "not_planned": "7-9,16,20,26",
+   "ep_mif": "2",
+   "approach_hint": "1 instrument approach on RTB in at least 1 sortie",
+   "note": "GPS legs at most half the legs, over sea",
+   "page": 19,
+   "label": "N 4201"
+  },
+  "N4202": {
+   "cat": "vfr_navigation",
+   "band": "flights",
+   "section": "N4201-02",
+   "family": "nav-single",
+   "name": "VFR Navigation (Low Altitude)",
+   "work": "ROUTE_LOW",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_seed": "1-2,4-6,10-12,14,17-19,21-25",
+   "not_planned": "7-9,16,20,26",
+   "end_of_block": true,
+   "ep_mif": "2",
+   "approach_hint": "1 instrument approach on RTB in at least 1 sortie",
+   "note": "GPS legs at most half the legs, over sea",
+   "page": 19,
+   "label": "N 4202"
+  },
+  "N4301": {
+   "cat": "vfr_navigation",
+   "band": "flights",
+   "section": "N4301-02",
+   "family": "nav-single",
+   "name": "VFR Navigation (Low Altitude)",
+   "work": "ROUTE_LOW",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_seed": "1-2,4-6,10-14,17-19,21-25",
+   "not_planned": "7-9,16,20",
+   "ep_mif": "3",
+   "approach_hint": "1 instrument approach on RTB in at least 1 sortie",
+   "note": "SRN-1: IP demonstrates one leg at 500ft AGL",
+   "page": 19,
+   "label": "N 4301"
+  },
+  "N4302": {
+   "cat": "vfr_navigation",
+   "band": "flights",
+   "section": "N4301-02",
+   "family": "nav-single",
+   "name": "VFR Navigation (Low Altitude)",
+   "work": "ROUTE_LOW",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_seed": "1-2,4-6,10-14,17-19,21-25",
+   "not_planned": "7-9,16,20",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "approach_hint": "1 instrument approach on RTB in at least 1 sortie",
+   "note": "SRN-1: IP demonstrates one leg at 500ft AGL",
+   "page": 19,
+   "label": "N 4302"
+  },
+  "N4401": {
+   "cat": "vfr_navigation",
+   "band": "flights",
+   "section": "N4401-03",
+   "family": "nav-2ship",
+   "name": "Medium Level VFR Navigation (Two Ship Formation)",
+   "work": "ROUTE_MEDIUM",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_seed": "1-2,4-6,10-14,16-25",
+   "not_planned": "26",
+   "ep_mif": "3",
+   "approach_hint": "instrument approach + formation approach",
+   "note": "CONFLICT: section MISSION line says Medium Level, the VFR Navigation table says LOW LEVEL (FORMATION)",
+   "page": 19,
+   "label": "N 4401"
+  },
+  "N4402": {
+   "cat": "vfr_navigation",
+   "band": "flights",
+   "section": "N4401-03",
+   "family": "nav-2ship",
+   "name": "Medium Level VFR Navigation (Two Ship Formation)",
+   "work": "ROUTE_MEDIUM",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_seed": "1-2,4-6,10-14,16-25",
+   "not_planned": "26",
+   "ep_mif": "3",
+   "approach_hint": "instrument approach + formation approach",
+   "note": "CONFLICT: section MISSION line says Medium Level, the VFR Navigation table says LOW LEVEL (FORMATION)",
+   "page": 19,
+   "label": "N 4402"
+  },
+  "N4403": {
+   "cat": "vfr_navigation",
+   "band": "flights",
+   "section": "N4401-03",
+   "family": "nav-2ship",
+   "name": "Medium Level VFR Navigation (Two Ship Formation)",
+   "work": "ROUTE_MEDIUM",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_seed": "1-2,4-6,10-14,16-25",
+   "not_planned": "26",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "approach_hint": "instrument approach + formation approach",
+   "note": "CONFLICT: section MISSION line says Medium Level, the VFR Navigation table says LOW LEVEL (FORMATION)",
+   "page": 19,
+   "label": "N 4403"
+  },
+  "N4501": {
+   "cat": "vfr_navigation",
+   "band": "flights",
+   "section": "N4501-03",
+   "family": "nav-2ship",
+   "name": "Low Level VFR Navigation (Two Ship Formation)",
+   "work": "ROUTE_LOW",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_seed": "1-2,4-6,10-14,16-25",
+   "not_planned": "",
+   "ep_mif": "3",
+   "approach_hint": "instrument approach + formation approach",
+   "note": "SRN-1: one leg at 500ft AGL",
+   "page": 19,
+   "label": "N 4501"
+  },
+  "N4502": {
+   "cat": "vfr_navigation",
+   "band": "flights",
+   "section": "N4501-03",
+   "family": "nav-2ship",
+   "name": "Low Level VFR Navigation (Two Ship Formation)",
+   "work": "ROUTE_LOW",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_seed": "1-2,4-6,10-14,16-25",
+   "not_planned": "",
+   "ep_mif": "3",
+   "approach_hint": "instrument approach + formation approach",
+   "note": "SRN-1: one leg at 500ft AGL",
+   "page": 19,
+   "label": "N 4502"
+  },
+  "N4503": {
+   "cat": "vfr_navigation",
+   "band": "flights",
+   "section": "N4501-03",
+   "family": "nav-2ship",
+   "name": "Low Level VFR Navigation (Two Ship Formation)",
+   "work": "ROUTE_LOW",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_seed": "1-2,4-6,10-14,16-25",
+   "not_planned": "",
+   "end_of_block": true,
+   "ep_mif": "3",
+   "approach_hint": "instrument approach + formation approach",
+   "note": "SRN-1: one leg at 500ft AGL",
+   "page": 19,
+   "label": "N 4503"
+  },
+  "N4690": {
+   "cat": "vfr_navigation",
+   "band": "flights",
+   "section": "N4690",
+   "family": "nav-checkride-2ship",
+   "name": "Final Navigation Checkride",
+   "work": "ROUTE_LOW",
+   "to": "STATIC",
+   "elp": false,
+   "ep_item": 24,
+   "items_total": 26,
+   "solo_seed": "1-6,10-15,17-25",
+   "not_planned": "7-9,16,26",
+   "checkride": true,
+   "end_of_block": true,
+   "ep_mif": "3",
+   "hours": 1.2,
+   "approach_hint": "instrument approach on RTB if possible",
+   "note": "FINAL; low level + two-ship",
+   "page": 19,
+   "label": "N 4690"
+  }
+ }
+}

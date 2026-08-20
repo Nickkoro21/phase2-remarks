@@ -5,8 +5,8 @@ unit's CLOSED network.  **Hard browser target: Firefox 72.0.2** (the unit's
 browser — see specs/offline-export-spec.md, the contract for this builder).
 
 Produces (in D:\\FDMS-export\\):
-  * Phase2-FDMS.html     — Remarks + global search + Info + MIF chart +
-                           offline feedback + the 8-palette theme gallery
+  * Phase2-FDMS.html     — Remarks + Description + global search + Info +
+                           MIF chart + offline feedback + the 8-palette gallery
   * Phase2-Validate.html — ONLY the Schedule Validation tool (schedval.js as a
                            full-page standalone app, flowchart2.json inlined,
                            unit-terminology synonyms, theme gallery)
@@ -572,6 +572,14 @@ def collect_data() -> dict:
         DATA / "observations" / "master_index.json",   # app.js + remarksearch.js
         DATA / "minimums.json",                        # mifchart.js
         DATA / "manifest.json",                        # mifchart.js (source-jump)
+        # Round 16 — the Description tab. It is a pure syllabus/gradesheet tool
+        # (no roster data of any kind), so unlike the Scheduler and the Currency
+        # matrix it DOES travel to the closed network.
+        DATA / "descriptions.json",                    # description.js — the grammar
+        DATA / "areas.json",                           # description.js — working areas
+        DATA / "routes.json",                          # description.js — CPM routes
+        DATA / "ep_list.json",                         # description.js — the 71 EPs
+        DATA / "flowchart2.json",                      # description.js — the sortie roster
     ]
     files += sorted((DATA / "observations2").rglob("*.json"))   # item remarks (v2)
     files += sorted((DATA / "criteria").glob("*.json"))         # Info modal
@@ -1150,6 +1158,8 @@ def build_main_html(css: str, emblem_uri: str, prepaint_js: str, scripts: str) -
 
     # hide the removed view tabs (app.js binds by id — keep as hidden stubs).
     # tab-schedval is hidden too: Schedule Validation ships as its own file.
+    # tab-description (Round 16) is deliberately NOT in this list: Description
+    # ships offline intact, so the count stays 5.
     # tab-currency (Round 11) is hidden for the same reason as the Scheduler:
     # it reads the ROSTER, and nothing roster-derived travels to the closed
     # network in a file — the offline bundle stays a syllabus tool.
@@ -1174,10 +1184,13 @@ def build_main_html(css: str, emblem_uri: str, prepaint_js: str, scripts: str) -
     # through the Info-modal "Related requirements" links.
 
     # drop all external <script src> tags, then inline our chain before </body>
+    # (9 since Round 16 added description.js; 8 was Round 11's currency.js. Not
+    # all of them travel: the offline build inlines its own chain, WITHOUT the
+    # scheduler and the currency matrix but WITH Description.)
     # (8 since Round 11 added currency.js — none of them travels; the offline
     # build inlines its own shorter chain, without the scheduler or currency.)
     html = sub1(r'[ \t]*<script src="[^"]+"></script>\n', lambda m: "", html,
-                "external script tags", count=8)
+                "external script tags", count=9)
     html = sub1(r"</body>", lambda m: scripts + "\n</body>", html, "</body>")
 
     html = sub1(r"<!DOCTYPE html>",
@@ -1288,6 +1301,7 @@ def main() -> None:
 
     for f in [APP / "index.html", APP / "styles.css", APP / "app.js",
               APP / "mifchart.js", APP / "remarksearch.js", APP / "schedval.js",
+              APP / "description.js",
               APP / "assets" / "364mea.png", DATA / "flowchart2.json"]:
         if not f.is_file():
             fail(f"missing source file: {f}")
@@ -1299,13 +1313,14 @@ def main() -> None:
     appjs_raw = prepare_appjs()
     mifchart_raw = prepare_mifchart()
     remarksearch_raw = read_text(APP / "remarksearch.js")
+    description_raw = read_text(APP / "description.js")
     schedval_raw = prepare_schedval()
     gallery_raw = extract_gallery(read_text(APP / "app.js"))
     prepaint_raw = extract_prepaint(index_html)
 
     for name, src in [("styles.css", css), ("app.js", appjs_raw),
                       ("mifchart.js", mifchart_raw), ("remarksearch.js", remarksearch_raw),
-                      ("schedval.js", schedval_raw)]:
+                      ("description.js", description_raw), ("schedval.js", schedval_raw)]:
         if re.search(r"</(script|style)", src, re.I):
             fail(f"{name} contains a '</script'/'</style' sequence — inline-unsafe")
 
@@ -1320,6 +1335,7 @@ def main() -> None:
     appjs = t("app.js", appjs_raw)
     mifchart = t("mifchart.js", mifchart_raw)
     remarksearch = t("remarksearch.js", remarksearch_raw)
+    description = t("description.js", description_raw)
     feedback = t("feedback", FEEDBACK_JS)
     schedval = t("schedval.js", schedval_raw)
     gallery = t("gallery", gallery_raw)
@@ -1335,6 +1351,7 @@ def main() -> None:
         script_tag("app.js (loader block neutralized by build_offline.py)", appjs),
         script_tag("mifchart.js", mifchart),
         script_tag("remarksearch.js", remarksearch),
+        script_tag("description.js", description),
         script_tag("Offline feedback module (build_offline.py)", feedback),
     ])
     html_main = build_main_html(css, emblem_uri, prepaint_js, scripts_main)

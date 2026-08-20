@@ -487,13 +487,16 @@ const REQ_DOMAINS = [
 const reqState = { domain: null, cache: {} };
 
 function switchView(view) {
-  for (const v of ["remarks", "requirements", "flowchart", "scheduler", "currency"]) {
+  for (const v of ["remarks", "description", "requirements", "flowchart", "scheduler", "currency"]) {
     $(`view-${v}`).classList.toggle("hidden", v !== view);
     $(`tab-${v}`).classList.toggle("active", v === view);
   }
   if (view === "flowchart" && window.fcInit) window.fcInit();
 }
 $("tab-remarks").onclick = () => switchView("remarks");
+/* Round 16 — Description is a view of its own (app/description.js), booted on
+   first open like the Scheduler and the Currency matrix. */
+$("tab-description").onclick = () => { switchView("description"); if (window.descInit) window.descInit(); };
 $("tab-requirements").onclick = () => switchView("requirements");
 $("tab-flowchart").onclick = () => switchView("flowchart");
 $("tab-scheduler").onclick = () => { switchView("scheduler"); if (window.schInit) window.schInit(); };

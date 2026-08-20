@@ -1,0 +1,371 @@
+{
+ "schema": "ep-list-v1",
+ "generated": "2026-08-20",
+ "note": "T-6A emergency procedures — the pool the Description tab draws the «#n. (d) -> (a): …» line from (2-3 random picks + reroll, user ruling 2026-08-20). `name` is VERBATIM from the user-supplied list, including its own spelling (see entry 24, \"ELIMATION\"). `short` is the squadron short form and exists ONLY for the four entries proven by the sample photos — it is never invented; the Description tab falls back to `name` wherever `short` is absent.",
+ "source": "user-supplied T-6A emergency-procedures list, 2026-08-20 (71 entries, verbatim)",
+ "sample_evidence": [
+  "#39. (1) -> (1): FUEL BALANCE, TAD FAIL.",
+  "#39. (3) -> (3): HYD SYS MALFUNCTION, EMERGENCY LDG GR EXTENSION."
+ ],
+ "procedures": [
+  {
+   "n": 1,
+   "id": "hydraulic-system-malfunctions",
+   "name": "HYDRAULIC SYSTEM MALFUNCTIONS",
+   "short": "HYD SYS MALFUNCTION"
+  },
+  {
+   "n": 2,
+   "id": "landing-gear-malfunction",
+   "name": "LANDING GEAR MALFUNCTION"
+  },
+  {
+   "n": 3,
+   "id": "landing-with-unsafe-gear-indications",
+   "name": "LANDING WITH UNSAFE GEAR INDICATIONS"
+  },
+  {
+   "n": 4,
+   "id": "landing-gear-emergency-extension",
+   "name": "LANDING GEAR EMERGENCY EXTENSION",
+   "short": "EMERGENCY LDG GR EXTENSION"
+  },
+  {
+   "n": 5,
+   "id": "landing-with-cocked-nose-wheel",
+   "name": "LANDING WITH COCKED NOSE WHEEL"
+  },
+  {
+   "n": 6,
+   "id": "loss-of-electronic-displays-without-gen-bus-",
+   "name": "LOSS OF ELECTRONIC DISPLAYS WITHOUT GEN BUS OR BAT BUS ANNUNCIATORS ILLUMINATED (AVIONICS BUS FAILURE)"
+  },
+  {
+   "n": 7,
+   "id": "attitude-fail-on-eadi-with-hdg-on-ehsi-total",
+   "name": "ATTITUDE FAIL ON EADI WITH HDG ON EHSI (TOTAL ATTITUDE HEADING REFERENCE SYSTEM (AHRS) FAILURE)"
+  },
+  {
+   "n": 8,
+   "id": "attitude-fail-and-x-over-rate-of-turn-scale",
+   "name": "ATTITUDE FAIL AND X OVER RATE-OF-TURN SCALE"
+  },
+  {
+   "n": 9,
+   "id": "hdg-on-ehsi",
+   "name": "HDG ON EHSI"
+  },
+  {
+   "n": 10,
+   "id": "cp-on-eadi-or-ehsi-efis-control-panel-malfun",
+   "name": "CP ON EADI OR EHSI (EFIS CONTROL PANEL MALFUNCTION)"
+  },
+  {
+   "n": 11,
+   "id": "du-on-eadi-or-ehsi-display-unit-malfunction",
+   "name": "DU ON EADI OR EHSI (DISPLAY UNIT MALFUNCTION)"
+  },
+  {
+   "n": 12,
+   "id": "eadi-or-ehsi-impending-display-failure-blank",
+   "name": "EADI OR EHSI IMPENDING DISPLAY FAILURE (BLANKING, FLICKERING, BRIGHT TO DIM DISPLAY FAILURE, HOT OR FAN)"
+  },
+  {
+   "n": 13,
+   "id": "eid-impending-display-failure-primary-altern",
+   "name": "EID IMPENDING DISPLAY FAILURE (PRIMARY, ALTERNATE, ENGINE/SYSTEMS, ALTIMETER, AIRSPEED INDICATOR, OR VERTICAL SPEED INDICATOR)"
+  },
+  {
+   "n": 14,
+   "id": "rmu-failure",
+   "name": "RMU FAILURE"
+  },
+  {
+   "n": 15,
+   "id": "loss-of-ics-audio",
+   "name": "LOSS OF ICS/AUDIO"
+  },
+  {
+   "n": 16,
+   "id": "aoa-computer-failure",
+   "name": "AOA COMPUTER FAILURE"
+  },
+  {
+   "n": 17,
+   "id": "edm-fail-edm-a-fail-or-edm-b-fail-on-primary",
+   "name": "EDM FAIL, EDM A FAIL, OR EDM B FAIL ON PRIMARY, ALTERNATE, OR ENGINE/SYSTEMS EIDS (TOTAL OR PARTIAL LOSS OF ENGINE DATA MANAGER INFORMATION)"
+  },
+  {
+   "n": 18,
+   "id": "adc-fail-adc-a-fail-or-adc-b-fail-on-air-dat",
+   "name": "ADC FAIL, ADC A FAIL, OR ADC B FAIL ON AIR DATA EID’S (TOTAL OR PARTIAL LOSS OF AIR DATA COMPUTER INFORMATION)"
+  },
+  {
+   "n": 19,
+   "id": "generator-inoperative",
+   "name": "GENERATOR INOPERATIVE"
+  },
+  {
+   "n": 20,
+   "id": "generator-bus-inoperative",
+   "name": "GENERATOR BUS INOPERATIVE"
+  },
+  {
+   "n": 21,
+   "id": "battery-bus-inoperative",
+   "name": "BATTERY BUS INOPERATIVE"
+  },
+  {
+   "n": 22,
+   "id": "bus-tie-inoperative",
+   "name": "BUS TIE INOPERATIVE"
+  },
+  {
+   "n": 23,
+   "id": "battery-and-generator-failure",
+   "name": "BATTERY AND GENERATOR FAILURE"
+  },
+  {
+   "n": 24,
+   "id": "smoke-and-fume-elimation-electrical-fire",
+   "name": "SMOKE AND FUME ELIMATION/ELECTRICAL FIRE"
+  },
+  {
+   "n": 25,
+   "id": "low-fuel-pressure",
+   "name": "LOW FUEL PRESSURE"
+  },
+  {
+   "n": 26,
+   "id": "fuel-imbalance",
+   "name": "FUEL IMBALANCE",
+   "short": "FUEL BALANCE"
+  },
+  {
+   "n": 27,
+   "id": "leaking-fuel-from-wing",
+   "name": "LEAKING FUEL FROM WING"
+  },
+  {
+   "n": 28,
+   "id": "fuel-probe-malfunction",
+   "name": "FUEL PROBE MALFUNCTION"
+  },
+  {
+   "n": 29,
+   "id": "high-fuel-flow",
+   "name": "HIGH FUEL FLOW"
+  },
+  {
+   "n": 30,
+   "id": "obogs-fail-annunciator",
+   "name": "OBOGS FAIL ANNUNCIATOR"
+  },
+  {
+   "n": 31,
+   "id": "obogs-failure-physiological-symptoms",
+   "name": "OBOGS FAILURE/PHYSIOLOGICAL SYMPTOMS"
+  },
+  {
+   "n": 32,
+   "id": "environmental-systems-duct-overtemp",
+   "name": "ENVIRONMENTAL SYSTEMS DUCT OVERTEMP"
+  },
+  {
+   "n": 33,
+   "id": "cockpit-overpressurization",
+   "name": "COCKPIT OVERPRESSURIZATION"
+  },
+  {
+   "n": 34,
+   "id": "rapid-decompression-cockpit-pressure-altitud",
+   "name": "RAPID DECOMPRESSION/COCKPIT PRESSURE ALTITUDE EXCEEDS 18,000 FEET"
+  },
+  {
+   "n": 35,
+   "id": "defog-valve-fails-to-close-in-flight",
+   "name": "DEFOG VALVE FAILS TO CLOSE IN FLIGHT"
+  },
+  {
+   "n": 36,
+   "id": "cockpit-fails-to-pressurize",
+   "name": "COCKPIT FAILS TO PRESSURIZE"
+  },
+  {
+   "n": 37,
+   "id": "abort-start-procedure",
+   "name": "ABORT START PROCEDURE"
+  },
+  {
+   "n": 38,
+   "id": "motoring-run-procedure",
+   "name": "MOTORING RUN PROCEDURE"
+  },
+  {
+   "n": 39,
+   "id": "emergency-engine-shutdown-on-the-ground",
+   "name": "EMERGENCY ENGINE SHUTDOWN ON THE GROUND"
+  },
+  {
+   "n": 40,
+   "id": "uncommanded-power-changes-loss-of-power-unco",
+   "name": "UNCOMMANDED POWER CHANGES/LOSS OF POWER/UNCOMMANDED PROPELLER FEATHER"
+  },
+  {
+   "n": 41,
+   "id": "compressor-stalls",
+   "name": "COMPRESSOR STALLS"
+  },
+  {
+   "n": 42,
+   "id": "fire-in-flight",
+   "name": "FIRE IN FLIGHT"
+  },
+  {
+   "n": 43,
+   "id": "pmu-failure",
+   "name": "PMU FAILURE"
+  },
+  {
+   "n": 44,
+   "id": "pmu-fault",
+   "name": "PMU FAULT"
+  },
+  {
+   "n": 45,
+   "id": "chip-detector-warning",
+   "name": "CHIP DETECTOR WARNING"
+  },
+  {
+   "n": 46,
+   "id": "oil-system-malfunction-or-low-oil-pressure",
+   "name": "OIL SYSTEM MALFUNCTION OR LOW OIL PRESSURE"
+  },
+  {
+   "n": 47,
+   "id": "immediate-airstart-pmu-norm",
+   "name": "IMMEDIATE AIRSTART (PMU NORM)"
+  },
+  {
+   "n": 48,
+   "id": "precautionary-emergency-landing-pel",
+   "name": "PRECAUTIONARY EMERGENCY LANDING (PEL)"
+  },
+  {
+   "n": 49,
+   "id": "engine-failure-during-flight",
+   "name": "ENGINE FAILURE DURING FLIGHT"
+  },
+  {
+   "n": 50,
+   "id": "pmu-norm-airstart",
+   "name": "PMU NORM AIRSTART"
+  },
+  {
+   "n": 51,
+   "id": "pmu-off-airstart",
+   "name": "PMU OFF AIRSTART"
+  },
+  {
+   "n": 52,
+   "id": "pmu-off-ground-start",
+   "name": "PMU OFF GROUND START"
+  },
+  {
+   "n": 53,
+   "id": "forced-landing",
+   "name": "FORCED LANDING"
+  },
+  {
+   "n": 54,
+   "id": "abort",
+   "name": "ABORT"
+  },
+  {
+   "n": 55,
+   "id": "tire-failure-during-takeoff",
+   "name": "TIRE FAILURE DURING TAKEOFF"
+  },
+  {
+   "n": 56,
+   "id": "engine-failure-immediately-after-takeoff-suf",
+   "name": "ENGINE FAILURE IMMEDIATELY AFTER TAKEOFF (SUFFICIENT RUNWAY REMAINING STRAIGHT AHEAD)"
+  },
+  {
+   "n": 57,
+   "id": "inadvertent-departure-from-controlled-flight",
+   "name": "INADVERTENT DEPARTURE FROM CONTROLLED FLIGHT"
+  },
+  {
+   "n": 58,
+   "id": "flight-with-shattered-damaged-canopy",
+   "name": "FLIGHT WITH SHATTERED/DAMAGED CANOPY"
+  },
+  {
+   "n": 59,
+   "id": "canopy-unlocked",
+   "name": "CANOPY UNLOCKED"
+  },
+  {
+   "n": 60,
+   "id": "runaway-trim",
+   "name": "RUNAWAY TRIM"
+  },
+  {
+   "n": 61,
+   "id": "stuck-failed-trim",
+   "name": "STUCK/FAILED TRIM"
+  },
+  {
+   "n": 62,
+   "id": "trim-aid-device-failure",
+   "name": "TRIM AID DEVICE FAILURE",
+   "short": "TAD FAIL"
+  },
+  {
+   "n": 63,
+   "id": "asymmetric-flaps-split-flap-condition",
+   "name": "ASYMMETRIC FLAPS (SPLIT-FLAP CONDITION)"
+  },
+  {
+   "n": 64,
+   "id": "increased-rudder-pedal-forces",
+   "name": "INCREASED RUDDER PEDAL FORCES"
+  },
+  {
+   "n": 65,
+   "id": "controllability-check-structural-damage-flig",
+   "name": "CONTROLLABILITY CHECK (STRUCTURAL DAMAGE/FLIGHT CONTROL MALFUNCTION)"
+  },
+  {
+   "n": 66,
+   "id": "emergency-ground-egress",
+   "name": "EMERGENCY GROUND EGRESS"
+  },
+  {
+   "n": 67,
+   "id": "controlled-ejection",
+   "name": "CONTROLLED EJECTION"
+  },
+  {
+   "n": 68,
+   "id": "eject",
+   "name": "EJECT"
+  },
+  {
+   "n": 69,
+   "id": "post-ejection-procedures",
+   "name": "POST EJECTION PROCEDURES"
+  },
+  {
+   "n": 70,
+   "id": "life-raft-operation",
+   "name": "LIFE RAFT OPERATION"
+  },
+  {
+   "n": 71,
+   "id": "rescue",
+   "name": "RESCUE"
+  }
+ ]
+}
