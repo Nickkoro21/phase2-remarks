@@ -1432,11 +1432,19 @@
     .localeCompare(String(b).replace(/\d+/g, (n) => n.padStart(6, "0")));
   const allIps = () => (S().get("instructors") || []).slice();
   const departedN = () => allIps().filter((i) => (i.status || "active") === "departed").length;
-  /* sorted by CALL SIGN — the squadron's own hierarchy: VIPER01 IS the CO and
-     VIPER02 the DO, and the alphabet was burying them mid-table (user directive
-     2026-08-19: «σειρά με το call sign — δεν μπορεί ο CO να είναι στη μέση»).
-     natural() keeps P-9 before VIPER01; flyers without a call sign go last, by
-     the name the user reads. */
+  /* sorted by CALL SIGN — the squadron's own hierarchy, because the alphabet
+     was burying the command team mid-table (user directive 2026-08-19: «σειρά
+     με το call sign — δεν μπορεί ο CO να είναι στη μέση»).
+     WHOSE call sign comes first is NEVER written here. The order is read from
+     the store's own `callsign` values, so the hierarchy is whatever the roster
+     says it is and no literal in this file can contradict it — or name anyone.
+     (R18 slice 1b: two real call signs used to sit in this comment as the CO
+     and the DO. A public repository is not the place for them; the sorting
+     never needed them, and the behaviour is unchanged without them.)
+     natural() is the one thing this line adds: it reads the digits as NUMBERS,
+     so a VIPER9 would stand before a VIPER14 where a plain alphabetical sort
+     puts VIPER14 first. Flyers without a call sign go last, by the name the
+     user reads. */
   const listed = () => allIps().filter((i) => (i.status || "active") !== "departed")
     .sort((a, b) => {
       const ca = String(a.callsign || "").trim(), cb = String(b.callsign || "").trim();

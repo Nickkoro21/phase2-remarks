@@ -490,6 +490,12 @@ const REQ_DOMAINS = [
 const reqState = { domain: null, cache: {} };
 
 function switchView(view) {
+  /* CUSTODY (Round 18 · specs/bridge-spec.md § 6, ruling #7) — the Bridge
+     cross-check report carries REAL NAMES. Leaving the Scheduler drops it, DOM
+     included: a hidden view is still a readable document, and the pane's own
+     promise is that the report never outlives the pane. No-op when nothing was
+     loaded, and when the Bridge module is not present at all (offline build). */
+  if (view !== "scheduler" && window.schBridgeLeave) window.schBridgeLeave();
   for (const v of ["remarks", "description", "requirements", "flowchart", "scheduler", "currency"]) {
     $(`view-${v}`).classList.toggle("hidden", v !== view);
     $(`tab-${v}`).classList.toggle("active", v === view);

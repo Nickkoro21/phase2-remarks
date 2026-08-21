@@ -384,6 +384,26 @@
     return { completes: false, word: "incomplete" };
   }
 
+  /* THE NON-GRADED BADGE — R18 VERIFY FINDING 1. `graded === false` is NOT the
+     test, and reading it as one made the badge a lie on the ordinary row: a
+     flight recorded as MISSION COMPLETE carries no percentage BY DESIGN (R2 —
+     FDMS must never store a sortie as result:"score"), so it is unscored and it
+     DOES complete its node. The badge printed «ruling #3 — a non-graded row
+     never completes a node» on the same row whose Effect column said «completes
+     the node», on 43 of the 44 rows of the live run, and the summary sentence
+     «N non-graded rows (never complete a node)» counted them all.
+     The badge belongs to the THREE states that genuinely never complete:
+       ng        — nobody was in a position to score it (ruling #3)
+       awaiting  — the debrief has not landed (ruling #5)
+       incomplete without a grade — mission incomplete IS non-graded (ruling #3)
+     A lesson is `attended`, never scorable, and wears no such badge; a graded
+     failure is GRADED and wears the number instead. counts.nonGraded is derived
+     from this one flag, so the badge and the sentence can never drift apart. */
+  function isNonGraded(j) {
+    if (!j || j.graded) return false;
+    return j.source === "ng" || j.source === "awaiting" || j.verdict === "incomplete";
+  }
+
   /* ── normalising the two sides into one row shape ──────────────────────── */
 
   function baseRow(side, sec, band, uid, seq, date) {
@@ -742,6 +762,23 @@
         if (shred) recProblems.push(shred);
       }
 
+      /* R18 VERIFY FINDING 2 — A RECORD WARNING MUST HAVE A CARRIER.
+         `recProblems` is not about one row: it is about the whole record. The
+         table can only show it by hanging it on rows, and in the shred's own
+         headline case there are no rows to hang it on — migrate_record dropped
+         a WHOLE section, so Wings Ahead contributes nothing on those nodes, and
+         if FDMS is empty there too the person contributes no line at all. The
+         report then reads CLEAN, which is the worst lie this pane could tell.
+         withRec() is the ONE door every row-level concat goes through, so
+         `recCarried` means exactly «a row carrying these words was pushed»; a
+         warning that found no carrier becomes a note of its own (report.notes,
+         painted in the Identities panel, never silent). */
+      let recCarried = false;
+      const withRec = (list) => {
+        if (recProblems.length) recCarried = true;
+        return arr(list).concat(recProblems);
+      };
+
       const waRows = [];
       if (rec) {
         const data = isObj(rec.data) ? rec.data : {};
@@ -810,7 +847,7 @@
           const id = emit();
           const refused = refusalOf(pr.wa, b.gid);
           const cmp = compareRow(pr.wa, pr.fdms, ipResolve);
-          const bad = pr.wa.problems.concat(recProblems);
+          const bad = withRec(pr.wa.problems);
           /* an identity that cannot be resolved is class 5, not class 4: the
              surname collision the recon named is a BLOCKED row, not a
              disagreement about payload (ruling #4 — never guessed by name). */
@@ -827,7 +864,7 @@
         res.waOnly.forEach((r) => {
           const id = emit();
           const refused = refusalOf(r, b.gid);
-          const bad = r.problems.concat(recProblems);
+          const bad = withRec(r.problems);
           const j = judge(r);
           const cls = bad.length ? "unwritten" : refused ? "refused" : "wa_only";
           const row = mkRow(cls, b.gid, person, b.uid, id, r, null,
@@ -852,8 +889,15 @@
              not "FDMS only": it is a DELETION at source, and it needs the
              developer's tombstone and a change-log line before anything acts. */
           const cls = r.waWritten ? "deleted" : "fdms_only";
+          /* R18 VERIFY FINDING 2 — the record's own problems ride HERE too, not
+             only on the paired and WA-only rows. This is the branch the shred
+             lands in: a section migrate_record dropped leaves the WA side with
+             nothing, so every surviving FDMS event on it arrives as fdms_only —
+             and it was the ONE branch that dropped the warning on the floor.
+             The class is still decided by the source, never by `bad`: an event
+             FDMS holds is not «unwritten», whatever the WA record says. */
           const row = mkRow(cls, b.gid, person, b.uid, id, null, r,
-            { diffs: [], jw: null, jf: judge(r), duration: null }, "", r.problems);
+            { diffs: [], jw: null, jf: judge(r), duration: null }, "", withRec(r.problems));
           if (cls === "deleted") {
             row.detail = "the bridge wrote this FDMS event (id " + r.srcId + ") and its Wings Ahead source "
               + "is gone — delete only with the developer's OK, as a tombstone, with a change-log line "
@@ -867,7 +911,7 @@
       waRows.forEach((r) => {
         if (WA_SECTIONS[r.sec].group !== "events") return;
         const id = { ord: 1, rid: [oid, "events", r.uid || r.sec, 1].join(" ∷ ") };
-        const bad = r.problems.concat(recProblems);
+        const bad = withRec(r.problems);
         /* the counterpart is claimed BEFORE the class is decided: a row the
            record makes unwritable is still THE row for that event, and leaving
            its FDMS half unclaimed would report one NFS twice. */
@@ -942,6 +986,22 @@
           { diffs: [], jw: null, jf: judge(f), duration: null }, "", f.problems));
       });
 
+      /* A RECORD WARNING THAT FOUND NO CARRIER (R18 verify finding 2 · 6).
+         The table below is about to say NOTHING about this record, and an empty
+         table is read as a clean one. It is not clean: it is silent, and the
+         reason it is silent is the warning itself. So the warning is promoted
+         to a note of its own — the one place in this report that speaks about a
+         person without a row to speak through. */
+      if (recProblems.length && !recCarried) {
+        notes.push({
+          kind: "record", oid, code: person.code, who: person.name,
+          klass: person.klass, waName: person.waName,
+          problems: recProblems.slice(),
+          why: "no deviation row in this report carries this warning — the table below is SILENT "
+            + "about this record, which is not the same thing as clean",
+        });
+      }
+
       /* ground-history divergence count for the person header (ruling #4) */
       person.groundDivergence = rows.filter((x) => x.oid === oid
         && (x.group === "lessons" || x.group === "exams")
@@ -1005,8 +1065,8 @@
       thr: j && j.thr != null ? j.thr : null,
       nonInteger: !!(cmp.jw && cmp.jw.nonInt) || !!(cmp.jf && cmp.jf.nonInt),
       /* the NON-GRADED mark is about a grade that COULD have been there and is
-         not — a lesson was never scorable, so it wears no such badge */
-      nonGraded: !!j && !j.graded && j.source !== "attended",
+         not, AND about a row that never completes its node — see isNonGraded() */
+      nonGraded: isNonGraded(j),
       completes: eff.completes, effect: eff.word,
       duration: cmp.duration,
       sec: wa ? wa.sec : (fd ? fd.sec : ""),
@@ -1113,6 +1173,27 @@
     ui.report = null; ui.fileName = ""; ui.error = "";
     ui.cls = ""; ui.group = ""; ui.q = "";
   }
+
+  /* LEAVING THE PANE DROPS THE REPORT — R18 VERIFY FINDING 3.
+     § 6 of the spec has always said it in words («το ✕ Clear ΚΑΙ η εγκατάλειψη
+     της καρτέλας ρίχνουν την αναφορά»), and until this slice it was only half
+     true: ✕ Clear dropped it, but a subtab click or a jump to another view
+     merely put `display:none` over a DOM full of REAL NAMES, which then sat
+     there until a reload. Ctrl+F, Ctrl+A, a screen reader, the browser's own
+     find-in-page and any «save page» all still reached it — the same leak the
+     access-code curtain was built to close for the Scheduler.
+     So the state AND the nodes go, and the pane is repainted to its clean load
+     state so the return is a load state and not an empty box (ruling #7).
+     Called by app/scheduler.js when another subtab takes over and by app/app.js
+     when another view does. ✕ Clear is untouched and keeps its own button. */
+  W.schBridgeLeave = function schBridgeLeave() {
+    const had = !!(ui.report || ui.fileName || ui.error || ui.q || ui.cls || ui.group);
+    clearAll();
+    if (!had) return;                                   // nothing was ever painted
+    const doc = W.document;
+    const el = doc ? doc.getElementById("sch-bridge") : null;
+    if (el) render(el);                                 // → head() + placeholder, no data
+  };
 
   W.schBridgeInit = function schBridgeInit(el) {
     if (!el) return;
@@ -1297,10 +1378,29 @@
         <p class="sch-hint">Matched on <b>OID</b> first and on <b>MN</b> when a side carries no OID.
           <b>Never on the name</b> — a name is display only (ruling #4). A primary key never changes;
           MN, rank and class do, and only the developer changes them.</p>
+        ${notesHtml(r)}
         <div class="sch-scroll"><table class="sch-tbl">
           <thead><tr><th>OID</th><th>Name</th><th>FDMS code</th><th>Class</th><th>Matched</th><th>Notes</th></tr></thead>
           <tbody>${rowsHtml}${unm}${fOnly}</tbody></table></div>
       </section>`;
+  }
+
+  /* THE NOTES — a record warning with no row to stand on (R18 verify finding
+     2 · 6). It is painted HERE, above the identity table, because it is a
+     statement about a PERSON and because the alternative is an empty report
+     that reads as a clean one. Every value goes through esc() like every other
+     interpolation in this file: these are real names. */
+  function notesHtml(r) {
+    const list = arr(r.notes);
+    if (!list.length) return "";
+    const items = list.map((n) => `
+      <div class="brg-prob"><b>${esc(n.who || n.oid || "—")}</b>${n.code
+        ? ` <span class="sch-code">${esc(n.code)}</span>` : ""}${n.klass
+        ? ` <span class="sch-nd">${esc(n.klass)}</span>` : ""} — ${esc(n.why)}</div>
+      ${arr(n.problems).map((p) => `<div class="brg-prob">${esc(p)}</div>`).join("")}`).join("");
+    return `<div class="sch-consqban is-pd"><b>${list.length} record warning${list.length === 1 ? "" : "s"}
+      with no row to stand on</b> — for ${list.length === 1 ? "this record" : "these records"} the
+      deviation table below says nothing at all, and <b>silence is not a clean report</b>.</div>${items}`;
   }
 
   function rowsPanel(r) {
@@ -1427,6 +1527,6 @@
     VERSION, WA_SCHEMA, THRESHOLDS, CLASSES, CLASS_IDS, GROUPS,
     EVAL_IDS, EXAM_IDS,
     looksLikeWaExport, parseExport, matchPeople, crossCheck,
-    judge, nodeEffect, pairGroup, verdictWord,
+    judge, nodeEffect, isNonGraded, pairGroup, verdictWord,
   };
 })();

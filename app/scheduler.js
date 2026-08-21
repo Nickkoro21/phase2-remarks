@@ -1149,7 +1149,14 @@ window.fmtDMY = function fmtDMY(v) {
     bar.addEventListener("click", (e) => {
       const b = e.target.closest(".sch-subtab");
       if (!b) return;
+      const from = ui.pane;
       ui.pane = b.dataset.sch;
+      /* CUSTODY (bridge ruling #7 · specs/bridge-spec.md § 6) — the cross-check
+         report carries REAL NAMES and does not survive the pane it was painted
+         in. Hiding it would leave those names in the DOM for find-in-page and
+         for anything that reads the document; the bridge drops the state and
+         the nodes together and comes back as a clean load state. */
+      if (from === "bridge" && ui.pane !== "bridge" && window.schBridgeLeave) window.schBridgeLeave();
       for (const t of bar.querySelectorAll(".sch-subtab")) t.classList.toggle("active", t.dataset.sch === ui.pane);
       for (const p of PANES) $id("sch-" + p).classList.toggle("hidden", p !== ui.pane);
       render();
