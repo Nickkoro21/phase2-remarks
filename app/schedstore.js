@@ -521,14 +521,45 @@
     toastT = setTimeout(() => { el.className = "sch-toast"; }, 2600);
   }
 
-  /* ── Export / Import / Reset buttons for #sch-tools ─────────────────────── */
+  /* ── Export / Import / Reset buttons for #sch-tools ───────────────────────
+     ROUND 19 — THE HOVER RULE, user directive of 22/08/2026: «οπου εχουμε
+     βελακια που μπορει να επηρεασουν την βαση δεδομενων να εχουμε hover
+     εξηγησης.» Every glyph that can WRITE says, on hover, three things and in
+     this order: WHAT it replaces or writes · WHAT it never touches · THE SAFE
+     PATH. Read-only glyphs (🖨 Print, ✕ Close, ‹ › day nav, the Bridge pane)
+     are deliberately left silent — a tooltip on a control that cannot hurt you
+     only teaches the eye to skip tooltips.
+
+     These three are AUTHOR-WRITTEN CONSTANTS with no interpolation, which is
+     why they go into the attribute directly: `esc()` lives in the SchedEdit
+     IIFE below, not in this one. They must therefore never contain a double
+     quote — «…» and “…” are the house quotes and are safe inside title="…". */
+  const TIP = {
+    export: "Writes NOTHING — it reads the store and hands you the file. "
+      + "Downloads scheduler-backup-YYYY-MM-DD.json: every collection, config included. "
+      + "It carries REAL NAMES, so keep it off shared drives and out of the repo. "
+      + "This is the way back from ⭱ Import and ↺ Reset — take one first.",
+    import: "Replaces the WHOLE scheduler store with the chosen backup file — people, classes, "
+      + "training log, availability, duties, gates, currency, day plans and config (the editor code with it). "
+      + "It asks first and names the counts. It touches nothing in the cloud until the next push, and "
+      + "nothing outside the Scheduler. It refuses a global roster file and a Wings Ahead export BY NAME. "
+      + "For the shared roster use Roster → ⭱ Import roster, which merges by OID and wipes nothing. "
+      + "Take a ⭳ Export first — the current data is gone otherwise.",
+    reset: "Throws the whole store away and rebuilds it from the seed file that ships with the app. "
+      + "Roster, training log, availability, duties, gates, currency, day plans and config all go — "
+      + "the editor code with them, so this device is left with no code set. It asks first. "
+      + "It does NOT touch this browser’s sync settings or the ☁ Sync access code (those live outside the store), "
+      + "and it does NOT touch the GitHub copy — a later ⭳ Pull brings the old data back, while a ⭱ Push after this "
+      + "replaces the repo with the seed. Take a ⭳ Export first.",
+  };
+
   function mountTools(host) {
     if (!host || host._schTools) return;
     host._schTools = true;
     host.innerHTML = `
-      <button type="button" class="sch-tbtn" data-t="export" title="Download a JSON backup of the whole scheduler store">⭳ Export</button>
-      <button type="button" class="sch-tbtn" data-t="import" title="Replace the store from a JSON backup">⭱ Import</button>
-      <button type="button" class="sch-tbtn danger" data-t="reset" title="Discard everything and reload the seed file">↺ Reset</button>
+      <button type="button" class="sch-tbtn" data-t="export" title="${TIP.export}">⭳ Export</button>
+      <button type="button" class="sch-tbtn" data-t="import" title="${TIP.import}">⭱ Import</button>
+      <button type="button" class="sch-tbtn danger" data-t="reset" title="${TIP.reset}">↺ Reset</button>
       <input type="file" accept="application/json,.json" class="sch-file" hidden>`;
     const file = host.querySelector(".sch-file");
     host.addEventListener("click", (e) => {
@@ -686,6 +717,25 @@
     if (live("view-scheduler") && window.schInit) { try { window.schInit(); } catch (e) { console.error(e); } }
     if (live("view-currency") && window.curInit) { try { window.curInit(); } catch (e) { console.error(e); } }
   }
+
+  /* ROUND 19 — THE HOVER RULE (user directive, 22/08/2026). Of the four buttons
+     in this dialog, two only move a flag on THIS DEVICE (lock / unlock) and two
+     WRITE THE STORE CONFIG, which the sync then carries to every other device.
+     They looked alike; now they say which they are. ✕ Close stays silent. */
+  const ETIP = {
+    lock: "Puts THIS DEVICE back to view-only. It moves a flag in this browser and nothing else — "
+      + "no scheduler data changes, the code itself is untouched, and other devices are unaffected. "
+      + "The 👁 View button in the topbar does exactly this in one click.",
+    unlock: "Opens THIS DEVICE for editing until you lock it again. It writes nothing to the store: "
+      + "the code you type is only checked against the stored verifier, never saved anywhere as text.",
+    set: "WRITES THE STORE: it puts a salted PBKDF2-SHA256 verifier of this code into the scheduler config, "
+      + "so the next ⭱ Push carries it to every other device — each of them then asks for this code before "
+      + "anything may be changed there. No scheduler data is touched, and the code itself is never stored, "
+      + "never recoverable and never readable from here. ↺ Reset removes it along with everything else.",
+    change: "WRITES THE STORE: replaces the stored verifier with one for the new code — the current code must "
+      + "be typed first. Every OTHER device falls back to view-only until the new code is typed there. "
+      + "No scheduler data is touched.",
+  };
 
   /* ── the three write actions ────────────────────────────────────────────── */
   async function setCode(code, oldCode) {
@@ -862,10 +912,13 @@
       b.classList.toggle("is-on", live);
       b.setAttribute("aria-pressed", live ? "true" : "false");
       b.title = live
-        ? "EDITOR MODE is on for this device — click to lock it again"
+        ? "EDITOR MODE is on for THIS DEVICE — every save, delete and import is allowed. "
+          + "Click to lock it back to view-only. This button changes no data either way."
         : (hasCode()
-          ? "View-only. Click and type the editor code to change anything."
-          : "View-only. No editor code has been set yet — click to set one.");
+          ? "View-only on THIS DEVICE: everything is readable and nothing can be saved, deleted or imported. "
+            + "Click and type the editor code to unlock it. This button changes no data either way."
+          : "View-only on THIS DEVICE. No editor code has been set yet — click to set one. "
+            + "Setting it writes a verifier into the scheduler config, which the sync carries to your other devices.");
     }
     const v = $("edit-view-btn");
     if (v) {
@@ -964,11 +1017,11 @@
         <input id="ed-in2" type="password" autocomplete="off" placeholder="min ${MIN_LEN} characters">` : ""}
       <div class="ed-row">
         ${live
-          ? `<button type="button" class="sch-tbtn" data-e="lock">🔒 Lock this device</button>
-             <button type="button" class="sch-tbtn" data-e="change">Change code</button>`
+          ? `<button type="button" class="sch-tbtn" data-e="lock" title="${esc(ETIP.lock)}">🔒 Lock this device</button>
+             <button type="button" class="sch-tbtn" data-e="change" title="${esc(ETIP.change)}">Change code</button>`
           : (has
-            ? `<button type="button" class="sch-tbtn ed-go" data-e="unlock">Unlock</button>`
-            : `<button type="button" class="sch-tbtn ed-go" data-e="set">Set the code</button>`)}
+            ? `<button type="button" class="sch-tbtn ed-go" data-e="unlock" title="${esc(ETIP.unlock)}">Unlock</button>`
+            : `<button type="button" class="sch-tbtn ed-go" data-e="set" title="${esc(ETIP.set)}">Set the code</button>`)}
         <button type="button" class="sch-tbtn" data-e="close">✕ Close</button>
       </div>
       <div class="ed-status" id="ed-status">${esc(st.msg)}</div>

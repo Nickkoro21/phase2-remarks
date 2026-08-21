@@ -2136,6 +2136,19 @@
   const CELL_CLICK = "\n\nClick to type it.";
   const CELL_FLIGHT = "\n\nClick to record a flight (date + the Ε flown), or to delete one.";
   const CELL_RO = "\n\nView-only — unlock Editor mode in the topbar to change it.";
+
+  /* ROUND 19 — THE HOVER RULE (user directive, 22/08/2026). The one control in
+     this matrix that writes MORE than the cell you clicked says so: recording a
+     flight also DATES Ε rows in other columns, forward only. The cells and the
+     ✕ of a recorded sortie already carried their explanations and keep them;
+     🖨 print and the ⓘ legend write nothing and stay silent. */
+  const TIP = {
+    recordFlight: "Appends ONE sortie to this cell, filed under the semester the DATE above falls in — not "
+      + "under today’s. It also DATES every Ε ticked here, plus the rows this column implies by itself, in the "
+      + "instructor’s currency record: forward only, so a later date already stored is never pulled back. "
+      + "It writes nothing outside that instructor’s currency — no training-log event, no day plan. "
+      + "Each recorded sortie keeps its own ✕ below to take it out again.",
+  };
   const CUR_STATE_TXT = {
     ok: "current", expiring: "expiring", expired: "EXPIRED",
     never: "never recorded", neutral: "no counter",
@@ -2443,7 +2456,7 @@
       ${es.length < 28 ? `<p class="cur-popnote">${28 - es.length} Ε of the 28 (Chapter 5) belong to the display pilot and are
         not offered here — ${esc(who(ip))} does not hold the post.</p>` : ""}
       <div class="cur-popbtns">
-        <button type="button" class="sch-btn primary" data-pop="save">✔ Record flight</button>
+        <button type="button" class="sch-btn primary" data-pop="save" title="${esc(TIP.recordFlight)}">✔ Record flight</button>
         <button type="button" class="sch-btn" data-pop="close">Cancel</button>
       </div>`}
       <hr class="cur-pophr">

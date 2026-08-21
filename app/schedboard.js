@@ -67,6 +67,78 @@
   const AV_CYCLE = ["available", "LV", "SLV", "HLV", "SCL", "OFF", "TO", "AMC"];
   const FS_DEVICES = ["OFT", "FTD"];
 
+  /* ROUND 19 — THE HOVER RULE (user directive, 22/08/2026): «οπου εχουμε
+     βελακια που μπορει να επηρεασουν την βαση δεδομενων να εχουμε hover
+     εξηγησης.» Every glyph on this board that WRITES says, on hover, what it
+     writes, what it leaves alone, and the way back. Read-only glyphs — 🖨 Print
+     view, ✕ Close, the ‹ D › day nav (which only loads another day), the ▾▸
+     section chevrons — stay silent, so that a tooltip here always means
+     «something is being stored».
+     The three stages of a day are not the same act and must not read alike:
+       the LINE edits  write the DAY PLAN and nothing else;
+       ✔ Publish      freezes that plan — still no training-log row;
+       Write N events  is the ONE control that turns the day into HISTORY. */
+  const TIP = {
+    away: "One click cycles this person’s availability for THIS DAY ONLY — "
+      + AV_CYCLE.join(" → ") + " — and stores it the moment it changes. "
+      + "It writes one availability row, never a training-log event, and never touches the roster record. "
+      + "Cycle it round to «available» to undo.",
+    duty: "Picking a name here STORES the duty of this date at once — there is no Save and no confirmation. "
+      + "It writes one duty-roster row for the day and nothing else: no training-log event, no instructor record. "
+      + "Set it back to «—» to clear it. The list offers active instructors only; a stored name that has since "
+      + "departed keeps its own option so the day never changes behind your back.",
+    publish: "Freezes the day plan: the status becomes PUBLISHED and every line, wave and time on this board "
+      + "locks against editing. It writes only the day plan. NO training-log event is created — nothing has been "
+      + "flown yet — and no student history changes. Reversible with ↩ Reopen as draft.",
+    reopen: "Unfreezes this day back to DRAFT so the lines can be edited again. It writes only the day plan’s "
+      + "status. Training-log events already written by «Write … to the log» STAY — take them back by flipping "
+      + "the line to ✗ and running that button again.",
+    clearDay: "Deletes the WHOLE day plan of this date — every wave, line, F/S slot, lessons block and duty "
+      + "assignment on this board. It asks first. Training-log events already written from this day are NOT "
+      + "removed: they are history now, and the Training Log is where they are taken back. There is no undo.",
+    commit: "THE ONE BUTTON THAT TURNS THIS DAY INTO HISTORY. Every ✓ and ~ line becomes a training-log event "
+      + "for that student, and every ✗ or untouched line has its event withdrawn if this button once wrote one. "
+      + "The ids are derived from the day and the line, so running it twice UPDATES instead of duplicating. "
+      + "It writes training-log rows and marks the plan ACTUALIZED; it changes no roster record and no currency date.",
+    abDone: "Marks this line FLOWN AS PLANNED — stored in the day plan straight away. "
+      + "It does not write the training log by itself: «Write … to the log» does that.",
+    abCancelled: "Marks this line CANCELLED — stored in the day plan straight away. "
+      + "If «Write … to the log» already wrote an event for this line, the next run WITHDRAWS it.",
+    abChanged: "Marks this line FLOWN, BUT ANOTHER MISSION — stored in the day plan straight away, and the "
+      + "sortie actually flown is picked beside it. «Write … to the log» then logs THAT node, not the planned one.",
+    lineDel: "Removes this line from the day plan at once. It writes the day plan only. "
+      + "A training-log event already written for it is NOT removed — flip it to ✗ and re-run "
+      + "«Write … to the log» instead, which withdraws it properly.",
+    waveDel: "Removes this whole wave and every line inside it from the day plan. It asks first when the wave "
+      + "still holds lines. It writes the day plan only; training-log events already written from those lines stay.",
+    lineDup: "Adds a COPY of this line to the same wave and stores it in the day plan — same student, instructor "
+      + "and mission, with a fresh take-off time suggested and the callsign and IFF left for the board to re-derive. "
+      + "It writes the day plan only, and the copy is a second line, so it will become a SECOND training-log event.",
+    lineUp: "Moves this F/S line one slot earlier and stores the new order in the day plan. Nothing else changes.",
+    lineDown: "Moves this F/S line one slot later and stores the new order in the day plan. Nothing else changes.",
+    progDone: "Marks this node COMPLETED for this student: it writes ONE training-log event (id «prg:…»), "
+      + "dated and attributed in the bar that opens. It is the student’s history that changes, not a day plan. "
+      + "Take it back with the ↺ beside the node.",
+    progUndo: "Withdraws the completion: it DELETES the training-log event this node was completed by. Readiness "
+      + "is recomputed from the log, so whatever this node had unlocked and nothing else still satisfies goes back "
+      + "to locked. It asks first, names the date, and refuses when the event is a CLASS lesson — that one is "
+      + "edited in the Training Log. There is no undo.",
+    progUpto: "Completes EVERY node up to and including this one, in order. A stepper asks each item its own date "
+      + "and instructor and writes one training-log event per step AS YOU GO — Cancel keeps the steps already "
+      + "written and stops there. Nothing is written for a step you have not reached.",
+    stepNext: "WRITES THIS STEP before moving on: one training-log event for the item named above, with the date "
+      + "and instructor filled in here. Each step is stored as you pass it, so leaving the stepper never takes "
+      + "back what it has already written. It refuses to advance until the date is filled.",
+    stepCancel: "Stops the stepper here. The steps already passed STAY WRITTEN in the training log — they were "
+      + "stored as you went — and nothing after this point is written. Take a written step back with the ↺ "
+      + "beside its node.",
+    boardContinue: "Records the Flight Aptitude Board outcome CONTINUE: it writes one referral gate row dated "
+      + "today and every activity this board was blocking unlocks. The student’s status is left as it is. It asks first.",
+    boardStop: "Records the Flight Aptitude Board outcome STOP: it writes one referral gate row dated today AND "
+      + "sets the student’s status to WITHDRAWN — he leaves every picker and every count of the day. "
+      + "It asks first. Undone only by editing the student in the Roster and the gate in the log.",
+  };
+
   /* ── time ─────────────────────────────────────────────────────────────── */
   const pad2 = (n) => (n < 10 ? "0" : "") + n;
   function hm2min(s) {
@@ -1291,11 +1363,11 @@
         <span class="sch-hint">${A.hard ? `<b class="sch-hard">${A.hard} hard</b> · ` : ""}${A.soft} soft warnings</span>
         <span class="sch-spacer"></span>
         ${locked
-        ? `<button type="button" class="sch-btn" data-b="reopen">↩ Reopen as draft</button>
+        ? `<button type="button" class="sch-btn" data-b="reopen" title="${esc(TIP.reopen)}">↩ Reopen as draft</button>
            <button type="button" class="sch-btn" data-b="print">🖨 Print view</button>`
-        : `<button type="button" class="sch-btn primary" data-b="publish">✔ Publish</button>
+        : `<button type="button" class="sch-btn primary" data-b="publish" title="${esc(TIP.publish)}">✔ Publish</button>
            <button type="button" class="sch-btn" data-b="print">🖨 Print view</button>`}
-        <button type="button" class="sch-btn danger" data-b="clear">Clear day</button>
+        <button type="button" class="sch-btn danger" data-b="clear" title="${esc(TIP.clearDay)}">Clear day</button>
       </div>
       <div class="sch-fgrid">
         <label class="sch-fld"><span>Date</span>
@@ -1363,7 +1435,7 @@
     const sel = (role, cur, filter) => {
       const list = activeIps().filter(filter || (() => true));
       const hasCur = !cur || list.some((i) => i.code === cur);
-      return `<select class="sch-in" data-duty="${esc(role)}" data-fk="duty-${esc(role)}"${dis}>
+      return `<select class="sch-in" data-duty="${esc(role)}" data-fk="duty-${esc(role)}" title="${esc(TIP.duty)}"${dis}>
         <option value="">—</option>${list.map((i) => `<option value="${esc(i.code)}"${i.code === cur ? " selected" : ""}>`
         + esc(S().personOption(i) + (awayOf(i.code, plan.date) ? " — " + awayOf(i.code, plan.date) : "")) + `</option>`).join("")}
         ${hasCur ? "" : `<option value="${esc(cur)}" selected>${esc(nmOpt("instructors", cur) + " — departed/unknown")}</option>`}</select>`;
@@ -1375,7 +1447,8 @@
     const rsuOK = (i) => (anyRsuSolo ? (i.quals || {}).rsu_solo : (i.duty_eligible || {}).RSU);
     const mark = (code) => {
       const st = S().availabilityOf(code, plan.date);
-      return `<button type="button" class="sch-av av-${esc(st)}" data-away="${esc(code)}" title="${esc(nmOpt(null, code) + " — " + st)} · click to cycle"${dis}>
+      return `<button type="button" class="sch-av av-${esc(st)}" data-away="${esc(code)}"
+        title="${esc(nmOpt(null, code) + " — " + st + ". " + TIP.away)}"${dis}>
         <span class="sch-code">${esc(nm(code))}</span><span class="sch-avst">${esc(st === "available" ? "OK" : st)}</span></button>`;
     };
     const away = students().concat(activeIps()).filter((p) => awayOf(p.code, plan.date));
@@ -1443,8 +1516,8 @@
         <label class="sch-lf grow"><span>Remarks</span>
           <input class="sch-in" data-lf="remarks" data-fk="rm-${esc(l.id)}" value="${esc(l.remarks || "")}"${dis}></label>
         <span class="sch-lact">
-          <button type="button" class="sch-mini" data-lb="dup" title="duplicate"${dis}>⧉</button>
-          <button type="button" class="sch-mini danger" data-lb="del" title="remove the line"${dis}>✕</button></span>
+          <button type="button" class="sch-mini" data-lb="dup" title="${esc(TIP.lineDup)}"${dis}>⧉</button>
+          <button type="button" class="sch-mini danger" data-lb="del" title="${esc(TIP.lineDel)}"${dis}>✕</button></span>
       </div>
       ${mi.opt && mi.opt.pendingReason ? `<p class="sch-cond">${esc(mi.opt.pendingReason)}</p>` : ""}
       ${A.altHint.has(l.id) ? `<p class="sch-cond">${esc(A.altHint.get(l.id))}</p>` : ""}
@@ -1481,7 +1554,7 @@
           <input type="time" step="300" class="sch-in" data-wf="brief" data-fk="wb-${esc(w.id)}" value="${esc(w.brief || "")}"${dis}></label>` : ""}
         <span class="sch-spacer"></span>
         <button type="button" class="sch-btn" data-wb="add"${dis}>+ line</button>
-        ${plan.waves.length > 1 ? `<button type="button" class="sch-mini danger" data-wb="del" title="remove the wave"${dis}>✕</button>` : ""}
+        ${plan.waves.length > 1 ? `<button type="button" class="sch-mini danger" data-wb="del" title="${esc(TIP.waveDel)}"${dis}>✕</button>` : ""}
       </div>
       ${!open ? ""
         : w.lines.length
@@ -1517,9 +1590,9 @@
           <label class="sch-lf grow"><span>Remarks</span>
             <input class="sch-in" data-lf="remarks" data-fk="frm-${esc(l.id)}" value="${esc(l.remarks || "")}"${dis}></label>
           <span class="sch-lact">
-            <button type="button" class="sch-mini" data-lb="up" title="earlier slot"${dis || (i === 0 ? " disabled" : "")}>↑</button>
-            <button type="button" class="sch-mini" data-lb="down" title="later slot"${dis || (i === plan.fs.length - 1 ? " disabled" : "")}>↓</button>
-            <button type="button" class="sch-mini danger" data-lb="del" title="remove"${dis}>✕</button></span>
+            <button type="button" class="sch-mini" data-lb="up" title="${esc(TIP.lineUp)}"${dis || (i === 0 ? " disabled" : "")}>↑</button>
+            <button type="button" class="sch-mini" data-lb="down" title="${esc(TIP.lineDown)}"${dis || (i === plan.fs.length - 1 ? " disabled" : "")}>↓</button>
+            <button type="button" class="sch-mini danger" data-lb="del" title="${esc(TIP.lineDel)}"${dis}>✕</button></span>
         </div>
         ${mi.opt && mi.opt.pendingReason ? `<p class="sch-cond">${esc(mi.opt.pendingReason)}</p>` : ""}
         ${opts.lockedNote ? `<p class="sch-cond is-hard">${esc(opts.lockedNote)}</p>` : ""}
@@ -1648,7 +1721,7 @@
           <input class="sch-in" data-lf="time" data-fk="ltm-${esc(l.id)}" value="${esc(l.time || "")}" placeholder="08:00–10:00"${dis}></label>
         <label class="sch-lf grow"><span>Note</span>
           <input class="sch-in" data-lf="note" data-fk="lnt-${esc(l.id)}" value="${esc(l.note || "")}"${dis}></label>
-        <span class="sch-lact"><button type="button" class="sch-mini danger" data-lb="del" title="remove"${dis}>✕</button></span>
+        <span class="sch-lact"><button type="button" class="sch-mini danger" data-lb="del" title="${esc(TIP.lineDel)}"${dis}>✕</button></span>
       </div>
       ${covLine(l)}
       ${absHtml(l)}
@@ -1722,13 +1795,13 @@
         optionsFor(a.sp, "flights", A.planned, a.node, A.c.depth))}</select>
       ${a.customOn ? `<input class="sch-in" data-lf="custom" data-fk="asc-${esc(a.id)}" value="${esc(a.custom)}"${dis}>` : ""}
       <input class="sch-in" data-lf="note" data-fk="asnt-${esc(a.id)}" value="${esc(a.note || "")}" placeholder="note"${dis}>
-      <button type="button" class="sch-mini danger" data-lb="del"${dis}>✕</button></div></div>`).join("");
+      <button type="button" class="sch-mini danger" data-lb="del" title="${esc(TIP.lineDel)}"${dis}>✕</button></div></div>`).join("");
     const iRows = plan.alt_instructors.map((a) => `<div class="sch-altrow" data-l="${esc(a.id)}" data-blk="ai">
       <select class="sch-in" data-lf="ip" data-fk="aip-${esc(a.id)}"${dis}><option value="">—</option>
         ${activeIps().map((i) => `<option value="${esc(i.code)}"${a.ip === i.code ? " selected" : ""}>${esc(S().personOption(i))}</option>`).join("")}
         ${a.ip && !activeIps().some((i) => i.code === a.ip) ? `<option value="${esc(a.ip)}" selected>${esc(nmOpt("instructors", a.ip) + " — departed/unknown")}</option>` : ""}</select>
       <input class="sch-in" data-lf="note" data-fk="aint-${esc(a.id)}" value="${esc(a.note || "")}" placeholder="note"${dis}>
-      <button type="button" class="sch-mini danger" data-lb="del"${dis}>✕</button></div>`).join("");
+      <button type="button" class="sch-mini danger" data-lb="del" title="${esc(TIP.lineDel)}"${dis}>✕</button></div>`).join("");
     return `<section class="panel sch-panel">
       <div class="sch-h">${secBtn("alts", `Alternates <span class="count">${plan.alt_students.length} SP · ${plan.alt_instructors.length} IP</span>`)}
         <span class="sch-hint">an alternate counts as one item of its sortie's kind in the SP's daily load</span></div>
@@ -1816,9 +1889,9 @@
         <span class="sch-note">${esc(what)}${nAbs ? ` <span class="sch-badge warn" title="${esc(Object.keys(x.l.absent).map((c) => c + ((x.l.absent[c] && " — " + x.l.absent[c]) || "")).join(" · "))}">${nAbs} absent</span>` : ""}</span>
         <span class="sch-mono">${esc(nm(isLs ? x.l.instructor : x.l.ip) || "—")}</span>
         <span class="sch-actbtns">
-          <button type="button" class="sch-mini${a.state === "done" ? " is-on good" : ""}" data-ab="done" title="${isLs ? "held as planned" : "flown as planned"}">✓</button>
-          <button type="button" class="sch-mini${a.state === "cancelled" ? " is-on danger" : ""}" data-ab="cancelled" title="cancelled">✗</button>
-          ${isLs ? "" : `<button type="button" class="sch-mini${a.state === "changed" ? " is-on warn" : ""}" data-ab="changed" title="flown, but another mission">~</button>`}
+          <button type="button" class="sch-mini${a.state === "done" ? " is-on good" : ""}" data-ab="done" title="${esc((isLs ? "Held as planned. " : "Flown as planned. ") + TIP.abDone)}">✓</button>
+          <button type="button" class="sch-mini${a.state === "cancelled" ? " is-on danger" : ""}" data-ab="cancelled" title="${esc(TIP.abCancelled)}">✗</button>
+          ${isLs ? "" : `<button type="button" class="sch-mini${a.state === "changed" ? " is-on warn" : ""}" data-ab="changed" title="${esc(TIP.abChanged)}">~</button>`}
         </span>
         ${a.state === "cancelled" ? `<input class="sch-in grow" data-ab-f="reason" data-fk="acr-${esc(x.l.id)}" value="${esc(a.reason || "")}" placeholder="reason">` : ""}
         ${a.state === "changed" ? `<select class="sch-in grow" data-ab-f="node" data-fk="acn-${esc(x.l.id)}">
@@ -1842,7 +1915,7 @@
       <div class="sch-h"><h2>Actualize <span class="count">${esc(dmy(plan.date))}</span></h2>
         <span class="sch-hint">✓ and ~ become training-log events — re-running never duplicates them</span>
         <span class="sch-spacer"></span>
-        <button type="button" class="sch-btn primary" data-b="commit-actual">Write ${n} event${n === 1 ? "" : "s"} to the log</button>
+        <button type="button" class="sch-btn primary" data-b="commit-actual" title="${esc(TIP.commit)}">Write ${n} event${n === 1 ? "" : "s"} to the log</button>
       </div>
       ${rows || `<p class="sch-hint">No line to actualize.</p>`}
     </section>`;
@@ -2576,8 +2649,8 @@
         <span class="sch-hint">${esc(cq.pdStageText(pd))}</span>
         ${pd.stage === "board" ? `
           <span class="sch-spacer"></span>
-          <button type="button" class="sch-btn primary" data-pb="board-continue">Board: CONTINUE</button>
-          <button type="button" class="sch-btn danger" data-pb="board-stop">Board: STOP</button>` : ""}
+          <button type="button" class="sch-btn primary" data-pb="board-continue" title="${esc(TIP.boardContinue)}">Board: CONTINUE</button>
+          <button type="button" class="sch-btn danger" data-pb="board-stop" title="${esc(TIP.boardStop)}">Board: STOP</button>` : ""}
       </div>`);
     }
     const note = cq.pdNote(code);
@@ -2807,9 +2880,9 @@
         ${s.instructor ? `<span class="sch-nd">${esc(s.instructor)}</span>` : ""}
         <span class="sch-pact">
           ${done
-          ? `<button type="button" class="sch-mini danger" data-pb="undo" title="withdraw the completion">↺</button>`
-          : `<button type="button" class="sch-mini good" data-pb="done" title="${s.status === "pending" ? "mark completed" : "mark the makeup done"}">✓</button>`}
-          <button type="button" class="sch-mini" data-pb="upto" title="complete everything up to here — a stepper asks each item its own date/instructor">⇥</button>
+          ? `<button type="button" class="sch-mini danger" data-pb="undo" title="${esc(TIP.progUndo)}">↺</button>`
+          : `<button type="button" class="sch-mini good" data-pb="done" title="${esc((s.status === "pending" ? "Mark completed. " : "Mark the makeup done. ") + TIP.progDone)}">✓</button>`}
+          <button type="button" class="sch-mini" data-pb="upto" title="${esc(TIP.progUpto)}">⇥</button>
         </span>
         ${covLine}
         ${needs.length ? `<span class="sch-pneeds">needs: ${needs.join(" · ")}</span>` : ""}
@@ -2886,7 +2959,7 @@
       <label class="sch-fld"><span>Date</span><input type="date" class="sch-in" data-pf="date" value="${esc(pend.date)}"></label>
       <label class="sch-fld"><span>Instructor</span><select class="sch-in" data-pf="instructor"><option value="">—</option>
         ${activeIps().map((i) => `<option value="${esc(i.code)}"${pend.instructor === i.code ? " selected" : ""}>${esc(i.code)}</option>`).join("")}</select></label>
-      <button type="button" class="sch-btn primary" data-pb="confirm">Save</button>
+      <button type="button" class="sch-btn primary" data-pb="confirm" title="${esc(TIP.progDone)}">Save</button>
       <button type="button" class="sch-btn" data-pb="cancel">Cancel</button>
     </div>` : "");
 
@@ -3121,9 +3194,9 @@
       <span class="sch-stepbtns">
         <button type="button" class="sch-btn" data-pb="st-back"${stp.ix === 0 ? " disabled" : ""}>‹ Back</button>
         ${last
-        ? `<button type="button" class="sch-btn primary" data-pb="st-finish">Finish</button>`
-        : `<button type="button" class="sch-btn primary" data-pb="st-next">Next ›</button>`}
-        <button type="button" class="sch-btn" data-pb="st-cancel" title="already-written steps stay — nothing after is written">Cancel</button>
+        ? `<button type="button" class="sch-btn primary" data-pb="st-finish" title="${esc(TIP.stepNext)}">Finish</button>`
+        : `<button type="button" class="sch-btn primary" data-pb="st-next" title="${esc(TIP.stepNext)}">Next ›</button>`}
+        <button type="button" class="sch-btn" data-pb="st-cancel" title="${esc(TIP.stepCancel)}">Cancel</button>
       </span>
     </div>`;
   }

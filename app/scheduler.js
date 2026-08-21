@@ -1033,6 +1033,40 @@ window.fmtDMY = function fmtDMY(v) {
   const STATUS_TITLE = { kepe: "Special Monitoring Status" };
   const statusLabel = (s) => STATUS_LABEL[s] || s;
   const AV_CYCLE = ["available", "LV", "SLV", "HLV", "SCL", "OFF", "TO", "AMC"];
+
+  /* ROUND 19 — THE HOVER RULE (user directive, 22/08/2026): «οπου εχουμε
+     βελακια που μπορει να επηρεασουν την βαση δεδομενων να εχουμε hover
+     εξηγησης.» Every glyph in the Roster and the Training Log that WRITES says
+     what it writes, what it leaves alone, and the way back. The read-only ones
+     — ↩ Cancel, the filters, the NIGHT badge that only jumps to a Currency
+     cell — stay silent on purpose, so a tooltip always means «this stores».
+     ⭱ Import roster and 🛠 Repair codes already carried theirs and keep them. */
+  const TIP = {
+    saveS: "Writes this student’s record to the store — code, rank, class, primary and reserve IP, the manual "
+      + "avoid list and the notes, all of it as shown above. It touches nothing in the training log: history "
+      + "keeps naming him by the code, so changing the code here is what 🛠 Repair codes exists to do safely. "
+      + "A new student is created; an existing one is replaced field by field.",
+    delS: "Deletes this student’s ROSTER RECORD. It asks first and names how many training-log entries mention "
+      + "him — those entries STAY, and they will point at a code that no longer has a person. Availability rows, "
+      + "gates and day-plan lines that name him are not cleaned up either. There is no undo short of ⭱ Import "
+      + "of a backup, so take a ⭳ Export first.",
+    saveI: "Writes this instructor’s record to the store — code, call sign, rank, status, qualifications and duty "
+      + "eligibility. It touches no training-log event and no day plan; both keep naming him by his code.",
+    delI: "Deletes this instructor, or — when the log, a student or a duty day still names him — offers to mark "
+      + "him DEPARTED instead. An instructor with history is NEVER hard-deleted: departed keeps every past event "
+      + "readable and takes him out of every picker and every count of the day. Either way it asks first.",
+    av: "One click cycles this person’s availability for the date chosen above — "
+      + AV_CYCLE.join(" → ") + " — and stores it immediately, one row per person per day. "
+      + "It writes no training-log event and does not touch the roster record. Cycle round to «available» to undo.",
+    logEdit: "Opens this event in the form below. Nothing is written until «Update entry» there, and that "
+      + "REPLACES this same event — it never creates a second one.",
+    logDel: "Deletes this training-log event outright, after asking. The student’s progress is recomputed from "
+      + "the log, so whatever this event had unlocked and nothing else still satisfies goes back to locked. "
+      + "Currency dates it once wrote are NOT rolled back. There is no undo — take a ⭳ Export first.",
+    logSave: "Writes this event to the training log. An event opened with ✎ is REPLACED in place; a new one is "
+      + "created with a fresh id. This is the student’s history, and the progress graph is recomputed from it "
+      + "the moment it lands.",
+  };
   /* Round 2 result vocabulary (spec §3α): flying events say PASS / LAG / FAIL.
      The stored values stay completed / lag / fail — legacy "repeat" is read as
      lag everywhere and never rewritten. */
@@ -1436,9 +1470,9 @@ window.fmtDMY = function fmtDMY(v) {
       </div>
       ${personLine(s)}
       <div class="sch-fbtns">
-        <button type="button" class="sch-btn primary" data-act="save-s">✔ Save</button>
+        <button type="button" class="sch-btn primary" data-act="save-s" title="${esc(TIP.saveS)}">✔ Save</button>
         <button type="button" class="sch-btn" data-act="cancel">↩ Cancel</button>
-        ${isNew ? "" : `<button type="button" class="sch-btn danger" data-act="del-s" data-id="${esc(s.code)}">✕ Delete</button>`}
+        ${isNew ? "" : `<button type="button" class="sch-btn danger" data-act="del-s" data-id="${esc(s.code)}" title="${esc(TIP.delS)}">✕ Delete</button>`}
       </div>
     </div>`;
   }
@@ -1563,9 +1597,9 @@ window.fmtDMY = function fmtDMY(v) {
         <label class="sch-fld grow"><span>Notes</span><input class="sch-in" data-f="notes" value="${esc(i.notes || "")}"></label>
       </div>
       <div class="sch-fbtns">
-        <button type="button" class="sch-btn primary" data-act="save-i">✔ Save</button>
+        <button type="button" class="sch-btn primary" data-act="save-i" title="${esc(TIP.saveI)}">✔ Save</button>
         <button type="button" class="sch-btn" data-act="cancel">↩ Cancel</button>
-        ${isNew ? "" : `<button type="button" class="sch-btn danger" data-act="del-i" data-id="${esc(i.code)}">
+        ${isNew ? "" : `<button type="button" class="sch-btn danger" data-act="del-i" data-id="${esc(i.code)}" title="${esc(TIP.delI)}">
           ${refs && refs.any ? "✕ Mark departed" : "✕ Delete"}</button>`}
         ${refs && refs.any ? `<span class="sch-hint">referenced by ${refs.log} log event${refs.log === 1 ? "" : "s"} · ${refs.students} student${refs.students === 1 ? "" : "s"} · ${refs.duty} duty day${refs.duty === 1 ? "" : "s"} — never hard-deleted</span>` : ""}
       </div>
@@ -1613,7 +1647,7 @@ window.fmtDMY = function fmtDMY(v) {
     const map = S().availabilityFor(date);
     const cell = (code) => {
       const st = map.get(code) || "available";
-      return `<button type="button" class="sch-av av-${esc(st)}" data-av="${esc(code)}" title="${esc(nmOpt(null, code))} — ${esc(st)} · click to cycle">
+      return `<button type="button" class="sch-av av-${esc(st)}" data-av="${esc(code)}" title="${esc(nmOpt(null, code) + " — " + st + ". " + TIP.av)}">
         <span class="sch-code">${esc(nm(code))}</span><span class="sch-avst">${esc(st === "available" ? "OK" : st)}</span></button>`;
     };
     const away = [...map.entries()].filter(([, v]) => v && v !== "available").length;
@@ -2486,8 +2520,8 @@ window.fmtDMY = function fmtDMY(v) {
         <td><span class="sch-badge r-${esc(rcls)}">${res}</span></td>
         <td>${abs ? `<span class="sch-badge warn" title="${esc((ev.absent || []).map((a) => nm(a.student) + (a.reason ? " — " + a.reason : "")).join(" · "))}">${abs} absent</span>` : "—"}</td>
         <td class="sch-note">${ev.maneuvers ? `<span class="sch-badge warn" title="maneuvers to repeat (fail-10)">repeat: ${esc(ev.maneuvers)}</span> ` : ""}${esc(ev.note || "")}</td>
-        <td class="sch-act"><button type="button" class="sch-mini" data-act="edit-ev" data-id="${esc(ev.id)}" title="Edit">✎</button>
-          <button type="button" class="sch-mini danger" data-act="del-ev" data-id="${esc(ev.id)}" title="Delete">✕</button></td>
+        <td class="sch-act"><button type="button" class="sch-mini" data-act="edit-ev" data-id="${esc(ev.id)}" title="${esc(TIP.logEdit)}">✎</button>
+          <button type="button" class="sch-mini danger" data-act="del-ev" data-id="${esc(ev.id)}" title="${esc(TIP.logDel)}">✕</button></td>
       </tr>`;
   }
 
@@ -2664,7 +2698,7 @@ window.fmtDMY = function fmtDMY(v) {
           <div id="sch-absbox">${absentBox()}</div></div>` : ""}
 
         <div class="sch-fbtns">
-          <button type="button" class="sch-btn primary" data-act="save-ev">${f.id ? "Update entry" : "Add entry"}</button>
+          <button type="button" class="sch-btn primary" data-act="save-ev" title="${esc(TIP.logSave)}">${f.id ? "Update entry" : "Add entry"}</button>
           <button type="button" class="sch-btn" data-act="reset-ev">${f.id ? "Cancel edit" : "Clear"}</button>
           ${f.id ? `<span class="sch-hint">editing <span class="sch-mono">${esc(f.id)}</span></span>` : ""}
         </div>

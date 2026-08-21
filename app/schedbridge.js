@@ -25,7 +25,8 @@
  *      ground-history divergence line, reported and never auto-written.
  *   #5 a grade may arrive later — «awaiting» is a legitimate state, not an
  *      error → judge() returns source:"awaiting" and the row is not proposable.
- *   #6 thresholds: ground exams 80, flights 60, F/S 50. FROZEN PER ROW at the
+ *   #6 thresholds: ground exams 80, flights 60, F/S 60 (the F/S number was
+ *      corrected from 50 on 22/08/2026 — see below). FROZEN PER ROW at the
  *      moment it is judged and printed beside the number, so a later config
  *      change can never re-judge history → THRESHOLDS + row.thr.
  *   #7 minimum leakage. For THIS slice: the report data NEVER leaves the
@@ -82,11 +83,28 @@
 
   /* RULING #6 — the three thresholds, frozen per row when it is judged.
      80 is FDMS's own exam_pass_pct default (ground school); 60 is ΠΔ 151/13's
-     «Κ» floor, the line every referral criterion uses for a flight; 50 is the
-     «ΣΚ» / ΥΣΤΕΡΗΣΗ floor of the same printed scale, which the earlier mapping
-     gave the simulator. They are constants HERE and never read from config:
-     a config that drifts must never re-judge a history already reported. */
-  const THRESHOLDS = { exams: 80, flights: 60, fs: 50 };
+     «Κ» floor, the line every referral criterion uses for a flight.
+
+     THE F/S NUMBER IS 60, AND IT ALWAYS WAS (ruling of 22/08/2026 — «60 % f/s,
+     flights»). Slice 1 shipped it as 50, and that 50 never existed as a pass
+     mark anywhere: it is the «ΣΚ»/ΥΣΤΕΡΗΣΗ BAND FLOOR of the printed ΠΔ scale —
+     a label for a range of marks — which the planning mistook for the line a
+     simulator sortie has to clear. The school and Wings Ahead judge a simulator
+     sortie exactly like a flight, at 60.
+
+     WHAT THE 50 ACTUALLY DID — it did not make noise, it made SILENCE. judge()
+     runs per side with the SAME threshold, so a simulator sortie scored 50–59
+     printed «COMPLETE · 55 % vs 50 %», completed its node, AND — since both
+     sides were judged by the same wrong line — came out as class `agree`. The
+     report said "the two databases agree" over a failure painted as a pass that
+     was unlocking the nodes behind it. A wrong threshold here does not fabricate
+     a deviation; it hides a real one.
+
+     They are constants HERE and never read from config: a config that drifts
+     must never re-judge a history already reported. Rows judged BEFORE this
+     correction carry their own `thr` — that is what freezing is for, and the
+     report prints the number it used beside every verdict. */
+  const THRESHOLDS = { exams: 80, flights: 60, fs: 60 };
   const thrOf = (band) => (THRESHOLDS[band] != null ? THRESHOLDS[band] : THRESHOLDS.flights);
 
   /* THE NINE DEVIATION CLASSES — the architect's six plus the critic's three.

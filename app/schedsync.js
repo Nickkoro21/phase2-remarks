@@ -62,6 +62,44 @@
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ESC[c]);
   const nowHM = () => new Date().toTimeString().slice(0, 5);
 
+  /* ROUND 19 — THE HOVER RULE (user directive, 22/08/2026): every control here
+     that can replace data says so on hover. The two arrows are the sharpest
+     pair in the whole app — ⭳ Pull replaces THIS BROWSER, ⭱ Push replaces THE
+     REPO — and until now they were two unlabelled glyphs side by side. Each
+     tooltip names WHAT is replaced, WHAT is left alone, and the way back.
+     Read-only controls in this dialog (✕ Close) stay silent on purpose. */
+  const TIP = {
+    save: "Saves the repository, branch, path and device name INTO THIS BROWSER only (localStorage) — "
+      + "never into the scheduler store, so they survive ↺ Reset and never travel in a backup. "
+      + "A token typed above is stored the same way and never leaves this machine; a passphrase typed above "
+      + "is armed for THIS SESSION ONLY and is stored nowhere at all. It moves no data in either direction.",
+    pull: "REPLACES THIS BROWSER’S WHOLE SCHEDULER STORE with the copy in the repo — roster, log, availability, "
+      + "duties, gates, currency, day plans and config. It writes nothing to GitHub. If unpushed local changes "
+      + "exist it names them and asks first; answering no leaves everything untouched. There is no undo, so "
+      + "take Scheduler → ⭳ Export first if this browser holds work the repo has never seen.",
+    push: "REPLACES THE REPO COPY with this browser’s whole store, as one commit on the branch above. "
+      + "It changes nothing locally. Every previous push stays in the repo’s history, so the way back is that "
+      + "history. If another device pushed first it stops and asks instead of overwriting. "
+      + "With a passphrase armed the repo receives ciphertext only.",
+    force: "The same push with the safety off: it re-reads the repo only to take its sha, then OVERWRITES the "
+      + "newer version another device pushed. Their changes leave the file (git history still holds the commit). "
+      + "Nothing local changes. Use it only when you know this browser is the good copy — otherwise ⭳ Pull theirs first.",
+    forget: "Deletes the GitHub token and the last-seen file id FROM THIS BROWSER. No data is touched here or in "
+      + "the repo — sync simply stops until a token is pasted again. The token stays valid on GitHub: revoke it "
+      + "there if the machine is leaving your hands.",
+    passClear: "Drops the encryption passphrase held in memory for this session. Nothing is deleted anywhere — but "
+      + "THE NEXT PUSH WRITES PLAINTEXT over the encrypted repo copy, and a ⭳ Pull will ask for the passphrase "
+      + "again. Auto-sync stops itself rather than downgrade the repo silently.",
+    lockSet: "Sets the access code asked for before the Scheduler opens, on THIS BROWSER only (a salted "
+      + "PBKDF2-SHA256 verifier in localStorage). It is a privacy curtain for a shared screen, not encryption, "
+      + "and it does not travel with the sync. It changes no scheduler data. "
+      + "For who may CHANGE data, use the topbar’s ✎ Editor lock instead.",
+    lockChange: "Replaces this browser’s access code — the current one must be typed first. No scheduler data is "
+      + "touched, and other devices keep their own codes.",
+    lockRemove: "Removes the curtain from THIS BROWSER: the Scheduler opens with no code from now on. "
+      + "No scheduler data is touched, and the ✎ Editor lock that guards writing is unaffected.",
+  };
+
   const lsGet = (k) => { try { return localStorage.getItem(k); } catch (e) { return null; } };
   const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
   const lsDel = (k) => { try { localStorage.removeItem(k); } catch (e) {} };
@@ -610,7 +648,12 @@
     btn.type = "button";
     btn.className = "sch-tbtn";
     btn.id = "sync-open";
-    btn.title = "Sync the scheduler store with a private GitHub repo";
+    /* the topbar glyph itself only OPENS the dialog — but it is the door to the
+       two controls that can replace a whole store, so it says which is which */
+    btn.title = "Opens GitHub Sync — the settings, and the two arrows that move the whole store: "
+      + "⭳ Pull replaces THIS BROWSER with the repo copy, ⭱ Push replaces THE REPO with this browser. "
+      + "Opening the dialog by itself changes nothing. The counter on this button is how many local "
+      + "changes have not reached the repo yet.";
     host.insertBefore(btn, host.firstChild);
 
     const pop = document.createElement("div");
@@ -667,12 +710,12 @@
         holds <b>only ciphertext</b> (AES-GCM&nbsp;256, PBKDF2-SHA256 · 310k). Forgetting it makes the
         <b>remote</b> backups unreadable — local data is unaffected. Empty → plaintext, as before.</p>
         <div class="sync-row">
-          <button type="button" class="sch-tbtn" data-s="save">💾 Save</button>
-          <button type="button" class="sch-tbtn" data-s="pull">⭳ Pull</button>
-          <button type="button" class="sch-tbtn" data-s="push">⭱ Push</button>
-          <button type="button" class="sch-tbtn danger" data-s="force">Force push</button>
-          <button type="button" class="sch-tbtn danger" data-s="forget">Forget token</button>
-          ${sess.pass ? '<button type="button" class="sch-tbtn" data-s="pass-clear">Clear passphrase</button>' : ""}
+          <button type="button" class="sch-tbtn" data-s="save" title="${esc(TIP.save)}">💾 Save</button>
+          <button type="button" class="sch-tbtn" data-s="pull" title="${esc(TIP.pull)}">⭳ Pull</button>
+          <button type="button" class="sch-tbtn" data-s="push" title="${esc(TIP.push)}">⭱ Push</button>
+          <button type="button" class="sch-tbtn danger" data-s="force" title="${esc(TIP.force)}">Force push</button>
+          <button type="button" class="sch-tbtn danger" data-s="forget" title="${esc(TIP.forget)}">Forget token</button>
+          ${sess.pass ? `<button type="button" class="sch-tbtn" data-s="pass-clear" title="${esc(TIP.passClear)}">Clear passphrase</button>` : ""}
           <button type="button" class="sch-tbtn" data-s="close">✕ Close</button>
         </div>
         <div class="sync-status" id="sync-status">${esc(st.lastMsg)}</div>
@@ -695,9 +738,9 @@
           unlocking the curtain then also arms the session encryption key</label>
         <div class="sync-row">
           ${lk
-            ? `<button type="button" class="sch-tbtn" data-s="lock-change">Change code</button>
-               <button type="button" class="sch-tbtn danger" data-s="lock-remove">Remove code</button>`
-            : `<button type="button" class="sch-tbtn" data-s="lock-set">Set code</button>`}
+            ? `<button type="button" class="sch-tbtn" data-s="lock-change" title="${esc(TIP.lockChange)}">Change code</button>
+               <button type="button" class="sch-tbtn danger" data-s="lock-remove" title="${esc(TIP.lockRemove)}">Remove code</button>`
+            : `<button type="button" class="sch-tbtn" data-s="lock-set" title="${esc(TIP.lockSet)}">Set code</button>`}
         </div>
         <div class="sync-status" id="lock-status">${esc(st.lockMsg)}</div>
       </div>`;
