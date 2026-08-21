@@ -2280,3 +2280,62 @@ html[data-edit="off"] .cur-head::after {
     color: #000000 !important; background: #ffffff !important; padding: 18mm 16mm;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   BRIDGE — the read-only cross-check with Wings Ahead (Round 18, slice 1).
+   Tokens only (--good / --warn / --bad / --accent / --muted / --line /
+   --panel-2), so all eight palettes and both modes get it for free and the
+   print block that flattens the palette to black-on-white already covers the
+   printed report.
+   DELIBERATELY WITHOUT THE TWO COUNTED PSEUDO-CLASSES — the focus-ring one
+   (Fx85) and the relational one (Fx121). tools/build_offline.py patches both
+   with an EXACT match count and «the exact count IS the tripwire», so writing
+   either here would move a number in the builder for no gain — and the literal
+   spelling cannot appear even in THIS comment, because the builder counts the
+   file, not the rules. .sch-btn already carries the focus ring this pane needs.
+   The one builder count this round DID move is the script-tag count, 9 → 10,
+   because app/schedbridge.js is a new file.
+   ══════════════════════════════════════════════════════════════════════════ */
+.brg-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 2px; }
+.brg-chips .sch-btn b { margin-left: 6px; color: var(--text); }
+
+/* the class badge takes its colour from the class's TONE, never from a literal */
+.sch-badge.brg-tone-good { color: var(--good); border-color: var(--good); }
+.sch-badge.brg-tone-warn { color: var(--warn); border-color: var(--warn); }
+.sch-badge.brg-tone-bad { color: var(--bad); border-color: var(--bad); }
+.sch-badge.brg-tone-accent { color: var(--accent); border-color: var(--accent); }
+.sch-badge.brg-tone-muted { color: var(--muted); border-color: var(--line); }
+
+.brg-tbl { margin-bottom: 14px; }
+.brg-tbl td { vertical-align: top; }
+.brg-rid { font-size: 10px; color: var(--muted); word-break: break-all; max-width: 220px; }
+
+/* the row that carries the two sides side by side — one line per field */
+.brg-sub > td { background: var(--panel-2); padding-top: 4px; padding-bottom: 8px; }
+.brg-diff {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px;
+  font-size: 12px; padding: 3px 0; border-top: 1px dashed var(--line);
+}
+.brg-diff:first-child { border-top: 0; }
+.brg-diff b { min-width: 84px; color: var(--text); text-transform: uppercase; font-size: 10px; letter-spacing: 0.6px; }
+.brg-diff em { color: var(--muted); font-style: normal; }
+.brg-w, .brg-f {
+  font-family: Consolas, monospace; border: 1px solid var(--line);
+  border-radius: 6px; padding: 1px 7px;
+}
+.brg-w { border-color: var(--accent); color: var(--accent); }
+.brg-f { border-color: var(--muted); color: var(--text); }
+.brg-prob { font-size: 12px; color: var(--bad); padding: 3px 0; }
+
+/* the left edge says the class at a glance, without a second badge column */
+.brg-r > td:first-child { border-left: 3px solid transparent; }
+.brg-agree > td:first-child { border-left-color: var(--good); }
+.brg-source_moved > td:first-child,
+.brg-payload_differs > td:first-child { border-left-color: var(--warn); }
+.brg-wa_only > td:first-child,
+.brg-fdms_only > td:first-child { border-left-color: var(--accent); }
+.brg-deleted > td:first-child,
+.brg-unwritten > td:first-child,
+.brg-unresolvable > td:first-child { border-left-color: var(--bad); }
+.brg-refused > td:first-child { border-left-color: var(--muted); }
+.brg-bad td { color: var(--bad); }

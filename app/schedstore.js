@@ -454,6 +454,21 @@
       return false;
     }
 
+    /* THE SAME TRAP, ONE DOOR OVER (Round 18): a WINGS AHEAD EXPORT is people
+       and student records, not a scheduler store. Handed to this button it
+       would find no collection and — worse, once it grows a `students` key —
+       could replace the store with somebody else's shape. The Bridge only ever
+       READS it (Scheduler → Bridge), so the refusal points there.
+       The shape test is repeated here on purpose instead of calling
+       SchedBridge.looksLikeWaExport(): this guard is a WALL and must stand
+       even if app/schedbridge.js failed to load. Keep the two in step. */
+    if (data.schema === "wa-export-v1"
+        || (Array.isArray(data.people) && Array.isArray(data.student_records)
+            && data.trainingLog === undefined && data.config === undefined)) {
+      toast("This file is a WINGS AHEAD EXPORT, not a store backup — use Scheduler → “Bridge”, which only reads it, compares it with this store and writes nothing.", "bad");
+      return false;
+    }
+
     const pick = (n) => {
       const c = COLLS[n];
       const v = data[n] !== undefined ? data[n] : data[c.seed];
@@ -745,6 +760,16 @@
     '[data-b="date"]', '[data-b="day-1"]', '[data-b="day+1"]',                // which day the board SHOWS
     '[data-b="day-today"]', '[data-b="print"]', '[data-b="allip"]',
     '[data-t="export"]', "#sync-open", '[data-act="cur-print"]',              // read-only exits: backup, sync dialog, binder sheet
+    /* ROUND 18 — THE BRIDGE. Every control of the Wings Ahead cross-check
+       READS: it chooses a file, filters the report, prints it, or clears it.
+       The pane cannot write — not the store, not Wings Ahead, not the repo
+       (app/schedbridge.js, specs/bridge-spec.md) — so the lock has nothing to
+       protect here, and denying it would make the report unreachable in the
+       default state of every device. Same category, and the same line, as the
+       backup export and the sync dialog above. If a later slice gives the
+       Bridge a control that WRITES, that control must NOT be a [data-brg] one
+       — it goes outside this list and meets the lock like every other write. */
+    "[data-brg]", ".brg-file", "[data-brgq]",
     "[data-nav]",                                                             // anything a view marks explicitly
   ].join(",");
   /* the three hosts the guard covers. #sch-progmodal is created lazily on

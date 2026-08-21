@@ -1185,13 +1185,18 @@ def build_main_html(css: str, emblem_uri: str, prepaint_js: str, scripts: str) -
     # through the Info-modal "Related requirements" links.
 
     # drop all external <script src> tags, then inline our chain before </body>
+    # (10 since Round 18 added schedbridge.js — the read-only Wings Ahead
+    # cross-check. It is a SCHEDULER module, so like scheduler.js / schedstore.js
+    # / schedboard.js / currency.js it does NOT travel: the closed-network
+    # bundle stays a syllabus tool and nothing roster-derived reaches it. The
+    # count still has to move, because the count is the tripwire on THIS file.)
     # (9 since Round 16 added description.js; 8 was Round 11's currency.js. Not
     # all of them travel: the offline build inlines its own chain, WITHOUT the
     # scheduler and the currency matrix but WITH Description.)
     # (8 since Round 11 added currency.js — none of them travels; the offline
     # build inlines its own shorter chain, without the scheduler or currency.)
     html = sub1(r'[ \t]*<script src="[^"]+"></script>\n', lambda m: "", html,
-                "external script tags", count=9)
+                "external script tags", count=10)
     html = sub1(r"</body>", lambda m: scripts + "\n</body>", html, "</body>")
 
     html = sub1(r"<!DOCTYPE html>",

@@ -1024,7 +1024,9 @@ window.fmtDMY = function fmtDMY(v) {
   const nm = (code) => S().personLabelOf(null, code);
   const nmOpt = (coll, code) => S().personOptionOf(coll, code);
 
-  const PANES = ["board", "roster", "log", "balance"];
+  /* Round 18 — "bridge" is the READ-ONLY cross-check with Wings Ahead
+     (app/schedbridge.js, specs/bridge-spec.md). It writes nothing. */
+  const PANES = ["board", "roster", "log", "balance", "bridge"];
   const STATUS_OPTS = ["active", "hold", "kepe", "withdrawn"];
   /* "kepe" stays the STORED value for compatibility — the UI says SMS */
   const STATUS_LABEL = { kepe: "SMS" };
@@ -1159,6 +1161,7 @@ window.fmtDMY = function fmtDMY(v) {
     if (ui.pane === "board") renderBoard();
     else if (ui.pane === "roster") renderRoster();
     else if (ui.pane === "log") renderLog();
+    else if (ui.pane === "bridge") renderBridge();
     else renderBalance();
   }
 
@@ -1180,6 +1183,18 @@ window.fmtDMY = function fmtDMY(v) {
       <strong>Balance arrives with Phase B.</strong>
       <p>Events, deviation from the cohort average, makeups, idle days and instructor load
       are all derived from the training log and the duty roster recorded here.</p></div>`;
+  }
+
+  /* ── BRIDGE (Round 18, slice 1 — READ-ONLY) ─────────────────────────────
+     The cross-check with Wings Ahead. It reads one export file the user
+     chooses and writes NOTHING: not the store, not WA, not the repository.
+     Everything it does lives in app/schedbridge.js; this is only the seat. */
+  function renderBridge() {
+    const el = $id("sch-bridge");
+    if (window.schBridgeInit) { window.schBridgeInit(el); return; }
+    el.innerHTML = `<div class="sch-ph">
+      <strong>The Bridge could not be loaded.</strong>
+      <p>Expected <code>app/schedbridge.js</code> next to the other Scheduler modules.</p></div>`;
   }
 
   /* ══ ROSTER ══════════════════════════════════════════════════════════════ */

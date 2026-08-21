@@ -13,3 +13,12 @@ tools/package-lock.json
 roster.json
 people-import.sql
 scheduler-backup-*.json
+
+# ROUND 18 — THE BRIDGE, CUSTODY (ruling #7 of 21/08/2026 · specs/bridge-spec.md
+# § 6). A Wings Ahead export and a cross-check report are DATA WITH REAL NAMES —
+# the same class of thing as the private roster and the encrypted store. The
+# pane never writes either to disk, but a hand-saved copy must not be able to
+# reach a commit by accident.
+wings-ahead-export-*.json
+wa-export-*.json
+bridge-report-*
