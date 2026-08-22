@@ -448,7 +448,24 @@
   let wordBusy = false;
   function wordPrompt(o) {
     return new Promise((resolve) => {
-      if (wordBusy || !document.body) { resolve(false); return; }   // never two at once
+      /* ROUND 20b · finding 7 — NEVER A SILENT NO-OP. This branch used to
+         resolve(false) without a word to anybody: the console route
+         (`SchedStore.importAll(f)` while the Reset dialog is up) looked like a
+         refusal that came from the seam, and a body-less document looked like
+         nothing at all. Both now SAY which one happened, and the open dialog
+         takes the focus back so the eye lands on the thing that is in the way. */
+      if (wordBusy) {                                               // never two at once
+        toast("One of these at a time — finish the dialog that is already open.", "bad");
+        const live = document.querySelector(".sch-wordpop #sch-wordin");
+        if (live) live.focus();
+        resolve(false);
+        return;
+      }
+      if (!document.body) {                                         // nowhere to put it
+        toast("Cannot ask for the word yet — the page is still loading.", "bad");
+        resolve(false);
+        return;
+      }
       wordBusy = true;
       const veil = document.createElement("div");
       veil.className = "ed-pop sch-wordpop";
@@ -460,16 +477,26 @@
         <input id="sch-wordin" type="text" autocomplete="off" spellcheck="false"
                placeholder="${esc(o.word)}" aria-describedby="sch-wordmsg">
         <div class="ed-row">
-          <button type="button" class="sch-tbtn danger" data-w="go">${esc(o.go)}</button>
+          <button type="button" class="sch-tbtn danger" data-w="go"><span class="sch-dgl">${esc(o.ico || "⚠")}</span> ${esc(o.go)}</button>
           <button type="button" class="sch-tbtn" data-w="cancel">↩ Cancel</button>
         </div>
         <div class="ed-status" id="sch-wordmsg" role="status"></div>
       </div>`;
+      /* ROUND 20b · finding 7 — THE WEDGE. The teardown used to hang off
+         `veil.parentNode`: if anything removed the veil from outside (a devtools
+         delete, a rogue innerHTML on <body>, a future dialog manager), the very
+         first line returned and the LAST THREE NEVER RAN — the capture-phase
+         keydown listener stayed on the document for the life of the page and
+         `wordBusy` stayed true, which killed BOTH ⭱ Import and ↺ Reset until a
+         reload. The idempotence the guard was really buying is now bought by a
+         local flag; `parentNode` guards only the one line it belongs to. */
+      let finished = false;
       const done = (v) => {
-        if (!veil.parentNode) return;
+        if (finished) return;
+        finished = true;
         document.removeEventListener("keydown", onKey, true);
-        veil.remove();
         wordBusy = false;
+        if (veil.parentNode) veil.remove();
         resolve(v);
       };
       const submit = () => {
@@ -578,7 +605,10 @@
        word; only «Continue?» has become a word you have to type. */
     const n = (pick("students") || []).length + "/" + (pick("trainingLog") || []).length;
     const go = await wordPrompt({
-      ico: "⭱", word: "REPLACE", go: "⭱ Replace the store",
+      /* the glyph is no longer part of `go`: the dialog renders it from `ico`
+         inside `.sch-dgl`, so the danger tone reaches it at rest too (§ 21η).
+         What the button READS is byte-identical: «⭱ Replace the store». */
+      ico: "⭱", word: "REPLACE", go: "Replace the store",
       title: "Replace the whole scheduler store?",
       body: "Import replaces the whole scheduler store (students/log: <b>" + esc(n) + "</b>). "
         + "The current data is lost unless you exported it first. It replaces all "
@@ -600,7 +630,7 @@
   async function resetToSeed() {
     if (!mayWrite("reset the store")) return false;
     const go = await wordPrompt({
-      ico: "↺", word: "RESET", go: "↺ Reset to the seed",
+      ico: "↺", word: "RESET", go: "Reset to the seed",     // glyph from `ico` — see above
       title: "Reset the scheduler to the seed file?",
       body: "Roster, training log, availability, duties, gates and day plans are all discarded. "
         + "The editor code goes with them, so this device is left with no code set. "
@@ -618,6 +648,14 @@
   /* ── toast (shared with scheduler.js) ───────────────────────────────────── */
   let toastT = null;
   function toast(msg, kind) {
+    /* ROUND 20b — a toast asked for before <body> exists used to throw inside
+       appendChild, which turned "tell the user" into "lose the message AND the
+       call stack". It is now HELD until the body arrives, so the sentence still
+       lands; nothing is swallowed and nothing reaches the console. */
+    if (!document.body) {
+      document.addEventListener("DOMContentLoaded", () => toast(msg, kind), { once: true });
+      return;
+    }
     let el = document.getElementById("sch-toast");
     if (!el) {
       el = document.createElement("div");
@@ -707,7 +745,7 @@
       <p class="sch-morehint">Both of these REPLACE THE WHOLE STORE. Each one needs ✎ Editor mode
         and asks you to type a word before anything happens.</p>
       <button type="button" class="sch-tbtn" role="menuitem" data-t="import" title="${TIP.import}">⭱ Import</button>
-      <button type="button" class="sch-tbtn danger" role="menuitem" data-t="reset" title="${TIP.reset}">↺ Reset</button>
+      <button type="button" class="sch-tbtn danger" role="menuitem" data-t="reset" title="${TIP.reset}"><span class="sch-dgl">↺</span> Reset</button>
       <input type="file" accept="application/json,.json" class="sch-file" hidden>`;
     const file = pop.querySelector(".sch-file");
 
@@ -762,14 +800,22 @@
       file.value = "";
       if (chosen) await importAll(chosen);
     });
-    /* outside click and a resize close the menu — an anchored popover that
-       stays behind a moved anchor is a lie about what it belongs to */
+    /* outside click, a resize and a SCROLL close the menu — an anchored popover
+       that stays behind a moved anchor is a lie about what it belongs to.
+       ROUND 20b · finding 6 — the comment above already promised the scroll and
+       only the resize was wired: the menu is `position: fixed` at coordinates
+       taken from the button ONCE, so scrolling the Scheduler view slid the
+       anchor out from under it and left the card floating over unrelated rows.
+       CAPTURE PHASE on purpose: scroll does not bubble, so a bubble-phase
+       listener on window would miss every inner scroller — and the pane, the
+       board and the log all scroll inside their own boxes. */
     document.addEventListener("click", (e) => {
       if (!isOpen()) return;
       if (e.target.closest && (e.target.closest("#sch-morepop") || e.target.closest('[data-t="more"]'))) return;
       closeMore();
     });
     window.addEventListener("resize", () => { if (isOpen()) closeMore(); });
+    window.addEventListener("scroll", () => { if (isOpen()) closeMore(); }, true);
   }
 
   window.SchedStore = {
@@ -1304,4 +1350,70 @@
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
+})();
+
+/* ══════════════════════════════════════════════════════════════════════════
+   THE HOUSE FOCUS TRAP — one listener for every `.ed-pop` dialog
+   ══════════════════════════════════════════════════════════════════════════
+   ROUND 20b · finding 8, 22/08/2026.
+
+   THE LEAK. `.ed-pop` + `.ed-box` is the house's ONE modal shape: the Editor
+   dialog (`#ed-pop`) wears it, and the Round-20 typed-word dialog reuses it
+   verbatim (`.sch-wordpop`). Both painted a veil over the page and both let the
+   KEYBOARD walk straight off the card: Tab from «↩ Cancel» landed on whatever
+   was behind the veil, and from there Enter activated it — a control the user
+   could neither see nor point at, while a dialog that says «type RESET to
+   continue» was still on screen. A modal that only stops the mouse is not a
+   modal.
+
+   WHY THE TAB WRAP AND NOT `inert` / `aria-hidden` ON THE SIBLINGS. Both of the
+   alternatives are STATE: something must put them on and something must take
+   them off again. The failure this same round fixed two screens up (finding 7 —
+   an externally-removed veil that never ran its teardown) is exactly the shape
+   of bug that state invites, and there it would leave the whole page
+   permanently unfocusable instead of merely wedged. The wrap holds NO state:
+   it reads the DOM on each Tab, and the moment no `.ed-pop` is visible it stops
+   having an opinion. `inert` is also Fx112+, and `aria-hidden` moves nothing
+   for a sighted keyboard user, who is precisely who was leaking.
+
+   WHAT IT DOES, AND ONLY THAT
+     · Tab / Shift+Tab inside a visible `.ed-pop` cycle within its `.ed-box`;
+     · Tab with focus outside (page load, a click on the veil) is pulled back
+       to the first control of the card;
+     · with two cards open, the LAST visible one in the DOM wins — the word
+       dialog is appended fresh at open and sits at z-index 102, above the
+       editor's 72, so «last in the DOM» is «the one on top».
+   Esc, Enter, the click handlers, the veil-cancel and every other key are
+   untouched: this listener returns immediately for anything that is not Tab.
+   See specs/scheduler-spec.md § 21ζ.                                        */
+(function () {
+  "use strict";
+  const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]),'
+    + ' select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+  function liveBox() {
+    const pops = document.querySelectorAll(".ed-pop");
+    for (let i = pops.length - 1; i >= 0; i--) {          // topmost = last painted
+      if (pops[i].classList.contains("hidden")) continue;
+      const box = pops[i].querySelector(".ed-box");
+      if (box) return box;
+    }
+    return null;
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Tab" || e.altKey || e.ctrlKey || e.metaKey) return;
+    const box = liveBox();
+    if (!box) return;
+    const list = Array.from(box.querySelectorAll(FOCUSABLE))
+      .filter((el) => el.offsetParent !== null || el === document.activeElement);
+    e.preventDefault();                                   // the trap owns Tab in here
+    if (!list.length) return;
+    const at = list.indexOf(document.activeElement);
+    let next;
+    if (at === -1) next = e.shiftKey ? list[list.length - 1] : list[0];
+    else if (e.shiftKey) next = at === 0 ? list[list.length - 1] : list[at - 1];
+    else next = at === list.length - 1 ? list[0] : list[at + 1];
+    next.focus();
+  }, true);
 })();

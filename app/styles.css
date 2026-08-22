@@ -821,6 +821,19 @@ body {
   border-radius: 7px; padding: 5px 11px; font-size: 12px; font-family: inherit; cursor: pointer;
 }
 .sch-tbtn:hover { border-color: var(--accent); color: var(--text); }
+/* ΓΥΡΟΣ 20b — Ο ΤΟΝΟΣ ΤΟΥ ΚΙΝΔΥΝΟΥ ΣΕ ΗΡΕΜΙΑ (παρατήρηση α).
+   Μέσα στο «⋯» το «↺ Reset» διαβαζόταν ΙΔΙΟ με το «⭱ Import»: ίδιο περίγραμμα,
+   ίδιο χρώμα κειμένου, και η μόνη διαφορά έφτανε στο hover — δηλαδή αφού το
+   χέρι είχε ήδη φύγει προς τα εκεί. Τώρα το κουμπί το λέει ΠΡΙΝ το αγγίξεις:
+     · το περίγραμμα παίρνει τη χροιά του `--bad` σε χαμηλή αδιαφάνεια·
+     · το σύμβολο (`.sch-dgl`) παίρνει ολόκληρο το `--bad`·
+     · η ΕΤΙΚΕΤΑ μένει `--muted`, ώστε το hover να έχει ακόμη κάτι να πει.
+   ΜΟΝΟ tokens. Μετρημένο και στις οκτώ παλέτες × το mode τους (§ 21η):
+   `--bad` πάνω στο φόντο του κουμπιού ≥ 6,40:1 — πάνω από το συμβόλαιο 4,5:1
+   του σπιτιού — και το περίγραμμα στο 0,55 δίνει 2,62-3,26:1, δηλαδή ΠΑΝΤΟΥ πιο
+   ευδιάκριτο από το `--line` που αντικαθιστά (1,47-1,77:1). */
+.sch-tbtn.danger { border-color: rgba(var(--bad-rgb), 0.55); }
+.sch-tbtn.danger .sch-dgl { color: var(--bad); }
 .sch-tbtn.danger:hover { border-color: var(--bad); color: var(--bad); }
 
 .sch-pane { display: flex; flex-direction: column; gap: 12px; min-height: 0; }
