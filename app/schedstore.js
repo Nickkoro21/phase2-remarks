@@ -399,6 +399,102 @@
     return true;
   }
 
+  /* ══ ROUND 20 — THE DANGER BURIAL ═════════════════════════════════════════
+     USER RULING, 22/08/2026 (verbatim): «Το import και το reset νομίζω
+     περισσότερο επικίνδυνα είναι παρά βοηθούν.»
+
+     They are NOT removed — a backup you cannot restore is not a backup, and a
+     seed you cannot return to is not a seed. They are BURIED, and every layer
+     costs a deliberate act:
+       1 · OUT OF REACH   they leave the first line of the toolbar and live
+                          under one «⋯» at its end. ☁ Sync and ⭳ Export — the
+                          two that cannot lose anything — stay in sight.
+       2 · THE EDIT LOCK  both demand ✎ Editor mode BEFORE anything opens: no
+                          OS file picker, no dialog. A view-only device is told
+                          WHICH act it refused, in the seam's own words.
+       3 · THE TYPED WORD the confirmation stopped being a click. REPLACE for
+                          Import, RESET for Reset, typed into a dialog that
+                          still carries the old counts sentence word for word.
+     THE TWO-IMPORTS GUARDS KEEP THEIR PLACE — before the word step — so a
+     refused file never costs a single keystroke. See specs/scheduler-spec.md
+     § 21.
+
+     esc() lives twice in this file on purpose: the SchedEdit IIFE below has its
+     own, and this one is the same five-character map. The dialog interpolates
+     record COUNTS, which are digits today — and "it is digits today" is exactly
+     the assumption that stops being true one refactor from now.             */
+  const ESC5 = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ESC5[c]);
+
+  /* Layer 2 asked BEFORE the UI moves, so a view-only device never meets an OS
+     file picker it is not allowed to use. The seam behind each of these asks
+     again through mayWrite() and remains the wall — this is the courtesy that
+     makes the refusal NAME the act instead of shrugging. */
+  const editOn = () => { const E = window.SchedEdit; return !E || E.on(); };
+  function refuseWrite(what) {
+    const E = window.SchedEdit;
+    if (E && E.refuse) return E.refuse(what);
+    toast("View-only — unlock Editor mode to " + what + ".", "bad");
+    return false;
+  }
+
+  /* THE TYPED-WORD DIALOG. House modal, nothing new invented: the .ed-pop veil
+     and the .ed-box card the editor dialog already uses, tokens-only.
+     Esc cancels · ↩ Cancel cancels · a click on the veil cancels · and CANCEL
+     MEANS NOTHING HAPPENS: the promise resolves false and the caller returns
+     before a single collection is touched. Enter submits, so the keyboard alone
+     finishes it. The comparison is trimmed and case-insensitive on purpose —
+     the gate is «read the sentence and type the word», not «hold shift».     */
+  let wordBusy = false;
+  function wordPrompt(o) {
+    return new Promise((resolve) => {
+      if (wordBusy || !document.body) { resolve(false); return; }   // never two at once
+      wordBusy = true;
+      const veil = document.createElement("div");
+      veil.className = "ed-pop sch-wordpop";
+      veil.innerHTML = `<div class="ed-box" role="dialog" aria-modal="true" aria-label="${esc(o.title)}">
+        <div class="ed-ico" aria-hidden="true">${esc(o.ico || "⚠")}</div>
+        <h3>${esc(o.title)}</h3>
+        <p class="hint">${o.body}</p>
+        <label class="ed-lbl" for="sch-wordin">Type ${esc(o.word)} to continue</label>
+        <input id="sch-wordin" type="text" autocomplete="off" spellcheck="false"
+               placeholder="${esc(o.word)}" aria-describedby="sch-wordmsg">
+        <div class="ed-row">
+          <button type="button" class="sch-tbtn danger" data-w="go">${esc(o.go)}</button>
+          <button type="button" class="sch-tbtn" data-w="cancel">↩ Cancel</button>
+        </div>
+        <div class="ed-status" id="sch-wordmsg" role="status"></div>
+      </div>`;
+      const done = (v) => {
+        if (!veil.parentNode) return;
+        document.removeEventListener("keydown", onKey, true);
+        veil.remove();
+        wordBusy = false;
+        resolve(v);
+      };
+      const submit = () => {
+        const el = veil.querySelector("#sch-wordin");
+        const typed = String(el ? el.value : "").trim();
+        if (typed.toUpperCase() === String(o.word).toUpperCase()) { done(true); return; }
+        const m = veil.querySelector("#sch-wordmsg");
+        if (m) m.textContent = typed ? "that is not the word — type " + o.word : "type " + o.word + " to continue";
+        if (el) { el.focus(); el.select(); }
+      };
+      function onKey(e) {
+        if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); done(false); return; }
+        if (e.key === "Enter" && veil.contains(e.target)) { e.preventDefault(); e.stopPropagation(); submit(); }
+      }
+      veil.addEventListener("click", (e) => {
+        if (e.target === veil || e.target.closest('[data-w="cancel"]')) { done(false); return; }
+        if (e.target.closest('[data-w="go"]')) submit();
+      });
+      document.addEventListener("keydown", onKey, true);
+      document.body.appendChild(veil);
+      const f = veil.querySelector("#sch-wordin");
+      if (f) setTimeout(() => f.focus(), 50);
+    });
+  }
+
   /* ── backup: export / import / reset ────────────────────────────────────── */
   function snapshot() {
     const out = { schema: SCHEMA, exported_at: new Date().toISOString() };
@@ -478,9 +574,17 @@
     const found = NAMES.filter((n) => pick(n) !== null);
     if (!found.length) { toast("Import failed — no scheduler collection inside.", "bad"); return false; }
 
+    /* Round 20 · layer 3 — the counts sentence is the old confirm(), word for
+       word; only «Continue?» has become a word you have to type. */
     const n = (pick("students") || []).length + "/" + (pick("trainingLog") || []).length;
-    if (!confirm("Import replaces the whole scheduler store (students/log: " + n + ").\n"
-      + "The current data is lost unless you exported it first.\n\nContinue?")) return false;
+    const go = await wordPrompt({
+      ico: "⭱", word: "REPLACE", go: "⭱ Replace the store",
+      title: "Replace the whole scheduler store?",
+      body: "Import replaces the whole scheduler store (students/log: <b>" + esc(n) + "</b>). "
+        + "The current data is lost unless you exported it first. It replaces all "
+        + NAMES.length + " collections, the config and the editor code with them.",
+    });
+    if (!go) return false;
 
     for (const name of NAMES) {
       const v = pick(name);
@@ -495,8 +599,14 @@
 
   async function resetToSeed() {
     if (!mayWrite("reset the store")) return false;
-    if (!confirm("Reset the scheduler to the seed file?\n"
-      + "Roster, training log, availability, duties, gates and day plans are all discarded.\n\nContinue?")) return false;
+    const go = await wordPrompt({
+      ico: "↺", word: "RESET", go: "↺ Reset to the seed",
+      title: "Reset the scheduler to the seed file?",
+      body: "Roster, training log, availability, duties, gates and day plans are all discarded. "
+        + "The editor code goes with them, so this device is left with no code set. "
+        + "This browser’s sync settings and the copy on GitHub are NOT touched.",
+    });
+    if (!go) return false;
     const ok = await seedFresh(true);
     for (const n of NAMES) lsDel(n);
     persistAll();
@@ -530,10 +640,17 @@
      are deliberately left silent — a tooltip on a control that cannot hurt you
      only teaches the eye to skip tooltips.
 
-     These three are AUTHOR-WRITTEN CONSTANTS with no interpolation, which is
-     why they go into the attribute directly: `esc()` lives in the SchedEdit
-     IIFE below, not in this one. They must therefore never contain a double
-     quote — «…» and “…” are the house quotes and are safe inside title="…". */
+     These four are AUTHOR-WRITTEN CONSTANTS with no interpolation, which is
+     why they go into the attribute directly. They must therefore never contain
+     a double quote — «…» and “…” are the house quotes and are safe inside
+     title="…".
+
+     ROUND 20 — the tooltips of ⭱ Import and ↺ Reset TRAVELLED WITH THEM into
+     the «⋯» menu, unchanged in substance: the burial moved the buttons, it did
+     not make them safer, and a shorter tooltip on a control that is now harder
+     to reach would be the wrong trade. ⋯ itself earns one for the same reason
+     ☁ Sync did — it writes nothing, but it is the DOOR to two things that
+     replace everything. */
   const TIP = {
     export: "Writes NOTHING — it reads the store and hands you the file. "
       + "Downloads scheduler-backup-YYYY-MM-DD.json: every collection, config included. "
@@ -541,38 +658,118 @@
       + "This is the way back from ⭱ Import and ↺ Reset — take one first.",
     import: "Replaces the WHOLE scheduler store with the chosen backup file — people, classes, "
       + "training log, availability, duties, gates, currency, day plans and config (the editor code with it). "
-      + "It asks first and names the counts. It touches nothing in the cloud until the next push, and "
-      + "nothing outside the Scheduler. It refuses a global roster file and a Wings Ahead export BY NAME. "
+      + "It needs ✎ Editor mode, and it asks TWICE: it names the counts and then makes you type REPLACE. "
+      + "It touches nothing in the cloud until the next push, and "
+      + "nothing outside the Scheduler. It refuses a global roster file and a Wings Ahead export BY NAME, "
+      + "before any of that. "
       + "For the shared roster use Roster → ⭱ Import roster, which merges by OID and wipes nothing. "
       + "Take a ⭳ Export first — the current data is gone otherwise.",
     reset: "Throws the whole store away and rebuilds it from the seed file that ships with the app. "
       + "Roster, training log, availability, duties, gates, currency, day plans and config all go — "
-      + "the editor code with them, so this device is left with no code set. It asks first. "
+      + "the editor code with them, so this device is left with no code set. "
+      + "It needs ✎ Editor mode and makes you type RESET. "
       + "It does NOT touch this browser’s sync settings or the ☁ Sync access code (those live outside the store), "
       + "and it does NOT touch the GitHub copy — a later ⭳ Pull brings the old data back, while a ⭱ Push after this "
       + "replaces the repo with the seed. Take a ⭳ Export first.",
+    more: "Opens the two controls that can REPLACE THE WHOLE STORE — ⭱ Import a backup and ↺ Reset to the seed. "
+      + "They live behind this button, and not on the toolbar, because they are more dangerous than they are useful "
+      + "(ruling of 22/08/2026). Opening this menu changes nothing: each one still needs ✎ Editor mode and a "
+      + "typed word before it does anything at all.",
   };
 
+  /* ROUND 20 · layer 1 — the first line keeps only what cannot lose anything:
+     ☁ Sync (inserted here by schedsync.js) and ⭳ Export. The other two move
+     behind «⋯».
+
+     THE MENU LIVES ON document.body, like the sync and editor dialogs, and for
+     one more reason that is not cosmetic: #sch-tools sits inside
+     #view-scheduler, which the edit lock's capture guard treats as DENY BY
+     DEFAULT. A button swallowed there says «unlock Editor mode to change
+     anything» — the generic sentence. Out here each one reaches its own gate
+     and names the act it refused, in the same words the seam uses.
+     Only «⋯» stays inside the guarded nav, and it is on the NAV list below
+     precisely because it opens a menu and writes nothing. */
   function mountTools(host) {
     if (!host || host._schTools) return;
     host._schTools = true;
     host.innerHTML = `
       <button type="button" class="sch-tbtn" data-t="export" title="${TIP.export}">⭳ Export</button>
-      <button type="button" class="sch-tbtn" data-t="import" title="${TIP.import}">⭱ Import</button>
-      <button type="button" class="sch-tbtn danger" data-t="reset" title="${TIP.reset}">↺ Reset</button>
+      <button type="button" class="sch-tbtn sch-morebtn" data-t="more" aria-haspopup="true"
+        aria-expanded="false" aria-controls="sch-morepop" title="${TIP.more}">⋯</button>`;
+    const moreBtn = host.querySelector('[data-t="more"]');
+
+    let pop = document.getElementById("sch-morepop");
+    if (!pop) { pop = document.createElement("div"); pop.id = "sch-morepop"; document.body.appendChild(pop); }
+    pop.className = "sch-morepop hidden";
+    pop.setAttribute("role", "menu");
+    pop.setAttribute("aria-label", "Store backup and reset");
+    pop.innerHTML = `
+      <p class="sch-morehint">Both of these REPLACE THE WHOLE STORE. Each one needs ✎ Editor mode
+        and asks you to type a word before anything happens.</p>
+      <button type="button" class="sch-tbtn" role="menuitem" data-t="import" title="${TIP.import}">⭱ Import</button>
+      <button type="button" class="sch-tbtn danger" role="menuitem" data-t="reset" title="${TIP.reset}">↺ Reset</button>
       <input type="file" accept="application/json,.json" class="sch-file" hidden>`;
-    const file = host.querySelector(".sch-file");
+    const file = pop.querySelector(".sch-file");
+
+    const isOpen = () => !pop.classList.contains("hidden");
+    function onMoreKey(e) {
+      if (e.key !== "Escape") return;
+      e.preventDefault();
+      closeMore();
+      moreBtn.focus();
+    }
+    function closeMore() {
+      pop.classList.add("hidden");
+      moreBtn.setAttribute("aria-expanded", "false");
+      document.removeEventListener("keydown", onMoreKey, true);
+    }
+    function openMore() {
+      pop.classList.remove("hidden");
+      moreBtn.setAttribute("aria-expanded", "true");
+      /* right-aligned under the button, never off the left edge */
+      const r = moreBtn.getBoundingClientRect();
+      const w = pop.offsetWidth || 268;
+      pop.style.left = Math.round(Math.max(8, r.right - w)) + "px";
+      pop.style.top = Math.round(r.bottom + 6) + "px";
+      document.addEventListener("keydown", onMoreKey, true);
+      const first = pop.querySelector("[data-t]");
+      if (first) setTimeout(() => first.focus(), 30);
+    }
+
     host.addEventListener("click", (e) => {
       const b = e.target.closest("[data-t]");
       if (!b) return;
       if (b.dataset.t === "export") exportAll();
-      else if (b.dataset.t === "import") file.click();
-      else if (b.dataset.t === "reset") resetToSeed();
+      else if (b.dataset.t === "more") { if (isOpen()) closeMore(); else openMore(); }
+    });
+    pop.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-t]");
+      if (!b) return;
+      /* LAYER 2 — never a silent no-op: a locked device is told which act it
+         just refused, and no OS file picker is opened behind the refusal. */
+      if (b.dataset.t === "import") {
+        if (!editOn()) { refuseWrite("import a backup"); return; }
+        file.click();
+        closeMore();
+      } else if (b.dataset.t === "reset") {
+        if (!editOn()) { refuseWrite("reset the store"); return; }
+        closeMore();
+        void resetToSeed();
+      }
     });
     file.addEventListener("change", async () => {
-      if (file.files && file.files[0]) await importAll(file.files[0]);
+      const chosen = file.files && file.files[0];
       file.value = "";
+      if (chosen) await importAll(chosen);
     });
+    /* outside click and a resize close the menu — an anchored popover that
+       stays behind a moved anchor is a lie about what it belongs to */
+    document.addEventListener("click", (e) => {
+      if (!isOpen()) return;
+      if (e.target.closest && (e.target.closest("#sch-morepop") || e.target.closest('[data-t="more"]'))) return;
+      closeMore();
+    });
+    window.addEventListener("resize", () => { if (isOpen()) closeMore(); });
   }
 
   window.SchedStore = {
@@ -810,6 +1007,13 @@
     '[data-b="date"]', '[data-b="day-1"]', '[data-b="day+1"]',                // which day the board SHOWS
     '[data-b="day-today"]', '[data-b="print"]', '[data-b="allip"]',
     '[data-t="export"]', "#sync-open", '[data-act="cur-print"]',              // read-only exits: backup, sync dialog, binder sheet
+    /* ROUND 20 — «⋯» OPENS A MENU AND WRITES NOTHING, exactly like #sync-open
+       one entry above: it is the door, not the act. The two acts behind it —
+       ⭱ Import and ↺ Reset — are NOT on this list and never will be: their
+       buttons live on document.body, outside this guard's scope, where each
+       meets its own SchedEdit.on() check and then its own seam. Putting them
+       here would be the mistake this comment exists to prevent. */
+    '[data-t="more"]',
     /* ROUND 18 — THE BRIDGE. Every control of the Wings Ahead cross-check
        READS: it chooses a file, filters the report, prints it, or clears it.
        The pane cannot write — not the store, not Wings Ahead, not the repo

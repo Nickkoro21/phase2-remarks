@@ -137,6 +137,19 @@
     boardStop: "Records the Flight Aptitude Board outcome STOP: it writes one referral gate row dated today AND "
       + "sets the student’s status to WITHDRAWN — he leaves every picker and every count of the day. "
       + "It asks first. Undone only by editing the student in the Roster and the gate in the log.",
+    /* ROUND 20 (R19 verify finding 1) — THE TWO BARE «+». Every other adder on
+       this board carries its own words («+ Wave line», «+ F/S line», «+ Night»,
+       «+ Lessons block»), which is why § 20γ of the spec let them stay silent:
+       the LABEL was the explanation. These two have no label at all — a bare
+       glyph beside a section head — so the exemption never applied to them and
+       the silence was an oversight, not a decision. */
+    altAddS: "Adds an empty ALTERNATE STUDENT line — a stand-by sortie, picked afterwards from the two "
+      + "dropdowns it brings with it — and stores the day plan straight away, before you have chosen anything. "
+      + "An alternate counts as one item of its sortie’s kind in that student’s daily load. "
+      + "It writes the day plan only: no training-log event, no roster record. Take it back with its own ✕.",
+    altAddI: "Adds an empty ALTERNATE INSTRUCTOR line and stores the day plan straight away, before you have "
+      + "picked the name. It writes the day plan only — it is NOT a duty-roster assignment, it creates no "
+      + "training-log event and it changes no instructor record. Take it back with its own ✕.",
   };
 
   /* ── time ─────────────────────────────────────────────────────────────── */
@@ -1807,10 +1820,10 @@
         <span class="sch-hint">an alternate counts as one item of its sortie's kind in the SP's daily load</span></div>
       ${secOpen("alts") ? `<div class="sch-grid2">
         <div><div class="sch-h"><span class="sch-lbl">Students (+ sortie)</span>
-            <button type="button" class="sch-mini" data-b="add-alt-s"${dis}>+</button></div>
+            <button type="button" class="sch-mini" data-b="add-alt-s" title="${esc(TIP.altAddS)}"${dis}>+</button></div>
           ${sRows || `<p class="sch-hint">None.</p>`}</div>
         <div><div class="sch-h"><span class="sch-lbl">Instructors</span>
-            <button type="button" class="sch-mini" data-b="add-alt-i"${dis}>+</button></div>
+            <button type="button" class="sch-mini" data-b="add-alt-i" title="${esc(TIP.altAddI)}"${dis}>+</button></div>
           ${iRows || `<p class="sch-hint">None.</p>`}</div>
       </div>` : ""}
     </section>`;
