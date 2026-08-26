@@ -2368,11 +2368,6 @@
     return `
       <section class="panel sch-panel">
         <div class="sch-h"><h2>Bridge — cross-check with Wings Ahead
-          <!-- PHASE 3b · FINDING 10 — this badge still said «read-only» beside a
-               panel whose own prose says Phase 3 writes, and beside live ✔ Apply
-               buttons. A badge is the first thing read and the last thing
-               re-read, so it said the opposite of the truth in the loudest
-               place on the pane. -->
           <span class="count">writes on your confirm</span></h2>
           <span class="sch-spacer"></span>
           <button type="button" class="sch-btn primary" data-brg="pick">⭱ Choose a Wings Ahead export…</button>
