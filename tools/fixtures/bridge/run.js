@@ -17,6 +17,7 @@ require("./p6-fs60.js");         // Round 19 — F/S judged at 60
 require("./p7-nongraded.js");    // slice 1b — the badge and the shred note
 require("./p8-esc.js");          // esc(), all five characters
 require("./p9-apply.js");        // Phase 3 — apply · provenance · idempotency · undo
+require("./p10-offgraph.js");    // Phase 3b — the off-catalogue node, and the badge
 
 const R = require("./harness.js").report();
 console.log("\n════════════════════════════════════════════");

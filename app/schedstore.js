@@ -685,9 +685,10 @@
      βελακια που μπορει να επηρεασουν την βαση δεδομενων να εχουμε hover
      εξηγησης.» Every glyph that can WRITE says, on hover, three things and in
      this order: WHAT it replaces or writes · WHAT it never touches · THE SAFE
-     PATH. Read-only glyphs (🖨 Print, ✕ Close, ‹ › day nav, the Bridge pane)
-     are deliberately left silent — a tooltip on a control that cannot hurt you
-     only teaches the eye to skip tooltips.
+     PATH. Read-only glyphs (🖨 Print, ✕ Close, ‹ › day nav, the Bridge pane's
+     READ controls — its ✔ Apply / ↦ adopt / ↺ Undo have carried theirs since
+     Phase 3) are deliberately left silent: a tooltip on a control that cannot
+     hurt you only teaches the eye to skip tooltips.
 
      These four are AUTHOR-WRITTEN CONSTANTS with no interpolation, which is
      why they go into the attribute directly. They must therefore never contain

@@ -1024,8 +1024,11 @@ window.fmtDMY = function fmtDMY(v) {
   const nm = (code) => S().personLabelOf(null, code);
   const nmOpt = (coll, code) => S().personOptionOf(coll, code);
 
-  /* Round 18 — "bridge" is the READ-ONLY cross-check with Wings Ahead
-     (app/schedbridge.js, specs/bridge-spec.md). It writes nothing. */
+  /* Round 18 — "bridge" is the cross-check with Wings Ahead
+     (app/schedbridge.js, specs/bridge-spec.md). Round 21 (Phase 3) made it
+     write in ONE direction: a line the developer confirms becomes an FDMS
+     training-log event, past the edit lock and a numbered dialog. Towards
+     Wings Ahead and towards the repository it still writes nothing, ever. */
   const PANES = ["board", "roster", "log", "balance", "bridge"];
   const STATUS_OPTS = ["active", "hold", "kepe", "withdrawn"];
   /* "kepe" stays the STORED value for compatibility — the UI says SMS */
@@ -1226,10 +1229,12 @@ window.fmtDMY = function fmtDMY(v) {
       are all derived from the training log and the duty roster recorded here.</p></div>`;
   }
 
-  /* ── BRIDGE (Round 18, slice 1 — READ-ONLY) ─────────────────────────────
+  /* ── BRIDGE (Round 18 slice 1 · Round 21 Phase 3) ───────────────────────
      The cross-check with Wings Ahead. It reads one export file the user
-     chooses and writes NOTHING: not the store, not WA, not the repository.
-     Everything it does lives in app/schedbridge.js; this is only the seat. */
+     chooses; since Phase 3 a line the developer CONFIRMS is written into the
+     FDMS training log — and nothing is ever written to Wings Ahead or to the
+     repository. Everything it does lives in app/schedbridge.js, behind the
+     edit lock and its [data-brgw] controls; this is only the seat. */
   function renderBridge() {
     const el = $id("sch-bridge");
     if (window.schBridgeInit) { window.schBridgeInit(el); return; }

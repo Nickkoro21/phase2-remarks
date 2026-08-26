@@ -173,6 +173,11 @@
     { id: "fs", label: "F/S (simulator)" },
     { id: "lessons", label: "Ground lessons" },
     { id: "exams", label: "Ground exams" },
+    /* PHASE 3b · FINDING 9 — a home for the events the syllabus graph does not
+       carry. It exists so that such an event has somewhere VISIBLE to land: a
+       row counted in the summary and then missing from the table is the same
+       lie as a clean-looking empty report. */
+    { id: "off_graph", label: "Off-catalogue — nodes the syllabus graph does not carry" },
   ];
 
   /* MIRROR of wa.eval_ids() (D:\WingsAhead\db\schema.sql). Eight codes, in
@@ -202,6 +207,13 @@
   };
   const WA_SECTION_IDS = Object.keys(WA_SECTIONS);
 
+  /* THE SECTIONS WHOSE ROW IDENTITY IS A SYLLABUS NODE — the six the graph is
+     asked about, and only those. The event sections name no node of their own:
+     a FAIL / ALMOST GOOD is an ANNOTATION on a flight, an NFS is a form and SMS
+     is a status plus a gate, so «the graph does not carry it» is not a finding
+     about them, it is their nature. */
+  const NODE_SECTIONS = ["evaluations", "solo_flights", "flights", "fs", "lessons", "exams"];
+
   /* ── small helpers ─────────────────────────────────────────────────────── */
   const isObj = (v) => !!v && typeof v === "object" && !Array.isArray(v);
   const arr = (v) => (Array.isArray(v) ? v : []);
@@ -228,6 +240,79 @@
      "MN-1001" and "mn1001" are one number and a typo is still a typo. */
   const normMn = (v) => up(v).replace(/[^A-Z0-9]/g, "");
   const normName = (v) => up(v).replace(/\s+/g, " ");
+
+  /* ══ THE GRAPH QUESTION — PHASE 3b, FINDING 9 ════════════════════════════
+     THE HOLE THIS CLOSES. Until this round `kindOf()` — the FDMS syllabus graph
+     — was asked on ONE side only, in the FDMS reader. A Wings Ahead row naming
+     a sortie the graph does not carry (a retired code, a typo, «ZZ999», or a
+     near-miss like «C4404» beside the real «C4304») therefore sailed through as
+     an ordinary appliable `wa_only`; the confirm dialog promised it would
+     «COMPLETE the node and unlock its successors» about a node that does not
+     exist; the write landed; and the NEXT report could not see its own write,
+     because the same kindOf() gates the reader. So the row stayed `wa_only` and
+     every further click minted another orphan event.
+     From here the question is asked on BOTH sides and at every seam that can
+     lead to a write. */
+
+  /* THE NODE BEHIND A ROW IDENTITY. A ground-lesson uid is «g:GROUP::COURSE» —
+     the course belongs to the ROW IDENTITY (it is FDMS's own parseGroupCourses
+     join key) and NOT to the syllabus node, and the graph is asked about the
+     node. Every other uid is its own node. */
+  const nodeOfUid = (uid) => {
+    const s = trim(uid);
+    const i = s.indexOf("::");
+    return i > 0 ? s.slice(0, i) : s;
+  };
+  const codeOfNode = (node) => {
+    const i = node.indexOf(":");
+    return i > 0 ? node.slice(i + 1) : node;
+  };
+
+  /* THE SENTENCE, IN ONE PLACE, because the report, the plan, the refusal and
+     the writer must all say it in the SAME words — the R20 lesson about two
+     seams is only worth anything if both seams tell the developer the same
+     thing. It names the code, and it says what the absence of a node means. */
+  function offGraphWhy(uid) {
+    const node = nodeOfUid(uid);
+    return "«" + codeOfNode(node) + "» is not in the FDMS syllabus graph — there is no node «" + node
+      + "» for this row to be about. Nothing can be compared against a node that does not exist, nothing "
+      + "can complete it, and nothing may be written for it: SchedReady would never read such an event, "
+      + "so no Progress screen would ever show it and this report could not even see its own write. An "
+      + "off-catalogue row lives on the Wings Ahead side only — correct the code there, or add the node "
+      + "to the syllabus first (specs/bridge-spec.md § 13δ)";
+  }
+
+  /* the one predicate both the classification and the Effect column ask */
+  function offGraph(r, kindOf) {
+    const k = typeof kindOf === "function" ? kindOf : () => null;
+    return !!(r && r.side === "wa" && NODE_SECTIONS.indexOf(r.sec) >= 0
+      && r.uid && !k(nodeOfUid(r.uid)));
+  }
+
+  /* A ROW WITH NO NODE COMPLETES NOTHING. nodeEffect() answers «does this row
+     complete its FDMS node», and for a row the graph has never heard of the
+     honest answer is not «yes, it scored 78» — there is no node to complete.
+     Without this the table printed «completes the node» in the Effect column of
+     the very row whose refusal says the node does not exist: the same lie the
+     confirm dialog used to tell, one column to the left. */
+  function noNodeEffect(row) {
+    row.completes = false;
+    row.effect = "no node — nothing is completed and nothing is unlocked";
+    return row;
+  }
+
+  /* the mirror sentence, for an event the STORE already holds on such a node */
+  function offGraphSeen(f) {
+    const node = nodeOfUid(f.uid);
+    return "the FDMS training log holds this event on «" + node + "», and the syllabus graph has no node "
+      + "by that name. SchedReady never reads it, so it completes nothing, unlocks nothing and reaches no "
+      + "Progress screen — it is listed here for one reason only: an event on a node the catalogue does "
+      + "not carry must never be invisible."
+      + (f.waWritten ? " This event was written by the BRIDGE (" + f.srcId + "), which is exactly the "
+        + "orphan a row that got past the graph check leaves behind." : "")
+      + " Correct the node in the Training log, or remove the event there — the bridge deletes nothing "
+      + "(ruling #2).";
+  }
 
   /* ── the wa-export-v1 contract ─────────────────────────────────────────── */
 
@@ -528,7 +613,15 @@
        "adopt"  a per-field adoption — the row must be expressible, but the
                 instructor is checked per field, where the field is offered;
        "full"   a CREATE, which is answerable for every field of the event. */
-  function refuseApply(gid, j, ip, person, need) {
+  function refuseApply(gid, j, ip, person, need, nodeUid, kindOf) {
+    /* PHASE 3b · FINDING 9 — SEAM ③, THE SHARED REFUSAL. It is asked FIRST, and
+       deliberately BEFORE the `need === "date"` early return: an UPDATE that
+       moves a date is still a write, and a date moved onto a node that does not
+       exist is the same orphan by a quieter door. `nodeUid` is empty for the
+       event sections, whose rows name no node of their own and keep their own
+       out-of-slice sentence. */
+    const k = typeof kindOf === "function" ? kindOf : () => null;
+    if (nodeUid && !k(nodeOfUid(nodeUid))) return offGraphWhy(nodeUid);
     if (APPLY_GROUPS.indexOf(gid) < 0) {
       return "this slice fills FLIGHTS and F/S only — ground lessons and exams, the eight checkrides, "
         + "the prescribed solos and the FAIL / ALMOST GOOD / NFS / SMS events each wait for a slice of "
@@ -1032,6 +1125,14 @@
          stays unmatched is emitted there. Keeping them out of fdRows is what
          stops one NFS being reported twice. */
       const fdSpecials = [];
+      /* PHASE 3b · FINDING 9 — THE DEFENSIVE READ. An event the store holds on
+         a node the graph does not carry used to be dropped on the floor by the
+         one line `if (!band) return`, and that line is what made the hole
+         invisible from BOTH ends: the pane could create such an event and then
+         could not show it, so the row stayed `wa_only` and every further click
+         minted another orphan. These are collected instead, and emitted below
+         as visible `fdms_only` rows of their own. */
+      const fdOffGraph = [];
       log.forEach((ev) => {
         if (!isObj(ev)) return;
         const node = evNodeOf(ev);
@@ -1039,8 +1140,9 @@
           if (trim(ev.special) && trim(ev.student) === person.code) fdSpecial(ev, person, fdSpecials);
           return;
         }
-        const band = kindOf(node);
-        if (!band) return;                              // the graph does not know it
+        /* the reach test comes FIRST now: an event that never reaches this
+           student is not this student's orphan either, and asking the graph
+           about it would list one stray node once per member of the school. */
         const scope = trim(ev.scope);
         if (scope === "student") {
           if (trim(ev.student) !== person.code) return;
@@ -1050,6 +1152,13 @@
           if (!reaches) return;
           const absent = arr(ev.absent).some((a) => isObj(a) && trim(a.student) === person.code);
           if (absent) return;                           // the class sat it, this student did not
+        }
+        const band = kindOf(node);
+        if (!band) {
+          /* a SPECIAL (NFS today) is outside the graph BY NATURE and has its own
+             pass — it is not an off-catalogue node, it is a form. */
+          if (!trim(ev.special)) fdOffGraph.push(fdmsRow(oid, ev, "", "off_graph", ev.course));
+          return;
         }
         const g = groupOfNode(node, band, waRows);
         fdRows.push(fdmsRow(oid, ev, band, g, ev.course));
@@ -1078,7 +1187,7 @@
         };
         res.pairs.forEach((pr) => {
           const id = emit();
-          const refused = refusalOf(pr.wa, b.gid);
+          const refused = refusalOf(pr.wa, b.gid, kindOf);
           const cmp = compareRow(pr.wa, pr.fdms, ipResolve);
           const bad = withRec(pr.wa.problems);
           /* an identity that cannot be resolved is class 5, not class 4: the
@@ -1092,16 +1201,19 @@
           else if (pr.wa.date !== pr.fdms.date) cls = "source_moved";
           else if (cmp.diffs.length) cls = "payload_differs";
           else cls = "agree";
-          rows.push(mkRow(cls, b.gid, person, b.uid, id, pr.wa, pr.fdms, cmp, refused, bad));
+          const prow = mkRow(cls, b.gid, person, b.uid, id, pr.wa, pr.fdms, cmp, refused, bad);
+          if (offGraph(pr.wa, kindOf)) noNodeEffect(prow);
+          rows.push(prow);
         });
         res.waOnly.forEach((r) => {
           const id = emit();
-          const refused = refusalOf(r, b.gid);
+          const refused = refusalOf(r, b.gid, kindOf);
           const bad = withRec(r.problems);
           const j = judge(r);
           const cls = bad.length ? "unwritten" : refused ? "refused" : "wa_only";
           const row = mkRow(cls, b.gid, person, b.uid, id, r, null,
             { diffs: [], jw: j, jf: null, duration: r.duration }, refused, bad);
+          if (offGraph(r, kindOf)) noNodeEffect(row);
           /* WHY a Wings-Ahead-only row is not simply "propose it": each of the
              three non-graded states says something different, and the sentence
              must be the one that is true (rulings #3 and #5). */
@@ -1211,6 +1323,26 @@
         }
       });
 
+      /* THE ORPHANS, SAID OUT LOUD (Phase 3b · finding 9). One row per event
+         the store holds on a node the syllabus does not carry — `fdms_only`,
+         with the sentence, in a group of its own so it is never mistaken for a
+         flight the FC is waiting on. It carries no apply plan (makePlan answers
+         only to wa_only / source_moved / payload_differs), so the report SEES
+         it and can still write nothing about it. */
+      let offOrd = 0;
+      fdOffGraph.forEach((f) => {
+        offOrd += 1;
+        const row = mkRow("fdms_only", "off_graph", person, f.uid,
+          { ord: offOrd, rid: [oid, "off_graph", f.uid, offOrd].join(" ∷ ") }, null, f,
+          { diffs: [], jw: null, jf: judge(f), duration: null }, "", withRec(f.problems));
+        /* the Effect column asks the ROW, and judge() would read a stored
+           `result: "completed"` and print «completes the node» about a node
+           that does not exist. The honest answer is the absence itself. */
+        noNodeEffect(row);
+        row.detail = offGraphSeen(f);
+        rows.push(row);
+      });
+
       /* an FDMS special no Wings Ahead row claimed */
       fdSpecials.forEach((f) => {
         if (f.claimed) return;
@@ -1252,7 +1384,7 @@
     let appliable = 0;
     rows.forEach((x, i) => {
       x.key = "r" + i;
-      x.plan = makePlan(x, ipResolve, waParsed.exported_at);
+      x.plan = makePlan(x, ipResolve, waParsed.exported_at, kindOf);
       if (x.plan) x.plan.key = x.key;
       if (x.plan && x.plan.can) appliable += 1;
     });
@@ -1341,12 +1473,15 @@
      would be written, and WHAT WOULD IT DO TO THE NODE. Pure — the confirm
      dialog, the change log and the fixtures all read the same object, so the
      sentence the developer confirms is the sentence the store gets. */
-  function makePlan(x, ipResolve, exportAt) {
+  function makePlan(x, ipResolve, exportAt, kindOf) {
     const cls = x.cls;
     if (cls !== "wa_only" && cls !== "source_moved" && cls !== "payload_differs") return null;
     const wa = x._wa, fd = x._fd;
     if (!wa) return null;                       // nothing on the Wings Ahead side to write
     const gid = x.group;
+    /* PHASE 3b · FINDING 9 — the uid this row's node is asked about, or "" for
+       the event sections. Computed once and handed to BOTH seams below. */
+    const nodeUid = NODE_SECTIONS.indexOf(x.sec) >= 0 ? x.uid : "";
     const j = judge(wa);
     const ip = ipResolve(wa);
     const person = { oid: x.oid, code: x.code, name: x.who };
@@ -1382,6 +1517,14 @@
       list.push({ field: "bridge.src." + key, from: from == null ? "" : from, to: to == null ? "" : to });
     };
 
+    /* PHASE 3b · FINDING 9 — SEAM ②, THE PLAN BUILDER. Seam ① should already
+       have made this row class `refused`, which never reaches makePlan at all.
+       It is asked again here, before anything else, because a classification is
+       one edit away from changing and the door must not re-open with it: that
+       is the whole R20 lesson — one guard is an intention, two are a wall. */
+    const kOf = typeof kindOf === "function" ? kindOf : () => null;
+    if (nodeUid && !kOf(nodeOfUid(nodeUid))) { p.why = offGraphWhy(nodeUid); return p; }
+
     /* A ROW THE REPORT ALREADY REFUSED IS NEVER OFFERED. `unwritten`,
        `refused`, `unresolvable` are classes of their own and never reach here,
        but a row can be `wa_only` AND carry record-level problems, and those are
@@ -1394,7 +1537,7 @@
     if (p.act === "update") {
       /* the date is the only field this act writes, so the instructor and the
          verdict are none of its business — a moved date is a moved date. */
-      p.why = refuseApply(gid, j, ip, person, "date");
+      p.why = refuseApply(gid, j, ip, person, "date", nodeUid, kOf);
       if (!p.why && (!wa.date || !fd || !fd.date)) p.why = "one of the two dates is missing";
       if (!p.why && fd.date === wa.date) p.why = "the two dates are already the same";
       if (p.why) return p;
@@ -1410,7 +1553,7 @@
     }
 
     if (p.act === "adopt") {
-      p.why = refuseApply(gid, j, ip, person, "adopt");
+      p.why = refuseApply(gid, j, ip, person, "adopt", nodeUid, kOf);
       if (p.why) return p;
       const want = resultOf(j);
       const now = fd ? trim(fd.extra.result) : "";
@@ -1459,7 +1602,7 @@
     }
 
     /* create */
-    p.why = refuseApply(gid, j, ip, person, "full");
+    p.why = refuseApply(gid, j, ip, person, "full", nodeUid, kOf);
     if (p.why) return p;
     p.result = resultOf(j);
     p.can = true;
@@ -1488,8 +1631,9 @@
 
   /* the structural refusals — a rule refusing a row on principle, listed with
      the rule that refused it (never silently dropped) */
-  function refusalOf(r, gid) {
+  function refusalOf(r, gid, kindOf) {
     if (!r || r.side !== "wa") return "";
+    const k = typeof kindOf === "function" ? kindOf : () => null;
     const code = r.uid.indexOf("s:") === 0 ? r.uid.slice(2) : "";
     if ((r.sec === "flights" || r.sec === "fs") && code && EVAL_IDS.indexOf(code) >= 0) {
       return "the checkride " + code + " is stored in the Evaluations section — it is SHOWN in the flight "
@@ -1505,6 +1649,14 @@
     if ((gid === "flights" || gid === "fs") && r.kind && r.kind !== "syllabus" && r.kind !== "repeat") {
       return "a " + r.kind.toUpperCase() + " is off-catalogue by nature — FDMS's graph has no node for it";
     }
+    /* PHASE 3b · FINDING 9 — SEAM ①, THE CLASSIFICATION ITSELF. Asked LAST so
+       that the four rules above keep their own, more specific, words: a
+       checkride filed as an ordinary flight and an FCF are already refused for
+       what they ARE, and the code they name may well exist. What is left here
+       is the plain case — the graph has never heard of this row — and the row
+       becomes class `refused`, which carries no apply plan at all, so it can
+       never reach the checkbox, the dialog or the writer. */
+    if (offGraph(r, k)) return offGraphWhy(r.uid);
     return "";
   }
 
@@ -1753,6 +1905,15 @@
 
   function applyPlan(p) {
     if (!p || !p.can) return { ok: false, why: (p && p.why) || "this row is not appliable" };
+    /* PHASE 3b · FINDING 9 — SEAM ④, THE WRITER'S OWN. The three seams above
+       are all inside the ENGINE, which works on the plan it was handed; this
+       one asks the LIVE graph, here, at the last moment before the store is
+       touched. It is the seam that answers a console: whatever built the plan,
+       whatever the report believed, an event is not written for a node
+       SchedReady does not have. With no graph loaded it refuses too — a writer
+       that cannot ask is a writer that does not write. */
+    const band = R() && R().kindOf ? R().kindOf(nodeOfUid(p.uid)) : null;
+    if (!band) return { ok: false, why: offGraphWhy(p.uid) };
     try {
       return p.act === "create" ? applyCreate(p) : applyPatch(p);
     } catch (err) {
@@ -2207,7 +2368,12 @@
     return `
       <section class="panel sch-panel">
         <div class="sch-h"><h2>Bridge — cross-check with Wings Ahead
-          <span class="count">read-only</span></h2>
+          <!-- PHASE 3b · FINDING 10 — this badge still said «read-only» beside a
+               panel whose own prose says Phase 3 writes, and beside live ✔ Apply
+               buttons. A badge is the first thing read and the last thing
+               re-read, so it said the opposite of the truth in the loudest
+               place on the pane. -->
+          <span class="count">writes on your confirm</span></h2>
           <span class="sch-spacer"></span>
           <button type="button" class="sch-btn primary" data-brg="pick">⭱ Choose a Wings Ahead export…</button>
           ${r ? `<button type="button" class="sch-btn" data-brg="print">🖨 Print</button>

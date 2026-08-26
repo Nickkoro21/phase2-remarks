@@ -15,7 +15,7 @@ the number, and the exit code is `0` only if nothing failed.
 
 ```
 ════════════════════════════════════════════
-  BRIDGE FIXTURES — 316 passed, 0 failed
+  BRIDGE FIXTURES — 382 passed, 0 failed
 ════════════════════════════════════════════
 ```
 
@@ -53,6 +53,17 @@ whole enumeration of `specs/bridge-spec.md` § 10 the way the spec says it does:
   the sentence that says why. The write controls are checked to be **absent from
   `SchedStore`'s NAV list**, and the store-touching half is checked to be absent
   from the public surface.
+* **Phase 3b** — the two findings of the Phase-3 adversarial verify. A Wings
+  Ahead row naming a sortie the **syllabus graph does not carry** (`ZZ999`, and
+  the near-miss `C4404` beside the real `C4304`) is class `refused` with the
+  sentence, carries **no plan**, and completes nothing — while the real sortie
+  beside it still applies. The graph is asked about the **node**, not the row
+  identity, so a known lesson group with an unknown course is untouched. The
+  **four seams** (classification · plan builder · shared refusal · the writer's
+  own, which asks the live graph) are read out of the source, including the
+  ordering that puts the question **before** the «date» act's early return. And
+  an event the store already holds on such a node is a **visible** `fdms_only`
+  row in its own group, never dropped on the floor.
 
 It does **not** prove anything about the pane's painting, the palettes, or the
 live store — those are verified in the app and recorded in § 10 as such.
@@ -87,6 +98,7 @@ live store — those are verified in the app and recorded in § 10 as such.
 | `p7-nongraded.js` | the NON-GRADED badge and the shred note |
 | `p8-esc.js` | `esc()`, all five characters, hostile name |
 | `p9-apply.js` | Phase 3 — the plan, the written record, idempotency, drift, undo, the refusals |
+| `p10-offgraph.js` | Phase 3b — the off-catalogue node (four seams + the defensive read), and the honest badge |
 
 The offline builder (`tools/build_offline.py`) never looks in here: it collects
 from an explicit file list under `app/` and `data/`, so nothing in this directory
