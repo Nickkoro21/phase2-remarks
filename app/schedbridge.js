@@ -1,12 +1,39 @@
 "use strict";
-/* SchedBridge — THE BRIDGE, SLICE 1: the READ-ONLY CROSS-CHECK REPORT.
+/* SchedBridge — THE BRIDGE: the cross-check report (slice 1) and, from
+ * PHASE 3 (26/08/2026), THE CONFIRMED FILL — «Πάμε να το κάνουμε two way».
  *
  * WHAT THIS IS
  *   A Scheduler pane that reads ONE Wings Ahead admin-export file the user
  *   chooses from disk, cross-checks it against the local FDMS store, and paints
- *   a report. It writes NOTHING — not to the store, not to WA, not to the repo,
- *   not to localStorage. There is no credential anywhere in this file and no
- *   schema change on either side. See specs/bridge-spec.md.
+ *   a report. The report itself still goes nowhere: not to WA, not to the repo,
+ *   not to localStorage, no credential, no network, no schema change on either
+ *   side. See specs/bridge-spec.md.
+ *
+ * WHAT PHASE 3 ADDED — and the five walls around it
+ *   The report stopped being read-only in ONE direction only: a row the
+ *   developer CONFIRMS becomes an event in the FDMS **training log**. Nothing
+ *   is ever written back to Wings Ahead, and nothing is ever written without
+ *   all five of these:
+ *     1 · THE EDIT LOCK. Every write control carries [data-brgw], which is
+ *         deliberately NOT on SchedStore's NAV list — so the veneer disables
+ *         it, the capture guard refuses the click by name, and upsert() asks
+ *         mayWrite() a third time. Slice 1 promised exactly this in the NAV
+ *         comment; Phase 3 is where the promise was called in.
+ *     2 · AN EXPLICIT ACT PER ROW. [✔ Apply] on one row, or a selection and
+ *         «✔ Apply N selected». There is no auto-apply and no apply-all.
+ *     3 · A NUMBERED DIALOG THAT STATES THE NODE EFFECT of every single line
+ *         before the confirm — «completes the node» / «does not complete the
+ *         node» — because that is the sentence a syllabus graph turns on.
+ *     4 · PROVENANCE ON EVERY EVENT (`id: "wa:…"` · `origin: "wa"` · a whole
+ *         `bridge` block). Re-loading the SAME export then reads `agree` and
+ *         can never duplicate; an export where the student CHANGED the row
+ *         reads `payload_differs` AGAINST the event the bridge wrote.
+ *     5 · A CHANGE LOG WITH ↺ UNDO (ruling #2), in the store, synced like
+ *         everything else, recording who · when · rid · what was written and
+ *         what was there before.
+ *   What Phase 3 deliberately does NOT do: delete anything (a tombstone is a
+ *   separate deliberate act, ruling #2), write to Wings Ahead, open a network
+ *   transport, or touch any group but `flights` and `fs`. See § 13 of the spec.
  *
  * THE EIGHT RULINGS OF THE FLIGHT COMMANDER (21/08/2026) — recorded verbatim
  * in the spec; here is what each one MEANS IN THIS FILE:
@@ -66,10 +93,12 @@
  *   .gitignore carries the filename patterns defensively.
  *
  * NODE-TESTABLE ON PURPOSE
- *   Section ① touches no DOM and is attached to window.SchedBridge, so the
- *   fixtures can require() this file with `global.window = global` and run the
- *   whole cross-check headlessly. Section ② is the pane and only runs from a
- *   UI event.
+ *   Section ① touches no DOM and no store, and is attached to
+ *   window.SchedBridge, so the fixtures can require() this file with
+ *   `global.window = global` and run the whole cross-check — and the whole
+ *   apply PLAN, including the record it would write — headlessly.
+ *   Section ② is the writer: the only place that calls SchedStore. Section ③
+ *   is the pane, and it only runs from a UI event.
  */
 (() => {
   const W = typeof window !== "undefined" ? window : globalThis;
@@ -78,7 +107,7 @@
      ① THE ENGINE — pure, no DOM, no store, no fetch
      ══════════════════════════════════════════════════════════════════════════ */
 
-  const VERSION = "bridge-slice-1";
+  const VERSION = "bridge-phase-3";
   const WA_SCHEMA = "wa-export-v1";
 
   /* RULING #6 — the three thresholds, frozen per row when it is judged.
@@ -422,6 +451,155 @@
     return j.source === "ng" || j.source === "awaiting" || j.verdict === "incomplete";
   }
 
+  /* ══ PHASE 3 · THE CONFIRMED FILL — the writer's PURE half ════════════════
+     Everything below is arithmetic on plain objects: it decides WHETHER a row
+     may be written, WHAT the event would look like and WHAT it would do to the
+     syllabus node. It touches no store and no DOM, so the fixtures drive it
+     headlessly and the answers in the confirm dialog are the same answers the
+     store gets. § ③ is the only place that calls upsert(). */
+
+  /* THE SCOPE OF THIS SLICE. `flights` and `fs` and nothing else — the same
+     scope specs/bridge-spec.md § 11 recorded for it, and each exclusion is a
+     reason, not an omission:
+       lessons/exams  a ground event is CLASS-scope in FDMS and reaches the
+                      student through membership read at run time; writing a
+                      per-student copy would freeze a fact that is supposed to
+                      move, and a class change would fabricate attendance.
+       evaluations    the eight checkrides have their own fixed-slot doctrine
+                      on the WA side and their own evaluator rules on this one.
+       solo_flights   «a student never launches alone on their own authority» —
+                      the solo slots are prescribed, not filled in from a file.
+       events         FAIL / ALMOST GOOD are ANNOTATIONS on a flight, NFS is a
+                      form, SMS is a status plus a gate. None of them is a
+                      training-log event of the shape this writer builds. */
+  const APPLY_GROUPS = ["flights", "fs"];
+
+  /* THE PRINTED-SCALE FLOOR — NOT A PASS MARK, and the difference is the whole
+     lesson of the 22/08/2026 correction. 60 is the line a sortie must clear
+     (THRESHOLDS, ruling #6). 50 is the floor of the «ΣΚ»/ΥΣΤΕΡΗΣΗ BAND of the
+     printed ΠΔ scale, i.e. the label a mark between 50 and 59 wears — which is
+     exactly what slice 1 mistook for a pass mark. It is used HERE and only here
+     to choose the FDMS WORD for a mark already judged INCOMPLETE:
+       ≥ thr   → «completed»            (the sortie stands)
+       ≥ 50    → «lag»    ΥΣΤΕΡΗΣΗ      (owed — the node stays open)
+       < 50    → «fail»   ΑΠΟΤΥΧΙΑ      (owed — the node stays open)
+     Both of the last two leave the node owed in SchedReady.state(), so the
+     choice between them never changes a graph — it changes the WORD, which is
+     the squadron's own vocabulary and belongs in the record. */
+  const LAG_FLOOR = 50;
+
+  /* mirrors scheduler.js DEVICE_BY_KIND for the two bands this slice writes */
+  const DEVICE_BY_GROUP = { flights: "T-6A", fs: "OFT" };
+
+  /* THE PROVENANCE MARK. `id` is deterministic and DATE-FREE — the same row
+     applied twice lands on the same event (upsert UPDATES, never appends), and
+     a corrected date moves that one event instead of minting a second, which is
+     the critique's first must-fix and the reason SchedConsq.counters() cannot
+     count one FAIL twice. `origin` is the one-word greppable mark; the `bridge`
+     block is the full identity plus WHAT WINGS AHEAD SAID, so that a later
+     export whose row CHANGED is seen as a change and not as agreement. */
+  const ORIGIN = "wa";
+  const bridgeEvId = (oid, group, uid, ord) => "wa:" + oid + ":" + group + ":" + uid + ":" + ord;
+
+  /* the FDMS result word for a judged Wings Ahead row — "" when FDMS has no
+     word that would be true (see applicability() for what that means) */
+  function resultOf(j) {
+    if (!j) return "";
+    if (j.source === "grade") {
+      if (j.nonInt) return "";
+      if (j.grade >= j.thr) return "completed";
+      return j.grade >= LAG_FLOOR ? "lag" : "fail";
+    }
+    if (j.source === "mission") return j.verdict === "complete" ? "completed" : "lag";
+    return "";
+  }
+  /* what SchedReady.state() will make of that word — the sentence the confirm
+     dialog must print for every line (ruling #3). `completed` completes and
+     unlocks the successors; `lag` / `fail` leave the node owed. */
+  const resultCompletes = (res) => res === "completed";
+  const RESULT_WORD = { completed: "MISSION COMPLETE", lag: "ΥΣΤΕΡΗΣΗ (lag)", fail: "ΑΠΟΤΥΧΙΑ (fail)" };
+
+  /* WHY A ROW IS NOT APPLIABLE — the sentence matters more than the boolean.
+     Returns "" when the row may be written.
+     `need` says how much of the row the act is about, because the three acts
+     answer to different rules:
+       "date"   an UPDATE that moves a date and nothing else — the verdict and
+                the instructor are none of its business;
+       "adopt"  a per-field adoption — the row must be expressible, but the
+                instructor is checked per field, where the field is offered;
+       "full"   a CREATE, which is answerable for every field of the event. */
+  function refuseApply(gid, j, ip, person, need) {
+    if (APPLY_GROUPS.indexOf(gid) < 0) {
+      return "this slice fills FLIGHTS and F/S only — ground lessons and exams, the eight checkrides, "
+        + "the prescribed solos and the FAIL / ALMOST GOOD / NFS / SMS events each wait for a slice of "
+        + "their own (specs/bridge-spec.md § 13)";
+    }
+    if (!person || !person.code) {
+      return "this person has no FDMS code, and a training-log event names its student by code";
+    }
+    if (need === "date") return "";
+    if (!j) return "there is nothing on the Wings Ahead side to write";
+    if (j.source === "ng") {
+      return "Wings Ahead records this sortie as NON-GRADED. The FDMS training log has no word for "
+        + "«flown, not scorable, and still owed»: «completed» would complete the node and unlock its "
+        + "successors, and «lag»/«fail» would say it must be re-flown. It is reported here and written "
+        + "nowhere (rulings #3 · #5)";
+    }
+    if (j.source === "awaiting") {
+      return "the debrief has not landed. FDMS reads an event with a blank result as COMPLETED "
+        + "(SchedReady.state), so «awaiting» cannot be stored without unlocking the successors. The row "
+        + "is re-offered by itself once the grade arrives (ruling #5)";
+    }
+    if (j.source === "attended") {
+      return "a lesson is attended, not scored, and its FDMS event is class-scope — out of this slice";
+    }
+    if (j.source === "grade" && j.nonInt) {
+      return "the grade " + j.grade + " is not a whole number — a non-integer grade is shown in this "
+        + "report and written nowhere (ruling #6)";
+    }
+    if (!resultOf(j)) return "this row has no verdict FDMS could express";
+    if (need === "adopt") return "";
+    if (!ip || ip.status !== "resolved") {
+      return "the instructor is not resolved — " + ((ip && ip.why) || "no instructor on the row")
+        + ". An event is never written with an identity guessed from a name (ruling #4)";
+    }
+    return "";
+  }
+
+  /* THE FIELDS OF A PAYLOAD DIFFERENCE THIS SLICE CAN ADOPT — and only those
+     the report ALREADY SHOWS ON BOTH SIDES, which is the binding rule. A field
+     the table does not print side by side is not adoptable, however easy it
+     would be to write. */
+  const ADOPTABLE = ["verdict", "grade (Wings Ahead)", "instructor"];
+
+  /* the event the bridge would write for a wa_only row — every field it owns is
+     named, empty ones included, because SchedStore.upsert MERGES: a re-write
+     that omitted `maneuvers` would leave yesterday's lag reasons on today's
+     pass (the critique's tenth must-fix). */
+  function buildEvent(p) {
+    return {
+      id: p.evId,
+      origin: ORIGIN,
+      bridge: {
+        rid: p.rid, oid: p.oid, group: p.group, uid: p.uid, ord: p.ord, seq: p.seq,
+        src: p.src, applied_at: p.at, applied_by: p.who, export_at: p.exportAt || "",
+      },
+      node: p.uid, kind: p.group, scope: "student", student: p.student,
+      class: "", classes: undefined, special: undefined, category: undefined, ref: undefined,
+      date: p.date, start_date: "", end_date: "",
+      instructor: p.ip, device: p.device,
+      result: p.result,
+      /* R2 — a sortie is NEVER stored as result:"score". Two engines read that
+         field with two different thresholds and the same row would be
+         «completed» for one and «repeat» for the other. The number itself is
+         kept in `bridge.src.grade`, where no engine reads it and the next
+         cross-check can see whether Wings Ahead has changed it since. */
+      score: null,
+      maneuvers: p.result === "lag" || p.result === "fail" ? p.maneuvers || "" : "",
+      note: p.note, absent: [],
+    };
+  }
+
   /* ── normalising the two sides into one row shape ──────────────────────── */
 
   function baseRow(side, sec, band, uid, seq, date) {
@@ -430,6 +608,12 @@
       end_date: "", grade: null, ng: false, mission: "", duration: null,
       kind: "", track: "", instructor: "", instructorOid: "",
       extra: {}, srcId: "", srcNote: "", waWritten: false,
+      /* PHASE 3 — what a bridge-written FDMS event remembers about its source.
+         `bridgeGrade` is the percentage Wings Ahead carried WHEN THE EVENT WAS
+         WRITTEN. It is never a grade of the FDMS event (R2 keeps the number out
+         of `result`/`score` for a sortie); it exists so that a later export in
+         which the student CHANGED the number is a difference and not silence. */
+      bridgeGrade: null, bridgeBlock: null,
       problems: [], raw: null,
     };
   }
@@ -520,20 +704,34 @@
   /* ── the FDMS side ─────────────────────────────────────────────────────── */
 
   const evNodeOf = (ev) => trim(ev && (ev.node || ev.uid));
-  /* an event the bridge itself wrote carries the "wa:" id convention — slice 1
-     writes none, but it must RECOGNISE them so `deleted` can exist (ruling #2) */
-  const isWaWritten = (ev) => /^wa:/i.test(trim(ev && ev.id));
+  /* AN EVENT THE BRIDGE ITSELF WROTE. Two marks, and either one is enough: the
+     `wa:` id convention slice 1 already recognised (so that `deleted` could
+     exist before anything was written — ruling #2), and the `origin` word
+     Phase 3 stamps beside it. Two marks because an id can be rewritten by hand
+     in a restored backup and a word cannot be greppable by accident. */
+  const isWaWritten = (ev) => /^wa:/i.test(trim(ev && ev.id))
+    || trim(ev && ev.origin).toLowerCase() === ORIGIN;
+  const bridgeBlockOf = (ev) => (isObj(ev) && isObj(ev.bridge) ? ev.bridge : null);
 
   function fdmsRow(oid, ev, band, groupId, course) {
     const node = evNodeOf(ev);
     const uid = groupId === "lessons"
       ? node + "::" + (trim(course) || "*")
       : node;
-    const r = baseRow("fdms", groupId, band, uid, 1,
+    const blk = bridgeBlockOf(ev);
+    /* PHASE 3 — THE SEQ OF A BRIDGE-WRITTEN EVENT IS A FACT OF THE ROW, not a
+       position in an array (ruling #1). An ordinary FDMS event has no seq and
+       keeps the store's array order as its tie-break, exactly as slice 1 read
+       it; an event the bridge wrote carries the Wings Ahead seq it came from,
+       so re-loading the same export pairs the two halves EXACTLY instead of
+       leaning on the leftovers pass. */
+    const r = baseRow("fdms", groupId, band, uid, blk ? posInt(blk.seq, 1) : 1,
       trim(ev.date) || trim(ev.start_date));
     r.raw = ev;
     r.srcId = trim(ev.id);
     r.waWritten = isWaWritten(ev);
+    r.bridgeBlock = blk;
+    if (blk && isObj(blk.src)) r.bridgeGrade = num(blk.src.grade);
     r.end_date = isoDate(ev.end_date);
     r.instructor = trim(ev.instructor);
     r.extra = {
@@ -635,6 +833,23 @@
     } else if (pw.grade == null && pf.grade != null && carriesNumber(pw.band)) {
       diffs.push({ field: "grade", wa: "—", fdms: String(pf.grade),
         why: "FDMS has the percentage and Wings Ahead has only a verdict" });
+    }
+    /* PHASE 3 — THE DRIFT AGAINST WHAT THE BRIDGE WAS TOLD. A flight does not
+       carry its percentage in FDMS by design (R2), so two grades that map to
+       the SAME verdict — 78 corrected to 84, both passes — would otherwise be
+       perfect silence: same date, same verdict, same instructor, class `agree`.
+       An event the bridge wrote remembers the number it was given, so a student
+       who corrects it is SEEN, and the row becomes `payload_differs` against
+       the bridge's own event. This diff exists only on rows the bridge wrote;
+       a hand-typed FDMS event has nothing to have been told. */
+    if (pf.bridgeGrade != null && pw.grade != null && pw.grade !== pf.bridgeGrade) {
+      diffs.push({ field: "grade (Wings Ahead)", wa: String(pw.grade), fdms: String(pf.bridgeGrade),
+        why: "the bridge wrote this event from a Wings Ahead grade of " + pf.bridgeGrade
+          + " % and Wings Ahead now says " + pw.grade + " %" });
+    } else if (pf.bridgeGrade != null && pw.grade == null) {
+      diffs.push({ field: "grade (Wings Ahead)", wa: "—", fdms: String(pf.bridgeGrade),
+        why: "the bridge wrote this event from a Wings Ahead grade of " + pf.bridgeGrade
+          + " % and the Wings Ahead row no longer carries one" });
     }
     const ip = ipResolve(pw);
     if (ip.status === "ambiguous") {
@@ -1026,6 +1241,22 @@
         && x.cls !== "agree").length;
     });
 
+    /* PHASE 3 — ONE PASS, AT THE END, FOR THE WHOLE REPORT.
+       `key` is the row's address for every control in the pane: the row
+       identity (rid) is unique inside a bucket but the event sections mint one
+       per uid, so two FAIL annotations on one flight code could share it — an
+       Apply button must never be able to point at the wrong line.
+       `plan` is built here, once, from the two sides mkRow() kept beside the
+       flattened row, so that the pane, the confirm dialog, the change log and
+       the fixtures all read the SAME answer. */
+    let appliable = 0;
+    rows.forEach((x, i) => {
+      x.key = "r" + i;
+      x.plan = makePlan(x, ipResolve, waParsed.exported_at);
+      if (x.plan) x.plan.key = x.key;
+      if (x.plan && x.plan.can) appliable += 1;
+    });
+
     /* counts */
     const byClass = {};
     CLASS_IDS.forEach((c) => { byClass[c] = 0; });
@@ -1050,7 +1281,7 @@
       identities: ids,
       persons,
       rows,
-      counts: { byClass, byGroup, total: rows.length, nonGraded, nonInteger },
+      counts: { byClass, byGroup, total: rows.length, nonGraded, nonInteger, appliable },
       notes,
     };
   }
@@ -1067,6 +1298,7 @@
       grade: null, thr: null, nonInteger: false, nonGraded: false,
       completes: false, effect: "—", duration: null, sec: "", instructor: "", srcId: "",
       diffs: [], refused: "", problems: [], detail: "", extra: "",
+      _wa: null, _fd: null, key: "", plan: null,
     };
   }
 
@@ -1095,8 +1327,154 @@
       problems: (bad || []).slice(),
       detail: "",
       extra: "",
+      /* PHASE 3 — the two sides are kept BESIDE the flattened row so that the
+         apply plan can be built from them in one pass at the end of
+         crossCheck(). They are memory only, exactly like the rest of the
+         report: nothing here is persisted, downloaded or printed. */
+      _wa: wa || null, _fd: fd || null,
+      key: "", plan: null,
     };
   }
+
+  /* ══ THE APPLY PLAN ═══════════════════════════════════════════════════════
+     One report row in, one answer out: may this line be written, what exactly
+     would be written, and WHAT WOULD IT DO TO THE NODE. Pure — the confirm
+     dialog, the change log and the fixtures all read the same object, so the
+     sentence the developer confirms is the sentence the store gets. */
+  function makePlan(x, ipResolve, exportAt) {
+    const cls = x.cls;
+    if (cls !== "wa_only" && cls !== "source_moved" && cls !== "payload_differs") return null;
+    const wa = x._wa, fd = x._fd;
+    if (!wa) return null;                       // nothing on the Wings Ahead side to write
+    const gid = x.group;
+    const j = judge(wa);
+    const ip = ipResolve(wa);
+    const person = { oid: x.oid, code: x.code, name: x.who };
+    const p = {
+      cls, act: cls === "wa_only" ? "create" : cls === "source_moved" ? "update" : "adopt",
+      can: false, why: "",
+      key: x.key, rid: x.rid, oid: x.oid, group: gid, uid: x.uid, ord: x.ord,
+      seq: wa.seq, student: person.code, who: person.name, klass: x.klass,
+      evId: fd && fd.srcId ? fd.srcId : bridgeEvId(x.oid, gid, x.uid, x.ord),
+      waWritten: !!(fd && fd.waWritten),
+      date: wa.date, fdmsDate: fd ? fd.date : "",
+      result: "", ip: ip.status === "resolved" ? ip.code : "", ipLabel: ip.label || wa.instructor,
+      device: DEVICE_BY_GROUP[gid] || "",
+      completes: false, effect: "", verdict: verdictWord(j),
+      fields: [], exportAt: exportAt || "",
+      /* `src` is the WHOLE Wings Ahead payload and is written only by a CREATE.
+         An UPDATE or an ADOPTION refreshes only the `bridge.src.*` keys that
+         belong to what it actually wrote — and it does that THROUGH `fields`,
+         so ↺ Undo reverts them with everything else. Refreshing the whole block
+         would be a silent lie: adopting the INSTRUCTOR would also quietly
+         overwrite the remembered grade, and the grade difference the developer
+         did NOT adopt would vanish from the next report. */
+      src: { date: wa.date, seq: wa.seq, grade: wa.grade, thr: j.thr == null ? null : j.thr,
+        mission: wa.mission, ng: !!wa.ng, instructor: wa.instructor, duration: wa.duration },
+    };
+    /* push a `bridge.src.<key>` change only when the event is the bridge's own
+       and the value really moves — a hand-typed FDMS event has no block */
+    const srcMove = (list, key, to) => {
+      if (!p.waWritten || !fd) return;
+      const from = fd.bridgeBlock && isObj(fd.bridgeBlock.src) ? fd.bridgeBlock.src[key] : null;
+      const a = from == null ? "" : from, b = to == null ? "" : to;
+      if (String(a) === String(b)) return;
+      list.push({ field: "bridge.src." + key, from: from == null ? "" : from, to: to == null ? "" : to });
+    };
+
+    /* A ROW THE REPORT ALREADY REFUSED IS NEVER OFFERED. `unwritten`,
+       `refused`, `unresolvable` are classes of their own and never reach here,
+       but a row can be `wa_only` AND carry record-level problems, and those are
+       reasons enough on their own. */
+    if (arr(x.problems).length) {
+      p.why = "the record carries a warning that would have to be settled first — " + x.problems[0];
+      return p;
+    }
+
+    if (p.act === "update") {
+      /* the date is the only field this act writes, so the instructor and the
+         verdict are none of its business — a moved date is a moved date. */
+      p.why = refuseApply(gid, j, ip, person, "date");
+      if (!p.why && (!wa.date || !fd || !fd.date)) p.why = "one of the two dates is missing";
+      if (!p.why && fd.date === wa.date) p.why = "the two dates are already the same";
+      if (p.why) return p;
+      const jf = judge(fd);
+      const eff = nodeEffect(jf);
+      p.can = true;
+      p.completes = eff.completes;
+      p.effect = "the node effect does not change — this line moves a date";
+      p.fields = [{ field: "date", from: fd.date, to: wa.date }];
+      srcMove(p.fields, "date", wa.date);
+      srcMove(p.fields, "seq", wa.seq);
+      return p;
+    }
+
+    if (p.act === "adopt") {
+      p.why = refuseApply(gid, j, ip, person, "adopt");
+      if (p.why) return p;
+      const want = resultOf(j);
+      const now = fd ? trim(fd.extra.result) : "";
+      const take = [];
+      arr(x.diffs).forEach((d) => {
+        if (ADOPTABLE.indexOf(d.field) < 0) return;
+        if (d.field === "instructor" && ip.status !== "resolved") return;
+        take.push(d.field);
+      });
+      if (!take.length) {
+        p.why = "none of the differences on this row is one this slice can adopt. Adoptable: "
+          + ADOPTABLE.join(" · ") + " — and only where the report already shows both sides. "
+          + "Everything else is corrected in the system that owns the fact.";
+        return p;
+      }
+      if (take.indexOf("verdict") >= 0 || take.indexOf("grade (Wings Ahead)") >= 0) {
+        if (!want) { p.why = "Wings Ahead's verdict is one FDMS cannot express"; return p; }
+        p.result = want;
+        if (want !== now) p.fields.push({ field: "result", from: now, to: want });
+        srcMove(p.fields, "grade", wa.grade);
+        srcMove(p.fields, "thr", j.thr == null ? null : j.thr);
+        srcMove(p.fields, "mission", wa.mission);
+        srcMove(p.fields, "ng", !!wa.ng);
+        /* the lag reasons belong to the lag. A row that becomes a pass and
+           keeps yesterday's `maneuvers` is the stale-field trap upsert()'s
+           merge sets for anyone who writes only what changed. */
+        if (!(want === "lag" || want === "fail") && fd && trim(fd.extra.maneuvers)) {
+          p.fields.push({ field: "maneuvers", from: trim(fd.extra.maneuvers), to: "" });
+        }
+      }
+      if (take.indexOf("instructor") >= 0 && fd && ip.code !== fd.instructor) {
+        p.fields.push({ field: "instructor", from: fd.instructor, to: ip.code });
+        srcMove(p.fields, "instructor", wa.instructor);
+      }
+      if (!p.fields.length) {
+        p.why = "the adoptable fields already hold the Wings Ahead value";
+        return p;
+      }
+      p.can = true;
+      const res = p.result || now;
+      p.completes = resultCompletes(res);
+      p.effect = p.result
+        ? "result «" + (RESULT_WORD[res] || res) + "» → " + effectWord(p.completes)
+        : effectWord(p.completes) + " — unchanged by this line";
+      return p;
+    }
+
+    /* create */
+    p.why = refuseApply(gid, j, ip, person, "full");
+    if (p.why) return p;
+    p.result = resultOf(j);
+    p.can = true;
+    p.completes = resultCompletes(p.result);
+    p.effect = "result «" + (RESULT_WORD[p.result] || p.result) + "» → " + effectWord(p.completes);
+    p.fields = [
+      { field: "date", from: "", to: wa.date },
+      { field: "result", from: "", to: p.result },
+      { field: "instructor", from: "", to: p.ip },
+      { field: "device", from: "", to: p.device },
+    ];
+    return p;
+  }
+  const effectWord = (c) => (c ? "COMPLETES the node and unlocks its successors"
+    : "does NOT complete the node");
 
   /* which report group an FDMS event belongs to — EXACTLY ONE, so a checkride
      or a prescribed solo can never be counted twice */
@@ -1174,23 +1552,310 @@
   }
 
   /* ══════════════════════════════════════════════════════════════════════════
-     ② THE PANE — DOM only, runs from a UI event, writes nothing
-     ══════════════════════════════════════════════════════════════════════════ */
+     ② THE WRITER — the ONLY place in this file that touches the store
+     ══════════════════════════════════════════════════════════════════════════
+     Every function below is reached from an explicit [data-brgw] control, past
+     the edit lock, past a numbered confirm dialog that has already stated the
+     node effect of every line. Each one writes TWO records and never one: the
+     training-log event, and the change-log entry that can take it back. */
 
   const ESC = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ESC[c]);
   const S = () => W.SchedStore;
   const R = () => W.SchedReady;
+  const ED = () => W.SchedEdit;
   const dmy = (s) => (W.fmtDMY ? W.fmtDMY(s) : String(s == null ? "" : s));
+  const todayOf = () => (R() && R().todayISO ? R().todayISO() : new Date().toISOString().slice(0, 10));
 
-  /* the whole pane's state. `report` and `file` live HERE and nowhere else —
-     no localStorage, no store, no sync, no download (ruling #7). */
-  const ui = { report: null, fileName: "", error: "", filter: "", cls: "", group: "", q: "" };
+  /* WHO WROTE IT. FDMS has ONE owner and ONE edit lock — there is no second
+     account to name, and inventing one would be a fiction in an audit trail.
+     So «who» is the honest thing: the act was made on this store, with ✎ Editor
+     mode on, on the day recorded beside it. The sync then carries the entry to
+     the owner's other devices exactly like every other row. */
+  const WHO = "✎ Editor";
+
+  /* THE LOCK, ASKED BEFORE THE UI MOVES (the Round 20 layer-2 doctrine): a
+     view-only device is told WHICH act it refused and never meets a dialog it
+     is not allowed to finish. The seam asks again inside upsert() and remains
+     the wall. */
+  const editOn = () => { const E = ED(); return !E || E.on(); };
+  function refuseWrite(what) {
+    const E = ED();
+    if (E && E.refuse) return E.refuse(what);
+    if (S() && S().toast) S().toast("View-only — unlock ✎ Editor mode to " + what + ".", "bad");
+    return false;
+  }
+
+  /* THE HANDLE IS MINTED ONCE AND NEVER RE-USED. `bridgeEvId` is deterministic
+     so that the same line applied twice UPDATES one event instead of appending
+     a second. But the ordinal is a POSITION IN THE ATTEMPT SEQUENCE, and an
+     earlier attempt applied later legitimately renumbers the ones behind it —
+     so a freshly computed id can land on a handle an earlier write already
+     took. Re-using it would merge one flight into another. The identity that
+     matters is (student ∷ node ∷ date ∷ seq), which is what pairGroup() reads;
+     the id is only the handle, so on a collision the next free one in the same
+     family is taken and the fact is recorded in the change log. */
+  function freeEvId(oid, group, uid, ord) {
+    const want = bridgeEvId(oid, group, uid, ord);
+    if (!S().find("trainingLog", want)) return want;
+    for (let k = 1; k <= 99; k++) {
+      const c = bridgeEvId(oid, group, uid, k);
+      if (!S().find("trainingLog", c)) return c;
+    }
+    return want + ":" + Date.now().toString(36);
+  }
+
+  /* one change-log entry — the shape is recorded in specs/bridge-spec.md § 13γ */
+  function logAct(o) {
+    return S().upsert("bridgeLog", {
+      id: "", act: o.act, at: new Date().toISOString(), date: todayOf(), who: WHO,
+      rid: o.rid || "", oid: o.oid || "", group: o.group || "", uid: o.uid || "",
+      ord: o.ord || 0, seq: o.seq || 1, student: o.student || "", evId: o.evId || "",
+      what: o.what || "", fields: arr(o.fields).map((f) => ({ field: f.field, from: f.from, to: f.to })),
+      effect: o.effect || "", undone: false, undoneBy: "", undoOf: o.undoOf || "",
+    });
+  }
+
+  /* the fields a bridge-written event owns, and the values the log says they
+     were left at — the check that makes ↺ Undo safe. Undo must revert exactly
+     one write; if the developer has edited the event in the Training log since,
+     reverting would silently discard THAT work, so it refuses and says so. */
+  function driftOf(ev, fields) {
+    for (const f of arr(fields)) {
+      const now = evFieldOf(ev, f.field);
+      if (String(now == null ? "" : now) !== String(f.to == null ? "" : f.to)) {
+        return "«" + f.field + "» now reads " + (trim(now) || "(blank)") + " and this entry left it at "
+          + (trim(f.to) || "(blank)");
+      }
+    }
+    return "";
+  }
+  /* A FIELD NAME IS EITHER AN EVENT FIELD OR ONE KEY OF THE PROVENANCE BLOCK.
+     `bridge.src.<key>` is addressed the same way as `date` or `result` on
+     purpose: the provenance refresh then rides in the SAME `fields` list the
+     change log stores, which is what makes ↺ Undo revert it too. A refresh that
+     travelled beside the list instead of inside it would be a write the audit
+     trail could not take back — and this trail exists to be taken back. */
+  const SRC_PREFIX = "bridge.src.";
+  function evFieldOf(ev, field) {
+    if (field.indexOf(SRC_PREFIX) === 0) {
+      const b = bridgeBlockOf(ev);
+      const k = field.slice(SRC_PREFIX.length);
+      return b && isObj(b.src) ? b.src[k] : null;
+    }
+    return ev ? ev[field] : null;
+  }
+  function evSetField(patch, ev, field, value) {
+    if (field.indexOf(SRC_PREFIX) === 0) {
+      const b = bridgeBlockOf(ev) || {};
+      /* read back from the patch under construction, so several src keys in one
+         act accumulate instead of each one erasing the last */
+      const cur = isObj(patch.bridge) && isObj(patch.bridge.src) ? patch.bridge.src
+        : (isObj(b.src) ? b.src : {});
+      const src = Object.assign({}, cur);
+      src[field.slice(SRC_PREFIX.length)] = value;
+      patch.bridge = Object.assign({}, b, isObj(patch.bridge) ? patch.bridge : {}, { src: src });
+      return;
+    }
+    patch[field] = value == null ? "" : value;
+    if (field === "result") {
+      patch.score = null;                                   // R2 — never a number on a sortie
+      if (!(value === "lag" || value === "fail")) patch.maneuvers = "";
+    }
+  }
+
+  /* ── the three acts ────────────────────────────────────────────────────── */
+
+  /* CREATE — the main fill. Every field the event owns is written, empty ones
+     included, because upsert() MERGES: a write that named only what changed
+     would leave yesterday's values in the fields it forgot. */
+  /* THE EVENT A PLAN BECOMES — pure, so a fixture can assert on the very record
+     the store would get instead of on a paraphrase of it. */
+  function plannedEvent(p, evId, at) {
+    const day = at || todayOf();
+    return buildEvent({
+      evId: evId || bridgeEvId(p.oid, p.group, p.uid, p.ord),
+      rid: [p.oid, p.group, p.uid, p.ord].join(" ∷ "),
+      oid: p.oid, group: p.group, uid: p.uid, ord: p.ord, seq: p.seq,
+      src: p.src, at: day, who: WHO, exportAt: p.exportAt,
+      student: p.student, date: p.date, ip: p.ip, device: p.device, result: p.result,
+      maneuvers: "",
+      /* THE NOTE SAYS WHERE THE EVENT CAME FROM AND NOTHING THAT CAN GO STALE.
+         An earlier draft wrote the verdict and the percentage into it — and the
+         first adoption of a corrected grade made it a lie, because update and
+         adopt deliberately never rewrite a note (on a hand-typed event the note
+         is the developer's own). One fact, one place: the verdict is the
+         `result` column, the number and the threshold live in `bridge.src`,
+         which every adoption refreshes, and the whole history is in the change
+         log. The note is a pointer. */
+      note: "from Wings Ahead · bridge " + dmy(day),
+    });
+  }
+
+  function applyCreate(p) {
+    const evId = freeEvId(p.oid, p.group, p.uid, p.ord);
+    const rec = plannedEvent(p, evId, todayOf());
+    const rid = rec.bridge.rid;
+    if (!S().upsert("trainingLog", rec)) return { ok: false, why: "the edit lock refused the write" };
+    logAct({
+      act: "create", rid, oid: p.oid, group: p.group, uid: p.uid, ord: p.ord, seq: p.seq,
+      student: p.student, evId,
+      what: "created the training-log event for " + p.uid + " of " + dmy(p.date)
+        + (evId === bridgeEvId(p.oid, p.group, p.uid, p.ord) ? ""
+          : " (the computed handle was taken — this event took the next free one)"),
+      fields: [
+        { field: "date", from: "", to: p.date },
+        { field: "result", from: "", to: p.result },
+        { field: "instructor", from: "", to: p.ip },
+        { field: "device", from: "", to: p.device },
+      ],
+      effect: p.effect,
+    });
+    return { ok: true, evId };
+  }
+
+  /* UPDATE / ADOPT — field-scoped on purpose. The event may have been typed by
+     hand in the Training log, and rewriting it whole would take the developer's
+     own note and device with it. Only the named fields move, and the change log
+     carries the old value of each one. */
+  function applyPatch(p) {
+    const ev = S().find("trainingLog", p.evId);
+    if (!ev) return { ok: false, why: "that FDMS event is no longer in the training log" };
+    const patch = { id: p.evId };
+    arr(p.fields).forEach((f) => evSetField(patch, ev, f.field, f.to));
+    /* an event the bridge wrote keeps its provenance current: the row identity
+       (the ordinal can legitimately move) and what Wings Ahead said. The id
+       itself is NEVER rewritten — that would orphan the event. */
+    /* BOOKKEEPING, NOT FACTS — and the difference is why these three sit here
+       and not in `fields`. The row identity is refreshed because an ordinal can
+       legitimately move; `applied_at` / `applied_by` record WHEN THE BRIDGE LAST
+       TOUCHED this event, and an undo is itself a touch. Nothing here is a claim
+       about the flight, so nothing here is undone. Every claim about the flight
+       — the event's own fields AND every `bridge.src.*` key — travels in
+       `fields`, where ↺ Undo can reach it.
+       The id is NEVER rewritten: that would orphan the event. */
+    if (isWaWritten(ev)) {
+      const b = bridgeBlockOf(ev) || {};
+      patch.bridge = Object.assign({}, b, isObj(patch.bridge) ? patch.bridge : {}, {
+        rid: [p.oid, p.group, p.uid, p.ord].join(" ∷ "), ord: p.ord, seq: p.seq,
+        applied_at: todayOf(), applied_by: WHO, export_at: p.exportAt || b.export_at || "",
+      });
+    }
+    if (!S().upsert("trainingLog", patch)) return { ok: false, why: "the edit lock refused the write" };
+    logAct({
+      act: "update", rid: p.rid, oid: p.oid, group: p.group, uid: p.uid, ord: p.ord, seq: p.seq,
+      student: p.student, evId: p.evId,
+      what: (p.act === "update" ? "moved the date of " : "adopted the Wings Ahead value on ") + p.uid,
+      fields: p.fields, effect: p.effect,
+    });
+    return { ok: true, evId: p.evId };
+  }
+
+  function applyPlan(p) {
+    if (!p || !p.can) return { ok: false, why: (p && p.why) || "this row is not appliable" };
+    try {
+      return p.act === "create" ? applyCreate(p) : applyPatch(p);
+    } catch (err) {
+      console.error(err);
+      return { ok: false, why: "the write failed: " + err.message };
+    }
+  }
+
+  /* ── ↺ UNDO — ruling #2's rollback, one entry at a time ────────────────── */
+  function undoEntry(id) {
+    const e = S().find("bridgeLog", id);
+    if (!e) return { ok: false, why: "that change-log entry is gone" };
+    if (e.undone) return { ok: false, why: "that entry has already been undone" };
+    if (e.act === "undo") {
+      return { ok: false, why: "an undo is not itself undone from here — the row is back in the report, "
+        + "and applying it again is the deliberate act that re-does it" };
+    }
+    const ev = S().find("trainingLog", e.evId);
+    if (e.act === "create") {
+      if (ev) {
+        const drift = driftOf(ev, e.fields);
+        if (drift) {
+          return { ok: false, why: "this event changed after the bridge wrote it — " + drift
+            + ". Undo would discard that change, so it refuses: open the event in the Training log instead." };
+        }
+        if (!S().remove("trainingLog", e.evId)) return { ok: false, why: "the edit lock refused the write" };
+      }
+      const rev = logAct({
+        act: "undo", rid: e.rid, oid: e.oid, group: e.group, uid: e.uid, ord: e.ord, seq: e.seq,
+        student: e.student, evId: e.evId, undoOf: e.id,
+        what: ev ? "removed the training-log event this entry created"
+          : "the event was already gone from the training log — nothing to remove",
+        fields: arr(e.fields).map((f) => ({ field: f.field, from: f.to, to: "" })),
+        effect: "the node returns to what it was before that line",
+      });
+      S().upsert("bridgeLog", { id: e.id, undone: true, undoneBy: rev ? rev.id : "" });
+      return { ok: true, removed: !!ev };
+    }
+    /* an UPDATE goes back field by field, and only if every field still holds
+       what this entry left it holding */
+    if (!ev) return { ok: false, why: "that FDMS event is no longer in the training log" };
+    const drift = driftOf(ev, e.fields);
+    if (drift) {
+      return { ok: false, why: "this event changed after that write — " + drift
+        + ". Undo would discard that change, so it refuses: open the event in the Training log instead." };
+    }
+    const patch = { id: e.evId };
+    arr(e.fields).forEach((f) => evSetField(patch, ev, f.field, f.from));
+    if (!S().upsert("trainingLog", patch)) return { ok: false, why: "the edit lock refused the write" };
+    const rev = logAct({
+      act: "undo", rid: e.rid, oid: e.oid, group: e.group, uid: e.uid, ord: e.ord, seq: e.seq,
+      student: e.student, evId: e.evId, undoOf: e.id,
+      what: "put back what that line changed",
+      fields: arr(e.fields).map((f) => ({ field: f.field, from: f.to, to: f.from })),
+      effect: "the node returns to what it was before that line",
+    });
+    S().upsert("bridgeLog", { id: e.id, undone: true, undoneBy: rev ? rev.id : "" });
+    return { ok: true, removed: false };
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     ③ THE PANE — DOM only, and every write it starts goes through § ②
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  /* the whole pane's state. `report`, `parsed` and `fileName` live HERE and
+     nowhere else — no localStorage, no store, no sync, no download (ruling #7).
+     PHASE 3 keeps the PARSED EXPORT in memory beside the report, and it has to:
+     after a line is applied the report must be RE-JUDGED against the store it
+     just changed, so the row moves to `agree` in front of the developer instead
+     of being taken on trust. It is the same class of data as the report, it
+     lives exactly as long, and § schBridgeLeave drops both together. */
+  const ui = { report: null, parsed: null, fileName: "", error: "", filter: "",
+    cls: "", group: "", q: "", pick: [], logOpen: false, applyMsg: "", applyBad: false };
 
   function clearAll() {
-    ui.report = null; ui.fileName = ""; ui.error = "";
-    ui.cls = ""; ui.group = ""; ui.q = "";
+    ui.report = null; ui.parsed = null; ui.fileName = ""; ui.error = "";
+    ui.cls = ""; ui.group = ""; ui.q = ""; ui.pick = [];
+    ui.applyMsg = ""; ui.applyBad = false; ui.logOpen = false;
   }
+
+  /* THE HOVER RULE (Round 19) — a tooltip inside the Scheduler means «something
+     is stored here». Every control below writes; each says WHAT it writes, WHAT
+     it never touches, and THE SAFE PATH out. The read-only controls of this
+     pane stay deliberately silent, which is the other half of the rule. */
+  const TIP = {
+    apply: "Writes ONE training-log event for this line, after a dialog that lists it and says what it "
+      + "does to the syllabus node. It touches nothing in Wings Ahead and nothing in the repository. "
+      + "The act is appended to the Bridge change log below, where ↺ Undo takes back exactly this write.",
+    adopt: "Writes the Wings Ahead value of THIS FIELD onto the FDMS event, and nothing else on it — the "
+      + "note, the device and every other field stay as they are. Wings Ahead is not touched. The old "
+      + "value is kept in the Bridge change log, where ↺ Undo puts it back.",
+    move: "Moves the DATE of the existing FDMS event to the Wings Ahead date. It creates no second event — "
+      + "that is the whole point of a row identity without a date in it — and changes no verdict. "
+      + "The old date is kept in the change log, where ↺ Undo restores it.",
+    pick: "Selects this line for «✔ Apply selected». Selecting writes nothing at all: the dialog that "
+      + "follows lists every selected line, numbered, with what each one does to its node.",
+    batch: "Opens the confirm dialog for every SELECTED line — numbered, one entry each, with the node "
+      + "effect spelled out — and writes them into the training log only after you confirm. Wings Ahead "
+      + "and the repository are never touched. Every line lands in the change log with its own ↺ Undo.",
+    undo: "Reverts EXACTLY this one act: the event it created is removed, or the fields it changed go back "
+      + "to the values recorded here. If the event has been edited since, it refuses instead of discarding "
+      + "that edit. The undo is itself recorded as a change-log entry.",
+  };
 
   /* LEAVING THE PANE DROPS THE REPORT — R18 VERIFY FINDING 3.
      § 6 of the spec has always said it in words («το ✕ Clear ΚΑΙ η εγκατάλειψη
@@ -1202,10 +1867,16 @@
      access-code curtain was built to close for the Scheduler.
      So the state AND the nodes go, and the pane is repainted to its clean load
      state so the return is a load state and not an empty box (ruling #7).
+     PHASE 3 — AND THE PARSED EXPORT GOES WITH THEM. It is the same real names,
+     kept in memory for one reason only (re-judging the report against the store
+     after a line is applied), so it lives exactly as long as the report and
+     dies at exactly the same moment. The change log stays: it is store data,
+     it names students by CODE, and it is the trail ruling #2 asked for.
      Called by app/scheduler.js when another subtab takes over and by app/app.js
      when another view does. ✕ Clear is untouched and keeps its own button. */
   W.schBridgeLeave = function schBridgeLeave() {
-    const had = !!(ui.report || ui.fileName || ui.error || ui.q || ui.cls || ui.group);
+    const had = !!(ui.report || ui.parsed || ui.fileName || ui.error || ui.q || ui.cls
+      || ui.group || ui.pick.length || ui.applyMsg || ui.logOpen);
     clearAll();
     if (!had) return;                                   // nothing was ever painted
     const doc = W.document;
@@ -1227,6 +1898,28 @@
       if (a === "print") { W.print(); return; }
       if (a === "cls") { ui.cls = ui.cls === b.dataset.v ? "" : b.dataset.v; render(el); return; }
       if (a === "group") { ui.group = ui.group === b.dataset.v ? "" : b.dataset.v; render(el); return; }
+      if (a === "log") { ui.logOpen = !ui.logOpen; render(el); return; }
+    });
+    /* THE WRITE CONTROLS — a separate attribute from [data-brg] ON PURPOSE.
+       [data-brg] is on SchedStore's NAV list because everything wearing it
+       READS; [data-brgw] is deliberately absent from that list, so the edit
+       lock's veneer disables these, its capture guard refuses the click, and
+       upsert() refuses a third time. Slice 1's NAV comment promised exactly
+       this. Every branch below asks editOn() BEFORE any dialog opens. */
+    el.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-brgw]");
+      if (!b || b.disabled) return;
+      const a = b.dataset.brgw;
+      if (a === "sel") return;                     // the checkbox answers to `change`, once
+      if (a === "selall") { pickAll(el, b.dataset.v === "1"); return; }
+      if (a === "apply") { startApply(el, [b.dataset.rid], b.dataset.f || ""); return; }
+      if (a === "batch") { startApply(el, ui.pick.slice(), ""); return; }
+      if (a === "undo") { startUndo(el, b.dataset.id); return; }
+    });
+    el.addEventListener("change", (e) => {
+      const c = e.target.closest('input[data-brgw="sel"]');
+      if (!c) return;
+      togglePick(el, c.dataset.rid);
     });
     el.addEventListener("input", (e) => {
       const t = e.target.closest("[data-brgq]");
@@ -1251,8 +1944,20 @@
     catch (err) { ui.error = "the file could not be read."; render(el); return; }
     const parsed = parseExport(text);
     if (!parsed.ok) { ui.error = parsed.why; render(el); return; }
+    ui.parsed = parsed;
+    recompute();
+    render(el);
+  }
+
+  /* RE-JUDGE THE SAME EXPORT AGAINST THE STORE AS IT STANDS NOW. Called once
+     on load and again after every apply and every undo, so that what the pane
+     shows is never a memory of a store that has since changed: a line applied
+     turns into `agree` in front of the developer, and an undone one turns back
+     into `wa_only`. Nothing is written here. */
+  function recompute() {
+    if (!ui.parsed) return;
     try {
-      ui.report = crossCheck(parsed, {
+      ui.report = crossCheck(ui.parsed, {
         students: S().get("students") || [],
         instructors: S().get("instructors") || [],
         trainingLog: S().get("trainingLog") || [],
@@ -1262,11 +1967,15 @@
         membersOf: (c) => S().membersOf(c) || [],
         today: R() ? R().todayISO() : "",
       });
+      /* a selection survives a recompute only where the line is still there and
+         still appliable — a row that has just become `agree` must not stay
+         ticked, or the next batch would open on nothing. */
+      const live = new Set(ui.report.rows.filter((x) => x.plan && x.plan.can).map((x) => x.rid));
+      ui.pick = ui.pick.filter((rid) => live.has(rid));
     } catch (err) {
       ui.error = "the cross-check could not be completed: " + err.message;
       console.error(err);
     }
-    render(el);
   }
 
   function readFile(file) {
@@ -1279,11 +1988,218 @@
     });
   }
 
+  /* ── selection ─────────────────────────────────────────────────────────── */
+
+  /* an APPLIABLE row is addressed by its ROW IDENTITY, never by its position:
+     the report is rebuilt after every write, and a position would point at a
+     different flight the moment one line moved. Inside `flights`/`fs` — the
+     only two groups this slice writes — the rid is unique by construction. */
+  const planOf = (rid) => {
+    if (!ui.report) return null;
+    const hit = ui.report.rows.find((x) => x.rid === rid && x.plan && x.plan.can);
+    return hit ? hit.plan : null;
+  };
+
+  function togglePick(el, rid) {
+    if (!rid) return;
+    const i = ui.pick.indexOf(rid);
+    if (i >= 0) ui.pick.splice(i, 1); else ui.pick.push(rid);
+    paintRows(el);
+    paintBatch(el);
+  }
+  function pickAll(el, on) {
+    ui.pick = on ? visibleRows().filter((x) => x.plan && x.plan.can).map((x) => x.rid) : [];
+    paintRows(el);
+    paintBatch(el);
+  }
+
+  /* ── the numbered confirm dialog ───────────────────────────────────────── */
+
+  /* THE HOUSE MODAL, nothing new invented: the .ed-pop veil and the .ed-box
+     card the editor dialog and the typed-word dialog already use, tokens only.
+     It is appended to document.body — OUTSIDE #view-scheduler — for the same
+     reason the typed-word dialog is: inside the guarded view the edit lock's
+     veneer would disable the very buttons that finish the act it has already
+     allowed. Esc · ↩ Cancel · a click on the veil all cancel, and CANCEL MEANS
+     NOTHING HAPPENS: the promise resolves false and the caller returns before a
+     single record is touched. */
+  let popBusy = false;
+  function confirmPop(o) {
+    return new Promise((resolve) => {
+      const doc = W.document;
+      if (popBusy || !doc || !doc.body) { resolve(false); return; }
+      popBusy = true;
+      const veil = doc.createElement("div");
+      veil.className = "ed-pop brg-pop";
+      veil.innerHTML = `<div class="ed-box brg-box" role="dialog" aria-modal="true" aria-label="${esc(o.title)}">
+        <div class="ed-ico" aria-hidden="true">${esc(o.ico || "✔")}</div>
+        <h3>${esc(o.title)}</h3>
+        <p class="hint">${o.lead}</p>
+        <ol class="brg-poplist">${o.items}</ol>
+        <p class="hint">${o.foot}</p>
+        <div class="ed-row">
+          <button type="button" class="sch-tbtn primary" data-p="go">${esc(o.go)}</button>
+          <button type="button" class="sch-tbtn" data-p="cancel">↩ Cancel</button>
+        </div>
+      </div>`;
+      let finished = false;
+      const done = (v) => {
+        if (finished) return;
+        finished = true;
+        doc.removeEventListener("keydown", onKey, true);
+        popBusy = false;
+        if (veil.parentNode) veil.remove();
+        resolve(v);
+      };
+      function onKey(e) {
+        if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); done(false); }
+      }
+      veil.addEventListener("click", (e) => {
+        if (e.target === veil || e.target.closest('[data-p="cancel"]')) { done(false); return; }
+        if (e.target.closest('[data-p="go"]')) done(true);
+      });
+      doc.addEventListener("keydown", onKey, true);
+      doc.body.appendChild(veil);
+      const g = veil.querySelector('[data-p="go"]');
+      if (g) setTimeout(() => g.focus(), 50);
+    });
+  }
+
+  /* ONE PLAN, ONE FIELD. The per-field ↦ button adopts exactly the difference
+     the report is showing on that line and leaves the rest of the row alone —
+     which is the binding rule: adoption is offered only where both sides are
+     already on screen. */
+  function narrowPlan(p, field) {
+    if (!field) return p;
+    /* the provenance keys narrow with the act too: adopting ONE field must
+       never quietly re-stamp what the OTHER fields remembered */
+    const keep = field === "instructor"
+      ? ["instructor", "bridge.src.instructor"]
+      : ["result", "maneuvers", "bridge.src.grade", "bridge.src.thr",
+        "bridge.src.mission", "bridge.src.ng"];
+    const fields = arr(p.fields).filter((f) => keep.indexOf(f.field) >= 0);
+    if (!fields.length) return null;
+    const q = Object.assign({}, p, { fields: fields, field: field });
+    if (field === "instructor") {
+      q.result = "";
+      q.effect = "the instructor is not part of what completes a node — the node effect does not change";
+    }
+    return q;
+  }
+
+  /* ONE FIELD VALUE, THE WAY THE HOUSE READS IT. The change log stores the raw
+     value — an ISO date is what actually lands in the event — but everything
+     this app SHOWS a human is DD/MM, and an audit trail that reads in a second
+     format is an audit trail nobody checks. Empty is a dash, never a blank. */
+  const fval = (v) => (v === "" || v == null ? "—"
+    : (/^\d{4}-\d{2}-\d{2}$/.test(String(v)) ? dmy(String(v)) : String(v)));
+  const fchg = (list, back) => arr(list).map((f) => {
+    const a = back ? f.to : f.from, b = back ? f.from : f.to;
+    return `<span class="brg-fchg"><b>${esc(f.field)}</b> ${esc(fval(a))} → ${esc(fval(b))}</span>`;
+  }).join("");
+
+  function planLine(p) {
+    const who = esc(p.who || p.student) + (p.student ? ` <span class="sch-code">${esc(p.student)}</span>` : "");
+    const act = p.act === "create" ? "CREATE a training-log event"
+      : p.act === "update" ? "MOVE the date of the existing FDMS event"
+        : "ADOPT the Wings Ahead value" + (p.field ? " of «" + p.field + "»" : "s") + " on the existing FDMS event";
+    const fields = fchg(p.fields, false);
+    return `<li><b>${who}</b> · <span class="sch-mono">${esc(p.uid)}</span>
+      ${p.date ? " · " + esc(dmy(p.date)) : ""}
+      <div>${esc(act)}${p.act === "create" ? " — " + esc(p.verdict) : ""}
+        ${p.act === "create" && p.ipLabel ? " · " + esc(p.ipLabel) : ""}</div>
+      <div class="brg-fchgs">${fields}</div>
+      <div class="brg-eff ${p.completes ? "is-c" : ""}">→ ${esc(p.effect)}</div>
+      <div class="sch-nd sch-mono">${esc(p.rid)}${p.waWritten ? " · this FDMS event was written by the bridge"
+    : p.act === "create" ? "" : " · this FDMS event was TYPED IN THE TRAINING LOG, not written by the bridge"}</div></li>`;
+  }
+
+  async function startApply(el, rids, field) {
+    if (!editOn()) { refuseWrite("apply a Wings Ahead line to the training log"); return; }
+    const plans = [];
+    arr(rids).forEach((rid) => {
+      const p = planOf(rid);
+      if (!p) return;
+      const q = narrowPlan(p, field);
+      if (q) plans.push(q);
+    });
+    if (!plans.length) {
+      ui.applyMsg = "nothing to apply — the selected line is no longer appliable. Reload the export.";
+      ui.applyBad = true;
+      render(el);
+      return;
+    }
+    const created = plans.filter((p) => p.act === "create").length;
+    const changed = plans.length - created;
+    const go = await confirmPop({
+      ico: "✔",
+      title: plans.length === 1 ? "Apply this line to the training log?"
+        : "Apply " + plans.length + " lines to the training log?",
+      go: "✔ Apply " + plans.length + " line" + (plans.length === 1 ? "" : "s"),
+      lead: "Every line is listed below with what it writes and <b>what it does to the syllabus node</b>. "
+        + "This writes the <b>FDMS training log only</b> — Wings Ahead, the repository and the export file "
+        + "are not touched.",
+      items: plans.map(planLine).join(""),
+      foot: "<b>" + created + "</b> created · <b>" + changed + "</b> changed. "
+        + "Each act is appended to the <b>Bridge change log</b> below with what was there before, and "
+        + "<b>↺ Undo</b> reverts exactly that write. Nothing is deleted here — a deletion stays a separate "
+        + "deliberate act (ruling #2).",
+    });
+    if (!go) { ui.applyMsg = "cancelled — nothing was written."; ui.applyBad = false; render(el); return; }
+    let ok = 0;
+    const bad = [];
+    plans.forEach((p) => {
+      const res = applyPlan(p);
+      if (res.ok) ok += 1; else bad.push(p.uid + " — " + res.why);
+    });
+    ui.pick = [];
+    recompute();
+    ui.applyMsg = ok + " line" + (ok === 1 ? "" : "s") + " written to the training log"
+      + (bad.length ? " · " + bad.length + " refused: " + bad.join(" · ") : "")
+      + ". The report below was re-judged against the store as it now stands.";
+    ui.applyBad = bad.length > 0;
+    if (ok && S().toast) S().toast("Bridge — " + ok + " line" + (ok === 1 ? "" : "s") + " applied.", "good");
+    render(el);
+  }
+
+  async function startUndo(el, id) {
+    if (!editOn()) { refuseWrite("undo a bridge write"); return; }
+    const e = S().find("bridgeLog", id);
+    if (!e) return;
+    const go = await confirmPop({
+      ico: "↺",
+      title: "Undo this bridge write?",
+      go: "↺ Undo this act",
+      lead: "This reverts <b>exactly this one act</b> and nothing else. If the event has been edited in the "
+        + "Training log since, it refuses rather than discard that edit.",
+      items: `<li><b>${esc(dmy(e.date))}</b> · ${esc(String(e.act).toUpperCase())}
+        · <span class="sch-mono">${esc(e.uid)}</span>
+        <div>${esc(e.what)}</div>
+        <div class="brg-fchgs">${fchg(e.fields, true)}</div>
+        <div class="sch-nd sch-mono">${esc(e.evId)}</div></li>`,
+      foot: "The undo is itself recorded as a change-log entry, so the trail keeps both acts.",
+    });
+    if (!go) { ui.applyMsg = "cancelled — nothing was written."; ui.applyBad = false; render(el); return; }
+    const res = undoEntry(id);
+    recompute();
+    ui.applyMsg = res.ok ? "undone — the change log keeps both acts." : "not undone: " + res.why;
+    ui.applyBad = !res.ok;
+    if (S().toast) S().toast(res.ok ? "Bridge — the write was undone." : "Bridge — not undone.", res.ok ? "good" : "bad");
+    render(el);
+  }
+
   /* ── render ────────────────────────────────────────────────────────────── */
 
   function render(el) {
-    el.innerHTML = head() + (ui.report ? body(ui.report) : "");
-    if (ui.report) paintRows(el);
+    el.innerHTML = head() + (ui.report ? body(ui.report) : changeLogPanel());
+    if (ui.report) { paintBatch(el); paintRows(el); }
+    /* the write controls were just re-created, so the edit lock's veneer must
+       run over them again — otherwise a freshly painted ✔ Apply would look
+       live on a view-only device until the next mutation happened to trigger
+       a sweep. The capture guard and upsert() would still refuse it; this is
+       the honesty of the surface, not the wall. */
+    const E = ED();
+    if (E && E.sweep) E.sweep();
   }
 
   function head() {
@@ -1299,14 +2215,28 @@
           <input type="file" accept="application/json,.json" class="brg-file" hidden>
         </div>
         <p class="sch-hint">This pane <b>reads</b> one <code>${esc(WA_SCHEMA)}</code> file you choose from
-          disk and compares it with the local store. It writes nothing — not the store, not Wings Ahead,
-          not the repository, not <code>localStorage</code>. The report and the file it came from carry
+          disk and compares it with the local store. It never writes Wings Ahead, the repository or
+          <code>localStorage</code>. Since Phase 3 a line you <b>confirm</b> is written into the
+          <b>FDMS training log</b> — one explicit act at a time, with ✎ Editor mode on, recorded in the
+          change log below with <b>↺ Undo</b>. The report and the file it came from carry
           <b>real names</b>: they stay on this machine and are never committed (ruling #7).</p>
         ${ui.error ? `<div class="sch-consqban is-pd"><b>Not read</b> — ${esc(ui.error)}</div>` : ""}
         ${ui.fileName && !ui.error ? `<p class="sch-hint">Read from <span class="sch-code">${esc(ui.fileName)}</span>
           — in memory only.</p>` : ""}
+        ${lockBanner()}
+        ${ui.applyMsg ? `<div class="sch-consqban ${ui.applyBad ? "is-pd" : "is-ok"}">${esc(ui.applyMsg)}</div>` : ""}
         ${!r && !ui.error ? placeholder() : ""}
       </section>`;
+  }
+
+  /* THE LOCK, SAID OUT LOUD. The veneer already greys the write controls and
+     the guard already refuses the click — but a disabled button explains
+     nothing, and the default state of every device is view-only. */
+  function lockBanner() {
+    if (editOn()) return "";
+    return `<div class="sch-consqban"><b>View-only</b> — the report reads, filters and prints as
+      always. <b>Applying a line writes the training log</b>, so ✔ Apply, ↦ adopt and ↺ Undo stay inert
+      until ✎ Editor mode is on. Nothing on this pane has ever written Wings Ahead.</div>`;
   }
 
   function placeholder() {
@@ -1320,7 +2250,7 @@
   }
 
   function body(r) {
-    return summary(r) + identityPanel(r) + rowsPanel(r) + legend();
+    return summary(r) + identityPanel(r) + rowsPanel(r) + changeLogPanel() + legend();
   }
 
   function summary(r) {
@@ -1351,6 +2281,7 @@
           <b>flights ${r.thresholds.flights}&nbsp;%</b> · <b>F/S ${r.thresholds.fs}&nbsp;%</b>
           ${r.counts.nonGraded ? ` · <b>${r.counts.nonGraded}</b> non-graded row${r.counts.nonGraded === 1 ? "" : "s"} (never complete a node)` : ""}
           ${r.counts.nonInteger ? ` · <b class="sch-warn">${r.counts.nonInteger}</b> non-integer grade${r.counts.nonInteger === 1 ? "" : "s"} — shown here, written nowhere` : ""}
+          ${r.counts.appliable ? ` · <b>${r.counts.appliable}</b> line${r.counts.appliable === 1 ? "" : "s"} the developer may apply` : ""}
         </p>
         <div class="brg-chips">${chips}</div>
         <div class="brg-chips">${gchips}</div>
@@ -1430,16 +2361,19 @@
             <input type="search" class="sch-in" data-brgq="1" value="${esc(ui.q)}"
               placeholder="name · code · node · class"></label>
         </div>
+        <p class="sch-hint"><b>✔ Apply</b> writes ONE training-log event, or moves one date, or adopts one
+          field — after a dialog that numbers every line and says what it does to the node. It writes the
+          <b>FDMS training log only</b>: Wings Ahead is never written by this app, and neither is the
+          repository. Every act lands in the change log below with <b>↺ Undo</b>.</p>
+        <div class="brg-batch" id="brg-batch"></div>
         <div class="sch-scroll" id="brg-rows"></div>
       </section>`;
   }
 
-  function paintRows(el) {
-    const host = el.querySelector("#brg-rows");
-    const cnt = el.querySelector("#brg-count");
-    if (!host || !ui.report) return;
+  function visibleRows() {
+    if (!ui.report) return [];
     const q = ui.q.trim().toLowerCase();
-    const list = ui.report.rows.filter((x) => {
+    return ui.report.rows.filter((x) => {
       if (ui.cls && x.cls !== ui.cls) return false;
       if (ui.group && x.group !== ui.group) return false;
       if (!q) return true;
@@ -1447,6 +2381,34 @@
         .filter(Boolean).join(" ").toLowerCase();
       return hay.indexOf(q) >= 0;
     });
+  }
+
+  /* the batch bar — it counts, it selects, it opens the dialog. It writes
+     nothing by itself: selecting is not applying, and the bar says so. */
+  function paintBatch(el) {
+    const host = el.querySelector("#brg-batch");
+    if (!host || !ui.report) return;
+    const can = visibleRows().filter((x) => x.plan && x.plan.can);
+    if (!can.length && !ui.pick.length) {
+      host.innerHTML = "";
+      return;
+    }
+    const n = ui.pick.length;
+    const allOn = can.length > 0 && can.every((x) => ui.pick.indexOf(x.rid) >= 0);
+    host.innerHTML = `
+      <button type="button" class="sch-btn" data-brgw="selall" data-v="${allOn ? "0" : "1"}"
+        title="${esc(TIP.pick)}">${allOn ? "☐ Clear the selection" : "☑ Select the " + can.length + " appliable line" + (can.length === 1 ? "" : "s") + " shown"}</button>
+      <button type="button" class="sch-btn primary" data-brgw="batch" ${n ? "" : "disabled"}
+        title="${esc(TIP.batch)}">✔ Apply ${n} selected</button>
+      <span class="sch-nd">${n ? "the dialog lists every one of the " + n + " lines, numbered, before anything is written"
+    : "selecting writes nothing — the dialog that follows does, and only after you confirm"}</span>`;
+  }
+
+  function paintRows(el) {
+    const host = el.querySelector("#brg-rows");
+    const cnt = el.querySelector("#brg-count");
+    if (!host || !ui.report) return;
+    const list = visibleRows();
     if (cnt) cnt.textContent = list.length + " of " + ui.report.rows.length + " shown";
     if (!list.length) {
       host.innerHTML = `<div class="sch-ph"><strong>No row matches this filter.</strong></div>`;
@@ -1469,10 +2431,10 @@
       const g = GROUPS.find((x) => x.id === gid);
       html += `<table class="sch-tbl brg-tbl">
         <thead>
-          <tr class="sch-loggrp"><td colspan="7">${esc(g ? g.label : "Identities")}
+          <tr class="sch-loggrp"><td colspan="8">${esc(g ? g.label : "Identities")}
             <span class="count">${rows.length}</span></td></tr>
           <tr><th>Class</th><th>Student</th><th>Node</th><th>Wings Ahead</th><th>FDMS</th>
-            <th>Effect</th><th>Row identity</th></tr>
+            <th>Effect</th><th>Row identity</th><th>Apply</th></tr>
         </thead><tbody>${rows.map(rowHtml).join("")}</tbody></table>`;
     });
     host.innerHTML = html;
@@ -1484,10 +2446,19 @@
     if (x.nonGraded) marks.push(`<span class="sch-badge warn" title="ruling #3 — a non-graded row never completes a node">NON-GRADED</span>`);
     if (x.nonInteger) marks.push(`<span class="sch-badge st-withdrawn" title="shown in the report only — never written anywhere">NOT A WHOLE NUMBER</span>`);
     if (x.duration != null) marks.push(`<span class="sch-chip" title="Wings Ahead only until slice 6 (ruling #8)">${esc(x.duration)} h</span>`);
-    const diffs = x.diffs.map((d) => `<div class="brg-diff"><b>${esc(d.field)}</b>
+    /* PER-FIELD ADOPTION — offered on the very line that shows both sides, and
+       nowhere else. That is the binding rule of this slice: what the developer
+       can adopt is exactly what the report has already put in front of him. */
+    const canAdopt = x.plan && x.plan.can && x.plan.act === "adopt";
+    const diffs = x.diffs.map((d) => {
+      const take = canAdopt && narrowPlan(x.plan, d.field);
+      return `<div class="brg-diff"><b>${esc(d.field)}</b>
       <span class="brg-w">WA ${esc(d.wa)}</span>
       <span class="brg-f">FDMS ${esc(d.fdms)}</span>
-      <em>${esc(d.why)}</em></div>`).join("");
+      <em>${esc(d.why)}</em>${take
+    ? ` <button type="button" class="sch-mini" data-brgw="apply" data-rid="${esc(x.rid)}"
+          data-f="${esc(d.field)}" title="${esc(TIP.adopt)}">↦ adopt</button>` : ""}</div>`;
+    }).join("");
     const probs = x.problems.map((p) => `<div class="brg-prob">${esc(p)}</div>`).join("");
     const ref = x.refused ? `<div class="brg-prob">${esc(x.refused)}</div>` : "";
     const det = x.detail ? `<div class="sch-note">${esc(x.detail)}</div>` : "";
@@ -1496,6 +2467,11 @@
       ? `<div class="brg-diff"><b>date</b><span class="brg-w">WA ${esc(dmy(x.waDate))}</span>
          <span class="brg-f">FDMS ${esc(dmy(x.fdmsDate))}</span>
          <em>one deviation — the source moved; this is never a delete plus an add</em></div>` : "";
+    /* WHY A LINE THAT LOOKS APPLIABLE IS NOT. The sentence is the deliverable:
+       «ng», «awaiting», an unresolved instructor and an out-of-slice group each
+       refuse for a different reason, and each reason names the ruling. */
+    const noap = x.plan && !x.plan.can && x.plan.why
+      ? `<div class="brg-noap"><b>not appliable</b> — ${esc(x.plan.why)}</div>` : "";
     return `<tr class="brg-r brg-${esc(x.cls)}">
       <td><span class="sch-badge brg-tone-${esc(k.tone)}">${esc(k.label)}</span></td>
       <td>${esc(x.who || "—")}${x.code ? ` <span class="sch-code">${esc(x.code)}</span>` : ""}
@@ -1510,31 +2486,129 @@
       <td>${marks.join(" ")}
         <div class="sch-nd">${esc(x.completes ? "completes the node" : "does not complete the node")}</div></td>
       <td class="sch-mono brg-rid">${esc(x.rid || "—")}</td>
-    </tr>${diffs || probs || ref || det || ext || moved
-      ? `<tr class="brg-sub"><td colspan="7">${moved}${diffs}${ref}${probs}${det}${ext}</td></tr>` : ""}`;
+      <td class="brg-ap">${applyCell(x)}</td>
+    </tr>${diffs || probs || ref || det || ext || moved || noap
+      ? `<tr class="brg-sub"><td colspan="8">${moved}${diffs}${ref}${probs}${det}${ext}${noap}</td></tr>` : ""}`;
+  }
+
+  /* THE APPLY CELL. Three states and no fourth:
+       appliable      a checkbox for the batch and a ✔ Apply for this line;
+       could-have-been a muted «not appliable» whose reason is spelled out in
+                      the sub-row, because a silent dash is the same lie as an
+                      empty report;
+       nothing        the class is not one that writes at all (agree needs no
+                      act, and deleted/refused/unresolvable/unwritten are the
+                      report's own refusals). */
+  function applyCell(x) {
+    const p = x.plan;
+    if (!p) return '<span class="sch-nd">—</span>';
+    if (!p.can) return '<span class="sch-nd">not appliable</span>';
+    const on = ui.pick.indexOf(x.rid) >= 0;
+    const word = p.act === "create" ? "✔ Apply" : p.act === "update" ? "✔ Move the date" : "✔ Adopt";
+    const tip = p.act === "create" ? TIP.apply : p.act === "update" ? TIP.move : TIP.adopt;
+    return `<label class="brg-sel" title="${esc(TIP.pick)}"><input type="checkbox" data-brgw="sel"
+        data-rid="${esc(x.rid)}"${on ? " checked" : ""}><span>select</span></label>
+      <button type="button" class="sch-mini primary" data-brgw="apply" data-rid="${esc(x.rid)}"
+        title="${esc(tip)}">${esc(word)}</button>`;
+  }
+
+  /* ══ THE CHANGE LOG ══════════════════════════════════════════════════════
+     RULING #2, verbatim: «όπως σε κάθε σωστά οργανωμένη βάση δεδομένων
+     καταγράφουμε μεταβολές για δυνατότητα rollback». Every act the bridge
+     performed, newest first, with what was written, what was there before, and
+     ↺ Undo beside it. It is store data — it syncs to the private fdms-data with
+     everything else, it survives a reload and it leaves with a ⭳ Export. The
+     rows name the student by CODE and the label is read from the roster at
+     paint time, so no name is stored twice. */
+  function changeLogPanel() {
+    const list = arr(S() ? S().get("bridgeLog") : []).slice()
+      .sort((a, b) => (String(b.at || "") < String(a.at || "") ? -1 : String(b.at || "") > String(a.at || "") ? 1 : 0));
+    if (!list.length && !ui.report) return "";
+    const live = list.filter((e) => e.act !== "undo" && !e.undone).length;
+    const head = `<div class="sch-h"><h2>Bridge change log
+        <span class="count">${list.length} act${list.length === 1 ? "" : "s"}${live
+  ? " · " + live + " standing" : ""}</span></h2>
+        <span class="sch-spacer"></span>
+        <button type="button" class="sch-btn" data-brg="log">${ui.logOpen ? "▾ Hide" : "▸ Show"}</button></div>
+      <p class="sch-hint">Every write this pane made, and every undo, in the store and synced like every
+        other collection (ruling #2 — «we record changes so there can be a rollback»). <b>↺ Undo</b>
+        reverts exactly one act; if the event was edited afterwards it refuses instead of discarding
+        that edit. Nothing here ever deleted anything on the Wings Ahead side.</p>`;
+    if (!ui.logOpen) {
+      return `<section class="panel sch-panel">${head}</section>`;
+    }
+    if (!list.length) {
+      return `<section class="panel sch-panel">${head}
+        <div class="sch-ph"><strong>Nothing applied yet.</strong>
+        <p>The log fills the first time a line is applied.</p></div></section>`;
+    }
+    const rows = list.map((e) => {
+      const who = S().personLabelOf ? S().personLabelOf("students", e.student) : e.student;
+      const fields = fchg(e.fields, false);
+      const canUndo = e.act !== "undo" && !e.undone;
+      return `<tr class="${e.undone ? "brg-undone" : ""}">
+        <td class="sch-mono">${esc(dmy(e.date))}</td>
+        <td><span class="sch-badge ${e.act === "undo" ? "brg-tone-muted" : "brg-tone-accent"}">${esc(String(e.act).toUpperCase())}</span></td>
+        <td>${esc(who || "—")}${e.student ? ` <span class="sch-code">${esc(e.student)}</span>` : ""}</td>
+        <td class="sch-mono">${esc(e.uid || "—")}</td>
+        <td>${esc(e.what)}
+          <div class="brg-fchgs">${fields}</div>
+          ${e.effect ? `<div class="sch-nd">${esc(e.effect)}</div>` : ""}
+          <div class="sch-nd sch-mono">${esc(e.rid || "")}${e.evId ? " · " + esc(e.evId) : ""}</div></td>
+        <td class="sch-mono">${esc(e.who || "—")}</td>
+        <td>${canUndo
+    ? `<button type="button" class="sch-mini" data-brgw="undo" data-id="${esc(e.id)}"
+             title="${esc(TIP.undo)}">↺ Undo</button>`
+    : `<span class="sch-nd">${e.undone ? "undone" : "—"}</span>`}</td>
+      </tr>`;
+    }).join("");
+    return `<section class="panel sch-panel">${head}
+      <div class="sch-scroll"><table class="sch-tbl brg-tbl">
+        <thead><tr><th>When</th><th>Act</th><th>Student</th><th>Node</th><th>What</th><th>By</th><th></th></tr></thead>
+        <tbody>${rows}</tbody></table></div></section>`;
   }
 
   function legend() {
     return `<section class="panel sch-panel">
-      <div class="sch-h"><h2>What slice 1 does <span class="count">and what it deliberately does not</span></h2></div>
+      <div class="sch-h"><h2>What the Bridge does <span class="count">and what it deliberately does not</span></h2></div>
       <div class="sch-two">
         <div>
           <p class="sch-hint"><b>The nine deviation classes</b></p>
           ${CLASSES.map((c) => `<p class="sch-hint"><span class="sch-badge brg-tone-${esc(c.tone)}">${esc(c.label)}</span>
             ${esc(c.what)}</p>`).join("")}
+          <p class="sch-hint"><b>Of the nine, four can be applied</b> — and only in
+            <b>${esc(APPLY_GROUPS.join(" · "))}</b>:
+            <span class="sch-badge brg-tone-accent">Wings Ahead only</span> creates the event ·
+            <span class="sch-badge brg-tone-warn">Source moved</span> offers to move the date ·
+            <span class="sch-badge brg-tone-warn">Payload differs</span> offers the fields the report is
+            already showing on both sides · <span class="sch-badge brg-tone-good">Agree</span> needs nothing.
+            <b>Deleted at source</b> is never deletable from here: a tombstone is a separate deliberate
+            act (ruling #2). <b>Unwritten · Structurally refused · Unresolvable identity</b> are the
+            report's own refusals and are never appliable.</p>
         </div>
         <div>
           <p class="sch-hint"><b>Deliberately not in this slice</b></p>
-          <p class="sch-hint">No writes — to either side. No schema change anywhere. No credential and no
-            network call: the transport is a file you chose. No cloud, no backup, no download. Duration is
-            carried and shown but never compared, because FDMS has no field for it until slice 6 (ruling #8).</p>
+          <p class="sch-hint">No write to <b>Wings Ahead</b>, in any direction, ever from here. No delete —
+            on either side. No schema change anywhere. No credential and no network call: the transport is
+            a file you chose. No cloud, no backup, no download. Ground lessons and exams, the eight
+            checkrides, the prescribed solos and the FAIL / NFS / SMS events are <b>reported and not
+            written</b> — each waits for a slice of its own. Duration is carried and shown but never
+            compared, because FDMS has no field for it until slice 6 (ruling #8).</p>
+          <p class="sch-hint"><b>What a written event carries</b> —
+            <span class="sch-code">id wa:…</span>, <span class="sch-code">origin wa</span> and a
+            <span class="sch-code">bridge</span> block holding the row identity and what Wings Ahead said.
+            Re-loading the same export therefore reads <b>Agree</b> and can never write it twice; an export
+            in which the student <b>changed</b> the row reads <b>Payload differs</b> against the very event
+            the bridge wrote. A non-graded, awaiting or non-integer row is <b>never</b> written: FDMS has no
+            way to store it without completing a node it must not complete (rulings #3 · #5 · #6).</p>
           <p class="sch-hint"><b>The row identity</b> is
             <span class="sch-code">OID ∷ group ∷ node ∷ attempt</span> and the <b>date is not in it</b>.
             A corrected date is one <span class="sch-badge brg-tone-warn">Source moved</span> row — never a
             delete plus an add, which is how a duplicated FAIL would fabricate a ΠΔ 29/2020 referral.</p>
           <p class="sch-hint"><b>Custody</b> — this report carries real names. It is never written to the
             repository, never downloaded and never persisted; clearing the pane or leaving the tab drops it
-            (ruling #7).</p>
+            (ruling #7). The <b>events</b> a confirmed line writes are ordinary store data and travel with
+            the store, exactly like every event typed in the Training log.</p>
         </div>
       </div>
     </section>`;
@@ -1546,5 +2620,11 @@
     EVAL_IDS, EXAM_IDS,
     looksLikeWaExport, parseExport, matchPeople, crossCheck,
     judge, nodeEffect, isNonGraded, pairGroup, verdictWord,
+    /* PHASE 3 — the writer's pure half, exported so the fixtures assert on the
+       very record the store would get and not on a paraphrase of it. Nothing
+       here touches the store: applyPlan/undoEntry, which do, are reached only
+       from a [data-brgw] control in § ③. */
+    APPLY_GROUPS, LAG_FLOOR, ADOPTABLE, ORIGIN,
+    bridgeEvId, resultOf, isWaWritten, plannedEvent, buildEvent,
   };
 })();

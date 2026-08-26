@@ -1,7 +1,8 @@
 # Bridge fixtures — the number that has to be re-runnable
 
-Headless test file for `app/schedbridge.js`, the **read-only** FDMS ⇄ Wings Ahead
-cross-check. Spec: `specs/bridge-spec.md`.
+Headless test file for `app/schedbridge.js` — the FDMS ⇄ Wings Ahead cross-check
+report, and since Phase 3 (26/08/2026) the **confirmed fill** that writes a
+confirmed line into the FDMS training log. Spec: `specs/bridge-spec.md`.
 
 ## How to run
 
@@ -14,7 +15,7 @@ the number, and the exit code is `0` only if nothing failed.
 
 ```
 ════════════════════════════════════════════
-  BRIDGE FIXTURES — 176 passed, 0 failed
+  BRIDGE FIXTURES — 316 passed, 0 failed
 ════════════════════════════════════════════
 ```
 
@@ -38,7 +39,20 @@ whole enumeration of `specs/bridge-spec.md` § 10 the way the spec says it does:
   and one that no row carried produces exactly one `report.notes` entry —
   silence is not a clean report;
 * `esc()` covers all five characters, and a deliberately hostile fixture name
-  stays text.
+  stays text;
+* **Phase 3** — the apply plan and the very record the store would get: the
+  provenance shape (`id wa:…` · `origin` · the `bridge` block), **re-loading the
+  same export reads `agree` and can never write twice**, a changed source grade
+  becomes `payload_differs` **against the bridge's own event**, a corrected date
+  is one `update` (the event's date and its provenance twin, nothing else — the
+  remembered grade is not re-stamped by a date move, and every provenance key an
+  act touches rides **inside** the change-log field list so ↺ Undo can revert
+  it), an incomplete mission is stored as `lag` — tied
+  **mechanically** to the line of `app/scheduler.js` that leaves such a node owed
+  — and `ng` / `awaiting` / a non-integer grade are never appliable, each with
+  the sentence that says why. The write controls are checked to be **absent from
+  `SchedStore`'s NAV list**, and the store-touching half is checked to be absent
+  from the public surface.
 
 It does **not** prove anything about the pane's painting, the palettes, or the
 live store — those are verified in the app and recorded in § 10 as such.
@@ -72,6 +86,7 @@ live store — those are verified in the app and recorded in § 10 as such.
 | `p6-fs60.js` | F/S judged at 60, and the mechanical inverse at 50 |
 | `p7-nongraded.js` | the NON-GRADED badge and the shred note |
 | `p8-esc.js` | `esc()`, all five characters, hostile name |
+| `p9-apply.js` | Phase 3 — the plan, the written record, idempotency, drift, undo, the refusals |
 
 The offline builder (`tools/build_offline.py`) never looks in here: it collects
 from an explicit file list under `app/` and `data/`, so nothing in this directory

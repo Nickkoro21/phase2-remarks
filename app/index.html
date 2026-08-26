@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Phase 2 FDMS — T-6A Texan II</title>
-<link rel="stylesheet" href="styles.css?v=20260822c">
+<link rel="stylesheet" href="styles.css?v=20260826a">
 <script>
 /* Palette before first paint — no flash of the default theme on reload.
    Mirrors app.js (PALETTES / apply): same keys, same migration of the old
@@ -178,10 +178,14 @@
     <button class="sch-subtab" data-sch="roster">Roster</button>
     <button class="sch-subtab" data-sch="log">Training Log</button>
     <button class="sch-subtab" data-sch="balance">Balance</button>
-    <!-- ΓΥΡΟΣ 18 — BRIDGE: ο διασταυρωτικός έλεγχος με το Wings Ahead. ΜΟΝΟ
-         ΑΝΑΓΝΩΣΗ: διαβάζει ΕΝΑ αρχείο export που επιλέγει ο χρήστης και δεν
-         γράφει πουθενά — ούτε store, ούτε WA, ούτε repo (απόφανση #7 της
-         21/08/2026 · specs/bridge-spec.md). -->
+    <!-- ΓΥΡΟΣ 18 — BRIDGE: ο διασταυρωτικός έλεγχος με το Wings Ahead. Διαβάζει
+         ΕΝΑ αρχείο export που επιλέγει ο χρήστης.
+         ΓΥΡΟΣ 21 (ΦΑΣΗ 3, 26/08/2026) — Η ΕΠΙΒΕΒΑΙΩΜΕΝΗ ΣΥΜΠΛΗΡΩΣΗ: μια γραμμή
+         που ΕΠΙΒΕΒΑΙΩΝΕΙ ο developer γράφεται στο FDMS training log — μία ρητή
+         πράξη τη φορά, με το ✎ Editor ανοιχτό, με αριθμημένο διάλογο που λέει
+         την επίδραση σε κάθε κόμβο, και με change log + ↺ Undo (απόφανση #2).
+         ΣΤΟ WINGS AHEAD ΔΕΝ ΓΡΑΦΕΙ ΠΟΤΕ, ούτε στο repo (απόφανση #7 της
+         21/08/2026 · specs/bridge-spec.md § 13). -->
     <button class="sch-subtab" data-sch="bridge">Bridge</button>
     <span class="sch-tools" id="sch-tools"></span>
   </nav>
@@ -234,11 +238,11 @@
 <script src="description.js?v=20260821a"></script>
 <script src="flowchart.js?v=20260821a"></script>
 <script src="schedval.js?v=20260821a"></script>
-<script src="schedstore.js?v=20260822c"></script>
+<script src="schedstore.js?v=20260826a"></script>
 <script src="scheduler.js?v=20260822a"></script>
 <script src="schedconsq.js?v=20260821a"></script>
 <script src="schedboard.js?v=20260822b"></script>
-<script src="schedbridge.js?v=20260822a"></script>
+<script src="schedbridge.js?v=20260826a"></script>
 <script src="currency.js?v=20260822a"></script>
 </body>
 </html>

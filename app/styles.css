@@ -2375,3 +2375,53 @@ html[data-edit="off"] .cur-head::after {
 .brg-unresolvable > td:first-child { border-left-color: var(--bad); }
 .brg-refused > td:first-child { border-left-color: var(--muted); }
 .brg-bad td { color: var(--bad); }
+
+/* ── PHASE 3 · THE CONFIRMED FILL (Round 21) ───────────────────────────────
+   The controls that WRITE, the numbered confirm dialog and the change log.
+   Same rules as the block above: tokens only, and neither of the two counted
+   pseudo-classes appears here — the focus ring comes from .sch-btn / .sch-mini,
+   which already carry it, so tools/build_offline.py's two exact counts stay
+   exactly where they were. No new script file either: everything Phase 3 added
+   lives inside app/schedbridge.js, so the script-tag count stays 10.        */
+/* the «what just happened» banner. `is-pd` (red) already exists for a refusal;
+   this is its counterpart for a write that landed, in the same family. */
+.sch-consqban.is-ok { border-left-color: var(--good); background: rgba(var(--good-rgb), 0.10); }
+
+.brg-batch { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 6px 0 10px; }
+.brg-batch .sch-nd { font-size: 12px; }
+
+/* the Apply cell — the checkbox and the act, never wider than they must be */
+.brg-ap { white-space: nowrap; }
+.brg-sel { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--muted); }
+.brg-sel input { margin: 0; }
+.brg-ap .sch-mini { margin-left: 6px; }
+.brg-diff .sch-mini { margin-left: auto; }
+
+/* the reason a line that looks appliable is not — the sentence IS the answer */
+.brg-noap { font-size: 12px; color: var(--muted); padding: 4px 0; border-top: 1px dashed var(--line); }
+.brg-noap b { color: var(--warn); text-transform: uppercase; font-size: 10px; letter-spacing: 0.6px; }
+
+/* one field of one write: what it was, what it becomes */
+.brg-fchgs { display: flex; flex-wrap: wrap; gap: 6px; margin: 3px 0; }
+.brg-fchg {
+  font-family: Consolas, monospace; font-size: 11px;
+  border: 1px solid var(--line); border-radius: 6px; padding: 1px 7px;
+}
+.brg-fchg b { color: var(--muted); text-transform: uppercase; font-size: 10px; letter-spacing: 0.5px; }
+.brg-eff { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.brg-eff.is-c { color: var(--warn); }
+
+/* THE CONFIRM DIALOG — the house .ed-pop veil and .ed-box card, widened for a
+   list that must show every line rather than a count of them. */
+.brg-box { width: 760px; max-width: 92vw; text-align: left; }
+.brg-box h3, .brg-box .ed-ico { text-align: center; }
+.brg-poplist {
+  margin: 10px 0; padding: 0 0 0 26px; max-height: 46vh; overflow-y: auto;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--panel-2);
+}
+.brg-poplist li { padding: 8px 8px 8px 2px; border-bottom: 1px dashed var(--line); font-size: 13px; }
+.brg-poplist li:last-child { border-bottom: 0; }
+
+/* the change log — an undone act stays readable and stops looking live */
+.brg-undone td { color: var(--muted); text-decoration: line-through; }
+.brg-undone .sch-badge { opacity: 0.7; text-decoration: none; }

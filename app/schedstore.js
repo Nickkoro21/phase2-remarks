@@ -2,9 +2,9 @@
 /* SchedStore — the Scheduler's persistence layer (Phase A of specs/scheduler-spec.md).
  *
  * MODEL
- *   Ten collections, each in its own localStorage key under the "p2r-sch-" prefix:
+ *   Eleven collections, each in its own localStorage key under the "p2r-sch-" prefix:
  *     students · instructors · classes · trainingLog · availability · dutyRoster ·
- *     gates · instructorCurrency
+ *     gates · instructorCurrency · bridgeLog
  *                      → lists of records addressed by a per-collection key field
  *     config           → one object
  *     dayPlans         → one map { "YYYY-MM-DD": plan }        (Phase B writes it)
@@ -58,6 +58,16 @@
        { oid, items: { <catalog_item_id>: { last_date: "YYYY-MM-DD", src?, note? } }, updated_at }
        Written only through SchedCurrency.bump() (scheduler.js § ③). */
     instructorCurrency: { type: "list", key: "oid", seed: "instructor_currency" },
+    /* ROUND 21 — THE BRIDGE CHANGE LOG (bridge ruling #2, verbatim: «όπως σε
+       κάθε σωστά οργανωμένη βάση δεδομένων καταγράφουμε μεταβολές για δυνατότητα
+       rollback»). One row per act the Bridge performed on the training log —
+       create · update · undo — carrying who/when/rid, what was written and what
+       was there BEFORE, so that ↺ Undo can revert exactly that write and nothing
+       else. Written only through SchedBridge (app/schedbridge.js § ③), which
+       goes through upsert() like every other write and therefore meets the edit
+       lock. It is store data: it syncs, it exports and it restores with
+       everything else. Shape: specs/bridge-spec.md § 13γ. */
+    bridgeLog:    { type: "list", key: "id",   seed: "bridge_log" },
     config:       { type: "obj",  seed: "config" },
     dayPlans:     { type: "map",  seed: "day_plans" },
   };
@@ -632,7 +642,8 @@
     const go = await wordPrompt({
       ico: "↺", word: "RESET", go: "Reset to the seed",     // glyph from `ico` — see above
       title: "Reset the scheduler to the seed file?",
-      body: "Roster, training log, availability, duties, gates and day plans are all discarded. "
+      body: "Roster, training log, availability, duties, gates, day plans and the Bridge change log "
+        + "are all discarded. "
         + "The editor code goes with them, so this device is left with no code set. "
         + "This browser’s sync settings and the copy on GitHub are NOT touched.",
     });
@@ -1060,15 +1071,21 @@
        meets its own SchedEdit.on() check and then its own seam. Putting them
        here would be the mistake this comment exists to prevent. */
     '[data-t="more"]',
-    /* ROUND 18 — THE BRIDGE. Every control of the Wings Ahead cross-check
-       READS: it chooses a file, filters the report, prints it, or clears it.
-       The pane cannot write — not the store, not Wings Ahead, not the repo
-       (app/schedbridge.js, specs/bridge-spec.md) — so the lock has nothing to
-       protect here, and denying it would make the report unreachable in the
-       default state of every device. Same category, and the same line, as the
-       backup export and the sync dialog above. If a later slice gives the
-       Bridge a control that WRITES, that control must NOT be a [data-brg] one
-       — it goes outside this list and meets the lock like every other write. */
+    /* ROUND 18 — THE BRIDGE. Every control NAMED HERE reads: it chooses a
+       file, filters the report, prints it, clears it, or opens/closes the
+       change log. Denying those would make the report unreachable in the
+       default state of every device, for no gain — the same category, and the
+       same line, as the backup export and the sync dialog above.
+
+       ROUND 21 — AND THE PROMISE THIS LIST MADE WAS KEPT. Slice 1 wrote:
+       «if a later slice gives the Bridge a control that WRITES, that control
+       must NOT be a [data-brg] one — it goes outside this list and meets the
+       lock like every other write.» Phase 3 gave it exactly that, and the
+       write controls carry their own attribute **[data-brgw]** (Apply · adopt ·
+       Apply N selected · ↺ Undo · the row checkboxes), which is deliberately
+       ABSENT from every entry below. They are guarded like any other mutation:
+       the veneer disables them, the capture guard refuses the click by name,
+       and SchedStore.upsert() asks mayWrite() a third time. */
     "[data-brg]", ".brg-file", "[data-brgq]",
     "[data-nav]",                                                             // anything a view marks explicitly
   ].join(",");
