@@ -3,6 +3,44 @@ r"""
 build_offline.py — deterministic single-file export of Phase 2 FDMS for the
 unit's CLOSED network.
 
+WHAT CHANGED ON 28/08/2026 (Round 23 — THE REAL FLOOR: FIREFOX 32, PURE ES5)
+  User ruling, after being told to look in D:\FDMS-export at what the unit
+  actually sent back: «Λογικά με το 32 θα είμαστε μια χαρά».  Round 22's
+  Firefox 52 was a guess; 32 is the number the user gave.
+
+  It is not twenty more releases of the same work.  Firefox 52 still has
+  arrow functions, classes, template literals, let/const — es2017 was a
+  DIALECT the file could be written in.  Firefox 32 has almost none of that
+  (let/const 51, classes 45, template literals 34, destructuring 53), and no
+  Symbol at all (36).  Below that line there is no dialect left to aim at
+  except the one every engine since 2011 parses, so the export is now compiled
+  to **pure ES5**, and the claim is MECHANICAL: every inline script in the
+  output is parsed by acorn at `ecmaVersion: 5` and the build refuses to write
+  a file if one of them is not.  That is what makes "it will at least parse on
+  the unit's browser" a proof rather than a hope — for 32, for the
+  photographed 72, and for everything in between.
+
+  THREE CONSEQUENCES, each with its own section below:
+    1. esbuild is OUT of the build.  It bottoms out at ES2015 and answers
+       --target=es5 with "Transforming const to the configured target
+       environment is not supported yet".  @babel/preset-env replaces it, and
+       acorn — a different library — supplies the proof.  Both live OUTSIDE
+       this repository; see § 0.
+    2. The API floor drops with the syntax floor: Object.assign (34),
+       .includes (43/40), Object.entries/values (47), padStart/End (48),
+       Element.closest (35) and matches (34), NodeList.forEach (50) and
+       <details> (49) all need shims, and the ITERATOR PROTOCOL needs one too,
+       because Babel's helpers reach for Symbol.iterator and Firefox 32 has no
+       Symbol — see THE FIREFOX 32 BATCH in RUNTIME_SHIMS_JS.
+    3. CSS GRID IS GONE (52).  Eleven containers in app/styles.css are grids.
+       They stay exactly as they are — nothing a modern browser sees changed —
+       and a hand-written flexbox sheet behind `html.no-grid` restores them,
+       switched on only by the capability guard's live test.  See NO_GRID_CSS.
+
+  The capability guard's job changed with all this: with the whole file in
+  ES5 there is no syntax left for it to probe, so it guards the RUNTIME floor
+  instead.  Its comment says so.
+
 WHAT CHANGED ON 28/08/2026 (Round 22 — THE WHOLE APP, ONE FILE)
   User order: «Ετοίμασε το export του Phase II FDMS όπως είναι τώρα. Προσοχή:
   πρέπει να είναι όλα ΕΝΑ λειτουργικό HTML και να τρέχει στο παλαιολιθικό
@@ -21,10 +59,9 @@ WHAT CHANGED ON 28/08/2026 (Round 22 — THE WHOLE APP, ONE FILE)
      GitHub over the network, which on a closed network can only fail and would
      put a live https endpoint in the file.
 
-  2. ΠΑΛΑΙΟΛΙΘΙΚΟ — the floor drops from Firefox 72 to **Firefox 52 ESR**.
-     See § FLOOR below: this is a WORKING ASSUMPTION and it contradicts the
-     evidence in specs/offline-export-spec.md § 1.  It is deliberately the
-     safer of the two.
+  2. ΠΑΛΑΙΟΛΙΘΙΚΟ — the floor dropped from Firefox 72 to Firefox 52 ESR as a
+     working assumption.  Round 23 (above) replaced that guess with the user's
+     own ruling of 32; § FLOOR below carries both numbers and the evidence.
 
 FLOOR — READ THIS BEFORE MOVING IT
   specs/offline-export-spec.md § 1 records the unit's browser as **Firefox
@@ -32,76 +69,100 @@ FLOOR — READ THIS BEFORE MOVING IT
   user took at the unit on 12/08/2026 (they are still in D:\FDMS-export as
   viber_image_2026-08-12_*.jpg; the middle one shows the About box reading
   "72.0.2 (64-bit)" with this app's own footer below it).  That is a hard,
-  first-hand fact and it has not been retracted.
+  first-hand fact and it has not been retracted.  The two OTHER photographs
+  show what that browser did with the 26/08 export: three SyntaxErrors at
+  Phase2-FDMS.html:1492, 2092 and 2404 — optional chaining `?.`, which Firefox
+  did not parse until 74 — so every script died before running and the unit
+  got a blank page with only the static footer on it.
 
-  The 28/08 order calls the browser "παλαιολιθικό" without naming a version,
-  so this builder now targets **Firefox 52 ESR** — twenty releases BELOW the
-  photographed browser.  Everything the 52 floor costs (grid-gap longhands, a
-  typed date fallback, a clipboard fallback, a handful of extra shims) is
-  inert on 72, so the lower floor is free insurance and the file still runs on
-  72 exactly as before.  If the user confirms 72.0.2 is still what is on those
-  machines, nothing needs rebuilding — but FLOOR below may then be raised to
-  "firefox72" / ES_TARGET to "es2019" to get slightly smaller output.
+  Round 22 guessed **52 ESR** from the word "παλαιολιθικό".  On 28/08 the user
+  looked in the folder and ruled: «Λογικά με το 32 θα είμαστε μια χαρά».
+  **32 is a ruling, not a guess, and it is what this builder targets.**  It is
+  forty releases below the photographed browser, and the cost is real (no CSS
+  Grid, no Symbol, no Object.assign, no `.includes`) — but every one of those
+  costs is paid by a shim or a fallback sheet that a newer browser never
+  activates, so the file still runs on 72 exactly as it does on 132.
+
+  WHAT 32 DOES NOT COVER, honestly: WebCrypto is Firefox **34**.  On a true 32
+  or 33 the editor code cannot be set, so the Scheduler stays view-only and
+  Import is out of reach.  Nothing else on the page is affected, and the
+  capability guard now says so ON SCREEN in a dismissible strip rather than
+  leaving someone hunting for a button that will not work.  On the browser in
+  the photograph this is moot.
 
 LANGUAGE CONTRACT (spec § 2, floor-adjusted) — the app source stays modern;
 the divergence lives only here:
-  * every inline script is transpiled with **esbuild --target=es2017**
-    (pinned 0.28.2 in tools/package.json; version drift hard-fails).
-    es2017 IS the Firefox 52 syntax ceiling: FF52 is the release that shipped
-    async/await, the last ES2017 syntax feature, and it has none of ES2018
-    (object rest/spread → FF55, async generators / for-await → FF57, optional
-    catch binding → FF58).  esbuild's own "firefox52" target cannot be used:
-    its compat table calls for-of, destructuring and generators unsupported on
-    52 and then refuses to lower them, which is wrong for Firefox (for-of FF13,
-    destructuring FF2, generators FF26) and would abort the build.
-  * FOUR builder-owned blocks are prepended before any app script —
-      ① the CAPABILITY GUARD (hand-written ES5, first script in <head>): it
-        feature-detects the floor and, below it, paints a plain-English banner
-        naming exactly what is missing instead of a white page;
-      ② the RUNTIME SHIMS (everything FF52 lacks that the app or the export's
-        own code touches — each installed only if missing);
+  * every inline script is compiled to **pure ES5** by @babel/preset-env with
+    `forceAllTransforms` (tools/es5_transpile.js holds the full contract and
+    the reasoning for every option, including the `loose: true` trap that
+    turned `[...map.values()]` into `[].concat(iterator)`).
+    ES5, rather than a Firefox-32 feature table, because at this depth the
+    table buys almost nothing — 32 has arrow functions and nothing else — and
+    ES5 buys a MECHANICAL PROOF: acorn at `ecmaVersion: 5` either parses the
+    emitted script or it does not.
+  * FIVE builder-owned blocks are prepended before any app script —
+      ① the CAPABILITY GUARD (hand-written ES5, first script in <head>).  With
+        the whole file in ES5 it no longer probes SYNTAX — anything that can
+        parse the guard can parse all of it — so it probes the RUNTIME floor
+        and paints a plain-English banner naming what is missing.  It also runs
+        the three live layout tests that set html.no-grid / html.no-flexgap /
+        html.no-details;
+      ② the RUNTIME SHIMS (everything Fx32 lacks that the app or the export's
+        own code touches — each installed only if missing).  The load-bearing
+        one is the ITERATOR BRIDGE: Babel's helpers look for Symbol.iterator,
+        then for the STRING key "@@iterator"; Firefox 32 has no Symbol, so the
+        shim installs that string key on Map, Set and the Map/Set/Array
+        iterator prototypes, and the app's ~250 for-of/spread sites work;
       ③ the OFFLINE FETCH SHIM (serves ../data/... from the embedded bundle);
-      ④ the DATE-INPUT FALLBACK (FF52 has no date picker — <input type=date>
+      ④ the DATE-INPUT FALLBACK (no date picker before Fx57 — <input type=date>
         degrades to a text box, so the export teaches it to accept a typed
-        DD/MM/YYYY or YYYY-MM-DD and hands the app ISO either way).
-  * CSS is patched for Fx52: :focus-visible→:focus, :has() rules dropped,
-    min()/max()/clamp() and inset: and break-inside: get a same-property
-    fallback emitted BEFORE the modern value, every gap: gets its grid-gap
-    longhand, and a generated `html.no-flexgap` stylesheet restores the
-    spacing of flex containers on browsers older than the flex-gap of FF63.
-  * QUALITY GATE (hard fail): each emitted script must re-parse under esbuild,
-    then a string/comment/regex-stripping scanner proves no ES2018+ syntax
-    survived (including a bracket-aware OBJECT-spread detector that does not
-    trip on array/call spread, which FF52 has), plus a checklist scan for
-    Fx52-missing APIs; the final CSS is scanned for Fx53+ features.  The
-    builder exits non-zero with the exact locations.
+        DD/MM/YYYY or YYYY-MM-DD and hands the app ISO either way);
+      ⑤ the offline FEEDBACK module.
+  * CSS is patched for Fx32: :focus-visible→:focus, :has() rules dropped,
+    min()/max()/clamp() and inset: and break-inside: and overflow-wrap: get a
+    same-property or legacy-property fallback emitted BEFORE the modern value,
+    every gap: gets its grid-gap longhand, and TWO generated stylesheets —
+    `html.no-flexgap` (flex gap, Fx63) and `html.no-grid` (CSS Grid, Fx52) —
+    restore the layouts, each behind a class the capability guard sets only
+    after a live test.  app/styles.css itself is NOT touched: the hosted app
+    and this export render identically on any browser that has the features.
+  * QUALITY GATE (hard fail, nothing is written):
+      LAYER 1 — acorn, ecmaVersion 5, over every emitted script.  The proof.
+      LAYER 2 — a string/comment/regex-stripping scanner for line numbers and
+        for the API floor, plus the CSS floor scan and the two GRID TRIPWIRES
+        (stylesheet and CSS-in-JS) that refuse to ship a grid container or a
+        grid-placed child with no rule in the html.no-grid sheet.
 
-GATE HONESTY NOTE: esbuild at --target=es2017 *lowers* modern syntax instead
-of rejecting it, so the esbuild pass proves "parses as JavaScript" (catches
-assembly/concatenation bugs) while the stripping scanner is the layer that
-proves "no ES2018+ syntax survived".  The scanner strips string literals,
-template literals (with nested ${} expressions), comments and regex literals
-(pragmatic first-token heuristic for / vs division — documented, good enough
-for this codebase) before matching, so "?." inside remark text never
-false-positives.
+GATE HONESTY NOTE: Babel *lowers* modern syntax rather than rejecting it, so
+the transpiler can never be its own proof.  acorn is a different library
+reading the finished text, and it is the layer that establishes "this parses on
+an engine from 2011".  The regex scanner underneath it is a second opinion with
+line numbers, and it is the layer that greps for `?.` and `??` by name, because
+those two tokens are what the unit's browser actually died on.  It strips
+string literals, template literals, comments and regex literals before matching
+(pragmatic first-token heuristic for / vs division), so "?." inside remark text
+never false-positives.
 
 Flags:
   --stamp=YYYYMMDD  override the date stamp in the output filename
-  --no-transpile    skip esbuild (DEMO ONLY: proves the quality gate trips on
-                    un-transpiled input; the build then fails by design)
-  --gate-selftest   run the scanner against known-good/known-bad snippets and
-                    exit (regression test for the gate itself)
+  --no-transpile    skip Babel AND the ES5 proof (DEMO ONLY: shows the regex
+                    layer tripping on un-transpiled input; the build then fails
+                    by design)
+  --gate-selftest   run the scanner against known-good/known-bad snippets, and
+                    re-prove the Map-spread regression, then exit
 
-Deterministic: same inputs + pinned esbuild + same stamp -> byte-identical
+Deterministic: same inputs + pinned toolchain + same stamp -> byte-identical
 output.  Re-run any time:  python tools/build_offline.py
 """
 
 import base64
 import datetime
 import json
+import os
 import re
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]          # D:\FDMS
@@ -110,10 +171,29 @@ DATA = ROOT / "data"
 TOOLS = ROOT / "tools"
 EXPORT = ROOT.parent / "FDMS-export"                # D:\FDMS-export (OUTSIDE the repo)
 
-FLOOR = "Firefox 52 ESR"
-ES_TARGET = "es2017"                                # == the Firefox 52 syntax ceiling
-ESBUILD_VERSION = "0.28.2"                          # must match tools/package.json
+FLOOR = "Firefox 32"
+ES_TARGET = "es5"                                   # the OUTPUT dialect — see § 0
+BABEL_VERSION = "7.28.4"                            # must match FDMS-build-deps/package.json
+PRESET_ENV_VERSION = "7.28.3"
+ACORN_VERSION = "8.14.0"
 MAX_BYTES = 20 * 1024 * 1024                        # hard size guard
+
+# WHERE THE TRANSPILER LIVES — deliberately NOT in this repository.
+#   1. $FDMS_BUILD_DEPS            (override; point it at a node_modules parent)
+#   2. D:\FDMS-build-deps          (the recorded default, OUTSIDE the repo tree)
+#   3. tools/                      (gitignored fallback, for a checkout that
+#                                   would rather keep everything in one place)
+# @babel/core + @babel/preset-env + acorn is ~30 MB of node_modules. The public
+# repo (Nickkoro21/phase2-remarks) must never gain a vendored blob that size, so
+# the builder REQUIRES the path and fails loudly with the exact npm command when
+# it is absent, instead of quietly shipping un-transpiled ES2020 to the unit.
+BUILD_DEPS_ENV = "FDMS_BUILD_DEPS"
+BUILD_DEPS_DEFAULT = ROOT.parent / "FDMS-build-deps"
+
+# The gate finds the shim block by this string. It lives in the <script> LABEL
+# (comments do not survive the transpiler), so it must not carry a version
+# number that would rot the next time the floor moves.
+SHIM_MARK = "FDMS runtime shims"
 
 NO_TRANSPILE = "--no-transpile" in sys.argv         # gate-demo mode only
 
@@ -150,51 +230,118 @@ def sub1(pattern: str, repl, s: str, what: str, count: int = 1, flags=0) -> str:
 
 
 # ────────────────────────────────────────────────────────────────────
-# 0. esbuild toolchain (pinned)
+# 0. THE ES5 TOOLCHAIN — Babel to compile, acorn to prove it (pinned)
+#
+#    Round 22 used esbuild --target=es2017. Round 23 cannot: esbuild bottoms
+#    out at ES2015 and answers --target=es5 with "Transforming const to the
+#    configured target environment (\"es5\") is not supported yet". Babel is
+#    the only real route to ES5, so esbuild is out of the build entirely and
+#    tools/es5_transpile.js (a thin node driver) owns both halves:
+#      · TRANSPILE — @babel/preset-env, forceAllTransforms, ES5 out;
+#      · PARSE5    — acorn with ecmaVersion:5 over every EMITTED script.
+#    The second half is the proof. It is not "the transpiler says so": it is a
+#    different library, reading the finished text, refusing anything an engine
+#    from 2011 could not parse.
 # ────────────────────────────────────────────────────────────────────
 
-def find_esbuild() -> Path:
-    cands = [
-        TOOLS / "node_modules" / "@esbuild" / "win32-x64" / "esbuild.exe",
-        TOOLS / "node_modules" / "esbuild" / "bin" / "esbuild",
-    ]
+DRIVER = TOOLS / "es5_transpile.js"
+
+
+def build_deps_dir() -> Path:
+    """Locate node_modules holding @babel/core, @babel/preset-env and acorn."""
+    cands = []
+    env = os.environ.get(BUILD_DEPS_ENV)
+    if env:
+        cands.append(Path(env))
+    cands += [BUILD_DEPS_DEFAULT, TOOLS]
     for c in cands:
-        if c.is_file():
-            return c
-    fail(f"esbuild not found under tools/node_modules — run:  cd tools && npm install"
-         f"  (package.json pins esbuild {ESBUILD_VERSION})")
+        nm = c if c.name == "node_modules" else c / "node_modules"
+        if (nm / "@babel" / "core" / "package.json").is_file() and \
+           (nm / "acorn" / "package.json").is_file():
+            return nm
+    fail(
+        "the ES5 build toolchain was not found. It lives OUTSIDE this repository\n"
+        "  on purpose (the public repo must not carry ~30 MB of node_modules).\n"
+        "  Looked in: " + " · ".join(str(c) for c in cands) + "\n\n"
+        "  To create it:\n"
+        f"     mkdir {BUILD_DEPS_DEFAULT}\n"
+        f"     cd {BUILD_DEPS_DEFAULT}\n"
+        f"     npm install --save-dev @babel/core@{BABEL_VERSION} "
+        f"@babel/preset-env@{PRESET_ENV_VERSION} acorn@{ACORN_VERSION}\n\n"
+        f"  or set {BUILD_DEPS_ENV} to a directory that already has them.")
 
 
-_ESBUILD = None
+_DEPS = None
 
 
-def esbuild_exe() -> Path:
-    global _ESBUILD
-    if _ESBUILD is None:
-        _ESBUILD = find_esbuild()
-        v = subprocess.run([str(_ESBUILD), "--version"], capture_output=True)
-        got = v.stdout.decode("ascii", "replace").strip()
-        if v.returncode != 0 or got != ESBUILD_VERSION:
-            fail(f"esbuild version drift: expected {ESBUILD_VERSION}, got '{got}' — "
-                 f"builds would not be reproducible. Fix tools/package.json + npm install.")
-    return _ESBUILD
+def deps() -> Path:
+    """Resolve once, then version-check: a build that is not reproducible is
+    not a build we can hand to a closed network and defend."""
+    global _DEPS
+    if _DEPS is None:
+        if not DRIVER.is_file():
+            fail(f"missing the node driver: {DRIVER}")
+        _DEPS = build_deps_dir()
+        got = _node(_DEPS, "versions", None)
+        want = {"babel": BABEL_VERSION, "presetEnv": PRESET_ENV_VERSION,
+                "acorn": ACORN_VERSION}
+        drift = {k: (want[k], got.get(k)) for k in want if got.get(k) != want[k]}
+        if drift:
+            fail("build toolchain version drift — builds would not be "
+                 "reproducible:\n  " + "\n  ".join(
+                     f"{k}: expected {w}, found {g}" for k, (w, g) in drift.items()) +
+                 f"\n  (in {_DEPS}; pin them or update the constants at the top "
+                 f"of {Path(__file__).name})")
+    return _DEPS
 
 
-def esbuild_pass(src: str, name: str, purpose: str) -> str:
-    """Run esbuild --target=es2017 over one script (stdin->stdout)."""
-    p = subprocess.run(
-        [str(esbuild_exe()), "--loader=js", f"--target={ES_TARGET}",
-         "--charset=utf8", "--log-level=warning"],
-        input=src.encode("utf-8"), capture_output=True)
-    if p.returncode != 0:
-        fail(f"esbuild {purpose} failed for {name}:\n{p.stderr.decode('utf-8', 'replace')}")
-    return p.stdout.decode("utf-8")
+def _node(deps_dir: Path, mode: str, payload):
+    """Run tools/es5_transpile.js once, over a whole batch. One node start-up
+    for the entire build instead of one per script."""
+    tmp = Path(tempfile.mkdtemp(prefix="fdms-es5-"))
+    fin, fout = tmp / "in.json", tmp / "out.json"
+    try:
+        fin.write_text(json.dumps(payload if payload is not None else []),
+                       encoding="utf-8")
+        p = subprocess.run(["node", str(DRIVER), str(deps_dir), mode,
+                            str(fin), str(fout)], capture_output=True)
+        if p.returncode != 0:
+            err = p.stderr.decode("utf-8", "replace").strip()
+            fail(f"es5_transpile.js ({mode}) failed:\n{err}")
+        return json.loads(fout.read_text(encoding="utf-8"))
+    finally:
+        for f in (fin, fout):
+            try:
+                f.unlink()
+            except OSError:
+                pass
+        try:
+            tmp.rmdir()
+        except OSError:
+            pass
 
 
-def transpile(name: str, src: str) -> str:
+def transpile_all(items: list) -> dict:
+    """[(name, source)] → {name: ES5 source}."""
     if NO_TRANSPILE:
-        return src
-    return esbuild_pass(src, name, "transpile")
+        return {n: s for n, s in items}
+    out = _node(deps(), "transpile", [{"name": n, "code": s} for n, s in items])
+    if isinstance(out, dict) and out.get("fatal"):
+        fail(out["fatal"])
+    return {r["name"]: r["code"] for r in out}
+
+
+def parse_es5(items: list) -> list:
+    """THE MECHANICAL PROOF. [(name, emitted source)] → list of violations,
+    one per script acorn could not parse at ecmaVersion 5."""
+    if NO_TRANSPILE:
+        return []
+    out = _node(deps(), "parse5", [{"name": n, "code": s} for n, s in items])
+    if isinstance(out, dict) and out.get("fatal"):
+        fail(out["fatal"])
+    return [f"{r['name']}: NOT ES5 — {r['error']}"
+            + (f"\n      → {r['context']}" if r.get("context") else "")
+            for r in out if not r.get("ok")]
 
 
 # ────────────────────────────────────────────────────────────────────
@@ -391,9 +538,17 @@ def strip_js(code: str) -> str:
     return "".join(out)
 
 
-# Syntax above the Firefox 52 floor.  Object rest/spread is NOT here: it needs
-# bracket context to tell `{...o}` (FF55) from `[...a]` / `f(...a)` (FF52 has
-# both), so it has its own scanner below.
+# Syntax above the ES5 output contract.
+#
+# ROUND 23: the AUTHORITY on syntax is now acorn at ecmaVersion 5 (parse_es5),
+# which reads the finished script and refuses every one of these and more. The
+# regex rules below are kept as a CHEAP SECOND OPINION that also produces a
+# line number and the offending text, and because two of them — `?.` and `??` —
+# are the exact tokens the unit's Firefox choked on in the 26/08 export, and
+# this project greps for them by name.
+#
+# They run over strip_js output (strings, template literals, comments and regex
+# literals blanked), so a `?.` inside remark prose never false-positives.
 _SYNTAX_RULES = [
     (r"\?\.(?![0-9])", "optional chaining `?.` (ES2020 / Fx74)"),
     (r"\?\?", "nullish coalescing `??`/`??=` (ES2020 / Fx72)"),
@@ -402,20 +557,32 @@ _SYNTAX_RULES = [
     (r"#[A-Za-z_$]", "private class field `#x` (ES2022 / Fx90)"),
     (r"(?<![\w$])\d[\d_]*_\d", "numeric separator (ES2021 / Fx70)"),
     (r"(?<![\w$])\d+n\b", "BigInt literal (ES2020 / Fx68)"),
-    # ── new at the Fx52 floor ──
     (r"\bcatch\s*\{", "optional catch binding `catch {}` (ES2019 / Fx58)"),
     (r"\basync\s+function\s*\*", "async generator (ES2018 / Fx57)"),
     (r"\bfor\s+await\b", "for-await-of (ES2018 / Fx57)"),
     (r"\bnew\s+RegExp\s*\(\s*0\s*,\s*0*[a-z]*s", "RegExp `s` (dotAll) flag (ES2018 / Fx78)"),
-    # esbuild rewrites an unsupported-flag literal into new RegExp(...), which
-    # then throws at RUNTIME on the old engine — catch the rewrite, not the
-    # literal.  Named groups / lookbehind survive as source text inside the
-    # string argument, so they are matched on the RAW body (see below).
+    # ── new at the ES5 floor (Firefox 32) ──
+    #    Each names the release that FIRST ran it, so the cost of the floor is
+    #    legible from the failure message alone.
+    (r"=>", "arrow function (ES2015 / Fx22 — but not ES5, so it must not survive)"),
+    (r"(?<![\w$.])(?:let|const)\s+[A-Za-z_$]", "let/const (ES2015 / Fx51)"),
+    (r"(?<![\w$.])class\s+[A-Za-z_$]", "class declaration (ES2015 / Fx45)"),
+    (r"(?<![\w$.])class\s*(?:extends[\s(]|\{)", "class expression (ES2015 / Fx45)"),
+    (r"(?<![\w$.])function\s*\*", "generator function (ES2015 / Fx26)"),
+    (r"(?<![\w$.])async(?:\s+function|\s*\(|\s+[A-Za-z_$])", "async function (ES2017 / Fx52)"),
+    (r"(?<![\w$.])for\s*\(\s*(?:var\s+|let\s+|const\s+)?[\w$.\[\]]+\s+of(?![\w$])",
+     "for-of (ES2015 / Fx53 per Babel's table)"),
+    (r"(?<![\w$.])yield(?![\w$])", "yield (ES2015 / Fx26)"),
+    # NOTE: template literals leave no trace in strip_js output (every one is
+    # blanked to `0`), so a backtick cannot be scanned for here — that is
+    # exactly the kind of hole acorn closes, and why acorn is the authority.
 ]
 
-# Object rest/spread `{...x}` is ES2018 (Fx55).  Array spread `[...a]` and call
-# spread `f(...a)` are ES2015 and fine on Fx52 — so the check has to know which
-# bracket it is inside.
+# Object rest/spread `{...x}` is ES2018.  Array spread `[...a]` and call spread
+# `f(...a)` are ES2015 — none of the three is ES5, so all of them are now
+# violations; the bracket-aware scanner survives because it names WHICH one,
+# which is the difference between "Babel missed a case" and "the source grew a
+# construct nobody looked at".
 def scan_object_spread(name: str, stripped: str) -> list:
     bad, brackets = [], []
     i, n = 0, len(stripped)
@@ -427,21 +594,73 @@ def scan_object_spread(name: str, stripped: str) -> list:
             if brackets:
                 brackets.pop()
         elif c == "." and stripped[i:i + 3] == "...":
-            if brackets and brackets[-1] == "{":
-                ln = stripped.count("\n", 0, i) + 1
-                ctx = stripped.splitlines()[ln - 1].strip()[:90]
-                bad.append(f"{name}:{ln}: object rest/spread `{{...}}` (ES2018 / Fx55)  →  {ctx}")
+            kind = {"{": "object rest/spread `{...}` (ES2018 / Fx55)",
+                    "[": "array spread `[...a]` (ES2015 / Fx16)",
+                    "(": "call spread / rest params `f(...a)` (ES2015 / Fx27)"}.get(
+                        brackets[-1] if brackets else "", "spread/rest `...` (ES2015)")
+            ln = stripped.count("\n", 0, i) + 1
+            ctx = stripped.splitlines()[ln - 1].strip()[:90]
+            bad.append(f"{name}:{ln}: {kind} — not ES5  →  {ctx}")
             i += 3
             continue
         i += 1
     return bad
 
 
-# APIs missing in Fx52.  kind:
+# APIs missing in Fx32.  kind:
 #   shimmed     — allowed, the prepended shim block provides it
 #   guarded     — allowed only when the same script also contains the guard text
 #   forbidden   — hard fail
 _API_RULES = [
+    # ── the Firefox 32 batch (Round 23) ──────────────────────────────────
+    (r"Object\.assign\b", "Object.assign (Fx34)", "shimmed", None),
+    (r"Object\.entries\b", "Object.entries (Fx47)", "shimmed", None),
+    (r"Object\.values\b", "Object.values (Fx47)", "shimmed", None),
+    (r"Object\.getOwnPropertyDescriptors\b",
+     "Object.getOwnPropertyDescriptors (Fx50)", "shimmed", None),
+    (r"\.includes\s*\(", "Array/String .includes (Fx43 / Fx40)", "shimmed", None),
+    (r"\.padStart\s*\(", "String.padStart (Fx48)", "shimmed", None),
+    (r"\.padEnd\s*\(", "String.padEnd (Fx48)", "shimmed", None),
+    (r"\.closest\s*\(", "Element.closest (Fx35)", "shimmed", None),
+    (r"(?<!\w)\.matches\s*\(", "Element.matches (Fx34 unprefixed)", "shimmed", None),
+    # fetch is Fx39 — but the export never makes a network request at all, and
+    # the offline fetch shim REPLACES window.fetch unconditionally with a
+    # bundle reader, so the browser's own fetch is never reached. That is the
+    # only reason a Fx39 API is allowed at a Fx32 floor.
+    (r"(?<![\w.$])fetch\s*\(", "fetch (Fx39) — served by the offline shim, never "
+     "by the browser", "shimmed", None),
+    # nothing in app/ uses URLSearchParams, and there is no reason for a
+    # file:// page with no URLs to grow one — kept forbidden rather than shimmed
+    (r"\bURLSearchParams\b", "URLSearchParams (Fx44)", "forbidden", None),
+    # THE ITERATOR PROTOCOL. Firefox got Symbol in 36, so on the floor there is
+    # no Symbol at all. Every mention of it in the emitted file comes from
+    # Babel's own helpers and is written `"undefined" != typeof Symbol &&
+    # r[Symbol.iterator] || r["@@iterator"]` — the STRING key is the rung that
+    # carries the weight here, and the shim block installs it on Map, Set and
+    # the Map/Set/Array iterator prototypes. So: allowed ONLY behind a live
+    # `typeof Symbol` test. An unguarded Symbol from app source is a hard fail.
+    (r"(?<![\w.$])Symbol\s*[.(\[]", "Symbol (Fx36)", "guarded", "typeof Symbol"),
+    # …with ONE exception that no `typeof Symbol` in the same script can excuse.
+    # Babel's _toPrimitive reads `t[Symbol.toPrimitive]` UNGUARDED, and it is
+    # emitted for every computed object key `{[k]: v}`. On Fx32 that line is a
+    # ReferenceError the moment the key is an object. prepare_schedstore()
+    # rewrites the app's single computed key the long way so the helper is never
+    # emitted; if another one appears, this stops the build and says what to do.
+    (r"Symbol\.toPrimitive", "Symbol.toPrimitive inside Babel's _toPrimitive — "
+     "something in the sources grew a computed object key `{[k]: v}`; write it "
+     "the long way (see prepare_schedstore) or the floor has an unguarded Symbol",
+     "forbidden", None),
+    # WebCrypto is Fx34: below it the editor code cannot be set and the
+    # scheduler stays view-only. Every call site already tests for it, and the
+    # capability guard names it on screen (see the warning strip there).
+    (r"crypto\.subtle\b", "crypto.subtle (Fx34)", "guarded", "crypto.subtle)"),
+    # document.execCommand("copy") is Fx41 — ABOVE the floor and unshimmable
+    # (there is no other way to reach the clipboard from a page that old). The
+    # one call site is inside a try/catch, so on Fx32-40 "copy" simply does
+    # nothing visible and the rest of the page is unaffected. Recorded, not
+    # fatal: see kind "degrades".
+    (r"execCommand\s*\(", "document.execCommand('copy') (Fx41) — copy silently "
+     "does nothing below 41; every other control is unaffected", "degrades", None),
     # provided by the shim block
     (r"\bstructuredClone\s*\(", "structuredClone (Fx94)", "shimmed", None),
     (r"crypto\.randomUUID", "crypto.randomUUID (Fx95)", "shimmed", None),
@@ -495,10 +714,10 @@ def _line_of(text: str, pos: int) -> int:
 
 
 def gate_scan_script(name: str, body: str, shim_present: bool,
-                     check_apis: bool = True, check_cssjs: bool = True) -> list:
-    """Return list of violation strings for one emitted script body."""
+                     check_apis: bool = True, check_cssjs: bool = True) -> tuple:
+    """Return (violations, notes) for one emitted script body."""
     stripped = strip_js(body)
-    bad = []
+    bad, notes = [], []
     for pat, label in _SYNTAX_RULES:
         for m in re.finditer(pat, stripped):
             ln = _line_of(stripped, m.start())
@@ -509,7 +728,7 @@ def gate_scan_script(name: str, body: str, shim_present: bool,
         for m in re.finditer(pat, body):
             bad.append(f"{name}:{_line_of(body, m.start())}: {label}")
     if not check_apis:
-        return bad
+        return bad, notes
     for pat, label, kind, guard in _API_RULES:
         hits = list(re.finditer(pat, stripped))
         if not hits:
@@ -517,6 +736,11 @@ def gate_scan_script(name: str, body: str, shim_present: bool,
         if kind == "shimmed":
             if not shim_present:
                 bad.append(f"{name}: uses {label} but the shim block is absent from this page")
+            continue
+        if kind == "degrades":
+            # above the floor, unshimmable, and harmless where it fails —
+            # reported every build so the cost stays visible, never fatal
+            notes.append(f"{name}: {len(hits)}× {label}")
             continue
         if kind == "guarded":
             guards = guard if isinstance(guard, (list, tuple)) else [guard]
@@ -532,13 +756,14 @@ def gate_scan_script(name: str, body: str, shim_present: bool,
         for m in re.finditer(r"(?<![\w.$-])(?:min|max|clamp)\(\s*\d", body):
             bad.append(f"{name}:{_line_of(body, m.start())}: CSS min()/max()/clamp() inside JS "
                        f"(Fx75+) — patch it in the builder")
-    return bad
+    return bad, notes
 
 
 _CSS_FORBIDDEN = [
     (r":is\(", ":is() (Fx78)"),
     (r":where\(", ":where() (Fx82)"),
     (r":has\(", ":has() (Fx121)"),
+    (r":focus-within", ":focus-within (Fx52 — invalidates the whole rule)"),
     (r"aspect-ratio", "aspect-ratio (Fx81)"),
     (r":focus-visible", ":focus-visible (Fx85 — invalidates the whole rule)"),
     (r"content-visibility", "content-visibility"),
@@ -565,6 +790,18 @@ _CSS_INFO = [  # degrade silently on the floor — reported, not fatal
     (r"-webkit-line-clamp", "-webkit-line-clamp (Fx68) — the text is not clamped, it wraps"),
     (r"(?<![\w-])gap\s*:", "gap: — every one carries its grid-gap longhand, and the "
                            "generated html.no-flexgap sheet restores the flex ones"),
+    # ── the Firefox 32 batch (Round 23) ──
+    (r"display\s*:\s*(?:inline-)?grid", "display:grid (Fx52) — every one of these "
+                                        "containers has a flexbox rule in the generated "
+                                        "html.no-grid sheet; the gate asserts it below"),
+    (r"font-variant-numeric", "font-variant-numeric (Fx34) — the tabular figures fall "
+                              "back to proportional; columns of numbers still align "
+                              "because the font is Consolas"),
+    (r"(?<![\w-])filter\s*:", "filter: (Fx35) — one decorative saturate() on the credit "
+                              "line, ignored below 35"),
+    (r"mix-blend-mode", "mix-blend-mode (Fx32) — lands exactly on the floor"),
+    (r"(?<![\w-])position\s*:\s*sticky", "position:sticky (Fx32) — lands exactly on the "
+                                         "floor; below it the element simply scrolls away"),
 ]
 
 
@@ -593,6 +830,81 @@ def gate_scan_css(name: str, css: str) -> tuple:
     return bad, notes
 
 
+def gate_scan_grid(name: str, css: str) -> list:
+    """THE GRID TRIPWIRE.
+
+    CSS Grid is Firefox 52 — twenty releases above this floor. On Fx32 an
+    unknown `display: grid` is simply dropped and the container falls back to
+    `display: block`, which for this app means four side-by-side panels
+    stacking into one very tall column and the flowchart's rail losing its side
+    sheet. Nothing errors; it just looks wrong.
+
+    The answer is the same shape as the flex-gap answer: the grid declarations
+    STAY (they are what a modern browser reads, and Round 23 changed nothing a
+    modern browser sees), and the builder appends a hand-written flexbox sheet
+    behind `html.no-grid`, a class the capability guard sets only after a live
+    test. On Fx52+ — and on the photographed Fx72 — not one of those rules can
+    match.
+
+    Hand-written, so it needs a tripwire: every selector that declares
+    `display: grid` must appear in that sheet. A new grid layout added to
+    app/styles.css therefore stops the build until someone has looked at it
+    once, instead of quietly shipping a broken column to the unit."""
+    covered = re.search(r"/\* NO-GRID SHEET BEGIN \*/(.*?)/\* NO-GRID SHEET END \*/",
+                        css, re.S)
+    if not covered:
+        return [f"{name}: the generated html.no-grid sheet is missing"]
+    # comments BLANKED before the membership test: the sheet documents itself,
+    # and a selector named in a comment above a rule made the check pass with
+    # the rule deleted. Found by deleting one on purpose — a tripwire nobody
+    # has tried to trip is not a tripwire.
+    sheet = _blank_comments(covered.group(1))
+    body_css = css[:covered.start()]
+    bad = []
+    # Two kinds of rule need a fallback, not one:
+    #   · the CONTAINER (display:grid) — without it the box becomes a block;
+    #   · the PLACEMENT (grid-column / grid-row / grid-area) — a child that
+    #     spans every column, like `.rs-panel { grid-column: 1 / -1 }`, needs a
+    #     100% basis or it lines up beside its siblings instead of above them.
+    #     That one was found on screen, not by the gate, which is why it is here.
+    probe = _blank_comments(body_css)
+    for at, sel, b0, b1 in _leaf_blocks(body_css):
+        seg = probe[b0:b1]
+        why = None
+        if re.search(r"display\s*:\s*(?:inline-)?grid", seg):
+            why = "declares display:grid"
+        elif re.search(r"(?<![\w-])grid-(?:column|row|area)\s*:", seg):
+            why = "places itself on a grid track (grid-column/row/area)"
+        if not why:
+            continue
+        for part in sel.split(","):
+            s = part.strip()
+            if not s or s.startswith("@"):
+                continue
+            if s not in sheet:
+                bad.append(f"{name}: `{s}` {why} but has no rule in the html.no-grid "
+                           f"fallback sheet (NO_GRID_CSS in the builder) — on {FLOOR} "
+                           f"its layout would silently come out wrong")
+    return bad
+
+
+def gate_scan_grid_js(name: str, body: str, sheet: str) -> list:
+    """The same tripwire for CSS-IN-JS. Several modules write their own rules
+    from a string (remarksearch.js owns `.rs-panel { grid-column: 1 / -1 }`),
+    and those never reach the <style> block the CSS gate reads."""
+    bad = []
+    sheet = _blank_comments(sheet)      # see the note in gate_scan_grid
+    for m in re.finditer(r"([.#][\w-]+(?:[.#][\w-]+)*)\s*\{[^{}]*"
+                         r"(?:display\s*:\s*(?:inline-)?grid|grid-(?:column|row|area|template)\s*:)",
+                         body):
+        sel = m.group(1)
+        if sel not in sheet:
+            bad.append(f"{name}:{_line_of(body, m.start())}: `{sel}` uses CSS Grid from "
+                       f"JavaScript but has no rule in the html.no-grid fallback sheet "
+                       f"(NO_GRID_CSS in the builder)")
+    return bad
+
+
 def run_gate(html: str, page: str) -> list:
     """Full quality gate over one assembled HTML page. Returns notes; exits on
     violations."""
@@ -604,27 +916,49 @@ def run_gate(html: str, page: str) -> list:
     styles = re.findall(r"<style>(.*?)</style>", html, re.S)
     if not scripts or not styles:
         fail(f"{page}: could not extract inline scripts/styles for the gate")
-    shim_present = any("Fx52 runtime shims" in s for s in scripts)
+    shim_present = any(SHIM_MARK in s for s in scripts)
     if not shim_present:
         fail(f"{page}: the runtime shim block is missing")
     bad, notes = [], []
+    named = []
     for idx, body in enumerate(scripts):
         mlab = re.search(r"/\* ═+ (.+?) ═+ \*/", body)
-        name = f"{page}[script#{idx} {(mlab.group(1) if mlab else 'head')}]"
-        if not NO_TRANSPILE:
-            esbuild_pass(body, name, "gate re-parse")     # true parser layer
-        if "Fx52 runtime shims" in body or "FDMS capability guard" in body:
+        named.append((f"{page}[script#{idx} {(mlab.group(1) if mlab else 'head')}]", body))
+
+    # ── LAYER 1: acorn, ecmaVersion 5, over EVERY emitted script. This is the
+    #    proof the whole round exists for: a different library from the one that
+    #    produced the text, reading the finished file, refusing every construct
+    #    an engine from 2011 could not parse. Nothing below is a substitute.
+    es5 = parse_es5(named)
+    if es5:
+        print(f"\nES5 PARSE — {len(es5)} script(s) in {page} are NOT ES5:", file=sys.stderr)
+        for x in es5:
+            print("  ✗ " + x, file=sys.stderr)
+        fail(f"{page} would not PARSE on {FLOOR} — nothing was written")
+    notes.append(f"acorn ecmaVersion:5 — {len(named)} inline scripts, 0 parse errors")
+
+    # ── LAYER 2: the regex scanners (line numbers, API floor, CSS-in-JS)
+    for name, body in named:
+        if SHIM_MARK in body or "FDMS capability guard" in body:
             # the shim block IS the API provider, and the capability guard runs
             # BEFORE it — both are syntax-scanned only.
-            bad += gate_scan_script(name, body, shim_present,
-                                    check_apis=False, check_cssjs=False)
-            continue
-        bad += gate_scan_script(name, body, shim_present,
-                                check_cssjs="Embedded data bundle" not in name)
+            b, nn = gate_scan_script(name, body, shim_present,
+                                     check_apis=False, check_cssjs=False)
+        else:
+            b, nn = gate_scan_script(name, body, shim_present,
+                                     check_cssjs="Embedded data bundle" not in name)
+        bad += b
+        notes += nn
     for idx, body in enumerate(styles):
         b, nn = gate_scan_css(f"{page}[style#{idx}]", body)
         bad += b
         notes += nn
+        bad += gate_scan_grid(f"{page}[style#{idx}]", body)
+    # the same grid tripwire over the modules that write CSS from JavaScript
+    for name, body in named:
+        if "Embedded data bundle" in name:
+            continue
+        bad += gate_scan_grid_js(name, body, NO_GRID_CSS)
     if bad:
         print(f"\nQUALITY GATE — {len(bad)} violation(s) in {page}:", file=sys.stderr)
         for x in bad[:60]:
@@ -637,42 +971,82 @@ def run_gate(html: str, page: str) -> list:
 
 def gate_selftest() -> None:
     cases_bad = [
-        ("const x = a?.b;", "optional chaining"),
-        ("const y = a ?? b;", "nullish"),
+        ("var x = a?.b;", "optional chaining"),
+        ("var y = a ?? b;", "nullish"),
         ("v ||= 3;", "logical assign"),
         ("class A { #x = 1; }", "private field"),
-        ("const n = 1_000_000;", "numeric separator"),
-        ("const b = 10n;", "bigint"),
+        ("var n = 1_000_000;", "numeric separator"),
+        ("var b = 10n;", "bigint"),
         ("s.replaceAll('a','b')", "replaceAll without shim"),
         ("try { x(); } catch { y(); }", "optional catch binding"),
-        ("const o = {...a, b: 1};", "object spread"),
-        ("const {a, ...rest} = o;", "object rest"),
-        ("async function* g(){}", "async generator"),
-        ("for await (const x of y) {}", "for-await"),
-        ('const r = new RegExp("(?<y>a)");', "named capture group"),
-        ("const q = new IntersectionObserver(f);", "IntersectionObserver"),
+        ("var o = {...a, b: 1};", "object spread"),
+        ("var q = new IntersectionObserver(f);", "IntersectionObserver"),
+        # ── the ES5 floor (Round 23) ──
+        ("var f = (x) => x + 1;", "arrow function"),
+        ("let a = 1;", "let"),
+        ("const a = 1;", "const"),
+        ("class K { m() {} }", "class"),
+        ("function* g() { yield 1; }", "generator"),
+        ("async function f() {}", "async function"),
+        ("for (var x of xs) { f(x); }", "for-of"),
+        ("var arr = [...a, ...b];", "array spread"),
+        ("f(...arr);", "call spread"),
+        ("function g(...args) {}", "rest params"),
+        ("var el = document.querySelector('x'); el.closest('.y');", "Element.closest, no shim"),
+        ("Object.assign({}, a);", "Object.assign, no shim"),
+        ("var t = xs.includes(3);", "Array.includes, no shim"),
+        ("String(n).padStart(2, '0');", "padStart, no shim"),
+        ("var k = Symbol.iterator;", "unguarded Symbol"),
     ]
     cases_good = [
-        'const s = "no ?. here ?? really";',
-        "const r = /ab?./g; const t = `x ${a ? b : c} ?.`;",
-        "const u = 'tpl ${a?.b} not code'; // a?.b in comment",
-        "const q = x ? .5 : y;",
-        'el.innerHTML = `<a href="?x=1&y=2">${esc(v)}</a>`;',
-        "const arr = [...a, ...b]; f(...arr);",              # array/call spread: Fx52 OK
-        "function g(...args) { return Math.max(...args); }",  # rest params: Fx52 OK
+        'var s = "no ?. here ?? really";',
+        "var r = /ab?./g; var t = 'x ?.';",
+        "var u = 'tpl ${a?.b} not code'; // a?.b in comment",
+        "var q = x ? .5 : y;",
+        'el.innerHTML = "<a href=\\"?x=1&y=2\\">" + esc(v) + "</a>";',
         "try { x(); } catch (e) { y(); }",
+        "var i = 0; for (i = 0; i < n; i++) { f(i); }",
+        # the exact shape Babel's helper emits — guarded Symbol is fine
+        'var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];',
+        # ES5 property access on reserved-ish names must not trip the class rule
+        "var c = node.className; var d = o['class'];",
     ]
     ok = True
     for src, why in cases_bad:
-        hits = gate_scan_script("selftest", src, shim_present=False)
+        hits, _ = gate_scan_script("selftest", src, shim_present=False)
         if not hits:
             ok = False
             print(f"SELFTEST FAIL: missed {why}: {src}")
     for src in cases_good:
-        hits = gate_scan_script("selftest", src, shim_present=True)
+        hits, _ = gate_scan_script("selftest", src, shim_present=True)
         if hits:
             ok = False
             print(f"SELFTEST FAIL: false positive on: {src}\n  {hits}")
+
+    # ── THE SPREAD REGRESSION ────────────────────────────────────────────
+    # Round 23 first ran Babel with `loose: true`, which implies iterableIsArray
+    # for the spread transform. `[...bag.values()]` came out as
+    # `[].concat(bag.values())` — and Array.prototype.concat does not expand an
+    # iterator, it appends it as ONE element. Every list built that way from a
+    # Map silently became a list of one iterator object: no error, no console
+    # warning, just an empty screen at the unit. The build now proves the
+    # opposite on every run.
+    if not NO_TRANSPILE:
+        probe = "var out = [...m.values()]; for (const k of s) { f(k); }"
+        got = transpile_all([("spread-probe.js", probe)])["spread-probe.js"]
+        if "[].concat(m.values())" in got or "_toConsumableArray" not in got:
+            ok = False
+            print("SELFTEST FAIL: spread over a Map iterator did not go through "
+                  "Babel's iterator helper — check the assumptions in "
+                  "tools/es5_transpile.js (loose: true is the known trap)\n  " + got)
+        if '"@@iterator"' not in got:
+            ok = False
+            print("SELFTEST FAIL: the emitted iterator helper has no \"@@iterator\" "
+                  "fallback rung — without Symbol (Fx36) nothing would iterate")
+        if parse_es5([("spread-probe.js", got)]):
+            ok = False
+            print("SELFTEST FAIL: the transpiler's own output is not ES5")
+
     print("gate selftest:", "PASS" if ok else "FAIL")
     sys.exit(0 if ok else 1)
 
@@ -738,6 +1112,36 @@ def _leaf_blocks(real_css: str):
 _LEN = r"[-\w.%()+ /*]+"
 
 
+def sub_decls(pattern: str, repl, body: str) -> tuple:
+    """re.subn over a rule body, SKIPPING anything inside a /* … */ comment.
+
+    _leaf_blocks hands back the real text between `{` and `}`, and in this
+    stylesheet a rule body can contain a long Greek comment that DISCUSSES the
+    property being rewritten — `overflow-wrap: normal` is spelled out in prose
+    in the currency table's note. A plain re.subn rewrote the sentence and
+    swallowed everything up to the next semicolon into the value. Inert inside
+    a comment, but it corrupted the note, and one stray `*/` would have made it
+    not inert at all. Every per-declaration rewrite goes through here."""
+    spans = [m.span() for m in re.finditer(r"/\*.*?\*/", body, re.S)]
+
+    def inside(pos):
+        for a, b in spans:
+            if a <= pos < b:
+                return True
+        return False
+
+    out, last, n = [], 0, 0
+    for m in re.finditer(pattern, body):
+        if inside(m.start()):
+            continue
+        out.append(body[last:m.start()])
+        out.append(repl(m))
+        last = m.end()
+        n += 1
+    out.append(body[last:])
+    return "".join(out), n
+
+
 def _split_gap(v: str):
     """`gap: 4px 10px` → (row, col); `gap: 6px` → (6px, 6px)."""
     parts = v.strip().split()
@@ -789,7 +1193,7 @@ def patch_css(css: str) -> tuple:
 
     # ── 3. per-declaration fallbacks inside every innermost rule block ──
     #       (walked back-to-front so the offsets stay valid)
-    n_minmax = n_gap = n_inset = n_break = 0
+    n_minmax = n_gap = n_inset = n_break = n_ow = 0
     flex_rules = []          # (at_stack, selector, row, col, direction, wrap)
     orphan_gap = []          # gap on a rule nothing proves is a flex container
     blocks = _leaf_blocks(css)
@@ -822,14 +1226,25 @@ def patch_css(css: str) -> tuple:
             else:
                 t, r, b, l = parts[:4]
             return f"top:{t};right:{r};bottom:{b};left:{l}"
-        new, k = re.subn(r"(?<![\w-])inset\s*:\s*([^;}]+)", inset_repl, new)
+        new, k = sub_decls(r"(?<![\w-])inset\s*:\s*([^;}]+)", inset_repl, new)
         n_inset += k
 
         # 3b. break-inside (Fx65 unprefixed) → the legacy page-break-inside first
         def brk_repl(m):
             return f"page-break-inside:{m.group(1)};break-inside:{m.group(1)}"
-        new, k = re.subn(r"(?<![\w-])break-inside\s*:\s*([^;}]+)", brk_repl, new)
+        new, k = sub_decls(r"(?<![\w-])break-inside\s*:\s*([^;}]+)", brk_repl, new)
         n_break += k
+
+        # 3b2. overflow-wrap (Fx49 unprefixed) → the legacy word-wrap first.
+        #      Same values, same effect; Fx32 reads word-wrap and ignores the
+        #      one it does not know. Done HERE, inside the declaration walk,
+        #      rather than over the whole sheet: one of this stylesheet's Greek
+        #      comments discusses `overflow-wrap: normal` in prose, and a
+        #      sheet-wide substitution rewrote the sentence.
+        def ow_repl(m):
+            return f"word-wrap:{m.group(1)};overflow-wrap:{m.group(1)}"
+        new, k = sub_decls(r"(?<![\w-])overflow-wrap\s*:\s*([^;}]+)", ow_repl, new)
+        n_ow += k
 
         # 3c. gap / row-gap / column-gap → the grid-* longhand first.
         #     Fx52 shipped CSS Grid with grid-gap; the unprefixed forms are
@@ -840,7 +1255,7 @@ def patch_css(css: str) -> tuple:
             legacy = {"gap": "grid-gap", "row-gap": "grid-row-gap",
                       "column-gap": "grid-column-gap"}[prop]
             return f"{legacy}:{val};{prop}:{val}"
-        new, k = re.subn(r"(?<![\w-])(gap|row-gap|column-gap)\s*:\s*([^;}]+)", gap_repl, new)
+        new, k = sub_decls(r"(?<![\w-])(gap|row-gap|column-gap)\s*:\s*([^;}]+)", gap_repl, new)
         n_gap += k
 
         # 3d. collect the flex containers that rely on gap, for the generated
@@ -887,7 +1302,7 @@ def patch_css(css: str) -> tuple:
             if fn == "min" and prop in ("width", "height") and len(rest) == 1:
                 fb += f"max-{prop}:{rest[0]};"
             return fb + f"{prop}:{fn}({args})"
-        new, k = re.subn(
+        new, k = sub_decls(
             r"(?<![\w-])([a-z-]+)\s*:\s*(min|max|clamp)\(([^()]*)\)",
             mm_repl, new)
         n_minmax += k
@@ -899,6 +1314,7 @@ def patch_css(css: str) -> tuple:
     notes.append(f"inset: → four longhands ×{n_inset}")
     notes.append(f"break-inside → page-break-inside first ×{n_break}")
     notes.append(f"min()/max()/clamp() same-property fallback ×{n_minmax}")
+    notes.append(f"overflow-wrap → word-wrap first ×{n_ow}")
 
     # ── 4. THE GENERATED FLEX-GAP SHEET ───────────────────────────────────
     #    Firefox grew `gap` on flex containers in 63. Below that, 133 of this
@@ -957,7 +1373,155 @@ def patch_css(css: str) -> tuple:
     if orphan_gap:
         notes.append("gap without display: in the same rule (grid-gap only, "
                      f"no flex fallback): {', '.join(orphan_gap)}")
-    return css + "\n".join(out) + "\n", notes
+
+    return css + "\n".join(out) + "\n" + NO_GRID_CSS, notes
+
+
+# ── THE NO-GRID SHEET ────────────────────────────────────────────────────
+# CSS Grid is Firefox 52 — twenty releases above the ruled floor. Eleven
+# containers in app/styles.css are grids. On Fx32 `display: grid` is an unknown
+# value, so it is dropped and the container becomes a plain block: four panels
+# that should sit side by side stack into one tall column, and the flowchart
+# loses its side sheet. Nothing throws; it just looks wrong, which is the worst
+# kind of wrong to send to a closed network.
+#
+# THE JUDGEMENT (recorded here because it is the only hand-written CSS in the
+# build): the grid declarations STAY EXACTLY AS THEY ARE. Round 23 must not
+# change one pixel of what a modern browser draws, and app/styles.css is shared
+# with the hosted app, so nothing was touched there either. The fallback below
+# is generated into the export only, behind `html.no-grid` — a class the
+# capability guard sets ONLY after CSS.supports("display","grid") answers no.
+# On Fx52+, and on the photographed Fx72, not one of these rules can match.
+#
+# Flexbox is Firefox 28, four releases below the floor, so every rule here is
+# safe. Percentage widths with margins reproduce the fractional columns; the
+# ×2 wrapping grids become `flex-wrap: wrap` with a calc() basis (calc is Fx16).
+# The tripwire in gate_scan_grid() asserts that every selector declaring
+# display:grid appears somewhere in this text, so a new grid layout stops the
+# build instead of quietly shipping a broken column.
+NO_GRID_CSS = r"""
+/* ══════════════════════════════════════════════════════════════
+ * GENERATED BY tools/build_offline.py — CSS Grid fallback (Fx52)
+ * and the <details> fallback (Fx49). Both are switched on only by
+ * the capability guard's live tests, so a browser that has the
+ * feature never matches a single rule below.
+ * ══════════════════════════════════════════════════════════════ */
+/* NO-GRID SHEET BEGIN */
+/* EVERY multi-column rule below is `flex-wrap: wrap` with a flex-BASIS rather
+   than a fixed width, and that is the whole trick: the original grids change
+   their column count at 1100px and 640px through media queries, and a fallback
+   built on fixed widths would have to restate all of them — get one wrong and
+   the panels squeeze instead of wrapping. (They did: the first version of this
+   sheet put four fixed columns in a 321px pane and every panel came out 30px
+   wide.) A wrapping basis reproduces the same three shapes — four columns,
+   then two, then one — from the container width alone, with no breakpoint to
+   keep in step. `min-width:0` is what lets a long word wrap instead of
+   forcing the row wider, which is the job `minmax(0, 1fr)` does in the grid. */
+/* The three .layout grids are addressed BY PANEL ID, not by :nth-child.
+   remarksearch.js injects .rs-panel as the FIRST child of #view-remarks at
+   run time, so :nth-child(1..4) silently addressed the wrong four boxes — the
+   230px column landed on the 300px panel and so on. Every panel in
+   app/index.html carries a stable id; ids cannot be knocked out of step by a
+   module that injects a sibling.
+   `flex: 0 1 <track>` for the fixed columns and `flex: 1 1 <min>` for the
+   `1fr` one reproduces the grid almost to the pixel: the fixed panels keep
+   their basis and the last one absorbs the remainder, which is exactly what
+   `230px 300px 250px 1fr` does. */
+html.no-grid .layout,html.no-grid .req-layout,html.no-grid .desc-layout{display:-webkit-flex;display:flex;-webkit-flex-wrap:wrap;flex-wrap:wrap;-webkit-align-items:flex-start;align-items:flex-start;margin-left:-7px;margin-right:-7px}
+html.no-grid .layout > *{margin:0 7px 14px;min-width:0;max-width:100%}
+/* `grid-column: 1 / -1` — a child that spans every column. In a wrapping flex
+   row the equivalent is a 100% basis, which forces its own line. .rs-panel is
+   the global search panel and its rule lives in remarksearch.js, not in
+   styles.css, which is why the tripwire reads the emitted scripts too. */
+html.no-grid .rs-panel{-webkit-flex:1 1 100%;flex:1 1 100%;width:auto}
+
+/* Remarks — 230px 300px 250px 1fr */
+html.no-grid #panel-category{-webkit-flex:0 1 230px;flex:0 1 230px}
+html.no-grid #panel-item{-webkit-flex:0 1 300px;flex:0 1 300px}
+html.no-grid #panel-codes{-webkit-flex:0 1 250px;flex:0 1 250px}
+html.no-grid #panel-results{-webkit-flex:1 1 300px;flex:1 1 300px}
+
+/* Requirements — 260px 1fr */
+html.no-grid #panel-req-domains{-webkit-flex:0 1 260px;flex:0 1 260px}
+html.no-grid #panel-req-list{-webkit-flex:1 1 320px;flex:1 1 320px}
+
+/* Description — 215px 275px minmax(0,1fr), and the output panel spans the row
+   at EVERY width (its grid-column: 1 / -1 sits outside any media query) */
+html.no-grid #panel-desc-cat{-webkit-flex:0 1 215px;flex:0 1 215px}
+html.no-grid #panel-desc-sortie{-webkit-flex:0 1 275px;flex:0 1 275px}
+html.no-grid #panel-desc-build{-webkit-flex:1 1 300px;flex:1 1 300px}
+html.no-grid #panel-desc-out{-webkit-flex:1 1 100%;flex:1 1 100%}
+
+/* the app's own two breakpoints, mirrored: at 1100 the grids drop to two
+   columns and .panel.wide starts spanning; at 640 they drop to one. */
+@media (max-width:1100px){
+  html.no-grid #panel-category,html.no-grid #panel-item,html.no-grid #panel-codes,
+  html.no-grid #panel-desc-cat,html.no-grid #panel-desc-sortie{-webkit-flex:1 1 40%;flex:1 1 40%}
+  html.no-grid #panel-results,html.no-grid #panel-desc-build,
+  html.no-grid .layout > .panel.wide{-webkit-flex:1 1 100%;flex:1 1 100%}
+}
+@media (max-width:640px){
+  /* the ids are repeated here on purpose: an id beats `.layout > .panel`
+     whatever the source order, so a class-only rule never reached the two
+     panels the 1100 block had already pinned to 40%. */
+  html.no-grid .layout > .panel,
+  html.no-grid #panel-category,html.no-grid #panel-item,html.no-grid #panel-codes,
+  html.no-grid #panel-results,html.no-grid #panel-req-domains,html.no-grid #panel-req-list,
+  html.no-grid #panel-desc-cat,html.no-grid #panel-desc-sortie,
+  html.no-grid #panel-desc-build,html.no-grid #panel-desc-out{-webkit-flex:1 1 100%;flex:1 1 100%}
+}
+
+html.no-grid .cat-grid{display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column}
+html.no-grid .cat-grid > * + *{margin-top:8px}
+
+html.no-grid .fc-vitals{display:-webkit-flex;display:flex;-webkit-flex-wrap:wrap;flex-wrap:wrap;margin:0 -5px}
+html.no-grid .fc-vitals > *{-webkit-flex:1 1 160px;flex:1 1 160px;margin:0 5px 10px;min-width:0}
+
+html.no-grid .fc-tracks{display:-webkit-flex;display:flex;-webkit-flex-wrap:wrap;flex-wrap:wrap;margin:0 -6px}
+html.no-grid .fc-tracks > *{-webkit-flex:1 1 238px;flex:1 1 238px;margin:0 6px 12px;min-width:0}
+
+html.no-grid .fc-vitals-grid{display:-webkit-flex;display:flex;-webkit-flex-wrap:wrap;flex-wrap:wrap;margin-top:8px;margin-right:-10px}
+html.no-grid .fc-vitals-grid > *{-webkit-flex:1 1 110px;flex:1 1 110px;min-width:0;margin:0 10px 4px 0}
+
+html.no-grid .thm-grid{display:-webkit-flex;display:flex;-webkit-flex-wrap:wrap;flex-wrap:wrap;margin-right:-8px}
+html.no-grid .thm-grid > *{-webkit-flex:1 1 130px;flex:1 1 130px;min-width:0;margin:0 8px 8px 0}
+
+html.no-grid .sch-grid2{display:-webkit-flex;display:flex;-webkit-flex-wrap:wrap;flex-wrap:wrap;-webkit-align-items:flex-start;align-items:flex-start;margin-right:-12px}
+html.no-grid .sch-grid2 > *{min-width:0;max-width:100%;margin:0 12px 12px 0}
+html.no-grid .sch-grid2 > *:nth-child(1){-webkit-flex:115 1 340px;flex:115 1 340px}
+html.no-grid .sch-grid2 > *:nth-child(2){-webkit-flex:100 1 300px;flex:100 1 300px}
+
+/* the poster is a SCROLLING board, not a wrapping one — seven fixed-width
+   columns and an overflow:auto container. nowrap is the faithful shape here. */
+html.no-grid .fc-poster{display:-webkit-flex;display:flex;-webkit-flex-wrap:nowrap;flex-wrap:nowrap;-webkit-align-items:flex-start;align-items:flex-start}
+html.no-grid .fc-poster > *{-webkit-flex:1 0 190px;flex:1 0 190px;margin-right:12px}
+html.no-grid .fc-poster > *:last-child{margin-right:0}
+
+/* .fc-l1 is the one genuinely two-dimensional layout (a full-width track bar,
+   a full-width filter row, then a rail with an optional side sheet). Rather
+   than fake two dimensions with wrapping — where align-content would hand the
+   two header rows the same share of the leftover height as the rail — it takes
+   the app's OWN narrow-screen shape, which is already written, already tested
+   and already the layout this app shows below 1040px: one column, and the
+   detail sheet docked to the bottom of the window. A deliberate, named
+   degradation rather than an approximation that would look almost right. */
+html.no-grid .fc-l1{display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;min-height:0}
+html.no-grid .fc-l1 > * + *{margin-top:10px}
+html.no-grid .fc-trackbar,html.no-grid .fc-filters{-webkit-flex:0 0 auto;flex:0 0 auto}
+html.no-grid .fc-rail-scroll{-webkit-flex:1 1 auto;flex:1 1 auto;min-height:0}
+html.no-grid .fc-detail{position:fixed;left:0;right:0;bottom:0;max-height:58vh;border-radius:12px 12px 0 0;z-index:30;box-shadow:0 -14px 44px var(--shadow);margin-top:0}
+/* NO-GRID SHEET END */
+
+/* <details> — Firefox 49. The guard sets html.no-details only when the element
+   has no `open` property; the shim block's delegated click handler flips the
+   attribute this rule reads. */
+html.no-details details > *{display:none}
+html.no-details details > summary{display:list-item;cursor:pointer;list-style:none}
+html.no-details details[open] > *{display:block}
+html.no-details details[open] > summary{display:list-item}
+html.no-details details > summary:before{content:"\25B8\00a0"}
+html.no-details details[open] > summary:before{content:"\25BE\00a0"}
+"""
 
 
 # ────────────────────────────────────────────────────────────────────
@@ -1029,20 +1593,31 @@ def data_bundle_js(bundle: dict) -> str:
 # ────────────────────────────────────────────────────────────────────
 
 # ① THE CAPABILITY GUARD — the FIRST script in <head>.
-#    HAND-WRITTEN ES5 ON PURPOSE. Every other block in this file is ES2017, so
-#    on a browser below the floor those blocks die with a SyntaxError at PARSE
-#    time and never run — which is exactly the white page this guard exists to
-#    prevent. It must therefore parse on an engine that has no arrow functions,
-#    no `const`, no template literals. Do not "modernise" it.
 #    Marker string for the gate: FDMS capability guard
+#
+#    WHAT CHANGED IN ROUND 23, AND IT CHANGED THE GUARD'S JOB.
+#    Until now the guard was hand-written ES5 in a file that was otherwise
+#    ES2017, and its first and most important probe was for SYNTAX: it asked,
+#    via new Function(), whether the engine understood let/const/arrows/classes,
+#    because if it did not, every other block in the file died at PARSE time and
+#    the reader got a white page.
+#
+#    The whole file is now ES5. There is no syntax left to fail on: anything
+#    that can parse this block can parse all of it. So the guard has stopped
+#    guarding syntax and guards the RUNTIME FLOOR instead — the APIs Firefox 32
+#    does have, which the rest of the file assumes and the shim block cannot
+#    invent (you can polyfill Object.assign; you cannot polyfill localStorage).
+#    It is still written in plain ES5 by hand, for the same reason as before:
+#    it must be the one block that cannot possibly be the thing that broke.
 CAPABILITY_GUARD_JS = r"""
-/* FDMS capability guard — build_offline.py. ES5 ONLY (see the note in the
-   builder): this block has to parse on a browser too old for the rest.
-   It does two things:
-     · below the floor → paints a plain-English banner naming what is missing,
-       instead of leaving a white page or a half-rendered screen;
-     · on the floor but without flex `gap` (Firefox < 63) → sets
-       html.no-flexgap, which switches on the generated fallback stylesheet. */
+/* FDMS capability guard — build_offline.py.
+   The whole file is ES5 now, so this block no longer probes for SYNTAX: if it
+   parses, everything parses. It probes the RUNTIME FLOOR — the handful of APIs
+   that cannot be shimmed — and below it paints a plain-English banner naming
+   exactly what is missing, instead of a white or half-drawn page.
+   It also runs three live layout tests and sets the classes that switch on the
+   generated fallback sheets: no-grid (Fx52), no-flexgap (Fx63), no-details
+   (Fx49). On a browser that has those features, none of them is ever set. */
 (function () {
   "use strict";
   var missing = [];
@@ -1051,19 +1626,20 @@ CAPABILITY_GUARD_JS = r"""
     try { ok = !!test(); } catch (e) { ok = false; }
     if (!ok) missing.push(label);
   }
-  /* syntax the transpiled bundle still needs (ES2015/2017) — probed with
-     new Function so a SyntaxError is caught instead of killing this script */
-  need("modern JavaScript (arrow functions, let/const, classes, template literals)",
-    function () { new Function("let a=1;const b=(x)=>`${x}`;class C{};return b(a)"); return true; });
-  need("async functions (async/await)",
-    function () { new Function("return (async function(){ await 0; });")(); return true; });
+
+  /* ── the floor: what no shim can provide ── */
+  need("JSON", function () { return window.JSON && typeof JSON.parse === "function"; });
+  need("querySelector / querySelectorAll",
+    function () { return typeof document.querySelectorAll === "function"; });
+  need("classList on elements",
+    function () { return "classList" in document.createElement("div"); });
+  need("addEventListener", function () { return typeof window.addEventListener === "function"; });
   need("Promise", function () { return typeof Promise === "function"; });
-  need("Map and Set", function () { return typeof Map === "function" && typeof Set === "function"; });
-  need("Symbol", function () { return typeof Symbol === "function"; });
-  need("Object.assign", function () { return typeof Object.assign === "function"; });
-  need("Object.entries", function () { return typeof Object.entries === "function"; });
-  need("Array.from", function () { return typeof Array.from === "function"; });
-  need("String.padStart", function () { return typeof "".padStart === "function"; });
+  need("Map and Set",
+    function () { return typeof Map === "function" && typeof Set === "function" &&
+                         typeof new Map().values === "function"; });
+  need("Array.from (Firefox 32 or newer)",
+    function () { return typeof Array.from === "function"; });
   need("localStorage (needed to keep the scheduler data on this computer)",
     function () { window.localStorage.setItem("p2r-probe", "1");
                   window.localStorage.removeItem("p2r-probe"); return true; });
@@ -1071,40 +1647,55 @@ CAPABILITY_GUARD_JS = r"""
     function () { return typeof Blob === "function" && typeof URL !== "undefined" &&
                          typeof URL.createObjectURL === "function"; });
   need("FileReader (needed by Import)", function () { return typeof FileReader === "function"; });
-  need("CSS custom properties (needed by every colour in this page)",
-    function () { return window.CSS && CSS.supports && CSS.supports("--a", "0"); });
-  need("CSS Grid", function () { return window.CSS && CSS.supports && CSS.supports("display", "grid"); });
+  /* CSS custom properties (Firefox 31) — every colour in this page is one, so
+     without them the screen is unreadable rather than merely plain. CSS.supports
+     is itself Firefox 22; where it is missing, fall back to writing the property
+     and reading it back, which is what the feature test would do anyway. */
+  need("CSS custom properties (needed by every colour in this page)", function () {
+    if (window.CSS && CSS.supports) {
+      return CSS.supports("--a", "0") || CSS.supports("(--a: 0)");
+    }
+    var d = document.createElement("div");
+    d.style.cssText = "--fdms-probe:1;color:var(--fdms-probe,#123456)";
+    return d.style.color !== "";
+  });
 
+  /* ── warnings: real losses, but the page still works around them ── */
   var WARN = [];
-  /* not fatal — the app says so itself where it matters, but naming it here
-     saves the reader a hunt */
   try {
     if (!(window.crypto && window.crypto.subtle)) {
-      WARN.push("Web Crypto is unavailable, so the editor code cannot be set on this " +
-                "computer — the scheduler will stay in view-only mode.");
+      WARN.push("This browser has no Web Crypto (Firefox 34 and newer have it). " +
+                "The editor code cannot be set, so the Scheduler stays view-only " +
+                "and Import is unavailable — everything else on this page works.");
     }
   } catch (e) {}
 
-  function banner() {
+  function shell(bg, fg, html, fixed) {
     var d = document.createElement("div");
     d.setAttribute("style",
-      "position:fixed;inset:0;left:0;top:0;right:0;bottom:0;z-index:2147483647;" +
-      "background:#0b1220;color:#e6edf6;font:15px/1.6 Segoe UI,Tahoma,sans-serif;" +
-      "padding:6vh 6vw;overflow:auto");
-    var li = "";
-    for (var i = 0; i < missing.length; i++) {
+      (fixed ? "position:fixed;left:0;top:0;right:0;bottom:0;z-index:2147483647;padding:6vh 6vw;overflow:auto;"
+             : "position:relative;padding:10px 16px;border-bottom:1px solid rgba(0,0,0,0.25);") +
+      "background:" + bg + ";color:" + fg + ";" +
+      "font:15px/1.6 Segoe UI,Tahoma,sans-serif");
+    d.innerHTML = html;
+    return d;
+  }
+
+  function banner() {
+    var li = "", i;
+    for (i = 0; i < missing.length; i++) {
       li += "<li style=\"margin:6px 0\">" + missing[i] + "</li>";
     }
-    d.innerHTML =
+    var d = shell("#0b1220", "#e6edf6",
       "<h1 style=\"font-size:22px;margin:0 0 10px\">Phase 2 FDMS cannot run in this browser</h1>" +
       "<p style=\"margin:0 0 14px;color:#9fb3c8\">This file was built for " +
-      "<strong>Firefox 52 or newer</strong>. The browser that opened it is missing " +
+      "<strong>Firefox 32 or newer</strong>. The browser that opened it is missing " +
       "the following, and the page would otherwise come up blank or half-drawn:</p>" +
       "<ul style=\"margin:0 0 18px 20px;padding:0\">" + li + "</ul>" +
       "<p style=\"margin:0;color:#9fb3c8\">Nothing is broken and no data was lost — " +
       "open the same file in a newer Firefox, or in Chrome or Edge, and it will work. " +
       "If none of those is available on this computer, hand this message to the IT " +
-      "department: it names exactly what the browser lacks.</p>";
+      "department: it names exactly what the browser lacks.</p>", true);
     if (document.body) {
       while (document.body.firstChild) document.body.removeChild(document.body.firstChild);
       document.body.appendChild(d);
@@ -1113,11 +1704,45 @@ CAPABILITY_GUARD_JS = r"""
     }
   }
 
-  /* flex `gap` (Firefox 63) — a live test, because no CSS.supports() query can
-     tell flex gap from grid gap. Runs first thing on DOMContentLoaded: this is
-     the first script in the document, so its listener is also the first to
-     fire, before any app module paints. */
+  /* A warning is NOT a white page, so it must not take the screen. It is a
+     strip above the app that says what is lost and can be closed. Losing the
+     editor code silently would be worse: the unit would reach for Import and
+     find no way in, with nothing on screen to explain why. */
+  function strip() {
+    var txt = "", i;
+    for (i = 0; i < WARN.length; i++) txt += "<div>" + WARN[i] + "</div>";
+    var d = shell("#3a2a12", "#f4e7d0",
+      "<div style=\"font-size:13.5px;line-height:1.5\">" + txt + "</div>", false);
+    var b = document.createElement("button");
+    b.setAttribute("type", "button");
+    b.setAttribute("style",
+      "position:absolute;right:10px;top:8px;background:transparent;border:1px solid " +
+      "currentColor;color:inherit;border-radius:999px;padding:1px 9px;cursor:pointer;font:inherit");
+    b.appendChild(document.createTextNode("×"));
+    b.onclick = function () { if (d.parentNode) d.parentNode.removeChild(d); };
+    d.appendChild(b);
+    if (document.body.firstChild) document.body.insertBefore(d, document.body.firstChild);
+    else document.body.appendChild(d);
+  }
+
+  /* ── the three live layout probes ──────────────────────────────────────
+     Each sets a class ONLY when the feature is genuinely absent, so on any
+     browser that has it the generated fallback rules cannot match at all. */
+  function mark(cls) { document.documentElement.className += " " + cls; }
+
+  function gridTest() {
+    /* CSS Grid — Firefox 52. CSS.supports answers this one honestly, and where
+       CSS.supports itself is missing (below Fx22) the answer is no anyway. */
+    try {
+      var ok = !!(window.CSS && CSS.supports && CSS.supports("display", "grid"));
+      if (!ok) mark("no-grid");
+      return ok;
+    } catch (e) { mark("no-grid"); return false; }
+  }
+
   function flexGapTest() {
+    /* flex `gap` — Firefox 63. A LIVE test, because no CSS.supports() query can
+       tell flex gap from grid gap on the browsers in between. */
     try {
       var box = document.createElement("div");
       box.style.display = "flex";
@@ -1130,9 +1755,28 @@ CAPABILITY_GUARD_JS = r"""
       document.body.appendChild(box);
       var ok = box.scrollHeight === 1;
       box.parentNode.removeChild(box);
-      if (!ok) document.documentElement.className += " no-flexgap";
+      if (!ok) mark("no-flexgap");
     } catch (e) { /* leave the modern path alone if the probe itself fails */ }
   }
+
+  function detailsTest() {
+    /* <details> — Firefox 49. Below it the element is an unknown inline box:
+       the summary AND the body are both always visible, so the four collapsed
+       source panels in this app open permanently and push everything down.
+       The class turns on a CSS rule that hides the body, and the delegated
+       click handler in the shim block does the toggling. */
+    try {
+      if (!("open" in document.createElement("details"))) mark("no-details");
+    } catch (e) { mark("no-details"); }
+  }
+
+  function ready() {
+    flexGapTest();
+    if (WARN.length) { try { strip(); } catch (e) {} }
+  }
+
+  gridTest();
+  detailsTest();
 
   if (missing.length) {
     banner();
@@ -1145,9 +1789,9 @@ CAPABILITY_GUARD_JS = r"""
     if (window.console && console.warn) console.warn("[FDMS] " + WARN[w]);
   }
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", flexGapTest);
+    document.addEventListener("DOMContentLoaded", ready);
   } else {
-    flexGapTest();
+    ready();
   }
 })();
 """
@@ -1158,15 +1802,268 @@ CAPABILITY_GUARD_JS = r"""
 #    Marker string for the gate: Fx52 runtime shims
 RUNTIME_SHIMS_JS = r"""
 "use strict";
-/* Fx52 runtime shims — prepended by tools/build_offline.py BEFORE every app
-   script. Each installs ONLY when the API is missing (modern browsers keep
-   their native implementation). Marker string for the gate: Fx52 runtime shims */
+/* FDMS runtime shims — prepended by tools/build_offline.py BEFORE every app
+   script. Each installs ONLY when the API is missing, so a modern browser keeps
+   every native implementation and this whole block is inert there. */
 (function () {
   var def = function (obj, name, value) {
     try {
       Object.defineProperty(obj, name, { configurable: true, writable: true, value: value });
     } catch (e) { try { obj[name] = value; } catch (e2) {} }
   };
+
+  /* ══════════════════════════════════════════════════════════════════════
+     THE FIREFOX 32 BATCH (Round 23). Everything above is what Firefox 52
+     lacked; this is the further twenty releases down to the ruled floor.
+     ══════════════════════════════════════════════════════════════════════ */
+
+  /* ── THE ITERATOR PROTOCOL, WITHOUT Symbol (Fx36) ──────────────────────
+     This is the load-bearing shim of the whole round, and it is worth reading
+     before touching.
+
+     Babel compiles `for (var x of xs)` and `[...xs]` into helpers whose
+     fallback chain is, in order:
+         Symbol.iterator  →  the STRING key "@@iterator"  →  Array / String /
+         Map / Set recognised by brand  →  array-like by .length
+     Firefox 32 has no Symbol at all (it arrived in 36), so the "@@iterator"
+     rung is the one this app stands on: it iterates and spreads Maps and Sets
+     in roughly 250 places, and `[...map.values()]` reaches the helper as a
+     Map Iterator, which the brand check does NOT recognise — it would throw
+     "Invalid attempt to iterate non-iterable instance".
+
+     So: install "@@iterator" on Map, on Set, and on the Map/Set/Array ITERATOR
+     prototypes (the objects .keys()/.values()/.entries() actually return).
+     NOT on Array.prototype or String.prototype — the helpers already handle
+     those natively, by a faster path, and adding the key would divert every
+     array loop through a closure for nothing.
+
+     Installed non-enumerable, so it is invisible to Object.keys and for-in,
+     and only when Symbol is genuinely absent. */
+  var IT = "@@iterator";
+  var selfIter = function () { return this; };
+  if (typeof Symbol === "undefined" || !Symbol.iterator) {
+    var put = function (proto) {
+      try { if (proto && !proto[IT]) def(proto, IT, selfIter); } catch (e) {}
+    };
+    try { if (!Map.prototype[IT]) def(Map.prototype, IT, function () { return this.entries(); }); } catch (e) {}
+    try { if (!Set.prototype[IT]) def(Set.prototype, IT, function () { return this.values(); }); } catch (e) {}
+    try { put(Object.getPrototypeOf(new Map().keys())); } catch (e) {}
+    try { put(Object.getPrototypeOf(new Set().values())); } catch (e) {}
+    try { put(Object.getPrototypeOf([].keys())); } catch (e) {}
+  }
+
+  /* Array.from is Firefox 32 EXACTLY — the floor's own release, which is why
+     the capability guard names it. It is also the function Babel's helpers call
+     the moment they decide something is iterable, so it has to cope with a Map
+     iterator on an engine with no Symbol. Probe the native one against that
+     exact case; replace it only if the probe fails. */
+  var fromOK = false;
+  try {
+    var probeMap = new Map();
+    probeMap.set("a", 1);
+    fromOK = typeof Array.from === "function" &&
+             Array.from(probeMap.values()).length === 1 &&
+             Array.from(new Set([1, 2])).length === 2 &&
+             Array.from({ length: 2 }).length === 2 &&
+             Array.from("ab").length === 2;
+  } catch (e) { fromOK = false; }
+  if (!fromOK) {
+    def(Array, "from", function (src, mapFn, thisArg) {
+      if (src === null || src === undefined) {
+        throw new TypeError("Array.from requires an array-like or iterable");
+      }
+      var out = [], i = 0, it = null, step, fn = null;
+      if (typeof src !== "string") {
+        if (typeof Symbol !== "undefined" && Symbol.iterator && src[Symbol.iterator]) {
+          fn = src[Symbol.iterator];
+        } else if (src[IT]) {
+          fn = src[IT];
+        }
+        if (typeof fn === "function") it = fn.call(src);
+        else if (typeof src.next === "function") it = src;
+      }
+      if (it) {
+        while (!(step = it.next()).done) {
+          out.push(mapFn ? mapFn.call(thisArg, step.value, i) : step.value);
+          i++;
+        }
+        return out;
+      }
+      var n = src.length >>> 0;
+      for (i = 0; i < n; i++) {
+        out.push(mapFn ? mapFn.call(thisArg, src[i], i) : src[i]);
+      }
+      return out;
+    });
+  }
+
+  /* Array.prototype.values (Fx48). Not used by app/ today, but anything this
+     shim hands back must itself carry "@@iterator", or spreading its result
+     would land in the very hole the block above exists to fill. */
+  if (!Array.prototype.values) {
+    def(Array.prototype, "values", function () {
+      var a = Object(this), i = 0;
+      var it = { next: function () {
+        return i < (a.length >>> 0)
+          ? { value: a[i++], done: false }
+          : { value: undefined, done: true };
+      } };
+      def(it, IT, selfIter);
+      return it;
+    });
+  }
+
+  /* Object.assign (Fx34) — 38 call sites in app/. */
+  if (typeof Object.assign !== "function") {
+    def(Object, "assign", function (target) {
+      if (target === null || target === undefined) {
+        throw new TypeError("Cannot convert undefined or null to object");
+      }
+      var to = Object(target), i, k, src;
+      for (i = 1; i < arguments.length; i++) {
+        src = arguments[i];
+        if (src === null || src === undefined) continue;
+        src = Object(src);
+        for (k in src) {
+          if (Object.prototype.hasOwnProperty.call(src, k)) to[k] = src[k];
+        }
+      }
+      return to;
+    });
+  }
+
+  /* Object.values / Object.entries (Fx47) */
+  if (!Object.values) {
+    def(Object, "values", function (o) {
+      var r = [], k, s = Object(o);
+      for (k in s) if (Object.prototype.hasOwnProperty.call(s, k)) r.push(s[k]);
+      return r;
+    });
+  }
+  if (!Object.entries) {
+    def(Object, "entries", function (o) {
+      var r = [], k, s = Object(o);
+      for (k in s) if (Object.prototype.hasOwnProperty.call(s, k)) r.push([k, s[k]]);
+      return r;
+    });
+  }
+
+  /* Object.getOwnPropertyDescriptors (Fx50) */
+  if (!Object.getOwnPropertyDescriptors) {
+    def(Object, "getOwnPropertyDescriptors", function (o) {
+      var s = Object(o), names = Object.getOwnPropertyNames(s), r = {}, i;
+      for (i = 0; i < names.length; i++) {
+        r[names[i]] = Object.getOwnPropertyDescriptor(s, names[i]);
+      }
+      return r;
+    });
+  }
+
+  /* Array.prototype.includes (Fx43) — NaN-aware, like the real one. */
+  if (!Array.prototype.includes) {
+    def(Array.prototype, "includes", function (x, from) {
+      var a = Object(this), n = a.length >>> 0, i = parseInt(from, 10) || 0, v;
+      if (n === 0) return false;
+      if (i < 0) i = Math.max(n + i, 0);
+      for (; i < n; i++) {
+        v = a[i];
+        if (v === x || (x !== x && v !== v)) return true;
+      }
+      return false;
+    });
+  }
+
+  /* String.prototype.includes (Fx40 — it was called `contains` before that) */
+  if (!String.prototype.includes) {
+    def(String.prototype, "includes", function (s, from) {
+      return String(this).indexOf(String(s), from || 0) !== -1;
+    });
+  }
+
+  /* String.prototype.padStart / padEnd (Fx48) */
+  var padWith = function (self, len, fill, atEnd) {
+    var s = String(self);
+    var want = len >> 0;
+    var f = fill === undefined ? " " : String(fill);
+    if (s.length >= want || f === "") return s;
+    var need = want - s.length, pad = "";
+    while (pad.length < need) pad += f;
+    pad = pad.slice(0, need);
+    return atEnd ? s + pad : pad + s;
+  };
+  if (!String.prototype.padStart) {
+    def(String.prototype, "padStart", function (len, fill) {
+      return padWith(this, len, fill, false);
+    });
+  }
+  if (!String.prototype.padEnd) {
+    def(String.prototype, "padEnd", function (len, fill) {
+      return padWith(this, len, fill, true);
+    });
+  }
+
+  /* Element.matches (Fx34 unprefixed) and Element.closest (Fx35).
+     closest has 90 call sites — nearly every delegated click handler in the
+     app walks up from event.target with it, so without this shim the Scheduler
+     board simply would not respond to clicks. */
+  if (typeof Element !== "undefined" && Element.prototype) {
+    var ep = Element.prototype;
+    if (!ep.matches) {
+      def(ep, "matches", ep.matchesSelector || ep.mozMatchesSelector ||
+                         ep.webkitMatchesSelector || ep.msMatchesSelector ||
+        function (sel) {
+          var doc = this.document || this.ownerDocument;
+          if (!doc) return false;
+          var list = doc.querySelectorAll(sel), i = 0;
+          while (list[i] && list[i] !== this) i++;
+          return !!list[i];
+        });
+    }
+    if (!ep.closest) {
+      def(ep, "closest", function (sel) {
+        var n = this;
+        while (n && n.nodeType === 1) {
+          if (n.matches(sel)) return n;
+          n = n.parentElement || n.parentNode;
+        }
+        return null;
+      });
+    }
+  }
+
+  /* NodeList.forEach (Fx50) / HTMLCollection — querySelectorAll(...).forEach()
+     is the shape the app writes in a few places. Array.prototype.forEach is
+     ES5, so it can simply be borrowed. */
+  var LISTS = [window.NodeList, window.HTMLCollection, window.DOMTokenList], li;
+  for (li = 0; li < LISTS.length; li++) {
+    if (LISTS[li] && LISTS[li].prototype && !LISTS[li].prototype.forEach) {
+      def(LISTS[li].prototype, "forEach", Array.prototype.forEach);
+    }
+  }
+
+  /* <details>/<summary> (Fx49). Below it the element is an unknown inline box:
+     the summary AND the body are both permanently visible, so the four
+     collapsed "Source & verbatim" panels in this app would open themselves and
+     push the page down. The capability guard sets html.no-details, the
+     generated stylesheet hides the body of a <details> without [open], and this
+     delegated handler does the toggling — the same open/closed behaviour, from
+     three small pieces instead of one native element. */
+  try {
+    if (!("open" in document.createElement("details"))) {
+      document.addEventListener("click", function (ev) {
+        var n = ev.target;
+        while (n && n.nodeType === 1 && String(n.nodeName).toLowerCase() !== "summary") {
+          n = n.parentNode;
+        }
+        if (!n || n.nodeType !== 1) return;
+        var d = n.parentNode;
+        if (!d || String(d.nodeName).toLowerCase() !== "details") return;
+        if (d.getAttribute("open") === null) d.setAttribute("open", "");
+        else d.removeAttribute("open");
+        if (ev.preventDefault) ev.preventDefault();
+      }, false);
+    }
+  } catch (e) { /* no <details> on the page is not a failure */ }
 
   /* globalThis (Fx65) — schedbridge.js reads it in the else branch of a
      typeof-window ternary; harmless there, but a defined value costs nothing. */
@@ -1888,6 +2785,31 @@ def prepare_mifchart() -> str:
                 src, "mifchart modal width min()")
 
 
+def prepare_schedstore() -> str:
+    """THE ONE COMPUTED OBJECT KEY IN THE APP, and why it does not travel.
+
+    `{ [CFG_KEY]: rec }` is the only computed key in app/, and Babel compiles a
+    computed key into `_defineProperty` → `_toPropertyKey` → `_toPrimitive`,
+    whose body reads `t[Symbol.toPrimitive]`. Firefox 32 has no Symbol at all
+    (it arrived in 36), so that line is a ReferenceError waiting for the day
+    the key is an object rather than a string.
+
+    Today it is safe by luck: CFG_KEY is the string "editor_lock", and
+    _toPrimitive returns non-objects before it ever touches Symbol. Luck is not
+    a floor. Writing the same object the long way removes the helper chain
+    entirely, which is why the gate can then assert that `Symbol.toPrimitive`
+    does not appear ANYWHERE in the emitted file — every surviving mention of
+    Symbol sits behind a live `typeof Symbol` test.
+
+    This is the export's rewrite, not the app's: app/schedstore.js keeps the
+    modern line, and the hosted app is untouched."""
+    src = read_text(APP / "schedstore.js")
+    return sub1(
+        r"S\(\)\.setConfig\(\{ \[CFG_KEY\]: rec \}\)",
+        lambda m: "S().setConfig((function () { var o = {}; o[CFG_KEY] = rec; return o; })())",
+        src, "schedstore computed key { [CFG_KEY]: rec }")
+
+
 def prepare_schedval() -> str:
     src = read_text(APP / "schedval.js")
     return sub1(r"width:min\(760px,94vw\)", lambda m: "width:760px;max-width:94vw",
@@ -1974,7 +2896,8 @@ def build_main_html(css: str, emblem_uri: str, guard_js: str, prepaint_js: str,
                 lambda m: "<!DOCTYPE html>\n"
                           f"<!-- Phase 2 FDMS — single-file offline build {STAMP}\n"
                           "     generated by tools/build_offline.py; do not edit by hand.\n"
-                          f"     Browser floor: {FLOOR} (JavaScript transpiled to {ES_TARGET}).\n"
+                          f"     Browser floor: {FLOOR}. Every inline script is pure ES5,\n"
+                          "     proved by parsing each one with acorn at ecmaVersion 5.\n"
                           "     Self-contained: no network request of any kind is made.\n"
                           "     The scheduler store ships EMPTY — load data on site through\n"
                           "     Scheduler → «⋯» → ⭱ Import (needs the editor lock open). -->",
@@ -2001,6 +2924,9 @@ Balance / Bridge), Instructor Currency και Schedule Validation.
   είναι ενσωματωμένα μέσα στο αρχείο.
 - Συμβατό με Mozilla Firefox {floor_short} ή νεότερο, καθώς και με οποιονδήποτε
   σύγχρονο Chrome / Edge.
+- ΔΙΟΡΘΩΘΗΚΕ: το σφάλμα σύνταξης («SyntaxError») που εμφάνιζε το παλαιότερο
+  αρχείο στον Firefox 72 της Μονάδας, και άφηνε τη σελίδα κενή, δεν υπάρχει
+  πλέον — όλος ο κώδικας του αρχείου γράφεται τώρα σε παλαιά έκδοση JavaScript.
 - ΔΕΝ απαιτείται internet, server, εγκατάσταση προγράμματος ή δικαιώματα
   διαχειριστή. Η σελίδα ΔΕΝ στέλνει και ΔΕΝ λαμβάνει τίποτα από το δίκτυο —
   λειτουργεί εξ ολοκλήρου τοπικά μέσα στον browser.
@@ -2069,7 +2995,7 @@ def main() -> None:
         if not f.is_file():
             fail(f"missing source file: {f}")
     if not NO_TRANSPILE:
-        esbuild_exe()   # resolve + version-check up front
+        deps()   # resolve the external toolchain + version-check up front
 
     index_html = read_text(APP / "index.html")
     css, css_notes = patch_css(read_text(APP / "styles.css"))
@@ -2079,6 +3005,7 @@ def main() -> None:
         "app": prepare_appjs(),
         "mifchart": prepare_mifchart(),
         "schedval": prepare_schedval(),
+        "schedstore": prepare_schedstore(),
     }
     for s in sources:
         key = s[:-3]
@@ -2095,20 +3022,32 @@ def main() -> None:
     png = (APP / "assets" / "364mea.png").read_bytes()
     emblem_uri = "data:image/png;base64," + base64.b64encode(png).decode("ascii")
 
-    # ── transpile EVERYTHING that ships as inline JS ──
-    t = transpile
-    guard_js = t("capability-guard", CAPABILITY_GUARD_JS)   # ES5 in → ES5 out
-    prepaint_js = t("prepaint", prepaint_raw)
-    shims_js = t("runtime-shims", RUNTIME_SHIMS_JS)
-    fetch_js = t("fetch-shim", FETCH_SHIM_JS)
-    datefb_js = t("date-fallback", DATE_FALLBACK_JS)
-    feedback_js = t("feedback", FEEDBACK_JS)
-    mods = {k: t(k + ".js", v) for k, v in raw.items()}
+    # ── transpile EVERYTHING that ships as inline JS, in ONE node run ──
+    #    The guard and the shims go through Babel too. They are written in ES5
+    #    by hand, so Babel has nothing to do to them — but running them through
+    #    the same pipe means there is no block in the file that only a human
+    #    ever checked.
+    batch = [("capability-guard", CAPABILITY_GUARD_JS),
+             ("prepaint", prepaint_raw),
+             ("runtime-shims", RUNTIME_SHIMS_JS),
+             ("fetch-shim", FETCH_SHIM_JS),
+             ("date-fallback", DATE_FALLBACK_JS),
+             ("feedback", FEEDBACK_JS)] + \
+            [(k + ".js", v) for k, v in raw.items()]
+    done = transpile_all(batch)
+    guard_js = done["capability-guard"]
+    prepaint_js = done["prepaint"]
+    shims_js = done["runtime-shims"]
+    fetch_js = done["fetch-shim"]
+    datefb_js = done["date-fallback"]
+    feedback_js = done["feedback"]
+    mods = {k: done[k + ".js"] for k in raw}
 
     bundle = collect_data()
     data_js = data_bundle_js(bundle)          # generated ES5-safe object literal
     scripts = "\n".join(
-        [script_tag("Fx52 runtime shims (build_offline.py)", shims_js),
+        [script_tag(f"{SHIM_MARK} (build_offline.py) — each installs only when the "
+                    f"API is missing", shims_js),
          script_tag(f"Embedded data bundle — {len(bundle)} JSON files", data_js),
          script_tag("Offline fetch shim", fetch_js),
          script_tag("Typed-date fallback (build_offline.py)", datefb_js)]
@@ -2130,15 +3069,19 @@ def main() -> None:
                                floor_short=FLOOR.replace("Firefox ", "")),
         encoding="utf-8-sig", newline="\r\n")
 
-    print(f"floor       : {FLOOR}  (esbuild --target={ES_TARGET})")
+    print(f"floor       : {FLOOR}  (every inline script emitted as {ES_TARGET})")
     print(f"modules     : {len(SCRIPT_CHAIN)} app modules "
           f"+ guard/shims/fetch/date/feedback  (schedsync.js excluded)")
     print(f"data bundle : {len(bundle)} JSON files, "
           f"{sum(len(json.dumps(v, ensure_ascii=False)) for v in bundle.values()) / 1e6:.1f} MB raw"
           f"  (data/scheduler/seed.json shipped EMPTY)")
     print(f"emblem      : {len(png)} bytes PNG -> {len(emblem_uri)} chars data URI")
-    print(f"transpile   : esbuild {ESBUILD_VERSION} --target={ES_TARGET}"
+    print(f"transpile   : @babel/core {BABEL_VERSION} + preset-env "
+          f"{PRESET_ENV_VERSION} → {ES_TARGET}"
           + ("  ** SKIPPED (--no-transpile) **" if NO_TRANSPILE else ""))
+    print(f"proof       : acorn {ACORN_VERSION}, ecmaVersion 5, every inline script"
+          + ("  ** SKIPPED **" if NO_TRANSPILE else ""))
+    print(f"build deps  : {deps() if not NO_TRANSPILE else '(skipped)'}")
     print(f"output      : {OUT_HTML}  ({size:,} bytes = {size / 1048576:.2f} MB)")
     print(f"readme      : {OUT_README}")
     for x in css_notes:

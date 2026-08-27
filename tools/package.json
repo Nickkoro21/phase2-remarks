@@ -1,9 +1,11 @@
 {
   "name": "fdms-offline-build",
   "private": true,
-  "version": "1.0.0",
-  "description": "Pinned esbuild toolchain for tools/build_offline.py — ES2019 transpile so the offline exports run on the unit's Firefox 72 (closed network). Version is pinned EXACTLY; build_offline.py hard-fails on drift.",
+  "version": "2.0.0",
+  "description": "FALLBACK location for the ES5 build toolchain of tools/build_offline.py. Round 23 (28/08/2026) dropped the export's floor to Firefox 32 and compiles every inline script to pure ES5; esbuild cannot do that (it bottoms out at ES2015 and refuses --target=es5), so @babel/preset-env transpiles and acorn proves the result by parsing it at ecmaVersion 5. The builder looks for these in $FDMS_BUILD_DEPS, then in D:/FDMS-build-deps, then here — the recorded home is OUTSIDE the repository so the public repo never carries ~30 MB of node_modules. Versions are pinned EXACTLY; build_offline.py hard-fails on drift. tools/node_modules is gitignored.",
   "devDependencies": {
-    "esbuild": "0.28.2"
+    "@babel/core": "7.28.4",
+    "@babel/preset-env": "7.28.3",
+    "acorn": "8.14.0"
   }
 }
