@@ -3,6 +3,35 @@ r"""
 build_offline.py — deterministic single-file export of Phase 2 FDMS for the
 unit's CLOSED network.
 
+WHAT CHANGED ON 28/08/2026 (Round 24b — THE COMPENSATION TRAVELS WITH THE SHAPE)
+  The verify of Round 24 left exactly one thing measurably wrong, and it was an
+  INSTANCE-level miss of a model that was otherwise right.
+
+  Round 24 taught the flex-gap fallback's CHILD rules to follow a shape flip
+  into its @media; the CONTAINER rules stayed where they were written.  So
+  `.fc-bar` — wrapping, painting nothing — got `margin-bottom:-14px` at the top
+  level to give back the height its children's margins added, and when the
+  stylesheet flips it to a column at 740px the children's `margin-bottom` was
+  duly zeroed while the container's -14px went on applying, compensating
+  nothing.  Measured at 560px with the fallback forced: the 12px `.fc-view`'s
+  own gap puts between `.fc-bar` and `.fc-l0` came out as a 2px OVERLAP.
+
+  Fixed AS THE MODEL, not as a special case.  The compensation is now asked of
+  every shape, read off the child rule rather than off the flags (only the
+  wrapping tail `> *` puts a margin on the LAST child, so only it can grow the
+  box), and every at-context in which a container rule is emitted restates the
+  FULL set of properties this generator has ever set on that container — with
+  what the new shape needs, or with the box's own uncompensated value where the
+  new shape needs nothing.  One rule was added to the whole export
+  (`@media (max-width: 740px){html.no-flexgap .fc-bar{margin-bottom:0}}`), the
+  spacing is 12px again, and a sweep of all 62 container compensations against
+  every shape-flip rule now finds nothing left to find.  See flexgap_sheet.
+
+  Also: the `inset` collapse is no longer written up as a fixed measurement.
+  The old note quoted "120×20" in the spec and "63×20" here for the same
+  defect, because the collapsed box is content-sized — the collapse is the
+  fact, its dimensions are not.
+
 WHAT CHANGED ON 28/08/2026 (Round 24 — THE VERIFY: WHAT THE PATCH NEVER SWEPT)
   Round 23 shipped, and the verify found two things wrong with it plus one
   footgun in the command line.  All three have the same shape: a rule that was
@@ -12,10 +41,13 @@ WHAT CHANGED ON 28/08/2026 (Round 24 — THE VERIFY: WHAT THE PATCH NEVER SWEPT)
      schedval.js's `.sv-modal` declare `position:fixed;inset:0` inside a
      template literal.  patch_css only ever reads the <style> block, and the
      CSS-in-JS tripwire was watching for `grid`, not for the forbidden list.
-     Measured on the shipped file: the overlay is 1440×900 where `inset` is
-     understood and a 120×20 sliver where it is not — so on Fx32-65 the
-     Schedule-Validation and minimums backdrops collapsed into the top-left
-     corner.  Fixed at the source of truth and generalised:
+     Measured on the shipped file: the overlay covers the whole viewport
+     (1440×900) where `inset` is understood; where it is not, it collapses to a
+     content-sized box in the top-left corner — the size is whatever the modal
+     happens to hold, not a fixed one (the verify measured 760×305 and
+     1240×115 for the two).  So on Fx32-65 the Schedule-Validation and
+     minimums backdrops stopped being backdrops at all.  Fixed at the source of
+     truth and generalised:
        · the per-declaration floor patch is now the FUNCTION `patch_decls`,
          called by patch_css for the stylesheet AND by prepare_cssjs for every
          rule a module writes from a string.  app/ is untouched — the hosted
@@ -1403,9 +1435,14 @@ def _cssjs_blocks(js: str) -> list:
 # sees the <style> block.  Two modules write their own rules from a JavaScript
 # string — mifchart.js's `.mc-modal` and schedval.js's `.sv-modal` both declare
 # `position:fixed;inset:0` — so the inset patch swept straight past them.  On
-# Fx32-65 those two backdrops came out as a top-left sliver instead of a
-# full-viewport veil (measured on the shipped file: 1440×900 with inset
-# support, 63×20 without).  The patch is a FUNCTION now and BOTH paths call it:
+# Fx32-65 those two backdrops came out as a content-sized box in the top-left
+# corner instead of a full-viewport veil (measured on the shipped file:
+# 1440×900 with inset support; without it the box is only as big as what the
+# modal holds — 760×305 and 1240×115 for the two).  The two numbers this
+# comment and the header used to quote were each a single reading of a
+# content-dependent box, and they did not even agree with each other; the
+# COLLAPSE is the fact, its size is not.
+# The patch is a FUNCTION now and BOTH paths call it:
 # patch_css for the stylesheet, prepare_cssjs for the rules a module writes
 # from a string.  app/ is not touched — the hosted app keeps the shorthand.
 _GAP_LEGACY = {"gap": "grid-gap", "row-gap": "grid-row-gap",
@@ -1688,6 +1725,27 @@ def _wrap_compensation(entry, side: str, amount: float):
     return decl, "+".join(how), left
 
 
+def _uncompensated(entry, prop: str) -> str:
+    """What a container property is worth when it is compensating NOTHING: the
+    box's own declared value, which for an absent padding or margin is 0.
+
+    This is the value a compensation has to be RESTATED as in an at-context
+    whose shape no longer puts a margin on the last child — `padding-bottom`
+    back to the padding the stylesheet wrote, `margin-bottom` back to 0.
+
+    A property only ever reaches here because _wrap_compensation set it, and
+    that function sets one only when _resolve_px called it usable, so the
+    `not ok` branch is unreachable.  It is a tripwire, not a fallback: if some
+    future stylesheet makes it reachable, the build must stop rather than
+    invent a number for a box it cannot read."""
+    v, ok = _resolve_px(entry, prop)
+    if not ok:
+        fail(f"flex-gap fallback: the compensation set {prop} on a box whose "
+             f"own {prop} the generator cannot read, so it cannot be restated "
+             f"where the shape flips")
+    return _len(v)
+
+
 def flexgap_sheet(flex_rules, boxes, where: str) -> tuple:
     """THE GENERATED FLEX-GAP SHEET.  Firefox grew `gap` on flex containers in
     63; below that the spacing collapses to nothing.  These rules restore it
@@ -1714,7 +1772,17 @@ def flexgap_sheet(flex_rules, boxes, where: str) -> tuple:
         legitimate margin on some future child.  It now cancels exactly the
         properties IT set for that selector and this rule does not, which for a
         row→column flip is the one `margin-left`.
-      · it grew the box.  See _wrap_compensation."""
+      · it grew the box.  See _wrap_compensation.
+
+    AND THE ONE THING THE FF32 VERIFY LEFT BEHIND (Round 24b).  Those three
+    fixes taught the CHILD rules to follow a shape flip into its @media; the
+    CONTAINER rules stayed where they were written.  `.fc-bar` wraps at the top
+    level and paints nothing, so it got `margin-bottom:-14px`; at 740px the
+    stylesheet flips it to a column, the pass above duly zeroes the children's
+    `margin-bottom` — and the container's -14px went on applying, compensating
+    nothing.  Measured at 560px with the fallback forced, the 12px `.fc-view`'s
+    own gap puts between `.fc-bar` and `.fc-l0` came out as a 2px OVERLAP.
+    The compensation now TRAVELS WITH THE SHAPE: see the container block."""
     # TWO GROUPS, and the order between them is a decision, not a formatting
     # choice.  A wrapping container can itself be a child of another wrapping
     # container — `.viewtabs` sits inside `.topbar`, and below 900px BOTH wrap —
@@ -1732,10 +1800,13 @@ def flexgap_sheet(flex_rules, boxes, where: str) -> tuple:
     out, cont_out, notes = [], [], []
     how_n = {}          # how the compensation was paid → count
     resid = {"bottom": [], "right": []}
+    carried = []        # compensations restated where the shape flipped
     emitted = {}        # selector → (ctx, tail, {prop: value}, index in `out`)
     comped = {}         # selector → (decls, index in `cont_out`, ctx)
+    owned = {}          # selector → {prop: last value emitted for the container}
     for at_stack, sel, row, col, column, wrap in flex_rules:
         key = sel.strip()
+        ctx = tuple(at_stack)
 
         def wrap_rule(text):
             for at in reversed(at_stack):
@@ -1759,23 +1830,30 @@ def flexgap_sheet(flex_rules, boxes, where: str) -> tuple:
             if not _zero_len(col):
                 decl["margin-left"] = col
         # ── the container rule: give back what the last line/column took ──
-        if wrap:
-            entry = boxes.get(key)
-            for side, amount in (("bottom", row if "margin-bottom" in decl else None),
-                                 ("right", col if "margin-right" in decl else None)):
-                if amount is None:
-                    continue
-                px = float(amount[:-2]) if re.fullmatch(_PX, amount.strip()) else None
-                if px is None:
-                    resid[side].append(f"{key} ({amount} is not a px length)")
-                    continue
-                d, how, residual = _wrap_compensation(
-                    entry or {"paints": set(), "decl": {}}, side, px)
-                cont.update(d)
-                how_n[how or "nothing to take it from"] = \
-                    how_n.get(how or "nothing to take it from", 0) + 1
-                if residual > 1e-9:
-                    resid[side].append(f"{key} +{_len(residual)}")
+        # The question is asked of EVERY shape, not just of `wrap`, and it is
+        # asked of the child rule that was just built rather than of the flags:
+        # only the wrapping tail `> *` puts a margin on the LAST child as well,
+        # so only that tail leaves the container bigger than the gap geometry
+        # it is imitating.  A column or a plain row answers "nothing" — and
+        # that answer is not a no-op, it is exactly what a later at-context has
+        # to HEAR when the base context said -14px.
+        entry = boxes.get(key) or {"paints": set(), "decl": {}}
+        for side, amount in (("bottom", row if tail == "> *"
+                              and "margin-bottom" in decl else None),
+                             ("right", col if tail == "> *"
+                              and "margin-right" in decl else None)):
+            if amount is None:
+                continue
+            px = float(amount[:-2]) if re.fullmatch(_PX, amount.strip()) else None
+            if px is None:
+                resid[side].append(f"{key} ({amount} is not a px length)")
+                continue
+            d, how, residual = _wrap_compensation(entry, side, px)
+            cont.update(d)
+            how_n[how or "nothing to take it from"] = \
+                how_n.get(how or "nothing to take it from", 0) + 1
+            if residual > 1e-9:
+                resid[side].append(f"{key} +{_len(residual)}")
         # ── SUPERSEDE, or cancel, but never both ──────────────────────────
         # Two rules for one selector in the SAME at-context is not an override,
         # it is a replacement: whatever the earlier one said is unreachable, and
@@ -1787,7 +1865,6 @@ def flexgap_sheet(flex_rules, boxes, where: str) -> tuple:
         # `.fc-vrow` from row to column — and there CSS needs both rules, so the
         # old one is cancelled where it stands, in the properties this generator
         # set and this rule does not.
-        ctx = tuple(at_stack)
         prev_ctx, prev_tail, prev, prev_ix = emitted.get(key, (ctx, tail, {}, None))
         if prev and prev_ctx == ctx:
             if prev_ix is not None:
@@ -1809,13 +1886,38 @@ def flexgap_sheet(flex_rules, boxes, where: str) -> tuple:
                                  + ";".join(f"{k}:{v}" for k, v in decl.items()) + "}"))
             emitted[key] = (ctx, tail, {k: v for k, v in decl.items() if v != "0"},
                             len(out) - 1)
-        if cont and cont != comped.get(key, (None, None))[0]:
-            prev_cix = comped.get(key, (None, None))[1]
-            if prev_cix is not None and comped[key][2] == ctx:
+        # ── THE COMPENSATION TRAVELS WITH THE SHAPE ────────────────────────
+        # A compensation is only ever correct for the shape that caused it, so
+        # the container rules follow a shape flip into its @media exactly as
+        # the child rules just did.  The rule is: EVERY at-context in which
+        # this generator emits a container rule states the FULL set of
+        # properties it has ever set on that container — with what the new
+        # shape needs (`cont`, computed above by the same padding-first rung)
+        # or, where the new shape needs nothing, with the box's own
+        # uncompensated value.  Stating all of them is what makes it airtight
+        # for contexts that are not nested: whichever @media happens to match,
+        # the last matching rule settles every compensated property outright,
+        # so nothing from an earlier context can survive into a shape it was
+        # never computed for.  A property first compensated in a LATER context
+        # is untouched in the earlier ones by construction, which is exactly
+        # right, so it does not have to be back-stated.
+        own = owned.setdefault(key, {})
+        prev_cont, prev_cix, prev_cctx = comped.get(key, ({}, None, None))
+        if prev_cont and prev_cctx == ctx:
+            if prev_cix is not None:
                 cont_out[prev_cix] = None            # same context: replaced
+            prev_cont = {}
+        for k in own:
+            if k not in cont:
+                cont[k] = _uncompensated(entry, k)
+                if cont[k] != own[k]:
+                    carried.append(f"{key} → {' '.join(at_stack) or 'top level'} "
+                                   f"({k}:{own[k]} → {cont[k]})")
+        if cont and cont != prev_cont:
             cont_out.append(wrap_rule(_prefix_selector(sel, "") + "{"
                                       + ";".join(f"{k}:{v}" for k, v in cont.items()) + "}"))
-            comped[key] = (cont, len(cont_out) - 1, ctx)
+            comped[key] = (dict(cont), len(cont_out) - 1, ctx)
+            own.update(cont)
     out = [r for r in cont_out if r] + [r for r in out if r]
     notes.append(f"{where}: flex-gap fallback — {len(flex_rules)} gap rules → "
                  f"{len(out)} generated rules ({len(cont_out)} of them the wrap "
@@ -1823,6 +1925,10 @@ def flexgap_sheet(flex_rules, boxes, where: str) -> tuple:
     if how_n:
         notes.append(f"{where}: wrap compensation — "
                      + ", ".join(f"{v}× {k}" for k, v in sorted(how_n.items())))
+    if carried:
+        notes.append(f"{where}: container compensation restated in "
+                     f"{len(carried)} shape-flip context(s) — "
+                     + ", ".join(carried))
     if resid["bottom"]:
         notes.append(f"{where}: still {len(resid['bottom'])} wrapping container(s) "
                      f"taller than the gap geometry — {', '.join(resid['bottom'])}")
@@ -3378,8 +3484,8 @@ def prepare_cssjs(name: str, src: str) -> tuple:
     The FF32 verify found what that cost: `.mc-modal` (mifchart.js) and
     `.sv-modal` (schedval.js) declare `position:fixed;inset:0` inside a template
     literal, the inset patch never reached them, and on Fx32-65 the
-    Schedule-Validation and minimums backdrops collapsed to a top-left sliver
-    instead of covering the viewport.
+    Schedule-Validation and minimums backdrops collapsed to a content-sized box
+    in the top-left corner instead of covering the viewport.
 
     So a module's own rules now go through EXACTLY the patch the stylesheet goes
     through (patch_decls), and a flex container declared in a module gets the
