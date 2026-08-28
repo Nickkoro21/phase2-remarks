@@ -2426,3 +2426,52 @@ html[data-edit="off"] .cur-head::after {
 /* the change log — an undone act stays readable and stops looking live */
 .brg-undone td { color: var(--muted); text-decoration: line-through; }
 .brg-undone .sch-badge { opacity: 0.7; text-decoration: none; }
+
+/* ══ PHASE 4/5 — THE PUSH LANE ══════════════════════════════════════════════
+   Four new surfaces and not one new colour: every one of them borrows the
+   tokens the report already uses (--accent · --good · --warn · --bad · --muted
+   over --panel / --panel-2), so the eight palettes and their light modes carry
+   them at the contrast they already carry the deviation chips at. Nothing here
+   spends a pseudo-class the offline gate counts. */
+
+/* the header chip — «✈ WA · 3 queued» — beside the sync hint it is a sibling
+   of, and shaped exactly like it, because they say the same KIND of thing:
+   what this store still owes somewhere else. */
+.brg-chip {
+  font-family: inherit; font-size: 11px; color: var(--muted); background: transparent;
+  border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; margin-right: 8px;
+  max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  cursor: pointer;
+}
+.brg-chip.hidden { display: none; }
+.brg-chip.is-on { border-color: var(--accent); color: var(--accent); }
+.brg-chip.is-ok { border-color: var(--good); color: var(--good); }
+.brg-chip.is-warn { border-color: var(--warn); color: var(--warn); }
+.brg-chip.is-bad { border-color: var(--bad); color: var(--bad); }
+@media (max-width: 900px) { .brg-chip { max-width: 140px; } }
+
+/* the source picker — two buttons that are ONE control, so they read as a
+   choice between carriers and not as two unrelated acts */
+.brg-src { display: inline-flex; gap: 0; }
+.brg-src .sch-btn { border-radius: 0; margin: 0; }
+.brg-src .sch-btn:first-child { border-radius: 7px 0 0 7px; }
+.brg-src .sch-btn:last-child { border-radius: 0 7px 7px 0; margin-left: -1px; }
+
+/* ⚚ the settings dialog — the house .ed-box card with a form in it */
+.brg-cfgbox { width: 560px; }
+.brg-cfgl {
+  display: block; font-size: 11px; color: var(--muted); margin: 10px 0 3px;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.brg-cfgin {
+  width: 100%; box-sizing: border-box; padding: 7px 10px; font-size: 13px;
+  background: var(--panel-2); color: var(--text);
+  border: 1px solid var(--line); border-radius: 7px;
+}
+.brg-cfgin:focus { outline: none; border-color: var(--accent); }
+.brg-cfgchk {
+  display: flex; gap: 7px; align-items: flex-start; margin: 12px 0 2px;
+  font-size: 11.5px; line-height: 1.45; color: var(--muted); cursor: pointer;
+}
+.brg-cfgchk input { width: auto; margin-top: 2px; accent-color: var(--accent); }
+.brg-cfgbox .sch-tbtn.danger { border-color: var(--bad); color: var(--bad); }

@@ -2,7 +2,12 @@
 
 Headless test file for `app/schedbridge.js` — the FDMS ⇄ Wings Ahead cross-check
 report, and since Phase 3 (26/08/2026) the **confirmed fill** that writes a
-confirmed line into the FDMS training log. Spec: `specs/bridge-spec.md`.
+confirmed line into the FDMS training log. Since Phases 4+5 (28/08/2026) it also
+covers the **push lane** — a flight typed in the Training log becoming a row on a
+student's Wings Ahead record: the qualifying predicate, the wire shapes the
+deployed `bridge_push` refuses by name, the derived queue, the eleven verdicts
+and the three shapes of ↺ Undo across the wire (`p11-push.js`, `p12-undo.js`).
+Spec: `specs/bridge-spec.md` (§ 10, § 13ια, § 14γ, § 15κ).
 
 ## How to run
 
@@ -15,7 +20,7 @@ the number, and the exit code is `0` only if nothing failed.
 
 ```
 ════════════════════════════════════════════
-  BRIDGE FIXTURES — 382 passed, 0 failed
+  BRIDGE FIXTURES — 609 passed, 0 failed
 ════════════════════════════════════════════
 ```
 

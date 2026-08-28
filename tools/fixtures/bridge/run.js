@@ -18,6 +18,8 @@ require("./p7-nongraded.js");    // slice 1b — the badge and the shred note
 require("./p8-esc.js");          // esc(), all five characters
 require("./p9-apply.js");        // Phase 3 — apply · provenance · idempotency · undo
 require("./p10-offgraph.js");    // Phase 3b — the off-catalogue node, and the badge
+require("./p11-push.js");        // Phase 4/5 — the push lane: predicate · shapes · queue · verdicts
+require("./p12-undo.js");        // Phase 4/5 — undo across the wire, and the two drift refusals
 
 const R = require("./harness.js").report();
 console.log("\n════════════════════════════════════════════");

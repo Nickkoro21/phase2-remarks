@@ -221,15 +221,32 @@ console.log("\n=== PROBE 10j — FINDING 10: the badge says what the pane does =
 {
   ok("the header no longer claims «read-only»",
     !/<span class="count">read-only<\/span>/.test(bridge), "the read-only badge must be gone");
+  /* PHASE 4/5 — the badge grew with the lane. Phase 3's «writes on your
+     confirm» named ONE direction; the push lane made it two, and a badge that
+     still named one would be the same half-truth «read-only» was. */
   ok("and says what it actually does instead",
-    /<span class="count">writes on your confirm<\/span>/.test(bridge));
+    /<span class="count">both directions write on your confirm<\/span>/.test(bridge));
   /* the prose beside it already said Phase 3 writes — the badge was the half
      that contradicted it, and a badge is read first and re-read last. */
   ok("the prose still names the training log as what it writes",
     /written into the\s*\n?\s*<b>FDMS training log<\/b>/.test(bridge)
       || bridge.indexOf("<b>FDMS training log</b>") >= 0);
-  ok("and still promises Wings Ahead is never written",
-    bridge.indexOf("It never writes Wings Ahead, the repository or") >= 0);
+  /* THE PROMISE THIS ROUND RETIRED, AND THE ONE THAT REPLACED IT. Slice 1 and
+     Phase 3 could say «it never writes Wings Ahead»; Phase 4/5 writes it, so
+     that sentence had to GO rather than survive as a lie — and what stands in
+     its place has to be checkable, not comforting. The repository promise is
+     unchanged and still absolute; the Wings Ahead one becomes «only these rows,
+     only on your confirm, and never a row a human typed». */
+  ok("the retired promise is really gone, not merely reworded around",
+    bridge.indexOf("It never writes Wings Ahead, the repository or") < 0);
+  ok("the repository promise is unchanged and still absolute",
+    /they are never\s+committed, and they die with the tab/.test(bridge));
+  ok("and the Wings Ahead promise is now the bounded one, in the pane's own prose",
+    bridge.indexOf("never a row a human typed") >= 0
+      && bridge.indexOf("<b>never</b> a grade, a duration or an NG flag") >= 0);
+  ok("the push tooltip states the same three things (the Round 19 hover rule)",
+    /push: "Sends the queued flights/.test(bridge)
+      && bridge.indexOf("never deletes anything") >= 0);
   /* the pane's seat, in the Scheduler, said «It writes nothing» in a comment —
      true in slice 1, false since Phase 3, and the next round reads comments. */
   const sched = fs.readFileSync(H.BRIDGE_SRC.replace("schedbridge.js", "scheduler.js"), "utf8");

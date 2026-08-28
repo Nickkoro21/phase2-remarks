@@ -330,8 +330,62 @@ console.log("\n=== PROBE 9o — the write controls are OUTSIDE the edit lock's n
   ok("and the pane really does mark its write controls with it", bridge.indexOf('data-brgw="apply"') >= 0);
   ok("the bridge never touches localStorage itself — the store's seams are the only door",
     !/localStorage\s*[.[]/.test(bridge), "no localStorage access anywhere in the bridge");
-  ok("there is still no network call in this file",
-    bridge.indexOf("fetch(") < 0 && bridge.indexOf("XMLHttpRequest") < 0);
+  /* PHASE 4/5 — THE ONE PROMISE THIS ROUND DELIBERATELY BREAKS, and what
+     replaces it. Slice 1 and Phase 3 could say «no network call in this file»
+     because the transport was a file the user picked; the push lane IS a
+     network call, so the assertion becomes the one that still means something:
+     there is EXACTLY ONE caller, it is POST, it goes to the two named RPC doors,
+     and the credential rides in the BODY — never in a URL, where a GET would
+     put it into every proxy log and browser history on the way. */
+  eq("there is exactly ONE network caller in this file", (bridge.match(/W\.fetch\(/g) || []).length, 1);
+  ok("and it is the only fetch of any spelling",
+    (bridge.match(/(?:^|[^.\w])fetch\s*\(/g) || []).length === 0 && bridge.indexOf("XMLHttpRequest") < 0);
+  ok("it is POST — never a GET, whose status code would tell a live credential from a dead one",
+    /method:\s*"POST"/.test(bridge) && !/method:\s*"GET"/.test(bridge));
+  ok("it speaks to the two named doors and nothing else",
+    /rpc\/" \+ fn/.test(bridge) && /wireCall\("bridge_pull"/.test(bridge)
+      && /wireCall\("bridge_push"/.test(bridge));
+  ok("the credential is put in the BODY and never interpolated into a URL",
+    /p_token: trim\(c\.token\)/.test(bridge) && !/p_token=/.test(bridge));
+  /* THE EXACT CONSTRUCTION, PINNED. The live acceptance drives the deployed
+     Wings Ahead stack through a harness of its own, and a harness that builds
+     the request slightly differently would prove nothing about THIS code. So
+     the four pieces are asserted here, character for character, and the live
+     harness is written against these four lines. */
+  ok("the URL is <config.url without trailing slashes> + /rest/v1/rpc/<fn>",
+    bridge.indexOf('const rpcUrl = (c, fn) => trim(c.url).replace(/\\/+$/, "") + "/rest/v1/rpc/" + fn;') >= 0);
+  ok("the anon key travels as BOTH apikey and Authorization: Bearer, the PostgREST pair",
+    /apikey: trim\(c\.anon\),\s*\n?\s*Authorization: "Bearer " \+ trim\(c\.anon\)/.test(bridge));
+  ok("the content type is JSON and the answer is asked for as JSON",
+    /"Content-Type": "application\/json"/.test(bridge) && /Accept: "application\/json"/.test(bridge));
+  ok("the body is the token merged with the call's own arguments, and nothing else",
+    /body: JSON\.stringify\(Object\.assign\(\{ p_token: trim\(c\.token\) \}, body \|\| \{\}\)\)/.test(bridge));
+  ok("and the token is never logged, toasted or put in a message",
+    !/console\.[a-z]+\([^)]*token/i.test(bridge) && !/toast\([^)]*\.token/.test(bridge));
+  /* THE RHYTHM AND THE CEILING (design C.4). The debounce is the one SchedSync
+     already established, so a burst of typing costs ONE push on both lanes; the
+     backoff climbs to five minutes and STOPS there, because a lane that keeps
+     halving its patience eventually hammers a door that is not answering. */
+  ok("the debounce is the 5 s SchedSync already lives by",
+    /const AUTO_MS = 5000;/.test(bridge));
+  ok("the backoff is a ramp with a 5-minute ceiling",
+    /const BACKOFF_MS = \[10000, 30000, 60000, 180000, 300000\];/.test(bridge));
+  ok("and it is read with a clamp, so the ceiling is a ceiling and not a step",
+    /BACKOFF_MS\[Math\.min\(wst\.tries, BACKOFF_MS\.length - 1\)\]/.test(bridge));
+  ok("a REVOKED credential is not retried at all — it disarms and says so",
+    /if \(stopped && wst\.kind !== "revoked"\) armAuto\(\);/.test(bridge));
+  /* THE ROUND'S OVERRULED DESIGN DECISION, PINNED. The automatic lane asks the
+     edit lock at fire time — found live: a view-only device pushed rows to Wings
+     Ahead and could not write its own ledger, because ledgerPut goes through
+     upsert and upsert asks mayWrite. */
+  ok("the automatic lane asks the edit lock before a single byte leaves",
+    /if \(!editOn\(\)\) \{\s*\n\s*if \(how !== "auto"\) refuseWrite/.test(bridge));
+  ok("and the timer is not even armed on a locked device",
+    bridge.indexOf("if (!editOn()) return;") >= 0);
+  ok("the chip says the view-only state instead of counting silently",
+    bridge.indexOf('" queued · view-only"') >= 0);
+  ok("there is no background POLLER anywhere — every read is an act somebody took",
+    !/setInterval/.test(bridge));
   ok("and no download — a JSON of real names is exactly the object that wanders",
     bridge.indexOf("createObjectURL") < 0 && !/\.download\s*=/.test(bridge) && !/download=/.test(bridge));
   ok("the change log is a store collection, declared once",

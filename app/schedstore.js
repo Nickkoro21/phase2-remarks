@@ -2,9 +2,9 @@
 /* SchedStore — the Scheduler's persistence layer (Phase A of specs/scheduler-spec.md).
  *
  * MODEL
- *   Eleven collections, each in its own localStorage key under the "p2r-sch-" prefix:
+ *   Twelve collections, each in its own localStorage key under the "p2r-sch-" prefix:
  *     students · instructors · classes · trainingLog · availability · dutyRoster ·
- *     gates · instructorCurrency · bridgeLog
+ *     gates · instructorCurrency · bridgeLog · bridgePush
  *                      → lists of records addressed by a per-collection key field
  *     config           → one object
  *     dayPlans         → one map { "YYYY-MM-DD": plan }        (Phase B writes it)
@@ -68,6 +68,24 @@
        lock. It is store data: it syncs, it exports and it restores with
        everything else. Shape: specs/bridge-spec.md § 13γ. */
     bridgeLog:    { type: "list", key: "id",   seed: "bridge_log" },
+    /* ROUND 25 (PHASE 4/5) — THE BRIDGE PUSH LEDGER: the identity map between an
+       FDMS training-log event and the flight row the bridge wrote for it in
+       Wings Ahead. One row per pushed identity, keyed by the DATE-FREE rid.
+         { rid, oid, group, uid, ord, seq, evId, student,
+           sent: <the WA row AS THE BRIDGE LAST WROTE IT>,   // = `prev` next time
+           state, verdict, note, at }
+       IT IS DATA, NOT CACHE, and that is the whole reason it is stored while the
+       push QUEUE is not: the queue is recomputed on every planner run from
+       (qualifying events × this ledger × tombstones), so offline means WAITING
+       and never loss — but WHICH Wings Ahead row belongs to WHICH FDMS event,
+       and the seq that was minted for it, cannot be re-derived from anything.
+       `sent` is the full row because the deployed wire compares `prev` FACT FOR
+       FACT with the row standing at the handle: a change may only be sent with
+       the row of the LAST ACKNOWLEDGED push, which is exactly what this holds.
+       Written only through SchedBridge (app/schedbridge.js § ②), so it meets the
+       edit lock like every other write. It syncs, exports and restores with
+       everything else. Shape: specs/bridge-spec.md § 15γ. */
+    bridgePush:   { type: "list", key: "rid",  seed: "bridge_push" },
     config:       { type: "obj",  seed: "config" },
     dayPlans:     { type: "map",  seed: "day_plans" },
   };
@@ -539,8 +557,35 @@
     return out;
   }
 
+  /* ══ THE ONE KEY THE TWO SERIALIZERS DISAGREE ABOUT (Phase 4/5 · E.1) ══════
+     snapshot() is COMPLETE — it feeds the sync, which is the owner's own channel
+     to his own other devices, ciphertext whenever the passphrase is armed. The
+     ⭳ EXPORT is the artefact that WANDERS: it lands in Downloads, on a stick, in
+     a mail. So the export clones the snapshot and DELETES config.bridge.token,
+     and the tooltip says so out loud. The URL and the anon key stay — they are
+     public values, and stripping them would make a restored backup look
+     configured when it is not.
+     THE CONSEQUENCE, STATED RATHER THAN DISCOVERED: an ⭱ Import never restores a
+     token. It is pasted once, by hand, after a restore — which is also why
+     importAll() strips the key from whatever it is handed (a hand-made file
+     could carry one, and a backup that quietly re-arms a live write lane is the
+     opposite of what a backup is for).
+     The token never reaches the repo, a fixture, the report, the offline package
+     or a chat: it is typed by the owner, into his own browser, twice at most. */
+  const BRIDGE_TOKEN_KEY = "token";
+  function stripBridgeToken(obj) {
+    if (!obj || typeof obj !== "object") return obj;
+    const cfgIn = obj.config;
+    if (!cfgIn || typeof cfgIn !== "object") return obj;
+    const br = cfgIn.bridge;
+    if (!br || typeof br !== "object" || br[BRIDGE_TOKEN_KEY] === undefined) return obj;
+    const brOut = Object.assign({}, br);
+    delete brOut[BRIDGE_TOKEN_KEY];
+    return Object.assign({}, obj, { config: Object.assign({}, cfgIn, { bridge: brOut }) });
+  }
+
   function exportAll() {
-    const blob = new Blob([JSON.stringify(snapshot(), null, 1)], { type: "application/json" });
+    const blob = new Blob([JSON.stringify(stripBridgeToken(snapshot()), null, 1)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -630,6 +675,12 @@
       const v = pick(name);
       db[name] = v !== null ? v : empty(COLLS[name].type);
     }
+    /* AND AN IMPORT NEVER RESTORES A BRIDGE TOKEN (Phase 4/5 · E.1). ⭳ Export
+       strips it, so a file this app wrote carries none; a hand-made one might,
+       and a restore that silently re-arms a live write lane to Wings Ahead is
+       not a restore. The URL and the anon key come back — only the credential
+       is re-typed, once, by the owner. */
+    db.config = stripBridgeToken({ config: db.config }).config;
     normalize();
     persistAll();
     emit("*", "import", null);
@@ -642,9 +693,13 @@
     const go = await wordPrompt({
       ico: "↺", word: "RESET", go: "Reset to the seed",     // glyph from `ico` — see above
       title: "Reset the scheduler to the seed file?",
-      body: "Roster, training log, availability, duties, gates, day plans and the Bridge change log "
-        + "are all discarded. "
-        + "The editor code goes with them, so this device is left with no code set. "
+      body: "Roster, training log, availability, duties, gates, day plans, the Bridge change log "
+        + "and the Bridge <b>push ledger</b> are all discarded. "
+        + "The editor code goes with them, so this device is left with no code set — and so does the "
+        + "Wings Ahead bridge credential, which is re-pasted by hand. "
+        + "Throwing the push ledger away does not remove one row from Wings Ahead: it forgets WHICH "
+        + "row belongs to which FDMS event, so every flight looks unpushed and the next push meets its "
+        + "own rows as conflicts, on the report, settled by hand. "
         + "This browser’s sync settings and the copy on GitHub are NOT touched.",
     });
     if (!go) return false;
@@ -704,6 +759,9 @@
   const TIP = {
     export: "Writes NOTHING — it reads the store and hands you the file. "
       + "Downloads scheduler-backup-YYYY-MM-DD.json: every collection, config included. "
+      + "The ONE thing it leaves out is the Wings Ahead bridge token: the file wanders, so the "
+      + "credential does not travel in it and an ⭱ Import never brings one back — you paste it once, "
+      + "in Bridge → ⚙. The URL and the anon key do travel; they are public values. "
       + "It carries REAL NAMES, so keep it off shared drives and out of the repo. "
       + "This is the way back from ⭱ Import and ↺ Reset — take one first.",
     import: "Replaces the WHOLE scheduler store with the chosen backup file — people, classes, "
@@ -715,8 +773,11 @@
       + "For the shared roster use Roster → ⭱ Import roster, which merges by OID and wipes nothing. "
       + "Take a ⭳ Export first — the current data is gone otherwise.",
     reset: "Throws the whole store away and rebuilds it from the seed file that ships with the app. "
-      + "Roster, training log, availability, duties, gates, currency, day plans and config all go — "
-      + "the editor code with them, so this device is left with no code set. "
+      + "Roster, training log, availability, duties, gates, currency, day plans, the Bridge change log, "
+      + "the Bridge push ledger and config all go — the editor code with them, so this device is left "
+      + "with no code set, and the Wings Ahead bridge token with them too. "
+      + "It removes NOTHING from Wings Ahead: what it throws away is the memory of which row is whose, "
+      + "so the next push meets its own rows as conflicts on the report. "
       + "It needs ✎ Editor mode and makes you type RESET. "
       + "It does NOT touch this browser’s sync settings or the ☁ Sync access code (those live outside the store), "
       + "and it does NOT touch the GitHub copy — a later ⭳ Pull brings the old data back, while a ⭱ Push after this "

@@ -354,6 +354,16 @@
       people,
       records,
       proposals: arr(d.proposals).filter(isObj),
+      /* PHASE 4/5 — WHAT WINGS AHEAD REMEMBERS THE BRIDGE DOING. Both doors
+         carry it (bridge_pull and the admin's own download), so a report can
+         render «what WA remembers» beside «what the ledger claims» and a drift
+         between the two is a line rather than a silence. Absent in an older
+         export, which is why every reader below asks arr()/isObj() first.
+         `via` is «bridge» when the payload came down the live wire. */
+      via: trim(d.via),
+      bridge: isObj(d.bridge) ? d.bridge : null,
+      tombstones: isObj(d.bridge) ? arr(d.bridge.tombstones).filter(isObj) : [],
+      auditTail: isObj(d.bridge) ? arr(d.bridge.audit_tail).filter(isObj) : [],
     };
   }
 
@@ -990,6 +1000,10 @@
     const students = arr(fdms && fdms.students);
     const instructors = arr(fdms && fdms.instructors);
     const log = arr(fdms && fdms.trainingLog);
+    /* PHASE 4/5 — the push ledger rides in beside the store so the report can
+       tell the bridge's own echo from a stranger's (D.3). It is read, never
+       written, here: § ② is still the only writer in this file. */
+    const ledger = arr(fdms && fdms.bridgePush).filter(isObj);
 
     const ids = matchPeople(waParsed.people, students, instructors);
 
@@ -1384,9 +1398,18 @@
     let appliable = 0;
     rows.forEach((x, i) => {
       x.key = "r" + i;
-      x.plan = makePlan(x, ipResolve, waParsed.exported_at, kindOf);
+      x.plan = makePlan(x, ipResolve, waParsed.exported_at, kindOf, ledger);
       if (x.plan) x.plan.key = x.key;
       if (x.plan && x.plan.can) appliable += 1;
+      /* D.3's second half — an fdms-stamped Wings Ahead row THIS store's ledger
+         has never heard of is an IDENTITY question, and it is promoted to a note
+         of its own for the same reason a record warning with no carrier is: a
+         line whose sentence nobody reads is a line that was not said. */
+      const ec = x._wa ? echoOf(x._wa, x.oid, ledger) : null;
+      if (ec && !ec.known && (x.cls === "wa_only" || x.cls === "source_moved" || x.cls === "payload_differs")) {
+        notes.push({ kind: "echo", oid: x.oid, code: x.code, who: x.who, klass: x.klass,
+          problems: [x.uid + " of " + (x.waDate || "an unrecorded date")], why: ec.why });
+      }
     });
 
     /* counts */
@@ -1473,7 +1496,7 @@
      would be written, and WHAT WOULD IT DO TO THE NODE. Pure — the confirm
      dialog, the change log and the fixtures all read the same object, so the
      sentence the developer confirms is the sentence the store gets. */
-  function makePlan(x, ipResolve, exportAt, kindOf) {
+  function makePlan(x, ipResolve, exportAt, kindOf, ledger) {
     const cls = x.cls;
     if (cls !== "wa_only" && cls !== "source_moved" && cls !== "payload_differs") return null;
     const wa = x._wa, fd = x._fd;
@@ -1524,6 +1547,22 @@
        is the whole R20 lesson — one guard is an intention, two are a wall. */
     const kOf = typeof kindOf === "function" ? kindOf : () => null;
     if (nodeUid && !kOf(nodeOfUid(nodeUid))) { p.why = offGraphWhy(nodeUid); return p; }
+
+    /* PHASE 4/5 · D.3 — THE ECHO RULE, COMPLETED. Once the push lane exists,
+       Wings Ahead carries rows the BRIDGE ITSELF wrote, stamped `fdms` by the
+       server. Such a row is this store's own reflection: minting an FDMS event
+       from it would create a second event for a flight that is already in the
+       training log, and the next push would then owe a second Wings Ahead row
+       for the same flight. No path mints an FDMS event from FDMS's own echo.
+       WHICH SENTENCE depends on whether the ledger knows the row, and the two
+       are genuinely different situations:
+         · the ledger knows it → its FDMS source is gone, so what this line
+           really is, is a PENDING REMOVAL waiting on the Bridge tab;
+         · the ledger does not → some other store pushed it (a restored backup,
+           another device whose ledger did not travel), and that is an identity
+           question, not a flight question. */
+    const echo = echoOf(wa, x.oid, ledger);
+    if (echo) { p.why = echo.why; return p; }
 
     /* A ROW THE REPORT ALREADY REFUSED IS NEVER OFFERED. `unwritten`,
        `refused`, `unresolvable` are classes of their own and never reach here,
@@ -1619,6 +1658,29 @@
   const effectWord = (c) => (c ? "COMPLETES the node and unlocks its successors"
     : "does NOT complete the node");
 
+  /* IS THIS WINGS AHEAD ROW THE BRIDGE'S OWN ECHO? — the one predicate D.3's
+     rule is asked through, so the plan, the report note and the pane all say the
+     same thing. It answers null for every row a human typed. */
+  function echoOf(wa, oid, ledger) {
+    if (!wa || wa.side !== "wa") return null;
+    if (trim(wa.extra && wa.extra.entered_by) !== "fdms") return null;
+    const known = arr(ledger).find((L) => isObj(L) && normOid(L.oid) === normOid(oid)
+      && isObj(L.sent) && up(L.sent.sortie) === up(codeOfNode(nodeOfUid(wa.uid)))
+      && isoDate(L.sent.date) === isoDate(wa.date)
+      && posInt(L.sent.seq, 1) === posInt(wa.seq, 1)) || null;
+    if (known) {
+      return { known, why: "this Wings Ahead row is the BRIDGE'S OWN — it was pushed from this store "
+        + "(row identity " + trim(known.rid) + ") and Wings Ahead stamped it «fdms». Its FDMS event is "
+        + "gone, so what this line really is, is a PENDING REMOVAL: confirm it on the Bridge tab, or ↺ "
+        + "undo the deletion in the Training log. Writing it back would create a second FDMS event for a "
+        + "flight this store already pushed (design D.3)" };
+    }
+    return { known: null, why: "Wings Ahead stamped this row «fdms» — the bridge wrote it — and THIS "
+      + "store's push ledger has never heard of it: a restored backup, or another device whose ledger did "
+      + "not travel with it. It is never written back into FDMS (that would mint an event from this "
+      + "system's own reflection); pull the store, or settle the identity first (design D.3)" };
+  }
+
   /* which report group an FDMS event belongs to — EXACTLY ONE, so a checkride
      or a prescribed solo can never be counted twice */
   function groupOfNode(node, band, waRows) {
@@ -1704,6 +1766,632 @@
   }
 
   /* ══════════════════════════════════════════════════════════════════════════
+     ①β THE PUSH LANE — FDMS → WINGS AHEAD (Phase 4/5, 28/08/2026)
+     ══════════════════════════════════════════════════════════════════════════
+     Still pure: no DOM, no store, no fetch. It answers one question — WHICH
+     Wings Ahead operations does this store owe right now — and it answers it by
+     RECOMPUTING, never by remembering:
+
+         queue = (qualifying trainingLog events) × (the bridgePush ledger)
+                                                 × (the tombstones Wings Ahead
+                                                    told us about)
+
+     THERE IS NO STORED QUEUE, and that is the design decision this whole file
+     rests on: a stored queue is a second truth that drifts from the store it
+     summarises, can be drained twice, and turns "offline" into "lost". Derived,
+     offline means WAITING; a retry costs nothing; and a failed push is simply
+     still owed, which is why the header chip can never quietly drop one.
+
+     WHAT IS STORED is the LEDGER — `bridgePush`, one row per pushed identity —
+     because it is the one thing that cannot be re-derived from anything: which
+     WA row belongs to which FDMS event, and the two numbers minted for it.
+
+     ── THE FOUR THINGS THE DEPLOYED WIRE MADE NON-NEGOTIABLE ─────────────────
+     The Wings Ahead side (db/schema.sql, public.bridge_push) landed four rounds
+     after this contract was designed, and it is the deployed wire that wins:
+
+      1 · `prev` IS THE WHOLE ROW, not the three fields that name it. The server
+          compares it FACT FOR FACT with the row standing at the handle; a claim
+          it cannot back is `exists_fdms` and nothing is written. So the ledger
+          stores the full row of the LAST ACKNOWLEDGED push and sends exactly
+          that. A removal names its row the same way.
+      2 · THEREFORE THE QUEUE IS ORDERED PER rid. A second change sent with the
+          first change's `prev` is REFUSED. Here that is free rather than
+          engineered: each rid contributes AT MOST ONE op per planner run, built
+          from (ledger.sent → the event as it stands now), and the ledger only
+          advances when an answer arrives. Two edits before one answer collapse
+          into ONE op with the right `prev`.
+      3 · A REPLAY IS ABSORBED — the identical retry of any verb answers
+          `unchanged`. "Identical" means the same `prev`, which the
+          last-acknowledged ledger hands us without trying.
+      4 · SHAPES ARE REFUSED BY NAME, NEVER COERCED. seq is a JSON NUMBER 1..20
+          (never "2"), kind is one of five words, ng is a boolean and never true,
+          the date is "YYYY-MM-DD", `entered_by` / `legacy` / `duration` never
+          cross, the rid is a string ≤ 200 chars and at most 200 ops ride in one
+          call. Everything below emits those shapes deliberately.
+
+     ── AND THE ONE THING THE WINGS AHEAD SIDE SAID IT CANNOT DO ──────────────
+     «BYTE-IDENTICAL TWINS REMAIN INDISTINGUISHABLE … that dedup is P45-FDMS's,
+     by pairing on evId with a seq minted once and frozen.» It is done HERE:
+       · an event is paired to its ledger row by **evId FIRST** — the stable FDMS
+         handle — and never by its facts. The attempt ordinal is a POSITION and
+         positions renumber when an earlier attempt is deleted; an id does not.
+       · `ord` (and with it the rid) and `seq` are MINTED ONCE, at the first
+         push, and FROZEN in the ledger. Nothing re-derives them, ever. Delete
+         the morning bust from the training log and the surviving afternoon
+         flight keeps the seq it was pushed under: the deletion becomes ONE
+         pending removal naming the row it removes, and not an update that
+         quietly morphs one flight into another.
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  const WA_BRIDGE_SCHEMA = "wa-bridge-v1";
+
+  /* MIRRORS of wa.bridge_ops() / wa.bridge_reasons() / wa.bridge_verdicts() and
+     of the three numeric bounds the server refuses by name. They are literals
+     here for the same reason EVAL_IDS and FLIGHT_KINDS are: the client must be
+     able to say what it is about to send WITHOUT the database, and a shape this
+     side emits wrongly is a refusal the developer has to read instead of a
+     flight that landed. */
+  const PUSH_OPS = ["upsert", "remove"];
+  const PUSH_REASONS = ["undo", "source_removed", "developer"];
+  const PUSH_VERDICTS = ["created", "moved", "updated", "removed", "unchanged",
+    "exists_student", "exists_admin", "exists_fdms", "missing", "tombstoned", "refused"];
+  const PUSH_MAX_OPS = 200;     // wa: «a single push carries at most 200 operations»
+  const RID_MAX = 200;          // wa: the rid is a string of at most 200 characters
+  const SEQ_MAX = 20;           // wa: chk_int(seq, 1, 20) on every flight row
+
+  /* the keys of a pushed row, in the ONE order everything writes them. `sent`
+     and a freshly built row are compared key by key over exactly this list, so
+     a key added on one side and not the other is a difference and not a
+     surprise. `duration` is NOT here and never will be until FDMS has the field
+     (ruling #8); `entered_by` and `legacy` are the server's, never the wire's. */
+  const PUSH_ROW_KEYS = ["date", "track", "sortie", "seq", "kind",
+    "instructor", "instructor_oid", "grade", "ng", "mission"];
+
+  /* MIRROR of wa.code_track(). The letter of a syllabus code names the table the
+     row belongs to, and Wings Ahead validates the pair — so a row whose code
+     this side cannot read is refused HERE, by name, instead of arriving as a
+     `legacy` row the server refuses as «incomplete». */
+  function codeTrack(code) {
+    const c = up(code);
+    if (!/^[BCIFN][0-9]{4}$/.test(c)) return "";
+    const l = c.charAt(0);
+    if (l === "B" || l === "C") return "contact";
+    if (l === "I") return "instrument";
+    if (l === "F") return "formation";
+    return "vfr_navigation";
+  }
+
+  /* ── THE LEDGER ──────────────────────────────────────────────────────────
+     One row per pushed identity. `state` is where the identity IS; `hold` is
+     the exception that stopped it, and a held row is never queued again by
+     itself — recovery is an explicit act, which is the whole point:
+       state ""        never pushed (or put back by an undo / a cleared removal)
+             "pushed"  a row of ours stands in Wings Ahead; `sent` is it
+             "undone"  the developer took the push back — a removal is OWED
+             "removed" the row is gone and a tombstone lies on the identity
+       hold  ""        nothing in the way
+             "conflict"      exists_fdms — this op did not know the row it claimed
+             "student"/"admin"  a human's row stands at the handle
+             "missing"       the admin deleted our row
+             "tombstoned"    the identity is tombstoned and this op did not say so
+             "refused"       the server refused the operation's shape or section */
+  const LED_KEYS = ["rid", "oid", "group", "uid", "ord", "seq", "evId", "student",
+    "sent", "state", "hold", "note", "verdict", "reason", "clearTomb", "at", "waRow"];
+
+  const ledRid = (oid, group, uid, ord) => [oid, group, uid, ord].join(" ∷ ");
+
+  /* THE INDEX IS BUILT ONCE PER PLANNER RUN, and the two minting tables with
+     it. They are here rather than as a scan-per-event for a reason a live store
+     makes obvious rather than theoretical: the demo roster carries ~2 000
+     training-log events, so a minter that walked the whole ledger for each one
+     would be quadratic — and this runs on every store mutation, behind a chip
+     that has to stay true while somebody types. Built once, updated as each
+     number is minted, it is linear. */
+  function ledgerIndex(list) {
+    const byRid = new Map(), byEv = new Map(), ordMax = new Map(), seqUsed = new Map();
+    const clean = arr(list).filter(isObj);
+    clean.forEach((L) => {
+      if (!trim(L.rid)) return;
+      byRid.set(trim(L.rid), L);
+      const ev = trim(L.evId);
+      if (ev) {
+        if (!byEv.has(ev)) byEv.set(ev, []);
+        byEv.get(ev).push(L);
+      }
+      const ok = normOid(L.oid) + " " + trim(L.group) + " " + trim(L.uid);
+      if (posInt(L.ord, 0) > (ordMax.get(ok) || 0)) ordMax.set(ok, posInt(L.ord, 0));
+      /* a REMOVED identity's seq is free again: its row is gone from the record,
+         and the tombstone is on the identity, not on the number. */
+      if (trim(L.state) === "removed" || !isObj(L.sent)) return;
+      const sk = normOid(L.oid) + " " + up(L.sent.sortie) + " " + isoDate(L.sent.date);
+      if (!seqUsed.has(sk)) seqUsed.set(sk, new Set());
+      seqUsed.get(sk).add(posInt(L.seq, 1));
+    });
+    return { byRid, byEv, ordMax, seqUsed, list: clean };
+  }
+
+  /* THE ATTEMPT ORDINAL, MINTED ONCE. The next free ordinal inside
+     (oid, group, uid) ACROSS THE LEDGER — never recomputed from the events,
+     because the events renumber and the ledger does not. */
+  function mintOrd(idx, oid, group, uid) {
+    const k = normOid(oid) + " " + group + " " + uid;
+    const n = (idx.ordMax.get(k) || 0) + 1;
+    idx.ordMax.set(k, n);                         // the run's own mints count too
+    return n;
+  }
+
+  /* THE SAME-DAY SEQUENCE NUMBER, MINTED ONCE AND FROZEN (ruling #1 · the
+     critique's must-fix 3). The next free seq among the rows this ledger — and
+     this run — already hold for the same student, sortie and day: a fact of the
+     row, not a position, and never re-derived afterwards. */
+  function mintSeq(idx, oid, sortie, date) {
+    const k = normOid(oid) + " " + up(sortie) + " " + isoDate(date);
+    if (!idx.seqUsed.has(k)) idx.seqUsed.set(k, new Set());
+    const used = idx.seqUsed.get(k);
+    for (let n = 1; n <= SEQ_MAX; n++) {
+      if (!used.has(n)) { used.add(n); return n; }
+    }
+    return 0;                                     // 20 flights of one code in one day
+  }
+
+  /* ── THE ROW AN FDMS EVENT BECOMES (design B.2, field for field) ────────── */
+  function pushRowOf(o) {
+    return {
+      date: o.date,
+      track: o.track,
+      sortie: o.sortie,
+      seq: o.seq,
+      kind: o.kind,
+      instructor: o.instructor,
+      instructor_oid: o.instructorOid,
+      /* R2, on this side of the wire too: a sortie NEVER crosses as a number.
+         Wings Ahead reads a grade as the thing that decides the mission, and
+         FDMS holds no number for a sortie to begin with. */
+      grade: null,
+      /* NEVER true from this lane (design F.4): FDMS has no NG state to assert
+         and NG removes the grade — the server refuses a true by name, and this
+         side never asks it to. */
+      ng: false,
+      mission: o.mission,
+    };
+  }
+
+  /* the FDMS result word → Wings Ahead's two-word vocabulary (design B.2).
+     «lag» and «fail» both mean the sortie is owed; the finer word is the
+     squadron's own and stays on this side (12b: «Θελω μονο mission complete,
+     mission incomplete»). */
+  const PUSH_MISSION = { completed: "complete", lag: "incomplete", fail: "incomplete", repeat: "incomplete" };
+
+  function sameWaRow(a, b) {
+    if (!isObj(a) || !isObj(b)) return false;
+    for (const k of PUSH_ROW_KEYS) {
+      const x = a[k] === undefined ? null : a[k];
+      const y = b[k] === undefined ? null : b[k];
+      if (x === null || y === null) { if (x !== y) return false; continue; }
+      if (String(x) !== String(y)) return false;
+    }
+    return true;
+  }
+
+  /* ── WHY AN EVENT DOES NOT CROSS — the qualifying predicate (design B.1) ──
+     Returns "" when the event may be pushed. Every clause is a SENTENCE the
+     developer reads on the Bridge tab, because a silent exclusion is the same
+     lie as a clean-looking empty report. */
+  function pushBlockOf(ev, ctx) {
+    if (trim(ev.scope) !== "student") {
+      return "a ground event is CLASS-scope in FDMS and reaches the student through membership read at "
+        + "run time — pushing a per-student copy would freeze a fact that is supposed to move, and a "
+        + "class change would fabricate attendance (design F.4)";
+    }
+    /* THE ECHO RULE — absolute, and it is the loop-breaker. An event the bridge
+       itself wrote FROM Wings Ahead never crosses back to Wings Ahead. Two
+       marks, either one enough, exactly as isWaWritten() reads them. */
+    if (isWaWritten(ev)) {
+      return "this FDMS event was written BY the bridge, from a Wings Ahead row — pushing it back would "
+        + "be the bridge writing to Wings Ahead what Wings Ahead told it (the echo rule, design B.1·3)";
+    }
+    const node = evNodeOf(ev);
+    if (!node || node.indexOf("s:") !== 0) {
+      return "only a SORTIE crosses this lane — this event names «" + (node || "no node") + "»";
+    }
+    const band = ctx.kindOf(nodeOfUid(node));
+    if (!band) return offGraphWhy(node);
+    if (APPLY_GROUPS.indexOf(band) < 0) {
+      return "this lane pushes FLIGHTS and F/S only — ground lessons and exams, the eight checkrides, "
+        + "the prescribed solos and the FAIL / ALMOST GOOD / NFS / SMS events each wait for a lane of "
+        + "their own (design F.4)";
+    }
+    const code = codeOfNode(node);
+    if (EVAL_IDS.indexOf(code) >= 0) {
+      return "the checkride " + code + " lives in the Evaluations section of Wings Ahead, which this lane "
+        + "does not write — two rows for one event, with two grades, can disagree";
+    }
+    if (!isoDate(ev.date)) {
+      return "the flight has no valid date — every Wings Ahead entry is dated, and only the grade lags";
+    }
+    if (!codeTrack(code)) {
+      return "«" + code + "» is not a syllabus code Wings Ahead can place in a table (its letter names the "
+        + "track: B/C contact · I instrument · F formation · N navigation). A row whose table cannot be "
+        + "named arrives there as INCOMPLETE and is refused — so it is refused here, by its real fault";
+    }
+    const res = trim(ev.result);
+    if (res === "score") {
+      return "this event stores a NUMBER as its result, and a sortie never crosses as a number (R2). "
+        + "Correct it in the Training log to «completed» / «lag» / «fail»";
+    }
+    /* A BLANK RESULT DOES NOT PUSH — and this is the round's own decision,
+       taken against design B.2's «push it as awaiting», for a reason the
+       adversarial critique proved: FDMS's own readiness engine reads a blank
+       result as COMPLETED (SchedReady.state, and fdmsRow says so on the row),
+       so pushing «awaiting» would assert to Wings Ahead a state this database
+       does not itself believe — and every subsequent cross-check would then
+       print `payload_differs` on that row for ever, training the developer to
+       ignore the one class that must never be ignored. Pushing «complete»
+       instead would invent a verdict nobody typed. So the flight waits, exactly
+       as an awaiting Wings Ahead row waits on the other side (ruling #5), and
+       it crosses by itself the moment the debrief is typed. */
+    if (!res) {
+      return "the debrief has not been typed: this event carries no result. FDMS's own readiness engine "
+        + "reads a blank result as COMPLETED, so pushing it would tell Wings Ahead something this store "
+        + "does not itself believe. Type the result and the flight crosses by itself (ruling #5)";
+    }
+    if (!PUSH_MISSION[res]) {
+      return "«" + res + "» is not a result this lane can express as Wings Ahead's mission complete / "
+        + "mission incomplete";
+    }
+    return "";
+  }
+
+  /* ── THE PLANNER ─────────────────────────────────────────────────────────
+     Pure. Everything the Bridge tab, the confirm dialog, the header chip and the
+     fixtures read comes out of this one call, so the sentence the developer
+     confirms is the operation the wire gets. */
+  function planPush(fdms, opts) {
+    const o = opts || {};
+    const kindOf = typeof o.kindOf === "function" ? o.kindOf : () => null;
+    const ctx = { kindOf };
+    const log = arr(fdms && fdms.trainingLog);
+    const idx = ledgerIndex(fdms && fdms.bridgePush);
+
+    /* the two rosters, by code */
+    const stuByCode = new Map(), ipByCode = new Map();
+    arr(fdms && fdms.students).forEach((s) => { if (isObj(s) && trim(s.code)) stuByCode.set(trim(s.code), s); });
+    arr(fdms && fdms.instructors).forEach((i) => { if (isObj(i) && trim(i.code)) ipByCode.set(trim(i.code), i); });
+
+    /* WHAT A PULL ADDS, WHEN THERE IS ONE. Without it the OID is sent and the
+       server answers by name; with it the same two refusals are made HERE, where
+       they cost nothing — because an unknown or ambiguous OID is one of the four
+       ENVELOPE raises and it voids that student's whole call. */
+    const waStudentOids = new Set(), waPersonOids = new Set();
+    let havePull = false;
+    arr(o.waPeople).forEach((p) => {
+      if (!isObj(p)) return;
+      havePull = true;
+      const oid = normOid(p.external_oid || p.oid);
+      if (!oid) return;
+      waPersonOids.add(oid);
+      if (trim(p.role) === "student" && p.active !== false) waStudentOids.add(oid);
+    });
+    /* the tombstones Wings Ahead reported at the last pull — an identity nobody
+       may resurrect by accident (design B.6). The ledger carries its own memory
+       of a removal too; this is the OTHER side's, and a drift between the two is
+       a report line rather than a silence. */
+    const tombs = new Set();
+    arr(o.tombstones).forEach((t) => {
+      if (!isObj(t) || t.cleared_at) return;
+      tombs.add(normOid(t.student_oid) + " " + trim(t.rid));
+    });
+
+    /* THE NUMBERS MINTED IN *THIS* RUN COUNT AS TAKEN, and that is not
+       bookkeeping — it is the twin dedup itself. Two events describing the same
+       flight with the same facts (ruling #1's own scenario: the morning bust and
+       the afternoon re-fly) are ONE ROW to Wings Ahead, which said so in its own
+       comment and handed the problem here. If the minters saw only the STORED
+       ledger, both would mint ord 1 / seq 1 on their first push, collide on one
+       handle, and the second would be answered `exists_fdms` for ever. The two
+       tables above are updated as each number is handed out, so the second twin
+       is separated from the first in the one place that can tell them apart:
+       their FDMS event ids. */
+    const queued = [], removals = [], blocked = [], held = [];
+    const seenLedger = new Set();
+
+    log.forEach((ev) => {
+      if (!isObj(ev) || !trim(ev.id)) return;
+      const code = trim(ev.student);
+      const stu = code ? stuByCode.get(code) : null;
+      const node = evNodeOf(ev);
+      const band = node ? kindOf(nodeOfUid(node)) : null;
+      const evId = trim(ev.id);
+
+      /* the ledger rows this event is the source of — paired by evId FIRST and
+         then by the identity's own (oid, group, uid); an event whose NODE moved
+         is a different identity, and the old one is owed a removal. */
+      const mine = arr(idx.byEv.get(evId));
+
+      const why = pushBlockOf(ev, ctx);
+      if (why) {
+        /* an event that no longer qualifies but whose row we PUSHED still owes a
+           removal — that is exactly the «source_removed» case, and it is the
+           reason the block list and the removal list are built in one pass. */
+        /* WHICH REFUSALS ARE WORTH LISTING. A SORTIE this store holds for a
+           student and does not send is a fact the developer has to be able to
+           see — including, and especially, one whose node the syllabus graph
+           does not carry, which is the case a silent list would hide best.
+           A GROUND event is not listed: «ground never crosses» is a doctrine
+           printed in the legend, not a per-event finding, and one line per
+           lesson per student would bury the sortie that matters. An ECHO is not
+           listed either: it is not a candidate that failed, it is not a
+           candidate. */
+        if (!mine.length) {
+          if (trim(ev.scope) === "student" && !isWaWritten(ev) && node && node.indexOf("s:") === 0) {
+            blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date),
+              who: stu ? label(stu) : code, why });
+          }
+          return;
+        }
+        return;                                   // its ledger rows are swept below
+      }
+      if (!stu) {
+        blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: code,
+          why: "«" + code + "» is not a student of this FDMS roster — a flight is pushed onto the record "
+            + "of a person, and this side cannot name one" });
+        return;
+      }
+      const oid = normOid(stu.oid);
+      if (!oid) {
+        blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: label(stu),
+          why: "this student carries no OID, and the OID is the ONE thing the two systems join on "
+            + "(ruling #4) — a surname never resolves anybody across this wire" });
+        return;
+      }
+      if (havePull && !waStudentOids.has(oid)) {
+        blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: label(stu),
+          why: "no ACTIVE Wings Ahead student carries the roster object id " + oid + " — the person has "
+            + "to exist there, and be active, before a flight can be pushed onto his record" });
+        return;
+      }
+      const ip = ipByCode.get(trim(ev.instructor));
+      if (!trim(ev.instructor)) {
+        blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: label(stu),
+          why: "the flight names no instructor — «a student never launches alone on their own "
+            + "authority», and Wings Ahead requires one on every row" });
+        return;
+      }
+      if (!ip || !normOid(ip.oid)) {
+        blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: label(stu),
+          why: "«" + trim(ev.instructor) + "» resolves to no FDMS instructor with an OID — an identity is "
+            + "never guessed from a name across this wire (ruling #4)" });
+        return;
+      }
+      if (havePull && !waPersonOids.has(normOid(ip.oid))) {
+        blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: label(stu),
+          why: "the instructor's object id " + normOid(ip.oid) + " is not on the Wings Ahead roster — the "
+            + "row would carry an identity that side cannot resolve" });
+        return;
+      }
+
+      const group = band;
+      let L = mine.find((x) => normOid(x.oid) === oid && trim(x.group) === group && trim(x.uid) === node) || null;
+      if (L) seenLedger.add(trim(L.rid));
+
+      const date = isoDate(ev.date);
+      const ord = L ? posInt(L.ord, 1) : mintOrd(idx, oid, group, node);
+      const rid = L ? trim(L.rid) : ledRid(oid, group, node, ord);
+      if (rid.length > RID_MAX) {
+        blocked.push({ evId, student: code, uid: node, date, who: label(stu),
+          why: "the row identity is " + rid.length + " characters and the wire carries at most " + RID_MAX
+            + " — it is what the tombstones and the audit are keyed to" });
+        return;
+      }
+      const seq = L ? posInt(L.seq, 1) : mintSeq(idx, oid, codeOfNode(node), date);
+      if (!seq) {
+        blocked.push({ evId, student: code, uid: node, date, who: label(stu),
+          why: "twenty flights of «" + codeOfNode(node) + "» already stand on that day — Wings Ahead "
+            + "numbers the same-day flights of one code from 1 to " + SEQ_MAX });
+        return;
+      }
+      const row = pushRowOf({
+        date, track: codeTrack(codeOfNode(node)), sortie: codeOfNode(node), seq,
+        /* THE KIND: the first attempt on a node is its syllabus flight; every
+           attempt after it is a re-fly, which is exactly what Wings Ahead's
+           `repeat` kind exists to say. Frozen with the ordinal. */
+        kind: ord > 1 ? "repeat" : "syllabus",
+        instructor: normName(ip.last_name) || trim(ip.code),
+        instructorOid: normOid(ip.oid),
+        mission: PUSH_MISSION[trim(ev.result)],
+      });
+      const line = { rid, oid, group, uid: node, ord, seq, evId, student: code, who: label(stu),
+        date, row, klass: trim(stu.class) };
+
+      if (!L) {
+        queued.push({ kind: "create", line,
+          op: { op: "upsert", section: group, rid, prev: null, row, clear_tombstone: false } });
+        return;
+      }
+      const state = trim(L.state), hold = trim(L.hold);
+      if (hold) {
+        held.push({ line: Object.assign({}, line, { row }), hold, note: trim(L.note),
+          verdict: trim(L.verdict), sent: isObj(L.sent) ? L.sent : null });
+        return;
+      }
+      if (state === "removed") {
+        held.push({ line: Object.assign({}, line, { row }), hold: "removed",
+          note: "this identity was removed from Wings Ahead by the bridge and a tombstone lies on it — "
+            + "bringing it back is a deliberate act, never something the queue does by itself",
+          verdict: trim(L.verdict), sent: isObj(L.sent) ? L.sent : null });
+        return;
+      }
+      if (state === "undone") {
+        removals.push({ line, reason: "undo", rid, oid, sent: isObj(L.sent) ? L.sent : row,
+          why: "the developer took this push back (↺ Undo) — the Wings Ahead row it created is removed "
+            + "and the identity is tombstoned, which is what makes the undo stick",
+          op: { op: "remove", section: group, rid, prev: isObj(L.sent) ? L.sent : row, reason: "undo" } });
+        return;
+      }
+      if (tombs.has(oid + " " + rid) && !L.clearTomb) {
+        held.push({ line, hold: "tombstoned",
+          note: "Wings Ahead reports a live tombstone on this identity — it does not come back on its own",
+          verdict: "", sent: isObj(L.sent) ? L.sent : null });
+        return;
+      }
+      const sent = isObj(L.sent) ? L.sent : null;
+      if (state === "pushed" && sent && sameWaRow(sent, row)) return;      // nothing owed
+      const isMove = !!sent && (up(sent.sortie) !== up(row.sortie) || isoDate(sent.date) !== isoDate(row.date)
+        || posInt(sent.seq, 1) !== posInt(row.seq, 1));
+      queued.push({ kind: sent ? (isMove ? "move" : "change") : "create",
+        line: Object.assign({}, line, { sent }),
+        op: { op: "upsert", section: group, rid, prev: sent, row,
+          clear_tombstone: !!L.clearTomb } });
+    });
+
+    /* ── THE OTHER HALF: a ledger row whose source is gone ────────────────
+       Never queued, never automatic. It lands in Pending removals with its
+       reason, and it crosses only through the numbered dialog — deletion is
+       never accidental, on the wire as at home. */
+    idx.list.forEach((L) => {
+      const rid = trim(L.rid);
+      if (!rid || seenLedger.has(rid)) return;
+      if (trim(L.state) === "removed") return;                      // already gone
+      const group = trim(L.group), oid = normOid(L.oid);
+      const sent = isObj(L.sent) ? L.sent : null;
+      if (!sent) return;                       // never landed anywhere — nothing to remove
+      const undone = trim(L.state) === "undone";
+      if (trim(L.hold) && !undone) {
+        held.push({ line: { rid, oid, group, uid: trim(L.uid), ord: posInt(L.ord, 1), seq: posInt(L.seq, 1),
+          evId: trim(L.evId), student: trim(L.student), who: trim(L.student), date: isoDate(sent.date),
+          row: sent, klass: "" }, hold: trim(L.hold), note: trim(L.note), verdict: trim(L.verdict), sent });
+        return;
+      }
+      const line = { rid, oid, group, uid: trim(L.uid), ord: posInt(L.ord, 1), seq: posInt(L.seq, 1),
+        evId: trim(L.evId), student: trim(L.student), who: trim(L.student),
+        date: isoDate(sent.date), row: sent, klass: "" };
+      removals.push({ line, reason: undone ? "undo" : "source_removed", rid, oid, sent,
+        why: undone
+          ? "the developer took this push back (↺ Undo) — the Wings Ahead row it created is removed and "
+            + "the identity is tombstoned, which is what makes the undo stick"
+          : "the FDMS event this row came from is gone from the training log, or no longer qualifies to "
+            + "cross (its node, its scope or its result changed) — so the row it wrote is owed a removal",
+        op: { op: "remove", section: group, rid, prev: sent,
+          reason: undone ? "undo" : "source_removed" } });
+    });
+
+    /* group by student: bridge_push takes ONE student per call, and chunks of at
+       most 200 operations (the server refuses the 201st by name). */
+    const byStudent = new Map();
+    const push = (oid, who, code, entry) => {
+      if (!byStudent.has(oid)) byStudent.set(oid, { oid, who, code, ops: [], lines: [] });
+      const b = byStudent.get(oid);
+      b.ops.push(entry.op);
+      b.lines.push(entry.line);
+    };
+    queued.forEach((q) => push(q.line.oid, q.line.who, q.line.student, q));
+
+    return {
+      schema: WA_BRIDGE_SCHEMA,
+      queued, removals, blocked, held,
+      students: Array.from(byStudent.values()),
+      counts: { queued: queued.length, removals: removals.length, blocked: blocked.length,
+        held: held.length, ledger: idx.list.length, students: byStudent.size },
+    };
+  }
+
+  /* one person's display label, without reaching for the store (the planner is
+     pure) — the same three rules SchedStore.personLabel uses. */
+  function label(p) {
+    const ln = trim(p && p.last_name), fn = trim(p && p.first_name);
+    if (ln) return ln + (fn ? " " + fn.charAt(0) + "." : "");
+    return trim(p && p.code);
+  }
+
+  /* ── CHUNKING — the client's own bound, said before the server says it ────
+     The wire refuses the 201st operation of a call BY NAME, at the envelope,
+     which would take the 200 well-formed ones standing beside it. So the client
+     never builds a 201st: it splits, in order, and the two halves stay lined up
+     (`entries[i]` is what `ops[i]` came from, which is what folds the answer). */
+  function chunkOps(ops, entries) {
+    const out = [];
+    for (let i = 0; i < arr(ops).length; i += PUSH_MAX_OPS) {
+      out.push({ ops: ops.slice(i, i + PUSH_MAX_OPS),
+        entries: arr(entries).slice(i, i + PUSH_MAX_OPS) });
+    }
+    return out.length ? out : [];
+  }
+
+  /* ── FOLDING A VERDICT (design B.7, against the DEPLOYED eleven words) ────
+     One verdict in, one ledger row out — plus the sentence the report prints.
+     `advance` is the whole safety property: the ledger moves ONLY on an answer
+     that says the row is now what we sent, so the next `prev` is always the row
+     of the LAST ACKNOWLEDGED push and a replay is always the identical op. */
+  function foldVerdict(v, entry) {
+    const op = entry.op, line = entry.line;
+    const isRemove = op.op === "remove";
+    const row = isObj(op.row) ? op.row : null;
+    const base = { rid: line.rid, oid: line.oid, group: line.group, uid: line.uid,
+      ord: line.ord, seq: line.seq, evId: line.evId, student: line.student,
+      verdict: trim(v && v.verdict), note: trim(v && v.note), at: new Date().toISOString(),
+      hold: "", reason: "", clearTomb: false, waRow: null };
+    const word = trim(v && v.verdict);
+    switch (word) {
+      case "created": case "moved": case "updated":
+        return Object.assign(base, { sent: row, state: "pushed", cls: "agree",
+          say: word === "created" ? "created in Wings Ahead"
+            : word === "moved" ? "moved to its corrected date in Wings Ahead"
+              : "updated in Wings Ahead" });
+      case "unchanged":
+        return Object.assign(base, { sent: isRemove ? (isObj(op.prev) ? op.prev : null) : row,
+          state: isRemove ? "removed" : "pushed", cls: "agree",
+          say: isRemove ? "already removed — the tombstone was already lying on it"
+            : "already exactly this, fact for fact — a replay, absorbed" });
+      case "removed":
+        return Object.assign(base, { sent: isObj(op.prev) ? op.prev : row, state: "removed",
+          reason: trim(op.reason), cls: "agree",
+          say: "removed from Wings Ahead, and a tombstone now lies on the identity" });
+      case "exists_student":
+        return Object.assign(base, { sent: isObj(op.prev) ? op.prev : null, state: "pushed",
+          hold: "student", waRow: isObj(v.row) ? v.row : null, cls: "payload_differs",
+          say: "a row the STUDENT typed stands at that flight, date and seq — the bridge never writes "
+            + "over what a human wrote. Both versions are on the report; the developer rules" });
+      case "exists_admin":
+        return Object.assign(base, { sent: isObj(op.prev) ? op.prev : null, state: "pushed",
+          hold: "admin", waRow: isObj(v.row) ? v.row : null, cls: "payload_differs",
+          say: "the Wings Ahead admin has taken this row over — only he writes it now" });
+      case "exists_fdms":
+        /* THE STALE-`prev` REFUSAL, and the queue must NOT wedge on it. The
+           ledger did not advance, so nothing was written and nothing was lost —
+           but the identity is HELD, off the queue, with the server's own
+           sentence beside it, until the developer clears it explicitly. An
+           automatic retry would re-send the same stale claim for ever. */
+        return Object.assign(base, { sent: isObj(op.prev) ? op.prev : null, state: "pushed",
+          hold: "conflict", cls: "payload_differs",
+          say: "a row the bridge itself wrote holds that flight, date and seq, and this operation did "
+            + "not describe it correctly — Wings Ahead refuses to write over a row the sender has not "
+            + "seen. Nothing was written. ⟳ Refresh from Wings Ahead, then clear this line by hand" });
+      case "missing":
+        return Object.assign(base, { sent: null, state: "", hold: "missing", cls: "deleted",
+          say: "the row is no longer on the Wings Ahead record — the admin removed it, which is his "
+            + "custody. Putting it back is a deliberate re-push" });
+      case "tombstoned":
+        return Object.assign(base, { sent: isObj(op.prev) ? op.prev : null, state: "removed",
+          hold: "tombstoned", cls: "deleted",
+          say: "this identity is tombstoned in Wings Ahead — only an explicit, confirmed re-push "
+            + "brings it back" });
+      case "refused":
+        return Object.assign(base, { sent: isObj(op.prev) ? op.prev : null,
+          state: isObj(op.prev) ? "pushed" : "", hold: "refused", cls: "unwritten",
+          say: "Wings Ahead refused this operation — nothing was written, and the operations sent "
+            + "beside it were not affected" });
+      default:
+        return Object.assign(base, { sent: isObj(op.prev) ? op.prev : null,
+          state: isObj(op.prev) ? "pushed" : "", hold: "refused",
+          verdict: word || "(none)", cls: "unwritten",
+          say: "Wings Ahead answered a word this side does not know («" + (word || "none") + "»). "
+            + "Nothing is assumed and nothing is advanced: the identity is held and the answer is "
+            + "printed as it arrived" });
+    }
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
      ② THE WRITER — the ONLY place in this file that touches the store
      ══════════════════════════════════════════════════════════════════════════
      Every function below is reached from an explicit [data-brgw] control, past
@@ -1757,7 +2445,18 @@
     return want + ":" + Date.now().toString(36);
   }
 
-  /* one change-log entry — the shape is recorded in specs/bridge-spec.md § 13γ */
+  /* one change-log entry — the shape is recorded in specs/bridge-spec.md § 13γ,
+     and § 15ε for the two acts the push lane adds.
+     PHASE 4/5 — FOUR KEYS MORE, and every one of them exists so ↺ Undo can take
+     a WIRE write back the way it takes a local one back (the 13γ law: every
+     claim rides INSIDE the entry, or the trail cannot reverse it):
+       waHandle  «flights ∷ C4302 ∷ 2026-08-12 ∷ 1» — the far side's own name
+                 for the row, printed so a human can find it over there;
+       waBefore  the row as Wings Ahead held it before this act (the op's `prev`)
+       waAfter   the row this act left standing there (the op's `row`)
+       verdict   what the server answered, in its own word.
+     `waBefore`/`waAfter` are the compensating op's two halves AND the wire drift
+     guard: an undo may only send a `prev` that is still what this entry left. */
   function logAct(o) {
     return S().upsert("bridgeLog", {
       id: "", act: o.act, at: new Date().toISOString(), date: todayOf(), who: WHO,
@@ -1765,7 +2464,36 @@
       ord: o.ord || 0, seq: o.seq || 1, student: o.student || "", evId: o.evId || "",
       what: o.what || "", fields: arr(o.fields).map((f) => ({ field: f.field, from: f.from, to: f.to })),
       effect: o.effect || "", undone: false, undoneBy: "", undoOf: o.undoOf || "",
+      waHandle: o.waHandle || "", waBefore: o.waBefore || null, waAfter: o.waAfter || null,
+      verdict: o.verdict || "",
     });
+  }
+
+  /* ── THE LEDGER, WRITTEN (design B.5 · the deployed wire's `prev`) ────────
+     One row per pushed identity. It goes through upsert() like everything else,
+     so it meets the edit lock, it syncs, it exports and it dies with a Reset. */
+  const ledgerRow = (rid) => S().find("bridgePush", rid);
+  function ledgerPut(o) {
+    const rec = { rid: o.rid };
+    LED_KEYS.forEach((k) => { if (k !== "rid" && o[k] !== undefined) rec[k] = o[k]; });
+    return S().upsert("bridgePush", rec);
+  }
+  /* the far side's own name for a row — printed, never sent: Wings Ahead finds
+     its row by the handle inside `prev`, and this string is for a human. */
+  const waHandleOf = (group, row) => (isObj(row)
+    ? group + " ∷ " + up(row.sortie) + " ∷ " + isoDate(row.date) + " ∷ " + posInt(row.seq, 1) : group);
+
+  /* every field of a pushed row that MOVED, in the 13γ shape — this is what
+     makes the change-log line readable and the undo reversible. */
+  function rowFields(before, after) {
+    const out = [];
+    PUSH_ROW_KEYS.forEach((k) => {
+      const a = !isObj(before) || before[k] == null ? "" : before[k];
+      const b = !isObj(after) || after[k] == null ? "" : after[k];
+      if (String(a) === String(b)) return;
+      out.push({ field: "wa." + k, from: a === false ? "false" : a, to: b === false ? "false" : b });
+    });
+    return out;
   }
 
   /* the fields a bridge-written event owns, and the values the log says they
@@ -1922,6 +2650,148 @@
     }
   }
 
+  /* ══════════════════════════════════════════════════════════════════════════
+     ②β THE WIRE — two POST doors, the credential inside the BODY
+     ══════════════════════════════════════════════════════════════════════════
+     `…/rest/v1/rpc/bridge_pull` and `…/rest/v1/rpc/bridge_push`, POST only, the
+     token in the JSON body and never in a URL — which is what makes the later
+     Cloudflare-Worker lift a URL swap and not a contract change (design E.4),
+     and what keeps the credential out of every server log, proxy log and browser
+     history on the way. A GET on either door is answered by ONE uniform refusal
+     whatever it carries, deliberately, so the status code cannot tell a live
+     credential from a dead one — this side therefore never issues one.
+
+     THE TOKEN NEVER LEAVES THIS FUNCTION. It is read from the config, put in the
+     body, and that is all: it is not logged, not toasted, not put in an error
+     message, not printed in the report and not written to any file. Every
+     failure below reports the SERVER's own sentence or this side's own words.  */
+
+  const bridgeCfg = () => {
+    const c = S() ? S().cfg("bridge", null) : null;
+    return isObj(c) ? c : null;
+  };
+  const bridgeConfigured = () => {
+    const c = bridgeCfg();
+    return !!(c && trim(c.url) && trim(c.anon) && trim(c.token));
+  };
+  const bridgeLive = () => { const c = bridgeCfg(); return !!(c && c.live && bridgeConfigured()); };
+  const rpcUrl = (c, fn) => trim(c.url).replace(/\/+$/, "") + "/rest/v1/rpc/" + fn;
+
+  /* WHAT WENT WRONG, AS A STATE AND NOT A TOAST (design C.4). Three kinds, and
+     the difference decides what the header chip says and whether the automatic
+     lane stays armed:
+       "revoked"      the credential is gone — auto disarms until it is re-set;
+       "unreachable"  the network did not answer — still owed, retried with
+                      backoff, never dropped;
+       "refused"      the server answered, and said why in its own words.       */
+  function wireError(kind, why) { return { ok: false, kind, why }; }
+
+  async function wireCall(fn, body) {
+    const c = bridgeCfg();
+    if (!bridgeConfigured()) {
+      return wireError("unconfigured", "the Wings Ahead bridge is not configured on this device — "
+        + "open Bridge → ⚙ and paste the project URL, the anon key and the bridge token");
+    }
+    let res = null;
+    try {
+      res = await W.fetch(rpcUrl(c, fn), {
+        method: "POST",
+        headers: { "Content-Type": "application/json", apikey: trim(c.anon),
+          Authorization: "Bearer " + trim(c.anon), Accept: "application/json" },
+        body: JSON.stringify(Object.assign({ p_token: trim(c.token) }, body || {})),
+      });
+    } catch (err) {
+      return wireError("unreachable", "Wings Ahead did not answer — " + (err && err.message ? err.message : "the request failed")
+        + ". Nothing was sent twice and nothing is lost: what is owed is still owed.");
+    }
+    let data = null, text = "";
+    try { text = await res.text(); } catch (e) { text = ""; }
+    try { data = text ? JSON.parse(text) : null; } catch (e) { data = null; }
+    if (!res.ok) {
+      const msg = trim(data && (data.message || data.error_description || data.error))
+        || ("HTTP " + res.status);
+      /* the house refusal sentence of wa.auth_bridge, recognised by its own
+         words rather than by a status code — the door answers 400 for every
+         credential state on purpose. */
+      if (/invalid or revoked/i.test(msg) || res.status === 401) {
+        return wireError("revoked", msg + " — the automatic lane is disarmed until a working token is set "
+          + "in Bridge → ⚙.");
+      }
+      return wireError("refused", msg);
+    }
+    return { ok: true, data };
+  }
+
+  /* ── THE PULL — the export-equivalent read, byte-for-byte a wa-export-v1 ── */
+  async function wirePull() {
+    const r = await wireCall("bridge_pull", {});
+    if (!r.ok) return r;
+    const p = parseExport(r.data);
+    if (!p.ok) {
+      return wireError("refused", "Wings Ahead answered, but not with an export this side can read — " + p.why);
+    }
+    return { ok: true, parsed: p };
+  }
+
+  /* ── THE PUSH — ONE STUDENT, ORDERED, CHUNKED AT 200 ─────────────────────
+     The whole safety property of this lane is in three lines of it: the ops of
+     one rid are built from the LAST ACKNOWLEDGED ledger row, exactly one op per
+     rid per run, and the ledger advances only on the answer. So a retry is
+     always the identical operation (absorbed as `unchanged`), and a second
+     change can never be sent with the first change's `prev`. */
+  async function wirePush(oid, ops, lines, entries) {
+    const r = await wireCall("bridge_push", { p_student_oid: oid, p_ops: ops });
+    if (!r.ok) return r;
+    const d = isObj(r.data) ? r.data : {};
+    const vs = arr(d.verdicts);
+    if (vs.length !== ops.length) {
+      /* an answer that does not line up with the question is not folded on a
+         guess: the ledger stays exactly where it was, and the whole call is a
+         report line. Nothing was lost — the same ops are still owed. */
+      return wireError("refused", "Wings Ahead answered " + vs.length + " verdict"
+        + (vs.length === 1 ? "" : "s") + " for " + ops.length + " operation"
+        + (ops.length === 1 ? "" : "s") + " — nothing is folded on a guess and the ledger is untouched.");
+    }
+    return { ok: true, verdicts: vs, last_update: trim(d.last_update),
+      fdms_entries: d.fdms_entries, entries_total: d.entries_total, entries, lines };
+  }
+
+  /* FOLD ONE ANSWER INTO THE TWO LEDGERS — the push ledger (what the wire now
+     believes) and the change log (what a human can read and take back). */
+  function foldOne(entry, v) {
+    const f = foldVerdict(v, entry);
+    const op = entry.op;
+    const isRemove = op.op === "remove";
+    f.unrecorded = !ledgerPut({
+      rid: f.rid, oid: f.oid, group: f.group, uid: f.uid, ord: f.ord, seq: f.seq,
+      evId: f.evId, student: f.student, sent: f.sent, state: f.state, hold: f.hold,
+      note: f.note || f.say, verdict: f.verdict, reason: f.reason,
+      clearTomb: f.clearTomb, at: f.at, waRow: f.waRow,
+    });
+    /* ONLY A WRITE THAT HAPPENED IS A CHANGE-LOG ACT. A refusal, a conflict and
+       a replay changed nothing on either side; they are report lines, and
+       putting them in a trail whose whole purpose is «↺ take this back» would
+       offer an undo for a write that never was. */
+    const wrote = ["created", "moved", "updated", "removed"].indexOf(f.verdict) >= 0;
+    if (!wrote) return f;
+    const before = isObj(op.prev) ? op.prev : null;
+    const after = isRemove ? null : (isObj(op.row) ? op.row : null);
+    logAct({
+      act: isRemove ? "push-remove" : "push",
+      rid: f.rid, oid: f.oid, group: f.group, uid: f.uid, ord: f.ord, seq: f.seq,
+      student: f.student, evId: f.evId,
+      what: (isRemove ? "removed " : "pushed ") + up((after || before || {}).sortie)
+        + " of " + dmy((after || before || {}).date) + " " + (isRemove ? "from" : "to")
+        + " Wings Ahead — " + f.verdict
+        + (isRemove && trim(op.reason) ? " (" + trim(op.reason) + ")" : ""),
+      fields: rowFields(before, after),
+      effect: f.say,
+      waHandle: waHandleOf(f.group, after || before),
+      waBefore: before, waAfter: after, verdict: f.verdict,
+    });
+    return f;
+  }
+
   /* ── ↺ UNDO — ruling #2's rollback, one entry at a time ────────────────── */
   function undoEntry(id) {
     const e = S().find("bridgeLog", id);
@@ -1931,6 +2801,13 @@
       return { ok: false, why: "an undo is not itself undone from here — the row is back in the report, "
         + "and applying it again is the deliberate act that re-does it" };
     }
+    /* ── PHASE 4/5 — UNDOING A WRITE THAT HAPPENED ON THE OTHER SIDE ──────
+       The 13γ rule «an undo never offers its own ↺» and the drift guard are the
+       same here; what changes is where the compensation lands. NOTHING crosses
+       the wire from inside this function: an undo of a push turns into a
+       PENDING op that the developer confirms in the numbered dialog, exactly as
+       every other write to Wings Ahead does. */
+    if (e.act === "push" || e.act === "push-remove") return undoPushEntry(e);
     const ev = S().find("trainingLog", e.evId);
     if (e.act === "create") {
       if (ev) {
@@ -1974,6 +2851,134 @@
     return { ok: true, removed: false };
   }
 
+  /* ── ↺ UNDO ACROSS THE WIRE (design D.2) ─────────────────────────────────
+     Three shapes, and each one is the honest compensation for what was done:
+
+       an undo of a CREATED push  → the identity owes a REMOVAL (reason «undo»)
+           and a tombstone. The removal is what makes the undo STICK: without it
+           the very next planner run would owe the same create again, one
+           debounce later, for ever. It is not sent from here — it lands in
+           Pending removals and crosses on the developer's confirm, because a
+           deletion is never accidental on the wire either.
+
+       an undo of a MOVED / UPDATED push → a compensating upsert restoring what
+           the row held before, whose `prev` is exactly what this entry LEFT the
+           row at. Guarded twice: HERE, against this store's own ledger (has a
+           later push already moved it?), and again on the server, which
+           compares `prev` fact for fact and answers `exists_fdms` if a human
+           has touched the row since — nothing written, a report line.
+           The identity is then HELD, and that is not tidiness: the FDMS event
+           still says the new value, so an unheld identity would be re-pushed
+           immediately and the undo would not stick.
+
+       an undo of a PUSH-REMOVE → the identity goes back to PENDING, carrying
+           `clear_tombstone`. Re-pushing it is the explicit act, through the
+           dialog — 13γ's «an undo never offers its own ↺», applied to the wire.
+
+     WHAT IT NEVER DOES is touch the FDMS training log: the push lane wrote
+     nothing there, so its undo has nothing there to take back. */
+  /* THE DECISION, PURE (so a fixture asserts on the very ledger patch the store
+     would get, and on the very refusal sentence the developer would read).
+     `undoPushEntry` below is the thin half that writes. */
+  function undoPushPlan(e, L) {
+    if (!isObj(L)) {
+      return { ok: false, why: "the push ledger no longer carries the row identity " + trim(e.rid)
+        + " — without it this side does not know which Wings Ahead row this act left standing, and an "
+        + "undo that guesses is worse than no undo" };
+    }
+    if (e.act === "push-remove") {
+      return { ok: true, pending: "repush",
+        ledger: { rid: e.rid, state: "", sent: null, hold: "reopened", clearTomb: true,
+          note: "the removal was taken back — this identity is pending again, and bringing the row back "
+            + "is a deliberate re-push that clears the tombstone Wings Ahead is holding", verdict: "" },
+        what: "took back the removal of " + up((e.waBefore || {}).sortie) + " — the identity is pending again",
+        effect: "nothing crossed: re-pushing it is the explicit act that clears the tombstone",
+        fields: rowFields(null, e.waBefore) };
+    }
+
+    /* THE WIRE DRIFT GUARD, THIS SIDE. `driftOf` asks «does the FDMS event still
+       hold what this entry left it holding?»; the wire's own version asks the
+       same question of the LEDGER — «is the Wings Ahead row still the one this
+       act left standing?» — and refuses if a later push has moved it, because
+       undoing an act that is no longer the last one would take back somebody
+       else's write. The SERVER then asks it a third time, of the row itself:
+       `prev` is compared fact for fact, and a row a human has touched since
+       answers exists_student / exists_admin and nothing is written. */
+    const drifted = !sameWaRow(isObj(L.sent) ? L.sent : {}, e.waAfter || {});
+
+    if (trim(e.verdict) === "created") {
+      if (trim(L.state) === "removed") {
+        return { ok: false, why: "that Wings Ahead row is already gone — the removal has landed and a "
+          + "tombstone lies on the identity" };
+      }
+      if (drifted) {
+        return { ok: false, why: "the Wings Ahead row changed after that push — this store has since "
+          + "pushed it again, so undoing THIS act would remove a row it did not create. Undo the later "
+          + "act first" };
+      }
+      return { ok: true, pending: "removal",
+        ledger: { rid: e.rid, state: "undone", hold: "",
+          note: "the developer took this push back — the removal is waiting in Pending removals" },
+        what: "took back the push of " + up((e.waAfter || {}).sortie) + " of "
+          + dmy((e.waAfter || {}).date) + " — the removal is now pending",
+        effect: "nothing has crossed yet: the removal is confirmed on the Bridge tab, and it tombstones "
+          + "the identity so the queue cannot re-create it",
+        fields: rowFields(e.waAfter, null) };
+    }
+
+    if (!isObj(e.waBefore)) {
+      return { ok: false, why: "this entry did not record the row Wings Ahead held before it, so there is "
+        + "nothing to restore it to" };
+    }
+    if (drifted) {
+      return { ok: false, why: "the Wings Ahead row changed after that push — this store has pushed it "
+        + "again since, and undoing THIS act would discard the later one. Undo the later act first, or "
+        + "settle it from the cross-check report, where the two versions meet" };
+    }
+    return { ok: true, pending: "compensate",
+      ledger: { rid: e.rid, state: "pushed", hold: "compensate",
+        note: "↺ an undo is waiting to put this Wings Ahead row back to what it was before the push of "
+          + dmy(e.date) + " — it is confirmed on the Bridge tab, and until then the queue leaves the "
+          + "identity alone" },
+      what: "queued the undo of " + up((e.waAfter || {}).sortie) + " — Wings Ahead goes back to "
+        + dmy((e.waBefore || {}).date),
+      effect: "nothing has crossed yet: the compensating write is confirmed on the Bridge tab, and Wings "
+        + "Ahead refuses it outright if a human has touched the row since",
+      fields: rowFields(e.waAfter, e.waBefore) };
+  }
+
+  function undoPushEntry(e) {
+    const r = undoPushPlan(e, ledgerRow(e.rid));
+    if (!r.ok) return r;
+    ledgerPut(Object.assign({ at: new Date().toISOString() }, r.ledger));
+    const rev = logAct({
+      act: "undo", rid: e.rid, oid: e.oid, group: e.group, uid: e.uid, ord: e.ord, seq: e.seq,
+      student: e.student, evId: e.evId, undoOf: e.id, what: r.what, effect: r.effect,
+      fields: arr(r.fields), waHandle: e.waHandle, waBefore: e.waAfter, waAfter: e.waBefore,
+    });
+    S().upsert("bridgeLog", { id: e.id, undone: true, undoneBy: rev ? rev.id : "" });
+    return { ok: true, pending: r.pending };
+  }
+
+  /* the compensating op a held «compensate» identity owes — built from the LOG,
+     because the log is what recorded the two halves; the ledger only says the
+     row is still where that act left it. */
+  function compensationOf(L) {
+    const list = arr(S().get("bridgeLog")).filter((x) => isObj(x) && trim(x.rid) === trim(L.rid)
+      && x.act === "undo" && isObj(x.waAfter) && isObj(x.waBefore));
+    if (!list.length) return null;
+    list.sort((a, b) => (String(a.at) < String(b.at) ? 1 : String(a.at) > String(b.at) ? -1 : 0));
+    const u = list[0];
+    /* `waAfter` of the UNDO entry is the row we are putting BACK; its `waBefore`
+       is what stands there now — and that is precisely the `prev` the server
+       demands: the row as the bridge last wrote it, fact for fact. */
+    return { line: { rid: trim(L.rid), oid: normOid(L.oid), group: trim(L.group), uid: trim(L.uid),
+      ord: posInt(L.ord, 1), seq: posInt(L.seq, 1), evId: trim(L.evId), student: trim(L.student),
+      who: trim(L.student), date: isoDate(u.waAfter.date), row: u.waAfter, sent: u.waBefore, klass: "" },
+    op: { op: "upsert", section: trim(L.group), rid: trim(L.rid), prev: u.waBefore, row: u.waAfter,
+      clear_tombstone: false } };
+  }
+
   /* ══════════════════════════════════════════════════════════════════════════
      ③ THE PANE — DOM only, and every write it starts goes through § ②
      ══════════════════════════════════════════════════════════════════════════ */
@@ -1986,13 +2991,54 @@
      of being taken on trust. It is the same class of data as the report, it
      lives exactly as long, and § schBridgeLeave drops both together. */
   const ui = { report: null, parsed: null, fileName: "", error: "", filter: "",
-    cls: "", group: "", q: "", pick: [], logOpen: false, applyMsg: "", applyBad: false };
+    cls: "", group: "", q: "", pick: [], logOpen: false, applyMsg: "", applyBad: false,
+    /* PHASE 4/5 — the push lane's own pane state. `src` is the SOURCE PICKER
+       («📄 file» / «⟳ Wings Ahead live»): the payload is the same wa-export-v1
+       whichever carrier brings it, and everything downstream of parseExport is
+       Phase 3 verbatim. `plan` is the DERIVED queue, recomputed on every paint —
+       it is never stored, here or anywhere. */
+    src: "file", plan: null, pushMsg: "", pushBad: false, verdicts: [],
+    pulling: false, holdOpen: false, blockOpen: false };
+
+  /* THE WIRE'S STATE — a failure is a STATE, not a toast (design C.4). It lives
+     here, beside the report, and the header chip reads it: `owed` cannot be
+     silently dropped because it is recomputed from the store on every planner
+     run, so «3 not pushed» stays true until it is not. */
+  const wst = { busy: false, at: "", kind: "", why: "", since: "", tries: 0, timer: null, back: 0 };
+  const AUTO_MS = 5000;                 // the debounce SchedSync already lives by
+  const BACKOFF_MS = [10000, 30000, 60000, 180000, 300000];   // → a 5-minute ceiling
 
   function clearAll() {
     ui.report = null; ui.parsed = null; ui.fileName = ""; ui.error = "";
     ui.cls = ""; ui.group = ""; ui.q = ""; ui.pick = [];
     ui.applyMsg = ""; ui.applyBad = false; ui.logOpen = false;
+    ui.pushMsg = ""; ui.pushBad = false; ui.verdicts = [];
   }
+
+  /* ── THE DERIVED QUEUE, RECOMPUTED ───────────────────────────────────────
+     Nothing is cached across a paint: what this store owes Wings Ahead is a
+     function of the training log, the ledger and the tombstones, and asking it
+     again is cheaper than being wrong about it. */
+  function planNow() {
+    if (!S()) return null;
+    try {
+      return planPush({
+        trainingLog: S().get("trainingLog") || [],
+        students: S().get("students") || [],
+        instructors: S().get("instructors") || [],
+        bridgePush: S().get("bridgePush") || [],
+      }, {
+        kindOf: (uid) => (R() ? R().kindOf(uid) : null),
+        /* the pull's own knowledge, when a pull is on screen — the two refusals
+           the server raises at the ENVELOPE (unknown OID, inactive student) are
+           made HERE when this side can make them, because an envelope raise
+           voids that student's whole call. */
+        waPeople: ui.parsed ? ui.parsed.people : null,
+        tombstones: ui.parsed ? ui.parsed.tombstones : null,
+      });
+    } catch (err) { console.error(err); return null; }
+  }
+  const plan = () => (ui.plan = planNow());
 
   /* THE HOVER RULE (Round 19) — a tooltip inside the Scheduler means «something
      is stored here». Every control below writes; each says WHAT it writes, WHAT
@@ -2015,7 +3061,37 @@
       + "and the repository are never touched. Every line lands in the change log with its own ↺ Undo.",
     undo: "Reverts EXACTLY this one act: the event it created is removed, or the fields it changed go back "
       + "to the values recorded here. If the event has been edited since, it refuses instead of discarding "
-      + "that edit. The undo is itself recorded as a change-log entry.",
+      + "that edit. On a PUSH act it writes nothing at once — it puts a removal or a compensating write "
+      + "into Pending removals, which you confirm. The undo is itself recorded as a change-log entry.",
+    /* PHASE 4/5 — the hover rule (Round 19) applied to the controls that write
+       the OTHER side: WHAT it writes · WHAT it never touches · THE SAFE PATH. */
+    push: "Sends the queued flights to Wings Ahead, after a dialog that numbers every one and shows the "
+      + "exact row it becomes. It writes ONLY the flight / F-S rows this bridge itself owns, and only for "
+      + "students matched by OID. It never writes a grade, a duration or an NG flag, never a ground "
+      + "section, never a row a human typed, and never deletes anything. Every write lands in the Bridge "
+      + "change log, where ↺ Undo takes exactly that one back.",
+    rm: "Removes the Wings Ahead row this bridge wrote and lays a TOMBSTONE on the identity, so the queue "
+      + "cannot re-create it. It touches nothing in the FDMS training log and nothing a student typed — a "
+      + "corrected row is his, and Wings Ahead refuses this lane over it. ↺ Undo puts the identity back in "
+      + "the pending state; bringing the row back is then a deliberate re-push.",
+    cfg: "Opens the bridge credential and the Live switch. Saving WRITES the synced store config, so the "
+      + "token reaches your other devices — ciphertext when the sync passphrase is armed. ⭳ Export strips "
+      + "it and ⭱ Import never restores it. It is never shown back to you: «Forget» is how it is removed, "
+      + "and Revoke in Wings Ahead is how every lane is closed at once.",
+    repush: "Puts this identity back in the queue CARRYING clear_tombstone, so the next push re-creates the "
+      + "Wings Ahead row and clears the tombstone lying on it. Nothing crosses until you push.",
+    clear: "Lets the queue try this identity again. It writes nothing by itself — it only takes the line "
+      + "off hold, and the next push is still an explicit act.",
+    forget: "Forgets the link between this FDMS event and its Wings Ahead row. It REMOVES NOTHING from "
+      + "Wings Ahead: the row stays, and the next cross-check shows it as an fdms-stamped row this store's "
+      + "ledger does not know. Use it when the row is somebody else's to own.",
+    srcFile: "Reads one Wings Ahead export file you pick from disk. Nothing leaves this machine and no "
+      + "credential is used. This is the fallback for a closed network, and it stays byte-compatible.",
+    srcLive: "Reads the SAME payload straight from Wings Ahead over the bridge credential. It is a READ: "
+      + "it writes nothing on either side. There is no background polling — the report carries real names, "
+      + "and holding them in memory behind your back is exactly what this pane does not do.",
+    pull: "Calls rpc/bridge_pull once, now, and builds the report from what comes back. It writes nothing, "
+      + "anywhere. What it fetches lives exactly as long as this tab: leaving the pane drops it.",
   };
 
   /* LEAVING THE PANE DROPS THE REPORT — R18 VERIFY FINDING 3.
@@ -2045,8 +3121,154 @@
     if (el) render(el);                                 // → head() + placeholder, no data
   };
 
+  /* ══ THE HEADER CHIP — FAILURE AS STATE (design C.4) ═════════════════════
+     It lives beside the sync hint and the data badge, the one corner of the
+     topbar that already talks about data freshness, and it says one of five
+     things:
+       ✈ WA · pushed 14:32          everything owed has landed
+       ✈ WA · 3 queued              three flights are waiting for ✈ Push now
+       ✈ WA · 3 not pushed — unreachable since 14:02 · ⟳
+       ✈ WA · token revoked — open Bridge ⚙     (and the automatic lane disarms)
+       ✈ WA · 2 to settle           conflicts / removals a human has to rule on
+     It is deliberately NOT a toast: a toast is gone in three seconds and this is
+     a fact about the store, true until it is not. And because the count is
+     RECOMPUTED (there is no stored queue), a failed push cannot be silently
+     dropped — it is simply still owed, and the chip keeps saying so.
+     It sits OUTSIDE #view-scheduler, like the ⋯ menu, so the edit lock's veneer
+     does not reach it — which is why its retry asks editOn() by hand and names
+     the act it refused. */
+  function chipEl() {
+    const doc = W.document;
+    if (!doc || !doc.body) return null;
+    let el = doc.getElementById("brg-chip");
+    if (el) return el;
+    const badge = doc.getElementById("databadge");
+    if (!badge || !badge.parentNode) return null;
+    el = doc.createElement("button");
+    el.type = "button";
+    el.id = "brg-chip";
+    el.className = "brg-chip hidden";
+    el.setAttribute("data-brgw", "chip");
+    badge.parentNode.insertBefore(el, badge);
+    el.addEventListener("click", () => {
+      /* THE CHIP IS A RETRY, NEVER A FIRST WRITE. With the Live switch on it
+         re-fires the automatic lane the developer has already armed — that is
+         what «⟳» in its own text means. With Live OFF it takes him to the pane,
+         where ✈ Push now opens the numbered dialog: a topbar chip must never be
+         the shortest route past a confirm. */
+      if (!bridgeLive() || wst.kind === "revoked" || !(ui.plan && ui.plan.counts.queued)) {
+        openBridgeTab();
+        return;
+      }
+      if (!editOn()) { refuseWrite("push the waiting flights to Wings Ahead"); return; }
+      void runPush("chip");
+    });
+    return el;
+  }
+
+  /* the chip's one navigation act: show me the pane that explains this */
+  function openBridgeTab() {
+    const doc = W.document;
+    if (!doc) return;
+    const tab = doc.getElementById("tab-scheduler");
+    if (tab) tab.click();
+    const sub = doc.querySelector('.sch-subtab[data-sch="bridge"]');
+    if (sub) sub.click();
+  }
+
+  function chipPaint() {
+    const el = chipEl();
+    if (!el) return;
+    if (!bridgeConfigured()) { el.className = "brg-chip hidden"; el.textContent = ""; return; }
+    const p = ui.plan || plan();
+    const owed = p ? p.counts.queued : 0;
+    const settle = p ? p.counts.removals + p.counts.held : 0;
+    let txt = "", cls = "brg-chip", tip = "";
+    if (wst.kind === "revoked") {
+      txt = "✈ WA · token revoked — open Bridge ⚙";
+      cls += " is-bad";
+      tip = wst.why;
+    } else if (wst.kind && owed) {
+      txt = "✈ WA · " + owed + " not pushed — " + (wst.kind === "unreachable" ? "unreachable" : "refused")
+        + " since " + wst.since + " · ⟳";
+      cls += " is-bad";
+      tip = wst.why + "  Nothing is lost: the queue is recomputed from the store, so what is owed stays owed.";
+    } else if (wst.busy) {
+      txt = "✈ WA · pushing…";
+      cls += " is-on";
+    } else if (owed && !editOn()) {
+      /* THE VIEW-ONLY STATE, SAID RATHER THAN IMPLIED. The count is still true —
+         these flights ARE owed — and the reason nothing is happening about them
+         is a fact about this device, not about the queue. A chip that showed
+         «3 queued» and then never moved would teach the developer to distrust
+         the chip. */
+      txt = "✈ WA · " + owed + " queued · view-only";
+      cls += " is-warn";
+      tip = "these flights are owed and nothing will cross from this device: the bridge writes Wings "
+        + "Ahead only with ✎ Editor mode on, because a write it could not record in its own ledger is a "
+        + "write nobody could take back.";
+    } else if (owed) {
+      txt = "✈ WA · " + owed + " queued";
+      cls += " is-on";
+      tip = bridgeLive()
+        ? "these flights cross by themselves " + (AUTO_MS / 1000) + " s after the last change — or now, if you click"
+        : "the live switch is off: click, or use ✈ Push now on the Bridge tab";
+    } else if (settle) {
+      txt = "✈ WA · " + settle + " to settle";
+      cls += " is-warn";
+      tip = "removals waiting for a confirm, or lines Wings Ahead refused — the Bridge tab names each one";
+    } else if (wst.at) {
+      txt = "✈ WA · pushed " + wst.at;
+      cls += " is-ok";
+      tip = "everything this store owes Wings Ahead has landed";
+    } else {
+      txt = "✈ WA · nothing owed";
+      tip = "the bridge is configured and this store owes Wings Ahead nothing";
+    }
+    el.textContent = txt;
+    el.className = cls;
+    el.title = tip || txt;
+  }
+
+  /* ── THE DEBOUNCE AND THE BACKOFF (design C.2 row 1 · C.4) ───────────────
+     Every store mutation re-arms a 5-second timer — the rhythm SchedSync
+     already established, so a burst of typing costs ONE push. It fires only
+     when the bridge is configured AND the Live switch is on; otherwise the
+     timer's only job is to repaint the chip, which must stay true whether or
+     not anything is armed.
+     A failure backs off 10 s → 30 s → 1 min → 3 min → 5 min and STOPS THERE.
+     A revoked credential is not retried at all: it disarms the automatic lane
+     and says so, because retrying a refusal is how a log fills with the same
+     sentence a thousand times. */
+  function armAuto() {
+    if (wst.timer) { clearTimeout(wst.timer); wst.timer = null; }
+    plan();
+    chipPaint();
+    if (!bridgeLive() || wst.kind === "revoked" || wst.busy) return;
+    /* AND THE TIMER IS NOT EVEN ARMED ON A VIEW-ONLY DEVICE. runPush refuses
+       anyway — that is the wall — but arming a timer whose only outcome is a
+       refusal would spend a wake-up every five seconds to say nothing. */
+    if (!editOn()) return;
+    if (!ui.plan || !ui.plan.counts.queued) return;
+    const wait = wst.kind ? BACKOFF_MS[Math.min(wst.tries, BACKOFF_MS.length - 1)] : AUTO_MS;
+    wst.timer = setTimeout(() => { wst.timer = null; void runPush("auto"); }, wait);
+  }
+
+  let wired = false;
+  function wireStore() {
+    if (wired || !S()) return;
+    wired = true;
+    S().subscribe((coll) => {
+      if (coll !== "trainingLog" && coll !== "bridgePush" && coll !== "config"
+        && coll !== "students" && coll !== "instructors" && coll !== "*") return;
+      armAuto();
+    });
+    armAuto();
+  }
+
   W.schBridgeInit = function schBridgeInit(el) {
     if (!el) return;
+    wireStore();
     render(el);
     if (el._brgWired) return;
     el._brgWired = true;
@@ -2060,6 +3282,17 @@
       if (a === "cls") { ui.cls = ui.cls === b.dataset.v ? "" : b.dataset.v; render(el); return; }
       if (a === "group") { ui.group = ui.group === b.dataset.v ? "" : b.dataset.v; render(el); return; }
       if (a === "log") { ui.logOpen = !ui.logOpen; render(el); return; }
+      if (a === "blocks") { ui.blockOpen = !ui.blockOpen; render(el); return; }
+      /* THE SOURCE PICKER AND THE LIVE PULL ARE READS, and they are on
+         [data-brg] for the reason every other read control is: denying them
+         would make the report unreachable in the default state of every device,
+         for no gain. A pull writes nothing on either side. */
+      if (a === "src") {
+        if (ui.src !== b.dataset.v) { clearAll(); ui.src = b.dataset.v; }
+        render(el);
+        return;
+      }
+      if (a === "pull") { void doPull(el); return; }
     });
     /* THE WRITE CONTROLS — a separate attribute from [data-brg] ON PURPOSE.
        [data-brg] is on SchedStore's NAV list because everything wearing it
@@ -2076,6 +3309,15 @@
       if (a === "apply") { startApply(el, [b.dataset.rid], b.dataset.f || ""); return; }
       if (a === "batch") { startApply(el, ui.pick.slice(), ""); return; }
       if (a === "undo") { startUndo(el, b.dataset.id); return; }
+      /* PHASE 4/5 — the four controls that write the OTHER side. Same
+         attribute, same three walls: the veneer disables them, the capture
+         guard refuses the click by name, and each one asks editOn() again
+         before a single dialog opens. */
+      if (a === "pushnow") { void startPush(el); return; }
+      if (a === "rm") { void startRemovals(el, [b.dataset.rid]); return; }
+      if (a === "rmall") { void startRemovals(el, []); return; }
+      if (a === "hold") { void startHold(el, b.dataset.rid, b.dataset.a || "clear"); return; }
+      if (a === "cfg") { void openSettings(el); return; }
     });
     el.addEventListener("change", (e) => {
       const c = e.target.closest('input[data-brgw="sel"]');
@@ -2349,11 +3591,648 @@
     render(el);
   }
 
+  /* ══ THE PUSH LANE'S ACTS — every one of them past the lock and a dialog ══ */
+
+  const paneEl = () => (W.document ? W.document.getElementById("sch-bridge") : null);
+  function repaint() { const el = paneEl(); if (el) render(el); }
+
+  /* ONE LINE OF THE NUMBERED DIALOG (13η's shape, verbatim, one wire over):
+     who · which flight · what the operation IS · every field that moves,
+     from → to · what Wings Ahead will do with it · the row identity. */
+  function wireLine(e) {
+    const L = e.line, op = e.op;
+    const isRemove = op.op === "remove";
+    const who = esc(L.who || L.student) + (L.student ? ` <span class="sch-code">${esc(L.student)}</span>` : "");
+    const act = isRemove ? "REMOVE the Wings Ahead row and tombstone the identity"
+      : e.kind === "move" ? "MOVE the Wings Ahead row to its corrected flight, date and sequence"
+        : e.kind === "change" ? "UPDATE the Wings Ahead row"
+          : op.clear_tombstone ? "RE-CREATE the Wings Ahead row and CLEAR its tombstone"
+            : "CREATE the flight row in Wings Ahead";
+    const before = isObj(op.prev) ? op.prev : null;
+    const after = isObj(op.row) ? op.row : null;
+    const fields = fchg(rowFields(before, after), false);
+    return `<li><b>${who}</b> · <span class="sch-mono">${esc(L.uid)}</span>
+      ${L.date ? " · " + esc(dmy(L.date)) : ""}
+      <div>${esc(act)}${isRemove && trim(op.reason) ? " — reason «" + esc(op.reason) + "»" : ""}</div>
+      ${e.why ? `<div class="sch-nd">${esc(e.why)}</div>` : ""}
+      <div class="brg-fchgs">${fields}</div>
+      <div class="brg-eff">→ ${esc(waHandleOf(L.group, after || before))}</div>
+      <div class="sch-nd sch-mono">${esc(L.rid)}${L.evId ? " · " + esc(L.evId) : ""}</div></li>`;
+  }
+
+  /* ── THE ONE PLACE THAT SENDS ─────────────────────────────────────────────
+     Grouped per student (bridge_push takes one), chunked at 200 (it refuses the
+     201st by name), and STOPPED on the first transport failure: a door that did
+     not answer will not answer the next chunk either, and hammering it would
+     turn one outage into a hundred log lines. Nothing is lost by stopping —
+     what is owed is derived, so it is still owed. */
+  async function runPush(how, only) {
+    if (wst.busy) return { ok: false, why: "a push is already running" };
+    /* ── THE THIRD WALL, AND THE ROUND'S ONE OVERRULED DESIGN DECISION ──────
+       Design G.12 said the automatic lane should NOT be re-gated on the edit
+       lock at fire time, on the sync-auto-push precedent: «the gated act was the
+       store write; its 5-second completion is the same doctrine the 5-second
+       sync push already lives by.» That reasoning does not survive contact with
+       this lane, and the live run is what showed it:
+
+         a view-only device with Live armed pushed the rows to Wings Ahead —
+         and then could not write its own ledger, because ledgerPut() goes
+         through upsert() and upsert() asks mayWrite(). The far side gained
+         rows this store had no memory of creating. Every later planner run
+         would owe them again, meet its own rows, and answer `exists_fdms` for
+         ever; and ↺ Undo would have nothing to take back.
+
+       The precedent does not transfer, and the difference is exactly why: what
+       SchedSync auto-pushes is a snapshot of writes the lock ALREADY allowed,
+       and its bookkeeping is localStorage counters that no lock guards. What
+       this lane auto-pushes is a write to another system, and its bookkeeping
+       is a STORE COLLECTION the lock does guard. A write whose record cannot be
+       written must not be made. So the lock is asked HERE too — and it is asked
+       in the one place that cannot be walked around, before a single byte
+       leaves, which makes it the wall and not the veneer. */
+    if (!editOn()) {
+      if (how !== "auto") refuseWrite("push flights to Wings Ahead");
+      return { ok: false, why: "view-only — the bridge does not write Wings Ahead from a locked device, "
+        + "because it could not record what it wrote" };
+    }
+    const list = only || arr((ui.plan || plan()).queued);
+    if (!list.length) return { ok: false, why: "nothing is owed" };
+    const buckets = new Map();
+    list.forEach((e) => {
+      const oid = e.line.oid;
+      if (!buckets.has(oid)) buckets.set(oid, { oid, who: e.line.who, entries: [] });
+      buckets.get(oid).entries.push(e);
+    });
+    wst.busy = true;
+    chipPaint();
+    const seen = [];
+    let sent = 0, wrote = 0, unrecorded = 0, stopped = "";
+    for (const b of buckets.values()) {
+      if (stopped) break;
+      const chunks = chunkOps(b.entries.map((e) => e.op), b.entries);
+      for (const ch of chunks) {
+        const r = await wirePush(b.oid, ch.ops, ch.entries);
+        if (!r.ok) {
+          wst.kind = r.kind;
+          wst.why = r.why;
+          wst.since = wst.since && wst.kind ? wst.since : nowHM();
+          wst.tries += 1;
+          stopped = r.why;
+          break;
+        }
+        sent += ch.ops.length;
+        r.verdicts.forEach((v, i) => {
+          const f = foldOne(ch.entries[i], v);
+          if (["created", "moved", "updated", "removed"].indexOf(f.verdict) >= 0) wrote += 1;
+          /* THE NARROW RACE, SURFACED RATHER THAN SWALLOWED. The lock was open
+             when this push started and it is the wall that stops a locked device
+             writing at all — but a device locked WHILE a call is in flight would
+             have its ledger write refused by upsert(), and a Wings Ahead row
+             this store cannot remember is precisely the failure the lock check
+             above exists to prevent. It cannot pass silently. */
+          if (f.unrecorded) unrecorded += 1;
+          seen.push({ rid: f.rid, uid: f.uid, who: ch.entries[i].line.who,
+            date: ch.entries[i].line.date, verdict: f.verdict, say: f.say, note: f.note,
+            cls: f.cls, waRow: f.waRow, unrecorded: f.unrecorded });
+        });
+      }
+    }
+    if (!stopped) { wst.kind = ""; wst.why = ""; wst.since = ""; wst.tries = 0; wst.at = nowHM(); }
+    wst.busy = false;
+    ui.verdicts = seen;
+    ui.pushBad = !!stopped || !!unrecorded || seen.some((s) => s.cls !== "agree");
+    ui.pushMsg = (stopped
+      ? sent + " operation" + (sent === 1 ? "" : "s") + " answered, then Wings Ahead stopped answering: "
+        + stopped
+      : wrote + " write" + (wrote === 1 ? "" : "s") + " landed in Wings Ahead of " + sent
+        + " operation" + (sent === 1 ? "" : "s") + " sent"
+        + (seen.length > wrote ? " · " + (seen.length - wrote) + " answered with a verdict to settle" : "")
+        + ".")
+      + (unrecorded ? "  ⚠ " + unrecorded + " answer" + (unrecorded === 1 ? "" : "s")
+        + " could NOT be written to the push ledger — the edit lock closed while the call was in flight. "
+        + "Wings Ahead has those rows and this store does not remember them: unlock ✎ Editor mode and "
+        + "⟳ Refresh, then settle them from the report." : "");
+    plan();
+    chipPaint();
+    if (how !== "auto") repaint(); else { chipPaint(); repaint(); }
+    if (how !== "auto" && S().toast) {
+      S().toast(stopped ? "Bridge — the push did not complete." : "Bridge — " + wrote + " written to Wings Ahead.",
+        stopped ? "bad" : "good");
+    }
+    /* the backoff re-arms itself; a revoked credential deliberately does not */
+    if (stopped && wst.kind !== "revoked") armAuto();
+    return { ok: !stopped, wrote, sent };
+  }
+  const nowHM = () => {
+    const d = new Date();
+    return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
+  };
+
+  async function startPush(el) {
+    if (!editOn()) { refuseWrite("push flights to Wings Ahead"); return; }
+    const p = plan();
+    const list = arr(p && p.queued);
+    if (!list.length) {
+      ui.pushMsg = "nothing is owed — every qualifying flight in the training log already stands in "
+        + "Wings Ahead exactly as it is here.";
+      ui.pushBad = false;
+      render(el);
+      return;
+    }
+    const creates = list.filter((e) => e.kind === "create").length;
+    /* THE 13η LAW MEETS A FIRST PUSH. The numbered dialog exists so that no line
+       crosses unseen, and it lists every one — up to the point where «every one»
+       stops being something a person can read: the first push on a real store
+       owes some two thousand flights. Above the cap the dialog says how many it
+       did not draw, in the same breath as the total it is about to send, because
+       a dialog that quietly showed 200 of 1 900 would be the one lie this whole
+       pane is built against. The queue table on the pane lists them too. */
+    const drawn = list.slice(0, DRAW_MAX);
+    const go = await confirmPop({
+      ico: "✈",
+      title: list.length === 1 ? "Push this flight to Wings Ahead?"
+        : "Push " + list.length + " flights to Wings Ahead?",
+      go: "✈ Push " + list.length + " line" + (list.length === 1 ? "" : "s"),
+      lead: (list.length > DRAW_MAX
+        ? "<b>" + list.length + " flights</b> are going and the first <b>" + DRAW_MAX
+          + "</b> are listed below — the rest are in the queue table on the pane behind this dialog. "
+        : "Every line is listed below with <b>exactly what crosses the wire</b> and what Wings Ahead "
+          + "will do with it. ")
+        + "This writes the <b>flight rows of the students' Wings Ahead records</b> and "
+        + "nothing else: no grade, no duration, no NG, no ground section, and never a row a human typed.",
+      items: drawn.map(wireLine).join(""),
+      foot: "<b>" + creates + "</b> new · <b>" + (list.length - creates) + "</b> changed"
+        + (list.length > DRAW_MAX ? " · <b>" + (list.length - DRAW_MAX) + "</b> not drawn above" : "")
+        + ". Each write lands "
+        + "in the <b>Bridge change log</b> below with what Wings Ahead held before it, and <b>↺ Undo</b> "
+        + "takes exactly that write back. A row Wings Ahead refuses is a <b>report line</b> — nothing is "
+        + "written and nothing is lost.",
+    });
+    if (!go) { ui.pushMsg = "cancelled — nothing crossed."; ui.pushBad = false; render(el); return; }
+    await runPush("now", list);
+  }
+
+  /* REMOVALS AND UNDOS — they never cross by themselves, and each one names its
+     reason on the line the developer confirms (design C.2 row 3). */
+  async function startRemovals(el, rids) {
+    if (!editOn()) { refuseWrite("remove a flight row from Wings Ahead"); return; }
+    const p = plan();
+    const want = arr(rids);
+    const rems = arr(p && p.removals).filter((r) => !want.length || want.indexOf(r.rid) >= 0);
+    const comps = pendingCompensations().filter((c) => !want.length || want.indexOf(c.line.rid) >= 0);
+    const list = rems.concat(comps);
+    if (!list.length) {
+      ui.pushMsg = "nothing pending — the list was rebuilt and this line is no longer owed.";
+      ui.pushBad = false;
+      render(el);
+      return;
+    }
+    const go = await confirmPop({
+      ico: "␥",
+      title: list.length === 1 ? "Send this removal to Wings Ahead?"
+        : "Send " + list.length + " pending acts to Wings Ahead?",
+      go: "␥ Send " + list.length + " act" + (list.length === 1 ? "" : "s"),
+      lead: "A removal <b>takes a flight row off a student's Wings Ahead record</b> and lays a "
+        + "<b>tombstone</b> on the identity, which is what stops the queue re-creating it one debounce "
+        + "later. It removes only rows <b>the bridge itself wrote</b>: a row a student corrected is his, "
+        + "and Wings Ahead refuses to let this lane touch it.",
+      items: list.map(wireLine).join(""),
+      foot: "Each act lands in the <b>Bridge change log</b>, and <b>↺ Undo</b> puts the identity back in "
+        + "the pending state — bringing the row back is then a deliberate re-push that clears the "
+        + "tombstone. Nothing in the FDMS training log is touched by any of this.",
+    });
+    if (!go) { ui.pushMsg = "cancelled — nothing crossed."; ui.pushBad = false; render(el); return; }
+    await runPush("now", list);
+  }
+
+  /* the compensating upserts a held «compensate» identity owes — derived from
+     the change log, exactly like everything else in this lane */
+  function pendingCompensations() {
+    return arr(S() ? S().get("bridgePush") : []).filter((L) => isObj(L) && trim(L.hold) === "compensate")
+      .map((L) => {
+        const c = compensationOf(L);
+        if (!c) return null;
+        return { kind: "change", line: c.line, op: c.op,
+          why: "↺ an undo: Wings Ahead goes back to what it held before that push" };
+      }).filter(Boolean);
+  }
+
+  /* A HELD IDENTITY IS CLEARED BY HAND — that is the whole point of holding it.
+     Three acts, and none of them writes to Wings Ahead by itself:
+       ⟳ clear    the developer has read the refusal and lets the queue try again
+       ↩ re-push  a removed identity comes back, carrying clear_tombstone
+       ✕ forget   stop tracking this identity here (the Wings Ahead row stays;
+                  the next cross-check shows it as this bridge's own echo)     */
+  async function startHold(el, rid, act) {
+    if (!editOn()) { refuseWrite("change what the bridge is tracking"); return; }
+    const L = ledgerRow(rid);
+    if (!L) { ui.pushMsg = "that row identity is no longer in the ledger."; ui.pushBad = true; render(el); return; }
+    if (act === "forget") {
+      const go = await confirmPop({
+        ico: "✕", title: "Stop tracking this identity?", go: "✕ Stop tracking",
+        lead: "This forgets the link between an FDMS event and the Wings Ahead row the bridge wrote for "
+          + "it. <b>It removes nothing from Wings Ahead</b> — the row stays exactly where it is.",
+        items: `<li><span class="sch-mono">${esc(rid)}</span><div>${esc(trim(L.note))}</div>
+          <div class="brg-eff">→ the row stays in Wings Ahead, unowned by this store</div></li>`,
+        foot: "The next cross-check will show that row as an <b>fdms-stamped row this store's ledger does "
+          + "not know</b> — an identity note, never a proposal back into FDMS.",
+      });
+      if (!go) return;
+      S().remove("bridgePush", rid);
+      logAct({ act: "push-forget", rid, oid: trim(L.oid), group: trim(L.group), uid: trim(L.uid),
+        ord: posInt(L.ord, 1), seq: posInt(L.seq, 1), student: trim(L.student), evId: trim(L.evId),
+        what: "stopped tracking " + rid + " — the Wings Ahead row was not touched",
+        fields: rowFields(isObj(L.sent) ? L.sent : null, null),
+        effect: "nothing crossed the wire", waHandle: waHandleOf(trim(L.group), L.sent),
+        waBefore: isObj(L.sent) ? L.sent : null, waAfter: null, verdict: trim(L.verdict) });
+    } else if (act === "repush") {
+      ledgerPut({ rid, state: "", sent: null, hold: "", clearTomb: true,
+        note: "cleared by hand — the next push re-creates this row and clears the tombstone Wings Ahead "
+          + "is holding on it", at: new Date().toISOString() });
+    } else {
+      ledgerPut({ rid, hold: "", note: "cleared by hand — the queue may try this identity again",
+        at: new Date().toISOString() });
+    }
+    plan();
+    render(el);
+  }
+
+  /* ── THE LIVE PULL — the same wa-export-v1, a different carrier ─────────── */
+  async function doPull(el) {
+    if (!bridgeConfigured()) {
+      ui.error = "the Wings Ahead bridge is not configured on this device — open ⚙ and paste the project "
+        + "URL, the anon key and the bridge token.";
+      render(el);
+      return;
+    }
+    ui.pulling = true;
+    ui.error = "";
+    render(el);
+    const r = await wirePull();
+    ui.pulling = false;
+    if (!r.ok) {
+      if (r.kind === "revoked") { wst.kind = "revoked"; wst.why = r.why; wst.since = nowHM(); }
+      ui.error = r.why;
+      chipPaint();
+      render(el);
+      return;
+    }
+    clearAll();
+    ui.src = "live";
+    ui.parsed = r.parsed;
+    ui.fileName = "";
+    recompute();
+    plan();
+    chipPaint();
+    render(el);
+  }
+
+  /* ══ ⚙ THE BRIDGE SETTINGS — CUSTODY, WRITTEN AS A DIALOG (design E.1) ════
+     Four values in the SYNCED store config under one key, `config.bridge`:
+         { url, anon, token, live, configured_at }
+     WHY SYNCED, AND WHAT THAT COSTS, said in the dialog and not only here: the
+     config rides the fdms-data snapshot to the owner's other devices —
+     ciphertext whenever the sync passphrase is armed, plaintext in a private
+     repo when it is not. The blast radius of the credential is the SCOPED
+     bridge role: it reads the roster and the records and writes flight rows the
+     bridge itself owns. It cannot read one login token, cannot delete a person,
+     cannot touch proposals or settings. Revoking it in Wings Ahead closes every
+     lane at once, which is the whole reason the role is scoped.
+     THE TOKEN IS NEVER RENDERED BACK. The field is type=password and always
+     opens EMPTY; the status line says «set · 28/08» and nothing more. What is
+     not drawn cannot be read off a shoulder, copied out of a DOM dump, or
+     screenshotted into a chat. «Forget» wipes it store-wide — it syncs away
+     too, and the dialog says so before it does it. */
+  let cfgBusy = false;
+  function settingsPop() {
+    return new Promise((resolve) => {
+      const doc = W.document;
+      if (cfgBusy || !doc || !doc.body) { resolve(false); return; }
+      cfgBusy = true;
+      const c = bridgeCfg() || {};
+      const hasTok = !!trim(c.token);
+      const veil = doc.createElement("div");
+      veil.className = "ed-pop brg-pop";
+      veil.innerHTML = `<div class="ed-box brg-box brg-cfgbox" role="dialog" aria-modal="true"
+          aria-label="Wings Ahead bridge settings">
+        <div class="ed-ico" aria-hidden="true">⚚</div>
+        <h3>Wings Ahead bridge</h3>
+        <p class="hint">Two doors, both <b>POST</b>, the credential inside the request body:
+          <code>rpc/bridge_pull</code> reads the export, <code>rpc/bridge_push</code> writes the flight
+          rows this bridge owns. The token is minted <b>once</b> in Wings Ahead (Admin → People → Bridge →
+          Mint) and shown there exactly once — the database keeps only a digest and cannot echo it back.</p>
+        <label class="brg-cfgl">Project URL</label>
+        <input class="brg-cfgin" id="brg-url" placeholder="https://&lt;project&gt;.supabase.co"
+          value="${esc(trim(c.url))}" autocomplete="off" spellcheck="false">
+        <label class="brg-cfgl">Anon key <span class="sch-nd">(a public value — it travels in backups)</span></label>
+        <input class="brg-cfgin" id="brg-anon" value="${esc(trim(c.anon))}" autocomplete="off" spellcheck="false">
+        <label class="brg-cfgl">Bridge token
+          <span class="sch-nd">${hasTok ? "· set " + esc(dmy(trim(c.configured_at))) : "· not set"}</span></label>
+        <input class="brg-cfgin" id="brg-tok" type="password" autocomplete="new-password"
+          placeholder="${hasTok ? "•••••••• — leave empty to keep the one already stored" : "paste it once; it is never shown again"}">
+        <label class="brg-cfgchk"><input type="checkbox" id="brg-live"${c.live ? " checked" : ""}>
+          <span><b>Live</b> — a flight typed in the Training log crosses by itself, ${AUTO_MS / 1000} s
+          after the last change. With this off, nothing ever leaves except from <b>✈ Push now</b>.</span></label>
+        <p class="hint"><b>Where this token lives, and what that means.</b> It is stored in this browser and
+          it <b>syncs</b> to your other devices with the rest of the store — ciphertext whenever the sync
+          passphrase is armed, plaintext in your private repo when it is not. Arming the passphrase is the
+          difference, and it is worth arming: with this key the <code>fdms-data</code> repo stops being a
+          copy of FDMS and becomes a <b>live read of Wings Ahead and a write lane into it</b>. What the
+          credential can do is bounded on purpose — it reads the roster and the records and writes the
+          flight rows the bridge itself owns; it cannot read one login token, delete a person, or touch
+          proposals, settings or evaluations. <b>⭳ Export strips it</b> and an <b>⭱ Import never restores
+          it</b>: the backup file wanders, so the credential does not travel in it.</p>
+        <p class="hint" id="brg-cfgst"></p>
+        <div class="ed-row">
+          <button type="button" class="sch-tbtn primary" data-c="save">✔ Save</button>
+          <button type="button" class="sch-tbtn" data-c="test">⟳ Test</button>
+          ${hasTok ? `<button type="button" class="sch-tbtn danger" data-c="forget">✕ Forget the token</button>` : ""}
+          <button type="button" class="sch-tbtn" data-c="cancel">↩ Close</button>
+        </div>
+      </div>`;
+      let finished = false;
+      const done = (v) => {
+        if (finished) return;
+        finished = true;
+        doc.removeEventListener("keydown", onKey, true);
+        cfgBusy = false;
+        if (veil.parentNode) veil.remove();
+        resolve(v);
+      };
+      function onKey(e) {
+        if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); done(false); }
+      }
+      const st = (m) => { const n = veil.querySelector("#brg-cfgst"); if (n) n.textContent = m; };
+      const val = (id) => { const n = veil.querySelector(id); return n ? trim(n.value) : ""; };
+      function save() {
+        const tok = val("#brg-tok");
+        const patch = { url: val("#brg-url"), anon: val("#brg-anon"),
+          live: !!(veil.querySelector("#brg-live") || {}).checked,
+          configured_at: trim(c.configured_at) || todayOf() };
+        /* AN EMPTY FIELD MEANS «KEEP», NEVER «CLEAR». The field is never
+           rendered back, so an empty box is the normal state of a configured
+           bridge — reading it as a clear would delete the credential every time
+           the developer flipped the Live switch. Clearing is «Forget», which
+           says what it does and asks first. */
+        patch.token = tok || trim(c.token);
+        if (tok) patch.configured_at = todayOf();
+        if (!S().setConfig({ bridge: patch })) { st("the edit lock refused the write"); return false; }
+        return true;
+      }
+      veil.addEventListener("click", async (e) => {
+        if (e.target === veil || e.target.closest('[data-c="cancel"]')) { done(false); return; }
+        if (e.target.closest('[data-c="save"]')) { if (save()) done(true); return; }
+        if (e.target.closest('[data-c="test"]')) {
+          if (!save()) return;
+          st("testing…");
+          const r = await wirePull();
+          if (!r.ok) { st("✕ " + r.why); return; }
+          st("✓ connected — " + r.parsed.people.length + " people · " + r.parsed.records.length
+            + " records · " + r.parsed.tombstones.length + " tombstone"
+            + (r.parsed.tombstones.length === 1 ? "" : "s") + " (export-equivalent read)");
+          return;
+        }
+        if (e.target.closest('[data-c="forget"]')) {
+          const cur = bridgeCfg() || {};
+          const next = Object.assign({}, cur);
+          delete next.token;
+          next.live = false;
+          if (!S().setConfig({ bridge: next })) { st("the edit lock refused the write"); return; }
+          st("the token is gone from this store — and it syncs away from your other devices at the next "
+            + "push. Mint a new one in Wings Ahead when you need the lane again.");
+          wst.kind = ""; wst.why = "";
+          done(true);
+        }
+      });
+      doc.addEventListener("keydown", onKey, true);
+      doc.body.appendChild(veil);
+      const f = veil.querySelector("#brg-url");
+      if (f) setTimeout(() => f.focus(), 50);
+    });
+  }
+
+  async function openSettings(el) {
+    if (!editOn()) { refuseWrite("change the Wings Ahead bridge settings"); return; }
+    await settingsPop();
+    plan();
+    chipPaint();
+    render(el);
+  }
+
+  /* ══ THE PUSH PANEL — what this store owes Wings Ahead, right now ═════════ */
+  function pushPanel() {
+    const p = ui.plan || plan();
+    if (!p) return "";
+    const cfg = bridgeCfg() || {};
+    const on = bridgeConfigured();
+    const c = p.counts;
+    const state = wst.kind === "revoked"
+      ? `<div class="sch-consqban is-pd"><b>The bridge credential is not accepted</b> — ${esc(wst.why)}</div>`
+      : wst.kind
+        ? `<div class="sch-consqban is-pd"><b>${c.queued} not pushed</b> — ${esc(wst.why)}
+           <br>Nothing is lost: what this store owes is <b>recomputed</b>, never stored, so it stays owed
+           until it lands.</div>`
+        : "";
+    return `
+      <section class="panel sch-panel">
+        <div class="sch-h"><h2>Push to Wings Ahead
+          <span class="count">${on ? (cfg.live ? "live · " + (AUTO_MS / 1000) + " s debounce" : "manual") : "not configured"}</span></h2>
+          <span class="sch-spacer"></span>
+          <button type="button" class="sch-btn primary" data-brgw="pushnow" ${c.queued && on ? "" : "disabled"}
+            title="${esc(TIP.push)}">✈ Push now${c.queued ? " (" + c.queued + ")" : ""}</button>
+          <button type="button" class="sch-btn" data-brgw="cfg" title="${esc(TIP.cfg)}">⚚ ⚙ Settings</button>
+        </div>
+        <p class="sch-hint">The queue is <b>derived, never stored</b>: it is recomputed from the training
+          log, the push ledger and Wings Ahead's own tombstones every time this pane paints. So being
+          offline means <b>waiting</b> and never losing, a retry costs nothing, and a failed push is simply
+          still owed. Only <b>flights and F/S</b> cross, only rows <b>this bridge owns</b>, and
+          <b>never</b> a grade, a duration or an NG flag.</p>
+        ${editOn() ? "" : `<div class="sch-consqban"><b>View-only</b> — nothing crosses this wire from this
+          device, on any timer and from any button, until <b>✎ Editor mode</b> is on. Not tidiness: the
+          ledger that records what was written goes through the same lock, and a write this store could
+          not record is a write nobody could take back.</div>`}
+        ${on ? "" : `<div class="sch-consqban"><b>Not configured</b> — open <b>⚚ ⚙ Settings</b> (with ✎ Editor
+          mode on) and paste the project URL, the anon key and the bridge token you minted in Wings Ahead.</div>`}
+        ${state}
+        ${ui.pushMsg ? `<div class="sch-consqban ${ui.pushBad ? "is-pd" : "is-ok"}">${esc(ui.pushMsg)}</div>` : ""}
+        <div class="brg-chips">
+          <span class="sch-badge brg-tone-accent">Queued <b>${c.queued}</b></span>
+          <span class="sch-badge brg-tone-warn">Pending removals <b>${c.removals + pendingCompensations().length}</b></span>
+          <span class="sch-badge brg-tone-bad">Held <b>${c.held}</b></span>
+          <span class="sch-badge brg-tone-muted">Not crossing <b>${c.blocked}</b></span>
+          <span class="sch-badge">Ledger <b>${c.ledger}</b></span>
+        </div>
+        ${verdictPanel()}
+        ${queueTable(p)}
+        ${heldTable(p)}
+        ${blockedTable(p)}
+      </section>`;
+  }
+
+  /* HOW MANY LINES A LIST DRAWS BEFORE IT SAYS «and N more». It is the wire's
+     own chunk size, deliberately: one screenful of this table is one call, and a
+     number the reader can already see somewhere else is easier to trust than a
+     round one invented for the layout. A first push on a real store owes some
+     two thousand flights — drawing them all is a megabyte of DOM nobody reads,
+     and pretending there are only 200 would be the lie this pane exists to
+     avoid. So the cap is stated, with the count it hides. */
+  const DRAW_MAX = PUSH_MAX_OPS;
+  const moreLine = (n, what) => (n <= DRAW_MAX ? ""
+    : `<p class="sch-hint"><b>${n - DRAW_MAX}</b> more ${what} ${n - DRAW_MAX === 1 ? "is" : "are"}
+       not drawn here — the first <b>${DRAW_MAX}</b> are, which is also exactly how many ride in one
+       call to Wings Ahead. Nothing is hidden from the act itself: every one of the <b>${n}</b> is
+       counted, and every one of them goes.</p>`);
+
+  function queueTable(p) {
+    if (!p.queued.length) {
+      return `<div class="sch-ph"><strong>Nothing is owed.</strong>
+        <p>Every qualifying flight in the training log stands in Wings Ahead exactly as it stands here.</p></div>`;
+    }
+    const rows = p.queued.slice(0, DRAW_MAX).map((e) => `<tr>
+      <td><span class="sch-badge brg-tone-accent">${esc(e.kind === "create" ? "create"
+    : e.kind === "move" ? "move" : "update")}</span></td>
+      <td>${esc(e.line.who)}${e.line.student ? ` <span class="sch-code">${esc(e.line.student)}</span>` : ""}</td>
+      <td class="sch-mono">${esc(e.line.uid)}</td>
+      <td class="sch-mono">${esc(dmy(e.line.date))}</td>
+      <td>${esc(waHandleOf(e.line.group, e.op.row))}
+        <div class="brg-fchgs">${fchg(rowFields(e.op.prev, e.op.row), false)}</div></td>
+      <td class="sch-mono brg-rid">${esc(e.line.rid)}</td></tr>`).join("");
+    return `<div class="sch-scroll"><table class="sch-tbl brg-tbl">
+      <thead><tr><th>Act</th><th>Student</th><th>Node</th><th>Date</th><th>The Wings Ahead row</th>
+        <th>Row identity</th></tr></thead><tbody>${rows}</tbody></table></div>
+      ${moreLine(p.queued.length, "queued flight" + (p.queued.length - DRAW_MAX === 1 ? "" : "s"))}`;
+  }
+
+  const HOLD_WORD = {
+    conflict: "Wings Ahead refused the claim", student: "a student's row stands there",
+    admin: "the admin took the row over", missing: "the admin deleted the row",
+    tombstoned: "tombstoned in Wings Ahead", refused: "refused", removed: "removed · tombstoned",
+    reopened: "removal taken back", compensate: "an undo is waiting",
+  };
+  function heldTable(p) {
+    /* a «compensate» identity is not listed HERE: it has a home of its own in
+       Pending removals, where the undo it owes is confirmed. One line, one
+       place — a control that appears twice is a control somebody clicks twice. */
+    const held = arr(p.held).filter((h) => h.hold !== "compensate");
+    if (!held.length) return "";
+    const rows = held.map((h) => {
+      const rid = h.line.rid;
+      const canRepush = h.hold === "removed" || h.hold === "reopened" || h.hold === "tombstoned";
+      return `<tr>
+        <td><span class="sch-badge brg-tone-bad">${esc(HOLD_WORD[h.hold] || h.hold)}</span></td>
+        <td>${esc(h.line.who)}</td>
+        <td class="sch-mono">${esc(h.line.uid)}</td>
+        <td>${esc(h.note || "")}${h.verdict ? `<div class="sch-nd">Wings Ahead answered «${esc(h.verdict)}»</div>` : ""}</td>
+        <td class="sch-mono brg-rid">${esc(rid)}</td>
+        <td>${canRepush
+    ? `<button type="button" class="sch-mini" data-brgw="hold" data-rid="${esc(rid)}" data-a="repush"
+             title="${esc(TIP.repush)}">↩ Re-push (clears the tombstone)</button>`
+    : `<button type="button" class="sch-mini" data-brgw="hold" data-rid="${esc(rid)}" data-a="clear"
+             title="${esc(TIP.clear)}">⟳ Clear the hold</button>`}
+          <button type="button" class="sch-mini" data-brgw="hold" data-rid="${esc(rid)}" data-a="forget"
+            title="${esc(TIP.forget)}">✕ Stop tracking</button></td></tr>`;
+    }).join("");
+    return `<p class="sch-hint"><b>Held — waiting for a human.</b> Wings Ahead answered these, and every
+        answer said the same thing in a different way: <b>nothing was written</b>. A held identity is
+        <b>off the queue</b> on purpose — an automatic retry would re-send the same refused claim for
+        ever — and the way back is one explicit click, which is what «recovery is explicit» means.</p>
+      <div class="sch-scroll"><table class="sch-tbl brg-tbl">
+        <thead><tr><th>Why</th><th>Student</th><th>Node</th><th>What Wings Ahead said</th>
+          <th>Row identity</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  }
+
+  function blockedTable(p) {
+    const b = arr(p.blocked);
+    if (!b.length) return "";
+    if (!ui.blockOpen) {
+      return `<p class="sch-hint"><b>${b.length}</b> training-log event${b.length === 1 ? " does" : "s do"}
+        not cross this lane, each for a stated reason —
+        <button type="button" class="sch-btn" data-brg="blocks">▸ Show</button></p>`;
+    }
+    const rows = b.slice(0, DRAW_MAX).map((x) => `<tr>
+      <td>${esc(x.who || x.student)}</td>
+      <td class="sch-mono">${esc(x.uid)}</td>
+      <td class="sch-mono">${esc(dmy(x.date))}</td>
+      <td>${esc(x.why)}</td>
+      <td class="sch-mono sch-nd">${esc(x.evId)}</td></tr>`).join("");
+    return `<p class="sch-hint"><b>${b.length}</b> training-log event${b.length === 1 ? " does" : "s do"}
+        not cross this lane — <button type="button" class="sch-btn" data-brg="blocks">▾ Hide</button>
+        <br>A silent exclusion is the same lie as a clean-looking empty report, so each one is listed with
+        the sentence that refused it.</p>
+      <div class="sch-scroll"><table class="sch-tbl brg-tbl">
+        <thead><tr><th>Student</th><th>Node</th><th>Date</th><th>Why it does not cross</th>
+          <th>Event</th></tr></thead><tbody>${rows}</tbody></table></div>
+      ${moreLine(b.length, "event" + (b.length - DRAW_MAX === 1 ? "" : "s"))}`;
+  }
+
+  /* WHAT THE LAST PUSH WAS ANSWERED — folded into the report's own vocabulary,
+     because a verdict the developer has to learn a second language for is a
+     verdict he will not read. */
+  function verdictPanel() {
+    const v = arr(ui.verdicts);
+    if (!v.length) return "";
+    const rows = v.map((x) => {
+      const k = CLASS_BY_ID[x.cls] || { label: x.cls, tone: "muted" };
+      return `<tr>
+        <td><span class="sch-badge brg-tone-${esc(k.tone)}">${esc(x.verdict)}</span></td>
+        <td><span class="sch-badge brg-tone-${esc(k.tone)}">${esc(k.label)}</span></td>
+        <td>${esc(x.who)}</td>
+        <td class="sch-mono">${esc(x.uid)} · ${esc(dmy(x.date))}</td>
+        <td>${esc(x.say)}${x.waRow ? `<div class="brg-fchgs">${fchg(rowFields(null, x.waRow), false)}</div>` : ""}</td>
+      </tr>`;
+    }).join("");
+    return `<p class="sch-hint"><b>The last push, verdict by verdict</b> — Wings Ahead answers each
+        operation in one of eleven words, and each one is folded into the report class it belongs to.
+        <b>exists_fdms</b> hands back <b>no row at all</b>, deliberately: describing a bridge row is what
+        authorises replacing it, so the refusal names only the handle you sent.</p>
+      <div class="sch-scroll"><table class="sch-tbl brg-tbl">
+        <thead><tr><th>Verdict</th><th>Report class</th><th>Student</th><th>Flight</th>
+          <th>What it means</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  }
+
+  /* ══ PENDING REMOVALS — never automatic, each with its reason ═════════════ */
+  function removalsPanel() {
+    const p = ui.plan || plan();
+    if (!p) return "";
+    const rems = arr(p.removals);
+    const comps = pendingCompensations();
+    const n = rems.length + comps.length;
+    if (!n) return "";
+    const rows = rems.concat(comps).map((r) => `<tr>
+      <td><span class="sch-badge brg-tone-warn">${esc(r.op.op === "remove" ? "remove · " + trim(r.op.reason) : "undo")}</span></td>
+      <td>${esc(r.line.who || r.line.student)}${r.line.student ? ` <span class="sch-code">${esc(r.line.student)}</span>` : ""}</td>
+      <td class="sch-mono">${esc(r.line.uid)}</td>
+      <td class="sch-mono">${esc(dmy(r.line.date))}</td>
+      <td>${esc(r.why)}
+        <div class="sch-nd">${esc(waHandleOf(r.line.group, r.op.prev || r.op.row))}</div></td>
+      <td class="sch-mono brg-rid">${esc(r.line.rid)}</td>
+      <td><button type="button" class="sch-mini primary" data-brgw="rm" data-rid="${esc(r.line.rid)}"
+        title="${esc(TIP.rm)}">✔ Confirm</button></td></tr>`).join("");
+    return `
+      <section class="panel sch-panel">
+        <div class="sch-h"><h2>Pending removals <span class="count">${n} waiting on you</span></h2>
+          <span class="sch-spacer"></span>
+          <button type="button" class="sch-btn" data-brgw="rmall" title="${esc(TIP.rm)}">␥ Confirm all ${n}</button>
+        </div>
+        <p class="sch-hint"><b>A removal never crosses by itself.</b> Not on the debounce, not on a retry,
+          not on any timer — <b>deletion is never accidental, on the wire as at home</b> (ruling #2).
+          Each line names the reason it is owed, and confirming it removes the Wings Ahead row and lays a
+          <b>tombstone</b> on the identity, which is what stops the queue re-creating it. Bringing one back
+          afterwards is a deliberate re-push that clears the tombstone.</p>
+        <div class="sch-scroll"><table class="sch-tbl brg-tbl">
+          <thead><tr><th>Act</th><th>Student</th><th>Node</th><th>Date</th><th>Why</th>
+            <th>Row identity</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
+      </section>`;
+  }
+
   /* ── render ────────────────────────────────────────────────────────────── */
 
   function render(el) {
-    el.innerHTML = head() + (ui.report ? body(ui.report) : changeLogPanel());
+    plan();
+    el.innerHTML = head() + (ui.report ? body(ui.report)
+      : (pushPanel() + removalsPanel() + changeLogPanel()));
     if (ui.report) { paintBatch(el); paintRows(el); }
+    chipPaint();
     /* the write controls were just re-created, so the edit lock's veneer must
        run over them again — otherwise a freshly painted ✔ Apply would look
        live on a view-only device until the next mutation happened to trigger
@@ -2365,22 +4244,36 @@
 
   function head() {
     const r = ui.report;
+    const live = ui.src === "live";
+    const on = bridgeConfigured();
     return `
       <section class="panel sch-panel">
-        <div class="sch-h"><h2>Bridge — cross-check with Wings Ahead
-          <span class="count">writes on your confirm</span></h2>
+        <div class="sch-h"><h2>Bridge — the two-way with Wings Ahead
+          <span class="count">both directions write on your confirm</span></h2>
           <span class="sch-spacer"></span>
-          <button type="button" class="sch-btn primary" data-brg="pick">⭱ Choose a Wings Ahead export…</button>
+          <span class="brg-src" role="group" aria-label="Where the cross-check reads Wings Ahead from">
+            <button type="button" class="sch-btn${live ? "" : " primary"}" data-brg="src" data-v="file"
+              title="${esc(TIP.srcFile)}">📄 File</button>
+            <button type="button" class="sch-btn${live ? " primary" : ""}" data-brg="src" data-v="live"
+              title="${esc(TIP.srcLive)}">⟳ Wings Ahead live</button>
+          </span>
+          ${live
+    ? `<button type="button" class="sch-btn primary" data-brg="pull" ${on && !ui.pulling ? "" : "disabled"}
+              title="${esc(TIP.pull)}">${ui.pulling ? "⟳ Reading…" : (r ? "⟳ Refresh" : "⟳ Read Wings Ahead")}</button>`
+    : `<button type="button" class="sch-btn primary" data-brg="pick">⭱ Choose a Wings Ahead export…</button>`}
           ${r ? `<button type="button" class="sch-btn" data-brg="print">🖨 Print</button>
                  <button type="button" class="sch-btn" data-brg="clear">✕ Clear</button>` : ""}
           <input type="file" accept="application/json,.json" class="brg-file" hidden>
         </div>
-        <p class="sch-hint">This pane <b>reads</b> one <code>${esc(WA_SCHEMA)}</code> file you choose from
-          disk and compares it with the local store. It never writes Wings Ahead, the repository or
-          <code>localStorage</code>. Since Phase 3 a line you <b>confirm</b> is written into the
-          <b>FDMS training log</b> — one explicit act at a time, with ✎ Editor mode on, recorded in the
-          change log below with <b>↺ Undo</b>. The report and the file it came from carry
-          <b>real names</b>: they stay on this machine and are never committed (ruling #7).</p>
+        <p class="sch-hint">The cross-check reads <b>one <code>${esc(WA_SCHEMA)}</code> payload</b> — a file
+          you choose from disk, or the same payload straight off the wire — and compares it with the local
+          store. <b>The carrier changes nothing downstream</b>: the parser, the nine classes, the pairing
+          and the confirm dialog are the same code either way, and the file stays the fallback for a closed
+          network. A line you <b>confirm</b> is written into the <b>FDMS training log</b>; a flight you type
+          in the Training log is <b>pushed to Wings Ahead</b> from the panel below — one explicit act at a
+          time, with ✎ Editor mode on, both recorded in the change log with <b>↺ Undo</b>. The report and
+          the payload it came from carry <b>real names</b>: they stay on this machine, they are never
+          committed, and they die with the tab (ruling #7).</p>
         ${ui.error ? `<div class="sch-consqban is-pd"><b>Not read</b> — ${esc(ui.error)}</div>` : ""}
         ${ui.fileName && !ui.error ? `<p class="sch-hint">Read from <span class="sch-code">${esc(ui.fileName)}</span>
           — in memory only.</p>` : ""}
@@ -2411,7 +4304,8 @@
   }
 
   function body(r) {
-    return summary(r) + identityPanel(r) + rowsPanel(r) + changeLogPanel() + legend();
+    return summary(r) + identityPanel(r) + rowsPanel(r)
+      + pushPanel() + removalsPanel() + changeLogPanel() + legend();
   }
 
   function summary(r) {
@@ -2748,13 +4642,26 @@
             report's own refusals and are never appliable.</p>
         </div>
         <div>
-          <p class="sch-hint"><b>Deliberately not in this slice</b></p>
-          <p class="sch-hint">No write to <b>Wings Ahead</b>, in any direction, ever from here. No delete —
-            on either side. No schema change anywhere. No credential and no network call: the transport is
-            a file you chose. No cloud, no backup, no download. Ground lessons and exams, the eight
-            checkrides, the prescribed solos and the FAIL / NFS / SMS events are <b>reported and not
-            written</b> — each waits for a slice of its own. Duration is carried and shown but never
-            compared, because FDMS has no field for it until slice 6 (ruling #8).</p>
+          <p class="sch-hint"><b>What the push lane does — and what it never does</b></p>
+          <p class="sch-hint">It writes <b>flight and F/S rows Wings Ahead stamps «fdms»</b>, for students
+            matched by <b>OID</b>, and nothing else anywhere. It never writes a <b>grade</b> (a sortie is a
+            word here, not a number — R2), never a <b>duration</b> (FDMS has no field until slice 6 —
+            ruling #8), never <b>NG</b> (this system has no such state to assert, and NG removes a grade),
+            never a ground section, an evaluation, a solo or a proposal. It never overwrites a row a
+            <b>human</b> typed: Wings Ahead answers <code>exists_student</code> / <code>exists_admin</code>
+            and returns both versions for the report. And it never <b>deletes</b> by itself — a removal
+            waits in Pending removals, names its reason, and lays a tombstone so the queue cannot undo
+            your undo.</p>
+          <p class="sch-hint"><b>The echo rule</b> — an FDMS event the bridge wrote from Wings Ahead is
+            never pushed back, and a Wings Ahead row this bridge wrote is never proposed back into FDMS.
+            Those two sentences are the loop-breaker, and they are absolute in both directions.</p>
+          <p class="sch-hint"><b>Deliberately not in this lane</b></p>
+          <p class="sch-hint">No delete of anything a person typed, on either side. No schema change
+            anywhere. <b>No background polling</b>: the report carries real names, and a poller would hold
+            them in memory behind your back — every read and every retry here is an act you took. No
+            ground push. Ground lessons and exams, the eight checkrides, the prescribed solos and the
+            FAIL / NFS / SMS events are <b>reported and not written</b> in either direction — each waits
+            for a slice of its own.</p>
           <p class="sch-hint"><b>What a written event carries</b> —
             <span class="sch-code">id wa:…</span>, <span class="sch-code">origin wa</span> and a
             <span class="sch-code">bridge</span> block holding the row identity and what Wings Ahead said.
@@ -2787,5 +4694,37 @@
        from a [data-brgw] control in § ③. */
     APPLY_GROUPS, LAG_FLOOR, ADOPTABLE, ORIGIN,
     bridgeEvId, resultOf, isWaWritten, plannedEvent, buildEvent,
+    /* PHASE 4/5 — the push lane's pure half, on the same terms as Phase 3's:
+       the fixtures assert on the very OPERATIONS the wire would get and on the
+       very LEDGER row a verdict produces, never on a paraphrase of either.
+       Nothing here touches the store or the network — planNow/runPush/wireCall,
+       which do, are reached only from a [data-brgw] control past the lock. */
+    WA_BRIDGE_SCHEMA, PUSH_OPS, PUSH_REASONS, PUSH_VERDICTS,
+    PUSH_MAX_OPS, RID_MAX, SEQ_MAX, PUSH_ROW_KEYS, PUSH_MISSION,
+    codeTrack, pushBlockOf, planPush, foldVerdict, sameWaRow, chunkOps, echoOf,
+    undoPushPlan, rowFields, waHandleOf,
   };
+
+  /* ══ THE LANE ARMS ITSELF AT LOAD, NOT AT THE FIRST VISIT ════════════════
+     The header chip and the 5-second debounce are the push lane's honesty
+     surface, and a surface that only exists once you have opened the pane it
+     talks about is not one: a flight typed in the Training log has to be
+     counted the moment it is typed, whichever tab is on screen. So the store
+     subscription is wired at load — it reads, it counts and it paints a chip,
+     and it sends nothing that the Live switch has not armed and the edit lock
+     has not allowed.
+     Guarded on `document` because the fixtures require() this file with
+     `global.window = global` and no DOM at all; guarded on SchedStore because
+     the offline build inlines the modules in app/index.html's own order and a
+     module must never assume the one below it has run. */
+  if (W.document && W.document.addEventListener) {
+    const boot = () => {
+      if (!W.SchedStore || !W.SchedStore.ready) return;
+      try { W.SchedStore.ready().then(() => { wireStore(); }, () => {}); }
+      catch (e) { /* a store that cannot boot is the store's own report, not ours */ }
+    };
+    if (W.document.readyState === "loading") {
+      W.document.addEventListener("DOMContentLoaded", boot, { once: true });
+    } else { boot(); }
+  }
 })();
