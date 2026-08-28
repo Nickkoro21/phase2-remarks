@@ -719,10 +719,23 @@ console.log("\n=== PROBE 11k — adopt the row where it stands, or re-create it 
 {
   const sent = { date: "2026-08-12", track: "contact", sortie: "C4302", seq: 1, kind: "syllabus",
     instructor: "AIRMAN", instructor_oid: "R-9001", grade: null, ng: false, mission: "complete" };
+  /* P45-FDMSc — THE REFUSAL NOW HAS AN INSTANT, and every read below is dated
+     against it. `at` is what foldVerdict writes on every folded verdict; the
+     reads are stamped AFTER it unless a block is deliberately proving the
+     stale case. */
+  const REFUSED = "2026-08-20T10:00:00.000Z";
+  const AFTER = "2026-08-20T10:05:00.000Z";
+  const BEFORE = "2026-08-20T09:00:00.000Z";
   const L = { rid: "S-9001 ∷ flights ∷ s:C4302 ∷ 1", oid: "S-9001", group: "flights", uid: "s:C4302",
-    ord: 1, seq: 1, evId: "TV-K1", student: "ZZ-1", state: "", hold: "missing", sent };
-  const wa = (rows) => ({ people: [{ id: "P-1", external_oid: "S-9001", role: "student", active: true }],
-    records: [{ student_id: "P-1", data: { flights: rows } }] });
+    ord: 1, seq: 1, evId: "TV-K1", student: "ZZ-1", state: "", hold: "missing", sent,
+    verdict: "missing", at: REFUSED };
+  /* a read, DATED: `taken_at` is this browser's own clock (parseExport stamps
+     it), `exported_at` is Wings Ahead's. Both default to «after the refusal»,
+     which is the state in which the reconciliation is allowed to speak. */
+  const wa = (rows, o) => Object.assign({
+    people: [{ id: "P-1", external_oid: "S-9001", role: "student", active: true }],
+    records: [{ student_id: "P-1", data: { flights: rows } }],
+    taken_at: AFTER, exported_at: AFTER, auditTail: [] }, o || {});
   const row = (o) => Object.assign({ sortie: "C4302", date: "2026-08-12", seq: 1, kind: "syllabus",
     track: "contact", instructor: "AIRMAN", instructor_oid: "R-9001", mission: "complete",
     entered_by: "fdms" }, o || {});
@@ -730,8 +743,8 @@ console.log("\n=== PROBE 11k — adopt the row where it stands, or re-create it 
   /* NO READ IN MEMORY — and therefore no act that could create a second row */
   const blind = B.missingLook(L, null, [L]);
   ok("with no read of Wings Ahead in memory, nothing is offered", !blind.have && !blind.adopt);
-  ok("and the sentence says why the ledger cannot answer it alone",
-    /read Wings Ahead first/.test(blind.why), blind.why);
+  ok("and the sentence names BOTH ways to get one — the live door and the file hatch",
+    /⟳ Read Wings Ahead/.test(blind.why) && /📄 File/.test(blind.why), blind.why);
 
   /* THE MOVED CASE — one fdms row of that sortie, standing elsewhere */
   const moved = B.missingLook(L, wa([row({ date: "2026-08-19" })]), [L]);
@@ -743,10 +756,12 @@ console.log("\n=== PROBE 11k — adopt the row where it stands, or re-create it 
   ok("and saying that adopting writes nothing to Wings Ahead",
     /Nothing is written to Wings Ahead by adopting/.test(moved.why), moved.why);
 
-  /* THE DELETED CASE — nothing of ours anywhere on that record */
+  /* THE DELETED CASE — nothing of ours anywhere on that record, in a read that
+     is NEWER than the refusal it is explaining */
   const gone = B.missingLook(L, wa([]), [L]);
   eq("a read that finds nothing offers no adoption", gone.adopt, null);
   ok("and says the read CONFIRMS the deleted case", /DELETED case/.test(gone.why), gone.why);
+  ok("and only THEN is the re-creation armed", gone.recreate === true, gone.why);
   const humans = B.missingLook(L, wa([row({ date: "2026-08-19", entered_by: "" })]), [L]);
   eq("a row a human typed is never adopted — the bridge owns only its own rows",
     humans.adopt, null);
@@ -783,6 +798,137 @@ console.log("\n=== PROBE 11k — adopt the row where it stands, or re-create it 
   eq("and an F/S identity is never adopted out of the flights section",
     B.missingLook(Object.assign({}, L, { group: "fs" }), wa([row({ date: "2026-08-19" })]), [L]).adopt,
     null);
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     11k·2 — THE AGE OF THE READ (P45-FDMSc, verify item 5a)
+     ══════════════════════════════════════════════════════════════════════════
+     The verify walked the pane's own primary offered act into a duplicate, and
+     the read that did it was not exotic — it was the ordinary one: pull to
+     build the report, push, the admin edits a date, push again. `missingLook`
+     consulted the read taken BEFORE the push and stated, as a fact, that the
+     row had been deleted. These blocks assert on the three tests that now
+     stand between that read and the ⊕ button. */
+  console.log("\n=== PROBE 11k·2 — a read older than the refusal arms nothing ===");
+
+  /* ① THE ARRIVAL TEST — the verifier's exact sequence, dated */
+  const stale = B.missingLook(L, wa([], { taken_at: BEFORE, exported_at: BEFORE }), [L]);
+  eq("a read taken BEFORE the refusal does not confirm the deleted case", stale.recreate, false);
+  ok("and it says so in the words of the finding — this read is older than the refusal",
+    /OLDER THAN THE REFUSAL/.test(stale.why), stale.why);
+  /* both instants are printed in the READER's OWN frame, so the check he is
+     invited to make is between two values on his own clock — computed here the
+     same way rather than hard-coded, because a fixture pinned to UTC would pass
+     in London and fail in Larissa. */
+  const pad2 = (n) => String(n).padStart(2, "0");
+  const local = (iso) => {
+    const d = new Date(Date.parse(iso));
+    return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate())
+      + " " + pad2(d.getHours()) + ":" + pad2(d.getMinutes()) + ":" + pad2(d.getSeconds());
+  };
+  ok("naming BOTH instants, so a human can check the arithmetic instead of trusting it",
+    stale.why.indexOf(local(BEFORE)) >= 0 && stale.why.indexOf(local(REFUSED)) >= 0,
+    stale.why);
+  ok("and they are two DIFFERENT moments, in one frame, so the order is readable",
+    local(BEFORE) !== local(REFUSED), local(BEFORE) + " vs " + local(REFUSED));
+  ok("and naming BOTH refresh routes — the live door AND the file hatch nothing used to mention",
+    /⟳ Read Wings Ahead/.test(stale.why) && /📄 File/.test(stale.why), stale.why);
+  ok("the DELETED-case sentence is never printed as a fact by a stale read",
+    !/the read confirms the DELETED case/.test(stale.why), stale.why);
+
+  /* the same read, same content, dated AFTER — and the button comes back */
+  eq("the identical read, taken after the refusal, does confirm it",
+    B.missingLook(L, wa([]), [L]).recreate, true);
+
+  /* ② A PAYLOAD LOADED NOW BUT GENERATED THEN — the file hatch's own trap */
+  const oldFile = B.missingLook(L, wa([], { taken_at: AFTER, exported_at: BEFORE }), [L]);
+  eq("a file opened now but EXPORTED before the refusal arms nothing", oldFile.recreate, false);
+  ok("and the sentence says loading an old export does not make it a new one",
+    /GENERATED BEFORE THE REFUSAL/.test(oldFile.why), oldFile.why);
+
+  /* ③ THE AUDIT PROOF — one clock, no arithmetic. Wings Ahead files every
+     operation, refusals included, and the export carries the last 200 with
+     their rid and verdict: a read that carries THIS refusal was generated
+     after it, and no cross-machine comparison is involved. */
+  const audited = B.missingLook(L, wa([], { exported_at: BEFORE,
+    auditTail: [{ at: AFTER, rid: L.rid, verdict: "missing", op: "upsert" }] }), [L]);
+  eq("a read whose own audit tail carries this refusal is fresh, whatever the clocks say",
+    audited.recreate, true);
+  eq("and it says which proof it used", audited.how, "audit");
+  ok("the sentence points at Wings Ahead's own audit trail",
+    /audit trail/.test(audited.why), audited.why);
+  eq("an audit row for ANOTHER identity proves nothing about this one",
+    B.missingLook(L, wa([], { exported_at: BEFORE,
+      auditTail: [{ at: AFTER, rid: "S-9002 ∷ flights ∷ s:C4302 ∷ 1", verdict: "missing" }] }),
+    [L]).recreate, false);
+  eq("nor does an audit row for this identity carrying a DIFFERENT verdict",
+    B.missingLook(L, wa([], { exported_at: BEFORE,
+      auditTail: [{ at: AFTER, rid: L.rid, verdict: "created" }] }), [L]).recreate, false);
+
+  /* ④ NO INSTANT AT ALL — a ledger row from before this round, or one an
+     ⭱ Import brought back without an `at`. Nothing can be proven, so nothing
+     is armed: the failure direction is «withhold the destructive act». */
+  eq("a held row with no timestamp of its own arms nothing",
+    B.missingLook(Object.assign({}, L, { at: "" }), wa([]), [L]).recreate, false);
+  eq("nor does a read with no timestamp of its own",
+    B.missingLook(L, wa([], { taken_at: "", exported_at: "" }), [L]).recreate, false);
+
+  /* ⑤ ⇄ ADOPT IS **NOT** GATED — the recorded judgement, asserted rather than
+     described: it writes the ledger and nothing else, so a stale read costs a
+     refusal and never a second row. It must still SAY that it is stale. */
+  const staleMoved = B.missingLook(L, wa([row({ date: "2026-08-19" })],
+    { taken_at: BEFORE, exported_at: BEFORE }), [L]);
+  ok("a stale read still offers the adoption — ledger-only, and its worst case is another refusal",
+    !!staleMoved.adopt, staleMoved.why);
+  ok("and it warns, in the same sentence, that the read is older than the refusal",
+    /OLDER THAN THE REFUSAL/.test(staleMoved.why), staleMoved.why);
+  ok("and says what a stale adoption can and cannot do",
+    /cannot make a second row/.test(staleMoved.why), staleMoved.why);
+
+  /* ⑥ AND readFresh IS ITS OWN JUDGEMENT, asserted directly */
+  const f1 = B.readFresh(L, wa([]));
+  eq("readFresh dates a live-shaped read after the refusal as fresh", f1.fresh, true);
+  eq("by the payload's own claim when there is no audit row", f1.how, "clock");
+  eq("readFresh needs a ledger row and a payload to say anything",
+    B.readFresh(null, wa([])).fresh, false);
+  eq("and it carries the two instants it compared, verbatim",
+    B.readFresh(L, wa([], { taken_at: BEFORE, exported_at: BEFORE })).refusedAt, REFUSED);
+
+  /* ⑦ AND THE STAMP IS PUT ON BY THE ONE FUNCTION EVERY CARRIER PASSES THROUGH
+     — parseExport, so the ⟳ live pull and the 📄 file input are dated by the
+     same clock the ledger is written with, and neither carrier can forget. */
+  const parsed = B.parseExport(JSON.stringify({ schema: "wa-export-v1",
+    exported_at: "2026-08-20T10:05:00.000Z", people: [], student_records: [] }));
+  ok("parseExport stamps the instant THIS tab took the payload in", !!parsed.taken_at, parsed.taken_at);
+  ok("and it is a real instant on this machine's clock, not the payload's",
+    isFinite(Date.parse(parsed.taken_at)) && Date.parse(parsed.taken_at) >= Date.parse("2026-01-01"),
+    parsed.taken_at);
+  eq("while the payload's own stamp is carried unchanged beside it",
+    parsed.exported_at, "2026-08-20T10:05:00.000Z");
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   11m — THE WIRE CALL IS BOUNDED IN TIME (P45-FDMSc, the verify's minor)
+   ══════════════════════════════════════════════════════════════════════════
+   A peer that accepts the connection and never answers left the chip at
+   «✈ WA · pushing…» for ever — `fetch` has no deadline of its own. The number
+   is a judgement about the far side's own budget, so it is exported and
+   asserted here rather than left as a literal nobody can see change. */
+console.log("\n=== PROBE 11m — the call has a deadline, and it is the far side's budget with margin ===");
+{
+  eq("the wire deadline is 20 s", B.WIRE_MS, 20000);
+  ok("which is the far side's own three-second statement budget several times over",
+    B.WIRE_MS > 3000 * 5, String(B.WIRE_MS));
+  ok("and it is short enough that a stalled call is a state and not an evening",
+    B.WIRE_MS <= 30000, String(B.WIRE_MS));
+  /* AND IT FOLDS INTO THE STATE THAT ALREADY EXISTS — `unreachable` stops the
+     run (a door that did not answer will not answer the next chunk either),
+     which is exactly the classification a transport failure already had. */
+  eq("a timed-out call stops the run, like every other door that did not answer",
+    B.wireFailKind({ ok: false, kind: "unreachable",
+      why: "Wings Ahead accepted the connection and then did not answer within 20 seconds" }), "stop");
+  eq("and it is NOT mistaken for the server's own statement timeout, which halves and retries",
+    B.wireFailKind({ ok: false, kind: "refused", code: "57014",
+      why: "canceling statement due to statement timeout" }), "toobig");
 }
 
 module.exports = true;

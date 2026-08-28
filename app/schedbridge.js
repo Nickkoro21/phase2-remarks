@@ -351,6 +351,17 @@
       marked,
       schema: marked ? WA_SCHEMA : "(unmarked admin_export — " + WA_SCHEMA + " is what the WA side stamps next round)",
       exported_at: trim(d.exported_at) || trim(d.generated_at),
+      /* ── WHEN THIS TAB TOOK THE PAYLOAD IN (P45-FDMSc) ──────────────────
+         `exported_at` is WINGS AHEAD's clock; every ledger row's `at` is THIS
+         BROWSER's. Comparing the two is a comparison across two machines, and
+         a skew of minutes decides whether a destructive act arms — so a second
+         instant is stamped here, on the clock the ledger is written with, at
+         the one moment every carrier passes through. Both readers of this file
+         reach parseExport: the ⟳ live pull and the 📄 file input. It is not
+         the payload's age (a file exported yesterday and opened now is old the
+         moment it lands) — it is the age of the READING, and § readFresh uses
+         them for the two different questions they can each answer. */
+      taken_at: new Date().toISOString(),
       people,
       records,
       proposals: arr(d.proposals).filter(isObj),
@@ -1430,6 +1441,9 @@
       source: {
         schema: waParsed.schema, marked: waParsed.marked,
         exported_at: waParsed.exported_at,
+        /* P45-FDMSc — printed beside it, because the age of a read is the half
+           of the reconciliation the pane used to leave unsaid */
+        taken_at: waParsed.taken_at,
         people: waParsed.people.length, records: waParsed.records.length,
       },
       thresholds: { exams: THRESHOLDS.exams, flights: THRESHOLDS.flights, fs: THRESHOLDS.fs },
@@ -2656,16 +2670,152 @@
   }
   const rowHandle = (r) => (isObj(r) ? up(r.sortie) + " ∷ " + isoDate(r.date) + " ∷ " + posInt(r.seq, 1) : "");
 
+  /* ══ IS THIS READ FRESHER THAN THE REFUSAL IT IS ASKED TO EXPLAIN? ═══════
+     ═══════════════════════════════════════════════════════════════════════
+     THE FINDING THAT MADE THIS FUNCTION EXIST (P45-FDMSb verify item 5a). The
+     reconciliation above is correct when the read is fresh and LETHAL when it
+     is not, and it had no freshness test of any kind — its input was
+     `ui.parsed`, whatever that happened to be. The verifier followed the
+     ORDINARY order of work:
+
+         22:09  ⟳ read Wings Ahead, to build the report
+         22:10  ✈ push — the first drain, 1 873 flights
+         22:19  the Wings Ahead admin MOVES one row's date
+         22:20  ✈ push again  ⇒  `missing`
+
+     …and the pane consulted the 22:09 read — taken when that record was still
+     empty — and printed, as a statement of fact, «no row the bridge wrote
+     stands anywhere on that record — the read confirms the DELETED case». It
+     armed ⊕ Re-create. One confirmed click later the record carried TWO
+     fdms rows for one FDMS event, the orphan outside the ledger and unreachable
+     by ↺ Undo — the exact failure the whole reconciliation exists to prevent,
+     reached through the pane's own primary offered act.
+
+     THE STALENESS THAT KILLS IS NOT THE ONE § 15λ CONSIDERED. That table
+     considered a read older than the admin's DELETE, whose worst outcome is
+     another `missing`. The read older than the PUSH is the one that kills, and
+     it is the DEFAULT state: a read is taken to build the report, and the push
+     comes after it.
+
+     ── THE THREE TESTS, IN THE ORDER THEY ARE ASKED ───────────────────────
+     ① THE ARRIVAL TEST — necessary, exact, and the only one free of clocks.
+        `parsed.taken_at` (when THIS tab took the payload in) and `L.at` (when
+        THIS tab folded the refusal) are the SAME browser's clock, so their
+        order is a fact and not an estimate. A payload that entered this tab
+        before the refusal was recorded cannot describe the world after it. This
+        alone refuses the verifier's sequence.
+     ② THE AUDIT PROOF — clock-free, and it is the strong one when it is there.
+        Wings Ahead files EVERY operation in `wa.bridge_audit`, refusals
+        included, and the export carries the last 200 of them with their rid and
+        verdict. So if the read's own audit tail carries THIS identity's THIS
+        refusal, the export was generated after the refusal was filed — both
+        instants on the SERVER's clock, nothing crossing a machine boundary.
+     ③ THE GENERATION TEST — the payload's own claim, and it is worth saying
+        that it is the weakest. `exported_at` is Wings Ahead's clock and `L.at`
+        is this browser's; a badly set clock on either machine moves this answer.
+        It is asked only when ② cannot be (a file exported before the refusal's
+        audit row, or an export older than the audit tail's 200-row window), and
+        the sentence it produces NAMES BOTH INSTANTS so a human can check the
+        arithmetic himself instead of trusting it.
+
+     WHAT «NOT FRESH» BUYS. Nothing is repaired and nothing is guessed: the act
+     that could create a second row is simply not offered, and the line says
+     what would make it offerable — in both of the two ways a payload can be
+     refreshed, because until this round the dialogs named only one of them and
+     that one was, at the time, dead. */
+  const stamp = (s) => { const t = Date.parse(trim(s)); return isFinite(t) ? t : NaN; };
+  /* AN INSTANT A HUMAN CAN CHECK AGAINST HIS OWN CLOCK. Both instants in every
+     staleness sentence go through this one function, so the comparison the
+     developer is invited to make is between two values in the same frame — and
+     that frame is HIS, not UTC: `exported_at` arrives with a +00:00 offset and
+     the ledger's `at` is a Z string, and printing either raw would ask a man in
+     Greece to do the arithmetic twice. An instant this side cannot parse is
+     printed exactly as it arrived rather than guessed at. */
+  const two = (n) => String(n).padStart(2, "0");
+  const hm = (s) => {
+    const t = trim(s);
+    if (!t) return "(no timestamp)";
+    const ms = stamp(t);
+    if (!isFinite(ms)) return t;
+    const d = new Date(ms);
+    /* TO THE SECOND, and that is not pedantry: a stale read and the refusal it
+       is being asked to explain are routinely seconds apart — the developer
+       reads, pushes, and the answer comes back in the same minute — and two
+       instants that both print «00:50» invite a check nobody can make. */
+    return dmy(d.getFullYear() + "-" + two(d.getMonth() + 1) + "-" + two(d.getDate()))
+      + " " + two(d.getHours()) + ":" + two(d.getMinutes()) + ":" + two(d.getSeconds());
+  };
+  /* the two doors that refresh a read, named together — every sentence that
+     asks for a fresher read points at BOTH, because the live one has been down
+     at scale on a real store and the file one is what the verifier actually
+     used to get out of it. */
+  const REFRESH2 = "⟳ Read Wings Ahead takes the live read on this line, and 📄 File loads a "
+    + "wa-export-v1 the Wings Ahead admin downloaded — either one settles it, and the file is the "
+    + "route that still works when the live door is refusing at scale";
+
+  function readFresh(L, parsed) {
+    const out = { fresh: false, how: "", refusedAt: "", takenAt: "", exportedAt: "", why: "" };
+    if (!isObj(L) || !isObj(parsed)) return out;
+    out.refusedAt = trim(L.at);
+    out.takenAt = trim(parsed.taken_at);
+    out.exportedAt = trim(parsed.exported_at);
+    const tRef = stamp(out.refusedAt);
+    if (!isFinite(tRef)) {
+      out.why = "this held line carries no timestamp of its own, so nothing on this side can say whether "
+        + "the read on screen is older or newer than the refusal it would be used to explain. "
+        + REFRESH2 + ", and the line will be able to answer.";
+      return out;
+    }
+    /* ① */
+    const tTook = stamp(out.takenAt);
+    if (!isFinite(tTook) || tTook <= tRef) {
+      out.why = "THIS READ IS OLDER THAN THE REFUSAL IT WOULD BE EXPLAINING — it was taken "
+        + hm(out.takenAt) + " and Wings Ahead answered this line " + hm(out.refusedAt)
+        + ". A payload that entered this tab before the refusal was recorded cannot say what stands "
+        + "on that record now: it was read when the row was still where this store left it. "
+        + REFRESH2 + ".";
+      return out;
+    }
+    /* ② */
+    const seen = arr(parsed.auditTail).some((a) => isObj(a) && trim(a.rid) === trim(L.rid)
+      && trim(a.verdict) === trim(L.verdict) && trim(L.verdict));
+    if (seen) {
+      out.fresh = true;
+      out.how = "audit";
+      return out;
+    }
+    /* ③ */
+    const tExp = stamp(out.exportedAt);
+    if (isFinite(tExp) && tExp > tRef) {
+      out.fresh = true;
+      out.how = "clock";
+      return out;
+    }
+    out.why = "THIS READ WAS GENERATED BEFORE THE REFUSAL IT WOULD BE EXPLAINING — Wings Ahead stamped "
+      + "it " + hm(out.exportedAt) + " and answered this line " + hm(out.refusedAt) + ". Loading an old "
+      + "export now does not make it a new one. " + REFRESH2 + ".";
+    return out;
+  }
+
   function missingLook(L, parsed, ledger) {
-    const out = { have: false, person: false, record: false, rows: [], free: [], adopt: null, why: "" };
+    const out = { have: false, person: false, record: false, rows: [], free: [], adopt: null, why: "",
+      /* P45-FDMSc — the freshness verdict, carried OUT of this function rather
+         than re-derived by every caller: `recreate` is the ONLY thing heldActs
+         and startHold ask before they arm the act that can write a second row,
+         so there is exactly one place where the answer is decided. */
+      fresh: false, how: "", stale: "", recreate: false };
     if (!isObj(L)) { out.why = "that row identity is no longer in the ledger."; return out; }
     if (!isObj(parsed) || !arr(parsed.people).length) {
       out.why = "no read of Wings Ahead is in memory on this tab. Nothing can be settled from the ledger "
         + "alone: whether the row was deleted or merely moved is a fact about the OTHER side, and this "
-        + "pane deliberately holds no background copy of it — read Wings Ahead first.";
+        + "pane deliberately holds no background copy of it — this pane's own " + REFRESH2 + ".";
       return out;
     }
     out.have = true;
+    const age = readFresh(L, parsed);
+    out.fresh = age.fresh;
+    out.how = age.how;
+    out.stale = age.fresh ? "" : age.why;
     const oid = normOid(L.oid);
     const p = arr(parsed.people).find((x) => isObj(x) && normOid(x.external_oid || x.oid) === oid) || null;
     if (!p) {
@@ -2701,14 +2851,55 @@
     out.free = out.rows.filter((x) => !x.claimed);
     if (out.free.length === 1) {
       out.adopt = out.free[0];
+      /* ⇄ ADOPT IS **NOT** GATED ON FRESHNESS, AND THE JUDGEMENT IS RECORDED
+         RATHER THAN ASSUMED (P45-FDMSc). The two acts differ in what they write
+         and therefore in what a stale read can cost:
+           ⊕ Re-create arms a CREATE — a new row on the record, with no claim
+             about what stands there. On a stale read that is a DUPLICATE, and
+             the orphan is outside the ledger and unreachable by ↺ Undo. It is
+             gated.
+           ⇄ Adopt writes THIS STORE'S LEDGER AND NOTHING ELSE — no call, no
+             row created, moved or removed. What it can get wrong is WHERE it
+             thinks the row stands, and the next push then carries a `prev` that
+             describes a row that is not there: Wings Ahead compares `prev` fact
+             by fact and answers `missing` (nothing written — this same hold
+             again) or `exists_fdms` (nothing written — a named conflict). The
+             worst outcome of adopting on a stale read is ANOTHER REFUSAL, never
+             a second row and never a write over somebody else's flight; and the
+             one genuinely bad adoption — onto a row another identity of this
+             ledger answers for — is refused by the `claimed` test above, which
+             reads the LIVE ledger and not the payload.
+         So it keeps its button and gains an honest warning. Withholding it
+         would leave a stale read with no repair at all for the ordinary MOVED
+         case and would push the developer onto ✕ Stop tracking, which is the
+         act that actually makes a second row (§ startHold · forget). */
       out.why = "one row the bridge wrote is standing on that record for " + sortie + ", at "
         + out.adopt.handle + " — this is the MOVED case: the admin edited the date and the handle moved "
         + "with the row. Adopting it re-anchors this identity to where the row now stands. Nothing is "
-        + "written to Wings Ahead by adopting.";
+        + "written to Wings Ahead by adopting."
+        + (out.fresh ? "" : "  ⚠ " + out.stale + " Adopting on a read this old cannot make a second row — "
+          + "the worst it can do is claim the wrong handle, and Wings Ahead refuses a `prev` it does not "
+          + "recognise without writing anything — but it is a guess until the read is refreshed.");
     } else if (!out.rows.length) {
-      out.why = "no row the bridge wrote stands anywhere on that record for " + sortie + " — the read "
-        + "confirms the DELETED case. Putting it back is a deliberate re-creation, and it is the only "
-        + "path from here that writes a new row.";
+      /* ── THE SENTENCE THAT WALKED THE DEVELOPER INTO THE DUPLICATE ────────
+         «the read confirms the DELETED case» is a STATEMENT OF FACT and it was
+         made from whatever read happened to be in memory. It is now made only
+         when the read has been shown to postdate the refusal; otherwise the
+         line says what it actually knows, which is nothing yet. */
+      out.recreate = out.fresh;
+      out.why = out.fresh
+        ? "no row the bridge wrote stands anywhere on that record for " + sortie + " — the read "
+          + "confirms the DELETED case" + (out.how === "audit"
+            ? " (and it is Wings Ahead's own audit trail that dates it: this read carries the very "
+              + "refusal it is explaining, so it was generated after it — one clock, no arithmetic)"
+            : " (this read was generated " + hm(age.exportedAt) + " and Wings Ahead answered this line "
+              + hm(age.refusedAt) + " — two clocks, so check them if they look wrong)")
+          + ". Putting it back is a deliberate re-creation, and it is the only path from here that "
+          + "writes a new row."
+        : "no row the bridge wrote stands anywhere on that record for " + sortie + " IN THIS READ — and "
+          + "this read cannot be trusted to say so. " + out.stale + " A re-creation is NOT offered "
+          + "until the read is newer than the refusal: a create against a row the admin merely MOVED is "
+          + "exactly the second row this line exists to keep off the record.";
     } else if (!out.free.length) {
       out.why = out.rows.length + " row" + (out.rows.length === 1 ? "" : "s") + " for " + sortie
         + " stand" + (out.rows.length === 1 ? "s" : "") + " on that record and this ledger already "
@@ -3062,20 +3253,95 @@
     return "stop";
   }
 
+  /* ── THE CALL IS BOUNDED IN TIME (P45-FDMSc, the verify's pre-existing minor)
+     ═════════════════════════════════════════════════════════════════════════
+     THE FINDING. There was no client-side timeout at all. A peer that accepts
+     the connection and then never answers — a half-open socket, a proxy that
+     swallowed the request, a laptop lid closed mid-call — left the chip at
+     «✈ WA · pushing…» FOR EVER: `fetch` has no default deadline, `wst.busy`
+     stayed true, the backoff never re-armed, and the verifier had to kill his
+     proxy outright before the promise settled. Nothing was lost (the queue is
+     derived) but nothing said so either, and a lane whose whole doctrine is
+     «a failure is a STATE, not a silence» had one silence left in it.
+
+     THE NUMBER, AND WHAT IT IS MEASURED AGAINST. The far side gives its own
+     statement THREE SECONDS and kills it (`statement_timeout` on the role the
+     anon key authenticates as — the same 3 s that sizes PUSH_CHUNK). So no
+     honest answer can still be COMPUTED after 3 s; everything past that is
+     transport. 20 000 ms is that budget nearly seven times over, and it leaves
+     ~17 s of pure transfer — enough to carry the biggest answer this lane has
+     (a ~1.5 MB `bridge_pull` body) over a link as slow as 0.7 Mbit/s. A call
+     that has not answered inside it is not working, it is gone.
+
+     WHY ABANDONING A PUSH IS SAFE, said once so it is not taken on faith: the
+     ledger advances ONLY on an answer, so an abandoned call leaves the identity
+     exactly as it was and the next run sends the IDENTICAL operation, which the
+     server absorbs as `unchanged` (proven live, md5-identical bodies). The one
+     thing that must never happen — a second row — cannot: the retry carries the
+     same `prev`, not a create.
+
+     AND IT FOLDS INTO THE STATE THAT ALREADY EXISTS. `unreachable`, with its
+     own sentence: the run stops, the chip says «not pushed — unreachable since
+     HH:MM», the backoff re-arms, and what is owed stays owed. */
+  const WIRE_MS = 20000;
+
+  /* AND THE SOCKET IS NOT ABORTED — a judgement, not an omission. The obvious
+     shape is an `AbortController`, and it was written that way first; the
+     offline builder's quality gate refused it BY NAME («AbortController (Fx57)
+     — no shim, Firefox 32 breaks») and the refusal is right. The export's floor
+     is Firefox 32 and that gate exists so a floor browser meets a working page,
+     not a feature-detected branch that quietly does less. What the abort buys
+     is a released socket; what it costs is an API below the floor in the one
+     file that must survive being inlined into that export. THE DEADLINE IS THE
+     FIX — the wait is bounded and the state is named — and the abandoned call
+     is bounded too: the lane sends ONE call at a time (`wst.busy`), the backoff
+     between retries is 10 s → 5 min, and the browser's own connection timeout
+     ends the socket without anybody's help. Its answer, whenever it comes, is
+     read by nobody.
+
+     AND THE LOSER OF THE RACE CANNOT SURFACE AS AN UNHANDLED REJECTION: the
+     fetch promise is settled into a VALUE by the two-armed `.then(ok, err)`
+     below before it ever enters the race. An unhandled rejection is a console
+     error, and this pane ships zero of those. */
+  function wireRace(p, ms) {
+    let t = null;
+    const timer = new Promise((resolve) => {
+      t = W.setTimeout(() => resolve({ late: true }), ms);
+    });
+    return Promise.race([p, timer]).then((v) => {
+      if (t !== null) { W.clearTimeout(t); t = null; }
+      return v;
+    });
+  }
+
   async function wireCall(fn, body) {
     const c = bridgeCfg();
     if (!bridgeConfigured()) {
       return wireError("unconfigured", "the Wings Ahead bridge is not configured on this device — "
         + "open Bridge → ⚙ and paste the project URL, the anon key and the bridge token");
     }
+    const opts = {
+      method: "POST",
+      headers: { "Content-Type": "application/json", apikey: trim(c.anon),
+        Authorization: "Bearer " + trim(c.anon), Accept: "application/json" },
+      body: JSON.stringify(Object.assign({ p_token: trim(c.token) }, body || {})),
+    };
     let res = null;
     try {
-      res = await W.fetch(rpcUrl(c, fn), {
-        method: "POST",
-        headers: { "Content-Type": "application/json", apikey: trim(c.anon),
-          Authorization: "Bearer " + trim(c.anon), Accept: "application/json" },
-        body: JSON.stringify(Object.assign({ p_token: trim(c.token) }, body || {})),
-      });
+      /* the two-armed settle: a rejection becomes a VALUE, so the loser of the
+         race can never surface as an unhandled promise rejection */
+      const call = W.fetch(rpcUrl(c, fn), opts).then(
+        (r) => ({ res: r }), (err) => ({ err }));
+      const won = await wireRace(call, WIRE_MS);
+      if (won.late) {
+        return wireError("unreachable", "Wings Ahead accepted the connection and then did not answer "
+          + "within " + Math.round(WIRE_MS / 1000) + " seconds — and its own statement budget is three, "
+          + "so this is not a slow answer, it is no answer. The call was given up on. Nothing was sent "
+          + "twice and nothing is lost: what is owed is still owed, and the identical operation goes "
+          + "again on the next push.");
+      }
+      if (won.err) throw won.err;
+      res = won.res;
     } catch (err) {
       return wireError("unreachable", "Wings Ahead did not answer — " + (err && err.message ? err.message : "the request failed")
         + ". Nothing was sent twice and nothing is lost: what is owed is still owed.");
@@ -3486,7 +3752,9 @@
       + "off hold, and the next push is still an explicit act.",
     forget: "Forgets the link between this FDMS event and its Wings Ahead row. It REMOVES NOTHING from "
       + "Wings Ahead: the row stays, and the next cross-check shows it as an fdms-stamped row this store's "
-      + "ledger does not know. Use it when the row is somebody else's to own.",
+      + "ledger does not know. AND IT PUTS THE FLIGHT BACK IN THE QUEUE AS A NEW ROW — the FDMS event is "
+      + "untouched, so the queue owes it again and the next push would CREATE it. Use it when the row over "
+      + "there is somebody else's to own; if it is this event's, ⇄ Adopt it instead.",
     /* P45-FDMSb — the four acts that settle a hold the ledger cannot settle by
        itself. Two of them write ONLY this store's memory, one writes nothing at
        all, and none of them touches Wings Ahead. */
@@ -3495,16 +3763,18 @@
       + "exist on the Wings Ahead roster with this OID, the next push holds him again, with the same "
       + "sentence.",
     lookpull: "Calls rpc/bridge_pull once, now. It is a READ — it writes nothing on either side — and it "
-      + "is what tells a row the admin DELETED from a row he MOVED. Until it has run, this line offers no "
-      + "act that could create a second row.",
+      + "is what tells a row the admin DELETED from a row he MOVED. Until a read NEWER than this refusal "
+      + "has run, this line offers no act that could create a second row. If the live door is refusing, "
+      + "📄 File loads a wa-export-v1 the Wings Ahead admin downloaded and settles it exactly as well.",
     adopt2: "Re-anchors this row identity to the Wings Ahead row that is standing on the record right now. "
       + "It writes ONLY this store's push ledger — nothing crosses the wire, no row is created, moved or "
       + "removed — and the change log keeps what the ledger remembered before. After it, the queue plans "
       + "the ordinary correction against the row's real handle instead of creating a second one.",
     recreate: "Arms a DELIBERATE re-creation: this store forgets the row it wrote, and the next ✈ Push now "
       + "sends a create. It writes nothing by itself, and it is offered only when a read of Wings Ahead has "
-      + "shown that no row the bridge wrote stands anywhere on that record for this flight — which is the "
-      + "only state in which a create cannot make a duplicate.",
+      + "shown that no row the bridge wrote stands anywhere on that record for this flight AND that read is "
+      + "NEWER than the refusal it explains — which is the only state in which a create cannot make a "
+      + "duplicate. A read taken before the push that was refused arms nothing, whatever it shows.",
     srcFile: "Reads one Wings Ahead export file you pick from disk. Nothing leaves this machine and no "
       + "credential is used. This is the fallback for a closed network, and it stays byte-compatible.",
     srcLive: "Reads the SAME payload straight from Wings Ahead over the bridge credential. It is a READ: "
@@ -4033,6 +4303,26 @@
   /* ONE LINE OF THE NUMBERED DIALOG (13η's shape, verbatim, one wire over):
      who · which flight · what the operation IS · every field that moves,
      from → to · what Wings Ahead will do with it · the row identity. */
+  /* ── A CREATE OVER A ROW THAT IS ALREADY STANDING (P45-FDMSc) ─────────────
+     A create carries `prev: null` — no claim about the far side — so Wings
+     Ahead has nothing to refuse it with, and if a bridge-written row for that
+     flight is standing on that record the push leaves TWO. The queue can reach
+     that state by more than one road: ✕ Stop tracking on a held identity (the
+     verify's item 5b), an ⭱ Import of a backup taken before the row was
+     written, a ⟲ Reset. So the warning does not live on any one of those roads
+     — it lives HERE, on the line the developer confirms, where every create
+     passes. It is the read on screen that answers, and when there is no read
+     the line says nothing rather than guessing: silence here is «not known»,
+     and the dialog's own foot already says what a create is. */
+  function standingBeside(e) {
+    if (!ui.parsed || !isObj(e) || !isObj(e.op)) return [];
+    if (e.op.op === "remove" || isObj(e.op.prev)) return [];
+    const L = e.line;
+    const look = missingLook({ rid: trim(L.rid), oid: trim(L.oid), group: trim(L.group),
+      uid: trim(L.uid), sent: null, at: "" }, ui.parsed, S() ? S().get("bridgePush") : []);
+    return look.free;
+  }
+
   function wireLine(e) {
     const L = e.line, op = e.op;
     const isRemove = op.op === "remove";
@@ -4045,10 +4335,17 @@
     const before = isObj(op.prev) ? op.prev : null;
     const after = isObj(op.row) ? op.row : null;
     const fields = fchg(rowFields(before, after), false);
+    const standing = standingBeside(e);
     return `<li><b>${who}</b> · <span class="sch-mono">${esc(L.uid)}</span>
       ${L.date ? " · " + esc(dmy(L.date)) : ""}
       <div>${esc(act)}${isRemove && trim(op.reason) ? " — reason «" + esc(op.reason) + "»" : ""}</div>
       ${e.why ? `<div class="sch-nd">${esc(e.why)}</div>` : ""}
+      ${standing.length ? `<div class="brg-eff is-c">⚠ this is a CREATE, and a row the bridge wrote
+        for this flight is <b>already standing</b> on that record in the read on screen, at
+        ${standing.map((x) => `<span class="sch-mono">${esc(x.handle)}</span>`).join(" · ")} — no
+        ledger row of this store answers for it, so nothing here will stop the create and the record
+        would carry <b>two</b> rows for one FDMS event. Settle it from the Held table
+        (<b>⇄ Adopt</b>) before you send this line.</div>` : ""}
       <div class="brg-fchgs">${fields}</div>
       <div class="brg-eff">→ ${esc(waHandleOf(L.group, after || before))}</div>
       <div class="sch-nd sch-mono">${esc(L.rid)}${L.evId ? " · " + esc(L.evId) : ""}</div></li>`;
@@ -4279,6 +4576,10 @@
       return;
     }
     const creates = list.filter((e) => e.kind === "create").length;
+    /* the same question the LINE asks, asked once for the whole run — because a
+       queue of 1 900 lines draws only its first 200, and a warning a reader
+       cannot reach is not one (P45-FDMSc). Counted over the WHOLE list. */
+    const overStanding = ui.parsed ? list.filter((e) => standingBeside(e).length).length : 0;
     /* THE 13η LAW MEETS A FIRST PUSH. The numbered dialog exists so that no line
        crosses unseen, and it lists every one — up to the point where «every one»
        stops being something a person can read: the first push on a real store
@@ -4302,6 +4603,10 @@
       items: drawn.map(wireLine).join(""),
       foot: "<b>" + creates + "</b> new · <b>" + (list.length - creates) + "</b> changed"
         + (list.length > DRAW_MAX ? " · <b>" + (list.length - DRAW_MAX) + "</b> not drawn above" : "")
+        + (overStanding ? " · <b class=\"sch-warn\">⚠ " + overStanding + "</b> of them would CREATE a row "
+          + "where the read on screen already shows a bridge-written row standing for that flight, with "
+          + "no ledger row of this store answering for it — each one is marked on its own line above, and "
+          + "each one would leave <b>two</b> rows for one FDMS event" : "")
         + ". Each write lands "
         + "in the <b>Bridge change log</b> below with what Wings Ahead held before it, and <b>↺ Undo</b> "
         + "takes exactly that write back. A row Wings Ahead refuses is a <b>report line</b> — nothing is "
@@ -4447,6 +4752,16 @@
         render(el);
         return;
       }
+      /* THE FRESHNESS WALL, ASKED AGAIN AT THE CLICK (P45-FDMSc). heldActs only
+         decides which button is DRAWN; this is the one that decides whether the
+         act happens, and it is asked against the read that is on screen at the
+         moment of the click — which may be a different one, and may be older. */
+      if (!look.recreate) {
+        ui.pushMsg = "not re-created: " + look.stale;
+        ui.pushBad = true;
+        render(el);
+        return;
+      }
       const go = await confirmPop({
         ico: "⊕", title: "Forget the old row and create a NEW one on the next push?",
         go: "⊕ Arm the re-creation",
@@ -4459,9 +4774,19 @@
           <div>${esc(look.why)}</div>
           <div class="brg-fchgs">${fchg(rowFields(isObj(L.sent) ? L.sent : null, null), false)}</div>
           <div class="sch-nd sch-mono">${esc(rid)}</div></li>`,
-        foot: "If that read is stale — if the admin merely MOVED the row and this pull predates the move — "
-          + "read Wings Ahead again first: a create against a row that is still standing is exactly the "
-          + "duplicate this dialog exists to keep out.",
+        /* THE FOOT USED TO GIVE ADVICE AND NO LONGER GIVES IT — because the
+           advice («if that read is stale, read Wings Ahead again first») was
+           advice the developer could not act on: it pointed at ONE door, the
+           live one, which on a real store answers 57014 after the first drain.
+           The staleness is now a WALL and not a warning, so what the foot has
+           to say is what was PROVEN before the button appeared. */
+        foot: "This act is offered only because the read is <b>newer than the refusal it explains</b>"
+          + (look.how === "audit"
+            ? " — Wings Ahead's own audit trail carries this refusal inside this very read, so the two "
+              + "instants are on one clock"
+            : " — the payload says Wings Ahead generated it after this line was refused")
+          + ". On a read older than the refusal the button is not drawn at all: a create against a row "
+          + "the admin merely MOVED is exactly the duplicate this dialog exists to keep out.",
       });
       if (!go) { ui.pushMsg = "cancelled — the ledger is untouched."; ui.pushBad = false; render(el); return; }
       const had = isObj(L.sent) ? L.sent : null;
@@ -4491,14 +4816,60 @@
       return;
     }
     if (act === "forget") {
+      /* ── WHAT ✕ STOP TRACKING ACTUALLY DOES NEXT (P45-FDMSc, verify item 5b)
+         ───────────────────────────────────────────────────────────────────────
+         THE FINDING. Its dialog said two true things — «it removes nothing from
+         Wings Ahead» and «the next cross-check will show that row as an
+         fdms-stamped row this store's ledger does not know» — and left out the
+         one that matters: forgetting the ledger row forgets the EVENT's memory
+         too, so the very next planner run puts the same FDMS event back in the
+         queue as a CREATE with `prev: null`. The verifier clicked it on a hold
+         where a FRESH read was showing the row standing, pushed once, and the
+         record carried two rows again. Nothing in either dialog mentioned it.
+
+         SAY IT, DO NOT WITHHOLD IT — and the judgement is recorded here because
+         it went the other way in the drafting. Withholding the act on a hold
+         where the read shows a standing row would be the tidier rule and it
+         would be wrong: that is EXACTLY the state the act exists for. Its own
+         tooltip says «use it when the row is somebody else's to own», and the
+         only way a developer ever learns that a standing row is not this
+         event's is by reading a record that shows one standing. A wall there
+         would leave him with ⇄ Adopt — which would claim a row that is not his
+         — or with nothing. So the act stays, and it stops lying: the sentence
+         below names the re-queue, and names the row that will be standing
+         beside the new one, by its Wings Ahead handle.
+
+         AND THE SENTENCE IS NOT THE ONLY GUARD. A create built over a standing
+         bridge-written row is named again in the PUSH dialog (§ wireLine), for
+         every create and not only the ones a forget produced — because the
+         re-queue can also be reached by an ⭱ Import that drops a ledger row, or
+         by a Reset, and a warning that only fires on one route is a warning
+         with a hole in it. */
+      const look = LOOK_HOLDS.indexOf(trim(L.hold)) >= 0
+        ? missingLook(L, ui.parsed, S().get("bridgePush")) : null;
+      const standing = look && look.free.length ? look.free : [];
       const go = await confirmPop({
         ico: "✕", title: "Stop tracking this identity?", go: "✕ Stop tracking",
         lead: "This forgets the link between an FDMS event and the Wings Ahead row the bridge wrote for "
-          + "it. <b>It removes nothing from Wings Ahead</b> — the row stays exactly where it is.",
+          + "it. <b>It removes nothing from Wings Ahead</b> — the row stays exactly where it is — and it "
+          + "removes nothing from the FDMS training log either. <b>The FDMS event stays</b>, and an event "
+          + "this store owes Wings Ahead with no ledger row beside it is an event the queue owes again: "
+          + "<b>this flight returns to the queue as a NEW row</b>, and the next ✈ Push now would "
+          + "<b>create</b> it, carrying no claim about what stands over there.",
         items: `<li><span class="sch-mono">${esc(rid)}</span><div>${esc(trim(L.note))}</div>
-          <div class="brg-eff">→ the row stays in Wings Ahead, unowned by this store</div></li>`,
+          <div class="brg-eff">→ the row stays in Wings Ahead, unowned by this store</div>
+          <div class="brg-eff">→ this flight goes back in the queue as a <b>create</b></div>
+          ${standing.length ? `<div class="brg-eff is-c">⚠ a row the bridge wrote for this flight is
+            <b>standing on that record right now</b>, at
+            ${standing.map((x) => `<span class="sch-mono">${esc(x.handle)}</span>`).join(" · ")} —
+            pushing the create would leave <b>two</b> rows for one FDMS event. If that row is this
+            event's, <b>⇄ Adopt</b> it instead; if it is somebody else's to own, this act is the right
+            one and the second row is deliberate.</div>` : ""}
+          </li>`,
         foot: "The next cross-check will show that row as an <b>fdms-stamped row this store's ledger does "
-          + "not know</b> — an identity note, never a proposal back into FDMS.",
+          + "not know</b> — an identity note, never a proposal back into FDMS. The push dialog names it "
+          + "again on the line itself, so the create cannot cross without the standing row being said out "
+          + "loud one more time.",
       });
       if (!go) return;
       S().remove("bridgePush", rid);
@@ -4811,7 +5182,13 @@
         return say + `<button type="button" class="sch-mini primary" data-brgw="hold" data-rid="${esc(rid)}"
           data-a="adopt" title="${esc(TIP.adopt2)}">⇄ Adopt the row where it stands</button>` + reread + stop;
       }
-      if (look.record && !look.rows.length && h.src === "event") {
+      /* ⊕ IS ARMED BY THE READ'S AGE AND NOT ONLY BY ITS CONTENT (P45-FDMSc).
+         `look.recreate` is false whenever the read cannot be shown to postdate
+         the refusal it would be explaining — and it is the read taken BEFORE
+         the push, not the one taken before a delete, that is the ordinary
+         state of an owner's tab. The sentence beside it already says which
+         instant lost, and both refresh routes are named there. */
+      if (look.record && !look.rows.length && look.recreate && h.src === "event") {
         return say + `<button type="button" class="sch-mini" data-brgw="hold" data-rid="${esc(rid)}"
           data-a="recreate" title="${esc(TIP.recreate)}">⊕ Re-create it in Wings Ahead</button>`
           + reread + stop;
@@ -4854,7 +5231,10 @@
         RECONCILED</b> — Wings Ahead answers <code>missing</code> for a row an admin DELETED and for one
         he MOVED (he edits the date and the handle moves with it) and cannot tell them apart, so this side
         reads the record and offers what it found: adopt the row where it stands, or — only once the read
-        shows no such row anywhere — re-create it deliberately.</p>
+        shows no such row anywhere <b>and that read is newer than the refusal it is explaining</b> —
+        re-create it deliberately. <b>The age of the read is half the answer</b>: a read taken before the
+        push that was refused shows the record as it was BEFORE the admin touched it, and «nothing stands
+        there» is then a fact about the past. Such a read adopts and reads again; it re-creates nothing.</p>
       <div class="sch-scroll"><table class="sch-tbl brg-tbl">
         <thead><tr><th>Why</th><th>Student</th><th>Node</th><th>What Wings Ahead said</th>
           <th>Row identity</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
@@ -5049,7 +5429,8 @@
         <div class="sch-h"><h2>Report <span class="count">${r.counts.total} row${r.counts.total === 1 ? "" : "s"}</span></h2></div>
         <p class="sch-hint">
           Source <span class="sch-code">${esc(r.source.schema)}</span>
-          ${r.source.exported_at ? " · exported " + esc(dmy(String(r.source.exported_at).slice(0, 10))) : ""}
+          ${r.source.exported_at ? " · exported " + esc(hm(r.source.exported_at)) : ""}
+          ${r.source.taken_at ? " · <b>read " + esc(hm(r.source.taken_at)) + "</b>" : ""}
           · ${r.source.people} people · ${r.source.records} records
           · judged with <b>exams ${r.thresholds.exams}&nbsp;%</b> ·
           <b>flights ${r.thresholds.flights}&nbsp;%</b> · <b>F/S ${r.thresholds.fs}&nbsp;%</b>
@@ -5429,6 +5810,12 @@
        sentence and the very shape, never on a paraphrase. */
     rowProblem, prevProblem, opProblem, wireFailKind, missingLook, adoptRowOf,
     ledStuRid, LEDGER_ONLY_ACTS,
+    /* P45-FDMSc — the age of a read is a judgement like every other one in this
+       file, so it is pure, exported, and asserted on directly instead of being
+       inferred from the sentence missingLook happens to print. WIRE_MS is here
+       for the same reason the chunk is: a number a fixture cannot read is a
+       number a round can change without anybody noticing. */
+    readFresh, WIRE_MS,
   };
 
   /* ══ THE LANE ARMS ITSELF AT LOAD, NOT AT THE FIRST VISIT ════════════════

@@ -7,7 +7,7 @@ covers the **push lane** — a flight typed in the Training log becoming a row o
 student's Wings Ahead record: the qualifying predicate, the wire shapes the
 deployed `bridge_push` refuses by name, the derived queue, the eleven verdicts
 and the three shapes of ↺ Undo across the wire (`p11-push.js`, `p12-undo.js`).
-Spec: `specs/bridge-spec.md` (§ 10, § 13ια, § 14γ, § 15κ, § 15λ).
+Spec: `specs/bridge-spec.md` (§ 10, § 13ια, § 14γ, § 15κ, § 15λ, § 15μ).
 
 ## How to run
 
@@ -20,7 +20,7 @@ the number, and the exit code is `0` only if nothing failed.
 
 ```
 ════════════════════════════════════════════
-  BRIDGE FIXTURES — 688 passed, 0 failed
+  BRIDGE FIXTURES — 720 passed, 0 failed
 ════════════════════════════════════════════
 ```
 
@@ -84,6 +84,23 @@ whole enumeration of `specs/bridge-spec.md` § 10 the way the spec says it does:
   `duration`, an `entered_by` — is refused **by name, on `prev`, with no wire
   call**, and never silently repaired.
 
+* **P45-FDMSc — the AGE of a read.** The verify of the round above walked the
+  pane's own primary offered act into a duplicate twice, because `missingLook`
+  asked only what a read **shows** and never how **old** it is. So `readFresh`
+  is driven through all three of its tests — the **arrival** test (`taken_at`
+  against the held row's `at`, one clock, the verifier's exact sequence), the
+  **audit** proof (the read's own `bridge.audit_tail` carrying this rid's this
+  verdict — and refused when the rid or the verdict is somebody else's), and
+  the **generation** test (a file opened now but exported before the refusal) —
+  plus the two states where nothing can be proven and therefore nothing arms.
+  `parseExport` is checked to **stamp** the arrival instant, so neither carrier
+  can forget it; both instants are asserted to be printed in the reader's own
+  frame; and **⇄ Adopt is asserted NOT to be gated** — the recorded judgement,
+  because it writes the ledger alone and a stale adoption costs a refusal, not
+  a second row. `WIRE_MS` is read as the number it is (20 s against the far
+  side's own 3 s budget) and checked not to be confused with the server's 57014,
+  which halves and retries instead of stopping.
+
 It does **not** prove anything about the pane's painting, the palettes, or the
 live store — those are verified in the app and recorded in § 10 as such.
 
@@ -118,7 +135,7 @@ live store — those are verified in the app and recorded in § 10 as such.
 | `p8-esc.js` | `esc()`, all five characters, hostile name |
 | `p9-apply.js` | Phase 3 — the plan, the written record, idempotency, drift, undo, the refusals |
 | `p10-offgraph.js` | Phase 3b — the off-catalogue node (four seams + the defensive read), and the honest badge |
-| `p11-push.js` | Phases 4+5 — the push lane: the predicate, the wire shapes, the derived queue, the eleven verdicts; and 4+5b's chunk/halving, failure classification, poisoned `prev`, held student, pull-informed reconciliation |
+| `p11-push.js` | Phases 4+5 — the push lane: the predicate, the wire shapes, the derived queue, the eleven verdicts; 4+5b's chunk/halving, failure classification, poisoned `prev`, held student, pull-informed reconciliation; and P45-FDMSc's three freshness tests and the wire deadline |
 | `p12-undo.js` | Phases 4+5 — ↺ Undo across the wire: the three shapes and the two drift refusals |
 
 The offline builder (`tools/build_offline.py`) never looks in here: it collects
