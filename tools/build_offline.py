@@ -3,6 +3,48 @@ r"""
 build_offline.py — deterministic single-file export of Phase 2 FDMS for the
 unit's CLOSED network.
 
+WHAT CHANGED ON 28/08/2026 (Round 24 — THE VERIFY: WHAT THE PATCH NEVER SWEPT)
+  Round 23 shipped, and the verify found two things wrong with it plus one
+  footgun in the command line.  All three have the same shape: a rule that was
+  enforced in ONE place and not in the other.
+
+  1. `inset: 0` SURVIVED IN CSS-IN-JS.  mifchart.js's `.mc-modal` and
+     schedval.js's `.sv-modal` declare `position:fixed;inset:0` inside a
+     template literal.  patch_css only ever reads the <style> block, and the
+     CSS-in-JS tripwire was watching for `grid`, not for the forbidden list.
+     Measured on the shipped file: the overlay is 1440×900 where `inset` is
+     understood and a 120×20 sliver where it is not — so on Fx32-65 the
+     Schedule-Validation and minimums backdrops collapsed into the top-left
+     corner.  Fixed at the source of truth and generalised:
+       · the per-declaration floor patch is now the FUNCTION `patch_decls`,
+         called by patch_css for the stylesheet AND by prepare_cssjs for every
+         rule a module writes from a string.  app/ is untouched — the hosted
+         app keeps the shorthand and renders identically;
+       · the CSS-in-JS sweep (`gate_scan_cssjs`) runs THE SAME `gate_scan_css`
+         the stylesheet gets — `_CSS_FORBIDDEN` entire, plus the min/max/clamp
+         fallback rule — over every rule block inside a string literal, and
+         adds the grid and flex-gap COVERAGE checks a generated fallback needs.
+         The class of hole dies, not the instance.
+
+  2. THE FLEX-GAP SHEET SAID TOO MUCH AND GREW THE BOX.  Three selectors were
+     emitted twice; the longer copy zeroed all four margins, including two the
+     gap had never touched; and a wrapping container took its row gap from a
+     margin on EVERY child, last line included, so the box came out `gap` px
+     tall (.topbar: 106px by the real geometry, 114px by the fallback).  The
+     generator now emits one rule per selector per context, cancels only what
+     it set itself, and gives a wrapping container the difference back — out of
+     its own padding where there is padding (exact, and what .topbar gets), out
+     of a negative margin where the box paints nothing on that edge.  Measured
+     with the fallback forced: 1440px is exact, 560px is +6px, all of it the
+     one nested case written up in flexgap_sheet.
+     While proving it, a THIRD bug fell out: `.viewtabs` declares its gap in
+     one rule and `flex-wrap: wrap` in a @media 1900 lines away, and the
+     generator only ever read the first — so below 900px the tab bar's second
+     line sat flush against its first.  See collect_flex_rules.
+
+  3. argparse.  `--help` was not a flag, so typing it printed nothing and
+     REBUILT the deliverable.  See THE COMMAND LINE.
+
 WHAT CHANGED ON 28/08/2026 (Round 23 — THE REAL FLOOR: FIREFOX 32, PURE ES5)
   User ruling, after being told to look in D:\FDMS-export at what the unit
   actually sent back: «Λογικά με το 32 θα είμαστε μια χαρά».  Round 22's
@@ -70,10 +112,21 @@ FLOOR — READ THIS BEFORE MOVING IT
   viber_image_2026-08-12_*.jpg; the middle one shows the About box reading
   "72.0.2 (64-bit)" with this app's own footer below it).  That is a hard,
   first-hand fact and it has not been retracted.  The two OTHER photographs
-  show what that browser did with the 26/08 export: three SyntaxErrors at
+  show what that browser did with AN EXPORT: three SyntaxErrors at
   Phase2-FDMS.html:1492, 2092 and 2404 — optional chaining `?.`, which Firefox
   did not parse until 74 — so every script died before running and the unit
   got a blank page with only the static footer on it.
+
+  WHICH export, corrected on 28/08 by the Round 24 verify: NOT the 26/08 file
+  that is still in D:\FDMS-export, which this docstring used to name.  The
+  taskbar clock inside the photograph reads 9:36, 10/8/2026; the app footer in
+  the About-box photograph reads "July 2026"; and the 26/08 file contains zero
+  `?.` and zero `??`, parses clean under acorn at ecmaVersion 2019, and its
+  lines 1492 / 2092 / 2404 are CSS, not code.  The crash therefore belongs to
+  an earlier build (~10/08) carrying the same stable filename, and that build
+  no longer exists to be examined.  Nothing else moves: the browser is still
+  Firefox 72.0.2 on first-hand evidence, `?.` is still Fx74, and the floor of
+  32 is still the user's own ruling.  Only the attribution was overstated.
 
   Round 22 guessed **52 ESR** from the word "παλαιολιθικό".  On 28/08 the user
   looked in the folder and ruled: «Λογικά με το 32 θα είμαστε μια χαρά».
@@ -138,25 +191,25 @@ the transpiler can never be its own proof.  acorn is a different library
 reading the finished text, and it is the layer that establishes "this parses on
 an engine from 2011".  The regex scanner underneath it is a second opinion with
 line numbers, and it is the layer that greps for `?.` and `??` by name, because
-those two tokens are what the unit's browser actually died on.  It strips
+those two tokens are what the unit's browser was photographed dying on.  It strips
 string literals, template literals, comments and regex literals before matching
 (pragmatic first-token heuristic for / vs division), so "?." inside remark text
 never false-positives.
 
-Flags:
-  --stamp=YYYYMMDD  override the date stamp in the output filename
-  --no-transpile    skip Babel AND the ES5 proof (DEMO ONLY: shows the regex
-                    layer tripping on un-transpiled input; the build then fails
-                    by design)
-  --gate-selftest   run the scanner against known-good/known-bad snippets, and
-                    re-prove the Map-spread regression, then exit
+Flags: run `python tools/build_offline.py --help`.  They are declared with
+argparse (Round 24), which is why --help now PRINTS AND EXITS instead of
+printing and then building, and why a mistyped flag is an error instead of a
+silent full build over the deliverable.  --dry-run runs the whole build,
+transpiler and gates included, and writes nothing.
 
 Deterministic: same inputs + pinned toolchain + same stamp -> byte-identical
 output.  Re-run any time:  python tools/build_offline.py
 """
 
+import argparse
 import base64
 import datetime
+import hashlib
 import json
 import os
 import re
@@ -195,20 +248,64 @@ BUILD_DEPS_DEFAULT = ROOT.parent / "FDMS-build-deps"
 # number that would rot the next time the floor moves.
 SHIM_MARK = "FDMS runtime shims"
 
-NO_TRANSPILE = "--no-transpile" in sys.argv         # gate-demo mode only
+# ────────────────────────────────────────────────────────────────────
+# THE COMMAND LINE (Round 24)
+#
+# Until now the flags were `"--x" in sys.argv` tests, and that had one real
+# footgun: `--help` was not a flag at all, so typing it printed nothing, fell
+# through to main() and REBUILT the deliverable.  A verifier did exactly that.
+# Harmless here (the build is deterministic, so the file came back identical),
+# but a builder whose only mode is "write the artefact" has no business being
+# the default answer to a question.
+#
+# argparse fixes all three at once: --help prints and exits, an unknown flag is
+# an error with a usage line, and --dry-run runs the entire build — Babel, acorn
+# and every gate — and then writes nothing.
+#
+# Parsed AT IMPORT so that STAMP/OUT_HTML stay module-level constants, and so
+# that --help exits before a single source file has been read.  When the module
+# is IMPORTED (the probes, floor_audit) it is parsed with an empty argv instead,
+# or every importer would inherit this parser.
+# ────────────────────────────────────────────────────────────────────
+
+def _stamp_arg(v: str) -> str:
+    if not re.fullmatch(r"\d{8}", v):
+        raise argparse.ArgumentTypeError("must be YYYYMMDD, e.g. 20260828")
+    return v
 
 
-def _stamp() -> str:
-    for a in sys.argv[1:]:
-        if a.startswith("--stamp="):
-            v = a.split("=", 1)[1]
-            if not re.fullmatch(r"\d{8}", v):
-                sys.exit("BUILD FAILED: --stamp must be YYYYMMDD")
-            return v
-    return datetime.date.today().strftime("%Y%m%d")
+def parse_args(argv=None) -> argparse.Namespace:
+    p = argparse.ArgumentParser(
+        prog="build_offline.py",
+        description="Deterministic single-file export of Phase 2 FDMS for the "
+                    f"unit's CLOSED network ({FLOOR} floor, every inline script "
+                    f"emitted as {ES_TARGET}).",
+        epilog="With no flags at all it builds:  "
+               f"{EXPORT}\\Phase2-FDMS-<today>.html + README-IT-<today>.txt\n"
+               "The toolchain lives OUTSIDE the repo; the build fails loudly "
+               "with the npm command when it is absent.",
+        formatter_class=argparse.RawDescriptionHelpFormatter)
+    p.add_argument("--stamp", metavar="YYYYMMDD", type=_stamp_arg,
+                   help="override the date stamp in the output filenames "
+                        "(default: today)")
+    p.add_argument("--no-transpile", action="store_true",
+                   help="skip Babel AND the ES5 proof (DEMO ONLY: shows the "
+                        "regex layer tripping on un-transpiled input; the build "
+                        "then fails by design)")
+    p.add_argument("--gate-selftest", action="store_true",
+                   help="run the scanner against known-good/known-bad snippets, "
+                        "re-prove the Map-spread regression, then exit")
+    p.add_argument("--dry-run", action="store_true",
+                   help="run the whole build and every gate, then report what "
+                        "WOULD be written (path, size, SHA-256) and write nothing")
+    return p.parse_args(argv)
 
 
-STAMP = _stamp()
+ARGS = parse_args() if __name__ == "__main__" else parse_args([])
+
+NO_TRANSPILE = ARGS.no_transpile                    # gate-demo mode only
+DRY_RUN = ARGS.dry_run
+STAMP = ARGS.stamp or datetime.date.today().strftime("%Y%m%d")
 OUT_HTML = EXPORT / f"Phase2-FDMS-{STAMP}.html"
 OUT_README = EXPORT / f"README-IT-{STAMP}.txt"
 
@@ -544,8 +641,9 @@ def strip_js(code: str) -> str:
 # which reads the finished script and refuses every one of these and more. The
 # regex rules below are kept as a CHEAP SECOND OPINION that also produces a
 # line number and the offending text, and because two of them — `?.` and `??` —
-# are the exact tokens the unit's Firefox choked on in the 26/08 export, and
-# this project greps for them by name.
+# are the exact tokens the unit's Firefox choked on in the photographed
+# export (§ FLOOR: the ~10/08 build, not the 26/08 one still in the folder),
+# and this project greps for them by name.
 #
 # They run over strip_js output (strings, template literals, comments and regex
 # literals blanked), so a `?.` inside remark prose never false-positives.
@@ -714,7 +812,7 @@ def _line_of(text: str, pos: int) -> int:
 
 
 def gate_scan_script(name: str, body: str, shim_present: bool,
-                     check_apis: bool = True, check_cssjs: bool = True) -> tuple:
+                     check_apis: bool = True) -> tuple:
     """Return (violations, notes) for one emitted script body."""
     stripped = strip_js(body)
     bad, notes = [], []
@@ -749,13 +847,9 @@ def gate_scan_script(name: str, body: str, shim_present: bool,
             bad.append(f"{name}:{_line_of(stripped, hits[0].start())}: {label} without its guard")
             continue
         bad.append(f"{name}:{_line_of(stripped, hits[0].start())}: {label} — no shim, {FLOOR} breaks")
-    # CSS-in-JS: unpatched min()/max()/clamp() with numeric args (Math.min etc.
-    # excluded via lookbehind). Raw-body scan on purpose: these live inside JS
-    # template literals; skipped for the JSON data bundle (free text).
-    if check_cssjs:
-        for m in re.finditer(r"(?<![\w.$-])(?:min|max|clamp)\(\s*\d", body):
-            bad.append(f"{name}:{_line_of(body, m.start())}: CSS min()/max()/clamp() inside JS "
-                       f"(Fx75+) — patch it in the builder")
+    # NOTE: everything CSS-shaped inside a JS string — min()/max()/clamp()
+    # included — moved to gate_scan_cssjs in Round 24, so that the CSS-in-JS
+    # sweep and the stylesheet sweep read ONE list instead of two.
     return bad, notes
 
 
@@ -888,21 +982,77 @@ def gate_scan_grid(name: str, css: str) -> list:
     return bad
 
 
-def gate_scan_grid_js(name: str, body: str, sheet: str) -> list:
-    """The same tripwire for CSS-IN-JS. Several modules write their own rules
-    from a string (remarksearch.js owns `.rs-panel { grid-column: 1 / -1 }`),
-    and those never reach the <style> block the CSS gate reads."""
+def gate_scan_cssjs(name: str, body: str, sheet: str) -> tuple:
+    """THE CSS-IN-JS FLOOR SWEEP.
+
+    Several modules write their own rules from a string — remarksearch.js owns
+    `.rs-panel { grid-column: 1 / -1 }`, mifchart.js and schedval.js own their
+    modal sheets — and none of that ever reaches the <style> block the CSS gate
+    reads.  Until Round 24 this sweep watched exactly TWO things: an unpaired
+    min()/max()/clamp(), and CSS Grid.  The FF32 verify then found `inset:0`
+    alive inside `.mc-modal` and `.sv-modal`: forbidden CSS, shipped to the
+    unit, with a tripwire in the building that was looking the other way.
+
+    The hole was never `inset`.  It was that the CSS-in-JS sweep had its own
+    short private list while the stylesheet had the real one.  So this now runs
+    THE SAME gate_scan_css — _CSS_FORBIDDEN entire, plus the same-property
+    fallback rule for min()/max()/clamp() — over every CSS rule block inside a
+    string literal, and adds the two coverage checks that a GENERATED fallback
+    needs and a static list cannot express:
+
+      · GRID: a grid container, or a child placed on a grid track, must appear
+        in the hand-written html.no-grid sheet;
+      · FLEX GAP: a flex container leaning on `gap` must have its generated
+        html.no-flexgap rule in the same script (prepare_cssjs appends it to the
+        module's own CSS string, so it is there or the patch did not run).
+
+    Returns (violations, notes)."""
+    blocks = _cssjs_blocks(body)
+    if not blocks:
+        return [], []
     bad = []
-    sheet = _blank_comments(sheet)      # see the note in gate_scan_grid
-    for m in re.finditer(r"([.#][\w-]+(?:[.#][\w-]+)*)\s*\{[^{}]*"
-                         r"(?:display\s*:\s*(?:inline-)?grid|grid-(?:column|row|area|template)\s*:)",
-                         body):
-        sel = m.group(1)
-        if sel not in sheet:
-            bad.append(f"{name}:{_line_of(body, m.start())}: `{sel}` uses CSS Grid from "
-                       f"JavaScript but has no rule in the html.no-grid fallback sheet "
-                       f"(NO_GRID_CSS in the builder)")
-    return bad
+    ng = _blank_comments(sheet)         # see the note in gate_scan_grid
+    flat = _descape(body)
+    known_flex = set()
+    for _a, _b, _at, sel, _b0, _b1, block in blocks:
+        if re.search(r"display\s*:\s*(inline-)?flex", block):
+            for part in sel.split(","):
+                known_flex.add(part.strip())
+    for _a, _b, _at, sel, b0, _b1, block in blocks:
+        where = f"{name}:{_line_of(body, b0)} `{sel[:40]}`"
+        # THE SAME LIST THE STYLESHEET GETS. The braces are put back so the
+        # min()/max()/clamp() fallback lookup can find the start of the block.
+        b, _n = gate_scan_css(where, sel + "{" + block + "}")
+        bad += [x.replace(f"{where}:1: ", f"{where}: ") for x in b]
+        for part in sel.split(","):
+            s = part.strip()
+            if not s or s.startswith("@"):
+                continue
+            why = None
+            if re.search(r"display\s*:\s*(?:inline-)?grid", block):
+                why = "declares display:grid"
+            elif re.search(r"(?<![\w-])grid-(?:column|row|area|template)\s*:", block):
+                why = "places itself on a grid track"
+            if why and s not in ng:
+                bad.append(f"{where}: `{s}` {why} from JavaScript but has no rule in "
+                           f"the html.no-grid fallback sheet (NO_GRID_CSS in the builder)")
+            g = _gap_rule(s, block, known_flex)
+            if g and g[4] and not (_zero_len(g[0]) and _zero_len(g[1])):
+                want = _prefix_selector(s, "")
+                if want not in flat:
+                    bad.append(f"{where}: `{s}` is a flex container leaning on `gap` "
+                               f"(Fx63) but this script carries no `{want}` rule — "
+                               f"prepare_cssjs should have appended one")
+    # a bare min()/max()/clamp() OUTSIDE any rule block (an el.style assignment,
+    # say) — the block-scoped check above already allows the patched pairs.
+    spans = [(b0, b1) for _a, _b, _at, _s, b0, b1, _t in blocks]
+    for m in re.finditer(r"(?<![\w.$-])(?:min|max|clamp)\(\s*\d", flat):
+        if any(b0 <= m.start() < b1 for b0, b1 in spans):
+            continue
+        bad.append(f"{name}:{_line_of(body, m.start())}: CSS min()/max()/clamp() "
+                   f"inside JS (Fx75+) and outside any rule block — patch it in "
+                   f"the builder")
+    return bad, [f"{name}: {len(blocks)} CSS rule block(s) swept for the floor list"]
 
 
 def run_gate(html: str, page: str) -> list:
@@ -942,11 +1092,9 @@ def run_gate(html: str, page: str) -> list:
         if SHIM_MARK in body or "FDMS capability guard" in body:
             # the shim block IS the API provider, and the capability guard runs
             # BEFORE it — both are syntax-scanned only.
-            b, nn = gate_scan_script(name, body, shim_present,
-                                     check_apis=False, check_cssjs=False)
+            b, nn = gate_scan_script(name, body, shim_present, check_apis=False)
         else:
-            b, nn = gate_scan_script(name, body, shim_present,
-                                     check_cssjs="Embedded data bundle" not in name)
+            b, nn = gate_scan_script(name, body, shim_present)
         bad += b
         notes += nn
     for idx, body in enumerate(styles):
@@ -954,11 +1102,15 @@ def run_gate(html: str, page: str) -> list:
         bad += b
         notes += nn
         bad += gate_scan_grid(f"{page}[style#{idx}]", body)
-    # the same grid tripwire over the modules that write CSS from JavaScript
+    # THE SAME FLOOR LIST over the modules that write CSS from JavaScript.
+    # Skipped for the data bundle alone: it is free text, and a Greek remark
+    # that happens to contain a brace is not a stylesheet.
     for name, body in named:
         if "Embedded data bundle" in name:
             continue
-        bad += gate_scan_grid_js(name, body, NO_GRID_CSS)
+        b, nn = gate_scan_cssjs(name, body, NO_GRID_CSS)
+        bad += b
+        notes += nn
     if bad:
         print(f"\nQUALITY GATE — {len(bad)} violation(s) in {page}:", file=sys.stderr)
         for x in bad[:60]:
@@ -1094,8 +1246,10 @@ def _leaf_blocks(real_css: str):
                 i += 1
                 seg_start = i
                 continue
-            close = css.index("}", i)
-            out.append((list(stack), prelude, i + 1, close))
+            close = css.find("}", i)
+            if close < 0:                # unbalanced: not a stylesheet after all
+                break                    # (a JS string with a stray `{` — see
+            out.append((list(stack), prelude, i + 1, close))   # _cssjs_blocks)
             i = close + 1
             seg_start = i
             continue
@@ -1153,7 +1307,8 @@ def _split_gap(v: str):
 def _prefix_selector(sel: str, tail: str) -> str:
     """`.a, .b:hover` → `html.no-flexgap .a TAIL, html.no-flexgap .b:hover TAIL`.
     A selector that already starts at the root gets the class welded on instead
-    of prefixed, or `html.no-flexgap html.light .x` would never match."""
+    of prefixed, or `html.no-flexgap html.light .x` would never match.
+    An empty tail addresses the CONTAINER itself (the wrap compensation)."""
     outs = []
     for one in sel.split(","):
         one = one.strip()
@@ -1165,8 +1320,524 @@ def _prefix_selector(sel: str, tail: str) -> str:
             one = ":root.no-flexgap" + one[len(":root"):]
         else:
             one = "html.no-flexgap " + one
-        outs.append(one + " " + tail)
+        outs.append(one + " " + tail if tail else one)
     return ", ".join(outs)
+
+
+# ── FINDING THE CSS A MODULE WRITES FROM A STRING (Round 24) ────────────────
+
+def _js_literal_spans(js: str) -> list:
+    """[(start, end)] for the INTERIOR of every string, template literal, regex
+    literal and comment in `js` — i.e. every region strip_js blanked.
+
+    strip_js emits exactly one character for every character it consumes, so the
+    blanked copy is an offset-for-offset mask of the original; the assertion
+    below is what keeps that a fact rather than a belief.  CSS-in-JS lives in a
+    string literal BY DEFINITION, so this is where the floor patch and the floor
+    sweep look for it — and only there, which is what stops a JavaScript object
+    key spelled `gap:` or `contain:` from being read as CSS."""
+    stripped = strip_js(js)
+    if len(stripped) != len(js):
+        fail("strip_js lost the 1:1 offset mapping the CSS-in-JS pass depends on")
+    spans, i, n = [], 0, len(js)
+    while i < n:
+        if js[i].strip() and not stripped[i].strip():
+            j = i
+            while j < n and (not js[j].strip() or not stripped[j].strip()):
+                j += 1
+            a = i + 1 if js[i] in "'\"`" else i     # skip the opening delimiter
+            if j > a:
+                spans.append((a, j))
+            i = j
+        else:
+            i += 1
+    return spans
+
+
+def _descape(s: str) -> str:
+    """A same-LENGTH copy of a string literal with every `\\x` escape blanked to
+    two spaces.  Babel compiles the modules' CSS template literals down to
+    ordinary double-quoted strings, so by the time the GATE reads the emitted
+    file every newline inside that CSS is the two characters `\\n`.  Blanking
+    the pairs leaves every brace and declaration exactly where it was — offsets
+    are what the line numbers are made of — while stopping `\\n` from gluing
+    itself to the front of a selector."""
+    return re.sub(r"\\.", "  ", s, flags=re.S)
+
+
+def _looks_css(sel: str, body: str) -> bool:
+    s = sel.strip()
+    return bool(s) and bool(re.match(r"[@.#*:\[a-zA-Z]", s)) \
+        and bool(re.search(r"[-a-zA-Z]+\s*:\s*[^;}\s]", body))
+
+
+def _stylesheet_shaped(text: str) -> bool:
+    """Cheap gate before the brace walk. A module is full of strings that are
+    NOT stylesheets — HTML fragments, messages, an SVG path — and some of them
+    carry a lone `{`. Only text with at least one brace PAIR and a declaration
+    in it is worth parsing, and the counts must balance or the walk is reading
+    something that was never CSS."""
+    return ("{" in text and ":" in text
+            and text.count("{") == text.count("}")
+            and bool(re.search(r"\{[^{}]*[-a-zA-Z]+\s*:\s*[^;}\s][^{}]*\}", text)))
+
+
+def _cssjs_blocks(js: str) -> list:
+    """[(lit_a, lit_b, at_stack, selector, b0, b1, scan_body)] for every CSS rule
+    block inside a string literal.  b0/b1 index into `js`; scan_body is the
+    de-escaped copy (same length), which is what the gate reads."""
+    out = []
+    for a, b in _js_literal_spans(js):
+        text = _descape(js[a:b])
+        if not _stylesheet_shaped(text):
+            continue
+        for at_stack, sel, i0, i1 in _leaf_blocks(text):
+            if _looks_css(sel, text[i0:i1]):
+                out.append((a, b, at_stack, sel.strip(),
+                            a + i0, a + i1, text[i0:i1]))
+    return out
+
+
+# ── THE ONE FLOOR PATCH FOR A BLOCK OF DECLARATIONS (Round 24) ──────────────
+# Every rewrite below used to live INSIDE patch_css, and patch_css only ever
+# sees the <style> block.  Two modules write their own rules from a JavaScript
+# string — mifchart.js's `.mc-modal` and schedval.js's `.sv-modal` both declare
+# `position:fixed;inset:0` — so the inset patch swept straight past them.  On
+# Fx32-65 those two backdrops came out as a top-left sliver instead of a
+# full-viewport veil (measured on the shipped file: 1440×900 with inset
+# support, 63×20 without).  The patch is a FUNCTION now and BOTH paths call it:
+# patch_css for the stylesheet, prepare_cssjs for the rules a module writes
+# from a string.  app/ is not touched — the hosted app keeps the shorthand.
+_GAP_LEGACY = {"gap": "grid-gap", "row-gap": "grid-row-gap",
+               "column-gap": "grid-column-gap"}
+
+
+def _inset_longhands(v: str) -> str:
+    """`inset: T R B L` → the four longhands.  A total replacement, not a
+    fallback pair: the shorthand has no legacy VALUE to degrade to, it simply
+    must not be used below Fx66.  Every browser since forever computes the same
+    box from the longhands, so nothing a modern engine draws changes."""
+    parts = v.strip().split()
+    if len(parts) == 1:
+        t = r = b = l = parts[0]
+    elif len(parts) == 2:
+        t = b = parts[0]
+        r = l = parts[1]
+    elif len(parts) == 3:
+        t, r, b = parts
+        l = r
+    else:
+        t, r, b, l = parts[:4]
+    return f"top:{t};right:{r};bottom:{b};left:{l}"
+
+
+def _mm_repl(m):
+    """min()/max()/clamp() (Fx75) → a same-property fallback BEFORE the modern
+    declaration.  Fx32 drops the declaration it cannot parse and keeps the
+    fallback; a modern browser applies the later one.  The fallback value is the
+    FIRST argument, plus max-width/max-height for the classic
+    `width: min(Npx, Nvw)` shape, which is what every current call site is."""
+    prop, fn, args = m.group(1), m.group(2), m.group(3)
+    first = args.split(",")[0].strip()
+    rest = [a.strip() for a in args.split(",")[1:]]
+    fb = f"{prop}:{first};"
+    if fn == "min" and prop in ("width", "height") and len(rest) == 1:
+        fb += f"max-{prop}:{rest[0]};"
+    return fb + f"{prop}:{fn}({args})"
+
+
+def patch_decls(body: str) -> tuple:
+    """Apply every per-declaration floor fallback to ONE rule body.
+    Returns (new_body, {what: count})."""
+    n = {}
+
+    def run(key, pattern, repl, text):
+        text, k = sub_decls(pattern, repl, text)
+        n[key] = n.get(key, 0) + k
+        return text
+
+    body = run("inset", r"(?<![\w-])inset\s*:\s*([^;}]+)",
+               lambda m: _inset_longhands(m.group(1)), body)
+    # break-inside (Fx65 unprefixed) → the legacy page-break-inside first
+    body = run("break", r"(?<![\w-])break-inside\s*:\s*([^;}]+)",
+               lambda m: f"page-break-inside:{m.group(1)};break-inside:{m.group(1)}",
+               body)
+    # overflow-wrap (Fx49 unprefixed) → the legacy word-wrap first.  Same values,
+    # same effect; Fx32 reads word-wrap and ignores the one it does not know.
+    # Done per-declaration rather than sheet-wide because one of this
+    # stylesheet's Greek comments discusses `overflow-wrap: normal` in prose,
+    # and a sheet-wide substitution rewrote the sentence.
+    body = run("ow", r"(?<![\w-])overflow-wrap\s*:\s*([^;}]+)",
+               lambda m: f"word-wrap:{m.group(1)};overflow-wrap:{m.group(1)}",
+               body)
+    # gap / row-gap / column-gap → the grid-* longhand first.  Fx52 shipped CSS
+    # Grid with grid-gap; the unprefixed forms are Fx61 (grid) and Fx63 (flex).
+    # On a FLEX container Fx52 ignores both — that is what the generated
+    # html.no-flexgap sheet below is for.
+    body = run("gap", r"(?<![\w-])(gap|row-gap|column-gap)\s*:\s*([^;}]+)",
+               lambda m: (f"{_GAP_LEGACY[m.group(1)]}:{m.group(2).strip()};"
+                          f"{m.group(1)}:{m.group(2).strip()}"), body)
+    body = run("minmax", r"(?<![\w-])([a-z-]+)\s*:\s*(min|max|clamp)\(([^()]*)\)",
+               _mm_repl, body)
+    return body, n
+
+
+# ── READING A GAP RULE, AND READING THE CONTAINER'S OWN BOX ─────────────────
+
+def _gap_rule(sel: str, probe: str, known_flex: set):
+    """(row, col, is_column, is_wrap, is_flex) for a rule body that declares a
+    gap, or None when it declares none.  `probe` is the COMMENT-BLANKED body, so
+    a rule commented out — or a comment that talks about gap — cannot be
+    mistaken for a declaration."""
+    gm = re.search(r"(?<![\w-])gap\s*:\s*([^;}]+)", probe)
+    rgm = re.search(r"(?<![\w-])row-gap\s*:\s*([^;}]+)", probe)
+    cgm = re.search(r"(?<![\w-])column-gap\s*:\s*([^;}]+)", probe)
+    if not (gm or rgm or cgm):
+        return None
+    row, col = ("0", "0")
+    if gm:
+        row, col = _split_gap(gm.group(1))
+    if rgm:
+        row = rgm.group(1).strip()
+    if cgm:
+        col = cgm.group(1).strip()
+    dm = re.search(r"display\s*:\s*(inline-)?(flex|grid)", probe)
+    fd = re.search(r"flex-direction\s*:\s*([\w-]+)", probe)
+    fw = re.search(r"flex-wrap\s*:\s*([\w-]+)", probe)
+    # a rule is a flex container when it says so, when another rule says so for
+    # the same selector (the media-query override case, which carries the gap
+    # but not the display), or when it sets a flex-only property
+    is_flex = bool(dm and dm.group(2) == "flex") or (
+        not dm and (bool(fd) or bool(fw)
+                    or any(p.strip() in known_flex for p in sel.split(","))))
+    return (row, col,
+            bool(fd and "column" in fd.group(1)),
+            bool(fw and fw.group(1).strip() == "wrap"),
+            is_flex, bool(dm))
+
+
+def collect_flex_rules(blocks, blank, known_flex) -> tuple:
+    """Walk the rule blocks IN SOURCE ORDER and return
+    (flex_rules, orphan_gap, n_shape) for the generated html.no-flexgap sheet.
+
+    THE SHAPE OVERRIDE, found by measuring rather than by reading.  With the
+    fallback forced at 560px the topbar came out SIX PIXELS SHORT, and the six
+    belonged to `.viewtabs`:
+
+        .viewtabs { display: flex; gap: 6px }                      (line 368)
+        @media (max-width: 900px) { .viewtabs { flex-wrap: wrap } } (line 2306)
+
+    The gap and the wrap live in different rules, eighteen hundred lines apart.
+    The generator read the first one, saw a non-wrapping row, and restored the
+    HORIZONTAL gap only — so below 900px the tab bar's second line sat flush
+    against its first.  The builder already knew to look across rules for
+    `display: flex` (that is what `known_flex` is); it did not know to look
+    across rules for the SHAPE.  It does now: a rule that declares flex-wrap or
+    flex-direction and no gap of its own inherits the gap of the last rule that
+    did, and is emitted in ITS OWN at-context, which is what makes the fallback
+    change shape at the same breakpoint the real layout does."""
+    flex_rules, orphan_gap = [], []
+    last_gap, last_shape = {}, {}
+    n_shape = 0
+    for at_stack, sel, b0, b1 in blocks:
+        key = sel.strip()
+        probe = blank[b0:b1]
+        g = _gap_rule(sel, probe, known_flex)
+        if g:
+            row, col, column, wrap, is_flex, has_display = g
+            if is_flex:
+                flex_rules.append((at_stack, sel, row, col, column, wrap))
+                last_gap[key] = (row, col)
+                last_shape[key] = (column, wrap)
+            elif not has_display:
+                orphan_gap.append(key[:60])
+            continue
+        fd = re.search(r"flex-direction\s*:\s*([\w-]+)", probe)
+        fw = re.search(r"flex-wrap\s*:\s*([\w-]+)", probe)
+        if not (fd or fw) or key not in last_gap or key not in known_flex:
+            continue
+        base_col, base_wrap = last_shape.get(key, (False, False))
+        column = bool(fd and "column" in fd.group(1)) if fd else base_col
+        wrap = (fw.group(1).strip() == "wrap") if fw else base_wrap
+        if (column, wrap) == (base_col, base_wrap):
+            continue                     # says nothing the base rule did not
+        row, col = last_gap[key]
+        flex_rules.append((at_stack, sel, row, col, column, wrap))
+        last_shape[key] = (column, wrap)
+        n_shape += 1
+    return flex_rules, orphan_gap, n_shape
+
+
+_PX = re.compile(r"-?[\d.]+px")
+_SIDES = ("-top", "-right", "-bottom", "-left")
+
+
+def _four(val: str) -> list:
+    p = val.strip().split()
+    if len(p) == 1:
+        return [p[0]] * 4
+    if len(p) == 2:
+        return [p[0], p[1], p[0], p[1]]
+    if len(p) == 3:
+        return [p[0], p[1], p[2], p[1]]
+    return p[:4]
+
+
+def box_facts(blocks, blank) -> dict:
+    """What the stylesheet says about each selector's OWN box.  The wrap
+    compensation below has exactly two questions to ask of it: how much padding
+    and margin the box already carries on the edge being compensated, and
+    whether the box PAINTS that edge — because the negative-margin trick leaves
+    the painted box `gap` px taller than the space it occupies, and on something
+    like .topbar (background + border-bottom + sticky) that would drag the bar's
+    bottom edge down over the first rows of the page."""
+    f = {}
+    for _at, sel, b0, b1 in blocks:
+        seg = blank[b0:b1]
+        paints = set()
+        if re.search(r"(?<![\w-])background(?:-color|-image)?\s*:", seg):
+            paints.add("background")
+        # any border but border-top: the left/right ones run the full height of
+        # the box, so they lengthen with it exactly as border-bottom moves
+        if re.search(r"(?<![\w-])border(?:-(?:bottom|left|right|width|style|color))?\s*:", seg):
+            paints.add("border")
+        if re.search(r"(?<![\w-])box-shadow\s*:", seg):
+            paints.add("box-shadow")
+        if re.search(r"(?<![\w-])position\s*:\s*(?:sticky|fixed|absolute)", seg):
+            paints.add("out-of-flow")
+        got = {}
+        for m in re.finditer(r"(?<![\w-])(padding|margin)(-top|-right|-bottom|-left)?\s*:"
+                             r"\s*([^;}]+)", seg):
+            prop, side, val = m.group(1), m.group(2), m.group(3).strip()
+            if side:
+                got[prop + side] = val
+            else:
+                for s, v in zip(_SIDES, _four(val)):
+                    got[prop + s] = v
+        for part in sel.split(","):
+            s = part.strip()
+            if not s:
+                continue
+            e = f.setdefault(s, {"paints": set(), "decl": {}})
+            e["paints"] |= paints
+            for k, v in got.items():
+                e["decl"].setdefault(k, set()).add(v)
+    return f
+
+
+def _resolve_px(entry, prop):
+    """(value_in_px, usable).  `usable` is False when the stylesheet says
+    something the generator must not average over — several DIFFERENT values for
+    the same property (a @media override it cannot see from here), or a value
+    that is not a plain px length (var(), %, calc()).  Absent means the initial
+    value, which for padding and margin is 0 and is perfectly usable."""
+    vals = entry["decl"].get(prop) if entry else None
+    if not vals:
+        return 0.0, True
+    if len(vals) != 1:
+        return 0.0, False
+    v = next(iter(vals)).strip()
+    return (float(v[:-2]), True) if re.fullmatch(_PX, v) else (0.0, False)
+
+
+def _len(x: float) -> str:
+    return "0" if abs(x) < 1e-9 else f"{x:g}px"
+
+
+def _wrap_compensation(entry, side: str, amount: float):
+    """A WRAPPING flex container takes its gap from a margin on EVERY child —
+    the last line included — so the box comes out `amount` px bigger than the
+    gap geometry it is imitating.  Measured on the shipped file: .topbar is
+    106px with row-gap:8px and 114px with the fallback.
+
+    Two ways to give it back, and the first one is exact and free:
+
+      · PADDING.  Take `amount` off the container's own padding on that edge.
+        The visible distance from the last line to the padding edge is then
+        (child margin) + (padding − amount) = the original padding, whether the
+        container wrapped or not.  Nothing outside the box moves at all.
+      · NEGATIVE MARGIN — the standard trick, and the one the vertical axis can
+        fall back on.  A block's HEIGHT is content-driven, so the children's
+        margin really did make the box taller and `margin-bottom: -amount` gives
+        the space back to the flow.  Its cost is that the box still PAINTS
+        `amount` px taller, so it is only offered to a container that paints
+        nothing on that edge.
+
+    The horizontal axis gets no negative-margin rung, and that is not an
+    oversight: a block's WIDTH comes from its parent, not from its content, so
+    the trailing margin never widened the box — it only ate `amount` px INTO the
+    line.  `margin-right: -amount` would not give anything back; it would make
+    the box genuinely wider and hang it over the parent's padding.
+
+    Returns (container declarations, how, residual px)."""
+    pad, pad_ok = _resolve_px(entry, "padding-" + side)
+    take = min(pad, amount) if pad_ok else 0.0
+    decl, how = {}, []
+    if take > 0:
+        decl["padding-" + side] = _len(pad - take)
+        how.append("padding")
+    left = amount - take
+    if left <= 1e-9:
+        return decl, "+".join(how), 0.0
+    if side == "bottom" and not entry["paints"]:
+        mar, mar_ok = _resolve_px(entry, "margin-bottom")
+        if mar_ok:
+            decl["margin-bottom"] = _len(mar - left)
+            how.append("negative margin")
+            return decl, "+".join(how), 0.0
+    return decl, "+".join(how), left
+
+
+def flexgap_sheet(flex_rules, boxes, where: str) -> tuple:
+    """THE GENERATED FLEX-GAP SHEET.  Firefox grew `gap` on flex containers in
+    63; below that the spacing collapses to nothing.  These rules restore it
+    with margins, behind `html.no-flexgap` — a class the capability guard sets
+    ONLY when its live feature test says flex gap is missing, so on Fx63+ (and
+    on the photographed Fx72) not one of them can ever match.
+
+    `flex_rules` arrives in SOURCE order: a @media override has to be emitted
+    after the base rule it is meant to beat.
+
+    THREE THINGS THE FF32 VERIFY FOUND HERE, all fixed (Round 24):
+      · the sheet emitted three selectors TWICE.  All three were the same
+        shape — a base rule plus a later rule for the same selector.  A repeat
+        in the SAME at-context is now dropped outright, because the earlier
+        rule is simply unreachable (.topbar said the identical thing twice;
+        .sch-pnode would have said `margin-left:5px` and then `margin-left:0`).
+        Where the repeat is REAL — a @media that flips .fc-vrow from row to
+        column — CSS needs both rules, so both are still emitted: what changed
+        is what the second one says.
+      · it said too much.  The second rule used to zero ALL FOUR margins, so
+        `.fc-vrow > * + *` and `.sch-avcls > * + *` came out carrying
+        `margin-right:0;margin-bottom:0` — margins this generator had never set
+        and the original gap had never touched, sitting there ready to flatten a
+        legitimate margin on some future child.  It now cancels exactly the
+        properties IT set for that selector and this rule does not, which for a
+        row→column flip is the one `margin-left`.
+      · it grew the box.  See _wrap_compensation."""
+    # TWO GROUPS, and the order between them is a decision, not a formatting
+    # choice.  A wrapping container can itself be a child of another wrapping
+    # container — `.viewtabs` sits inside `.topbar`, and below 900px BOTH wrap —
+    # and then two generated rules of EQUAL specificity want the same element's
+    # `margin-bottom`: the parent's `> *` gap, and the child's own compensation.
+    # CSS cannot add them, so one has to win, and measurement settles which:
+    # with the compensation winning the topbar came out 8px SHORT at 560px (the
+    # parent's row gap simply vanished, two rows touching); with the parent's
+    # gap winning it comes out 6px TALL (every gap present, one of them
+    # generous).  A gap that is there and slightly large beats a gap that is
+    # gone, so every CONTAINER rule is emitted before every CHILD rule and the
+    # parent wins on source order.  Compensation paid out of `padding` is not
+    # in this fight at all — a different property — which is why .topbar, the
+    # one that was actually measured wrong, stays exact.
+    out, cont_out, notes = [], [], []
+    how_n = {}          # how the compensation was paid → count
+    resid = {"bottom": [], "right": []}
+    emitted = {}        # selector → (ctx, tail, {prop: value}, index in `out`)
+    comped = {}         # selector → (decls, index in `cont_out`, ctx)
+    for at_stack, sel, row, col, column, wrap in flex_rules:
+        key = sel.strip()
+
+        def wrap_rule(text):
+            for at in reversed(at_stack):
+                text = at + "{" + text + "}"
+            return text
+
+        # ── the child rule: ONLY the axis this gap actually governs ──
+        decl, cont = {}, {}
+        if column:
+            tail = "> * + *"
+            if not _zero_len(row):
+                decl["margin-top"] = row
+        elif wrap:
+            tail = "> *"
+            if not _zero_len(col):
+                decl["margin-right"] = col
+            if not _zero_len(row):
+                decl["margin-bottom"] = row
+        else:
+            tail = "> * + *"
+            if not _zero_len(col):
+                decl["margin-left"] = col
+        # ── the container rule: give back what the last line/column took ──
+        if wrap:
+            entry = boxes.get(key)
+            for side, amount in (("bottom", row if "margin-bottom" in decl else None),
+                                 ("right", col if "margin-right" in decl else None)):
+                if amount is None:
+                    continue
+                px = float(amount[:-2]) if re.fullmatch(_PX, amount.strip()) else None
+                if px is None:
+                    resid[side].append(f"{key} ({amount} is not a px length)")
+                    continue
+                d, how, residual = _wrap_compensation(
+                    entry or {"paints": set(), "decl": {}}, side, px)
+                cont.update(d)
+                how_n[how or "nothing to take it from"] = \
+                    how_n.get(how or "nothing to take it from", 0) + 1
+                if residual > 1e-9:
+                    resid[side].append(f"{key} +{_len(residual)}")
+        # ── SUPERSEDE, or cancel, but never both ──────────────────────────
+        # Two rules for one selector in the SAME at-context is not an override,
+        # it is a replacement: whatever the earlier one said is unreachable, and
+        # emitting `margin-left:5px` on one line and `margin-left:0` on the next
+        # is exactly the noise this round exists to remove.  (`.sch-pnode`
+        # declares `gap: 5px` at line 1167 and a bare `flex-wrap: wrap` at 1202,
+        # both top-level.)  So the earlier rule is REMOVED from the sheet.
+        # A DIFFERENT context is a genuine override — a @media that flips
+        # `.fc-vrow` from row to column — and there CSS needs both rules, so the
+        # old one is cancelled where it stands, in the properties this generator
+        # set and this rule does not.
+        ctx = tuple(at_stack)
+        prev_ctx, prev_tail, prev, prev_ix = emitted.get(key, (ctx, tail, {}, None))
+        if prev and prev_ctx == ctx:
+            if prev_ix is not None:
+                out[prev_ix] = None                  # unreachable — drop it
+            prev = {}
+        elif prev_tail != tail:
+            # the shape changed (row ⇄ wrap) in a NEW context: the old rule's
+            # selector no longer matches the same children, so it is cancelled
+            if prev:
+                out.append(wrap_rule(_prefix_selector(sel, prev_tail) + "{"
+                                     + ";".join(f"{k}:0" for k in prev) + "}"))
+            prev = {}
+        else:
+            for k in prev:
+                if k not in decl:
+                    decl[k] = "0"
+        if decl and decl != prev:
+            out.append(wrap_rule(_prefix_selector(sel, tail) + "{"
+                                 + ";".join(f"{k}:{v}" for k, v in decl.items()) + "}"))
+            emitted[key] = (ctx, tail, {k: v for k, v in decl.items() if v != "0"},
+                            len(out) - 1)
+        if cont and cont != comped.get(key, (None, None))[0]:
+            prev_cix = comped.get(key, (None, None))[1]
+            if prev_cix is not None and comped[key][2] == ctx:
+                cont_out[prev_cix] = None            # same context: replaced
+            cont_out.append(wrap_rule(_prefix_selector(sel, "") + "{"
+                                      + ";".join(f"{k}:{v}" for k, v in cont.items()) + "}"))
+            comped[key] = (cont, len(cont_out) - 1, ctx)
+    out = [r for r in cont_out if r] + [r for r in out if r]
+    notes.append(f"{where}: flex-gap fallback — {len(flex_rules)} gap rules → "
+                 f"{len(out)} generated rules ({len(cont_out)} of them the wrap "
+                 f"compensation, emitted first) behind html.no-flexgap")
+    if how_n:
+        notes.append(f"{where}: wrap compensation — "
+                     + ", ".join(f"{v}× {k}" for k, v in sorted(how_n.items())))
+    if resid["bottom"]:
+        notes.append(f"{where}: still {len(resid['bottom'])} wrapping container(s) "
+                     f"taller than the gap geometry — {', '.join(resid['bottom'])}")
+    if resid["right"]:
+        # NOT container growth: a block's width comes from its parent, so the
+        # trailing margin only eats into the LINE. Reported because the last
+        # item of each line sits that many px short of the padding edge.
+        notes.append(f"{where}: {len(resid['right'])} wrapping container(s) keep a "
+                     f"gap-sized margin after the last item of each line (the box "
+                     f"itself does not grow)")
+    return out, notes
+
+
+def _zero_len(v: str) -> bool:
+    return v.strip() in ("0", "0px", "0em", "0rem", "normal", "")
 
 
 def patch_css(css: str) -> tuple:
@@ -1192,14 +1863,10 @@ def patch_css(css: str) -> tuple:
     notes.append(f":has() rules dropped ×{n_has}")
 
     # ── 3. per-declaration fallbacks inside every innermost rule block ──
-    #       (walked back-to-front so the offsets stay valid)
-    n_minmax = n_gap = n_inset = n_break = n_ow = 0
-    flex_rules = []          # (at_stack, selector, row, col, direction, wrap)
-    orphan_gap = []          # gap on a rule nothing proves is a flex container
+    #       DETECTION reads a comment-blanked copy (same offsets) so that a rule
+    #       commented out, or a comment that talks about gap, cannot be mistaken
+    #       for a declaration; the SUBSTITUTIONS rewrite the real body.
     blocks = _leaf_blocks(css)
-    # DETECTION reads a comment-blanked copy (same offsets) so that a rule
-    # commented out, or a comment that talks about gap, cannot be mistaken for
-    # a declaration; the SUBSTITUTIONS below rewrite the real body.
     blank = _blank_comments(css)
     # every selector any rule declares display:flex on — so that a MEDIA-QUERY
     # OVERRIDE (`@media … { .fc-vrow { flex-direction: column; gap: 4px } }`),
@@ -1209,167 +1876,48 @@ def patch_css(css: str) -> tuple:
         if re.search(r"display\s*:\s*(inline-)?flex", blank[_b0:_b1]):
             for part in _sel.split(","):
                 known_flex.add(part.strip())
-    for at_stack, sel, b0, b1 in reversed(blocks):
+    boxes = box_facts(blocks, blank)
+
+    # 3a. COLLECT, forward, in source order: a @media override has to be emitted
+    #     after the base rule it is meant to beat.
+    flex_rules, orphan_gap, n_shape = collect_flex_rules(blocks, blank, known_flex)
+
+    # 3b. PATCH, backwards, so the string offsets stay valid while css is
+    #     rewritten under the loop.
+    tot = {}
+    for _at, _sel, b0, b1 in reversed(blocks):
         body = css[b0:b1]
-        new = body
-
-        # 3a. inset: T R B L (Fx66) → the four longhands (total replacement:
-        #     the shorthand has no fallback value, it simply must not be used)
-        def inset_repl(m):
-            parts = m.group(1).strip().split()
-            if len(parts) == 1:
-                t = r = b = l = parts[0]
-            elif len(parts) == 2:
-                t = b = parts[0]; r = l = parts[1]
-            elif len(parts) == 3:
-                t, r, b = parts; l = r
-            else:
-                t, r, b, l = parts[:4]
-            return f"top:{t};right:{r};bottom:{b};left:{l}"
-        new, k = sub_decls(r"(?<![\w-])inset\s*:\s*([^;}]+)", inset_repl, new)
-        n_inset += k
-
-        # 3b. break-inside (Fx65 unprefixed) → the legacy page-break-inside first
-        def brk_repl(m):
-            return f"page-break-inside:{m.group(1)};break-inside:{m.group(1)}"
-        new, k = sub_decls(r"(?<![\w-])break-inside\s*:\s*([^;}]+)", brk_repl, new)
-        n_break += k
-
-        # 3b2. overflow-wrap (Fx49 unprefixed) → the legacy word-wrap first.
-        #      Same values, same effect; Fx32 reads word-wrap and ignores the
-        #      one it does not know. Done HERE, inside the declaration walk,
-        #      rather than over the whole sheet: one of this stylesheet's Greek
-        #      comments discusses `overflow-wrap: normal` in prose, and a
-        #      sheet-wide substitution rewrote the sentence.
-        def ow_repl(m):
-            return f"word-wrap:{m.group(1)};overflow-wrap:{m.group(1)}"
-        new, k = sub_decls(r"(?<![\w-])overflow-wrap\s*:\s*([^;}]+)", ow_repl, new)
-        n_ow += k
-
-        # 3c. gap / row-gap / column-gap → the grid-* longhand first.
-        #     Fx52 shipped CSS Grid with grid-gap; the unprefixed forms are
-        #     Fx61 (grid) and Fx63 (flex). On a FLEX container Fx52 ignores
-        #     both — that is what § 3d below is for.
-        def gap_repl(m):
-            prop, val = m.group(1), m.group(2).strip()
-            legacy = {"gap": "grid-gap", "row-gap": "grid-row-gap",
-                      "column-gap": "grid-column-gap"}[prop]
-            return f"{legacy}:{val};{prop}:{val}"
-        new, k = sub_decls(r"(?<![\w-])(gap|row-gap|column-gap)\s*:\s*([^;}]+)", gap_repl, new)
-        n_gap += k
-
-        # 3d. collect the flex containers that rely on gap, for the generated
-        #     html.no-flexgap sheet (read from the comment-blanked copy)
-        probe = blank[b0:b1]
-        gm = re.search(r"(?<![\w-])gap\s*:\s*([^;}]+)", probe)
-        rgm = re.search(r"(?<![\w-])row-gap\s*:\s*([^;}]+)", probe)
-        cgm = re.search(r"(?<![\w-])column-gap\s*:\s*([^;}]+)", probe)
-        if gm or rgm or cgm:
-            row, col = ("0", "0")
-            if gm:
-                row, col = _split_gap(gm.group(1))
-            if rgm:
-                row = rgm.group(1).strip()
-            if cgm:
-                col = cgm.group(1).strip()
-            dm = re.search(r"display\s*:\s*(inline-)?(flex|grid)", probe)
-            fd = re.search(r"flex-direction\s*:\s*([\w-]+)", probe)
-            fw = re.search(r"flex-wrap\s*:\s*([\w-]+)", probe)
-            # a rule is a flex container when it says so, when another rule says
-            # so for the same selector (the media-query override case), or when
-            # it sets a flex-only property
-            is_flex = bool(dm and dm.group(2) == "flex") or (
-                not dm and (bool(fd) or bool(fw)
-                            or any(p.strip() in known_flex for p in sel.split(","))))
-            if is_flex:
-                column = bool(fd and "column" in fd.group(1))
-                wrap = bool(fw and fw.group(1).strip() == "wrap")
-                flex_rules.append((at_stack, sel, row, col, column, wrap))
-            elif not dm:
-                orphan_gap.append(sel.strip()[:60])
-
-        # 3e. min()/max()/clamp() (Fx75) → a same-property fallback BEFORE the
-        #     modern declaration. Fx52 drops the declaration it cannot parse and
-        #     keeps the fallback; modern browsers apply the later one.
-        #     The fallback value is the FIRST argument, plus max-width/max-height
-        #     for the classic `width: min(Npx, Nvw)` shape, which is what every
-        #     current call site is.
-        def mm_repl(m):
-            prop, fn, args = m.group(1), m.group(2), m.group(3)
-            first = args.split(",")[0].strip()
-            rest = [a.strip() for a in args.split(",")[1:]]
-            fb = f"{prop}:{first};"
-            if fn == "min" and prop in ("width", "height") and len(rest) == 1:
-                fb += f"max-{prop}:{rest[0]};"
-            return fb + f"{prop}:{fn}({args})"
-        new, k = sub_decls(
-            r"(?<![\w-])([a-z-]+)\s*:\s*(min|max|clamp)\(([^()]*)\)",
-            mm_repl, new)
-        n_minmax += k
-
+        new, n = patch_decls(body)
+        for k, v in n.items():
+            tot[k] = tot.get(k, 0) + v
         if new != body:
             css = css[:b0] + new + css[b1:]
 
-    notes.append(f"gap → grid-gap longhand ×{n_gap}")
-    notes.append(f"inset: → four longhands ×{n_inset}")
-    notes.append(f"break-inside → page-break-inside first ×{n_break}")
-    notes.append(f"min()/max()/clamp() same-property fallback ×{n_minmax}")
-    notes.append(f"overflow-wrap → word-wrap first ×{n_ow}")
+    notes.append(f"gap → grid-gap longhand ×{tot.get('gap', 0)}")
+    notes.append(f"inset: → four longhands ×{tot.get('inset', 0)}")
+    notes.append(f"break-inside → page-break-inside first ×{tot.get('break', 0)}")
+    notes.append(f"min()/max()/clamp() same-property fallback ×{tot.get('minmax', 0)}")
+    notes.append(f"overflow-wrap → word-wrap first ×{tot.get('ow', 0)}")
 
-    # ── 4. THE GENERATED FLEX-GAP SHEET ───────────────────────────────────
-    #    Firefox grew `gap` on flex containers in 63. Below that, 133 of this
-    #    app's layouts would collapse to zero spacing. The sheet below restores
-    #    them with margins and is gated behind `html.no-flexgap`, a class the
-    #    capability guard sets ONLY when the live feature test says flex gap is
-    #    missing — so on Fx63+ (and on the photographed Fx72) not one of these
-    #    rules can ever match.
+    # ── 4. THE GENERATED FLEX-GAP SHEET (see flexgap_sheet) ───────────────
     out = ["\n/* ══════════════════════════════════════════════════════════════",
            " * GENERATED BY tools/build_offline.py — flex-gap fallback",
            " * Firefox grew `gap` on FLEX containers in 63; `grid-gap` (emitted",
            " * above next to every gap) covers GRID as far back as 52. These",
            " * rules restore the flex spacing with margins and are switched on",
            " * only by the capability guard's live test (html.no-flexgap).",
+           " * A WRAPPING container also gets a rule of its own: the margin has",
+           " * to go on every child, last line included, so the box is handed",
+           " * the difference back out of its own padding (exact) or, when it",
+           " * paints nothing on that edge, out of a negative margin.",
            " * ══════════════════════════════════════════════════════════════ */"]
-    def zero(v):
-        return v.strip() in ("0", "0px", "0em", "0rem", "normal", "")
-
-    seen = set()
-    # the blocks were walked back-to-front (so the string offsets stayed valid);
-    # the SHEET has to come out in source order or a @media override would be
-    # emitted before the base rule it is meant to beat.
-    for at_stack, sel, row, col, column, wrap in reversed(flex_rules):
-        decl = {}
-        if column:
-            tail = "> * + *"
-            if not zero(row):
-                decl["margin-top"] = row
-        elif wrap:
-            tail = "> *"
-            if not zero(col):
-                decl["margin-right"] = col
-            if not zero(row):
-                decl["margin-bottom"] = row
-        else:
-            tail = "> * + *"
-            if not zero(col):
-                decl["margin-left"] = col
-        # a selector that already carries a fallback is being OVERRIDDEN here
-        # (the @media narrow-screen rules flip row→column): the axes this rule
-        # does NOT set must be zeroed, or the base rule's margin survives into
-        # the new direction as a stray indent.
-        if sel.strip() in seen:
-            for prop in ("margin-top", "margin-right", "margin-bottom", "margin-left"):
-                decl.setdefault(prop, "0")
-        seen.add(sel.strip())
-        if not decl:
-            continue
-        rule = _prefix_selector(sel, tail) + "{" + \
-            ";".join(f"{k}:{v}" for k, v in decl.items()) + "}"
-        for at in reversed(at_stack):
-            rule = at + "{" + rule + "}"
-        out.append(rule)
-    notes.append(f"flex-gap fallback rules generated ×{len(flex_rules)} "
-                 f"(behind html.no-flexgap)")
+    rules, gen_notes = flexgap_sheet(flex_rules, boxes, "styles.css")
+    out += rules
+    notes += gen_notes
+    if n_shape:
+        notes.append(f"styles.css: {n_shape} rule(s) flip a container's shape "
+                     f"(flex-wrap/flex-direction) without restating its gap — the "
+                     f"fallback follows them into their own @media")
     if orphan_gap:
         notes.append("gap without display: in the same rule (grid-gap only, "
                      f"no flex fallback): {', '.join(orphan_gap)}")
@@ -2562,7 +3110,7 @@ FEEDBACK_JS = r"""
 
   /* ── styles ── */
   const CSS = `
-  .fb-bar{display:flex;grid-gap:10px;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:9px;font-size:12px;color:var(--muted)}
+  .fb-bar{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:9px;font-size:12px;color:var(--muted)}
   .fb-bar .fb-b{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:7px;padding:3px 10px;font-size:11.5px;cursor:pointer}
   .fb-bar .fb-b:hover{color:var(--text);border-color:var(--accent)}
   .fb-ctx{background:var(--panel-2);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:10px 12px;margin-bottom:4px}
@@ -2573,12 +3121,18 @@ FEEDBACK_JS = r"""
   .fb-ta{min-height:110px;resize:vertical}
   .fb-in:focus,.fb-ta:focus{outline:none;border-color:var(--accent)}
   .fb-note{font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.5}
-  .fb-actions{display:flex;grid-gap:10px;gap:10px;justify-content:flex-end;margin-top:14px}
+  .fb-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:14px}
   .fb-primary{background:var(--accent);color:#06121f;border:1px solid var(--accent);border-radius:8px;padding:6px 16px;font-weight:700;cursor:pointer}
   .fb-primary:hover{filter:brightness(1.12)}
   .fb-flash{color:var(--warn);font-size:12px;margin-right:auto;align-self:center}
-  html.no-flexgap .fb-bar > * + *{margin-left:10px}
-  html.no-flexgap .fb-actions > * + *{margin-left:10px}
+  /* The grid-gap longhand and the html.no-flexgap rules for .fb-bar and
+     .fb-actions used to be written out by hand right here. They are GENERATED
+     now, by the same prepare_cssjs pass that patches the app's own modules:
+     one source for the whole export instead of a hand-written island beside a
+     generated sheet, which is the exact split that let the modals ship a
+     shorthand nobody below Fx66 can read. It also gets .fb-bar right, which
+     the hand-written rule did not: the bar WRAPS, and only the horizontal gap
+     was ever restored. */
   #fb-status{font-size:11.5px}
   `;
 
@@ -2816,18 +3370,70 @@ def prepare_schedval() -> str:
                 src, "schedval modal width min()")
 
 
-def prepare_cssjs(name: str, src: str) -> str:
-    """CSS-in-JS `gap:` inside a JS template literal gets the same grid-gap
-    longhand the stylesheet gets. Purely additive; modern browsers read the
-    later `gap` exactly as before."""
-    def rep(m):
-        prop, val = m.group(1), m.group(2)
-        legacy = {"gap": "grid-gap", "row-gap": "grid-row-gap",
-                  "column-gap": "grid-column-gap"}[prop]
-        return f"{legacy}:{val};{prop}:{val}"
-    out, n = re.subn(r"(?<![\w-])(gap|row-gap|column-gap):([-\w.%]+(?: [-\w.%]+)?)(?=[;\"'`}])",
-                     rep, src)
-    return out
+def prepare_cssjs(name: str, src: str) -> tuple:
+    """THE FLOOR PATCH FOR THE RULES A MODULE WRITES FROM A STRING.
+
+    Until Round 24 this did ONE thing — the grid-gap longhand beside every
+    `gap:` — and patch_css did everything else, over the <style> block only.
+    The FF32 verify found what that cost: `.mc-modal` (mifchart.js) and
+    `.sv-modal` (schedval.js) declare `position:fixed;inset:0` inside a template
+    literal, the inset patch never reached them, and on Fx32-65 the
+    Schedule-Validation and minimums backdrops collapsed to a top-left sliver
+    instead of covering the viewport.
+
+    So a module's own rules now go through EXACTLY the patch the stylesheet goes
+    through (patch_decls), and a flex container declared in a module gets the
+    same generated html.no-flexgap rules — appended to the very string the
+    module injects, so the fallback travels inside the <style> element the rules
+    themselves came from and cannot drift away from them.
+
+    app/ is not touched. The hosted app keeps `inset`, keeps `gap`, and renders
+    exactly as it did."""
+    tot, notes = {}, []
+    # literal by literal, back to front, so the offsets ahead stay valid
+    for a, b in reversed(_js_literal_spans(src)):
+        real = src[a:b]
+        text = _descape(real)
+        if not _stylesheet_shaped(text):
+            continue
+        blocks = [(at, sel.strip(), i0, i1) for at, sel, i0, i1 in _leaf_blocks(text)
+                  if _looks_css(sel, text[i0:i1])]
+        if not blocks:
+            continue
+        blank = _blank_comments(text)
+        known_flex = set()
+        for _at, sel, i0, i1 in blocks:
+            if re.search(r"display\s*:\s*(inline-)?flex", blank[i0:i1]):
+                for part in sel.split(","):
+                    known_flex.add(part.strip())
+        boxes = box_facts(blocks, blank)
+        flex_rules, _orphan, _n_shape = collect_flex_rules(blocks, blank, known_flex)
+        # patch the declarations back to front (the offsets move under us)
+        for _at, _sel, i0, i1 in reversed(blocks):
+            body = real[i0:i1]
+            new, n = patch_decls(body)
+            for k, v in n.items():
+                tot[k] = tot.get(k, 0) + v
+            if new != body:
+                real = real[:i0] + new + real[i1:]
+        if flex_rules:
+            rules, nn = flexgap_sheet(flex_rules, boxes, name)
+            notes += nn
+            if rules:
+                blob = "\n".join(rules)
+                # it is going INSIDE a JavaScript string literal: nothing in it
+                # may close or escape that string, and a single-quoted or
+                # double-quoted host cannot take a raw newline.
+                if re.search(r"""[`'"\\]|\$\{""", blob):
+                    fail(f"{name}: the generated flex-gap rules are not safe to "
+                         f"inline into a JS string literal:\n  {blob[:200]}")
+                sep = "\n" if "\n" in real else " "
+                real = real + sep + blob.replace("\n", sep) + sep
+        src = src[:a] + real + src[b:]
+    if tot:
+        notes.insert(0, f"{name}: CSS-in-JS floor patch — "
+                     + ", ".join(f"{k}×{v}" for k, v in sorted(tot.items()) if v))
+    return src, notes
 
 
 def extract_prepaint(index_html: str) -> str:
@@ -2983,7 +3589,7 @@ SCRIPT_CHAIN = [
 
 
 def main() -> None:
-    if "--gate-selftest" in sys.argv:
+    if ARGS.gate_selftest:
         gate_selftest()
 
     sources = ["app.js", "mifchart.js", "remarksearch.js", "description.js",
@@ -3011,9 +3617,19 @@ def main() -> None:
         key = s[:-3]
         if key not in raw:
             raw[key] = read_text(APP / s)
-    # CSS-in-JS gap → grid-gap longhand, for every module that writes CSS
+    # THE SAME CSS FLOOR PATCH FOR EVERY BLOCK THAT WRITES CSS FROM A STRING —
+    # the app's modules AND the builder's own, because a hand-patched island
+    # beside a generated sheet is the shape of the defect this round fixed.
+    own = {"capability-guard": CAPABILITY_GUARD_JS, "prepaint": prepaint_raw,
+           "runtime-shims": RUNTIME_SHIMS_JS, "fetch-shim": FETCH_SHIM_JS,
+           "date-fallback": DATE_FALLBACK_JS, "feedback": FEEDBACK_JS}
+    cssjs_notes = []
     for key in list(raw):
-        raw[key] = prepare_cssjs(key, raw[key])
+        raw[key], nn = prepare_cssjs(key + ".js", raw[key])
+        cssjs_notes += nn
+    for key in list(own):
+        own[key], nn = prepare_cssjs(key, own[key])
+        cssjs_notes += nn
 
     for name, src in [("styles.css", css)] + [(k + ".js", v) for k, v in raw.items()]:
         if re.search(r"</(script|style)", src, re.I):
@@ -3027,12 +3643,7 @@ def main() -> None:
     #    by hand, so Babel has nothing to do to them — but running them through
     #    the same pipe means there is no block in the file that only a human
     #    ever checked.
-    batch = [("capability-guard", CAPABILITY_GUARD_JS),
-             ("prepaint", prepaint_raw),
-             ("runtime-shims", RUNTIME_SHIMS_JS),
-             ("fetch-shim", FETCH_SHIM_JS),
-             ("date-fallback", DATE_FALLBACK_JS),
-             ("feedback", FEEDBACK_JS)] + \
+    batch = [(k, v) for k, v in own.items()] + \
             [(k + ".js", v) for k, v in raw.items()]
     done = transpile_all(batch)
     guard_js = done["capability-guard"]
@@ -3059,15 +3670,23 @@ def main() -> None:
     # ── QUALITY GATE (hard fail — nothing is written on violation) ──
     notes = run_gate(html, OUT_HTML.name)
 
-    # ── write ──
-    EXPORT.mkdir(parents=True, exist_ok=True)
-    OUT_HTML.write_text(html, encoding="utf-8", newline="\n")
-    size = OUT_HTML.stat().st_size
-    OUT_README.write_text(
-        README_TEMPLATE.format(stamp=STAMP, name=OUT_HTML.name,
-                               size_mb=f"{size / 1048576:.1f}",
-                               floor_short=FLOOR.replace("Firefox ", "")),
-        encoding="utf-8-sig", newline="\r\n")
+    # ── write (or, under --dry-run, deliberately do not) ──
+    html_bytes = html.encode("utf-8")
+    size = len(html_bytes)
+    readme = README_TEMPLATE.format(stamp=STAMP, name=OUT_HTML.name,
+                                    size_mb=f"{size / 1048576:.1f}",
+                                    floor_short=FLOOR.replace("Firefox ", ""))
+    if DRY_RUN:
+        print("DRY RUN — the build and every gate ran; NOTHING was written.")
+        print(f"would write : {OUT_HTML}  ({size:,} bytes)")
+        print(f"      sha256: {hashlib.sha256(html_bytes).hexdigest()}")
+        print(f"would write : {OUT_README}  "
+              f"({len(readme.encode('utf-8-sig')) + readme.count(chr(10)):,} bytes)")
+    else:
+        EXPORT.mkdir(parents=True, exist_ok=True)
+        OUT_HTML.write_text(html, encoding="utf-8", newline="\n")
+        size = OUT_HTML.stat().st_size
+        OUT_README.write_text(readme, encoding="utf-8-sig", newline="\r\n")
 
     print(f"floor       : {FLOOR}  (every inline script emitted as {ES_TARGET})")
     print(f"modules     : {len(SCRIPT_CHAIN)} app modules "
@@ -3082,10 +3701,14 @@ def main() -> None:
     print(f"proof       : acorn {ACORN_VERSION}, ecmaVersion 5, every inline script"
           + ("  ** SKIPPED **" if NO_TRANSPILE else ""))
     print(f"build deps  : {deps() if not NO_TRANSPILE else '(skipped)'}")
-    print(f"output      : {OUT_HTML}  ({size:,} bytes = {size / 1048576:.2f} MB)")
-    print(f"readme      : {OUT_README}")
+    print(f"output      : {OUT_HTML}  ({size:,} bytes = {size / 1048576:.2f} MB)"
+          + ("  ** NOT WRITTEN (--dry-run) **" if DRY_RUN else ""))
+    print(f"readme      : {OUT_README}"
+          + ("  ** NOT WRITTEN (--dry-run) **" if DRY_RUN else ""))
     for x in css_notes:
         print(f"css patch   : {x}")
+    for x in cssjs_notes:
+        print(f"css-in-js   : {x}")
     for x in notes:
         print(f"css note    : {x}")
     if size > MAX_BYTES:
