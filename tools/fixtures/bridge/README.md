@@ -7,7 +7,7 @@ covers the **push lane** — a flight typed in the Training log becoming a row o
 student's Wings Ahead record: the qualifying predicate, the wire shapes the
 deployed `bridge_push` refuses by name, the derived queue, the eleven verdicts
 and the three shapes of ↺ Undo across the wire (`p11-push.js`, `p12-undo.js`).
-Spec: `specs/bridge-spec.md` (§ 10, § 13ια, § 14γ, § 15κ).
+Spec: `specs/bridge-spec.md` (§ 10, § 13ια, § 14γ, § 15κ, § 15λ).
 
 ## How to run
 
@@ -20,7 +20,7 @@ the number, and the exit code is `0` only if nothing failed.
 
 ```
 ════════════════════════════════════════════
-  BRIDGE FIXTURES — 609 passed, 0 failed
+  BRIDGE FIXTURES — 688 passed, 0 failed
 ════════════════════════════════════════════
 ```
 
@@ -70,6 +70,20 @@ whole enumeration of `specs/bridge-spec.md` § 10 the way the spec says it does:
   an event the store already holds on such a node is a **visible** `fdms_only`
   row in its own group, never dropped on the floor.
 
+* **Phases 4+5b** — the four findings of the push lane's adversarial verify.
+  The **chunk** the client sends is 25 and not the envelope's 200 (the `anon`
+  role's 3 s statement timeout kills a 200-op call), the sender's halving is
+  driven through `chunkOps`, and `wireFailKind` is asked all six sentences a
+  failed call can carry — so that a **transport** failure still stops the run
+  while a refusal naming `student_oid` holds **one student** and lets everybody
+  else cross. A `missing` verdict **keeps** the row it last wrote, and
+  `missingLook` is driven through all five states a read of Wings Ahead can be
+  in (moved · deleted · ambiguous · already claimed by another identity · a
+  malformed memory rescued by the identity's own `uid`). And a **poisoned
+  ledger** — a hand-made backup with a string `seq`, `kind:"banana"`, a
+  `duration`, an `entered_by` — is refused **by name, on `prev`, with no wire
+  call**, and never silently repaired.
+
 It does **not** prove anything about the pane's painting, the palettes, or the
 live store — those are verified in the app and recorded in § 10 as such.
 
@@ -104,6 +118,8 @@ live store — those are verified in the app and recorded in § 10 as such.
 | `p8-esc.js` | `esc()`, all five characters, hostile name |
 | `p9-apply.js` | Phase 3 — the plan, the written record, idempotency, drift, undo, the refusals |
 | `p10-offgraph.js` | Phase 3b — the off-catalogue node (four seams + the defensive read), and the honest badge |
+| `p11-push.js` | Phases 4+5 — the push lane: the predicate, the wire shapes, the derived queue, the eleven verdicts; and 4+5b's chunk/halving, failure classification, poisoned `prev`, held student, pull-informed reconciliation |
+| `p12-undo.js` | Phases 4+5 — ↺ Undo across the wire: the three shapes and the two drift refusals |
 
 The offline builder (`tools/build_offline.py`) never looks in here: it collects
 from an explicit file list under `app/` and `data/`, so nothing in this directory

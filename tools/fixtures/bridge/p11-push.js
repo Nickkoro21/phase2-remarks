@@ -223,17 +223,77 @@ console.log("\n=== PROBE 11c — the seven wire shapes the deployed side refuses
     Object.keys(op.row).sort().join(","), B.PUSH_ROW_KEYS.slice().sort().join(","));
 
   /* AT MOST 200 OPERATIONS — the client chunks, and says so before the server
-     has to (the server refuses the 201st by name). */
+     has to (the server refuses the 201st by name). BUT 200 IS THE ENVELOPE AND
+     NOT THE BUDGET: the `anon` role carries a 3 s statement_timeout, and a
+     200-op call of creates was measured at 3122 ms → SQLSTATE 57014 (nothing
+     written, whole transaction rolled back), 100 at 3014 ms → 57014, while 40
+     took 1691 ms and 25 took 1481 ms. So the chunk this side SENDS is 25. */
   eq("the bound this side holds is the server's own", B.PUSH_MAX_OPS, 200);
+  eq("and the chunk it actually sends clears the 3 s budget with a factor of two",
+    B.PUSH_CHUNK, 25);
+  ok("the sent chunk is never larger than the envelope", B.PUSH_CHUNK <= B.PUSH_MAX_OPS);
   const many = new Array(450).fill(0).map((_, i) => ({ op: "upsert", n: i }));
   const chunks = B.chunkOps(many, many);
-  eq("450 operations become three calls", chunks.length, 3);
-  eq("the first two are full", chunks[0].ops.length + "/" + chunks[1].ops.length, "200/200");
-  eq("and the last carries the remainder", chunks[2].ops.length, 50);
+  eq("450 operations become eighteen calls of 25", chunks.length, 18);
+  eq("every one of them is a full chunk", chunks[0].ops.length + "/" + chunks[17].ops.length, "25/25");
   ok("no operation is dropped and none is sent twice",
     chunks.reduce((a, c) => a.concat(c.ops), []).map((x) => x.n).join(",")
       === many.map((x) => x.n).join(","));
   eq("an empty list is no call at all", B.chunkOps([], []).length, 0);
+
+  /* THE HALVING — the sender passes the size, because a timeout halves it */
+  eq("a size of 40 splits 450 into 12 calls", B.chunkOps(many, many, 40).length, 12);
+  eq("the floor the halving reaches is one operation per call",
+    B.chunkOps(many, many, 1).length, 450);
+  eq("and an unstated size is the default, never zero calls",
+    B.chunkOps(many, many, 0).length, B.chunkOps(many, many).length);
+  eq("and the envelope is still the ceiling, whatever is asked for",
+    B.chunkOps(many, many, 1000)[0].ops.length, 200);
+  eq("the two halves stay lined up — entries[i] is what ops[i] came from",
+    B.chunkOps(many, many, 7)[3].entries[2].n, 3 * 7 + 2);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   11c·2 — WHAT A FAILED CALL MEANS FOR THE REST OF THE RUN (P45-FDMSb · 11)
+   ══════════════════════════════════════════════════════════════════════════
+   One classifier, four answers, and the difference between two of them is the
+   difference between «one student is held» and «nobody's flights ever cross». */
+console.log("\n=== PROBE 11c·2 — the four kinds of failure, told apart by the sentence ===");
+{
+  const K = B.wireFailKind;
+  eq("a fetch that never answered stops the run — it will not answer the next chunk either",
+    K({ ok: false, kind: "unreachable", why: "Wings Ahead did not answer — Failed to fetch" }), "stop");
+  eq("an unconfigured bridge stops it too",
+    K({ ok: false, kind: "unconfigured", why: "not configured" }), "stop");
+  eq("a revoked credential is its own answer — every lane is closed",
+    K({ ok: false, kind: "revoked", why: "WA: invalid or revoked token" }), "revoked");
+
+  /* THE STATEMENT TIMEOUT — by SQLSTATE, because the HTTP status does not say */
+  eq("SQLSTATE 57014 means «too big», never «the door is down»",
+    K({ ok: false, kind: "refused", status: 500, code: "57014",
+      why: "canceling statement due to statement timeout" }), "toobig");
+  eq("and the sentence alone is enough when no code came back",
+    K({ ok: false, kind: "refused", status: 504, code: "",
+      why: "canceling statement due to statement timeout" }), "toobig");
+
+  /* THE ENVELOPE RAISE THAT NAMES A PERSON — wa.chk() closes with its own
+     location in parentheses, and `student_oid` is the only one about a person */
+  eq("an unknown roster object id holds ONE student and stops nothing",
+    K({ ok: false, kind: "refused", status: 400, code: "P0001",
+      why: "WA: invalid payload — no ACTIVE student carries the roster object id OID-SP-02 — the person "
+        + "has to exist on the Wings Ahead roster, and be active, before a flight can be pushed onto his "
+        + "record (student_oid)" }), "student");
+  eq("so does a duplicated one — the roster must be healed, by a human",
+    K({ ok: false, kind: "refused", status: 400,
+      why: "WA: invalid payload — roster object id S-1 is carried by more than one person — the roster "
+        + "must be healed before the bridge writes anything to it (student_oid)" }), "student");
+  eq("but an envelope refusal about the OPS array is this side's own bug, and it would repeat "
+    + "identically for every student — so it stops",
+  K({ ok: false, kind: "refused", status: 400,
+    why: "WA: invalid payload — a single push carries at most 200 operations (ops)" }), "stop");
+  eq("and an unattributable 5xx stops as well: it may be global, and thirty buckets would make it "
+    + "thirty log lines",
+  K({ ok: false, kind: "refused", status: 500, code: "XX000", why: "internal error" }), "stop");
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -421,11 +481,29 @@ console.log("\n=== PROBE 11f — eleven words in, one ledger row and one report 
   eq("exists_admin says the admin took it over", xa.hold, "admin");
   ok("and keeps his row too", !!xa.waRow);
 
-  const ms = fold("missing");
-  eq("missing forgets the row — the admin deleted it, which is his custody", ms.sent, null);
-  eq("so the next push for it would be a CREATE, and only on an explicit act", ms.state, "");
+  /* ── `missing` KEEPS THE MEMORY (P45-FDMSb · verify item 5) ──────────────
+     It used to answer `sent: null`, and the pane's own recovery sentence then
+     armed a create with `prev: null` — which produced TWO fdms rows for one
+     FDMS event, the second one outside the ledger and unreachable by ↺ Undo.
+     The server answers `missing` for a row the admin DELETED and for one he
+     MOVED (his date edit moves the handle) and cannot tell them apart; this
+     side keeps what it wrote so the difference can be READ instead of guessed.
+     Folded on a MOVE, because that is the operation the verdict can answer. */
+  const mv = { line: e.line, kind: "move",
+    op: { op: "upsert", section: "flights", rid: e.op.rid, prev: e.op.row,
+      row: Object.assign({}, e.op.row, { date: "2026-08-14" }), clear_tombstone: false } };
+  const ms = B.foldVerdict({ verdict: "missing" }, mv);
+  eq("missing KEEPS the row this store last wrote — it is the only handle on the moved case",
+    JSON.stringify(ms.sent), JSON.stringify(mv.op.prev));
+  eq("the identity is not «pushed»: nothing of ours stands at that handle", ms.state, "");
   eq("held meanwhile", ms.hold, "missing");
   eq("in the class the report already has for a vanished row", ms.cls, "deleted");
+  ok("and it names BOTH readings — deleted, or moved by an admin's date edit",
+    /DELETED/.test(ms.say) && /MOVED/.test(ms.say), ms.say);
+  ok("and sends the developer to read Wings Ahead rather than to a button",
+    /read Wings Ahead/.test(ms.say), ms.say);
+  eq("an operation that CLAIMED nothing keeps nothing — a create has no memory to hold",
+    B.foldVerdict({ verdict: "missing" }, e).sent, null);
 
   eq("tombstoned holds the identity as removed", fold("tombstoned").state, "removed");
   eq("refused holds it and names nothing else", fold("refused").hold, "refused");
@@ -498,6 +576,213 @@ console.log("\n=== PROBE 11h — a Wings Ahead row this bridge wrote is never pr
     !!stranger && !stranger.known);
   ok("naming the two honest causes", /restored backup/.test(stranger.why)
     && /another device whose ledger did not travel/.test(stranger.why), stranger.why);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   11i — THE POISONED LEDGER: `prev` IS THE OTHER HALF OF THE SHAPE DISCIPLINE
+   ══════════════════════════════════════════════════════════════════════════
+   `row` is rebuilt from scratch by pushRowOf() on every operation and cannot
+   carry a string seq even from a ledger somebody hand-edited — the P45-FDMS
+   verify proved that with this very fixture's planner. `prev` was forwarded
+   VERBATIM, and an ⭱ Import restores the ledger verbatim, so a tampered or
+   hand-made backup could put a string seq / kind:"banana" / a duration / an
+   entered_by on the wire. Half of those the server refuses by name; the other
+   half it CANNOT — the entered_by / legacy / duration guards read `row` only —
+   and a `prev` carrying them comes back `exists_fdms`: a knowledge refusal for
+   a claim that was true. So the check is made here, and the claim is never
+   silently repaired, because repairing a claim of knowledge is forging it. */
+console.log("\n=== PROBE 11i — a `prev` this side will not send, and never rewrites ===");
+{
+  const good = q0(plan([ev({ id: "TV-P1" })])).op.row;
+  eq("a row this planner built is a legal `prev`", B.prevProblem(good), "");
+  eq("and a create's absent claim is legal too — it claims nothing", B.prevProblem(null), "");
+
+  const bad = (patch, kill) => {
+    const c = Object.assign({}, good, patch || {});
+    if (kill) delete c[kill];
+    return B.prevProblem(c);
+  };
+  ok("a STRING seq is refused here, before the wire is asked",
+    /seq/.test(bad({ seq: "2" })) && /JSON NUMBER/.test(bad({ seq: "2" })), bad({ seq: "2" }));
+  ok("so is a seq out of the 1..20 the record is validated against", !!bad({ seq: 21 }));
+  ok("an unknown kind is refused by name", /kind/.test(bad({ kind: "banana" })), bad({ kind: "banana" }));
+  ok("a non-boolean ng is refused by its SHAPE", !!bad({ ng: "maybe" }));
+  ok("a date that is not a calendar day is refused", !!bad({ date: "12/08/2026" }));
+  ok("and a date that is not a string at all", !!bad({ date: 20260812 }));
+  ok("a mission nobody speaks is refused", !!bad({ mission: "aborted" }));
+  ok("a track nobody speaks is refused", !!bad({ track: "aerobatics" }));
+  ok("a grade that is neither a number nor null is refused", !!bad({ grade: "71" }));
+
+  /* THE THREE THE SERVER WOULD NOT CATCH ON `prev` */
+  ok("`duration` in the memory is refused HERE — the server's duration guard reads `row` only, so this "
+    + "one would have come back as a knowledge refusal for a true claim",
+  /duration/.test(bad({ duration: 1.5 })), bad({ duration: 1.5 }));
+  ok("`entered_by` likewise", /entered_by/.test(bad({ entered_by: "admin" })));
+  ok("`legacy` likewise", /legacy|not one of the ten keys/.test(bad({ legacy: true })));
+  ok("a missing key is a partial memory, and refused", /missing/.test(bad(null, "mission")));
+
+  /* THE ONE TRUE IN `prev` THAT IS NOT A FAULT */
+  eq("ng:true is legal in a MEMORY — the bridge never writes one, but an adopted row is read back as it "
+    + "actually stands", B.prevProblem(Object.assign({}, good, { ng: true })), "");
+
+  /* AND IT IS NEVER REWRITTEN — the sentence says why, and names the way out */
+  const why = bad({ seq: "2" });
+  ok("the sentence names the cause: a tampered or hand-edited backup",
+    /tampered or hand-edited backup/.test(why), why);
+  ok("it says nothing was sent", /Nothing was sent/.test(why), why);
+  ok("it refuses to forge the claim rather than «fixing» it",
+    /repairing it here would forge that claim/.test(why), why);
+  ok("and it sends the developer to Wings Ahead to re-anchor",
+    /re-anchor the identity/.test(why), why);
+
+  /* THE PLANNER TAKES IT OFF THE QUEUE — a held line, no wire call */
+  const led = [{ rid: "S-9001 ∷ flights ∷ s:C4302 ∷ 1", oid: "S-9001", group: "flights",
+    uid: "s:C4302", ord: 1, seq: 1, evId: "TV-P2", student: "ZZ-1", state: "pushed", hold: "",
+    sent: Object.assign({}, good, { seq: "1", duration: 1.5, entered_by: "admin" }) }];
+  const p = plan([ev({ id: "TV-P2", date: "2026-08-13" })], led);
+  eq("a poisoned memory queues NOTHING", p.counts.queued, 0);
+  eq("it is HELD, by name", p.counts.held, 1);
+  eq("under a hold of its own", p.held[0].hold, "malformed");
+  ok("carrying the sentence", /malformed/.test(p.held[0].note), p.held[0].note);
+
+  /* THE SAME WALL AT THE SENDER, for the ops the planner did not build */
+  const comp = { op: "upsert", section: "flights", rid: "r", prev: good,
+    row: Object.assign({}, good, { kind: "banana" }), clear_tombstone: false };
+  ok("a compensating op built from the CHANGE LOG is asked the same question",
+    /the row this act would write is malformed/.test(B.opProblem(comp)), B.opProblem(comp));
+  eq("a clean op passes both halves",
+    B.opProblem({ op: "upsert", section: "flights", rid: "r", prev: null, row: good }), "");
+  ok("and an upsert with no row at all is refused before it is sent",
+    /carries none/.test(B.opProblem({ op: "upsert", rid: "r", prev: null, row: null })));
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   11j — ONE STUDENT WINGS AHEAD CANNOT RESOLVE HOLDS ONLY HIS OWN FLIGHTS
+   ══════════════════════════════════════════════════════════════════════════
+   The live proof of the failure: buckets = 30 students, the FIRST one carried
+   an OID Wings Ahead does not know, the 400 was read as a transport failure,
+   the loop broke, and a perfectly valid flight of a real active student in the
+   LAST bucket was never sent — no ledger row, nothing. The backoff then retried
+   the same first bucket for ever. Here is the ledger row that stops that. */
+console.log("\n=== PROBE 11j — a held student, and everybody else crosses ===");
+{
+  const STU2 = { oid: "S-9002", code: "ZZ-2", first_name: "Second", last_name: "Nobody",
+    class: "77TST-Z", status: "active" };
+  const twoStudents = (ledger) => B.planPush({
+    trainingLog: [ev({ id: "TV-J1", student: "ZZ-1" }), ev({ id: "TV-J2", student: "ZZ-2" })],
+    students: [STU, STU2], instructors: [IP], bridgePush: ledger || [] }, { kindOf: kOf });
+
+  const clean = twoStudents([]);
+  eq("with nothing held, both students are owed", clean.counts.queued, 2);
+  eq("and they are two calls, because bridge_push takes ONE student", clean.students.length, 2);
+
+  const rid = B.ledStuRid("S-9002");
+  eq("a student hold's identity has two segments where a row's has four", rid, "S-9002 ∷ (student)");
+  const held = twoStudents([{ rid, scope: "student", oid: "S-9002", student: "ZZ-2", sent: null,
+    state: "", hold: "student_oid", note: "no ACTIVE student carries the roster object id S-9002" }]);
+  eq("the held student's flight comes OFF the queue", held.counts.queued, 1);
+  eq("and the other student's flight is still owed — this is the whole finding",
+    held.queued[0].line.student, "ZZ-1");
+  eq("one call goes out, for the student who can receive it", held.students.length, 1);
+  eq("the hold is listed, once, for the PERSON and not once per flight", held.counts.held, 1);
+  eq("carrying the count of flights standing behind it", held.counts.heldFlights, 1);
+  eq("the held line names the person, not a row", held.held[0].src, "student");
+  ok("and prints the server's own sentence",
+    /no ACTIVE student carries the roster object id/.test(held.held[0].note), held.held[0].note);
+  eq("its flights are NOT counted as queued: they are owed and they are not going anywhere",
+    held.counts.queued + held.counts.heldFlights, 2);
+
+  /* A HOLD THAT HAS BEEN CLEARED IS NOT A HOLD */
+  const cleared = twoStudents([{ rid, scope: "student", oid: "S-9002", student: "ZZ-2", sent: null,
+    state: "", hold: "", note: "cleared by hand" }]);
+  eq("clearing it puts his flights straight back in the queue", cleared.counts.queued, 2);
+
+  /* AND IT IS NEVER MISTAKEN FOR AN IDENTITY */
+  const withRow = twoStudents([{ rid, scope: "student", oid: "S-9002", student: "ZZ-2", sent: null,
+    state: "", hold: "timeout", note: "canceling statement due to statement timeout" }]);
+  eq("a timeout at the floor of one operation is the same shape of hold", withRow.counts.held, 1);
+  ok("a student hold mints no ordinal and takes no sequence number: the surviving student's own "
+    + "numbers are untouched by it",
+  withRow.queued[0].op.rid === "S-9001 ∷ flights ∷ s:C4302 ∷ 1"
+      && withRow.queued[0].op.row.seq === 1, JSON.stringify(withRow.queued[0].op));
+  eq("and it is not a removal candidate either — it has no row to remove", withRow.counts.removals, 0);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   11k — `missing`, RECONCILED AGAINST A READ INSTEAD OF CLEARED INTO A CREATE
+   ══════════════════════════════════════════════════════════════════════════
+   The duplicate the verify walked into: clear the hold, push, and because the
+   ledger had forgotten the row the operation was a CREATE with `prev: null`.
+   Wings Ahead answers `missing` for a DELETED row and for a MOVED one alike, so
+   the client reads the record and offers what it found — and only that. */
+console.log("\n=== PROBE 11k — adopt the row where it stands, or re-create it deliberately ===");
+{
+  const sent = { date: "2026-08-12", track: "contact", sortie: "C4302", seq: 1, kind: "syllabus",
+    instructor: "AIRMAN", instructor_oid: "R-9001", grade: null, ng: false, mission: "complete" };
+  const L = { rid: "S-9001 ∷ flights ∷ s:C4302 ∷ 1", oid: "S-9001", group: "flights", uid: "s:C4302",
+    ord: 1, seq: 1, evId: "TV-K1", student: "ZZ-1", state: "", hold: "missing", sent };
+  const wa = (rows) => ({ people: [{ id: "P-1", external_oid: "S-9001", role: "student", active: true }],
+    records: [{ student_id: "P-1", data: { flights: rows } }] });
+  const row = (o) => Object.assign({ sortie: "C4302", date: "2026-08-12", seq: 1, kind: "syllabus",
+    track: "contact", instructor: "AIRMAN", instructor_oid: "R-9001", mission: "complete",
+    entered_by: "fdms" }, o || {});
+
+  /* NO READ IN MEMORY — and therefore no act that could create a second row */
+  const blind = B.missingLook(L, null, [L]);
+  ok("with no read of Wings Ahead in memory, nothing is offered", !blind.have && !blind.adopt);
+  ok("and the sentence says why the ledger cannot answer it alone",
+    /read Wings Ahead first/.test(blind.why), blind.why);
+
+  /* THE MOVED CASE — one fdms row of that sortie, standing elsewhere */
+  const moved = B.missingLook(L, wa([row({ date: "2026-08-19" })]), [L]);
+  ok("a read that finds ONE bridge-written row for that flight offers the adoption", !!moved.adopt);
+  eq("and it is the row as it ACTUALLY stands, date and all", moved.adopt.row.date, "2026-08-19");
+  eq("read back into the ten keys of the wire",
+    Object.keys(moved.adopt.row).sort().join(","), B.PUSH_ROW_KEYS.slice().sort().join(","));
+  ok("naming the case in the developer's own terms", /MOVED case/.test(moved.why), moved.why);
+  ok("and saying that adopting writes nothing to Wings Ahead",
+    /Nothing is written to Wings Ahead by adopting/.test(moved.why), moved.why);
+
+  /* THE DELETED CASE — nothing of ours anywhere on that record */
+  const gone = B.missingLook(L, wa([]), [L]);
+  eq("a read that finds nothing offers no adoption", gone.adopt, null);
+  ok("and says the read CONFIRMS the deleted case", /DELETED case/.test(gone.why), gone.why);
+  const humans = B.missingLook(L, wa([row({ date: "2026-08-19", entered_by: "" })]), [L]);
+  eq("a row a human typed is never adopted — the bridge owns only its own rows",
+    humans.adopt, null);
+  eq("nor is a row of a different flight",
+    B.missingLook(L, wa([row({ sortie: "C4303" })]), [L]).adopt, null);
+
+  /* THE AMBIGUOUS CASE — two candidates is a question, not a tie-break */
+  const two = B.missingLook(L, wa([row({ date: "2026-08-19" }), row({ date: "2026-08-20" })]), [L]);
+  eq("two candidates adopt nothing", two.adopt, null);
+  ok("and both are printed", /2026-08-19/.test(two.why) && /2026-08-20/.test(two.why), two.why);
+  ok("saying it is a question for a human", /question for a human/.test(two.why), two.why);
+
+  /* THE CLAIMED CASE — the worst outcome of all, refused */
+  const other = { rid: "S-9001 ∷ flights ∷ s:C4302 ∷ 2", oid: "S-9001", group: "flights",
+    sent: Object.assign({}, sent, { date: "2026-08-19", seq: 1 }) };
+  const claimed = B.missingLook(L, wa([row({ date: "2026-08-19" })]), [L, other]);
+  eq("a row ANOTHER identity of this ledger already answers for is never adopted",
+    claimed.adopt, null);
+  ok("because that would point two identities at one Wings Ahead row",
+    /two identities at one Wings Ahead row/.test(claimed.why), claimed.why);
+
+  /* THE SAME MACHINERY SERVES THE MALFORMED HOLD, and it reads the sortie from
+     the IDENTITY rather than from the memory it cannot trust */
+  const poisoned = Object.assign({}, L, { hold: "malformed",
+    sent: Object.assign({}, sent, { seq: "1", sortie: 12345 }) });
+  const rescue = B.missingLook(poisoned, wa([row({ date: "2026-08-19" })]), [poisoned]);
+  ok("a malformed memory is still rescued — the uid names the sortie, and the uid never travelled",
+    !!rescue.adopt, rescue.why);
+
+  /* AND THE READ IS ASKED OF THE RIGHT PERSON AND THE RIGHT SECTION */
+  eq("a read of a different Wings Ahead resolves nobody",
+    B.missingLook(L, { people: [{ id: "P-9", external_oid: "S-0000", role: "student" }], records: [] },
+      [L]).person, false);
+  eq("and an F/S identity is never adopted out of the flights section",
+    B.missingLook(Object.assign({}, L, { group: "fs" }), wa([row({ date: "2026-08-19" })]), [L]).adopt,
+    null);
 }
 
 module.exports = true;
