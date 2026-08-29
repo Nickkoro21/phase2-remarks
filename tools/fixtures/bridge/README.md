@@ -7,7 +7,8 @@ covers the **push lane** — a flight typed in the Training log becoming a row o
 student's Wings Ahead record: the qualifying predicate, the wire shapes the
 deployed `bridge_push` refuses by name, the derived queue, the eleven verdicts
 and the three shapes of ↺ Undo across the wire (`p11-push.js`, `p12-undo.js`).
-Spec: `specs/bridge-spec.md` (§ 10, § 13ια, § 14γ, § 15κ, § 15λ, § 15μ).
+Spec: `specs/bridge-spec.md` (§ 10, § 13ια, § 14γ, § 15κ, § 15λ, § 15μ, § 15ν,
+§ 15ξ).
 
 ## How to run
 
@@ -20,7 +21,7 @@ the number, and the exit code is `0` only if nothing failed.
 
 ```
 ════════════════════════════════════════════
-  BRIDGE FIXTURES — 805 passed, 0 failed
+  BRIDGE FIXTURES — 867 passed, 0 failed
 ════════════════════════════════════════════
 ```
 
@@ -101,8 +102,33 @@ whole enumeration of `specs/bridge-spec.md` § 10 the way the spec says it does:
   side's own 3 s budget) and checked not to be confused with the server's 57014,
   which halves and retries instead of stopping.
 
+* **P45-FDMSe — a sentence that cannot prove itself is not printed.** The round
+  above rewrote `removalWhy` to abolish the guessing «or» and its own verify
+  found that the rewrite had left one unproven clause and added a second. So a
+  MOVED event's consequence clause is driven through **every** fate its flight
+  can have under its new node — queued (and still on the queue when the run
+  ends), refused by the **graph**, refused by the **event**, refused by an
+  identity bound, held, already standing, undone — and the branch that used to
+  promise «queued afresh» unconditionally is asserted to be **gone from the
+  whole plan**. The strand's held line is driven both ways: with an event-side
+  change waiting behind the hold (it must be **counted and said**) and without
+  one (it must say the log was **asked**), and the two categorical claims it
+  used to make about the training log and about the Wings Ahead record are
+  asserted **absent**. `11n ⑤bis` drives § 15ν·2's **table row 14** — the
+  branch a mutation could delete with the whole 805 staying green — in the
+  verifier's own store shape. And the client's upper-casing of OIDs against a
+  far side that matches exactly is surfaced in two places and driven in
+  `11p·3`, including that it is a **warning and not a new refusal**.
+
 It does **not** prove anything about the pane's painting, the palettes, or the
-live store — those are verified in the app and recorded in § 10 as such.
+live store — those are verified in the app and recorded in § 10 as such. That
+limit is load-bearing rather than decorative: the three dialog cures of
+P45-FDMSd (the forget dialog's blind block, the corrected footer, the
+typed-count gate) can each be deleted with this number **staying green**,
+because these fixtures assert what `missingLook` and `planPush` **carry**,
+never what a dialog **prints**. The same holds for this round's two panels —
+`plan.oidCase` and `held[i].changed` are asserted here as data; that they are
+painted is checked with eyes, on the live walk.
 
 ## House rules for this directory
 
@@ -135,7 +161,7 @@ live store — those are verified in the app and recorded in § 10 as such.
 | `p8-esc.js` | `esc()`, all five characters, hostile name |
 | `p9-apply.js` | Phase 3 — the plan, the written record, idempotency, drift, undo, the refusals |
 | `p10-offgraph.js` | Phase 3b — the off-catalogue node (four seams + the defensive read), and the honest badge |
-| `p11-push.js` | Phases 4+5 — the push lane: the predicate, the wire shapes, the derived queue, the eleven verdicts; 4+5b's chunk/halving, failure classification, poisoned `prev`, held student, pull-informed reconciliation; and P45-FDMSc's three freshness tests and the wire deadline; and P45-FDMSd's distinction between a removal owed by the training log and a row stranded by a lookup, the invariant that a read of Wings Ahead can never ADD a removal, and the staleness the ✕ Stop tracking dialog now prints |
+| `p11-push.js` | Phases 4+5 — the push lane: the predicate, the wire shapes, the derived queue, the eleven verdicts; 4+5b's chunk/halving, failure classification, poisoned `prev`, held student, pull-informed reconciliation; and P45-FDMSc's three freshness tests and the wire deadline; and P45-FDMSd's distinction between a removal owed by the training log and a row stranded by a lookup, the invariant that a read of Wings Ahead can never ADD a removal, and the staleness the ✕ Stop tracking dialog now prints; and P45-FDMSe's measured consequence clause (`11p`), the strand line that asks the training log instead of asserting about it (`11p·2`), the OID-case surfacing (`11p·3`), and § 15ν·2 table row 14 at last (`11n ⑤bis`) |
 | `p12-undo.js` | Phases 4+5 — ↺ Undo across the wire: the three shapes and the two drift refusals |
 
 The offline builder (`tools/build_offline.py`) never looks in here: it collects

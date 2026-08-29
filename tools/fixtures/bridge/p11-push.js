@@ -1066,6 +1066,46 @@ console.log("\n=== PROBE 11n — a lookup is never printed as a removal ===");
   ok("the sentence names both nodes",
     /s:C4303/.test(r0(movedNode).why) && /s:C4302/.test(r0(movedNode).why),
     r0(movedNode).why);
+  /* ── ⑤bis  THE STUDENT'S OID CHANGED IN THE **FDMS** ROSTER ──────────────
+     § 15ν·2 TABLE ROW 14, and P45-FDMSd's own verify proved this branch both
+     LOAD-BEARING and UNDRIVEN: `strand(moved, sKey("oid-moved", …))` could be
+     deleted whole and all 805 fixtures stayed green, while the very same store
+     then derived `removals: 1 · source_removed` over a CORRECT standing row.
+     Every other row of the table had a fixture; this one had a sentence. It is
+     the exact store shape the verifier drove: the ledger row stands under the
+     OLD object id, the FDMS roster now carries a NEW one, and the event in the
+     training log is untouched. Nothing here can know whether the old number was
+     a typo being corrected or a second person, and «delete the rows» is not a
+     guess this side is entitled to make. */
+  const NEWOID = { oid: "S-9002", code: "ZZ-1", first_name: "Fabricated", last_name: "Nobody",
+    class: "77TST-Z", status: "active" };
+  const oidMoved = B.planPush({ trainingLog: [e], students: [NEWOID], instructors: [IP],
+    bridgePush: led() }, { kindOf: kOf });
+  eq("a student RE-NUMBERED in the FDMS roster removes nothing", oidMoved.counts.removals, 0);
+  ok("and no `remove` carrying source_removed is built for him at all",
+    !JSON.stringify(oidMoved.removals).includes("source_removed"), JSON.stringify(oidMoved.removals));
+  eq("the row written under his old object id is HELD instead", oidMoved.counts.held, 1);
+  eq("counted as a stranded row and not as a line", oidMoved.counts.stranded, 1);
+  eq("under the strand's own hold", h0(oidMoved).hold, "unresolved");
+  eq("and the strand's own source", h0(oidMoved).src, "roster");
+  ok("the sentence names the FDMS ROSTER, which is what moved",
+    /THE FDMS ROSTER, NOT THE TRAINING LOG/.test(h0(oidMoved).note), h0(oidMoved).note);
+  ok("and it names BOTH object ids — the one he carries now and the one the row stands on",
+    /S-9002/.test(h0(oidMoved).note) && /S-9001/.test(h0(oidMoved).note), h0(oidMoved).note);
+  ok("and it says the two must be settled before the next push, not by this pane",
+    /Settle which object id is the right one/.test(h0(oidMoved).note), h0(oidMoved).note);
+  eq("meanwhile the flight itself is queued afresh under the NEW object id",
+    oidMoved.counts.queued, 1);
+  ok("with an identity minted under that new object id",
+    /^S-9002 /.test(q0(oidMoved).line.rid), q0(oidMoved).line.rid);
+  /* and a read on screen changes NOTHING about that judgement */
+  const oidMovedRead = B.planPush({ trainingLog: [e], students: [NEWOID], instructors: [IP],
+    bridgePush: led() }, { kindOf: kOf, waPeople: [{ role: "student", active: true,
+      external_oid: "S-9002" }, waOk[1]] });
+  eq("and a read that carries the new object id still removes nothing",
+    oidMovedRead.counts.removals, 0);
+  eq("holding the old row exactly the same way", oidMovedRead.counts.stranded, 1);
+
   /* the developer's own act is owed WHATEVER the rosters are doing */
   const undoneStranded = plan([e], led({ state: "undone" }), { waPeople: [waOk[0],
     { role: "instructor", active: true, external_oid: "R-9001-GONE" }] });
@@ -1194,6 +1234,202 @@ console.log("\n=== PROBE 11o — the read that cannot answer says so before the 
   eq("a stale read that DOES show a row still names it", staleMoved.free.length, 1);
   ok("and still says the read is old", /OLDER THAN THE REFUSAL/.test(staleMoved.stale),
     staleMoved.stale);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   11p — THE TWO SENTENCES P45-FDMSd's OWN VERIFY CAUGHT GUESSING
+   ══════════════════════════════════════════════════════════════════════════
+   The round before this one rewrote `removalWhy` to abolish the guessing «or».
+   Its verifier then found that the rewrite had left ONE unproven clause of its
+   own and had added a second: a MOVED event promising a re-queue that does not
+   happen, and a held line asserting that 151 training-log events are
+   «unedited» without opening the training log. Both are sentences, neither
+   destroys a row — and both are exactly the class of defect the round existed
+   to remove, which is why they are driven here rather than argued.
+
+   The three cases below are the verifier's own three, measured off the live
+   pane; they are re-measured here against the planner that prints them. */
+console.log("\n=== PROBE 11p — a consequence clause that proves itself ===");
+{
+  const e = ev({ id: "TV-P1" });
+  const SENT = q0(plan([e])).op.row;
+  const led = (rows) => [].concat(rows || []).map((r) => Object.assign({
+    rid: "S-9001 ∷ flights ∷ " + r.uid + " ∷ 1", oid: "S-9001", group: "flights",
+    ord: 1, seq: 1, evId: "TV-P1", student: "ZZ-1", sent: SENT, state: "pushed",
+    hold: "", verdict: "created" }, r));
+  const old = { uid: "s:C4302" };
+  const moveTo = (node, ledger) => plan([ev({ id: "TV-P1", node })], ledger || led([old]));
+  const rWhy = (p) => (p.removals.length ? p.removals[0].why : "");
+
+  /* ── ① IN THE GRAPH AND IN THE LANE — the flight really is queued ──────── */
+  const inLane = moveTo("s:C4303");
+  eq("a move to a node the graph carries owes the old row a removal", inLane.counts.removals, 1);
+  eq("and the flight really is queued under the new node", inLane.counts.queued, 1);
+  ok("so the sentence is allowed to say so — and it names the node it checked",
+    /IS queued under «s:C4303»/.test(rWhy(inLane)), rWhy(inLane));
+
+  /* ── ② OFF THE GRAPH — the case the old clause lied about ───────────────
+     Measured by the verifier as QUEUED 0 under a sentence promising a
+     re-queue, while the same pane listed that very event as `off_graph`. */
+  const offGraph = moveTo("s:QQ111");
+  eq("a move to a node the graph does NOT carry still owes the old row a removal",
+    offGraph.counts.removals, 1);
+  eq("but nothing whatever is queued under the new node", offGraph.counts.queued, 0);
+  ok("and the sentence says the flight does NOT cross, in the GRAPH's own words",
+    /does NOT cross under «s:QQ111»/.test(rWhy(offGraph))
+      && /is not in the FDMS syllabus graph/.test(rWhy(offGraph)), rWhy(offGraph));
+  ok("THE FALSE REASSURANCE IS GONE — not on this line and not anywhere in the plan",
+    !JSON.stringify(offGraph).includes("queued afresh under its new node"), rWhy(offGraph));
+  ok("and it is the SAME classification the blocked list uses, quoted whole — the pane cannot "
+    + "contradict itself on one screen",
+  rWhy(offGraph).indexOf(B.pushBlockWhy(ev({ id: "TV-P1", node: "s:QQ111" }), { kindOf: kOf }).why) > 0,
+  rWhy(offGraph));
+
+  /* ── ③ AN EVENT-SIDE REFUSAL UNDER THE NEW NODE — the branch that was right */
+  const toEval = moveTo("s:C4590");
+  eq("a move onto a checkride owes the old row a removal too", toEval.counts.removals, 1);
+  eq("and queues nothing", toEval.counts.queued, 0);
+  ok("with the clause that refused it quoted whole",
+    /does NOT cross under «s:C4590»/.test(rWhy(toEval))
+      && /lives in the Evaluations section/.test(rWhy(toEval)), rWhy(toEval));
+  /* a GROUND node is the other event-side shape of the same thing */
+  ok("and a move onto a ground node says «only a SORTIE crosses this lane»",
+    /only a SORTIE crosses this lane/.test(rWhy(moveTo("g:CO190"))), rWhy(moveTo("g:CO190")));
+
+  /* ── ④ THE OTHER FATES, EACH SAID IN ITS OWN WORDS ──────────────────────
+     Whatever happened under the new node, the clause is read back from what
+     the run DID — never inferred from the absence of a sentence. */
+  const heldNew = moveTo("s:C4303", led([old, { uid: "s:C4303", hold: "conflict",
+    note: "a row the bridge itself wrote holds that flight" }]));
+  eq("a moved event whose new-node row is HELD still owes the old row a removal",
+    heldNew.counts.removals, 1);
+  eq("and the flight is not queued", heldNew.counts.queued, 0);
+  ok("so the clause says it is held, and names the hold",
+    /is held «conflict»/.test(rWhy(heldNew)), rWhy(heldNew));
+
+  const standing = plan([ev({ id: "TV-P1", node: "s:C4303" })],
+    led([old, { uid: "s:C4303", sent: q0(plan([ev({ id: "TV-P1", node: "s:C4303" })])).op.row }]));
+  eq("a moved event already standing under its new node owes the old row a removal",
+    standing.counts.removals, 1);
+  eq("and nothing is queued, because nothing is owed there", standing.counts.queued, 0);
+  ok("and the clause says exactly that, instead of promising a re-queue",
+    /owed nothing under «s:C4303»/.test(rWhy(standing)), rWhy(standing));
+
+  /* AND THE CLAUSE IS FINALISED AFTER THE QUEUE IS. A line can still be taken
+     OFF the queue by the two sweeps that run last; «the flight itself IS
+     queued» is a claim about the queue this run RETURNS, so it is asked again
+     once that queue is final. */
+  const badPrev = Object.assign({}, SENT, { sortie: "C4303", duration: 1.4, mission: "incomplete" });
+  const scrubbed = plan([ev({ id: "TV-P1", node: "s:C4303" })],
+    led([old, { uid: "s:C4303", sent: badPrev }]));
+  eq("a queued line the malformed-`prev` sweep takes off is off the queue", scrubbed.counts.queued, 0);
+  eq("while the old row's removal still stands", scrubbed.counts.removals, 1);
+  ok("and the removal does NOT claim a crossing the run can see did not happen",
+    !/IS queued under/.test(rWhy(scrubbed)) && /NOT on the queue that leaves this run/.test(rWhy(scrubbed)),
+    rWhy(scrubbed));
+}
+
+console.log("\n=== PROBE 11p·2 — «unedited» is a claim about the training log, so the log answers it ===");
+{
+  /* THE VERIFIER'S EXACT REPRODUCTION: the instructor's object id is
+     unresolvable in the read AND one of his events has moved. Without the read
+     that event's old row owes a genuine removal; with the read the removal is
+     correctly absorbed into the strand — and the sentence used to tell the
+     developer that every event behind the hold was «unedited». */
+  const e1 = ev({ id: "TV-Q1" });
+  const e2 = ev({ id: "TV-Q2", node: "s:C4303" });
+  const SENT1 = q0(plan([e1])).op.row, SENT2 = q0(plan([e2])).op.row;
+  const ledger = [
+    { rid: "S-9001 ∷ flights ∷ s:C4302 ∷ 1", oid: "S-9001", group: "flights", uid: "s:C4302",
+      ord: 1, seq: 1, evId: "TV-Q1", student: "ZZ-1", sent: SENT1, state: "pushed", hold: "" },
+    { rid: "S-9001 ∷ flights ∷ s:C4303 ∷ 1", oid: "S-9001", group: "flights", uid: "s:C4303",
+      ord: 1, seq: 1, evId: "TV-Q2", student: "ZZ-1", sent: SENT2, state: "pushed", hold: "" }];
+  const moved2 = Object.assign({}, e2, { node: "s:I4201" });      // TV-Q2 moved off s:C4303
+  const ipGone = [{ role: "student", active: true, external_oid: "S-9001" },
+    { role: "instructor", active: true, external_oid: "R-9001-GONE" }];
+
+  const bare = plan([e1, moved2], ledger);
+  eq("WITHOUT the read, the moved event's old row owes a genuine removal", bare.counts.removals, 1);
+
+  const strandedNow = plan([e1, moved2], ledger, { waPeople: ipGone });
+  eq("WITH the read, the invariant holds and the removal is absorbed", strandedNow.counts.removals, 0);
+  eq("into ONE held line", strandedNow.counts.held, 1);
+  eq("carrying both rows", strandedNow.counts.stranded, 2);
+  eq("AND THE CHANGE BEHIND IT IS COUNTED, not denied", strandedNow.counts.strandedChanged, 1);
+  eq("the held line carries it too, so the table can print it", strandedNow.held[0].changed, 1);
+  ok("and the sentence SAYS it, with the number",
+    /1 of them carries a change of its own/.test(strandedNow.held[0].note)
+      && /WAITING BEHIND THIS HOLD/.test(strandedNow.held[0].note), strandedNow.held[0].note);
+  ok("and says the removal comes back with its proving sentence once the lookup answers",
+    /on the first run where this lookup answers/.test(strandedNow.held[0].note),
+    strandedNow.held[0].note);
+
+  /* THE CLEAN CASE — nothing behind the hold has changed, and NOW that is a
+     checked statement rather than an assumed one. */
+  const calm = plan([e1], [ledger[0]], { waPeople: ipGone });
+  eq("with nothing edited behind it the count is zero", calm.counts.strandedChanged, 0);
+  ok("and the sentence says the log was ASKED, not that it is assumed",
+    /this run asked the training log about it/.test(calm.held[0].note), calm.held[0].note);
+  ok("naming the three things it looked for",
+    /deleted, moved to another node, or edited out of qualifying/.test(calm.held[0].note),
+    calm.held[0].note);
+
+  /* THE OLD CATEGORICAL CLAIMS ARE GONE FROM BOTH STATES */
+  [strandedNow, calm].forEach((p, i) => {
+    ok("state " + i + ": the unchecked «still in the training log, unedited» is gone",
+      !JSON.stringify(p).includes("still in the training log, unedited"), p.held[0].note);
+    ok("state " + i + ": and «still standing on the Wings Ahead records» is no longer asserted",
+      !JSON.stringify(p).includes("still standing on the Wings Ahead record"), p.held[0].note);
+    ok("state " + i + ": what the read was NOT consulted for is said instead",
+      /HAS NOT LOOKED AT is the Wings Ahead record itself/.test(p.held[0].note)
+        && /roster of PEOPLE and for nothing else/.test(p.held[0].note), p.held[0].note);
+  });
+  /* and none of this weakens what the line exists to say */
+  ok("«NOTHING IS REMOVED AND NOTHING IS LOST» still opens it",
+    /NOTHING IS REMOVED AND NOTHING IS LOST/.test(strandedNow.held[0].note),
+    strandedNow.held[0].note);
+}
+
+console.log("\n=== PROBE 11p·3 — «matched BY OID» and then refused thirty times ===");
+{
+  /* PRE-EXISTING, and it would have met the owner on his FIRST real push:
+     `normOid` upper-cases before the wire, this side compares
+     case-insensitively, and the far side matches EXACTLY. A Wings Ahead roster
+     carrying `oid-sp-01` therefore reports a clean match and is then refused at
+     the ENVELOPE, one HTTP 400 per person, with nothing joining the two facts.
+     The judgement was to SAY it, not to silently upper-case somebody else's
+     roster in memory — so what is asserted is that it is said, and that it
+     changes nothing else. */
+  const e = ev({ id: "TV-C1" });
+  const lower = plan([e], [], { waPeople: [{ role: "student", active: true, external_oid: "s-9001" },
+    { role: "instructor", active: true, external_oid: "R-9001" }] });
+  /* padded, like h0/r0 above: a mutation that empties this list must FAIL the
+     suite, never abort it on a read of `undefined` */
+  const c0 = (p) => (arr0(p.oidCase) || { raw: "", oid: "" });
+  eq("a lower-case object id in the read is caught", (lower.oidCase || []).length, 1);
+  eq("carrying what Wings Ahead actually holds", c0(lower).raw, "s-9001");
+  eq("beside what this lane will send", c0(lower).oid, "S-9001");
+  eq("and it is a WARNING, not a new refusal — the flight is still queued", lower.counts.queued, 1);
+  eq("and nothing is held for it", lower.counts.held, 0);
+  const upper = plan([e], [], { waPeople: [{ role: "student", active: true, external_oid: "S-9001" },
+    { role: "instructor", active: true, external_oid: "R-9001" }] });
+  eq("a clean read says nothing at all", (upper.oidCase || []).length, 0);
+  eq("and no read says nothing either", (plan([e], []).oidCase || []).length, 0);
+
+  /* AND THE CROSS-CHECK REPORT — where the false «matched BY OID» is printed —
+     carries the same fact on the person's own row. */
+  const rep = H.run(H.waExport([H.person({ oid: "oid-x01" })], []),
+    { students: [H.fdmsStudent({ oid: "OID-X01" })] });
+  eq("the report still matches him by OID, because hiding him would be worse",
+    rep.persons[0].via, "oid");
+  ok("and it says on his own line that the wire will refuse him",
+    rep.persons[0].divergences.some((d) => /CASE/.test(d) && /UPPER-CASED as OID-X01/.test(d)),
+    JSON.stringify(rep.persons[0].divergences));
+  const clean = H.run(H.waExport([H.person({ oid: "OID-X01" })], []),
+    { students: [H.fdmsStudent({ oid: "OID-X01" })] });
+  ok("and says nothing when the two cases already agree",
+    !clean.persons[0].divergences.some((d) => /CASE/.test(d)),
+    JSON.stringify(clean.persons[0].divergences));
 }
 
 module.exports = true;

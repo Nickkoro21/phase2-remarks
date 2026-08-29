@@ -408,6 +408,15 @@
       const oid = normOid(p.external_oid), mn = normMn(p.mn);
       const shown = {
         waId: trim(p.id), oid, mn,
+        /* THE OBJECT ID EXACTLY AS WINGS AHEAD CARRIES IT (P45-FDMSe, verify
+           item 12b). `normOid` upper-cases, so this report matches a lower-case
+           `external_oid` happily and prints «matched BY OID» — and then the
+           push sends the UPPER-CASED form, the envelope matches exactly, and
+           every one of that person's flights is refused, with nothing on screen
+           joining the two facts. Keeping the raw value is what lets the
+           divergence below be said before the first push rather than after 30
+           refusals. */
+        oidRaw: trim(p.external_oid),
         name: trim(p.last_name) + (trim(p.first_name) ? " " + trim(p.first_name) : ""),
         role: trim(p.role), active: p.active !== false, klass: trim(p.class),
         rank: trim(p.rank), callsign: trim(p.call_sign),
@@ -452,6 +461,12 @@
         /* ruling #4 — MN / rank / class are MUTABLE and only the developer
            changes them; a divergence is a report line, never a write. */
         divergences: [
+          oid && shown.oidRaw && shown.oidRaw !== oid
+            ? "CASE — Wings Ahead carries this object id as «" + shown.oidRaw + "». The push sends it "
+              + "UPPER-CASED as " + oid + " and the far side matches it EXACTLY, so this person's "
+              + "envelope is refused and none of his flights crosses. It is matched here because this "
+              + "report compares case-insensitively; the wire does not. Fix the case in the Wings Ahead "
+              + "roster before the first push" : "",
           via === "mn" && !oid ? "matched by MN — Wings Ahead carries no OID for this person" : "",
           via === "oid" && oid && normOid(f.oid) !== oid ? "OID mismatch after an OID match (impossible — read this as a bug)" : "",
           mn && normMn(f.mn) && mn !== normMn(f.mn) ? "MN differs — WA " + trim(p.mn) + " · FDMS " + trim(f.mn) : "",
@@ -2240,12 +2255,22 @@
        they cost nothing — because an unknown or ambiguous OID is one of the four
        ENVELOPE raises and it voids that student's whole call. */
     const waStudentOids = new Set(), waPersonOids = new Set();
+    /* ── AND THE ONE THING THIS PRE-CHECK CANNOT CATCH, SAID OUT LOUD ────────
+       `normOid` upper-cases, so the two Sets above resolve a lower-case
+       `external_oid` and this planner queues the flight — and the ENVELOPE on
+       the far side matches EXACTLY and refuses the whole student (P45-FDMSe,
+       verify item 12b: 30 people «matched BY OID», 30 × HTTP 400). The case is
+       not corrected here — a read is somebody else's roster and this app does
+       not rewrite it, not even in memory — it is REPORTED, on the pane where
+       ✈ Push now is, before the button is pressed. */
+    const oidCase = [];
     let havePull = false;
     arr(o.waPeople).forEach((p) => {
       if (!isObj(p)) return;
       havePull = true;
-      const oid = normOid(p.external_oid || p.oid);
+      const raw = trim(p.external_oid || p.oid), oid = normOid(raw);
       if (!oid) return;
+      if (raw !== oid) oidCase.push({ raw, oid, role: trim(p.role) });
       waPersonOids.add(oid);
       if (trim(p.role) === "student" && p.active !== false) waStudentOids.add(oid);
     });
@@ -2326,7 +2351,27 @@
         if (!rid || strandedBy.has(rid)) return;
         strandedBy.set(rid, key);
       });
-      if (!strands.has(key)) strands.set(key, { key, who, what, n: 0, uids: [] });
+      if (!strands.has(key)) strands.set(key, { key, who, what, n: 0, chg: 0, uids: [] });
+    };
+    /* ── «UNEDITED» IS A CLAIM ABOUT THE TRAINING LOG, SO THE LOG ANSWERS IT ──
+       P45-FDMSe, verify item 8. The held line used to end «…and the FDMS events
+       they came from are still in the training log, UNEDITED» without ever
+       consulting the training log, and the verifier reproduced it in one act:
+       make an instructor's object id unresolvable in the read AND move one of
+       his events. Without the read that event's old row owes a genuine
+       removal; with the read the removal is (correctly, and by the invariant a
+       read may never ADD one) absorbed into the strand — and the sentence then
+       told the developer all 151 events were unedited when one of them was not.
+       This is the check the sentence was missing, and it is three lookups in
+       maps this run has already built: TRUE when the row behind the hold WOULD
+       have been owed an event-side removal but for the fault holding it. */
+    const evChanged = (L) => {
+      const e = trim(L && L.evId);
+      if (!e) return false;
+      if (!liveEv.has(e)) return true;                     // deleted from the log
+      const nd = evNode.get(e);
+      if (nd && nd !== trim(L.uid)) return true;           // moved to another node
+      return evWhy.has(e);                                 // edited out of qualifying
     };
     /* WHAT A REMOVAL IS ALLOWED TO SAY, and the sweep proves each one before it
        says it: the event id is looked for in the training log by name, and when
@@ -2335,6 +2380,20 @@
     const liveEv = new Set();              // every event id the training log carries
     const evWhy = new Map();               // evId → the EVENT-SIDE sentence that disqualified it
     const evNode = new Map();              // evId → the syllabus node it names NOW
+    /* ── AND WHAT THE RUN ACTUALLY DID WITH THE EVENT (P45-FDMSe, item 7) ────
+       `evWhy` above is filled ONLY for `fact === "event"`, because only an
+       event-side clause may be quoted as the reason a row is REMOVED. The
+       moved-branch's consequence clause then had nothing to read for a GRAPH
+       fact and printed «the flight itself is queued afresh under its new node»
+       unconditionally — measured FALSE: move a flight onto a node the syllabus
+       graph does not carry and the same pane lists it under «does not cross
+       this lane» while the removal beside it promises a re-queue.
+       `evFate` is the cure: one entry per event, written at the very point the
+       run decides, covering EVERY exit — blocked (whosever fact it is), held
+       behind a lookup, already standing, held, undone, queued. Nothing here
+       infers; `movedTail` reads it back. */
+    const evFate = new Map();              // evId → {kind, why, how, hold}
+    const queuedNow = new Set();           // evId → still on the queue when the run ENDS
 
     log.forEach((ev) => {
       if (!isObj(ev) || !trim(ev.id)) return;
@@ -2366,6 +2425,7 @@
            are stranded rather than removed. A row written under a DIFFERENT
            node is one this event moved away from — that one is a real removal,
            and it keeps its place in the sweep. */
+        evFate.set(evId, { kind: "block", why: why, fact: blk.fact });
         if (blk.fact === "graph" && node) {
           strand(mine.filter((x) => trim(x.uid) === node), sKey("graph", node),
             stu ? label(stu) : code,
@@ -2399,6 +2459,7 @@
         const w = "«" + code + "» is not a student of this FDMS roster — a flight is pushed onto the "
           + "record of a person, and this side cannot name one";
         blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: code, why: w });
+        evFate.set(evId, { kind: "lookup", why: w });
         strand(mine, sKey("fdms-stu", code), code, "THE FDMS ROSTER, NOT THE TRAINING LOG: " + w);
         return;
       }
@@ -2407,6 +2468,7 @@
         const w = "this student carries no OID, and the OID is the ONE thing the two systems join on "
           + "(ruling #4) — a surname never resolves anybody across this wire";
         blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: label(stu), why: w });
+        evFate.set(evId, { kind: "lookup", why: w });
         strand(mine, sKey("fdms-stu-oid", code), label(stu),
           "THE FDMS ROSTER, NOT THE TRAINING LOG: " + w);
         return;
@@ -2415,6 +2477,7 @@
         const w = "no ACTIVE Wings Ahead student carries the roster object id " + oid + " — the person has "
           + "to exist there, and be active, before a flight can be pushed onto his record";
         blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: label(stu), why: w });
+        evFate.set(evId, { kind: "lookup", why: w });
         strand(mine, sKey("wa-stu", oid), label(stu) + " · " + oid,
           "THE READ OF WINGS AHEAD, NOT THE TRAINING LOG: the roster in the read on screen carries no "
           + "ACTIVE person with the object id " + oid + " — he has been deactivated there, renamed, "
@@ -2431,12 +2494,14 @@
           + "authority», and Wings Ahead requires one on every row";
         blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: label(stu), why: w });
         evWhy.set(evId, w);
+        evFate.set(evId, { kind: "block", why: w, fact: "event" });
         return;
       }
       if (!ip || !normOid(ip.oid)) {
         const w = "«" + trim(ev.instructor) + "» resolves to no FDMS instructor with an OID — an identity "
           + "is never guessed from a name across this wire (ruling #4)";
         blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: label(stu), why: w });
+        evFate.set(evId, { kind: "lookup", why: w });
         strand(mine, sKey("fdms-ip", trim(ev.instructor)), "instructor «" + trim(ev.instructor) + "»",
           "THE FDMS ROSTER, NOT THE TRAINING LOG: " + w);
         return;
@@ -2445,6 +2510,7 @@
         const w = "the instructor's object id " + normOid(ip.oid) + " is not on the Wings Ahead roster — "
           + "the row would carry an identity that side cannot resolve";
         blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: label(stu), why: w });
+        evFate.set(evId, { kind: "lookup", why: w });
         strand(mine, sKey("wa-ip", normOid(ip.oid)), label(ip) + " · " + normOid(ip.oid),
           "THE READ OF WINGS AHEAD, NOT THE TRAINING LOG: the roster in the read on screen no longer "
           + "carries the object id " + normOid(ip.oid) + " — the instructor was renamed there, "
@@ -2489,16 +2555,18 @@
       const ord = L ? posInt(L.ord, 1) : mintOrd(idx, oid, group, node);
       const rid = L ? trim(L.rid) : ledRid(oid, group, node, ord);
       if (rid.length > RID_MAX) {
-        blocked.push({ evId, student: code, uid: node, date, who: label(stu),
-          why: "the row identity is " + rid.length + " characters and the wire carries at most " + RID_MAX
-            + " — it is what the tombstones and the audit are keyed to" });
+        const w = "the row identity is " + rid.length + " characters and the wire carries at most "
+          + RID_MAX + " — it is what the tombstones and the audit are keyed to";
+        blocked.push({ evId, student: code, uid: node, date, who: label(stu), why: w });
+        evFate.set(evId, { kind: "block", why: w, fact: "identity" });
         return;
       }
       const seq = L ? posInt(L.seq, 1) : mintSeq(idx, oid, codeOfNode(node), date);
       if (!seq) {
-        blocked.push({ evId, student: code, uid: node, date, who: label(stu),
-          why: "twenty flights of «" + codeOfNode(node) + "» already stand on that day — Wings Ahead "
-            + "numbers the same-day flights of one code from 1 to " + SEQ_MAX });
+        const w = "twenty flights of «" + codeOfNode(node) + "» already stand on that day — Wings Ahead "
+          + "numbers the same-day flights of one code from 1 to " + SEQ_MAX;
+        blocked.push({ evId, student: code, uid: node, date, who: label(stu), why: w });
+        evFate.set(evId, { kind: "block", why: w, fact: "identity" });
         return;
       }
       const row = pushRowOf({
@@ -2515,17 +2583,20 @@
         date, row, klass: trim(stu.class) };
 
       if (!L) {
+        evFate.set(evId, { kind: "queued", how: "create" });
         queued.push({ kind: "create", line,
           op: { op: "upsert", section: group, rid, prev: null, row, clear_tombstone: false } });
         return;
       }
       const state = trim(L.state), hold = trim(L.hold);
       if (hold) {
+        evFate.set(evId, { kind: "held", hold: hold });
         held.push({ line: Object.assign({}, line, { row }), hold, note: trim(L.note),
           verdict: trim(L.verdict), sent: isObj(L.sent) ? L.sent : null, src: "event" });
         return;
       }
       if (state === "removed") {
+        evFate.set(evId, { kind: "held", hold: "removed" });
         held.push({ line: Object.assign({}, line, { row }), hold: "removed",
           note: "this identity was removed from Wings Ahead by the bridge and a tombstone lies on it — "
             + "bringing it back is a deliberate act, never something the queue does by itself",
@@ -2533,6 +2604,7 @@
         return;
       }
       if (state === "undone") {
+        evFate.set(evId, { kind: "undone" });
         removals.push({ line, reason: "undo", rid, oid, sent: isObj(L.sent) ? L.sent : row,
           why: "the developer took this push back (↺ Undo) — the Wings Ahead row it created is removed "
             + "and the identity is tombstoned, which is what makes the undo stick",
@@ -2540,15 +2612,20 @@
         return;
       }
       if (tombs.has(oid + " " + rid) && !L.clearTomb) {
+        evFate.set(evId, { kind: "held", hold: "tombstoned" });
         held.push({ line, hold: "tombstoned", src: "event",
           note: "Wings Ahead reports a live tombstone on this identity — it does not come back on its own",
           verdict: "", sent: isObj(L.sent) ? L.sent : null });
         return;
       }
       const sent = isObj(L.sent) ? L.sent : null;
-      if (state === "pushed" && sent && sameWaRow(sent, row)) return;      // nothing owed
+      if (state === "pushed" && sent && sameWaRow(sent, row)) {
+        evFate.set(evId, { kind: "standing" });
+        return;                                                           // nothing owed
+      }
       const isMove = !!sent && (up(sent.sortie) !== up(row.sortie) || isoDate(sent.date) !== isoDate(row.date)
         || posInt(sent.seq, 1) !== posInt(row.seq, 1));
+      evFate.set(evId, { kind: "queued", how: sent ? (isMove ? "move" : "change") : "create" });
       queued.push({ kind: sent ? (isMove ? "move" : "change") : "create",
         line: Object.assign({}, line, { sent }),
         op: { op: "upsert", section: group, rid, prev: sent, row,
@@ -2585,6 +2662,7 @@
       if (sK && strands.has(sK)) {
         const s = strands.get(sK);
         s.n += 1;
+        if (evChanged(L)) s.chg += 1;         // and it is SAID, not swallowed
         const u = trim(L.uid);
         if (u && s.uids.length < 4 && s.uids.indexOf(u) < 0) s.uids.push(u);
         return;
@@ -2597,6 +2675,10 @@
           ? "the developer took this push back (↺ Undo) — the Wings Ahead row it created is removed and "
             + "the identity is tombstoned, which is what makes the undo stick"
           : removalWhy(L),
+        /* the ledger row, kept just long enough to ask `removalWhy` a SECOND
+           time once the queue is final — see the finalising pass below. It is
+           deleted there, so nothing but the sentence leaves this function. */
+        srcRow: undone ? null : L,
         op: { op: "remove", section: group, rid, prev: sent,
           reason: undone ? "undo" : "source_removed" } });
     });
@@ -2628,9 +2710,7 @@
       if (nd && nd !== trim(L.uid)) {
         return "the FDMS event this row was written from now names the syllabus node «" + nd + "», and "
           + "this row was written for «" + trim(L.uid) + "» — the event MOVED, and the row it left behind "
-          + "is owed a removal" + (evWhy.has(ev)
-            ? " (and the flight does not cross under its new node either: " + evWhy.get(ev) + ")"
-            : " (the flight itself is queued afresh under its new node)");
+          + "is owed a removal" + movedTail(ev, nd);
       }
       const w = evWhy.get(ev);
       if (w) {
@@ -2642,24 +2722,100 @@
         + "the training log claims it any more";
     }
 
+    /* ── WHAT HAPPENS TO A MOVED FLIGHT UNDER ITS NEW NODE ────────────────────
+       The consequence clause of the MOVED branch, and P45-FDMSd's own verify
+       caught it lying (item 7): it printed «the flight itself is queued afresh
+       under its new node» whenever `evWhy` was empty, and `evWhy` is filled
+       only for an EVENT-side refusal. Move a flight onto a node the syllabus
+       graph does not carry and the run queues NOTHING — measured QUEUED 0 —
+       while the same pane lists that very event under «does not cross this
+       lane» as off_graph. One screen, two contradictory sentences.
+
+       So the clause is now MEASURED, with the same classification the blocked
+       list uses: `evFate` says what the run decided about this event, and
+       `queuedNow` says whether the line survived to the queue the run actually
+       returns (two later sweeps can still take one off it — a malformed `prev`,
+       a student the server is holding). Nothing is reassured that was not
+       looked up, and an event with no recorded fate gets NO parenthetical at
+       all rather than a comforting guess. */
+    function movedTail(evId, nd) {
+      const at = nd ? "«" + nd + "»" : "its new node";
+      const f = evFate.get(evId);
+      if (queuedNow.has(evId)) {
+        return " (and the flight itself IS queued under " + at + " in this same run, "
+          + ((f && f.how) === "create" ? "as a new row" : "as a change to the row already standing there")
+          + ")";
+      }
+      if (!f) return "";
+      if (f.kind === "standing") {
+        return " (and the flight itself is owed nothing under " + at + ": the row the bridge wrote there "
+          + "already says exactly this, fact for fact)";
+      }
+      if (f.kind === "held") {
+        return " (and the flight does NOT cross under " + at + " either: the row there is held «"
+          + f.hold + "» and off the queue until a human settles it)";
+      }
+      if (f.kind === "undone") {
+        return " (and the flight does NOT cross under " + at + " either: the push that wrote its row "
+          + "there was taken back with ↺ Undo, so that row is owed a removal of its own)";
+      }
+      if (f.kind === "lookup") {
+        return " (and the flight does NOT cross under " + at + " either — and this is a LOOKUP, not the "
+          + "training log: " + f.why + ")";
+      }
+      if (f.kind === "queued") {
+        /* it was queued and a later sweep took it off — say that, do not
+           promise a crossing the caller can see did not happen */
+        return " (and the flight itself is NOT on the queue that leaves this run: its line under " + at
+          + " was taken off it — the Held table below says by what)";
+      }
+      return " (and the flight does NOT cross under " + at + " either: " + f.why + ")";
+    }
+
     /* ── AND THE STRANDS BECOME ONE HELD LINE EACH ────────────────────────
        Only the ones that actually caught a row: a lookup that failed for an
        event nobody ever pushed has cost nothing and has nothing to say. */
-    let strandedRows = 0;
+    let strandedRows = 0, strandedChanged = 0;
     strands.forEach((s) => {
       if (!s.n) return;
       strandedRows += s.n;
+      strandedChanged += s.chg;
+      const many = s.n !== 1;
+      /* THE TWO HALVES OF THE OLD SENTENCE, EACH PUT WHERE IT BELONGS
+         (P45-FDMSe, verify item 8). What this side CAN establish it states; what
+         it cannot it does not state at all. «Nothing is removed» is a fact about
+         what this run built and it stands. «The events are in the training log»
+         is a fact this run read — every one of these rows is here BECAUSE its
+         event was walked in the log above. «Unedited» was neither: it is now
+         asked, per row, by `evChanged`. And «the rows are still standing over
+         there» is knowledge of the OTHER side that this pane's read does not
+         carry — the read is consulted for its roster of people and nothing
+         else — so it is said as what it is. */
+      const changed = s.chg
+        ? " — and " + (many ? s.chg + " of them " + (s.chg === 1 ? "carries a change of its own"
+          : "carry a change of their own") : "IT CARRIES A CHANGE OF ITS OWN")
+          + ", WAITING BEHIND THIS HOLD: the event" + (s.chg === 1 ? " it was" : "s they were")
+          + " written from " + (s.chg === 1 ? "has" : "have") + " been deleted, moved to another node, or "
+          + "edited out of qualifying, and the removal that says so is derived — with the sentence that "
+          + "proves it — on the first run where this lookup answers."
+        : " — and this run asked the training log about " + (many ? "every one of them: not one is"
+          : "it: it is not") + " deleted, moved to another node, or edited out of qualifying.";
       held.push({
         line: { rid: "", oid: "", group: "", uid: s.uids.join(" · ") + (s.n > s.uids.length ? " · …" : ""),
           ord: 0, seq: 0, evId: "", student: "", who: s.who, date: "", row: null, klass: "" },
-        hold: "unresolved", src: "roster", rows: s.n, verdict: "", sent: null,
-        note: s.what + "  NOTHING IS REMOVED AND NOTHING IS LOST: the " + s.n + " row"
-          + (s.n === 1 ? "" : "s") + " the bridge wrote " + (s.n === 1 ? "is" : "are") + " still standing "
-          + "on the Wings Ahead record" + (s.n === 1 ? "" : "s") + ", and the FDMS event"
-          + (s.n === 1 ? "" : "s") + " " + (s.n === 1 ? "it" : "they") + " came from "
-          + (s.n === 1 ? "is" : "are") + " still in the training log, unedited. A row is NEVER taken off a "
-          + "student's record because a lookup failed, so no removal is owed and «source_removed» is not "
-          + "built for any of them. They wait: heal the roster — or take a read that carries it — and "
+        hold: "unresolved", src: "roster", rows: s.n, changed: s.chg, verdict: "", sent: null,
+        note: s.what + "  NOTHING IS REMOVED AND NOTHING IS LOST: this run builds no removal for "
+          + (many ? "any of the " + s.n + " rows" : "the one row") + " the bridge wrote — a row is NEVER "
+          + "taken off a student's record because a lookup failed, so «source_removed» is not built for "
+          + (many ? "any of them" : "it") + ". "
+          + "THE FDMS EVENT" + (many ? "S" : "") + " BEHIND " + (many ? "THEM" : "IT") + " "
+          + (many ? "ARE" : "IS") + " IN THE TRAINING LOG — this run walked "
+          + (many ? "them" : "it") + " there by id" + changed + " "
+          + "WHAT THIS SIDE HAS NOT LOOKED AT is the Wings Ahead record itself: the read on this pane is "
+          + "consulted for its roster of PEOPLE and for nothing else, so «the row" + (many ? "s" : "")
+          + " still stand" + (many ? "" : "s") + " over there» is what this side last WROTE, not what it "
+          + "has just seen — the cross-check report is where that is answered. "
+          + "They wait: heal the roster — or take a read that carries it — and "
           + "they are ordinary tracked rows again on the very next run, with nothing to undo. "
           + "AND IF THOSE ROWS REALLY SHOULD COME OFF THE RECORD, the act that says so is deleting the "
           + "FDMS EVENTS in the training log: that is a statement about the flights, it is made where the "
@@ -2718,6 +2874,19 @@
       });
     }
 
+    /* ── THE MOVED SENTENCE IS FINALISED AFTER THE QUEUE IS ──────────────────
+       `removalWhy` was asked once while the queue was still being built; both
+       sweeps above can still take a line OFF that queue (a malformed `prev`, a
+       student the server is holding), and «the flight itself IS queued» is a
+       claim about the queue this run RETURNS. So it is asked again here, with
+       `queuedNow` filled — and the ledger row it needed is dropped, so the
+       removal that leaves this function carries a sentence and nothing else. */
+    queued.forEach((q) => { const i = trim(q.line && q.line.evId); if (i) queuedNow.add(i); });
+    removals.forEach((r) => {
+      if (r.reason === "source_removed" && r.srcRow) r.why = removalWhy(r.srcRow);
+      delete r.srcRow;
+    });
+
     /* group by student: bridge_push takes ONE student per call, and chunks of at
        most 200 operations (the server refuses the 201st by name). */
     const byStudent = new Map();
@@ -2731,13 +2900,17 @@
 
     return {
       schema: WA_BRIDGE_SCHEMA,
-      queued, removals, blocked, held,
+      queued, removals, blocked, held, oidCase,
       students: Array.from(byStudent.values()),
       counts: { queued: queued.length, removals: removals.length, blocked: blocked.length,
         held: held.length, heldFlights, ledger: idx.list.length, students: byStudent.size,
         /* the rows a failed lookup is holding — counted apart from `held`,
            which counts LINES, because one line can stand for 148 rows */
-        stranded: strandedRows },
+        stranded: strandedRows,
+        /* and how many of THOSE are sitting on a real event-side change that
+           the hold is (correctly) delaying — the number the held line used to
+           deny categorically without ever asking (P45-FDMSe, item 8) */
+        strandedChanged: strandedChanged },
     };
   }
 
@@ -5481,6 +5654,7 @@
         ${on ? "" : `<div class="sch-consqban"><b>Not configured</b> — open <b>⚚ ⚙ Settings</b> (with ✎ Editor
           mode on) and paste the project URL, the anon key and the bridge token you minted in Wings Ahead.</div>`}
         ${state}
+        ${oidCaseLine(p)}
         ${ui.pushMsg ? `<div class="sch-consqban ${ui.pushBad ? "is-pd" : "is-ok"}">${esc(ui.pushMsg)}</div>` : ""}
         <div class="brg-chips">
           <span class="sch-badge brg-tone-accent">Queued <b>${c.queued}</b></span>
@@ -5495,6 +5669,26 @@
         ${heldTable(p)}
         ${blockedTable(p)}
       </section>`;
+  }
+
+  /* ── THE REFUSAL THIS PANE CAN SEE COMING (P45-FDMSe, verify item 12b) ─────
+     The planner resolves an object id case-INSENSITIVELY (`normOid` upper-cases
+     both sides) and the far side matches it EXACTLY. So a Wings Ahead roster
+     carrying `oid-sp-01` passes every check on this side, queues every flight,
+     and is then refused at the envelope — one HTTP 400 per person, none of his
+     lines written, and nothing on screen saying why. It costs one string
+     comparison per person to see it coming, so it is said HERE, above ✈ Push
+     now, and not deduced from a wall of refusals afterwards. */
+  function oidCaseLine(p) {
+    const bad = arr(p && p.oidCase);
+    if (!bad.length) return "";
+    return `<div class="sch-consqban is-pd"><b>${bad.length} object id${bad.length === 1 ? "" : "s"} in
+      the read ${bad.length === 1 ? "is" : "are"} not upper case</b> — Wings Ahead carries
+      <code>${esc(bad[0].raw)}</code> and this lane sends <code>${esc(bad[0].oid)}</code>. This side
+      resolves the two as one person; <b>the far side does not</b>, and it refuses the whole
+      <b>envelope</b> for each of them — every flight of ${bad.length === 1 ? "that person" : "those people"}
+      is refused together, and nothing is written. Correct the case <b>in the Wings Ahead
+      roster</b>; this app never rewrites a read.</div>`;
   }
 
   /* HOW MANY LINES A LIST DRAWS BEFORE IT SAYS «and N more». It is the wire's
@@ -5634,7 +5828,10 @@
        waiting on this</div>`
     : h.src === "roster"
       ? `<div class="sch-nd"><b>${h.rows}</b> row${h.rows === 1 ? "" : "s"} the bridge wrote
-         ${h.rows === 1 ? "is" : "are"} waiting on this — <b>none of them is owed a removal</b></div>`
+         ${h.rows === 1 ? "is" : "are"} waiting on this — <b>this run builds no removal for
+         ${h.rows === 1 ? "it" : "any of them"}</b>${posInt(h.changed, 0)
+    ? ` · <b>${h.changed}</b> of them carr${h.changed === 1 ? "ies" : "y"} a change of
+       ${h.changed === 1 ? "its" : "their"} own behind this hold` : ""}</div>`
       : ""}</td>
         <td class="sch-mono">${esc(h.line.uid)}</td>
         <td>${esc(h.note || "")}${h.verdict ? `<div class="sch-nd">Wings Ahead answered «${esc(h.verdict)}»</div>` : ""}</td>
@@ -5642,6 +5839,7 @@
         <td>${heldActs(h)}</td></tr>`).join("");
     const flights = posInt(p.counts.heldFlights, 0);
     const stranded = posInt(p.counts.stranded, 0);
+    const changed = posInt(p.counts.strandedChanged, 0);
     return `<p class="sch-hint"><b>Held — waiting for a human.</b> Most of these are Wings Ahead's own
         answers, and every one of them said the same thing in a different way: <b>nothing was written</b>.
         A held line is <b>off the queue</b> on purpose — an automatic retry would re-send the same refused
@@ -5652,10 +5850,17 @@
         ${stranded ? `<br><b>«${esc(HOLD_WORD.unresolved)}»</b> — <b>${stranded}</b> row${stranded === 1
     ? "" : "s"} the bridge already wrote ${stranded === 1 ? "is" : "are"} standing behind a name this run
         could not resolve: a person missing from one of the two rosters, an object id the read on screen
-        does not carry, a node the syllabus graph no longer files. <b>Not one of them is owed a
-        removal.</b> An instructor renamed or posted away in Wings Ahead is an ordinary week in a
-        squadron, and it says <b>nothing whatever</b> about the flights he flew: the events are in the
-        training log, unedited, and the rows are on the records, untouched. This lane removes a Wings
+        does not carry, a node the syllabus graph no longer files. <b>This run builds no removal for a
+        single one of them.</b> An instructor renamed or posted away in Wings Ahead is an ordinary week in
+        a squadron, and it says <b>nothing whatever</b> about the flights he flew: the events behind those
+        rows are in the training log — this run walked every one of them there by id — and
+        ${changed ? `<b>${changed}</b> of the rows ${changed === 1 ? "carries a change of its own"
+    : "carry a change of their own"} <b>waiting behind a hold</b>: that removal is derived, with the
+        sentence that proves it, on the first run where the lookup answers.`
+    : "not one of them is deleted, moved to another node, or edited out of qualifying."}
+        <b>Whether the rows are still standing over there this side has not looked at</b> — the read is
+        consulted for its roster of <b>people</b> and nothing else, and the cross-check report is where a
+        record is compared. This lane removes a Wings
         Ahead row for exactly two reasons — the FDMS event was <b>deleted</b>, or it was <b>edited out of
         qualifying</b> — and each pending removal proves which one on its own line. A failed lookup is
         neither, so it waits here instead.` : ""}
@@ -5922,11 +6127,44 @@
         <p class="sch-hint">Matched on <b>OID</b> first and on <b>MN</b> when a side carries no OID.
           <b>Never on the name</b> — a name is display only (ruling #4). A primary key never changes;
           MN, rank and class do, and only the developer changes them.</p>
+        ${oidCaseBanner(id)}
         ${notesHtml(r)}
         <div class="sch-scroll"><table class="sch-tbl">
           <thead><tr><th>OID</th><th>Name</th><th>FDMS code</th><th>Class</th><th>Matched</th><th>Notes</th></tr></thead>
           <tbody>${rowsHtml}${unm}${fOnly}</tbody></table></div>
       </section>`;
+  }
+
+  /* ── «MATCHED BY OID» AND THEN REFUSED THIRTY TIMES ───────────────────────
+     P45-FDMSe, verify item 12b — pre-existing, and it was going to meet the
+     owner on his FIRST real push. `normOid` upper-cases before the wire; this
+     report matches case-insensitively. A Wings Ahead roster whose
+     `external_oid` values are lower-case therefore reports «N matched BY OID»
+     — a clean report — and then every one of those students is refused at the
+     ENVELOPE, «no ACTIVE student carries the roster object id OID-SP-01», one
+     HTTP 400 per person, with nothing anywhere joining the two facts. The
+     verifier spent 30 refusals on it.
+
+     THE JUDGEMENT WAS: SAY IT, DO NOT SILENTLY FIX IT. Upper-casing the read
+     would be this app writing a correction into somebody else's roster in its
+     own memory and then reporting a match that the wire will not honour —
+     which is the same lie one layer down. Refusing to match would be worse
+     still: it would hide the person from the report that exists to find him.
+     So the match stands, and the divergence is named — here in one line above
+     the table, and again as a chip on the person's own row — where it is read
+     BEFORE the push rather than deduced from a wall of 400s afterwards. */
+  function oidCaseBanner(id) {
+    const bad = arr(id && id.matched).filter((m) => m.wa && m.wa.oid && m.wa.oidRaw
+      && m.wa.oidRaw !== m.wa.oid);
+    if (!bad.length) return "";
+    const one = bad[0].wa;
+    return `<div class="sch-consqban is-pd"><b>${bad.length} object id${bad.length === 1 ? "" : "s"}
+      match${bad.length === 1 ? "es" : ""} here and will be REFUSED on the wire</b> — Wings Ahead carries
+      ${bad.length === 1 ? "it" : "them"} in a different case (e.g. <code>${esc(one.oidRaw)}</code>), and
+      the push sends the upper-cased <code>${esc(one.oid)}</code>. This report compares case-insensitively;
+      <b>the far side matches exactly</b>, so each of these people fails at the <b>envelope</b> — one
+      refusal per person, and not one of their flights crosses. Nothing here is wrong and nothing is
+      written: <b>correct the case in the Wings Ahead roster</b> before the first push.</div>`;
   }
 
   /* THE NOTES — a record warning with no row to stand on (R18 verify finding
