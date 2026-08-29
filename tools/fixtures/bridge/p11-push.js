@@ -52,6 +52,7 @@ const plan = (log, ledger, opts) => B.planPush(
   Object.assign({ kindOf: kOf }, opts || {}));
 
 const q0 = (p) => (p.queued.length ? p.queued[0] : null);
+const arr0 = (a) => (Array.isArray(a) && a.length ? a[0] : null);
 
 /* ══════════════════════════════════════════════════════════════════════════
    11a — THE QUALIFYING PREDICATE, ONE CLAUSE AT A TIME (design B.1)
@@ -929,6 +930,270 @@ console.log("\n=== PROBE 11m — the call has a deadline, and it is the far side
   eq("and it is NOT mistaken for the server's own statement timeout, which halves and retries",
     B.wireFailKind({ ok: false, kind: "refused", code: "57014",
       why: "canceling statement due to statement timeout" }), "toobig");
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   11n — A REMOVAL IS A FACT ABOUT THE TRAINING LOG (P45-FDMSd, verify item 10)
+   ══════════════════════════════════════════════════════════════════════════
+   THE FINDING. One instructor's roster object id was renamed IN WINGS AHEAD —
+   a posting, a marriage, a departure. Nothing else moved; 158 FDMS events sat
+   in the training log unedited. The next live read made the planner derive
+   **148 PENDING REMOVALS** of correct, bridge-written rows, each carrying «the
+   FDMS event this row came from is gone from the training log, or no longer
+   qualifies to cross». One confirm and the wire answered `removed`: the row is
+   gone from Wings Ahead and a `source_removed` tombstone stands on it.
+
+   What is asserted below is not the sentence, it is the JUDGEMENT underneath
+   it: which facts owe a removal and which owe a hold. Force any one of them the
+   wrong way and these break. */
+console.log("\n=== PROBE 11n — a lookup is never printed as a removal ===");
+{
+  const e = ev({ id: "TV-R1" });
+  const led = (o) => [Object.assign({ rid: "S-9001 ∷ flights ∷ s:C4302 ∷ 1", oid: "S-9001",
+    group: "flights", uid: "s:C4302", ord: 1, seq: 1, evId: "TV-R1", student: "ZZ-1",
+    sent: q0(plan([e])).op.row, state: "pushed", hold: "", verdict: "created" }, o || {})];
+  const waOk = [{ role: "student", active: true, external_oid: "S-9001" },
+    { role: "instructor", active: true, external_oid: "R-9001" }];
+  /* A FORCED WRONG BRANCH MUST *FAIL*, NOT CRASH. Every assertion below reaches
+     for held[0] or removals[0]; on a mutation that empties the list, reading
+     `.note` off undefined would abort the whole suite with a stack trace, and a
+     suite that dies is a suite that cannot say which of its 805 checks the
+     mutation actually broke. So the reach is padded, once, here. */
+  const h0 = (p) => (arr0(p.held) || { hold: "", note: "", src: "", rows: 0 });
+  const r0 = (p) => (arr0(p.removals) || { why: "", op: {}, rid: "" });
+
+  /* the baseline: read on screen, everything resolves, nothing owed anywhere */
+  const calm = plan([e], led(), { waPeople: waOk });
+  eq("with both rosters answering, the pushed row is owed nothing", calm.counts.queued, 0);
+  eq("and nothing is removed", calm.counts.removals, 0);
+  eq("and nothing is held", calm.counts.held, 0);
+
+  /* ── ① THE FINDING ITSELF, REPLAYED: the instructor is renamed in WA ─────── */
+  const ipGone = plan([e], led(), { waPeople: [waOk[0],
+    { role: "instructor", active: true, external_oid: "R-9001-GONE" }] });
+  eq("an instructor renamed in Wings Ahead removes NOTHING", ipGone.counts.removals, 0);
+  eq("the pushed row is not queued either — it is off the run", ipGone.counts.queued, 0);
+  eq("it is ONE held line, for the FACT and not one per flight", ipGone.counts.held, 1);
+  eq("naming the rows standing behind it", ipGone.counts.stranded, 1);
+  eq("under a hold of its own, which is not a Wings Ahead verdict",
+    h0(ipGone).hold, "unresolved");
+  eq("and a source of its own, so the table can say what it is", h0(ipGone).src, "roster");
+  ok("the sentence names the READ, not the training log",
+    /THE READ OF WINGS AHEAD, NOT THE TRAINING LOG/.test(h0(ipGone).note), h0(ipGone).note);
+  ok("and it names the object id that could not be resolved",
+    /R-9001/.test(h0(ipGone).note), h0(ipGone).note);
+  ok("and it says out loud that nothing is removed and nothing is lost",
+    /NOTHING IS REMOVED AND NOTHING IS LOST/.test(h0(ipGone).note), h0(ipGone).note);
+  ok("the FALSE sentence is nowhere in the plan",
+    !JSON.stringify(ipGone).includes("gone from the training log, or no longer qualifies"));
+  ok("and no `remove` operation carrying source_removed was built at all",
+    !JSON.stringify(ipGone.removals).includes("source_removed"));
+  /* CAUSATION, BOTH WAYS — the verifier proved it live; it is proven here too */
+  eq("restoring the object id takes the hold away on the very next run",
+    plan([e], led(), { waPeople: waOk }).counts.held, 0);
+
+  /* ── ② THE STUDENT-SIDE VARIANTS: deactivated, and re-numbered ──────────── */
+  const stuOff = plan([e], led(), { waPeople: [{ role: "student", active: false,
+    external_oid: "S-9001" }, waOk[1]] });
+  eq("a student DEACTIVATED in Wings Ahead removes nothing either", stuOff.counts.removals, 0);
+  eq("his rows are held behind one fact", stuOff.counts.held, 1);
+  ok("naming him and his object id", /S-9001/.test(h0(stuOff).note), h0(stuOff).note);
+  const stuNew = plan([e], led(), { waPeople: [{ role: "student", active: true,
+    external_oid: "S-9001-NEW" }, waOk[1]] });
+  eq("nor does a student re-numbered over there", stuNew.counts.removals, 0);
+
+  /* ── ③ THE FDMS ROSTER IS A ROSTER TOO ─────────────────────────────────── */
+  const noIp = B.planPush({ trainingLog: [e], students: [STU], instructors: [],
+    bridgePush: led() }, { kindOf: kOf });
+  eq("an instructor missing from the FDMS roster removes nothing", noIp.counts.removals, 0);
+  ok("and says which roster it is", /THE FDMS ROSTER, NOT THE TRAINING LOG/.test(h0(noIp).note),
+    h0(noIp).note);
+  const noStu = B.planPush({ trainingLog: [e], students: [], instructors: [IP],
+    bridgePush: led() }, { kindOf: kOf });
+  eq("a student missing from the FDMS roster removes nothing", noStu.counts.removals, 0);
+  const noOid = B.planPush({ trainingLog: [e], students: [Object.assign({}, STU, { oid: "" })],
+    instructors: [IP], bridgePush: led() }, { kindOf: kOf });
+  eq("nor does a student whose OID was cleared in the FDMS roster", noOid.counts.removals, 0);
+
+  /* ── ④ THE SYLLABUS GRAPH IS NOT AN EDIT TO THE TRAINING LOG ────────────── */
+  const noGraph = B.planPush({ trainingLog: [e], students: [STU], instructors: [IP],
+    bridgePush: led() }, { kindOf: () => null });
+  eq("a graph that no longer carries the node removes nothing", noGraph.counts.removals, 0);
+  eq("the rows are held", noGraph.counts.stranded, 1);
+  ok("and the sentence names the GRAPH", /THE SYLLABUS GRAPH, NOT THE TRAINING LOG/
+    .test(h0(noGraph).note), h0(noGraph).note);
+  /* the catastrophic shape of the same fault: SchedReady not loaded at all, and
+     EVERY pushed row in the store answering to a graph that says null. */
+  const many = [ev({ id: "TV-R2", node: "s:C4303" }), ev({ id: "TV-R3", node: "s:I4201" })];
+  const manyLed = many.map((x, i) => ({ rid: "S-9001 ∷ flights ∷ " + x.node + " ∷ 1", oid: "S-9001",
+    group: "flights", uid: x.node, ord: 1, seq: 1, evId: x.id, student: "ZZ-1",
+    sent: q0(plan([x])).op.row, state: "pushed", hold: "" }));
+  const dark = B.planPush({ trainingLog: many, students: [STU], instructors: [IP],
+    bridgePush: manyLed }, { kindOf: () => null });
+  eq("a graph that answers null for EVERYTHING still removes nothing at all", dark.counts.removals, 0);
+  eq("and every row is accounted for", dark.counts.stranded, 2);
+  /* a re-filing of the SECTION is the same class — the node did not move */
+  const refiled = B.planPush({ trainingLog: [e], students: [STU], instructors: [IP],
+    bridgePush: led() }, { kindOf: () => "fs" });
+  eq("a graph that re-files the code into another section removes nothing", refiled.counts.removals, 0);
+  ok("and says the graph moved, not the event",
+    /what moved is the graph/.test(h0(refiled).note), h0(refiled).note);
+
+  /* ── ⑤ AND THE REMOVALS THAT ARE STILL OWED, EACH PROVING ITS OWN FACT ──── */
+  const deleted = plan([], led(), { waPeople: waOk });
+  eq("an FDMS event DELETED from the training log is still one removal", deleted.counts.removals, 1);
+  eq("with the reason the wire speaks", r0(deleted).op.reason, "source_removed");
+  ok("and a sentence that proves it by name, with no «or» in it",
+    /GONE from the training log/.test(r0(deleted).why)
+      && /TV-R1/.test(r0(deleted).why)
+      && !/no longer qualifies to/.test(r0(deleted).why), r0(deleted).why);
+  const blanked = plan([Object.assign({}, e, { result: "" })], led(), { waPeople: waOk });
+  eq("an event EDITED out of qualifying is still one removal", blanked.counts.removals, 1);
+  ok("and the sentence carries the very clause that disqualified it",
+    /edited out of qualifying/.test(r0(blanked).why)
+      && /reads a blank result as COMPLETED/.test(r0(blanked).why), r0(blanked).why);
+  const scoped = plan([Object.assign({}, e, { scope: "class", class: "77TST-Z" })], led(),
+    { waPeople: waOk });
+  eq("a scope changed to CLASS is a removal too", scoped.counts.removals, 1);
+  const noWho = plan([Object.assign({}, e, { instructor: "" })], led(), { waPeople: waOk });
+  eq("and an event edited to name NO instructor is a removal — the event is what changed",
+    noWho.counts.removals, 1);
+  ok("saying so, in the words that refused it",
+    /never launches alone/.test(r0(noWho).why), r0(noWho).why);
+  const movedNode = plan([Object.assign({}, e, { node: "s:C4303" })], led(), { waPeople: waOk });
+  eq("an event MOVED to another node owes its old row a removal", movedNode.counts.removals, 1);
+  eq("and the flight is queued afresh under the new one", movedNode.counts.queued, 1);
+  ok("the sentence names both nodes",
+    /s:C4303/.test(r0(movedNode).why) && /s:C4302/.test(r0(movedNode).why),
+    r0(movedNode).why);
+  /* the developer's own act is owed WHATEVER the rosters are doing */
+  const undoneStranded = plan([e], led({ state: "undone" }), { waPeople: [waOk[0],
+    { role: "instructor", active: true, external_oid: "R-9001-GONE" }] });
+  eq("an ↺ Undo is still owed even while the roster cannot be resolved",
+    undoneStranded.counts.removals, 1);
+  eq("under its own reason, never source_removed", r0(undoneStranded).op.reason, "undo");
+
+  /* ── ⑥ THE INVARIANT THE WHOLE FIX RESTS ON ─────────────────────────────
+     A READ OF WINGS AHEAD CAN NEVER ADD A REMOVAL. It is knowledge about the
+     other side; a removal is a statement about THIS one. Whatever a read
+     carries — a renamed instructor, an emptied roster, a read of a different
+     Wings Ahead entirely — the set of rows owed a removal can only ever be the
+     same or smaller than it is with no read at all. */
+  const rids = (p) => p.removals.map((r) => r.rid).sort().join("|");
+  const noReadCase = (log) => plan(log, led());
+  [[e], [], [Object.assign({}, e, { result: "" })], [Object.assign({}, e, { node: "s:C4303" })]]
+    .forEach((log, i) => {
+      const base = noReadCase(log);
+      [waOk, [], [{ role: "student", active: true, external_oid: "ZZZZ" }],
+        [{ role: "student", active: false, external_oid: "S-9001" }]].forEach((wp, j) => {
+        const withRead = plan(log, led(), { waPeople: wp });
+        const b = rids(base).split("|").filter(Boolean);
+        const w = rids(withRead).split("|").filter(Boolean);
+        ok("case " + i + "/" + j + ": a read never ADDS a removal", w.every((r) => b.indexOf(r) >= 0),
+          "with read: " + rids(withRead) + " · without: " + rids(base));
+      });
+    });
+
+  /* ── ⑦ AND THE PREDICATE CARRIES THE JUDGEMENT, ASSERTED DIRECTLY ──────── */
+  eq("pushBlockWhy still answers the sentence pushBlockOf answers",
+    B.pushBlockWhy(ev({ origin: "wa" }), { kindOf: kOf }).why,
+    B.pushBlockOf(ev({ origin: "wa" }), { kindOf: kOf }));
+  eq("an echo is a fact about the EVENT", B.pushBlockWhy(ev({ origin: "wa" }),
+    { kindOf: kOf }).fact, "event");
+  eq("a blank result is a fact about the EVENT",
+    B.pushBlockWhy(ev({ result: "" }), { kindOf: kOf }).fact, "event");
+  eq("a ground scope is a fact about the EVENT",
+    B.pushBlockWhy(ev({ scope: "class" }), { kindOf: kOf }).fact, "event");
+  eq("a node the graph does not carry is a fact about the GRAPH",
+    B.pushBlockWhy(ev({ node: "s:QQ111" }), { kindOf: kOf }).fact, "graph");
+  eq("and so is a node the graph files outside this lane",
+    B.pushBlockWhy(ev({ node: "s:C4302" }), { kindOf: () => "lessons" }).fact, "graph");
+  eq("an event that qualifies carries no sentence and no fault",
+    B.pushBlockWhy(ev({}), { kindOf: kOf }).why, "");
+
+  /* ── ⑧ THE FRICTION A MASS REMOVAL DESERVES ─────────────────────────────
+     The number lives in the source, exported, so a round cannot move it
+     quietly — and the two sides of the line are what the judgement is about. */
+  ok("␥ Confirm all asks for the count back above a threshold, and the threshold is readable",
+    typeof B.RM_TYPE_AT === "number" && B.RM_TYPE_AT >= 2, String(B.RM_TYPE_AT));
+  ok("it is high enough that a day's corrections do not meet a gate",
+    B.RM_TYPE_AT >= 5, String(B.RM_TYPE_AT));
+  ok("and low enough that finding A's 148 would have met one by a wide margin",
+    B.RM_TYPE_AT <= 25, String(B.RM_TYPE_AT));
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   11o — THE STALE FORGET PATH SPEAKS (P45-FDMSd, verify item 7)
+   ══════════════════════════════════════════════════════════════════════════
+   `standingBeside()` and the ✕ Stop tracking dialog's standing-row warning are
+   not two guards — they are ONE READ consulted twice. On a stale hold both go
+   quiet, and the verifier walked that silence to two fdms rows for one FDMS
+   event. The cure was one line this code already held: `look.stale`. What is
+   asserted here is that the look CARRIES the three things the dialog now prints
+   — the staleness sentence, both refresh routes, and the fact that the standing
+   row cannot be checked on this read — in every state where the dialog is
+   silent about a standing row. */
+console.log("\n=== PROBE 11o — the read that cannot answer says so before the forget ===");
+{
+  const sent = { date: "2026-08-12", track: "contact", sortie: "C4302", seq: 1, kind: "syllabus",
+    instructor: "AIRMAN", instructor_oid: "R-9001", grade: null, ng: false, mission: "complete" };
+  const REFUSED = "2026-08-20T10:00:00.000Z";
+  const AFTER = "2026-08-20T10:05:00.000Z";
+  const BEFORE = "2026-08-20T09:00:00.000Z";
+  const L = { rid: "S-9001 ∷ flights ∷ s:C4302 ∷ 1", oid: "S-9001", group: "flights", uid: "s:C4302",
+    ord: 1, seq: 1, evId: "TV-K1", student: "ZZ-1", state: "", hold: "missing", sent,
+    verdict: "missing", at: REFUSED };
+  const wa = (rows, o) => Object.assign({
+    people: [{ id: "P-1", external_oid: "S-9001", role: "student", active: true }],
+    records: [{ student_id: "P-1", data: { flights: rows } }],
+    taken_at: AFTER, exported_at: AFTER, auditTail: [] }, o || {});
+  const row = (o) => Object.assign({ sortie: "C4302", date: "2026-08-12", seq: 1, kind: "syllabus",
+    track: "contact", instructor: "AIRMAN", instructor_oid: "R-9001", mission: "complete",
+    entered_by: "fdms" }, o || {});
+
+  /* THE VERIFIER'S EXACT STATE: a stale read showing nothing. Both guards read
+     THIS object, so both are silent — and the look must be able to say why. */
+  const staleEmpty = B.missingLook(L, wa([], { taken_at: BEFORE, exported_at: BEFORE }), [L]);
+  eq("the stale read shows no standing row — which is exactly the silence", staleEmpty.free.length, 0);
+  eq("it is not fresh", staleEmpty.fresh, false);
+  ok("and it CARRIES the staleness sentence the forget dialog now prints",
+    !!staleEmpty.stale && /OLDER THAN THE REFUSAL/.test(staleEmpty.stale), staleEmpty.stale);
+  ok("with both instants in it, to the second",
+    /\d\d:\d\d:\d\d/.test(staleEmpty.stale), staleEmpty.stale);
+  ok("and BOTH refresh routes named in it — the live door and the file hatch",
+    /⟳ Read Wings Ahead/.test(staleEmpty.stale) && /📄 File/.test(staleEmpty.stale), staleEmpty.stale);
+  eq("and the re-creation is still withheld on that read", staleEmpty.recreate, false);
+
+  /* THE OTHER TWO WAYS THE SAME SILENCE HAPPENS — each one must carry a
+     sentence, because the dialog prints whatever the look gives it. */
+  const oldFile = B.missingLook(L, wa([], { taken_at: AFTER, exported_at: BEFORE }), [L]);
+  ok("a payload GENERATED before the refusal carries its own sentence",
+    /GENERATED BEFORE THE REFUSAL/.test(oldFile.stale), oldFile.stale);
+  const noStamp = B.missingLook(Object.assign({}, L, { at: "" }), wa([]), [L]);
+  ok("a held row with no instant of its own says that nothing can date the read",
+    !!noStamp.stale && /⟳ Read Wings Ahead/.test(noStamp.stale), noStamp.stale);
+  const none = B.missingLook(L, null, [L]);
+  eq("and with no read at all the look does not even claim to have one", none.have, false);
+  ok("saying so, with both routes", /⟳ Read Wings Ahead/.test(none.why) && /📄 File/.test(none.why),
+    none.why);
+
+  /* AND WHERE THE READ *CAN* ANSWER, THE DIALOG KEEPS ITS OLD PROMISE: a fresh
+     read that shows the row standing is the P45-FDMSc case, and it stays. */
+  const freshStanding = B.missingLook(L, wa([row({ date: "2026-08-19" })]), [L]);
+  eq("a fresh read that finds the row leaves nothing to warn about", freshStanding.fresh, true);
+  eq("and it is the standing row the two dialogs name", freshStanding.free.length, 1);
+  eq("with its Wings Ahead handle", freshStanding.free[0].handle, "C4302 ∷ 2026-08-19 ∷ 1");
+  eq("a fresh read with no row at all is the DELETED case, and it is not stale",
+    B.missingLook(L, wa([]), [L]).stale, "");
+
+  /* THE STALE *MOVED* CASE — the read is old AND it shows a row. The dialog is
+     not blind there: it names the row, and the staleness rides on the adopt
+     sentence, which is where P45-FDMSc put it. */
+  const staleMoved = B.missingLook(L, wa([row({ date: "2026-08-19" })],
+    { taken_at: BEFORE, exported_at: BEFORE }), [L]);
+  eq("a stale read that DOES show a row still names it", staleMoved.free.length, 1);
+  ok("and still says the read is old", /OLDER THAN THE REFUSAL/.test(staleMoved.stale),
+    staleMoved.stale);
 }
 
 module.exports = true;

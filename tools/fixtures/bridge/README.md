@@ -20,7 +20,7 @@ the number, and the exit code is `0` only if nothing failed.
 
 ```
 ════════════════════════════════════════════
-  BRIDGE FIXTURES — 720 passed, 0 failed
+  BRIDGE FIXTURES — 805 passed, 0 failed
 ════════════════════════════════════════════
 ```
 
@@ -135,7 +135,7 @@ live store — those are verified in the app and recorded in § 10 as such.
 | `p8-esc.js` | `esc()`, all five characters, hostile name |
 | `p9-apply.js` | Phase 3 — the plan, the written record, idempotency, drift, undo, the refusals |
 | `p10-offgraph.js` | Phase 3b — the off-catalogue node (four seams + the defensive read), and the honest badge |
-| `p11-push.js` | Phases 4+5 — the push lane: the predicate, the wire shapes, the derived queue, the eleven verdicts; 4+5b's chunk/halving, failure classification, poisoned `prev`, held student, pull-informed reconciliation; and P45-FDMSc's three freshness tests and the wire deadline |
+| `p11-push.js` | Phases 4+5 — the push lane: the predicate, the wire shapes, the derived queue, the eleven verdicts; 4+5b's chunk/halving, failure classification, poisoned `prev`, held student, pull-informed reconciliation; and P45-FDMSc's three freshness tests and the wire deadline; and P45-FDMSd's distinction between a removal owed by the training log and a row stranded by a lookup, the invariant that a read of Wings Ahead can never ADD a removal, and the staleness the ✕ Stop tracking dialog now prints |
 | `p12-undo.js` | Phases 4+5 — ↺ Undo across the wire: the three shapes and the two drift refusals |
 
 The offline builder (`tools/build_offline.py`) never looks in here: it collects

@@ -2129,48 +2129,72 @@
   /* ── WHY AN EVENT DOES NOT CROSS — the qualifying predicate (design B.1) ──
      Returns "" when the event may be pushed. Every clause is a SENTENCE the
      developer reads on the Bridge tab, because a silent exclusion is the same
-     lie as a clean-looking empty report. */
-  function pushBlockOf(ev, ctx) {
+     lie as a clean-looking empty report.
+
+     ── AND EVERY CLAUSE NOW SAYS WHOSE FACT IT IS (P45-FDMSd · finding A) ────
+     A refusal is not only a sentence, it is EVIDENCE — and the removal
+     derivation below has to know whose. «the result changed», «the scope
+     changed», «the bridge itself wrote this event» are facts about THE FDMS
+     EVENT: the row that event once wrote is genuinely owed a removal. «the
+     syllabus graph does not carry this node» is a fact about THE GRAPH, which
+     is configuration this run happens to read: the training log is untouched,
+     and a row is never taken off a student's Wings Ahead record because a
+     lookup failed. `fact` is that distinction, kept in ONE place — beside the
+     sentence it belongs to, so a future clause cannot be added without its
+     author being asked which kind it is.
+
+     `pushBlockOf` stays exactly what it was (the sentence, or ""), because the
+     blocked table, the fixtures and every other reader want the sentence. */
+  const BLOCK = (why, fact) => ({ why: why, fact: fact || "event" });
+  function pushBlockOf(ev, ctx) { return pushBlockWhy(ev, ctx).why; }
+  function pushBlockWhy(ev, ctx) {
     if (trim(ev.scope) !== "student") {
-      return "a ground event is CLASS-scope in FDMS and reaches the student through membership read at "
-        + "run time — pushing a per-student copy would freeze a fact that is supposed to move, and a "
-        + "class change would fabricate attendance (design F.4)";
+      return BLOCK("a ground event is CLASS-scope in FDMS and reaches the student through membership read "
+        + "at run time — pushing a per-student copy would freeze a fact that is supposed to move, and a "
+        + "class change would fabricate attendance (design F.4)");
     }
     /* THE ECHO RULE — absolute, and it is the loop-breaker. An event the bridge
        itself wrote FROM Wings Ahead never crosses back to Wings Ahead. Two
        marks, either one enough, exactly as isWaWritten() reads them. */
     if (isWaWritten(ev)) {
-      return "this FDMS event was written BY the bridge, from a Wings Ahead row — pushing it back would "
-        + "be the bridge writing to Wings Ahead what Wings Ahead told it (the echo rule, design B.1·3)";
+      return BLOCK("this FDMS event was written BY the bridge, from a Wings Ahead row — pushing it back "
+        + "would be the bridge writing to Wings Ahead what Wings Ahead told it (the echo rule, "
+        + "design B.1·3)");
     }
     const node = evNodeOf(ev);
     if (!node || node.indexOf("s:") !== 0) {
-      return "only a SORTIE crosses this lane — this event names «" + (node || "no node") + "»";
+      return BLOCK("only a SORTIE crosses this lane — this event names «" + (node || "no node") + "»");
     }
+    /* THE TWO GRAPH CLAUSES. Both are answers from `kindOf` — the FDMS syllabus
+       graph — about a node the EVENT still names, unchanged. A retired code, a
+       syllabus revision, or a SchedReady that has not finished loading each
+       produce this exact refusal over a training log nobody touched. */
     const band = ctx.kindOf(nodeOfUid(node));
-    if (!band) return offGraphWhy(node);
+    if (!band) return BLOCK(offGraphWhy(node), "graph");
     if (APPLY_GROUPS.indexOf(band) < 0) {
-      return "this lane pushes FLIGHTS and F/S only — ground lessons and exams, the eight checkrides, "
-        + "the prescribed solos and the FAIL / ALMOST GOOD / NFS / SMS events each wait for a lane of "
-        + "their own (design F.4)";
+      return BLOCK("this lane pushes FLIGHTS and F/S only — ground lessons and exams, the eight "
+        + "checkrides, the prescribed solos and the FAIL / ALMOST GOOD / NFS / SMS events each wait for a "
+        + "lane of their own (design F.4)", "graph");
     }
     const code = codeOfNode(node);
     if (EVAL_IDS.indexOf(code) >= 0) {
-      return "the checkride " + code + " lives in the Evaluations section of Wings Ahead, which this lane "
-        + "does not write — two rows for one event, with two grades, can disagree";
+      return BLOCK("the checkride " + code + " lives in the Evaluations section of Wings Ahead, which this "
+        + "lane does not write — two rows for one event, with two grades, can disagree");
     }
     if (!isoDate(ev.date)) {
-      return "the flight has no valid date — every Wings Ahead entry is dated, and only the grade lags";
+      return BLOCK("the flight has no valid date — every Wings Ahead entry is dated, and only the grade "
+        + "lags");
     }
     if (!codeTrack(code)) {
-      return "«" + code + "» is not a syllabus code Wings Ahead can place in a table (its letter names the "
-        + "track: B/C contact · I instrument · F formation · N navigation). A row whose table cannot be "
-        + "named arrives there as INCOMPLETE and is refused — so it is refused here, by its real fault";
+      return BLOCK("«" + code + "» is not a syllabus code Wings Ahead can place in a table (its letter "
+        + "names the track: B/C contact · I instrument · F formation · N navigation). A row whose table "
+        + "cannot be named arrives there as INCOMPLETE and is refused — so it is refused here, by its "
+        + "real fault");
     }
     const res = trim(ev.result);
     if (res === "score") {
-      return "this event stores a NUMBER as its result, and a sortie never crosses as a number (R2). "
-        + "Correct it in the Training log to «completed» / «lag» / «fail»";
+      return BLOCK("this event stores a NUMBER as its result, and a sortie never crosses as a number (R2). "
+        + "Correct it in the Training log to «completed» / «lag» / «fail»");
     }
     /* A BLANK RESULT DOES NOT PUSH — and this is the round's own decision,
        taken against design B.2's «push it as awaiting», for a reason the
@@ -2184,15 +2208,15 @@
        as an awaiting Wings Ahead row waits on the other side (ruling #5), and
        it crosses by itself the moment the debrief is typed. */
     if (!res) {
-      return "the debrief has not been typed: this event carries no result. FDMS's own readiness engine "
-        + "reads a blank result as COMPLETED, so pushing it would tell Wings Ahead something this store "
-        + "does not itself believe. Type the result and the flight crosses by itself (ruling #5)";
+      return BLOCK("the debrief has not been typed: this event carries no result. FDMS's own readiness "
+        + "engine reads a blank result as COMPLETED, so pushing it would tell Wings Ahead something this "
+        + "store does not itself believe. Type the result and the flight crosses by itself (ruling #5)");
     }
     if (!PUSH_MISSION[res]) {
-      return "«" + res + "» is not a result this lane can express as Wings Ahead's mission complete / "
-        + "mission incomplete";
+      return BLOCK("«" + res + "» is not a result this lane can express as Wings Ahead's mission complete "
+        + "/ mission incomplete");
     }
-    return "";
+    return BLOCK("");
   }
 
   /* ── THE PLANNER ─────────────────────────────────────────────────────────
@@ -2249,11 +2273,80 @@
     const blocked = [], held = [];
     const seenLedger = new Set();
 
+    /* ══ A REMOVAL IS A FACT ABOUT THE TRAINING LOG, NEVER ABOUT A LOOKUP ═════
+       ═══════════════════════════════════════════════════════════════════════
+       THE FINDING THIS EXISTS FOR (P45-FDMSd, verify item 10). The verifier
+       renamed ONE instructor's roster object id in Wings Ahead — an ordinary
+       posting, rename or departure. Nothing else moved: the 158 FDMS events
+       flown with that instructor sat in the training log, unedited. The next
+       live read made this derivation produce **148 PENDING REMOVALS** of
+       correct, bridge-written flight rows, every one of them carrying the
+       sentence «the FDMS event this row came from is gone from the training
+       log, or no longer qualifies to cross». That sentence was FALSE. He
+       confirmed one line and the wire answered `removed`: the row is gone from
+       Wings Ahead and a `source_removed` tombstone stands on the identity.
+       «␥ Confirm all 148» would have destroyed 148 rows.
+
+       WHY IT HAPPENED, AND IT IS A STRUCTURAL FAULT AND NOT A TYPO. The sweep
+       below asks the ledger ONE question — «did any event answer for this row
+       this run?» — and every `return` in the loop above answers «no» in the
+       same voice, whatever it was actually about. So «the developer deleted
+       this flight» and «the read on screen cannot resolve an OID» arrived at
+       the sweep indistinguishable, and the sweep, being able to name only one
+       of them, named the wrong one.
+
+       THE DISTINCTION, AND IT IS A DISTINCTION OF FACTS:
+         · A row is owed a REMOVAL when THE FDMS SIDE MOVED — the event was
+           deleted from the training log, or it was EDITED out of qualifying
+           (its result, its scope, its date, its node). That is a change to the
+           thing the row was written from, and the row it wrote is now a claim
+           this store no longer makes.
+         · A row is STRANDED when the event stands unchanged and this RUN
+           cannot resolve something around it — a person in either roster, an
+           object id in the read of Wings Ahead, a node in the syllabus graph.
+           Nothing over there is owed anything: the rows stand, the events
+           stand, and what is broken is a lookup. It becomes ONE held line
+           naming the person and the fact, `removals` stays 0, and the reason
+           `source_removed` is never built for it.
+
+       AND THE HELD LINE IS ONE PER FACT, NOT ONE PER ROW — the same judgement
+       § 15λ·2 took for the student the server refuses: 148 identical lines is
+       not a report, it is the place a report goes to be ignored. The strand
+       carries the count of rows standing behind it, exactly as the student
+       hold carries the count of flights standing behind it. */
+    const strandedBy = new Map();          // rid → the key of the fact holding it
+    const strands = new Map();             // key → the ONE held line all of them share
+    /* the key is «what kind of fact» + «which one», joined the way every other
+       composite key in this file is joined — on a character no identifier of
+       either system can contain. */
+    const sKey = (kind, of) => kind + " " + trim(of);
+    const strand = (rows, key, who, what) => {
+      arr(rows).forEach((L) => {
+        const rid = trim(L.rid);
+        if (!rid || strandedBy.has(rid)) return;
+        strandedBy.set(rid, key);
+      });
+      if (!strands.has(key)) strands.set(key, { key, who, what, n: 0, uids: [] });
+    };
+    /* WHAT A REMOVAL IS ALLOWED TO SAY, and the sweep proves each one before it
+       says it: the event id is looked for in the training log by name, and when
+       it IS there the sentence that disqualified it is the one carried out of
+       the loop. A removal that cannot name its fact does not get to guess. */
+    const liveEv = new Set();              // every event id the training log carries
+    const evWhy = new Map();               // evId → the EVENT-SIDE sentence that disqualified it
+    const evNode = new Map();              // evId → the syllabus node it names NOW
+
     log.forEach((ev) => {
       if (!isObj(ev) || !trim(ev.id)) return;
+      liveEv.add(trim(ev.id));
       const code = trim(ev.student);
       const stu = code ? stuByCode.get(code) : null;
       const node = evNodeOf(ev);
+      /* THE NODE IT NAMES **NOW**, recorded before any refusal can stop the run
+         — because «this event moved to another node» is a fact about the event
+         whether or not the node it moved TO qualifies, and the row it left
+         behind is entitled to be told which node took its place. */
+      if (node) evNode.set(trim(ev.id), node);
       const band = node ? kindOf(nodeOfUid(node)) : null;
       const evId = trim(ev.id);
 
@@ -2262,11 +2355,22 @@
          is a different identity, and the old one is owed a removal. */
       const mine = arr(idx.byEv.get(evId));
 
-      const why = pushBlockOf(ev, ctx);
+      const blk = pushBlockWhy(ev, ctx);
+      const why = blk.why;
       if (why) {
         /* an event that no longer qualifies but whose row we PUSHED still owes a
            removal — that is exactly the «source_removed» case, and it is the
-           reason the block list and the removal list are built in one pass. */
+           reason the block list and the removal list are built in one pass.
+           ONLY WHEN THE EVENT IS WHAT MOVED, though: a GRAPH answer is not an
+           edit to the training log, and the rows written under THAT SAME NODE
+           are stranded rather than removed. A row written under a DIFFERENT
+           node is one this event moved away from — that one is a real removal,
+           and it keeps its place in the sweep. */
+        if (blk.fact === "graph" && node) {
+          strand(mine.filter((x) => trim(x.uid) === node), sKey("graph", node),
+            stu ? label(stu) : code,
+            "THE SYLLABUS GRAPH, NOT THE TRAINING LOG: " + why);
+        } else if (blk.fact === "event") { evWhy.set(evId, why); }
         /* WHICH REFUSALS ARE WORTH LISTING. A SORTIE this store holds for a
            student and does not send is a fact the developer has to be able to
            see — including, and especially, one whose node the syllabus graph
@@ -2285,48 +2389,101 @@
         }
         return;                                   // its ledger rows are swept below
       }
+      /* ── THE FIVE LOOKUPS, AND NOT ONE OF THEM IS AN EDIT TO THE TRAINING LOG
+         Two rosters and one read answer below. Each of them can stop this event
+         from crossing TODAY, and none of them says anything whatever about the
+         row the bridge already wrote: the flight was flown, the event is typed,
+         the row stands. So each one strands the rows it cannot vouch for and
+         says which lookup failed — the removal list never hears about it. */
       if (!stu) {
-        blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: code,
-          why: "«" + code + "» is not a student of this FDMS roster — a flight is pushed onto the record "
-            + "of a person, and this side cannot name one" });
+        const w = "«" + code + "» is not a student of this FDMS roster — a flight is pushed onto the "
+          + "record of a person, and this side cannot name one";
+        blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: code, why: w });
+        strand(mine, sKey("fdms-stu", code), code, "THE FDMS ROSTER, NOT THE TRAINING LOG: " + w);
         return;
       }
       const oid = normOid(stu.oid);
       if (!oid) {
-        blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: label(stu),
-          why: "this student carries no OID, and the OID is the ONE thing the two systems join on "
-            + "(ruling #4) — a surname never resolves anybody across this wire" });
+        const w = "this student carries no OID, and the OID is the ONE thing the two systems join on "
+          + "(ruling #4) — a surname never resolves anybody across this wire";
+        blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: label(stu), why: w });
+        strand(mine, sKey("fdms-stu-oid", code), label(stu),
+          "THE FDMS ROSTER, NOT THE TRAINING LOG: " + w);
         return;
       }
       if (havePull && !waStudentOids.has(oid)) {
-        blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: label(stu),
-          why: "no ACTIVE Wings Ahead student carries the roster object id " + oid + " — the person has "
-            + "to exist there, and be active, before a flight can be pushed onto his record" });
+        const w = "no ACTIVE Wings Ahead student carries the roster object id " + oid + " — the person has "
+          + "to exist there, and be active, before a flight can be pushed onto his record";
+        blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: label(stu), why: w });
+        strand(mine, sKey("wa-stu", oid), label(stu) + " · " + oid,
+          "THE READ OF WINGS AHEAD, NOT THE TRAINING LOG: the roster in the read on screen carries no "
+          + "ACTIVE person with the object id " + oid + " — he has been deactivated there, renamed, "
+          + "re-numbered, or this is a read of a different Wings Ahead.");
         return;
       }
       const ip = ipByCode.get(trim(ev.instructor));
       if (!trim(ev.instructor)) {
-        blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: label(stu),
-          why: "the flight names no instructor — «a student never launches alone on their own "
-            + "authority», and Wings Ahead requires one on every row" });
+        /* THE ONE EVENT-SIDE FACT IN THIS BLOCK: the event itself names nobody.
+           Somebody edited the flight, and a row that can no longer say who flew
+           it is a claim this store stops making. It is a REMOVAL, and it keeps
+           the sentence that proves it. */
+        const w = "the flight names no instructor — «a student never launches alone on their own "
+          + "authority», and Wings Ahead requires one on every row";
+        blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: label(stu), why: w });
+        evWhy.set(evId, w);
         return;
       }
       if (!ip || !normOid(ip.oid)) {
-        blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: label(stu),
-          why: "«" + trim(ev.instructor) + "» resolves to no FDMS instructor with an OID — an identity is "
-            + "never guessed from a name across this wire (ruling #4)" });
+        const w = "«" + trim(ev.instructor) + "» resolves to no FDMS instructor with an OID — an identity "
+          + "is never guessed from a name across this wire (ruling #4)";
+        blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: label(stu), why: w });
+        strand(mine, sKey("fdms-ip", trim(ev.instructor)), "instructor «" + trim(ev.instructor) + "»",
+          "THE FDMS ROSTER, NOT THE TRAINING LOG: " + w);
         return;
       }
       if (havePull && !waPersonOids.has(normOid(ip.oid))) {
-        blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: label(stu),
-          why: "the instructor's object id " + normOid(ip.oid) + " is not on the Wings Ahead roster — the "
-            + "row would carry an identity that side cannot resolve" });
+        const w = "the instructor's object id " + normOid(ip.oid) + " is not on the Wings Ahead roster — "
+          + "the row would carry an identity that side cannot resolve";
+        blocked.push({ evId, student: code, uid: node, date: isoDate(ev.date), who: label(stu), why: w });
+        strand(mine, sKey("wa-ip", normOid(ip.oid)), label(ip) + " · " + normOid(ip.oid),
+          "THE READ OF WINGS AHEAD, NOT THE TRAINING LOG: the roster in the read on screen no longer "
+          + "carries the object id " + normOid(ip.oid) + " — the instructor was renamed there, "
+          + "re-numbered, or he has departed the squadron.");
         return;
       }
 
       const group = band;
       let L = mine.find((x) => normOid(x.oid) === oid && trim(x.group) === group && trim(x.uid) === node) || null;
       if (L) seenLedger.add(trim(L.rid));
+      else if (mine.length) {
+        /* ── THE PAIRING MISSED, AND THE REASON DECIDES EVERYTHING ───────────
+           A row of this very event that did not pair is either one the event
+           MOVED AWAY FROM — a different node, an FDMS edit, a real removal
+           handled by the sweep — or one whose identity was moved UNDER it by
+           something that is not the training log at all. Two of those, and both
+           strand:
+             · the SECTION changed while the node did not. Only `kindOf` can do
+               that: the syllabus graph re-filed the code from `flights` to `fs`
+               or back. The event is untouched.
+             · the student's OID changed in the FDMS ROSTER. The rid embeds the
+               OID it was written under, so the old rows point at the person
+               they were actually written onto. Nothing here can know whether
+               the old number was a mistake being corrected or a second person,
+               and «delete the rows» is not a guess this side is entitled to. */
+        const here = mine.filter((x) => trim(x.uid) === node && trim(x.state) !== "removed");
+        strand(here.filter((x) => normOid(x.oid) === oid && trim(x.group) !== group),
+          sKey("graph-band", node), stu ? label(stu) : code,
+          "THE SYLLABUS GRAPH, NOT THE TRAINING LOG: the graph now files «" + codeOfNode(node)
+          + "» in the «" + group + "» section, and the row the bridge wrote for it stands in another "
+          + "section of the same record. The event is unchanged; what moved is the graph.");
+        const moved = here.filter((x) => normOid(x.oid) !== oid);
+        strand(moved, sKey("oid-moved", code), label(stu),
+          "THE FDMS ROSTER, NOT THE TRAINING LOG: this student now carries the object id " + oid
+          + " and the row the bridge wrote stands on the record of "
+          + (moved.length ? normOid(moved[0].oid) : "another object id") + ". Settle which object id is "
+          + "the right one BEFORE the next push: this flight is queued as a create under " + oid + ", and "
+          + "the old row is not touched by anything this pane does.");
+      }
 
       const date = isoDate(ev.date);
       const ord = L ? posInt(L.ord, 1) : mintOrd(idx, oid, group, node);
@@ -2417,6 +2574,21 @@
         src: "ledger" });
         return;
       }
+      /* ── THE STRAND GATE (P45-FDMSd · finding A) ────────────────────────
+         An UNDO is the developer's own act and it is owed whatever the rosters
+         are doing — it is the only removal on this side that a human asked for
+         by name. Everything else has to get past the lookups first: if a fact
+         about a roster, the graph or the read on screen is what took this row's
+         event out of the run, the row is HELD behind that fact and no `remove`
+         operation is built for it at all. */
+      const sK = undone ? "" : strandedBy.get(rid);
+      if (sK && strands.has(sK)) {
+        const s = strands.get(sK);
+        s.n += 1;
+        const u = trim(L.uid);
+        if (u && s.uids.length < 4 && s.uids.indexOf(u) < 0) s.uids.push(u);
+        return;
+      }
       const line = { rid, oid, group, uid: trim(L.uid), ord: posInt(L.ord, 1), seq: posInt(L.seq, 1),
         evId: trim(L.evId), student: trim(L.student), who: trim(L.student),
         date: isoDate(sent.date), row: sent, klass: "" };
@@ -2424,10 +2596,75 @@
         why: undone
           ? "the developer took this push back (↺ Undo) — the Wings Ahead row it created is removed and "
             + "the identity is tombstoned, which is what makes the undo stick"
-          : "the FDMS event this row came from is gone from the training log, or no longer qualifies to "
-            + "cross (its node, its scope or its result changed) — so the row it wrote is owed a removal",
+          : removalWhy(L),
         op: { op: "remove", section: group, rid, prev: sent,
           reason: undone ? "undo" : "source_removed" } });
+    });
+
+    /* ── THE SENTENCE A REMOVAL IS ENTITLED TO SAY ────────────────────────
+       It used to say «gone from the training log, OR no longer qualifies … (its
+       node, its scope or its result changed)» — an either/or covering four
+       possibilities at once, which is what let it be printed over a case that
+       was none of them. Each branch below is PROVEN before it is printed: the
+       event id is looked for in the training log by name, and when it is there,
+       the sentence that disqualified it is the very one the loop above produced
+       for it. Nothing here guesses, and there is no «or». */
+    function removalWhy(L) {
+      const ev = trim(L.evId);
+      if (!ev) {
+        return "this ledger row names no FDMS event at all, so nothing in the training log can be "
+          + "answering for the Wings Ahead row it wrote — it is owed a removal";
+      }
+      if (!liveEv.has(ev)) {
+        return "the FDMS event this row was written from is GONE from the training log — this side has "
+          + "looked for «" + ev + "» by id, in the whole log, and it is not there. The row it wrote is "
+          + "owed a removal";
+      }
+      /* THE NODE IS ASKED FIRST, and the order is the judgement: when the event
+         has moved, «it now names another node» is the PRECISE fact about this
+         row, and «it no longer qualifies» would be a fact about a node that was
+         never this row's. */
+      const nd = evNode.get(ev);
+      if (nd && nd !== trim(L.uid)) {
+        return "the FDMS event this row was written from now names the syllabus node «" + nd + "», and "
+          + "this row was written for «" + trim(L.uid) + "» — the event MOVED, and the row it left behind "
+          + "is owed a removal" + (evWhy.has(ev)
+            ? " (and the flight does not cross under its new node either: " + evWhy.get(ev) + ")"
+            : " (the flight itself is queued afresh under its new node)");
+      }
+      const w = evWhy.get(ev);
+      if (w) {
+        return "the FDMS event this row was written from is STILL in the training log and has been edited "
+          + "out of qualifying: " + w + " — so the row it wrote is owed a removal";
+      }
+      return "the FDMS event this row was written from no longer answers for this row identity — its "
+        + "object id, its section or its node is not the one the row was written under, and nothing in "
+        + "the training log claims it any more";
+    }
+
+    /* ── AND THE STRANDS BECOME ONE HELD LINE EACH ────────────────────────
+       Only the ones that actually caught a row: a lookup that failed for an
+       event nobody ever pushed has cost nothing and has nothing to say. */
+    let strandedRows = 0;
+    strands.forEach((s) => {
+      if (!s.n) return;
+      strandedRows += s.n;
+      held.push({
+        line: { rid: "", oid: "", group: "", uid: s.uids.join(" · ") + (s.n > s.uids.length ? " · …" : ""),
+          ord: 0, seq: 0, evId: "", student: "", who: s.who, date: "", row: null, klass: "" },
+        hold: "unresolved", src: "roster", rows: s.n, verdict: "", sent: null,
+        note: s.what + "  NOTHING IS REMOVED AND NOTHING IS LOST: the " + s.n + " row"
+          + (s.n === 1 ? "" : "s") + " the bridge wrote " + (s.n === 1 ? "is" : "are") + " still standing "
+          + "on the Wings Ahead record" + (s.n === 1 ? "" : "s") + ", and the FDMS event"
+          + (s.n === 1 ? "" : "s") + " " + (s.n === 1 ? "it" : "they") + " came from "
+          + (s.n === 1 ? "is" : "are") + " still in the training log, unedited. A row is NEVER taken off a "
+          + "student's record because a lookup failed, so no removal is owed and «source_removed» is not "
+          + "built for any of them. They wait: heal the roster — or take a read that carries it — and "
+          + "they are ordinary tracked rows again on the very next run, with nothing to undo. "
+          + "AND IF THOSE ROWS REALLY SHOULD COME OFF THE RECORD, the act that says so is deleting the "
+          + "FDMS EVENTS in the training log: that is a statement about the flights, it is made where the "
+          + "flights live, and each row is then owed a removal that can prove its own reason.",
+      });
     });
 
     /* ── THE TWO SWEEPS THAT ARE NOT ABOUT ONE ROW ────────────────────────
@@ -2497,7 +2734,10 @@
       queued, removals, blocked, held,
       students: Array.from(byStudent.values()),
       counts: { queued: queued.length, removals: removals.length, blocked: blocked.length,
-        held: held.length, heldFlights, ledger: idx.list.length, students: byStudent.size },
+        held: held.length, heldFlights, ledger: idx.list.length, students: byStudent.size,
+        /* the rows a failed lookup is holding — counted apart from `held`,
+           which counts LINES, because one line can stand for 148 rows */
+        stranded: strandedRows },
     };
   }
 
@@ -3285,6 +3525,20 @@
      HH:MM», the backoff re-arms, and what is owed stays owed. */
   const WIRE_MS = 20000;
 
+  /* ── THE SIZE AT WHICH A REMOVAL STOPS BEING A CORRECTION (P45-FDMSd) ──────
+     Above this many acts in ONE ␥ confirm, the dialog asks for the count to be
+     typed back (§ startRemovals argues the whole judgement; this is only where
+     the number lives, so a fixture can read it and a round cannot move it
+     quietly). TEN, and the line is drawn by what the two sides of it actually
+     are. Below it a removal list is a day's corrections — a deleted duplicate,
+     a re-typed sortie, an undo or two — and the numbered dialog already prints
+     every one of them with the fact that owes it, which is a list a person
+     reads. Above it, it is a PURGE: 148 rows on somebody else's database, and
+     the one thing that went wrong in finding A is that the number was not taken
+     in. A gate that fires on the ordinary case teaches people to type through
+     it, so it does not fire there. */
+  const RM_TYPE_AT = 10;
+
   /* AND THE SOCKET IS NOT ABORTED — a judgement, not an omission. The obvious
      shape is an `AbortController`, and it was written that way first; the
      offline builder's quality gate refused it BY NAME («AbortController (Fx57)
@@ -3742,6 +3996,10 @@
       + "cannot re-create it. It touches nothing in the FDMS training log and nothing a student typed — a "
       + "corrected row is his, and Wings Ahead refuses this lane over it. ↺ Undo puts the identity back in "
       + "the pending state; bringing the row back is then a deliberate re-push.",
+    rmall: "Sends EVERY pending act in the table below, in one go — each one destroys a flight row on a "
+      + "student's Wings Ahead record and tombstones its identity. The numbered dialog lists them with the "
+      + "fact that owes each one, and above " + RM_TYPE_AT + " acts it asks you to type the count back "
+      + "before it sends. Nothing in the FDMS training log is touched, and ↺ Undo reaches every act.",
     cfg: "Opens the bridge credential and the Live switch. Saving WRITES the synced store config, so the "
       + "token reaches your other devices — ciphertext when the sync passphrase is armed. ⭳ Export strips "
       + "it and ⭱ Import never restores it. It is never shown back to you: «Forget» is how it is removed, "
@@ -4131,11 +4389,24 @@
      NOTHING HAPPENS: the promise resolves false and the caller returns before a
      single record is touched. */
   let popBusy = false;
+  /* ── THE NUMBERED DIALOG, AND THE ONE THAT ASKS FOR THE NUMBER BACK ───────
+     `o.word` is optional and everything above this line is unchanged without
+     it. With it the dialog grows the house's typed-word gate — the very shape
+     Round 20 built for ⭱ Import and ⟲ Reset (`SchedStore.wordPrompt`): the same
+     `.ed-box` card, the same `.ed-lbl` / `.ed-status` / `.ed-box input`, Enter
+     submits, Esc cancels, a wrong word says so and takes the focus back. It is
+     re-implemented here rather than reached across a module boundary because
+     that one is private to the store and this one has to carry a NUMBERED LIST
+     above the input — and because a shared dialog with two callers' worth of
+     options is how a confirm dialog quietly gains a path that skips its own
+     gate. The input's id is this pane's own, so the two can never collide in
+     one document. */
   function confirmPop(o) {
     return new Promise((resolve) => {
       const doc = W.document;
       if (popBusy || !doc || !doc.body) { resolve(false); return; }
       popBusy = true;
+      const word = trim(o.word);
       const veil = doc.createElement("div");
       veil.className = "ed-pop brg-pop";
       veil.innerHTML = `<div class="ed-box brg-box" role="dialog" aria-modal="true" aria-label="${esc(o.title)}">
@@ -4144,10 +4415,15 @@
         <p class="hint">${o.lead}</p>
         <ol class="brg-poplist">${o.items}</ol>
         <p class="hint">${o.foot}</p>
+        ${word ? `<label class="ed-lbl" for="brg-wordin">Type ${esc(word)} to continue</label>
+        <input id="brg-wordin" type="text" autocomplete="off" spellcheck="false"
+               placeholder="${esc(word)}" aria-describedby="brg-wordmsg">` : ""}
         <div class="ed-row">
-          <button type="button" class="sch-tbtn primary" data-p="go">${esc(o.go)}</button>
+          <button type="button" class="sch-tbtn ${word ? "danger" : "primary"}" data-p="go">${word
+    ? `<span class="sch-dgl">${esc(o.ico || "⚠")}</span> ` : ""}${esc(o.go)}</button>
           <button type="button" class="sch-tbtn" data-p="cancel">↩ Cancel</button>
         </div>
+        ${word ? `<div class="ed-status" id="brg-wordmsg" role="status"></div>` : ""}
       </div>`;
       let finished = false;
       const done = (v) => {
@@ -4158,16 +4434,31 @@
         if (veil.parentNode) veil.remove();
         resolve(v);
       };
+      /* the comparison is trimmed and case-insensitive for the same reason the
+         store's is: the gate is «read the sentence and type it back», not
+         «hold shift». A count is digits, so it only ever trims. */
+      const submit = () => {
+        if (!word) { done(true); return; }
+        const el = veil.querySelector("#brg-wordin");
+        const typed = String(el ? el.value : "").trim();
+        if (typed.toUpperCase() === word.toUpperCase()) { done(true); return; }
+        const m = veil.querySelector("#brg-wordmsg");
+        if (m) m.textContent = typed ? "that is not it — type " + word : "type " + word + " to continue";
+        if (el) { el.focus(); el.select(); }
+      };
       function onKey(e) {
-        if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); done(false); }
+        if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); done(false); return; }
+        if (word && e.key === "Enter" && veil.contains(e.target)) {
+          e.preventDefault(); e.stopPropagation(); submit();
+        }
       }
       veil.addEventListener("click", (e) => {
         if (e.target === veil || e.target.closest('[data-p="cancel"]')) { done(false); return; }
-        if (e.target.closest('[data-p="go"]')) done(true);
+        if (e.target.closest('[data-p="go"]')) submit();
       });
       doc.addEventListener("keydown", onKey, true);
       doc.body.appendChild(veil);
-      const g = veil.querySelector('[data-p="go"]');
+      const g = veil.querySelector(word ? "#brg-wordin" : '[data-p="go"]');
       if (g) setTimeout(() => g.focus(), 50);
     });
   }
@@ -4607,6 +4898,16 @@
           + "where the read on screen already shows a bridge-written row standing for that flight, with "
           + "no ledger row of this store answering for it — each one is marked on its own line above, and "
           + "each one would leave <b>two</b> rows for one FDMS event" : "")
+        /* SILENCE IS «NOT KNOWN», AND IT SAYS SO (P45-FDMSd · B's judgement).
+           The standing-row warning is drawn from the read on screen; with no
+           read on screen it is not drawn at ALL, and an unmarked line then
+           looks exactly like a line that was checked and found clear. One
+           sentence, once, in the foot — never a mark on every line, because a
+           first drain is two thousand creates and a warning on all of them is
+           a warning on none. */
+        + (!ui.parsed && creates ? " · <b class=\"sch-warn\">no read of Wings Ahead is on screen</b>, so "
+          + "not one of these creates has been checked against what is standing over there — an unmarked "
+          + "line here means <b>not known</b>, not «clear»" : "")
         + ". Each write lands "
         + "in the <b>Bridge change log</b> below with what Wings Ahead held before it, and <b>↺ Undo</b> "
         + "takes exactly that write back. A row Wings Ahead refuses is a <b>report line</b> — nothing is "
@@ -4631,17 +4932,52 @@
       render(el);
       return;
     }
+    /* ── HOW MUCH FRICTION A MASS REMOVAL DESERVES (P45-FDMSd · finding A) ────
+       THE JUDGEMENT, RECORDED. The house has a pattern for a dangerous act
+       (Round 20: ⭱ Import and ⟲ Reset live behind «⋯», demand the edit lock,
+       and ask for a TYPED WORD), and «␥ Confirm all N» destroying N rows on
+       somebody else's database in one click is unmistakably that class. What it
+       gets is the middle term of the three, and each is argued:
+         · NOT the «⋯» burial. Import and Reset are permanently on screen beside
+           harmless controls, which is what made burying them worth it. Pending
+           removals is a panel that does not exist unless something is pending,
+           and its whole purpose is confirming; burying the confirm button of a
+           confirmation panel is theatre, and it would push the developer onto
+           the per-line ✔ Confirm — the same destruction, one row at a time.
+         · THE EDIT LOCK: already demanded, first line of this function.
+         · THE TYPED VALUE, and it is the COUNT rather than a fixed word. The
+           whole failure mode of finding A is a developer who did not take in
+           that the number said 148. A fixed «REMOVE» is a reflex you can type
+           without reading; the count cannot be typed without having read the
+           one fact that matters. It is asked ABOVE A THRESHOLD only, because a
+           gate that fires on the ordinary case is a gate that teaches people to
+           type through it: below it the numbered dialog already lists every
+           line with the fact that proves it, and that is a list a person reads.
+       The individually-confirmed removal is untouched — deletion was never
+       accidental line by line, and the verifier's own walk-through confirms it
+       one row at a time before anything went wrong. */
+    const mass = list.length > RM_TYPE_AT;
     const go = await confirmPop({
       ico: "␥",
       title: list.length === 1 ? "Send this removal to Wings Ahead?"
         : "Send " + list.length + " pending acts to Wings Ahead?",
       go: "␥ Send " + list.length + " act" + (list.length === 1 ? "" : "s"),
-      lead: "A removal <b>takes a flight row off a student's Wings Ahead record</b> and lays a "
+      word: mass ? String(list.length) : "",
+      lead: (mass ? "<b class=\"sch-warn\">This destroys " + list.length + " flight rows on students' "
+        + "Wings Ahead records.</b> Every one of them names, on its own line below, the fact that owes "
+        + "it: an FDMS event <b>deleted</b> from the training log, an event <b>edited out of "
+        + "qualifying</b>, or an <b>↺ Undo</b> you took. A row whose event is standing and unchanged is "
+        + "never here — a name this run could not resolve (a roster, an object id, a syllabus node) is "
+        + "<b>held</b>, not removed. Read the list, then type the count to send it. " : "")
+        + "A removal <b>takes a flight row off a student's Wings Ahead record</b> and lays a "
         + "<b>tombstone</b> on the identity, which is what stops the queue re-creating it one debounce "
         + "later. It removes only rows <b>the bridge itself wrote</b>: a row a student corrected is his, "
         + "and Wings Ahead refuses to let this lane touch it.",
-      items: list.map(wireLine).join(""),
-      foot: "Each act lands in the <b>Bridge change log</b>, and <b>↺ Undo</b> puts the identity back in "
+      items: list.slice(0, DRAW_MAX).map(wireLine).join(""),
+      foot: (list.length > DRAW_MAX ? "<b>" + (list.length - DRAW_MAX) + "</b> of these are not drawn "
+        + "above — the first <b>" + DRAW_MAX + "</b> are, and all <b>" + list.length + "</b> go. "
+        + "The Pending removals table on the pane behind this dialog lists every one. " : "")
+        + "Each act lands in the <b>Bridge change log</b>, and <b>↺ Undo</b> puts the identity back in "
         + "the pending state — bringing the row back is then a deliberate re-push that clears the "
         + "tombstone. Nothing in the FDMS training log is touched by any of this.",
     });
@@ -4844,10 +5180,46 @@
          every create and not only the ones a forget produced — because the
          re-queue can also be reached by an ⭱ Import that drops a ledger row, or
          by a Reset, and a warning that only fires on one route is a warning
-         with a hole in it. */
+         with a hole in it.
+
+         ── AND THEN THE VERIFIER FOUND THE HOLE IN *THAT* (P45-FDMSd · B) ─────
+         THE FINDING. `standingBeside()` (which draws the push-dialog warning)
+         and this dialog's own standing-row warning both call `missingLook` on
+         the SAME `ui.parsed`. They are not two independent guards; they are ONE
+         READ CONSULTED TWICE. On a STALE hold — the exact state the freshness
+         test has just flagged as untrustworthy — the read shows nothing, so
+         BOTH go quiet, and the verifier walked it end to end to two fdms rows
+         for one FDMS event with the standing row named nowhere.
+         WORSE, THE FOOT PROMISED THE SECOND GUARD BY NAME: «The push dialog
+         names it again on the line itself, so the create cannot cross without
+         the standing row being said out loud one more time.» On a stale read it
+         does not — which made that sentence false precisely in the state the
+         round existed to handle: the house's own «comment that lied», moved out
+         of a code comment and into the UI, where a developer acts on it.
+
+         THE CURE IS THE ONE THIS FUNCTION ALREADY HELD IN ITS HAND. `look`
+         carries `stale` — the sentence, with both instants to the second and
+         both refresh routes — and this dialog was not printing it. It prints it
+         now, together with the thing the silence was hiding: that on THIS read
+         the standing-row question COULD NOT BE ASKED, so a blank where a
+         warning would be means «not known», never «checked and clear». And the
+         foot no longer promises a second guard it cannot deliver: it says what
+         the push dialog will actually be able to do, which on a stale read is
+         nothing, BECAUSE IT READS THE SAME PAYLOAD.
+
+         WHY THE ACT IS STILL NOT WALLED HERE, on the same reasoning as above:
+         ✕ Stop tracking is the ONLY exit a stale `missing` hold has that is not
+         «read again» — ⊕ is withheld and ⇄ Adopt has nothing to adopt — and a
+         developer who has genuinely established that the row over there is
+         somebody else's must be able to say so. It stops lying instead. */
       const look = LOOK_HOLDS.indexOf(trim(L.hold)) >= 0
         ? missingLook(L, ui.parsed, S().get("bridgePush")) : null;
       const standing = look && look.free.length ? look.free : [];
+      /* the read is on screen and it CANNOT answer for this identity: either it
+         is older than the refusal this hold came from, or there is no read at
+         all. Both make the silence below meaningless, and both are said. */
+      const blind = look && !look.fresh && !standing.length;
+      const noRead = !!look && !look.have;
       const go = await confirmPop({
         ico: "✕", title: "Stop tracking this identity?", go: "✕ Stop tracking",
         lead: "This forgets the link between an FDMS event and the Wings Ahead row the bridge wrote for "
@@ -4865,11 +5237,32 @@
             pushing the create would leave <b>two</b> rows for one FDMS event. If that row is this
             event's, <b>⇄ Adopt</b> it instead; if it is somebody else's to own, this act is the right
             one and the second row is deliberate.</div>` : ""}
+          ${blind ? `<div class="brg-eff is-c">⚠ <b>THIS DIALOG CANNOT TELL YOU WHETHER A ROW IS
+            STANDING THERE.</b> ${noRead ? "There is no read of Wings Ahead in memory on this tab at all."
+    : esc(look.stale)} So the line above is <b>missing, not clear</b>: a bridge-written row for this
+            flight may be standing on that record this second — the admin moves a date and the handle
+            moves with it — and forgetting this identity would put the same FDMS event back in the queue
+            as a create <b>on top of it</b>. That is the second row this whole hold exists to keep off
+            the record. <b>⟳ Read Wings Ahead — or 📄 File — first, and this dialog will know.</b>
+            ${noRead ? "<br>" + esc(REFRESH2) + "." : ""}</div>` : ""}
           </li>`,
+        /* THE FOOT NO LONGER PROMISES A GUARD IT CANNOT DELIVER (P45-FDMSd · B).
+           It used to say the push dialog would name the standing row again «so
+           the create cannot cross without it being said out loud one more time»
+           — a promise that is false exactly when it matters, because the push
+           dialog asks the SAME read this dialog just asked. What it says now is
+           what is true: one read, consulted twice, and on a read that cannot
+           answer both are silent together. */
         foot: "The next cross-check will show that row as an <b>fdms-stamped row this store's ledger does "
-          + "not know</b> — an identity note, never a proposal back into FDMS. The push dialog names it "
-          + "again on the line itself, so the create cannot cross without the standing row being said out "
-          + "loud one more time.",
+          + "not know</b> — an identity note, never a proposal back into FDMS. "
+          + (blind
+            ? "<b class=\"sch-warn\">And do not wait for the push dialog to catch this:</b> its "
+              + "standing-row warning reads the <b>same payload</b> this dialog just read, so on a read "
+              + "that cannot answer it will be <b>silent too</b>. Two guards that consult one read are "
+              + "one guard consulted twice — the read is the thing to fix, not the dialog."
+            : "The push dialog asks the same question again on the line itself, against the read on "
+              + "screen at that moment — so if that read still answers, the create cannot cross without "
+              + "the standing row being said out loud one more time."),
       });
       if (!go) return;
       S().remove("bridgePush", rid);
@@ -5146,6 +5539,10 @@
     malformed: "this store's memory of the row is malformed",
     student_oid: "Wings Ahead cannot resolve this student",
     timeout: "Wings Ahead ran out of time on this student",
+    /* P45-FDMSd — the hold that exists so that a LOOKUP can never be printed as
+       a removal. It is not a refusal from Wings Ahead and it is not a fault of
+       the training log: it is a name this run could not resolve. */
+    unresolved: "a roster, not the training log — nothing is removed",
   };
   /* the two holds whose way out is a READ of Wings Ahead and never a ⟳ Clear:
      clearing them would arm a blind `prev: null` create, which is the duplicate
@@ -5159,6 +5556,27 @@
     if (h.src === "student") {
       return `<button type="button" class="sch-mini" data-brgw="hold" data-rid="${esc(rid)}"
         data-a="clearstu" title="${esc(TIP.clearstu)}">⟳ Clear the hold</button>`;
+    }
+    /* ── THE STRAND OFFERS NO WRITE AT ALL, AND THAT IS THE JUDGEMENT ────────
+       (P45-FDMSd · finding A.) This line is not one identity, it is a FACT
+       standing in front of many correct rows, and neither of the two write acts
+       a held line normally carries means anything here:
+         · ⟳ Clear the hold would write `hold: ""` onto ledger rows whose hold
+           is ALREADY "" — the hold is derived from the lookup, not stored — so
+           the next paint would draw it again. A control that visibly does
+           nothing is the same lie as a sentence that is not true.
+         · ✕ Stop tracking would delete correct ledger rows whose Wings Ahead
+           rows are standing, which puts every one of those events back in the
+           queue as a CREATE. That is the duplicate this whole lane is built
+           against, offered as the way out of a problem that costs nothing.
+       So the exits are the two the sentence names — heal the roster, or take a
+       read that carries it — and the button beside them is the READ. It wears
+       [data-brg], so it stays live on a view-only device. */
+    if (h.src === "roster") {
+      return `<div class="sch-nd">Nothing here is owed to Wings Ahead and nothing is offered: the rows
+        stand, the events stand, and the way out is the roster — or a read that carries it.</div>
+        <button type="button" class="sch-mini" data-brg="pull"
+          title="${esc(TIP.lookpull)}">⟳ Read Wings Ahead</button>`;
     }
     if (LOOK_HOLDS.indexOf(h.hold) >= 0) {
       const look = missingLook(ledgerRow(rid), ui.parsed, S() ? S().get("bridgePush") : []);
@@ -5214,19 +5632,33 @@
         <td>${esc(h.line.who)}${h.src === "student"
     ? `<div class="sch-nd">${h.flights} owed line${h.flights === 1 ? " of his is" : "s of his are"}
        waiting on this</div>`
-    : ""}</td>
+    : h.src === "roster"
+      ? `<div class="sch-nd"><b>${h.rows}</b> row${h.rows === 1 ? "" : "s"} the bridge wrote
+         ${h.rows === 1 ? "is" : "are"} waiting on this — <b>none of them is owed a removal</b></div>`
+      : ""}</td>
         <td class="sch-mono">${esc(h.line.uid)}</td>
         <td>${esc(h.note || "")}${h.verdict ? `<div class="sch-nd">Wings Ahead answered «${esc(h.verdict)}»</div>` : ""}</td>
         <td class="sch-mono brg-rid">${esc(h.line.rid)}</td>
         <td>${heldActs(h)}</td></tr>`).join("");
     const flights = posInt(p.counts.heldFlights, 0);
-    return `<p class="sch-hint"><b>Held — waiting for a human.</b> Wings Ahead answered these, and every
-        answer said the same thing in a different way: <b>nothing was written</b>. A held line is
-        <b>off the queue</b> on purpose — an automatic retry would re-send the same refused claim for
-        ever — and the way back is one explicit act, which is what «recovery is explicit» means.
+    const stranded = posInt(p.counts.stranded, 0);
+    return `<p class="sch-hint"><b>Held — waiting for a human.</b> Most of these are Wings Ahead's own
+        answers, and every one of them said the same thing in a different way: <b>nothing was written</b>.
+        A held line is <b>off the queue</b> on purpose — an automatic retry would re-send the same refused
+        claim for ever — and the way back is one explicit act, which is what «recovery is explicit» means.
         ${flights ? `<br><b>${flights}</b> owed line${flights === 1 ? " is" : "s are"} standing behind
         a held STUDENT and ${flights === 1 ? "is" : "are"} not counted as queued: they are owed, and they
         are not going anywhere until somebody settles the person.` : ""}
+        ${stranded ? `<br><b>«${esc(HOLD_WORD.unresolved)}»</b> — <b>${stranded}</b> row${stranded === 1
+    ? "" : "s"} the bridge already wrote ${stranded === 1 ? "is" : "are"} standing behind a name this run
+        could not resolve: a person missing from one of the two rosters, an object id the read on screen
+        does not carry, a node the syllabus graph no longer files. <b>Not one of them is owed a
+        removal.</b> An instructor renamed or posted away in Wings Ahead is an ordinary week in a
+        squadron, and it says <b>nothing whatever</b> about the flights he flew: the events are in the
+        training log, unedited, and the rows are on the records, untouched. This lane removes a Wings
+        Ahead row for exactly two reasons — the FDMS event was <b>deleted</b>, or it was <b>edited out of
+        qualifying</b> — and each pending removal proves which one on its own line. A failed lookup is
+        neither, so it waits here instead.` : ""}
         <br><b>«${esc(HOLD_WORD.missing)}» and «${esc(HOLD_WORD.malformed)}» are not cleared, they are
         RECONCILED</b> — Wings Ahead answers <code>missing</code> for a row an admin DELETED and for one
         he MOVED (he edits the date and the handle moves with it) and cannot tell them apart, so this side
@@ -5311,13 +5743,21 @@
       <section class="panel sch-panel">
         <div class="sch-h"><h2>Pending removals <span class="count">${n} waiting on you</span></h2>
           <span class="sch-spacer"></span>
-          <button type="button" class="sch-btn" data-brgw="rmall" title="${esc(TIP.rm)}">␥ Confirm all ${n}</button>
+          <button type="button" class="sch-btn" data-brgw="rmall" title="${esc(TIP.rmall)}">␥ Confirm all ${n}</button>
         </div>
         <p class="sch-hint"><b>A removal never crosses by itself.</b> Not on the debounce, not on a retry,
           not on any timer — <b>deletion is never accidental, on the wire as at home</b> (ruling #2).
           Each line names the reason it is owed, and confirming it removes the Wings Ahead row and lays a
           <b>tombstone</b> on the identity, which is what stops the queue re-creating it. Bringing one back
-          afterwards is a deliberate re-push that clears the tombstone.</p>
+          afterwards is a deliberate re-push that clears the tombstone.
+          <br><b>A row is here for exactly three reasons</b>, and each line proves which: the FDMS event
+          it was written from is <b>gone from the training log</b> · that event is still there and was
+          <b>edited out of qualifying</b>, in the words that disqualified it · or you took the push back
+          with <b>↺ Undo</b>. A row whose event is standing and unchanged is <b>never</b> here: when a
+          name cannot be resolved — a person missing from a roster, an object id the read on screen does
+          not carry, a node the syllabus graph no longer files — the rows are <b>held</b>, and no removal
+          is built for them.${n > RM_TYPE_AT ? ` <b class="sch-warn">␥ Confirm all ${n}</b> destroys
+          <b>${n}</b> rows, so it asks you to type <b>${n}</b> back before it sends.` : ""}</p>
         <div class="sch-scroll"><table class="sch-tbl brg-tbl">
           <thead><tr><th>Act</th><th>Student</th><th>Node</th><th>Date</th><th>Why</th>
             <th>Row identity</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
@@ -5816,6 +6256,12 @@
        for the same reason the chunk is: a number a fixture cannot read is a
        number a round can change without anybody noticing. */
     readFresh, WIRE_MS,
+    /* P45-FDMSd — the distinction a removal is made of, exported so a fixture
+       asserts on the JUDGEMENT and not on the sentence it happens to print:
+       `pushBlockWhy` carries whose fact each refusal is, and RM_TYPE_AT is the
+       size at which ␥ Confirm all asks for its count back. A number no fixture
+       can read is a number a round can move without anybody noticing. */
+    pushBlockWhy, RM_TYPE_AT,
   };
 
   /* ══ THE LANE ARMS ITSELF AT LOAD, NOT AT THE FIRST VISIT ════════════════
