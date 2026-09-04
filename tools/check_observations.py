@@ -593,6 +593,9 @@ def at_level_verdict(text, m, val, unit, code, bands, lead, ctx, floor=None):
     So at-3 numbers must BE the desired tolerance C3, at-1 numbers must BE the
     maximum tolerance C1, and at-2 numbers sit readably inside the gap.  The
     detail carries the target so the mechanical pass can substitute it.
+    A row whose C3 is printed qualitatively has no at-3 number to demand (spec
+    5.6); the DATUM a row measures from ("the 10 ft minimum reference") and, at
+    at-2, a quoted edge ("outside the +/- 5 degree standard") are citations.
     """
     if (ABS_BEFORE.search(text[max(0, m.start() - 30):m.start()])
             or ABS_AFTER.search(text[m.end():m.end() + 60])):
@@ -604,13 +607,13 @@ def at_level_verdict(text, m, val, unit, code, bands, lead, ctx, floor=None):
     sided = [b for b in dev if b[4] is None or b[4] == side] if side else dev
     if not sided:
         return None
-    # two legs printed with the SAME numbers are one band for this purpose
-    uniq_bands = []
+    uniq, seen = [], set()               # two legs printed alike are one band here
     for b in sided:
-        keyb = (b[1], b[2] if b[2] is not None else b[1] / 2.0)
-        if keyb not in [(x[1], x[2] if x[2] is not None else x[1] / 2.0) for x in uniq_bands]:
-            uniq_bands.append(b)
-    sided = uniq_bands
+        k = (b[1], b[2] if b[2] is not None else b[1] / 2.0)
+        if k not in seen:
+            seen.add(k)
+            uniq.append(b)
+    sided = uniq
     scale = max(b[1] for b in sided)
     if val > 3 * scale and not any(b[3] for b in sided):
         return None                       # an absolute reading at this scale
@@ -618,31 +621,43 @@ def at_level_verdict(text, m, val, unit, code, bands, lead, ctx, floor=None):
     if not cue:
         return None
     near = lambda a, b: abs(a - b) <= max(0.02 * b, 1e-9)
+    is_datum = any(b[3] is not None and abs(val - b[3]) < 1e-9 for b in sided)
+    citing = bool(CITATION_NEAR.search(ctx)) or lead in CITE_LEADS
     if code == "2":
         for b in sided:
             b1, b3 = b[1], (b[2] if b[2] is not None else b[1] / 2.0)
             w = b1 - b3
             if b3 + 0.1 * w - 1e-9 <= val <= b1 - 0.1 * w + 1e-9:
                 return (val, unit, "ok", "at-2 sits readably inside %s/%s" % (b3, b1))
+        if is_datum:
+            return None
+        if citing:
+            edges = set()
+            for b in sided:
+                edges.update(x for x in (b[1], b[2]) if x is not None)
+            if any(abs(val - e) < 1e-9 for e in edges):
+                return None
         b = sided[0]
         b1, b3 = b[1], (b[2] if b[2] is not None else b[1] / 2.0)
         tgt = nice_mid(b3, b1) if len(sided) == 1 else None
         return (val, unit, "atnum",
                 "at-2 number must sit readably between C3=%s and C1=%s (spec 5.9) "
                 "target=%s" % (b3, b1, "%g" % tgt if tgt is not None else "ambiguous"))
-    targets = []
-    for b in sided:
-        b1, b3 = b[1], (b[2] if b[2] is not None else b[1] / 2.0)
-        targets.append(b3 if code == "3" else b1)
-    if any(near(val, t) for t in targets):
-        return (val, unit, "ok", "at-%s sits ON C%s=%g (spec 5.9)"
-                % (code, code, [t for t in targets if near(val, t)][0]))
-    uniq = sorted(set(targets))
+    if code == "3":
+        sided = [b for b in sided if b[2] is not None]   # spec 5.6: qualitative C3 -> nothing to demand
+        if not sided:
+            return None
+    targets = [(b[2] if code == "3" else b[1]) for b in sided]
+    hit = [t for t in targets if near(val, t)]
+    if hit:
+        return (val, unit, "ok", "at-%s sits ON C%s=%g (spec 5.9)" % (code, code, hit[0]))
+    if is_datum:
+        return None
+    uniq_t = sorted(set(targets))
     return (val, unit, "atnum",
             "at-%s number must BE C%s (spec 5.9)%s target=%s"
             % (code, code, " [%s side]" % side if side else "",
-               "%g" % uniq[0] if len(uniq) == 1 else "ambiguous(%s)" % "/".join("%g" % t for t in uniq)))
-
+               "%g" % uniq_t[0] if len(uniq_t) == 1 else "ambiguous(%s)" % "/".join("%g" % t for t in uniq_t)))
 
 def numeric_verdicts(text, code, item, row=None, defines=(), relation=None):
     """[(number, unit, verdict, detail)] — verdict in ok / flag / cite / skip.
@@ -1269,7 +1284,9 @@ def main():
                                 (b[0] != "deviation" or b[1])
                                 for bs in ((item_bands or {}).get("units") or {}).values()
                                 for b, _s in bs)):
-                    if mode_row and any(mode_row.get(u) for u in mode_row):
+                    row_c3 = any(b[0] == "deviation" and b[2] is not None
+                                 for bs in (mode_row or {}).values() for b, _s in bs)
+                    if mode_row and any(mode_row.get(u) for u in mode_row) and (code != "3" or row_c3):
                         atquals.append("%s.%s: no measurable deviation in an at-level "
                                        "text on a mode that names a numeric row "
                                        "(spec 5.9)" % (tag, key))
