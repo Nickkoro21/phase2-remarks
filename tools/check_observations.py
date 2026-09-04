@@ -82,7 +82,8 @@ BASE_DEFAULT = "0e5f7ae"          # origin/main the ids are anchored to
 # "no new number flags" while its own ON-BOUNDARY count went 71 -> 115 under a
 # checker that had itself changed; --tree makes that claim testable and this
 # dict makes it loud.
-CEILING = {"WARN": 124, "NUMBER FLAG": 47, "NUMBER ON-BOUNDARY": 98}
+CEILING = {"WARN": 124, "NUMBER FLAG": 47, "NUMBER ON-BOUNDARY": 98,
+           "AT-NUMBER": 0, "AT-QUALITATIVE": 0}   # round D gates (spec 5.9)
 
 TEXTS_KEYS = ["0", "1", "2", "3", "4", "marginal"]
 # ROUND B - BOTH GAPS ARE CLOSED BY REQUIREMENT, NOT BY GOODWILL.
@@ -563,7 +564,87 @@ def named_side(text, start, end):
     return scan_side(head, last=True)
 
 
-def numeric_verdicts(text, code, item, row=None, defines=()):
+def nice_mid(b3, b1):
+    """A readable value strictly inside (b3, b1), at least 10 % of the width
+    from each edge - "200" or "250" for 150/300, never "155" (spec 5.9)."""
+    width = b1 - b3
+    if width <= 0:
+        return None
+    lo, hi = b3 + 0.1 * width, b1 - 0.1 * width
+    step = 50 if width >= 200 else 10 if width >= 40 else 5 if width >= 10 else 1 if width >= 2 else 0.5
+    mid = (b3 + b1) / 2.0
+    cands = sorted({round(round(mid / step) * step, 2),
+                    round(round((mid - step / 2.0) / step) * step, 2),
+                    round(round((mid + step / 2.0) / step) * step, 2)},
+                   key=lambda c: abs(c - mid))
+    for c in cands:
+        if lo <= c <= hi:
+            return c
+    return None
+
+
+def at_level_verdict(text, m, val, unit, code, bands, lead, ctx, floor=None):
+    """(val, unit, verdict, detail) for a number in an at-level text, or None
+    when the number is not a deviation reading at all (then the ordinary judge
+    decides whether it is a setting, a citation of the mode's own subject, ...).
+
+    ROUND D, spec 5.9 - the owner's ruling of 2026-09-04: "from 3 to 3 we write
+    the deviations that are borderline 3, i.e. 150 ft; from 1 to 1 the same".
+    So at-3 numbers must BE the desired tolerance C3, at-1 numbers must BE the
+    maximum tolerance C1, and at-2 numbers sit readably inside the gap.  The
+    detail carries the target so the mechanical pass can substitute it.
+    """
+    if (ABS_BEFORE.search(text[max(0, m.start() - 30):m.start()])
+            or ABS_AFTER.search(text[m.end():m.end() + 60])):
+        return None                       # a setting, not a deviation
+    if floor and unit == "feet" and abs(val - floor) < 1e-9:
+        return None                       # the absolute safety floor, not a band
+    side = named_side(text, m.start(), m.end())
+    dev = [b for b, _s in bands if b[0] == "deviation" and b[1]]
+    sided = [b for b in dev if b[4] is None or b[4] == side] if side else dev
+    if not sided:
+        return None
+    # two legs printed with the SAME numbers are one band for this purpose
+    uniq_bands = []
+    for b in sided:
+        keyb = (b[1], b[2] if b[2] is not None else b[1] / 2.0)
+        if keyb not in [(x[1], x[2] if x[2] is not None else x[1] / 2.0) for x in uniq_bands]:
+            uniq_bands.append(b)
+    sided = uniq_bands
+    scale = max(b[1] for b in sided)
+    if val > 3 * scale and not any(b[3] for b in sided):
+        return None                       # an absolute reading at this scale
+    cue = bool(DEVIATION_CUE.search(ctx)) or side is not None or lead in CITE_LEADS
+    if not cue:
+        return None
+    near = lambda a, b: abs(a - b) <= max(0.02 * b, 1e-9)
+    if code == "2":
+        for b in sided:
+            b1, b3 = b[1], (b[2] if b[2] is not None else b[1] / 2.0)
+            w = b1 - b3
+            if b3 + 0.1 * w - 1e-9 <= val <= b1 - 0.1 * w + 1e-9:
+                return (val, unit, "ok", "at-2 sits readably inside %s/%s" % (b3, b1))
+        b = sided[0]
+        b1, b3 = b[1], (b[2] if b[2] is not None else b[1] / 2.0)
+        tgt = nice_mid(b3, b1) if len(sided) == 1 else None
+        return (val, unit, "atnum",
+                "at-2 number must sit readably between C3=%s and C1=%s (spec 5.9) "
+                "target=%s" % (b3, b1, "%g" % tgt if tgt is not None else "ambiguous"))
+    targets = []
+    for b in sided:
+        b1, b3 = b[1], (b[2] if b[2] is not None else b[1] / 2.0)
+        targets.append(b3 if code == "3" else b1)
+    if any(near(val, t) for t in targets):
+        return (val, unit, "ok", "at-%s sits ON C%s=%g (spec 5.9)"
+                % (code, code, [t for t in targets if near(val, t)][0]))
+    uniq = sorted(set(targets))
+    return (val, unit, "atnum",
+            "at-%s number must BE C%s (spec 5.9)%s target=%s"
+            % (code, code, " [%s side]" % side if side else "",
+               "%g" % uniq[0] if len(uniq) == 1 else "ambiguous(%s)" % "/".join("%g" % t for t in uniq)))
+
+
+def numeric_verdicts(text, code, item, row=None, defines=(), relation=None):
     """[(number, unit, verdict, detail)] — verdict in ok / flag / cite / skip.
 
     `row` is the ONE criteria row the mode's source names, when it names one.
@@ -626,6 +707,12 @@ def numeric_verdicts(text, code, item, row=None, defines=()):
                                 "no %s row in this item's table" % ctx_subj))
                     continue
             bands = [(b, s) for b, s in bands if s is None or s == ctx_subj]
+        # ROUND D - spec 5.9: at the SAME code the number is the BOUNDARY of that
+        # code's band (3->3 = C3, 1->1 = C1), and 2->2 a readable value well
+        # inside the gap.  A citation of a printed bound is not exempt here: an
+        # at-3 text that quotes "the 300 ft limit" quotes the WRONG bound.
+        at_mode = (relation == "at" and code in ("1", "2", "3")
+                   and any(b[0] == "deviation" and b[1] for b, _s in bands))
         # bound citation? ("inside the 300 ft limit", "the 20 kt tolerance")
         printed = set()
         for b, _subj in bands:
@@ -644,6 +731,12 @@ def numeric_verdicts(text, code, item, row=None, defines=()):
         # Naming a printed bound is quoting the standard, whether the sentence
         # says "limit" out loud ("inside the 300 ft limit") or leans on the
         # preposition to say it ("regain the position inside 1000 ft").
+        if at_mode and val not in defines:
+            verdict = at_level_verdict(text, m, val, unit, code, bands, lead, ctx,
+                                       (item or {}).get("floor"))
+            if verdict is not None:
+                res.append(verdict)
+                continue
         if val in printed and (CITATION_NEAR.search(ctx) or lead in CITE_LEADS):
             res.append((val, unit, "cite", "quotes the printed tolerance"))
             continue
@@ -896,6 +989,7 @@ def main():
     ap = argparse.ArgumentParser(description="Round-26 observation-bank gate (report only).")
     ap.add_argument("--base", default=BASE_DEFAULT,
                     help="git rev the ids are compared against (default %s)" % BASE_DEFAULT)
+    ap.add_argument("--pooled", action="store_true", help="list the AT-QUALITATIVE-POOLED lines (spec 5.9, informative)")
     ap.add_argument("--only", default=None,
                     help="only files whose path contains this; a COMMA-SEPARATED list is "
                          "accepted so a writer can check a whole chunk in one run, e.g. "
@@ -910,11 +1004,12 @@ def main():
     crit = load_criteria()
     base_ids = git_mode_ids(args.base)
     errors, warns, flags, softs, fbs = [], [], [], [], []
+    atnums, atquals, atpooled = [], [], []
     per_file = []
     caps_seen = Counter()
     # every count that matters, split by the FAMILY it came from, so a rise can
     # never hide inside an aggregate the way ON-BOUNDARY 71 -> 115 did
-    flag_fam, soft_fam, judged = Counter(), Counter(), Counter()
+    flag_fam, soft_fam, judged, atnum_fam = Counter(), Counter(), Counter(), Counter()
     miss_tot, fb_cards = Counter(), Counter()
 
     files = []
@@ -1146,8 +1241,15 @@ def main():
                 if fallback:
                     return
                 fam = key.split(".")[0]
+                seen_number = False
                 for val, unit, verdict, why in numeric_verdicts(txt, code, item_bands,
-                                                                mode_row, mode_defines):
+                                                                mode_row, mode_defines,
+                                                                relation=relation):
+                    if verdict in ("ok", "soft", "flag", "atnum", "cite"):
+                        seen_number = True
+                    if verdict == "atnum":
+                        atnums.append("%s.%s: %g %s - %s" % (tag, key, val, unit, why))
+                        atnum_fam[fam] += 1
                     if verdict == "flag":
                         flags.append("%s.%s: %g %s outside the code-%s band (%s)"
                                      % (tag, key, val, unit, code, why))
@@ -1156,8 +1258,25 @@ def main():
                         softs.append("%s.%s: %g %s sits ON the code-%s boundary (%s)"
                                      % (tag, key, val, unit, code, why))
                         soft_fam[fam] += 1
-                    if verdict in ("ok", "soft", "flag"):
+                    if verdict in ("ok", "soft", "flag", "atnum"):
                         judged[fam] += 1
+                # ROUND D, spec 5.9 ruling 1: at the same code the student is told
+                # something MEASURABLE.  A qualitative at-1/2/3 text on a mode that
+                # names a numeric row is a gap; on a pooled (technique / general)
+                # mode it is the writer's call, so it is only a WARN.
+                if (relation == "at" and code != "0" and not seen_number
+                        and any(b[0] in ("deviation", "range", "nominal_window") and
+                                (b[0] != "deviation" or b[1])
+                                for bs in ((item_bands or {}).get("units") or {}).values()
+                                for b, _s in bs)):
+                    if mode_row and any(mode_row.get(u) for u in mode_row):
+                        atquals.append("%s.%s: no measurable deviation in an at-level "
+                                       "text on a mode that names a numeric row "
+                                       "(spec 5.9)" % (tag, key))
+                    elif not fallback:
+                        atpooled.append("%s.%s: no number in an at-level text on a pooled "
+                                        "(technique / general) mode - add one where the "
+                                        "mode's subject is measurable (spec 5.9)" % (tag, key))
 
             for k in ("0", "1", "2"):
                 if isinstance(texts.get(k), str):
@@ -1267,7 +1386,9 @@ def main():
         print("REQUIRED KEYS STILL UNWRITTEN: %s"
               % ("  ".join("%s x%d" % (k, n) for k, n in sorted(miss_tot.items()))))
     print("-" * 78)
-    for label, bag in (("ERROR", errors), ("WARN", warns), ("NUMBER FLAG", flags),
+    for label, bag in (("ERROR", errors), ("AT-NUMBER", atnums), ("AT-QUALITATIVE", atquals),
+                       ("AT-QUALITATIVE-POOLED", atpooled),
+                       ("WARN", warns), ("NUMBER FLAG", flags),
                        ("NUMBER ON-BOUNDARY", softs), ("FALLBACK FINDING", fbs)):
         cap = CEILING.get(label)
         note = ""
@@ -1276,7 +1397,10 @@ def main():
                     % (cap, " - ABOVE CEILING by %d" % (len(bag) - cap)
                        if len(bag) > cap else ""))
         print("%s: %d%s" % (label, len(bag), note))
-        lim = 400 if label == "ERROR" else 200
+        if label == "AT-QUALITATIVE-POOLED":
+            lim = len(bag) if args.pooled else 0
+        else:
+            lim = 400 if label in ("ERROR", "AT-NUMBER", "AT-QUALITATIVE") else 200
         for s in bag[:lim]:
             print("  ! %s" % s)
         if len(bag) > lim:
@@ -1298,10 +1422,10 @@ def main():
     # The two numeric buckets, split by family: an aggregate that only ever
     # moves as one number is how a rise of 44 went unreported in round 26.
     print("-" * 78)
-    print("NUMBERS judged, by family (flag / on-boundary / judged):")
+    print("NUMBERS judged, by family (flag / on-boundary / at-number / judged):")
     for fam in ("texts", "texts_at", "texts_above"):
-        print("  %-12s %4d flag   %4d on-boundary   %5d judged"
-              % (fam, flag_fam[fam], soft_fam[fam], judged[fam]))
+        print("  %-12s %4d flag   %4d on-boundary   %4d at-number   %5d judged"
+              % (fam, flag_fam[fam], soft_fam[fam], atnum_fam[fam], judged[fam]))
     if fbs:
         print("-" * 78)
         print("FALLBACK FINDINGS BY REASON (they are structural, not the writer's "
@@ -1317,7 +1441,7 @@ def main():
 
     if args.fail_on == "none":
         return 0
-    if errors:
+    if errors or atnums or atquals:
         return 1
     if args.fail_on == "warn" and warns:
         return 1
