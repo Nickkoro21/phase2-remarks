@@ -266,8 +266,18 @@ function fallbackNote(o) {
       + `Do not paste it as an at-MIF remark: the record to write is ${want}.`;
 }
 
+/* THE ROW DROPDOWN LISTS THE ITEM'S ROWS, NOT THE ROWS THAT HAPPEN TO HAVE A MODE.
+   Ruling 2026-09-03 («στο dropdown δεν ανοίγουν όλα τα items»): the list used to be
+   built from the observations, so a row nobody had filed a mode under (LANDING
+   PATTERN's «Normal Overhead Pattern») never appeared, and — worse — a mode with
+   no row of its own (mif_row null: the item-wide ones, 18 of the 22 in that file)
+   was shown ONLY while no row was selected, which on a multi-row item is never.
+   A null row means «this mode applies to the whole item»; it belongs under
+   every row. */
 function rowsWithData() {
   if (!state.itemData) return [];
+  const rows = (state.itemData.mif_rows || []).map((r) => r.row_name).filter(Boolean);
+  if (rows.length) return rows;
   const set = new Set();
   for (const o of state.itemData.observations) if (o.mif_row) set.add(o.mif_row);
   return [...set];
@@ -275,7 +285,8 @@ function rowsWithData() {
 
 function obsPool() {
   if (!state.itemData) return [];
-  return state.itemData.observations.filter((o) => (o.mif_row ?? null) === (state.row ?? null));
+  return state.itemData.observations.filter((o) =>
+    o.mif_row == null || (o.mif_row ?? null) === (state.row ?? null));
 }
 
 function renderCodes() {
@@ -327,6 +338,10 @@ function prefixFor(o) {
   if (o.mif_row && state.itemData.mif_rows) {
     const row = state.itemData.mif_rows.find((r) => r.row_name === o.mif_row);
     if (row && row.sn != null) sn = row.sn;
+  } else if (state.row && state.itemData.mif_rows) {
+    const row = state.itemData.mif_rows.find((r) => r.row_name === state.row);
+    if (row && row.sn != null) sn = row.sn;
+    else if (state.itemData.mif_numbers?.length) sn = state.itemData.mif_numbers[0];
   } else if (state.itemData.mif_numbers?.length) {
     sn = state.itemData.mif_numbers[0];
   }
