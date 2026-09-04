@@ -165,12 +165,25 @@ async function selectItem(it, btn) {
                                         attribution                      (§41.d — the
                                         remark exists "to justify the very high grade")
 
-   Every family key is OPTIONAL. A mode not yet rewritten falls back to exactly
-   what it rendered before this round, so the bank is consumable at every commit
-   and no id ever disappears. srcKey records WHICH key produced the text, so the
-   Feedback issue lands on the record that actually rendered.
+   ROUND B — texts_at["0"] and texts_above["1"] are REQUIRED of the bank, and
+   the composer no longer PRETENDS when one is missing. A missing key still
+   falls back, so no id disappears and the app stays consumable at every
+   commit — but the fallback is rendered as what it is:
 
-   The closing sentence is appended HERE, once, and can never be doubled.
+     * the closing sentence is NOT appended to a below-MIF text. Round 26
+       shipped 1 588 cards that opened "SP, due to ..." and closed "Above end
+       of block MIF achieved." at desired 0 -> achieved 1, because 1 823 modes
+       had no texts_above["1"] and the tail went on regardless. A deficiency
+       narrative cannot justify a high grade (BaD 3-1 §41.d); appending the
+       claim to it does not make it justify one, it only makes it lie.
+     * the observation carries `fallback: true`, the card wears a warn-coloured
+       badge naming the record that actually rendered, and the Feedback issue
+       asks for the MISSING KEY to be written rather than for the fallback to
+       be edited.
+
+   srcKey records WHICH key produced the text, so the Feedback issue lands on
+   the record that actually rendered. The closing sentence is appended HERE,
+   once, and can never be doubled.
    ══════════════════════════════════════════════════════════════════════════ */
 const ABOVE_TAIL = "Above end of block MIF achieved.";
 function withAboveTail(s) {
@@ -192,7 +205,7 @@ function expandV2(data) {
     m.mif_row = rowName(m.mif_row);
     for (let d = 0; d <= 3; d++) {
       for (let a = 0; a <= 4; a++) {
-        let text, variant, relation, srcKey;
+        let text, variant, relation, srcKey, fallback = false;
         const k = String(a);
         if (a < d) {
           relation = "below";
@@ -202,22 +215,31 @@ function expandV2(data) {
         } else if (a === d) {
           relation = "at";
           if (m.texts_at?.[k]) { text = m.texts_at[k]; srcKey = `texts_at.${k}`; }
-          else if (m.texts?.marginal) { text = m.texts.marginal; srcKey = "texts.marginal"; }
-          else { text = m.texts?.[k]; srcKey = `texts.${k}`; }
+          /* texts.marginal is frozen historical prose: it states neither the
+             cause of the error nor that the standard was met, so it is a
+             fallback, never an at-MIF record. */
+          else if (m.texts?.marginal) { text = m.texts.marginal; srcKey = "texts.marginal"; fallback = true; }
+          else { text = m.texts?.[k]; srcKey = `texts.${k}`; fallback = true; }
           variant = "marginal";
         } else {
           relation = "above";
-          let base;
-          if (m.texts_above?.[k]) { base = m.texts_above[k]; srcKey = `texts_above.${k}`; }
-          else { base = m.texts?.[k]; srcKey = `texts.${k}`; }
-          text = base ? withAboveTail(base) : null;
+          if (m.texts_above?.[k]) {
+            text = withAboveTail(m.texts_above[k]);
+            srcKey = `texts_above.${k}`;
+          } else {
+            /* NO TAIL ON A BELOW-FAMILY FALLBACK. The text describes a fault;
+               the claim it would close with is not its to make. */
+            text = m.texts?.[k] ?? null;
+            srcKey = `texts.${k}`;
+            fallback = !!text;
+          }
           variant = "above";
         }
         if (!text) continue;
         obs.push({
           id: `${m.id}-d${d}a${a}`,
           mif_row: m.mif_row ?? null,
-          desired: d, achieved: a, variant, relation, srcKey,
+          desired: d, achieved: a, variant, relation, srcKey, fallback,
           hf_concept: m.hf_concept ?? null,
           mode: m.label ?? null,
           text,
@@ -226,6 +248,22 @@ function expandV2(data) {
     }
   }
   return { ...data, observations: obs };
+}
+
+/* What the badge and the Feedback issue say when the card is a fallback.
+   It names the key that SHOULD have produced this text, so the reader is told
+   what is missing rather than being invited to edit the wrong record. */
+function fallbackNote(o) {
+  const want = o.relation === "above"
+    ? `texts_above["${o.achieved}"]` : `texts_at["${o.achieved}"]`;
+  return o.relation === "above"
+    ? `This mode has no ${want} yet, so the card is showing ${o.srcKey} — a text written `
+      + `for a BELOW-MIF code. It narrates a deficiency and does not justify the higher `
+      + `code, so "Above end of block MIF achieved." is deliberately NOT added. `
+      + `Do not paste it as an above-MIF remark: the record to write is ${want}.`
+    : `This mode has no ${want} yet, so the card is showing ${o.srcKey} — frozen prose that `
+      + `states neither the cause of the error nor that the standard was met. `
+      + `Do not paste it as an at-MIF remark: the record to write is ${want}.`;
 }
 
 function rowsWithData() {
@@ -305,6 +343,7 @@ function feedbackUrl(o) {
        after the relation split, texts["2"] and texts_above["2"] are two different
        records that both render as an achieved (2). */
     `**Record:** \`${o.srcKey ?? "texts." + o.achieved}\` in \`data/observations2/${state.category}/${state.itemData.item_id}.json\` · mode \`${o.id.replace(/-d\d+a\d+$/, "")}\``,
+    ...(o.fallback ? [`**FALLBACK:** ${fallbackNote(o)}`] : []),
     ``,
     `> ${o.text}`,
     ``,
@@ -332,7 +371,7 @@ function renderResults() {
   box.innerHTML = "";
   for (const o of hits) {
     const card = document.createElement("div");
-    card.className = `obs-card v-${o.variant}`;
+    card.className = `obs-card v-${o.variant}${o.fallback ? " is-fallback" : ""}`;
     const prefix = prefixFor(o);
     const full = `${prefix} ${o.text}`;
     card.innerHTML = `
@@ -340,6 +379,7 @@ function renderResults() {
         <span class="obs-prefix">${prefix}</span>
         <button type="button" class="obs-id" data-id="${esc(o.id)}" title="Copy this observation id">${esc(o.id)}</button>
         <span class="badge">${VARIANT_LABELS[o.variant] ?? o.variant}</span>
+        ${o.fallback ? `<span class="badge fallback" title="${esc(fallbackNote(o))}">fallback · ${esc(o.srcKey)}</span>` : ""}
         ${o.mode ? `<span class="badge mode">${esc(o.mode)}</span>` : ""}
         ${o.hf_concept ? `<span class="badge hf">${o.hf_concept}</span>` : ""}
         <a class="fb-btn" href="${feedbackUrl(o)}" target="_blank" rel="noopener" title="Report an error or suggest a correction for this remark">Feedback</a>

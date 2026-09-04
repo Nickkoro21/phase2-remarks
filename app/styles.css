@@ -307,6 +307,15 @@ body {
   padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted);
 }
 .badge.hf { color: var(--hf); border-color: var(--hf); }
+/* Round B — a card the composer had to build out of a record written for
+   ANOTHER relation says so on its face: warn-coloured dashed rail, and a badge
+   naming the record instead of the relation.  The green "above" rail must
+   never sit over a deficiency text. */
+.obs-card.is-fallback { border-left-color: var(--warn); border-left-style: dashed; }
+.badge.fallback {
+  color: var(--warn); border-color: var(--warn); cursor: help;
+  text-transform: none; letter-spacing: 0; font-family: Consolas, monospace;
+}
 .copy-btn {
   margin-left: auto; background: transparent; border: 1px solid var(--line);
   color: var(--muted); border-radius: 7px; padding: 4px 10px; font-size: 12px; cursor: pointer;

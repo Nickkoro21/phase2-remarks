@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Round-26 gate for the observation bank — REPORT ONLY, never edits a data file.
+"""Round-B gate for the observation bank — REPORT ONLY, never edits a data file.
 
     python tools/check_observations.py [--base <git-rev>] [--only <substring>]
+                                       [--tree <git-rev>]
                                        [--fail-on error|warn|none] [--quiet]
 
 Checks, in the order the rulings of 2026-08-29 put them:
@@ -21,10 +22,16 @@ Checks, in the order the rulings of 2026-08-29 put them:
                 that never states the standard was met is an error too.
                 texts_above that opens with the deficiency formula
                 ("SP, due to ...") is an error - ruling 1, achievement first.
-  4. NUMBERS    ruling 3, best effort.  Every dimensioned number quoted in a
-                text is pulled out and compared with the item's own criteria
-                table for the ACHIEVED code's band.  Bound CITATIONS ("inside
-                the 300 ft limit") are recognized and skipped.  Everything the
+  4. NUMBERS    ruling 3 and BaD 3-1/2025 §41.e, best effort.  Every
+                dimensioned number quoted in a text is pulled out and compared
+                with the item's own criteria table for the ACHIEVED code's band,
+                ON THE SIDE THE SENTENCE NAMES (fast/slow, high/low, above/
+                below, long/short, early/late).  Round 26 accepted a number that
+                fitted EITHER leg, so "about 8 knots fast" passed a row whose
+                fast leg is 10-15.  A leg the table prints as ZERO ("+20, -0")
+                is a prohibition, not a band: any value the sentence puts on
+                that side is a code 0 (spec §5.3).  Bound CITATIONS ("inside the
+                300 ft limit") are recognized and skipped.  Everything the
                 parser cannot settle is reported as a FLAG, never as a failure.
   5. PALETTE    ruling 2's "synonyms, not one phrase parroted": per file, per
                 rung, how many distinct adjectives and what share the most-used
@@ -34,6 +41,20 @@ Checks, in the order the rulings of 2026-08-29 put them:
                 sentence, real-name smell (capitalised words outside the
                 aviation allow-list are LISTED for the human's eye - the
                 authoritative privacy check is the roster grep, run separately).
+
+  8. FALLBACK   what the composer still renders out of the WRONG record.
+                texts_at["0"] and texts_above["1"] are REQUIRED (spec §3.2.1,
+                §3.3); until a mode carries them the app falls back to
+                texts.marginal and to texts["1"], which are at-level-frozen and
+                below-doctrine prose.  Each reachable fallback is scanned a
+                SECOND time under the rules of the relation it is reached in and
+                every finding is a WARN tagged FALLBACK.  The count is the size
+                of the remaining gap and reaches 0 when the round lands.
+
+`--tree <rev>` runs this same checker over the bank as it stood at another
+revision (blobs straight out of git, so LF regardless of the checkout).  That
+is the LIKE-FOR-LIKE comparison round 26 could not produce when its
+ON-BOUNDARY count moved 71 -> 115 under a checker that had itself changed.
 
 Exit code: 0 unless --fail-on says otherwise (default: errors fail).
 """
@@ -52,13 +73,28 @@ OBS = ROOT / "data" / "observations2"
 CRIT = ROOT / "data" / "criteria"
 CATS = ["contact", "instrument", "formation", "vfr_navigation"]
 
-BASE_DEFAULT = "0e5f7ae"          # origin/main at the start of the round
+BASE_DEFAULT = "0e5f7ae"          # origin/main the ids are anchored to
+# THE CEILING.  Measured with THIS checker on 2d9b92a (origin/main at the start
+# of round B) - the like-for-like floor the round may not raise.  Two lines are
+# expected to MOVE, and only downwards: ERROR starts at 234 (the two required
+# keys, one line per file per key) and must reach 0, and FALLBACK FINDING starts
+# at 5 341 over 3 647 rendered cards and must reach 0 as well.  Round 26 said
+# "no new number flags" while its own ON-BOUNDARY count went 71 -> 115 under a
+# checker that had itself changed; --tree makes that claim testable and this
+# dict makes it loud.
+CEILING = {"WARN": 124, "NUMBER FLAG": 47, "NUMBER ON-BOUNDARY": 98}
 
 TEXTS_KEYS = ["0", "1", "2", "3", "4", "marginal"]
-AT_KEYS = ["0", "1", "2", "3"]            # "0" optional / deferred, see spec §12
-AT_REQUIRED = ["1", "2", "3"]
-ABOVE_KEYS = ["1", "2", "3", "4"]         # "1" optional (only reachable from desired 0)
-ABOVE_REQUIRED = ["2", "3", "4"]
+# ROUND B - BOTH GAPS ARE CLOSED BY REQUIREMENT, NOT BY GOODWILL.
+# texts_at["0"] is the (0) -> (0) record: desired 0 appears in 65 cells of the
+# MIF, and until it existed all 1 824 of those cards rendered the frozen
+# texts.marginal under an "At MIF" badge.  texts_above["1"] is the (0) -> (1)
+# record: without it the composer reached for texts["1"], a DEFICIENCY text,
+# and appended "Above end of block MIF achieved." to it - 1 588 shipped cards.
+AT_KEYS = ["0", "1", "2", "3"]
+AT_REQUIRED = ["0", "1", "2", "3"]
+ABOVE_KEYS = ["1", "2", "3", "4"]
+ABOVE_REQUIRED = ["1", "2", "3", "4"]
 
 ABOVE_TAIL = "Above end of block MIF achieved."
 
@@ -115,6 +151,14 @@ AT_MET_STEMS = [
     "standard required for this stage", "standard the training section requires",
     "in line with the proficiency expected", "within the desired standards",
     "inside the desired standards", "consistent with the expected",
+]
+# At desired 0 the Training Section is INTRODUCING the manoeuvre and asks for
+# no independent standard yet, so "the standard was met" would be a false
+# claim.  The at-0 text says what the section actually still provides (§4.5).
+AT0_MET_STEMS = [
+    "the training section introduces", "still provides", "first exposure",
+    "is being introduced at this point", "no independent standard is required yet",
+    "does not yet ask for an independent standard", "still expects ip assistance",
 ]
 AT_TREND_STEMS = ["sp is expected to", "is expected to"]
 
@@ -187,7 +231,10 @@ NUM_RE = re.compile(
     r"(?P<lead>(?:more than|less than|no more than|not more than|up to|within|inside|"
     r"about|roughly|around|approximately|nearly|almost|over|under|beyond|outside|"
     r"at most|past|out to|back inside|short of|close to)\s+)?"
-    r"(?P<num>\d+(?:\.\d+)?)\s*(?P<unit>" + UNIT_RE + r")\b",
+    # (?<![\d,]) - "1,000 feet MSL" must not be read as a deviation of ZERO
+    # feet.  The thousands separator split the number and the tail "000 feet"
+    # parsed as 0, which then failed every band it was offered to.
+    r"(?<![\d,])(?P<num>\d+(?:\.\d+)?)\s*(?P<unit>" + UNIT_RE + r")\b",
     re.IGNORECASE)
 # a number that names the printed tolerance rather than a flown deviation
 CITATION_NEAR = re.compile(
@@ -290,6 +337,21 @@ SUBJECT_WORDS = {
 }
 
 
+# Which quantities a unit can actually express.  A unit absent from this map
+# is left ungated (its vetoes behave as they did in round 26).
+UNIT_SUBJECTS = {
+    "feet": ("altitude", "separation", "touchdown", "glidepath", "path"),
+    "knots": ("airspeed",),
+    "degrees": ("heading", "bank", "geometry", "glidepath", "path"),
+    "NM": ("path", "separation"),
+    "DME": ("path", "separation"),
+    "dots": ("glidepath", "heading"),
+    "AOA units": ("aoa",),
+    "feet_per_min": ("vsi",),
+    "ship lengths": ("separation",),
+}
+
+
 def subject_of(text):
     """The one quantity a string is about, or None when it is 0 or several."""
     lo = (text or "").lower()
@@ -323,13 +385,24 @@ CAP_ALLOW = {
 
 
 def band_bounds(param):
-    """{unit: [(kind, code1, code3), ...]} for ONE criteria row.
+    """{unit: [(band, subject), ...]} for ONE criteria row.
 
-    A row can print more than one unit.  `formation-18 · a/ ROUTE POSITION -
+    A row can print more than one unit.  `formation-18 - a/ ROUTE POSITION -
     DISTANCE` is "+200' , -1/2 span": the plus leg is FEET, the minus leg is
     WING SPANS, and the row's own `unit` field just says "mixed".  Indexing the
     whole row under "mixed" hid the 200/100 ft band from every number in the
     file, so each leg is now filed under the unit it is actually printed in.
+
+    ROUND B - THE SIDE TRAVELS WITH THE BAND.  A deviation band now carries the
+    leg it was printed on ("plus" / "minus").  BaD 3-1/2025 §41.e - "the
+    performance codes must necessarily agree with the deviations written down" -
+    and spec §5.3 both judge a number on the side the SENTENCE names, while the
+    round-26 checker judged it against the UNION of the two legs: that is how
+    "about 8 knots fast" passed against a row whose fast leg is 10-15, because
+    the SLOW leg (10) happened to accept it.  A leg printed as ZERO ("+20, -0"
+    on the downwind airspeed) is now KEPT instead of dropped: it is the table
+    stating that nothing at all is tolerated on that side, which is what makes
+    every "kt slow" on the downwind a code 0 (spec §5.3).
     """
     c1, c3 = param.get("code_1"), param.get("code_3")
     if not isinstance(c1, dict):
@@ -349,19 +422,16 @@ def band_bounds(param):
         out[base].append(((("range", (c1.get("min"), c1.get("max")),
                             (r3.get("min"), r3.get("max")) if r3 else None)), subject))
     elif k1 == "deviation":
-        # SIDE-AWARE, cheaply: many rows are asymmetric ("+200', -100'" on final,
-        # "+20, -0" on downwind airspeed - slow is never tolerated). Collapsing
-        # them to max() made every legitimate low-side number look out of band, so
-        # each side becomes its OWN candidate band and a number that fits either
-        # one passes. Which side a sentence means is the human's call.
         d3 = c3 if isinstance(c3, dict) and c3.get("kind") == "deviation" else {}
         for side in ("plus", "minus"):
-            b1 = abs(c1.get(side) or 0)
-            if not b1:
-                continue
-            b3 = abs(d3.get(side) or 0) or None
+            raw = c1.get(side)
+            if raw is None:
+                continue                      # this leg is not printed at all
+            b1 = abs(raw)
+            r3 = d3.get(side)
+            b3 = abs(r3) if r3 is not None else None
             unit = (c1.get(side + "_unit") or param.get(side + "_unit") or base)
-            out[unit].append((("deviation", b1, b3, datum), subject))
+            out[unit].append((("deviation", b1, b3, datum, side), subject))
     elif k1 == "nominal_change":
         v1 = c1.get("value")
         v3 = c3.get("value") if isinstance(c3, dict) else None
@@ -370,7 +440,7 @@ def band_bounds(param):
                                (v3, c3.get("plus"), c3.get("minus"))
                                if isinstance(c3, dict) else None), subject))
         else:                               # a single ceiling, e.g. touch-down point
-            out[base].append((("deviation", v1, v3, datum), subject))
+            out[base].append((("deviation", v1, v3, datum, None), subject))
     return dict(out)
 
 
@@ -441,13 +511,70 @@ def resolve_row(item, source):
     return cands[0] if len(cands) == 1 else None
 
 
+# ── which SIDE of the table a sentence is talking about (spec §5.3) ───────
+# The tables are not all "+/-".  contact-23 FINAL ALTITUDE is "+200', -100'";
+# the downwind airspeed is "+20, -0" and slow is never allowed at all.  So the
+# number is judged on the leg the SENTENCE names, and only on that leg.
+SIDE_WORDS = {
+    "plus":  ("fast", "high", "above", "long", "late", "wide", "overshot",
+              "overshoot", "overshoots"),
+    "minus": ("slow", "low", "below", "short", "early", "shallow", "undershot",
+              "undershoot", "undershoots"),
+}
+SIDE_RE = {s: re.compile(r"\b(?:%s)\b" % "|".join(ws), re.IGNORECASE)
+           for s, ws in SIDE_WORDS.items()}
+# A side word that belongs to the NAME of a pattern point is not a side:
+# "low key", "high key", "high station", "low level" are places, not errors.
+SIDE_STOP = re.compile(r"^\s*(?:key|keys|station|stations|level|levels|"
+                       r"altitude\s+work|speed\s+handling)\b", re.IGNORECASE)
+# Backwards, the search must not walk over ANOTHER number, a sentence end or a
+# conjunction: in "about 250 feet low and 12 knots off the glide speed" the
+# "low" is the 250's, and reading it as the 12's put a downwind-legal 12 kt
+# fast on the slow leg.
+SIDE_CUT = re.compile(r"[0-9;,.]|\band\b|\bwith\b|\bwhile\b|\bbut\b",
+                      re.IGNORECASE)
+
+
+def named_side(text, start, end):
+    """'plus' / 'minus' / None - the side the sentence puts THIS number on.
+
+    Looked for AFTER the number first ("about 8 knots fast", "250 feet low"),
+    which is the house phrasing, and only then before it ("was high by about
+    200 feet").  "off", "of error", "either side" name no side and stay None -
+    those keep the round-26 behaviour of accepting either leg, because the
+    sentence itself is symmetric, and an unsigned sentence is the writer's
+    choice, not the checker's business.
+    """
+    def scan_side(window, last):
+        hits = [(m.start(), s) for s in SIDE_WORDS
+                for m in SIDE_RE[s].finditer(window)
+                if not SIDE_STOP.match(window[m.end():])]   # "low key" is a place
+        if not hits:
+            return None
+        return (max(hits) if last else min(hits))[1]
+
+    hit = scan_side(text[end:end + 28].split(".")[0], last=False)
+    if hit:
+        return hit
+    head = text[max(0, start - 28):start]
+    cuts = [m.end() for m in SIDE_CUT.finditer(head)]
+    if cuts:
+        head = head[max(cuts):]
+    return scan_side(head, last=True)
+
+
 def numeric_verdicts(text, code, item, row=None, defines=()):
     """[(number, unit, verdict, detail)] — verdict in ok / flag / cite / skip.
 
     `row` is the ONE criteria row the mode's source names, when it names one.
     A number whose unit that row prints is judged against that row alone; any
-    other unit falls back to the item's pooled bands.
-    
+    other unit falls back to the item's pooled bands.  ROUND B: so does a
+    number whose QUANTITY the named row does not measure - the round-26 code
+    skipped it ("no altitude row in this item's table") even when the item
+    printed an altitude row two lines further down, which is how an injected
+    "80 feet high" walked through contact-23-em02 (its source names the BANK
+    row).  The item is silent only when NO row of it measures that quantity.
+
     `defines` are the numbers the mode's OWN label and source quote - the mode
     "Pitch corrections larger than 2 degrees on the glide path" is DEFINED by
     that 2, and a text naming it is naming the technique limit the mode is
@@ -460,34 +587,51 @@ def numeric_verdicts(text, code, item, row=None, defines=()):
         unit = UNIT_ALIASES[m.group("unit").lower()]
         lead = (m.group("lead") or "").strip().lower()
         ctx = text[max(0, m.start() - 60):min(len(text), m.end() + 60)]
+        pool = units_map.get(unit) or []
         if row and row.get(unit):
             bands, scope = row[unit], "row"
         else:
-            bands, scope = (units_map.get(unit) or []), "item"
+            bands, scope = pool, "item"
         if not bands:
             res.append((val, unit, "skip", "no criteria parameter in %s" % unit))
             continue
         # A row can only judge a number that is about the SAME QUANTITY it
         # measures.  When the sentence names one quantity and the row names a
-        # different one, the row is simply not the standard for this number.
+        # different one, the row is not the standard for this number - but the
+        # ITEM may still print one, so the item's own rows are tried before the
+        # number is given up on.
         ctx_subj = subject_of(ctx)
+        if ctx_subj and unit in UNIT_SUBJECTS and ctx_subj not in UNIT_SUBJECTS[unit]:
+            # The window caught a noun from the neighbouring clause.  A quantity
+            # this UNIT cannot express has no standing to veto this unit's rows:
+            # feet do not measure an airspeed, so "about 250 feet low with the
+            # speed some 12 knots off schedule" is an ALTITUDE reading and must
+            # be judged - round 26 skipped it, and its 250-ft-low code-2 text
+            # had to be found by a human instead.
+            ctx_subj = None
         if ctx_subj:
-            named = [s for _b, s in bands if s]
-            if named and ctx_subj not in named:
-                # The item prints standards, but none of them for THIS quantity
-                # - formation-20 inherits altitude/airspeed/heading and says
-                # nothing about nose-tail separation.  Spec 5.7: the measurable
-                # fact stands on the General Criteria, not on a table row.
-                res.append((val, unit, "skip",
-                            "no %s row in this item's table" % ctx_subj))
-                continue
+            def fits(bs):
+                named = [s for _b, s in bs if s]
+                return (not named) or (ctx_subj in named)
+            if not fits(bands):
+                if scope == "row" and pool and fits(pool):
+                    bands, scope = pool, "item"
+                else:
+                    # The item prints standards, but none of them for THIS
+                    # quantity - formation-20 inherits altitude/airspeed/heading
+                    # and says nothing about nose-tail separation.  Spec §5.7:
+                    # the measurable fact stands on the General Criteria, not on
+                    # a table row.
+                    res.append((val, unit, "skip",
+                                "no %s row in this item's table" % ctx_subj))
+                    continue
             bands = [(b, s) for b, s in bands if s is None or s == ctx_subj]
         # bound citation? ("inside the 300 ft limit", "the 20 kt tolerance")
         printed = set()
         for b, _subj in bands:
             if b[0] == "deviation":
-                printed.update(x for x in (b[1], b[2]) if x is not None)
-                if len(b) > 3 and b[3] is not None:
+                printed.update(x for x in (b[1], b[2]) if x)
+                if b[3] is not None:
                     printed.add(b[3])          # the datum is printed too
             elif b[0] == "range":
                 for r in (b[1], b[2]):
@@ -524,15 +668,59 @@ def numeric_verdicts(text, code, item, row=None, defines=()):
                             "INSIDE the %g ft safety distance, which does not "
                             "vary by code" % floor))
             continue
+        # ── §41.e / spec §5.3: judge on the side the SENTENCE names ───────
+        # The scale of this unit on THIS item: a "deviation" three times larger
+        # than the widest printed tolerance is not a deviation at all, it is an
+        # absolute reading ("never below the 120 KIAS minimum", "the 140 KIAS
+        # gate").  The judge already applies this test per band; the ZERO leg
+        # has no band to apply it with, so it is applied here.
+        dev_scale = max([bb[1] for bb, _s in bands
+                         if bb[0] == "deviation" and bb[1]] or [0])
+        side = named_side(text, m.start(), m.end())
+        sided = [(b, s) for b, s in bands
+                 if b[0] != "deviation" or b[4] is None or b[4] == side]
+        if side and sided:
+            bands, side_note = sided, " [%s side]" % side
+        elif side:
+            # the row prints no leg on that side at all - it cannot judge the
+            # direction, so the printed leg is used and the human is told.
+            side_note = " [%s side not printed]" % side
+        else:
+            # an unsigned sentence ("about 10 degrees off") names no side, so
+            # both legs stay in play - but a leg printed as ZERO is not a band,
+            # it is a prohibition, and only a sentence that NAMES that side may
+            # be judged by it.
+            bands = [(b, s) for b, s in bands if b[0] != "deviation" or b[1]]
+            side_note = ""
+            if not bands:
+                res.append((val, unit, "skip",
+                            "the row prints no tolerance in %s" % unit))
+                continue
         ok, soft, why = False, False, []
-        cue = bool(DEVIATION_CUE.search(ctx))
+        # A sentence that puts the number on a SIDE has already said it is a
+        # deviation: "about 8 knots below the reference" needs no further cue.
+        # Without this, contact-11-tm01's below-band 8 kt was skipped as "not
+        # read as a deviation" and the round-26 verifier had to find it by hand.
+        cue = bool(DEVIATION_CUE.search(ctx)) or side is not None
         took = bool(IP_TOOK_OVER.search(text))
         for b, _subj in bands:
             kind = b[0]
             if kind == "deviation":
-                b1, b3 = b[1], b[2]
-                datum = b[3] if len(b) > 3 else None
+                b1, b3, datum, bside = b[1], b[2], b[3], b[4]
                 if b1 is None:
+                    continue
+                if not b1:
+                    # THE ZERO LEG.  "+20, -0" says the table tolerates nothing
+                    # on this side: spec §5.3, "slow is never allowed - every
+                    # 'kt slow' on the downwind is a code 0".  Reached only when
+                    # the sentence names this side out loud AND the value could
+                    # be a deviation at this item's scale at all.
+                    if not cue or (dev_scale and val > 3 * dev_scale):
+                        continue
+                    why.append("no %s tolerance printed on this row" % bside)
+                    if code == "0":
+                        ok = True
+                        break
                     continue
                 if b3 is None:
                     b3 = b1 / 2.0
@@ -571,8 +759,8 @@ def numeric_verdicts(text, code, item, row=None, defines=()):
                 # lateral separation is "+20 ft" from the 10 ft minimum spacing
                 # (table footnote), so a text that says "30 ft of spacing" is
                 # reporting the code-1 deviation, not breaking it.  Both readings
-                # are offered and the kinder one wins - which side a sentence
-                # means is the human's call, exactly as with the plus/minus legs.
+                # are offered and the kinder one wins - a change of ORIGIN is not
+                # a change of SIDE, so this is not the union §41.e forbids.
                 verdict = judge(val)
                 if (not verdict or not verdict[0]) and datum:
                     alt = judge(val - datum)
@@ -600,7 +788,7 @@ def numeric_verdicts(text, code, item, row=None, defines=()):
             elif kind == "nominal_window":
                 # The nominal itself MOVES with the code - the observance angle
                 # is 30 degrees when desired and 50 degrees at maximum tolerance
-                # - so the number is a POSITION, not a deviation (spec 5.5):
+                # - so the number is a POSITION, not a deviation (spec §5.5):
                 # code 3 sits in the desired window, code 1 in the outer one,
                 # and code 2 in the GAP BETWEEN THEM.  Reading code 2 against
                 # the outer window called every correct 40-degree text wrong.
@@ -641,7 +829,7 @@ def numeric_verdicts(text, code, item, row=None, defines=()):
             res.append((val, unit, "skip", "not read as a deviation in %s" % unit))
         else:
             res.append((val, unit, "ok" if (ok and not soft) else ("soft" if ok else "flag"),
-                        "%s: %s" % (scope, "; ".join(why[:2]))))
+                        "%s: %s%s" % (scope, "; ".join(why[:2]), side_note)))
     return res
 
 
@@ -672,6 +860,33 @@ def git_mode_ids(base):
     return out
 
 
+def git_tree_files(rev):
+    """[(relpath, blob-bytes)] for the observation bank at a revision, or None.
+
+    Straight out of the object store, so the bytes are what git stores (LF) and
+    two runs of this checker over two revisions differ only in the DATA - which
+    is the whole point of --tree.  On a working-tree run the same files may show
+    CRLF, a checkout artefact of core.autocrlf, and the CRLF warning differs.
+    """
+    try:
+        subprocess.run(["git", "-C", str(ROOT), "rev-parse", "--verify", rev + "^{commit}"],
+                       check=True, capture_output=True)
+    except Exception:
+        return None
+    out = []
+    listing = subprocess.run(
+        ["git", "-C", str(ROOT), "ls-tree", "-r", "--name-only", rev, "data/observations2/"],
+        capture_output=True, text=True, encoding="utf-8")
+    for rel in listing.stdout.splitlines():
+        rel = rel.strip()
+        if not rel.endswith(".json") or rel.endswith("index.json"):
+            continue
+        blob = subprocess.run(["git", "-C", str(ROOT), "show", "%s:%s" % (rev, rel)],
+                              capture_output=True)
+        out.append((rel, blob.stdout))
+    return out
+
+
 def composed_ids(mode_ids):
     return {"%s-d%da%d" % (mid, d, a) for mid in mode_ids
             for d in range(4) for a in range(5)}
@@ -681,31 +896,49 @@ def main():
     ap = argparse.ArgumentParser(description="Round-26 observation-bank gate (report only).")
     ap.add_argument("--base", default=BASE_DEFAULT,
                     help="git rev the ids are compared against (default %s)" % BASE_DEFAULT)
-    ap.add_argument("--only", default=None, help="only files whose path contains this")
+    ap.add_argument("--only", default=None,
+                    help="only files whose path contains this; a COMMA-SEPARATED list is "
+                         "accepted so a writer can check a whole chunk in one run, e.g. "
+                         "--only contact-10,contact-11,contact-12,contact-21")
+    ap.add_argument("--tree", default=None,
+                    help="read the bank from this git rev instead of the working tree "
+                         "(the like-for-like run)")
     ap.add_argument("--fail-on", choices=["error", "warn", "none"], default="error")
     ap.add_argument("--quiet", action="store_true", help="totals and problems only")
     args = ap.parse_args()
 
     crit = load_criteria()
     base_ids = git_mode_ids(args.base)
-    errors, warns, flags, softs = [], [], [], []
+    errors, warns, flags, softs, fbs = [], [], [], [], []
     per_file = []
     caps_seen = Counter()
+    # every count that matters, split by the FAMILY it came from, so a rise can
+    # never hide inside an aggregate the way ON-BOUNDARY 71 -> 115 did
+    flag_fam, soft_fam, judged = Counter(), Counter(), Counter()
+    miss_tot, fb_cards = Counter(), Counter()
 
     files = []
-    for cat in CATS:
-        folder = OBS / cat
-        if not folder.is_dir():
-            errors.append("MISSING FOLDER %s" % folder)
-            continue
-        files += [p for p in sorted(folder.glob("*.json")) if p.name != "index.json"]
+    if args.tree:
+        files = git_tree_files(args.tree)
+        if files is None:
+            print("--tree %s: revision unreachable" % args.tree)
+            return 1
+    else:
+        for cat in CATS:
+            folder = OBS / cat
+            if not folder.is_dir():
+                errors.append("MISSING FOLDER %s" % folder)
+                continue
+            files += [(p.relative_to(ROOT).as_posix(), None)
+                      for p in sorted(folder.glob("*.json")) if p.name != "index.json"]
     if args.only:
-        files = [p for p in files if args.only in p.as_posix()]
+        wanted = [w.strip() for w in args.only.split(",") if w.strip()]
+        files = [f for f in files if any(w in f[0] for w in wanted)]
 
     tot_modes = tot_at = tot_above = 0
-    for path in files:
-        rel = path.relative_to(ROOT).as_posix()
-        raw = path.read_bytes()
+    for rel, blob in files:
+        name = rel.split("/")[-1]
+        raw = blob if blob is not None else (ROOT / rel).read_bytes()
         if raw[:3] == b"\xef\xbb\xbf":
             errors.append("%s: UTF-8 BOM" % rel)
         if b"\r\n" in raw:
@@ -721,16 +954,17 @@ def main():
             errors.append("%s: JSON parse error: %s" % (rel, e))
             continue
 
-        item_id = data.get("item_id") or path.stem
+        item_id = data.get("item_id") or name[:-5]
         item_bands = crit.get(item_id, {})
         modes = data.get("error_modes") or []
         tot_modes += len(modes)
         rung_use = defaultdict(Counter)
+        miss_at, miss_ab = defaultdict(list), defaultdict(list)
         n_at = n_above = 0
 
         for m in modes:
             mid = m.get("id") or "?"
-            tag = "%s[%s]" % (path.name, mid)
+            tag = "%s[%s]" % (name, mid)
             texts = m.get("texts")
             if not isinstance(texts, dict):
                 errors.append("%s: texts missing" % tag)
@@ -757,18 +991,20 @@ def main():
             bad = [k for k in fam_ab if k not in ABOVE_KEYS]
             if bad:
                 errors.append("%s: texts_above has illegal keys %s (legal: %s)" % (tag, bad, ABOVE_KEYS))
-            if fam_at:
-                miss = [k for k in AT_REQUIRED if not fam_at.get(k)]
-                if miss:
-                    errors.append("%s: texts_at started but %s missing" % (tag, miss))
-                else:
-                    n_at += 1
-            if fam_ab:
-                miss = [k for k in ABOVE_REQUIRED if not fam_ab.get(k)]
-                if miss:
-                    errors.append("%s: texts_above started but %s missing" % (tag, miss))
-                else:
-                    n_above += 1
+            # Both families are REQUIRED now (spec §3.2.1 / §3.3), so a
+            # missing key is an ERROR - but one line per FILE, not per mode,
+            # or a half-written tree buries every other finding under 3 647
+            # identical complaints.
+            for k in AT_REQUIRED:
+                if not fam_at.get(k):
+                    miss_at[k].append(mid)
+            for k in ABOVE_REQUIRED:
+                if not fam_ab.get(k):
+                    miss_ab[k].append(mid)
+            if all(fam_at.get(k) for k in AT_REQUIRED):
+                n_at += 1
+            if all(fam_ab.get(k) for k in ABOVE_REQUIRED):
+                n_above += 1
 
             # The row this mode is scored on, when its source names one, so its
             # numbers are measured against THAT row and not against every row
@@ -782,107 +1018,146 @@ def main():
                                        "%s %s" % (m.get("label") or "",
                                                   m.get("source") or ""))}
 
-            def scan(txt, key, code, relation):
+            def scan(txt, key, code, relation, fallback=False, shape=True):
+                """One text under the rules of the relation it RENDERS in.
+
+                `fallback=True` means this record is not the record for that
+                relation at all: it is what the composer reaches for because the
+                family key is missing (spec §2.3, §3.4).  The record is
+                below-doctrine or frozen, so every finding is a WARN tagged
+                FALLBACK - it measures THE SIZE OF THE GAP, not the writer's
+                craft, and it falls to zero when the gap is closed.  Numbers are
+                not re-judged there: for a texts[k] fallback the code is the
+                same and the verdict would be identical, and texts.marginal is
+                frozen prose no writer may touch.
+                """
+                def E(msg):
+                    (fbs if fallback else errors).append(msg)
+
+                def W(msg):
+                    (fbs if fallback else warns).append(msg)
+
                 if not isinstance(txt, str):
-                    errors.append("%s.%s: not a string" % (tag, key))
+                    E("%s.%s: not a string" % (tag, key))
                     return
                 if not txt.strip():
-                    errors.append("%s.%s: empty" % (tag, key))
+                    E("%s.%s: empty" % (tag, key))
                     return
-                bad = {"U+%04X %s" % (ord(c), unicodedata.name(c, "?"))
-                       for c in txt if ord(c) > 127}
-                if bad:
-                    errors.append("%s.%s: non-ASCII %s" % (tag, key, sorted(bad)))
-                if GREEK.search(txt):
-                    errors.append("%s.%s: Greek glyphs in an English observation" % (tag, key))
-                if LONG_DIGITS.search(txt):
-                    warns.append("%s.%s: 5+ digit run - service number?" % (tag, key))
-                for w in CAP_WORD.findall(txt):
-                    if w not in CAP_ALLOW:
-                        caps_seen[w] += 1
                 lo = txt.lower()
-                if " he " in lo or " she " in lo or " his " in lo or " her " in lo:
-                    warns.append("%s.%s: personal pronoun - the subject is SP" % (tag, key))
-                n = count_sentences(txt)
-                hi = 4 if relation == "above" else 5
-                if n < 2 or n > hi:
-                    # strict on what THIS round writes, informative on inherited prose
-                    (warns if relation == "below" else errors).append(
-                        "%s.%s: %d sentences (expected 2-%d)" % (tag, key, n, hi))
+                if shape:
+                    bad = {"U+%04X %s" % (ord(c), unicodedata.name(c, "?"))
+                           for c in txt if ord(c) > 127}
+                    if bad:
+                        E("%s.%s: non-ASCII %s" % (tag, key, sorted(bad)))
+                    if GREEK.search(txt):
+                        E("%s.%s: Greek glyphs in an English observation" % (tag, key))
+                    if LONG_DIGITS.search(txt):
+                        W("%s.%s: 5+ digit run - service number?" % (tag, key))
+                    for w in CAP_WORD.findall(txt):
+                        if w not in CAP_ALLOW:
+                            caps_seen[w] += 1
+                    if " he " in lo or " she " in lo or " his " in lo or " her " in lo \
+                            or " him " in lo or lo.endswith(" him.") or " himself" in lo:
+                        W("%s.%s: personal pronoun - the subject is SP" % (tag, key))
+                    n = count_sentences(txt)
+                    hi = 4 if relation == "above" else 5
+                    if n < 2 or n > hi:
+                        # strict on what THIS round writes, informative on inherited prose
+                        (W if relation == "below" else E)(
+                            "%s.%s: %d sentences (expected 2-%d)" % (tag, key, n, hi))
                 if ABOVE_TAIL.lower() in lo:
                     if relation == "above":
-                        warns.append("%s.%s: closing sentence typed by hand - the composer "
-                                     "appends it (harmless, it is de-duplicated)" % (tag, key))
+                        W("%s.%s: closing sentence typed by hand - the composer "
+                          "appends it (harmless, it is de-duplicated)" % (tag, key))
                     else:
-                        errors.append("%s.%s: carries the above-MIF closing sentence" % (tag, key))
+                        E("%s.%s: carries the above-MIF closing sentence" % (tag, key))
                 # --- ruling 2: the ladder ---------------------------------
                 praise = [w for w in HARD_PRAISE if re.search(r"\b%s\b" % re.escape(w), lo)]
                 attrib = attribution_hits(lo, ALL_LADDER)
                 phr = [p for p in ABOVE_ONLY_PHRASES if p in lo]
                 if relation == "above":
+                    if any(lo.startswith(o) for o in DEFICIENCY_OPENERS):
+                        E("%s.%s: opens with the deficiency formula - "
+                          "ruling 1 says achievement FIRST" % (tag, key))
                     rung = LADDER.get(code)
                     if rung is None:
                         # achieved (1) above MIF - reachable only from a desired 0.
                         # The ruling named rungs 2/3/4 only, so this one carries NO
-                        # praise word: it states the fact (spec §12, question 2).
-                        if attrib:
-                            errors.append("%s.%s: rung-1 above-MIF must carry no praise "
-                                          "word (unruled rung): %s" % (tag, key, attrib))
+                        # praise word: it states the fact (spec §4.1, rung 1).
+                        if attrib or praise:
+                            E("%s.%s: rung-1 above-MIF carries no praise word - it states "
+                              "the fact plainly (spec §4.1): %s" % (tag, key, attrib or praise))
                         if not phr:
-                            errors.append("%s.%s: must state plainly that the result is above "
-                                          "the level the Training Section requires" % (tag, key))
+                            E("%s.%s: must state plainly that the result is above "
+                              "the level the Training Section requires" % (tag, key))
                     else:
                         want = [w for w in rung if w in attrib]
                         if not want:
-                            errors.append("%s.%s: the closing attribution carries no rung-%s word "
-                                          "(due to <%s> ...)"
-                                          % (tag, key, code, " | ".join(rung)))
+                            E("%s.%s: the closing attribution carries no rung-%s word "
+                              "(due to <%s> ...)" % (tag, key, code, " | ".join(rung)))
                         else:
-                            rung_use[code][want[0]] += 1
+                            if not fallback:
+                                rung_use[code][want[0]] += 1
                         wrong = [w for w in attrib if w not in rung
                                  and not any(w in ww for ww in want)]
                         if wrong:
-                            warns.append("%s.%s: attribution uses a word from another rung: %s"
-                                         % (tag, key, wrong))
+                            W("%s.%s: attribution uses a word from another rung: %s"
+                              % (tag, key, wrong))
                         if not phr:
-                            warns.append("%s.%s: never states the result is above the required code"
-                                         % (tag, key))
-                    if any(lo.startswith(o) for o in DEFICIENCY_OPENERS):
-                        errors.append("%s.%s: opens with the deficiency formula - "
-                                      "ruling 1 says achievement FIRST" % (tag, key))
+                            W("%s.%s: never states the result is above the required code"
+                              % (tag, key))
                 elif relation == "at":
                     if praise:
-                        errors.append("%s.%s: praise word(s) %s at at-level - ruling 2: "
-                                      "'from 3 to 3 we cannot say very good'" % (tag, key, praise))
+                        E("%s.%s: praise word(s) %s at at-level - ruling 2: "
+                          "'from 3 to 3 we cannot say very good'" % (tag, key, praise))
                     if attrib:
-                        errors.append("%s.%s: ladder attribution 'due to %s' at at-level - "
-                                      "the at-level text states the CAUSE of the minor error, "
-                                      "not a merit" % (tag, key, attrib[0]))
+                        E("%s.%s: ladder attribution 'due to %s' at at-level - "
+                          "the at-level text states the CAUSE of the minor error, "
+                          "not a merit" % (tag, key, attrib[0]))
                     if phr:
-                        errors.append("%s.%s: above-MIF phrasing %s at at-level" % (tag, key, phr))
-                    if not any(s in lo for s in AT_MET_STEMS):
-                        errors.append("%s.%s: at-level text never states the desired standard "
-                                      "was met" % (tag, key))
+                        E("%s.%s: above-MIF phrasing %s at at-level" % (tag, key, phr))
+                    if code == "0":
+                        # (0) -> (0): the Training Section is INTRODUCING the
+                        # manoeuvre and asks for no independent standard yet, so
+                        # "met the desired standard" would be a false claim.  The
+                        # text says what the section actually provides (spec §4.5).
+                        if not any(s in lo for s in AT0_MET_STEMS):
+                            E("%s.%s: at-0 text never says the Training Section is still "
+                              "introducing the manoeuvre / still provides the assistance "
+                              "(spec §4.5)" % (tag, key))
+                        if any(s in lo for s in AT_MET_STEMS):
+                            E("%s.%s: at-0 must not claim a standard was met - at desired 0 "
+                              "the Training Section asks for none (spec §3.2.1)" % (tag, key))
+                    elif not any(s in lo for s in AT_MET_STEMS):
+                        E("%s.%s: at-level text never states the desired standard "
+                          "was met" % (tag, key))
                     if not any(s in lo for s in AT_TREND_STEMS):
-                        warns.append("%s.%s: no forward expectation sentence (BaD 3-1 §41.d "
-                                     "wants the trend named)" % (tag, key))
+                        W("%s.%s: no forward expectation sentence (BaD 3-1 §41.d "
+                          "wants the trend named)" % (tag, key))
                 else:  # below
                     if praise:
-                        errors.append("%s.%s: praise word(s) %s below MIF" % (tag, key, praise))
+                        E("%s.%s: praise word(s) %s below MIF" % (tag, key, praise))
                     if attrib:
-                        errors.append("%s.%s: ladder attribution 'due to %s' below MIF"
-                                      % (tag, key, attrib[0]))
+                        E("%s.%s: ladder attribution 'due to %s' below MIF"
+                          % (tag, key, attrib[0]))
                     if phr:
-                        errors.append("%s.%s: above-MIF phrasing %s below MIF" % (tag, key, phr))
-                # --- ruling 3: the numbers --------------------------------
+                        E("%s.%s: above-MIF phrasing %s below MIF" % (tag, key, phr))
+                # --- ruling 3 / BaD 3-1 §41.e: the numbers ----------------
+                if fallback:
+                    return
+                fam = key.split(".")[0]
                 for val, unit, verdict, why in numeric_verdicts(txt, code, item_bands,
                                                                 mode_row, mode_defines):
                     if verdict == "flag":
                         flags.append("%s.%s: %g %s outside the code-%s band (%s)"
                                      % (tag, key, val, unit, code, why))
+                        flag_fam[fam] += 1
                     elif verdict == "soft":
                         softs.append("%s.%s: %g %s sits ON the code-%s boundary (%s)"
                                      % (tag, key, val, unit, code, why))
+                        soft_fam[fam] += 1
+                    if verdict in ("ok", "soft", "flag"):
+                        judged[fam] += 1
 
             for k in ("0", "1", "2"):
                 if isinstance(texts.get(k), str):
@@ -894,8 +1169,42 @@ def main():
                 if fam_ab.get(k) is not None:
                     scan(fam_ab[k], "texts_above.%s" % k, k, "above")
 
+            # ── THE REACHABLE FALLBACKS (spec §2.3, §3.4) ─────────────────
+            # A missing family key does NOT make the card disappear: the
+            # composer still renders it, out of a record written for another
+            # relation.  Round 26 shipped 1 823 modes without texts_above["1"],
+            # so 1 588 cards opened with the deficiency formula while the badge
+            # said "Above MIF" - and the checker never saw one of them, because
+            # texts["1"] was only ever read under BELOW rules.  Every record the
+            # composer can still reach is therefore scanned a second time under
+            # the rules of the relation it is REACHED in.
+            for k in ABOVE_REQUIRED:
+                if not fam_ab.get(k) and isinstance(texts.get(k), str):
+                    scan(texts[k], "texts.%s->above" % k, k, "above",
+                         fallback=True, shape=(k not in ("0", "1", "2")))
+                    # (0..k-1) -> (k): one composed card per desired code below k
+                    fb_cards["texts_above.%s" % k] += int(k)
+            miss_at_now = [k for k in AT_REQUIRED if not fam_at.get(k)]
+            if miss_at_now and isinstance(texts.get("marginal"), str):
+                # texts.marginal is the at-level fallback for EVERY missing at
+                # key; it is scanned once, against the lowest one still open.
+                scan(texts["marginal"], "texts.marginal->at%s" % miss_at_now[0],
+                     miss_at_now[0], "at", fallback=True, shape=True)
+                for k in miss_at_now:
+                    fb_cards["texts_at.%s" % k] += 1        # (k) -> (k), one card
+
         tot_at += n_at
         tot_above += n_above
+        for k, ids in sorted(miss_at.items()):
+            miss_tot["texts_at.%s" % k] += len(ids)
+            errors.append('%s: %d mode(s) with no texts_at["%s"] (REQUIRED, spec §3.2.1): '
+                          "%s%s" % (name, len(ids), k, ", ".join(ids[:4]),
+                                    " +%d more" % (len(ids) - 4) if len(ids) > 4 else ""))
+        for k, ids in sorted(miss_ab.items()):
+            miss_tot["texts_above.%s" % k] += len(ids)
+            errors.append('%s: %d mode(s) with no texts_above["%s"] (REQUIRED, spec §3.3): '
+                          "%s%s" % (name, len(ids), k, ", ".join(ids[:4]),
+                                    " +%d more" % (len(ids) - 4) if len(ids) > 4 else ""))
         # --- ruling 2: distribution ----------------------------------------
         for code, c in sorted(rung_use.items()):
             n = sum(c.values())
@@ -910,10 +1219,10 @@ def main():
                 if len(c) < need:
                     warns.append("%s rung %s: only %d distinct adjective(s) over %d texts "
                                  "(want >= %d) - the house asked for synonyms"
-                                 % (path.name, code, len(c), n, need))
+                                 % (name, code, len(c), n, need))
                 if share > 0.40:
                     warns.append("%s rung %s: '%s' used in %d of %d texts (%.0f%%, cap 40%%)"
-                                 % (path.name, code, top, k, n, share * 100))
+                                 % (name, code, top, k, n, share * 100))
         # --- ids -----------------------------------------------------------
         if base_ids is not None:
             was = base_ids.get(rel)
@@ -951,15 +1260,55 @@ def main():
     print("files=%d  modes=%d  texts_at complete=%d (%.1f%%)  texts_above complete=%d (%.1f%%)"
           % (len(per_file), tot_modes, tot_at, 100.0 * tot_at / max(1, tot_modes),
              tot_above, 100.0 * tot_above / max(1, tot_modes)))
-    print("id baseline: %s%s" % (args.base, "" if base_ids is not None else "  (UNREACHABLE - ids NOT verified)"))
+    print("tree: %s   id baseline: %s%s"
+          % (args.tree or "working tree", args.base,
+             "" if base_ids is not None else "  (UNREACHABLE - ids NOT verified)"))
+    if miss_tot:
+        print("REQUIRED KEYS STILL UNWRITTEN: %s"
+              % ("  ".join("%s x%d" % (k, n) for k, n in sorted(miss_tot.items()))))
     print("-" * 78)
-    for name, bag in (("ERROR", errors), ("WARN", warns), ("NUMBER FLAG", flags),
-                      ("NUMBER ON-BOUNDARY", softs)):
-        print("%s: %d" % (name, len(bag)))
-        for s in bag[:400 if name == "ERROR" else 200]:
+    for label, bag in (("ERROR", errors), ("WARN", warns), ("NUMBER FLAG", flags),
+                       ("NUMBER ON-BOUNDARY", softs), ("FALLBACK FINDING", fbs)):
+        cap = CEILING.get(label)
+        note = ""
+        if cap is not None:
+            note = ("  (ceiling %d%s)"
+                    % (cap, " - ABOVE CEILING by %d" % (len(bag) - cap)
+                       if len(bag) > cap else ""))
+        print("%s: %d%s" % (label, len(bag), note))
+        lim = 400 if label == "ERROR" else 200
+        for s in bag[:lim]:
             print("  ! %s" % s)
-        if len(bag) > (400 if name == "ERROR" else 200):
-            print("  ... %d more" % (len(bag) - (400 if name == "ERROR" else 200)))
+        if len(bag) > lim:
+            print("  ... %d more" % (len(bag) - lim))
+    # THE HEADLINE THE ROUND EXISTS FOR.  Not "how many texts are wrong" but
+    # "how many CARDS the app will hand an IP out of a record written for a
+    # different relation".  Round 26 shipped 3 647 of them and reported none.
+    if fb_cards:
+        tot_cards = tot_modes * 20
+        n_fb = sum(fb_cards.values())
+        print("-" * 78)
+        print("FALLBACK RENDERS: %d of %d composed observations (%.1f%%) come out of a "
+              "record written for another relation" % (n_fb, tot_cards,
+                                                       100.0 * n_fb / max(1, tot_cards)))
+        for k, n in sorted(fb_cards.items()):
+            what = ("the frozen texts.marginal" if k.startswith("texts_at")
+                    else "the below-MIF texts[\"%s\"]" % k.split(".")[1])
+            print("  %-16s missing -> %5d card(s) rendered from %s" % (k, n, what))
+    # The two numeric buckets, split by family: an aggregate that only ever
+    # moves as one number is how a rise of 44 went unreported in round 26.
+    print("-" * 78)
+    print("NUMBERS judged, by family (flag / on-boundary / judged):")
+    for fam in ("texts", "texts_at", "texts_above"):
+        print("  %-12s %4d flag   %4d on-boundary   %5d judged"
+              % (fam, flag_fam[fam], soft_fam[fam], judged[fam]))
+    if fbs:
+        print("-" * 78)
+        print("FALLBACK FINDINGS BY REASON (they are structural, not the writer's "
+              "craft - each one disappears when the missing key is written):")
+        reasons = Counter(s.split(": ", 1)[1][:72] for s in fbs if ": " in s)
+        for r, n in reasons.most_common(12):
+            print("  x%-6d %s" % (n, r))
     if caps_seen:
         print("-" * 78)
         print("CAPITALISED WORDS OUTSIDE THE ALLOW-LIST (eyeball these; the authoritative")
