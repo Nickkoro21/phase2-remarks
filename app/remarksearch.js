@@ -8,6 +8,15 @@
   const REPO = "Nickkoro21/phase2-remarks";
   const CATS = ["contact", "instrument", "formation", "vfr_navigation"];
   const LEVELS = ["0", "1", "2", "3", "4", "marginal"];
+  /* Round 26 — the bank split by RELATION (specs/observations-style.md). The same
+     achieved code now has up to three records: texts[a] (below), texts_at[a] (at),
+     texts_above[a] (above). All three are indexed, each labelled with the relation
+     it renders under, so the Feedback issue names the key that actually produced
+     the card. A legacy key that the new families have made unreachable is still
+     searchable — it is in the file, an IP may well find it in an old gradesheet —
+     but it is badged so nobody corrects a string the app no longer shows. */
+  const AT_LEVELS = ["0", "1", "2", "3"];
+  const ABOVE_LEVELS = ["1", "2", "3", "4"];
   const st = { index: null, loading: false };
   const $id = (x) => document.getElementById(x);
   /* Round 16b — the house escaper. Every call here is text content today, but
@@ -24,7 +33,18 @@
   .rs-res{margin-top:10px;display:flex;flex-direction:column;gap:8px;max-height:46vh;overflow-y:auto}
   .rs-hit{background:var(--panel-2);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:9px 12px}
   .rs-head{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:5px}
-  .rs-id{font-family:Consolas,monospace;font-size:12px;color:var(--accent);font-weight:700}
+  /* Ruling 4 — the mode id as a discreet click-to-copy chip, the same shape
+     .obs-id has in styles.css. This module owns its own rules, so the whole
+     chip is defined here rather than split across two stylesheets. */
+  .rs-id{font-family:Consolas,monospace;font-size:11px;color:var(--muted);
+    background:var(--panel-2);border:1px solid var(--line);border-radius:6px;
+    padding:1px 6px;cursor:pointer;line-height:1.6}
+  .rs-id:hover{color:var(--accent);border-color:var(--accent)}
+  /* :focus, not :focus-visible — the offline builder rewrites styles.css for
+     Firefox 32 but not the CSS a module emits, and an unknown pseudo-class
+     invalidates the whole rule there. */
+  .rs-id:focus{outline:2px solid var(--accent);outline-offset:1px}
+  .rs-id.copied{color:var(--good);border-color:var(--good)}
   .rs-txt{font-size:13px;line-height:1.55;color:var(--text)}
   .rs-txt mark{background:var(--accent-soft);color:var(--accent);padding:0 2px;border-radius:3px}
   .rs-btn{margin-left:auto;background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:7px;padding:3px 9px;font-size:11.5px;cursor:pointer;text-decoration:none}
@@ -69,12 +89,25 @@
             .then((r) => r.json())
             .then((d) => {
               for (const m of d.error_modes || []) {
-                for (const lv of LEVELS) {
-                  const txt = m.texts?.[lv];
-                  if (!txt) continue;
+                const push = (txt, key, label, legacy) => {
+                  if (!txt) return;
                   idx.push({ cat, item: d.item_name, itemId: d.item_id, file: it.v2_file,
-                             mode: m.label || "", modeId: m.id, level: lv, low: txt.toLowerCase(), txt });
+                             mode: m.label || "", modeId: m.id, level: label, key,
+                             legacy: !!legacy, low: txt.toLowerCase(), txt });
+                };
+                for (const lv of LEVELS) {
+                  /* texts["3"] / texts["4"] can only ever have rendered ABOVE, and
+                     texts.marginal only AT — so a family key of the same code
+                     retires them. texts["0"|"1"|"2"] always keep their below role. */
+                  const retired = (lv === "3" || lv === "4") ? !!m.texts_above?.[lv]
+                                : (lv === "marginal") ? AT_LEVELS.every((x) => !!m.texts_at?.[x])
+                                : false;
+                  const role = (lv === "marginal") ? "at" : (lv === "3" || lv === "4") ? "above" : "below";
+                  push(m.texts?.[lv], `texts.${lv}`,
+                       lv === "marginal" ? "at · marginal" : `${role} ${lv}`, retired);
                 }
+                for (const lv of AT_LEVELS) push(m.texts_at?.[lv], `texts_at.${lv}`, `at ${lv}`, false);
+                for (const lv of ABOVE_LEVELS) push(m.texts_above?.[lv], `texts_above.${lv}`, `above ${lv}`, false);
               }
             }).catch(() => {}));
         }
@@ -85,9 +118,9 @@
   }
 
   function fbUrl(h) {
-    const title = `Feedback: ${h.modeId} · level ${h.level}`;
+    const title = `Feedback: ${h.modeId} · ${h.key}`;
     const body = [
-      `**Mode id:** \`${h.modeId}\` · **Level:** \`${h.level}\``,
+      `**Mode id:** \`${h.modeId}\` · **Record:** \`${h.key}\` · **Renders:** ${h.level}${h.legacy ? " (legacy — no longer rendered)" : ""}`,
       `**Item:** ${h.item} (${h.cat}) · **File:** \`data/observations2/${h.file}\``,
       ``, `> ${h.txt}`, ``,
       `**What is wrong / suggested correction:**`, ``,
@@ -120,8 +153,9 @@
     res.innerHTML = hits.slice(0, 60).map((h, i) => `
       <div class="rs-hit">
         <div class="rs-head">
-          <span class="rs-id">${esc(h.modeId)}</span>
-          <span class="badge">${esc(h.level === "marginal" ? "marginal" : "level " + h.level)}</span>
+          <button type="button" class="rs-id" data-cid="${i}" title="Copy this mode id">${esc(h.modeId)}</button>
+          <span class="badge">${esc(h.level)}</span>
+          ${h.legacy ? `<span class="badge">legacy</span>` : ""}
           <span class="badge">${esc(h.item)}</span>
           <span class="badge">${esc(h.mode)}</span>
           <a class="rs-btn" href="${fbUrl(h)}" target="_blank" rel="noopener">Feedback</a>
@@ -129,6 +163,20 @@
         </div>
         <p class="rs-txt">${mark(h.txt)}</p>
       </div>`).join("") + (hits.length > 60 ? `<p class="hint">Showing first 60 — narrow the search.</p>` : "");
+    // Ruling 4: the mode id is click-to-copy here too, same chip, same fallback.
+    res.querySelectorAll("[data-cid]").forEach((b) => {
+      b.onclick = async () => {
+        const id = hits[Number(b.dataset.cid)].modeId, label = b.textContent;
+        try {
+          await navigator.clipboard.writeText(id);
+          b.textContent = "copied ✓"; b.classList.add("copied");
+          setTimeout(() => { b.textContent = label; b.classList.remove("copied"); }, 1200);
+        } catch (e) {
+          const r = document.createRange(); r.selectNodeContents(b);
+          const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+        }
+      };
+    });
     res.querySelectorAll("[data-copy]").forEach((b) => {
       b.onclick = async () => {
         const h = hits[Number(b.dataset.copy)];

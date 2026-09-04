@@ -291,6 +291,17 @@ body {
 .obs-card.v-technique { border-left-color: var(--bad); }
 .obs-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
 .obs-prefix { font-family: Consolas, monospace; font-size: 14px; color: var(--accent); font-weight: 700; }
+/* Ruling 4 — the observation id, discreet, beside the prefix, click to copy.
+   The remark search carries the same chip as .rs-id, defined in
+   remarksearch.js, which owns the rules for the panel it injects. */
+.obs-id {
+  font-family: Consolas, monospace; font-size: 11px; color: var(--muted);
+  background: var(--panel-2); border: 1px solid var(--line); border-radius: 6px;
+  padding: 1px 6px; cursor: pointer; line-height: 1.6;
+}
+.obs-id:hover { color: var(--accent); border-color: var(--accent); }
+.obs-id:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.obs-id.copied { color: var(--good); border-color: var(--good); }
 .badge {
   font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.8px;
   padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted);

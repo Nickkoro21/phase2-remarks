@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-"""Validate + index data/observations2/formation (schema v2-trunk).
+"""Validate + index data/observations2/contact (schema v2-trunk).
 
 Checks only; never edits the source JSON. Writes index.json.
 """
 import json, io, re, sys
 from pathlib import Path
 
-FOLDER = Path(r"D:\FDMS\data\observations2\formation")
-CATEGORY = "formation"
+FOLDER = Path(r"D:\FDMS\data\observations2\contact")
+CATEGORY = "contact"
 SCHEMA = "v2-trunk"
 
 # The two families this round added, as SIBLINGS of `texts` (never keys inside

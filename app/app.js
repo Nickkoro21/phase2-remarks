@@ -11,7 +11,11 @@ const CAT_LABELS = {
 const VARIANT_LABELS = {
   technique: "Technique",
   human_factor: "Human factor",
-  marginal: "Marginal @ MIF",
+  /* Ruling 2 of 2026-08-29 — at-level is not a criticism. The card used to read
+     "Marginal @ MIF" over a text that now states the standard was MET; the badge
+     and the prose have to say the same thing. The variant KEY stays "marginal"
+     (CSS .v-marginal, every downstream consumer). */
+  marginal: "At MIF",
   above: "Above MIF",
 };
 
@@ -138,8 +142,42 @@ async function selectItem(it, btn) {
   revealPanels();
 }
 
-/* v2-trunk: expand error modes into the flat observations shape the UI consumes.
-   Below MIF -> the mode's text for the achieved level; at MIF -> marginal; above -> positive + closing. */
+/* ══════════════════════════════════════════════════════════════════════════
+   v2-trunk -> the flat observations shape the UI consumes.
+
+   RELATION IS THE AXIS, NOT THE CODE  (rulings of 2026-08-29 · specs/observations-style.md)
+   ──────────────────────────────────────────────────────────────────────────
+   One achieved code means two opposite things depending on the desired code:
+   an achieved (2) against a desired (3) is a REGRESSION; the same (2) against a
+   desired (1) is an ACHIEVEMENT — the SP did better than his Training Section
+   asks. Until this round both drew the SAME string out of texts["2"], so the
+   above-MIF card read as a fault litany about a student who had EXCEEDED his
+   stage. The ruled case is instrument-10-tm04-d1a2 ("SP, due to a delayed power
+   reduction ... had to use the speed brake ... Above end of block MIF achieved.").
+
+   The bank now carries one text family per RELATION and the composer picks by
+   relation, not by code alone:
+
+     below (a <  d) -> texts[a]         deficiency cause-effect          (BaD 3-1 §41.st)
+     at    (a == d) -> texts_at[a]      standard met + cause of the minor
+                                        error, NO ladder word            (§41.d, trend)
+     above (a >  d) -> texts_above[a]   achievement first + ladder
+                                        attribution                      (§41.d — the
+                                        remark exists "to justify the very high grade")
+
+   Every family key is OPTIONAL. A mode not yet rewritten falls back to exactly
+   what it rendered before this round, so the bank is consumable at every commit
+   and no id ever disappears. srcKey records WHICH key produced the text, so the
+   Feedback issue lands on the record that actually rendered.
+
+   The closing sentence is appended HERE, once, and can never be doubled.
+   ══════════════════════════════════════════════════════════════════════════ */
+const ABOVE_TAIL = "Above end of block MIF achieved.";
+function withAboveTail(s) {
+  const t = String(s).replace(/\s+$/, "");
+  return t.slice(-ABOVE_TAIL.length) === ABOVE_TAIL ? t : t + " " + ABOVE_TAIL;
+}
+
 function expandV2(data) {
   const obs = [];
   const rowName = (v) => {
@@ -154,23 +192,32 @@ function expandV2(data) {
     m.mif_row = rowName(m.mif_row);
     for (let d = 0; d <= 3; d++) {
       for (let a = 0; a <= 4; a++) {
-        let text, variant;
+        let text, variant, relation, srcKey;
+        const k = String(a);
         if (a < d) {
-          text = m.texts?.[String(a)];
+          relation = "below";
+          text = m.texts?.[k];
+          srcKey = `texts.${k}`;
           variant = m.hf_concept ? "human_factor" : "technique";
         } else if (a === d) {
-          text = m.texts?.marginal || m.texts?.[String(a)];
+          relation = "at";
+          if (m.texts_at?.[k]) { text = m.texts_at[k]; srcKey = `texts_at.${k}`; }
+          else if (m.texts?.marginal) { text = m.texts.marginal; srcKey = "texts.marginal"; }
+          else { text = m.texts?.[k]; srcKey = `texts.${k}`; }
           variant = "marginal";
         } else {
-          const base = m.texts?.[String(a)];
-          text = base ? base.replace(/\s+$/, "") + " Above end of block MIF achieved." : null;
+          relation = "above";
+          let base;
+          if (m.texts_above?.[k]) { base = m.texts_above[k]; srcKey = `texts_above.${k}`; }
+          else { base = m.texts?.[k]; srcKey = `texts.${k}`; }
+          text = base ? withAboveTail(base) : null;
           variant = "above";
         }
         if (!text) continue;
         obs.push({
           id: `${m.id}-d${d}a${a}`,
           mif_row: m.mif_row ?? null,
-          desired: d, achieved: a, variant,
+          desired: d, achieved: a, variant, relation, srcKey,
           hf_concept: m.hf_concept ?? null,
           mode: m.label ?? null,
           text,
@@ -253,7 +300,11 @@ function feedbackUrl(o) {
   const body = [
     `**Observation id:** \`${o.id}\``,
     `**Item:** ${state.itemData.item_name} (${state.category}${o.mif_row ? ` · ${o.mif_row}` : ""})`,
-    `**Codes:** desired (${o.desired}) → achieved (${o.achieved}) · variant: ${o.variant}`,
+    `**Codes:** desired (${o.desired}) → achieved (${o.achieved}) · relation: ${o.relation ?? "?"} · variant: ${o.variant}`,
+    /* The record to correct is the KEY that produced this text, not the code:
+       after the relation split, texts["2"] and texts_above["2"] are two different
+       records that both render as an achieved (2). */
+    `**Record:** \`${o.srcKey ?? "texts." + o.achieved}\` in \`data/observations2/${state.category}/${state.itemData.item_id}.json\` · mode \`${o.id.replace(/-d\d+a\d+$/, "")}\``,
     ``,
     `> ${o.text}`,
     ``,
@@ -287,6 +338,7 @@ function renderResults() {
     card.innerHTML = `
       <div class="obs-head">
         <span class="obs-prefix">${prefix}</span>
+        <button type="button" class="obs-id" data-id="${esc(o.id)}" title="Copy this observation id">${esc(o.id)}</button>
         <span class="badge">${VARIANT_LABELS[o.variant] ?? o.variant}</span>
         ${o.mode ? `<span class="badge mode">${esc(o.mode)}</span>` : ""}
         ${o.hf_concept ? `<span class="badge hf">${o.hf_concept}</span>` : ""}
@@ -295,6 +347,22 @@ function renderResults() {
       </div>
       <p class="obs-text"></p>`;
     card.querySelector(".obs-text").textContent = o.text;
+    // Ruling 4: the id is the handle every Feedback link and every conversation
+    // about a remark uses, so it is on the card and one click away from the
+    // clipboard - with the same select-text fallback as Copy, because the app
+    // also runs over plain http where the clipboard API is blocked.
+    const idbtn = card.querySelector(".obs-id");
+    idbtn.onclick = async () => {
+      const label = idbtn.textContent;
+      try {
+        await navigator.clipboard.writeText(o.id);
+        idbtn.textContent = "copied ✓"; idbtn.classList.add("copied");
+        setTimeout(() => { idbtn.textContent = label; idbtn.classList.remove("copied"); }, 1200);
+      } catch {
+        const r = document.createRange(); r.selectNodeContents(idbtn);
+        const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      }
+    };
     const cbtn = card.querySelector(".copy-btn");
     cbtn.onclick = async () => {
       try {

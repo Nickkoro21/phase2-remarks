@@ -20,6 +20,13 @@ from pathlib import Path
 
 CATEGORY = "vfr_navigation"
 SCHEMA = "v2-trunk"
+
+# The two families this round added, as SIBLINGS of `texts` (never keys inside
+# it - the `extra` check below is exactly what would reject them there).
+AT_KEYS = ["0", "1", "2", "3"]
+ABOVE_KEYS = ["1", "2", "3", "4"]
+FAMILIES = [("texts_at", AT_KEYS), ("texts_above", ABOVE_KEYS)]
+
 FOLDER = Path(r"D:\FDMS\data\observations2") / CATEGORY
 OUT = FOLDER / "index.json"
 
@@ -119,6 +126,7 @@ def main():
     items = []
     modes_total = 0
     texts_total = 0
+    fam_totals = {"texts_at": 0, "texts_above": 0}
     seen_ids_global = {}
 
     files = sorted(p for p in FOLDER.glob("*.json") if p.name != "index.json")
@@ -220,6 +228,44 @@ def main():
                     issues.append("%s.%s: %d sentences (expected %d-%d) :: %s"
                                   % (tag, lvl, n, MIN_SENT, MAX_SENT,
                                      t[:110].replace("\n", " ")))
+            # --- the relation families (spec 2.2) -------------------------
+            for fam, legal in FAMILIES:
+                block = m.get(fam)
+                if block is None:
+                    continue
+                if not isinstance(block, dict):
+                    issues.append(f"{tag}: {fam} is not an object")
+                    continue
+                bad_keys = [k for k in block if k not in legal]
+                if bad_keys:
+                    issues.append(f"{tag}: unexpected {fam} keys {bad_keys}")
+                for lv, t in block.items():
+                    if lv not in legal or t is None:
+                        continue
+                    if not isinstance(t, str):
+                        issues.append(f"{tag}.{fam}[{lv}]: text is not a string")
+                        continue
+                    fam_totals[fam] += 1
+                    if not t.strip():
+                        issues.append(f"{tag}.{fam}[{lv}]: empty text")
+                        continue
+                    bad = sorted({ch for ch in t
+                                  if ord(ch) > 126 or (ord(ch) < 32 and ch != "\n")})
+                    if bad:
+                        issues.append(f"{tag}.{fam}[{lv}]: non-ASCII chars "
+                                      f"{[hex(ord(c)) + ' ' + repr(c) for c in bad]}")
+                    # texts_above is 2-4: the composer appends one sentence more.
+                    hi = 4 if fam == "texts_above" else 5
+                    ns = count_sentences(t)
+                    if ns < 2 or ns > hi:
+                        issues.append(f"{tag}.{fam}[{lv}]: {ns} sentences (expected 2-{hi})")
+                    if t.strip()[-1] not in ".!?":
+                        issues.append(f"{tag}.{fam}[{lv}]: does not end with sentence terminator")
+                    if "  " in t:
+                        issues.append(f"{tag}.{fam}[{lv}]: contains double space")
+                    if t != t.strip():
+                        issues.append(f"{tag}.{fam}[{lv}]: leading/trailing whitespace")
+
 
         modes_total += len(modes)
         items.append({
@@ -235,10 +281,12 @@ def main():
         "generated_items": len(items),
         "modes_total": modes_total,
         "texts_total": texts_total,
+        "texts_at_total": fam_totals["texts_at"],
+        "texts_above_total": fam_totals["texts_above"],
         "items": items,
     }
-    OUT.write_text(json.dumps(index, ensure_ascii=False, indent=1),
-                   encoding="utf-8")
+    with io.open(OUT, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(json.dumps(index, ensure_ascii=False, indent=2) + "\n")
 
     print("index.json -> %s" % OUT)
     print("items=%d modes=%d texts=%d" % (len(items), modes_total, texts_total))
