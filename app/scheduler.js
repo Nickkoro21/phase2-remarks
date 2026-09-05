@@ -330,6 +330,92 @@ window.fmtDMY = function fmtDMY(v) {
   }
   const labelOf = (uid) => { const d = describe(uid); return d ? d.label : uid; };
 
+  /* ══ WHAT A LOGGED FLIGHT TIME MAY BE (P46-A3 · ruling #8) ════════════════
+     The Flight Commander, 05/09/2026: «Βάλε και το duration στο FDMS. Παράλειψη
+     δική μου όταν ξεκινήσαμε.» A training-log event now carries `duration`, and
+     this is the ONE place that decides what a typed one is worth.
+
+     IT LIVES HERE, BESIDE describe().hours, ON PURPOSE. Those two numbers are
+     the pair the form puts on one line: `hours` is what the syllabus SAYS the
+     sortie takes and is shown as the placeholder, `duration` is what it took
+     and is what gets stored. Keeping the rule beside the expectation is what
+     stops a later round from writing the planned hours into the field by
+     accident — and, being pure, it is what lets the fixtures drive the
+     validation with no DOM (tools/fixtures/bridge/p15-duration.js).
+
+     THE RULE, and every clause is a sentence the person typing reads:
+       ""  / blank        → { ok: true, value: null }   the time is not known
+       not a number       → refused, because "1,3" and "1:18" are both things a
+                            person types and neither is a decimal hour
+       ≤ 0                → refused: a flown sortie lasted longer than nothing
+       > 9.9              → refused: this is DECIMAL HOURS, not minutes, and no
+                            single T-6A training sortie of this syllabus is ten
+                            hours long — the bound is a typo net for «130»
+       more than 1 decimal→ refused, with the rounded number offered: the hours
+                            are recorded in 6-minute steps, which is the same
+                            granularity Wings Ahead's own wa.chk_duration keeps.
+       unchanged from what   → accepted AS IT STANDS, whatever it is: see below
+       is already stored
+     WHY 9.9 AND NOT WA's 24. They are two different guards for two different
+     acts. `wa.chk_duration` bounds a day (≤ 24) because it also has to accept
+     what the other system's own forms accept; this one bounds ONE HAND-TYPED
+     SORTIE, where the realistic failure is a slipped decimal point and not a
+     long day. The bridge does NOT apply this bound to a figure Wings Ahead
+     already recorded and already validated — recording a fact that happened is
+     not the same act as typing one (see schedbridge.js § buildEvent).
+
+     AND THAT ASYMMETRY HAS A PRICE, WHICH IS THE SECOND ARGUMENT (P46-A3 · the
+     verification of this round). An ordinary Wings-Ahead-side typo — 15 for 1.5
+     — is a legal `wa.chk_duration` figure and an illegal one here, so the
+     bridge can leave a number in the box that this guard refuses. Without the
+     `was` clause, saveEvent would then block the WHOLE event: the note, the
+     result and the maneuvers could not be edited until the hours were erased,
+     and the toast would blame the developer for a number he never typed. So a
+     value that is BYTE-IDENTICAL to the one already stored is not judged at
+     all — it is not being typed, it is being left alone, and the form judges
+     typing. Touch it and it is a typed figure again, bound and all: correcting
+     15 to 1.5 goes through every clause above. This is the whole escape hatch,
+     and it is deliberately the narrowest one that unblocks the form. */
+  function durationValue(v, was) {
+    const s = String(v == null ? "" : v).trim();
+    if (!s) return { ok: true, value: null, why: "" };
+    /* the blank is asked FIRST: clearing a box the bridge filled must stay a
+       clearing, never «unchanged». Only a non-empty box can be untouched. */
+    if (typeof was === "number" && isFinite(was) && was > 0 && s === String(was)) {
+      return { ok: true, value: was, why: "" };
+    }
+    /* «.5» and «1.» are accepted and read as 0.5 and 1: they are what a person
+       types, they are unambiguous, and refusing them would be friction bought
+       with nothing. «1,3» is NOT — a comma is the reading convention of the
+       tables, not of an input, and guessing would make the box mean two things
+       depending on locale. */
+    if (!/^(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)$/.test(s)) {
+      return { ok: false, value: null,
+        why: "the flight time is decimal HOURS written with a dot — 1.3 is one hour and eighteen minutes" };
+    }
+    const n = Number(s);
+    if (!isFinite(n) || n <= 0) {
+      return { ok: false, value: null,
+        why: "a flown sortie lasted longer than nothing — leave the box empty while the time is not known yet" };
+    }
+    /* THE PRECISION IS ASKED BEFORE THE BOUND, and the order is the difference
+       between a true sentence and a false one. Asked the other way round, 9.95
+       would be refused as «not under ten hours» — which it is — instead of as a
+       number with two decimals, which is what is actually wrong with it. With
+       this order the bound only ever sees a one-decimal figure, so anything it
+       refuses really is ten hours or more and its sentence is always true. */
+    const r = Math.round(n * 10) / 10;
+    if (r !== n) {
+      return { ok: false, value: null,
+        why: "the flight time is recorded to one decimal (6-minute steps) — " + n + " is not (round it, e.g. " + r + ")" };
+    }
+    if (n > 9.9) {
+      return { ok: false, value: null,
+        why: n + " h is decimal HOURS, not minutes — a single training sortie is under ten hours" };
+    }
+    return { ok: true, value: r, why: "" };
+  }
+
   function search(q, kind) {
     const terms = String(q || "").toLowerCase().split(/\s+/).filter(Boolean);
     const pool = kind ? G.ofKind[kind] || [] : G.all;
@@ -823,6 +909,11 @@ window.fmtDMY = function fmtDMY(v) {
     load, invalidate,
     node: (uid) => G.node.get(uid) || null,
     describe, label: labelOf, kindOf: (uid) => G.kind.get(uid) || null,
+    /* P46-A3 — the pure judgement of a typed flight time (ruling #8). Exported
+       for the same reason the rest of this surface is: the Training-log form
+       and the fixtures must ask the SAME function, or the rule the number was
+       validated against is whatever the form happened to be that week. */
+    durationValue,
     nodes: (kind) => (kind ? (G.ofKind[kind] || []).slice() : G.all.slice()),
     sections: (kind) => (G.sections[kind] || []).slice(),
     rank: (uid) => (G.rank.has(uid) ? G.rank.get(uid) : Infinity),
@@ -2336,6 +2427,11 @@ window.fmtDMY = function fmtDMY(v) {
     return {
       id: "", node: "", date: today(), start_date: "", end_date: "",
       scope: "student", class: "", classes: [], student: "", instructor: "", device: "",
+      /* P46-A3 — the flight time, as TEXT while it is in the form and a number
+         or null once it is saved (ruling #8). It is a string here for the same
+         reason `score` is: an <input> hands back text, and a half-typed "1." is
+         a state the form must survive without deciding anything about it. */
+      duration: "",
       result: "completed", score: "", note: "", absent: {},
       category: "", maneuvers: "",
       course: "", periods_done: "",             // Round 5 — per-course lessons
@@ -2498,6 +2594,16 @@ window.fmtDMY = function fmtDMY(v) {
         : raw === "score" ? esc(String(ev.score ?? "")) + "%"
           : esc(isFly ? (RESULT_LABEL[raw] || raw) : (raw === "repeat" ? "LAG (YSTERISI)" : raw));
       const rcls = isNfs ? "" : raw === "repeat" ? "lag" : raw;
+      /* P46-A3 · RULING #8 — THE HOURS RIDE IN THE DEVICE CELL, and the column
+         count does not move. What a sortie was flown IN and how long it lasted
+         are one fact about the aircraft time, they are read together, and a
+         tenth column for a number most rows do not carry would have cost every
+         row of the table width it does not have to spare. A blank prints
+         nothing at all — «— · — h» would be two absences dressed as data. The
+         decimal comma is the app's own reading convention (the form's node
+         badge shows the syllabus hours the same way). */
+      const hrs = ev.duration == null ? ""
+        : ` <span class="sch-badge" title="flight time — decimal hours">${esc(String(ev.duration).replace(".", ","))} h</span>`;
       /* Round 5 — a per-course lesson event shows the COURSE + its periods */
       const crs = ev.course && d ? R().courseOf(evNode(ev), ev.course) : null;
       const per = ev.course ? (ev.periods_done != null ? ev.periods_done : (crs ? crs.periods : "")) : "";
@@ -2521,7 +2627,7 @@ window.fmtDMY = function fmtDMY(v) {
         <td><span class="sch-badge ${isNfs ? "warn" : "k-" + esc(k || "x")}">${esc(isNfs ? "NFS" : (k && R().KIND_SHORT[k]) || "?")}</span></td>
         <td>${who}</td>
         <td class="sch-mono">${esc(nm(ev.instructor) || "—")}${ipShares}</td>
-        <td class="sch-mono">${esc(ev.device || "—")}</td>
+        <td class="sch-mono">${esc(ev.device || "—")}${hrs}</td>
         <td><span class="sch-badge r-${esc(rcls)}">${res}</span></td>
         <td>${abs ? `<span class="sch-badge warn" title="${esc((ev.absent || []).map((a) => nm(a.student) + (a.reason ? " — " + a.reason : "")).join(" · "))}">${abs} absent</span>` : "—"}</td>
         <td class="sch-note">${ev.maneuvers ? `<span class="sch-badge warn" title="maneuvers to repeat (fail-10)">repeat: ${esc(ev.maneuvers)}</span> ` : ""}${esc(ev.note || "")}</td>
@@ -2615,6 +2721,25 @@ window.fmtDMY = function fmtDMY(v) {
       + (sel && !pool.some((i) => i.code === sel) ? `<optgroup label="departed"><option value="${esc(sel)}" selected>${esc(nmOpt("instructors", sel))}</option></optgroup>` : "");
   }
 
+  /* P46-A3 · RULING #8 — THE «Duration (h)» BOX, AND THE THREE THINGS IT DOES
+     NOT DO. The Flight Commander, 05/09/2026: «Βάλε και το duration στο FDMS.
+     Παράλειψη δική μου όταν ξεκινήσαμε.»
+       · IT IS OFFERED FOR THE FLYING BANDS ONLY (`isFly` — flights and F/S, and
+         the special sorties, which are flights). A ground lesson is measured in
+         PERIODS and a ground exam in nothing at all; an hours box on either
+         would invite a number no engine in this app would ever read. An NFS is
+         not a flight and never sees it (it is inside the same `isNfs` guard the
+         instructor, the device and the result live in).
+       · THE SYLLABUS HOURS ARE A PLACEHOLDER AND NEVER A VALUE. describe(node)
+         .hours is what the sortie is PLANNED to take; the field is what it
+         took. Pre-filling the plan into the box would put a number nobody
+         measured into the record, and it would be indistinguishable from one
+         somebody did — which is the same class of lie as a badge that
+         contradicts its own column. It is shown greyed, and the tooltip says in
+         so many words that it is a hint.
+       · IT VALIDATES ON SAVE, NOT ON EVERY KEYSTROKE, through the ONE pure
+         judgement SchedReady.durationValue() — the same function the fixtures
+         drive. A half-typed «1.» has to be a survivable state of a form. */
   function renderForm() {
     const f = ui.log.form || (ui.log.form = blankForm());
     const spKey = spKeyOf(f.node);
@@ -2689,6 +2814,12 @@ window.fmtDMY = function fmtDMY(v) {
             ? `<optgroup label="departed"><option value="${esc(f.instructor)}" selected>${esc(nmOpt("instructors", f.instructor))}</option></optgroup>` : "")}</select></label>
           <label class="sch-fld"><span>Device</span><input class="sch-in" data-ff="device" value="${esc(f.device)}" list="sch-devlist" placeholder="${esc(DEVICES.join(" · "))}"></label>
           <datalist id="sch-devlist">${DEVICES.map((x) => `<option value="${esc(x)}"></option>`).join("")}</datalist>
+          ${isFly ? `<label class="sch-fld"><span>Duration (h)</span>
+            <input class="sch-in" data-ff="duration" value="${esc(f.duration)}" inputmode="decimal"
+              placeholder="${esc(d && d.hours != null ? String(d.hours) : "1.3")}"
+              title="${esc("Decimal hours the sortie actually took — 1.3 is one hour and eighteen minutes. Leave it empty while the time is not known."
+        + (d && d.hours != null ? " The syllabus plans " + d.hours + " h for this sortie; that is a HINT and is never written for you."
+          : " The syllabus names no hours for this node."))}"></label>` : ""}
           <label class="sch-fld"><span>Result</span><select class="sch-in" data-ff="result">
             ${(isFly ? RESULT_OPTS_FLY : RESULT_OPTS_GND).map((o) => `<option value="${o.v}"${f.result === o.v ? " selected" : ""}>${o.t}</option>`).join("")}</select></label>`}
           ${!isNfs && f.result === "score" ? `<label class="sch-fld"><span>Score %</span>
@@ -2853,6 +2984,9 @@ window.fmtDMY = function fmtDMY(v) {
     const isNfs = spKey === NFS_KEY;
     const kind = isNfs ? "nfs" : (spKey ? "flights" : R().kindOf(f.node));
     const isLesson = kind === "lessons";
+    /* hoisted from below (P46-A3): the duration clause needs the same answer
+       the maneuvers clause does, and one band question is asked once */
+    const isFly = kind === "flights" || kind === "fs";
     if (spKey && !f.student) { S().toast(isNfs ? "An NFS is recorded per student." : "A special sortie is recorded per student.", "bad"); return; }
     if (spKey && !f.category) { S().toast(isNfs ? "Pick the NFS reason." : "Pick the category of the special sortie.", "bad"); return; }
     if (!spKey && f.scope === "student" && !f.student) { S().toast("Pick the student.", "bad"); return; }
@@ -2861,6 +2995,24 @@ window.fmtDMY = function fmtDMY(v) {
     if (isLesson && !f.start_date && !f.date) { S().toast("A lesson block needs a start date.", "bad"); return; }
     if (!isLesson && !f.date) { S().toast("Pick the date.", "bad"); return; }
     if (f.result === "score" && f.score === "") { S().toast("Enter the score.", "bad"); return; }
+    /* P46-A3 · RULING #8 — THE FLIGHT TIME IS JUDGED BEFORE ANYTHING IS
+       WRITTEN, and a bad one is a BLOCK and not a warning. The difference from
+       the evaluator clause below is the difference between a fact that already
+       happened and a number that is simply wrong: an unqualified evaluator is
+       recorded because refusing it would not un-fly the checkride, while «130»
+       in an hours box is not a long sortie, it is a slipped decimal point, and
+       storing it would put a number in the record that no later reader could
+       tell from a real one. The judgement is SchedReady's, so the form and the
+       fixtures cannot drift apart. */
+    /* P46-A3 · THE VERIFICATION OF THIS ROUND — WHAT IS ALREADY STORED IS
+       HANDED TO THE JUDGE, so a figure the bridge wrote and this form would
+       refuse (WA bounds a day at 24, this bounds one sortie at 9.9) cannot lock
+       the developer out of the note and the result of that event. It is read
+       from the STORE and not from the form, because the form's copy is exactly
+       what is being judged. */
+    const stored = f.id ? S().find("trainingLog", f.id) : null;
+    const dur = R().durationValue(isFly ? f.duration : "", stored ? stored.duration : null);
+    if (!dur.ok) { S().toast("Duration — " + dur.why, "bad"); return; }
 
     /* apt / dp sorties fly with an evaluator — hard warning, not a block */
     let evalWarn = "";
@@ -2871,7 +3023,6 @@ window.fmtDMY = function fmtDMY(v) {
       }
     }
 
-    const isFly = kind === "flights" || kind === "fs";
     const rec = {
       id: f.id || S().uid("ev"),
       node: spKey ? "" : f.node, kind: kind,
@@ -2884,6 +3035,13 @@ window.fmtDMY = function fmtDMY(v) {
       classes: (!spKey && f.scope === "class") ? fClasses.slice() : undefined,
       instructor: isNfs ? "" : (f.instructor || ""), device: isNfs ? "" : (f.device || ""),
       result: isNfs ? "" : f.result, score: !isNfs && f.result === "score" ? Number(f.score) : null,
+      /* P46-A3 · RULING #8 — ALWAYS WRITTEN, EVEN WHEN IT IS null. SchedStore's
+         upsert MERGES, so a key this record left out would keep whatever the
+         stored event already held: clearing the box would then not clear the
+         field, and a wrong number would be un-erasable through the very form
+         that typed it. A ground event writes null for the same reason — moving
+         a flight's node to a lesson must take its hours with it. */
+      duration: dur.value,
       maneuvers: isFly && (f.result === "lag" || f.result === "fail") ? (f.maneuvers || "") : "",
       note: f.note || "",
       ref: isNfs ? (f.nfsRef || undefined) : undefined,   // Round 6 — NFS → exam node
@@ -2938,6 +3096,9 @@ window.fmtDMY = function fmtDMY(v) {
       periods_done: ev.periods_done == null ? "" : String(ev.periods_done),
       student: ev.student || "",
       instructor: ev.instructor || "", device: ev.device || "",
+      /* P46-A3 — the stored NUMBER becomes the form's TEXT again, and a blank
+         stays blank: `String(null)` would put the word «null» in the box. */
+      duration: ev.duration == null ? "" : String(ev.duration),
       /* migration on READ: the legacy "repeat" shows as LAG in the form */
       result: ev.result === "repeat" ? "lag" : (ev.result || "completed"),
       score: ev.score == null ? "" : String(ev.score),

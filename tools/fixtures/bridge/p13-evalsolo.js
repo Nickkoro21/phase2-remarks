@@ -298,14 +298,21 @@ console.log("\n=== PROBE 13i — A NON-GRADED SOLO: the ONE place `ng` completes
   ok("and it never re-derives the cell from x.completes alone again",
     !/>\$\{esc\(x\.completes \?/.test(src), "the Effect cell must read the engine's answer");
   ok("the row says the doctrine out loud", /DOES complete the node/.test(row.detail), row.detail);
-  /* THE ASSUMPTION IS PRINTED ON EVERY LINE IT DECIDES, in the dialog, before
-     the confirm — because it is an assumption and not a ruling. */
+  /* THE DOCTRINE IS PRINTED ON EVERY LINE IT DECIDES, in the dialog, before the
+     confirm. P46-A1 printed it as an assumption awaiting the owner; P46-A3
+     prints it as HIS RULING of 05/09/2026 (R1), and the line still rides — a
+     write that opens the one welded door says under whose authority it does. */
   eq("exactly one warning rides with it", row.plan.warn.length, 1);
-  ok("and it is the sentence the round owes the Flight Commander",
-    /NG solo — COMPLETES the node \(solo doctrine, pending confirmation\)/.test(row.plan.warn[0]),
+  ok("and it is the ruling, not a guess",
+    /NG solo — COMPLETES the node \(the Flight Commander's ruling of 05\/09\/2026\)/.test(row.plan.warn[0]),
     row.plan.warn[0]);
-  ok("which names the spec section that records it as OPEN",
-    /§ 16/.test(row.plan.warn[0]), row.plan.warn[0]);
+  ok("quoted in the words he used",
+    /το NG solo ολοκληρώνει τον κόμβο για τις πτήσεις προσαρμογής/.test(row.plan.warn[0]), row.plan.warn[0]);
+  ok("and it carries the other half of the ruling — a marked solo is judged by the flight rule",
+    /να μπορεί να πάρει βαθμολογία αν έχει μπει/.test(row.plan.warn[0]), row.plan.warn[0]);
+  ok("no line still calls it pending", !/pending confirmation/i.test(row.plan.warn[0]), row.plan.warn[0]);
+  ok("which names the spec sections that record it",
+    /§ 16δ/.test(row.plan.warn[0]) && /§ 18/.test(row.plan.warn[0]), row.plan.warn[0]);
   const rec = B.plannedEvent(row.plan, null, DAY);
   eq("the stored result is the word", rec.result, "completed");
   eq("and no number rides with it (R2)", rec.score, null);
@@ -596,10 +603,17 @@ console.log("\n=== PROBE 13o — THE FOUR SEAMS AND THE LOCK ARE THE SAME ONES =
   ok("there is still no background poller", !/setInterval/.test(bridge));
   ok("and still no download of a report full of real names",
     bridge.indexOf("createObjectURL") < 0 && !/\.download\s*=/.test(bridge));
-  /* the assumption must be readable, or a later round could flip it in silence */
-  ok("SOLO_NG_COMPLETES is a named constant with the pending-confirmation words on it",
+  /* the doctrine must be readable, or a later round could flip it in silence —
+     that was the reason while it was an assumption (P46-A1) and it is the same
+     reason now that it is the owner's ruling (P46-A3 · R1) */
+  ok("SOLO_NG_COMPLETES is a named constant carrying the ruling that settled it",
     /const SOLO_NG_COMPLETES = true;/.test(bridge)
-      && /AN ASSUMPTION AWAITING THE OWNER'S CONFIRMATION/.test(bridge));
+      && /THE FLIGHT COMMANDER'S RULING OF 05\/09\/2026/.test(bridge));
+  ok("quoted in his own words, so a later reader needs no conversation",
+    /Ναι, το NG solo ολοκληρώνει τον κόμβο για τις πτήσεις προσαρμογής/.test(bridge));
+  ok("and no sentence in the file still calls the solo doctrine an assumption awaiting him",
+    !/AN ASSUMPTION AWAITING THE OWNER'S CONFIRMATION/.test(bridge)
+      && !/pending confirmation/i.test(bridge));
 }
 
 module.exports = true;

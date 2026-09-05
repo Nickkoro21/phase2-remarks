@@ -50,6 +50,25 @@
     students:     { type: "list", key: "code", seed: "students" },
     instructors:  { type: "list", key: "code", seed: "instructors" },
     classes:      { type: "list", key: "id",   seed: "classes" },
+    /* P46-A3 — THE TRAINING LOG GAINED A FIELD, AND THIS FILE GAINED NOTHING.
+       The Flight Commander, 05/09/2026: «Βάλε και το duration στο FDMS.
+       Παράλειψη δική μου όταν ξεκινήσαμε.» A flying event now carries
+         duration: <decimal hours to one decimal> | null
+       beside its date, device and result — written by the Training-log form
+       (scheduler.js § saveEvent, validated through SchedReady.durationValue)
+       and by the bridge (schedbridge.js § buildEvent, from the Wings Ahead
+       row). It is recorded HERE because a reader of this table should not have
+       to grep two other files to learn what a training-log event holds.
+       WHY NO CODE CHANGED FOR IT, and it is worth saying rather than assuming:
+       this store is SHAPE-AGNOSTIC below the key. normalize() only mints a
+       missing `id` and strips nothing, upsert() MERGES with Object.assign so an
+       unnamed key survives a partial write, and export/import/sync move whole
+       records. A new field therefore arrives, persists, syncs, exports and
+       restores with no seam to teach — which is exactly what ruling #8's «a
+       duration field can attach later without changing any row key» promised.
+       The one obligation it puts on WRITERS is the other side of that merge:
+       a form that can CLEAR the field must write `null` explicitly, because a
+       key left out keeps the stored value. */
     trainingLog:  { type: "list", key: "id",   seed: "training_log" },
     availability: { type: "list", key: "id",   seed: "availability" },
     dutyRoster:   { type: "list", key: "date", seed: "duty_roster" },

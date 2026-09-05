@@ -50,8 +50,10 @@
  *       PERSON — SchedPeople.avoidedIps() avoids that evaluator afterwards;
  *     · a solo's instructor is the literal «SOLO», FDMS's own convention, and
  *       the authorising IP is kept in bridge.src and printed;
- *     · SOLO_NG_COMPLETES is this round's ONE open assumption, named, exported
- *       and printed on every line it decides.
+ *     · SOLO_NG_COMPLETES was this round's ONE open assumption, named, exported
+ *       and printed on every line it decides. THE OWNER RULED ON IT the same
+ *       day (P46-A3, below): it is a ruling now, and every sentence that called
+ *       it an assumption was rewritten into his own words.
  *   An event of either group is stamped with the BAND of its node (both are
  *   `flights`), never with the report group — see buildEvent. § 16 of the spec.
  *
@@ -60,7 +62,8 @@
  *   currency rows out of the live pull, ties them BY OID, and the Ε dates and
  *   Σ sorties an instructor recorded in Wings Ahead appear in FDMS — report
  *   first, written only through the confirm dialog. (The other half of slice 6
- *   — `duration` as a real FDMS field, ruling #8 — is NOT this round.)
+ *   — `duration` as a real FDMS field, ruling #8 — was NOT that round; it is
+ *   Phase 6γ, below, the same day.)
  *   Four things make this group unlike every other one, and all four are
  *   deliberate: the report group is about an INSTRUCTOR and not a student; its
  *   row identity CARRIES THE DATE (a Σ sortie has no syllabus node — the known
@@ -71,6 +74,34 @@
  *   restores a SNAPSHOT of the whole record through the one seam in
  *   app/currency.js that moves backwards, `SchedCurrency.restore()` — the
  *   forward-only seams cannot un-write an Ε date. § 17 of the spec.
+ *
+ * WHAT PHASE 6γ ADDED (P46-A3, 05/09/2026) — THE HOURS, AND TWO SETTLEMENTS
+ *   Three rulings of the Flight Commander, and one of them closes the last
+ *   sentence ruling #8 had left open since 21/08/2026. § 18 of the spec.
+ *     R1 · «Ναι, το NG solo ολοκληρώνει τον κόμβο για τις πτήσεις προσαρμογής.
+ *          Να δεχόμαστε το non graded, αλλά να μπορεί να πάρει βαθμολογία αν
+ *          έχει μπει.» — SOLO_NG_COMPLETES stops being an assumption and
+ *          becomes a RULING. Nothing about the code's BEHAVIOUR moved; every
+ *          sentence that told the developer it was a guess was rewritten into
+ *          the owner's own words, and the second half of his sentence is what
+ *          the file already did: a solo that carries a mark is judged by the
+ *          flight rule, so a failed solo leaves the node owed.
+ *     R2 · «Βάλε και το duration στο FDMS. Παράλειψη δική μου όταν
+ *          ξεκινήσαμε.» — RULING #8's FDMS HALF. `duration` is now a field of
+ *          a training-log event: decimal hours to one decimal, null when
+ *          unknown. Here that is five seams and no new powers — waRow already
+ *          read it, and now fdmsRow reads it back (`ev.duration`), compareRow
+ *          makes it a REAL difference instead of a comment, ADOPTABLE grows by
+ *          one, buildEvent writes it, and the chip stops claiming the number
+ *          is Wings Ahead's alone. IT STILL DOES NOT CROSS THE WIRE: the
+ *          deployed wa.bridge_push refuses a pushed duration BY NAME, so
+ *          PUSH_ROW_KEYS is unchanged and the reason written beside it is now
+ *          the true one — not «FDMS has no field» but «the wire does not carry
+ *          it yet». Lifting it is a Wings Ahead schema round.
+ *     R3 · on the pre-existing defect that recompute() never handed the push
+ *          ledger to crossCheck(): «κάνε ό,τι νομίζεις». It is handed over, as
+ *          15ζ designed it — so the echo rule's PENDING REMOVAL half, which no
+ *          browser could ever reach, is reachable. See recompute().
  *
  * THE EIGHT RULINGS OF THE FLIGHT COMMANDER (21/08/2026) — recorded verbatim
  * in the spec; here is what each one MEANS IN THIS FILE:
@@ -99,6 +130,12 @@
  *   #8 duration becomes an FDMS field in slice 6. Identities here are built so
  *      that a duration field can attach later WITHOUT changing any row key —
  *      duration is payload, and payload is never part of a row identity.
+ *      → DONE ON THE FDMS HALF, 05/09/2026 (P46-A3 · R2): the field exists, the
+ *      bridge reads / compares / adopts / writes it, and the promise above held
+ *      exactly as made — NOT ONE ROW KEY CHANGED to let it in. What is still
+ *      owed is the WIRE: the deployed bridge_push refuses a pushed duration by
+ *      name, so PUSH_ROW_KEYS stays without it until a Wings Ahead schema round
+ *      lifts that guard. § 18 of the spec.
  *
  * THE ROW IDENTITY — THE ONE THING THIS SLICE MUST GET RIGHT
  *   rid = oid ∷ group ∷ uid ∷ ord
@@ -687,8 +724,13 @@
      asks the graph about the node an FDMS event names. */
   const PUSH_BANDS = ["flights", "fs"];
 
-  /* ── THE ONE ASSUMPTION OF THIS ROUND, NAMED SO IT CAN BE OVERRULED ───────
-     SOLO_NG_COMPLETES — AN ASSUMPTION AWAITING THE OWNER'S CONFIRMATION.
+  /* ── THE ONE OPENING THE NG DOOR HAS — AND IT IS NOW A RULING ─────────────
+     SOLO_NG_COMPLETES — THE FLIGHT COMMANDER'S RULING OF 05/09/2026, verbatim:
+     «Ναι, το NG solo ολοκληρώνει τον κόμβο για τις πτήσεις προσαρμογής. Να
+     δεχόμαστε το non graded, αλλά να μπορεί να πάρει βαθμολογία αν έχει μπει.
+     Πρόκειται για την περίπτωση όπου σε ένα solo ο μαθητής βαθμολογείται με
+     αποτυχία, π.χ. γιατί δεν εφάρμοσε μια κανονική διαδικασία ή δεν ακολούθησε
+     οδηγία του ATC.»
      Everywhere else in this file `ng` is the door welded shut (13ζ · rulings #3
      and #5): FDMS has no word for «flown, not scorable, and still owed», so an
      NG row is reported and written nowhere. A SOLO is the one place where the
@@ -697,14 +739,22 @@
      Ahead's own validator says so («NG removes the GRADE … never the person»),
      which is why the authorising instructor is required on an NG solo row and a
      grade is not. So «flown, not scorable, and STILL OWED» is not a state a
-     solo can be in: it was either flown or it was not.
-     This is a DESIGN READING of the doctrine, not a ruling the Flight Commander
-     has given, and it is the only line of this round that is not his. It is a
-     constant with a name so that overruling it is a one-word edit, the confirm
-     dialog says «pending confirmation» on every such line before it is written,
-     and specs/bridge-spec.md § 16 records it as an OPEN ASSUMPTION. It applies
-     to `solo_flights` and to nothing else: an `ng` on a checkride is still one
-     of the three lines that are never written. */
+     solo can be in: it was either flown or it was not. P46-A1 wrote that as a
+     DESIGN READING and said so; the owner confirmed it on 05/09/2026 and added
+     the second half of the sentence, which is the half that matters most:
+     A GRADED SOLO IS STILL JUDGED BY THE FLIGHT RULE. «Να μπορεί να πάρει
+     βαθμολογία αν έχει μπει» — the constant applies to `j.source === "ng"` and
+     to nothing else, so a solo that CARRIES a mark goes through resultOf() like
+     any sortie: ≥ 60 completes, 50-59 is ΥΣΤΕΡΗΣΗ and < 50 is ΑΠΟΤΥΧΙΑ, both of
+     which leave the node OWED. That is exactly the case the owner names — the
+     student who flew alone and was marked down for a procedure he did not
+     apply or an ATC instruction he did not follow — and it is proven by probe
+     `13h` (a graded solo writes the flight verdict) and `15f`.
+     It is still a constant with a name so that a later ruling is a one-word
+     edit, the confirm dialog names the ruling on every such line before it is
+     written, and specs/bridge-spec.md § 16δ · § 18 record it. It applies to
+     `solo_flights` and to nothing else: an `ng` on a checkride is still one of
+     the three lines that are never written. */
   const SOLO_NG_COMPLETES = true;
 
   /* THE PRINTED-SCALE FLOOR — NOT A PASS MARK, and the difference is the whole
@@ -857,8 +907,11 @@
        for every group but one, with the same sentence it has carried since 13ζ.
        A SOLO is complete by having been flown and carries no grade by nature, so
        «flown, not scorable, and still owed» is not a state it can be in — see
-       SOLO_NG_COMPLETES, which is this round's OPEN ASSUMPTION and says on the
-       confirm line that it is one. */
+       SOLO_NG_COMPLETES, which P46-A1 wrote as an open assumption and P46-A3
+       carries as the owner's RULING, named on the confirm line either way. And
+       the door opens for an `ng` row only: a solo that CARRIES a mark never
+       reaches this clause at all, and is judged by the flight rule like any
+       sortie — «να μπορεί να πάρει βαθμολογία αν έχει μπει» (R1). */
     if (j.source === "ng" && !(SOLO_NG_COMPLETES && gid === "solo_flights")) {
       return "Wings Ahead records this sortie as NON-GRADED. The FDMS training log has no word for "
         + "«flown, not scorable, and still owed»: «completed» would complete the node and unlock its "
@@ -901,8 +954,16 @@
   /* THE FIELDS OF A PAYLOAD DIFFERENCE THIS SLICE CAN ADOPT — and only those
      the report ALREADY SHOWS ON BOTH SIDES, which is the binding rule. A field
      the table does not print side by side is not adoptable, however easy it
-     would be to write. */
-  const ADOPTABLE = ["verdict", "grade (Wings Ahead)", "instructor"];
+     would be to write.
+     P46-A3 — `duration` JOINS THE LIST BECAUSE FDMS NOW HAS A FIELD TO PUT IT
+     IN (ruling #8, the owner's «βάλε και το duration στο FDMS» of 05/09/2026).
+     Until this round it was the one payload the report printed as a chip and
+     could never write anywhere, because there was nothing on this side to
+     write it into; the chip was the whole of what the bridge could do with an
+     hour figure. It is adopted ALONE — an adoption of the hours never touches
+     the verdict, the grade or the seat — for the same reason every other field
+     here is: what the developer ticks is what gets written and nothing else. */
+  const ADOPTABLE = ["verdict", "grade (Wings Ahead)", "instructor", "duration"];
 
   /* the event the bridge would write for a wa_only row — every field it owns is
      named, empty ones included, because SchedStore.upsert MERGES: a re-write
@@ -949,6 +1010,33 @@
          kept in `bridge.src.grade`, where no engine reads it and the next
          cross-check can see whether Wings Ahead has changed it since. */
       score: null,
+      /* P46-A3 · RULING #8, THE FDMS HALF — «Βάλε και το duration στο FDMS.
+         Παράλειψη δική μου όταν ξεκινήσαμε.» The training log now HAS the
+         field, so the bridge writes the hours Wings Ahead recorded for the
+         sortie instead of printing them and dropping them. It is decimal hours
+         to one decimal, `null` when the other side does not know them — never
+         0 and never "", because a flown sortie that lasted nothing is not a
+         thing and an empty string would sort and compare as one. The number is
+         ALSO kept in `bridge.src.duration`, exactly as the grade is: `duration`
+         is what FDMS now holds, `bridge.src.duration` is what Wings Ahead said
+         when the event was written, and the next cross-check reads the drift
+         between the two.
+         WHY IT IS NOT VALIDATED HERE. The Training-log form bounds a HAND-TYPED
+         figure at 9.9 h (SchedReady.durationValue — a typo net for one sortie).
+         This is not a hand-typed figure: it is what the other system already
+         recorded and already validated (`wa.chk_duration`: > 0, ≤ 24, one
+         decimal). Refusing to record it would not un-fly the sortie, which is
+         the same house rule that makes a non-evaluator checkride a warning and
+         not a refusal. What the form DOES do with such a figure — a WA-legal 15
+         is not a form-legal one — is leave it alone instead of blocking the
+         event around it (scheduler.js § durationValue, the `was` clause).
+         THE ONE BOUND THIS LINE KEEPS IS ITS OWN SENTENCE. «Never 0» is only
+         true because `wa.chk_duration` enforces n > 0 over there, and a
+         guarantee held by the far side is not a guarantee held by this line:
+         one relaxed CHECK constraint and a 0 would be minted here as a flown
+         sortie that lasted nothing. So the claim is made true where it is
+         claimed. Everything else stays the other system's judgement. */
+      duration: p.duration > 0 ? p.duration : null,
       maneuvers: p.result === "lag" || p.result === "fail" ? p.maneuvers || "" : "",
       note: p.note, absent: [],
     };
@@ -959,6 +1047,12 @@
   function baseRow(side, sec, band, uid, seq, date) {
     return {
       side, sec, band, uid, seq: posInt(seq, 1), date: isoDate(date),
+      /* P46-A3 — `duration` is now a field of BOTH sides. It used to be a
+         Wings-Ahead-only payload that this shape carried so the chip could
+         print it; since ruling #8's FDMS half it is filled from the WA row on
+         one side and from `ev.duration` on the other, and the two can disagree
+         like any other fact. It stays out of every row IDENTITY, which is what
+         ruling #8 promised in the first place: payload is never a key. */
       end_date: "", grade: null, ng: false, mission: "", duration: null,
       kind: "", track: "", instructor: "", instructorOid: "",
       extra: {}, srcId: "", srcNote: "", waWritten: false,
@@ -1107,6 +1201,13 @@
     r.bridgeBlock = blk;
     if (blk && isObj(blk.src)) r.bridgeGrade = num(blk.src.grade);
     r.end_date = isoDate(ev.end_date);
+    /* P46-A3 · RULING #8 — THE FDMS SIDE NOW HAS HOURS TO READ. Before this
+       round the FDMS half of a pair carried `duration: null` by construction,
+       which is why the comparison below could only ever be silent. `num()`
+       answers null for a blank, a "" or a non-number, so an event written
+       before the field existed reads exactly as one whose hours are unknown —
+       which is what it is. */
+    r.duration = num(ev.duration);
     r.instructor = trim(ev.instructor);
     r.extra = {
       result: trim(ev.result), score: num(ev.score), device: trim(ev.device),
@@ -1272,9 +1373,41 @@
     if (pw.extra.course && pf.extra.course && pw.extra.course !== pf.extra.course) {
       diffs.push({ field: "course", wa: pw.extra.course, fdms: pf.extra.course, why: "different course" });
     }
-    /* RULING #8 — duration is WA-only until slice 6. It is never a difference,
-       because FDMS has no field to differ with; it is shown as what it is. */
-    return { diffs, jw, jf, duration: pw.duration };
+    /* RULING #8, SECOND HALF — AND IT IS A REAL DIFFERENCE NOW (P46-A3).
+       «Βάλε και το duration στο FDMS. Παράλειψη δική μου όταν ξεκινήσαμε.»
+       Until this round the answer here was a comment: the hours were WA-only
+       and could not be a difference, because FDMS had no field to differ with.
+       It has one, so the ordinary rule of this whole function applies to them —
+       and the three cases are three different facts, not three severities:
+         · BOTH SIDES CARRY A NUMBER AND THEY DIFFER → `payload_differs`, with
+           the two figures printed. Somebody corrected the hours in one of the
+           two systems and not in the other, and that is exactly what the
+           report exists to say.
+         · FDMS IS BLANK AND WINGS AHEAD HAS ONE → also a difference, and the
+           ADOPTABLE one: the developer ticks it and the hours land on the
+           event. That is the ordinary shape of a field FDMS has just gained —
+           every event written before today is blank, and none of them is
+           wrong for being blank.
+         · WINGS AHEAD IS BLANK → SILENCE, whatever FDMS holds. The absence of
+           a number on the other side is not a claim that the flight lasted
+           nothing; it is the other side not knowing yet (`wa.chk_duration`
+           returns on null and says so: «leave the box empty while the time is
+           not known yet»). Reporting it would print a difference on every
+           event whose hours the developer typed himself, for ever.
+       The comparison is on the NUMBER and never on the text: 1.30 and 1.3 are
+       one hour and eighteen minutes twice, and both sides are read through
+       num(). */
+    if (pw.duration != null && pf.duration != null && pw.duration !== pf.duration) {
+      diffs.push({ field: "duration", wa: String(pw.duration) + " h", fdms: String(pf.duration) + " h",
+        why: "two flight times for one sortie" });
+    } else if (pw.duration != null && pf.duration == null) {
+      diffs.push({ field: "duration", wa: String(pw.duration) + " h", fdms: "—",
+        why: "Wings Ahead recorded the flight time and the FDMS event carries none" });
+    }
+    /* the chip prints ONE number, and it is the one the reader is looking at:
+       Wings Ahead's when there is one, FDMS's otherwise. Both are printed side
+       by side in the diff above whenever they disagree. */
+    return { diffs, jw, jf, duration: pw.duration != null ? pw.duration : pf.duration };
   }
 
   function verdictWord(j) {
@@ -1569,8 +1702,8 @@
                  F1 lie in a new place. See SOLO_NG_COMPLETES. */
               row.detail = SOLO_NG_COMPLETES && b.gid === "solo_flights"
                 ? "a NON-GRADED solo — a solo carries no grade by nature and is complete by having been "
-                  + "flown, so this line DOES complete the node (SOLO_NG_COMPLETES — an assumption of the "
-                  + "design, awaiting the Flight Commander's confirmation: specs/bridge-spec.md § 16)"
+                  + "flown, so this line DOES complete the node (SOLO_NG_COMPLETES — the Flight "
+                  + "Commander's ruling of 05/09/2026: specs/bridge-spec.md § 16δ · § 18)"
                 : "non-graded by nature — reported, and it would never complete the node (ruling #3)";
             } else if (j.source === "attended") {
               row.detail = "the student's own record of a lesson FDMS has no matching event for";
@@ -1591,8 +1724,12 @@
              and it was the ONE branch that dropped the warning on the floor.
              The class is still decided by the source, never by `bad`: an event
              FDMS holds is not «unwritten», whatever the WA record says. */
+          /* P46-A3 — and the hours of an FDMS-only event are ITS OWN. There is
+             no Wings Ahead row here to prefer, so the chip prints what the
+             training log holds; before ruling #8's FDMS half this was null by
+             construction and the literal said so. */
           const row = mkRow(cls, b.gid, person, b.uid, id, null, r,
-            { diffs: [], jw: null, jf: judge(r), duration: null }, "", withRec(r.problems));
+            { diffs: [], jw: null, jf: judge(r), duration: r.duration }, "", withRec(r.problems));
           if (cls === "deleted") {
             row.detail = "the bridge wrote this FDMS event (id " + r.srcId + ") and its Wings Ahead source "
               + "is gone — delete only with the developer's OK, as a tombstone, with a change-log line "
@@ -1684,7 +1821,7 @@
         offOrd += 1;
         const row = mkRow("fdms_only", "off_graph", person, f.uid,
           { ord: offOrd, rid: [oid, "off_graph", f.uid, offOrd].join(" ∷ ") }, null, f,
-          { diffs: [], jw: null, jf: judge(f), duration: null }, "", withRec(f.problems));
+          { diffs: [], jw: null, jf: judge(f), duration: f.duration }, "", withRec(f.problems));
         /* the Effect column asks the ROW, and judge() would read a stored
            `result: "completed"` and print «completes the node» about a node
            that does not exist. The honest answer is the absence itself. */
@@ -1698,7 +1835,7 @@
         if (f.claimed) return;
         rows.push(mkRow("fdms_only", "events", person, f.uid,
           { ord: 1, rid: [oid, "events", f.uid, 1].join(" ∷ ") }, null, f,
-          { diffs: [], jw: null, jf: judge(f), duration: null }, "", f.problems));
+          { diffs: [], jw: null, jf: judge(f), duration: f.duration }, "", f.problems));
       });
 
       /* A RECORD WARNING THAT FOUND NO CARRIER (R18 verify finding 2 · 6).
@@ -1902,6 +2039,14 @@
       authorisedBy: isSolo ? (ip.label || trim(wa.instructor)) : "",
       kind: band,
       device: DEVICE_BY_BAND[band] || "",
+      /* P46-A3 · RULING #8 — the flight time the CREATE would write. It is the
+         Wings Ahead figure or nothing: this side does not invent an hour and
+         does not fall back to the node's syllabus hours, which are what the
+         sortie is PLANNED to take and not what it took (the Training-log form
+         shows those as a placeholder for the same reason and never writes them
+         either). An UPDATE never touches it — a moved date is a moved date —
+         and an ADOPTION writes it only when the developer ticks that field. */
+      duration: wa.duration,
       completes: false, effect: "", verdict: verdictWord(j),
       /* the sentences the dialog prints beside a line it is still going to
          write — a warning is not a refusal (P46-A1 · fail-12's own precedent) */
@@ -2029,6 +2174,17 @@
           srcMove(p.fields, "instructor", wa.instructor);
         }
       }
+      /* P46-A3 — ADOPTING THE HOURS WRITES THE HOURS AND NOTHING ELSE. It is
+         the narrowest of the four adoptions by nature: `duration` is a fact
+         about the sortie that no engine in FDMS reads, so it moves no node,
+         unlocks no successor and puts nobody on an avoid list. The provenance
+         twin travels with it in the SAME `fields` list, which is what makes ↺
+         Undo able to take both back — the rule 13γ set for every other field. */
+      if (take.indexOf("duration") >= 0) {
+        p.fields.push({ field: "duration",
+          from: fd && fd.duration != null ? fd.duration : "", to: wa.duration });
+        srcMove(p.fields, "duration", wa.duration);
+      }
       if (!p.fields.length) {
         p.why = "the adoptable fields already hold the Wings Ahead value";
         return p;
@@ -2059,6 +2215,11 @@
       { field: "instructor", from: "", to: p.ip },
       { field: "device", from: "", to: p.device },
     ];
+    /* P46-A3 — and the hours, ONLY when Wings Ahead carries them. A blank is
+       not written as a field of its own: the change-log line would then say
+       «duration: (blank) → (blank)» on every sortie whose time nobody knows,
+       and a log that prints non-events is a log nobody reads. */
+    if (wa.duration != null) p.fields.push({ field: "duration", from: "", to: wa.duration });
     return p;
   }
   const effectWord = (c) => (c ? "COMPLETES the node and unlocks its successors"
@@ -2102,8 +2263,11 @@
      evaluator-qualified (fail-12)» beside it, because the record of who
      evaluated is a fact that already happened and refusing it would not un-fly
      the checkride. The bridge writes the same fact, so it says the same thing
-     in the same voice. The second warning is this round's own open assumption,
-     named on every line it decides. */
+     in the same voice. The second one still rides on every NG solo, and P46-A3
+     changed WHAT IT SAYS and not WHETHER it is said: the line used to warn that
+     the doctrine was an assumption, and it now states the ruling that settled
+     it. A line that writes the one `ng` row this bridge writes says under whose
+     authority it does so, either way. */
   function sayTheRest(p, gid, j, ip) {
     if (gid === "evaluations" && ip && ip.status === "resolved" && !ip.evaluator) {
       p.warn.push("⚠ " + (ip.label || p.ipLabel) + " is NOT evaluator-qualified in the FDMS roster, and a "
@@ -2112,10 +2276,12 @@
         + "Roster if the roster is what is wrong.");
     }
     if (SOLO_NG_COMPLETES && gid === "solo_flights" && j && j.source === "ng") {
-      p.warn.push("NG solo — COMPLETES the node (solo doctrine, pending confirmation): a solo carries no "
-        + "grade by nature and is complete by having been flown. This is the ONE place an `ng` row is "
-        + "written, it is an assumption of the design and not a ruling of the Flight Commander, and it is "
-        + "recorded as an open assumption in specs/bridge-spec.md § 16.");
+      p.warn.push("NG solo — COMPLETES the node (the Flight Commander's ruling of 05/09/2026): «το NG solo "
+        + "ολοκληρώνει τον κόμβο για τις πτήσεις προσαρμογής». A solo carries no grade by nature and is "
+        + "complete by having been flown. This is the ONE place an `ng` row is written. A solo that DOES "
+        + "carry a mark is judged by the flight rule instead — «να μπορεί να πάρει βαθμολογία αν έχει "
+        + "μπει» — so a failed solo still leaves the node owed. Recorded in specs/bridge-spec.md "
+        + "§ 16δ · § 18.");
     }
   }
 
@@ -2279,8 +2445,10 @@
      instructors' currency rows out of the live pull, ties them by OID, and the
      Ε dates and Σ sorties an instructor recorded in Wings Ahead APPEAR IN FDMS
      — report first, written only through the confirm dialog. (The other half of
-     slice 6 — `duration` as a real FDMS field, ruling #8 — is NOT this round
-     and stays recorded as pending.)
+     slice 6 — `duration` as a real FDMS field, ruling #8 — was not this round;
+     it landed the same day, in P46-A3 · R2. NOTHING OF IT REACHES THIS LANE: a
+     currency row records WHO flew, not FOR HOW LONG, and this group still
+     neither reads nor writes an hour figure anywhere.)
 
      WHAT A WINGS AHEAD CURRENCY ROW IS (wa.ins_entry_keys('currency')):
          { date, kind: continuation | with_sp, s_category (continuation only),
@@ -2903,8 +3071,11 @@
       4 · SHAPES ARE REFUSED BY NAME, NEVER COERCED. seq is a JSON NUMBER 1..20
           (never "2"), kind is one of five words, ng is a boolean and never true,
           the date is "YYYY-MM-DD", `entered_by` / `legacy` / `duration` never
-          cross, the rid is a string ≤ 200 chars and at most 200 ops ride in one
-          call. Everything below emits those shapes deliberately.
+          cross THIS WIRE (P46-A3: FDMS now HAS a duration field — ruling #8's
+          other half — and the wire still does not carry it, because the
+          deployed bridge_push refuses the key by name; see PUSH_ROW_KEYS), the
+          rid is a string ≤ 200 chars and at most 200 ops ride in one call.
+          Everything below emits those shapes deliberately.
 
      ── AND THE ONE THING THE WINGS AHEAD SIDE SAID IT CANNOT DO ──────────────
      «BYTE-IDENTICAL TWINS REMAIN INDISTINGUISHABLE … that dedup is P45-FDMS's,
@@ -2968,8 +3139,27 @@
   /* the keys of a pushed row, in the ONE order everything writes them. `sent`
      and a freshly built row are compared key by key over exactly this list, so
      a key added on one side and not the other is a difference and not a
-     surprise. `duration` is NOT here and never will be until FDMS has the field
-     (ruling #8); `entered_by` and `legacy` are the server's, never the wire's. */
+     surprise. `entered_by` and `legacy` are the server's, never the wire's.
+
+     ── AND `duration` IS STILL NOT HERE, FOR A REASON THAT HAS CHANGED (P46-A3)
+     Until 05/09/2026 the sentence above read «and never will be until FDMS has
+     the field (ruling #8)». FDMS HAS THE FIELD NOW — the owner's «βάλε και το
+     duration στο FDMS» closed that half the same day, and this bridge reads,
+     compares, adopts and stores flight hours WA → FDMS. What has not moved is
+     THE WIRE: the deployed `wa.bridge_push` refuses a pushed `duration` BY
+     NAME —
+         «DURATION CROSSES IN NEITHER DIRECTION UNTIL FDMS HAS THE FIELD
+          (ruling #8). Refused rather than dropped: silently discarding a
+          number somebody sent is how the two systems start disagreeing about
+          hours.»                       (D:\WingsAhead\db\schema.sql, wa.bridge_push)
+     — and that guard is on the OTHER SIDE of a system this repo does not
+     deploy. Sending the key anyway would earn a `refused` verdict per row and
+     teach the developer to read past a refusal, which is the one thing a
+     refusal must never become. So the key stays out of this list for one more
+     round, the reason is now «the wire does not carry it», and lifting it is a
+     WINGS AHEAD schema round (drop that branch, let `wa.chk_duration` — which
+     already validates > 0, ≤ 24 and one decimal — be the only judge). It is
+     recorded as the pending item of specs/bridge-spec.md § 18 and § 15ι. */
   const PUSH_ROW_KEYS = ["date", "track", "sortie", "seq", "kind",
     "instructor", "instructor_oid", "grade", "ng", "mission"];
 
@@ -3084,7 +3274,13 @@
     return 0;                                     // 20 flights of one code in one day
   }
 
-  /* ── THE ROW AN FDMS EVENT BECOMES (design B.2, field for field) ────────── */
+  /* ── THE ROW AN FDMS EVENT BECOMES (design B.2, field for field) ──────────
+     AND THE EVENT MAY NOW CARRY HOURS THIS ROW DOES NOT (P46-A3). Since ruling
+     #8's FDMS half a training-log sortie can hold a `duration`, and this
+     function still builds a row of exactly PUSH_ROW_KEYS — no duration key,
+     not even a null one. The row is rebuilt from scratch on every op, so that
+     is also the guard: there is no path by which an event's hours reach the
+     wire, whatever a ledger or an import puts in front of it. */
   function pushRowOf(o) {
     return {
       date: o.date,
@@ -3156,9 +3352,19 @@
     if (!isObj(r)) return "the " + what + " block is not an object";
     for (const k of Object.keys(r)) {
       if (PUSH_ROW_KEYS.indexOf(k) < 0) {
+        /* P46-A3 — THE SENTENCE HAD TO STOP SAYING «nobody's» ABOUT DURATION.
+           FDMS holds flight hours since 05/09/2026 (ruling #8), so «the
+           server's or nobody's» became false for one of the three names the
+           moment the field existed. What is true is narrower and is what the
+           developer needs: `entered_by` and `legacy` belong to the server, and
+           `duration` belongs to FDMS AND TO WINGS AHEAD SEPARATELY — this WIRE
+           does not carry it, because the deployed bridge_push refuses it by
+           name until a Wings Ahead schema round lifts that guard. */
         return "it carries «" + k + "», which is not one of the ten keys of a pushed row — "
-          + "`entered_by`, `legacy` and `duration` are the server's or nobody's, and a key this wire "
-          + "does not speak makes the whole block describe a row that cannot exist";
+          + "`entered_by` and `legacy` are the server's, and `duration` — which FDMS now HAS as a field "
+          + "(ruling #8) — does not cross this wire in either direction while the deployed bridge_push "
+          + "refuses it by name. A key this wire does not speak makes the whole block describe a row "
+          + "that cannot exist";
       }
     }
     for (const k of PUSH_ROW_KEYS) {
@@ -4561,6 +4767,16 @@
       patch.bridge = Object.assign({}, b, isObj(patch.bridge) ? patch.bridge : {}, { src: src });
       return;
     }
+    /* P46-A3 — AND THE ONE FIELD WHOSE EMPTY IS `null` AND NOT `""`. Every
+       event field this writer touches is text, and "" is the honest blank for
+       text; `duration` is a NUMBER, and an empty string in it would be a value
+       — it would sort, compare and print as one, and `num("")` would have to
+       undo it on every read. The Training-log form writes null for the same
+       reason (scheduler.js § saveEvent). */
+    if (field === "duration") {
+      patch.duration = value == null || value === "" ? null : value;
+      return;
+    }
     patch[field] = value == null ? "" : value;
     if (field === "result") {
       patch.score = null;                                   // R2 — never a number on a sortie
@@ -4592,6 +4808,9 @@
       kind: trim(band) || p.kind || p.group,
       src: p.src, at: day, who: WHO, exportAt: p.exportAt,
       student: p.student, date: p.date, ip: p.ip, device: p.device, result: p.result,
+      /* P46-A3 — the hours ride with the rest of the plan, so a fixture asserts
+         on the very record the store gets and not on a paraphrase of it. */
+      duration: p.duration == null ? null : p.duration,
       maneuvers: "",
       /* THE NOTE SAYS WHERE THE EVENT CAME FROM AND NOTHING THAT CAN GO STALE.
          An earlier draft wrote the verdict and the percentage into it — and the
@@ -4616,12 +4835,22 @@
       what: "created the training-log event for " + p.uid + " of " + dmy(p.date)
         + (evId === bridgeEvId(p.oid, p.group, p.uid, p.ord) ? ""
           : " (the computed handle was taken — this event took the next free one)"),
-      fields: [
-        { field: "date", from: "", to: p.date },
-        { field: "result", from: "", to: p.result },
-        { field: "instructor", from: "", to: p.ip },
-        { field: "device", from: "", to: p.device },
-      ],
+      /* P46-A3 · THE VERIFICATION OF THIS ROUND — THE LOG RECORDS THE PLAN,
+         NOT A COPY OF IT. This was a hand-written four-entry literal (date /
+         result / instructor / device) that happened to equal what makePlan
+         builds. It stopped being equal the moment a CREATE learned to write
+         the hours: the confirm dialog printed `p.fields` and promised them,
+         and the change-log entry recorded a write it had performed nowhere.
+         The real damage was one seam further on. undoEntry's create branch
+         asks driftOf(ev, e.fields) — «if the developer has edited the event in
+         the Training log since, reverting would silently discard THAT work, so
+         it refuses» — and driftOf can only guard the fields the entry NAMES.
+         With the literal, a developer who corrected the hours of a
+         bridge-written event and then pressed ↺ Undo lost the correction with
+         no refusal, because `duration` was not in the list being checked.
+         Before this round every editable field of a bridge-written event was
+         in that list; reading the plan keeps it that way by construction. */
+      fields: p.fields,
       effect: p.effect,
     });
     return { ok: true, evId };
@@ -5860,6 +6089,23 @@
         instructors: S().get("instructors") || [],
         trainingLog: S().get("trainingLog") || [],
         gates: S().get("gates") || [],
+        /* P46-A3 · R3 — THE PUSH LEDGER, WHICH THIS CALL HAD NEVER HANDED OVER.
+           crossCheck() has read `fdms.bridgePush` since Phases 4+5 and echoOf()
+           has needed it since D.3, but the LIVE pane built its store object
+           without the key — so in the browser the ledger was always the empty
+           array, and 15ζ's echo rule only ever printed ONE of its two halves:
+           every Wings Ahead row stamped `fdms` came out as the identity note
+           («a restored backup, or another device whose ledger did not travel»)
+           even when this store's own ledger held the very rid it was pushed
+           under, and the line that should have said PENDING REMOVAL — the one
+           that sends the developer to the Bridge tab to confirm a deletion he
+           has already asked for — could not be reached from the app at all. The
+           fixtures never saw it because they call crossCheck() directly and
+           hand the ledger in themselves. It is handed in exactly the way
+           planNow() hands it to planPush(): read, never written, § ② is still
+           the only writer in this file. The owner's word on the defect was «κάνε
+           ό,τι νομίζεις» — so it is fixed, as 15ζ designed it. */
+        bridgePush: S().get("bridgePush") || [],
         /* PHASE 6β — the instructors' own currency records, handed in like the
            ledger is: § ① reads them and writes nothing, and re-judging after an
            apply is what turns an applied line into `agree` in front of the
@@ -6013,18 +6259,53 @@
        such a row (rowHtml only draws them for act «adopt»), so this returns
        nothing rather than a plan with an empty field list. */
     if (p.group === CUR_GROUP) return null;
-    /* the provenance keys narrow with the act too: adopting ONE field must
-       never quietly re-stamp what the OTHER fields remembered */
+    /* P46-A3 · THE SAME LESSON, ONE STEP EARLIER — A FIELD THAT IS NOT
+       ADOPTABLE IS NOT NARROWABLE EITHER. `ADOPTABLE` is the ONE list that says
+       what this slice may adopt, and the list below says what each adoption
+       MOVES; a field missing from the first but reaching the second falls into
+       the fall-through and adopts the verdict under its own name. `duration`
+       was one such field this round, and it is not the only one the report can
+       put on a line: an appliable row can also show a bare `grade` or, when a
+       later round opens another group, an `end date` or a `course`. Asked here,
+       the whole class is closed at once — rowHtml draws no ↦ button on a line
+       this slice cannot adopt, which is what the binding rule always said.
+       Nothing changes for the four that ARE adoptable. */
+    if (ADOPTABLE.indexOf(field) < 0) return null;
+    /* P46-A3 · THE VERIFICATION OF THIS ROUND — AND THE HOURS, WHICH ARE
+       NEITHER THE VERDICT NOR THE SEAT. `duration` joined ADOPTABLE without
+       joining this list, and the fall-through below is the VERDICT bundle, so
+       the filter answered a duration button with the verdict's own fields. Two
+       lies, both reachable from the report: on a row where ONLY the hours
+       differed the filter yielded [] and rowHtml drew no «↦ adopt» at all, and
+       on a row where the verdict differed TOO the button WAS drawn and the
+       click wrote the VERDICT under a dialog whose line said «ADOPT the Wings
+       Ahead value of «duration»». ADOPTABLE's own promise — «it is adopted
+       ALONE» — is only true if it is written HERE, in the one place that
+       narrows a plan, and not merely in the comment beside the list.
+       The provenance keys narrow with the act too: adopting ONE field must
+       never quietly re-stamp what the OTHER fields remembered. */
     const keep = field === "instructor"
       ? ["instructor", "bridge.src.instructor"]
-      : ["result", "maneuvers", "bridge.src.grade", "bridge.src.thr",
-        "bridge.src.mission", "bridge.src.ng"];
+      : field === "duration"
+        ? ["duration", "bridge.src.duration"]
+        : ["result", "maneuvers", "bridge.src.grade", "bridge.src.thr",
+          "bridge.src.mission", "bridge.src.ng"];
     const fields = arr(p.fields).filter((f) => keep.indexOf(f.field) >= 0);
     if (!fields.length) return null;
     /* the warnings are COPIED, never shared: a narrowed plan is a second plan
        and pushing onto the parent's array would put one line's sentence on
        another line of the same dialog (P46-A1) */
     const q = Object.assign({}, p, { fields: fields, field: field, warn: arr(p.warn).slice() });
+    /* P46-A3 — AND THE SENTENCE OF THE WRITE THIS PLAN IS NOT DOING GOES WITH
+       IT. The parent plan's `effect` reads «result «…» → COMPLETES the node»,
+       which is true of the verdict adoption it was built for and a lie on a
+       line that moves only the flight time. Same clearing, same reason as the
+       instructor branch below: no engine in FDMS reads `duration`, so the node
+       effect of adopting it is exactly nothing, and the dialog must say so. */
+    if (field === "duration") {
+      q.result = "";
+      q.effect = "the flight time is not part of what completes a node — the node effect does not change";
+    }
     if (field === "instructor") {
       q.result = "";
       q.effect = "the instructor is not part of what completes a node — the node effect does not change";
@@ -7062,7 +7343,8 @@
           log, the push ledger and Wings Ahead's own tombstones every time this pane paints. So being
           offline means <b>waiting</b> and never losing, a retry costs nothing, and a failed push is simply
           still owed. Only <b>flights and F/S</b> cross, only rows <b>this bridge owns</b>, and
-          <b>never</b> a grade, a duration or an NG flag.</p>
+          <b>never</b> a grade, a duration or an NG flag — the flight <b>time</b> is a field of the FDMS
+          training log since 05/09/2026, and it still does not cross this wire in either direction.</p>
         ${editOn() ? "" : `<div class="sch-consqban"><b>View-only</b> — nothing crosses this wire from this
           device, on any timer and from any button, until <b>✎ Editor mode</b> is on. Not tidiness: the
           ledger that records what was written goes through the same lock, and a write this store could
@@ -7712,7 +7994,13 @@
     const marks = [];
     if (x.nonGraded) marks.push(`<span class="sch-badge warn" title="ruling #3 — a non-graded row never completes a node">NON-GRADED</span>`);
     if (x.nonInteger) marks.push(`<span class="sch-badge st-withdrawn" title="shown in the report only — never written anywhere">NOT A WHOLE NUMBER</span>`);
-    if (x.duration != null) marks.push(`<span class="sch-chip" title="Wings Ahead only until slice 6 (ruling #8)">${esc(x.duration)} h</span>`);
+    /* P46-A3 — the chip stayed, and its TITLE stopped being true the moment
+       FDMS gained the field: it used to say «Wings Ahead only until slice 6».
+       Now it names which side the number came from, because the two sides can
+       disagree and that disagreement is a `duration` diff one line below. */
+    if (x.duration != null) {
+      marks.push(`<span class="sch-chip" title="flight time, decimal hours (ruling #8 — FDMS holds this field since 05/09/2026; it never crosses the wire to Wings Ahead)">${esc(x.duration)} h</span>`);
+    }
     /* PER-FIELD ADOPTION — offered on the very line that shows both sides, and
        nowhere else. That is the binding rule of this slice: what the developer
        can adopt is exactly what the report has already put in front of him. */
@@ -7884,8 +8172,11 @@
           <p class="sch-hint"><b>What the push lane does — and what it never does</b></p>
           <p class="sch-hint">It writes <b>flight and F/S rows Wings Ahead stamps «fdms»</b>, for students
             matched by <b>OID</b>, and nothing else anywhere. It never writes a <b>grade</b> (a sortie is a
-            word here, not a number — R2), never a <b>duration</b> (FDMS has no field until slice 6 —
-            ruling #8), never <b>NG</b> (this system has no such state to assert, and NG removes a grade),
+            word here, not a number — R2), never a <b>duration</b> — FDMS <b>has</b> held that field since
+            05/09/2026 (ruling #8) and reads, compares and adopts flight time <em>from</em> Wings Ahead, but
+            the deployed <code>bridge_push</code> refuses the key by name, so the hours do not cross this
+            wire until the Wings Ahead side lifts that guard —, never <b>NG</b> (this system has no such
+            state to assert, and NG removes a grade),
             never a ground section, an evaluation, a solo or a proposal. It never overwrites a row a
             <b>human</b> typed: Wings Ahead answers <code>exists_student</code> / <code>exists_admin</code>
             and returns both versions for the report. And it never <b>deletes</b> by itself — a removal
@@ -7936,8 +8227,9 @@
     /* PHASE 6α (P46-A1) — the four judgements the checkride/solo round added,
        exported on the same terms as the rest: a fixture asserts on the JUDGEMENT
        and never on the sentence it happens to print. SOLO_NG_COMPLETES is here
-       because it is this round's OPEN ASSUMPTION — an assumption a fixture
-       cannot read is an assumption a later round can flip in silence — and
+       because a doctrine a fixture cannot read is one a later round can flip in
+       silence — that was the reason while it was an open assumption and it is
+       the same reason now that P46-A3 has made it the owner's ruling — and
        PUSH_BANDS because the whole point of splitting it from APPLY_GROUPS is
        that the two scopes can now be checked to be different. */
     SOLO_NG_COMPLETES, SOLO_IP, PUSH_BANDS, DEVICE_BY_BAND,
@@ -7977,6 +8269,21 @@
        guard and a guard no fixture can read is a guard a round can weaken. */
     CUR_GROUP, CUR_KINDS, CUR_LEGACY, CUR_DEMO_CAT, CUR_ACTS,
     curRid, curWhat, curCatProblem, curDrift, curPlanFlight, curPlanEdate,
+    /* PHASE 6γ (P46-A3) — THE TWO JUDGEMENTS THE VERIFICATION OF THIS ROUND
+       PUT ON THE SURFACE, and both are here for the reason `curDrift` is: a
+       guard no fixture can read is a guard a round can weaken in silence, and
+       both of these were weakened in silence by `duration` joining ADOPTABLE.
+         `narrowPlan` is what a per-field «↦ adopt» button MEANS. It lived in
+       § ③ and was assertable only through a click, so a plan that narrowed to
+       the WRONG fields could — and did — reach the dialog looking right: the
+       dialog printed «duration» while the filtered list still held the verdict.
+       It is pure, it takes a plan and returns a plan, and it belongs here.
+         `driftOf` is Phase 3's undo guard — the sentence «this event changed
+       after the bridge wrote it», which is what stops ↺ Undo from discarding
+       work the developer has since typed into the Training log. It can only
+       guard the fields the change-log entry NAMES, so it is exactly as strong
+       as that list is complete, and a fixture must be able to say so. */
+    narrowPlan, driftOf,
     /* AND THE TWO THAT DO TOUCH THE STORE — the ONLY impure functions on this
        surface, and the reason is not convenience, it is that nothing else can
        be asserted on. Every other lane's whole write is ONE RECORD, and

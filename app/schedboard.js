@@ -1989,6 +1989,20 @@
         instructor: x.l.ip || "", device: x.blk === "fs" ? (x.l.device || "OFT") : "T-6A",
         solo: isSolo(x.l) || undefined,
         result: res, score: null,
+        /* P46-A3 — THE HOURS THE BOARD DOES NOT KNOW, AND THE ONES IT MUST NOT
+           CARRY OVER. This writer never learns a flight time: the day plan is a
+           plan, and what a sortie took is typed in the Training log afterwards.
+           But upsert MERGEs and this event id is the PLAN LINE's, not the
+           node's — a line changed to a different sortie and re-actualized keeps
+           the same id while `node` above moves under it. Leaving `duration`
+           unnamed would then leave yesterday's hours sitting on a record that
+           has started describing a different flight. Named, the field does the
+           one honest thing in both directions: a re-actualize of the SAME
+           sortie keeps the time the developer typed, and a re-actualize that
+           changes what was flown drops it, because nobody has yet said how long
+           the new one took. Every other field of this record is written for the
+           same reason — see `maneuvers`. */
+        duration: existing && existing.node === node && existing.duration != null ? existing.duration : null,
         maneuvers: res === "completed" ? "" : (a.maneuvers || ""),
         note: (a.state === "changed" ? "actualized (changed from " + (missionLabel(x.l.node) || "—") + ")" : "actualized from the day plan")
           + (x.l.remarks ? " · " + x.l.remarks : ""),

@@ -303,7 +303,17 @@ console.log("\n=== PROBE 9l2 — THE REGRESSION: a flights and an F/S plan, froz
      new groups: every one of those edits runs through the flights and F/S path
      as well. So the two records the store would get for the two original groups
      are pinned here CHARACTER FOR CHARACTER, taken from the run BEFORE this
-     round's first edit. A paraphrase would not have caught `kind`. */
+     round's first edit. A paraphrase would not have caught `kind`.
+
+     P46-A3 — AND THE ONE KEY THAT WAS ALLOWED TO ARRIVE IS SUBTRACTED BEFORE
+     THE COMPARISON, RATHER THAN BAKED INTO THE FROZEN STRING. Ruling #8's FDMS
+     half added `duration` to a training-log event, so the record produced today
+     genuinely differs from the P46-A1 one by exactly that key. Re-freezing the
+     new bytes would have thrown away what this probe is FOR: it would then
+     prove only that today equals today. So the frozen strings stay the
+     pre-P46-A3 ones, the new key is lifted off and asserted on its own, and
+     what is compared is still «everything the old path used to write». A second
+     new key would fail here, which is the whole point. */
   const wa = waExport([person({ oid: "oid-a1", last_name: "Alpha" })], [record("wa-oid-a1", {
     flights: [{ date: "2026-08-12", sortie: "C4302", seq: 1, kind: "syllabus",
       instructor: "Airman", duration: 1.3, grade: 78 }],
@@ -314,11 +324,19 @@ console.log("\n=== PROBE 9l2 — THE REGRESSION: a flights and an F/S plan, froz
     "s:C4302": '{"id":"wa:OID-A1:flights:s:C4302:1","origin":"wa","bridge":{"rid":"OID-A1 ∷ flights ∷ s:C4302 ∷ 1","oid":"OID-A1","group":"flights","uid":"s:C4302","ord":1,"seq":1,"src":{"date":"2026-08-12","seq":1,"grade":78,"thr":60,"mission":"","ng":false,"instructor":"Airman","duration":1.3},"applied_at":"2026-08-26","applied_by":"✎ Editor","export_at":"2026-08-21T09:00:00Z"},"node":"s:C4302","kind":"flights","scope":"student","student":"ZZ-1","class":"","date":"2026-08-12","start_date":"","end_date":"","instructor":"ZP-1","device":"T-6A","result":"completed","score":null,"maneuvers":"","note":"from Wings Ahead · bridge 2026-08-26","absent":[]}',
     "s:FS4101": '{"id":"wa:OID-A1:fs:s:FS4101:1","origin":"wa","bridge":{"rid":"OID-A1 ∷ fs ∷ s:FS4101 ∷ 1","oid":"OID-A1","group":"fs","uid":"s:FS4101","ord":1,"seq":1,"src":{"date":"2026-08-13","seq":1,"grade":88,"thr":60,"mission":"","ng":false,"instructor":"Airman","duration":null},"applied_at":"2026-08-26","applied_by":"✎ Editor","export_at":"2026-08-21T09:00:00Z"},"node":"s:FS4101","kind":"fs","scope":"student","student":"ZZ-1","class":"","date":"2026-08-13","start_date":"","end_date":"","instructor":"ZP-1","device":"OFT","result":"completed","score":null,"maneuvers":"","note":"from Wings Ahead · bridge 2026-08-26","absent":[]}',
   };
+  /* the hours P46-A3 added, per node — asserted on their own, then removed so
+     the rest of the record can still be compared to the frozen bytes */
+  const HOURS = { "s:C4302": 1.3, "s:FS4101": null };
   Object.keys(FROZEN).forEach((uid) => {
     const row = r.rows.find((x) => x.uid === uid);
     ok("a plan still exists for " + uid, !!(row && row.plan && row.plan.can), uid);
-    eq(uid + " — the event is byte-identical to the pre-P46 record",
-      JSON.stringify(B.plannedEvent(row.plan, null, DAY)), FROZEN[uid]);
+    const rec = B.plannedEvent(row.plan, null, DAY);
+    ok(uid + " — the event now HAS a duration key (ruling #8, P46-A3)",
+      Object.prototype.hasOwnProperty.call(rec, "duration"), JSON.stringify(rec));
+    eq(uid + " — and it holds what Wings Ahead said the sortie took", rec.duration, HOURS[uid]);
+    delete rec.duration;
+    eq(uid + " — everything else is byte-identical to the pre-P46-A3 record",
+      JSON.stringify(rec), FROZEN[uid]);
   });
   const f = r.rows.find((x) => x.uid === "s:C4302").plan;
   const s = r.rows.find((x) => x.uid === "s:FS4101").plan;

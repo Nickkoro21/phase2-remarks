@@ -98,16 +98,28 @@ console.log("\n=== RULING #5 — «awaiting» is legitimate, never proposed ==="
   ok("the row says «not proposable»", /awaiting a grade — not proposable/.test(r.rows[0].detail), r.rows[0].detail);
   eq("it does not complete the node", r.rows[0].completes, false);
 }
-console.log("\n=== RULING #8 — duration carried, never compared ===");
+/* P46-A3 · RULING #8, SECOND HALF (05/09/2026) — this probe used to end with
+   «and it produced NO difference», which was the truth for as long as FDMS had
+   no field to differ with. The owner closed that: «Βάλε και το duration στο
+   FDMS.» A Wings Ahead hour figure beside an FDMS event that carries none is
+   now a REAL difference and the adoptable one, so the assertions are inverted
+   here and the three-case rule is driven in full by p15-duration.js. What did
+   NOT change is the half this section is named for: the number is still not
+   part of any row identity, and the rid below is the proof. */
+console.log("\n=== RULING #8 — duration carried, and now COMPARED (P46-A3) ===");
 {
   const wa = waExport([person({ oid: "oid-a1" })], [record("wa-oid-a1", {
     flights: [{ date: "2026-08-09", sortie: "C4302", seq: 1, kind: "syllabus", instructor: "Airman", duration: 1.7, mission: "complete" }] })], true);
   const r = run(wa, { students: [fdmsStudent({ oid: "oid-a1" })], instructors: [fdmsIp({})],
     trainingLog: [ev({ date: "2026-08-09", node: "s:C4302", result: "completed", instructor: "ZP-1" })] });
   eq("the duration is carried onto the row", r.rows[0].duration, 1.7);
-  eq("and it produced NO difference", r.rows[0].diffs.length, 0);
-  eq("the row agrees", r.rows[0].cls, "agree");
-  ok("no diff mentions duration", !JSON.stringify(r.rows[0].diffs).match(/duration/i));
+  eq("and a blank FDMS field beside it IS a difference now", r.rows[0].diffs.length, 1);
+  eq("the row is payload_differs", r.rows[0].cls, "payload_differs");
+  ok("and the diff is the duration one", r.rows[0].diffs[0].field === "duration", JSON.stringify(r.rows[0].diffs));
+  eq("printed in hours on the Wings Ahead side", r.rows[0].diffs[0].wa, "1.7 h");
+  eq("and as nothing on the FDMS side", r.rows[0].diffs[0].fdms, "—");
+  ok("the row identity did NOT gain the number (the promise of ruling #8)",
+    r.rows[0].rid.indexOf("1.7") < 0, r.rows[0].rid);
 }
 console.log("\n=== R1 — the blank-result warning the readiness engine needs ===");
 {

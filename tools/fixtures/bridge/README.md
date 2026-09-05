@@ -12,9 +12,13 @@ the Flight Commander's ruling of that day made appliable WA → FDMS
 (`p13-evalsolo.js`). And since Phase 6β, the same day, the **instructor currency
 lane** — an instructor's own Σ sorties and Ε dates, read out of the payload's
 `instructor_records`, tied by OID and written through `SchedCurrency`'s own seams
-(`p14-currency.js`).
+(`p14-currency.js`). And since Phase 6γ, the same day, the **flight time** — the
+FDMS half of ruling #8, which the Flight Commander closed with «Βάλε και το
+duration στο FDMS»: the field a training-log event now carries, the comparison it
+is now part of, the wire it still does not cross, and the two rulings that came
+with it (`p15-duration.js`).
 Spec: `specs/bridge-spec.md` (§ 10, § 13ια, § 14γ, § 15κ, § 15λ, § 15μ, § 15ν,
-§ 15ξ, § 16, § 17).
+§ 15ξ, § 16, § 17, § 18).
 
 ## How to run
 
@@ -27,7 +31,7 @@ the number, and the exit code is `0` only if nothing failed.
 
 ```
 ════════════════════════════════════════════
-  BRIDGE FIXTURES — 1346 passed, 0 failed
+  BRIDGE FIXTURES — 1551 passed, 0 failed
 ════════════════════════════════════════════
 ```
 
@@ -139,8 +143,10 @@ whole enumeration of `specs/bridge-spec.md` § 10 the way the spec says it does:
   skips it — and keeps the AUTHORISING instructor in `bridge.src`, where a change
   of it is an adoption of the **provenance** and never of the seat. The one open
   assumption of the round, **`SOLO_NG_COMPLETES`**, is asserted to be a named
-  constant, to be true for solos and false for every other group, and to print
-  «pending confirmation» on every line it decides. The event's `kind` is asserted
+  constant and to be true for solos and false for every other group — and since
+  the owner ruled on it the same day (P46-A3 · R1) the line it prints is asserted
+  to be **his ruling** with its date and his own words, never «pending
+  confirmation» again. The event's `kind` is asserted
   to be the **band** of the node and never the report group. And § 15ι is checked
   to have **stayed**: `PUSH_BANDS` is still `flights, fs`, the push predicate no
   longer tests the fill's scope at all, and neither a bridge-written checkride
@@ -199,6 +205,7 @@ painted is checked with eyes, on the live walk.
 | `p12-undo.js` | Phases 4+5 — ↺ Undo across the wire: the three shapes and the two drift refusals |
 | `p13-evalsolo.js` | Phase 6α — checkrides and solos appliable: the evaluator (ruling #4 · the fail-12 warning · the avoided-evaluator sentence, with no date window it cannot keep), the `SOLO` convention and the authorising instructor — **required**, so a flown solo with nobody's signature is `unwritten` and never proposed — `SOLO_NG_COMPLETES`, the empty slot on `wa.slot_empty`'s own test, idempotency, the moved date, **the sortie re-filed in the other section (one row, never a second event)**, undo byte-for-byte, and that the push lane did **not** grow with the fill |
 | `p14-currency.js` | Phase 6β — the instructor currency lane: the carrier the parser used to drop, the header count and the zero said in words, the **OID-only** join (an MN match is refused by name), the classes of a Continuation row and of a with-SP row (one line per Ε), the **eleven** `unwritten` reasons — `x-demo-flight` among them, answered out of `DEMO_IDS` / `FLIGHT_DERIVE` rather than assumed — the date inside the row identity and the two rows a moved date becomes, and then **the first writes any probe in here has ever made**: the sortie filed under the semester of its own date with its `src`, the Ε dates moved forward only and never over a later manual one, a second click that appends nothing, ↺ Undo restoring the whole record through `SchedCurrency.restore()` with its drift refusal, both walls of the edit lock, the **cold engine** (`14q`) — a page whose Currency tab was never opened compares nothing, arms nothing and **says so**, instead of reading every Ε id as one the catalog carries — the lone `seq: 2` whose own write it now recognises by **provenance** (`14j`), the two ways an `instructor_record` used to vanish with no row and no note (`14c`), the good Ε that no longer dies with a bad sibling on a with-SP row (`14g`), the OID re-asked at the moment of the write and ↺ Undo behind the same lock (`14m`), and the proof that **nothing of this lane reaches the wire** |
+| `p15-duration.js` | Phase 6γ — the flight time as a field of the FDMS training log (ruling #8's FDMS half): `buildEvent` writing it for all four appliable groups with the row identity untouched, the store's shape-agnostic collection and the merge that forces a clearing write to say `null` out loud, the comparison's three cases (**differ · adoptable · silent**), an adoption that moves exactly two fields and no verdict, a hand-typed event left where it stands and syllabus hours never written for anybody, **R1**'s graded solo judged by the flight rule (41 ⇒ ΑΠΟΤΥΧΙΑ, node still owed), the pushed row still carrying **no** duration with the true reason beside it, the form's pure validator driven headless out of `SchedReady.durationValue`, and **R3** — the push ledger reaching the live report, both echo sentences apart, with a regression that nothing else in the report moves. The round's own verification added three more: the **per-field button** (`narrowPlan`, now on the public surface) narrowing to the hours and to nothing else — and the verdict button never carrying the hours; the **change log recording the plan it applied**, so `driftOf` — the guard that makes ↺ Undo refuse instead of discarding a correction — sees the hours too; and the form **never blocking an event on a figure it did not receive from a person** (`wa.chk_duration` accepts 24 h, this form 9.9) |
 
 The offline builder (`tools/build_offline.py`) never looks in here: it collects
 from an explicit file list under `app/` and `data/`, so nothing in this directory
