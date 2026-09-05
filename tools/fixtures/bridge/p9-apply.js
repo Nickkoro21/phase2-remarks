@@ -260,25 +260,76 @@ console.log("\n=== PROBE 9k — the instructor is never guessed from a name (rul
   ok("and the reason counts them", /matches 2 active/.test(amb.plan.why), amb.plan.why);
 }
 
-console.log("\n=== PROBE 9l — the groups this slice deliberately does not write ===");
+console.log("\n=== PROBE 9l — the groups this fill deliberately does not write ===");
 {
+  /* P46-A1 (05/09/2026) — the scope grew by the Flight Commander's ruling
+     («checkrides and solos become appliable; FAIL / NFS / SMS / airsickness stay
+     report-only»), and what stayed OUT is what this probe is now about. The two
+     that came in are driven end to end in p13-evalsolo.js. */
   const scope = B.APPLY_GROUPS.join(",");
-  eq("the scope is flights and F/S", scope, "flights,fs");
+  eq("the scope is flights, F/S, the checkrides and the solos", scope,
+    "flights,fs,evaluations,solo_flights");
   const wa = waExport([person({ oid: "oid-a1" })], [record("wa-oid-a1", {
     lessons: [{ date: "2026-08-10", group: "GT-AERO-CRM", course: "AE 101" }],
     exams: [{ date: "2026-08-11", exam: "CO190", trial: 1, grade: 88 }],
-    evaluations: [{ date: "2026-08-09", evaluation: "C4590", with: "Airman", grade: 82 }],
-    solo_flights: [{ slot: "1", sortie: "C4303", date: "2026-08-08", instructor: "Airman", grade: 75 }],
+    airsickness: [{ date: "2026-08-07", instructor: "Airman", flight_code: "C4302" }],
   })], true);
   const r = run(wa, base());
-  ["g:GT-AERO-CRM::AE 101", "g:CO190", "s:C4590", "s:C4303"].forEach((uid) => {
+  ["g:GT-AERO-CRM::AE 101", "g:CO190"].forEach((uid) => {
     const row = r.rows.find((x) => x.uid === uid);
     ok("a row exists for " + uid, !!row, uid);
     if (!row || !row.plan) { ok(uid + " carries no appliable plan", !row || !row.plan || !row.plan.can); return; }
     eq(uid + " is not appliable", row.plan.can, false);
-    ok(uid + " says it is out of this slice", /FLIGHTS and F\/S only/.test(row.plan.why), row.plan.why);
+    ok(uid + " says it is out of this slice",
+      /writes FLIGHTS, F\/S, the eight CHECKRIDES and the prescribed SOLOS/.test(row.plan.why), row.plan.why);
+    ok(uid + " names ground lessons and exams as what still waits",
+      /ground lessons and exams/.test(row.plan.why), row.plan.why);
   });
+  /* airsickness is the half of the ruling that did NOT move: it is refused
+     before any scope question, by the sentence that says FDMS has no such
+     event at all. */
+  const sick = r.rows.find((x) => x.sec === "airsickness");
+  ok("an airsickness row is still there", !!sick, "airsickness");
+  eq("and it is class `refused`", sick.cls, "refused");
+  eq("carrying no plan at all", sick.plan, null);
   eq("nothing in that report is appliable", r.counts.appliable, 0);
+}
+
+console.log("\n=== PROBE 9l2 — THE REGRESSION: a flights and an F/S plan, frozen ===");
+{
+  /* P46-A1 — THE ROUND THAT GREW THE SCOPE MUST NOT HAVE MOVED THE OLD ONE.
+     `kind` stopped being the report group and became the BAND of the node, the
+     device table is now keyed by band, and refuseApply / makePlan learned two
+     new groups: every one of those edits runs through the flights and F/S path
+     as well. So the two records the store would get for the two original groups
+     are pinned here CHARACTER FOR CHARACTER, taken from the run BEFORE this
+     round's first edit. A paraphrase would not have caught `kind`. */
+  const wa = waExport([person({ oid: "oid-a1", last_name: "Alpha" })], [record("wa-oid-a1", {
+    flights: [{ date: "2026-08-12", sortie: "C4302", seq: 1, kind: "syllabus",
+      instructor: "Airman", duration: 1.3, grade: 78 }],
+    fs: [{ date: "2026-08-13", sortie: "FS4101", seq: 1, instructor: "Airman", grade: 88 }],
+  })], true);
+  const r = run(wa, base());
+  const FROZEN = {
+    "s:C4302": '{"id":"wa:OID-A1:flights:s:C4302:1","origin":"wa","bridge":{"rid":"OID-A1 ∷ flights ∷ s:C4302 ∷ 1","oid":"OID-A1","group":"flights","uid":"s:C4302","ord":1,"seq":1,"src":{"date":"2026-08-12","seq":1,"grade":78,"thr":60,"mission":"","ng":false,"instructor":"Airman","duration":1.3},"applied_at":"2026-08-26","applied_by":"✎ Editor","export_at":"2026-08-21T09:00:00Z"},"node":"s:C4302","kind":"flights","scope":"student","student":"ZZ-1","class":"","date":"2026-08-12","start_date":"","end_date":"","instructor":"ZP-1","device":"T-6A","result":"completed","score":null,"maneuvers":"","note":"from Wings Ahead · bridge 2026-08-26","absent":[]}',
+    "s:FS4101": '{"id":"wa:OID-A1:fs:s:FS4101:1","origin":"wa","bridge":{"rid":"OID-A1 ∷ fs ∷ s:FS4101 ∷ 1","oid":"OID-A1","group":"fs","uid":"s:FS4101","ord":1,"seq":1,"src":{"date":"2026-08-13","seq":1,"grade":88,"thr":60,"mission":"","ng":false,"instructor":"Airman","duration":null},"applied_at":"2026-08-26","applied_by":"✎ Editor","export_at":"2026-08-21T09:00:00Z"},"node":"s:FS4101","kind":"fs","scope":"student","student":"ZZ-1","class":"","date":"2026-08-13","start_date":"","end_date":"","instructor":"ZP-1","device":"OFT","result":"completed","score":null,"maneuvers":"","note":"from Wings Ahead · bridge 2026-08-26","absent":[]}',
+  };
+  Object.keys(FROZEN).forEach((uid) => {
+    const row = r.rows.find((x) => x.uid === uid);
+    ok("a plan still exists for " + uid, !!(row && row.plan && row.plan.can), uid);
+    eq(uid + " — the event is byte-identical to the pre-P46 record",
+      JSON.stringify(B.plannedEvent(row.plan, null, DAY)), FROZEN[uid]);
+  });
+  const f = r.rows.find((x) => x.uid === "s:C4302").plan;
+  const s = r.rows.find((x) => x.uid === "s:FS4101").plan;
+  eq("the flight's device is still the aircraft", f.device, "T-6A");
+  eq("the F/S device is still the trainer", s.device, "OFT");
+  eq("and the band is what the graph said, which for these two IS the group",
+    f.kind + "/" + s.kind, "flights/fs");
+  eq("the flight names a resolved FDMS instructor code, not «SOLO»", f.ip, "ZP-1");
+  eq("no warning is raised on an ordinary flight", f.warn.length, 0);
+  eq("and its effect sentence is exactly the Phase-3 one",
+    f.effect, "result «MISSION COMPLETE» → COMPLETES the node and unlocks its successors");
 }
 
 console.log("\n=== PROBE 9m — a deletion is never offered from here (ruling #2) ===");

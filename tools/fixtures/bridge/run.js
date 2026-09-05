@@ -20,6 +20,7 @@ require("./p9-apply.js");        // Phase 3 — apply · provenance · idempoten
 require("./p10-offgraph.js");    // Phase 3b — the off-catalogue node, and the badge
 require("./p11-push.js");        // Phase 4/5 — the push lane: predicate · shapes · queue · verdicts
 require("./p12-undo.js");        // Phase 4/5 — undo across the wire, and the two drift refusals
+require("./p13-evalsolo.js");    // Phase 6α — checkrides and solos appliable, and what each one owes
 
 const R = require("./harness.js").report();
 console.log("\n════════════════════════════════════════════");

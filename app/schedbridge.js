@@ -35,6 +35,26 @@
  *   separate deliberate act, ruling #2), write to Wings Ahead, open a network
  *   transport, or touch any group but `flights` and `fs`. See § 13 of the spec.
  *
+ * WHAT PHASE 6α ADDED (P46-A1, 05/09/2026) — TWO MORE GROUPS, NO NEW POWERS
+ *   The Flight Commander's ruling, verbatim: «checkrides and solos become
+ *   appliable; FAIL / NFS / SMS / airsickness stay report-only». So APPLY_GROUPS
+ *   grew by `evaluations` and `solo_flights`, and NOTHING ELSE about the fill
+ *   changed: the same deterministic id, the same five walls, the same four graph
+ *   seams, the same change log and ↺ Undo, the same three lines that are never
+ *   written. WA → FDMS only — the push lane did not grow with it (PUSH_BANDS,
+ *   and § 15ι stays). What each group needed of its own:
+ *     · a checkride's instructor is the row's own `with`, resolved under ruling
+ *       #4 or refused by it; an evaluator without the qualification is a
+ *       WARNING on the confirm line, never a refusal (fail-12's own precedent),
+ *       and a checkride stored as lag/fail is printed with what it does to the
+ *       PERSON — SchedPeople.avoidedIps() avoids that evaluator afterwards;
+ *     · a solo's instructor is the literal «SOLO», FDMS's own convention, and
+ *       the authorising IP is kept in bridge.src and printed;
+ *     · SOLO_NG_COMPLETES is this round's ONE open assumption, named, exported
+ *       and printed on every line it decides.
+ *   An event of either group is stamped with the BAND of its node (both are
+ *   `flights`), never with the report group — see buildEvent. § 16 of the spec.
+ *
  * THE EIGHT RULINGS OF THE FLIGHT COMMANDER (21/08/2026) — recorded verbatim
  * in the spec; here is what each one MEANS IN THIS FILE:
  *   #1 same sortie twice a day is real, with an explicit seq. The morning bust
@@ -579,21 +599,68 @@
      headlessly and the answers in the confirm dialog are the same answers the
      store gets. § ③ is the only place that calls upsert(). */
 
-  /* THE SCOPE OF THIS SLICE. `flights` and `fs` and nothing else — the same
-     scope specs/bridge-spec.md § 11 recorded for it, and each exclusion is a
-     reason, not an omission:
+  /* THE SCOPE OF THE WA → FDMS FILL. Four groups, and every one of the four
+     lines below is a REASON, never an omission.
+
+     PHASE 6α (P46-A1, 2026-09-05) — THE FLIGHT COMMANDER'S RULING, verbatim:
+     «checkrides and solos become appliable; FAIL / NFS / SMS / airsickness stay
+     report-only». The two entries that grew this list were, until this round,
+     the two exclusions of § 13α, and each one is answered by the ruling on its
+     own ground rather than waved through:
+       evaluations    the eight checkrides DO have their own fixed-slot doctrine
+                      on the WA side and their own evaluator rules here — and
+                      that doctrine is now WRITTEN (spec § 16) instead of being
+                      the reason for a silence: the evaluator is the row's own
+                      `with`, resolved under ruling #4 or refused by it, and a
+                      FAIL or a lag on a checkride is exactly the fact
+                      SchedPeople.avoidedIps() reads to keep that evaluator away
+                      from this student afterwards. A checkride the FDMS graph
+                      never hears about leaves that engine blind.
+       solo_flights   «a student never launches alone on their own authority»
+                      remains true, and it is the reason the AUTHORISING
+                      instructor is kept (bridge.src.instructor) and printed —
+                      the prescribed slot is not filled in FROM the file, the
+                      FLIGHT THAT WAS FLOWN is. An unflown slot is still a
+                      placeholder and still produces no row at all.
+     The other two exclusions are unchanged, and their sentences stand verbatim:
        lessons/exams  a ground event is CLASS-scope in FDMS and reaches the
                       student through membership read at run time; writing a
                       per-student copy would freeze a fact that is supposed to
                       move, and a class change would fabricate attendance.
-       evaluations    the eight checkrides have their own fixed-slot doctrine
-                      on the WA side and their own evaluator rules on this one.
-       solo_flights   «a student never launches alone on their own authority» —
-                      the solo slots are prescribed, not filled in from a file.
        events         FAIL / ALMOST GOOD are ANNOTATIONS on a flight, NFS is a
                       form, SMS is a status plus a gate. None of them is a
                       training-log event of the shape this writer builds. */
-  const APPLY_GROUPS = ["flights", "fs"];
+  const APPLY_GROUPS = ["flights", "fs", "evaluations", "solo_flights"];
+
+  /* AND THE PUSH LANE DID NOT GROW WITH IT. Until this round the FDMS → WA
+     qualifying predicate read APPLY_GROUPS, which was true only because the two
+     lists happened to hold the same two words. They stop being the same list
+     here: the ruling opened the fill, not the wire, and § 15ι stays as it was —
+     evaluations and solo_flights are never pushed to Wings Ahead. Two names, so
+     that growing one scope can never open the other by accident.
+     These are BANDS (what kindOf answers), not report groups: the push lane
+     asks the graph about the node an FDMS event names. */
+  const PUSH_BANDS = ["flights", "fs"];
+
+  /* ── THE ONE ASSUMPTION OF THIS ROUND, NAMED SO IT CAN BE OVERRULED ───────
+     SOLO_NG_COMPLETES — AN ASSUMPTION AWAITING THE OWNER'S CONFIRMATION.
+     Everywhere else in this file `ng` is the door welded shut (13ζ · rulings #3
+     and #5): FDMS has no word for «flown, not scorable, and still owed», so an
+     NG row is reported and written nowhere. A SOLO is the one place where the
+     reasoning does not carry, and the reason is the nature of the thing: a solo
+     is COMPLETE BY HAVING BEEN FLOWN and carries no grade by nature — Wings
+     Ahead's own validator says so («NG removes the GRADE … never the person»),
+     which is why the authorising instructor is required on an NG solo row and a
+     grade is not. So «flown, not scorable, and STILL OWED» is not a state a
+     solo can be in: it was either flown or it was not.
+     This is a DESIGN READING of the doctrine, not a ruling the Flight Commander
+     has given, and it is the only line of this round that is not his. It is a
+     constant with a name so that overruling it is a one-word edit, the confirm
+     dialog says «pending confirmation» on every such line before it is written,
+     and specs/bridge-spec.md § 16 records it as an OPEN ASSUMPTION. It applies
+     to `solo_flights` and to nothing else: an `ng` on a checkride is still one
+     of the three lines that are never written. */
+  const SOLO_NG_COMPLETES = true;
 
   /* THE PRINTED-SCALE FLOOR — NOT A PASS MARK, and the difference is the whole
      lesson of the 22/08/2026 correction. 60 is the line a sortie must clear
@@ -609,8 +676,23 @@
      the squadron's own vocabulary and belongs in the record. */
   const LAG_FLOOR = 50;
 
-  /* mirrors scheduler.js DEVICE_BY_KIND for the two bands this slice writes */
-  const DEVICE_BY_GROUP = { flights: "T-6A", fs: "OFT" };
+  /* MIRRORS scheduler.js DEVICE_BY_KIND, AND IS INDEXED BY THE BAND — never by
+     the report group (P46-A1). The two used to be the same word because the
+     scope was `flights` and `fs`, which ARE bands; a checkride and a solo are
+     report GROUPS whose band is `flights`, and keying on the group would have
+     written a blank device onto both. The band is what the Training log's own
+     form writes for that node (scheduler.js § renderForm), so an event this
+     bridge creates and one the developer types are the same record. */
+  const DEVICE_BY_BAND = { lessons: "GND", exams: "GND", fs: "OFT", flights: "T-6A" };
+
+  /* FDMS'S OWN WORD FOR «NOBODY WAS IN THE OTHER SEAT» (P46-A1). It is not a
+     string this file invents: schedboard.js declares `const SOLO = "SOLO"` and
+     reads it as an instructor-less line, and SchedPeople.avoidedIps() skips
+     exactly this reference (`if (!ref || ref === "SOLO") return;`) so a solo
+     never puts an instructor on a student's avoid list. Mirrored here rather
+     than imported for the same reason EVAL_IDS is: the engine half of this file
+     is required() headlessly by the fixtures, with no other module loaded. */
+  const SOLO_IP = "SOLO";
 
   /* THE PROVENANCE MARK. `id` is deterministic and DATE-FREE — the same row
      applied twice lands on the same event (upsert UPDATES, never appends), and
@@ -634,6 +716,64 @@
     if (j.source === "mission") return j.verdict === "complete" ? "completed" : "lag";
     return "";
   }
+  /* THE SAME QUESTION, ASKED FOR A GROUP (P46-A1). `resultOf` answers about a
+     JUDGEMENT and knows nothing about which section the row came from; every
+     caller that can write now asks THIS one, because exactly one group changes
+     the answer. It is a wrapper and not an edit of resultOf() on purpose: the
+     bare judgement is what the report prints and what the fixtures pin, and a
+     solo doctrine leaking into it would change the verdict of every NG row in
+     the file. */
+  function resultFor(gid, j) {
+    if (SOLO_NG_COMPLETES && gid === "solo_flights" && j && j.source === "ng") return "completed";
+    return resultOf(j);
+  }
+
+  /* AND THE TABLE MUST SAY THE SAME THING AS THE WRITER (P46-A1). These two are
+     the report's half of the very same doctrine, and they exist because slice
+     1b's finding F1 is the standing lesson of this file: a badge that says «a
+     non-graded row never completes a node» printed on a row whose Effect column
+     says «completes the node» is a lie the report tells about itself. An NG solo
+     is the one row that is non-graded AND completes, so it must wear neither the
+     badge nor the «non-graded» effect word — otherwise F1 comes back, one
+     section over. `nodeEffect` / `isNonGraded` themselves are untouched: they
+     answer about a judgement, and a judgement has no group. */
+  function nodeEffectIn(group, j) {
+    if (SOLO_NG_COMPLETES && group === "solo_flights" && j && j.source === "ng") {
+      return { completes: true, word: "flown solo (non-graded)" };
+    }
+    return nodeEffect(j);
+  }
+  function isNonGradedIn(group, j) {
+    if (SOLO_NG_COMPLETES && group === "solo_flights" && j && j.source === "ng") return false;
+    return isNonGraded(j);
+  }
+
+  /* AND THE EFFECT COLUMN PRINTS THIS STRING (verify F5), so it has to BE a
+     sentence about the node and not a bare verdict word. `nodeEffect()` answers
+     in the doctrine's own five words — «complete», «incomplete», «attended»,
+     «non-graded», «awaiting» — and the table used to throw the word away and
+     print a phrase it derived from `completes` alone. That is how the two
+     sentences this file actually computes never reached a screen: the off-graph
+     «no node — nothing is completed and nothing is unlocked» (Phase 3b, § 13δ)
+     and the NG solo's «flown solo (non-graded)» (P46-A1, § 16δ) — both of them
+     saying something «completes the node» / «does not complete the node» cannot.
+     The word becomes the sentence HERE, once, and the renderer prints what the
+     engine decided instead of deciding it again one column to the left. */
+  const EFFECT_SENTENCE = {
+    complete: "completes the node and unlocks its successors",
+    incomplete: "does not complete the node — it stays owed",
+    attended: "attended — a lesson is not scored, and it completes no node",
+    "non-graded": "non-graded — it completes no node (ruling #3)",
+    awaiting: "awaiting the grade — nothing is completed yet (ruling #5)",
+  };
+  function effectSentence(eff) {
+    if (!eff) return "";
+    const w = trim(eff.word);
+    if (EFFECT_SENTENCE[w]) return EFFECT_SENTENCE[w];
+    if (!w || w === "—") return w;
+    return w + (eff.completes ? " — completes the node" : " — does not complete the node");
+  }
+
   /* what SchedReady.state() will make of that word — the sentence the confirm
      dialog must print for every line (ruling #3). `completed` completes and
      unlocks the successors; `lag` / `fail` leave the node owed. */
@@ -659,16 +799,22 @@
     const k = typeof kindOf === "function" ? kindOf : () => null;
     if (nodeUid && !k(nodeOfUid(nodeUid))) return offGraphWhy(nodeUid);
     if (APPLY_GROUPS.indexOf(gid) < 0) {
-      return "this slice fills FLIGHTS and F/S only — ground lessons and exams, the eight checkrides, "
-        + "the prescribed solos and the FAIL / ALMOST GOOD / NFS / SMS events each wait for a slice of "
-        + "their own (specs/bridge-spec.md § 13)";
+      return "this fill writes FLIGHTS, F/S, the eight CHECKRIDES and the prescribed SOLOS — ground "
+        + "lessons and exams and the FAIL / ALMOST GOOD / NFS / SMS / airsickness events each wait for "
+        + "a slice of their own (specs/bridge-spec.md § 13α · § 16)";
     }
     if (!person || !person.code) {
       return "this person has no FDMS code, and a training-log event names its student by code";
     }
     if (need === "date") return "";
     if (!j) return "there is nothing on the Wings Ahead side to write";
-    if (j.source === "ng") {
+    /* THE NG DOOR, AND THE ONE ROW IT OPENS FOR (P46-A1). It stays welded shut
+       for every group but one, with the same sentence it has carried since 13ζ.
+       A SOLO is complete by having been flown and carries no grade by nature, so
+       «flown, not scorable, and still owed» is not a state it can be in — see
+       SOLO_NG_COMPLETES, which is this round's OPEN ASSUMPTION and says on the
+       confirm line that it is one. */
+    if (j.source === "ng" && !(SOLO_NG_COMPLETES && gid === "solo_flights")) {
       return "Wings Ahead records this sortie as NON-GRADED. The FDMS training log has no word for "
         + "«flown, not scorable, and still owed»: «completed» would complete the node and unlock its "
         + "successors, and «lag»/«fail» would say it must be re-flown. It is reported here and written "
@@ -686,11 +832,23 @@
       return "the grade " + j.grade + " is not a whole number — a non-integer grade is shown in this "
         + "report and written nowhere (ruling #6)";
     }
-    if (!resultOf(j)) return "this row has no verdict FDMS could express";
+    if (!resultFor(gid, j)) return "this row has no verdict FDMS could express";
     if (need === "adopt") return "";
+    /* THE INSTRUCTOR CLAUSE IS ABOUT WHO IS IN THE EVENT — and on a solo nobody
+       is (P46-A1). FDMS's own convention for a solo is the literal instructor
+       «SOLO» (schedboard.js § SOLO · scheduler.js avoidedIps, which skips that
+       exact string), so demanding a resolved FDMS code here would refuse every
+       solo for lacking a person the event must not name. The authorising
+       instructor of the Wings Ahead row is NOT lost by that: it is kept in
+       bridge.src.instructor and printed on the confirm line as «authorised by».
+       Ruling #4 is untouched — nothing is guessed from a name, because no
+       identity is written at all. */
+    if (gid === "solo_flights") return "";
     if (!ip || ip.status !== "resolved") {
       return "the instructor is not resolved — " + ((ip && ip.why) || "no instructor on the row")
-        + ". An event is never written with an identity guessed from a name (ruling #4)";
+        + ". An event is never written with an identity guessed from a name (ruling #4)"
+        + (gid === "evaluations" ? ". On a checkride that identity is the EVALUATOR, and the FDMS record "
+          + "of who evaluated is the fact SchedPeople.avoidedIps() reads afterwards" : "");
     }
     return "";
   }
@@ -713,7 +871,29 @@
         rid: p.rid, oid: p.oid, group: p.group, uid: p.uid, ord: p.ord, seq: p.seq,
         src: p.src, applied_at: p.at, applied_by: p.who, export_at: p.exportAt || "",
       },
-      node: p.uid, kind: p.group, scope: "student", student: p.student,
+      /* `kind` IS THE BAND OF THE NODE, NEVER THE REPORT GROUP (P46-A1; the WHY
+         corrected on verify F4). The two were the same word while the scope was
+         flights and F/S, and they part company the moment a checkride or a solo
+         is written: both are sortie nodes whose band is `flights`, and stamping
+         «evaluations» / «solo_flights» here would invent a kind no engine in
+         FDMS speaks. The rule is: WRITE WHAT THE TRAINING LOG'S OWN FORM WOULD
+         HAVE WRITTEN for this node — scheduler.js § renderForm computes
+         `kind = R().kindOf(f.node)` and stores exactly that (§ saveForm), and
+         its device follows DEVICE_BY_KIND[kind]. An event this bridge creates
+         and one the developer types are then the SAME RECORD.
+         AND ONE CONSUMER READS `ev.kind` STRAIGHT OFF THE STORED EVENT:
+         schedboard.js's pre-solo check counts the different instructors a
+         student has already flown with by asking
+         `ev.kind === "flights" && ev.instructor !== SOLO` over the training log
+         (the max-4-IPs rule before C4791). A checkride stamped «evaluations»
+         would be missing from that count. What does NOT depend on this field is
+         SchedPeople.avoidedIps() and the log filter: both compute the kind of a
+         NON-special event from the graph (`ev.special ? ev.kind : R().kindOf(…)`),
+         so they would have found the checkride either way — the field still has
+         to be right, but that is not the engine it would have blinded.
+         The identity group is not lost: it is bridge.group, where the row
+         identity keeps it. */
+      node: p.uid, kind: p.kind || p.group, scope: "student", student: p.student,
       class: "", classes: undefined, special: undefined, category: undefined, ref: undefined,
       date: p.date, start_date: "", end_date: "",
       instructor: p.ip, device: p.device,
@@ -826,6 +1006,26 @@
       if (r.track && TRACKS.indexOf(r.track) < 0) p.push("unknown track «" + r.track + "»");
       if (r.kind && FLIGHT_KINDS.indexOf(r.kind) < 0) p.push("unknown flight kind «" + r.kind + "»");
       if (posInt(e.seq, 1) > 20) p.push("seq above 20");
+    }
+    /* AND A FLOWN SOLO NAMES THE PERSON WHO SIGNED FOR IT (P46-A1 · verify F1).
+       This clause used to be asked of `flights` and `fs` only, which cost
+       nothing while a solo was report-only — and became a hole the moment the
+       05/09 ruling made solos WRITABLE: a row with a date and a grade but no
+       instructor came out appliable, wrote «SOLO» into the seat and carried an
+       EMPTY bridge.src.instructor, so the confirm dialog printed no «authorised
+       by …» line at all. That is the one fact § 16γ says a solo write keeps.
+       The row has already survived isEmptySlot(), so it is a FLOWN row, and
+       Wings Ahead could never have written it: wa.chk (db/schema.sql) demands
+       the name on EVERY flown solo, refuses all four spellings of absence
+       (missing key / null / "" / "   ") and does not excuse a legacy row — the
+       NG row wants the AUTHORISING instructor, the graded one the instructor
+       who signed for it. So it is exactly what this function exists for: a row
+       that could never have been written is SEEN as such (class `unwritten`,
+       no plan at all) instead of being proposed. */
+    if (sec === "solo_flights" && !trim(e.instructor)) {
+      p.push("no instructor — a student never launches alone on their own authority; Wings Ahead "
+        + "requires the authorising name on every FLOWN solo row, NG included (wa.chk), and this "
+        + "bridge keeps it in bridge.src.instructor and prints it as «authorised by …»");
     }
     return p;
   }
@@ -946,7 +1146,18 @@
     const jw = judge(pw), jf = judge(pf);
     const diffs = [];
     const softVerdict = (j) => (j.source === "ng" || j.source === "awaiting");
-    if (jw.verdict !== jf.verdict || softVerdict(jw) !== softVerdict(jf)) {
+    /* P46-A1 — THE SOLO DOCTRINE HAS TO BE READ ON BOTH SIDES, OR IT MINTS A
+       GHOST. SOLO_NG_COMPLETES makes an NG solo a `completed` event in FDMS;
+       reading the Wings Ahead row back afterwards would then compare a bare
+       «NON-GRADED» against a stored «MISSION COMPLETE» and print
+       `payload_differs` on every solo this bridge ever wrote, for ever —
+       training the developer to ignore the one class that must never be
+       ignored. The DISPLAY still says NON-GRADED, because Wings Ahead really
+       does say NG; it is the COMPARISON that reads the doctrine. */
+    const soloNg = SOLO_NG_COMPLETES && pw.sec === "solo_flights" && jw.source === "ng";
+    const waVerdict = soloNg ? "complete" : jw.verdict;
+    const waSoft = soloNg ? false : softVerdict(jw);
+    if (waVerdict !== jf.verdict || waSoft !== softVerdict(jf)) {
       diffs.push({
         field: "verdict",
         wa: verdictWord(jw), fdms: verdictWord(jf),
@@ -981,7 +1192,26 @@
           + " % and the Wings Ahead row no longer carries one" });
     }
     const ip = ipResolve(pw);
-    if (ip.status === "ambiguous") {
+    /* P46-A1 — «SOLO» IS NOT A DISAGREEMENT ABOUT WHO FLEW. An FDMS solo event
+       names the literal «SOLO» because nobody was in the other seat, and the
+       Wings Ahead row names the instructor who AUTHORISED the flight: two true
+       statements about two different facts, and comparing them would print
+       `payload_differs` on every solo for ever. What CAN move is the
+       authorising name itself, and that is read exactly the way the remembered
+       grade above is — against what the bridge was told when it wrote. A solo
+       event a human typed with a real instructor in it is NOT this case, and
+       falls through to the ordinary comparison, where it belongs: Wings Ahead
+       says the student flew alone and FDMS says he did not. */
+    const soloConvention = pw.sec === "solo_flights" && trim(pf.instructor) === SOLO_IP;
+    if (soloConvention) {
+      const told = pf.bridgeBlock && isObj(pf.bridgeBlock.src) ? trim(pf.bridgeBlock.src.instructor) : "";
+      if (told && normName(told) !== normName(pw.instructor)) {
+        diffs.push({ field: "instructor", wa: pw.instructor || "—", fdms: told,
+          why: "the bridge wrote this solo from a Wings Ahead row authorised by «" + told
+            + "» and Wings Ahead now says «" + (trim(pw.instructor) || "nobody") + "». The FDMS event "
+            + "names «SOLO» either way — a solo is flown alone — so what moves here is the provenance" });
+      }
+    } else if (ip.status === "ambiguous") {
       diffs.push({ field: "instructor", wa: pw.instructor, fdms: pf.instructor || "—",
         why: ip.why, blocking: true });
     } else if (ip.status === "resolved" && pf.instructor && ip.code && ip.code !== pf.instructor) {
@@ -1049,16 +1279,26 @@
     });
     const ipLabel = (i) => trim(i.last_name) + (trim(i.first_name) ? " " + trim(i.first_name).charAt(0) + "." : "")
       + (trim(i.code) ? " (" + trim(i.code) + ")" : "");
+    /* IS THIS PERSON AN EVALUATOR OF THE SQUADRON? (P46-A1). A checkride is
+       flown «με Αξιολογητή της Μοίρας» (fail-12), and the Training log's own
+       form treats the missing qualification as a HARD WARNING and not a block
+       (scheduler.js § saveLog, the evalWarn line) — because the record of who
+       evaluated is a FACT that already happened, and refusing to record it
+       would not un-fly the checkride. The resolution carries the answer so the
+       confirm dialog can say it in the same voice the form does. */
+    const ipIsEvaluator = (i) => !!(isObj(i) && isObj(i.quals) && i.quals.evaluator);
+    const resolved = (i) => ({ status: "resolved", code: trim(i.code), label: ipLabel(i),
+      evaluator: ipIsEvaluator(i) });
     function ipResolve(row) {
       if (row.instructorOid) {
         const hit = ipByOid.get(row.instructorOid);
-        if (hit) return { status: "resolved", code: trim(hit.code), label: ipLabel(hit) };
+        if (hit) return resolved(hit);
         return { status: "ambiguous", why: "instructor OID " + row.instructorOid + " is not in the FDMS roster" };
       }
       const sn = normName(row.instructor);
       if (!sn) return { status: "unknown", why: "no instructor on the row" };
       const hits = ipBySurname.get(sn) || [];
-      if (hits.length === 1) return { status: "resolved", code: trim(hits[0].code), label: ipLabel(hits[0]) };
+      if (hits.length === 1) return resolved(hits[0]);
       if (hits.length > 1) {
         return { status: "ambiguous", why: "the surname «" + trim(row.instructor) + "» matches "
           + hits.length + " active FDMS instructors and the row carries no instructor OID — "
@@ -1200,7 +1440,7 @@
           if (!trim(ev.special)) fdOffGraph.push(fdmsRow(oid, ev, "", "off_graph", ev.course));
           return;
         }
-        const g = groupOfNode(node, band, waRows);
+        const g = groupOfNode(node, band, waRows, ev);
         fdRows.push(fdmsRow(oid, ev, band, g, ev.course));
       });
 
@@ -1261,7 +1501,15 @@
             if (j.source === "awaiting") {
               row.detail = "reported, awaiting a grade — not proposable (ruling #5)";
             } else if (j.source === "ng") {
-              row.detail = "non-graded by nature — reported, and it would never complete the node (ruling #3)";
+              /* P46-A1 — and the ONE section where that sentence is not true.
+                 A solo is complete by having been flown; saying «it would never
+                 complete the node» beside an ✔ Apply that completes it is the
+                 F1 lie in a new place. See SOLO_NG_COMPLETES. */
+              row.detail = SOLO_NG_COMPLETES && b.gid === "solo_flights"
+                ? "a NON-GRADED solo — a solo carries no grade by nature and is complete by having been "
+                  + "flown, so this line DOES complete the node (SOLO_NG_COMPLETES — an assumption of the "
+                  + "design, awaiting the Flight Commander's confirmation: specs/bridge-spec.md § 16)"
+                : "non-graded by nature — reported, and it would never complete the node (ruling #3)";
             } else if (j.source === "attended") {
               row.detail = "the student's own record of a lesson FDMS has no matching event for";
             }
@@ -1488,7 +1736,10 @@
 
   function mkRow(cls, group, person, uid, id, wa, fd, cmp, refused, bad) {
     const j = cmp.jw || cmp.jf;
-    const eff = j ? nodeEffect(j) : { completes: false, word: "—" };
+    /* P46-A1 — the group-aware readings, so the Effect column and the badge say
+       what the writer would actually do. See nodeEffectIn / isNonGradedIn: the
+       one row they change is an NG solo, which is non-graded AND completes. */
+    const eff = j ? nodeEffectIn(group, j) : { completes: false, word: "—" };
     return {
       cls, group, oid: person.oid, code: person.code, who: person.name,
       klass: person.klass, uid, ord: id.ord, rid: id.rid,
@@ -1500,8 +1751,8 @@
       nonInteger: !!(cmp.jw && cmp.jw.nonInt) || !!(cmp.jf && cmp.jf.nonInt),
       /* the NON-GRADED mark is about a grade that COULD have been there and is
          not, AND about a row that never completes its node — see isNonGraded() */
-      nonGraded: isNonGraded(j),
-      completes: eff.completes, effect: eff.word,
+      nonGraded: isNonGradedIn(group, j),
+      completes: eff.completes, effect: effectSentence(eff),
       duration: cmp.duration,
       sec: wa ? wa.sec : (fd ? fd.sec : ""),
       instructor: wa ? wa.instructor : (fd ? fd.instructor : ""),
@@ -1537,6 +1788,23 @@
     const j = judge(wa);
     const ip = ipResolve(wa);
     const person = { oid: x.oid, code: x.code, name: x.who };
+    /* P46-A1 — THE BAND, ASKED ONCE AND CARRIED. It is what the event's `kind`
+       and its `device` are made of, and it is asked of the graph rather than
+       derived from the report group, because a checkride and a solo are groups
+       whose nodes are `flights`. Seam ② below refuses the row outright when the
+       graph does not answer, so everything after that line has a real band. */
+    const kOf = typeof kindOf === "function" ? kindOf : () => null;
+    const band = nodeUid ? (kOf(nodeOfUid(nodeUid)) || "") : "";
+    /* A SOLO IS FLOWN ALONE, AND THE EVENT SAYS SO IN FDMS'S OWN WORD. The
+       Wings Ahead row names the instructor who AUTHORISED it (WA's validator
+       requires that name even on an NG row, and says why: «NG removes the GRADE
+       … never the person»). FDMS records the same fact differently — the
+       instructor field of a solo event is the literal «SOLO», which is what
+       schedboard.js reads as «no IP on this line» and what avoidedIps() skips —
+       so the authorising name is kept where it belongs, in bridge.src, and
+       printed on the confirm line. Writing him into `instructor` would put a
+       person in the cockpit who was not there. */
+    const isSolo = gid === "solo_flights";
     const p = {
       cls, act: cls === "wa_only" ? "create" : cls === "source_moved" ? "update" : "adopt",
       can: false, why: "",
@@ -1545,9 +1813,19 @@
       evId: fd && fd.srcId ? fd.srcId : bridgeEvId(x.oid, gid, x.uid, x.ord),
       waWritten: !!(fd && fd.waWritten),
       date: wa.date, fdmsDate: fd ? fd.date : "",
-      result: "", ip: ip.status === "resolved" ? ip.code : "", ipLabel: ip.label || wa.instructor,
-      device: DEVICE_BY_GROUP[gid] || "",
+      result: "",
+      ip: isSolo ? SOLO_IP : (ip.status === "resolved" ? ip.code : ""),
+      ipLabel: isSolo ? SOLO_IP : (ip.label || wa.instructor),
+      /* the authorising instructor of a solo and the evaluator of a checkride —
+         both are the Wings Ahead name, printed on the confirm line so the
+         developer reads WHO signed for the flight he is about to record */
+      authorisedBy: isSolo ? (ip.label || trim(wa.instructor)) : "",
+      kind: band,
+      device: DEVICE_BY_BAND[band] || "",
       completes: false, effect: "", verdict: verdictWord(j),
+      /* the sentences the dialog prints beside a line it is still going to
+         write — a warning is not a refusal (P46-A1 · fail-12's own precedent) */
+      warn: [],
       fields: [], exportAt: exportAt || "",
       /* `src` is the WHOLE Wings Ahead payload and is written only by a CREATE.
          An UPDATE or an ADOPTION refreshes only the `bridge.src.*` keys that
@@ -1573,8 +1851,10 @@
        have made this row class `refused`, which never reaches makePlan at all.
        It is asked again here, before anything else, because a classification is
        one edit away from changing and the door must not re-open with it: that
-       is the whole R20 lesson — one guard is an intention, two are a wall. */
-    const kOf = typeof kindOf === "function" ? kindOf : () => null;
+       is the whole R20 lesson — one guard is an intention, two are a wall.
+       It stays the QUESTION and not a re-reading of the answer above it (P46-A1
+       moved the same call up to compute the band): a seam that reads a variable
+       is a seam that a later edit can leave holding a stale one. */
     if (nodeUid && !kOf(nodeOfUid(nodeUid))) { p.why = offGraphWhy(nodeUid); return p; }
 
     /* PHASE 4/5 · D.3 — THE ECHO RULE, COMPLETED. Once the push lane exists,
@@ -1610,7 +1890,7 @@
       if (!p.why && fd.date === wa.date) p.why = "the two dates are already the same";
       if (p.why) return p;
       const jf = judge(fd);
-      const eff = nodeEffect(jf);
+      const eff = nodeEffectIn(gid, jf);
       p.can = true;
       p.completes = eff.completes;
       p.effect = "the node effect does not change — this line moves a date";
@@ -1623,12 +1903,17 @@
     if (p.act === "adopt") {
       p.why = refuseApply(gid, j, ip, person, "adopt", nodeUid, kOf);
       if (p.why) return p;
-      const want = resultOf(j);
+      const want = resultFor(gid, j);
       const now = fd ? trim(fd.extra.result) : "";
       const take = [];
       arr(x.diffs).forEach((d) => {
         if (ADOPTABLE.indexOf(d.field) < 0) return;
-        if (d.field === "instructor" && ip.status !== "resolved") return;
+        /* P46-A1 — on a SOLO the instructor difference is about the AUTHORISING
+           name and nothing else, so it does not need an FDMS identity to be
+           adoptable: what it writes is a string in the provenance block, never
+           a person in the event. Everywhere else ruling #4 still stands, and an
+           unresolved name is not offered at all. */
+        if (d.field === "instructor" && !isSolo && ip.status !== "resolved") return;
         take.push(d.field);
       });
       if (!take.length) {
@@ -1652,9 +1937,17 @@
           p.fields.push({ field: "maneuvers", from: trim(fd.extra.maneuvers), to: "" });
         }
       }
-      if (take.indexOf("instructor") >= 0 && fd && ip.code !== fd.instructor) {
-        p.fields.push({ field: "instructor", from: fd.instructor, to: ip.code });
-        srcMove(p.fields, "instructor", wa.instructor);
+      if (take.indexOf("instructor") >= 0) {
+        /* P46-A1 — A SOLO ADOPTS THE PROVENANCE AND NOT THE COCKPIT. The event's
+           own `instructor` stays «SOLO» whatever Wings Ahead now says about who
+           authorised the flight; writing the new name into the field would put
+           a person in a seat that was empty, and SchedPeople would then read him
+           as having flown it. */
+        if (isSolo) srcMove(p.fields, "instructor", wa.instructor);
+        else if (fd && ip.code !== fd.instructor) {
+          p.fields.push({ field: "instructor", from: fd.instructor, to: ip.code });
+          srcMove(p.fields, "instructor", wa.instructor);
+        }
       }
       if (!p.fields.length) {
         p.why = "the adoptable fields already hold the Wings Ahead value";
@@ -1666,16 +1959,20 @@
       p.effect = p.result
         ? "result «" + (RESULT_WORD[res] || res) + "» → " + effectWord(p.completes)
         : effectWord(p.completes) + " — unchanged by this line";
+      p.effect += avoidedTail(gid, res, p.ipLabel);
+      sayTheRest(p, gid, j, ip);
       return p;
     }
 
     /* create */
     p.why = refuseApply(gid, j, ip, person, "full", nodeUid, kOf);
     if (p.why) return p;
-    p.result = resultOf(j);
+    p.result = resultFor(gid, j);
     p.can = true;
     p.completes = resultCompletes(p.result);
-    p.effect = "result «" + (RESULT_WORD[p.result] || p.result) + "» → " + effectWord(p.completes);
+    p.effect = "result «" + (RESULT_WORD[p.result] || p.result) + "» → " + effectWord(p.completes)
+      + avoidedTail(gid, p.result, p.ipLabel);
+    sayTheRest(p, gid, j, ip);
     p.fields = [
       { field: "date", from: "", to: wa.date },
       { field: "result", from: "", to: p.result },
@@ -1686,6 +1983,61 @@
   }
   const effectWord = (c) => (c ? "COMPLETES the node and unlocks its successors"
     : "does NOT complete the node");
+
+  /* ── THE TWO SENTENCES A CHECKRIDE AND A SOLO OWE THE DIALOG (P46-A1) ─────
+     THE WHOLE TRUTH BEFORE THE CONFIRM, not after it. 13η's rule is that the
+     numbered dialog states the node effect of every line BEFORE anything is
+     written, and for these two groups the node effect is not the whole of what
+     the write does:
+
+     A CHECKRIDE STORED AS `lag` OR `fail` MOVES A PERSON, NOT ONLY A NODE.
+     SchedPeople.avoidedIps() walks the student's flying events, and for a node
+     the graph marks `checkride` it reads a lag/fail/repeat result as «graded
+     FAIL on checkride …» and AVOIDS THAT EVALUATOR for this student from then
+     on — the lost-instructor engine of 3-01 §24στ(6). That is a real
+     consequence of this one click on next week's scheduling board, so it is
+     printed on the line that causes it. `EVAL_IDS` is what tells a checkride
+     from an ordinary sortie here; `describe().checkride` is what tells the
+     engine, and the two are the same eight codes (§ 3 of the spec). */
+  function avoidedTail(gid, res, evaluator) {
+    if (gid !== "evaluations") return "";
+    if (res !== "lag" && res !== "fail") return "";
+    /* «FROM NOW ON, ON EVERY BOARD» — AND NOT «FROM THIS DATE ON» (verify F7).
+       The engine keeps NO date window: avoidedIps() builds a FLAT per-student
+       avoid list, and the date of the checkride survives only inside the reason
+       string it prints. Every consumer reads it through avoidMap(code), which
+       is not date-scoped either — so the evaluator is avoided on a board being
+       planned for a date BEFORE the checkride just the same. Promising a limit
+       the code does not enforce is the same class of lie as a badge that
+       contradicts its own column. */
+    return " · AND IT MOVES A PERSON: FDMS reads a checkride recorded as ΥΣΤΕΡΗΣΗ or ΑΠΟΤΥΧΙΑ as a "
+      + "negative evaluation, so SchedPeople.avoidedIps() will AVOID " + (trim(evaluator) || "this evaluator")
+      + " for this student from now on, ON EVERY BOARD — the avoid list carries no date window "
+      + "(the lost-instructor rule, 3-01 §24στ(6))";
+  }
+
+  /* AND THE WARNINGS — a warning is not a refusal, and the difference is a
+     ruling of the house, not a preference: scheduler.js's own Training-log form
+     records a checkride flown with a non-evaluator and puts «⚠ … is NOT
+     evaluator-qualified (fail-12)» beside it, because the record of who
+     evaluated is a fact that already happened and refusing it would not un-fly
+     the checkride. The bridge writes the same fact, so it says the same thing
+     in the same voice. The second warning is this round's own open assumption,
+     named on every line it decides. */
+  function sayTheRest(p, gid, j, ip) {
+    if (gid === "evaluations" && ip && ip.status === "resolved" && !ip.evaluator) {
+      p.warn.push("⚠ " + (ip.label || p.ipLabel) + " is NOT evaluator-qualified in the FDMS roster, and a "
+        + "checkride is flown «με Αξιολογητή της Μοίρας» (fail-12). This is recorded, not refused — the "
+        + "record of WHO evaluated is a fact that already happened. Correct the qualification in the "
+        + "Roster if the roster is what is wrong.");
+    }
+    if (SOLO_NG_COMPLETES && gid === "solo_flights" && j && j.source === "ng") {
+      p.warn.push("NG solo — COMPLETES the node (solo doctrine, pending confirmation): a solo carries no "
+        + "grade by nature and is complete by having been flown. This is the ONE place an `ng` row is "
+        + "written, it is an assumption of the design and not a ruling of the Flight Commander, and it is "
+        + "recorded as an open assumption in specs/bridge-spec.md § 16.");
+    }
+  }
 
   /* IS THIS WINGS AHEAD ROW THE BRIDGE'S OWN ECHO? — the one predicate D.3's
      rule is asked through, so the plan, the report note and the pane all say the
@@ -1712,10 +2064,35 @@
 
   /* which report group an FDMS event belongs to — EXACTLY ONE, so a checkride
      or a prescribed solo can never be counted twice */
-  function groupOfNode(node, band, waRows) {
+  function groupOfNode(node, band, waRows, ev) {
     const code = node.indexOf("s:") === 0 ? node.slice(2) : "";
     if (code && EVAL_IDS.indexOf(code) >= 0) return "evaluations";
     if (code && waRows.some((r) => r.sec === "solo_flights" && r.uid === node)) return "solo_flights";
+    /* AND ONLY IF NOBODY ON THE WINGS AHEAD SIDE CLAIMS THIS NODE, the event's
+       own `bridge.group` (P46-A1, corrected on verify F2). The two rules above
+       read the LIVE export, which is exactly what a solo whose Wings Ahead row
+       has VANISHED no longer has: without this last resort such an event falls
+       back to its band and is listed under Flights, with a flights-shaped
+       report rid, for a solo the bridge itself wrote. That heading and that rid
+       are the WHOLE of what this line fixes — the CLASS is decided one screen
+       away by `r.waWritten ? "deleted" : "fdms_only"`, which never asks the
+       group, so a vanished bridge-written solo was already a `deleted` asking
+       for a tombstone and is one still.
+       IT IS ASKED LAST, AND THAT IS THE POINT. Read first, a stored group beat
+       a live Wings Ahead row that claims the same node: a section correction in
+       WA (one sortie moved between solo_flights and flights, an ordinary
+       operator fix) split ONE flight into a `deleted` in the old group and a
+       fresh `wa_only` in the new one — a delete plus an add, offering a SECOND
+       event for the same flight on the same node and the same date, which § 2
+       forbids by name and which SchedConsq.counters() would then count twice on
+       a FAIL. `claimed` asks only the sections whose identity IS a node
+       (NODE_SECTIONS): a FAIL / ALMOST GOOD annotation names its flight's code
+       but never buckets against it, so it must not silence this fallback. */
+    const claimed = waRows.some((r) => r.uid === node && NODE_SECTIONS.indexOf(r.sec) >= 0);
+    const blk = bridgeBlockOf(ev);
+    if (!claimed && blk && trim(blk.group) && GROUPS.some((g) => g.id === trim(blk.group))) {
+      return trim(blk.group);
+    }
     return band;
   }
   const groupIdOfRow = (r) => (r.side === "wa" ? WA_SECTIONS[r.sec].group : r.sec);
@@ -1751,10 +2128,31 @@
     return "";
   }
 
-  /* an unflown fixed slot is a PLACEHOLDER, not an entry (WA round 5) */
+  /* AN UNFLOWN FIXED SLOT IS A PLACEHOLDER, NOT AN ENTRY (WA round 5) — AND THE
+     TEST IS wa.slot_empty()'S, NOT A SHORTER ONE (verify F6). This predicate is
+     the only place the bridge drops a row on the floor without reporting it, so
+     it must name EXACTLY the rows Wings Ahead itself calls empty. It used to
+     ask about the date, the grade, the instructor and `ng` only, and the two
+     keys it left out are the ones that say A FLIGHT HAPPENED: a row that NAMES
+     A SORTIE or carries a DURATION is flown for Wings Ahead — which then
+     refuses it on save for the missing date and instructor — and was invisible
+     here, silently dropped from a report whose whole doctrine is that a silent
+     exclusion is the same lie as a clean-looking empty report (shredCheck's
+     rule, one function down). Now such a row falls through to waRowProblems()
+     and lands in class `unwritten`, seen and refused with its reasons.
+     MIRROR of wa.slot_empty (D:\WingsAhead\db\schema.sql), key for key:
+       solo_flights  slot present · date, grade, instructor, sortie, duration
+                     all absent · ng false
+       evaluations   evaluation present · date, grade, `with`, duration absent */
   function isEmptySlot(sec, e) {
-    if (sec === "evaluations") return !isoDate(e.date) && num(e.grade) == null && !trim(e.with);
-    if (sec === "solo_flights") return !isoDate(e.date) && num(e.grade) == null && !trim(e.instructor) && e.ng !== true;
+    if (sec === "evaluations") {
+      return !!trim(e.evaluation) && !isoDate(e.date) && num(e.grade) == null
+        && !trim(e.with) && num(e.duration) == null;
+    }
+    if (sec === "solo_flights") {
+      return !!trim(e.slot) && !isoDate(e.date) && num(e.grade) == null
+        && !trim(e.instructor) && !trim(e.sortie) && num(e.duration) == null && e.ng !== true;
+    }
     return false;
   }
 
@@ -2186,10 +2584,16 @@
        produce this exact refusal over a training log nobody touched. */
     const band = ctx.kindOf(nodeOfUid(node));
     if (!band) return BLOCK(offGraphWhy(node), "graph");
-    if (APPLY_GROUPS.indexOf(band) < 0) {
+    /* PUSH_BANDS, NOT APPLY_GROUPS (P46-A1). This clause read the fill's scope
+       while the two lists held the same two words; the 2026-09-05 ruling opened
+       the FILL to checkrides and solos and said nothing about the wire, and
+       § 15ι stays exactly as it was. Reading the other list here would have let
+       a ruling about WA → FDMS quietly open FDMS → WA. */
+    if (PUSH_BANDS.indexOf(band) < 0) {
       return BLOCK("this lane pushes FLIGHTS and F/S only — ground lessons and exams, the eight "
         + "checkrides, the prescribed solos and the FAIL / ALMOST GOOD / NFS / SMS events each wait for a "
-        + "lane of their own (design F.4)", "graph");
+        + "lane of their own (design F.4). The 2026-09-05 ruling made checkrides and solos appliable "
+        + "WA → FDMS (§ 16); it did not open this direction", "graph");
     }
     const code = codeOfNode(node);
     if (EVAL_IDS.indexOf(code) >= 0) {
@@ -3487,12 +3891,21 @@
      would leave yesterday's values in the fields it forgot. */
   /* THE EVENT A PLAN BECOMES — pure, so a fixture can assert on the very record
      the store would get instead of on a paraphrase of it. */
-  function plannedEvent(p, evId, at) {
+  /* P46-A1 — `band` IS THE LIVE GRAPH'S ANSWER, HANDED IN BY THE WRITER. The
+     plan already carries the band the report was built with (`p.kind`), and for
+     flights and F/S the two can never differ. They can for a checkride and a
+     solo, whose report GROUP is not their band, and the seam that must decide is
+     the one that asks the LIVE SchedReady (applyPlan, seam ④) — «whatever built
+     the plan, whatever the report believed». So the argument is optional and
+     falls back to the plan's own answer: § ① and the fixtures call this with
+     three arguments and get exactly what the report promised. */
+  function plannedEvent(p, evId, at, band) {
     const day = at || todayOf();
     return buildEvent({
       evId: evId || bridgeEvId(p.oid, p.group, p.uid, p.ord),
       rid: [p.oid, p.group, p.uid, p.ord].join(" ∷ "),
       oid: p.oid, group: p.group, uid: p.uid, ord: p.ord, seq: p.seq,
+      kind: trim(band) || p.kind || p.group,
       src: p.src, at: day, who: WHO, exportAt: p.exportAt,
       student: p.student, date: p.date, ip: p.ip, device: p.device, result: p.result,
       maneuvers: "",
@@ -3508,9 +3921,9 @@
     });
   }
 
-  function applyCreate(p) {
+  function applyCreate(p, band) {
     const evId = freeEvId(p.oid, p.group, p.uid, p.ord);
-    const rec = plannedEvent(p, evId, todayOf());
+    const rec = plannedEvent(p, evId, todayOf(), band);
     const rid = rec.bridge.rid;
     if (!S().upsert("trainingLog", rec)) return { ok: false, why: "the edit lock refused the write" };
     logAct({
@@ -3579,7 +3992,12 @@
     const band = R() && R().kindOf ? R().kindOf(nodeOfUid(p.uid)) : null;
     if (!band) return { ok: false, why: offGraphWhy(p.uid) };
     try {
-      return p.act === "create" ? applyCreate(p) : applyPatch(p);
+      /* P46-A1 — and the band this seam just read is the one the event is
+         stamped with. Seam ④ was already the last word on WHETHER the node
+         exists; it is now the last word on WHAT IT IS too, which is the same
+         sentence one step further: an event must carry the kind the live graph
+         gives the node, not the kind a report built minutes ago believed. */
+      return p.act === "create" ? applyCreate(p, band) : applyPatch(p);
     } catch (err) {
       console.error(err);
       return { ok: false, why: "the write failed: " + err.message };
@@ -4650,10 +5068,23 @@
         "bridge.src.mission", "bridge.src.ng"];
     const fields = arr(p.fields).filter((f) => keep.indexOf(f.field) >= 0);
     if (!fields.length) return null;
-    const q = Object.assign({}, p, { fields: fields, field: field });
+    /* the warnings are COPIED, never shared: a narrowed plan is a second plan
+       and pushing onto the parent's array would put one line's sentence on
+       another line of the same dialog (P46-A1) */
+    const q = Object.assign({}, p, { fields: fields, field: field, warn: arr(p.warn).slice() });
     if (field === "instructor") {
       q.result = "";
       q.effect = "the instructor is not part of what completes a node — the node effect does not change";
+      /* P46-A1 — BUT ON A CHECKRIDE IT CHANGES WHO. The node effect really is
+         untouched; the LOST-INSTRUCTOR engine is not. If this checkride stands
+         as ΥΣΤΕΡΗΣΗ / ΑΠΟΤΥΧΙΑ, SchedPeople.avoidedIps() reads the event's
+         instructor, so adopting a new evaluator moves which person this student
+         is kept away from. Said here because this is the one act whose whole
+         effect is on a person and none of it on the graph. */
+      if (p.group === "evaluations") {
+        q.warn.push("this changes WHO: if this checkride stands as ΥΣΤΕΡΗΣΗ / ΑΠΟΤΥΧΙΑ, the evaluator "
+          + "SchedPeople.avoidedIps() keeps away from this student moves with it (3-01 §24στ(6)).");
+      }
     }
     return q;
   }
@@ -4675,12 +5106,26 @@
       : p.act === "update" ? "MOVE the date of the existing FDMS event"
         : "ADOPT the Wings Ahead value" + (p.field ? " of «" + p.field + "»" : "s") + " on the existing FDMS event";
     const fields = fchg(p.fields, false);
+    /* P46-A1 — WHO SIGNED FOR THE FLIGHT, on the line that records it. A SOLO
+       event names «SOLO» as its instructor because nobody was in the other seat,
+       and the developer would otherwise read a confirm line that says «SOLO» and
+       nothing about the instructor who AUTHORISED it — a name Wings Ahead
+       requires on every flown solo row and this bridge keeps in bridge.src. */
+    const auth = p.authorisedBy
+      ? `<div class="sch-nd">authorised by ${esc(p.authorisedBy)} — kept in the provenance block, never
+         written into the event's instructor (a solo is flown alone)</div>` : "";
+    /* AND EVERY WARNING, BEFORE THE CONFIRM. A warning is not a refusal: this
+       line WILL be written, and the developer reads why it is worth a look
+       first (13η — the dialog states what a line does before it does it). */
+    const warn = arr(p.warn).map((w) => `<div class="brg-noap"><b>⚠</b> ${esc(w)}</div>`).join("");
     return `<li><b>${who}</b> · <span class="sch-mono">${esc(p.uid)}</span>
       ${p.date ? " · " + esc(dmy(p.date)) : ""}
       <div>${esc(act)}${p.act === "create" ? " — " + esc(p.verdict) : ""}
         ${p.act === "create" && p.ipLabel ? " · " + esc(p.ipLabel) : ""}</div>
+      ${auth}
       <div class="brg-fchgs">${fields}</div>
       <div class="brg-eff ${p.completes ? "is-c" : ""}">→ ${esc(p.effect)}</div>
+      ${warn}
       <div class="sch-nd sch-mono">${esc(p.rid)}${p.waWritten ? " · this FDMS event was written by the bridge"
     : p.act === "create" ? "" : " · this FDMS event was TYPED IN THE TRAINING LOG, not written by the bridge"}</div></li>`;
   }
@@ -6317,7 +6762,8 @@
         ${x.fdmsVerdict ? `<div>${esc(x.fdmsVerdict)}</div>` : ""}
         ${x.srcId ? `<div class="sch-nd">${esc(x.srcId)}</div>` : ""}</td>
       <td>${marks.join(" ")}
-        <div class="sch-nd">${esc(x.completes ? "completes the node" : "does not complete the node")}</div></td>
+        <div class="sch-nd">${esc(x.effect
+          || (x.completes ? "completes the node" : "does not complete the node"))}</div></td>
       <td class="sch-mono brg-rid">${esc(x.rid || "—")}</td>
       <td class="brg-ap">${applyCell(x)}</td>
     </tr>${diffs || probs || ref || det || ext || moved || noap
@@ -6412,7 +6858,9 @@
           ${CLASSES.map((c) => `<p class="sch-hint"><span class="sch-badge brg-tone-${esc(c.tone)}">${esc(c.label)}</span>
             ${esc(c.what)}</p>`).join("")}
           <p class="sch-hint"><b>Of the nine, four can be applied</b> — and only in
-            <b>${esc(APPLY_GROUPS.join(" · "))}</b>:
+            <b>Flights · F/S · the eight checkrides · the prescribed solos</b>
+            (the ruling of 05/09/2026; ground lessons and exams and the FAIL / ALMOST GOOD / NFS / SMS /
+            airsickness events stay report-only):
             <span class="sch-badge brg-tone-accent">Wings Ahead only</span> creates the event ·
             <span class="sch-badge brg-tone-warn">Source moved</span> offers to move the date ·
             <span class="sch-badge brg-tone-warn">Payload differs</span> offers the fields the report is
@@ -6474,6 +6922,15 @@
        from a [data-brgw] control in § ③. */
     APPLY_GROUPS, LAG_FLOOR, ADOPTABLE, ORIGIN,
     bridgeEvId, resultOf, isWaWritten, plannedEvent, buildEvent,
+    /* PHASE 6α (P46-A1) — the four judgements the checkride/solo round added,
+       exported on the same terms as the rest: a fixture asserts on the JUDGEMENT
+       and never on the sentence it happens to print. SOLO_NG_COMPLETES is here
+       because it is this round's OPEN ASSUMPTION — an assumption a fixture
+       cannot read is an assumption a later round can flip in silence — and
+       PUSH_BANDS because the whole point of splitting it from APPLY_GROUPS is
+       that the two scopes can now be checked to be different. */
+    SOLO_NG_COMPLETES, SOLO_IP, PUSH_BANDS, DEVICE_BY_BAND,
+    resultFor, nodeEffectIn, isNonGradedIn,
     /* PHASE 4/5 — the push lane's pure half, on the same terms as Phase 3's:
        the fixtures assert on the very OPERATIONS the wire would get and on the
        very LEDGER row a verdict produces, never on a paraphrase of either.

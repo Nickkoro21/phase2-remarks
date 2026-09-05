@@ -88,8 +88,13 @@ console.log("\n=== PROBE 10c — the graph is asked about the NODE, not the row 
   const row = at(run(wa, base()), "g:GT-AERO-CRM::NEVER-SEEN-101")[0];
   ok("a lesson on a KNOWN group with an unknown course is not refused", !!row && row.cls !== "refused",
     row && row.cls);
+  /* P46-A1 — the sentence grew when the fill did (evaluations and solo_flights
+     came IN on 05/09/2026), and a ground lesson is still out of it for the
+     ordinary reason: class-scope, not a node the graph cannot find. */
   ok("it is out of this slice for the ordinary reason instead",
-    /FLIGHTS and F\/S only/.test(row.plan.why), row.plan.why);
+    /writes FLIGHTS, F\/S, the eight CHECKRIDES and the prescribed SOLOS/.test(row.plan.why), row.plan.why);
+  ok("and the reason names ground lessons and exams as the ones still waiting",
+    /ground lessons and exams/.test(row.plan.why), row.plan.why);
 
   const gone = waExport([person({ oid: "oid-a1" })], [record("wa-oid-a1", {
     lessons: [{ date: "2026-08-10", group: "GT-NOPE", course: "AE 101" }],
@@ -111,8 +116,13 @@ console.log("\n=== PROBE 10d — the EVENT sections keep their own words ===");
   const row = at(run(wa, base()), "s:" + GHOST)[0];
   eq("the FAIL row is still wa_only, not refused", row.cls, "wa_only");
   ok("and still says FDMS has no event on that code", /has no event on/.test(row.detail), row.detail);
+  /* P46-A1 — and the FAIL / ALMOST GOOD / NFS / SMS / airsickness sections are
+     named in that sentence as the ones that stay report-only, which is the
+     other half of the 05/09/2026 ruling. */
   ok("its plan still refuses for the out-of-slice reason",
-    /FLIGHTS and F\/S only/.test(row.plan.why), row.plan.why);
+    /writes FLIGHTS, F\/S, the eight CHECKRIDES and the prescribed SOLOS/.test(row.plan.why), row.plan.why);
+  ok("and the sentence names the event sections that stay report-only",
+    /FAIL \/ ALMOST GOOD \/ NFS \/ SMS \/ airsickness/.test(row.plan.why), row.plan.why);
 }
 
 console.log("\n=== PROBE 10e — THE DEFENSIVE READ: an orphan event is never invisible ===");

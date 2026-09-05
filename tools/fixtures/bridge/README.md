@@ -7,8 +7,11 @@ covers the **push lane** — a flight typed in the Training log becoming a row o
 student's Wings Ahead record: the qualifying predicate, the wire shapes the
 deployed `bridge_push` refuses by name, the derived queue, the eleven verdicts
 and the three shapes of ↺ Undo across the wire (`p11-push.js`, `p12-undo.js`).
+Since Phase 6α (05/09/2026) it also covers the **checkrides and the solos**, which
+the Flight Commander's ruling of that day made appliable WA → FDMS
+(`p13-evalsolo.js`).
 Spec: `specs/bridge-spec.md` (§ 10, § 13ια, § 14γ, § 15κ, § 15λ, § 15μ, § 15ν,
-§ 15ξ).
+§ 15ξ, § 16).
 
 ## How to run
 
@@ -21,7 +24,7 @@ the number, and the exit code is `0` only if nothing failed.
 
 ```
 ════════════════════════════════════════════
-  BRIDGE FIXTURES — 867 passed, 0 failed
+  BRIDGE FIXTURES — 1104 passed, 0 failed
 ════════════════════════════════════════════
 ```
 
@@ -120,6 +123,26 @@ whole enumeration of `specs/bridge-spec.md` § 10 the way the spec says it does:
   far side that matches exactly is surfaced in two places and driven in
   `11p·3`, including that it is a **warning and not a new refusal**.
 
+* **Phase 6α — the checkrides and the solos.** The ruling («checkrides and solos
+  become appliable; FAIL / NFS / SMS / airsickness stay report-only») is driven
+  group by group: a checkride writes its EVALUATOR by code and never by name,
+  and a checkride stored as ΥΣΤΕΡΗΣΗ / ΑΠΟΤΥΧΙΑ prints on the confirm line that
+  `SchedPeople.avoidedIps()` will avoid that evaluator afterwards — tied
+  **mechanically** to the lines of `app/scheduler.js` that do it. An evaluator
+  without the qualification is a **warning**, in the Training log's own words
+  (fail-12), and never a refusal; an evaluator who does not resolve is a refusal,
+  in ruling #4's. A solo writes the literal **`SOLO`** in the instructor field —
+  tied to `schedboard.js`'s own constant and to the `avoidedIps()` line that
+  skips it — and keeps the AUTHORISING instructor in `bridge.src`, where a change
+  of it is an adoption of the **provenance** and never of the seat. The one open
+  assumption of the round, **`SOLO_NG_COMPLETES`**, is asserted to be a named
+  constant, to be true for solos and false for every other group, and to print
+  «pending confirmation» on every line it decides. The event's `kind` is asserted
+  to be the **band** of the node and never the report group. And § 15ι is checked
+  to have **stayed**: `PUSH_BANDS` is still `flights, fs`, the push predicate no
+  longer tests the fill's scope at all, and neither a bridge-written checkride
+  nor a bridge-written solo crosses back.
+
 It does **not** prove anything about the pane's painting, the palettes, or the
 live store — those are verified in the app and recorded in § 10 as such. That
 limit is load-bearing rather than decorative: the three dialog cures of
@@ -163,6 +186,7 @@ painted is checked with eyes, on the live walk.
 | `p10-offgraph.js` | Phase 3b — the off-catalogue node (four seams + the defensive read), and the honest badge |
 | `p11-push.js` | Phases 4+5 — the push lane: the predicate, the wire shapes, the derived queue, the eleven verdicts; 4+5b's chunk/halving, failure classification, poisoned `prev`, held student, pull-informed reconciliation; and P45-FDMSc's three freshness tests and the wire deadline; and P45-FDMSd's distinction between a removal owed by the training log and a row stranded by a lookup, the invariant that a read of Wings Ahead can never ADD a removal, and the staleness the ✕ Stop tracking dialog now prints; and P45-FDMSe's measured consequence clause (`11p`), the strand line that asks the training log instead of asserting about it (`11p·2`), the OID-case surfacing (`11p·3`), and § 15ν·2 table row 14 at last (`11n ⑤bis`) |
 | `p12-undo.js` | Phases 4+5 — ↺ Undo across the wire: the three shapes and the two drift refusals |
+| `p13-evalsolo.js` | Phase 6α — checkrides and solos appliable: the evaluator (ruling #4 · the fail-12 warning · the avoided-evaluator sentence, with no date window it cannot keep), the `SOLO` convention and the authorising instructor — **required**, so a flown solo with nobody's signature is `unwritten` and never proposed — `SOLO_NG_COMPLETES`, the empty slot on `wa.slot_empty`'s own test, idempotency, the moved date, **the sortie re-filed in the other section (one row, never a second event)**, undo byte-for-byte, and that the push lane did **not** grow with the fill |
 
 The offline builder (`tools/build_offline.py`) never looks in here: it collects
 from an explicit file list under `app/` and `data/`, so nothing in this directory
