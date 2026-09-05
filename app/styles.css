@@ -1948,6 +1948,15 @@ html[data-edit="on"] .cur-cell.is-rec:hover .cur-cv::after {
 .cur-entryd.is-undated { color: var(--muted); font-style: italic; font-family: inherit; }
 .cur-entrye { color: var(--muted); }
 .cur-entryx { margin-left: auto; }
+/* P46-A2 — WHERE A SORTIE CAME FROM, WHEN IT WAS NOT TYPED HERE. An entry the
+   Bridge filed out of an instructor's own Wings Ahead currency claim wears a
+   small WA mark, because a card that shows a foreign record as its own is a
+   card that lies quietly. It is the house badge in the `alt` tone — no new
+   colour, no new token — shrunk to the row's own type size, and it is drawn
+   ONLY when the entry carries the mark: the overwhelming majority carry none
+   and render exactly as Round 15 left them. It sits BEFORE the ✕ (which keeps
+   `margin-left: auto`), so the delete button stays where the hand expects it. */
+.cur-entrywa { font-size: 9.5px; padding: 0 5px; letter-spacing: .04em; }
 .cur-pop :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 /* a popover is a screen affordance: paper carries the same words in the sheet */
 @media print { .cur-pop, .cur-i { display: none !important; } }

@@ -21,9 +21,24 @@ require("./p10-offgraph.js");    // Phase 3b — the off-catalogue node, and the
 require("./p11-push.js");        // Phase 4/5 — the push lane: predicate · shapes · queue · verdicts
 require("./p12-undo.js");        // Phase 4/5 — undo across the wire, and the two drift refusals
 require("./p13-evalsolo.js");    // Phase 6α — checkrides and solos appliable, and what each one owes
+/* Phase 6β — the currency lane. It is the ONE asynchronous probe, and the
+   reason is app/currency.js: that module loads its 91-item catalog through
+   fetch(), which is a promise however it is fed, and a probe that ran without
+   the catalog could not tell a real Ε id from an invented one. So it exports a
+   function, the total is printed after it settles, and the number is still
+   printed exactly ONCE and only after everything has run. */
+const p14 = require("./p14-currency.js");   // Phase 6β — instructor currency, WA → FDMS
 
-const R = require("./harness.js").report();
-console.log("\n════════════════════════════════════════════");
-console.log("  BRIDGE FIXTURES — " + R.pass + " passed, " + R.fail + " failed");
-console.log("════════════════════════════════════════════");
-if (R.fail) { R.FAILURES.forEach((f) => console.log("  ! " + f)); process.exitCode = 1; }
+function total() {
+  const R = require("./harness.js").report();
+  console.log("\n════════════════════════════════════════════");
+  console.log("  BRIDGE FIXTURES — " + R.pass + " passed, " + R.fail + " failed");
+  console.log("════════════════════════════════════════════");
+  if (R.fail) { R.FAILURES.forEach((f) => console.log("  ! " + f)); process.exitCode = 1; }
+}
+
+p14().then(total, (err) => {
+  console.log("\n  ! p14-currency.js threw: " + ((err && err.stack) || err));
+  total();
+  process.exitCode = 1;
+});

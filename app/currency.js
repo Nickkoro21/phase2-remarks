@@ -79,6 +79,22 @@
      truth (an automatic source may only move a date FORWARD and never over a
      manual entry). NOTHING auto-maps today — no sortie, no E-item, no
      exercise code is wired to any catalog row.
+     P46-A2 — the Bridge is that future caller: it writes with src
+     "wa:<row identity>", which is an AUTOMATIC source like every other one.
+
+   AND THE ONE SEAM THAT MOVES BACKWARDS — restore(oid, snapshot, src)
+     Every other write in this file is forward-only by design, and that is
+     exactly why a ROLLBACK could not be built out of them: bump() will not
+     clear an automatic date and delEntry() cannot put back the Ε dates a
+     flight wrote. Bridge-spec ruling #2 («όπως σε κάθε σωστά οργανωμένη βάση
+     δεδομένων καταγράφουμε μεταβολές για δυνατότητα rollback») demands that
+     the Bridge's ↺ Undo put this record back exactly where it stood, so the
+     Bridge's change log carries a SNAPSHOT of the whole record before each of
+     its acts and hands it back here. It is the ONLY backwards-moving write in
+     the module, it is called by the Bridge change log alone, it refuses
+     anything that is not a record shape, and — like every other write here —
+     it goes through SchedStore, so a view-only device writes nothing.
+     See the seam itself, further down beside addEntry/delEntry.
 
    AVAILABILITY vs RECORDED OBLIGATIONS            (Round 10c/10d — finding 1)
      Not every dated row costs the instructor his availability. Fifteen of
@@ -872,11 +888,19 @@
      ημερομηνια και λιστα απο Ε για να επιλεξει ποια εκτελεστηκαν.»
 
      THE ENTRY — one recorded sortie
-         { date: "YYYY-MM-DD" | null, eids: ["e-32-bfm", …] }
+         { date: "YYYY-MM-DD" | null, eids: ["e-32-bfm", …], src?: "wa:…" }
        WHEN it was flown, and WHICH Ε exercises it covered. The eids are not
        stored as a second source of truth: addEntry() hands each of them to
        bump(), so the Ε table is written by the seam a manual date goes
        through and the Ε row keeps ONE date, as it always had.
+       `src` IS OPTIONAL AND IT IS NEW (P46-A2). Round 15 dropped every key but
+       the two, and that was the ONLY reason an entry could not remember who
+       wrote it — which the Bridge lane needs, because a sortie the bridge
+       filed out of a Wings Ahead claim must be VISIBLE as such on the card
+       and not read as something the squadron typed. The card's own write
+       passes no src (or the default "flight") and stores exactly the two keys
+       Round 15 stored, byte for byte; every reader must keep rendering an
+       entry that carries no src at all, because most of them never will.
 
      THE DATE DECIDES THE SEMESTER — «στην βαση του ημερολογιακου εξαμηνου»
        addEntry() files under semKeyOf(THE ENTRY'S OWN DATE). A sortie flown on
@@ -914,13 +938,25 @@
     }
     return out;
   };
+  /* the provenance string of ONE entry — a bounded, trimmed string or nothing.
+     The cap is the bridge's own RID_MAX: a row identity is the longest honest
+     value anybody writes here, and a hand-edited file must not be able to
+     store a novel in a cell the card renders. */
+  const SRC_MAX = 200;
+  const normSrc = (v) => String(v == null ? "" : v).trim().slice(0, SRC_MAX);
   /* one entry, from anything the store may hold. A bare ISO string is accepted
-     because it is the one other honest shape a hand-edited file might carry. */
+     because it is the one other honest shape a hand-edited file might carry.
+     P46-A2 — `src` survives the round trip when it is there and is simply
+     absent when it is not: every reader still meets the Round-15 two-key
+     entry, which is what the vast majority of stored entries are. */
   function normEntry(e) {
     if (typeof e === "string") { const d = normISO(e); return { date: realISO(d) ? d : null, eids: [] }; }
     if (!e || typeof e !== "object") return { date: null, eids: [] };
     const d = normISO(e.date);
-    return { date: realISO(d) ? d : null, eids: normEids(e.eids) };
+    const out = { date: realISO(d) ? d : null, eids: normEids(e.eids) };
+    const s = normSrc(e.src);
+    if (s) out.src = s;
+    return out;
   }
   /* THE MIGRATION, in four lines: an array is a list of entries, a number is
      that many undated entries, anything else is nothing recorded. */
@@ -1103,6 +1139,14 @@
     for (const id of normEids(eids)) ((loaded() && !byId(id)) ? bad : ok).push(id);
     if (bad.length) console.warn("SchedCurrency.addEntry: dropped Ε id(s) that are not in the catalog — " + bad.join(", "));
     const entry = { date: iso, eids: ok };
+    /* P46-A2 — WHO FILED IT, when it was not the card. "flight" is the card's
+       own default and stays UNWRITTEN, so a squadron entry is byte-identical
+       to what Round 15 stored; anything else (today: the bridge's
+       "wa:<row identity>") is remembered on the entry, which is what lets the
+       cell say «this sortie came from Wings Ahead» instead of pretending
+       somebody here typed it. */
+    const from = normSrc(src);
+    if (from && from !== "flight") entry.src = from;
     list.push(entry);
     bag[itemId] = list;
     const rec = writeBag(oid, key, bag);
@@ -1128,6 +1172,74 @@
     list.splice(i, 1);
     if (list.length) bag[itemId] = list; else delete bag[itemId];
     return writeBag(oid, key, bag);
+  }
+
+  /* ══ THE ROLLBACK SEAM — THE ONLY WRITE HERE THAT GOES BACKWARDS ═══════
+     restore(oid, snapshot, src)                              (P46-A2)
+     WHY IT MAY EXIST AT ALL. Every other write in this file is forward-only
+     on purpose — bump() refuses to clear from an automatic source, addEntry()
+     only appends, bumpCount() only rises for anything but "manual". That is
+     the right shape for a currency card and the WRONG one for a rollback: the
+     Bridge writes ONE sortie and, with it, the Ε dates that sortie proves, and
+     no combination of the seams above can put those Ε dates back where they
+     were. Bridge-spec ruling #2 makes rollback a condition of writing at all,
+     so the Bridge's change log carries a SNAPSHOT of this whole record taken
+     BEFORE its act (it is a small object — items + semesters) and ↺ Undo hands
+     it back here.
+
+     ITS FIVE LIMITS, ALL OF THEM WALLS AND NOT MANNERS:
+       · ONE CALLER. The Bridge change log. Nothing in this tab calls it, the
+         card never offers it, and there is no UI for it here.
+       · IT NAMES ITS SOURCE. A blank `src` is refused: an audit trail that
+         cannot say which act rolled a record back is not one.
+       · IT REFUSES ANYTHING THAT IS NOT A RECORD. A string, an array, a
+         number, or an object whose `items`/`semesters` are not objects is a
+         BUG IN THE CALLER, never an instruction to wipe a record — refused
+         loudly, nothing written (the Round-10c rule, applied here).
+       · `null` MEANS «THERE WAS NO RECORD» and only that: the row is removed,
+         which is the honest inverse of the act that created it.
+       · THE EDIT LOCK IS THE SAME ONE. It writes through SchedStore.upsert()/
+         .remove(), which ask mayWrite(); on a view-only device this function
+         changes nothing and answers null, exactly like bump() and addEntry().
+         THE ONE EXCEPTION IS A STATE THAT ALREADY STANDS: `null` over a record
+         that is already gone asks the store nothing, because nothing has to
+         change, and answers true — the rule above, not a hole in the lock. It
+         is the truth about the RECORD and it would be a lie about an ACT, so
+         the ONE caller (the Bridge change log's undoCurrency) asks the lock
+         ITSELF before it ever gets here.
+     Returns the stored record (or true for a removal), or null when refused. */
+  const isRecShape = (s) => !!s && typeof s === "object" && !Array.isArray(s)
+    && (s.items === undefined || (!!s.items && typeof s.items === "object" && !Array.isArray(s.items)))
+    && (s.semesters === undefined || (!!s.semesters && typeof s.semesters === "object" && !Array.isArray(s.semesters)));
+  function restore(oid, snapshot, src) {
+    if (!oid) return null;
+    const from = normSrc(src);
+    if (!from) {
+      console.warn("SchedCurrency.restore: refused a rollback that names no source — a restore that "
+        + "cannot say which act asked for it is not an audit trail");
+      return null;
+    }
+    if (snapshot === null || snapshot === undefined) {
+      /* the inverse of «there was nothing here before»: the row goes away. A
+         row that is already gone is not an error — the state asked for is the
+         state that stands. */
+      if (!record(oid)) return true;
+      return S().remove(COLL, oid) ? true : null;
+    }
+    if (!isRecShape(snapshot)) {
+      console.warn("SchedCurrency.restore: refused a snapshot that is not an instructor-currency record — "
+        + JSON.stringify(snapshot).slice(0, 120));
+      return null;
+    }
+    /* upsert() MERGES top-level keys, and that is exactly what is wanted here:
+       `items` and `semesters` are whole objects, so handing back the snapshot's
+       two objects REPLACES both — an item or a semester that only exists
+       because of the act being undone disappears with it. */
+    const rec = { oid: oid,
+      items: JSON.parse(JSON.stringify(snapshot.items || {})),
+      semesters: JSON.parse(JSON.stringify(snapshot.semesters || {})),
+      updated_at: new Date().toISOString() };
+    return S().upsert(COLL, rec);
   }
 
   /* ══ THE SECOND SEAM — A COUNT WITH NO DATES ══════════════════════════
@@ -1260,6 +1372,11 @@
     MAX_ENTRIES, TOTALS, isTotalItem, totalOf,
     SYNTH, isSynthItem, synthItems, FLIGHT_DERIVE, flightDerive,
     normEntries, bagOf, semBag, entriesOf, semKeysOf, isRecordable, addEntry, delEntry,
+    /* P46-A2 — the Bridge's currency lane: an entry may REMEMBER who wrote it,
+       and the change log may put the whole record back. `restore` is exported
+       because its one caller lives in another module; nothing in this tab
+       calls it. */
+    SRC_MAX, normSrc, restore,
   };
 })();
 /* ══════════════════════════════════════════════════════════════════════════
@@ -2471,14 +2588,29 @@
         : "Each carries its own ✕, so a sortie typed on the wrong day can be taken out of the half that holds it."}</p>` : ""}`;
   }
 
+  /* WHERE A SORTIE CAME FROM, WHEN IT WAS NOT TYPED HERE          (P46-A2)
+     Round 15 stored `{date, eids}` and nothing else, so every entry read as
+     «somebody in this squadron typed it». The Bridge now files sorties out of
+     an instructor's own Wings Ahead claims, and a claim that arrived from the
+     other system must SAY SO on the cell — otherwise the card presents a
+     foreign record as its own. The chip is drawn only when the entry carries
+     the mark; the overwhelming majority carry nothing and render exactly as
+     they always did. */
+  const WA_SRC = "wa:";
+  const isWaEntry = (e) => String((e && e.src) || "").indexOf(WA_SRC) === 0;
   function entryLi(e, idx, ro, semKey) {
     const names = (e.eids || []).map((id) => (CUR().byId(id) || {}).name || id);
+    const wa = isWaEntry(e);
     return `<li class="cur-entry">
       <span class="cur-entryd${e.date ? "" : " is-undated"}"
         title="${esc(e.date ? "flown " + dmy(e.date) : "no date: this sortie came from a plain counter (before Round 15) or from an import that knew the count but not the day")}"
         >${e.date ? esc(dmy(e.date).slice(0, 5)) : "undated"}</span>
       <span class="cur-entrye" title="${esc(names.length ? names.join("\n") : "no Ε exercise was recorded on this sortie")}"
         >${e.eids && e.eids.length ? e.eids.length + " Ε" : "—"}</span>
+      ${wa ? `<span class="sch-badge alt cur-entrywa" title="${esc("recorded by the Bridge out of this instructor's own "
+        + "Wings Ahead currency claim — " + String(e.src).slice(WA_SRC.length)
+        + ". Wings Ahead has no admin write path for these rows, so the lane is one-way and nothing here "
+        + "is ever pushed back.")}">WA</span>` : ""}
       ${ro ? "" : `<button type="button" class="sch-mini cur-entryx" data-pop="del" data-i="${idx}" data-k="${esc(semKey || "")}"
         title="delete this recorded sortie — the Ε dates it wrote are NOT rolled back, they are the truth of what was flown">✕</button>`}
     </li>`;

@@ -55,6 +55,23 @@
  *   An event of either group is stamped with the BAND of its node (both are
  *   `flights`), never with the report group — see buildEvent. § 16 of the spec.
  *
+ * WHAT PHASE 6β ADDED (P46-A2, 05/09/2026) — THE CURRENCY LANE
+ *   The Flight Commander's ruling: the FDMS Currency reads the instructors'
+ *   currency rows out of the live pull, ties them BY OID, and the Ε dates and
+ *   Σ sorties an instructor recorded in Wings Ahead appear in FDMS — report
+ *   first, written only through the confirm dialog. (The other half of slice 6
+ *   — `duration` as a real FDMS field, ruling #8 — is NOT this round.)
+ *   Four things make this group unlike every other one, and all four are
+ *   deliberate: the report group is about an INSTRUCTOR and not a student; its
+ *   row identity CARRIES THE DATE (a Σ sortie has no syllabus node — the known
+ *   limit #2 of § 2, the one nfs/sms already live with), so a moved date is two
+ *   rows and never a `source_moved`; the writes go through SchedCurrency's own
+ *   seams (addEntry · bump) and nowhere else; and the lane is ONE-WAY because
+ *   Wings Ahead has no admin write path for an instructor record at all. ↺ Undo
+ *   restores a SNAPSHOT of the whole record through the one seam in
+ *   app/currency.js that moves backwards, `SchedCurrency.restore()` — the
+ *   forward-only seams cannot un-write an Ε date. § 17 of the spec.
+ *
  * THE EIGHT RULINGS OF THE FLIGHT COMMANDER (21/08/2026) — recorded verbatim
  * in the spec; here is what each one MEANS IN THIS FILE:
  *   #1 same sortie twice a day is real, with an explicit seq. The morning bust
@@ -193,6 +210,20 @@
     { id: "fs", label: "F/S (simulator)" },
     { id: "lessons", label: "Ground lessons" },
     { id: "exams", label: "Ground exams" },
+    /* PHASE 6β (P46-A2) — THE INSTRUCTORS' OWN FLYING, after the students'.
+       Every group above is about a STUDENT's syllabus; this one is about an
+       INSTRUCTOR's currency, and it is last of the real groups because that is
+       the order the Flight Commander reads in — the course first, the people
+       who fly it after. Its note carries the two facts a reader of this table
+       has to have before he reads a single line of it. */
+    { id: "currency", label: "Instructor currency",
+      note: "THE DATE IS PART OF THE ROW IDENTITY HERE, and it is the only group where that is true. "
+        + "A Σ sortie has no syllabus node and no other key — exactly the known limit #2 of § 2, the one "
+        + "the nfs / sms events already live with — so a corrected date is TWO rows (one Wings Ahead only, "
+        + "one FDMS only) and never a «Source moved». Read them together; the bridge writes neither by "
+        + "itself. AND THIS LANE IS ONE-WAY: Wings Ahead has NO admin write path for an instructor record "
+        + "(wa.write_instructor_record has no p_as_admin twin — a currency claim is the pilot's own), so "
+        + "nothing here is ever pushed back and nothing here enters the push queue or the ledger." },
     /* PHASE 3b · FINDING 9 — a home for the events the syllabus graph does not
        carry. It exists so that such an event has somewhere VISIBLE to land: a
        row counted in the summary and then missing from the table is the same
@@ -385,6 +416,20 @@
       people,
       records,
       proposals: arr(d.proposals).filter(isObj),
+      /* ── PHASE 6β — THE INSTRUCTORS' OWN CURRENCY CLAIMS (P46-A2) ───────
+         `wa.export_body()` has carried `instructor_records[]` and the closed
+         `currency_kinds[]` list since the WA side's round 19/21, and BOTH
+         doors carry them — `public.bridge_pull` is `wa.export_body(false)` with
+         a `via` stamp on top, so the live pull and the file a person downloads
+         are the same payload. Until this round the parser DROPPED them on the
+         floor, which is why the Currency card could not see a single one of
+         them. They are kept here, in the one place every carrier passes
+         through, so that neither reader has to learn a second format.
+         An export with neither key reads as ZERO and the report SAYS SO out
+         loud — a silence that looks like «no deviations» is the one lie this
+         pane has refused to tell since slice 1b. */
+      instructorRecords: arr(d.instructor_records).filter(isObj),
+      currencyKinds: arr(d.currency_kinds).filter(isObj),
       /* PHASE 4/5 — WHAT WINGS AHEAD REMEMBERS THE BRIDGE DOING. Both doors
          carry it (bridge_pull and the admin's own download), so a report can
          render «what WA remembers» beside «what the ledger claims» and a drift
@@ -1260,6 +1305,14 @@
        tell the bridge's own echo from a stranger's (D.3). It is read, never
        written, here: § ② is still the only writer in this file. */
     const ledger = arr(fdms && fdms.bridgePush).filter(isObj);
+    /* PHASE 6β — and the instructors' own currency records, on exactly the same
+       terms: handed in, read, never written here. Keyed by OID, which is the
+       collection's own key and the ONLY key this lane joins on (ruling #4). */
+    const curRecs = new Map();
+    arr(fdms && fdms.instructorCurrency).filter(isObj).forEach((r) => {
+      const o = normOid(r.oid);
+      if (o) curRecs.set(o, r);
+    });
 
     const ids = matchPeople(waParsed.people, students, instructors);
 
@@ -1312,6 +1365,15 @@
       const id = trim(r.student_id);
       if (id) recByWaId.set(id, r);
     });
+    /* PHASE 6β — how many CURRENCY rows stand behind a Wings Ahead person. The
+       Identities line has said «no rows behind this identity» since slice 1 by
+       counting student sections only; for an instructor that sentence was about
+       to become false the moment this round gave him rows of his own. */
+    const insRowsByWaId = new Map();
+    arr(waParsed.instructorRecords).forEach((r) => {
+      const id = trim(r.instructor_id);
+      if (id) insRowsByWaId.set(id, arr(isObj(r.data) ? r.data.currency : null).filter(isObj).length);
+    });
 
     const rows = [];
     const notes = [];
@@ -1321,7 +1383,7 @@
        compared — never guessed (ruling #4) */
     ids.ambiguous.concat(ids.waOnly).forEach((u) => {
       const rec = recByWaId.get(u.wa.waId);
-      const n = rec ? countRecordRows(rec) : 0;
+      const n = (rec ? countRecordRows(rec) : 0) + (insRowsByWaId.get(u.wa.waId) || 0);
       const row = noteRow("unresolvable", "identity",
         { oid: u.wa.oid || "(none)", code: "", name: u.wa.name, klass: u.wa.klass });
       row.detail = u.why;
@@ -1661,6 +1723,12 @@
         && x.cls !== "agree").length;
     });
 
+    /* PHASE 6β — THE INSTRUCTORS' OWN FLYING, after the students'. It is its
+       own pass because it reads its own carrier (`instructor_records`), its own
+       roster half (the instructors) and its own FDMS collection
+       (`instructorCurrency`) — nothing above it changes shape for it. */
+    curPass(waParsed, ids, curRecs, rows, notes);
+
     /* PHASE 3 — ONE PASS, AT THE END, FOR THE WHOLE REPORT.
        `key` is the row's address for every control in the pane: the row
        identity (rid) is unique inside a bucket but the event sections mint one
@@ -1672,7 +1740,14 @@
     let appliable = 0;
     rows.forEach((x, i) => {
       x.key = "r" + i;
-      x.plan = makePlan(x, ipResolve, waParsed.exported_at, kindOf, ledger);
+      /* PHASE 6β — A CURRENCY ROW BRINGS ITS OWN PLAN, AND makePlan() IS NEVER
+         ASKED ABOUT IT. That function is about the TRAINING LOG — it judges a
+         grade against a threshold, asks the syllabus graph for a node and mints
+         an event id — and a currency row has none of those three things. Asking
+         it anyway would not merely answer wrongly; it would ask the graph about
+         a uid that is a Σ category, and the off-graph refusal would print a
+         sentence about a syllabus node nobody named. */
+      if (x.group !== CUR_GROUP) x.plan = makePlan(x, ipResolve, waParsed.exported_at, kindOf, ledger);
       if (x.plan) x.plan.key = x.key;
       if (x.plan && x.plan.can) appliable += 1;
       /* D.3's second half — an fdms-stamped Wings Ahead row THIS store's ledger
@@ -1708,6 +1783,11 @@
            of the reconciliation the pane used to leave unsaid */
         taken_at: waParsed.taken_at,
         people: waParsed.people.length, records: waParsed.records.length,
+        /* PHASE 6β — the third count of the header line. It is printed whether
+           it is zero or not, and the zero is printed IN WORDS, because an
+           export that carries no instructor record and a bridge that dropped
+           them on the floor look identical from a table with no rows in it. */
+        instructorRecords: arr(waParsed.instructorRecords).length,
       },
       thresholds: { exams: THRESHOLDS.exams, flights: THRESHOLDS.flights, fs: THRESHOLDS.fs },
       identities: ids,
@@ -2190,6 +2270,595 @@
     r.extra = { special: "nfs", category: trim(ev.category), note: trim(ev.note), result: "" };
     r.mission = "complete";
     out.push(r);
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     ①γ THE CURRENCY LANE — WA → FDMS, AND ONLY WA → FDMS (Phase 6β, P46-A2)
+     ══════════════════════════════════════════════════════════════════════════
+     THE FLIGHT COMMANDER'S RULING (2026-09-05): the FDMS Currency reads the
+     instructors' currency rows out of the live pull, ties them by OID, and the
+     Ε dates and Σ sorties an instructor recorded in Wings Ahead APPEAR IN FDMS
+     — report first, written only through the confirm dialog. (The other half of
+     slice 6 — `duration` as a real FDMS field, ruling #8 — is NOT this round
+     and stays recorded as pending.)
+
+     WHAT A WINGS AHEAD CURRENCY ROW IS (wa.ins_entry_keys('currency')):
+         { date, kind: continuation | with_sp, s_category (continuation only),
+           sortie (with_sp only), e_items[], seq }
+     and the ids are THE SAME STRINGS this app already uses: `s_category` is one
+     of wa.s_category_ids() — the Πίνακας 9 Σ rows, the Πίνακας 6 SIM rows,
+     FDMS's own two recording aids (`x-night-students` · `x-fcf-flight`), the
+     demo sortie and the two legacy placeholders — and `e_items` are ids of the
+     Ε table (`e-1a-aerobatics` …). Nothing is translated here; a shared id is
+     the whole reason this lane is a join and not an import.
+
+     ── THE THREE THINGS THAT MAKE THIS GROUP DIFFERENT FROM EVERY OTHER ──────
+      1 · THE DATE IS PART OF THE ROW IDENTITY.
+              rid = OID ∷ currency ∷ <what> ∷ <date> ∷ <seq>
+          `<what>` is the Σ category of a Continuation row and «sortie:<code>»
+          of a with-SP one. This is the ONE place this file puts a date in an
+          identity, and it is not an oversight: a Σ sortie has NO syllabus node
+          and no other key to be named by — it is precisely the known limit #2
+          of § 2, which the `nfs` / `sms` events have lived with since slice 1.
+          The consequence is stated rather than hidden: a MOVED DATE IS TWO ROWS
+          (one `wa_only`, one `fdms_only`) and never a `source_moved`, and the
+          group's own note says so above the table.
+          A with-SP row makes ONE LINE PER Ε (each Ε has its own class), so such
+          a line's address is the five parts of the row identity plus the Ε it
+          is about — one row cannot address three lines with one string, and
+          the first five parts are still readable as the row.
+      2 · IT IS ONE-WAY, BY THE OTHER SIDE'S OWN DESIGN. `wa.write_instructor_
+          record` has exactly one caller and NO `p_as_admin` twin — «a currency
+          claim is a statement about who flew what, and the admin was not in the
+          aircraft» (WA round 19). So there is nothing to push back, and nothing
+          of this lane touches `planPush`, `PUSH_BANDS` or the ledger.
+      3 · IT WRITES THROUGH SchedCurrency'S OWN SEAMS AND NOWHERE ELSE —
+          addEntry() files ONE sortie into the semester of ITS OWN DATE, bump()
+          moves an Ε date with an AUTOMATIC source (forward only, never
+          clearing, never over a later manual date). This section computes; § ②
+          calls the seams.
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  const CUR = () => W.SchedCurrency;
+  const CUR_GROUP = "currency";
+  /* MIRROR of wa.currency_kinds(). A literal here for the same reason EVAL_IDS
+     is one: the report must be able to say what a row is without the database. */
+  const CUR_KINDS = ["continuation", "with_sp"];
+  /* MIRROR of wa.s_category_legacy_ids() — a round-19/20 row that stored only
+     the programme. The Σ cannot be guessed from a date, and Wings Ahead itself
+     renders these marked everywhere. */
+  const CUR_LEGACY = ["legacy-aeros-unspecified", "legacy-fs-unspecified"];
+  /* the demo sortie: Wings Ahead offers it because it has no demo-pilot flag,
+     FDMS has no column for it at all — see curCatProblem() for the whole
+     sentence, which names what was checked instead of guessing. */
+  const CUR_DEMO_CAT = "x-demo-flight";
+  /* the two acts this lane writes, named once so the change log, the undo and
+     the fixtures cannot disagree about which entries are currency entries */
+  const CUR_ACTS = ["cur-flight", "cur-edate"];
+  /* `isoDate` above only checks the SHAPE, so «2026-13-45» passes it. The
+     SchedCurrency seams check the round trip before they write; the report has
+     to check the same thing or it would offer a line the writer refuses. */
+  const curRealDate = (iso) => !!iso
+    && new Date(Date.UTC(+iso.slice(0, 4), +iso.slice(5, 7) - 1, +iso.slice(8, 10)))
+      .toISOString().slice(0, 10) === iso;
+  const curWhat = (e) => (trim(e.kind) === "with_sp"
+    ? "sortie:" + (trim(e.sortie) || trim(e.s_category) || "(unnamed)")
+    : (trim(e.s_category) || "(no Σ category)"));
+  const curRid = (oid, what, date, seq, eid) => [oid, CUR_GROUP, what,
+    date || "(no date)", seq].concat(eid ? [eid] : []).join(" ∷ ");
+  const curSrcOf = (rid) => "wa:" + rid;
+  const curLast = (rec, eid) => {
+    const c = rec && isObj(rec.items) ? rec.items[eid] : null;
+    return c ? isoDate(c.last_date) : "";
+  };
+  const curName = (id) => {
+    const C = CUR();
+    const it = C && C.byId ? C.byId(id) : null;
+    return (it && it.name) || (C && C.SYNTH && C.SYNTH[id] && C.SYNTH[id].name) || id;
+  };
+  const curNames = (list) => arr(list).map(curName).join(" · ");
+
+  /* WHY FDMS CANNOT RECORD A SORTIE IN THIS COLUMN — one sentence per reason,
+     and every one of them names what was actually checked. The order is the
+     order a reader needs: is it a Σ at all · is it one FDMS knows · is it one
+     FDMS RECORDS. `isRecordable()` is the engine's own answer and it is asked
+     LAST, so the three specific refusals keep their own words. */
+  function curCatProblem(cat) {
+    const C = CUR();
+    if (!cat) {
+      return "a Continuation flight names which Σ category it was, and this row names none — Πίνακας 9 "
+        + "and Πίνακας 6 are counted by the category, so there is no column to record it in";
+    }
+    if (CUR_LEGACY.indexOf(cat) >= 0) {
+      return "«" + cat + "» is a Wings Ahead LEGACY placeholder — the row was recorded before the Σ "
+        + "taxonomy existed and stored only the programme. The Σ cannot be guessed from a date; Wings "
+        + "Ahead renders it marked everywhere and it needs the instructor's own hand over there first";
+    }
+    if (cat === CUR_DEMO_CAT) {
+      return "«" + cat + "» is the display pilot's sortie of Chapter 5. FDMS keeps the demo scope as SIX "
+        + "CATALOG ITEMS shown only to an instructor flagged demo_pilot (SchedCurrency.DEMO_IDS, of which "
+        + "the flying one is e-1d-demo) — and NOT as a recordable semester column: there is no "
+        + "SEM_QUOTA row and no recording aid for it, and FLIGHT_DERIVE names no Ε it would date. "
+        + "Recording it would mean inventing a column the 3-01 never asked this card for, so it is "
+        + "reported and not written";
+    }
+    if (!C) return "the Currency engine is not loaded, so no column can be checked";
+    if (C.isTotalItem(cat)) {
+      return "«" + cat + "» is a printed ΣΥΝΟΛΑ/ΣΥΝΟΛΟ row — FDMS DERIVES it from its component columns "
+        + "(Round 15), and a figure written into it would be counted twice";
+    }
+    if (!C.isSemItem(cat) && !C.isSynthItem(cat)) {
+      return "«" + cat + "» is not a semester column this FDMS knows — neither a row of Πίνακας 6 / "
+        + "Πίνακας 9 nor one of the two recording aids. Nothing is invented for an id the catalog "
+        + "does not carry";
+    }
+    if (!C.isRecordable(cat)) {
+      const q = (C.SEM_QUOTA || {})[cat] || {};
+      if (q.window) {
+        return "«" + cat + "» is the §49 THRESHOLD IN DAYS, not a quota — what it asks for is a SIM-1, "
+          + "and it keeps a DATE that goes through bump(), never a recorded sortie";
+      }
+      return "«" + cat + "» prints a dash «-» in both columns of the 3-01 — no sortie is required there, "
+        + "and offering a counter would invent a requirement";
+    }
+    return "";
+  }
+
+  /* THE WHOLE PASS. It is handed the parsed export, the identity match, the
+     FDMS `instructorCurrency` collection and the two output lists — and it
+     touches nothing else: no store, no DOM, no graph. */
+  function curPass(waParsed, ids, curRecs, rows, notes) {
+    const waRecs = new Map();
+    arr(waParsed.instructorRecords).forEach((r) => {
+      const id = trim(r.instructor_id);
+      if (id) waRecs.set(id, r);
+    });
+    if (!waRecs.size) return;                     // the header already says «no instructor records»
+    const C = CUR();
+    /* ── ASK THE ENGINE WHETHER IT IS READY, NOT MERELY WHETHER IT EXISTS ──
+       SchedCurrency attaches at SCRIPT LOAD; its 91-item catalog arrives only
+       when `CUR().load()` runs, and that happens inside `curInit()`, which
+       fires on the FIRST CLICK of the Currency tab (app/app.js). So on a page
+       whose Bridge tab was opened first — the ordinary way this pane is
+       reached — `C.bagOf` is a function and `C.byId()` answers null for EVERY
+       id. Asking only whether the engine EXISTS therefore let the whole
+       «an Ε id the catalog does not carry ⇒ unwritten» rule pass in silence:
+       the row was judged `wa_only`, ARMED, and applying it wrote a 3-01
+       exercise that does not exist onto an instructor's permanent card, with
+       the report saying nothing at all. `loaded()` is the only honest
+       question, and until it answers yes this lane compares NOTHING. */
+    if (!C || !C.bagOf || !C.loaded || !C.loaded()) {
+      /* an engine that cannot even be ASKED the question is not a cold engine,
+         it is another engine — and it gets the second sentence, not the first */
+      const cold = !!(C && C.bagOf && C.loaded);
+      notes.push({ kind: "currency", oid: "", code: "", who: "Instructor currency", klass: "",
+        problems: [waRecs.size + " Wings Ahead instructor record(s) were read and none of them compared"],
+        why: cold
+          ? "the 91-item catalog has not been fetched in this page yet — open the Currency tab once and "
+            + "re-read; nothing is compared and nothing is armed until it is. Without the catalog an Ε id "
+            + "cannot be checked against the 3-01, and a row judged without that check would offer to "
+            + "write an exercise that may not exist"
+          : "the Currency engine (app/currency.js → SchedCurrency) is not loaded in this page, so the "
+            + "catalog, the semester model and the write seams are all unavailable — the lane reports "
+            + "nothing rather than guessing at columns it cannot look up" });
+      return;
+    }
+    const rowsFor = new Map();                    // wa person id → how many currency rows
+    waRecs.forEach((r, id) => {
+      rowsFor.set(id, arr(isObj(r.data) ? r.data.currency : null).filter(isObj).length);
+    });
+
+    /* ── THE REFUSAL, ONCE PER PERSON (ruling #4) ────────────────────────
+       This lane joins on the OBJECT ID and on nothing else. An instructor the
+       Wings Ahead side carries without an `external_oid`, or with one no FDMS
+       instructor holds, is already an Identities line; here he gets ONE row
+       that says his currency rows were refused and why — because a person
+       whose rows are silently skipped reads as a person with nothing to
+       report. The MN fallback that matches a student is refused HERE on
+       purpose: an MN is mutable (ruling #4), and a currency record is the one
+       payload where a wrong join writes flights onto the wrong pilot. */
+    const refuse = (who, oid, n, why) => {
+      const row = noteRow("refused", CUR_GROUP, { oid: oid || "(none)", code: "", name: who, klass: "" });
+      row.sec = CUR_GROUP;
+      row.refused = why;
+      row.extra = n
+        ? n + " Wings Ahead currency row" + (n === 1 ? "" : "s") + " behind this identity — "
+          + (n === 1 ? "it is NOT compared" : "none of them is compared")
+          + ", and nothing of " + (n === 1 ? "it" : "them") + " is written"
+        : "this record carries NO currency row at all, so nothing was lost here — but the header counted "
+          + "it, and a counted record with no line under it reads as a comparison that was made";
+      rows.push(row);
+    };
+    /* EVERY instructor_record THE HEADER COUNTED MUST LEAVE A LINE OR A REASON.
+       The header says «K instructor records»; a record that then produces no
+       row and no note is exactly the silence this pane has refused since slice
+       1b. `seen` is the receipt: a Wings Ahead person id lands in it the moment
+       this pass has DECIDED something about him, and whatever is left over at
+       the end gets its own refusal below. */
+    const seen = new Set();
+    ids.ambiguous.concat(ids.waOnly).forEach((u) => {
+      const n = rowsFor.get(u.wa.waId);
+      if (n === undefined) return;                // this person carries no currency record at all
+      seen.add(u.wa.waId);
+      if (!n) return;                             // a record with no rows says nothing and hides nothing
+      refuse(u.wa.name, u.wa.oid, n, "this lane ties an instructor by his OBJECT ID and by nothing else "
+        + "(ruling #4 — a primary key never changes, and a currency record is the one payload where a "
+        + "wrong join would write another pilot's flights). " + u.why);
+    });
+
+    ids.matched.forEach((m) => {
+      const n = rowsFor.get(m.wa.waId);
+      if (n === undefined) return;                // Wings Ahead carries no currency record for him
+      seen.add(m.wa.waId);
+      /* THE OID RESOLVED — TO A STUDENT. Wings Ahead calls this person an
+         instructor and hands over his currency rows; the FDMS roster holding
+         that object id is the STUDENT roster. Two rosters disagree about what
+         one person is, and this lane compares an INSTRUCTOR's card: it says so
+         and stops, because guessing which roster is right would file a
+         maintenance sortie against somebody's student record. */
+      if (m.coll !== "instructors") {
+        refuse(m.fdms.name || m.wa.name, m.wa.oid || m.fdms.oid, n,
+          "Wings Ahead carries this person as an INSTRUCTOR with currency rows, but the OID resolves to an "
+          + "FDMS STUDENT — this lane compares an instructor's card and refuses to guess which roster is "
+          + "right. Nothing is compared and nothing is written until the two rosters agree");
+        return;
+      }
+      if (m.via !== "oid") {
+        refuse(m.fdms.name || m.wa.name, m.wa.oid || m.fdms.oid, n,
+          "this instructor was matched by MN, not by OID — the MN is MUTABLE and only the developer "
+          + "changes it (ruling #4), and a currency record is the one payload where a wrong join would "
+          + "write another pilot's flights. Give this person his external_oid in Wings Ahead and the "
+          + "lane opens by itself");
+        return;
+      }
+      const oid = m.fdms.oid || m.wa.oid;
+      const person = { oid: oid, code: m.fdms.code, name: m.fdms.name || m.wa.name, klass: "" };
+      const waList = arr((isObj(waRecs.get(m.wa.waId).data) ? waRecs.get(m.wa.waId).data : {}).currency)
+        .filter(isObj);
+      const fdRec = curRecs.get(oid) || null;
+      const paired = new Set();
+      const used = new Set();
+      /* the Apply button addresses a line by its ROW IDENTITY, so two lines may
+         never share one. Wings Ahead's own uniqueness check makes a collision
+         impossible in a real export (one row per kind ∷ what ∷ date ∷ seq); a
+         hand-made file is not a real export, and a duplicate that pointed two
+         buttons at one line would write the wrong thing silently. */
+      const uniq = (rid) => {
+        if (!used.has(rid)) { used.add(rid); return rid; }
+        for (let k = 2; k < 99; k += 1) {
+          const c = rid + " #" + k;
+          if (!used.has(c)) { used.add(c); return c; }
+        }
+        return rid + " #dup";
+      };
+      /* THE EFFECT COLUMN IS NOT DECORATION (P46-A1 · finding F5 — it once
+         printed nothing at all and two whole sentences were dead). Every row of
+         this group leaves it saying what this line DOES, and an appliable row
+         hands it the plan's own sentence, so the table and the confirm dialog
+         cannot drift apart. */
+      const mk = (cls, what, date, seq, eid) => {
+        const row = noteRow(cls, CUR_GROUP, person);
+        row.uid = what;
+        row.sec = CUR_GROUP;
+        row.ord = seq;
+        row.rid = uniq(curRid(oid, what, date, seq, eid));
+        row.waDate = date || "";
+        row.effect = cls === "unwritten" ? "not written — the reason is under the line"
+          : cls === "refused" ? "refused — the rule is under the line"
+            : cls === "fdms_only" ? "report only — nothing is written and nothing is ever pushed"
+              : "nothing to do — the two sides say the same thing about this line";
+        return row;
+      };
+      /* one door for «this row became appliable», so the plan and the printed
+         effect are set together and can never be set apart */
+      const arm = (row, plan) => {
+        row.plan = plan;
+        if (plan && plan.effect) row.effect = plan.effect;
+        return row;
+      };
+
+      waList.forEach((e) => {
+        const kind = trim(e.kind);
+        const date = isoDate(e.date);
+        const seq = posInt(e.seq, 1);
+        const what = curWhat(e);
+        const eids = arr(e.e_items).map(trim).filter(Boolean);
+        /* the catalog is loaded — the readiness guard at the head of this pass
+           is what makes that a fact and not a hope, so the question below is
+           answerable and its answer is never silently «none» */
+        const badEids = eids.filter((id) => !C.byId(id));
+        const badEidWhy = (list) => "the row names Ε exercise(s) the 3-01 catalog does not carry — "
+          + list.join(", ") + ". A date written for a row that does not exist is a claim nobody can audit";
+
+        /* the row could never be written at all — class `unwritten`, and the
+           reason is the deliverable (§ 4). The date is asked first because a
+           row with no readable day claims nothing at all. */
+        const unwritten = (why) => {
+          const row = mk("unwritten", what, date, seq);
+          row.problems = [why];
+          row.waVerdict = kind === "with_sp" ? "with SP" : "Continuation";
+          rows.push(row);
+        };
+        if (CUR_KINDS.indexOf(kind) < 0) {
+          unwritten("the row names no kind Wings Ahead knows — every currency row says whether it was a "
+            + "Continuation flight of the instructor's own or one flown with a student ("
+            + CUR_KINDS.join(" / ") + "), and the two are counted differently");
+          return;
+        }
+        if (!date || !curRealDate(date)) {
+          unwritten("the row carries no readable date (" + JSON.stringify(trim(e.date)) + ") — a sortie is "
+            + "filed under the semester ITS OWN DATE falls in, so a row without one cannot be filed at all");
+          return;
+        }
+        if (seq < 1 || seq > C.MAX_ENTRIES) {
+          unwritten("seq " + seq + " is outside what a cell can hold — FDMS stores at most "
+            + C.MAX_ENTRIES + " recorded sorties in one column of one semester");
+          return;
+        }
+        /* AN UNKNOWN Ε IS JUDGED WHERE THE ROW IS JUDGED, AND NOT BEFORE.
+           A Continuation row is ONE INDIVISIBLE ACT — a sortie recorded with a
+           list of Ε — so a single bad id refuses the whole row, below. A
+           with-SP row is not an act at all: it is one LINE PER Ε, each with its
+           own class and its own answer, so refusing the whole row there made a
+           good Ε the instructor really flew disappear because a sibling id was
+           bad. The refusal moved into the two branches for exactly that. */
+
+        if (kind === "continuation") {
+          if (badEids.length) { unwritten(badEidWhy(badEids)); return; }
+          const cat = trim(e.s_category);
+          const bad = curCatProblem(cat);
+          if (bad) { unwritten(bad); return; }
+          const key = C.semKeyOf(date);
+          const list = arr(C.bagOf(fdRec, key)[cat]);
+          /* WHICH FDMS ENTRY IS *THIS* WA ROW? PROVENANCE FIRST, POSITION
+             SECOND. `seq` is AUTHORED on the Wings Ahead side (wa.chk_int 1…9)
+             and its uniqueness check is on (kind ∷ what ∷ date ∷ seq) alone —
+             never on density — so a deleted first row leaves a lone `seq: 2`,
+             and the positional «the k-th same-day entry» rule then called an
+             already-written sortie missing FOR EVER: the pane kept offering
+             «✔ Record the sortie» for a sortie it had just recorded, and a
+             second click appended a twin. Since this round stamps every entry
+             it writes with `wa:<row identity>`, the row can simply RECOGNISE
+             ITS OWN WRITE, whatever the count. The k-th-same-day rule stays
+             underneath it untouched, and it is the right rule there: an entry
+             no bridge write stamped is one somebody typed on the card, and
+             position is the only thing that can pair it. */
+          const mine = curSrcOf(curRid(oid, cat, date, seq));
+          let at = list.findIndex((en) => en && en.date === date && trim(en.src) === mine);
+          if (at < 0) {
+            const sameDay = [];
+            list.forEach((en, ix) => { if (en && en.date === date) sameDay.push(ix); });
+            at = sameDay.length >= seq ? sameDay[seq - 1] : -1;
+          }
+          const hit = at >= 0 ? list[at] : null;
+          const derive = arr(C.flightDerive(cat));
+          if (!hit) {
+            const row = mk("wa_only", cat, date, seq);
+            row.waVerdict = "Continuation · " + C.semOf(key).label;
+            row.instructor = curName(cat);
+            row.extra = eids.length
+              ? "the sortie claims " + eids.length + " Ε — " + curNames(eids)
+              : "the sortie claims no Ε; a plain Σ flight that exercised no event is still a flight";
+            arm(row, curPlanFlight({ person: person, oid: oid, rid: row.rid, what: cat, date: date,
+              seq: seq, itemId: cat, eids: eids, derive: derive, semLabel: C.semOf(key).label,
+              semKey: key, exportAt: waParsed.exported_at, fdRec: fdRec }));
+            rows.push(row);
+            return;
+          }
+          paired.add(key + "|" + cat + "|" + at);
+          const have = arr(hit.eids);
+          const missing = eids.filter((id) => have.indexOf(id) < 0);
+          const extra = have.filter((id) => eids.indexOf(id) < 0);
+          const row = mk(missing.length ? "payload_differs" : "agree", cat, date, seq);
+          row.fdmsDate = hit.date || "";
+          row.waVerdict = "Continuation · " + eids.length + " Ε";
+          row.fdmsVerdict = "recorded · " + have.length + " Ε";
+          row.instructor = curName(cat);
+          row.srcId = trim(hit.src);
+          if (missing.length) {
+            row.diffs = [{ field: "Ε on this sortie", wa: curNames(eids) || "—",
+              fdms: curNames(have) || "—",
+              why: "the sortie is recorded on both sides; Wings Ahead names Ε this cell does not. The one "
+                + "act this lane offers is to DATE the missing Ε — the recorded sortie itself is never "
+                + "rewritten, because what stands in that cell is what somebody typed here" }];
+            arm(row, curPlanEdate({ person: person, oid: oid, rid: row.rid, what: cat, date: date,
+              seq: seq, eids: missing, fdRec: fdRec, exportAt: waParsed.exported_at,
+              lead: "Wings Ahead records " + missing.length + " Ε on this sortie that the FDMS entry does not" }));
+          }
+          row.extra = (extra.length
+            ? "the FDMS entry also carries " + extra.length + " Ε Wings Ahead does not name (" + curNames(extra)
+              + ") — nothing to do here: this lane adds, it never removes. "
+            : "")
+            + (missing.length
+              ? "applying this line dates the missing Ε and LEAVES THE LINE WHERE IT IS: the cell keeps the "
+                + "Ε list somebody typed here, so the next report reads payload_differs again. That is the "
+                + "ruling, not a defect — the bridge does not rewrite an entry a person wrote."
+              : "the recorded sortie covers every Ε Wings Ahead names.")
+            + (trim(hit.src).indexOf("wa:") === 0 ? " This FDMS entry was written by the bridge." : "");
+          rows.push(row);
+          return;
+        }
+
+        /* ── with_sp — a flight WITH A STUDENT. It carries no Σ of its own
+           (Wings Ahead refuses one by name), so it claims nothing about the
+           instructor's semester quota: THE STUDENT SIDE OWNS THE FLIGHT, and
+           it is already compared in the Flights group. What it does carry is
+           the Ε the instructor exercised while he was up there, and that is
+           what this lane reads — one line per Ε, because each Ε has its own
+           answer. */
+        const code = trim(e.sortie);
+        const carrier = trim(e.s_category);
+        if (!eids.length) {
+          const row = mk("refused", what, date, seq);
+          row.waVerdict = "with SP" + (code ? " · " + code : "");
+          row.refused = "flown with a student and claiming no Ε — the student side owns the flight, and it "
+            + "is compared in the Flights group under the student's own record. There is nothing here for "
+            + "the instructor's currency to record: Wings Ahead refuses a Σ category on a with-SP row by "
+            + "name, so this row makes no semester claim at all.";
+          rows.push(row);
+          return;
+        }
+        eids.forEach((eid) => {
+          /* the ONE bad id loses ITS OWN line and nothing else — the Ε beside
+             it, which the instructor really flew, keeps its class and its
+             Apply. That is what «one line per Ε» has to mean when one of them
+             is unreadable. */
+          if (!C.byId(eid)) {
+            const row = mk("unwritten", what, date, seq, eid);
+            row.problems = [badEidWhy([eid])];
+            row.waVerdict = "with SP" + (code ? " · " + code : "");
+            rows.push(row);
+            return;
+          }
+          const row = mk("agree", what, date, seq, eid);
+          row.waVerdict = "with SP" + (code ? " · " + code : "") + " · " + curName(eid);
+          row.instructor = curName(eid);
+          const last = curLast(fdRec, eid);
+          row.fdmsDate = last;
+          row.fdmsVerdict = last ? "Ε last dated" : "never recorded";
+          if (!last || last < date) {
+            row.cls = "wa_only";
+            arm(row, curPlanEdate({ person: person, oid: oid, rid: row.rid, what: what, date: date,
+              seq: seq, eids: [eid], fdRec: fdRec, exportAt: waParsed.exported_at,
+              lead: last ? "the FDMS Ε row is older than this flight" : "the FDMS Ε row has never been dated" }));
+            row.extra = "an Ε exercised on a student sortie is still an Ε flown (3-01 §61) — this line dates "
+              + "the Ε row and nothing else. No sortie is added to any semester column: the flight is the "
+              + "student's."
+              + (carrier ? " The row also carries a with-SP Σ legacy carrier («" + carrier + "») from the old "
+                + "Wings Ahead form; nothing is recorded from it — that side blocks its growth and this one "
+                + "reads no Σ off a with-SP row." : "");
+          } else {
+            row.extra = (last === date ? "the FDMS Ε row already carries this very day."
+              : "the FDMS Ε row already carries a LATER date (" + last + "), and an automatic source never "
+                + "moves a date backwards — the currency is covered, so there is nothing to do.")
+              + " Read `agree` here as «this lane owes this Ε nothing», which is what it means for a row "
+              + "whose only claim is a date that moves forward.";
+          }
+          rows.push(row);
+        });
+      });
+
+      /* ── THE FDMS SIDE — every recorded sortie no Wings Ahead row paired
+         with. REPORT ONLY, and the reason is the other side's own design: there
+         is no admin write path into an instructor record over there, so a line
+         here can never become a proposal to Wings Ahead. It is listed because a
+         cross-check that shows one side is not a cross-check. */
+      const sems = fdRec && isObj(fdRec.semesters) ? fdRec.semesters : {};
+      Object.keys(sems).sort().reverse().forEach((key) => {
+        const bag = C.bagOf(fdRec, key);
+        Object.keys(bag).forEach((itemId) => {
+          const list = bag[itemId];
+          const rank = Object.create(null);
+          list.forEach((en, ix) => {
+            const d = en.date || "";
+            rank[d] = (rank[d] || 0) + 1;
+            if (paired.has(key + "|" + itemId + "|" + ix)) return;
+            const row = mk("fdms_only", itemId, d, rank[d]);
+            row.waDate = "";
+            row.fdmsDate = d;
+            row.fdmsVerdict = "recorded · " + arr(en.eids).length + " Ε";
+            row.instructor = curName(itemId);
+            row.srcId = trim(en.src);
+            row.detail = "recorded in FDMS under " + C.semOf(key).label + " and named by no Wings Ahead "
+              + "currency row. It is REPORT ONLY in both directions: Wings Ahead has no admin write path "
+              + "for an instructor record (a currency claim is the pilot's own), so this line is never "
+              + "pushed and never proposed — it is here so that the two sides can be read side by side.";
+            row.extra = (d ? "" : "this entry carries NO DATE — it came from a plain counter (before the "
+              + "flight form existed) or from an import that knew the count but not the day. ")
+              + (trim(en.src).indexOf("wa:") === 0
+                ? "It was written by the bridge out of a Wings Ahead row that is no longer in this export."
+                : "");
+            rows.push(row);
+          });
+        });
+      });
+    });
+
+    /* ── AND THE RECORDS NOBODY IN THIS EXPORT ANSWERS FOR ─────────────────
+       `instructor_records[].instructor_id` is a foreign key to `public.people`
+       on the live side (schema.sql), so the pull cannot produce one of these;
+       a DOWNLOADED FILE has no foreign key behind it, and a hand-edited or
+       half-exported one can. The header counted such a record, so it gets its
+       line here rather than disappearing between two lists. */
+    waRecs.forEach((r, id) => {
+      if (seen.has(id)) return;
+      refuse("(Wings Ahead person «" + id + "»)", "", rowsFor.get(id) || 0,
+        "this instructor record names an identity the export's own `people` list does not carry, so there "
+        + "is no OID to tie it to and no name to print — the record cannot be attributed to anybody. The "
+        + "live pull cannot produce this (instructor_id is a foreign key over there); a downloaded file "
+        + "can, and it is reported instead of being dropped");
+    });
+  }
+
+  /* ── THE TWO APPLIABLE SHAPES ────────────────────────────────────────────
+     Pure, like every other plan in this file: the pane, the confirm dialog, the
+     change log and the fixtures all read the SAME object, so the sentence the
+     developer confirms is the sentence the store gets. Both write through
+     SchedCurrency's own seams and through nothing else.
+
+     THE 13γ LAW, HELD IN A BIGGER HAND. Every other act in this file rides its
+     claims in `fields`, because that is what ↺ Undo reverts. A currency act
+     writes ONE sortie AND the Ε dates that sortie proves, and no combination of
+     the forward-only seams can put those Ε dates back — so the change log
+     carries a SNAPSHOT of the whole record (before and after) and the undo
+     restores it. `fields` is still written, and still says every claim, because
+     it is what the dialog and the log PRINT. */
+  const curPlanBase = (o, act) => ({
+    cls: "", act: act, can: true, why: "",
+    key: "", rid: o.rid, oid: o.oid, group: CUR_GROUP, uid: o.what, ord: o.seq,
+    seq: o.seq, student: o.person.code, who: o.person.name, klass: "",
+    evId: "", waWritten: false,
+    date: o.date, fdmsDate: "", result: "", ip: "", ipLabel: "", authorisedBy: "",
+    kind: "", device: "", completes: false, effect: "", verdict: "",
+    warn: [], fields: [], exportAt: o.exportAt || "",
+    /* what the seams are handed — nothing here is a free-text instruction */
+    itemId: "", eids: [], derive: [], semKey: "", semLabel: "",
+    src: curSrcOf(o.rid),
+  });
+
+  function curPlanFlight(o) {
+    const C = CUR();
+    const p = curPlanBase(o, "cur-flight");
+    p.cls = "wa_only";
+    p.itemId = o.itemId;
+    p.eids = arr(o.eids).slice();
+    p.derive = arr(o.derive).slice();
+    p.semKey = o.semKey;
+    p.semLabel = o.semLabel;
+    p.verdict = "Continuation · " + curName(o.itemId);
+    p.fields = [{ field: "sortie · " + o.itemId, from: "", to: o.date }];
+    /* an Ε date is a claim about that Ε row, so it is named ONE BY ONE with the
+       date it would leave behind. A row already carrying a later date is listed
+       with its own value, because the seam will leave it alone and the dialog
+       must not promise a move that will not happen. */
+    p.eids.concat(p.derive.filter((id) => p.eids.indexOf(id) < 0)).forEach((id) => {
+      const from = curLast(o.fdRec, id);
+      if (from && from >= o.date) return;
+      p.fields.push({ field: "Ε " + id, from: from, to: o.date });
+    });
+    const moves = p.fields.length - 1;
+    p.effect = "records ONE sortie in «" + curName(o.itemId) + "», filed under " + o.semLabel
+      + " — the semester of the FLIGHT'S OWN DATE, never today's"
+      + (moves ? " · " + moves + " Ε date" + (moves === 1 ? "" : "s") + " move forward with it"
+        : " · no Ε date moves — every one of them already carries this day or a later one");
+    if (C && p.derive.length) {
+      p.warn.push("this column also dates, by itself: " + curNames(p.derive)
+        + " — forward only, and never over a later date.");
+    }
+    return p;
+  }
+
+  function curPlanEdate(o) {
+    const p = curPlanBase(o, "cur-edate");
+    p.cls = "wa_only";
+    p.eids = arr(o.eids).slice();
+    p.verdict = "Ε date" + (p.eids.length === 1 ? "" : "s") + " · " + curNames(p.eids);
+    p.eids.forEach((id) => { p.fields.push({ field: "Ε " + id, from: curLast(o.fdRec, id), to: o.date }); });
+    p.effect = (o.lead ? o.lead + " — " : "") + "moves " + p.eids.length + " Ε date"
+      + (p.eids.length === 1 ? "" : "s") + " forward to " + o.date
+      + ". NO sortie is recorded and no semester count changes: bump() is the seam, it only ever moves a "
+      + "date forward and it never walks over a later manual entry.";
+    return p;
   }
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -3806,6 +4475,21 @@
       effect: o.effect || "", undone: false, undoneBy: "", undoOf: o.undoOf || "",
       waHandle: o.waHandle || "", waBefore: o.waBefore || null, waAfter: o.waAfter || null,
       verdict: o.verdict || "",
+      /* PHASE 6β — THREE KEYS MORE, and they exist for the same reason the four
+         above do: ↺ Undo must be able to take back what this act did. A
+         currency act writes ONE sortie and, with it, every Ε date that sortie
+         proves — and SchedCurrency's seams are forward-only by design, so no
+         list of field reversals can undo it. The entry therefore carries the
+         whole record as it stood BEFORE and as it stood AFTER (it is a small
+         object: `items` + `semesters`), and the undo restores the first after
+         checking the record still IS the second — the 13γ drift guard, in the
+         only shape this collection allows.
+           curBefore  the instructor's currency record before the act, or null
+           curAfter   what the act left standing
+           seams      which SchedCurrency seams were called, in order */
+      curBefore: o.curBefore === undefined ? null : o.curBefore,
+      curAfter: o.curAfter === undefined ? null : o.curAfter,
+      seams: arr(o.seams).map(String),
     });
   }
 
@@ -3980,8 +4664,249 @@
     return { ok: true, evId: p.evId };
   }
 
+  /* ══ PHASE 6β — THE CURRENCY WRITER ══════════════════════════════════════
+     It calls SchedCurrency.addEntry() and SchedCurrency.bump() and NOTHING
+     else: no store collection is touched from here except the change log, and
+     the two seams carry their own guards (a recordable column, a readable date,
+     a catalogued Ε, forward-only automatic dates) all the way down.
+
+     THE RE-CHECK IS THIS LANE'S SEAM ④. The flight lane asks the LIVE syllabus
+     graph at the last moment before the store is touched; a currency row names
+     no node, so what has to be asked again here is the only thing that can have
+     changed under it: IS THE SORTIE STILL ABSENT, and IS THE Ε DATE STILL
+     OLDER. A double click, a stale report or a second device that recorded the
+     same flight in between must not append a second sortie — so the answer is
+     re-read from the store and an already-applied line reports UNCHANGED and
+     writes nothing at all.                                                  */
+  const curSnap = (rec) => (rec
+    ? JSON.parse(JSON.stringify({ items: rec.items || {}, semesters: rec.semesters || {} }))
+    : null);
+  const curRecordOf = (oid) => { const C = CUR(); return C && C.record ? C.record(oid) : null; };
+  const curEntKey = (e) => (e && e.date ? e.date : "undated")
+    + (arr(e && e.eids).length ? " +" + arr(e.eids).length + "Ε" : "")
+    + (e && trim(e.src) ? " " + trim(e.src) : "");
+
+  /* THE DRIFT GUARD, in the only shape this collection allows. 13γ's rule is
+     that an undo refuses rather than discard work somebody did afterwards; the
+     flight lane checks it field by field against the event, and here it is
+     checked snapshot against snapshot — and the sentence NAMES the cell and the
+     two readings, because «it changed» is not something a developer can act on. */
+  function curDrift(now, want) {
+    const A = now || { items: {}, semesters: {} };
+    const B = want || { items: {}, semesters: {} };
+    if (!!now !== !!want) {
+      return now ? "the record exists again and this entry left none behind"
+        : "the currency record is gone and this entry left one standing";
+    }
+    const ks = (o) => Object.keys(o || {});
+    const ai = A.items || {}, bi = B.items || {};
+    const ids = ks(ai).concat(ks(bi).filter((k) => !(k in ai)));
+    for (let i = 0; i < ids.length; i += 1) {
+      const a = ai[ids[i]] ? isoDate(ai[ids[i]].last_date) : "";
+      const b = bi[ids[i]] ? isoDate(bi[ids[i]].last_date) : "";
+      if (a !== b) {
+        return "«" + ids[i] + "» now reads " + (a ? dmy(a) : "nothing")
+          + " and this entry left it at " + (b ? dmy(b) : "nothing");
+      }
+    }
+    const as = A.semesters || {}, bs = B.semesters || {};
+    const sems = ks(as).concat(ks(bs).filter((k) => !(k in as)));
+    for (let i = 0; i < sems.length; i += 1) {
+      const ab = as[sems[i]] || {}, bb = bs[sems[i]] || {};
+      const cols = ks(ab).concat(ks(bb).filter((c) => !(c in ab)));
+      for (let j = 0; j < cols.length; j += 1) {
+        const av = ab[cols[j]], bv = bb[cols[j]];
+        const a = Array.isArray(av) ? av.map(curEntKey).join(" | ") : JSON.stringify(av === undefined ? null : av);
+        const b = Array.isArray(bv) ? bv.map(curEntKey).join(" | ") : JSON.stringify(bv === undefined ? null : bv);
+        if (a !== b) {
+          return "«" + sems[i] + " · " + cols[j] + "» now holds [" + (a || "—")
+            + "] and this entry left it holding [" + (b || "—") + "]";
+        }
+      }
+    }
+    return "";
+  }
+
+  /* the instructor this plan is about, resolved OUT OF THE ROSTER at write
+     time. The plan carries the NORMALISED oid because that is what a row
+     identity is made of; the SEAMS must be handed the store's own value, or a
+     roster carrying a lower-case oid would grow a SECOND currency record beside
+     the one the card writes into. */
+  function curWho(p) {
+    const ip = S().find("instructors", p.student);
+    if (!ip) return { why: "that instructor is no longer in the FDMS roster" };
+    const oid = trim(ip.oid);
+    if (!oid) return { why: "that FDMS instructor carries no OID, and this lane joins on nothing else (ruling #4)" };
+    /* THE REPORT JOINED BY OID; SO MUST THE WRITER, AT THE MOMENT IT WRITES.
+       The roster row is FOUND by the FDMS code, because that is the store's own
+       key — but the code is not the join: the object id is (ruling #4, and the
+       sentence this pane prints to every refused instructor). A roster edit
+       between the report and the click — another device, a SchedSync arrival —
+       that moves code ZP-7 to a different person would otherwise file this
+       instructor's Wings Ahead sortie onto that other pilot's card. This is
+       seam ④'s analogue for a lane whose identity is not a node. */
+    if (p && trim(p.oid) && normOid(oid) !== normOid(p.oid)) {
+      return { why: "the FDMS instructor holding code " + p.student + " no longer carries the object id "
+        + "this line was built for (" + p.oid + " — the roster now reads " + oid + "). This lane joins on "
+        + "the OID and on nothing else (ruling #4), so it refuses rather than write another pilot's "
+        + "flights. Re-read the export and the line will be rebuilt against the roster as it stands" };
+    }
+    return { oid: oid, ip: ip };
+  }
+
+  function applyCurrency(p) {
+    const C = CUR();
+    if (!C || !C.addEntry || !C.bump) {
+      return { ok: false, why: "the Currency engine (app/currency.js → SchedCurrency) is not loaded in this page" };
+    }
+    /* BELT AND BRACES BESIDE THE REFUSAL ABOVE. The report's own readiness
+       guard (curPass) already refuses to compare — let alone arm — a row while
+       the 91-item catalog is unfetched; this is the writer saying the same
+       thing at the moment of the write, because a plan can outlive the page
+       state that built it and an Ε id that cannot be checked must never be
+       written. */
+    if (!C.loaded || !C.loaded()) {
+      return { ok: false, why: "the Currency catalog is not loaded in this page, so an Ε id cannot be "
+        + "checked against the 3-01 — open the Currency tab once and re-read the export" };
+    }
+    /* THE LOCK, ASKED WHERE THE CARD ASKS IT (ruling of § 8 / § 13θ). The pane
+       asked before it opened the dialog and SchedStore.upsert() asks inside
+       every seam; this is the third, and it is here because a currency write is
+       several seam calls and a half-written record is worse than none. */
+    if (!editOn()) return { ok: false, why: "the edit lock refused the write" };
+    const w = curWho(p);
+    if (!w.oid) return { ok: false, why: w.why };
+    const oid = w.oid;
+    const src = trim(p.src) || curSrcOf(p.rid);
+    const before = curSnap(curRecordOf(oid));
+    const seams = [];
+    const moved = [];
+    const bumpOne = (id) => {
+      const was = C.dateOf(oid, id);
+      if (was && was >= p.date) return;               // the seam would refuse; do not pretend it moved
+      C.bump(oid, id, p.date, src);
+      seams.push("bump(" + id + ")");
+      const now = C.dateOf(oid, id);
+      if (now !== was) moved.push({ field: "Ε " + id, from: was, to: now });
+    };
+
+    if (p.act === "cur-flight") {
+      const key = C.semKeyOf(p.date);
+      const list = arr(C.entriesOf(oid, p.itemId, key));
+      /* THE RE-CHECK ASKS PROVENANCE BEFORE IT ASKS POSITION. An entry stamped
+         `wa:<this row identity>` IS this row's own write — whatever the count
+         beside it, and whatever `seq` the Wings Ahead author gave the row. The
+         positional test below cannot answer that on its own: WA's `seq` is
+         AUTHORED and only unique, never dense, so a lone `seq: 2` made
+         `same >= p.seq` false for ever and a second click appended a twin
+         sortie with the same date, the same Ε and the same src. */
+      if (list.some((en) => en && en.date === p.date && trim(en.src) === src)) {
+        return { ok: true, unchanged: true,
+          why: "that sortie is already recorded in " + C.semOf(key).label + " — this very line wrote it "
+            + "(the entry carries this row's own identity), so nothing was written" };
+      }
+      const same = list.filter((e) => e && e.date === p.date).length;
+      if (same >= p.seq) {
+        return { ok: true, unchanged: true,
+          why: "that sortie is already recorded in " + C.semOf(key).label + " — nothing was written" };
+      }
+      const r = C.addEntry(oid, p.itemId, p.date, p.eids, src);
+      if (!r) {
+        return { ok: false, why: "SchedCurrency refused the sortie — the column does not take recorded "
+          + "flights, the date is unreadable, or the edit lock said no" };
+      }
+      seams.push("addEntry(" + p.itemId + " → " + r.key + ")");
+      /* the derives are asked of the LIVE engine and not of the plan's memory:
+         a plan built minutes ago must not be the last word on what a column
+         also dates. Ticked Ε first, then what the column implies by itself. */
+      const seen = Object.create(null);
+      arr(p.eids).concat(arr(C.flightDerive(p.itemId))).forEach((id) => {
+        if (seen[id]) return;
+        seen[id] = 1;
+        bumpOne(id);
+      });
+      const after = curSnap(curRecordOf(oid));
+      logAct({
+        act: p.act, rid: p.rid, oid: p.oid, group: CUR_GROUP, uid: p.uid, ord: p.ord, seq: p.seq,
+        student: p.student, evId: "",
+        what: "recorded ONE maintenance sortie in «" + curName(p.itemId) + "» of " + dmy(p.date)
+          + ", filed under " + C.semOf(r.key).label
+          + (moved.length ? " · " + moved.length + " Ε date" + (moved.length === 1 ? "" : "s") + " moved forward" : ""),
+        fields: [{ field: "sortie · " + p.itemId, from: "", to: p.date }].concat(moved),
+        effect: p.effect, curBefore: before, curAfter: after, seams: seams,
+      });
+      return { ok: true, evId: "", moved: moved.length };
+    }
+
+    if (p.act === "cur-edate") {
+      arr(p.eids).forEach(bumpOne);
+      if (!moved.length) {
+        return { ok: true, unchanged: true,
+          why: "every Ε on this line already carries this day or a later one — nothing was written" };
+      }
+      const after = curSnap(curRecordOf(oid));
+      logAct({
+        act: p.act, rid: p.rid, oid: p.oid, group: CUR_GROUP, uid: p.uid, ord: p.ord, seq: p.seq,
+        student: p.student, evId: "",
+        what: "dated " + moved.length + " Ε row" + (moved.length === 1 ? "" : "s") + " from the Wings Ahead "
+          + "flight of " + dmy(p.date) + " — no sortie was recorded, no semester count changed",
+        fields: moved, effect: p.effect, curBefore: before, curAfter: after, seams: seams,
+      });
+      return { ok: true, evId: "", moved: moved.length };
+    }
+    return { ok: false, why: "unknown currency act «" + trim(p.act) + "»" };
+  }
+
+  /* ↺ UNDO of a currency act — the snapshot goes back through the ONE seam in
+     app/currency.js that moves backwards, and only after the drift guard has
+     agreed that the record still holds what this act left it holding. */
+  function undoCurrency(e) {
+    const C = CUR();
+    if (!C || !C.restore) {
+      return { ok: false, why: "the Currency engine (app/currency.js → SchedCurrency) is not loaded in this "
+        + "page, so there is nothing here to put the record back with" };
+    }
+    /* THE LOCK, ASKED HERE TOO — the two halves of § ② are symmetrical or they
+       are not a pair. restore()'s own rule is that «a state already standing is
+       not an error», so restoring a null snapshot over a record that is already
+       gone answers true without ever asking the store; on a view-only device
+       that answer would be the truth about the record and a LIE about the act,
+       since the change-log stamp behind it is refused and this function would
+       still report a rollback that never happened. */
+    if (!editOn()) return { ok: false, why: "the edit lock refused the write" };
+    const w = curWho({ student: e.student, oid: e.oid });
+    if (!w.oid) return { ok: false, why: w.why };
+    const drift = curDrift(curSnap(curRecordOf(w.oid)), e.curAfter);
+    if (drift) {
+      return { ok: false, why: "this instructor's currency record changed after that write — " + drift
+        + ". Undo would discard that change, so it refuses: open the Currency tab instead." };
+    }
+    if (!C.restore(w.oid, e.curBefore, "wa-undo:" + trim(e.rid))) {
+      return { ok: false, why: "the restore was refused — either the edit lock, or a change-log entry whose "
+        + "snapshot is not an instructor-currency record" };
+    }
+    const rev = logAct({
+      act: "undo", rid: e.rid, oid: e.oid, group: CUR_GROUP, uid: e.uid, ord: e.ord, seq: e.seq,
+      student: e.student, evId: "", undoOf: e.id,
+      what: "put the instructor's currency record back where that line found it — the recorded sortie and "
+        + "every Ε date that line moved",
+      fields: arr(e.fields).map((f) => ({ field: f.field, from: f.to, to: f.from })),
+      effect: "the record returns to what it was before that line",
+      curBefore: e.curAfter, curAfter: curSnap(curRecordOf(w.oid)), seams: ["restore"],
+    });
+    S().upsert("bridgeLog", { id: e.id, undone: true, undoneBy: rev ? rev.id : "" });
+    return { ok: true, removed: false };
+  }
+
   function applyPlan(p) {
     if (!p || !p.can) return { ok: false, why: (p && p.why) || "this row is not appliable" };
+    /* PHASE 6β — a currency plan never meets the graph seam below it: it names
+       no syllabus node (that is the whole reason its identity carries a date),
+       and its own last-moment re-check lives inside applyCurrency(). */
+    if (p.group === CUR_GROUP) {
+      try { return applyCurrency(p); }
+      catch (err) { console.error(err); return { ok: false, why: "the write failed: " + err.message }; }
+    }
     /* PHASE 3b · FINDING 9 — SEAM ④, THE WRITER'S OWN. The three seams above
        are all inside the ENGINE, which works on the plan it was handed; this
        one asks the LIVE graph, here, at the last moment before the store is
@@ -4315,6 +5240,12 @@
        PENDING op that the developer confirms in the numbered dialog, exactly as
        every other write to Wings Ahead does. */
     if (e.act === "push" || e.act === "push-remove") return undoPushEntry(e);
+    /* ── PHASE 6β — AN ACT THAT WROTE NO TRAINING-LOG EVENT AT ALL ─────────
+       A currency act wrote into `instructorCurrency` through SchedCurrency's
+       seams; there is no `evId` to look up and no field list that could undo
+       it, because those seams only ever move forward. Its own undo restores the
+       snapshot the entry carries — see undoCurrency(). */
+    if (CUR_ACTS.indexOf(trim(e.act)) >= 0) return undoCurrency(e);
     const ev = S().find("trainingLog", e.evId);
     if (e.act === "create") {
       if (ev) {
@@ -4567,6 +5498,17 @@
     move: "Moves the DATE of the existing FDMS event to the Wings Ahead date. It creates no second event — "
       + "that is the whole point of a row identity without a date in it — and changes no verdict. "
       + "The old date is kept in the change log, where ↺ Undo restores it.",
+    /* PHASE 6β — the same hover rule for the two currency acts: WHAT it writes ·
+       WHAT it never touches · THE SAFE PATH. */
+    curFlight: "Records ONE maintenance sortie on the INSTRUCTOR's currency card, in the column Wings "
+      + "Ahead names, filed under the semester THAT FLIGHT'S OWN DATE falls in — never today's. It goes "
+      + "through SchedCurrency's own seam, so the Ε it names (and whatever the column dates by itself) "
+      + "move FORWARD only and never over a later date. It touches no training-log event, no student and "
+      + "nothing in Wings Ahead — that side has no admin write path for these rows at all. ↺ Undo puts the "
+      + "whole record back.",
+    curEdate: "Dates the Ε row(s) this Wings Ahead flight exercised, and NOTHING else: no sortie is "
+      + "recorded, no semester count moves and no student is touched. bump() only ever moves a date "
+      + "forward and never walks over a later manual entry. ↺ Undo puts the whole record back.",
     pick: "Selects this line for «✔ Apply selected». Selecting writes nothing at all: the dialog that "
       + "follows lists every selected line, numbered, with what each one does to its node.",
     batch: "Opens the confirm dialog for every SELECTED line — numbered, one entry each, with the node "
@@ -4918,6 +5860,11 @@
         instructors: S().get("instructors") || [],
         trainingLog: S().get("trainingLog") || [],
         gates: S().get("gates") || [],
+        /* PHASE 6β — the instructors' own currency records, handed in like the
+           ledger is: § ① reads them and writes nothing, and re-judging after an
+           apply is what turns an applied line into `agree` in front of the
+           developer instead of asking him to believe it. */
+        instructorCurrency: S().get("instructorCurrency") || [],
       }, {
         kindOf: (uid) => (R() ? R().kindOf(uid) : null),
         membersOf: (c) => S().membersOf(c) || [],
@@ -5060,6 +6007,12 @@
      already on screen. */
   function narrowPlan(p, field) {
     if (!field) return p;
+    /* PHASE 6β — A CURRENCY PLAN NEVER NARROWS. Its acts are not per-field
+       adoptions: a recorded sortie is one indivisible act, and the Ε dates of
+       one flight are the same claim as the flight. There is no ↦ button on
+       such a row (rowHtml only draws them for act «adopt»), so this returns
+       nothing rather than a plan with an empty field list. */
+    if (p.group === CUR_GROUP) return null;
     /* the provenance keys narrow with the act too: adopting ONE field must
        never quietly re-stamp what the OTHER fields remembered */
     const keep = field === "instructor"
@@ -5104,7 +6057,11 @@
     const who = esc(p.who || p.student) + (p.student ? ` <span class="sch-code">${esc(p.student)}</span>` : "");
     const act = p.act === "create" ? "CREATE a training-log event"
       : p.act === "update" ? "MOVE the date of the existing FDMS event"
-        : "ADOPT the Wings Ahead value" + (p.field ? " of «" + p.field + "»" : "s") + " on the existing FDMS event";
+        /* PHASE 6β — the two currency acts name the INSTRUCTOR's own card, so
+           the developer can never read one of these lines as a student's. */
+        : p.act === "cur-flight" ? "RECORD one maintenance sortie on this INSTRUCTOR's currency card"
+          : p.act === "cur-edate" ? "DATE the Ε row(s) of this INSTRUCTOR's currency card"
+            : "ADOPT the Wings Ahead value" + (p.field ? " of «" + p.field + "»" : "s") + " on the existing FDMS event";
     const fields = fchg(p.fields, false);
     /* P46-A1 — WHO SIGNED FOR THE FLIGHT, on the line that records it. A SOLO
        event names «SOLO» as its instructor because nobody was in the other seat,
@@ -5126,8 +6083,10 @@
       <div class="brg-fchgs">${fields}</div>
       <div class="brg-eff ${p.completes ? "is-c" : ""}">→ ${esc(p.effect)}</div>
       ${warn}
-      <div class="sch-nd sch-mono">${esc(p.rid)}${p.waWritten ? " · this FDMS event was written by the bridge"
-    : p.act === "create" ? "" : " · this FDMS event was TYPED IN THE TRAINING LOG, not written by the bridge"}</div></li>`;
+      <div class="sch-nd sch-mono">${esc(p.rid)}${p.group === CUR_GROUP
+    ? " · instructor currency — nothing of this line is ever pushed to Wings Ahead"
+    : p.waWritten ? " · this FDMS event was written by the bridge"
+      : p.act === "create" ? "" : " · this FDMS event was TYPED IN THE TRAINING LOG, not written by the bridge"}</div></li>`;
   }
 
   async function startApply(el, rids, field) {
@@ -5146,31 +6105,43 @@
       return;
     }
     const created = plans.filter((p) => p.act === "create").length;
-    const changed = plans.length - created;
+    const cur = plans.filter((p) => p.group === CUR_GROUP).length;
+    const changed = plans.length - created - cur;
     const go = await confirmPop({
       ico: "✔",
       title: plans.length === 1 ? "Apply this line to the training log?"
         : "Apply " + plans.length + " lines to the training log?",
       go: "✔ Apply " + plans.length + " line" + (plans.length === 1 ? "" : "s"),
       lead: "Every line is listed below with what it writes and <b>what it does to the syllabus node</b>. "
-        + "This writes the <b>FDMS training log only</b> — Wings Ahead, the repository and the export file "
-        + "are not touched.",
+        + "This writes the <b>FDMS training log</b>"
+        + (cur ? " and the <b>instructors' currency records</b>" : "")
+        + " only — Wings Ahead, the repository and the export file are not touched"
+        + (cur ? ", and Wings Ahead has no admin write path for a currency record at all" : "") + ".",
       items: plans.map(planLine).join(""),
-      foot: "<b>" + created + "</b> created · <b>" + changed + "</b> changed. "
+      foot: "<b>" + created + "</b> created · <b>" + changed + "</b> changed"
+        + (cur ? " · <b>" + cur + "</b> on the instructors' currency cards" : "") + ". "
         + "Each act is appended to the <b>Bridge change log</b> below with what was there before, and "
         + "<b>↺ Undo</b> reverts exactly that write. Nothing is deleted here — a deletion stays a separate "
         + "deliberate act (ruling #2).",
     });
     if (!go) { ui.applyMsg = "cancelled — nothing was written."; ui.applyBad = false; render(el); return; }
-    let ok = 0;
+    let ok = 0, same = 0;
     const bad = [];
     plans.forEach((p) => {
       const res = applyPlan(p);
-      if (res.ok) ok += 1; else bad.push(p.uid + " — " + res.why);
+      /* PHASE 6β — «UNCHANGED» IS NOT «WRITTEN», AND IT IS NOT A FAILURE.
+         A currency line whose sortie is already recorded (a double click, a
+         stale report, a second device) answers ok WITHOUT writing, and the
+         sentence has to say so: counting it as written would tell the developer
+         a sortie was filed that was not. */
+      if (res.ok && res.unchanged) same += 1;
+      else if (res.ok) ok += 1;
+      else bad.push(p.uid + " — " + res.why);
     });
     ui.pick = [];
     recompute();
-    ui.applyMsg = ok + " line" + (ok === 1 ? "" : "s") + " written to the training log"
+    ui.applyMsg = ok + " line" + (ok === 1 ? "" : "s") + " written"
+      + (same ? " · " + same + " already recorded — nothing written for " + (same === 1 ? "it" : "them") : "")
       + (bad.length ? " · " + bad.length + " refused: " + bad.join(" · ") : "")
       + ". The report below was re-judged against the store as it now stands.";
     ui.applyBad = bad.length > 0;
@@ -6522,6 +7493,10 @@
           ${r.source.exported_at ? " · exported " + esc(hm(r.source.exported_at)) : ""}
           ${r.source.taken_at ? " · <b>read " + esc(hm(r.source.taken_at)) + "</b>" : ""}
           · ${r.source.people} people · ${r.source.records} records
+          · ${r.source.instructorRecords
+    ? "<b>" + r.source.instructorRecords + "</b> instructor record"
+      + (r.source.instructorRecords === 1 ? "" : "s")
+    : "<b>no instructor records in this export</b>"}
           · judged with <b>exams ${r.thresholds.exams}&nbsp;%</b> ·
           <b>flights ${r.thresholds.flights}&nbsp;%</b> · <b>F/S ${r.thresholds.fs}&nbsp;%</b>
           ${r.counts.nonGraded ? ` · <b>${r.counts.nonGraded}</b> non-graded row${r.counts.nonGraded === 1 ? "" : "s"} (never complete a node)` : ""}
@@ -6641,8 +7616,9 @@
         </div>
         <p class="sch-hint"><b>✔ Apply</b> writes ONE training-log event, or moves one date, or adopts one
           field — after a dialog that numbers every line and says what it does to the node. It writes the
-          <b>FDMS training log only</b>: Wings Ahead is never written by this app, and neither is the
-          repository. Every act lands in the change log below with <b>↺ Undo</b>.</p>
+          <b>FDMS training log</b> and, for the <b>Instructor currency</b> group, that instructor's own
+          <b>currency card</b> — and nothing else: Wings Ahead is never written by this app, and neither is
+          the repository. Every act lands in the change log below with <b>↺ Undo</b>.</p>
         <div class="brg-batch" id="brg-batch"></div>
         <div class="sch-scroll" id="brg-rows"></div>
       </section>`;
@@ -6707,11 +7683,24 @@
       const rows = byGroup.get(gid);
       if (!rows || !rows.length) return;
       const g = GROUPS.find((x) => x.id === gid);
+      /* A GROUP MAY OWE ITS READER A SENTENCE BEFORE ITS FIRST ROW (P46-A2).
+         Instructor currency is the one group whose identity carries a DATE, and
+         the one that can never be pushed — a reader who does not know both
+         before he reads a line will read a moved date as a lost sortie. */
+      const note = g && g.note
+        ? `<tr class="sch-loggrp"><td colspan="8"><span class="sch-nd">${esc(g.note)}</span></td></tr>` : "";
+      /* THE COLUMN HEAD NAMES WHAT IS UNDER IT. Every other group holds a
+         STUDENT and a syllabus NODE; the currency group holds an INSTRUCTOR and
+         a Σ column (or the Ε a with-SP line is about). The change-log table was
+         corrected the same way — a header that lies is a sentence too. */
+      const isCur = gid === CUR_GROUP;
       html += `<table class="sch-tbl brg-tbl">
         <thead>
           <tr class="sch-loggrp"><td colspan="8">${esc(g ? g.label : "Identities")}
             <span class="count">${rows.length}</span></td></tr>
-          <tr><th>Class</th><th>Student</th><th>Node</th><th>Wings Ahead</th><th>FDMS</th>
+          ${note}
+          <tr><th>Class</th><th>${isCur ? "Instructor" : "Student"}</th>
+            <th>${isCur ? "Σ column / Ε" : "Node"}</th><th>Wings Ahead</th><th>FDMS</th>
             <th>Effect</th><th>Row identity</th><th>Apply</th></tr>
         </thead><tbody>${rows.map(rowHtml).join("")}</tbody></table>`;
     });
@@ -6783,8 +7772,10 @@
     if (!p) return '<span class="sch-nd">—</span>';
     if (!p.can) return '<span class="sch-nd">not appliable</span>';
     const on = ui.pick.indexOf(x.rid) >= 0;
-    const word = p.act === "create" ? "✔ Apply" : p.act === "update" ? "✔ Move the date" : "✔ Adopt";
-    const tip = p.act === "create" ? TIP.apply : p.act === "update" ? TIP.move : TIP.adopt;
+    const word = p.act === "create" ? "✔ Apply" : p.act === "update" ? "✔ Move the date"
+      : p.act === "cur-flight" ? "✔ Record the sortie" : p.act === "cur-edate" ? "✔ Date the Ε" : "✔ Adopt";
+    const tip = p.act === "create" ? TIP.apply : p.act === "update" ? TIP.move
+      : p.act === "cur-flight" ? TIP.curFlight : p.act === "cur-edate" ? TIP.curEdate : TIP.adopt;
     return `<label class="brg-sel" title="${esc(TIP.pick)}"><input type="checkbox" data-brgw="sel"
         data-rid="${esc(x.rid)}"${on ? " checked" : ""}><span>select</span></label>
       <button type="button" class="sch-mini primary" data-brgw="apply" data-rid="${esc(x.rid)}"
@@ -6812,7 +7803,10 @@
       <p class="sch-hint">Every write this pane made, and every undo, in the store and synced like every
         other collection (ruling #2 — «we record changes so there can be a rollback»). <b>↺ Undo</b>
         reverts exactly one act; if the event was edited afterwards it refuses instead of discarding
-        that edit. Nothing here ever deleted anything on the Wings Ahead side.</p>`;
+        that edit. Nothing here ever deleted anything on the Wings Ahead side.
+        An <b>instructor-currency</b> act carries a <b>snapshot of that instructor's whole currency
+        record</b>, before and after — the seams that wrote it only move forward, so a snapshot is the
+        only honest way back, and the undo refuses if the record has changed since.</p>`;
     if (!ui.logOpen) {
       return `<section class="panel sch-panel">${head}</section>`;
     }
@@ -6822,7 +7816,13 @@
         <p>The log fills the first time a line is applied.</p></div></section>`;
     }
     const rows = list.map((e) => {
-      const who = S().personLabelOf ? S().personLabelOf("students", e.student) : e.student;
+      /* PHASE 6β — WHICH ROSTER THE CODE BELONGS TO. Every act until this round
+         named a STUDENT; a currency act names an INSTRUCTOR, and looking a
+         instructor code up in the students would print the raw handle (or,
+         worse, a student who happens to share it). The entry says which group
+         it belongs to, so the label is read out of the right half. */
+      const coll = trim(e.group) === CUR_GROUP ? "instructors" : "students";
+      const who = S().personLabelOf ? S().personLabelOf(coll, e.student) : e.student;
       const fields = fchg(e.fields, false);
       /* a ledger-only act offers no ↺: there is no write to take back, and a
          button that refuses on click is a button that should not be drawn */
@@ -6845,7 +7845,7 @@
     }).join("");
     return `<section class="panel sch-panel">${head}
       <div class="sch-scroll"><table class="sch-tbl brg-tbl">
-        <thead><tr><th>When</th><th>Act</th><th>Student</th><th>Node</th><th>What</th><th>By</th><th></th></tr></thead>
+        <thead><tr><th>When</th><th>Act</th><th>Person</th><th>Node / column</th><th>What</th><th>By</th><th></th></tr></thead>
         <tbody>${rows}</tbody></table></div></section>`;
   }
 
@@ -6868,6 +7868,17 @@
             <b>Deleted at source</b> is never deletable from here: a tombstone is a separate deliberate
             act (ruling #2). <b>Unwritten · Structurally refused · Unresolvable identity</b> are the
             report's own refusals and are never appliable.</p>
+          <p class="sch-hint"><b>Instructor currency</b> — the ruling of 05/09/2026 — is the fifth
+            appliable group and the only one that is about an <b>instructor</b> and not a student. It ties
+            him by <b>OID and by nothing else</b>; a Continuation row records ONE sortie in the column
+            Wings Ahead names, filed under the semester <b>that flight's own date</b> falls in; a with-SP
+            row records no sortie at all and only <b>dates the Ε</b> the instructor exercised, because the
+            flight itself belongs to the student. Every write goes through the Currency card's own seams,
+            so an Ε date only ever moves <b>forward</b> and never over a later manual one. <b>The date is
+            part of the row identity here</b> — a Σ sortie has no syllabus node to be named by — so a
+            corrected date reads as two rows, one on each side, and neither is written by itself.
+            <b>Nothing of this group is ever pushed</b>: Wings Ahead has no admin write path for an
+            instructor record, because a currency claim is the pilot's own.</p>
         </div>
         <div>
           <p class="sch-hint"><b>What the push lane does — and what it never does</b></p>
@@ -6957,6 +7968,30 @@
        size at which ␥ Confirm all asks for its count back. A number no fixture
        can read is a number a round can move without anybody noticing. */
     pushBlockWhy, RM_TYPE_AT,
+    /* PHASE 6β (P46-A2) — the currency lane's pure half, on the same terms as
+       every other: a fixture asserts on the JUDGEMENT and on the very object
+       the seams are handed, never on the sentence it happens to print. Nothing
+       here touches the store — applyCurrency / undoCurrency, which do, are
+       reached only from a [data-brgw] control past the lock, through
+       applyPlan / undoEntry. `curDrift` is exported because it is the undo's
+       guard and a guard no fixture can read is a guard a round can weaken. */
+    CUR_GROUP, CUR_KINDS, CUR_LEGACY, CUR_DEMO_CAT, CUR_ACTS,
+    curRid, curWhat, curCatProblem, curDrift, curPlanFlight, curPlanEdate,
+    /* AND THE TWO THAT DO TOUCH THE STORE — the ONLY impure functions on this
+       surface, and the reason is not convenience, it is that nothing else can
+       be asserted on. Every other lane's whole write is ONE RECORD, and
+       `plannedEvent()` hands a fixture exactly the record the store would get,
+       so the pure half IS the claim. A currency act is a SEQUENCE — a re-check,
+       then addEntry(), then one bump() per Ε, each with its own forward-only
+       rule — and there is no single object that is «what the store gets»: the
+       claim is what the seams do, in order, and a probe that stopped at the
+       plan would be asserting on a promise. They gain no power by being here:
+       the edit lock is asked inside applyCurrency() before anything moves, and
+       SchedStore.mayWrite() is asked again inside every seam below it. The PANE
+       still reaches them only through applyPlan / undoEntry, from a [data-brgw]
+       control, past the same lock and the same numbered dialog as everything
+       else — and applyPlan / undoEntry themselves stay off this surface. */
+    applyCurrency, undoCurrency,
   };
 
   /* ══ THE LANE ARMS ITSELF AT LOAD, NOT AT THE FIRST VISIT ════════════════

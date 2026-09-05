@@ -9,9 +9,12 @@ deployed `bridge_push` refuses by name, the derived queue, the eleven verdicts
 and the three shapes of ↺ Undo across the wire (`p11-push.js`, `p12-undo.js`).
 Since Phase 6α (05/09/2026) it also covers the **checkrides and the solos**, which
 the Flight Commander's ruling of that day made appliable WA → FDMS
-(`p13-evalsolo.js`).
+(`p13-evalsolo.js`). And since Phase 6β, the same day, the **instructor currency
+lane** — an instructor's own Σ sorties and Ε dates, read out of the payload's
+`instructor_records`, tied by OID and written through `SchedCurrency`'s own seams
+(`p14-currency.js`).
 Spec: `specs/bridge-spec.md` (§ 10, § 13ια, § 14γ, § 15κ, § 15λ, § 15μ, § 15ν,
-§ 15ξ, § 16).
+§ 15ξ, § 16, § 17).
 
 ## How to run
 
@@ -24,7 +27,7 @@ the number, and the exit code is `0` only if nothing failed.
 
 ```
 ════════════════════════════════════════════
-  BRIDGE FIXTURES — 1104 passed, 0 failed
+  BRIDGE FIXTURES — 1346 passed, 0 failed
 ════════════════════════════════════════════
 ```
 
@@ -160,8 +163,16 @@ painted is checked with eyes, on the live walk.
   private roster, and none ever may: the custody rule of `specs/bridge-spec.md`
   § 6 forbids real identities from reaching a commit, which is exactly why these
   fixtures are allowed to live in one.
-* The fixtures **read** `app/schedbridge.js` and nothing else. No writes, no
-  network, no `localStorage`, no store, no repo file touched.
+* The fixtures **read** `app/schedbridge.js` — and, since P46-A2,
+  `app/currency.js` and its catalog too, because the currency lane writes through
+  that module's seams and a probe that stopped at the plan would prove nothing
+  about the entry that has to land in the semester of its own date. **Still no
+  writes anywhere real**: the store is faked in `harness.js` (`mkStore`), the
+  catalog is read behind a `fetch` stub, and no network, no `localStorage` and no
+  repo file is touched.
+* **One probe is asynchronous** — `p14-currency.js`, because `app/currency.js`
+  loads its catalog through `fetch()`, which is a promise however it is fed.
+  `run.js` awaits it and prints the number once, after it settles.
 * The path to the engine is **repo-relative** (`harness.js` → `BRIDGE_SRC`).
   Never hard-code a drive letter here: the whole point of the move into the repo
   was that any clone can re-run the count.
@@ -187,6 +198,7 @@ painted is checked with eyes, on the live walk.
 | `p11-push.js` | Phases 4+5 — the push lane: the predicate, the wire shapes, the derived queue, the eleven verdicts; 4+5b's chunk/halving, failure classification, poisoned `prev`, held student, pull-informed reconciliation; and P45-FDMSc's three freshness tests and the wire deadline; and P45-FDMSd's distinction between a removal owed by the training log and a row stranded by a lookup, the invariant that a read of Wings Ahead can never ADD a removal, and the staleness the ✕ Stop tracking dialog now prints; and P45-FDMSe's measured consequence clause (`11p`), the strand line that asks the training log instead of asserting about it (`11p·2`), the OID-case surfacing (`11p·3`), and § 15ν·2 table row 14 at last (`11n ⑤bis`) |
 | `p12-undo.js` | Phases 4+5 — ↺ Undo across the wire: the three shapes and the two drift refusals |
 | `p13-evalsolo.js` | Phase 6α — checkrides and solos appliable: the evaluator (ruling #4 · the fail-12 warning · the avoided-evaluator sentence, with no date window it cannot keep), the `SOLO` convention and the authorising instructor — **required**, so a flown solo with nobody's signature is `unwritten` and never proposed — `SOLO_NG_COMPLETES`, the empty slot on `wa.slot_empty`'s own test, idempotency, the moved date, **the sortie re-filed in the other section (one row, never a second event)**, undo byte-for-byte, and that the push lane did **not** grow with the fill |
+| `p14-currency.js` | Phase 6β — the instructor currency lane: the carrier the parser used to drop, the header count and the zero said in words, the **OID-only** join (an MN match is refused by name), the classes of a Continuation row and of a with-SP row (one line per Ε), the **eleven** `unwritten` reasons — `x-demo-flight` among them, answered out of `DEMO_IDS` / `FLIGHT_DERIVE` rather than assumed — the date inside the row identity and the two rows a moved date becomes, and then **the first writes any probe in here has ever made**: the sortie filed under the semester of its own date with its `src`, the Ε dates moved forward only and never over a later manual one, a second click that appends nothing, ↺ Undo restoring the whole record through `SchedCurrency.restore()` with its drift refusal, both walls of the edit lock, the **cold engine** (`14q`) — a page whose Currency tab was never opened compares nothing, arms nothing and **says so**, instead of reading every Ε id as one the catalog carries — the lone `seq: 2` whose own write it now recognises by **provenance** (`14j`), the two ways an `instructor_record` used to vanish with no row and no note (`14c`), the good Ε that no longer dies with a bad sibling on a with-SP row (`14g`), the OID re-asked at the moment of the write and ↺ Undo behind the same lock (`14m`), and the proof that **nothing of this lane reaches the wire** |
 
 The offline builder (`tools/build_offline.py`) never looks in here: it collects
 from an explicit file list under `app/` and `data/`, so nothing in this directory
