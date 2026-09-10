@@ -251,9 +251,17 @@ console.log("\n=== PROBE 10j — FINDING 10: the badge says what the pane does =
     bridge.indexOf("It never writes Wings Ahead, the repository or") < 0);
   ok("the repository promise is unchanged and still absolute",
     /they are never\s+committed, and they die with the tab/.test(bridge));
+  /* P46-A4 — the bounded promise LOST A CLAUSE, because the clause stopped
+     being true: the hours crossed on 10/09/2026. What the pane now promises is
+     narrower and checkable — never a grade, never an NG flag — and it says out
+     loud what it DOES send, which is the half a promise about omissions can
+     never carry on its own. */
   ok("and the Wings Ahead promise is now the bounded one, in the pane's own prose",
     bridge.indexOf("never a row a human typed") >= 0
-      && bridge.indexOf("<b>never</b> a grade, a duration or an NG flag") >= 0);
+      && bridge.indexOf("<b>never</b> a grade or an NG flag") >= 0);
+  ok("and it no longer promises to withhold the flight time, which it now sends",
+    bridge.indexOf("<b>never</b> a grade, a duration or an NG flag") < 0
+      && bridge.indexOf("crosses in both directions since 10/09/2026") >= 0);
   ok("the push tooltip states the same three things (the Round 19 hover rule)",
     /push: "Sends the queued flights/.test(bridge)
       && bridge.indexOf("never deletes anything") >= 0);

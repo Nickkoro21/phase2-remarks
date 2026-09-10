@@ -213,14 +213,22 @@ console.log("\n=== PROBE 11c — the seven wire shapes the deployed side refuses
   ok("the date is a \"YYYY-MM-DD\" string", typeof op.row.date === "string"
     && /^\d{4}-\d{2}-\d{2}$/.test(op.row.date), op.row.date);
 
-  /* the three keys that must never appear */
+  /* the two keys that must never appear — and the third, which since
+     10/09/2026 must (P46-A4). `entered_by` and `legacy` are the SERVER's own
+     record of who wrote a row and a claim about them from here would be this
+     bridge testifying to somebody else's bookkeeping. `duration` used to sit
+     in that same sentence for a reason that expired twice over: FDMS gained
+     the field on 05/09 and the Wings Ahead round of 10/09 dropped the guard
+     that refused it on the wire. It is the ELEVENTH key now, and a probe that
+     still demanded its absence would be pinning doctrine the owner retired. */
   ok("entered_by is NEVER on the wire — provenance is the server's",
     !("entered_by" in op.row) && JSON.stringify(op).indexOf("entered_by") < 0);
   ok("legacy is NEVER on the wire", !("legacy" in op.row));
-  ok("duration is NEVER on the wire, in either direction (ruling #8)",
-    !("duration" in op.row) && B.PUSH_ROW_KEYS.indexOf("duration") < 0
-      && JSON.stringify(op).indexOf("duration") < 0);
-  eq("the row carries exactly the ten keys this lane owns",
+  ok("duration IS on the wire, named on every row, since ruling #8's wire half",
+    "duration" in op.row && B.PUSH_ROW_KEYS.indexOf("duration") >= 0);
+  ok("and a flight whose time nobody typed carries it as null, never as a missing key",
+    op.row.duration === null, JSON.stringify(op.row.duration));
+  eq("the row carries exactly the eleven keys this lane owns",
     Object.keys(op.row).sort().join(","), B.PUSH_ROW_KEYS.slice().sort().join(","));
 
   /* AT MOST 200 OPERATIONS — the client chunks, and says so before the server
@@ -586,12 +594,21 @@ console.log("\n=== PROBE 11h — a Wings Ahead row this bridge wrote is never pr
    carry a string seq even from a ledger somebody hand-edited — the P45-FDMS
    verify proved that with this very fixture's planner. `prev` was forwarded
    VERBATIM, and an ⭱ Import restores the ledger verbatim, so a tampered or
-   hand-made backup could put a string seq / kind:"banana" / a duration / an
-   entered_by on the wire. Half of those the server refuses by name; the other
-   half it CANNOT — the entered_by / legacy / duration guards read `row` only —
-   and a `prev` carrying them comes back `exists_fdms`: a knowledge refusal for
-   a claim that was true. So the check is made here, and the claim is never
-   silently repaired, because repairing a claim of knowledge is forging it. */
+   hand-made backup could put a string seq / kind:"banana" / a duration of
+   130 h / an entered_by on the wire. Some of those the server refuses by name;
+   the rest it CANNOT. The line between the two moved on 10/09/2026: the new
+   `duration` branch of wa.bridge_push guards `prv` BESIDE `row_in` and says so
+   in its own comment («for the seq/kind/ng/date reason exactly»), so a STRING
+   duration in a memory now belongs with seq and kind, in the half that IS
+   refused by name. What the server still cannot catch is a duration whose
+   SHAPE is fine and whose VALUE is impossible — wa.chk_duration's bounds run on
+   `row_in` only — and, as ever, `entered_by` / `legacy`, whose guards read
+   `row` only. A `prev` carrying one of those comes back `exists_fdms`: a
+   knowledge refusal for a claim that was true. So the check is made here — for
+   the uncatchable ones because nobody else will, and for the catchable ones to
+   save a wire call that would only repeat what this side already knew — and
+   the claim is never silently repaired, because repairing a claim of knowledge
+   is forging it. */
 console.log("\n=== PROBE 11i — a `prev` this side will not send, and never rewrites ===");
 {
   const good = q0(plan([ev({ id: "TV-P1" })])).op.row;
@@ -614,13 +631,46 @@ console.log("\n=== PROBE 11i — a `prev` this side will not send, and never rew
   ok("a track nobody speaks is refused", !!bad({ track: "aerobatics" }));
   ok("a grade that is neither a number nor null is refused", !!bad({ grade: "71" }));
 
-  /* THE THREE THE SERVER WOULD NOT CATCH ON `prev` */
-  ok("`duration` in the memory is refused HERE — the server's duration guard reads `row` only, so this "
-    + "one would have come back as a knowledge refusal for a true claim",
-  /duration/.test(bad({ duration: 1.5 })), bad({ duration: 1.5 }));
-  ok("`entered_by` likewise", /entered_by/.test(bad({ entered_by: "admin" })));
-  ok("`legacy` likewise", /legacy|not one of the ten keys/.test(bad({ legacy: true })));
+  /* THE TWO THE SERVER WOULD NOT CATCH ON `prev` */
+  ok("`entered_by` in the memory is refused HERE — the server's guard reads `row` only, so this one "
+    + "would have come back as a knowledge refusal for a true claim",
+  /entered_by/.test(bad({ entered_by: "admin" })), bad({ entered_by: "admin" }));
+  ok("`legacy` likewise", /legacy|not one of the eleven keys/.test(bad({ legacy: true })));
   ok("a missing key is a partial memory, and refused", /missing/.test(bad(null, "mission")));
+
+  /* ── AND `duration` CHANGED SIDES ON 10/09/2026 (P46-A4) ─────────────────
+     This block used to name it as the third key a memory must not carry. The
+     wire speaks it now, so an hour figure in a memory is a fact and not a
+     fault — but an IMPOSSIBLE one still is, and there the server's own guard
+     cannot help: `wa.chk_duration`'s BOUNDS read `row_in` only, so 130 h in a
+     `prev` would go out, fail to match fact for fact, and come back
+     `exists_fdms` — a knowledge refusal for a claim that was true. So the
+     mirror of that guard lives here. Its SHAPE is a different matter: since
+     10/09/2026 the wire refuses a string duration on `prev` too, so the text
+     assertion below is this side saving a wasted call rather than catching
+     what nobody else would — and it stays, because a refusal one side can say
+     for free is a refusal that should not cost a round trip.
+     AND THE MEMORY OF A ROW SENT BEFORE THE KEY EXISTED IS NOT A FAULT EITHER:
+     every identity this bridge pushed before that day remembers ten keys,
+     honestly, because ten is what was sent. Refusing those would have accused
+     the whole ledger of being a tampered backup on the first run after the
+     round. */
+  eq("an hour figure in the memory is now a FACT, and legal",
+    B.prevProblem(Object.assign({}, good, { duration: 1.5 })), "");
+  ok("but one Wings Ahead would raise on is refused here, by name",
+    /duration/.test(bad({ duration: 130 })) && /24/.test(bad({ duration: 130 })), bad({ duration: 130 }));
+  ok("so is a second decimal — the two sides record to one", !!bad({ duration: 1.55 }));
+  ok("so is a zero, because «not known yet» is null and never nothing", !!bad({ duration: 0 }));
+  ok("and so is text — said here for free, and by the wire itself since 10/09/2026",
+    /never as text/.test(bad({ duration: "1.5" })), bad({ duration: "1.5" }));
+  eq("a memory minted before the eleventh key existed is read, not accused",
+    bad(null, "duration"), "");
+  eq("null is what «the row we left there names no hours» looks like",
+    B.prevProblem(Object.assign({}, good, { duration: null })), "");
+  ok("and the licence is the MEMORY's alone — a row this side builds today must name it",
+    /duration/.test(B.rowProblem((function () {
+      const c = Object.assign({}, good); delete c.duration; return c;
+    }()), "row")), "a built row that forgets the key is a partial row");
 
   /* THE ONE TRUE IN `prev` THAT IS NOT A FAULT */
   eq("ng:true is legal in a MEMORY — the bridge never writes one, but an adopted row is read back as it "
@@ -751,7 +801,7 @@ console.log("\n=== PROBE 11k — adopt the row where it stands, or re-create it 
   const moved = B.missingLook(L, wa([row({ date: "2026-08-19" })]), [L]);
   ok("a read that finds ONE bridge-written row for that flight offers the adoption", !!moved.adopt);
   eq("and it is the row as it ACTUALLY stands, date and all", moved.adopt.row.date, "2026-08-19");
-  eq("read back into the ten keys of the wire",
+  eq("read back into the eleven keys of the wire",
     Object.keys(moved.adopt.row).sort().join(","), B.PUSH_ROW_KEYS.slice().sort().join(","));
   ok("naming the case in the developer's own terms", /MOVED case/.test(moved.why), moved.why);
   ok("and saying that adopting writes nothing to Wings Ahead",
@@ -1319,7 +1369,12 @@ console.log("\n=== PROBE 11p — a consequence clause that proves itself ===");
      OFF the queue by the two sweeps that run last; «the flight itself IS
      queued» is a claim about the queue this run RETURNS, so it is asked again
      once that queue is final. */
-  const badPrev = Object.assign({}, SENT, { sortie: "C4303", duration: 1.4, mission: "incomplete" });
+  /* P46-A4 — the malformed thing used to be the mere PRESENCE of `duration`;
+     the wire speaks it now, so the fault has to be a figure the far side would
+     actually raise on (wa.chk_duration: > 0, ≤ 24, one decimal). 130 h is the
+     slipped decimal point that guard exists for, and it exercises the mirror
+     of it that rowProblem gained this round. */
+  const badPrev = Object.assign({}, SENT, { sortie: "C4303", duration: 130, mission: "incomplete" });
   const scrubbed = plan([ev({ id: "TV-P1", node: "s:C4303" })],
     led([old, { uid: "s:C4303", sent: badPrev }]));
   eq("a queued line the malformed-`prev` sweep takes off is off the queue", scrubbed.counts.queued, 0);

@@ -1950,7 +1950,13 @@
       }
       /* Round 5 — a lesson block writes ONE event: class scope with the
          classes ARRAY (legacy `class` = the first) + absent[] across them,
-         or a single-student event; per-course lines carry course+periods. */
+         or a single-student event; per-course lines carry course+periods.
+         P46-A4 — AND IT NAMES NO `duration`, deliberately: the sweep of
+         2026-09-10 put the field on every writer of a FLYING event, and a
+         ground lesson is not one. It is measured in PERIODS (`periods_done`
+         below), a null hour figure on it would be an absence dressed as a
+         fact, and this id can never come to describe a flight — `x.blk` is
+         the block the line was planned in and it does not move. */
       if (x.blk === "ls") {
         const l = x.l;
         const cls = l.scope === "class" ? lessonClasses(l) : [];
@@ -3227,18 +3233,39 @@
       </span>
     </div>`;
   }
+  /* ── THE HOURS A WRITER THAT DOES NOT KNOW THEM MUST STILL NAME ───────────
+     P46-A4 · the Flight Commander, 2026-09-10: «να μπει και το duration όπου
+     δεν υπάρχει». Neither writer below ever learns a flight time — the progress
+     editor records THAT a node was flown, and how long it took is typed in the
+     Training log afterwards. That is exactly why the key has to be written:
+     SchedStore.upsert() MERGEs, so a key a record leaves out keeps whatever the
+     stored event already held, and a writer that stays silent about the hours
+     is not neutral — it is agreeing to whatever number is already there. The
+     rule is commitActuals' own, for the same reason and in the same words: the
+     hours SURVIVE a re-record of the same node (the developer typed them, and
+     re-running the editor is not a claim that he was wrong) and are DROPPED the
+     moment the record starts describing a different flight, because nobody has
+     yet said how long that one took. A GROUND event never gains the key at all:
+     a lesson is measured in periods and an exam in nothing, and a null hour
+     figure standing on one would be an absence dressed as a fact. */
   function stepWrite(it, ans, code) {
     if (it.type === "node") {
       const kind = R().kindOf(it.uid);
       const solo = ans.instructor === SOLO;
-      S().upsert("trainingLog", {
-        id: "prg:" + code + ":" + it.uid, node: it.uid, kind: kind, scope: "student",
+      const id = "prg:" + code + ":" + it.uid;
+      const rec = {
+        id: id, node: it.uid, kind: kind, scope: "student",
         student: code, class: "", date: ans.date, instructor: ans.instructor || "",
         solo: solo || undefined,
         device: kind === "flights" ? "T-6A" : (kind === "fs" ? "OFT" : "GND"),
         result: "completed", score: null, note: "progress editor", absent: [],
         start_date: "", end_date: "",
-      });
+      };
+      if (kind === "flights" || kind === "fs") {
+        const was = S().find("trainingLog", id);
+        rec.duration = was && was.node === it.uid && was.duration != null ? was.duration : null;
+      }
+      S().upsert("trainingLog", rec);
     } else {
       const ips = (ans.ips || []).filter(Boolean);
       const P = Math.max(0, num(ans.periods, it.remaining) || 0);
@@ -3298,13 +3325,24 @@
     ui.prog.pending = null;                                  // ui state first
     for (const u of uids) {
       const kind = R().kindOf(u);
+      const id = "prg:" + code + ":" + u;
       const rec = {
-        id: "prg:" + code + ":" + u, node: u, kind: kind, scope: "student",
+        id: id, node: u, kind: kind, scope: "student",
         student: code, class: "", date: date, instructor: ip,
         device: kind === "flights" ? "T-6A" : (kind === "fs" ? "OFT" : "GND"),
         result: "completed", score: null, note: "progress editor", absent: [],
         start_date: "", end_date: "",
       };
+      /* P46-A4 · «να μπει και το duration όπου δεν υπάρχει» — the same rule and
+         the same reason as stepWrite() above: this writer knows nothing about
+         the flight time, upsert() MERGEs, and a key left unnamed would sign off
+         on whatever hours the stored record happens to carry. Kept on a
+         re-record of the SAME node, dropped when the node under the id changes,
+         never written at all for a ground event. */
+      if (kind === "flights" || kind === "fs") {
+        const was = S().find("trainingLog", id);
+        rec.duration = was && was.node === u && was.duration != null ? was.duration : null;
+      }
       S().upsert("trainingLog", rec);
     }
     S().toast(uids.length + " node(s) marked completed.", "good");

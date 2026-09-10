@@ -2502,8 +2502,44 @@ window.fmtDMY = function fmtDMY(v) {
         </select></label>
       <label class="sch-fld"><span>From</span><input type="date" class="sch-in" data-flt="from" value="${esc(f.from)}"></label>
       <label class="sch-fld"><span>To</span><input type="date" class="sch-in" data-flt="to" value="${esc(f.to)}"></label>
-      <label class="sch-fld grow"><span>Search</span><input type="search" class="sch-in" data-flt="q" value="${esc(f.q)}" placeholder="node · instructor · note"></label>
+      <label class="sch-fld grow"><span>Search</span><input type="search" class="sch-in" data-flt="q" value="${esc(f.q)}" placeholder="node · instructor · note · hours"></label>
     </div>`;
+  }
+
+  /* ── THE FLIGHT TIME IS SEARCHABLE, IN EVERY SPELLING IT EVER WEARS ───────
+     P46-A4 · the Flight Commander, 2026-09-10: «να υπάρχει και στην αναζήτηση
+     αφού είναι εύκολο». The number lives on two surfaces and they do not spell
+     it the same way: the FORM types «1.3» — durationValue refuses a comma,
+     because a decimal comma in an input box would make the box mean two things
+     depending on the reader's locale — and the ROW prints «1,3 h», the app's
+     own reading convention, the same one the syllabus badge beside it uses. A
+     haystack that knew only one spelling would fail exactly the person who
+     typed the number and then went looking for it, or the one who read it off
+     the table. So both go in, plus the glued «1.3h» a logbook writes and the
+     printed cell «1,3 h» a reader copies straight out of the row.
+     AN EVENT WHOSE TIME IS NOT KNOWN ADDS NOTHING AT ALL — «unknown» is not a
+     value to be found by, and a bare «h» must never drag in every flight
+     nobody has timed yet.
+     AND THAT PROMISE IS KEPT BY A TYPE TEST AND NOT BY A NULL TEST, in ONE
+     place. What a record HOLDS is not always what the form WROTE: a
+     hand-edited store, an imported backup or an older sync copy can hold the
+     time as TEXT, as `""`, or as something that is not a time at all. So this
+     reads the two shapes a record may honestly hold — a number, or text that
+     is a number — exactly as schedbridge.pushRowOf() reads them, and returns
+     the empty string for every other. A null test alone would let `""`
+     through, and `""` would spell out «  h  h»: a bare «h» search would then
+     match every flight nobody has timed, which is the one failure this whole
+     paragraph promises cannot happen. Judging it HERE and not at the call site
+     is the rid_max doctrine of the bridge — a rule written twice is a rule
+     that can disagree with itself. The figure is spelled from the NUMBER, so
+     «1.30» and «1.3» are found as the one hour they are, which is the same
+     equivalence compareRow() keeps across the wire. */
+  function durHaystack(d) {
+    const n = typeof d === "number" ? d
+      : (typeof d === "string" && d.trim() ? Number(d) : NaN);
+    if (!isFinite(n)) return "";
+    const dot = String(n), comma = dot.replace(".", ",");
+    return dot + " " + comma + " " + dot + "h " + comma + " h";
   }
 
   function logRows() {
@@ -2528,6 +2564,13 @@ window.fmtDMY = function fmtDMY(v) {
           ev.special === NFS_KEY ? "nfs φύλλο μη πτήσης no-fly sheet " + (NFS_CAT_LABEL[ev.category] || "") : "",
           ev.category,
           ev.instructor, ev.device, ev.note, ev.maneuvers, ev.student,
+          /* P46-A4 — the hours, beside the device they were flown on, because
+             that is where the row prints them and how they are read. The value
+             is handed over RAW: durHaystack() is the one judgement of what a
+             stored time is worth to a search, and its answer for an unknown —
+             `null`, `""`, or anything that is not a number of hours — is
+             nothing at all. A second guard here would be a second rule. */
+          durHaystack(ev.duration),
           R().classesOf(ev).join(" "), ev.course]
           .filter(Boolean).join(" ").toLowerCase();
         if (hay.indexOf(q) < 0) return false;

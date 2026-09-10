@@ -29,9 +29,27 @@
        seat, no node moved;
      · an event a human typed, that Wings Ahead says nothing about, is left
        exactly where it stands;
-     · and it STILL DOES NOT CROSS THE WIRE. The deployed wa.bridge_push refuses
-       a pushed duration by name, so PUSH_ROW_KEYS is unchanged — and the reason
-       written beside it is now the true one.
+     · and — ~~it STILL DOES NOT CROSS THE WIRE~~ — SINCE 10/09/2026 IT DOES.
+       P46-A3 left exactly one thing owed and named it: the deployed
+       wa.bridge_push refused a pushed duration by name. The Flight Commander
+       closed it («ολοκλήρωσε ό,τι απαιτείται για το cloud schema· να μπει και
+       το duration όπου δεν υπάρχει»), the branch is gone, wa.chk_duration
+       judges the key, and `duration` is the ELEVENTH of PUSH_ROW_KEYS. Probe
+       15g is the INVERSE of what it was, deliberately and in full — and it
+       gained the guard that goes with the new power: this side refuses a
+       figure that guard would RAISE on, because a raise over there rolls back
+       every other flight in the same chunk.
+
+   AND WHAT P46-A4 ADDED BESIDE THE WIRE (15m · 15n), from the same ruling:
+     · «να μπει και το duration όπου δεν υπάρχει» is not only about the wire.
+       Two writers of the progress editor created FLYING training-log events
+       without naming the field, and upsert() MERGEs — so a re-record could
+       leave one flight's hours standing on a record that had started
+       describing another. 15m drives both, and drives the ground event that
+       must NOT gain the key;
+     · «να υπάρχει και στην αναζήτηση αφού είναι εύκολο» — the training log's
+       search haystack learns the hours, in both spellings the app uses for
+       them. 15n drives that.
 
    AND THREE THINGS THE ROUND'S OWN VERIFICATION ADDED (15j · 15k · 15l), each
    one a place where a NEW field had to join an OLD list and had not:
@@ -349,48 +367,155 @@ console.log("\n=== PROBE 15f — «να μπορεί να πάρει βαθμο�
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   15g — AND IT STILL DOES NOT CROSS THE WIRE
+   15g — AND SINCE 10/09/2026 IT CROSSES THE WIRE (P46-A4)
+   ══════════════════════════════════════════════════════════════════════════
+   THIS PROBE USED TO PROVE THE OPPOSITE, and it was right to: until the Wings
+   Ahead round of 10/09/2026 the deployed `wa.bridge_push` refused a pushed
+   duration BY NAME, so the honest thing for this side to do was not to send it
+   and to say why. The Flight Commander lifted that guard — «ολοκλήρωσε ό,τι
+   απαιτείται για το cloud schema· να μπει και το duration όπου δεν υπάρχει» —
+   the branch is gone, `wa.chk_duration` judges the key instead, and every
+   assertion below is the inverse of the one it replaces. A probe left pinning
+   the old doctrine would not be a stale comment: it would FAIL the round that
+   obeyed the owner, which is the most expensive kind of wrong a fixture can be.
    ══════════════════════════════════════════════════════════════════════════ */
-console.log("\n=== PROBE 15g — the pushed row has no duration, and says why ===");
+console.log("\n=== PROBE 15g — the pushed row CARRIES the hours, and refuses what WA would raise on ===");
 {
   const STU = { oid: "S-9001", code: "ZZ-1", first_name: "Fabricated", last_name: "Nobody",
     class: "77TST-Z", status: "active" };
   const PIP = { oid: "R-9001", code: "ZP-1", first_name: "Imaginary", last_name: "Airman",
     status: "active" };
-  const flown = { id: "TV-PUSH", scope: "student", student: "ZZ-1", node: "s:C4302",
-    date: "2026-09-01", instructor: "ZP-1", result: "completed", device: "T-6A",
-    duration: 1.3, absent: [] };
-  const p = B.planPush({ trainingLog: [flown], students: [STU], instructors: [PIP],
+  const flown = (o) => Object.assign({ id: "TV-PUSH", scope: "student", student: "ZZ-1",
+    node: "s:C4302", date: "2026-09-01", instructor: "ZP-1", result: "completed", device: "T-6A",
+    duration: 1.3, absent: [] }, o || {});
+  const push = (ev) => B.planPush({ trainingLog: [ev], students: [STU], instructors: [PIP],
     bridgePush: [] }, { kindOf });
+
+  const p = push(flown());
   eq("the flight is owed exactly once", p.counts.queued, 1);
   const row = p.queued[0].op.row;
-  ok("and the row the wire would get has NO duration key",
-    !Object.prototype.hasOwnProperty.call(row, "duration"), JSON.stringify(row));
-  eq("its keys are exactly the ten of PUSH_ROW_KEYS",
+  ok("and the row the wire gets NAMES the hours",
+    Object.prototype.hasOwnProperty.call(row, "duration"), JSON.stringify(row));
+  eq("as the number the event holds, never as text", row.duration, 1.3);
+  eq("its keys are exactly the ELEVEN of PUSH_ROW_KEYS",
     Object.keys(row).sort().join(","), B.PUSH_ROW_KEYS.slice().sort().join(","));
-  ok("PUSH_ROW_KEYS itself did not grow", B.PUSH_ROW_KEYS.indexOf("duration") < 0,
+  ok("PUSH_ROW_KEYS grew by exactly one, and it is this one",
+    B.PUSH_ROW_KEYS.indexOf("duration") >= 0 && B.PUSH_ROW_KEYS.length === 11,
     B.PUSH_ROW_KEYS.join(","));
-  ok("nothing anywhere in the queued operation carries the number",
-    JSON.stringify(p.queued[0].op).indexOf("1.3") < 0, JSON.stringify(p.queued[0].op));
+  eq("and the bound this side holds is the far side's own", B.DUR_MAX, 24);
+  ok("the number really is in the operation that leaves",
+    JSON.stringify(p.queued[0].op).indexOf("1.3") >= 0, JSON.stringify(p.queued[0].op));
 
-  /* a block that DOES carry one is refused here, before a byte leaves */
-  const why = B.rowProblem(Object.assign({}, row, { duration: 1.3 }), "row");
-  ok("a duration in a pushed block is refused by name", /duration/.test(why), why);
-  ok("and the sentence no longer says FDMS has no field for it",
-    !/FDMS has no field/i.test(why) && /FDMS now HAS as a field/.test(why), why);
-  ok("it names the wire, and the guard that has to be lifted",
-    /does not cross this wire/.test(why) && /bridge_push/.test(why), why);
+  /* A FLIGHT NOBODY HAS TIMED CARRIES null — the key is present and empty,
+     because an absent key and a null key are two different memories of one row
+     and the far side compares `prev` fact for fact. */
+  const q = push(flown({ duration: null }));
+  const nrow = q.queued[0].op.row;
+  ok("a flight whose time is unknown still names the key", "duration" in nrow);
+  eq("and its value is null — never \"\", never 0", nrow.duration, null);
+  eq("an event written before the field existed reads the same way",
+    push(flown({ duration: undefined })).queued[0].op.row.duration, null);
+  eq("and a string in a hand-edited store leaves as a NUMBER",
+    push(flown({ duration: "1.3" })).queued[0].op.row.duration, 1.3);
 
-  /* AND THE COMMENT BESIDE THE CONSTANT SAYS THE SAME THING, so the next round
-     reads the true reason and not the expired one */
-  ok("the reason written beside PUSH_ROW_KEYS is the WIRE and not the field",
-    /FDMS HAS THE FIELD NOW/.test(BRIDGE)
-      && /DURATION CROSSES IN NEITHER DIRECTION UNTIL FDMS HAS THE FIELD/.test(BRIDGE),
-    "PUSH_ROW_KEYS must quote the server guard it is waiting on");
-  ok("and it names the validator that would take over", /wa\.chk_duration/.test(BRIDGE));
-  ok("the pane's own text says the field exists and still does not cross",
-    /has<\/b> held that field since\s*\n?\s*05\/09\/2026/.test(BRIDGE)
-      || /has<\/b> held that field since/.test(BRIDGE), "the push-lane help text must be true");
+  /* ── AND A SHAPE A RECORD CANNOT HONESTLY HOLD IS NOT LAUNDERED INTO AN HOUR
+     num() reads `true` as one hour and `[1.3]` as 1.3. Minted through it, an
+     event carrying either would be QUEUED with a flight time nobody recorded —
+     and on the far side an invented number is indistinguishable from one
+     somebody flew. pushDuration() hands such a shape on RAW instead, so the
+     line is held here, by name, with the sentence rowProblem already had. */
+  const raw = (d) => B.rowProblem(Object.assign({}, row, { duration: d }), "row");
+  eq("a boolean is not one hour — nothing is queued", push(flown({ duration: true })).counts.queued, 0);
+  eq("it is held instead", push(flown({ duration: true })).counts.blocked, 1);
+  ok("and the held line names «duration» rather than a time it invented",
+    /duration/.test(push(flown({ duration: true })).blocked[0].why),
+    push(flown({ duration: true })).blocked[0].why);
+  ok("the block keeps the raw shape, so the sentence can print it",
+    /never as text/.test(raw(true)) && /true/.test(raw(true)), raw(true));
+  eq("an array is not a time either", push(flown({ duration: [1.3] })).counts.queued, 0);
+  ok("and it is refused by name, not read as 1.3", /duration/.test(raw([1.3])), raw([1.3]));
+  eq("text that reads as no number is not «not known yet» — it is held",
+    push(flown({ duration: "abc" })).counts.queued, 0);
+  ok("because calling it null would assert an absence over a value somebody meant",
+    /never as text/.test(raw("abc")), raw("abc"));
+  ok("and the comma spelling this wire does not speak is held the same way",
+    /never as text/.test(raw("1,3")), raw("1,3"));
+
+  /* ── A NON-FINITE NUMBER GETS ITS OWN SENTENCE ───────────────────────
+     JSON.stringify() prints BOTH Infinity and NaN as the four letters «null»,
+     so the text clause would have named the value as the one value it then
+     calls legal, and blamed text for something that is not text. It is
+     reachable through the real planner: num() keeps an Infinity, so a stored
+     "1e999" mints one. Precision before bound, the rule of this whole clause:
+     a refusal must name the real fault. */
+  ok("an infinity is refused as an infinity, and printed as one",
+    /Infinity/.test(raw(Infinity)) && !/never as text/.test(raw(Infinity)), raw(Infinity));
+  ok("and the sentence says what a flight time IS", /real number of hours/.test(raw(Infinity)),
+    raw(Infinity));
+  ok("NaN likewise — never described as «null»", /NaN/.test(raw(NaN))
+    && !/is null/.test(raw(NaN)), raw(NaN));
+  {
+    const inf = push(flown({ duration: "1e999" }));
+    eq("driven through the planner, the 1e999 store queues nothing", inf.counts.queued, 0);
+    ok("and the developer is told the real fault, not that his value is null",
+      /Infinity/.test(inf.blocked[0].why) && !/«duration» is null/.test(inf.blocked[0].why),
+      inf.blocked[0].why);
+  }
+
+  /* THE MIRROR OF wa.chk_duration — because over there a bad figure is a RAISE
+     and a raise rolls the whole chunk back. Refused here it costs one line. */
+  const why = (d) => B.rowProblem(Object.assign({}, row, { duration: d }), "row");
+  eq("a legal figure is not a problem at all", why(1.3), "");
+  eq("and neither is null", why(null), "");
+  ok("130 h is refused by name, and the sentence names the bound", /duration/.test(why(130))
+    && /24/.test(why(130)), why(130));
+  ok("a second decimal is refused as a second decimal, not as a size",
+    /one decimal/.test(why(1.55)), why(1.55));
+  ok("a zero is refused: «not known yet» is null, never nothing", /longer than nothing/.test(why(0)),
+    why(0));
+  ok("and text is refused as text", /never as text/.test(why("1.3")), why("1.3"));
+
+  /* AND THE EVENT THAT CARRIES ONE DOES NOT REACH THE WIRE AT ALL: the planner
+     asks the same question of the row it just built, so one impossible figure
+     costs its own line and not the chunk it was riding in. */
+  const bad = push(flown({ duration: 130 }));
+  eq("the flight with an impossible time is not queued", bad.counts.queued, 0);
+  eq("it is listed as not crossing, once", bad.counts.blocked, 1);
+  ok("with its own sentence, naming the figure and the bound",
+    /duration/.test(bad.blocked[0].why) && /24/.test(bad.blocked[0].why), bad.blocked[0].why);
+  ok("and the sentence says the flight itself is not in question",
+    /Nothing standing in Wings Ahead is touched/.test(bad.blocked[0].why), bad.blocked[0].why);
+  eq("nothing is proposed for removal over a typo", bad.counts.removals, 0);
+
+  /* AND A REMOVAL THE DEVELOPER ASKED FOR IS NOT HELD HOSTAGE BY THE SAME TYPO.
+     An ↺ Undo owes a removal that names the row the LEDGER REMEMBERS, never the
+     one the event would build now — so the guard is asked at the two UPSERT
+     paths and not at the row. Asked at the row, one mistyped figure would keep
+     a removal the developer explicitly requested owed for ever. */
+  const undone = B.planPush({ trainingLog: [flown({ duration: 130 })], students: [STU],
+    instructors: [PIP], bridgePush: [{ rid: "S-9001 ∷ flights ∷ s:C4302 ∷ 1", oid: "S-9001",
+      group: "flights", uid: "s:C4302", ord: 1, seq: 1, evId: "TV-PUSH", student: "ZZ-1",
+      sent: row, state: "undone", hold: "" }] }, { kindOf });
+  eq("the removal an ↺ Undo owes still stands, whatever the box now says",
+    undone.counts.removals, 1);
+  eq("and nothing of that identity is queued", undone.counts.queued, 0);
+  eq("the removal names the row the LEDGER remembers", undone.removals[0].op.prev.duration, 1.3);
+
+  /* AND THE COMMENT BESIDE THE CONSTANT TELLS THE NEXT ROUND WHAT IS TRUE NOW,
+     which is the whole reason the sentence beside PUSH_ROW_KEYS has been
+     rewritten three times instead of being left to rot. */
+  ok("the reason written beside PUSH_ROW_KEYS is the RULING that lifted the guard",
+    /`duration` IS THE ELEVENTH/.test(BRIDGE) && /THE FLIGHT COMMANDER LIFTED IT ON 10\/09\/2026/.test(BRIDGE),
+    "PUSH_ROW_KEYS must say why the key is there");
+  ok("and it names the validator that took the branch's place", /wa\.chk_duration/.test(BRIDGE));
+  ok("the pane's own text says the hours cross, and names the day",
+    /crosses in both directions since 10\/09\/2026/.test(BRIDGE)
+      || /crosses this wire in both directions since 10\/09\/2026/.test(BRIDGE),
+    "the push-lane help text must be true");
+  ok("and no surface still promises that the bridge never writes a duration",
+    BRIDGE.indexOf("never writes a grade, a duration or an NG flag") < 0
+      && BRIDGE.indexOf("no grade, no duration, no NG") < 0,
+    "a retired promise is not reworded around, it goes");
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -719,6 +844,164 @@ console.log("\n=== PROBE 15l — the form never blocks on a figure it did not re
   ok("the progress editor cannot hit that trap: its ids carry the node",
     /id: "prg:" \+ code \+ ":" \+ (it\.uid|u)/.test(BOARD),
     "a record keyed by node can never start describing a different one");
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   15m — «ΝΑ ΜΠΕΙ ΚΑΙ ΤΟ DURATION ΟΠΟΥ ΔΕΝ ΥΠΑΡΧΕΙ» — THE TWO BOARD WRITERS
+   ══════════════════════════════════════════════════════════════════════════
+   P46-A4. Three writers create a FLYING training-log event. `saveEvent` names
+   the field (15b · 15l), `commitActuals` names it (15l), and the progress
+   editor's two — `stepWrite`'s node branch and `progCommit` — did not. That is
+   not harmless just because neither of them knows an hour figure: upsert()
+   MERGEs, so a key a record leaves out KEEPS whatever is stored under it, and
+   a writer that says nothing about the hours is not neutral — it is agreeing
+   to whatever number is already there.
+
+   HOW THIS IS DRIVEN, AND WHY IT IS NOT A GREP. app/schedboard.js exposes
+   three entry points and neither writer is one of them, so the decision cannot
+   be called from here. What CAN be done is better than asserting a string is
+   present: the one expression that makes the decision is lifted OUT of the
+   source and EVALUATED. The probe therefore pins the real code — not a
+   re-implementation of it, which would only pin this file's own opinion — and
+   a round that reworded the expression into something that behaves differently
+   fails here. ALL NAMES FABRICATED. */
+console.log("\n=== PROBE 15m — the progress editor names the hours it does not know ===");
+{
+  const BOARD = fs.readFileSync(
+    path.resolve(__dirname, "..", "..", "..", "app", "schedboard.js"), "utf8");
+
+  const lift = (re) => { const m = BOARD.match(re); return m ? m[1] : ""; };
+  const stepExpr = lift(/rec\.duration = (was && was\.node === it\.uid && was\.duration != null \? was\.duration : null);/);
+  const prgExpr = lift(/rec\.duration = (was && was\.node === u && was\.duration != null \? was\.duration : null);/);
+  ok("stepWrite's node branch decides the hours in one expression", !!stepExpr, stepExpr);
+  ok("and so does progCommit, in the same words", !!prgExpr, prgExpr);
+
+  /* eslint-disable no-new-func */
+  const stepFn = new Function("was", "it", "return " + (stepExpr || "undefined") + ";");
+  const prgFn = new Function("was", "u", "return " + (prgExpr || "undefined") + ";");
+  /* eslint-enable no-new-func */
+  const NODE = "s:C4302", OTHER = "s:C4303";
+
+  eq("a re-record of the SAME node keeps the hours the developer typed",
+    stepFn({ node: NODE, duration: 1.3 }, { uid: NODE }), 1.3);
+  eq("a record that has started describing ANOTHER flight loses them",
+    stepFn({ node: OTHER, duration: 1.3 }, { uid: NODE }), null);
+  eq("a first write names the key with nothing in it", stepFn(null, { uid: NODE }), null);
+  eq("and so does a stored event that never had hours",
+    stepFn({ node: NODE }, { uid: NODE }), null);
+
+  eq("progCommit keeps them on the same node", prgFn({ node: NODE, duration: 2.1 }, NODE), 2.1);
+  eq("and drops them when the node moves", prgFn({ node: OTHER, duration: 2.1 }, NODE), null);
+  eq("a node nobody has recorded yet gets a null", prgFn(null, NODE), null);
+
+  /* THE KEY IS WRITTEN ONLY FOR A FLYING BAND — a lesson is measured in
+     PERIODS and an exam in nothing, and a null hour figure standing on one
+     would be an absence dressed as a fact. */
+  ok("both writers ask the band before they name the field",
+    (BOARD.match(/if \(kind === "flights" \|\| kind === "fs"\) \{\n\s+const was = S\(\)\.find\("trainingLog", id\);/g) || []).length === 2,
+    "the two flying-only guards must both be there");
+
+  const between = (from, to) => {
+    const i = BOARD.indexOf(from);
+    return i < 0 ? "" : BOARD.slice(i, BOARD.indexOf(to, i) + to.length);
+  };
+  const stepGround = between('id: "prg:" + code + ":" + it.uid + ":" + it.code,', "});");
+  ok("the progress editor's LESSON record exists and names no duration",
+    !!stepGround && stepGround.indexOf("duration") < 0, stepGround.slice(0, 120));
+  const lessonRec = between("const rec2 = {", "};");
+  ok("and neither does the day plan's lesson event", !!lessonRec && lessonRec.indexOf("duration") < 0,
+    lessonRec.slice(0, 120));
+  ok("and the reason is written where the silence is, not only where the key is",
+    /IT NAMES NO `duration`, deliberately/.test(BOARD),
+    "a deliberate omission that says nothing reads as a forgotten one");
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   15n — «ΝΑ ΥΠΑΡΧΕΙ ΚΑΙ ΣΤΗΝ ΑΝΑΖΗΤΗΣΗ ΑΦΟΥ ΕΙΝΑΙ ΕΥΚΟΛΟ»
+   ══════════════════════════════════════════════════════════════════════════
+   P46-A4. The training log's search box now finds a flight by its hours. The
+   only thing that makes that non-trivial is that the number wears TWO
+   spellings in this app and they disagree on the separator: the form TYPES
+   «1.3» (durationValue refuses a comma — a decimal comma in an input would
+   make the box mean two things depending on locale) and the row PRINTS «1,3 h»
+   (the app's own reading convention, the same the syllabus badge uses). A
+   haystack that knew one spelling would fail exactly the person who typed the
+   number, or exactly the one who read it off the table.
+   Driven the same way as 15m: `durHaystack` is lifted out of app/scheduler.js
+   and evaluated, and the search is then simulated the way logRows() does it —
+   join, lowercase, indexOf. */
+console.log("\n=== PROBE 15n — the hours are searchable, in both spellings ===");
+{
+  const m = SCHEDULER.match(/function durHaystack\(d\) \{[\s\S]*?\n  \}/);
+  ok("the haystack helper is there to be driven", !!m);
+  // eslint-disable-next-line no-eval
+  const durHaystack = m ? (0, eval)("(" + m[0] + ")") : () => "";
+
+  /* the search as logRows() performs it: the same join, the same lowercase,
+     the same substring test — and an event field list with no «h» in it, so a
+     stray letter cannot be what makes a match. */
+  const hayOf = (ev) => [ev.node, ev.instructor, ev.note,
+    durHaystack(ev.duration)]
+    .filter(Boolean).join(" ").toLowerCase();
+  const hit = (ev, q) => hayOf(ev).indexOf(String(q).toLowerCase()) >= 0;
+
+  const timed = { node: "s:C4302", instructor: "ZP-1", note: "", duration: 1.3 };
+  const untimed = { node: "s:C4302", instructor: "ZP-1", note: "", duration: null };
+  /* the SAME absence, spelled the three other ways a store can spell it. No
+     writer in this app produces them — durationValue() returns `value: null`
+     for a blank box — but the whole threat model of this round is the
+     hand-edited store and the imported backup, and this is the one guard that
+     decides what a stored TIME is worth to a search. */
+  const blankStr = { node: "s:C4302", instructor: "ZP-1", note: "", duration: "" };
+  const spaces = { node: "s:C4302", instructor: "ZP-1", note: "", duration: "   " };
+  const absent = { node: "s:C4302", instructor: "ZP-1", note: "" };
+
+  ok("the figure as the FORM types it finds the flight", hit(timed, "1.3"), hayOf(timed));
+  ok("the figure as the ROW prints it finds the same flight", hit(timed, "1,3"), hayOf(timed));
+  ok("the glued form a logbook writes finds it too", hit(timed, "1.3h"), hayOf(timed));
+  ok("and the printed cell, copied straight out of the table", hit(timed, "1,3 h"), hayOf(timed));
+  ok("a whole number reads as one", hit({ node: "s:C4302", duration: 2 }, "2"));
+
+  ok("a DIFFERENT time does not match", !hit(timed, "1.4"), hayOf(timed));
+  ok("an event whose time is unknown adds NOTHING to its haystack",
+    hayOf(untimed) === "s:c4302 zp-1", hayOf(untimed));
+  ok("so a stray «h» cannot drag in every flight nobody has timed", !hit(untimed, "h"),
+    hayOf(untimed));
+  ok("nor can a bare number the event does not carry", !hit(untimed, "1.3"));
+
+  /* THE EMPTY STRING IS AN ABSENCE AND NOT A VALUE. A null test alone would
+     let it through and spell out «  h  h» — the exact failure the assertion
+     above says is impossible, reached by a store nobody in this app wrote. */
+  eq("an empty string adds NOTHING, exactly as a null does", hayOf(blankStr), "s:c4302 zp-1");
+  ok("and a bare «h» still finds nothing", !hit(blankStr, "h"), hayOf(blankStr));
+  eq("whitespace is the same absence", hayOf(spaces), "s:c4302 zp-1");
+  eq("and so is a record written before the field existed", hayOf(absent), "s:c4302 zp-1");
+  ok("a shape that is not a time at all adds nothing either",
+    !hit({ node: "s:C4302", duration: true }, "h")
+      && !hit({ node: "s:C4302", duration: [1.3] }, "1.3"),
+    "a boolean or an array is not an hour, and must not be searchable as one");
+
+  /* AND TEXT THAT IS A NUMBER IS FOUND, because the ROW PRINTS IT: a store
+     holding «1.3» as text shows «1,3 h» in the table, and a row a reader can
+     SEE must be a row that reader can FIND. */
+  ok("a numeric string is searchable in both spellings",
+    hit({ node: "s:C4302", duration: "1.3" }, "1.3")
+      && hit({ node: "s:C4302", duration: "1.3" }, "1,3"));
+  ok("and «1.30» is found as the one hour it is — the equivalence compareRow keeps",
+    hit({ node: "s:C4302", duration: "1.30" }, "1,3"),
+    hayOf({ node: "s:C4302", duration: "1.30" }));
+
+  /* AND THE BOX SAYS SO — a field that is searchable and unadvertised is a
+     feature only its author knows about. */
+  ok("the search box names the hours among what it searches",
+    /placeholder="node · instructor · note · hours"/.test(SCHEDULER),
+    "the placeholder must name the fourth thing it now finds");
+  ok("the value reaches the helper RAW — one rule, in one place",
+    /durHaystack\(ev\.duration\),/.test(SCHEDULER),
+    "a second guard at the call site would be a second rule that can disagree");
+  ok("and the helper itself is the type test, not a null test",
+    /typeof d === "number" \? d/.test(SCHEDULER) && /if \(!isFinite\(n\)\) return "";/.test(SCHEDULER),
+    "an unknown time is not a value to be found by, and \"\" is an unknown time");
 }
 
 module.exports = true;

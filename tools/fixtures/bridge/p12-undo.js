@@ -23,8 +23,14 @@
 const H = require("./harness.js");
 const { B, ok, eq } = H;
 
+/* P46-A4 — the model row of this lane gained its ELEVENTH key on 10/09/2026,
+   when the Wings Ahead round dropped the guard that refused a pushed duration.
+   It is null here on purpose: a flight whose time nobody has typed is the
+   ordinary case, and `null` is how the wire says «not known yet» — never a
+   missing key, which would be a different memory of the same row. */
 const ROW_A = { date: "2026-08-12", track: "contact", sortie: "C4302", seq: 1, kind: "syllabus",
-  instructor: "AIRMAN", instructor_oid: "R-9001", grade: null, ng: false, mission: "complete" };
+  instructor: "AIRMAN", instructor_oid: "R-9001", grade: null, ng: false, mission: "complete",
+  duration: null };
 const ROW_B = Object.assign({}, ROW_A, { date: "2026-08-14" });
 const ROW_C = Object.assign({}, ROW_A, { date: "2026-08-19" });
 const RID = "S-9001 ∷ flights ∷ s:C4302 ∷ 1";
@@ -132,7 +138,7 @@ console.log("\n=== PROBE 12e — DRIFT GUARD 2: the compensating op's own shape 
   const opPrev = after, opRow = before;
   ok("the compensation's `prev` is what the push LEFT standing", opPrev === after);
   ok("and its `row` is what stood there before", opRow === before);
-  ok("both are whole rows, in the ten keys this lane owns",
+  ok("both are whole rows, in the eleven keys this lane owns",
     Object.keys(opPrev).sort().join(",") === B.PUSH_ROW_KEYS.slice().sort().join(",")
       && Object.keys(opRow).sort().join(",") === B.PUSH_ROW_KEYS.slice().sort().join(","));
   ok("so a row a human touched since answers exists_student and writes NOTHING",

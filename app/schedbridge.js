@@ -93,15 +93,34 @@
  *          read it, and now fdmsRow reads it back (`ev.duration`), compareRow
  *          makes it a REAL difference instead of a comment, ADOPTABLE grows by
  *          one, buildEvent writes it, and the chip stops claiming the number
- *          is Wings Ahead's alone. IT STILL DOES NOT CROSS THE WIRE: the
- *          deployed wa.bridge_push refuses a pushed duration BY NAME, so
- *          PUSH_ROW_KEYS is unchanged and the reason written beside it is now
- *          the true one — not «FDMS has no field» but «the wire does not carry
- *          it yet». Lifting it is a Wings Ahead schema round.
+ *          is Wings Ahead's alone. IT DID NOT CROSS THE WIRE THAT ROUND: the
+ *          deployed wa.bridge_push refused a pushed duration BY NAME, so
+ *          PUSH_ROW_KEYS stayed at ten keys and the reason written beside it
+ *          was rewritten to the true one — not «FDMS has no field» but «the
+ *          wire does not carry it yet». → LIFTED 10/09/2026, below.
  *     R3 · on the pre-existing defect that recompute() never handed the push
  *          ledger to crossCheck(): «κάνε ό,τι νομίζεις». It is handed over, as
  *          15ζ designed it — so the echo rule's PENDING REMOVAL half, which no
  *          browser could ever reach, is reachable. See recompute().
+ *
+ * WHAT P46-A4 ADDED (10/09/2026) — THE ELEVENTH KEY, AND RULING #8 IS DONE
+ *   The Flight Commander: «Ολοκλήρωσε ό,τι απαιτείται για το cloud schema. Να
+ *   μπει και το duration όπου δεν υπάρχει. Να υπάρχει και στην αναζήτηση αφού
+ *   είναι εύκολο. Ενημέρωσε roadmap.» § 19 of the spec.
+ *   The Wings Ahead schema round § 18ε named did exactly the two things it was
+ *   asked for: the ONE branch of wa.bridge_push that refused a pushed duration
+ *   is gone, and wa.chk_duration (> 0, ≤ 24, one decimal, null allowed) stands
+ *   in its place. On this side that is FOUR seams and, again, no new powers:
+ *   PUSH_ROW_KEYS gains `duration` and becomes ELEVEN keys; pushRowOf() mints
+ *   it from the event through num(), so a NUMBER or null leaves and never a
+ *   string; rowProblem() drops it from the refused-key sentence and gains a
+ *   MIRROR of wa.chk_duration, so a figure that would RAISE over there — and
+ *   roll back every other flight in the same chunk — is refused here by name;
+ *   sameWaRow() needed no line at all, because it asks the list. A ledger row
+ *   minted before this day remembers a row of TEN, honestly, and is read as
+ *   `null` rather than accused of being a tampered backup.
+ *   Ruling #8 is now DONE on BOTH halves, and the promise it made on
+ *   21/08/2026 held to the letter: not one row key changed to let the number in.
  *
  * THE EIGHT RULINGS OF THE FLIGHT COMMANDER (21/08/2026) — recorded verbatim
  * in the spec; here is what each one MEANS IN THIS FILE:
@@ -130,12 +149,13 @@
  *   #8 duration becomes an FDMS field in slice 6. Identities here are built so
  *      that a duration field can attach later WITHOUT changing any row key —
  *      duration is payload, and payload is never part of a row identity.
- *      → DONE ON THE FDMS HALF, 05/09/2026 (P46-A3 · R2): the field exists, the
- *      bridge reads / compares / adopts / writes it, and the promise above held
- *      exactly as made — NOT ONE ROW KEY CHANGED to let it in. What is still
- *      owed is the WIRE: the deployed bridge_push refuses a pushed duration by
- *      name, so PUSH_ROW_KEYS stays without it until a Wings Ahead schema round
- *      lifts that guard. § 18 of the spec.
+ *      → DONE, BOTH HALVES. The FDMS half on 05/09/2026 (P46-A3 · R2): the
+ *      field exists and the bridge reads / compares / adopts / writes it. The
+ *      WIRE on 10/09/2026 (P46-A4): the Wings Ahead round dropped the branch
+ *      that refused a pushed duration, wa.chk_duration judges it instead, and
+ *      `duration` is the ELEVENTH key of PUSH_ROW_KEYS. The promise above held
+ *      exactly as made across all twenty days — NOT ONE ROW KEY CHANGED to let
+ *      the number in. § 18 and § 19 of the spec.
  *
  * THE ROW IDENTITY — THE ONE THING THIS SLICE MUST GET RIGHT
  *   rid = oid ∷ group ∷ uid ∷ ord
@@ -2446,7 +2466,8 @@
      Ε dates and Σ sorties an instructor recorded in Wings Ahead APPEAR IN FDMS
      — report first, written only through the confirm dialog. (The other half of
      slice 6 — `duration` as a real FDMS field, ruling #8 — was not this round;
-     it landed the same day, in P46-A3 · R2. NOTHING OF IT REACHES THIS LANE: a
+     it landed the same day, in P46-A3 · R2, and its wire followed on 10/09/2026
+     in P46-A4. NOTHING OF EITHER REACHES THIS LANE, and that is unchanged: a
      currency row records WHO flew, not FOR HOW LONG, and this group still
      neither reads nor writes an hour figure anywhere.)
 
@@ -3070,10 +3091,12 @@
           last-acknowledged ledger hands us without trying.
       4 · SHAPES ARE REFUSED BY NAME, NEVER COERCED. seq is a JSON NUMBER 1..20
           (never "2"), kind is one of five words, ng is a boolean and never true,
-          the date is "YYYY-MM-DD", `entered_by` / `legacy` / `duration` never
-          cross THIS WIRE (P46-A3: FDMS now HAS a duration field — ruling #8's
-          other half — and the wire still does not carry it, because the
-          deployed bridge_push refuses the key by name; see PUSH_ROW_KEYS), the
+          the date is "YYYY-MM-DD", `entered_by` and `legacy` never cross THIS
+          WIRE (they are the server's own record of who wrote a row), `duration`
+          is a number > 0, ≤ 24, to one decimal — or null (P46-A4: the wire
+          carries the hours since 10/09/2026, wa.chk_duration is the judge, and
+          a figure it would RAISE on is refused HERE instead, because a raise
+          rolls the whole chunk back; see PUSH_ROW_KEYS and rowProblem) —, the
           rid is a string ≤ 200 chars and at most 200 ops ride in one call.
           Everything below emits those shapes deliberately.
 
@@ -3106,6 +3129,15 @@
   const PUSH_MAX_OPS = 200;     // wa: «a single push carries at most 200 operations»
   const RID_MAX = 200;          // wa: the rid is a string of at most 200 characters
   const SEQ_MAX = 20;           // wa: chk_int(seq, 1, 20) on every flight row
+  /* P46-A4 — THE FOURTH BOUND, and it arrived with the eleventh key. Since the
+     Wings Ahead round of 10/09/2026 dropped the branch that refused a pushed
+     `duration`, `wa.chk_duration` is the judge on the far side: a NUMBER,
+     > 0, ≤ 24, one decimal, and null allowed to mean «not known yet». 24 is
+     wider than the training-log form's own 9.9 h on purpose — the form bounds
+     ONE HAND-TYPED sortie, where the realistic failure is a slipped decimal
+     point, and this bounds what a record LINE may say (scheduler.js
+     § durationValue says the same thing from the other end). */
+  const DUR_MAX = 24;           // wa: chk_duration — n > 0, n <= 24, round(n, 1)
 
   /* ── THE CHUNK THIS SIDE ACTUALLY SENDS, AND WHY IT IS NOT 200 ────────────
      THE ENVELOPE MAX IS NOT A BUDGET. 200 is the largest call the server will
@@ -3141,27 +3173,36 @@
      a key added on one side and not the other is a difference and not a
      surprise. `entered_by` and `legacy` are the server's, never the wire's.
 
-     ── AND `duration` IS STILL NOT HERE, FOR A REASON THAT HAS CHANGED (P46-A3)
-     Until 05/09/2026 the sentence above read «and never will be until FDMS has
-     the field (ruling #8)». FDMS HAS THE FIELD NOW — the owner's «βάλε και το
-     duration στο FDMS» closed that half the same day, and this bridge reads,
-     compares, adopts and stores flight hours WA → FDMS. What has not moved is
-     THE WIRE: the deployed `wa.bridge_push` refuses a pushed `duration` BY
-     NAME —
+     ── AND `duration` IS THE ELEVENTH, SINCE 10/09/2026 (P46-A4) ─────────────
+     This list carried TEN keys for three weeks and the sentence beside it was
+     rewritten twice, because the reason kept changing while the answer did not.
+     Slice 1 said «FDMS has no field to disagree with» (ruling #8, 21/08). P46-A3
+     said «FDMS HAS the field now — what it has not got is a WIRE», and quoted
+     the guard on the other side by name:
          «DURATION CROSSES IN NEITHER DIRECTION UNTIL FDMS HAS THE FIELD
           (ruling #8). Refused rather than dropped: silently discarding a
           number somebody sent is how the two systems start disagreeing about
           hours.»                       (D:\WingsAhead\db\schema.sql, wa.bridge_push)
-     — and that guard is on the OTHER SIDE of a system this repo does not
-     deploy. Sending the key anyway would earn a `refused` verdict per row and
-     teach the developer to read past a refusal, which is the one thing a
-     refusal must never become. So the key stays out of this list for one more
-     round, the reason is now «the wire does not carry it», and lifting it is a
-     WINGS AHEAD schema round (drop that branch, let `wa.chk_duration` — which
-     already validates > 0, ≤ 24 and one decimal — be the only judge). It is
-     recorded as the pending item of specs/bridge-spec.md § 18 and § 15ι. */
+     THE FLIGHT COMMANDER LIFTED IT ON 10/09/2026 — «ολοκλήρωσε ό,τι απαιτείται
+     για το cloud schema· να μπει και το duration όπου δεν υπάρχει» — and the
+     Wings Ahead schema round § 18ε asked for did exactly the two things it
+     asked for and nothing else: that ONE branch of `wa.bridge_push` is gone,
+     and `wa.chk_duration(row_in->'duration', …)` stands in its place. That
+     function is the right judge for a figure arriving on the wire for the same
+     reason it is the right one for a figure typed into Wings Ahead's own form:
+     a number, > 0, ≤ 24, one decimal, and `null` allowed to mean «not known».
+
+     SO THE HOURS NOW CROSS IN BOTH DIRECTIONS, and the discipline that made
+     that safe did not change: the row is rebuilt from scratch on every op
+     (pushRowOf), `sent` and a fresh row are compared key by key over exactly
+     THIS list (sameWaRow), and this side refuses a figure the far side would
+     refuse rather than spending a call to be told (rowProblem). What this side
+     must NOT do is send a number `wa.chk_duration` would throw on — that would
+     earn a `refused` verdict per row and teach the developer to read past a
+     refusal, which is the one thing a refusal must never become.
+     § 19 of specs/bridge-spec.md; ruling #8 is now DONE on both halves. */
   const PUSH_ROW_KEYS = ["date", "track", "sortie", "seq", "kind",
-    "instructor", "instructor_oid", "grade", "ng", "mission"];
+    "instructor", "instructor_oid", "grade", "ng", "mission", "duration"];
 
   /* MIRROR of wa.code_track(). The letter of a syllabus code names the table the
      row belongs to, and Wings Ahead validates the pair — so a row whose code
@@ -3275,12 +3316,49 @@
   }
 
   /* ── THE ROW AN FDMS EVENT BECOMES (design B.2, field for field) ──────────
-     AND THE EVENT MAY NOW CARRY HOURS THIS ROW DOES NOT (P46-A3). Since ruling
-     #8's FDMS half a training-log sortie can hold a `duration`, and this
-     function still builds a row of exactly PUSH_ROW_KEYS — no duration key,
-     not even a null one. The row is rebuilt from scratch on every op, so that
-     is also the guard: there is no path by which an event's hours reach the
-     wire, whatever a ledger or an import puts in front of it. */
+     AND THE HOURS ARE PART OF IT SINCE 10/09/2026 (P46-A4). Ruling #8 wanted
+     the flight time to be a fact of the FDMS record; P46-A3 made it one; the
+     Wings Ahead round of 10/09 dropped the guard that refused it on the wire.
+     So this function builds a row of exactly ELEVEN keys, and `duration` is
+     minted here the same way every other key is — from the event, through
+     pushDuration(), which reads the two shapes a record may honestly hold and
+     hands every other one on UNTOUCHED so that rowProblem() can refuse it by
+     name instead of being given the hour num() would have invented for it.
+     `null` is
+     written out loud rather than omitted, because a key that is simply absent
+     is a claim of nothing and the far side compares `prev` FACT FOR FACT: an
+     absent key and a null key would be two different memories of one row.
+     The row is still rebuilt from scratch on every op, which is what keeps
+     that promise true no matter what stands in front of it. */
+  /* ── WHAT A STORED FLIGHT TIME IS WORTH ON THE WIRE (P46-A4) ───────────
+     Every other key of a pushed row is either copied from a field the app
+     itself wrote or minted as a literal, so it cannot be a shape nobody
+     intended. `duration` is different: it is COPIED OUT OF A RECORD, and a
+     record can be hand-edited, restored from a doctored backup, or synced from
+     a copy older than the field. So exactly TWO shapes are read as a time — a
+     number (what the form writes) and text that IS a number (what such a store
+     leaves behind) — and the three spellings of absence (`null`, `undefined`,
+     `""`) become the one honest `null`.
+     EVERYTHING ELSE IS HANDED ON RAW, ON PURPOSE, so that rowProblem() refuses
+     it BY NAME on this one line. Running it through num() instead would
+     LAUNDER it into a flight time nobody recorded — `true` would become one
+     hour and `[1.3]` would become 1.3 — and an invented number is far worse on
+     this wire than a refusal, because once it is a number it is
+     indistinguishable from an hour somebody flew. Text that reads as no number
+     at all («abc», or the comma spelling «1,3» this wire does not speak) is
+     handed on raw for the same reason: calling it `null` would assert «not
+     known yet» over a value somebody clearly meant as a time, and a silent
+     assertion is the one thing a bridge may not make on the record's behalf. */
+  function pushDuration(v) {
+    if (v === null || v === undefined || v === "") return null;
+    if (typeof v === "number") return v;
+    if (typeof v === "string") {
+      const n = num(v);
+      return n === null ? v : n;
+    }
+    return v;
+  }
+
   function pushRowOf(o) {
     return {
       date: o.date,
@@ -3299,6 +3377,13 @@
          side never asks it to. */
       ng: false,
       mission: o.mission,
+      /* P46-A4 — the flight time, as the FDMS event holds it. `null` when the
+         hours are not known: that is «I do not know yet» and never «it lasted
+         nothing», which is exactly the distinction wa.chk_duration keeps on
+         the far side (it returns on null and refuses a zero). What a record is
+         allowed to MEAN by its stored value is the one judgement of
+         pushDuration(), just above. */
+      duration: pushDuration(o.duration),
     };
   }
 
@@ -3308,6 +3393,12 @@
      mission incomplete»). */
   const PUSH_MISSION = { completed: "complete", lag: "incomplete", fail: "incomplete", repeat: "incomplete" };
 
+  /* IT ASKS THE LIST AND NOTHING ELSE, which is why the eleventh key needed no
+     line here (P46-A4): `duration` joined PUSH_ROW_KEYS and joined this
+     comparison with it. A memory minted before 10/09/2026 has no such key and
+     is read as `null` — «the row we left there names no hours», which is what
+     actually happened; so a flight whose time is now known reads as ONE change
+     owed, and one whose time is still unknown reads as nothing owed at all. */
   function sameWaRow(a, b) {
     if (!isObj(a) || !isObj(b)) return false;
     for (const k of PUSH_ROW_KEYS) {
@@ -3323,17 +3414,26 @@
      ═══════════════════════════════════════════════════════════════════════════
      `row` is rebuilt from scratch by pushRowOf() on every single op, so it
      cannot carry a string seq or a kind nobody speaks even from a poisoned
-     ledger. `prev` was not: it is forwarded VERBATIM from `bridgePush.sent`,
+     ledger. (The ONE key of `row` that is copied out of a record rather than
+     computed is `duration`, and pushDuration() hands an unreadable value on
+     RAW precisely so that the guard below refuses it by name instead of
+     inventing an hour for it — same discipline, opposite direction.) `prev`
+     was not rebuilt at all: it is forwarded VERBATIM from `bridgePush.sent`,
      and an ⭱ Import of a hand-made or tampered backup (or a tampered
      `fdms-data` sync copy) can put anything in there. SchedStore.normalize()
      fills a missing key field and sanitises nothing.
 
      WHAT THAT COSTS, PRECISELY — and it is worse than «the server refuses it»:
-       · a STRING seq or an unknown `kind` in `prev` IS refused by name (the
-         deployed guard tests both blocks) — one wasted call to be told what
-         this side could have said for free;
-       · `entered_by` / `legacy` / `duration` in `prev` are NOT refused by name.
-         Those three guards read `row_in` only. Such a `prev` goes into
+       · a STRING seq, an unknown `kind` or — since the Wings Ahead round of
+         10/09/2026 — a STRING `duration` in `prev` IS refused by name (the
+         deployed guard tests both blocks, and the new duration branch guards
+         `prv` beside `row_in` for exactly the seq/kind reason) — one wasted
+         call to be told what this side could have said for free;
+       · `entered_by` / `legacy` in `prev` are NOT refused by name — and nor is
+         a duration whose SHAPE is fine and whose VALUE is impossible, because
+         wa.chk_duration's BOUNDS run on `row_in` only: a memory carrying 130 h
+         is not judged over there at all. Those guards read `row_in` only. Such
+         a `prev` goes into
          wa.bridge_row() and is compared fact for fact against the standing row,
          fails to match, and comes back **`exists_fdms`** — a knowledge refusal
          for a claim that was true, blamed on the wrong thing, and held as a
@@ -3352,24 +3452,41 @@
     if (!isObj(r)) return "the " + what + " block is not an object";
     for (const k of Object.keys(r)) {
       if (PUSH_ROW_KEYS.indexOf(k) < 0) {
-        /* P46-A3 — THE SENTENCE HAD TO STOP SAYING «nobody's» ABOUT DURATION.
-           FDMS holds flight hours since 05/09/2026 (ruling #8), so «the
-           server's or nobody's» became false for one of the three names the
-           moment the field existed. What is true is narrower and is what the
-           developer needs: `entered_by` and `legacy` belong to the server, and
-           `duration` belongs to FDMS AND TO WINGS AHEAD SEPARATELY — this WIRE
-           does not carry it, because the deployed bridge_push refuses it by
-           name until a Wings Ahead schema round lifts that guard. */
-        return "it carries «" + k + "», which is not one of the ten keys of a pushed row — "
-          + "`entered_by` and `legacy` are the server's, and `duration` — which FDMS now HAS as a field "
-          + "(ruling #8) — does not cross this wire in either direction while the deployed bridge_push "
-          + "refuses it by name. A key this wire does not speak makes the whole block describe a row "
-          + "that cannot exist";
+        /* P46-A4 — AND THE SENTENCE IS DOWN TO THE TWO NAMES THAT REALLY ARE
+           SOMEBODY ELSE'S. It has been rewritten twice, because the list kept
+           being right for a reason that kept expiring. Slice 1: «the server's
+           or nobody's». P46-A3: `duration` is FDMS's now, but the WIRE refuses
+           it. Since the Wings Ahead round of 10/09/2026 the wire carries it and
+           it is the ELEVENTH key, so only `entered_by` and `legacy` are left —
+           and those two are genuinely the server's own bookkeeping about the
+           row it stores, never a claim this side is entitled to make. */
+        return "it carries «" + k + "», which is not one of the eleven keys of a pushed row — "
+          + "`entered_by` and `legacy` are the SERVER's own record of who wrote a row, and a claim about "
+          + "them from this side would be this bridge testifying to somebody else's bookkeeping. A key "
+          + "this wire does not speak makes the whole block describe a row that cannot exist";
       }
     }
     for (const k of PUSH_ROW_KEYS) {
-      if (r[k] === undefined) return "«" + k + "» is missing, and a partial " + what + " describes a row "
-        + "nobody wrote";
+      if (r[k] === undefined) {
+        /* ── THE ONE KEY A MEMORY IS ALLOWED NOT TO HAVE (P46-A4) ───────────
+           `duration` became the eleventh key on 10/09/2026. Every block this
+           store REMEMBERED before that day — a ledger row's `sent`, a change
+           log entry's `waBefore` / `waAfter` — remembers a row of TEN, and
+           remembers it honestly, because ten is exactly what was sent.
+           Refusing those would put a `malformed` hold, and the sentence «this
+           memory came from a tampered or hand-edited backup», on every identity
+           this bridge has ever pushed and on every undo it could still
+           compensate: a mass false accusation manufactured out of our own
+           history. The absence is read the way sameWaRow() reads it — as
+           `null`, «the row we left there names no hours», which is precisely
+           what happened — and it is NOT filled in, because writing a claim we
+           never made is the forgery prevProblem exists to refuse.
+           A block this side BUILDS in this run gets no such licence: `what` is
+           «row» only for pushRowOf's own output, and that function writes the
+           key on every path there is. */
+        if (k === "duration" && what !== "row") continue;
+        return "«" + k + "» is missing, and a partial " + what + " describes a row nobody wrote";
+      }
     }
     if (typeof r.date !== "string" || !isoDate(r.date)) {
       return "«date» is not a calendar day written out (YYYY-MM-DD)";
@@ -3397,6 +3514,55 @@
     if (typeof r.ng !== "boolean") return "«ng» is not a boolean";
     if (typeof r.mission !== "string" || (trim(r.mission) && MISSIONS.indexOf(trim(r.mission)) < 0)) {
       return "«mission» is neither blank nor one of " + MISSIONS.join(" / ");
+    }
+    /* ── THE HOURS, JUDGED BY THE FAR SIDE'S OWN RULE (P46-A4) ───────────────
+       A MIRROR of wa.chk_duration, clause for clause, for the same reason
+       FLIGHT_KINDS and SEQ_MAX are literals here: this side must be able to say
+       what it is about to send WITHOUT the database. The PRECISION is asked
+       before the BOUND — the one place the order differs from the server's, and
+       for the reason scheduler.js § durationValue gives: asked the other way
+       round, a two-decimal figure that also happens to be large is refused for
+       its size, which is true but is not what is wrong with it. It matters
+       more for this key than for any other, because every other key of a pushed
+       row is minted by pushRowOf and cannot be wrong, while `duration` is
+       COPIED out of a record — and a record can be hand-edited, restored from a
+       doctored backup, or hold a Wings-Ahead figure between 9.9 and 24 that the
+       training-log form itself would refuse. Over there a bad number is a
+       RAISE, and a raise rolls the whole call back: one impossible figure would
+       cost every other flight in the same chunk its push. Refused here, by
+       name, it costs that one line and says what to correct.
+       `null` is not a fault: it is «not known yet», the far side returns on it,
+       and it is what most flights ever written will carry. */
+    if (r.duration !== null && r.duration !== undefined) {
+      if (typeof r.duration !== "number") {
+        return "«duration» is " + JSON.stringify(r.duration) + " — the flight time crosses this wire as a "
+          + "JSON NUMBER or as null, never as text";
+      }
+      /* AND A NON-FINITE NUMBER GETS ITS OWN SENTENCE, for the same
+         precision-before-bound reason as the clause above it: JSON.stringify()
+         prints BOTH Infinity and NaN as the four letters «null», so the text
+         sentence would have named the value as the one value it then calls
+         legal, and blamed text for something that is not text. It is reachable
+         — num() keeps an Infinity (isNaN(Infinity) is false), so a stored
+         "1e999" mints one — and a refusal that misnames the fault is the fault
+         this whole clause exists to avoid. */
+      if (!isFinite(r.duration)) {
+        return "«duration» is " + String(r.duration) + " — the flight time is a real number of hours, and "
+          + "a store that holds an infinity was not written by this app";
+      }
+      if (r.duration <= 0) {
+        return "«duration» is " + r.duration + " — a flown sortie lasted longer than nothing, and «not "
+          + "known yet» is written null and never zero";
+      }
+      if (Math.round(r.duration * 10) / 10 !== r.duration) {
+        return "«duration» is " + r.duration + " — the flight time is recorded to one decimal (6-minute "
+          + "steps) on both sides of this wire";
+      }
+      if (r.duration > DUR_MAX) {
+        return "«duration» is " + r.duration + " h — the flight time is DECIMAL HOURS, not minutes, and "
+          + "Wings Ahead refuses anything past " + DUR_MAX + " h (a day is the widest a single record "
+          + "line can be)";
+      }
     }
     return "";
   }
@@ -3857,11 +4023,49 @@
         instructor: normName(ip.last_name) || trim(ip.code),
         instructorOid: normOid(ip.oid),
         mission: PUSH_MISSION[trim(ev.result)],
+        /* P46-A4 — the hours the event actually holds. The training-log form
+           bounds a typed figure at 9.9 h and Wings Ahead bounds a recorded one
+           at 24, so what stands in the field is not always something this wire
+           may carry — see the guard immediately below. */
+        duration: ev.duration,
       });
+      /* ── THE FIGURE THE FAR SIDE WOULD THROW ON DOES NOT LEAVE (P46-A4) ───
+         Every other key of a pushed row is minted by this file and cannot be
+         wrong; `duration` is the ONE that is copied out of a record, and a
+         record can be hand-edited, imported from a doctored backup, or hold a
+         Wings-Ahead figure between 9.9 and 24 that the training-log form itself
+         would refuse. wa.chk_duration RAISES on a bad number — the whole call
+         rolls back — so one impossible figure would cost every other flight in
+         the chunk its push and come back as an envelope error naming none of
+         them. Asked here, the event is named, its own sentence is printed, and
+         everything else still goes.
+
+         THE FACT IS «wire», DELIBERATELY NOT «event». An event-side fact is one
+         that entitles the sweep to REMOVE the row this bridge already wrote
+         (§ pushBlockWhy, P45-FDMSd finding A). A slipped decimal point typed
+         today does not un-fly the flight and does not make the row standing in
+         Wings Ahead wrong: correct the number and the line goes on the next
+         push. Nothing is removed for a typo.
+
+         AND IT IS ASKED AT THE QUEUE AND NOT AT THE ROW, which is the same
+         lesson in the other direction. Only the two UPSERT paths send this row;
+         a REMOVAL owed by an ↺ Undo names the row the ledger REMEMBERS, and a
+         held or tombstoned identity sends nothing at all. Blocking those on a
+         figure they never carry would let one mistyped number keep a removal
+         the developer explicitly asked for owed for ever. */
+      const rowWhy = rowProblem(row, "row");
+      const blockWire = () => {
+        const w = "this flight cannot cross as it stands — " + rowWhy + ". Nothing standing in Wings "
+          + "Ahead is touched by this: correct the figure in the Training log and the line goes with "
+          + "the next push";
+        blocked.push({ evId, student: code, uid: node, date, who: label(stu), why: w });
+        evFate.set(evId, { kind: "block", why: w, fact: "wire" });
+      };
       const line = { rid, oid, group, uid: node, ord, seq, evId, student: code, who: label(stu),
         date, row, klass: trim(stu.class) };
 
       if (!L) {
+        if (rowWhy) { blockWire(); return; }
         evFate.set(evId, { kind: "queued", how: "create" });
         queued.push({ kind: "create", line,
           op: { op: "upsert", section: group, rid, prev: null, row, clear_tombstone: false } });
@@ -3902,6 +4106,7 @@
         evFate.set(evId, { kind: "standing" });
         return;                                                           // nothing owed
       }
+      if (rowWhy) { blockWire(); return; }              // the second UPSERT path (P46-A4)
       const isMove = !!sent && (up(sent.sortie) !== up(row.sortie) || isoDate(sent.date) !== isoDate(row.date)
         || posInt(sent.seq, 1) !== posInt(row.seq, 1));
       evFate.set(evId, { kind: "queued", how: sent ? (isMove ? "move" : "change") : "create" });
@@ -4358,6 +4563,12 @@
       instructor: trim(e.instructor) || trim(e.with), instructor_oid: normOid(e.instructor_oid),
       grade: num(e.grade), ng: e.ng === true,
       mission: MISSIONS.indexOf(trim(e.mission)) >= 0 ? trim(e.mission) : "",
+      /* P46-A4 — and the hours the row ACTUALLY carries, for the same reason
+         the grade and the NG flag are carried verbatim: from 10/09/2026 the
+         wire speaks this key, so a memory that left it out would claim the row
+         over there names no time when it may very well name one — and the next
+         `prev` built from that memory would be a false claim of knowledge. */
+      duration: num(e.duration),
     };
   }
   const rowHandle = (r) => (isObj(r) ? up(r.sortie) + " ∷ " + isoDate(r.date) + " ∷ " + posInt(r.seq, 1) : "");
@@ -5751,9 +5962,10 @@
        the OTHER side: WHAT it writes · WHAT it never touches · THE SAFE PATH. */
     push: "Sends the queued flights to Wings Ahead, after a dialog that numbers every one and shows the "
       + "exact row it becomes. It writes ONLY the flight / F-S rows this bridge itself owns, and only for "
-      + "students matched by OID. It never writes a grade, a duration or an NG flag, never a ground "
-      + "section, never a row a human typed, and never deletes anything. Every write lands in the Bridge "
-      + "change log, where ↺ Undo takes exactly that one back.",
+      + "students matched by OID. It writes the flight TIME the FDMS event carries, since 10/09/2026, and "
+      + "it never writes a grade or an NG flag, never a ground section, never a row a human typed, and "
+      + "never deletes anything. Every write lands in the Bridge change log, where ↺ Undo takes exactly "
+      + "that one back.",
     rm: "Removes the Wings Ahead row this bridge wrote and lays a TOMBSTONE on the identity, so the queue "
       + "cannot re-create it. It touches nothing in the FDMS training log and nothing a student typed — a "
       + "corrected row is his, and Wings Ahead refuses this lane over it. ↺ Undo puts the identity back in "
@@ -6760,7 +6972,8 @@
         : "Every line is listed below with <b>exactly what crosses the wire</b> and what Wings Ahead "
           + "will do with it. ")
         + "This writes the <b>flight rows of the students' Wings Ahead records</b> and "
-        + "nothing else: no grade, no duration, no NG, no ground section, and never a row a human typed.",
+        + "nothing else: no grade, no NG, no ground section, and never a row a human typed. The flight "
+        + "<b>time</b> goes with each row it belongs to, as the FDMS event holds it.",
       items: drawn.map(wireLine).join(""),
       foot: "<b>" + creates + "</b> new · <b>" + (list.length - creates) + "</b> changed"
         + (list.length > DRAW_MAX ? " · <b>" + (list.length - DRAW_MAX) + "</b> not drawn above" : "")
@@ -7343,8 +7556,10 @@
           log, the push ledger and Wings Ahead's own tombstones every time this pane paints. So being
           offline means <b>waiting</b> and never losing, a retry costs nothing, and a failed push is simply
           still owed. Only <b>flights and F/S</b> cross, only rows <b>this bridge owns</b>, and
-          <b>never</b> a grade, a duration or an NG flag — the flight <b>time</b> is a field of the FDMS
-          training log since 05/09/2026, and it still does not cross this wire in either direction.</p>
+          <b>never</b> a grade or an NG flag. The flight <b>time</b> has been a field of the FDMS training
+          log since 05/09/2026 and it <b>crosses in both directions since 10/09/2026</b> — a figure Wings
+          Ahead would refuse (over 24 h, or with a second decimal) is held back here, by name, on the one
+          line that carries it.</p>
         ${editOn() ? "" : `<div class="sch-consqban"><b>View-only</b> — nothing crosses this wire from this
           device, on any timer and from any button, until <b>✎ Editor mode</b> is on. Not tidiness: the
           ledger that records what was written goes through the same lock, and a write this store could
@@ -7997,9 +8212,11 @@
     /* P46-A3 — the chip stayed, and its TITLE stopped being true the moment
        FDMS gained the field: it used to say «Wings Ahead only until slice 6».
        Now it names which side the number came from, because the two sides can
-       disagree and that disagreement is a `duration` diff one line below. */
+       disagree and that disagreement is a `duration` diff one line below.
+       P46-A4 — and the title's last false clause went with the wire: it said
+       the hours never cross to Wings Ahead, and since 10/09/2026 they do. */
     if (x.duration != null) {
-      marks.push(`<span class="sch-chip" title="flight time, decimal hours (ruling #8 — FDMS holds this field since 05/09/2026; it never crosses the wire to Wings Ahead)">${esc(x.duration)} h</span>`);
+      marks.push(`<span class="sch-chip" title="flight time, decimal hours (ruling #8, DONE on both halves — FDMS holds this field since 05/09/2026 and it crosses this wire in both directions since 10/09/2026)">${esc(x.duration)} h</span>`);
     }
     /* PER-FIELD ADOPTION — offered on the very line that shows both sides, and
        nowhere else. That is the binding rule of this slice: what the developer
@@ -8172,12 +8389,13 @@
           <p class="sch-hint"><b>What the push lane does — and what it never does</b></p>
           <p class="sch-hint">It writes <b>flight and F/S rows Wings Ahead stamps «fdms»</b>, for students
             matched by <b>OID</b>, and nothing else anywhere. It never writes a <b>grade</b> (a sortie is a
-            word here, not a number — R2), never a <b>duration</b> — FDMS <b>has</b> held that field since
-            05/09/2026 (ruling #8) and reads, compares and adopts flight time <em>from</em> Wings Ahead, but
-            the deployed <code>bridge_push</code> refuses the key by name, so the hours do not cross this
-            wire until the Wings Ahead side lifts that guard —, never <b>NG</b> (this system has no such
-            state to assert, and NG removes a grade),
-            never a ground section, an evaluation, a solo or a proposal. It never overwrites a row a
+            word here, not a number — R2), never <b>NG</b> (this system has no such state to assert, and NG
+            removes a grade), never a ground section, an evaluation, a solo or a proposal. It <b>does</b>
+            write the flight <b>time</b>: FDMS has held that field since 05/09/2026 (ruling #8) and, since
+            the Wings Ahead round of <b>10/09/2026</b> dropped the guard that refused it, the hours cross
+            in <b>both</b> directions — judged by <code>wa.chk_duration</code> over there and by the same
+            rule here, so a figure past 24 h or with a second decimal is held back on the one line that
+            carries it instead of rolling back everything sent with it. It never overwrites a row a
             <b>human</b> typed: Wings Ahead answers <code>exists_student</code> / <code>exists_admin</code>
             and returns both versions for the report. And it never <b>deletes</b> by itself — a removal
             waits in Pending removals, names its reason, and lays a tombstone so the queue cannot undo
@@ -8240,7 +8458,10 @@
        Nothing here touches the store or the network — planNow/runPush/wireCall,
        which do, are reached only from a [data-brgw] control past the lock. */
     WA_BRIDGE_SCHEMA, PUSH_OPS, PUSH_REASONS, PUSH_VERDICTS,
-    PUSH_MAX_OPS, PUSH_CHUNK, RID_MAX, SEQ_MAX, PUSH_ROW_KEYS, PUSH_MISSION,
+    /* DUR_MAX joined its three siblings with the eleventh key (P46-A4): a
+       fixture that pins the wire's bounds must be able to read the bound this
+       side holds, instead of writing 24 down a second time. */
+    PUSH_MAX_OPS, PUSH_CHUNK, RID_MAX, SEQ_MAX, DUR_MAX, PUSH_ROW_KEYS, PUSH_MISSION,
     codeTrack, pushBlockOf, planPush, foldVerdict, sameWaRow, chunkOps, echoOf,
     undoPushPlan, rowFields, waHandleOf,
     /* P45-FDMSb — the four judgements the round added, each pure and each
