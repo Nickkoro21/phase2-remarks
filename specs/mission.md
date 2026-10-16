@@ -1,5 +1,9 @@
 # Mission — FDMS / Phase 2 Remarks
 
+> **Κατάσταση: 16/10/2026.** Το αρχείο αυτό, μαζί με το `tech-stack.md` και το
+> `roadmap.md`, είναι το **SDD constitution** του project: τι φτιάχνουμε, με τι,
+> και πού βρισκόμαστε. Ό,τι γράφεται εδώ δεσμεύει τους επόμενους γύρους.
+
 ## Why
 
 Η αξιολόγηση μαθητών ιπταμένων Phase II (T-6A) απαιτεί παρατηρήσεις Φύλλου Βαθμολογίας που
@@ -8,25 +12,53 @@
 χρονοβόρα και ανομοιογενής. Το **Phase 2 Remarks** δίνει στον εκπαιδευτή έτοιμες, κανονιστικά ορθές
 παρατηρήσεις σε δευτερόλεπτα.
 
+**Και μεγάλωσε.** Ξεκίνησε ως viewer παρατηρήσεων και είναι σήμερα το εργαλείο της Μοίρας για
+**τέσσερα** πράγματα, σε μία στατική εφαρμογή χωρίς build:
+
+| μέρος | τι κάνει | spec |
+|---|---|---|
+| **Remarks** | κατηγορία → item → κώδικες → έτοιμες παρατηρήσεις → copy | `observations-style.md` |
+| **Description** | ολόκληρο το μπλοκ περιγραφής ΦΒ από μία έξοδο | `description-spec.md` |
+| **Scheduler** | training log, ημερήσιο πλάνο, progress, consequences, currency εκπαιδευτών, balance/duties | `scheduler-spec.md` |
+| **Bridge** | διασταυρωτικός έλεγχος και ανταλλαγή με το **Wings Ahead** (το μητρώο των μαθητών), και στις δύο κατευθύνσεις | `bridge-spec.md` |
+
 ## Χρήστες
 
-Εκπαιδευτές (IP) και Αξιολογητές Μοίρας εκπαίδευσης T-6A· δευτερευόντως μαθητές (αυτοπαρακολούθηση προόδου).
+Εκπαιδευτές (IP) και Αξιολογητές Μοίρας εκπαίδευσης T-6A· ο **Διοικητής Σμήνους** ως developer και
+admin· δευτερευόντως μαθητές (αυτοπαρακολούθηση προόδου, μέσα από το Wings Ahead).
 
 ## Ροή χρήστη
 
-Κατηγορία (Contact / Instrument / Formation / VFR Navigation) → Item (αναζήτηση/λίστα) →
+**Remarks:** Κατηγορία (Contact / Instrument / Formation / VFR Navigation) → Item (αναζήτηση/λίστα) →
 Επιθυμητός κώδικας (MIF) + Κώδικας επίδοσης → εμφάνιση παρατηρήσεων → copy to gradesheet.
+
+**Scheduler:** πλάνο ημέρας → actualize → events του training log → consequences και readiness.
+
+**Bridge:** ⟳ ανάγνωση του Wings Ahead → αναφορά εννέα κλάσεων απόκλισης → ✔ Apply ανά γραμμή,
+με αριθμημένο διάλογο, change log και ↺ Undo → ✈ ώθηση προς τα έξω.
 
 ## Κανόνες περιεχομένου (αμετάβλητοι)
 
 - Μορφή: `#<item>. (desired) → (achieved): text` κατά ΒαΔ 3-1 §41.ζ.
 - Αγγλικά, 2-5 προτάσεις: υποκείμενο SP, λόγος, αίτιο, αποτέλεσμα· σχόλιο όταν πάνω/κάτω από MIF.
-- Πάνω από MIF: τελευταία πρόταση «Above end of block MIF achieved.»
-- Οι ποσοτικές αποκλίσεις συμφωνούν με τη ζώνη του κώδικα επίδοσης (§41.ε, interpolation 1↔3).
+- Πάνω από MIF: τελευταία πρόταση «Above end of block MIF achieved.» — την **προσθέτει ο συνθέτης**,
+  δεν πληκτρολογείται μέσα στο κείμενο.
+- Οι ποσοτικές αποκλίσεις συμφωνούν με τη ζώνη του κώδικα επίδοσης (§41.ε).
+  **Στο ίσο ο αριθμός είναι το ΟΡΙΟ** της ζώνης (3→3 = C3, 1→1 = C1, 2→2 ενδιάμεσος ευανάγνωστος) —
+  απόφανση Διοικητή Σμήνους 04/09/2026, `observations-style.md` § 5.9.
 - Κώδικας «E»/«D» εκτός εφαρμογής. Εργαζόμαστε με 0-4.
-- Human factors ορολογία μόνο από το data/human_factors.json (applicability: cause_slot).
+- Human factors ορολογία μόνο από το `data/human_factors.json` (applicability: cause_slot).
+- **Ποτέ πραγματικό όνομα ή call sign** σε δημόσιο repo, σε κείμενο παρατήρησης ή σε fixture.
+  Μόνο `SP` και `IP`. Το ιδιωτικό roster ζει **εκτός** repo, στο `D:\FDMS-roster\roster.json`.
 
 ## Πηγές αλήθειας
 
-ΒαΔ 3-1/2025 (ΔΑΕ), Phase 2 Syllabus 2025, ΠΔ 29/2020 (ΦΕΚ Α΄57), Human Factors brief (Koro).
-Ψηφιοποιημένα, με LLM-as-judge επικύρωση, στο `data/`.
+ΒαΔ 3-1/2025 (ΔΑΕ), Phase 2 Syllabus 2025, ΠΔ 29/2020 (ΦΕΚ Α΄57), T-6A Techniques & Procedures
+Manual, Human Factors brief (Koro). Ψηφιοποιημένα, με LLM-as-judge επικύρωση, στο `data/`.
+
+## Τα δύο repos
+
+- **FDMS** — αυτό εδώ. `Nickkoro21/phase2-remarks`, ζωντανό σε GitHub Pages.
+- **Wings Ahead** — `D:\WingsAhead`, `Nickkoro21/wingsahead`, Pages + **cloud Supabase**
+  (`cublgiougtbiyaqputfd`). Είναι η πλευρά του **μαθητή**: το δικό του μητρώο εκπαίδευσης, και το
+  δικό του currency για τον εκπαιδευτή. Κάθε αλλαγή σχήματος εκεί περνά από την **πύλη §4φ**.
