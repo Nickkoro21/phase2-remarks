@@ -110,7 +110,13 @@
 .adv-msg li { margin: 2px 0; }
 .adv-quote { margin: 6px 0 8px; padding: 6px 12px; border-left: 3px solid var(--gold, var(--accent)); background: var(--panel-2); color: var(--text); font-style: italic; white-space: pre-wrap; }
 .adv-quote .adv-qlab { display: block; font-style: normal; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); margin-bottom: 2px; }
-.adv-pre { font-family: Consolas, monospace; font-size: 12px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; overflow-x: auto; white-space: pre; margin: 6px 0; }
+.adv-pre { font-family: Consolas, monospace; font-size: 12px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; overflow-x: auto; white-space: pre-wrap; margin: 0; }
+.adv-prewrap { position: relative; margin: 6px 0; }
+.adv-copy { position: absolute; top: 6px; right: 6px; font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--accent); cursor: pointer; font-family: inherit; }
+.adv-copy:hover { border-color: var(--accent); }
+.adv-copy.done { color: var(--good); border-color: var(--good); }
+.adv-diag { font-size: 12.5px; line-height: 1.5; border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 8px; padding: 6px 12px; background: var(--panel-2); font-family: Consolas, monospace; }
+.adv-diag.bad { border-left-color: var(--bad); }
 .adv-msg code { font-family: Consolas, monospace; font-size: 12px; background: var(--bg-2); border-radius: 4px; padding: 0 4px; }
 .adv-cite { font-size: 11.5px; padding: 0 6px; margin: 0 1px; vertical-align: baseline; }
 .adv-ref { font-family: Consolas, monospace; font-size: 12px; color: var(--accent); white-space: nowrap; }
@@ -185,7 +191,13 @@
     const out = [];
     const chunks = src.split(/```/);
     chunks.forEach((chunk, i) => {
-      if (i % 2 === 1) { out.push(`<pre class="adv-pre">${esc(chunk.replace(/^[a-z]*\n/, ""))}</pre>`); return; }
+      if (i % 2 === 1) {
+        // Q5 — every produced block gets a copy button: the composers exist so the
+        // last step into the gradesheet software is one click, not a hand selection.
+        const body = chunk.replace(/^[a-z]*\n/, "").replace(/\n$/, "");
+        out.push(`<div class="adv-prewrap"><button type="button" class="adv-copy" data-copy title="Αντιγραφή στο πρόχειρο">⎘ Αντιγραφή</button><pre class="adv-pre">${esc(body)}</pre></div>`);
+        return;
+      }
       const lines = chunk.split("\n");
       let para = [], list = null, quote = [];
       const flushP = () => { if (para.length) { out.push(`<p>${inline(esc(para.join(" ")))}</p>`); para = []; } };
@@ -301,6 +313,7 @@
         <button type="button" class="fc-tbtn" id="adv-recheck" title="Ξαναρώτα τον proxy (GET /health)">↻ Έλεγχος</button>
       </div>
       ${notice}
+      ${UI.diag ? `<div class="adv-diag${UI.offline || !(h && h.key_present) ? " bad" : ""}" role="status">${esc(UI.diag)}</div>` : ""}
       ${!UI.offline && h ? `<div class="adv-sess">
         <label for="adv-sess-sel">Συζήτηση</label>
         <select id="adv-sess-sel" ${UI.busy ? "disabled" : ""} title="Οι συνεδρίες μένουν στον proxy (tools/advisor/sessions) — όχι στον browser">${sessOpts}</select>
@@ -308,7 +321,7 @@
         ${S ? `<button type="button" class="fc-tbtn" id="adv-archive" ${UI.busy ? "disabled" : ""} title="Αρχειοθέτηση — φεύγει από τη λίστα, δεν σβήνεται">▣ Αρχειοθέτηση</button>` : ""}
         ${canClose ? `<button type="button" class="fc-tbtn adv-close" id="adv-close" title="Αρχειοθετεί αυτή τη συζήτηση και ανοίγει νέα με αφετηρία τον φάκελο του μαθητή όπως είναι ΤΩΡΑ καταγεγραμμένος">✓ Έκλεισε η υπόθεση</button>` : ""}
         ${S ? `<button type="button" class="fc-tbtn" id="adv-export" ${UI.busy ? "disabled" : ""} title="Κατεβάζει αυτή τη συζήτηση ως αρχείο Markdown (ερωτήσεις, απαντήσεις, εργαλεία, εγγραφές, compactions, usage)">⭳ Λήψη</button>` : ""}
-        ${S ? `<span class="adv-turn" title="Χαρακτήρες ιστορικού αυτής της συζήτησης — ΟΧΙ tokens, ΟΧΙ το corpus. Το corpus μένει στο cache και δεν μετρά εδώ.">${esc(S.id)} · ${S.messages.reduce((n, m) => n + (m.content || "").length, 0).toLocaleString("el-GR")} χαρακτήρες ιστορικού${h.memory ? ` · ♻ σύμπτυξη στους ${Number(h.memory.compact_after_chars).toLocaleString("el-GR")} χαρακτήρες (≈ ${(Math.round(h.memory.compact_after_chars / 2.8 / 5000) * 5000).toLocaleString("el-GR")} tokens)` : ""}</span>` : ""}
+        ${S ? tokensLabel(S, h) : ""}
       </div>
       <p class="adv-help"><b>Έλεγχος</b>: ξαναρωτά τον τοπικό proxy αν είναι ζωντανός. <b>Νέα</b>: καινούργια συζήτηση — η τρέχουσα μένει στη λίστα. <b>Αρχειοθέτηση</b>: φεύγει από τη λίστα, δεν σβήνεται ποτέ. <b>Λήψη</b>: κατεβάζει τη συζήτηση ως Markdown στον δίσκο σου. <b>Έκλεισε η υπόθεση</b>: αρχειοθετεί και ανοίγει νέα με αφετηρία τον φάκελο του μαθητή. Οι συζητήσεις ζουν στον proxy (tools/advisor/sessions), όχι στον browser.</p>` : ""}
       ${S && S.events && S.events.length ? `<div class="adv-events">${S.events.slice(-4).map(eventHTML).join("")}</div>` : ""}
@@ -333,6 +346,33 @@
     renderTranscript();
   }
 
+  /* Q1 — the TOTAL the model sees: corpus + conversation, as the proxy estimates
+     it (chars ÷ 2.5 for Greek — an estimate, said so in the tooltip). */
+  function tokensLabel(S, h) {
+    const a = agentOf(UI.agent) || {};
+    const cpt = (h.memory && h.memory.chars_per_token) || 2.5;
+    const corpus = a.corpus_tokens_est || 0;
+    const hist = Math.round(S.messages.reduce((n, m) => n + (m.content || "").length, 0) / cpt);
+    const ceiling = (h.memory && h.memory.context_ceiling_tokens) || 400000;
+    const f = (n) => Number(n).toLocaleString("el-GR");
+    return `<span class="adv-turn" title="Εκτίμηση (${cpt} χαρακτήρες/token για ελληνικά), όχι μέτρηση. Το corpus μένει στο cache· συμπτύσσεται το ιστορικό όταν το σύνολο πλησιάσει το ταβάνι μείον τον χώρο της απάντησης.">${esc(S.id)} · σύνολο ~${f(corpus + hist)} / ${f(ceiling)} tokens (corpus ${f(corpus)} + συζήτηση ${f(hist)})</span>`;
+  }
+  function fallbackCopy(text, done) {
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); done(); } catch (e) { /* the user can still select by hand */ }
+    ta.remove();
+  }
+  /* Q3 — «Έλεγχος» answers in a line he can read, not just by re-rendering. */
+  function diagLine() {
+    const h = UI.health;
+    const at = new Date().toTimeString().slice(0, 5);
+    if (UI.offline || !h) return `${at} · ✕ Ο proxy στο ${PROXY} ΔΕΝ απαντά. Τρέξε: ${START_CMD}`;
+    const ags = (h.agents || []).map((a) => `${a.id}${a.tools_offered && a.tools_offered.length ? " (" + a.tools_offered.join(", ") + ")" : ""}`).join(" · ");
+    const ka = h.keepalive && h.keepalive.enabled ? "ναι" : "όχι";
+    return `${at} · ✓ proxy ζωντανός στο ${PROXY} · κλειδί ${h.key_present ? "✓ παρόν" : "✕ ΛΕΙΠΕΙ"} · φάκελος ${h.casefile && h.casefile.configured ? "✓ συνδεδεμένος" : "✕ όχι"} · keep-alive ${ka} · σήμερα ${h.today ? h.today.count : 0}/${h.caps ? h.caps.daily_cap : "?"} · agents: ${ags || "κανένας"}`;
+  }
   function eventHTML(e) {
     if (e.type === "compaction") return `<div class="adv-event is-compaction">♻ Compaction #${e.n} στις ${esc(hhmm(e.at))}: το ιστορικό (${fmtK(e.chars_before)} χαρ.) έγινε δομημένη σύνοψη (${fmtK(e.chars_after)} χαρ.)${e.kept_pairs ? `, ${e.kept_pairs} ζεύγος αυτούσιο` : ""}. Οι παραπομπές και οι εγγραφές κρατήθηκαν.</div>`;
     if (e.type === "seed") return `<div class="adv-event">⤷ ${esc(e.text)}</div>`;
@@ -567,7 +607,16 @@
         const a = agentOf(UI.agent); UI.turnMax = a ? a.max_turns : UI.turnMax;
         loadSessions().then(render); return;
       }
-      if (t.id === "adv-recheck") { health(true).then(loadSessions).then(render); return; }
+      if (t.id === "adv-recheck") { health(true).then(loadSessions).then(() => { UI.diag = diagLine(); render(); }); return; }
+      const cp = t.closest("[data-copy]");
+      if (cp) {
+        const pre = cp.parentElement.querySelector("pre");
+        const text = pre ? pre.textContent : "";
+        const done = () => { cp.textContent = "✓ Αντιγράφηκε"; cp.classList.add("done"); setTimeout(() => { cp.textContent = "⎘ Αντιγραφή"; cp.classList.remove("done"); }, 1800); };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, () => fallbackCopy(text, done));
+        else fallbackCopy(text, done);
+        return;
+      }
       if (t.id === "adv-new") { if (UI.busy) return; UI.session = null; UI.errors = []; UI.ctxDraft = ""; render(); return; }
       if (t.id === "adv-archive") { archiveSession(); return; }
       if (t.id === "adv-export") { exportSession(); return; }
@@ -614,6 +663,32 @@
     health(false).then(loadSessions).then(render);
   }
 
-  window.advInit = advInit;
-  window.Advisor = { md: md, ui: UI, PROXY: PROXY };
+  /* ════════════════════════════════════════════════════════════════════════
+     § 7  THE EDITOR LOCK (Q2) — the tab exists only while THIS DEVICE is
+     unlocked for editing, through the app's own SchedEdit (schedstore.js):
+     same flag, same dialog, same 👁 View button as the Scheduler's dangerous
+     controls. View-only never sees the advisor. Fail closed: no SchedEdit, no tab.
+     ════════════════════════════════════════════════════════════════════════ */
+  function applyLock(open) {
+    const tab = $("tab-advisor"), view = $("view-advisor");
+    if (!tab) return;
+    tab.classList.toggle("hidden", !open);
+    if (!open && view && !view.classList.contains("hidden")) {
+      if (UI.abort) { try { UI.abort.abort(); } catch (e) { /* nothing streaming */ } }
+      if (typeof window.switchView === "function") window.switchView("remarks");
+    }
+  }
+  (function gate() {
+    const E = window.SchedEdit;
+    if (!E || typeof E.on !== "function") { applyLock(false); return; }
+    applyLock(!!E.on());
+    if (typeof E.subscribe === "function") E.subscribe((open) => applyLock(!!open));
+  })();
+
+  window.advInit = function () {
+    const E = window.SchedEdit;
+    if (!E || typeof E.on !== "function" || !E.on()) { applyLock(false); return; }   // belt and braces
+    advInit();
+  };
+  window.Advisor = { md: md, ui: UI, PROXY: PROXY, diagLine: diagLine, _applyLock: applyLock };
 })();

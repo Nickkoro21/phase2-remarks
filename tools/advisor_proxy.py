@@ -101,9 +101,12 @@ R-B — Η ΜΝΗΜΗ, με το σχήμα που έδωσε ο ιδιοκτή�
      (μόνο ids). GET /sessions?agent= · POST /sessions · GET /sessions/<id> ·
      POST /sessions/<id>/archive · POST /sessions/<id>/close. Το /ask παίρνει
      πλέον {session, question} και ο proxy κρατά το ιστορικό.
-  2. COMPACTION όταν μεγαλώσει το ΙΣΤΟΡΙΚΟ (ADVISOR_COMPACT_AFTER_CHARS, default
-     250.000 ΧΑΡΑΚΤΗΡΕΣ μηνυμάτων ≈ 90k tokens — F1, 17/10/2026: τα 24.000 ήταν
-     παράλογα νωρίς για παράθυρο 1M και διαβάζονταν ως tokens) — ΟΧΙ το corpus: το corpus είναι το cached
+  2. COMPACTION όταν το ΣΥΝΟΛΟ corpus + ιστορικό πλησιάσει το ταβάνι (Q1, απόφανση
+     ιδιοκτήτη «Σύνολο 400.000, βάλ' το να υπολογίζει το σύνολο»):
+     est(πρόθεμα system) + est(ιστορικό + ερώτηση) > ADVISOR_CONTEXT_CEILING_TOKENS
+     (400.000) − max_tokens της απάντησης. Η εκτίμηση: GREEK_CHARS_PER_TOKEN=2.5.
+     Προσαρμόζεται μόνη της: ο remarks (162 KB corpus) έχει πολύ περισσότερο χώρο
+     συζήτησης από τον board (464 KB). Το ιστορικό ΜΟΝΟ αλλάζει — το corpus είναι το cached
      πρόθεμα και δεν μετακινείται ΠΟΤΕ. Το μοντέλο ξαναγράφει τη συζήτηση σε
      ΔΟΜΗΜΕΝΗ ΣΥΝΟΨΗ σταθερού σχήματος (μαθητής & ερώτημα · τι τεκμηριώθηκε, με
      παραπομπές · τι μένει ανοιχτό · τι γράφτηκε, με ids) και το ιστορικό
@@ -137,7 +140,7 @@ compactions, σύνολα usage) ή ως το JSON της. Τοπικά, στο�
 third-party tracing — οι συνεδρίες έχουν πραγματικά ονόματα.
 
 ΑΛΛΕΣ ΡΥΘΜΙΣΕΙΣ
-  ADVISOR_COMPACT_AFTER_CHARS --compact-after   default 250000 (ΧΑΡΑΚΤΗΡΕΣ ιστορικού ≈ 90k tokens)
+  ADVISOR_CONTEXT_CEILING_TOKENS --context-ceiling default 400000 (ΣΥΝΟΛΟ tokens corpus+ιστορικό, ΕΚΤΙΜΗΣΗ με 2.5 χαρ./token)
   ADVISOR_COMPACT_KEEP        --compact-keep    default 1      (ζεύγη που μένουν αυτούσια)
   ADVISOR_CONFIRM_TTL_S       --confirm-ttl     default 900    (ζωή token επιβεβαίωσης)
   ADVISOR_SESSIONS_DIR        --sessions-dir    default tools/advisor/sessions/
@@ -200,7 +203,7 @@ DEFAULTS = {
     "tool_total_chars": 20000,
     "casefile_max_calls": 8,
     "casefile_max_writes": 2,
-    "compact_after": 250_000,      # ΧΑΡΑΚΤΗΡΕΣ ιστορικού (≈ 90k tokens) — όχι tokens, όχι το corpus
+    "context_ceiling": 400_000,    # Q1: ΣΥΝΟΛΟ tokens (corpus + ιστορικό), απόφανση ιδιοκτήτη «Σύνολο 400.000»
     "compact_keep": 1,
     "confirm_ttl": 900,
     "keepalive": 1,
@@ -210,6 +213,17 @@ DEFAULTS = {
     "agents_dir": str(ROOT / "agents"),
     "corpus_dir": str(ROOT / "tools" / "advisor"),
 }
+# Q1 — Η ΕΚΤΙΜΗΣΗ TOKENS. Δεν υπάρχει tokenizer εδώ· ο builder του corpus δίνει
+# εύρος 2.0–2.5 χαρακτήρες/token για ελληνικά. Διαλέγουμε το 2.5 (το ΑΙΣΙΟΔΟΞΟ
+# άκρο: λιγότερα tokens ανά χαρακτήρα) ΚΑΙ κρατάμε απόθεμα για την απάντηση· το
+# πραγματικό νούμερο του corpus το δίνει μία δωρεάν κλήση `--count-tokens`.
+GREEK_CHARS_PER_TOKEN = 2.5
+
+
+def est_tokens(chars: int) -> int:
+    return int(chars / GREEK_CHARS_PER_TOKEN)
+
+
 DEFAULT_MODEL = "claude-opus-5-5"
 DEFAULT_EFFORT = "high"
 DEFAULT_MAX_TOKENS = 16000
@@ -237,7 +251,10 @@ SEARCHABLE_SUFFIXES = {".json", ".md", ".txt"}
 
 # ── ΤΑ ΕΡΓΑΛΕΙΑ ΠΟΥ ΥΠΑΡΧΟΥΝ — ό,τι άλλο γράψει το agent.md στο `tools:` αγνοείται ──
 CASEFILE_TOOLS = ("casefile_find_student", "casefile_list_cases", "casefile_add_case", "casefile_update_case")
-KNOWN_TOOLS = ("search_sources",) + CASEFILE_TOOLS
+COMPOSER_TOOLS = ("description_template", "remarks_lookup")     # Q6/Q7: ανάγνωση της ΠΡΑΓΜΑΤΙΚΗΣ γραμματικής/τράπεζας
+KNOWN_TOOLS = ("search_sources",) + CASEFILE_TOOLS + COMPOSER_TOOLS
+OBS2_DIR = ROOT / "data" / "observations2"
+DESC_JSON = ROOT / "data" / "descriptions.json"
 CASE_KINDS = ("fail", "lag", "nfs_in", "nfs_out", "sms_in", "sms_out", "progress_check",
               "airsickness", "ground_exam", "oral_exam", "referral", "board", "note")
 UUID_RE = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", re.I)
@@ -362,11 +379,29 @@ def list_agents() -> list[dict]:
     return out
 
 
+_CHARS_CACHE: dict = {}
+
+
+def corpus_chars(a: dict) -> int | None:
+    """Χαρακτήρες του corpus (όχι bytes — τα ελληνικά είναι 2 bytes/χαρ.), cached ανά mtime."""
+    p = a["corpus_path"]
+    if not p.is_file():
+        return None
+    key = (str(p), p.stat().st_mtime_ns)
+    if key not in _CHARS_CACHE:
+        _CHARS_CACHE.clear()
+        _CHARS_CACHE[key] = len(p.read_text(encoding="utf-8"))
+    return _CHARS_CACHE[key]
+
+
 def public_agent(a: dict) -> dict:
     size = a["corpus_path"].stat().st_size if a["corpus_path"].is_file() else None
+    chars = corpus_chars(a)
     return {
         "id": a["id"], "name": a["name"], "model": a["model"], "effort": a["effort"],
-        "corpus": a["corpus"], "corpus_bytes": size,
+        "corpus": a["corpus"], "corpus_bytes": size, "corpus_chars": chars,
+        "corpus_tokens_est": est_tokens(chars + len(a["body"]) + 3000) if chars is not None else None,
+        "max_tokens": a["max_tokens"],
         "corpus_ok": size is not None and size <= CFG["max_corpus_bytes"],
         "max_turns": effective_max_turns(a), "language": a["language"], "tools": a["tools"],
         "tools_offered": offered_tools(a),
@@ -910,7 +945,8 @@ def session_summary(s: dict) -> dict:
             "created": s["created"], "updated": s["updated"], "archived": bool(s.get("archived")),
             "turns": sum(1 for m in s["messages"] if m["role"] == "user" and not m.get("kind")),
             "writes": len(s.get("writes") or []), "compactions": int(s.get("compactions") or 0),
-            "student_label": s.get("student_label") or "", "chars": history_chars(s["messages"])}
+            "student_label": s.get("student_label") or "", "chars": history_chars(s["messages"]),
+            "history_tokens_est": est_tokens(history_chars(s["messages"]))}
 
 
 def list_sessions(agent: str, include_archived: bool = False, limit: int = 30) -> list[dict]:
@@ -932,6 +968,57 @@ def list_sessions(agent: str, include_archived: bool = False, limit: int = 30) -
 
 def history_chars(messages: list[dict]) -> int:
     return sum(len(m.get("content") or "") for m in messages)
+
+
+def context_budget(a: dict, system: list[dict], s: dict, question: str = "") -> dict:
+    """Q1 — το ΣΥΝΟΛΟ που βλέπει το μοντέλο, σε εκτιμώμενα tokens, και αν
+    ξεχείλισε: corpus (όλο το system) + ιστορικό + ερώτηση, έναντι ταβανιού
+    μείον το απόθεμα της απάντησης (max_tokens του agent)."""
+    corpus_t = est_tokens(sum(len(b["text"]) for b in system))
+    hist_t = est_tokens(history_chars(s["messages"]) + len(question or ""))
+    ceiling = int(CFG["context_ceiling"])
+    reserve = int(a["max_tokens"])
+    return {"corpus": corpus_t, "history": hist_t, "total": corpus_t + hist_t, "ceiling": ceiling,
+            "reserve": reserve, "compact_at": ceiling - reserve,
+            "overflow": corpus_t + hist_t > ceiling - reserve, "chars_per_token": GREEK_CHARS_PER_TOKEN}
+
+
+def derive_title(question: str, agent: dict) -> str:
+    """Q8 — σύντομη ετικέτα ΧΩΡΙΣ κλήση μοντέλου: κωδικός εξόδου · θέμα · βαθμός.
+    Αν δεν βγαίνει τίποτα, η ερώτηση κομμένη, όπως πριν."""
+    q = question or ""
+    parts: list[str] = []
+    m = re.search(r"\b([CIFNB])\s?(\d{4})\b", q, re.I)
+    if m:
+        parts.append(m.group(1).upper() + m.group(2))
+    else:
+        m = re.search(r"(?<![\d.,])([1-9]\d{3})(?![\d.,%])", q)   # «την 4602» από υπαγόρευση, χωρίς γράμμα
+        if m:
+            parts.append(m.group(1))
+    KINDS = [
+        (r"περιγραφ|description", "περιγραφή"), (r"παρατήρησ|remark|observation", "παρατήρηση"),
+        (r"αεροναυτ|airsick", "αεροναυτία"), (r"αποτυχ|απέτυχ|κόπηκε|fail\b", "αποτυχία"),
+        (r"υστέρησ|υστερησ|\blag\b", "υστέρηση"), (r"κεπε|\bsms\b", "ΚΕΠΕ"),
+        (r"δοκιμ[ήη] προόδου|progress check", "δοκιμή προόδου"), (r"συμβούλι|\bboard\b", "συμβούλιο"),
+        (r"αξιολόγησ|checkride", "αξιολόγηση"), (r"μόνος|\bsolo\b", "ΜΟΝΟΣ"),
+        (r"εξέτασ|exam", "εξέταση"), (r"φύλλο μη πτήσης|\bnfs\b", "ΦμΠ"),
+    ]
+    for pat, lab in KINDS:
+        if re.search(pat, q, re.I):
+            parts.append(lab)
+            break
+    if not any(p in ("περιγραφή", "παρατήρηση") for p in parts):
+        subj = {"description": "περιγραφή", "remarks": "παρατήρηση"}.get(agent["id"])
+        if subj:
+            parts.append(subj)
+    m = re.search(r"\b(\d{1,3})\s?%", q)
+    if m and 0 <= int(m.group(1)) <= 100:
+        parts.append(m.group(1) + "%")
+    m = re.search(r"#\s?(\d{1,2})\b", q)
+    if m:
+        parts.append("#" + m.group(1))
+    title = " · ".join(dict.fromkeys(parts))
+    return title if title else q[:80]
 
 
 def api_messages(s: dict, question: str | None = None) -> list[dict]:
@@ -1013,7 +1100,256 @@ class ToolBudget:
         cf = [n for n in names if n in CASEFILE_TOOLS]
         if cf:
             out.extend(self.make_casefile_tools(cf))
+        if "remarks_lookup" in names:
+            out.append(self.make_remarks_lookup())
+        if "description_template" in names:
+            out.append(self.make_description_template())
         return out
+
+    # ── Q6: description_template — η ΠΡΑΓΜΑΤΙΚΗ γραμματική από το descriptions.json ──
+    def make_description_template(self):
+        from anthropic import beta_tool
+        from anthropic.lib.tools import ToolError
+        budget = self
+        cap = max(int(CFG["tool_max_chars"]), 9000)
+
+        def part_str(p: dict) -> str:
+            t = p.get("t")
+            if t == "lit":
+                return p.get("v", "")
+            if t == "items":
+                return "{items " + ("#a-b, c, d" if p.get("fmt") == "lead" else "#a-b, #c, #d") + "}"
+            if t == "slot":
+                bits = [p.get("id", "slot")]
+                if p.get("list"):
+                    bits.append("list " + p["list"])
+                if p.get("def") is not None:
+                    bits.append("def " + str(p["def"]))
+                if p.get("free"):
+                    bits.append("free")
+                if p.get("empty"):
+                    bits.append("may be empty")
+                return (p.get("pre") or "") + "{" + " · ".join(bits) + "}" + (p.get("post") or "")
+            return "{" + json.dumps(p, ensure_ascii=False) + "}"
+
+        def elem_str(e: dict, fam_on: dict) -> str:
+            eid = e.get("id", "?")
+            on = fam_on.get(eid, e.get("on"))
+            flags = [str(e.get("status") or "?"), "προαιρετικό" if e.get("opt") else "υποχρεωτικό",
+                     ("ΟΝ" if on else "off") + (" (από οικογένεια)" if eid in fam_on else "")]
+            if e.get("def") is not None:
+                flags.append("def " + str(e["def"]))
+            if e.get("fam"):
+                flags.append("μόνο fam " + ",".join(e["fam"]))
+            s = f"  - {eid} [{' · '.join(flags)}]: {e.get('label', '')}"
+            if e.get("parts"):
+                s += "\n      → " + "".join(part_str(p) for p in e["parts"])
+            for c in e.get("choice") or []:
+                s += f"\n      · {c.get('id')} [{c.get('status') or 'canon'}]: " + ("".join(part_str(p) for p in c.get("parts") or []) or c.get("label", ""))
+            for v in e.get("variants") or []:
+                s += f"\n      · {v.get('id')} [{v.get('status') or 'canon'}]: {v.get('text') or v.get('label') or ''}"
+            if e.get("note"):
+                s += f"\n      σημ.: {clean_short(e['note'], 220)}"
+            return s
+
+        def clean_short(x, n):
+            x = re.sub(r"\s+", " ", str(x or "")).strip()
+            return x if len(x) <= n else x[:n] + "…"
+
+        def description_template(sortie: str) -> str:
+            """Επιστρέφει από το ίδιο το data/descriptions.json της εφαρμογής ό,τι χρειάζεται για να συνθέσεις το μπλοκ ΜΙΑΣ εξόδου από την πραγματική γραμματική: τυπωμένο canon της κατηγορίας, προεπιλογή της εξόδου, items της κατηγορίας με αριθμούς, στοιχεία/επιλογές με status (canon/enriched/draft), ουρές outcomes, γραμμή EP. Κάλεσέ το πριν γράψεις.
+
+            Args:
+                sortie: Ο κωδικός της εξόδου, π.χ. C4602, I2201, F4102, N4401, B1001 (δέχεται και «C 4602» ή «4602»).
+            """
+            budget.calls += 1
+            if budget.calls > int(CFG["tool_max_calls"]):
+                budget.record_cf("description_template", f"sortie={sortie!r}", "limit")
+                raise ToolError(f"ΟΡΙΟ: {CFG['tool_max_calls']} κλήσεις ανά απάντηση.")
+            try:
+                D = json.loads(DESC_JSON.read_text(encoding="utf-8"))
+            except Exception as e:
+                raise ToolError(f"Δεν διαβάζεται το descriptions.json: {e}")
+            key = re.sub(r"\s+", "", str(sortie or "")).upper()
+            S = D.get("sorties") or {}
+            if key not in S:
+                cands = [k for k in S if k.endswith(key)] if key else []
+                if len(cands) == 1:
+                    key = cands[0]
+                else:
+                    budget.record_cf("description_template", f"sortie={sortie!r}", "error")
+                    raise ToolError(f"Η έξοδος «{sortie}» δεν υπάρχει στο descriptions.json"
+                                    + (f" — ίσως: {', '.join(cands[:6])}" if cands else "") + ". Ζήτα κωδικό ή κατηγορία.")
+            so = S[key]
+            cat = so.get("cat")
+            C = (D.get("categories") or {}).get(cat) or {}
+            T = (D.get("templates") or {}).get(C.get("template") or cat) or {}
+            F = (D.get("families") or {}).get(so.get("family")) or {}
+            fam_on = F.get("on") or {}
+            L = [f"ΕΞΟΔΟΣ {key} · {so.get('name')} · κατηγορία {cat} · οικογένεια {so.get('family')} · section {so.get('section')}"
+                 + (f" · Syllabus σελ.PDF {so.get('page')}" if so.get("page") else "")]
+            pre = {k: so.get(k) for k in ("band", "work", "to", "elp", "checkride", "first_solo", "night", "end_of_block",
+                                           "ep_item", "ep_mif", "items_total", "solo_seed", "not_planned", "hours") if so.get(k) is not None}
+            L.append("ΠΡΟΕΠΙΛΟΓΗ ΕΞΟΔΟΥ: " + " · ".join(f"{k}={v}" for k, v in pre.items()))
+            if so.get("note"):
+                L.append("  σημ. εξόδου: " + clean_short(so["note"], 300))
+            L.append(f"\nΤΥΠΩΜΕΝΟ CANON ({T.get('label')}, πηγή: {clean_short(T.get('canon_source'), 120)}):\n  «{T.get('canon')}»")
+            L.append("  (παρένθεση στο canon = προαιρετικό στοιχείο, τυπώνεται ΧΩΡΙΣ αγκύλες όταν είναι ΟΝ)")
+            H = T.get("head") or {}
+            if H:
+                L.append(f"\nΚΕΦΑΛΗ (head) [{'προαιρετικό' if H.get('opt') else 'υποχρεωτικό'} · {'ΟΝ' if H.get('on') else 'off'} · def {H.get('def')}]:")
+                for v in H.get("variants") or []:
+                    L.append(f"  · {v.get('id')} [{v.get('status') or 'canon'}]: {v.get('text') or v.get('label') or ''}")
+            if F:
+                L.append(f"\nΟΙΚΟΓΕΝΕΙΑ {so.get('family')}: on/off που επιβάλλει στο προφίλ: {json.dumps(fam_on, ensure_ascii=False)}")
+                if F.get("mission"):
+                    L.append(elem_str(dict(F["mission"], id="mission"), {}))
+                if F.get("note"):
+                    L.append("  σημ.: " + clean_short(F["note"], 220))
+            for sec, lab in (("profile", "ΠΡΟΦΙΛ (με τη σειρά που τυπώνεται)"), ("post", "ΜΕΤΑ ΤΟ ΠΡΟΦΙΛ"),
+                             ("graded", "ΒΑΘΜΟΛΟΓΗΜΕΝΟ ΠΡΟΦΙΛ"), ("overall", "OVERALL")):
+                V = T.get(sec)
+                if not V:
+                    continue
+                L.append(f"\n{lab}:")
+                if isinstance(V, list):
+                    for e in V:
+                        L.append(elem_str(e, fam_on))
+                elif isinstance(V, dict):
+                    L.append(elem_str(dict(V, id=V.get("id", sec)), fam_on))
+            L.append("\nOUTCOMES (ουρά μετά το «SORTIE OVERALL GRADED AS __.»):")
+            for o in D.get("outcomes") or []:
+                L.append(f"  - {o.get('id')} [{o.get('status')}] {o.get('label')}: " + " ".join(
+                    ("(" if t.get("opt") else "") + "".join(part_str(p) for p in t.get("parts") or []) + (")" if t.get("opt") else "")
+                    + ("" if t.get("on") else "[off]") for t in o.get("tail") or []))
+            ep = D.get("ep_line") or {}
+            L.append(f"\nΓΡΑΜΜΗ EP: fmt «{ep.get('fmt')}» · item #{so.get('ep_item') or C.get('ep_item')} · MIF {so.get('ep_mif')} · "
+                     f"{'-'.join(str(x) for x in ep.get('picks') or [])} διαδικασίες από {ep.get('pool')} · {'ΟΝ' if ep.get('default_on') else 'off'} εξ ορισμού")
+            items = C.get("items") or []
+            L.append(f"\nITEMS ΤΗΣ ΚΑΤΗΓΟΡΙΑΣ ({len(items)}; στο EXCEPT/SOLO γράφονται ΜΟΝΟ οι ΑΡΙΘΜΟΙ): "
+                     + " · ".join(f"{i.get('n')} {i.get('label')}" for i in items))
+            if C.get("solo_forbidden"):
+                L.append(f"  ποτέ ΜΟΝΟΣ: #{', '.join(str(x) for x in C['solo_forbidden'])}")
+            lists = D.get("lists") or {}
+            used = sorted({p.get("list") for sec in ("profile", "post") for e in (T.get(sec) or []) for p in (e.get("parts") or []) if p.get("list")} |
+                          {p.get("list") for o in D.get("outcomes") or [] for t in o.get("tail") or [] for p in t.get("parts") or [] if p.get("list")})
+            for ln in used:
+                if ln in lists:
+                    vals = lists[ln].get("values") or []
+                    L.append(f"ΛΙΣΤΑ {ln}: " + " · ".join(f"{v.get('v')}{' [' + v['status'] + ']' if v.get('status') else ''}" for v in vals[:14]))
+            res = "\n".join(L)
+            if len(res) > cap:
+                res = res[:cap] + f"\n… (κόπηκε στο όριο {cap} χαρακτήρων)"
+            budget.chars += len(res)
+            budget.record_cf("description_template", f"sortie={key}", "ok")
+            return res
+
+        return beta_tool(description_template, name="description_template")
+
+    # ── Q7: remarks_lookup — πραγματικά κείμενα της τράπεζας για item + ζεύγος κωδικών ──
+    def make_remarks_lookup(self):
+        from anthropic import beta_tool
+        from anthropic.lib.tools import ToolError
+        budget = self
+        per_call = int(CFG["tool_max_chars"])
+        ABOVE_TAIL = "Above end of block MIF achieved."
+
+        def remarks_lookup(item: str, desired: int, achieved: int, query: str = "", max_results: int = 5) -> str:
+            """Επιστρέφει ΠΡΑΓΜΑΤΙΚΕΣ παρατηρήσεις της τράπεζας (data/observations2, 1.910 modes που πέρασαν τον ελεγκτή) για ένα item και ένα ζεύγος κωδικών, επιλεγμένες με τον ΙΔΙΟ κανόνα σχέσης που χρησιμοποιεί η εφαρμογή (κάτω/στο/πάνω από το MIF). Για να γράψεις στο ύφος των υπαρχουσών — όχι για αντιγραφή.
+
+            Args:
+                item: Το item: «contact-36», ή «36» μαζί με κατηγορία στο query, ή μέρος του ονόματος (π.χ. «clearing», «GCA»).
+                desired: Ο επιθυμητός κώδικας MIF (0-3).
+                achieved: Ο κώδικας επίδοσης (0-4).
+                query: Προαιρετικά λέξεις-κλειδιά για το error mode (π.χ. «lookout», «complacency») ή η κατηγορία (contact/instrument/formation/vfr_navigation).
+                max_results: Πόσα κείμενα (1-8, προεπιλογή 5).
+            """
+            budget.calls += 1
+            if budget.calls > int(CFG["tool_max_calls"]):
+                budget.record_cf("remarks_lookup", f"item={item!r}", "limit")
+                raise ToolError(f"ΟΡΙΟ: {CFG['tool_max_calls']} αναζητήσεις ανά απάντηση. Γράψε με όσα έχεις.")
+            try:
+                d, a_ = int(desired), int(achieved)
+            except (TypeError, ValueError):
+                raise ToolError("desired/achieved πρέπει να είναι ακέραιοι (0-3 / 0-4).")
+            if not (0 <= d <= 3 and 0 <= a_ <= 4):
+                raise ToolError("desired 0-3, achieved 0-4. Ο κώδικας «E» δεν υπάρχει στην τράπεζα.")
+            n_max = max(1, min(int(max_results or 5), 8))
+            qf = _fold(query)
+            cat_hint = next((c for c in ("contact", "instrument", "formation", "vfr_navigation") if c in qf), None)
+            # ── εύρεση του αρχείου: id, αριθμός+κατηγορία, ή όνομα ──
+            files = [f for f in OBS2_DIR.glob("*/*.json") if f.name != "index.json"]
+            it = _fold(item)
+            hits = []
+            for f in files:
+                stem = f.stem                                   # contact-36
+                cat, _, num = stem.rpartition("-")
+                if it == stem or (it == num and (not cat_hint or cat == cat_hint)):
+                    hits.append(f)
+            if not hits:
+                for f in files:
+                    try:
+                        j = json.loads(f.read_text(encoding="utf-8"))
+                    except Exception:
+                        continue
+                    if it and it in _fold(j.get("item_name", "")) and (not cat_hint or j.get("category") == cat_hint):
+                        hits.append(f)
+            if not hits:
+                raise ToolError(f"Δεν βρέθηκε item «{item}». Δώσε id όπως contact-36, ή αριθμό + κατηγορία, ή μέρος του ονόματος.")
+            if len(hits) > 1 and not (len(hits) <= 4):
+                raise ToolError(f"Πολλά items ταιριάζουν ({len(hits)}): στένεψε — " + ", ".join(h.stem for h in hits[:8]))
+            rel = "below" if a_ < d else "at" if a_ == d else "above"
+            out, total, shown = [], 0, 0
+            for f in hits:
+                j = json.loads(f.read_text(encoding="utf-8"))
+                rows = {r["sn"]: r["row_name"] for r in j.get("mif_rows") or []}
+                out.append(f"ITEM {j['item_id']} · {j['item_name']} · {j['category']} · MIF rows {', '.join(f'{k} {v}' for k, v in rows.items())} · "
+                           f"σχέση {rel.upper()} (desired {d} → achieved {a_})")
+                modes = j.get("error_modes") or []
+                terms = [t for t in _terms(query) if t not in ("contact", "instrument", "formation", "vfr_navigation", "vfr", "navigation")]
+                if terms:
+                    modes = [m for m in modes if any(t in _fold(m.get("label", "") + " " + str(m.get("hf_concept", "")) + " " + str(m.get("mif_row", ""))) for t in terms)]
+                k = str(a_)
+                for m in modes:
+                    if shown >= n_max:
+                        break
+                    text, src, fb = None, None, False
+                    if rel == "below":
+                        text, src = (m.get("texts") or {}).get(k), f"texts.{k}"
+                    elif rel == "at":
+                        if (m.get("texts_at") or {}).get(k):
+                            text, src = m["texts_at"][k], f"texts_at.{k}"
+                        elif (m.get("texts") or {}).get("marginal"):
+                            text, src, fb = m["texts"]["marginal"], "texts.marginal", True
+                        else:
+                            text, src, fb = (m.get("texts") or {}).get(k), f"texts.{k}", True
+                    else:
+                        if (m.get("texts_above") or {}).get(k):
+                            t = m["texts_above"][k].rstrip()
+                            text, src = (t if t.endswith(ABOVE_TAIL) else t + " " + ABOVE_TAIL), f"texts_above.{k}"
+                        else:
+                            text, src, fb = (m.get("texts") or {}).get(k), f"texts.{k}", True
+                    if not text:
+                        continue
+                    total += 1
+                    line = (f"\n[{m.get('id')}] {m.get('label')}" + (f" · HF {m['hf_concept']}" if m.get("hf_concept") else "")
+                            + (f" · MIF row {m['mif_row']}" if m.get("mif_row") else "") + f" · {src}"
+                            + (" · FALLBACK (λείπει το κανονικό κλειδί — ΜΗΝ το μιμηθείς ως πρότυπο)" if fb else "")
+                            + f"\n    #{rows and list(rows)[0] or '?'}. ({d}) -> ({a_}): {text}")
+                    if sum(len(x) for x in out) + len(line) > per_call:
+                        out.append(f"\n… (κόπηκε στο όριο {per_call} χαρακτήρων)")
+                        shown = n_max
+                        break
+                    out.append(line)
+                    shown += 1
+            if shown == 0:
+                out.append("\n(κανένα κείμενο για αυτή τη σχέση/κλειδί — δοκίμασε άλλο ζεύγος ή κενό query)")
+            res = "".join(out)
+            budget.chars += len(res)
+            budget.record_cf("remarks_lookup", f"item={item!r} {d}->{a_} q={query!r} shown={shown}", "ok")
+            return res
+
+        return beta_tool(remarks_lookup, name="remarks_lookup")
 
     # ── casefile ──────────────────────────────────────────────────────────
     def make_casefile_tools(self, names: list[str]) -> list:
@@ -1941,18 +2277,22 @@ class Handler(BaseHTTPRequestHandler):
         try:
             import anthropic
             try:
-                # ── R-B.2: compaction ΠΡΙΝ τη νέα ερώτηση, όταν το ιστορικό ξεχείλισε.
-                #    Μόνο τα messages αλλάζουν· system/tools είναι byte-ίδια με το /ask. ──
-                if session and history_chars(session["messages"]) > int(CFG["compact_after"]):
+                # ── R-B.2 / Q1: compaction ΠΡΙΝ τη νέα ερώτηση, όταν το ΣΥΝΟΛΟ
+                #    corpus + ιστορικό πλησιάζει το ταβάνι. Μόνο τα messages αλλάζουν. ──
+                if session:
+                    emit({"type": "tokens", **context_budget(a, system, session, question)})
+                if session and context_budget(a, system, session, question)["overflow"]:
                     tool_dicts = [t.to_dict() for t in budget.make_tools(list(tools))] if budget else []
                     ev = run_compaction(a, session, system, tool_dicts)
                     save_session(session)
                     messages = api_messages(session, question)
                     params = request_params(a, system, messages)
+                    cb = context_budget(a, system, session, question)
                     emit({"type": "compacted", **{k: v for k, v in ev.items() if k != "usage"},
-                          "usage": ev.get("usage"), "message": (
-                              f"Έγινε compaction #{ev['n']}: το ιστορικό ({ev['chars_before']:,} χαρακτήρες) έγινε "
-                              f"δομημένη σύνοψη ({ev['chars_after']:,}). Οι παραπομπές και οι εγγραφές κρατήθηκαν.")})
+                          "usage": ev.get("usage"), "tokens": cb, "message": (
+                              f"Έγινε compaction #{ev['n']}: το σύνολο πλησίαζε τα {cb['ceiling']:,} tokens — το ιστορικό "
+                              f"({ev['chars_before']:,} χαρακτήρες ≈ {est_tokens(ev['chars_before']):,} tokens) έγινε δομημένη "
+                              f"σύνοψη ({ev['chars_after']:,} ≈ {est_tokens(ev['chars_after']):,}). Οι παραπομπές και οι εγγραφές κρατήθηκαν.")})
                 res = run_ask(a, params, emit, budget, tools)
             except anthropic.AuthenticationError:
                 return emit({"type": "error", "code": "auth", "message":
@@ -1993,7 +2333,7 @@ class Handler(BaseHTTPRequestHandler):
             emit(usage_ev)
             if session:
                 if not session.get("title"):
-                    session["title"] = question[:80]
+                    session["title"] = derive_title(question, a)
                 session["messages"].append({"role": "user", "content": question, "at": _now()})
                 session["messages"].append({"role": "assistant", "content": res["text"], "at": _now(),
                                             "tools": budget.log if budget else [],
@@ -2068,8 +2408,8 @@ def health() -> dict:
         "casefile": {"configured": casefile_configured(), "tools": list(CASEFILE_TOOLS),
                      "env": ["FDMS_CASEFILE_URL", "FDMS_CASEFILE_KEY"],
                      "confirm_gate": True, "confirm_ttl_s": int(CFG["confirm_ttl"]), "pending": len(PENDING)},
-        "memory": {"sessions_dir": str(sessions_dir()), "compact_after_chars": int(CFG["compact_after"]),
-                   "compact_after_tokens_approx": int(int(CFG["compact_after"]) / 2.8 / 1000) * 1000,
+        "memory": {"sessions_dir": str(sessions_dir()), "context_ceiling_tokens": int(CFG["context_ceiling"]),
+                   "chars_per_token": GREEK_CHARS_PER_TOKEN, "estimate": True,
                    "compact_keep_pairs": int(CFG["compact_keep"]),
                    "sessions": {a["id"]: len(list_sessions(a["id"])) for a in list_agents()}},
         "keepalive": keepalive_status(),
@@ -2093,7 +2433,7 @@ def configure(args) -> None:
         "tool_max_chars": ("ADVISOR_TOOL_MAX_CHARS", int), "tool_total_chars": ("ADVISOR_TOOL_TOTAL_CHARS", int),
         "casefile_max_calls": ("ADVISOR_CASEFILE_MAX_CALLS", int),
         "casefile_max_writes": ("ADVISOR_CASEFILE_MAX_WRITES", int),
-        "compact_after": ("ADVISOR_COMPACT_AFTER_CHARS", int), "compact_keep": ("ADVISOR_COMPACT_KEEP", int),
+        "context_ceiling": ("ADVISOR_CONTEXT_CEILING_TOKENS", int), "compact_keep": ("ADVISOR_COMPACT_KEEP", int),
         "confirm_ttl": ("ADVISOR_CONFIRM_TTL_S", int), "sessions_dir": ("ADVISOR_SESSIONS_DIR", str),
         "keepalive": ("ADVISOR_KEEPALIVE", int), "keepalive_idle_h": ("ADVISOR_KEEPALIVE_IDLE_H", int),
         "state_file": ("ADVISOR_STATE_FILE", str), "agents_dir": ("ADVISOR_AGENTS_DIR", str),
@@ -2189,16 +2529,19 @@ def compact_demo(agent_id: str) -> int:
         return 3
     tools = offered_tools(a)
     system = build_system(a, corpus, tools)
-    # συνθετικό ιστορικό: 9 ζεύγη × ~3k χαρακτήρες ≈ 27k → πάνω από το όριο των 24k
+    # συνθετικό ιστορικό: τόσα ζεύγη ώστε corpus + ιστορικό να περάσει το ταβάνι (Q1)
     s = {"id": "deadbeefdeadbeef", "agent": a["id"], "title": "demo", "context": "Προσαρμογή, 8η έξοδος",
          "student_id": None, "student_label": "", "created": _now(), "updated": _now(), "archived": False,
          "messages": [], "writes": [{"at": _now(), "tool": "casefile_add_case", "case_id": "2b1c0d9e-1111-2222-3333-444444444444",
                                      "preview": "ΝΕΑ ΥΠΟΘΕΣΗ · 2026-10-17 · fail · C4790\n  συνέπεια: καμία ενέργεια", "actor": "agent:" + a["id"]}],
          "events": [], "compactions": 0}
-    for k in range(9):
-        s["messages"].append({"role": "user", "content": f"Ερώτηση {k + 1}: " + ("τι ισχύει για την αποτυχία; " * 40), "at": _now()})
-        s["messages"].append({"role": "assistant", "content": f"Απάντηση {k + 1} [fail-24] §30ζ " + ("κείμενο απάντησης. " * 100), "at": _now()})
+    k = 0
+    while not context_budget(a, system, s)["overflow"]:
+        k += 1
+        s["messages"].append({"role": "user", "content": f"Ερώτηση {k}: " + ("τι ισχύει για την αποτυχία; " * 40), "at": _now()})
+        s["messages"].append({"role": "assistant", "content": f"Απάντηση {k} [fail-24] §30ζ " + ("κείμενο απάντησης. " * 100), "at": _now()})
     before = history_chars(s["messages"])
+    budget_before = context_budget(a, system, s)
     ask_digest = prefix_digest(system)
     tool_dicts = [t.to_dict() for t in ToolBudget(None, a["id"], s["id"]).make_tools(tools)] if tools else []
     p = compaction_params(a, system, s, tool_dicts)
@@ -2208,7 +2551,8 @@ def compact_demo(agent_id: str) -> int:
     ev = apply_brief(s, canned, {"input_tokens": 0, "cache_creation_input_tokens": 0, "cache_read_input_tokens": 0, "output_tokens": 0})
     shown_sys = [{"cache_control": b.get("cache_control"), "text": f"<{len(b['text']):,} chars · md5 {hashlib.md5(b['text'].encode('utf-8')).hexdigest()}>"} for b in p["system"]]
     out = {
-        "trigger": {"history_chars": before, "compact_after": int(CFG["compact_after"]), "fires": before > int(CFG["compact_after"])},
+        "trigger": {"history_chars": before, "pairs_needed": k, "budget_before": budget_before,
+                    "fires": budget_before["overflow"], "budget_after": context_budget(a, system, s)},
         "compaction_request": {"model": p["model"], "max_tokens": p["max_tokens"], "thinking": p["thinking"],
                                "output_config": p["output_config"], "tools": [t["name"] for t in p.get("tools", [])],
                                "tool_choice": p.get("tool_choice"), "system": shown_sys,
@@ -2239,7 +2583,8 @@ def main() -> int:
     ap.add_argument("--tool-total-chars", type=int, dest="tool_total_chars", help="search_sources: χαρακτήρες ανά απάντηση (20000)")
     ap.add_argument("--casefile-max-calls", type=int, dest="casefile_max_calls", help="casefile: κλήσεις ανά απάντηση (8)")
     ap.add_argument("--casefile-max-writes", type=int, dest="casefile_max_writes", help="casefile: προεπισκοπήσεις εγγραφής ανά απάντηση (2)")
-    ap.add_argument("--compact-after", type=int, dest="compact_after", help="compaction όταν το ιστορικό ξεπεράσει N ΧΑΡΑΚΤΗΡΕΣ (250000 ≈ 90k tokens)")
+    ap.add_argument("--context-ceiling", type=int, dest="context_ceiling",
+                    help=f"compaction όταν ΕΚΤΙΜΩΜΕΝΑ tokens corpus+ιστορικού ξεπεράσουν N − max_tokens (400000· εκτίμηση {GREEK_CHARS_PER_TOKEN} χαρ./token, όχι μέτρηση)")
     ap.add_argument("--keepalive", type=int, choices=[0, 1], dest="keepalive", help="keep-alive του cache με max_tokens:0 πριν τη λήξη (1)")
     ap.add_argument("--keepalive-idle", type=int, dest="keepalive_idle_h", help="ώρες χωρίς ερώτηση μετά τις οποίες σταματά το keep-alive (8)")
     ap.add_argument("--compact-keep", type=int, dest="compact_keep", help="ζεύγη που μένουν αυτούσια μετά το compaction (1)")
@@ -2311,7 +2656,8 @@ def main() -> int:
     if int(CFG["keepalive"]):
         threading.Thread(target=keepalive_loop, name="keepalive", daemon=True).start()
         log(f"keep-alive: ΝΑΙ — ping στα {keepalive_status()['ping_after_s'] // 60}′ από την τελευταία επαφή, "
-            f"σταματά μετά από {CFG['keepalive_idle_h']} ώρες χωρίς ερώτηση · compaction στους {int(CFG['compact_after']):,} χαρακτήρες ιστορικού")
+            f"σταματά μετά από {CFG['keepalive_idle_h']} ώρες χωρίς ερώτηση · compaction όταν corpus+ιστορικό ≈ "
+            f"{int(CFG['context_ceiling']):,} tokens (εκτίμηση {GREEK_CHARS_PER_TOKEN} χαρ./token)")
     else:
         log("keep-alive: ΟΧΙ (ADVISOR_KEEPALIVE=0)")
     log("Ctrl+C για τερματισμό.")
