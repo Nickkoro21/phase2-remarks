@@ -364,7 +364,7 @@ def offered_tools(a: dict) -> list[str]:
     όταν λείπουν τα διαπιστευτήρια. Τίποτα σιωπηλό — το /health και το event
     `start` λένε τι προσφέρθηκε."""
     cf_ok = casefile_configured()
-    return [t for t in a["tools"] if t == "search_sources" or cf_ok]
+    return [t for t in a["tools"] if t == "search_sources" or t in COMPOSER_TOOLS or cf_ok]
 
 
 def list_agents() -> list[dict]:
@@ -988,6 +988,8 @@ def derive_title(question: str, agent: dict) -> str:
     Αν δεν βγαίνει τίποτα, η ερώτηση κομμένη, όπως πριν."""
     q = question or ""
     parts: list[str] = []
+    # υπαγόρευση: «4600 2» είναι το 4602 (τετραψήφιο που λήγει σε 0 + μονοψήφιο)
+    q = re.sub(r"\b(\d{3})0\s([1-9])\b", r"\1\2", q)
     m = re.search(r"\b([CIFNB])\s?(\d{4})\b", q, re.I)
     if m:
         parts.append(m.group(1).upper() + m.group(2))
@@ -1572,8 +1574,11 @@ class ToolBudget:
             entry.update({"pending": True, "token": p["token"], "preview": p["preview"],
                           "expires": int(p["expires"]), "meta": p["meta"]})
         self.log.append(entry)
-        log(f"[casefile] {tool} call={self.cf_calls}/{CFG['casefile_max_calls']} "
-            f"writes={self.cf_writes}/{CFG['casefile_max_writes']} {summary} status={status}")
+        if tool in COMPOSER_TOOLS:
+            log(f"[tool] {tool} call={self.calls}/{CFG['tool_max_calls']} {summary} status={status}")
+        else:
+            log(f"[casefile] {tool} call={self.cf_calls}/{CFG['casefile_max_calls']} "
+                f"writes={self.cf_writes}/{CFG['casefile_max_writes']} {summary} status={status}")
         if self.emit:
             self.emit({"type": "tool_result", **entry})
 
