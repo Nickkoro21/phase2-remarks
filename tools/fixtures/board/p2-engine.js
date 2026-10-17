@@ -96,6 +96,79 @@ console.log("\n=== PROBE 2b — walk: the referral special opens the ladder at t
   ok("board ΥΠΕΡ closes a referral-opened ladder", !CQ.walk(log, ctx).pd);
 }
 
+console.log("\n=== PROBE 2b2 — R7: the παρ.7/9 budget lives in the walk, per ΣΤΑΔΙΟ ===");
+{
+  /* the owner's exact case: ΑΕ Δοκιμή flown and PASSED earlier in the stage →
+     last sortie of a unit fails → Εξέταση Καταλληλότητας fails → the ladder
+     must open at the Δκτής (παρ.7), never at a second ΑΕ test */
+  reset();
+  const log = [fl("lag", { checkride: true }), sp("dp_ae", "completed")];
+  let w = CQ.walk(log, ctx);
+  ok("R7 · after a passed ΑΕ test the ladder is closed", !w.pd);
+  ok("R7 · … and the budget says: aeUsed, aePassed, cdrBudget 1, cdrUsed 0", w.budget.aeUsed === true && w.budget.aePassed === true && w.budget.cdrBudget === 1 && w.budget.cdrUsed === 0, JSON.stringify(w.budget));
+  log.push(fl("lag", { last: true, track: "formation" }));
+  w = CQ.walk(log, ctx);
+  ok("R7 · last-of-unit lag → aptitude exam pending (3-01 §30ζ), ladder still closed", w.apt.length === 1 && !w.pd);
+  log.push(sp("apt", "fail", { category: "formation" }));
+  w = CQ.walk(log, ctx);
+  ok("R7 · OWNER'S CASE: a failed Εξέταση Καταλληλότητας opens the ladder at the Δκτής, NOT a second ΑΕ", !!w.pd && w.pd.stage === "cdr", w.pd && w.pd.stage);
+  eq("R7 · … rung cdr_par7", w.pd.rung, "cdr_par7");
+  ok("R7 · … citing fail-24 (παρ.7) and fail-26 (παρ.9)", w.pd.rungReq.indexOf("fail-24") >= 0 && w.pd.rungReq.indexOf("fail-26") >= 0);
+  eq("R7 · … req is still fail-12 (the case that opened it)", w.pd.req, "fail-12");
+  ok("R7 · … pdStageText names παρ.7", /§7/.test(CQ.pdStageText(w.pd)));
+  log.push(sp("dp_cdr", "completed"));
+  w = CQ.walk(log, ctx);
+  ok("R7 · Δκτής passes (1/1) → closed, another instructor", !w.pd && !!w.pdNote && w.budget.cdrUsed === 1);
+  log.push(fl("lag", { checkride: true }));
+  w = CQ.walk(log, ctx);
+  eq("R7 · EXHAUSTED: ΑΕ spent, Δκτής budget spent → a new κρίση opens at the Board", w.pd && w.pd.stage, "board");
+  eq("R7 · … rung board_par9", w.pd.rung, "board_par9");
+  ok("R7 · … boardSince set, citing fail-26", !!w.pd.boardSince && w.pd.rungReq[0] === "fail-26");
+  ok("R7 · … pdStageText says «χωρίς πτήσεις Δοκιμής Προόδου»", /χωρίς πτήσεις Δοκιμής Προόδου/.test(CQ.pdStageText(w.pd)));
+
+  /* παρ.9, both branches */
+  reset();
+  w = CQ.walk([fl("lag", { checkride: true }), sp("dp_ae", "completed")], ctx);
+  eq("R7 · παρ.9 branch A: ΑΕ ≥60 % → Δκτής budget 1", w.budget.cdrBudget, 1);
+  reset();
+  w = CQ.walk([fl("lag", { checkride: true }), sp("dp_ae", "fail")], ctx);
+  eq("R7 · παρ.9 branch B: ΑΕ <60 % → Δκτής budget 2", w.budget.cdrBudget, 2);
+  eq("R7 · … and the ladder is at the Δκτής (first occasion)", w.pd && w.pd.stage, "cdr");
+  reset();
+  const log2 = [fl("lag", { checkride: true }), sp("dp_ae", "fail"), sp("dp_cdr", "completed"), fl("lag", { checkride: true })];
+  w = CQ.walk(log2, ctx);
+  eq("R7 · branch B: Δκτής passed once → the next κρίση is the Δκτής again (2/2)", w.pd && w.pd.stage, "cdr");
+  eq("R7 · … cdrUsed 1 of 2", w.budget.cdrUsed + "/" + w.budget.cdrBudget, "1/2");
+  log2.push(sp("dp_cdr", "completed"), fl("lag", { checkride: true }));
+  w = CQ.walk(log2, ctx);
+  eq("R7 · branch B: after the 2nd Δκτής pass a third κρίση is the Board without a progress test", w.pd && w.pd.rung, "board_par9");
+  reset();
+  w = CQ.walk([fl("lag", { checkride: true }), sp("dp_ae", "fail"), sp("dp_cdr", "fail")], ctx);
+  eq("R7 · παρ.8β: a Δκτής failure is the Board even with budget 2 — the second occasion is reachable only by passing the first", w.pd && w.pd.stage, "board");
+  ok("R7 · … that is the rung transition, not the budget (rung stays ae-opened)", w.pd.rung === "ae");
+
+  /* the right is spent pass or fail — and per stage, not per category */
+  reset();
+  w = CQ.walk([fl("lag", { checkride: true, track: "contact" }), sp("dp_ae", "completed"), fl("lag", { checkride: true, track: "instrument" })], ctx);
+  eq("R7 · a new κρίση in ANOTHER category still finds the ΑΕ spent — per ΣΤΑΔΙΟ", w.pd && w.pd.stage, "cdr");
+  reset();
+  w = CQ.walk([fl("lag", { kind: "fs", last: true })], ctx);
+  const u = (ctx.describe("s:T-1") || {}).uid; const d2 = CQ.addWork(day, 1); day = d2;
+  const l3 = [fl("lag", { checkride: true }), sp("dp_ae", "completed")];
+  reset();
+  w = CQ.walk(l3.concat([sp("referral", "completed", { stage: "ae", req: "fail-76" })]), ctx);
+  eq("R7 · an explicit referral asking for «ae» is corrected by the budget to the Δκτής", w.pd && w.pd.stage, "cdr");
+  reset();
+  w = CQ.walk(l3.concat([sp("referral", "completed", { stage: "board", req: "fail-32" })]), ctx);
+  ok("R7 · a direct referral (παρ.5) bypasses the budget — rung direct", w.pd && w.pd.stage === "board" && w.pd.rung === "direct");
+  reset();
+  w = CQ.walk([fl("lag", { checkride: true }), sp("dp_ae", "fail"), sp("dp_cdr", "fail"), sp("board", "completed"), sp("referral", "completed", { stage: "ae", req: "fail-70", exceptional: true })], ctx);
+  ok("R7 · the exceptional Δοκιμή Προόδου of παρ.17β bypasses the budget — rung exceptional at ae", w.pd && w.pd.stage === "ae" && w.pd.rung === "exceptional");
+  reset();
+  w = CQ.walk([sp("dp_ae", "fail")], ctx);
+  ok("R7 · a dp_ae with no open κρίση still spends the ΑΕ's right (an occasion of judgment occurred)", w.budget.aeUsed === true && w.budget.cdrBudget === 2);
+}
+
 console.log("\n=== PROBE 2c — walk: fail-11 (3 attempts on the last F/S of a section) ===");
 {
   reset();
@@ -152,6 +225,26 @@ console.log("\n=== PROBE 2e — countersFrom: ΠΔ 1γ (fail-76) ===");
   reset();
   c = cnt([fl("pass"), fl("pass"), fl("pass"), fl("pass"), fl("lag"), fl("lag"), fl("pass"), fl("lag")]);
   eq("a pass resets the run", c.c059.value, 1);
+  /* R2 (owner, 2026-10-17): a run may NOT include a grace sortie — counting
+     starts from the 5th in the air, the 4th on the F/S */
+  reset();
+  c = cnt([fl("pass"), fl("pass"), fl("pass"), fl("fail"), fl("fail")]);
+  eq("R2 · fails on sorties 4+5 → c049 = 1 (sortie 4 is grace, the run cannot start inside it)", c.c049.value, 1);
+  reset();
+  c = cnt([fl("pass"), fl("pass"), fl("pass"), fl("pass"), fl("fail"), fl("fail")]);
+  eq("R2 · fails on sorties 5+6 → c049 = 2 — the earliest possible 1γ(Α)", c.c049.value, 2);
+  reset();
+  c = cnt([fl("pass"), fl("pass"), fl("lag"), fl("lag"), fl("lag"), fl("lag")]);
+  eq("R2 · lags on 3+4+5+6 → c059 = 2 (only 5 and 6 count)", c.c059.value, 2);
+  reset();
+  c = cnt([fl("pass"), fl("pass"), fl("pass"), fl("pass"), fl("lag"), fl("lag"), fl("lag")]);
+  eq("R2 · lags on 5+6+7 → c059 = 3 — the earliest possible 1γ(Β)", c.c059.value, 3);
+  reset();
+  c = cnt([fl("lag", { kind: "fs" }), fl("lag", { kind: "fs" }), fl("lag", { kind: "fs" }), fl("lag", { kind: "fs" }), fl("lag", { kind: "fs" })]);
+  eq("R2 · F/S lags on 1-5 → fs059 = 2 (only 4 and 5 count)", c.fs059.value, 2);
+  reset();
+  c = cnt([fl("pass", { kind: "fs" }), fl("pass", { kind: "fs" }), fl("pass", { kind: "fs" }), fl("lag", { kind: "fs" }), fl("lag", { kind: "fs" }), fl("lag", { kind: "fs" })]);
+  eq("R2 · F/S lags on 4+5+6 → fs059 = 3 — the earliest possible 1ε(αα)", c.fs059.value, 3);
   reset();
   c = cnt([fl("pass"), fl("pass"), fl("pass"), fl("pass"), fl("lag"), fl("lag", { exempt: true }), fl("lag")], { exemptIf: (x) => !!x.ev.nausea_exempt });
   eq("ΠΔ παρ.2: an exempt nausea flight is skipped — run is 2, not 3", c.c059.value, 2);
@@ -161,6 +254,25 @@ console.log("\n=== PROBE 2e — countersFrom: ΠΔ 1γ (fail-76) ===");
   reset();
   c = cnt([fl("pass"), fl("pass"), fl("pass"), fl("pass"), fl("lag", { kind: "fs" }), fl("lag", { kind: "fs" }), fl("lag", { kind: "fs" })]);
   eq("F/S sorties never feed the A/C 1γ counters", c.c059.value, 0);
+  /* R4 (owner, 2026-10-17): a checkride is NOT a member of the 1γ run.
+     Before the fix this list read checkride 45 + flight 45 as c049 = 2. */
+  reset();
+  const g4e = [fl("pass"), fl("pass"), fl("pass"), fl("pass")];
+  c = cnt(g4e.concat([fl("score", { checkride: true, score: 45 }), sp("dp_ae", "completed"), fl("score", { score: 45 })]));
+  eq("R4 · checkride 45 → dp_ae pass → flight 45: c049 = 1 (was 2 — the defect)", c.c049.value, 1);
+  eq("R4 · … c059 = 1 (was 2)", c.c059.value, 1);
+  reset();
+  c = cnt(g4e.concat([fl("lag"), fl("score", { checkride: true, score: 55 }), sp("dp_ae", "completed"), fl("lag")]));
+  eq("R4 · lag · checkride 55 · dp_ae pass · lag: c059 = 2 (was 3) — the checkride is skipped, the lags around it still count", c.c059.value, 2);
+  reset();
+  c = cnt(g4e.concat([fl("lag"), fl("lag"), fl("score", { checkride: true, score: 55 }), sp("dp_ae", "completed"), fl("lag")]));
+  eq("R4 · lag · lag · checkride · dp_ae pass · lag: c059 = 3 — skip, not reset (recorded as not ruled)", c.c059.value, 3);
+  reset();
+  c = cnt([fl("score", { checkride: true, score: 45 }), fl("pass"), fl("pass"), fl("pass"), fl("fail"), fl("fail")]);
+  eq("R4 · a checkride still occupies its slot in the 4-sortie grace window (fails on 5+6 → c049 = 2)", c.c049.value, 2);
+  reset();
+  c = cnt(g4e.concat([fl("score", { checkride: true, score: 45 }), fl("pass")]));
+  eq("R4 · 1δ is untouched: the failed checkride is one 0-59 flight of the stage", c.totalFl.bad, 1);
 }
 
 console.log("\n=== PROBE 2f — countersFrom: ΠΔ 1δ (fail-77) ===");

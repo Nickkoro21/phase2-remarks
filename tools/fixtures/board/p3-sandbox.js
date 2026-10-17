@@ -67,29 +67,92 @@ console.log("\n=== PROBE 3b — 1γ then the ladder: ΑΕ fail → Δκτής fa
   ok("… cites fail-71", hasCite(r.status.cites, "fail-71"));
 }
 
-console.log("\n=== PROBE 3c — ΠΔ παρ.7/9 overlay: second referral in the same stage ===");
+console.log("\n=== PROBE 3b2 — R4: a checkride is not a member of the 1γ run (defect closed 2026-10-17) ===");
 {
-  /* AE passed (≥60) once → a new referral goes to the Cdr, who may judge ONCE */
+  /* BEFORE the fix this exact sequence gave c049 = 2, c059 = 2, fired «1β | 1γ(Α)», verdict dp_cdr (a second referral) */
+  let r = run(g4().concat([F("score", { role: "checkride", score: 45 }), ev("dp_ae", "score", { score: 70 }), F("score", { score: 45 })]));
+  eq("R4 · checkride 45 → ΑΕ 70 → ordinary 45: c049 = 1 (before: 2)", r.counters.c049.value, 1);
+  eq("R4 · … c059 = 1 (before: 2)", r.counters.c059.value, 1);
+  ok("R4 · … 1γ does NOT fire — only the 1β (before: «1β | 1γ(Α)»)", firedCases(r).join("|") === "1β", firedCases(r).join("|"));
+  eq("R4 · … the student is free with another instructor, not under a second referral (before: dp_cdr)", r.status.code, "free");
+  eq("R4 · … other_ip", r.status.next_with, "other_ip");
+  r = run(g4().concat([F("lag"), F("score", { role: "checkride", score: 55 }), ev("dp_ae", "score", { score: 70 }), F("lag")]));
+  ok("R4 · lag · checkride 55 · ΑΕ 70 · lag → no 1γ (before: 1γ(Β))", !firedCases(r).some((c) => /1γ/.test(c)) && r.counters.c059.value === 2, firedCases(r).join("|") + " c059=" + r.counters.c059.value);
+  r = run(g4().concat([F("score", { role: "checkride", score: 45 }), ev("dp_ae", "score", { score: 70 }), F("score", { score: 45 }), F("score", { score: 45 })]));
+  ok("R4 · two ordinary 0-49 AFTER the cleared checkride still fire 1γ(Α) on their own", firedCases(r).indexOf("1γ(Α)") >= 0, firedCases(r).join("|"));
+  r = run(g4().concat([F("score", { role: "checkride", score: 45 }), ev("dp_ae", "score", { score: 70 }), F("pass")]));
+  eq("R4 · 1δ untouched: the checkride is one 0-59 flight of the stage (totalFl.bad = 1)", r.counters.totalFl.bad, 1);
+  ok("R4 · the tree carries the ruling with both sides and the quote", (() => { const n = BT.nodeOf("g_ckr"); return !!n && n.node.rulings.some((x) => x.by === "ο ιδιοκτήτης" && /δοκιμής προόδου/.test(x.quote)) && n.node.unresolved.some((u) => /ΑΠΟΦΑΝΣΗ ΙΔΙΟΚΤΗΤΗ 17\/10\/2026/.test(u) && /§32β\(2\)/.test(u) && /ΔΕΝ εξαιρεί/.test(u)) && n.node.cites.some((c) => c.requirement_id === "fail-44"); })());
+}
+
+console.log("\n=== PROBE 3b3 — R5: the Δκτής' occasions are set by the ΑΕ grade; R6: the aptitude exam consumes no rung ===");
+{
+  const seq = g4().concat([F("lag"), F("lag"), F("lag")]);
+  let r = run(seq.concat([ev("dp_ae", "score", { score: 70 }), F("pass"), F("lag"), F("lag"), F("lag")]));
+  eq("R5 · ΑΕ passed → next referral goes to the Δκτής", r.status.code, "dp_cdr");
+  ok("R5 · … and the verdict says the Δκτής has ONE occasion because the ΑΕ test was ≥60 %", r.status.notes.some((x) => /ΜΙΑ μόνο ευκαιρία/.test(x.text) && /≥60%/.test(x.text) && /1η\/1/.test(x.text) && hasCite(x.cites, "fail-26")));
+  ok("R5 · … and that a Δκτής failure is always the Board (παρ.8β)", r.status.notes.some((x) => /Συμβούλιο ΠΑΝΤΑ/.test(x.text) && hasCite(x.cites, "fail-25")));
+  r = run(seq.concat([ev("dp_ae", "score", { score: 70 }), F("pass"), F("lag"), F("lag"), F("lag"), ev("dp_cdr", "score", { score: 65 }), F("pass"), F("lag"), F("lag"), F("lag")]));
+  eq("R5 · ΑΕ passed, Δκτής passed once → a third referral is Board without a progress test", r.status.code, "board");
+  r = run(seq.concat([ev("dp_ae", "fail")]));
+  ok("R5 · ΑΕ failed → the Δκτής has TWO occasions (1η/2)", r.status.code === "dp_cdr" && r.status.notes.some((x) => /ΔΥΟ ευκαιρίες/.test(x.text) && /1η\/2/.test(x.text)));
+  r = run(seq.concat([ev("dp_ae", "fail"), ev("dp_cdr", "fail")]));
+  eq("R5 · Δκτής failure → Board, no second chance after a Δκτής failure", r.status.code, "board");
+  ok("R5 · the ladder node names the surprising branch", /ΜΙΑ μόνο ευκαιρία/.test(BT.nodeOf("dp_ae_pass").node.label) && BT.nodeOf("dp_ae_pass").node.cites.some((c) => c.requirement_id === "fail-26"));
+  ok("R5 · thresholds.dp carries the state machine", (() => { const m = TREES.thresholds.dp.state_machine; return !!m && /μία φορά/.test(m.ae) && /ΠΑΝΤΑ/.test(m.cdr_fail) && /ΜΙΑ· /.test(m.cdr_occasions) && /ΔΥΟ/.test(m.cdr_occasions); })());
+  /* R6 */
+  r = run([F("lag", { role: "last", cat: "formation" }), ev("apt", "fail", { cat: "formation" })]);
+  eq("R6 · a failed aptitude exam opens the ladder at the ΑΕ — clean", r.status.code, "dp_ae");
+  eq("R6 · … and consumed no ΑΕ occasion (dpUsed.ae = 0)", r.counters.dpUsed.ae, 0);
+  ok("R6 · … the verdict names the ΑΕ, not the evaluator, as next", r.status.next_with === "ae" && !/Αξιολογητή/.test(r.status.title));
+  r = run([F("lag", { role: "last", cat: "formation" }), ev("apt", "pass", { cat: "formation" }), F("lag", { role: "last", cat: "instrument" }), ev("apt", "pass", { cat: "instrument" })]);
+  ok("R6 · two aptitude exams in Phase II: no cap, both resolve, no ladder touched", r.status.code === "free" && r.counters.dpUsed.ae === 0 && r.counters.dpUsed.cdr === 0);
+  ok("R6 · the section_last tree says so, with the Phase III/IV contrast", (() => { const n = BT.nodeOf("l_apt").node; return /δεν καταναλώνει/.test(n.label) && /§80β\(4\)/.test(n.condition) && /§81α\(4\)/.test(n.condition) && n.rulings.some((x) => x.by === "ο ιδιοκτήτης"); })());
+}
+
+console.log("\n=== PROBE 3c — R7: the παρ.7/9 budget, now the engine's (second referral in the same stage) ===");
+{
+  /* BEFORE R7 these read «engine says ae / overlay says cdr»; the overlay is
+     gone and the engine itself opens the κρίση at the Δκτής. */
   const first = g4().concat([F("lag"), F("lag"), F("lag"), ev("dp_ae", "score", { score: 70 })]);
   let r = run(first);
   eq("after dp_ae 70 % → free with another instructor", r.status.code, "free");
   eq("… other_ip", r.status.next_with, "other_ip");
   r = run(first.concat([F("pass"), F("lag"), F("lag"), F("lag")]));
   ok("second 1γ fires", firedCases(r).filter((c) => /1γ/.test(c)).length === 2);
-  eq("engine says ae", r.stage.engine, "ae");
-  eq("overlay (παρ.7) says cdr", r.stage.effective, "cdr");
+  eq("R7 · the ENGINE opens it at the Δκτής (was: engine ae, overlay cdr)", r.stage.engine, "cdr");
+  eq("R7 · … effective = engine (no overlay left)", r.stage.effective, "cdr");
+  eq("R7 · … rung cdr_par7", r.stage.rung, "cdr_par7");
   eq("→ verdict: Cdr", r.status.code, "dp_cdr");
-  ok("… the note names παρ.7 and fail-24", r.status.notes.some((x) => /παρ\.7/.test(x.text) && hasCite(x.cites, "fail-24")));
+  ok("… the note names παρ.7, «ανά ΣΤΑΔΙΟ», and cites fail-24", r.status.notes.some((x) => /παρ\.7/.test(x.text) && /ανά ΣΤΑΔΙΟ/.test(x.text) && hasCite(x.cites, "fail-24")));
+  ok("… and the R5 note says ONE occasion because the ΑΕ test was ≥60 % (1η/1)", r.status.notes.some((x) => /ΜΙΑ μόνο ευκαιρία/.test(x.text) && /1η\/1/.test(x.text)));
   r = run(first.concat([F("pass"), F("lag"), F("lag"), F("lag"), ev("dp_cdr", "score", { score: 65 }), F("pass"), F("lag"), F("lag"), F("lag")]));
-  eq("third referral: Cdr exhausted (1 allowed, AE was ≥60) → board without a progress test", r.stage.effective, "board");
+  eq("third referral: Cdr exhausted (1 allowed, AE was ≥60) → board without a progress test", r.stage.engine, "board");
+  eq("R7 · … rung board_par9", r.stage.rung, "board_par9");
   eq("→ verdict: Board", r.status.code, "board");
-  ok("… cites fail-26", r.status.notes.some((x) => hasCite(x.cites, "fail-26")));
+  ok("R7 · … the title and the note say «χωρίς πτήσεις Δοκιμής Προόδου», citing fail-26", /ΧΩΡΙΣ πτήσεις Δοκιμής Προόδου/.test(r.status.title) && r.status.notes.some((x) => /ΧΩΡΙΣ ΠΤΗΣΕΙΣ ΔΟΚΙΜΗΣ ΠΡΟΟΔΟΥ/.test(x.text) && hasCite(x.cites, "fail-26")));
   /* AE failed (<60) → the Cdr has TWO judgements */
   const two = g4().concat([F("lag"), F("lag"), F("lag"), ev("dp_ae", "fail"), ev("dp_cdr", "score", { score: 61 }), F("pass"), F("lag"), F("lag"), F("lag")]);
   r = run(two);
-  eq("AE <60 then Cdr pass; new referral → Cdr again (2nd of 2)", r.stage.effective, "cdr");
+  eq("AE <60 then Cdr pass; new referral → Cdr again (2nd of 2)", r.stage.engine, "cdr");
+  ok("R7 · … counters: Δκτής 1 of budget 2", r.counters.dpUsed.cdr === 1 && r.counters.dpUsed.budget === 2 && r.counters.dpUsed.aePassed === false);
   r = run(two.concat([ev("dp_cdr", "score", { score: 62 }), F("pass"), F("lag"), F("lag"), F("lag")]));
-  eq("… after the 2nd Cdr judgement the next referral is Board directly", r.stage.effective, "board");
+  eq("… after the 2nd Cdr judgement the next referral is Board directly", r.stage.engine, "board");
+
+  /* THE OWNER'S CASE through the sandbox: ΑΕ passed earlier → last sortie
+     fails → Εξέταση Καταλληλότητας fails → Δκτής, never a second ΑΕ */
+  r = run([F("pass"), F("score", { role: "checkride", score: 55 }), ev("dp_ae", "score", { score: 72 }), F("lag", { role: "last", cat: "formation" }), ev("apt", "fail", { cat: "formation" })]);
+  ok("R7 · OWNER'S CASE: §30ζ→ΠΔ fired", firedCases(r).indexOf("§30ζ→ΠΔ") >= 0, firedCases(r).join("|"));
+  eq("R7 · … the ladder opens at the Δκτής", r.status.code, "dp_cdr");
+  eq("R7 · … engine rung cdr_par7", r.stage.rung, "cdr_par7");
+  ok("R7 · … the verdict names παρ.7 and the fact that the ΑΕ already judged (≥60%)", r.status.notes.some((x) => /παρ\.7/.test(x.text) && /ήδη/.test(x.text) && /≥60%/.test(x.text)));
+  eq("R7 · … and the ΑΕ's right is shown spent (1/1)", r.counters.dpUsed.ae, 1);
+  r = run([F("pass"), F("score", { role: "checkride", score: 55 }), ev("dp_ae", "score", { score: 72 }), F("lag", { role: "last", cat: "formation" }), ev("apt", "fail", { cat: "formation" }), ev("dp_cdr", "score", { score: 70 }), F("lag", { role: "last", cat: "instrument" }), ev("apt", "fail", { cat: "instrument" })]);
+  eq("R7 · … then a second failed Εξέταση Καταλληλότητας in ANOTHER category: Board — per ΣΤΑΔΙΟ, not per category", r.status.code, "board");
+  eq("R7 · … rung board_par9", r.stage.rung, "board_par9");
+  ok("R7 · the ladder node records the ruling and the unit of accounting", (() => { const n = BT.nodeOf("dp_exhausted").node; return n.rulings.some((x) => x.by === "ο ιδιοκτήτης" && /ανά στάδιο/.test(x.quote)) && n.engine === "schedconsq" && n.unresolved.length === 0; })());
+  ok("R7 · the drafting doubt on παρ.9 stays open on dp_cdr, labelled as such", BT.nodeOf("dp_cdr").node.unresolved.some((u) => /ΣΥΝΤΑΚΤΙΚΗ ΑΠΟΡΙΑ/.test(u) && /παραμένει ανοικτή/.test(u)));
+  ok("R7 · no overlay left in the module", !/effectiveStage/.test(require("fs").readFileSync(require("path").join(H.ROOT, "app", "boardtrees.js"), "utf8")));
 }
 
 console.log("\n=== PROBE 3d — 1β checkride, nausea, 1δ ===");
@@ -109,6 +172,21 @@ console.log("\n=== PROBE 3d — 1β checkride, nausea, 1δ ===");
   eq("… nausea flight graded 59 % by default", r.timeline[5].band, "lag 59%");
   r = run(g4().concat([F("lag"), F("pass", { nausea: "pre_bad" }), F("lag")]));
   ok("lag · non-exempt nausea · lag → 1γ(Β) fires", firedCases(r).indexOf("1γ(Β)") >= 0, firedCases(r).join());
+  /* R1 (owner, 2026-10-17): the 59 % airsickness sortie IS «Σχεδόν Καλώς»
+     (3-01 §29δ: ΣΚ = 50-59) → ΠΔ παρ.2 exempts it, when the other limbs hold */
+  r = run(g4().concat([F("lag"), F("lag"), F("pass", { nausea: "pre_ok" }), F("lag")]));
+  ok("R1 · lag·lag·nausea59(pre ok)·lag → the exempt sortie is SKIPPED, not a break: the three lags around it complete the run → 1γ(Β)", firedCases(r).indexOf("1γ(Β)") >= 0, firedCases(r).join());
+  r = run(g4().concat([F("lag"), F("lag"), F("pass", { nausea: "pre_ok" })]));
+  ok("R1 · lag·lag·nausea59(pre ok) → c059 stays 2: the nausea sortie adds nothing", r.counters.c059.value === 2 && r.fired.length === 0, String(r.counters.c059.value));
+  r = run(g4().concat([F("lag"), F("pass", { nausea: "pre_ok" }), F("pass")]));
+  ok("R1 · the sandbox row cites fail-01 (§29δ) beside fail-52 and fail-57", r.timeline[5].notes.some((x) => hasCite(x.cites, "fail-01") && hasCite(x.cites, "fail-52") && hasCite(x.cites, "fail-57")));
+  ok("R1 · … and names the bridge «ΣΚ» Σχεδόν Καλώς", r.timeline[5].notes.some((x) => /Σχεδόν Καλώς/.test(x.text) && /§29δ/.test(x.text) && /ΔΕΝ υπολογίζεται/.test(x.text)));
+  eq("R1 · the exempt sortie leaves the 1δ numerator", r.counters.totalFl.bad, 1);
+  r = run(g4().concat([F("lag"), F("score", { score: 45, nausea: "pre_ok" }), F("lag")]));
+  ok("R1 · a nausea sortie graded ΑΠΟΤΥΧΙΑ (45 %) is NOT «Σχεδόν Καλώς» → counts → 1γ(Β) fires", firedCases(r).indexOf("1γ(Β)") >= 0, firedCases(r).join());
+  ok("R1 · … and the row says why (παρ.2 requires Σχεδόν Καλώς)", r.timeline[5].notes.some((x) => /όχι «Σχεδόν Καλώς»/.test(x.text)));
+  r = run(g4().concat([F("lag"), F("pass", { nausea: "pre_bad" }), F("lag")]));
+  ok("R1 · the limb «before the onset Καλώς+» still binds: pre_bad counts → 1γ(Β)", firedCases(r).indexOf("1γ(Β)") >= 0, firedCases(r).join());
   r = run([F("pass", { nausea: "pre_ok" }), F("pass", { nausea: "pre_ok" })]);
   ok("2 consecutive nausea → KEPE (3)", r.timeline[1].notes.some((x) => /ΚΕΠΕ/.test(x.text) && /ΑΕΡΟΝΑΥΤΙΕΣ/.test(x.text)));
   ok("… a single nausea does NOT enter KEPE via (1)", !r.timeline[0].notes.some((x) => /→ ΚΕΠΕ/.test(x.text)));
@@ -119,16 +197,34 @@ console.log("\n=== PROBE 3d — 1β checkride, nausea, 1δ ===");
   r = run([F("pass"), F("pass"), F("pass"), F("lag")], { denom_1d: "planned" });
   ok("… and does NOT on the planned-85 reading (1/85)", !firedCases(r).some((c) => /1δ/.test(c)), firedCases(r).join());
   eq("… plannedPct reported", r.counters.plannedPct, 1.2);
-  const many = [];
+  /* the first ΜΟΝΟΣ closes the Προ-ΜΟΝΟΣ phase first (R3: otherwise the 6th
+     low grade of the 15-sortie phase fires 1δ(ΠΡΟ ΜΟΝΟΣ) before the stage's
+     17th) — this probe exercises the 20 % stage criterion alone */
+  const many = [F("pass", { role: "first_solo" })];
   for (let i = 0; i < 17; i++) { many.push(F("lag")); many.push(F("pass")); many.push(F("pass")); many.push(F("pass")); }
   r = run(many, { denom_1d: "planned" });
   ok("17 bad on the planned reading fires 1δ(ΣΥΝΟΛΟ) (17/85 = 20 %)", firedCases(r).indexOf("1δ(ΣΥΝΟΛΟ)") >= 0, firedCases(r).join());
-  ok("… exactly at the 17th lag (event 65)", r.fired[0].idx === 64, String(r.fired[0] && r.fired[0].idx));
+  ok("… exactly at the 17th lag (event 66)", r.fired[0].idx === 65, String(r.fired[0] && r.fired[0].idx));
   ok("… and 1γ never fired (lags were never consecutive)", !firedCases(r).some((c) => /1γ/.test(c)));
-  r = run(many.slice(0, 64), { denom_1d: "planned" });
+  ok("… and 1δ(ΠΡΟ ΜΟΝΟΣ) never fired (the phase was already closed)", !firedCases(r).some((c) => /ΠΡΟ ΜΟΝΟΣ/.test(c)));
+  r = run(many.slice(0, 65), { denom_1d: "planned" });
   ok("16 bad → nothing", r.fired.length === 0, firedCases(r).join());
+  r = run(many.slice(1), { denom_1d: "planned" });
+  ok("R3 · the same 17 lags WITHOUT a ΜΟΝΟΣ fire 1δ(ΠΡΟ ΜΟΝΟΣ) at the 6th (6/15 = 40 %) — event 21", firedCases(r)[0] === "1δ(ΠΡΟ ΜΟΝΟΣ)" && r.fired[0].idx === 20, firedCases(r).join() + " @" + (r.fired[0] && r.fired[0].idx));
   eq("default denominator is planned (owner ruling 2026-10-17)", run([F("lag")]).opts.denom_1d, "planned");
   ok("… the executed reading is still reachable behind the switch", run([F("pass"), F("pass"), F("pass"), F("lag")], { denom_1d: "executed" }).fired.length === 1);
+  /* R3 (owner, 2026-10-17): Προ-ΜΟΝΟΣ = 15 printed sorties → 40 % = 6 */
+  const five = [F("lag"), F("pass"), F("lag"), F("pass"), F("lag"), F("pass"), F("lag"), F("pass"), F("lag")];        // 5 lags, never consecutive
+  r = run(five);
+  ok("R3 · 5 low grades of 15 (33 %) → no 1δ(ΠΡΟ ΜΟΝΟΣ)", !firedCases(r).some((c) => /1δ/.test(c)), firedCases(r).join());
+  eq("R3 · … plannedPrePct 33.3", r.counters.plannedPrePct, 33.3);
+  r = run(five.concat([F("pass"), F("lag")]));
+  ok("R3 · the 6th low grade (6/15 = 40 %) fires 1δ(ΠΡΟ ΜΟΝΟΣ) on the printed programme", firedCases(r).indexOf("1δ(ΠΡΟ ΜΟΝΟΣ)") >= 0, firedCases(r).join());
+  ok("R3 · … the fired line names 15, the MIF table and the owner's ruling", /15 τυπωμένες/.test(r.fired[0].text) && /MIF/.test(r.fired[0].text) && hasCite(r.fired[0].cites, "fail-77") && /ιδιοκτήτη/.test(r.fired[0].cites[0].why));
+  ok("R3 · … and never 1γ (lags were never consecutive)", !firedCases(r).some((c) => /1γ/.test(c)));
+  r = run([F("pass", { role: "first_solo" })].concat(five, [F("pass"), F("lag")]));
+  ok("R3 · after the first ΜΟΝΟΣ the Προ-ΜΟΝΟΣ phase is closed — the same 6 low grades fire nothing", !firedCases(r).some((c) => /1δ\(ΠΡΟ/.test(c)), firedCases(r).join());
+  eq("R3 · counters expose the printed denominators", r.counters.preSoloSorties + "/" + r.counters.plannedSorties, "15/85");
 }
 
 console.log("\n=== PROBE 3e — F/S: the 3-attempt ladder and ΠΔ 1ε ===");
@@ -279,6 +375,62 @@ console.log("\n=== PROBE 3j — KEPE entries and caps (fail-44 / fail-45) ===");
   ok("63 then 64 → no KEPE", !r.timeline[1].notes.some((x) => /ΚΕΠΕ/.test(x.text)));
   r = run([ev("kepe_in", null, { cat: "formation" })]);
   ok("instructor recommendation (6) enters KEPE", r.timeline[0].notes.some((x) => /→ ΚΕΠΕ/.test(x.text) && hasCite(x.cites, "fail-44")));
+}
+
+console.log("\n=== PROBE 3l — R8(c): airsickness on a Δοκιμή Προόδου does not help the student ===");
+{
+  const open = [F("pass"), F("score", { role: "checkride", score: 55 })];
+  let r = run(open.concat([ev("dp_ae", "pass", { nausea: "pre_ok" })]));
+  ok("R8c · nausea on the ΑΕ test → graded 59 % (§35), 0-59 band", /59%/.test(r.timeline[2].band) && /ΑΠΟΤΥΧΩΝ/.test(r.timeline[2].band) && /ΑΕΡΟΝΑΥΤΙΑ/.test(r.timeline[2].band), r.timeline[2].band);
+  eq("R8c · … the ladder advances to the Δκτής (παρ.3β) — the rung is not escaped", r.status.code, "dp_cdr");
+  const f = r.timeline[2].fired.find((x) => x.case === "ΑΕΡΟΝΑΥΤΙΑ σε ΔΠ");
+  ok("R8c · … a fired line explains it", !!f);
+  ok("R8c · … (1) παρ.2 does not reach the Δοκιμή — scoping words quoted", !!f && /Κατά τις περιπτώσεις των υποπαραγράφων 1γ και 1δ/.test(f.text) && /παρ\.3 δεν είναι μέσα/.test(f.text) && hasCite(f.cites, "fail-57"));
+  ok("R8c · … (2) 59 % (§35, §43) sits inside παρ.3β's 0-59 → next rung", !!f && /59%/.test(f.text) && /§43/.test(f.text) && /παρ\.3β/.test(f.text) && /Διοικητή Μοίρας/.test(f.text) && hasCite(f.cites, "fail-52") && hasCite(f.cites, "fail-88") && hasCite(f.cites, "fail-23"));
+  ok("R8c · … (3) the gate is medical: §34 defines, §39 excludes — the doctor decides", !!f && /ιατρική/.test(f.text) && /§34/.test(f.text) && /§39/.test(f.text) && hasCite(f.cites, "fail-51") && hasCite(f.cites, "fail-56"));
+  ok("R8c · … the ΑΕ's right is spent by it (an occasion of judgment, παρ.7)", r.counters.dpUsed.ae === 1 && r.counters.dpUsed.budget === 2);
+  r = run(open.concat([ev("dp_ae", "fail"), ev("dp_cdr", "pass", { nausea: "pre_ok" })]));
+  eq("R8c · nausea on the Δκτής test → 59 % → Board (παρ.8β)", r.status.code, "board");
+  ok("R8c · … the line names παρ.8β and the Board", r.timeline[3].fired.some((x) => /παρ\.8β/.test(x.text) && /Συμβούλιο/.test(x.text) && hasCite(x.cites, "fail-25")));
+  r = run([F("lag", { role: "last", cat: "formation" }), ev("apt", "pass", { cat: "formation", nausea: "pre_ok" })]);
+  eq("R8b · nausea on an Εξέταση Καταλληλότητας → 59 % = ΥΣΤΕΡΗΣΗ εκ νέου → ΠΔ", r.status.code, "dp_ae");
+  ok("R8b · … the row says παρ.2 does not reach it", r.timeline[1].notes.some((x) => /παρ\.2/.test(x.text) && /1γ\/1δ μόνο/.test(x.text)));
+  r = run(open.concat([ev("dp_ae", "score", { score: 45, nausea: "pre_ok" })]));
+  ok("R8c · an explicit lower score with nausea is kept (45 %)", /45%/.test(r.timeline[2].band) && r.status.code === "dp_cdr");
+  ok("R8d · the §37 ΑΔΕ gap is recorded on dp_ae without a reading", BT.nodeOf("dp_ae").node.unresolved.some((u) => /ΚΕΝΟ/.test(u) && /δεν επιλέγεται ανάγνωση/.test(u) && /§37/.test(u) && /§71/.test(u) && /παρ\.7/.test(u) && /75%/.test(u)));
+}
+
+console.log("\n=== PROBE 3m — R8(a): the gate offers only the legal next events; the state line says where he stands ===");
+{
+  const A = (r) => BT.allowedEvents(r);
+  let g = A(run([]));
+  ok("R8a · free: ordinary sorties, exams, ΚΕΠΕ, incidents — no Δοκιμή Προόδου, no Board, no apt", g.allowed.indexOf("flight") >= 0 && g.allowed.indexOf("fs") >= 0 && g.allowed.indexOf("written") >= 0 && g.allowed.indexOf("oral") >= 0 && g.allowed.indexOf("kepe_in") >= 0 && g.allowed.indexOf("incident") >= 0 && ["dp_ae", "dp_cdr", "board", "apt", "practice", "cdr_decision", "ae_written"].every((t) => g.allowed.indexOf(t) < 0), g.allowed.join());
+  eq("R8a · … expected: a flight", g.expected, "flight");
+  ok("R8a · … state line: free", /Ελεύθερος/.test(g.state));
+  g = A(run([F("pass"), F("score", { role: "checkride", score: 55 })]));
+  ok("R8a · κρίση at ae: ONLY the ΑΕ test is offered, and it is the expected one", g.allowed.join() === "dp_ae" && g.expected === "dp_ae", g.allowed.join());
+  ok("R8a · … state line: εκκρεμεί Δοκιμή Προόδου με τον ΑΕ, cited", /Δοκιμή Προόδου από τον ΑΕ/.test(g.state) && g.cites.some((c) => c.id === "fail-23"));
+  g = A(run([F("pass"), F("score", { role: "checkride", score: 55 }), ev("dp_ae", "fail")]));
+  ok("R8a · κρίση at cdr: ONLY the Δκτής test", g.allowed.join() === "dp_cdr" && g.expected === "dp_cdr");
+  g = A(run([F("pass"), F("score", { role: "checkride", score: 55 }), ev("dp_ae", "score", { score: 70 }), F("lag", { role: "last", cat: "formation" }), ev("apt", "fail", { cat: "formation" })]));
+  ok("R8a · ΑΕ spent (R7): the ΑΕ test is NOT offered — the Δκτής is", g.allowed.join() === "dp_cdr", g.allowed.join());
+  g = A(run([F("pass"), F("score", { role: "checkride", score: 55 }), ev("dp_ae", "fail"), ev("dp_cdr", "fail")]));
+  ok("R8a · κρίση at board: ONLY the Board — nothing that flies", g.allowed.join() === "board" && g.expected === "board");
+  g = A(run([F("pass"), F("score", { role: "checkride", score: 55 }), ev("dp_ae", "score", { score: 70 }), ev("dp_cdr", "score", { score: 70 }), F("score", { role: "checkride", score: 50 })]));
+  ok("R8a · ladder exhausted: ONLY the Board, and the state line says «χωρίς πτήσεις Δοκιμής Προόδου»", g.allowed.join() === "board" && /ΧΩΡΙΣ πτήσεις Δοκιμής Προόδου/.test(g.state), g.allowed.join() + " / " + g.state);
+  g = A(run([ev("incident", null, { kind: "1h" }), ev("board", "stop")]));
+  ok("R8a · stopped: nothing is offered", g.allowed.length === 0 && g.expected === null);
+  g = A(run([ev("incident", null, { kind: "1ia" })]));
+  ok("R8a · ΑΑΣ: nothing is offered", g.allowed.length === 0);
+  g = A(run([F("lag", { role: "last", cat: "formation" })]));
+  ok("R8a · apt pending: the Εξέταση Καταλληλότητας is expected; ordinary sorties still offered; no Δοκιμή Προόδου", g.expected === "apt" && g.allowed.indexOf("flight") >= 0 && g.allowed.indexOf("dp_ae") < 0);
+  g = A(run([ev("oral", "fail"), ev("oral", "fail"), ev("oral", "fail"), ev("oral", "fail")]));
+  ok("R8a · 1ζ referral: ONLY the written exam", g.allowed.join() === "ae_written");
+  g = A(run([F("pass"), F("score", { role: "checkride", score: 55 }), ev("dp_ae", "fail"), ev("dp_cdr", "fail"), ev("board", "continue")]));
+  ok("R8a · after ΥΠΕΡ: only the practice flight; then only the Δκτής' decision", g.allowed.join() === "practice" && A(run([F("pass"), F("score", { role: "checkride", score: 55 }), ev("dp_ae", "fail"), ev("dp_cdr", "fail"), ev("board", "continue"), ev("practice", "pass")])).allowed.join() === "cdr_decision");
+  ok("R8a · the gate narrows, the engine judges: an off-gate event handed straight to evaluate() is still processed and told to the user", run([ev("dp_ae", "pass")]).timeline[0].notes.some((x) => /αγνοείται/.test(x.text)));
+  const src = require("fs").readFileSync(require("path").join(H.ROOT, "app", "boardtrees.js"), "utf8");
+  ok("R8a · the form has no disabled options (hidden, not greyed)", !/<option[^>]*disabled/.test(src));
 }
 
 console.log("\n=== PROBE 3k — every fired line and every verdict cite resolves in the trees' cite index ===");

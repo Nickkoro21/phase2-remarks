@@ -141,15 +141,28 @@ exam, the Board ΥΠΕΡ cycle (practice flight → Δκτής decides → excep
 Δοκιμή Προόδου). None of these is a counter; the overlay detects a *crossing*
 of a SchedConsq counter and records a `referral`.
 
-### The παρ.7/9 overlay — flagged as interpretation
-`SchedConsq` opens every new ladder at the ΑΕ rung. The ΠΔ says the ΑΕ judges
-**once per stage** (παρ.7) and the Δκτής **once if the ΑΕ test was ≥60 %, twice
-if <60 %** (παρ.9); after that, Board without a progress test. The sandbox
-applies this on top of the engine's `pd.stage` and shows both («SchedConsq: ae ·
-ΠΔ παρ.7/9 (ερμηνεία): cdr»). It is labelled ΕΡΜΗΝΕΙΑ in the UI and recorded as
-unresolved on the `dp_exhausted` node, because παρ.9 keys on «the previous ΑΕ
-test» that a second referral never has. **Recommendation:** move it into
-`SchedConsq` once the reading is agreed.
+### The παρ.7/9 budget — in the engine (R7, owner ruling 2026-10-17)
+`walk()` keeps, per stage and derived only from the events handed in:
+`aeUsed` (the ΑΕ's single right, παρ.7 — spent whether he passed or failed:
+occasions of judgment, not failures), `cdrBudget` (**1** if the ΑΕ's Δοκιμή was
+≥60 %, **2** if below — παρ.9) and `cdrUsed`. **Every** new κρίση — 1β, 1γ,
+1δ, 1ε, fail-12, fail-19, fail-11, an explicit `referral` — opens at the rung
+the budget allows: `!aeUsed` → `ae`; `cdrUsed < cdrBudget` → `cdr`
+(`pd.rung = "cdr_par7"`); else → `board` (`pd.rung = "board_par9"`, «χωρίς
+πτήσεις Δοκιμής Προόδου»). The rung transitions are untouched: a failed `dp_ae`
+→ `cdr`, a failed `dp_cdr` → `board` (παρ.8β — every Δκτής failure ends the
+ladder; the second Δκτής occasion is reachable only by passing the first). A
+direct referral (παρ.5, `rung "direct"`) and the exceptional Δοκιμή Προόδου of
+παρ.17β (`rung "exceptional"`) bypass the budget. The unit of accounting is the
+**ΣΤΑΔΙΟ**, not the category — «είναι ανά στάδιο, δεν είναι ανά κατηγορία.
+Ασχολούμαστε μόνο με το Phase 2.» `walk()` returns `budget`; the sandbox and
+`pdStageText()` only put words on the rung the engine chose. The overlay the
+sandbox carried until this round is gone: one implementation. The case that
+forced it: a student with his ΑΕ Δοκιμή already flown this stage fails the last
+sortie of a unit, flies an Εξέταση Καταλληλότητας (3-01 §30ζ) and fails that
+too — §30ζ «ΠΔ κατά περίπτωση» = 1β («πτήση **εξέτασης**»); before R7 the
+engine offered a second ΑΕ test, which παρ.7 forbids in terms; now it opens at
+the Δκτής.
 
 ---
 
@@ -180,9 +193,37 @@ test» that a second referral never has. **Recommendation:** move it into
     Προ-ΜΟΝΟΣ phase, or 20 % of the total flights of the stage; the programme,
     not the flights executed so far. The executed-count reading (the Progress
     editor's; on it any second lag in six flights is 33 %) remains behind the
-    switch for inspection. The pre-solo 40 % is computable only on the executed
-    reading, because no source gives the planned Προ-ΜΟΝΟΣ count (§10 #2) — so
-    on the ruled default it is shown as information and never fires.
+    switch for inspection. **The Προ-ΜΟΝΟΣ phase has 15 printed sorties** (R3,
+    §8) — so on the ruled default the 40 % is computable too: the 6th flight
+    graded 0-59 before the first ΜΟΝΟΣ fires 1δ(ΠΡΟ ΜΟΝΟΣ).
+* **The gate (R8a, owner ruling 2026-10-17).** The «Γεγονός» selector offers
+  **only the legal next events for the current state** — an event the state
+  does not allow is **not in the list** (not greyed: «όχι απλώς να μου
+  γκριζάρει κάποια πράγματα, αλλά να μου περιορίζει τις επιλογές»). A state
+  line above it says where the student stands and the single expected move,
+  cited: «εκκρεμεί Δοκιμή Προόδου από τον ΑΕ», «… από τον Διοικητή Μοίρας»,
+  «ΠΑΡΑΠΟΜΠΗ ΣΤΟ ΣΥΜΒΟΥΛΙΟ — ΧΩΡΙΣ πτήσεις Δοκιμής Προόδου», «Ελεύθερος —
+  συνεχίζει κανονικά». `BoardTrees.allowedEvents(result)` is pure: no κρίση →
+  sorties, exams, ΚΕΠΕ, incidents (never Δοκιμή Προόδου, Board, apt); κρίση at
+  `ae` → only `dp_ae`; at `cdr` → only `dp_cdr` (so a spent ΑΕ, R7, never
+  offers a second ΑΕ test); at `board` → only the Board; 1ζ referral → only the
+  written exam; ΥΠΕΡ → only the practice flight, then only the Δκτής' decision;
+  stopped / ΑΑΣ → nothing. **The engine stays the judge**: the gate narrows what
+  is offered, it never decides an outcome, and `evaluate()` still processes
+  (and reports as ignored) anything handed to it directly.
+* **Airsickness on every flying event (R8b)** — flight, F/S, Δοκιμή Προόδου
+  ΑΕ / Δκτή, Εξέταση Καταλληλότητας, practice flight — not only the ordinary
+  sortie.
+* **Airsickness on a Δοκιμή Προόδου does not help the student (R8c)**, and the
+  sandbox demonstrates why in one fired line: (1) ΠΔ παρ.2's exemption is
+  scoped «Κατά τις περιπτώσεις των υποπαραγράφων 1γ και 1δ» — παρ.3 is not in
+  it; (2) the Δοκιμή is graded 59 % (3-01 §35; §43 expressly grades the
+  airsickness ΑΔΕ unlike every other ΑΔΕ) and 59 sits inside παρ.3β's / παρ.8β's
+  «από μηδέν (0) έως πενήντα εννέα τοις εκατό (59%)» — he is pushed to the next
+  rung, not spared it; (3) the gate is medical: §34 defines «σοβαρή-έκδηλη» by
+  objective facts and §39 lets the Ιατρός Αεροπορικής Ιατρικής exclude what is
+  not airsickness. The same on an Εξέταση Καταλληλότητας (59 % = «ΥΣΤΕΡΗΣΗ εκ
+  νέου» → ΠΔ).
 * **Dates** are fictional: one working day per event unless typed; they serve
   only the rescheduling rules (fail-08/09/10/11).
 * **It never reads the Scheduler store.** `p3-sandbox.js` asserts that
@@ -200,20 +241,20 @@ test» that a second referral never has. **Recommendation:** move it into
 | band ΥΣΤΕΡΗΣΗ / ΑΠΟΤΥΧΙΑ | 50-59 / 0-49 | fail-01 | SchedConsq.bandOf |
 | 1α | 1 incident | fail-75 | data → referral |
 | 1β | 1 checkride 0-59 | fail-16, fail-86 | SchedConsq.walk (checkride, any lag/fail) |
-| 1γ | grace 4 · 2×0-49 · 3×0-59 | fail-76 | SchedConsq.countersFrom c049/c059 |
-| 1δ | ≥40 % pre-solo · ≥20 % total · 85 planned → 17 | fail-77 | SchedConsq.countersFrom preSolo/totalFl (+ planned option) |
-| 1ε | grace 3 · 3 consecutive · 20 % and ≥3 | fail-40 | SchedConsq.countersFrom fs059/fsCum (new) |
+| 1γ | grace 4 (run starts at the 5th — R2) · 2×0-49 · 3×0-59 · checkrides skipped (R4) | fail-76, fail-44 | SchedConsq.countersFrom c049/c059 |
+| 1δ | ≥40 % of the 15 printed Προ-ΜΟΝΟΣ sorties → 6 · ≥20 % of the 85 printed stage sorties → 17 (R3) | fail-77 · MIF table PDF 92 (`data/mif/t6a.json`) | SchedConsq.countersFrom preSolo/totalFl (numerators) + printed denominators in the sandbox |
+| 1ε | grace 3 (run starts at the 4th — R2) · 3 consecutive · 20 % and ≥3 | fail-40 | SchedConsq.countersFrom fs059/fsCum (new) |
 | §30στ F/S last | 3 attempts, 2 days before the 3rd | fail-11 | SchedConsq.walk fsLadder |
 | §30ζ A/C last | Εξέταση Καταλληλότητας, then ΠΔ | fail-12, fail-27 | SchedConsq.walk apt |
 | §56 first solo | Εξέταση Καταλληλότητας, solo not repeated | fail-19 | SchedConsq.walk apt (solo) |
 | ΔΠ pass mark | 60 % | fail-23, fail-25 | SchedConsq.normRes |
-| ΔΠ allowance | ΑΕ 1 · Δκτής 1 / 2 | fail-24, fail-26 | data overlay (§4) |
+| ΔΠ allowance | ΑΕ exactly 1 · Δκτής 1 if ΑΕ ≥60 / 2 if <60 · Δκτής fail → Board always (R5) | fail-24, fail-25, fail-26 | data overlay (§4) |
 | 1στ | 2 consecutive written → Board | fail-32, fail-62 | SchedConsq written.streak → referral board |
 | written pass | 80 % · bold face 100 % | fail-28 | data (passPct) |
 | 1ζ | ΚΕΠΕ 2/4 · referral 4/8 · γραπτή after 2 days · επανεξέταση after 2 days (ΑΕ, all subjects) · Board on the 2nd failure | fail-36, fail-44, fail-37, fail-38 + fail-39 (same rung), fail-24 | SchedConsq oral.total + data streak/path |
 | 1η 1θ 1ι | 1 incident → Board | fail-78, fail-79, fail-80, fail-62 | data → referral board |
 | 1ια | ΕΔΕ → ΑΑΣ | fail-81, fail-63 | data |
-| ΑΕΡΟΝΑΥΤΙΑ | 59 % · exempt 1γ/1δ · ΚΕΠΕ at 2 | fail-52, fail-57, fail-44 | SchedConsq exemptIf + data |
+| ΑΕΡΟΝΑΥΤΙΑ | 59 % = ΣΚ (§29δ) → exempt from 1γ/1δ when pre-onset Καλώς+ (R1) · ΚΕΠΕ at 2 | fail-52, fail-01, fail-57, fail-44 | SchedConsq exemptIf + data |
 | ΚΕΠΕ | 6 conditions · caps 2/2/1/1 · 63 % | fail-44, fail-45 | data + SchedConsq.smsMax |
 | blind control | 90 %, repeat next day | fail-35 | data |
 | stage exam | repeat next day | fail-33 | data (and fed to written.streak — see §8) |
@@ -270,19 +311,118 @@ after the completed branch. A scored checkride (≤59) was already right because
    inspection. What blocks computing his rule exactly stays open: no source
    gives the Προ-ΜΟΝΟΣ flight count, and whether F/S, ΜΟΝΟΣ, ΕΠΑΝΑΛΗΨΕΙΣ and ΑΔΕ
    sit in the denominator is not said (§10 #2).
-3. **Nausea exemption = skip**, not break (παρ.2 «δεν υπολογίζονται»).
-4. **A referral never re-opens a ladder already open** — the first owns it
+3. **R1 — RULED by the owner, 2026-10-17: a 59 % airsickness sortie is EXEMPT
+   from the 1γ run and the 1δ percentages.** The reconciliation is textual:
+   3-01 §35 (fail-52) grades the sortie «ΥΣΤΕΡΗΣΗ (59%)»; 3-01 §29δ (fail-01)
+   defines «ΣΚ» Σχεδόν Καλώς as **50%-59%**; so the 59 % sortie *is* «επίδοση
+   Σχεδόν Καλώς» in ΠΔ άρθρο 3 παρ.2's own words (fail-57), and παρ.2 exempts
+   it. The two instruments use different labels for the same value; §29δ is the
+   bridge. The other two limbs of παρ.2 stay intact: the exemption requires
+   that performance **before** the onset was «Καλώς και άνω» or unassessable
+   (sandbox: `nausea: "pre_ok"`), and the sortie must sit in the ΣΚ band — a
+   nausea sortie graded ΑΠΟΤΥΧΙΑ (0-49) is not «Σχεδόν Καλώς» and counts. The
+   reasoning is recorded on nodes `g_exempt`, `d_exempt`, `n_exempt`
+   (`rulings[]`, citing fail-01 + fail-52 + fail-57), because the labels will
+   confuse the next reader exactly as they confused us. Closed by it: the
+   «ναυτία / ΑΕΡΟΝΑΥΤΙΑ» terminology doubt and the «3-01 §58 does not reproduce
+   the exemption» doubt (the ΠΔ governs). Still open: whether «δεν
+   υπολογίζονται» *skips* the sortie or *breaks* the run — the engine skips.
+4. **R2 — RULED INTERPRETATION by the owner, 2026-10-17: the grace period
+   excludes the sortie entirely.** Counting starts from the **5th** sortie in
+   the air and the **4th** on the F/S; a run of low grades may not include a
+   grace sortie. Earliest possible 1γ referral: sorties 5+6 (two at 0-49) or
+   5+6+7 (three at 0-59); earliest 1ε(αα): F/S 4+5+6. This is expressly an
+   interpretation, not a quotation — ΠΔ παρ.1γ («Όταν μετά τις τέσσερις (4)
+   πρώτες εξόδους του σταδίου και σε δύο (2) συνεχόμενες πτήσεις…») and
+   παρ.1ε(αα) («Μετά τις τρεις (3) πρώτες εξόδους του σταδίου και σε τρεις (3)
+   συνεχόμενες πτήσεις…»), identical in 3-01 §58γ/§58ε, do not say whether a
+   run may begin inside the grace period and complete outside it. It is marked
+   ΕΡΜΗΝΕΙΑ ΙΔΙΟΚΤΗΤΗ in `unresolved[]` on `g_grace` and `e_grace` with the
+   texts shown. The engine already reads it this way (`ac.slice(4)`,
+   `fs.slice(3)`); `p2-engine.js` pins 4+5 → 1, 5+6 → 2, 5+6+7 → 3, F/S 4+5+6 → 3.
+5. **R3 — RULED by the owner, 2026-10-17: the Προ-ΜΟΝΟΣ count is 15, printed
+   in the MIF table.** Syllabus table «CONTACT (PRE-SOLO) / Τ-6A» (PDF 92;
+   digitised as `data/mif/t6a.json` `tables[0]`, column for column): C4101
+   (1/0) + C4201-03 (3/0) + C4301-03 (3/0) + C4401-03 (3/0) + C4590 (1/0) +
+   C4601-02 (2/0) + C4790-91 (1/1) = **14 dual + 1 solo = 15**, ending exactly
+   at the first solo. Three independent sources agree (syllabus graph, Contact
+   mission table, MIF table). Former doubt #8 («no source prints the count»)
+   is **closed**. Both denominators are the **printed programme**, in his
+   words: «όχι σε όσες έχει πετάξει μέχρι τώρα, αλλά στο σύνολο, είτε για το
+   προ-μόνος είτε για όλο το στάδιο» — **40 % of 15 = 6** low grades in the
+   Προ-ΜΟΝΟΣ phase, **20 % of 85 = 17** across the Στάδιο. Encoded in
+   `thresholds.air_1d` (`pre_solo_sorties: 15`, `pre_solo_source`), on `d_pre`
+   (`rulings[]`), in the sandbox (`1δ(ΠΡΟ ΜΟΝΟΣ)` fires at the 6th low grade on
+   the default), and pinned against the digitised MIF by `p1-data.js`.
+6. **R4 — RULED by the owner, 2026-10-17: an Αξιολόγηση (checkride) is NOT a
+   member of the 1γ consecutive run. A real defect, fixed in the engine.**
+   `countersFrom()` removed the specials (dp_ae, dp_cdr, apt, board, referral)
+   from the run — right for Δοκιμές Προόδου — but a checkride is a graph node,
+   so «checkride 45 → [dp_ae, filtered] → flight 45» became two *adjacent*
+   0-49 grades and `trailStreak` fired 1γ(Α). Measured before the fix on
+   that sequence (after the 4 grace sorties): **c049 = 2, c059 = 2, fired «1β
+   | 1γ(Α)», verdict dp_cdr (a second referral)**; after: **c049 = 1, c059 = 1,
+   fired «1β» only, verdict free / other instructor**. The owner's argument:
+   a sub-60 checkride is already 1β, opens the ladder (a barrier) and is
+   consumed by its own provision when the ΑΕ clears it («συνεχίζει την
+   εκπαίδευσή του με άλλον εκπαιδευτή»); counting it again inside 1γ books one
+   event into two ladders — «δεν μπορεί να ενεργοποιηθεί το 1γ με αξιολόγηση,
+   γιατί έχουμε μπει στη διαδικασία της δοκιμής προόδου». Both sides recorded on
+   node `g_ckr` (ΑΠΟΦΑΝΣΗ ΙΔΙΟΚΤΗΤΗ in `unresolved[]`): the ΠΔ does not
+   exclude checkrides in terms, but 3-01 §32β(2) (fail-44) shows the drafter
+   excludes «τελικές εξετάσεις και Δοκιμές Προόδου» expressly when he means to
+   (the ΚΕΠΕ 63 % counter), so the silence is at best ambiguous — the
+   double-counting argument settles it. Implementation: the checkride is
+   *skipped* by `c049`/`c059` (like an exempt nausea sortie), keeps its slot in
+   the 4-sortie grace window, and **1δ is untouched** — a failed checkride
+   genuinely is one 0-59 flight of the stage; I see no reason to change 1δ.
+   Not ruled and left open: whether a cleared 1β also resets the lags that
+   preceded the checkride (the engine skips only: lag · lag · checkride · ΑΕ
+   ≥60 · lag = run of 3).
+7. **R5 — the Δοκιμή Προόδου ladder, confirmed by the owner against the text
+   (2026-10-17) and encoded as the state machine** (`thresholds.dp.state_machine`,
+   nodes `dp_ae_pass` / `dp_cdr`, the sandbox verdict): the ΑΕ judges
+   **exactly once per Στάδιο, pass or fail** (παρ.7); a **Δκτής failure is
+   always the Board** (παρ.8β) — no second chance after it; **how many Δκτής
+   occasions exist is set by the ΑΕ grade, not by passing the Δκτής** (παρ.9):
+   ΑΕ «καλώς και άνω» (≥60 %) → **one**; ΑΕ below 60 % → **two**; then
+   «Συμβούλιο χωρίς πτήσεις Δοκιμής Προόδου». The surprising branch — ΑΕ
+   *passed*, so the Δκτής has only one occasion — is now printed on the
+   `dp_ae_pass` node's label and condition and in every dp_cdr verdict («Επειδή
+   η Δοκιμή ΑΕ ήταν ≥60%, ο Δκτής έχει ΜΙΑ μόνο ευκαιρία … (αυτή είναι η 1η/1)»).
+8. **R6 — documentation, no behaviour change (owner, 2026-10-17): the Εξέταση
+   Καταλληλότητας consumes NO rung of the ΠΔ ladder.** 3-01 §30ζ gives it to an
+   «Αξιολογητή της Μοίρας» — not the ΑΕ, not the Δκτής; it is the 3-01's own
+   remedy for a failed last sortie of a unit and sits *below* the ladder; only
+   «αν ΥΣΤΕΡΗΣΕΙ ή ΑΠΟΤΥΧΕΙ εκ νέου» does the ΠΔ fire, and then the ladder
+   starts clean at the ΑΕ. Phase II sets no cap on Εξετάσεις Καταλληλότητας and
+   no repeat of a failed one (Phase III/IV: §80β(4) caps at 3, §81α(4) allows a
+   repeat). Stated on `l_apt` / `l_pd`; the engine already keeps them apart
+   (`apt` is its own special, never `dp_ae`), and `dpUsed.ae` stays 0 after an
+   aptitude exam.
+9. **Nausea exemption = skip**, not break (παρ.2 «δεν υπολογίζονται»).
+9a. **R8 (owner, 2026-10-17)** — the sandbox gate (hide, not grey), airsickness
+   on every flying event, the three-part demonstration on a Δοκιμή Προόδου (§5),
+   and **one gap recorded without a reading (R8d)** on `dp_ae`: if the
+   airsickness comes early enough that the Δοκιμή becomes an ΑΔΕ under 3-01 §37
+   (75 %/75 %), no source says whether the Δοκιμή is re-flown or whether
+   re-flying it consumes a παρ.7 occasion («τεθεί υπό την κρίση» counts a
+   judgment, not a flight); §71 removes airsickness ΑΔΕ only from the grade
+   average.
+10. **A referral never re-opens a ladder already open** — the first owns it
    (one κρίση at a time).
-5. **The stage exam (fail-33) is fed into the written counter**: it is a
+11. **The stage exam (fail-33) is fed into the written counter**: it is a
    written ground exam «από Προϊστάμενη αρχή», so two failures read as 1στ by
    the letter of the ΠΔ. The matrix flags that this is not stated expressly;
    the timeline note says so.
-6. **ΚΕΠΕ entries**: a trigger opens an entry only if not already in ΚΕΠΕ for
+12. **ΚΕΠΕ entries**: a trigger opens an entry only if not already in ΚΕΠΕ for
    that category; `kepe_exit` closes all. Exceeding the cap prints the unit
    ruling (ΑΕ 364 ΜΕΑ, 09/08/2026: no re-entry, no referral).
-7. **The παρ.7/9 overlay** stays outside the engine and is labelled
-   interpretation (§4).
-8. **A dp/apt/board record with no open κρίση is ignored** and the row says so,
+13. **R7 — the παρ.7/9 budget moved INTO `schedconsq.js`** (owner ruling
+   2026-10-17, unit of accounting = the stage); the sandbox overlay is removed
+   (§4). The live Scheduler now opens a second κρίση of the stage at the Δκτής
+   (or the Board) instead of a second ΑΕ test.
+14. **A dp/apt/board record with no open κρίση is ignored** and the row says so,
    mirroring the engine.
 
 ---
@@ -308,17 +448,27 @@ Carried on the nodes as `unresolved[]`; the ones that change an answer:
    only · 3-01 §58ζ: Δκτής ή ΑΕ), its syllabus (ΠΔ: all professional subjects ·
    3-01: 50+25+5), and the pass mark (the 3-01 states none; presumably §25β's
    80 %/100 %).
-2. **1δ denominator — RULED 2026-10-17: the total the phase / the stage HAS
-   (planned).** Still open, and exactly what blocks computing the rule: no
-   source gives the Προ-ΜΟΝΟΣ flight count (so the 40 % has no planned basis),
-   and whether F/S, ΜΟΝΟΣ, ΕΠΑΝΑΛΗΨΕΙΣ and ΑΔΕ sit in the denominator (§43
-   removes them only from the numerator). The executed reading stays behind the
-   switch for inspection.
-3. **παρ.7 vs παρ.9**: the Δκτής' allowance keys on «the previous ΑΕ test»,
-   which a second referral (ΑΕ already used) never has.
+2. **1δ denominator — RULED 2026-10-17: the printed programme** (15 Προ-ΜΟΝΟΣ
+   → 6; 85 stage → 17; R3 in §8 — the Προ-ΜΟΝΟΣ count doubt is closed by the
+   MIF table). Still open: whether F/S, ΜΟΝΟΣ, ΕΠΑΝΑΛΗΨΕΙΣ and ΑΔΕ sit in the
+   denominator (§43 removes them only from the numerator). The executed reading
+   stays behind the switch for inspection.
+3. **παρ.7 vs παρ.9 — a drafting doubt, still open after R7** (it is only
+   now visible in the right place, on `dp_cdr`): the Δκτής' allowance keys on
+   «the previous ΑΕ test», which a second referral (ΑΕ already used) never has.
+   The engine reads «previous» as the stage's one and only ΑΕ test (budget 1 if
+   ≥60 %, 2 if <60 %, for the whole stage). Also open: whether the exceptional
+   Δοκιμή Προόδου of παρ.17β counts against the budget (the engine counts the
+   `dp_ae`/`dp_cdr` flown under it). Also open (R8d): a Δοκιμή Προόδου that
+   becomes an ΑΔΕ through airsickness under §37 — re-flown? a παρ.7 occasion?
+   No source says.
 4. **1γ sequence**: whether a non-graded sortie (§43) or an exempt nausea
-   flight *breaks* or is *skipped*; whether the 4 grace sorties include F/S;
-   ΜΟΝΟΣ flights (graded) are not excluded.
+   flight *breaks* or is *skipped* (the engine skips); whether the 4 grace
+   sorties include F/S; ΜΟΝΟΣ flights (graded) are not excluded. **Ruled as
+   interpretation (R2)**: a run may not include a grace sortie — counting starts
+   at the 5th (air) / 4th (F/S). **Ruled (R4)**: a checkride is not a member of
+   the run (skipped). Not ruled: whether a cleared 1β resets the lags that
+   preceded the checkride.
 5. **1ε**: planned vs executed again; the missing «και άνω».
 6. **§31 suspension** speaks of the Board stage; whether it also covers the
    Δοκιμές Προόδου (which are flights) is not said.
@@ -327,8 +477,9 @@ Carried on the nodes as `unresolved[]`; the ones that change an answer:
 8. **Stage exam (fail-33) and blind control (fail-35)**: a second failure is
    unregulated; blind control's 90 % vs 3-01's 80 %/100 %.
 9. **ΑΕΡΟΝΑΥΤΙΑ**: no maximum, no ΚΑΙ threshold; §35 (always 59 %) vs §37
-   (graded only if ΑΠΟΤΥΧΙΑ under 75 %/75 %); the 3-01 §58 does not reproduce
-   the ΠΔ exemption.
+   (graded only if ΑΠΟΤΥΧΙΑ under 75 %/75 %). **Ruled (R1)**: the 59 % sortie is
+   «Σχεδόν Καλώς» via §29δ and exempt from 1γ/1δ under παρ.2's other limbs; the
+   label and the 3-01-silence doubts are closed.
 10. **ΚΕΠΕ**: cap exceeded → unit ruling only; «2 for ground exams» total or
     per kind.
 11. **Board ΥΠΕΡ**: the practice flight's grading and threshold; who flies the
@@ -337,5 +488,6 @@ Carried on the nodes as `unresolved[]`; the ones that change an answer:
 12. **10 working days** run from «the last flight» — for 1στ/1η/1θ/1ι there may
     be none.
 13. **The live engine** (before this round) did not implement 1ε counters, the
-    nausea exemption, the παρ.7/9 allowances, and treated a lag-only checkride
-    as a non-event (§7). The first two are now in; the third is the overlay.
+    nausea exemption, the παρ.7/9 allowances, treated a lag-only checkride as a
+    non-event (§7), and double-booked a failed checkride into the 1γ run (R4,
+    §8 #6). All four are now in the engine (the παρ.7/9 budget since R7).

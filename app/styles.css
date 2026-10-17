@@ -2599,3 +2599,9 @@ html[data-edit="off"] .cur-head::after {
 .bt-ctr-v { font-family: Consolas, monospace; font-weight: 700; color: var(--text); }
 #bt-drawer .fc-drawer-body h4:first-child { margin-top: 0; }
 @media (max-width: 740px) { .bt-row { flex-direction: column; gap: 2px; } .bt-edge { margin-top: 0; } .bt-kv th { width: 110px; } }
+/* R8 — the sandbox state line: where the student stands, and the one expected move */
+.bt-state { border: 1px solid var(--line); border-left: 5px solid var(--accent); border-radius: 8px; padding: 8px 12px; margin-bottom: 8px; font-size: 13px; line-height: 1.55; background: var(--panel-2); }
+.bt-state.is-board, .bt-state.is-stopped, .bt-state.is-aas { border-left-color: var(--bad); }
+.bt-state.is-dp_ae, .bt-state.is-dp_cdr, .bt-state.is-oral_exam, .bt-state.is-apt, .bt-state.is-fs_ladder, .bt-state.is-practice, .bt-state.is-cdr_decides { border-left-color: var(--warn); }
+.bt-state.is-free { border-left-color: var(--good); }
+.bt-form-none { justify-content: center; }

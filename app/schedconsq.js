@@ -236,6 +236,40 @@
     const repeat = {};                   // track -> {maneuvers, kind, date, srcLabel}
     const catACFails = {};               // track -> count of A/C lag/fail so far (specific-vs-general)
 
+    /* ══ R7 (owner, 2026-10-17) — THE ΠΔ παρ.7 / παρ.9 BUDGET, per ΣΤΑΔΙΟ ══
+       «είναι ανά στάδιο, δεν είναι ανά κατηγορία» — one budget for the whole
+       Phase II, not one per category. Derived from the events handed in, never
+       from the store (the walk stays pure).
+         aeUsed    — the ΑΕ's single right (παρ.7 «μόνο μία (1) φορά»), spent
+                     whether he passed or failed: occasions of judgment, not
+                     failures.
+         cdrBudget — 1 if the ΑΕ's Δοκιμή was ≥60 %, 2 if below (παρ.9).
+         cdrUsed   — Δκτής occasions flown.
+       EVERY new κρίση — 1β, 1γ, 1δ, 1ε, fail-12, fail-19, fail-11, an explicit
+       referral — opens at the rung the budget allows: !aeUsed → "ae";
+       cdrUsed < cdrBudget → "cdr" (παρ.7 second sentence); else → "board",
+       «χωρίς πτήσεις Δοκιμής Προόδου» (παρ.9 last sentence). The rung
+       transitions are untouched: a failed dp_ae still moves to cdr, a failed
+       dp_cdr still moves to board (παρ.8β — every Δκτής failure ends the
+       ladder, so the second Δκτής occasion is reachable only by passing the
+       first). A direct referral (παρ.5) and the exceptional Δοκιμή Προόδου of
+       παρ.17β bypass the budget. Until this round the sandbox applied this as
+       an overlay and the live Scheduler opened every κρίση at "ae"; now there
+       is one implementation. */
+    const budget = { aeUsed: false, aePassed: false, cdrBudget: 0, cdrUsed: 0 };
+    function openPd(base, exceptional) {
+      let stage = "ae", rung = "ae";
+      if (exceptional) rung = "exceptional";
+      else if (!budget.aeUsed) rung = "ae";
+      else if (budget.cdrUsed < budget.cdrBudget) { stage = "cdr"; rung = "cdr_par7"; }
+      else { stage = "board"; rung = "board_par9"; }
+      base.stage = stage; base.rung = rung;
+      base.boardSince = stage === "board" ? base.since : "";
+      base.rungReq = rung === "cdr_par7" ? ["fail-24", "fail-26"] : rung === "board_par9" ? ["fail-26", "fail-24"] : rung === "exceptional" ? ["fail-70"] : [];
+      base.budget = { aeUsed: budget.aeUsed, aePassed: budget.aePassed, cdrBudget: budget.cdrBudget, cdrUsed: budget.cdrUsed };
+      return base;
+    }
+
     for (const x of evs) {
       const ev = x.ev, res = x.res, date = x.date, kind = x.kind;
       const man = String(ev.maneuvers || "").trim();
@@ -253,27 +287,36 @@
               }
             }
           } else if (!pd) {
-            /* an apt lag/fail sets the ΠΔ 29/2020 flag (fail-12 / fail-19 path) */
-            pd = { stage: "ae", since: date, boardSince: "", srcUid: "", failIp: ev.instructor || "", req: "fail-12",
-                   medium: "flights",
-                   srcLabel: SPECIAL.apt.label + (ev.category ? " · " + (CAT_LABEL[ev.category] || ev.category) : "") };
+            /* an apt lag/fail sets the ΠΔ 29/2020 flag (fail-12 / fail-19 path).
+               The Εξέταση Καταλληλότητας is a «πτήση εξέτασης» of the directive
+               — 1β in the ΠΔ's own words — and the ladder opens at the rung
+               the stage's budget allows (R7): an ΑΕ already spent means the
+               Δκτής, not a second ΑΕ test (παρ.7). */
+            pd = openPd({ since: date, srcUid: "", failIp: ev.instructor || "", req: "fail-12", medium: "flights",
+                   srcLabel: SPECIAL.apt.label + (ev.category ? " · " + (CAT_LABEL[ev.category] || ev.category) : "") });
           }
         } else if (sp === "referral") {
           /* an explicit ΠΔ referral record (board trees): opens the ladder at
-             the rung named — "ae" (παρ.3) or "board" (παρ.5 direct). A ladder
-             already open is never re-opened: the first referral owns it. */
+             the rung named — "board" (παρ.5 direct) — or, for a Δοκιμή Προόδου
+             case, at the rung the budget allows (R7). A ladder already open is
+             never re-opened: the first referral owns it. */
           if (!pd) {
             const direct = String(ev.stage || "") === "board";
-            pd = { stage: direct ? "board" : "ae", since: date, boardSince: direct ? date : "", srcUid: "",
-                   failIp: ev.instructor || "", req: ev.req || (direct ? "fail-62" : "fail-23"),
+            const base = { since: date, srcUid: "", failIp: ev.instructor || "", req: ev.req || (direct ? "fail-62" : "fail-23"),
                    medium: kind === "fs" ? "fs" : "flights", srcLabel: ev.label || SPECIAL.referral.label };
+            if (direct) { base.stage = "board"; base.rung = "direct"; base.boardSince = date; base.rungReq = ["fail-62"]; base.budget = Object.assign({}, budget); pd = base; }
+            else pd = openPd(base, !!ev.exceptional);
           }
         } else if (sp === "dp_ae") {
+          /* παρ.7: an occasion of judgment by the ΑΕ — spent pass or fail;
+             παρ.9: the grade sets how many Δκτής occasions the stage has */
+          budget.aeUsed = true; budget.aePassed = res === "completed"; budget.cdrBudget = res === "completed" ? 1 : 2;
           if (pd && pd.stage === "ae") {
             if (res === "completed") { pdNote = { avoidIp: pd.failIp || "", since: date }; pd = null; }
             else pd.stage = "cdr";
           }
         } else if (sp === "dp_cdr") {
+          budget.cdrUsed += 1;
           if (pd && (pd.stage === "cdr" || pd.stage === "ae")) {
             if (res === "completed") { pdNote = { avoidIp: pd.failIp || "", since: date }; pd = null; }
             else { pd.stage = "board"; pd.boardSince = date; }
@@ -306,8 +349,7 @@
            (tools/fixtures/board, 17/10/2026) this branch required res ===
            "fail", so a checkride recorded as a plain lag fell through as an
            ordinary sortie. */
-        pd = { stage: "ae", since: date, boardSince: "", srcUid: x.uid, srcLabel: d.label,
-               failIp: ev.instructor || "", req: "fail-16", medium: "flights" };
+        pd = openPd({ since: date, srcUid: x.uid, srcLabel: d.label, failIp: ev.instructor || "", req: "fail-16", medium: "flights" });
         if (kind === "flights") catACFails[d.track] = (catACFails[d.track] || 0) + 1;
         continue;
       }
@@ -337,8 +379,7 @@
         ladders.set(x.uid, L);
         activeLadder = L;
         if (L.fails >= 3) {
-          pd = { stage: "ae", since: date, boardSince: "", srcUid: x.uid, srcLabel: d.label + " (3rd F/S fail)",
-                 failIp: ev.instructor || "", req: "fail-11", medium: "fs" };
+          pd = openPd({ since: date, srcUid: x.uid, srcLabel: d.label + " (3rd F/S fail)", failIp: ev.instructor || "", req: "fail-11", medium: "fs" });
           ladders.delete(x.uid); activeLadder = null;
         } else {
           /* 1st fail → immediate repeat next working day; 2nd → ≥2 clear
@@ -405,6 +446,7 @@
       repeat: repeat,
       sms: sms,
       smsExhausted: sms.filter((x) => x.exhausted),
+      budget: budget,                   // R7 — the παρ.7/9 budget of the stage, as it stands now
     };
     return out;
   }
@@ -414,8 +456,8 @@
   function pdStageText(pd) {
     if (!pd) return "";
     if (pd.stage === "ae") return "next: Progress Test (AE) — record a dp_ae special sortie";
-    if (pd.stage === "cdr") return "next: Progress Test (Sq Cdr) — record a dp_cdr special sortie";
-    if (pd.stage === "board") return "next: Flight Aptitude Board — record the outcome in the Progress editor";
+    if (pd.stage === "cdr") return "next: Progress Test (Sq Cdr) — record a dp_cdr special sortie" + (pd.rung === "cdr_par7" ? " (the AE already judged this stage — ΠΔ αρ.3 §7)" : "");
+    if (pd.stage === "board") return "next: Flight Aptitude Board — record the outcome in the Progress editor" + (pd.rung === "board_par9" ? " (progress tests exhausted — ΠΔ αρ.3 §9, χωρίς πτήσεις Δοκιμής Προόδου)" : "");
     if (pd.stage === "stopped") return "board outcome STOP — training stopped";
     return "";
   }
@@ -550,7 +592,17 @@
        "δεν υπολογίζονται" is read as "skipped", not as "break the run"; the
        sources do not say which (fail-76 flag), and the spec records it. */
     const ac = fly.filter((x) => x.kind === "flights");
-    const acEff = ac.slice(4).filter((x) => !exemptIf(x));
+    /* R4 (owner, 2026-10-17): an Αξιολόγηση (checkride) is NOT a member of the
+       1γ run. A sub-60 checkride is already 1β — it opens the ΠΔ ladder, which
+       is a barrier, and is consumed by its own provision when the ΑΕ clears it.
+       Counting it again inside 1γ books one event into two ladders: with the
+       Δοκιμή Προόδου (a special) filtered out, «checkride 45 → dp_ae → flight
+       45» read as two consecutive 0-49. «δεν μπορεί να ενεργοποιηθεί το 1γ με
+       αξιολόγηση, γιατί έχουμε μπει στη διαδικασία της δοκιμής προόδου». The
+       checkride still occupies its slot in the 4-sortie grace window, and still
+       counts in 1δ (it genuinely is a 0-59 flight of the stage). */
+    const isCkr = (x) => { const d = describe(x.uid); return !!(d && d.checkride); };
+    const acEff = ac.slice(4).filter((x) => !exemptIf(x) && !isCkr(x));
     const s049 = trailStreak(acEff, (x) => bandOf(x.ev) === "fail");
     const s059 = trailStreak(acEff, (x) => bandOf(x.ev) !== "pass");
     const c049 = { value: s049, limit: 2, events: acEff.slice(acEff.length - s049).map(withBand) };

@@ -22,3 +22,16 @@ scheduler-backup-*.json
 wings-ahead-export-*.json
 wa-export-*.json
 bridge-report-*
+
+# ΓΥΡΟΣ Ε (2026-10-17) — ΤΟ ΚΛΕΙΔΙ ΤΩΝ AGENTS ΔΕΝ ΜΠΑΙΝΕΙ ΠΟΤΕ ΣΤΟ ΔΕΝΤΡΟ.
+# Το ANTHROPIC_API_KEY ζει ΜΟΝΟ ως μεταβλητή περιβάλλοντος στο μηχάνημα του
+# ιδιοκτήτη και το διαβάζει ο tools/advisor_proxy.py τη στιγμή της εκτέλεσης.
+# Κανένα αρχείο δεν το γράφει στον δίσκο. Τα μοτίβα εδώ υπάρχουν ώστε ένα
+# παραπεταμένο τοπικό αρχείο να μην μπορεί να γίνει staged κατά λάθος — το
+# κλειδί ΔΕΝ είναι στο repo και δεν επιτρέπεται να γίνει.
+.env
+.env.*
+*.key
+*.pem
+advisor_config.json
+casefile_config.json

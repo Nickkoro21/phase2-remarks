@@ -101,10 +101,11 @@
        ημέρες στα ίδια αντικείμενα, από τον ΑΕ σε όλα τα επαγγελματικά θέματα
        (3-01 §58η = ΠΔ παρ.4) → ΑΠΟΤΥΧΩΝ → Συμβούλιο. There is no switch: the
        two texts are read in sequence, not in conflict. */
-    /* 1δ denominator — DEFAULT planned (85, Syllabus): on the executed reading
-       any second lag in six flights is 33 % and 1δ fires before every other
-       family can be shown; the Progress editor's executed reading stays one
-       toggle away. The ΠΔ says neither (fail-77 flag) — see the spec. */
+    /* 1δ denominator — the PRINTED programme (owner, 2026-10-17: «όχι σε όσες
+       έχει πετάξει μέχρι τώρα, αλλά στο σύνολο, είτε για το προ-μόνος είτε για
+       όλο το στάδιο»): 15 Προ-ΜΟΝΟΣ sorties (MIF table, PDF 92) → 6; 85 for
+       the stage → 17. The Progress editor's executed reading stays one toggle
+       away for comparison. */
     const denom = opts.denom_1d === "executed" ? "executed" : "planned";
 
     /* synthetic graph the walk asks about */
@@ -167,28 +168,16 @@
     const prefix = () => ({ walk: Q.walk(log, ctx), cnt: Q.countersFrom({ passPct: TH.written.pass_pct, describe: ctx.describe, fly: log.filter((x) => !x.special), exams: exams, nfs: nfs, exemptIf: exemptIf, isSoloDone: isSoloDone }) });
     let prev = prefix();
 
-    /* ΠΔ παρ.7/9 allowance overlay — applied on top of the walk's pd.stage */
-    function effectiveStage(w) {
+    /* R7 — the ΠΔ παρ.7/9 budget now lives in SchedConsq.walk (pd.rung,
+       w.budget). This only puts Greek words on the rung the engine chose. */
+    function stageOf(w) {
       const pd = w.pd;
       if (!pd) return null;
-      const out = { engine: pd.stage, effective: pd.stage, why: [] };
-      if (pd.stage !== "ae") return out;
-      const ref = log.filter((x) => x.special === "referral").slice(-1)[0];
-      if (ref && ref.ev.exceptional) { out.why.push({ text: "Κατ' εξαίρεση Δοκιμή Προόδου (ΠΔ παρ.17β) — εκτός ορίων παρ.7/9", cites: [R("fail-70", "Ο Δκτής παραπέμπει εκ νέου «με εξέταση σε κατ' εξαίρεση πτήση Δοκιμής Προόδου».")] }); return out; }
-      const aes = log.filter((x) => x.special === "dp_ae" && x.date < pd.since);
-      if (aes.length >= TH.dp.ae_per_stage) {
-        const aePassed = aes.some((x) => x.res === "completed");
-        const cdrAllowed = aePassed ? TH.dp.cdr_if_ae_ge60 : TH.dp.cdr_if_ae_lt60;
-        const cdrs = log.filter((x) => x.special === "dp_cdr" && x.date < pd.since).length;
-        if (cdrs >= cdrAllowed) {
-          out.effective = "board";
-          out.why.push({ text: "ΕΡΜΗΝΕΙΑ ΠΔ παρ.9: ο ΑΕ έκρινε ήδη (1/" + TH.dp.ae_per_stage + ") και ο Δκτής εξάντλησε τις κρίσεις του (" + cdrs + "/" + cdrAllowed + ", επειδή η Δοκιμή ΑΕ ήταν " + (aePassed ? "≥60%" : "<60%") + ") → Συμβούλιο ΧΩΡΙΣ Δοκιμή Προόδου", cites: [R("fail-26", "«Εφόσον στη συνέχεια τεθεί σε κρίση πτητικής καταλληλότητας παραπέμπεται στο Συμβούλιο χωρίς πτήσεις Δοκιμής Προόδου»."), R("fail-24", "Ο ΑΕ κρίνει μία φορά ανά στάδιο.")] });
-        } else {
-          out.effective = "cdr";
-          out.why.push({ text: "ΕΡΜΗΝΕΙΑ ΠΔ παρ.7: ο ΑΕ έκρινε ήδη σε αυτό το στάδιο → η νέα κρίση αρχίζει από τον Δκτή Μοίρας (κρίση " + (cdrs + 1) + "/" + cdrAllowed + ")", cites: [R("fail-24", "«Εάν ο ίδιος Ίκαρος ή Ανθυποσμηναγός τεθεί για δεύτερη φορά υπό την κρίση του … παραπέμπεται στο Διοικητή της Μοίρας»."), R("fail-26", "Μία κρίση Δκτή αν η Δοκιμή ΑΕ ήταν ≥60%, δύο αν ήταν <60%.")] });
-        }
-        out.why.push({ text: "Ο SchedConsq (ζωντανός Scheduler) κρατά το σκαλί «ae» — το όριο κρίσεων ανά στάδιο δεν είναι ακόμη στον κινητήρα.", cites: [] });
-      }
+      const out = { engine: pd.stage, effective: pd.stage, rung: pd.rung || "", why: [] };
+      const B = pd.budget || w.budget;
+      if (pd.rung === "cdr_par7") out.why.push({ text: "ΠΔ παρ.7: ο ΑΕ έκρινε ήδη σε αυτό το στάδιο (Δοκιμή ΑΕ " + (B.aePassed ? "≥60%" : "<60%") + ") → η νέα κρίση αρχίζει από τον Δκτή Μοίρας — κρίση " + (B.cdrUsed + 1) + "/" + B.cdrBudget + " του σταδίου (παρ.9). Μία κλίμακα ανά ΣΤΑΔΙΟ, όχι ανά κατηγορία.", cites: [R("fail-24", "«Εάν ο ίδιος Ίκαρος ή Ανθυποσμηναγός τεθεί για δεύτερη φορά υπό την κρίση του … παραπέμπεται στο Διοικητή της Μοίρας»."), R("fail-26", "Μία κρίση Δκτή αν η Δοκιμή ΑΕ ήταν ≥60%, δύο αν ήταν <60%.")] });
+      else if (pd.rung === "board_par9") out.why.push({ text: "ΠΔ παρ.9: ο ΑΕ έκρινε ήδη (1/1) και ο Δκτής εξάντλησε τις κρίσεις του (" + B.cdrUsed + "/" + B.cdrBudget + ", επειδή η Δοκιμή ΑΕ ήταν " + (B.aePassed ? "≥60%" : "<60%") + ") → ΣΥΜΒΟΥΛΙΟ ΧΩΡΙΣ ΠΤΗΣΕΙΣ ΔΟΚΙΜΗΣ ΠΡΟΟΔΟΥ. Μία κλίμακα ανά ΣΤΑΔΙΟ, όχι ανά κατηγορία.", cites: [R("fail-26", "«Εφόσον στη συνέχεια τεθεί σε κρίση πτητικής καταλληλότητας παραπέμπεται στο Συμβούλιο Πτητικής Ικανότητας χωρίς πτήσεις Δοκιμής Προόδου»."), R("fail-24", "Ο ΑΕ κρίνει μία φορά ανά στάδιο.")] });
+      else if (pd.rung === "exceptional") out.why.push({ text: "Κατ' εξαίρεση Δοκιμή Προόδου (ΠΔ παρ.17β) — εκτός ορίων παρ.7/9", cites: [R("fail-70", "Ο Δκτής παραπέμπει εκ νέου «με εξέταση σε κατ' εξαίρεση πτήση Δοκιμής Προόδου».")] });
       return out;
     }
 
@@ -215,15 +204,21 @@
         DESC.set(uid, d);
         if (reuse) n++;
         if (role === "last") isLast.add(uid);
-        const ev = { result: r === "score" ? "score" : r === "pass" ? "completed" : r, score: r === "score" ? Number(sc) : undefined,
-          nausea: nausea, nausea_exempt: e.nausea === "pre_ok" };
         const band = bandOfRes(r, sc);
+        /* ΠΔ παρ.2 has three limbs: nausea · graded «Σχεδόν Καλώς» (= ΣΚ 50-59,
+           3-01 §29δ — the 59 % of §35 IS that band; owner 2026-10-17) · before
+           the onset Καλώς+ or unassessable. A nausea sortie graded ΑΠΟΤΥΧΙΑ
+           (0-49) fails limb two and counts. */
+        const exempt = e.nausea === "pre_ok" && band === "lag";
+        const ev = { result: r === "score" ? "score" : r === "pass" ? "completed" : r, score: r === "score" ? Number(sc) : undefined,
+          nausea: nausea, nausea_exempt: exempt };
         log.push({ ev: ev, i: n, uid: uid, kind: kind, date: row.date, res: Q.normRes(ev), special: "" });
         row.label = d.label + (role !== "normal" ? " · " + ROLE_LABEL[role] : "");
         row.band = band + (r === "score" ? " " + sc + "%" : "");
         if (nausea) {
-          row.notes.push({ text: "ΑΕΡΟΝΑΥΤΙΑ: βαθμολογία ΥΣΤΕΡΗΣΗ (59%)" + (e.nausea === "pre_ok" ? " — απόδοση πριν την εκδήλωση ≥60% ή μη αξιολογήσιμη → ΔΕΝ υπολογίζεται στα 1γ/1δ" : " — απόδοση πριν την εκδήλωση <60% → υπολογίζεται κανονικά"),
-            cites: [R("fail-52", "Η πτήση με σοβαρή-έκδηλη ΑΕΡΟΝΑΥΤΙΑ βαθμολογείται με ΥΣΤΕΡΗΣΗ (59%)."), R("fail-57", e.nausea === "pre_ok" ? "Η παρ.2 εξαιρεί την πτήση από τα 1γ/1δ — μόνο από αυτά." : "Η εξαίρεση της παρ.2 απαιτεί απόδοση Καλώς+ πριν τη ναυτία· εδώ δεν συντρέχει.")] });
+          row.notes.push({ text: "ΑΕΡΟΝΑΥΤΙΑ: βαθμολογία " + (band === "lag" ? "ΥΣΤΕΡΗΣΗ (59% = «ΣΚ» Σχεδόν Καλώς κατά §29δ)" : "ΑΠΟΤΥΧΙΑ (0-49%) — όχι «Σχεδόν Καλώς»")
+              + (exempt ? " — απόδοση πριν την εκδήλωση ≥60% ή μη αξιολογήσιμη → ΔΕΝ υπολογίζεται στα 1γ/1δ (ΠΔ παρ.2, απόφανση ιδιοκτήτη 17/10/2026)" : band !== "lag" ? " → η παρ.2 δεν συντρέχει (απαιτεί Σχεδόν Καλώς) → υπολογίζεται" : " — απόδοση πριν την εκδήλωση <60% → υπολογίζεται κανονικά"),
+            cites: [R("fail-52", "Η πτήση με σοβαρή-έκδηλη ΑΕΡΟΝΑΥΤΙΑ βαθμολογείται με ΥΣΤΕΡΗΣΗ (59%)."), R("fail-01", "3-01 §29δ: «ΣΚ» Σχεδόν Καλώς = 50%-59% — η γέφυρα ανάμεσα στο «ΥΣΤΕΡΗΣΗ (59%)» της §35 και το «Σχεδόν Καλώς» του ΠΔ παρ.2."), R("fail-57", exempt ? "Και τα τρία σκέλη της παρ.2 συντρέχουν (ναυτία · Σχεδόν Καλώς · πριν Καλώς+/μη αξιολογήσιμος) → η πτήση εξαιρείται από τα 1γ/1δ — μόνο από αυτά." : band !== "lag" ? "Η παρ.2 απαιτεί «βαθμολογήθηκε με επίδοση Σχεδόν Καλώς»· ΑΠΟΤΥΧΙΑ δεν είναι." : "Η εξαίρεση της παρ.2 απαιτεί απόδοση Καλώς+ πριν τη ναυτία· εδώ δεν συντρέχει.")] });
           if (d.checkride) row.notes.push({ text: "Ναυτία σε Αξιολόγηση: ο 1β ΔΕΝ εξαιρείται — το 59% είναι λόγος παραπομπής", cites: [R("fail-57", "«Κατά τις περιπτώσεις των υποπαραγράφων 1γ και 1δ» — ο 1β δεν είναι μέσα.")] });
           if (kind === "fs") row.notes.push({ text: "Ναυτία στον F/S: ο 1ε ΔΕΝ εξαιρείται", cites: [R("fail-57", "Η παρ.2 δεν καλύπτει τον 1ε.")] });
           st.nauseaRun += 1;
@@ -261,10 +256,13 @@
             const pre = c.preSolo, tot = c.totalFl;
             const totPct = denom === "planned" ? Math.round((tot.bad / TH.air_1d.planned_phase2_sorties) * 1000) / 10 : tot.pct;
             const pTotPct = denom === "planned" ? Math.round((p.totalFl.bad / TH.air_1d.planned_phase2_sorties) * 1000) / 10 : p.totalFl.pct;
-            if (!pre.soloDone && pre.total > 0 && pre.pct >= pre.limitPct && !(p.preSolo.total > 0 && p.preSolo.pct >= p.preSolo.limitPct) && denom === "executed")
-              refer(row, { case: "1δ(ΠΡΟ ΜΟΝΟΣ)", req: "fail-77", kind: "flights", label: "1δ: ≥40% ΠΡΟ ΜΟΝΟΣ", text: "1δ: " + pre.bad + "/" + pre.total + " = " + pre.pct + "% των πτήσεων ΠΡΟ ΜΟΝΟΣ με 0-59% (≥40%) → κρίση → Δοκιμή Προόδου ΑΕ — ΑΣΑΦΕΙΑ: παρονομαστής εκτελεσθείσες (ανάγνωση SchedConsq)", cites: [R("fail-77", "«Στο 40% και άνω των πτήσεων της Προ ΜΟΝΟΣ φάσης». Ο αριθμός πτήσεων της φάσης δεν ορίζεται σε καμία πηγή — μετρώνται οι εκτελεσθείσες."), R("fail-23", "Δοκιμή Προόδου ΑΕ στον αέρα.")] });
+            const PS = TH.air_1d.pre_solo_sorties;
+            const prePct = denom === "planned" ? Math.round((pre.bad / PS) * 1000) / 10 : pre.pct;
+            const pPrePct = denom === "planned" ? Math.round((p.preSolo.bad / PS) * 1000) / 10 : p.preSolo.pct;
+            if (!pre.soloDone && (denom === "planned" ? pre.bad > 0 : pre.total > 0) && prePct >= pre.limitPct && !((denom === "planned" ? p.preSolo.bad > 0 : p.preSolo.total > 0) && pPrePct >= pre.limitPct))
+              refer(row, { case: "1δ(ΠΡΟ ΜΟΝΟΣ)", req: "fail-77", kind: "flights", label: "1δ: ≥40% ΠΡΟ ΜΟΝΟΣ", text: "1δ: " + pre.bad + "/" + (denom === "planned" ? PS + " τυπωμένες έξοδοι ΠΡΟ ΜΟΝΟΣ (πίνακας MIF)" : pre.total + " εκτελεσθείσες") + " = " + prePct + "% των πτήσεων ΠΡΟ ΜΟΝΟΣ με 0-59% (≥40%) → κρίση → Δοκιμή Προόδου ΑΕ" + (denom === "planned" ? "" : " — ανάγνωση εκτελεσθεισών (Progress editor), προς σύγκριση"), cites: [R("fail-77", denom === "planned" ? "«Στο 40% και άνω των πτήσεων της Προ ΜΟΝΟΣ φάσης»: η φάση έχει 15 τυπωμένες εξόδους (C4101 … C4790-91, Syllabus MIF PDF 92) → η 6η πτήση 0-59% ενεργοποιεί. Παρονομαστής το τυπωμένο πρόγραμμα (απόφανση ιδιοκτήτη 17/10/2026)." : "«Στο 40% και άνω των πτήσεων της Προ ΜΟΝΟΣ φάσης» επί των εκτελεσθεισών — η ανάγνωση του Progress editor, όχι η απόφανση του ιδιοκτήτη (τυπωμένο πρόγραμμα: 15 → 6)."), R("fail-23", "Δοκιμή Προόδου ΑΕ στον αέρα.")] });
             else if (tot.total > 0 && totPct >= tot.limitPct && !(p.totalFl.total > 0 && pTotPct >= tot.limitPct))
-              refer(row, { case: "1δ(ΣΥΝΟΛΟ)", req: "fail-77", kind: "flights", label: "1δ: ≥20% συνόλου", text: "1δ: " + tot.bad + "/" + (denom === "planned" ? TH.air_1d.planned_phase2_sorties + " προγραμματισμένες" : tot.total + " εκτελεσθείσες") + " = " + totPct + "% με 0-59% (≥20%) → κρίση → Δοκιμή Προόδου ΑΕ", cites: [R("fail-77", denom === "planned" ? "Παρονομαστής οι 85 προγραμματισμένες έξοδοι Phase II (17 πτήσεις 0-59%). Το ΠΔ δεν λέει προγραμματισμένες ή εκτελεσθείσες." : "Παρονομαστής οι εκτελεσθείσες πτήσεις (ανάγνωση SchedConsq — η αυστηρότερη). Το ΠΔ δεν λέει προγραμματισμένες ή εκτελεσθείσες."), R("fail-23", "Δοκιμή Προόδου ΑΕ στον αέρα.")] });
+              refer(row, { case: "1δ(ΣΥΝΟΛΟ)", req: "fail-77", kind: "flights", label: "1δ: ≥20% συνόλου", text: "1δ: " + tot.bad + "/" + (denom === "planned" ? TH.air_1d.planned_phase2_sorties + " τυπωμένες έξοδοι του Σταδίου" : tot.total + " εκτελεσθείσες") + " = " + totPct + "% με 0-59% (≥20%) → κρίση → Δοκιμή Προόδου ΑΕ" + (denom === "planned" ? "" : " — ανάγνωση εκτελεσθεισών (Progress editor), προς σύγκριση"), cites: [R("fail-77", denom === "planned" ? "Παρονομαστής οι 85 τυπωμένες έξοδοι Phase II → 17 πτήσεις 0-59%. Απόφανση ιδιοκτήτη 17/10/2026: «όχι σε όσες έχει πετάξει μέχρι τώρα, αλλά στο σύνολο»." : "Παρονομαστής οι εκτελεσθείσες πτήσεις (ανάγνωση Progress editor) — όχι η απόφανση του ιδιοκτήτη (τυπωμένο πρόγραμμα: 85 → 17)."), R("fail-23", "Δοκιμή Προόδου ΑΕ στον αέρα.")] });
           }
         }
         if (kind === "fs" && !w.pd) {
@@ -277,12 +275,28 @@
 
       else if (e.t === "dp_ae" || e.t === "dp_cdr" || e.t === "apt" || e.t === "board") {
         const wBefore = Q.walk(log, ctx);
-        const ev = { special: e.t, result: e.t === "board" ? (res === "stop" ? "fail" : "completed") : (res === "score" ? "score" : res === "pass" ? "completed" : res), score: res === "score" ? Number(score) : undefined, category: e.t === "apt" ? cat : undefined, kind: e.medium === "fs" ? "fs" : "flights" };
+        /* R8(b)/(c): airsickness on a Δοκιμή Προόδου or an Εξέταση
+           Καταλληλότητας. 3-01 §35 grades it ΥΣΤΕΡΗΣΗ (59 %) — and 59 sits
+           inside παρ.3β / παρ.8β «από μηδέν (0) έως πενήντα εννέα τοις εκατό
+           (59%)». ΠΔ παρ.2's exemption is scoped «Κατά τις περιπτώσεις των
+           υποπαραγράφων 1γ και 1δ» — παρ.3 is not in it: the student does not
+           escape the rung, he is pushed to the next one. */
+        const nz = e.t !== "board" && (e.nausea === "pre_ok" || e.nausea === "pre_bad");
+        let rr = res, sc = score;
+        if (nz && rr === "pass") { rr = "score"; sc = TH.nausea.default_grade_pct; }
+        const ev = { special: e.t, result: e.t === "board" ? (res === "stop" ? "fail" : "completed") : (rr === "score" ? "score" : rr === "pass" ? "completed" : rr), score: rr === "score" ? Number(sc) : undefined, category: e.t === "apt" ? cat : undefined, kind: e.medium === "fs" ? "fs" : "flights", nausea: nz };
         log.push({ ev: ev, i: ++n, uid: "", kind: ev.kind, date: row.date, res: Q.normRes(ev), special: e.t });
-        const band = e.t === "board" ? res : bandOfRes(res, score);
+        const band = e.t === "board" ? res : bandOfRes(rr, sc);
         row.label = EV_LABEL[e.t] + (e.t === "apt" ? " · " + CAT_LABEL[cat] : "") + (e.medium === "fs" ? " · εξομοιωτής" : "");
-        row.band = e.t === "board" ? RES_LABEL[res] || res : (band === "pass" ? "≥60% ΕΠΙΤΥΧΩΝ" : "0-59% ΑΠΟΤΥΧΩΝ") + (res === "score" ? " (" + score + "%)" : "");
+        row.band = e.t === "board" ? RES_LABEL[res] || res : (band === "pass" ? "≥60% ΕΠΙΤΥΧΩΝ" : "0-59% ΑΠΟΤΥΧΩΝ") + (rr === "score" ? " (" + sc + "%" + (nz ? " — ΑΕΡΟΝΑΥΤΙΑ" : "") + ")" : "");
         const w = Q.walk(log, ctx);
+        if (nz && (e.t === "dp_ae" || e.t === "dp_cdr")) {
+          const nextRung = e.t === "dp_ae" ? "Δοκιμή Προόδου από τον Διοικητή Μοίρας" : "Συμβούλιο Πτητικής Ικανότητας";
+          const txt = "ΑΕΡΟΝΑΥΤΙΑ σε Δοκιμή Προόδου: (1) η εξαίρεση του ΠΔ παρ.2 ΔΕΝ φτάνει εδώ — το κείμενο αρχίζει «Κατά τις περιπτώσεις των υποπαραγράφων 1γ και 1δ»· η παρ.3 δεν είναι μέσα. (2) Η πτήση βαθμολογείται ΥΣΤΕΡΗΣΗ (59%) κατά 3-01 §35 — και η §43 βαθμολογεί ρητά την ΑΔΕ ναυτίας, αντίθετα με κάθε άλλη ΑΔΕ — και το 59% είναι μέσα στο «από μηδέν (0) έως πενήντα εννέα τοις εκατό (59%)» της παρ." + (e.t === "dp_ae" ? "3β" : "8β") + ": ο μαθητής δεν γλιτώνει το σκαλί, προχωρά στο επόμενο → " + nextRung + ". (3) Η κρίση αν ήταν ΑΕΡΟΝΑΥΤΙΑ είναι ιατρική, όχι δική του: η §34 ορίζει τη «σοβαρή-έκδηλη» με αντικειμενικά γεγονότα και η §39 αφαιρεί από το σύνολο ό,τι ο Ιατρός Αεροπορικής Ιατρικής κρίνει ότι δεν είναι ΑΕΡΟΝΑΥΤΙΑ.";
+          const cts = [R("fail-57", "«Κατά τις περιπτώσεις των υποπαραγράφων 1γ και 1δ δεν υπολογίζονται οι πτήσεις…» — μόνο 1γ και 1δ· όχι η Δοκιμή Προόδου της παρ.3."), R("fail-52", "3-01 §35: η πτήση με σοβαρή-έκδηλη ΑΕΡΟΝΑΥΤΙΑ βαθμολογείται με ΥΣΤΕΡΗΣΗ (59%)."), R("fail-88", "§43: οι ΑΔΕ δεν βαθμολογούνται — «εκτός των περιπτώσεων ΑΕΡΟΝΑΥΤΙΑΣ ή περιστατικού Φυσιολογίας Πτήσεων»."), R(e.t === "dp_ae" ? "fail-23" : "fail-25", "Το 59% είναι μέσα στο 0-59% του σκαλιού → " + nextRung + "."), R("fail-51", "§33-34: τι είναι «σοβαρή-έκδηλη» ΑΕΡΟΝΑΥΤΙΑ — έμετος, μεταβίβαση ελέγχου, αδυναμία ασφαλούς χειρισμού, αίτημα διακοπής."), R("fail-56", "§39: τα περιστατικά που κατά την ιατρική γνωμάτευση δεν είναι ΑΕΡΟΝΑΥΤΙΕΣ δεν προσμετρώνται.")];
+          row.fired.push({ case: "ΑΕΡΟΝΑΥΤΙΑ σε ΔΠ", text: txt, cites: cts, stage: e.t === "dp_ae" ? "cdr" : "board" }); fired.push({ idx: row.idx, date: row.date, case: "ΑΕΡΟΝΑΥΤΙΑ σε ΔΠ", text: txt, cites: cts });
+        }
+        if (nz && e.t === "apt") row.notes.push({ text: "ΑΕΡΟΝΑΥΤΙΑ στην Εξέταση Καταλληλότητας: βαθμολογία ΥΣΤΕΡΗΣΗ (59%, §35) = «ΥΣΤΕΡΗΣΗ εκ νέου» της §30ζ → ΠΔ. Η εξαίρεση της παρ.2 (1γ/1δ μόνο) δεν φτάνει εδώ· η Εξέταση είναι «πτήση εξέτασης» (1β).", cites: [R("fail-52", "§35: ΥΣΤΕΡΗΣΗ (59%)."), R("fail-57", "Εξαίρεση μόνο για 1γ και 1δ."), R("fail-12", "«Αν όμως ΥΣΤΕΡΗΣΕΙ ή ΑΠΟΤΥΧΕΙ εκ νέου, τότε να εφαρμόζεται το ΠΔ».")] });
         if (e.t === "dp_ae") {
           if (!wBefore.pd) row.notes.push({ text: "Δεν υπήρχε ανοικτή κρίση — η Δοκιμή Προόδου δεν αντιστοιχεί σε παραπομπή (αγνοείται από τον κινητήρα)", cites: [] });
           else if (band === "pass") row.notes.push({ text: "Δοκιμή Προόδου ΑΕ ≥60% → η κρίση κλείνει· συνεχίζει με ΑΛΛΟΝ εκπαιδευτή", cites: [R("fail-23", "«α. Από εξήντα τοις εκατό (60%) και πάνω, συνεχίζει την εκπαίδευσή του με άλλον εκπαιδευτή»."), R("fail-86", "Βαθμολογικά η επιτυχής Δοκιμή Προόδου γίνεται η Αξιολόγηση της κατηγορίας.")] });
@@ -305,7 +319,8 @@
       }
 
       else if (e.t === "practice") {
-        row.label = EV_LABEL.practice; row.band = BAND_TXT[bandOfRes(res, score)] || "";
+        row.label = EV_LABEL.practice; row.band = (BAND_TXT[bandOfRes(res, score)] || "") + (e.nausea ? " — ΑΕΡΟΝΑΥΤΙΑ" : "");
+        if (e.nausea) row.notes.push({ text: "ΑΕΡΟΝΑΥΤΙΑ στην πτήση εξάσκησης: η παρ.17 δεν λέει αν η πτήση βαθμολογείται — ο Δκτής αποφαίνεται ούτως ή άλλως (παρ.17β).", cites: [R("fail-70", "Η πτήση εξάσκησης δεν προσδιορίζεται αν βαθμολογείται."), R("fail-52", "§35: αν βαθμολογηθεί, ΥΣΤΕΡΗΣΗ (59%).")] });
         if (!st.boardYes) row.notes.push({ text: "Δεν προηγήθηκε απόφαση ΥΠΕΡ — η πτήση εξάσκησης δεν έχει έρεισμα", cites: [] });
         else { st.boardYes.practiced = true; row.notes.push({ text: "Η πτήση εξάσκησης εκτελέστηκε (με νέο εκπαιδευτή). Επόμενο: ο Δκτής Μοίρας αποφαίνεται — συνέχιση ή εκ νέου παραπομπή. Αν βαθμολογείται και με ποιο κατώφλι: ΔΕΝ ΟΡΙΖΕΤΑΙ.", cites: [R("fail-70", "«Ο Διοικητής της Μοίρας μετά την πτήση εξάσκησης αποφαίνεται…» — χωρίς αριθμητικό κριτήριο."), R("fail-87", "Οι κατ' εξαίρεση πτήσεις μετρούν ως απλές πτήσεις στη βαθμολογία.")] }); }
       }
@@ -399,7 +414,7 @@
 
       /* where he stands after this event */
       const w = Q.walk(log, ctx);
-      row.stage = effectiveStage(w);
+      row.stage = stageOf(w);
       row.pd = w.pd ? { stage: w.pd.stage, req: w.pd.req, medium: w.pd.medium } : null;
       timeline.push(row);
     }
@@ -407,7 +422,7 @@
     /* ── the verdict ─────────────────────────────────────────────────────── */
     const w = Q.walk(log, ctx);
     const cnt = prefix().cnt;
-    const stage = effectiveStage(w);
+    const stage = stageOf(w);
     const status = { code: "free", title: "", next_with: "own_ip", next: "", if_fail: "", cites: [], notes: [] };
     const A = D.actors || {};
     if (st.aas) {
@@ -420,21 +435,28 @@
       status.next = "Ίκαρος: η ΣΙ υποβάλλει στο ΓΕΑ για επικύρωση με διαταγή · Ανθσγός: ΔΑΕ → ΓΕΑ → ΑΑΣ για οριστική απόφαση.";
       status.cites = [R("fail-71", "Δύο επίπεδα τελικής κρίσης για την ίδια έκβαση."), R("fail-72", "Στον Ατομικό Φάκελο Εκπαίδευσης.")];
     } else if (w.pd && (stage.effective === "board")) {
-      status.code = "board"; status.title = "ΠΑΡΑΠΟΜΠΗ ΣΤΟ ΣΥΜΒΟΥΛΙΟ ΠΤΗΤΙΚΗΣ ΙΚΑΝΟΤΗΤΑΣ"; status.next_with = "none";
+      status.code = "board"; status.title = "ΠΑΡΑΠΟΜΠΗ ΣΤΟ ΣΥΜΒΟΥΛΙΟ ΠΤΗΤΙΚΗΣ ΙΚΑΝΟΤΗΤΑΣ" + (stage.rung === "board_par9" ? " — ΧΩΡΙΣ πτήσεις Δοκιμής Προόδου (παρ.9: η κλίμακα του σταδίου εξαντλήθηκε)" : ""); status.next_with = "none";
       status.next = "Καμία πτήση, F/S, μάθημα ή εξέταση. Ειδική έκθεση Δκτή Μοίρας + Φάκελος → Δκτής Μονάδας· εισήγηση συγκρότησης εντός 10 εργάσιμων από την τελευταία πτήση. Ο μαθητής προσέρχεται και εκθέτει τις απόψεις του.";
       status.if_fail = "ΥΠΕΡ: αλλαγή εκπαιδευτή + 1 πτήση εξάσκησης, μετά αποφαίνεται ο Δκτής. ΚΑΤΑ: Ίκαρος → ΓΕΑ επικυρώνει · Ανθσγός → ΑΑΣ.";
       status.cites = [R("fail-61", "Διακοπή όλων των δραστηριοτήτων."), R("fail-66", "Ειδική έκθεση με τον Φάκελο."), R("fail-67", "10 εργάσιμες ημέρες."), R("fail-68", "Ακρόαση του παραπεμπομένου."), R("fail-69", "ΥΠΕΡ ή ΚΑΤΑ, κατά πλειοψηφία."), R("fail-70", "Έκβαση ΥΠΕΡ."), R("fail-71", "Έκβαση ΚΑΤΑ.")];
-      if (stage.engine !== "board") status.notes = status.notes.concat(stage.why);
+      status.notes = status.notes.concat(stage.why);
     } else if (w.pd && stage.effective === "cdr") {
       status.code = "dp_cdr"; status.title = "Υπό κρίση — επόμενο σκαλί: Δοκιμή Προόδου από τον Διοικητή Μοίρας" + (w.pd.medium === "fs" ? " (στον εξομοιωτή)" : " (στον αέρα)"); status.next_with = "cdr";
       status.next = "Πτήση Δοκιμής Προόδου με τον Δκτή Μοίρας· εξετάζεται οπωσδήποτε σε όλους τους ελιγμούς που απέτυχε. ≥60% → συνεχίζει με ΑΛΛΟΝ εκπαιδευτή.";
       status.if_fail = "0-59% → Συμβούλιο Πτητικής Ικανότητας (δεν υπάρχει τρίτο σκαλί πτήσης).";
       status.cites = [R("fail-25", "Δοκιμή Προόδου Δκτή: ≥60% συνέχιση με άλλο εκπαιδευτή, 0-59% Συμβούλιο."), R("fail-27", "Υποχρεωτική εξέταση στους ελιγμούς που απέτυχε.")];
-      if (stage.engine !== "cdr") status.notes = status.notes.concat(stage.why);
+      status.notes = status.notes.concat(stage.why);
+      /* R5 — the branch a reader does not expect: HOW MANY Δκτής occasions the
+         stage has is decided by the ΑΕ grade (παρ.9), not by passing the Δκτής.
+         Read from the engine's budget (R7). */
+      {
+        const B = w.budget;
+        status.notes.push({ text: "Κλίμακα (ΠΔ παρ.7-9): ο ΑΕ κρίνει ΜΙΑ φορά στο στάδιο" + (B.aeUsed ? " — ήδη έκρινε (" + (B.aePassed ? "≥60%" : "<60%") + ")" : "") + ". " + (!B.aeUsed ? "Οι ευκαιρίες του Δκτή ορίζονται από τον βαθμό της Δοκιμής ΑΕ: ΜΙΑ αν ≥60%, ΔΥΟ αν <60%." : (B.aePassed ? "Επειδή η Δοκιμή ΑΕ ήταν ≥60%, ο Δκτής έχει ΜΙΑ μόνο ευκαιρία στο στάδιο" : "Επειδή η Δοκιμή ΑΕ ήταν <60%, ο Δκτής έχει ΔΥΟ ευκαιρίες στο στάδιο") + " (αυτή είναι η " + (B.cdrUsed + 1) + "η/" + B.cdrBudget + "). ") + "Αποτυχία στον Δκτή → Συμβούλιο ΠΑΝΤΑ (παρ.8β)· μετά την εξάντληση → Συμβούλιο χωρίς Δοκιμή Προόδου (παρ.9).", cites: [R("fail-24", "Παρ.7: ο ΑΕ μία φορά ανά στάδιο."), R("fail-25", "Παρ.8β: 0-59% στον Δκτή → Συμβούλιο."), R("fail-26", "Παρ.9: ΜΙΑ κρίση Δκτή αν η Δοκιμή ΑΕ ήταν καλώς και άνω, ΔΥΟ αν ήταν κάτω από 60%.")] });
+      }
     } else if (w.pd && stage.effective === "ae") {
       status.code = "dp_ae"; status.title = "Υπό κρίση — επόμενο σκαλί: Δοκιμή Προόδου από τον ΑΕ Μοίρας" + (w.pd.medium === "fs" ? " (στον εξομοιωτή)" : " (στον αέρα)"); status.next_with = "ae";
       status.next = "Πτήση Δοκιμής Προόδου με τον ΑΕ· εξετάζεται οπωσδήποτε σε όλους τους ελιγμούς που απέτυχε. ≥60% → συνεχίζει με ΑΛΛΟΝ εκπαιδευτή.";
-      status.if_fail = "0-59% → Δοκιμή Προόδου από τον Διοικητή Μοίρας (έως 2 φορές, επειδή η Δοκιμή ΑΕ ήταν <60%). Αν αποτύχει και εκεί → Συμβούλιο.";
+      status.if_fail = "0-59% → Δοκιμή Προόδου από τον Διοικητή Μοίρας (ο Δκτής θα έχει ΔΥΟ ευκαιρίες στο στάδιο, επειδή η Δοκιμή ΑΕ θα ήταν <60%· αν αντίθετα περάσει τον ΑΕ, ο Δκτής θα έχει ΜΙΑ). Αποτυχία στον Δκτή → Συμβούλιο.";
       status.cites = [R("fail-23", "Δοκιμή Προόδου ΑΕ: ≥60% συνέχιση με άλλον εκπαιδευτή, 0-59% Δκτής Μοίρας."), R("fail-27", "Υποχρεωτική εξέταση στους ελιγμούς που απέτυχε."), R("fail-24", "Ο ΑΕ κρίνει μία φορά ανά στάδιο."), R("fail-26", "Πόσες φορές κρίνει ο Δκτής.")];
       status.notes = status.notes.concat(stage.why);
     } else if (st.oralRef) {
@@ -491,10 +513,38 @@
     const counters = {
       c049: cnt.c049, c059: cnt.c059, preSolo: cnt.preSolo, totalFl: cnt.totalFl, fs059: cnt.fs059, fsCum: cnt.fsCum,
       written: cnt.written, oral: { streak: oralStreak, total: cnt.oral.total, limitC: cnt.oral.limitC, limitT: cnt.oral.limitT },
-      kepe: kepe, dpUsed: { ae: log.filter((x) => x.special === "dp_ae").length, cdr: log.filter((x) => x.special === "dp_cdr").length },
+      kepe: kepe, dpUsed: { ae: w.budget.aeUsed ? 1 : 0, cdr: w.budget.cdrUsed, budget: w.budget.cdrBudget, aePassed: w.budget.aePassed },
       plannedPct: Math.round((cnt.totalFl.bad / TH.air_1d.planned_phase2_sorties) * 1000) / 10,
+      plannedPrePct: Math.round((cnt.preSolo.bad / TH.air_1d.pre_solo_sorties) * 1000) / 10,
+      preSoloSorties: TH.air_1d.pre_solo_sorties, plannedSorties: TH.air_1d.planned_phase2_sorties,
     };
     return { timeline: timeline, fired: fired, status: status, counters: counters, pd: w.pd, stage: stage, opts: { denom_1d: denom }, events: events.length };
+  }
+
+  /* ── R8(a) — THE GATE: only the legal next events for the current state.
+     The owner: «όχι απλώς να μου γκριζάρει κάποια πράγματα, αλλά να μου
+     περιορίζει τις επιλογές και να μου λέει "αυτό δεν γίνεται", ούτε καν να
+     είναι στις προτεινόμενες επιλογές». An event the state does not allow is
+     not in the list at all; the state line says where the student stands and
+     what the single expected move is. The ENGINE stays the judge — this only
+     narrows what is offered. Pure: reads the evaluate() result. ──────────── ── */
+  const GROUND = ["written", "oral", "blind", "stage_exam", "incident", "kepe_in", "kepe_exit"];
+  function allowedEvents(res) {
+    const S = res && res.status ? res.status : { code: "free" };
+    const g = { allowed: [], expected: null, state: S.title || "", cites: S.cites || [] };
+    switch (S.code) {
+      case "aas": case "stopped": g.allowed = []; g.expected = null; break;
+      case "board": g.allowed = ["board"]; g.expected = "board"; break;
+      case "dp_cdr": g.allowed = ["dp_cdr"]; g.expected = "dp_cdr"; break;
+      case "dp_ae": g.allowed = ["dp_ae"]; g.expected = "dp_ae"; break;
+      case "oral_exam": g.allowed = ["ae_written"]; g.expected = "ae_written"; break;
+      case "practice": g.allowed = ["practice"]; g.expected = "practice"; break;
+      case "cdr_decides": g.allowed = ["cdr_decision"]; g.expected = "cdr_decision"; break;
+      case "apt": g.allowed = ["apt", "flight", "fs"].concat(GROUND); g.expected = "apt"; break;
+      case "fs_ladder": g.allowed = ["fs", "flight"].concat(GROUND); g.expected = "fs"; break;
+      default: g.allowed = ["flight", "fs"].concat(GROUND); g.expected = "flight";
+    }
+    return g;
   }
 
   /* ── presets — FABRICATED sequences, no student anywhere ───────────────── */
@@ -656,11 +706,13 @@
   }
 
   /* § 3 — the sandbox */
-  function evForm() {
+  function evForm(gate) {
     const catSel = `<select data-f="cat">${CATS.map((c) => `<option value="${c}">${esc(CAT_LABEL[c])}</option>`).join("")}</select>`;
     const resSel = (opts) => `<select data-f="res">${opts.map((o) => `<option value="${o}">${esc(RES_LABEL[o] || o)}</option>`).join("")}</select>`;
+    const types = gate.allowed;
+    if (!types.length) return `<div class="bt-form bt-form-none"><span class="hint">Καμία πτητική ή εξεταστική ενέργεια δεν προσφέρεται σε αυτή τη θέση.</span></div>`;
     return `<div class="bt-form">
-      <label class="lbl">Γεγονός <select id="bt-ev-t">${Object.keys(EV_LABEL).map((k) => `<option value="${k}">${esc(EV_LABEL[k])}</option>`).join("")}</select></label>
+      <label class="lbl">Γεγονός <select id="bt-ev-t">${types.map((k) => `<option value="${k}"${k === gate.expected ? " selected" : ""}>${esc(EV_LABEL[k])}${k === gate.expected ? " — αναμενόμενο" : ""}</option>`).join("")}</select></label>
       <span class="bt-f bt-f-flight bt-f-fs bt-f-apt bt-f-kepe_in">${catSel.replace('data-f="cat"', 'data-f="cat" id="bt-ev-cat"')}</span>
       <span class="bt-f bt-f-flight bt-f-fs"><select id="bt-ev-role">${Object.keys(ROLE_LABEL).map((k) => `<option value="${k}">${esc(ROLE_LABEL[k])}</option>`).join("")}</select></span>
       <span class="bt-f bt-f-flight bt-f-fs bt-f-dp_ae bt-f-dp_cdr bt-f-apt bt-f-written bt-f-stage_exam bt-f-practice">${resSel(["pass", "lag", "fail", "score"]).replace('data-f="res"', 'data-f="res" id="bt-ev-res"')}</span>
@@ -668,7 +720,7 @@
       <span class="bt-f bt-f-board"><select id="bt-ev-res3"><option value="continue">ΥΠΕΡ της συνέχισης</option><option value="stop">ΚΑΤΑ της συνέχισης</option></select></span>
       <span class="bt-f bt-f-cdr_decision"><select id="bt-ev-res4"><option value="continue">Συνέχιση</option><option value="refer">Εκ νέου παραπομπή (κατ' εξαίρεση ΔΠ)</option></select></span>
       <span class="bt-f bt-f-flight bt-f-fs bt-f-dp_ae bt-f-dp_cdr bt-f-apt bt-f-written bt-f-stage_exam bt-f-blind bt-f-practice"><input type="number" id="bt-ev-score" min="0" max="100" placeholder="βαθμός %" style="width:92px"></span>
-      <span class="bt-f bt-f-flight bt-f-fs"><select id="bt-ev-nausea"><option value="">χωρίς ναυτία</option><option value="pre_ok">ΑΕΡΟΝΑΥΤΙΑ — πριν ≥60% / μη αξιολογήσιμη</option><option value="pre_bad">ΑΕΡΟΝΑΥΤΙΑ — πριν <60%</option></select></span>
+      <span class="bt-f bt-f-flight bt-f-fs bt-f-dp_ae bt-f-dp_cdr bt-f-apt bt-f-practice"><select id="bt-ev-nausea"><option value="">χωρίς ναυτία</option><option value="pre_ok">ΑΕΡΟΝΑΥΤΙΑ — πριν ≥60% / μη αξιολογήσιμη</option><option value="pre_bad">ΑΕΡΟΝΑΥΤΙΑ — πριν <60%</option></select></span>
       <span class="bt-f bt-f-dp_ae bt-f-dp_cdr bt-f-kepe_in"><select id="bt-ev-medium"><option value="flights">στον αέρα</option><option value="fs">στον εξομοιωτή</option></select></span>
       <span class="bt-f bt-f-incident"><select id="bt-ev-kind">${Object.keys(INC_LABEL).map((k) => `<option value="${k}">${esc(INC_LABEL[k])}</option>`).join("")}</select></span>
       <button type="button" class="fc-tbtn bt-add" id="bt-add">+ Προσθήκη</button>
@@ -679,7 +731,8 @@
     const e = { t: t };
     const v = (id) => { const el = document.getElementById(id); return el ? el.value : ""; };
     if (t === "flight" || t === "fs" || t === "apt" || t === "kepe_in") e.cat = v("bt-ev-cat");
-    if (t === "flight" || t === "fs") { e.role = v("bt-ev-role"); const nz = v("bt-ev-nausea"); if (nz) e.nausea = nz; }
+    if (t === "flight" || t === "fs") e.role = v("bt-ev-role");
+    if (["flight", "fs", "dp_ae", "dp_cdr", "apt", "practice"].indexOf(t) >= 0) { const nz = v("bt-ev-nausea"); if (nz) e.nausea = nz; }
     if (["flight", "fs", "dp_ae", "dp_cdr", "apt", "written", "stage_exam", "practice"].indexOf(t) >= 0) { e.res = v("bt-ev-res"); if (e.res === "score") e.score = Number(v("bt-ev-score")); }
     if (t === "blind") { e.res = "score"; e.score = Number(v("bt-ev-score")); }
     if (t === "oral" || t === "ae_written") e.res = v("bt-ev-res2");
@@ -695,14 +748,20 @@
     if (e.role && e.role !== "normal") s += " · " + ROLE_LABEL[e.role];
     if (e.kind) s += " · " + (INC_LABEL[e.kind] || e.kind);
     if (e.medium === "fs") s += " · εξομοιωτής";
-    if (e.res) s += " → " + (e.res === "score" ? e.score + "%" : (RES_LABEL[e.res] || e.res));
-    if (e.nausea) s += " · ΑΕΡΟΝΑΥΤΙΑ" + (e.nausea === "pre_ok" ? " (εξαιρείται 1γ/1δ)" : " (μετρά)");
+    /* on a Δοκιμή Προόδου / Εξέταση Καταλληλότητας the παρ.2 exemption does not
+       reach (R8c): the label must not claim it */
+    const dp = e.t === "dp_ae" || e.t === "dp_cdr" || e.t === "apt" || e.t === "practice";
+    if (e.nausea && dp && e.res !== "score") s += " → ΑΕΡΟΝΑΥΤΙΑ (59%)";
+    else if (e.res) s += " → " + (e.res === "score" ? e.score + "%" : (RES_LABEL[e.res] || e.res));
+    if (e.nausea && !(dp && e.res !== "score")) s += " · ΑΕΡΟΝΑΥΤΙΑ" + (dp ? " (η παρ.2 δεν φτάνει εδώ)" : e.nausea === "pre_ok" ? " (εξαιρείται 1γ/1δ)" : " (μετρά)");
     return s;
   }
   function renderSandbox(host) {
     const presets = PRESETS.map((p) => `<option value="${p.id}">${esc(p.title)}</option>`).join("");
     let res = null, err = "";
     try { res = evaluate(UI.events, DATA, { denom_1d: UI.denom_1d }); } catch (e) { err = String(e && e.message || e); }
+    const gate = allowedEvents(res);
+    const stateLine = res ? `<div class="bt-state is-${esc(res.status.code)}"><b>Θέση:</b> ${esc(res.status.title)} ${chips(res.status.cites)}<br><b>Αναμενόμενο:</b> ${gate.expected ? esc(EV_LABEL[gate.expected]) : "τίποτα — " + esc(res.status.next)}</div>` : "";
     const evRows = UI.events.map((e, i) => {
       const row = res ? res.timeline[i] : null;
       const fired = row ? row.fired.map((f) => `<div class="bt-fire"><span class="fc-b fc-b-final">${esc(f.case)}</span> ${esc(f.text)} ${chips(f.cites)}</div>`).join("") : "";
@@ -734,30 +793,34 @@
       <div class="bt-ctrs">
         ${bar("1γ(Α) συνεχόμενες 0-49% (μετά 4 χάρης)", C.c049.value, C.c049.limit, [R("fail-76", "2 συνεχόμενες 0-49%.")])}
         ${bar("1γ(Β) συνεχόμενες 0-59% (μετά 4 χάρης)", C.c059.value, C.c059.limit, [R("fail-76", "3 συνεχόμενες 0-59%.")])}
-        <div class="bt-ctr${(!C.preSolo.soloDone && C.preSolo.total && C.preSolo.pct >= 40) ? " is-hot" : ""}"><span class="bt-ctr-l">1δ ΠΡΟ ΜΟΝΟΣ 0-59% (εκτελεσθείσες)</span><span class="bt-ctr-v">${esc(pct(C.preSolo))} / 40%</span>${chips([R("fail-77", "40% και άνω των πτήσεων ΠΡΟ ΜΟΝΟΣ — παρονομαστής εκτελεσθείσες (ΑΣΑΦΕΙΑ).")])}</div>
-        <div class="bt-ctr${(C.totalFl.total && (UI.denom_1d === "planned" ? C.plannedPct : C.totalFl.pct) >= 20) ? " is-hot" : ""}"><span class="bt-ctr-l">1δ ΣΥΝΟΛΟ 0-59% (${UI.denom_1d === "planned" ? "85 προγραμματισμένες" : "εκτελεσθείσες"})</span><span class="bt-ctr-v">${UI.denom_1d === "planned" ? esc(C.totalFl.bad + "/85 = " + C.plannedPct + "%") : esc(pct(C.totalFl))} / 20%</span>${chips([R("fail-77", "20% και άνω των συνολικών πτήσεων του σταδίου — προγραμματισμένες ή εκτελεσθείσες: ΔΕΝ ορίζεται.")])}</div>
+        <div class="bt-ctr${(!C.preSolo.soloDone && (UI.denom_1d === "planned" ? C.preSolo.bad > 0 && C.plannedPrePct >= 40 : C.preSolo.total && C.preSolo.pct >= 40)) ? " is-hot" : ""}"><span class="bt-ctr-l">1δ ΠΡΟ ΜΟΝΟΣ 0-59% (${UI.denom_1d === "planned" ? C.preSoloSorties + " τυπωμένες — MIF" : "εκτελεσθείσες"})${C.preSolo.soloDone ? " · φάση κλειστή" : ""}</span><span class="bt-ctr-v">${UI.denom_1d === "planned" ? esc(C.preSolo.bad + "/" + C.preSoloSorties + " = " + C.plannedPrePct + "%") : esc(pct(C.preSolo))} / 40%</span>${chips([R("fail-77", "40% και άνω των πτήσεων ΠΡΟ ΜΟΝΟΣ — η φάση έχει 15 τυπωμένες εξόδους (πίνακας MIF «CONTACT (PRE-SOLO)», Syllabus PDF 92) → 6. Απόφανση ιδιοκτήτη 17/10/2026: το τυπωμένο πρόγραμμα.")])}</div>
+        <div class="bt-ctr${(C.totalFl.total && (UI.denom_1d === "planned" ? C.plannedPct : C.totalFl.pct) >= 20) ? " is-hot" : ""}"><span class="bt-ctr-l">1δ ΣΥΝΟΛΟ 0-59% (${UI.denom_1d === "planned" ? C.plannedSorties + " τυπωμένες" : "εκτελεσθείσες"})</span><span class="bt-ctr-v">${UI.denom_1d === "planned" ? esc(C.totalFl.bad + "/" + C.plannedSorties + " = " + C.plannedPct + "%") : esc(pct(C.totalFl))} / 20%</span>${chips([R("fail-77", "20% και άνω των συνολικών πτήσεων του σταδίου — 85 τυπωμένες → 17. Απόφανση ιδιοκτήτη 17/10/2026: «όχι σε όσες έχει πετάξει μέχρι τώρα, αλλά στο σύνολο».")])}</div>
         ${bar("1ε(αα) συνεχόμενες F/S 0-59% (μετά 3 χάρης)", C.fs059.value, C.fs059.limit, [R("fail-40", "3 συνεχόμενες μετά τις 3 πρώτες.")])}
         <div class="bt-ctr${(C.fsCum.bad >= 3 && C.fsCum.pct >= 20) ? " is-hot" : ""}"><span class="bt-ctr-l">1ε(αβ) F/S 0-59% ≥20% και ≥3</span><span class="bt-ctr-v">${esc(pct(C.fsCum))} (≥3)</span>${chips([R("fail-40", "20% των εξόδων του σταδίου και όχι λιγότερες από 3.")])}</div>
         ${bar("1στ συνεχόμενες γραπτές", C.written.streak, C.written.limit, [R("fail-32", "2 συνεχόμενες γραπτές → απευθείας Συμβούλιο.")])}
         ${bar("1ζ συνεχόμενες προφορικές", C.oral.streak, C.oral.limitC, [R("fail-36", "4 συνεχόμενες.")])}
         ${bar("1ζ συνολικές προφορικές", C.oral.total, C.oral.limitT, [R("fail-36", "8 μη συνεχόμενες.")])}
-        ${bar("Δοκιμές Προόδου ΑΕ στο στάδιο", C.dpUsed.ae, 1, [R("fail-24", "Ο ΑΕ κρίνει μία φορά ανά στάδιο.")])}
-        ${bar("Δοκιμές Προόδου Δκτή στο στάδιο", C.dpUsed.cdr, 2, [R("fail-26", "1 ή 2 ανάλογα με τη Δοκιμή ΑΕ.")])}
+        ${bar("Δοκιμές Προόδου ΑΕ στο στάδιο (παρ.7 — ανά ΣΤΑΔΙΟ, όχι ανά κατηγορία)", C.dpUsed.ae, 1, [R("fail-24", "Ο ΑΕ κρίνει μία φορά ανά στάδιο, πέρασε ή όχι.")])}
+        ${bar("Δοκιμές Προόδου Δκτή στο στάδιο (παρ.9: " + (C.dpUsed.ae ? (C.dpUsed.aePassed ? "ΑΕ ≥60% → 1" : "ΑΕ <60% → 2") : "ορίζεται από τη Δοκιμή ΑΕ") + ")", C.dpUsed.cdr, C.dpUsed.ae ? C.dpUsed.budget : 2, [R("fail-26", "1 ή 2 ανάλογα με τον βαθμό της Δοκιμής ΑΕ· μετά Συμβούλιο χωρίς Δοκιμή Προόδου.")])}
         ${kepe}
       </div>`;
     }
     host.innerHTML = `<div class="bt-note bt-sbx-note"><b>ΔΟΚΙΜΑΣΤΗΡΙΟ.</b> Συνθετικά γεγονότα μόνο — τίποτα δεν διαβάζεται από τον Scheduler, κανένα όνομα, κανένας μαθητής. Οι ημερομηνίες είναι εικονικές (μία εργάσιμη ανά γεγονός) και χρησιμεύουν μόνο στους κανόνες αναπρογραμματισμού.</div>
       <div class="bt-sbx-bar">
         <label class="lbl">Σενάριο <select id="bt-preset"><option value="">— επιλογή —</option>${presets}</select></label>
-        <label class="lbl">1δ παρονομαστής (απόφανση ιδιοκτήτη 17/10/2026: το σύνολο που έχει η φάση / το στάδιο) <select id="bt-denom"><option value="planned"${UI.denom_1d === "planned" ? " selected" : ""}>σύνολο σταδίου: 85 προγραμματισμένες (Syllabus) — μόνο το 20%</option><option value="executed"${UI.denom_1d === "executed" ? " selected" : ""}>εκτελεσθείσες ως τώρα (ανάγνωση Progress editor, προς σύγκριση) — 40% και 20%</option></select></label>
+        <label class="lbl">1δ παρονομαστής (απόφανση ιδιοκτήτη 17/10/2026: το τυπωμένο πρόγραμμα) <select id="bt-denom"><option value="planned"${UI.denom_1d === "planned" ? " selected" : ""}>τυπωμένο πρόγραμμα: 15 ΠΡΟ ΜΟΝΟΣ (→ 6) · 85 Στάδιο (→ 17)</option><option value="executed"${UI.denom_1d === "executed" ? " selected" : ""}>εκτελεσθείσες ως τώρα (ανάγνωση Progress editor, προς σύγκριση)</option></select></label>
         <button type="button" class="fc-tbtn" id="bt-clear">Καθαρισμός</button>
       </div>
-      ${evForm()}
+      ${stateLine}
+      ${evForm(gate)}
       ${err ? `<p class="hint" style="color:var(--bad)">Σφάλμα: ${esc(err)}</p>` : ""}
       <div class="mif-scroll"><table class="spec-table bt-evs"><thead><tr><th>#</th><th>ημέρα</th><th>γεγονός</th><th>τι ενεργοποιήθηκε · συνέπειες</th><th></th></tr></thead><tbody>${evRows || `<tr><td colspan="5" class="hint">Πρόσθεσε γεγονότα ή διάλεξε σενάριο.</td></tr>`}</tbody></table></div>
       ${verdict}`;
-    const sync = () => { const t = document.getElementById("bt-ev-t").value; for (const el of host.querySelectorAll(".bt-f")) el.classList.toggle("hidden", !el.classList.contains("bt-f-" + t)); };
-    document.getElementById("bt-ev-t").addEventListener("change", sync); sync();
+    const sel = document.getElementById("bt-ev-t");
+    if (sel) {
+      const sync = () => { const t = sel.value; for (const el of host.querySelectorAll(".bt-f")) el.classList.toggle("hidden", !el.classList.contains("bt-f-" + t)); };
+      sel.addEventListener("change", sync); sync();
+    }
   }
 
   /* host-level render + delegation */
@@ -785,7 +848,7 @@
       const c = t.closest("[data-cite]"); if (c) { openCite(c.dataset.cite, c.getAttribute("title") || ""); return; }
       const nd = t.closest("[data-node]"); if (nd) { UI.sel = nd.dataset.node; nodeDetail(nd.dataset.node); return; }
       const jp = t.closest("[data-jump]"); if (jp) { const hit = nodeOf(jp.dataset.jump); if (hit) { UI.tree = hit.tree.id; UI.sel = hit.node.id; render(); } return; }
-      if (t.id === "bt-add") { UI.events.push(readForm()); render(); return; }
+      if (t.id === "bt-add") { const e = readForm(); const g = allowedEvents(evaluate(UI.events, DATA, { denom_1d: UI.denom_1d })); if (g.allowed.indexOf(e.t) >= 0) { UI.events.push(e); render(); } return; }
       if (t.id === "bt-clear") { UI.events = []; render(); return; }
       const del = t.closest("[data-del]"); if (del) { UI.events.splice(Number(del.dataset.del), 1); render(); return; }
       const mv = t.closest("[data-mv]"); if (mv) { const i = Number(mv.dataset.mv), j = i + Number(mv.dataset.dir); if (j >= 0 && j < UI.events.length) { const x = UI.events[i]; UI.events[i] = UI.events[j]; UI.events[j] = x; render(); } return; }
@@ -812,6 +875,6 @@
     render();
   }
 
-  window.BoardTrees = { load: load, setData: setData, data: () => DATA, evaluate: evaluate, PRESETS: PRESETS, EV_LABEL: EV_LABEL, CAT_LABEL: CAT_LABEL,
+  window.BoardTrees = { load: load, setData: setData, data: () => DATA, evaluate: evaluate, allowedEvents: allowedEvents, PRESETS: PRESETS, EV_LABEL: EV_LABEL, CAT_LABEL: CAT_LABEL,
     renderBoardArea: renderBoardArea, citeOf: citeOf, nodeOf: nodeOf, esc: esc, ui: UI };
 })();
