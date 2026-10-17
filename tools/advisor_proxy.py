@@ -80,7 +80,49 @@ prompt πίσω από ρητό cache_control. Η πρώτη κλήση το Γ�
   γράφτηκε, για ποιον, με ποιο id — ο ιδιοκτήτης το βλέπει ανεξάρτητα από το αν
   το μοντέλο το αφηγηθεί.
 
+R-A — Η ΠΥΛΗ ΕΠΙΒΕΒΑΙΩΣΗΣ (απόφανση ιδιοκτήτη: «να ζητάει την επιβεβαίωση πριν
+κάνει την εγγραφή είναι ένα fail-safe βήμα»). Τα casefile_add_case /
+casefile_update_case ΔΕΝ γράφουν. Επιστρέφουν στο μοντέλο ΠΡΟΕΠΙΣΚΟΠΗΣΗ και ένα
+token μίας χρήσης· η σελίδα δείχνει την προεπισκόπηση με «Γράψ' το» / «Άκυρο»,
+και η γραμμή γράφεται ΜΟΝΟ όταν ο ιδιοκτήτης πατήσει, μέσω POST /confirm που
+εξαργυρώνει το token. Το token: τυχαίο, μίας χρήσης, λήγει σε ADVISOR_CONFIRM_TTL_S
+(default 900 s), ΔΕΜΕΝΟ με τη συνεδρία και τον agent που το γέννησαν — ένα token
+που επιζεί της ερώτησής του είναι γεμάτο όπλο. Ζει μόνο στη μνήμη του proxy.
+Το όριο 2 προεπισκοπήσεων/απάντηση, το log και ο actor `agent:<id>` μένουν.
+Οι αναγνώσεις ΔΕΝ έχουν πύλη — δεν υπάρχει τίποτα να αναιρέσεις σε μια ανάγνωση.
+
+R-B — Η ΜΝΗΜΗ, με το σχήμα που έδωσε ο ιδιοκτήτης: «αφού περάσει τις αλλαγές στη
+βάση δεδομένων, να σβήνει η συνομιλία και μετά να τραβάει τη νέα βάση δεδομένων».
+Η ΔΙΑΡΚΗΣ μνήμη είναι ο φάκελος υποθέσεων, όχι η συνομιλία. Τρία πράγματα:
+  1. ΣΥΝΕΔΡΙΕΣ που επιζούν, στον PROXY (όχι στον browser):
+     tools/advisor/sessions/<agent>/<id>.json — {id, agent, title, context,
+     student_id, created, updated, messages[], writes[], events[]}. ΚΡΑΤΟΥΝ
+     ΠΡΑΓΜΑΤΙΚΑ ΟΝΟΜΑΤΑ: gitignored όπως το roster, και ΠΟΤΕ όνομα σε γραμμή log
+     (μόνο ids). GET /sessions?agent= · POST /sessions · GET /sessions/<id> ·
+     POST /sessions/<id>/archive · POST /sessions/<id>/close. Το /ask παίρνει
+     πλέον {session, question} και ο proxy κρατά το ιστορικό.
+  2. COMPACTION όταν μεγαλώσει το ΙΣΤΟΡΙΚΟ (ADVISOR_COMPACT_AFTER_CHARS, default
+     24000 χαρακτήρες μηνυμάτων) — ΟΧΙ το corpus: το corpus είναι το cached
+     πρόθεμα και δεν μετακινείται ΠΟΤΕ. Το μοντέλο ξαναγράφει τη συζήτηση σε
+     ΔΟΜΗΜΕΝΗ ΣΥΝΟΨΗ σταθερού σχήματος (μαθητής & ερώτημα · τι τεκμηριώθηκε, με
+     παραπομπές · τι μένει ανοιχτό · τι γράφτηκε, με ids) και το ιστορικό
+     αντικαθίσταται από αυτή (+ τα τελευταία ADVISOR_COMPACT_KEEP ζεύγη
+     αυτούσια). Την ενότητα «ΤΙ ΓΡΑΦΤΗΚΕ» τη γράφει ο PROXY από το session.writes
+     — όχι από τη μνήμη του μοντέλου. Η κλήση compaction στέλνει ΙΔΙΟ tools +
+     system (ίδιο md5 προθέματος) με tool_choice none, ώστε να διαβάσει το corpus
+     από το cache. Η σελίδα το λέει όταν συμβεί — η σιωπηλή απώλεια μνήμης είναι
+     ακριβώς αυτό που ζήτησε να αποφύγουμε.
+  3. «ΕΚΛΕΙΣΕ Η ΥΠΟΘΕΣΗ» — μετά από επιβεβαιωμένη εγγραφή, POST /sessions/<id>/close
+     αρχειοθετεί τη συνεδρία και ανοίγει νέα, ΣΠΑΡΜΕΝΗ από ανάγνωση του φακέλου
+     του μαθητή όπως είναι ΤΩΡΑ καταγεγραμμένος. Η βάση είναι η σύνοψη.
+  Μετά από ώρες το cache (1h) έχει λήξει και η πρώτη ερώτηση ξαναγράφει το corpus
+  — αναμενόμενο· το event usage το σημαίνει (cache_rewrite) ώστε να φαίνεται.
+
 ΑΛΛΕΣ ΡΥΘΜΙΣΕΙΣ
+  ADVISOR_COMPACT_AFTER_CHARS --compact-after   default 24000  (χαρακτήρες ιστορικού)
+  ADVISOR_COMPACT_KEEP        --compact-keep    default 1      (ζεύγη που μένουν αυτούσια)
+  ADVISOR_CONFIRM_TTL_S       --confirm-ttl     default 900    (ζωή token επιβεβαίωσης)
+  ADVISOR_SESSIONS_DIR        --sessions-dir    default tools/advisor/sessions/
   ADVISOR_PORT        --port        default 8771
   ADVISOR_CACHE_TTL   --cache-ttl   default 1h   (5m | 1h — ο ιδιοκτήτης ρωτά
                                                  αραιά· το 1h αξίζει το 2× στη
@@ -140,6 +182,10 @@ DEFAULTS = {
     "tool_total_chars": 20000,
     "casefile_max_calls": 8,
     "casefile_max_writes": 2,
+    "compact_after": 24000,
+    "compact_keep": 1,
+    "confirm_ttl": 900,
+    "sessions_dir": str(ROOT / "tools" / "advisor" / "sessions"),
     "state_file": str(ROOT / "tools" / "advisor" / ".proxy-state.json"),
     "agents_dir": str(ROOT / "agents"),
     "corpus_dir": str(ROOT / "tools" / "advisor"),
@@ -419,6 +465,11 @@ def casefile_preamble(a: dict) -> str:
         "- **Γράφεις ΜΟΝΟ όταν ο ιδιοκτήτης σου το ζητά ρητά** («γράψ' το», «καταχώρισέ το», "
         "«μην κάνεις τίποτα — σημείωσέ το»). Ποτέ προληπτικά, ποτέ «για να υπάρχει». Αν "
         "δεν είσαι βέβαιος ότι το ζήτησε, ρώτα με μία πρόταση.\n"
+        "- **Καμία εγγραφή δεν γίνεται από εσένα απευθείας.** Τα `casefile_add_case` / "
+        "`casefile_update_case` ετοιμάζουν ΠΡΟΕΠΙΣΚΟΠΗΣΗ· ο ιδιοκτήτης πατά «Γράψ' το» στη "
+        "σελίδα και τότε γράφεται. Στην απάντηση λες ότι η εγγραφή **περιμένει την "
+        "επιβεβαίωσή του** και τι θα γραφτεί — ποτέ ότι «γράφτηκε», μέχρι να το δεις σε "
+        "σύνοψη ή στον φάκελο.\n"
         "- **«Καμία ενέργεια» είναι πραγματική έκβαση και καταχωρίζεται**: μια υπόθεση με "
         "consequence «καμία ενέργεια» και τον ΛΟΓΟ στο note αξίζει περισσότερο από καθόλου "
         "γραμμή — τον επόμενο μήνα κανείς δεν θυμάται γιατί δεν έγινε τίποτα.\n"
@@ -777,15 +828,161 @@ def _parse_cites(cites: str) -> list:
     return out
 
 
+# ════════════════════════════════════════════════════════════════════════════
+# ΣΥΝΕΔΡΙΕΣ — tools/advisor/sessions/<agent>/<id>.json (R-B.1)
+# Πραγματικά ονόματα μέσα: ΠΟΤΕ στο git, ΠΟΤΕ σε γραμμή log — μόνο ids.
+# ════════════════════════════════════════════════════════════════════════════
+
+SID_RE = re.compile(r"^[0-9a-f]{16}$")
+
+
+def _now() -> str:
+    return dt.datetime.now().replace(microsecond=0).isoformat()
+
+
+def sessions_dir() -> pathlib.Path:
+    return pathlib.Path(CFG["sessions_dir"])
+
+
+def session_path(agent: str, sid: str) -> pathlib.Path | None:
+    if not SID_RE.match(sid or "") or not re.fullmatch(r"[a-z0-9][a-z0-9_-]{0,63}", agent or ""):
+        return None
+    return sessions_dir() / agent / f"{sid}.json"
+
+
+def new_session(agent: str, context: str = "", title: str = "", student_id: str | None = None,
+                student_label: str = "", seed: list[dict] | None = None, note: str = "") -> dict:
+    import secrets
+    s = {"id": secrets.token_hex(8), "agent": agent, "title": (title or "").strip()[:80],
+         "context": (context or "").strip(), "student_id": student_id, "student_label": student_label,
+         "created": _now(), "updated": _now(), "archived": False,
+         "messages": list(seed or []), "writes": [], "events": [], "compactions": 0}
+    if note:
+        s["events"].append({"at": _now(), "type": "seed", "text": note})
+    save_session(s)
+    log(f"[session] new agent={agent} id={s['id']} seeded={bool(seed)}")
+    return s
+
+
+def save_session(s: dict) -> None:
+    p = session_path(s["agent"], s["id"])
+    if not p:
+        raise ValueError("bad session id")
+    p.parent.mkdir(parents=True, exist_ok=True)
+    s["updated"] = _now()
+    tmp = p.with_suffix(".tmp")
+    tmp.write_text(json.dumps(s, ensure_ascii=False, indent=1), encoding="utf-8")
+    os.replace(tmp, p)
+
+
+def load_session(agent: str, sid: str) -> dict | None:
+    p = session_path(agent, sid)
+    if not p or not p.is_file():
+        return None
+    try:
+        return json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+
+
+def session_summary(s: dict) -> dict:
+    return {"id": s["id"], "agent": s["agent"], "title": s.get("title") or "(χωρίς τίτλο)",
+            "created": s["created"], "updated": s["updated"], "archived": bool(s.get("archived")),
+            "turns": sum(1 for m in s["messages"] if m["role"] == "user" and not m.get("kind")),
+            "writes": len(s.get("writes") or []), "compactions": int(s.get("compactions") or 0),
+            "student_label": s.get("student_label") or "", "chars": history_chars(s["messages"])}
+
+
+def list_sessions(agent: str, include_archived: bool = False, limit: int = 30) -> list[dict]:
+    d = sessions_dir() / agent
+    out = []
+    if not d.is_dir():
+        return out
+    for p in d.glob("*.json"):
+        try:
+            s = json.loads(p.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if s.get("archived") and not include_archived:
+            continue
+        out.append(session_summary(s))
+    out.sort(key=lambda x: x["updated"], reverse=True)
+    return out[:limit]
+
+
+def history_chars(messages: list[dict]) -> int:
+    return sum(len(m.get("content") or "") for m in messages)
+
+
+def api_messages(s: dict, question: str | None = None) -> list[dict]:
+    """Το ιστορικό της συνεδρίας στο σχήμα του API (+ η νέα ερώτηση), με το
+    context στο ΠΡΩΤΟ user μήνυμα και το cache breakpoint στο τελευταίο."""
+    raw = [{"role": m["role"], "content": m["content"]} for m in s["messages"]]
+    if question is not None:
+        raw.append({"role": "user", "content": question})
+    out, _ = normalise_messages(raw, s.get("context") or "")
+    return out or []
+
+
+# ── ΕΚΚΡΕΜΕΙΣ ΕΓΓΡΑΦΕΣ (R-A): token μίας χρήσης, στη μνήμη, δεμένο με συνεδρία ──
+PENDING: dict[str, dict] = {}
+
+
+def pending_sweep() -> None:
+    now = time.time()
+    for k in [k for k, v in PENDING.items() if v["expires"] < now]:
+        PENDING.pop(k, None)
+
+
+def pending_create(agent: str, session: str, tool: str, payload: dict, preview: str, meta: dict) -> dict:
+    import secrets
+    with LOCK:
+        pending_sweep()
+        tok = secrets.token_urlsafe(24)
+        rec = {"token": tok, "agent": agent, "session": session, "tool": tool, "payload": payload,
+               "preview": preview, "meta": meta, "created": time.time(),
+               "expires": time.time() + int(CFG["confirm_ttl"])}
+        PENDING[tok] = rec
+    return rec
+
+
+def pending_take(token: str, agent: str, session: str) -> dict | None:
+    """Μία φορά, μέσα στον χρόνο, από την ΙΔΙΑ συνεδρία/agent — αλλιώς None."""
+    with LOCK:
+        pending_sweep()
+        rec = PENDING.get(token or "")
+        if not rec or rec["agent"] != agent or rec["session"] != session:
+            return None
+        return PENDING.pop(token)
+
+
+def casefile_cases_text(student_id: str, limit: int = 40) -> tuple[str, str]:
+    """(κείμενο αφετηρίας, ετικέτα μαθητή) από το cases_live — για το «Έκλεισε η
+    υπόθεση» και για τον seeded νέο γύρο. Σηκώνει CasefileError."""
+    rows = _cf_request("GET", "cases_live", query=(
+        f"student_id=eq.{student_id}&order=occurred_on.desc,created_at.desc&limit={limit}"
+        "&select=id,occurred_on,kind,stage,sortie,score_pct,consequence,cites,note,status,rank,last_name,first_name,course,oid")) or []
+    if not rows:
+        st = _cf_request("GET", "students", query=f"id=eq.{student_id}&select=id,oid,rank,last_name,first_name,mn,course,active") or []
+        label = _fmt_student(st[0]).split(" · ", 1)[-1] if st else student_id
+        return f"Μαθητής: {label}\n(καμία ζωντανή υπόθεση στον φάκελο)", label
+    label = _fmt_student(rows[0]).split(" · ", 1)[-1]
+    body = f"Μαθητής: {label} · student_id {student_id}\n{len(rows)} ζωντανές υποθέσεις (νεότερες πρώτα):\n" + \
+        "\n".join("  " + _fmt_case(c) for c in rows)
+    return body, label
+
+
 class ToolBudget:
     """Τα φρένα ΟΛΩΝ των εργαλείων ΑΝΑ ΑΠΑΝΤΗΣΗ, και το ημερολόγιο κλήσεων."""
 
-    def __init__(self, emit=None, agent_id: str = "agent"):
+    def __init__(self, emit=None, agent_id: str = "agent", session_id: str | None = None):
         self.calls = 0            # search_sources
         self.chars = 0
         self.cf_calls = 0         # casefile_* (όλα)
-        self.cf_writes = 0        # casefile_add_case + casefile_update_case
+        self.cf_writes = 0        # προεπισκοπήσεις εγγραφής (add/update)
         self.agent_id = agent_id
+        self.session_id = session_id
+        self.last_pending = None
         self.log: list[dict] = []
         self.emit = emit
 
@@ -934,17 +1131,17 @@ class ToolBudget:
             gate("casefile_add_case", True, summary)
 
             def go():
-                cid = _cf_request("POST", "rpc/fn_add_case", {
+                payload = {
                     "p_actor": actor, "p_student_id": sid, "p_occurred_on": occurred_on, "p_kind": kind,
                     "p_stage": stage or None, "p_sortie": sortie or None, "p_score_pct": sc,
                     "p_consequence": consequence.strip(), "p_cites": cites_v, "p_note": note.strip(),
-                })
-                cid = str(cid).strip('"')
-                return (f"ΓΡΑΦΤΗΚΕ στον φάκελο (actor {actor}): case {cid} · μαθητής {sid} · "
-                        f"{occurred_on} · {kind}" + (f" · {stage}" if stage else "") + (f" · {sortie}" if sortie else "")
-                        + (f" · {sc}%" if sc is not None else "") + f"\n  συνέπεια: {consequence.strip()}\n  σημείωση: {note.strip()}"
-                        + (f"\n  παραπομπές: {json.dumps(cites_v, ensure_ascii=False)}" if cites_v else "")
-                        + "\nΑνάφερε το στον ιδιοκτήτη αυτολεξεί, με το id.")
+                }
+                preview = (f"ΝΕΑ ΥΠΟΘΕΣΗ · μαθητής {sid} · {occurred_on} · {kind}"
+                           + (f" · {stage}" if stage else "") + (f" · {sortie}" if sortie else "")
+                           + (f" · {sc}%" if sc is not None else "")
+                           + f"\n  συνέπεια: {consequence.strip()}\n  σημείωση: {note.strip()}"
+                           + (f"\n  παραπομπές: {json.dumps(cites_v, ensure_ascii=False)}" if cites_v else ""))
+                return budget.stage_write("casefile_add_case", payload, preview, {"student_id": sid})
             return run("casefile_add_case", summary, go)
 
         def casefile_update_case(case_id: str, consequence: str = "", note: str = "", status: str = "",
@@ -975,29 +1172,49 @@ class ToolBudget:
             gate("casefile_update_case", True, summary)
 
             def go():
-                _cf_request("POST", "rpc/fn_update_case", {
+                # null = αμετάβλητο: η fn_update_case κάνει coalesce(p_x, x) σε κάθε πεδίο.
+                payload = {
                     "p_actor": actor, "p_case_id": cid,
                     "p_consequence": consequence.strip() or None, "p_note": note.strip() or None,
                     "p_status": status or None, "p_cites": cites_v, "p_withdraw": bool(withdraw),
-                })
-                what = "ΑΝΑΚΛΗΘΗΚΕ" if withdraw else "ΕΝΗΜΕΡΩΘΗΚΕ"
-                return (f"{what} η υπόθεση {cid} (actor {actor})."
-                        + (f"\n  συνέπεια → {consequence.strip()}" if consequence.strip() else "")
-                        + (f"\n  σημείωση → {note.strip()}" if note.strip() else "")
-                        + (f"\n  status → {status}" if status else "")
-                        + (f"\n  παραπομπές → {json.dumps(cites_v, ensure_ascii=False)}" if cites_v else "")
-                        + "\nΑνάφερε το στον ιδιοκτήτη αυτολεξεί, με το id.")
+                }
+                what = "ΑΝΑΚΛΗΣΗ" if withdraw else "ΕΝΗΜΕΡΩΣΗ"
+                preview = (f"{what} ΥΠΟΘΕΣΗΣ {cid}"
+                           + (f"\n  συνέπεια → {consequence.strip()}" if consequence.strip() else "")
+                           + (f"\n  σημείωση → {note.strip()}" if note.strip() else "")
+                           + (f"\n  status → {status}" if status else "")
+                           + (f"\n  παραπομπές → {json.dumps(cites_v, ensure_ascii=False)}" if cites_v else "")
+                           + ("\n  (τα υπόλοιπα πεδία μένουν ως έχουν)"))
+                return budget.stage_write("casefile_update_case", payload, preview, {"case_id": cid})
             return run("casefile_update_case", summary, go)
 
         fns = {"casefile_find_student": casefile_find_student, "casefile_list_cases": casefile_list_cases,
                "casefile_add_case": casefile_add_case, "casefile_update_case": casefile_update_case}
         return [beta_tool(fns[n], name=n) for n in CASEFILE_TOOLS if n in names]
 
+    def stage_write(self, tool: str, payload: dict, preview: str, meta: dict) -> str:
+        """R-A: ΔΕΝ γράφει. Κρατά την εγγραφή ως εκκρεμή με token μίας χρήσης,
+        δεμένο με αυτή τη συνεδρία, και λέει στο μοντέλο ότι ο ιδιοκτήτης
+        αποφασίζει στη σελίδα. Χωρίς συνεδρία δεν υπάρχει πού να δεθεί — άρνηση."""
+        from anthropic.lib.tools import ToolError
+        if not self.session_id:
+            raise ToolError("Οι εγγραφές στον φάκελο γίνονται μόνο μέσα σε αποθηκευμένη συνεδρία της σελίδας.")
+        rec = pending_create(self.agent_id, self.session_id, tool, payload, preview, meta)
+        self.last_pending = rec
+        return (f"ΠΡΟΕΠΙΣΚΟΠΗΣΗ — ΔΕΝ ΓΡΑΦΤΗΚΕ ΑΚΟΜΑ. Η εγγραφή είναι εκκρεμής και ο ιδιοκτήτης "
+                f"θα τη δει στη σελίδα με τα κουμπιά «Γράψ' το» / «Άκυρο»· γράφεται ΜΟΝΟ αν πατήσει "
+                f"«Γράψ' το» (λήγει σε {int(CFG['confirm_ttl']) // 60} λεπτά).\n{preview}\n"
+                f"Στην απάντησή σου πες του ρητά ότι η εγγραφή ΠΕΡΙΜΕΝΕΙ την επιβεβαίωσή του, και τι "
+                f"ακριβώς θα γραφτεί. Μην πεις ότι γράφτηκε.")
+
     def record_cf(self, tool: str, summary: str, status: str, result: str | None = None):
         entry = {"n": self.cf_calls, "tool": tool, "summary": summary, "status": status,
                  "write": tool in ("casefile_add_case", "casefile_update_case")}
-        if result and entry["write"]:
-            entry["result"] = result.split("\nΑνάφερε", 1)[0]
+        if entry["write"] and status == "ok" and getattr(self, "last_pending", None):
+            p = self.last_pending
+            self.last_pending = None
+            entry.update({"pending": True, "token": p["token"], "preview": p["preview"],
+                          "expires": int(p["expires"]), "meta": p["meta"]})
         self.log.append(entry)
         log(f"[casefile] {tool} call={self.cf_calls}/{CFG['casefile_max_calls']} "
             f"writes={self.cf_writes}/{CFG['casefile_max_writes']} {summary} status={status}")
@@ -1132,6 +1349,105 @@ def run_ask(a: dict, params: dict, emit, budget: ToolBudget | None, tools: list[
 
 
 # ════════════════════════════════════════════════════════════════════════════
+# COMPACTION (R-B.2) — το ιστορικό γίνεται δομημένη σύνοψη· το corpus δεν κουνιέται
+# ════════════════════════════════════════════════════════════════════════════
+
+COMPACT_PROMPT = (
+    "[ΕΝΤΟΛΗ ΤΟΥ PROXY — COMPACTION]\n"
+    "Το ιστορικό μεγάλωσε. Ξαναγράψε ΟΛΗ τη μέχρι τώρα συζήτηση ως δομημένη σύνοψη, ΑΚΡΙΒΩΣ με "
+    "αυτό το σχήμα και τίποτα άλλο — καμία εισαγωγή, καμία απάντηση σε νέα ερώτηση:\n\n"
+    "# ΣΥΝΟΨΗ ΣΥΝΕΔΡΙΑΣ\n"
+    "## ΜΑΘΗΤΗΣ ΚΑΙ ΕΡΩΤΗΜΑ\n"
+    "(ποιος, ποιο Στάδιο/έξοδος, τι ρωτήθηκε — με τα λόγια του ιδιοκτήτη όπου μετρούν)\n"
+    "## ΤΙ ΕΧΕΙ ΤΕΚΜΗΡΙΩΘΕΙ\n"
+    "(μία γραμμή ανά συμπέρασμα· ΚΑΘΕ γραμμή με το [id] και την παραπομπή της· τα αυτολεξεί "
+    "παραθέματα που χρησιμοποιήθηκαν μένουν αυτολεξεί· ό,τι ήταν «ΑΚΑΤΕΡΓΑΣΤΟ ΚΕΙΜΕΝΟ ΠΗΓΗΣ» "
+    "μένει σημειωμένο έτσι· οι ✓ ΑΠΟΦΑΝΣΕΙΣ μένουν με τα λόγια του ιδιοκτήτη)\n"
+    "## ΤΙ ΜΕΝΕΙ ΑΝΟΙΧΤΟ\n"
+    "(ερωτήσεις σου που δεν απαντήθηκαν, ⚠ ΑΛΥΤΑ, αποφάσεις που περιμένουν τον ιδιοκτήτη, "
+    "εγγραφές που περιμένουν «Γράψ' το»)\n"
+    "## ΤΙ ΓΡΑΦΤΗΚΕ ΣΤΟΝ ΦΑΚΕΛΟ\n"
+    "(γράψε ΜΟΝΟ: «— το συμπληρώνει ο proxy από το αρχείο της συνεδρίας —»)\n\n"
+    "Χωρίς παραπομπή, ένα συμπέρασμα ΔΕΝ μπαίνει στη σύνοψη."
+)
+SUMMARY_HEAD = "[ΣΥΝΟΨΗ ΤΗΣ ΜΕΧΡΙ ΤΩΡΑ ΣΥΖΗΤΗΣΗΣ — μετά από compaction· οι παραπομπές της ισχύουν]\n"
+SUMMARY_ACK = "Έλαβα τη σύνοψη· συνεχίζω από αυτή, με τις παραπομπές της."
+
+
+def compaction_params(a: dict, system: list[dict], s: dict, tool_dicts: list[dict]) -> dict:
+    """ΙΔΙΟ tools + ΙΔΙΟ system με το /ask (ίδιο md5 προθέματος → το corpus
+    διαβάζεται από το cache) και tool_choice none: η σύνοψη δεν ψάχνει."""
+    p = {
+        "model": a["model"], "max_tokens": 6000, "system": system,
+        "messages": api_messages(s, COMPACT_PROMPT),
+        "thinking": {"type": "adaptive"}, "output_config": {"effort": a["effort"]},
+    }
+    if tool_dicts:
+        p["tools"] = tool_dicts
+        p["tool_choice"] = {"type": "none"}
+    return p
+
+
+def writes_section(s: dict) -> str:
+    """Η ενότητα «ΤΙ ΓΡΑΦΤΗΚΕ» από το ΑΡΧΕΙΟ της συνεδρίας — αυθεντικό, όχι μνήμη μοντέλου."""
+    ws = s.get("writes") or []
+    if not ws:
+        return "## ΤΙ ΓΡΑΦΤΗΚΕ ΣΤΟΝ ΦΑΚΕΛΟ\n(τίποτα — καμία επιβεβαιωμένη εγγραφή σε αυτή τη συνεδρία)"
+    lines = [f"- {w['at']} · {w['tool']} · case {w.get('case_id')} · {(w.get('preview') or '').splitlines()[0]}" for w in ws]
+    return "## ΤΙ ΓΡΑΦΤΗΚΕ ΣΤΟΝ ΦΑΚΕΛΟ (από το αρχείο της συνεδρίας)\n" + "\n".join(lines)
+
+
+def apply_brief(s: dict, brief: str, usage: dict | None = None) -> dict:
+    """Αντικαθιστά τα messages με τη σύνοψη (+ τα τελευταία compact_keep ζεύγη
+    αυτούσια). Μόνο messages — το system δεν αγγίζεται εδώ ούτε πουθενά."""
+    i = brief.find("## ΤΙ ΓΡΑΦΤΗΚΕ")
+    body = (brief[:i] if i >= 0 else brief).rstrip() + "\n\n" + writes_section(s)
+    msgs = s["messages"]
+    before = history_chars(msgs)
+    tail: list[dict] = []
+    j, pairs = len(msgs), 0
+    while pairs < int(CFG["compact_keep"]) and j >= 2 and msgs[j - 1]["role"] == "assistant" \
+            and msgs[j - 2]["role"] == "user" and not msgs[j - 2].get("kind"):
+        tail = msgs[j - 2:j] + tail
+        j -= 2
+        pairs += 1
+    s["messages"] = [
+        {"role": "user", "content": SUMMARY_HEAD + body, "kind": "summary", "at": _now()},
+        {"role": "assistant", "content": SUMMARY_ACK, "kind": "summary", "at": _now()},
+    ] + tail
+    s["compactions"] = int(s.get("compactions") or 0) + 1
+    ev = {"at": _now(), "type": "compaction", "n": s["compactions"], "chars_before": before,
+          "chars_after": history_chars(s["messages"]), "kept_pairs": pairs, "usage": usage}
+    s["events"].append(ev)
+    return ev
+
+
+def run_compaction(a: dict, s: dict, system: list[dict], tool_dicts: list[dict]) -> dict:
+    """Η μία κλήση του compaction. Σηκώνει anthropic.* σφάλματα."""
+    import anthropic
+    client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"], max_retries=2)
+    p = compaction_params(a, system, s, tool_dicts)
+    api = client.beta.messages if tool_dicts else client.messages
+    with api.stream(**p) as stream:
+        text = "".join(stream.text_stream)
+        final = stream.get_final_message()
+    u = _usage_dict(final.usage)
+    log(f"[compact] agent={a['id']} session={s['id']} in={u['input_tokens']} cache_w={u['cache_creation_input_tokens']} "
+        f"cache_r={u['cache_read_input_tokens']} out={u['output_tokens']} stop={final.stop_reason}")
+    if not text.strip() or final.stop_reason == "refusal":
+        raise RuntimeError("η σύνοψη ήρθε κενή")
+    return apply_brief(s, text, u)
+
+
+def _patch_tool_entry(s: dict, token: str, patch: dict) -> None:
+    for m in s["messages"]:
+        for t in m.get("tools") or []:
+            if t.get("token") == token:
+                t.update(patch)
+                t.pop("token", None)       # το token έφυγε: δεν ξαναχρησιμοποιείται από πουθενά
+
+
+# ════════════════════════════════════════════════════════════════════════════
 # HTTP
 # ════════════════════════════════════════════════════════════════════════════
 
@@ -1168,29 +1484,157 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        path = self.path.split("?", 1)[0]
+        from urllib.parse import parse_qs, urlparse
+        u = urlparse(self.path)
+        path, qs = u.path, parse_qs(u.query)
+        q1 = lambda k: (qs.get(k) or [""])[0]
         if path == "/health":
             return self._json(200, health())
         if path == "/agents":
             return self._json(200, {"agents": list_agents()})
-        return self._json(404, {"error": "not found", "endpoints": ["/health", "/agents", "/ask"]})
+        if path == "/sessions":
+            agent = q1("agent")
+            if not load_agent(agent):
+                return self._json(404, {"code": "unknown_agent", "error": f"Άγνωστος agent «{agent}»."})
+            return self._json(200, {"agent": agent, "sessions": list_sessions(agent, q1("archived") == "1")})
+        m = re.fullmatch(r"/sessions/([0-9a-f]{16})", path)
+        if m:
+            s = load_session(q1("agent"), m.group(1))
+            if not s:
+                return self._json(404, {"code": "unknown_session", "error": "Η συνεδρία δεν βρέθηκε."})
+            return self._json(200, {"session": s, "summary": session_summary(s)})
+        return self._json(404, {"error": "not found", "endpoints": ["/health", "/agents", "/sessions", "/ask", "/confirm"]})
 
-    def do_POST(self):
-        path = self.path.split("?", 1)[0]
-        if path != "/ask":
-            return self._json(404, {"error": "not found"})
+    def _body(self) -> dict | None:
         try:
             n = int(self.headers.get("Content-Length") or 0)
         except ValueError:
             n = 0
         if n <= 0 or n > MAX_BODY_BYTES:
-            return self._json(413, {"error": f"Το σώμα του αιτήματος πρέπει να είναι 1–{MAX_BODY_BYTES} bytes.",
-                                    "code": "bad_request"})
+            self._json(413, {"error": f"Το σώμα του αιτήματος πρέπει να είναι 1–{MAX_BODY_BYTES} bytes.", "code": "bad_request"})
+            return None
         try:
             req = json.loads(self.rfile.read(n).decode("utf-8"))
+            if not isinstance(req, dict):
+                raise ValueError
+            return req
         except Exception:
-            return self._json(400, {"error": "Μη έγκυρο JSON.", "code": "bad_request"})
+            self._json(400, {"error": "Μη έγκυρο JSON.", "code": "bad_request"})
+            return None
 
+    def do_POST(self):
+        path = self.path.split("?", 1)[0]
+        req = self._body()
+        if req is None:
+            return
+        if path == "/ask":
+            return self._ask(req)
+        if path == "/confirm":
+            return self._confirm(req)
+        if path == "/sessions":
+            return self._session_new(req)
+        m = re.fullmatch(r"/sessions/([0-9a-f]{16})/(archive|close)", path)
+        if m:
+            return self._session_close(req, m.group(1), m.group(2) == "close")
+        return self._json(404, {"error": "not found"})
+
+    # ── ΣΥΝΕΔΡΙΕΣ ───────────────────────────────────────────────────────────
+    def _session_new(self, req: dict):
+        a = load_agent(str(req.get("agent") or ""))
+        if not a:
+            return self._json(404, {"code": "unknown_agent", "error": "Άγνωστος agent."})
+        ctx = req.get("context") or ""
+        if not isinstance(ctx, str) or len(ctx) > 4000:
+            return self._json(400, {"code": "bad_request", "error": "Το context πρέπει να είναι κείμενο έως 4000 χαρακτήρες."})
+        s = new_session(a["id"], context=ctx, title=str(req.get("title") or ""))
+        return self._json(200, {"session": s, "summary": session_summary(s)})
+
+    def _session_close(self, req: dict, sid: str, reopen: bool):
+        """archive: απλώς κλείνει. close («Έκλεισε η υπόθεση»): κλείνει ΚΑΙ ανοίγει
+        νέα, σπαρμένη από τον φάκελο του μαθητή όπως είναι ΤΩΡΑ (R-B.3)."""
+        agent = str(req.get("agent") or "")
+        s = load_session(agent, sid)
+        if not s:
+            return self._json(404, {"code": "unknown_session", "error": "Η συνεδρία δεν βρέθηκε."})
+        new = None
+        if reopen:
+            seed, note, label = None, "", s.get("student_label") or ""
+            if s.get("student_id") and casefile_configured():
+                try:
+                    text, label = casefile_cases_text(s["student_id"])
+                    seed = [{"role": "user", "content": "[ΑΦΕΤΗΡΙΑ — ο φάκελος του μαθητή όπως είναι ΤΩΡΑ καταγεγραμμένος]\n" + text,
+                             "kind": "seed", "at": _now()},
+                            {"role": "assistant", "content": "Έλαβα τον φάκελο όπως είναι τώρα καταγεγραμμένος. Ρώτα.",
+                             "kind": "seed", "at": _now()}]
+                    note = "Νέα συνεδρία με αφετηρία τον φάκελο του μαθητή (ανάγνωση cases_live)."
+                except CasefileError as e:
+                    note = f"Νέα συνεδρία ΧΩΡΙΣ αφετηρία — ο φάκελος δεν διαβάστηκε: {e}"
+            else:
+                note = ("Νέα συνεδρία χωρίς αφετηρία: " + ("δεν υπάρχει μαθητής δεμένος στη συνεδρία."
+                        if not s.get("student_id") else "ο φάκελος δεν είναι ρυθμισμένος στον proxy."))
+            new = new_session(agent, context="", title="", student_id=s.get("student_id"),
+                              student_label=label, seed=seed, note=note)
+        s["archived"] = True
+        s["events"].append({"at": _now(), "type": "archived",
+                            "text": "Έκλεισε η υπόθεση → νέα συνεδρία " + new["id"] if new else "Αρχειοθετήθηκε."})
+        save_session(s)
+        log(f"[session] {'close' if reopen else 'archive'} agent={agent} id={sid}" + (f" → {new['id']}" if new else ""))
+        return self._json(200, {"ok": True, "archived": sid, "session": new, "summary": session_summary(new) if new else None})
+
+    # ── Η ΠΥΛΗ ΕΠΙΒΕΒΑΙΩΣΗΣ (R-A) ───────────────────────────────────────────
+    def _confirm(self, req: dict):
+        agent, sid = str(req.get("agent") or ""), str(req.get("session") or "")
+        tok, action = str(req.get("token") or ""), str(req.get("action") or "write")
+        a = load_agent(agent)
+        s = load_session(agent, sid) if a else None
+        if not a or not s:
+            return self._json(404, {"code": "unknown_session", "error": "Άγνωστος agent ή συνεδρία."})
+        rec = pending_take(tok, agent, sid)
+        if not rec:
+            return self._json(410, {"code": "token_invalid", "error":
+                "Η εκκρεμής εγγραφή δεν ισχύει πια: έληξε, χρησιμοποιήθηκε ήδη, ή ανήκει σε άλλη συνεδρία. "
+                "Ζήτα ξανά από τον σύμβουλο να την ετοιμάσει."})
+        if action == "cancel":
+            _patch_tool_entry(s, tok, {"pending": False, "cancelled": True, "at": _now()})
+            save_session(s)
+            log(f"[casefile] CANCELLED tool={rec['tool']} session={sid}")
+            return self._json(200, {"ok": True, "cancelled": True})
+        if not casefile_configured():
+            return self._json(503, {"code": "casefile_off", "error": "Ο φάκελος δεν είναι ρυθμισμένος στον proxy."})
+        payload, tool = rec["payload"], rec["tool"]
+        try:
+            if tool == "casefile_add_case":
+                cid = str(_cf_request("POST", "rpc/fn_add_case", payload)).strip('"')
+                student_id = payload.get("p_student_id")
+            else:
+                _cf_request("POST", "rpc/fn_update_case", payload)
+                cid = payload["p_case_id"]
+                student_id = s.get("student_id")
+                if not student_id:
+                    try:
+                        rows = _cf_request("GET", "cases_live", query=f"id=eq.{cid}&select=student_id") or []
+                        student_id = rows[0]["student_id"] if rows else None
+                    except CasefileError:
+                        student_id = None
+        except CasefileError as e:
+            _patch_tool_entry(s, tok, {"pending": False, "failed": str(e), "at": _now()})
+            save_session(s)
+            log(f"[casefile] CONFIRM FAILED tool={tool} session={sid}: {e}")
+            return self._json(502, {"code": "casefile", "error": f"Ο φάκελος απέρριψε την εγγραφή: {e} "
+                                    "(το token καταναλώθηκε — ζήτα ξανά την προετοιμασία)"})
+        result = (("ΓΡΑΦΤΗΚΕ" if tool == "casefile_add_case" else ("ΑΝΑΚΛΗΘΗΚΕ" if payload.get("p_withdraw") else "ΕΝΗΜΕΡΩΘΗΚΕ"))
+                  + f" · case {cid} · actor {payload['p_actor']} · {_now()}\n{rec['preview']}")
+        w = {"at": _now(), "tool": tool, "case_id": cid, "preview": rec["preview"], "actor": payload["p_actor"]}
+        s["writes"].append(w)
+        if student_id:
+            s["student_id"] = student_id
+        _patch_tool_entry(s, tok, {"pending": False, "confirmed": True, "case_id": cid, "result": result, "at": _now()})
+        save_session(s)
+        log(f"[casefile] CONFIRMED tool={tool} case={cid} session={sid} writes={len(s['writes'])}")
+        return self._json(200, {"ok": True, "case_id": cid, "result": result, "writes": len(s["writes"]),
+                                "student_id": s.get("student_id")})
+
+    def _ask(self, req: dict):
         # ── φρένο 0: το κλειδί ──
         if not os.environ.get("ANTHROPIC_API_KEY"):
             return self._json(503, {"code": "no_key", "error":
@@ -1207,12 +1651,33 @@ class Handler(BaseHTTPRequestHandler):
         student = req.get("student")
         if student is not None and not isinstance(student, str):
             return self._json(400, {"code": "bad_request", "error": "Το `student` πρέπει να είναι κείμενο."})
-        messages, err = normalise_messages(req.get("messages"), student or "")
-        if err:
-            return self._json(400, {"code": "bad_request", "error": err})
+
+        # ── με ΣΥΝΕΔΡΙΑ (η σελίδα): {session, question}· ο proxy κρατά το ιστορικό.
+        #    Χωρίς: {messages} stateless, όπως πριν (δοκιμές, curl). ──
+        session = None
+        question = None
+        if req.get("session"):
+            session = load_session(a["id"], str(req.get("session")))
+            if not session:
+                return self._json(404, {"code": "unknown_session", "error": "Η συνεδρία δεν βρέθηκε — άνοιξε νέα."})
+            if session.get("archived"):
+                return self._json(409, {"code": "session_archived", "error": "Η συνεδρία έχει κλείσει. Άνοιξε νέα."})
+            question = req.get("question")
+            if not isinstance(question, str) or not question.strip():
+                return self._json(400, {"code": "bad_request", "error": "Λείπει η ερώτηση (`question`)."})
+            question = question.strip()
+            if student and not session.get("context") and not any(not m.get("kind") for m in session["messages"]):
+                session["context"] = student.strip()
+            messages = api_messages(session, question)
+            turns = sum(1 for m in session["messages"] if m["role"] == "user" and not m.get("kind")) + 1
+        else:
+            messages, err = normalise_messages(req.get("messages"), student or "")
+            if err:
+                return self._json(400, {"code": "bad_request", "error": err})
+            turns = user_turns(messages)
 
         # ── φρένο 1: γύροι ανά συζήτηση ──
-        turns, cap = user_turns(messages), effective_max_turns(a)
+        cap = effective_max_turns(a)
         if turns > cap:
             return self._json(429, {"code": "turn_cap", "turn": turns, "max_turns": cap, "error":
                 f"Η συζήτηση έφτασε το όριο των {cap} γύρων. Άνοιξε νέα συζήτηση — "
@@ -1253,11 +1718,24 @@ class Handler(BaseHTTPRequestHandler):
 
         emit({"type": "start", "agent": a["id"], "turn": turns, "max_turns": cap,
               "today": state["count"], "daily_cap": int(CFG["daily_cap"]), "model": a["model"],
-              "tools": tools, "casefile": casefile_configured()})
-        budget = ToolBudget(emit, a["id"]) if tools else None
+              "tools": tools, "casefile": casefile_configured(),
+              "session": session["id"] if session else None})
+        budget = ToolBudget(emit, a["id"], session["id"] if session else None) if tools else None
         try:
             import anthropic
             try:
+                # ── R-B.2: compaction ΠΡΙΝ τη νέα ερώτηση, όταν το ιστορικό ξεχείλισε.
+                #    Μόνο τα messages αλλάζουν· system/tools είναι byte-ίδια με το /ask. ──
+                if session and history_chars(session["messages"]) > int(CFG["compact_after"]):
+                    tool_dicts = [t.to_dict() for t in budget.make_tools(list(tools))] if budget else []
+                    ev = run_compaction(a, session, system, tool_dicts)
+                    save_session(session)
+                    messages = api_messages(session, question)
+                    params = request_params(a, system, messages)
+                    emit({"type": "compacted", **{k: v for k, v in ev.items() if k != "usage"},
+                          "usage": ev.get("usage"), "message": (
+                              f"Έγινε compaction #{ev['n']}: το ιστορικό ({ev['chars_before']:,} χαρακτήρες) έγινε "
+                              f"δομημένη σύνοψη ({ev['chars_after']:,}). Οι παραπομπές και οι εγγραφές κρατήθηκαν.")})
                 res = run_ask(a, params, emit, budget, tools)
             except anthropic.AuthenticationError:
                 return emit({"type": "error", "code": "auth", "message":
@@ -1285,18 +1763,32 @@ class Handler(BaseHTTPRequestHandler):
                     f"cache_read_input_tokens=0 — ο λογαριασμός πληρώνει ολόκληρο το corpus.")
             CACHE_WATCH[a["id"]] = {"ts": time.time(), "prefix": digest}
             add_usage(u, (budget.calls + budget.cf_calls) if budget else 0)
-            emit({"type": "usage", **u, "iterations": res["iterations"],
-                  "tool_calls": budget.calls if budget else 0,
-                  "casefile_calls": budget.cf_calls if budget else 0,
-                  "casefile_writes": budget.cf_writes if budget else 0,
-                  "cache_ok": cache_ok, "expected_cache_read": expected_read})
+            usage_ev = {"type": "usage", **u, "iterations": res["iterations"],
+                        "tool_calls": budget.calls if budget else 0,
+                        "casefile_calls": budget.cf_calls if budget else 0,
+                        "casefile_writes": budget.cf_writes if budget else 0,
+                        "cache_ok": cache_ok, "expected_cache_read": expected_read,
+                        # το corpus ΞΑΝΑΓΡΑΦΤΗΚΕ (π.χ. επιστροφή μετά από ώρες, το 1h έληξε):
+                        # αναμενόμενο, αλλά να φαίνεται — όχι να ξαφνιάζει στον λογαριασμό.
+                        "cache_rewrite": u["cache_creation_input_tokens"] > max(2000, u["cache_read_input_tokens"])}
+            emit(usage_ev)
+            if session:
+                if not session.get("title"):
+                    session["title"] = question[:80]
+                session["messages"].append({"role": "user", "content": question, "at": _now()})
+                session["messages"].append({"role": "assistant", "content": res["text"], "at": _now(),
+                                            "tools": budget.log if budget else [],
+                                            "usage": {k: v for k, v in usage_ev.items() if k != "type"},
+                                            "stop_reason": res["stop_reason"]})
+                save_session(session)
             if res["stop_reason"] == "refusal":
                 emit({"type": "error", "code": "refusal", "message":
                       "Το μοντέλο αρνήθηκε να απαντήσει (stop_reason=refusal)."})
             elif res["stop_reason"] == "max_tokens":
                 emit({"type": "notice", "message":
                       f"Η απάντηση κόπηκε στο όριο max_tokens={a['max_tokens']}."})
-            emit({"type": "done", "stop_reason": res["stop_reason"], "text": res["text"]})
+            emit({"type": "done", "stop_reason": res["stop_reason"], "text": res["text"],
+                  "session": session_summary(session) if session else None})
         except ClientGone:
             log(f"[ask] agent={a['id']} ο client έκλεισε τη σύνδεση")
         except Exception as e:  # ποτέ traceback στη σελίδα· στο stderr ναι
@@ -1355,7 +1847,11 @@ def health() -> dict:
                  "casefile_max_writes": int(CFG["casefile_max_writes"])},
         # ΜΟΝΟ «ρυθμισμένο ή όχι» — ούτε το URL ούτε το κλειδί βγαίνουν ποτέ από εδώ.
         "casefile": {"configured": casefile_configured(), "tools": list(CASEFILE_TOOLS),
-                     "env": ["FDMS_CASEFILE_URL", "FDMS_CASEFILE_KEY"]},
+                     "env": ["FDMS_CASEFILE_URL", "FDMS_CASEFILE_KEY"],
+                     "confirm_gate": True, "confirm_ttl_s": int(CFG["confirm_ttl"]), "pending": len(PENDING)},
+        "memory": {"sessions_dir": str(sessions_dir()), "compact_after_chars": int(CFG["compact_after"]),
+                   "compact_keep_pairs": int(CFG["compact_keep"]),
+                   "sessions": {a["id"]: len(list_sessions(a["id"])) for a in list_agents()}},
         "tools": {"search_sources": {
             "whitelist": {k: {"path": str(v[0]), "dir": v[1], "raw_pdf": v[2], "exists": v[0].exists(), "about": v[3]}
                           for k, v in WHITELIST.items()},
@@ -1376,6 +1872,8 @@ def configure(args) -> None:
         "tool_max_chars": ("ADVISOR_TOOL_MAX_CHARS", int), "tool_total_chars": ("ADVISOR_TOOL_TOTAL_CHARS", int),
         "casefile_max_calls": ("ADVISOR_CASEFILE_MAX_CALLS", int),
         "casefile_max_writes": ("ADVISOR_CASEFILE_MAX_WRITES", int),
+        "compact_after": ("ADVISOR_COMPACT_AFTER_CHARS", int), "compact_keep": ("ADVISOR_COMPACT_KEEP", int),
+        "confirm_ttl": ("ADVISOR_CONFIRM_TTL_S", int), "sessions_dir": ("ADVISOR_SESSIONS_DIR", str),
         "state_file": ("ADVISOR_STATE_FILE", str), "agents_dir": ("ADVISOR_AGENTS_DIR", str),
         "corpus_dir": ("ADVISOR_CORPUS_DIR", str),
     }
@@ -1443,6 +1941,56 @@ def dry_run(agent_id: str, question: str) -> int:
     return 0
 
 
+def compact_demo(agent_id: str) -> int:
+    """ΧΩΡΙΣ API. Συνθετική συνεδρία πάνω από το όριο → δείχνει (α) την απόφαση,
+    (β) το αίτημα compaction με ΙΔΙΟ md5 προθέματος με το /ask, (γ) το prompt,
+    (δ) την αντικατάσταση με μια πλαστή σύνοψη και το event που γράφεται."""
+    a = load_agent(agent_id)
+    if not a:
+        print(f"άγνωστος agent «{agent_id}»")
+        return 2
+    corpus, err = read_corpus(a)
+    if err:
+        print("ΑΡΝΗΣΗ (φρένο 3):", err)
+        return 3
+    tools = offered_tools(a)
+    system = build_system(a, corpus, tools)
+    # συνθετικό ιστορικό: 9 ζεύγη × ~3k χαρακτήρες ≈ 27k → πάνω από το όριο των 24k
+    s = {"id": "deadbeefdeadbeef", "agent": a["id"], "title": "demo", "context": "Προσαρμογή, 8η έξοδος",
+         "student_id": None, "student_label": "", "created": _now(), "updated": _now(), "archived": False,
+         "messages": [], "writes": [{"at": _now(), "tool": "casefile_add_case", "case_id": "2b1c0d9e-1111-2222-3333-444444444444",
+                                     "preview": "ΝΕΑ ΥΠΟΘΕΣΗ · 2026-10-17 · fail · C4790\n  συνέπεια: καμία ενέργεια", "actor": "agent:" + a["id"]}],
+         "events": [], "compactions": 0}
+    for k in range(9):
+        s["messages"].append({"role": "user", "content": f"Ερώτηση {k + 1}: " + ("τι ισχύει για την αποτυχία; " * 40), "at": _now()})
+        s["messages"].append({"role": "assistant", "content": f"Απάντηση {k + 1} [fail-24] §30ζ " + ("κείμενο απάντησης. " * 100), "at": _now()})
+    before = history_chars(s["messages"])
+    ask_digest = prefix_digest(system)
+    tool_dicts = [t.to_dict() for t in ToolBudget(None, a["id"], s["id"]).make_tools(tools)] if tools else []
+    p = compaction_params(a, system, s, tool_dicts)
+    canned = ("# ΣΥΝΟΨΗ ΣΥΝΕΔΡΙΑΣ\n## ΜΑΘΗΤΗΣ ΚΑΙ ΕΡΩΤΗΜΑ\nΠροσαρμογή, 8η έξοδος, ΑΠΟΤΥΧΙΑ στην C4790.\n"
+              "## ΤΙ ΕΧΕΙ ΤΕΚΜΗΡΙΩΘΕΙ\n- Αξιολόγηση αποτυχία → Εξέταση Καταλληλότητας με Αξιολογητή [fail-24] ΒαΔ 3-01 §30ζ\n"
+              "## ΤΙ ΜΕΝΕΙ ΑΝΟΙΧΤΟ\n- ⚠ ΑΛΥΤΟ: νυχτερινή\n## ΤΙ ΓΡΑΦΤΗΚΕ ΣΤΟΝ ΦΑΚΕΛΟ\n— το συμπληρώνει ο proxy από το αρχείο της συνεδρίας —")
+    ev = apply_brief(s, canned, {"input_tokens": 0, "cache_creation_input_tokens": 0, "cache_read_input_tokens": 0, "output_tokens": 0})
+    shown_sys = [{"cache_control": b.get("cache_control"), "text": f"<{len(b['text']):,} chars · md5 {hashlib.md5(b['text'].encode('utf-8')).hexdigest()}>"} for b in p["system"]]
+    out = {
+        "trigger": {"history_chars": before, "compact_after": int(CFG["compact_after"]), "fires": before > int(CFG["compact_after"])},
+        "compaction_request": {"model": p["model"], "max_tokens": p["max_tokens"], "thinking": p["thinking"],
+                               "output_config": p["output_config"], "tools": [t["name"] for t in p.get("tools", [])],
+                               "tool_choice": p.get("tool_choice"), "system": shown_sys,
+                               "messages": f"{len(p['messages'])} (ιστορικό + COMPACT_PROMPT ως τελευταίο user)",
+                               "last_user_starts": p["messages"][-1]["content"][0]["text"][:90] + "…"},
+        "prefix_md5_ask": ask_digest, "prefix_md5_compaction": prefix_digest(p["system"]),
+        "same_prefix_so_corpus_stays_cached": ask_digest == prefix_digest(p["system"]),
+        "COMPACT_PROMPT": COMPACT_PROMPT,
+        "after_apply_brief": {"event": ev, "messages": [{"role": m["role"], "kind": m.get("kind"), "chars": len(m["content"]),
+                                                          "head": m["content"][:110]} for m in s["messages"]],
+                              "summary_message_full": s["messages"][0]["content"]},
+    }
+    print(json.dumps(out, ensure_ascii=False, indent=2))
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Ο τοπικός proxy του Συμβούλου FDMS (127.0.0.1 μόνο).",
                                  formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -1456,7 +2004,13 @@ def main() -> int:
     ap.add_argument("--tool-max-chars", type=int, dest="tool_max_chars", help="search_sources: χαρακτήρες ανά κλήση (6000)")
     ap.add_argument("--tool-total-chars", type=int, dest="tool_total_chars", help="search_sources: χαρακτήρες ανά απάντηση (20000)")
     ap.add_argument("--casefile-max-calls", type=int, dest="casefile_max_calls", help="casefile: κλήσεις ανά απάντηση (8)")
-    ap.add_argument("--casefile-max-writes", type=int, dest="casefile_max_writes", help="casefile: εγγραφές ανά απάντηση (2)")
+    ap.add_argument("--casefile-max-writes", type=int, dest="casefile_max_writes", help="casefile: προεπισκοπήσεις εγγραφής ανά απάντηση (2)")
+    ap.add_argument("--compact-after", type=int, dest="compact_after", help="compaction όταν το ιστορικό ξεπεράσει N χαρακτήρες (24000)")
+    ap.add_argument("--compact-keep", type=int, dest="compact_keep", help="ζεύγη που μένουν αυτούσια μετά το compaction (1)")
+    ap.add_argument("--confirm-ttl", type=int, dest="confirm_ttl", help="ζωή του token επιβεβαίωσης σε δευτερόλεπτα (900)")
+    ap.add_argument("--sessions-dir", dest="sessions_dir", help="φάκελος συνεδριών (tools/advisor/sessions)")
+    ap.add_argument("--compact-demo", action="store_true", dest="compact_demo",
+                    help="ΧΩΡΙΣ API: δείξε πότε/πώς γίνεται compaction σε συνθετικό ιστορικό και το αποτέλεσμα")
     ap.add_argument("--state-file", dest="state_file", help="αρχείο μετρητή ημέρας")
     ap.add_argument("--agents-dir", dest="agents_dir", help="φάκελος agents/")
     ap.add_argument("--corpus-dir", dest="corpus_dir", help="φάκελος των context-*.md")
@@ -1480,6 +2034,9 @@ def main() -> int:
         except PathRefused as e:
             print("TOOL ERROR (όπως θα το έβλεπε το μοντέλο):", e)
             return 4
+
+    if args.compact_demo:
+        return compact_demo(args.agent)
 
     if args.dry_run:
         return dry_run(args.agent, args.question)
