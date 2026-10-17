@@ -1436,14 +1436,37 @@
 
   window.SchedEdit = { on, hasCode, refuse, lock, unlock, setCode, subscribe, sweep, MIN_LEN };
 
+  /* ══ Q9 — A BOOT IS A STATE CHANGE, AND IT HAD NO VOICE ═════════════════
+     FOUND BY THE OWNER, 17/10/2026: the Σύμβουλος tab was missing on every
+     load, on BOTH origins.
+
+     paint() dresses the button; only emit() tells the SUBSCRIBERS. The flag
+     is settled ASYNCHRONOUSLY — the verifier lives in the store, which loads
+     long after this file parses — so on a device that was already unlocked
+     the flag went false → true with paint() and NOT A WORD to anyone
+     listening. Every seam that asks on() at the moment it acts never noticed.
+     The advisor tab is drawn from the SIGNAL ALONE (advisor.js § 7, which
+     fails closed and hides the tab until it hears otherwise), so it heard the
+     false and never the true: hidden, every single time, deterministically.
+
+     ONLY ON A REAL TRANSITION. Config writes are frequent and emit() repaints
+     whole views; re-emitting on each one would make the Scheduler and the
+     Currency matrix redraw for a byte that concerns neither. */
+  function reboot() {
+    const was = on();
+    boot();
+    if (on() === was) { paint(); return; }
+    emit();
+  }
+
   function start() {
     boot();
     if (!mount()) setTimeout(start, 300);
     /* the verifier lives in the store: re-read it after the seed loads and
        after every pull, so a code set on another device takes effect here */
     if (S()) {
-      S().ready().then(() => { boot(); paint(); });
-      S().subscribe((coll) => { if (coll === "config" || coll === "*") { boot(); paint(); } });
+      S().ready().then(reboot);
+      S().subscribe((coll) => { if (coll === "config" || coll === "*") reboot(); });
     }
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
