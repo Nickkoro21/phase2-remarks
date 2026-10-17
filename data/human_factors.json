@@ -1057,6 +1057,9 @@
       "cause_phrases": [
         "insufficient knowledge of the system's reversion logic",
         "lack of knowledge of the published procedure for the condition encountered",
+    "lack of knowledge of the published procedure for the assigned exercises",
+    "lack of knowledge of the published procedure for the assigned formation exercises",
+    "lack of knowledge of the published procedure for the assigned navigation exercises",
         "incomplete knowledge of the limits applicable to the maneuver"
       ],
       "typical_gradesheet_items": ["GENERAL KNOWLEDGE", "EMERGENCY PROCEDURES", "INSTRUMET PROCEDURES", "SPECIAL REQUIREMENTS", "GROUND PROCEDURES"],
@@ -1444,7 +1447,7 @@
     "Remark template: «SP, due to <cause_phrase>, did not <precise deviation>, with the result <quantified outcome>.» Keep the quantification (feet, knots, degrees, seconds) in the result clause, not in the cause clause.",
     "Cause slot grammar. A cause_phrase is a bare noun phrase that hangs from the preposition «due to». It carries NO result clause («so that …», «so …», «which delayed …») and NO internal comma. A result clause inside the cause slot double-books the «with the result …» slot and yields an ungrammatical run-on with two competing result clauses; a deviation stated inside it double-books «did not …». One slot, one job.",
     "Do not cite accident cases, aircraft types or crew names in gradesheet remarks — case_refs exist for IP-led debrief and recurrent training discussion only (§9.2 rec. 5; §10 discussion questions).",
-    "Use only terminology attested in the source document. Terms commonly used elsewhere in HF literature but ABSENT from this document — «channelized attention», «task saturation», «plan continuation bias» — must not be produced; use «attention bottleneck», «workload distribution / workload management» and «mission-completion bias» / «continuation bias» instead.",
+    "Use only terminology attested in a SOURCE WE HOLD. Terms commonly used elsewhere in HF literature but ABSENT from this document — «channelized attention», «task saturation», «plan continuation bias» — must not be produced FROM THIS BANK; use «attention bottleneck», «workload distribution / workload management» and «mission-completion bias» / «continuation bias» instead. EXCEPTION, owner ruling 2026-10-17 (observations-style.md — 18.7): where the GOVERNING CRITERION ITSELF prints the term — criterion c.3 of contact-38 prints «channelized attention» verbatim — the term IS attested, in the Syllabus rather than here, and a text whose mode cites that criterion may use it. The ban was ever a question of sourcing, never of style.",
     "One cause per observation. If two concepts apply, pick the one closest to the observed behavior and keep the other for the debrief.",
     "Concepts marked applicability=context_only (HFACS Tier 3/4, latent failures, supervisory courage, just culture, safety culture, FRMS, frameworks, emerging technology) are NOT SP-attributable causes. Never write an organizational or supervisory factor as the cause of a student's deviation on a gradesheet. Enforced structurally: every context_only concept carries «cause_phrases»: [] and holds its wordings in «debrief_phrases», so a generator iterating concepts[].cause_phrases cannot emit them. Never read debrief_phrases into the «due to …» slot.",
     "Concepts marked applicability=cause_slot_caution carry a disciplinary or medical implication (violations, at-risk behavior, reckless behavior, fatigue, sleep debt, microsleeps, WOCL, hypoxia, G-LOC/A-LOC, fitness for duty). Use them only on observed or reported fact, never on inference, and run the substitution test before any wording that implies at-risk or reckless behavior (§7.4, §8.4).",

@@ -126,7 +126,7 @@ whitelist: τα παραδείγματα **αντικαταστάθηκαν** α
 | 2 | Roster · μαθητής — Status | `select[data-f=status]` · `STATUS_OPTS` | active · hold · SMS (αποθηκεύεται `kepe`) · withdrawn | ΟΧΙ | **αλφάβητο μηχανής** — η μηχανή ετοιμότητας και οι counters κάνουν switch πάνω του |
 | 3 | Roster · μαθητής — Primary IP / Reserve IP 1 / Reserve IP 2 | `select[data-f=primary_ip‖r0‖r1]` · `ipRefOptions()` | οι IP του μητρώου (η αποθηκευμένη τιμή κρατιέται ορατή κι όταν ο IP έφυγε) | ΟΧΙ | **picker οντότητας** — δείχνει σε εγγραφή του μητρώου· ελεύθερο κείμενο θα ήταν σπασμένη αναφορά |
 | 4 | Roster · εκπαιδευτής — Country | `select[data-other=country]` · `COUNTRIES` | HAF · ITAF | **ΝΑΙ** | — |
-| 5 | Roster · εκπαιδευτής — Duty | `select[data-other=duty]` · `DUTIES` | Squadron Commander · DO · Flight Commander · Evaluator · Instructor | **ΝΑΙ** | — |
+| 5 | Roster · εκπαιδευτής — Duty | `select[data-other=duty]` · `DUTIES` | owner · DO · owner · Evaluator · Instructor | **ΝΑΙ** | — |
 | 6 | Roster · εκπαιδευτής — Leadership | `select[data-other=leadership]` · `LEADERSHIPS` | Wingman · 2-ship · 4-ship · Mission Commander | **ΝΑΙ** | — |
 | 7 | Roster · εκπαιδευτής — Status | `select[data-f=status]` | active · departed | ΟΧΙ | **αλφάβητο μηχανής** — το `departed` φιλτράρει ΚΑΘΕ picker και εμποδίζει το hard delete |
 | 8 | Roster · Rank (μαθητή & εκπαιδευτή) | `input[data-f=rank]` + chips `RANKS` | Cdt · 2Lt · 1Lt · Capt · Maj · Lt Col · S.Ten · Lt | **ΝΑΙ** — το πεδίο είναι εξαρχής ελεύθερο· τα chips είναι quick-pick | — |
@@ -398,7 +398,7 @@ demo pilot, τα 6 του Κεφ. 5 είναι **εκτός πεδίου, όχι
 > πάντα προέκυπτε (η ορατή συμπεριφορά δεν άλλαξε ούτε κατά ένα κελί).
 > **Το ιστορικό του git τα κρατά ακόμη** — από το `acb6b86` και μετά. Το rewrite
 > ιστορίας **ΔΕΝ έγινε**: είναι πράξη με συνέπειες σε κάθε κλώνο και **ανήκει
-> στην απόφανση του Διοικητή Σμήνους**. Καταγράφεται εδώ ως **ανοιχτή
+> στην απόφανση του ιδιοκτήτη**. Καταγράφεται εδώ ως **ανοιχτή
 > εκκρεμότητα**, ώστε να μη γίνει σιωπή.
 
 **Η ΣΥΝΤΑΞΗ ΓΙΝΕΤΑΙ ΜΕΣΑ ΣΤΟ ΚΕΛΙ.** Με το κλικ (ή Enter/Space — το κελί είναι

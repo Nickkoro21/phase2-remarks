@@ -867,8 +867,7 @@
          "id": "appr_type",
          "list": "approaches",
          "free": true,
-         "ph": "____",
-         "def": "VOR/DME"
+         "ph": "____"
         },
         {
          "t": "lit",
@@ -935,8 +934,9 @@
         }
        ],
        "def": "missed",
+       "not_last": true,
        "status": "canon",
-       "note": "Rendered per the user's full-words ruling (2026-08-20): the photographed canon prints the clipped form (see templates.<id>.canon, kept verbatim); the rendered string spells the full word. Canon prints «MISSED APPR.»."
+       "note": "Rendered per the user's full-words ruling (2026-08-20): the photographed canon prints the clipped form (see templates.<id>.canon, kept verbatim); the rendered string spells the full word. Canon prints «MISSED APPR.». Intermediate approaches only: the LAST approach block carries no pair of its own — the completion element (id «fs») ends the sortie."
       }
      ]
     },
@@ -963,18 +963,71 @@
     },
     {
      "id": "fs",
-     "label": "F/S (FULL STOP)",
+     "label": "LAST APPROACH COMPLETION",
      "opt": false,
      "on": true,
-     "parts": [
+     "choice": [
       {
-       "t": "lit",
-       "v": "F/S"
+       "id": "cg_tg_pw",
+       "label": "CIRCLING → TOUCH&GO → PATTERN WORK & F/S",
+       "parts": [
+        {
+         "t": "lit",
+         "v": "CIRCLING, TOUCH&GO, PATTERN WORK & F/S"
+        }
+       ],
+       "join": ", "
+      },
+      {
+       "id": "cg_fs",
+       "label": "CIRCLING → F/S",
+       "parts": [
+        {
+         "t": "lit",
+         "v": "CIRCLING, & F/S"
+        }
+       ],
+       "join": ", "
+      },
+      {
+       "id": "fs",
+       "label": "F/S",
+       "parts": [
+        {
+         "t": "lit",
+         "v": "F/S"
+        }
+       ],
+       "join": ", & "
+      },
+      {
+       "id": "tg_pw",
+       "label": "TOUCH&GO → PATTERN WORK & F/S",
+       "parts": [
+        {
+         "t": "lit",
+         "v": "TOUCH&GO, PATTERN WORK & F/S"
+        }
+       ],
+       "join": ", "
+      },
+      {
+       "id": "missed_pw",
+       "label": "MISSED APPROACH → PATTERN WORK & F/S",
+       "parts": [
+        {
+         "t": "lit",
+         "v": "MISSED APPROACH, PATTERN WORK & F/S"
+        }
+       ],
+       "join": ", "
       }
      ],
-     "status": "canon",
-     "join": ", & ",
-     "note": "the canon prints «, & F/S.» — comma AND ampersand; kept verbatim."
+     "def": "fs",
+     "status": "enriched",
+     "why": null,
+     "src": "Flight Commander ruling 2026-10-17: a block may never end without a landing event; the last approach COMPLETES in one of five shapes. On MISSED APPROACH the block stops at «PATTERN WORK & F/S» (he said «full stop» in words; on 2026-10-17 he ruled the PRINTED form is F/S, which is also the photographed instrument canon) and the writer types whatever else happened — the sub-cases are deliberately not modelled. LOW APPROACH is NOT offered (it exists in the air but is not written on gradesheets). The approach type and destination stay blank for the writer. The default is the plainest shape (F/S): it claims nothing beyond the landing itself.",
+     "note": "Replaces the canon «(MISSED APPR. / TOUCH&GO) … , & F/S.» ending of the LAST approach block. The canon wording «, & F/S.» survives in templates.instrument.canon only; the rendered closing keeps F/S (owner ruling)."
     }
    ],
    "post": [
@@ -1213,36 +1266,46 @@
     },
     {
      "id": "rtb_appr",
-     "label": "_FR RTB, ____ APPROACH",
+     "label": "_FR RTB (, ____ APPROACH)",
      "opt": true,
-     "on": false,
-     "parts": [
+     "on": true,
+     "choice": [
       {
-       "t": "slot",
-       "id": "rule_rtb",
-       "list": "rules",
-       "free": true,
-       "ph": "____",
-       "def": "VFR"
+       "id": "vfr",
+       "label": "VFR RTB",
+       "parts": [
+        {
+         "t": "lit",
+         "v": "VFR RTB"
+        }
+       ]
       },
       {
-       "t": "lit",
-       "v": " RTB, "
-      },
-      {
-       "t": "slot",
-       "id": "appr_type",
-       "list": "approaches",
-       "free": true,
-       "ph": "____",
-       "def": "VOR/DME"
-      },
-      {
-       "t": "lit",
-       "v": " APPROACH"
+       "id": "ifr",
+       "label": "IFR RTB, ____ APPROACH",
+       "parts": [
+        {
+         "t": "lit",
+         "v": "IFR RTB, "
+        },
+        {
+         "t": "slot",
+         "id": "appr_type",
+         "list": "approaches",
+         "free": true,
+         "ph": "____"
+        },
+        {
+         "t": "lit",
+         "v": " APPROACH"
+        }
+       ]
       }
      ],
-     "status": "canon",
+     "def": "vfr",
+     "status": "enriched",
+     "why": null,
+     "src": "Flight Commander ruling 2026-10-17: a formation sortie always has a return leg — VFR RTB or IFR RTB, chosen. IFR continues into an instrument approach and then the same five completions as the INSTRUMENT template. The VFR path keeps the canon «& F/S» closing. Approach type stays for the writer.",
      "note": "Rendered per the user's full-words ruling (2026-08-20): the photographed canon prints the clipped form (see templates.<id>.canon, kept verbatim); the rendered string spells the full word. Canon prints «APPR.»."
     },
     {
@@ -1257,7 +1320,11 @@
       }
      ],
      "status": "canon",
-     "note": "canon: «only if landings exceed 1»."
+     "note": "canon: «only if landings exceed 1». Hidden when the return leg is IFR — the IFR completions already say whether pattern work was flown.",
+     "unless": {
+      "el": "rtb_appr",
+      "choice": "ifr"
+     }
     },
     {
      "id": "fs",
@@ -1270,7 +1337,84 @@
        "v": "F/S"
       }
      ],
-     "status": "canon"
+     "status": "canon",
+     "unless": {
+      "el": "rtb_appr",
+      "choice": "ifr"
+     },
+     "note": "canon «& F/S.». Hidden when the return leg is IFR — the IFR completion below ends the sortie instead."
+    },
+    {
+     "id": "ifr_end",
+     "label": "IFR RTB COMPLETION",
+     "opt": false,
+     "on": true,
+     "when": {
+      "el": "rtb_appr",
+      "choice": "ifr"
+     },
+     "choice": [
+      {
+       "id": "cg_tg_pw",
+       "label": "CIRCLING → TOUCH&GO → PATTERN WORK & F/S",
+       "parts": [
+        {
+         "t": "lit",
+         "v": "CIRCLING, TOUCH&GO, PATTERN WORK & F/S"
+        }
+       ],
+       "join": ", "
+      },
+      {
+       "id": "cg_fs",
+       "label": "CIRCLING → F/S",
+       "parts": [
+        {
+         "t": "lit",
+         "v": "CIRCLING, & F/S"
+        }
+       ],
+       "join": ", "
+      },
+      {
+       "id": "fs",
+       "label": "F/S",
+       "parts": [
+        {
+         "t": "lit",
+         "v": "F/S"
+        }
+       ],
+       "join": ", & "
+      },
+      {
+       "id": "tg_pw",
+       "label": "TOUCH&GO → PATTERN WORK & F/S",
+       "parts": [
+        {
+         "t": "lit",
+         "v": "TOUCH&GO, PATTERN WORK & F/S"
+        }
+       ],
+       "join": ", "
+      },
+      {
+       "id": "missed_pw",
+       "label": "MISSED APPROACH → PATTERN WORK & F/S",
+       "parts": [
+        {
+         "t": "lit",
+         "v": "MISSED APPROACH, PATTERN WORK & F/S"
+        }
+       ],
+       "join": ", "
+      }
+     ],
+     "def": "fs",
+     "status": "enriched",
+     "why": null,
+     "src": "Flight Commander ruling 2026-10-17: a formation sortie always has a return leg — VFR RTB or IFR RTB, chosen. IFR continues into an instrument approach and then the same five completions as the INSTRUMENT template. The VFR path keeps the canon «& F/S» closing. Approach type stays for the writer. Flight Commander ruling 2026-10-17: a block may never end without a landing event; the last approach COMPLETES in one of five shapes. On MISSED APPROACH the block stops at «PATTERN WORK & F/S» (he said «full stop» in words; on 2026-10-17 he ruled the PRINTED form is F/S, which is also the photographed instrument canon) and the writer types whatever else happened — the sub-cases are deliberately not modelled. LOW APPROACH is NOT offered (it exists in the air but is not written on gradesheets). The approach type and destination stay blank for the writer. The default is the plainest shape (F/S): it claims nothing beyond the landing itself.",
+     "note": "Only present when the return leg is IFR; it replaces the «F/S» element and is the same five-shape completion the INSTRUMENT template uses."
     }
    ],
    "post": [

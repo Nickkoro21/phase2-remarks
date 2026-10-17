@@ -689,13 +689,17 @@ async function renderReqList() {
   let shown = 0;
 
   if (reqState.domain === "board_matrix") {
-    const rows = (data.entries || data.cases || data.matrix || data.rows || (Array.isArray(data) ? data : [])).filter((e) =>
-      !q || JSON.stringify(e).toLowerCase().includes(q));
+    /* Board trees (app/boardtrees.js, specs/board-trees-spec.md): the matrix
+       rendered properly, the decision trees and the sandbox tester. The old
+       table here printed esc(e.allowed_before_board) on an OBJECT —
+       «[object Object]» — and never showed threshold_verbatim or sources. */
+    if (window.BoardTrees) { window.BoardTrees.renderBoardArea(box, data, q); return; }
+    const rows = (data.entries || []).filter((e) => !q || JSON.stringify(e).toLowerCase().includes(q));
     const trs = rows.map((e) => `
       <tr>
         <td>${esc(e.failure_kind ?? "")}</td>
         <td>${esc(e.domain ?? "")}</td>
-        <td>${esc(e.allowed_before_board ?? "")}</td>
+        <td>${esc((e.allowed_before_board && e.allowed_before_board.statement) || "")}</td>
         <td>${esc(Array.isArray(e.ladder) ? e.ladder.join(" → ") : (e.ladder ?? ""))}</td>
       </tr>`).join("");
     box.innerHTML = `<div class="mif-scroll"><table class="spec-table">

@@ -2164,6 +2164,14 @@ html.no-grid .fc-l1 > * + *{margin-top:10px}
 html.no-grid .fc-trackbar,html.no-grid .fc-filters{-webkit-flex:0 0 auto;flex:0 0 auto}
 html.no-grid .fc-rail-scroll{-webkit-flex:1 1 auto;flex:1 1 auto;min-height:0}
 html.no-grid .fc-detail{position:fixed;left:0;right:0;bottom:0;max-height:58vh;border-radius:12px 12px 0 0;z-index:30;box-shadow:0 -14px 44px var(--shadow);margin-top:0}
+/* ROUND E (2026-10-17) — the Board decision-trees counter strip. The original is
+   `repeat(auto-fill, minmax(300px, 1fr))` with a 6px gap, so the fallback is the
+   same wrapping-basis trick as .fc-tracks: basis 300px and the gap reproduced by
+   negative margins on the container. The quality gate caught this one BEFORE the
+   unit ever saw it — a grid with no fallback lays out as a single stacked column
+   on Firefox 32 and the counters would have read as one long list. */
+html.no-grid .bt-ctrs{display:-webkit-flex;display:flex;-webkit-flex-wrap:wrap;flex-wrap:wrap;margin:0 -3px}
+html.no-grid .bt-ctrs > *{-webkit-flex:1 1 300px;flex:1 1 300px;margin:0 3px 6px;min-width:0}
 /* NO-GRID SHEET END */
 
 /* <details> — Firefox 49. The guard sets html.no-details only when the element
@@ -3596,12 +3604,12 @@ def build_main_html(css: str, emblem_uri: str, guard_js: str, prepaint_js: str,
         fail("a leftover stub marker is in the assembled HTML")
 
     # drop all external <script src> tags, then inline our chain before </body>
-    # (10 tags: app · description · flowchart · schedval · schedstore · scheduler ·
-    #  schedconsq · schedboard · schedbridge · currency. The count is the
+    # (11 tags: app · description · flowchart · schedval · schedstore · scheduler ·
+    #  schedconsq · boardtrees · schedboard · schedbridge · currency. The count is the
     #  tripwire on app/index.html: a new module must be looked at once — added
     #  to SCRIPT_CHAIN in main() and to the floor sweep — before it moves.)
     html = sub1(r'[ \t]*<script src="[^"]+"></script>\n', lambda m: "", html,
-                "external script tags", count=10)
+                "external script tags", count=11)
     html = sub1(r"</body>", lambda m: scripts + "\n</body>", html, "</body>")
 
     html = sub1(r"<!DOCTYPE html>",
@@ -3688,6 +3696,7 @@ SCRIPT_CHAIN = [
     ("schedstore.js", "schedstore"),
     ("scheduler.js", "scheduler"),
     ("schedconsq.js", "schedconsq"),
+    ("boardtrees.js", "boardtrees"),
     ("schedboard.js", "schedboard"),
     ("schedbridge.js", "schedbridge"),
     ("currency.js", "currency"),
@@ -3700,7 +3709,8 @@ def main() -> None:
 
     sources = ["app.js", "mifchart.js", "remarksearch.js", "description.js",
                "flowchart.js", "schedval.js", "schedstore.js", "scheduler.js",
-               "schedconsq.js", "schedboard.js", "schedbridge.js", "currency.js"]
+               "schedconsq.js", "boardtrees.js", "schedboard.js", "schedbridge.js",
+               "currency.js"]
     for f in [APP / "index.html", APP / "styles.css",
               APP / "assets" / "364mea.png", DATA / "flowchart2.json"] + \
              [APP / s for s in sources]:

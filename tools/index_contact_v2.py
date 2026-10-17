@@ -238,4 +238,9 @@ def main():
     for s in issues:
         print("  ! " + s)
 
-main()
+# ROUND E (2026-10-17) — THE IMPORT GUARD. A writer agent imported this module to
+# borrow its sentence counter and main() ran on import, silently rewriting
+# index.json underneath a round that was still in flight. A generator is a
+# COMMAND, not a library: it writes only when it is RUN.
+if __name__ == "__main__":
+    main()

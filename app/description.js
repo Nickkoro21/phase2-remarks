@@ -394,6 +394,10 @@
       if (e.kind === "repeat") {
         for (let i = 1; i <= st.apprCount; i++) {
           for (const b of e.block) {
+            /* R18 — «not_last»: the intermediate-approach pair (MISSED APPROACH /
+               TOUCH&GO) is not drawn on the LAST block; the last approach is
+               ended by the completion element that follows the repeat. */
+            if (b.not_last && i === st.apprCount) continue;
             const on = (b.on_first !== undefined && i === 1) ? b.on_first : b.on;
             out.push(Object.assign({}, b, {
               _key: e.id + i + "." + b.id, _inst: i, _rep: e.id,
@@ -407,6 +411,18 @@
     }
     return out;
   }
+
+  /* R18 — a profile element may carry `when:{el,choice}` or `unless:{el,choice}`:
+     it exists only while the named element is on and its ACTIVE choice is (when)
+     / is not (unless) the named one. The formation return leg uses it: an IFR RTB
+     brings in the five approach completions, a VFR RTB keeps the canon «& F/S». */
+  function condMet(c) {
+    const t = canonFlat().find((x) => x._key === c.el);
+    if (!t || !isOn(t)) return false;
+    const ch = activeChoice(t);
+    return !!ch && ch.id === c.choice;
+  }
+  const gatedOut = (e) => (e.when ? !condMet(e.when) : false) || (e.unless ? condMet(e.unless) : false);
 
   function profileEls() {
     const base = canonFlat();
@@ -422,7 +438,7 @@
         status: "draft", parts: [{ t: "slot", id: "txt", list: null, free: true, ph: "CUSTOM TEXT" }],
       });
     }
-    return base;
+    return base.filter((e) => !gatedOut(e));
   }
 
   /* post = the sentences that follow the profile («__ OUT - __ BACK.», «SP
@@ -463,11 +479,21 @@
     ? false
     : (st.on[e._key] === undefined ? !!e.on : !!st.on[e._key]);
 
+  /* R18 — the separator BEFORE element i of n: the active choice's own `join`
+     wins over the element's, which wins over the default (« & » last, else «, »).
+     The five approach completions need it: «…, & FULL STOP» vs «…, PATTERN WORK
+     & FULL STOP» are different closings of the same slot. */
+  function joinOf(e, i, n) {
+    const c = activeChoice(e);
+    const j = (c && c.join !== undefined) ? c.join : e.join;
+    return j || (i === n - 1 ? " & " : ", ");
+  }
+
   function joinEls(els) {
     if (!els.length) return "";
     let out = elText(els[0]);
     for (let i = 1; i < els.length; i++) {
-      const sep = els[i].join || (i === els.length - 1 ? " & " : ", ");
+      const sep = joinOf(els[i], i, els.length);
       out += sep + elText(els[i]);
     }
     return out + ".";
@@ -784,7 +810,7 @@
     if (m && isOn(m)) out += elHtml(m) + '<span class="desc-sep">.</span> ';
     const els = profileEls().filter(isOn);
     els.forEach((e, i) => {
-      if (i) out += '<span class="desc-sep">' + esc(e.join || (i === els.length - 1 ? " & " : ", ")) + "</span>";
+      if (i) out += '<span class="desc-sep">' + esc(joinOf(e, i, els.length)) + "</span>";
       out += elHtml(e);
     });
     if (els.length) out += '<span class="desc-sep">.</span> ';

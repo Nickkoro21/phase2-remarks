@@ -84,13 +84,18 @@
     dp_cdr: { label: "Progress Test (Sq Cdr)",   short: "DP-CDR", evaluator: true },
     apt:    { label: "Aptitude Exam (Ex. Katallilotitas)", short: "APT", evaluator: true },
     board:  { label: "Board Flight (krisi)",     short: "BOARD",  evaluator: false },
+    /* Board trees (specs/board-trees-spec.md §4) — an EXPLICIT ΠΔ 29/2020
+       referral record. It opens the one ladder below at the rung the recorder
+       names: `stage:"ae"` (παρ.3 — Δοκιμή Προόδου ΑΕ) or `stage:"board"`
+       (παρ.5 — 1στ/1η/1θ/1ι go straight to the Board). It is not a flight. */
+    referral: { label: "ΠΔ 29/2020 referral (κρίση)", short: "REF", evaluator: false },
   };
   const CATS = ["contact", "instrument", "formation", "vfr_navigation"];
   const CAT_LABEL = { contact: "Contact", instrument: "Instrument", formation: "Formation", vfr_navigation: "VFR Navigation" };
 
   /* fail-45 caps per Στάδιο — 2× ground exams, 2× ΠΡΟΣΑΡΜΟΓΗ (contact),
      1× per other air / F-S category */
-  const smsMax = (cat) => (cat === "ground_exam" || cat === "ground_exams" ? 2 : (cat === "contact" || cat === "adaptation") ? 2 : 1);
+  const smsMax = (cat) => (cat === "ground_exam" || cat === "ground_exams" || cat === "oral" || cat === "written" ? 2 : (cat === "contact" || cat === "adaptation") ? 2 : 1);
   const smsCatLabel = (cat) => (cat === "ground_exam" || cat === "ground_exams") ? "ground exams"
     : cat === "adaptation" ? "Adaptation (contact)" : (CAT_LABEL[cat] || cat || "");
 
@@ -195,12 +200,32 @@
   }
 
   /* ── THE WALK ─────────────────────────────────────────────────────────── */
+  /* Board trees (specs/board-trees-spec.md §4): the walk is PURE. It reads the
+     normalised events it is handed and asks the context — never the store or
+     the graph — for the five things it needs. liveCtx(code) binds those to
+     SchedStore/SchedReady for the Scheduler; the Board-trees sandbox and the
+     headless fixtures bind them to synthetic data. ONE ladder, two feeders. */
+  function liveCtx(code) {
+    return {
+      isLast: lastSet(),
+      describe: (uid) => R().describe(uid),
+      interveningFs: (uid, track) => interveningFs(code, uid, track),
+      nextIsExam: (track, uid, aptOpen) => nextIsExam(code, track, uid, aptOpen),
+      boardGates: (since) => (S().get("gates") || [])
+        .filter((g) => g.student === code && /referral|board/i.test(String(g.type || "")) && (g.date || "") >= since),
+      kepeGates: () => (S().get("gates") || []).filter((g) => g.student === code),
+    };
+  }
   function analyze(code) {
     if (cache.has(code)) return cache.get(code);
-    const evs = flightEvents(code);
-    const isLast = lastSet();
+    const out = walk(flightEvents(code), liveCtx(code));
+    cache.set(code, out);
+    return out;
+  }
+  function walk(evs, ctx) {
+    const isLast = ctx.isLast || new Set();
 
-    let pd = null;                       // { stage, since, boardSince, srcUid, srcLabel, failIp, req }
+    let pd = null;                       // { stage, since, boardSince, srcUid, srcLabel, failIp, req, medium }
     let pdNote = null;                   // { avoidIp, since } — after a passed progress test
     const apt = [];                      // [{category, since, srcUid, srcLabel, req, solo, resolved}]
     const skip = new Set();              // uids never re-offered (fail-19 first solo)
@@ -230,7 +255,18 @@
           } else if (!pd) {
             /* an apt lag/fail sets the ΠΔ 29/2020 flag (fail-12 / fail-19 path) */
             pd = { stage: "ae", since: date, boardSince: "", srcUid: "", failIp: ev.instructor || "", req: "fail-12",
+                   medium: "flights",
                    srcLabel: SPECIAL.apt.label + (ev.category ? " · " + (CAT_LABEL[ev.category] || ev.category) : "") };
+          }
+        } else if (sp === "referral") {
+          /* an explicit ΠΔ referral record (board trees): opens the ladder at
+             the rung named — "ae" (παρ.3) or "board" (παρ.5 direct). A ladder
+             already open is never re-opened: the first referral owns it. */
+          if (!pd) {
+            const direct = String(ev.stage || "") === "board";
+            pd = { stage: direct ? "board" : "ae", since: date, boardSince: direct ? date : "", srcUid: "",
+                   failIp: ev.instructor || "", req: ev.req || (direct ? "fail-62" : "fail-23"),
+                   medium: kind === "fs" ? "fs" : "flights", srcLabel: ev.label || SPECIAL.referral.label };
           }
         } else if (sp === "dp_ae") {
           if (pd && pd.stage === "ae") {
@@ -252,7 +288,7 @@
       }
 
       /* ── graph sorties ── */
-      const d = R().describe(x.uid);
+      const d = ctx.describe(x.uid);
       if (!d) continue;
 
       if (res === "completed") {
@@ -262,10 +298,16 @@
       }
 
       /* lag / fail from here on */
-      if (d.checkride && res === "fail") {
-        /* C3 — fail-16: PD 29/2020, zero repeats in Phase II */
+      if (d.checkride) {
+        /* C3 — fail-16: PD 29/2020, zero repeats in Phase II. The criterion is
+           the whole 0-59 % band — ΥΣΤΕΡΗΣΗ as much as ΑΠΟΤΥΧΙΑ (3-01 §69,
+           fail-86: «βαθμολογηθεί με ΥΣΤΕΡΗΣΗ ή ΑΠΟΤΥΧΙΑ, να ακολουθείται η
+           προβλεπόμενη διαδικασία από το ΠΔ»). Until the board fixtures
+           (tools/fixtures/board, 17/10/2026) this branch required res ===
+           "fail", so a checkride recorded as a plain lag fell through as an
+           ordinary sortie. */
         pd = { stage: "ae", since: date, boardSince: "", srcUid: x.uid, srcLabel: d.label,
-               failIp: ev.instructor || "", req: "fail-16" };
+               failIp: ev.instructor || "", req: "fail-16", medium: "flights" };
         if (kind === "flights") catACFails[d.track] = (catACFails[d.track] || 0) + 1;
         continue;
       }
@@ -296,7 +338,7 @@
         activeLadder = L;
         if (L.fails >= 3) {
           pd = { stage: "ae", since: date, boardSince: "", srcUid: x.uid, srcLabel: d.label + " (3rd F/S fail)",
-                 failIp: ev.instructor || "", req: "fail-11" };
+                 failIp: ev.instructor || "", req: "fail-11", medium: "fs" };
           ladders.delete(x.uid); activeLadder = null;
         } else {
           /* 1st fail → immediate repeat next working day; 2nd → ≥2 clear
@@ -315,8 +357,8 @@
         req = "fail-08";
         flt = addWork(date, 2); fsD = addWork(date, 2);
         const aptOpen = apt.some((a) => !a.resolved && a.category === d.track);
-        if (interveningFs(code, x.uid, d.track)) { fsD = addWork(date, 1); req = "fail-09"; }
-        if (nextIsExam(code, d.track, x.uid, aptOpen)) { flt = addWork(date, 1); if (fsD > addWork(date, 1)) fsD = addWork(date, 1); }
+        if (ctx.interveningFs(x.uid, d.track)) { fsD = addWork(date, 1); req = "fail-09"; }
+        if (ctx.nextIsExam(d.track, x.uid, aptOpen)) { flt = addWork(date, 1); if (fsD > addWork(date, 1)) fsD = addWork(date, 1); }
       } else {
         req = "fail-10";
         flt = addWork(date, 1); fsD = addWork(date, 1);
@@ -327,8 +369,7 @@
     /* board-stage resolution through the gates UI */
     if (pd && pd.stage === "board") {
       const since = pd.boardSince || pd.since;
-      const gs = (S().get("gates") || [])
-        .filter((g) => g.student === code && /referral|board/i.test(String(g.type || "")) && (g.date || "") >= since)
+      const gs = (ctx.boardGates ? ctx.boardGates(since) : [])
         .sort((a, b) => ((a.date || "") < (b.date || "") ? -1 : 1));
       const last = gs.length ? gs[gs.length - 1] : null;
       if (last) {
@@ -340,8 +381,7 @@
 
     /* C5 — SMS entry counter (fail-45), display only */
     const smsBag = new Map();
-    for (const g of (S().get("gates") || [])) {
-      if (g.student !== code) continue;
+    for (const g of (ctx.kepeGates ? ctx.kepeGates() : [])) {
       const t = String(g.type || "").toLowerCase();
       if (!/kepe(_entry|_in)?$|^kepe/.test(t)) continue;
       const cat = String(g.category || "").toLowerCase();
@@ -366,7 +406,6 @@
       sms: sms,
       smsExhausted: sms.filter((x) => x.exhausted),
     };
-    cache.set(code, out);
     return out;
   }
 
@@ -476,28 +515,42 @@
     for (let i = list.length - 1; i >= 0; i--) { if (pred(list[i])) n++; else break; }
     return n;
   }
-  function counters(code) {
-    const ppRaw = Number(S().cfg("exam_pass_pct", 80));
-    const passPct = isNaN(ppRaw) || !ppRaw ? 80 : ppRaw;
+  /* Board trees (specs/board-trees-spec.md §4): countersFrom() is PURE — it
+     counts whatever normalised lists it is handed. counters(code) collects the
+     live student's lists from the store and hands them over; the sandbox and
+     the fixtures hand over synthetic ones. The thresholds live HERE and only
+     here: 4 grace / 2×0-49 / 3×0-59 (fail-76), 40 % / 20 % (fail-77),
+     3 grace / 3×0-59 / 20 % & ≥3 on the F/S (fail-40), 2 written (fail-32),
+     4 / 8 oral (fail-36). `exemptIf(x)` is the ΠΔ άρθρο 3 παρ.2 hook
+     (fail-57): a flight it returns true for is NOT counted toward 1γ/1δ. The
+     live Scheduler passes no predicate today, so nothing changes there.   */
+  function countersFrom(inp) {
+    const passPct = Number(inp.passPct) > 0 ? Number(inp.passPct) : 80;
+    const describe = inp.describe || (() => null);
+    const exemptIf = inp.exemptIf || (() => false);
+    const isSoloDone = inp.isSoloDone || ((x) => x.uid === "s:C4791" && x.res === "completed");
     const withBand = (x) => {
       const b = bandOf(x.ev);
-      const d = R().describe(x.uid);
+      const d = describe(x.uid);
       return { date: x.date, label: d ? d.label : x.uid,
         detail: (b === "fail" ? "FAIL band 0-49" : b === "lag" ? "LAG band 50-59" : "PASS")
           + (x.ev.result === "score" && x.ev.score != null ? " · " + x.ev.score + "%" : "") };
     };
 
     /* flying events of the GRAPH (flights + F/S), chronological, no specials */
-    const fly = flightEvents(code).filter((x) => !x.special);
+    const fly = (inp.fly || []).filter((x) => !x.special);
     const lagEvs = fly.filter((x) => bandOf(x.ev) === "lag");
     const failEvs = fly.filter((x) => bandOf(x.ev) === "fail");
     const lag = { total: lagEvs.length, streak: trailStreak(fly, (x) => bandOf(x.ev) === "lag"), events: lagEvs.map(withBand) };
     const fail = { total: failEvs.length, streak: trailStreak(fly, (x) => bandOf(x.ev) === "fail"), events: failEvs.map(withBand) };
 
     /* ΠΔ 1γ (fail-76) — A/C flights only; the 4 FIRST sorties of the stage
-       are the grace window and never count toward the streaks. */
+       are the grace window and never count toward the streaks. Flights the
+       παρ.2 nausea exemption covers (fail-57) are left out of the sequence —
+       "δεν υπολογίζονται" is read as "skipped", not as "break the run"; the
+       sources do not say which (fail-76 flag), and the spec records it. */
     const ac = fly.filter((x) => x.kind === "flights");
-    const acEff = ac.slice(4);
+    const acEff = ac.slice(4).filter((x) => !exemptIf(x));
     const s049 = trailStreak(acEff, (x) => bandOf(x.ev) === "fail");
     const s059 = trailStreak(acEff, (x) => bandOf(x.ev) !== "pass");
     const c049 = { value: s049, limit: 2, events: acEff.slice(acEff.length - s049).map(withBand) };
@@ -505,19 +558,64 @@
 
     /* ΠΔ 1δ (fail-77) — % of EXECUTED A/C flights graded 0-59; pre-solo =
        the flights flown before the first completed C4791 («ΠΡΟ ΜΟΝΟΣ»);
-       with no solo yet, every flight so far is pre-solo. */
+       with no solo yet, every flight so far is pre-solo. The denominator is
+       the EXECUTED count — the ΠΔ does not say planned or executed (fail-77
+       flag); the Progress editor has always read it this way. */
     let soloIx = -1;
-    ac.forEach((x, i) => { if (soloIx < 0 && x.uid === "s:C4791" && x.res === "completed") soloIx = i; });
-    const pre = soloIx >= 0 ? ac.slice(0, soloIx) : ac.slice();
+    ac.forEach((x, i) => { if (soloIx < 0 && isSoloDone(x)) soloIx = i; });
+    const acCnt = ac.filter((x) => !exemptIf(x));
+    const pre = (soloIx >= 0 ? ac.slice(0, soloIx) : ac.slice()).filter((x) => !exemptIf(x));
     const badOf = (list) => list.filter((x) => bandOf(x.ev) !== "pass");
     const pctOf = (b, t) => (t ? Math.round((b / t) * 1000) / 10 : 0);
-    const preBad = badOf(pre), acBad = badOf(ac);
-    const preSolo = { bad: preBad.length, total: pre.length, pct: pctOf(preBad.length, pre.length), limitPct: 40, events: preBad.map(withBand) };
-    const totalFl = { bad: acBad.length, total: ac.length, pct: pctOf(acBad.length, ac.length), limitPct: 20, events: acBad.map(withBand) };
+    const preBad = badOf(pre), acBad = badOf(acCnt);
+    const preSolo = { bad: preBad.length, total: pre.length, pct: pctOf(preBad.length, pre.length), limitPct: 40, events: preBad.map(withBand), soloDone: soloIx >= 0 };
+    const totalFl = { bad: acBad.length, total: acCnt.length, pct: pctOf(acBad.length, acCnt.length), limitPct: 20, events: acBad.map(withBand) };
 
-    /* ground exams — WRITTEN failures (fail-36/38: the 2nd ⇒ ΠΔ 29/2020).
-       Exam events reach the student per-student OR via class scope (absent
-       students excluded); fail = result fail or score under the pass mark. */
+    /* ΠΔ 1ε (fail-40) — the F/S counters: (αα) after the 3 FIRST F/S sorties
+       of the stage, 3 consecutive 0-59; (αβ) 0-59 on 20 % of the stage's F/S
+       sorties and never fewer than 3. Same executed-denominator reading as 1δ
+       (fail-40 flag: planned vs executed is not said). Not exempted by παρ.2. */
+    const fs = fly.filter((x) => x.kind === "fs");
+    const fsEff = fs.slice(3);
+    const sfs = trailStreak(fsEff, (x) => bandOf(x.ev) !== "pass");
+    const fs059 = { value: sfs, limit: 3, grace: 3, events: fsEff.slice(fsEff.length - sfs).map(withBand) };
+    const fsBad = badOf(fs);
+    const fsCum = { bad: fsBad.length, total: fs.length, pct: pctOf(fsBad.length, fs.length), limitPct: 20, floor: 3, events: fsBad.map(withBand) };
+
+    /* ground exams — WRITTEN failures (fail-32: the 2nd consecutive ⇒ ΠΔ
+       άρθρο 3 παρ.5, straight to the Board). fail = result fail or score
+       under the pass mark. */
+    const exams = (inp.exams || []).slice();
+    const exFail = (ev) => ev.result === "fail" || (ev.result === "score" && Number(ev.score) < passPct);
+    const wr = exams.filter((x) => exFail(x.ev));
+    const written = {
+      streak: trailStreak(exams, (x) => exFail(x.ev)), total: wr.length, limit: 2,
+      events: wr.map((x) => {
+        const d = describe(x.uid);
+        return { date: x.date, label: d ? d.label : x.uid,
+          detail: x.ev.score != null ? x.ev.score + "% (pass " + passPct + "%)" : "FAIL" };
+      }),
+    };
+
+    /* NFS (fail-83) + the oral ladder (fail-36/39) counted from the NFS
+       records with reason "oral" — with no oral-PASS records to break a run,
+       every recorded oral failure counts as consecutive (conservative). */
+    const nfsEvs = (inp.nfs || []).slice().sort((a, b) => ((a.date || "") < (b.date || "") ? -1 : 1));
+    const NFS_TXT = { written: "written exam failure", oral: "oral exam failure", other: "no-fly — student cause" };
+    const nfsItem = (e) => ({ date: e.date || "", label: "NFS — " + (NFS_TXT[e.category] || "unspecified"), detail: e.note || "" });
+    const oralEvs = nfsEvs.filter((e) => e.category === "oral");
+    const oral = { total: oralEvs.length, limitC: 4, limitT: 8, events: oralEvs.map(nfsItem) };
+    const nfs = { total: nfsEvs.length, events: nfsEvs.map(nfsItem) };
+
+    return { lag: lag, fail: fail, c049: c049, c059: c059, preSolo: preSolo, totalFl: totalFl,
+      fs059: fs059, fsCum: fsCum, written: written, oral: oral, nfs: nfs };
+  }
+  function counters(code) {
+    const ppRaw = Number(S().cfg("exam_pass_pct", 80));
+    const passPct = isNaN(ppRaw) || !ppRaw ? 80 : ppRaw;
+
+    /* exam events reach the student per-student OR via class scope (absent
+       students excluded) */
     const exams = [];
     (S().get("trainingLog") || []).forEach((ev, i) => {
       if (evKind(ev) !== "exams") return;
@@ -533,31 +631,12 @@
       if (hit) exams.push({ ev: ev, i: i, date: evDate(ev), uid: ev.node || ev.uid || "" });
     });
     exams.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : a.i - b.i));
-    const exFail = (ev) => ev.result === "fail" || (ev.result === "score" && Number(ev.score) < passPct);
-    const wr = exams.filter((x) => exFail(x.ev));
-    const written = {
-      streak: trailStreak(exams, (x) => exFail(x.ev)), total: wr.length, limit: 2,
-      events: wr.map((x) => {
-        const d = R().describe(x.uid);
-        return { date: x.date, label: d ? d.label : x.uid,
-          detail: x.ev.score != null ? x.ev.score + "% (pass " + passPct + "%)" : "FAIL" };
-      }),
-    };
+    const nfsEvs = (S().get("trainingLog") || []).filter((e) => e.special === "nfs" && e.student === code);
 
-    /* NFS (fail-83) + the oral ladder (fail-36/39) counted from the NFS
-       records with reason "oral" — with no oral-PASS records to break a run,
-       every recorded oral failure counts as consecutive (conservative). */
-    const nfsEvs = (S().get("trainingLog") || [])
-      .filter((e) => e.special === "nfs" && e.student === code)
-      .sort((a, b) => ((a.date || "") < (b.date || "") ? -1 : 1));
-    const NFS_TXT = { written: "written exam failure", oral: "oral exam failure", other: "no-fly — student cause" };
-    const nfsItem = (e) => ({ date: e.date || "", label: "NFS — " + (NFS_TXT[e.category] || "unspecified"), detail: e.note || "" });
-    const oralEvs = nfsEvs.filter((e) => e.category === "oral");
-    const oral = { total: oralEvs.length, limitC: 4, limitT: 8, events: oralEvs.map(nfsItem) };
-    const nfs = { total: nfsEvs.length, events: nfsEvs.map(nfsItem) };
-
-    return { lag: lag, fail: fail, c049: c049, c059: c059, preSolo: preSolo, totalFl: totalFl,
-      written: written, oral: oral, nfs: nfs, sms: analyze(code).sms };
+    const out = countersFrom({ passPct: passPct, describe: (u) => R().describe(u),
+      fly: flightEvents(code).filter((x) => !x.special), exams: exams, nfs: nfsEvs });
+    out.sms = analyze(code).sms;
+    return out;
   }
 
   window.SchedConsq = {
@@ -576,5 +655,9 @@
     normRes: normRes, evKind: evKind, fmtDay: fmtDay, vb: vb,
     /* Round 6 — cumulative counters + the fail-01 band mapping */
     counters: counters, bandOf: bandOf,
+    /* Board trees — the PURE seams the sandbox and tools/fixtures/board feed:
+       the same walk, the same counters, synthetic events in, no store read. */
+    walk: walk, liveCtx: liveCtx, countersFrom: countersFrom, smsMax: smsMax,
+    addWork: addWork, addCal: addCal,
   };
 })();
