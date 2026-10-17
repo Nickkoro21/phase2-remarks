@@ -44,6 +44,12 @@
     <!-- Schedule validation: dialog, όχι view — ανοίγει από όποια καρτέλα κι αν
          είσαι και σε γυρίζει εκεί που ήσουν (schedval.js). -->
     <button id="tab-schedval" class="viewtab" title="Schedule validation — what the syllabus requires before a sortie">Validate</button>
+    <!-- advisor:start — ΣΥΜΒΟΥΛΟΣ (app/advisor.js). Talks ONLY to the owner's
+         local proxy (tools/advisor_proxy.py). build_offline.py strips this
+         block, the <main> below and the script tag: the unit build has no
+         advisor, no network code and no mention of an API. -->
+    <button id="tab-advisor" class="viewtab" title="Σύμβουλος — ρώτα τον κανονισμό: ποια διάταξη, το κείμενό της, η ερμηνεία, με ποιον πετάει μετά. Θέλει τον τοπικό proxy.">Σύμβουλος</button>
+    <!-- advisor:end -->
   </nav>
   <button id="theme-btn" class="viewtab" title="Light / dark theme">☀</button>
   <button id="theme-gal-btn" class="viewtab thm-btn" title="Theme gallery"><span class="thm-dot"></span><span class="thm-lbl">Theme</span></button>
@@ -217,6 +223,14 @@
   <section class="cur-main" id="cur-main"></section>
 </main>
 
+<!-- advisor:start — ΣΥΜΒΟΥΛΟΣ (17/10/2026). The shell only; app/advisor.js
+     writes the HTML and injects its own styles, so styles.css carries no
+     advisor bytes. Excluded from the unit build with the tab above. -->
+<main class="adv-view hidden" id="view-advisor">
+  <section class="adv-main" id="adv-main"></section>
+</main>
+<!-- advisor:end -->
+
 <footer class="credit">
   <span class="credit-line">
     Developed by <strong>Koro</strong> · with <strong>Claude</strong> riding the right seat
@@ -245,5 +259,6 @@
 <script src="schedboard.js?v=20260910a"></script>
 <script src="schedbridge.js?v=20260910a"></script>
 <script src="currency.js?v=20260905b"></script>
+<script src="advisor.js?v=20261017a"></script>
 </body>
 </html>

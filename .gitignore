@@ -23,6 +23,13 @@ wings-ahead-export-*.json
 wa-export-*.json
 bridge-report-*
 
+# Ο PROXY ΤΟΥ ΣΥΜΒΟΥΛΟΥ (tools/advisor_proxy.py) — τοπική κατάσταση μόνο:
+# ο μετρητής ημέρας (φρένο 2) και το εξαγόμενο κείμενο των PDF για το
+# search_sources (ΑΚΑΤΕΡΓΑΣΤΟ, ανεπικύρωτο — δεν είναι υλικό του repo).
+tools/advisor/.proxy-state.json
+tools/advisor/.proxy-state.tmp
+tools/advisor/.pdf-text/
+
 # ΓΥΡΟΣ Ε (2026-10-17) — ΤΟ ΚΛΕΙΔΙ ΤΩΝ AGENTS ΔΕΝ ΜΠΑΙΝΕΙ ΠΟΤΕ ΣΤΟ ΔΕΝΤΡΟ.
 # Το ANTHROPIC_API_KEY ζει ΜΟΝΟ ως μεταβλητή περιβάλλοντος στο μηχάνημα του
 # ιδιοκτήτη και το διαβάζει ο tools/advisor_proxy.py τη στιγμή της εκτέλεσης.
@@ -35,3 +42,9 @@ bridge-report-*
 *.pem
 advisor_config.json
 casefile_config.json
+
+# Τα corpora των agents είναι ΠΑΡΑΓΩΓΑ: τα χτίζει ντετερμινιστικά ο
+# tools/build_advisor_context.py από τα ίδια τα δεδομένα του repo. 1,2 MB
+# κειμένου που μπορεί να αναπαραχθεί με μία εντολή δεν έχει λόγο να ζει στο
+# git — και κάθε αλλαγή δεδομένων θα παρήγαγε έναν άχρηστο θόρυβο diff.
+tools/advisor/*.md

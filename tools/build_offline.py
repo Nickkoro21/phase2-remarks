@@ -3603,13 +3603,33 @@ def build_main_html(css: str, emblem_uri: str, guard_js: str, prepaint_js: str,
     if "stub:" in html:
         fail("a leftover stub marker is in the assembled HTML")
 
+    # 17/10/2026 — THE ADVISOR DOES NOT TRAVEL. «Σύμβουλος» (app/advisor.js)
+    # talks to the owner's local proxy, which talks to an API over the network.
+    # On the closed network that can only fail, and the file would carry a
+    # loopback URL, a Greek start-command and the word «API». So, like
+    # schedsync.js (see prepare_appjs), it is cut out — here by the two marked
+    # blocks in app/index.html (the tab and the <main>), and below by the
+    # generic <script src> drop, which never inlines it because it is not in
+    # SCRIPT_CHAIN. app.js's switchView tolerates the missing view/tab.
+    html = sub1(r"[ \t]*<!-- advisor:start[\s\S]*?<!-- advisor:end -->\n", lambda m: "", html,
+                "advisor blocks (tab + main)", count=2)
+
     # drop all external <script src> tags, then inline our chain before </body>
-    # (11 tags: app · description · flowchart · schedval · schedstore · scheduler ·
-    #  schedconsq · boardtrees · schedboard · schedbridge · currency. The count is the
-    #  tripwire on app/index.html: a new module must be looked at once — added
-    #  to SCRIPT_CHAIN in main() and to the floor sweep — before it moves.)
+    # (12 tags: app · description · flowchart · schedval · schedstore · scheduler ·
+    #  schedconsq · boardtrees · schedboard · schedbridge · currency · advisor.
+    #  Eleven are inlined from SCRIPT_CHAIN; advisor.js is dropped and NOT
+    #  inlined. The count is the tripwire on app/index.html: a new module must
+    #  be looked at once — added to SCRIPT_CHAIN in main() and to the floor
+    #  sweep, or deliberately excluded like advisor.js — before it moves.)
     html = sub1(r'[ \t]*<script src="[^"]+"></script>\n', lambda m: "", html,
-                "external script tags", count=11)
+                "external script tags", count=12)
+
+    # The residue tripwire: nothing of the advisor may be in the shell — not the
+    # view, not the tab, not the script, not its Greek label, not its boot hook.
+    # (Checked on the shell BEFORE the data bundle and scripts are spliced in.)
+    for needle in ('id="view-advisor"', 'id="tab-advisor"', "advisor.js", "Σύμβουλος", "advInit", "advisor:start"):
+        if needle in html:
+            fail(f"advisor residue in the unit build: {needle!r} survived assembly")
     html = sub1(r"</body>", lambda m: scripts + "\n</body>", html, "</body>")
 
     html = sub1(r"<!DOCTYPE html>",
@@ -3685,7 +3705,8 @@ Chrome/Edge εμφανίζεται κανονικά το ημερολόγιο.
 
 # THE SCRIPT CHAIN — the whole app, in app/index.html's own order, with the two
 # dynamically-injected modules folded in where app.js would have injected them.
-# schedsync.js is deliberately absent (see prepare_appjs).
+# schedsync.js is deliberately absent (see prepare_appjs); so is advisor.js
+# (see build_main_html) — both talk to the network.
 SCRIPT_CHAIN = [
     ("app.js (loader block neutralized by build_offline.py)", "app"),
     ("mifchart.js", "mifchart"),
@@ -3806,7 +3827,7 @@ def main() -> None:
 
     print(f"floor       : {FLOOR}  (every inline script emitted as {ES_TARGET})")
     print(f"modules     : {len(SCRIPT_CHAIN)} app modules "
-          f"+ guard/shims/fetch/date/feedback  (schedsync.js excluded)")
+          f"+ guard/shims/fetch/date/feedback  (schedsync.js and advisor.js excluded)")
     print(f"data bundle : {len(bundle)} JSON files, "
           f"{sum(len(json.dumps(v, ensure_ascii=False)) for v in bundle.values()) / 1e6:.1f} MB raw"
           f"  (data/scheduler/seed.json shipped EMPTY)")

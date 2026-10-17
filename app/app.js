@@ -619,9 +619,14 @@ function switchView(view) {
      promise is that the report never outlives the pane. No-op when nothing was
      loaded, and when the Bridge module is not present at all (offline build). */
   if (view !== "scheduler" && window.schBridgeLeave) window.schBridgeLeave();
-  for (const v of ["remarks", "description", "requirements", "flowchart", "scheduler", "currency"]) {
-    $(`view-${v}`).classList.toggle("hidden", v !== view);
-    $(`tab-${v}`).classList.toggle("active", v === view);
+  for (const v of ["remarks", "description", "requirements", "flowchart", "scheduler", "currency", "advisor"]) {
+    /* «advisor» exists only in the hosted app: build_offline.py strips its tab
+       and <main> (and advisor.js) from the unit build, so both lookups are
+       null there — skip, never throw. */
+    const pane = $(`view-${v}`), tab = $(`tab-${v}`);
+    if (!pane || !tab) continue;
+    pane.classList.toggle("hidden", v !== view);
+    tab.classList.toggle("active", v === view);
   }
   if (view === "flowchart" && window.fcInit) window.fcInit();
 }
@@ -635,6 +640,10 @@ $("tab-scheduler").onclick = () => { switchView("scheduler"); if (window.schInit
 /* Round 11 — Instructor Currency is a view of its own (app/currency.js), booted
    on first open exactly like the Scheduler and behind the same access curtain. */
 $("tab-currency").onclick = () => { switchView("currency"); if (window.curInit) window.curInit(); };
+/* 17/10/2026 — «Σύμβουλος» (app/advisor.js) is a view of its own, booted on
+   first open like the others. The tab is absent from the offline build, hence
+   the guard: no advisor, no network, no API in the unit's file. */
+if ($("tab-advisor")) $("tab-advisor").onclick = () => { switchView("advisor"); if (window.advInit) window.advInit(); };
 
 function renderReqDomains() {
   const grid = $("req-domain-grid");
