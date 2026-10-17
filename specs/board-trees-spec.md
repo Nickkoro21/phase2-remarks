@@ -2,6 +2,8 @@
 
 *Phase II (T-6A) · παραπομπή στο Συμβούλιο Πτητικής Ικανότητας · 17/10/2026*
 
+(«The owner» throughout: identity binds to the person, never to a rank or a post. Verbatim quotations of the regulation that name posts stay as written.)
+
 The owner's brief: the Board Tolerance Matrix «is just as hard as
 searching the original manuals». Turn the cases in which a student is referred
 to the Συμβούλιο Πτητικής Ικανότητας into decision trees he can read and test —
@@ -48,7 +50,7 @@ Matrix** → three pills: *Πίνακας ανοχής* · *Δέντρα απο�
 
 A tree: `{ id, title, short, pd_cases[], summary, engine_note, root, nodes[], edges[] }`.
 
-A node: `{ id, kind, label, condition, threshold, outcome, next_with, engine, cites[], unresolved[], link_tree? }`.
+A node: `{ id, kind, label, condition, threshold, outcome, next_with, engine, cites[], unresolved[], rulings[], link_tree? }`.
 
 * `next_with` is an `actors` key — **who he flies with next** (ΑΕ Μοίρας, Δκτής
   Μοίρας, άλλος εκπαιδευτής, Αξιολογητής, ο εκπαιδευτής του, κανείς, Συμβούλιο,
@@ -63,6 +65,9 @@ A node: `{ id, kind, label, condition, threshold, outcome, next_with, engine, ci
   byte-equality of every verbatim against its source, so a retyped quote fails
   the run.
 * `unresolved[]` carries the matrix's open doubts onto the node where they bite.
+* `rulings[]` = `{ date, by: "ο ιδιοκτήτης", text, quote }` — an owner ruling that
+  closed a doubt at that node, with his words. Rendered as «✓ απόφανση» on the
+  node and in the drawer. One exists today (1ζ, §8).
 * `edges[]` = `{ from, to, label }`; a node may be reached twice (the outline
   prints it once and then a `↩` back-reference); `link_tree` jumps to a shared
   sub-tree (the Δοκιμές Προόδου ladder, the Board outcome).
@@ -89,7 +94,7 @@ over the trees, and repeated on the oral-exam node and the discipline node.
 | `section_last` | — | last A/C sortie of a section → Εξέταση Καταλληλότητας → fail → ΠΔ (3-01 only) |
 | `first_solo` | — | first ΜΟΝΟΣ lag/fail → Εξέταση Καταλληλότητας with the solo profile; solo never repeated; ≤59 % cancels the next solo |
 | `written_1st` | 1στ | 1st fail → ΚΕΠΕ + ΦΜΠ; 2nd consecutive → **direct Board**; stage exam; blind control 90 % |
-| `oral_1z` | 1ζ | ΚΕΠΕ at 2/4, referral at 4/8, the written exam, the **ΠΔ ≠ 3-01 contradiction**, second referral → direct Board |
+| `oral_1z` | 1ζ | ΚΕΠΕ at 2/4, referral at 4/8, **one ladder**: γραπτή (3-01 §58ζ) → fail → επανεξέταση by the ΑΕ on all professional subjects after 2 days (3-01 §58η = ΠΔ παρ.4) → fail → Board; second referral → direct Board |
 | `discipline_direct` | 1η 1θ 1ι | one incident → special report → direct Board |
 | `accident_1ia` | 1ια | ΕΔΕ finding → ΑΑΣ, the Board bypassed |
 | `airsickness` | — | definition, 59 %, παρ.2 exemption, ΚΕΠΕ at 2 consecutive, no maximum anywhere |
@@ -163,27 +168,21 @@ test» that a second referral never has. **Recommendation:** move it into
   against their limits, ΚΕΠΕ entries against caps, ΑΕ/Δκτής judgements used).
   Every cite chip opens the drawer: paragraph, file and PDF page, the verbatim,
   the explanation at this point, and every other node that uses it.
-* **Two switches**, because the sources leave two readings open. Both defaults
-  are now **owner rulings of 2026-10-17**; the other reading
-  stays behind the switch and is printed beside the verdict either way — he
-  wants to *see* the other reading, not lose it.
-  * *1ζ: αποτυχία στη γραπτή ΑΕ* — **default 3-01 §58η (fail-38)**: first
-    failure → re-examination after 2 calendar days (the day of failure not
-    counted) on the same subjects; **Board only on the second failure**. The ΠΔ
-    άρθρο 3 παρ.4β reading (fail-39: one failure by the ΑΕ → Συμβούλιο) is the
-    other position of the switch and is named in the fired line and the verdict
-    whichever position is active. *Ruling 2026-10-17*: the 3-01 is the directive
-    the squadron actually works to. This **overrides** the module's original
-    decree-over-directive default (ΠΔ), which was an FDMS assumption and is now
-    withdrawn.
-  * *1δ παρονομαστής* — **default planned, 85 sorties (Syllabus)** → the 20 %
-    is reached at the 17th flight graded 0-59. Governing text: ΠΔ 29/2020
-    άρθρο 3 παρ.1δ (fail-77), identical in 3-01 §58δ; flight numbers from the
-    Syllabus. *Ruling 2026-10-17*: planned flights. The executed-count reading
-    (the Progress editor's; on it any second lag in six flights is 33 %) remains
-    behind the switch for inspection. The pre-solo 40 % is computable only on
-    the executed reading (no source gives the planned pre-solo count), so on
-    *planned* it is shown as information and never fires.
+* **One switch** — the 1δ denominator. (The 1ζ switch that shipped on the
+  first pass is **gone**: on 2026-10-17 the owner read the two texts as one
+  ladder, see §8 — so there is nothing to switch between.)
+  * *1δ παρονομαστής* — **default: the total the phase or the stage HAS**
+    (planned, 85 sorties for the stage per the Syllabus → the 20 % is reached at
+    the 17th flight graded 0-59). Governing text: ΠΔ 29/2020 άρθρο 3 παρ.1δ
+    (fail-77), identical in 3-01 §58δ, flight numbers from the Syllabus.
+    *Owner ruling 2026-10-17*, in his words: «Εννοεί στο σύνολο, για όσες είναι
+    προ μόνος ή όσες έχει το στάδιο» — 40 % of the total flights of the
+    Προ-ΜΟΝΟΣ phase, or 20 % of the total flights of the stage; the programme,
+    not the flights executed so far. The executed-count reading (the Progress
+    editor's; on it any second lag in six flights is 33 %) remains behind the
+    switch for inspection. The pre-solo 40 % is computable only on the executed
+    reading, because no source gives the planned Προ-ΜΟΝΟΣ count (§10 #2) — so
+    on the ruled default it is shown as information and never fires.
 * **Dates** are fictional: one working day per event unless typed; they serve
   only the rescheduling rules (fail-08/09/10/11).
 * **It never reads the Scheduler store.** `p3-sandbox.js` asserts that
@@ -211,7 +210,7 @@ test» that a second referral never has. **Recommendation:** move it into
 | ΔΠ allowance | ΑΕ 1 · Δκτής 1 / 2 | fail-24, fail-26 | data overlay (§4) |
 | 1στ | 2 consecutive written → Board | fail-32, fail-62 | SchedConsq written.streak → referral board |
 | written pass | 80 % · bold face 100 % | fail-28 | data (passPct) |
-| 1ζ | ΚΕΠΕ 2/4 · referral 4/8 · exam after 2 days | fail-36, fail-44, fail-37, fail-39, fail-38, fail-24 | SchedConsq oral.total + data streak/path |
+| 1ζ | ΚΕΠΕ 2/4 · referral 4/8 · γραπτή after 2 days · επανεξέταση after 2 days (ΑΕ, all subjects) · Board on the 2nd failure | fail-36, fail-44, fail-37, fail-38 + fail-39 (same rung), fail-24 | SchedConsq oral.total + data streak/path |
 | 1η 1θ 1ι | 1 incident → Board | fail-78, fail-79, fail-80, fail-62 | data → referral board |
 | 1ια | ΕΔΕ → ΑΑΣ | fail-81, fail-63 | data |
 | ΑΕΡΟΝΑΥΤΙΑ | 59 % · exempt 1γ/1δ · ΚΕΠΕ at 2 | fail-52, fail-57, fail-44 | SchedConsq exemptIf + data |
@@ -240,14 +239,37 @@ after the completed branch. A scored checkride (≤59) was already right because
 
 ## 8. Decisions taken here — and the two the owner ruled on
 
-1. **1ζ default = 3-01 §58η — OWNER RULING 2026-10-17** (re-examination after
-   2 days, Board on the second failure). The module shipped with ΠΔ παρ.4β as
-   default on a decree-over-directive argument; the owner overruled it because
-   the 3-01 is the directive the squadron works to. The ΠΔ reading stays on the
-   switch and is always printed beside the active one.
-2. **1δ default = planned 85 — OWNER RULING 2026-10-17** (confirming what the
-   module shipped with, now ruled rather than assumed). Executed is a switch for
-   inspection. Pre-solo 40 % fires only on executed.
+1. **1ζ — RESOLVED by the owner, 2026-10-17: the ΠΔ and the 3-01 describe the
+   SAME ladder, not two.** His words: «Στο ΠΔ εννοεί την πρώτη γραπτή εξέταση
+   μετά την αποτυχία. Αλλιώς θα πήγαιναν οι μισοί συμβούλιο…». Read in
+   sequence: (1) the written exam of 3-01 §58ζ (fail-37) is failed; (2) 3-01
+   §58η (fail-38) — re-examination after 2 calendar days (the day of failure not
+   counted) on the same subjects — **and this re-examination IS the exam ΠΔ
+   άρθρο 3 παρ.4 describes** («εξετάζεται από τον ΑΕ της Μοίρας σε γραπτές
+   εξετάσεις εδάφους σε όλα τα επαγγελματικά θέματα»); (3) ΠΔ παρ.4 (fail-39)
+   gives its outcome: ΕΠΙΤΥΧΩΝ → continues flying, ΑΠΟΤΥΧΩΝ → Συμβούλιο — which
+   is the 3-01's own «σε περίπτωση νέας ΑΠΟΤΥΧΙΑΣ, να εφαρμόζεται το ΠΔ». The
+   decree names the examiner and the syllabus *of the re-examination*; it does
+   not create a parallel one-strike route (on which half the course would end
+   before the Board). Consequences: the first-pass rule switch and any
+   decree-against-directive framing are retired from the module, the UI and
+   this spec; node `o_reexam`
+   cites fail-38 and fail-39 on the same path and carries the ruling in
+   `rulings[]`; the former unresolved entry «ΑΝΤΙΦΑΣΗ ΠΟΥ ΑΛΛΑΖΕΙ ΤΟ "ΠΟΣΕΣ
+   ΦΟΡΕΣ"» is withdrawn. **Still open, and now more visible** because the two
+   texts are one rung: examiner (ΠΔ: ΑΕ only · 3-01: Δκτής ή ΑΕ), syllabus (ΠΔ:
+   «όλα τα επαγγελματικά θέματα» · 3-01: 50+25+5), and the 3-01 prints no pass
+   mark for it. The module's first-pass default (ΠΔ, on a decree-over-directive
+   argument) and its second-pass default (3-01, by ruling) are both superseded
+   by this reading.
+2. **1δ — RULED by the owner, 2026-10-17: the denominator is the total the
+   phase or the stage HAS** («Εννοεί στο σύνολο, για όσες είναι προ μόνος ή όσες
+   έχει το στάδιο»): 40 % of the total flights of the Προ-ΜΟΝΟΣ phase, 20 % of
+   the total flights of the stage — the programme, not the flights executed so
+   far. Confirms and sharpens the planned default; executed stays a switch for
+   inspection. What blocks computing his rule exactly stays open: no source
+   gives the Προ-ΜΟΝΟΣ flight count, and whether F/S, ΜΟΝΟΣ, ΕΠΑΝΑΛΗΨΕΙΣ and ΑΔΕ
+   sit in the denominator is not said (§10 #2).
 3. **Nausea exemption = skip**, not break (παρ.2 «δεν υπολογίζονται»).
 4. **A referral never re-opens a ladder already open** — the first owns it
    (one κρίση at a time).
@@ -281,15 +303,17 @@ JSON needs nothing: the builder globs `data/requirements/*.json` into
 
 Carried on the nodes as `unresolved[]`; the ones that change an answer:
 
-1. **1ζ — RULED 2026-10-17: 3-01 §58η governs** (re-exam after 2 days, Board
-   only on the 2nd failure); the ΠΔ παρ.4β reading (1 failure → Board) is kept
-   visible behind the switch. Still open in the sources: examiner (ΑΕ only vs
-   Δκτής or ΑΕ), syllabus (all subjects vs 50+25+5), no pass mark stated for
-   this exam.
-2. **1δ denominator — RULED 2026-10-17: planned flights** (85 → 17 lags). The
-   executed reading stays behind the switch for inspection. Still open: the
-   pre-solo flight count is not given anywhere, so the 40 % has no planned
-   basis.
+1. **1ζ — RESOLVED 2026-10-17 (one ladder, §8).** What remains genuinely
+   open, and is now more visible: the examiner of the re-examination (ΠΔ: ΑΕ
+   only · 3-01 §58ζ: Δκτής ή ΑΕ), its syllabus (ΠΔ: all professional subjects ·
+   3-01: 50+25+5), and the pass mark (the 3-01 states none; presumably §25β's
+   80 %/100 %).
+2. **1δ denominator — RULED 2026-10-17: the total the phase / the stage HAS
+   (planned).** Still open, and exactly what blocks computing the rule: no
+   source gives the Προ-ΜΟΝΟΣ flight count (so the 40 % has no planned basis),
+   and whether F/S, ΜΟΝΟΣ, ΕΠΑΝΑΛΗΨΕΙΣ and ΑΔΕ sit in the denominator (§43
+   removes them only from the numerator). The executed reading stays behind the
+   switch for inspection.
 3. **παρ.7 vs παρ.9**: the Δκτής' allowance keys on «the previous ΑΕ test»,
    which a second referral (ΑΕ already used) never has.
 4. **1γ sequence**: whether a non-graded sortie (§43) or an exempt nausea

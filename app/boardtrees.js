@@ -79,7 +79,7 @@
      events: [{ t, cat, role, res, score, nausea, kind, medium, date, label }]
        t ∈ flight fs dp_ae dp_cdr apt board practice cdr_decision written oral
            ae_written blind stage_exam incident kepe_in kepe_exit
-     opts: { rule_1z: "pd"|"301", denom_1d: "executed"|"planned", start }
+     opts: { denom_1d: "planned"|"executed", start }
      ══════════════════════════════════════════════════════════════════════════ */
   const R = (id, why) => ({ id: id, why: why || "" });
   const bandOfRes = (res, score) => {
@@ -95,11 +95,12 @@
     if (!Q || !Q.walk) throw new Error("SchedConsq.walk missing — load app/schedconsq.js first");
     if (!D) throw new Error("board_decision_trees.json not loaded");
     const TH = D.thresholds;
-    /* 1ζ written-exam failure — DEFAULT 3-01 §58η (re-exam after 2 days, Board
-       on the 2nd failure). OWNER RULING 2026-10-17: the squadron works to the
-       3-01. The ΠΔ παρ.4β reading (one failure → Board) stays one toggle away
-       and is printed beside it either way. */
-    const rule1z = opts.rule_1z === "pd" ? "pd" : "301";
+    /* 1ζ written-exam failure — ONE ladder (owner, 2026-10-17: «Στο ΠΔ εννοεί
+       την πρώτη γραπτή εξέταση μετά την αποτυχία. Αλλιώς θα πήγαιναν οι μισοί
+       συμβούλιο…»): γραπτή (3-01 §58ζ) → ΑΠΟΤΥΧΩΝ → επανεξέταση μετά από 2
+       ημέρες στα ίδια αντικείμενα, από τον ΑΕ σε όλα τα επαγγελματικά θέματα
+       (3-01 §58η = ΠΔ παρ.4) → ΑΠΟΤΥΧΩΝ → Συμβούλιο. There is no switch: the
+       two texts are read in sequence, not in conflict. */
     /* 1δ denominator — DEFAULT planned (85, Syllabus): on the executed reading
        any second lag in six flights is 33 % and 1δ fires before every other
        family can be shown; the Progress editor's executed reading stays one
@@ -359,9 +360,11 @@
         if (!st.oralRef) row.notes.push({ text: "Δεν υπήρχε ανοικτή παραπομπή 1ζ — αγνοείται", cites: [] });
         else if (!failed) { st.oralRef = null; st.oralRefDone += 1; row.notes.push({ text: "ΕΠΙΤΥΧΩΝ → συνεχίζει τις πτήσεις. Η μία κρίση ΑΕ για 1ζ του σταδίου καταναλώθηκε — νέα παραπομπή 1ζ πάει απευθείας στο Συμβούλιο", cites: [R("fail-39", "«α. ΕΠΙΤΥΧΩΝ, συνεχίζει τις πτήσεις»."), R("fail-24", "Δεύτερη φορά υπό κρίση ΑΕ για 1ζ → Συμβούλιο.")] }); }
         else if (st.oralRef.stage === "exam") {
-          if (rule1z === "pd") { st.oralRef = null; st.oralRefDone += 1; refer(row, { case: "1ζ→ΠΔ παρ.4β", req: "fail-39", stage: "board", kind: "flights", label: "1ζ: αποτυχία στη γραπτή ΑΕ", text: "ΑΠΟΤΥΧΩΝ στη γραπτή του ΑΕ → ΚΑΤΑ ΤΟ ΠΔ (παρ.4β): ΣΥΜΒΟΥΛΙΟ. [Η 3-01 §58η θα έδινε επανεξέταση μετά από 2 ημέρες — ΑΝΤΙΦΑΣΗ, δεν επιλύεται· επιλεγμένος κανόνας: ΠΔ]", cites: [R("fail-39", "«β. ΑΠΟΤΥΧΩΝ, παραπέμπεται στο Συμβούλιο Πτητικής Ικανότητας» — χωρίς επανεξέταση."), R("fail-38", "Η 3-01 διαφωνεί: επανεξέταση και μόνο σε νέα αποτυχία ΠΔ.")] }); }
-          else { st.oralRef.stage = "reexam"; const txt = "ΑΠΟΤΥΧΩΝ στη γραπτή → ΚΑΤΑ ΤΗΝ 3-01 (§58η): ΕΠΑΝΕΞΕΤΑΣΗ μετά από 2 ημερολογιακές ημέρες στα ίδια αντικείμενα. [Το ΠΔ παρ.4β θα έστελνε απευθείας στο Συμβούλιο — ΑΝΤΙΦΑΣΗ, δεν επιλύεται· επιλεγμένος κανόνας: 3-01]"; const cts = [R("fail-38", "«Σε περίπτωση ΑΠΟΤΥΧΙΑΣ να επανεξετάζεται μετά από 2 ημερολογιακές ημέρες … Σε περίπτωση νέας ΑΠΟΤΥΧΙΑΣ, να εφαρμόζεται το ΠΔ»."), R("fail-39", "Το ΠΔ δεν προβλέπει επανεξέταση.")]; row.fired.push({ case: "1ζ→3-01 §58η", text: txt, cites: cts, stage: "reexam" }); fired.push({ idx: row.idx, date: row.date, case: "1ζ→3-01 §58η", text: txt, cites: cts }); }
-        } else { st.oralRef = null; st.oralRefDone += 1; refer(row, { case: "1ζ→ΠΔ", req: "fail-38", stage: "board", kind: "flights", label: "1ζ: νέα αποτυχία στην επανεξέταση", text: "Νέα ΑΠΟΤΥΧΙΑ στην επανεξέταση → «να εφαρμόζεται το ΠΔ 29/2020» → ΣΥΜΒΟΥΛΙΟ (εδώ συμφωνούν και οι δύο πηγές)", cites: [R("fail-38", "Δεύτερη αποτυχία: ΠΔ."), R("fail-39", "ΠΔ παρ.4β: ΑΠΟΤΥΧΩΝ → Συμβούλιο.")] }); }
+          st.oralRef.stage = "reexam";
+          const txt = "ΑΠΟΤΥΧΩΝ στη γραπτή (3-01 §58ζ) → ΕΠΑΝΕΞΕΤΑΣΗ μετά από 2 ημερολογιακές ημέρες στα ίδια αντικείμενα, από τον ΑΕ σε όλα τα επαγγελματικά θέματα — η επανεξέταση της 3-01 §58η ΕΙΝΑΙ η εξέταση του ΠΔ παρ.4 (μία κλίμακα, απόφανση ιδιοκτήτη 17/10/2026). ΕΠΙΤΥΧΩΝ → συνεχίζει τις πτήσεις· ΑΠΟΤΥΧΩΝ → Συμβούλιο.";
+          const cts = [R("fail-38", "Η 3-01 δίνει τον χρόνο (2 ημερολογιακές ημέρες, η ημέρα αποτυχίας δεν μετρά) και τα «ίδια αντικείμενα»."), R("fail-39", "Το ΠΔ δίνει τον εξεταστή (ΑΕ), την ύλη (όλα τα επαγγελματικά θέματα) και την έκβαση της ίδιας επανεξέτασης.")];
+          row.fired.push({ case: "1ζ→επανεξέταση", text: txt, cites: cts, stage: "reexam" }); fired.push({ idx: row.idx, date: row.date, case: "1ζ→επανεξέταση", text: txt, cites: cts });
+        } else { st.oralRef = null; st.oralRefDone += 1; refer(row, { case: "1ζ→Συμβούλιο", req: "fail-39", stage: "board", kind: "flights", label: "1ζ: νέα αποτυχία στην επανεξέταση", text: "Νέα ΑΠΟΤΥΧΙΑ στην επανεξέταση → ΠΔ παρ.4β «ΑΠΟΤΥΧΩΝ, παραπέμπεται στο Συμβούλιο» = 3-01 §58η «σε περίπτωση νέας ΑΠΟΤΥΧΙΑΣ, να εφαρμόζεται το ΠΔ» → ΣΥΜΒΟΥΛΙΟ", cites: [R("fail-39", "Η έκβαση της επανεξέτασης: ΑΠΟΤΥΧΩΝ → Συμβούλιο Πτητικής Ικανότητας."), R("fail-38", "Το ίδιο σκαλί, ειπωμένο από την 3-01."), R("fail-61", "Διακοπή όλων των δραστηριοτήτων — και για θεωρητική ανεπάρκεια.")] }); }
         prev = prefix();
       }
 
@@ -435,10 +438,19 @@
       status.cites = [R("fail-23", "Δοκιμή Προόδου ΑΕ: ≥60% συνέχιση με άλλον εκπαιδευτή, 0-59% Δκτής Μοίρας."), R("fail-27", "Υποχρεωτική εξέταση στους ελιγμούς που απέτυχε."), R("fail-24", "Ο ΑΕ κρίνει μία φορά ανά στάδιο."), R("fail-26", "Πόσες φορές κρίνει ο Δκτής.")];
       status.notes = status.notes.concat(stage.why);
     } else if (st.oralRef) {
-      status.code = "oral_exam"; status.title = st.oralRef.stage === "exam" ? "Παραπομπή 1ζ — εκκρεμεί ΓΡΑΠΤΗ εξέταση επαγγελματικών θεμάτων" : "Παραπομπή 1ζ — εκκρεμεί ΕΠΑΝΕΞΕΤΑΣΗ (3-01 §58η)"; status.next_with = "ae_exam";
-      status.next = "Όχι πτήση: γραπτή εξέταση μετά από 2 ημερολογιακές ημέρες (νωρίτερα " + Q.fmtDay(Q.addCal(st.oralRef.since, 3)) + "). ΠΔ: από τον ΑΕ, όλα τα επαγγελματικά θέματα · 3-01: Δκτής ή ΑΕ, 50 κλειστού + 25 ανοικτού + 5 BOLD FACE. ΕΠΙΤΥΧΩΝ → συνεχίζει τις πτήσεις.";
-      status.if_fail = st.oralRef.stage === "exam" ? (rule1z === "pd" ? "ΑΠΟΤΥΧΩΝ → ΚΑΤΑ ΤΟ ΠΔ (παρ.4β) Συμβούλιο. [3-01 §58η: επανεξέταση — ΑΝΤΙΦΑΣΗ]" : "ΑΠΟΤΥΧΩΝ → ΚΑΤΑ ΤΗΝ 3-01 (§58η) επανεξέταση μετά από 2 ημέρες. [ΠΔ παρ.4β: Συμβούλιο — ΑΝΤΙΦΑΣΗ]") : "Νέα ΑΠΟΤΥΧΙΑ → ΠΔ 29/2020 → Συμβούλιο.";
-      status.cites = [R("fail-39", "ΠΔ παρ.4."), R("fail-37", "3-01 §58ζ(1)-(3)."), R("fail-38", "3-01 §58η."), R("fail-61", "Διακοπή δραστηριοτήτων και για θεωρητική ανεπάρκεια.")];
+      status.code = "oral_exam"; status.next_with = "ae_exam";
+      if (st.oralRef.stage === "exam") {
+        status.title = "Παραπομπή 1ζ — εκκρεμεί ΓΡΑΠΤΗ εξέταση επαγγελματικών θεμάτων (3-01 §58ζ)";
+        status.next = "Όχι πτήση: γραπτή εξέταση μετά από 2 ημερολογιακές ημέρες (νωρίτερα " + Q.fmtDay(Q.addCal(st.oralRef.since, 3)) + ") από τον Δκτή ή τον ΑΕ, 50 κλειστού + 25 ανοικτού + 5 BOLD FACE. ΕΠΙΤΥΧΩΝ → συνεχίζει τις πτήσεις.";
+        status.if_fail = "ΑΠΟΤΥΧΩΝ → επανεξέταση μετά από 2 ημερολογιακές ημέρες στα ίδια αντικείμενα, από τον ΑΕ σε όλα τα επαγγελματικά θέματα (3-01 §58η = ΠΔ παρ.4). Νέα αποτυχία εκεί → Συμβούλιο.";
+        status.cites = [R("fail-37", "3-01 §58ζ(1)-(3): η πρώτη γραπτή εξέταση."), R("fail-38", "3-01 §58η: η επανεξέταση."), R("fail-39", "ΠΔ παρ.4: ο ΑΕ, η ύλη και η έκβαση της επανεξέτασης."), R("fail-61", "Διακοπή δραστηριοτήτων και για θεωρητική ανεπάρκεια.")];
+      } else {
+        status.title = "Παραπομπή 1ζ — εκκρεμεί ΕΠΑΝΕΞΕΤΑΣΗ (3-01 §58η = ΠΔ παρ.4)";
+        status.next = "Όχι πτήση: επανεξέταση μετά από 2 ημερολογιακές ημέρες (νωρίτερα " + Q.fmtDay(Q.addCal(st.oralRef.since, 3)) + ") στα ίδια αντικείμενα — από τον ΑΕ της Μοίρας, σε όλα τα επαγγελματικά θέματα. ΕΠΙΤΥΧΩΝ → συνεχίζει τις πτήσεις.";
+        status.if_fail = "ΑΠΟΤΥΧΩΝ → ΣΥΜΒΟΥΛΙΟ ΠΤΗΤΙΚΗΣ ΙΚΑΝΟΤΗΤΑΣ (ΠΔ παρ.4β· 3-01 §58η «να εφαρμόζεται το ΠΔ»).";
+        status.cites = [R("fail-38", "3-01 §58η: χρόνος και ίδια αντικείμενα."), R("fail-39", "ΠΔ παρ.4: εξεταστής, ύλη, έκβαση."), R("fail-61", "Διακοπή δραστηριοτήτων και για θεωρητική ανεπάρκεια.")];
+        status.notes.push({ text: "Μία κλίμακα, όχι δύο (απόφανση ιδιοκτήτη 17/10/2026): «Στο ΠΔ εννοεί την πρώτη γραπτή εξέταση μετά την αποτυχία. Αλλιώς θα πήγαιναν οι μισοί συμβούλιο…». Ανοικτά παραμένουν: εξεταστής (ΑΕ μόνο / Δκτής ή ΑΕ), ύλη (όλα τα θέματα / 50+25+5), κατώφλι επιτυχίας.", cites: [R("fail-39", "ΠΔ παρ.4."), R("fail-37", "3-01 §58ζ.")] });
+      }
     } else if (st.boardYes && !st.boardYes.practiced) {
       status.code = "practice"; status.title = "Συμβούλιο ΥΠΕΡ — εκκρεμεί η πτήση εξάσκησης"; status.next_with = "other_ip";
       status.next = "Αλλαγή εκπαιδευτή και ΜΙΑ (1) πτήση εξάσκησης ως επιπρόσθετο πρόγραμμα.";
@@ -482,7 +494,7 @@
       kepe: kepe, dpUsed: { ae: log.filter((x) => x.special === "dp_ae").length, cdr: log.filter((x) => x.special === "dp_cdr").length },
       plannedPct: Math.round((cnt.totalFl.bad / TH.air_1d.planned_phase2_sorties) * 1000) / 10,
     };
-    return { timeline: timeline, fired: fired, status: status, counters: counters, pd: w.pd, stage: stage, opts: { rule_1z: rule1z, denom_1d: denom }, events: events.length };
+    return { timeline: timeline, fired: fired, status: status, counters: counters, pd: w.pd, stage: stage, opts: { denom_1d: denom }, events: events.length };
   }
 
   /* ── presets — FABRICATED sequences, no student anywhere ───────────────── */
@@ -493,7 +505,7 @@
       { t: "dp_ae", res: "fail" }, { t: "dp_cdr", res: "fail" }, { t: "board", res: "continue" }, { t: "practice", res: "pass" }] },
     { id: "p1st", title: "1στ — δύο συνεχόμενες γραπτές → απευθείας Συμβούλιο", events: [
       { t: "written", res: "score", score: 72 }, { t: "written", res: "fail" }] },
-    { id: "p1z", title: "1ζ — τέσσερις προφορικές → γραπτή ΑΕ → αποτυχία (ΠΔ vs 3-01)", events: [
+    { id: "p1z", title: "1ζ — τέσσερις προφορικές → γραπτή → αποτυχία → επανεξέταση ΑΕ (μία κλίμακα)", events: [
       { t: "oral", res: "fail" }, { t: "oral", res: "fail" }, { t: "oral", res: "pass" }, { t: "oral", res: "fail" }, { t: "oral", res: "fail" }, { t: "oral", res: "fail" }, { t: "oral", res: "fail" }, { t: "ae_written", res: "fail" }] },
     { id: "p1b", title: "1β — Αξιολόγηση 55% με ναυτία → Δοκιμή Προόδου ΑΕ ≥60%", events: [
       { t: "flight", cat: "contact", res: "pass" }, { t: "flight", cat: "contact", role: "checkride", res: "score", score: 55, nausea: "pre_ok" }, { t: "dp_ae", res: "score", score: 68 }] },
@@ -512,7 +524,7 @@
   /* ══════════════════════════════════════════════════════════════════════════
      § 1-3  RENDERING — only when there is a document
      ══════════════════════════════════════════════════════════════════════════ */
-  const UI = { tab: "matrix", tree: null, sel: null, events: [], rule_1z: "301", denom_1d: "planned", host: null, matrix: null, q: "" };
+  const UI = { tab: "matrix", tree: null, sel: null, events: [], denom_1d: "planned", host: null, matrix: null, q: "" };
 
   const chip = (c) => `<button type="button" class="bt-cite" data-cite="${esc(c.id)}" title="${esc(c.why || "")}">${esc(c.id)}</button>`;
   const chips = (list) => (list || []).length ? `<span class="bt-cites">${list.map(chip).join("")}</span>` : "";
@@ -589,11 +601,12 @@
       const who = n.next_with && n.next_with !== "na" ? `<span class="fc-b bt-b-who" title="Με ποιον πετά μετά">✈ ${esc(A[n.next_with] || n.next_with)}</span>` : "";
       const eng = n.engine === "schedconsq" ? `<span class="fc-b bt-b-eng" title="Το όριο ζει στον SchedConsq (ίδιος κώδικας με τον Scheduler)">SchedConsq</span>` : n.engine === "both" ? `<span class="fc-b bt-b-eng">SchedConsq+δεδομένα</span>` : "";
       const unres = (n.unresolved || []).length ? `<span class="fc-b fc-b-warn" title="${esc(n.unresolved.join(" · "))}">⚠ ${n.unresolved.length}</span>` : "";
+      const rul = (n.rulings || []).length ? `<span class="fc-b bt-b-who" title="${esc(n.rulings.map((r) => r.date + " — " + r.by + ": " + r.text).join(" · "))}">✓ απόφανση ${n.rulings.length}</span>` : "";
       return `<button type="button" class="bt-node is-${esc(n.kind)}${UI.sel === n.id ? " fc-sel" : ""}" data-node="${esc(n.id)}" aria-pressed="${UI.sel === n.id}" title="${esc(K[n.kind] || n.kind)}">
         <span class="bt-n-k">${esc(K[n.kind] || n.kind)}</span>
         <span class="bt-n-l">${esc(n.label)}</span>
         ${n.threshold ? `<span class="bt-n-t">${esc(n.threshold)}</span>` : ""}
-        <span class="bt-n-b">${eng}${who}${link}${unres}${(n.cites || []).length ? `<span class="fc-b">${n.cites.length} §</span>` : ""}${ext ? `<span class="fc-b bt-b-link">άλλο δέντρο</span>` : ""}</span>
+        <span class="bt-n-b">${eng}${who}${link}${rul}${unres}${(n.cites || []).length ? `<span class="fc-b">${n.cites.length} §</span>` : ""}${ext ? `<span class="fc-b bt-b-link">άλλο δέντρο</span>` : ""}</span>
       </button>`;
     }
     function rec(id, depth, label) {
@@ -618,8 +631,9 @@
       .filter((r) => r[1]).map((r) => `<tr><th>${esc(r[0])}</th><td>${esc(r[1])}</td></tr>`).join("");
     const cites = (n.cites || []).map((c) => citeBlock({ id: c.requirement_id }, c.explanation)).join("");
     const unres = (n.unresolved || []).length ? `<h4 class="bt-h4">⚠ Απορίες — δεν επιλύονται από τις πηγές</h4><ul class="fc-ul bt-unres-list">${n.unresolved.map((u) => `<li>${esc(u)}</li>`).join("")}</ul>` : "";
+    const rul = (n.rulings || []).length ? `<h4 class="bt-h4">✓ Αποφάνσεις</h4>${n.rulings.map((r) => `<div class="bt-c bt-ruling"><b>${esc(r.date)} — ${esc(r.by)}</b><p class="obs-text">${esc(r.text)}</p>${r.quote ? `<p class="bt-expl">«${esc(r.quote)}»</p>` : ""}</div>`).join("")}` : "";
     const link = n.link_tree ? `<p class="hint">Συνέχεια: <button type="button" class="req-link" data-tree="${esc(n.link_tree)}">${esc((DATA.trees.find((x) => x.id === n.link_tree) || {}).title || n.link_tree)}</button></p>` : "";
-    openDrawer(esc(n.label), `<table class="spec-table bt-kv"><tbody>${rows}</tbody></table>${link}<h4 class="bt-h4">Παραπομπές — τι λέει και πώς ερμηνεύεται (${(n.cites || []).length})</h4>${cites || "<p class='hint'>—</p>"}${unres}`);
+    openDrawer(esc(n.label), `<table class="spec-table bt-kv"><tbody>${rows}</tbody></table>${link}<h4 class="bt-h4">Παραπομπές — τι λέει και πώς ερμηνεύεται (${(n.cites || []).length})</h4>${cites || "<p class='hint'>—</p>"}${rul}${unres}`);
   }
   function renderTrees(host) {
     const L = DATA.lettering || {};
@@ -688,7 +702,7 @@
   function renderSandbox(host) {
     const presets = PRESETS.map((p) => `<option value="${p.id}">${esc(p.title)}</option>`).join("");
     let res = null, err = "";
-    try { res = evaluate(UI.events, DATA, { rule_1z: UI.rule_1z, denom_1d: UI.denom_1d }); } catch (e) { err = String(e && e.message || e); }
+    try { res = evaluate(UI.events, DATA, { denom_1d: UI.denom_1d }); } catch (e) { err = String(e && e.message || e); }
     const evRows = UI.events.map((e, i) => {
       const row = res ? res.timeline[i] : null;
       const fired = row ? row.fired.map((f) => `<div class="bt-fire"><span class="fc-b fc-b-final">${esc(f.case)}</span> ${esc(f.text)} ${chips(f.cites)}</div>`).join("") : "";
@@ -735,8 +749,7 @@
     host.innerHTML = `<div class="bt-note bt-sbx-note"><b>ΔΟΚΙΜΑΣΤΗΡΙΟ.</b> Συνθετικά γεγονότα μόνο — τίποτα δεν διαβάζεται από τον Scheduler, κανένα όνομα, κανένας μαθητής. Οι ημερομηνίες είναι εικονικές (μία εργάσιμη ανά γεγονός) και χρησιμεύουν μόνο στους κανόνες αναπρογραμματισμού.</div>
       <div class="bt-sbx-bar">
         <label class="lbl">Σενάριο <select id="bt-preset"><option value="">— επιλογή —</option>${presets}</select></label>
-        <label class="lbl">1ζ αποτυχία στη γραπτή ΑΕ (απόφανση 17/10/2026: 3-01) <select id="bt-rule1z"><option value="301"${UI.rule_1z === "301" ? " selected" : ""}>κατά 3-01 §58η — επανεξέταση, Συμβούλιο στη 2η αποτυχία</option><option value="pd"${UI.rule_1z === "pd" ? " selected" : ""}>κατά ΠΔ παρ.4β — Συμβούλιο στην 1η (προς σύγκριση)</option></select></label>
-        <label class="lbl">1δ παρονομαστής (απόφανση 17/10/2026: προγραμματισμένες) <select id="bt-denom"><option value="planned"${UI.denom_1d === "planned" ? " selected" : ""}>85 προγραμματισμένες (Syllabus) — μόνο το 20%</option><option value="executed"${UI.denom_1d === "executed" ? " selected" : ""}>εκτελεσθείσες (ανάγνωση Progress editor, προς σύγκριση) — 40% και 20%</option></select></label>
+        <label class="lbl">1δ παρονομαστής (απόφανση ιδιοκτήτη 17/10/2026: το σύνολο που έχει η φάση / το στάδιο) <select id="bt-denom"><option value="planned"${UI.denom_1d === "planned" ? " selected" : ""}>σύνολο σταδίου: 85 προγραμματισμένες (Syllabus) — μόνο το 20%</option><option value="executed"${UI.denom_1d === "executed" ? " selected" : ""}>εκτελεσθείσες ως τώρα (ανάγνωση Progress editor, προς σύγκριση) — 40% και 20%</option></select></label>
         <button type="button" class="fc-tbtn" id="bt-clear">Καθαρισμός</button>
       </div>
       ${evForm()}
@@ -780,7 +793,6 @@
     host.addEventListener("change", (ev) => {
       const t = ev.target;
       if (t.id === "bt-preset") { const p = PRESETS.find((x) => x.id === t.value); if (p) { UI.events = p.events.map((e) => Object.assign({}, e)); render(); } }
-      else if (t.id === "bt-rule1z") { UI.rule_1z = t.value; render(); }
       else if (t.id === "bt-denom") { UI.denom_1d = t.value; render(); }
     });
     document.addEventListener("click", (ev) => {

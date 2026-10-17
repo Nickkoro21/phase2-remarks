@@ -196,7 +196,7 @@ console.log("\n=== PROBE 3g — 1στ written: the fastest road to the Board ===
   ok("blind 90 % passes", /ΕΠΙΤΥΧΩΝ/.test(r.timeline[0].band));
 }
 
-console.log("\n=== PROBE 3h — 1ζ oral: KEPE at 2/4, referral at 4/8, the exam, the contradiction ===");
+console.log("\n=== PROBE 3h — 1ζ oral: KEPE at 2/4, referral at 4/8, γραπτή → επανεξέταση → Συμβούλιο (one ladder) ===");
 {
   const o = (res) => ev("oral", res);
   let r = run([o("fail"), o("fail")]);
@@ -218,24 +218,27 @@ console.log("\n=== PROBE 3h — 1ζ oral: KEPE at 2/4, referral at 4/8, the exam
   const four = [o("fail"), o("fail"), o("fail"), o("fail")];
   r = run(four.concat([ev("ae_written", "pass")]));
   eq("AE exam pass → free", r.status.code, "free");
-  r = run(four.concat([ev("ae_written", "fail")]), { rule_1z: "pd" });
-  ok("AE exam fail, rule ΠΔ → Board", firedCases(r).indexOf("1ζ→ΠΔ παρ.4β") >= 0 && r.status.code === "board", firedCases(r).join() + " " + r.status.code);
-  ok("… the row names the contradiction", /ΑΝΤΙΦΑΣΗ/.test(r.fired[r.fired.length - 1].text) && hasCite(r.fired[r.fired.length - 1].cites, "fail-38"));
-  r = run(four.concat([ev("ae_written", "fail")]), { rule_1z: "301" });
-  ok("AE exam fail, rule 3-01 → re-exam", firedCases(r).indexOf("1ζ→3-01 §58η") >= 0 && r.status.code === "oral_exam", firedCases(r).join() + " " + r.status.code);
-  ok("… the verdict says so, and a further failure is the Board", /ΕΠΑΝΕΞΕΤΑΣΗ/.test(r.status.title) && /Συμβούλιο/.test(r.status.if_fail));
-  const r1 = run(four, { rule_1z: "301" });
-  ok("… before the exam, the verdict names the contradiction under either rule", /ΑΝΤΙΦΑΣΗ/.test(r1.status.if_fail) && /ΑΝΤΙΦΑΣΗ/.test(run(four, { rule_1z: "pd" }).status.if_fail));
-  r = run(four.concat([ev("ae_written", "fail"), ev("ae_written", "fail")]), { rule_1z: "301" });
-  ok("re-exam fail → Board (both sources agree)", firedCases(r).indexOf("1ζ→ΠΔ") >= 0 && r.status.code === "board");
-  /* OWNER RULING 2026-10-17: the default is the 3-01 reading */
-  eq("default 1ζ rule is 3-01 §58η (owner ruling 2026-10-17)", run(four).opts.rule_1z, "301");
+  /* ONE LADDER (owner, 2026-10-17): γραπτή → fail → επανεξέταση (3-01 §58η =
+     ΠΔ παρ.4) → fail → Συμβούλιο. There is no rule switch any more. */
   r = run(four.concat([ev("ae_written", "fail")]));
-  ok("with NO option, a failed AE exam → re-examination, not the Board", firedCases(r).indexOf("1ζ→3-01 §58η") >= 0 && r.status.code === "oral_exam", firedCases(r).join() + " " + r.status.code);
-  ok("… and the ΠΔ reading is still printed beside it", /ΠΔ παρ\.4β/.test(r.fired[r.fired.length - 1].text) && hasCite(r.fired[r.fired.length - 1].cites, "fail-39"));
-  ok("… the ΠΔ reading is still reachable behind the switch", run(four.concat([ev("ae_written", "fail")]), { rule_1z: "pd" }).status.code === "board");
+  ok("1st written fail → re-examination, not the Board", firedCases(r).indexOf("1ζ→επανεξέταση") >= 0 && r.status.code === "oral_exam", firedCases(r).join() + " " + r.status.code);
+  ok("… the fired line cites BOTH fail-38 (timing, same subjects) and fail-39 (examiner, syllabus, outcome)", hasCite(r.fired[r.fired.length - 1].cites, "fail-38") && hasCite(r.fired[r.fired.length - 1].cites, "fail-39"));
+  ok("… and says they are one ladder, not a contradiction", /μία κλίμακα/.test(r.fired[r.fired.length - 1].text) && !/ΑΝΤΙΦΑΣΗ/.test(r.fired[r.fired.length - 1].text));
+  ok("… the verdict: re-exam by the ΑΕ on all professional subjects, after 2 days, same subjects", /ΕΠΑΝΕΞΕΤΑΣΗ/.test(r.status.title) && /ΑΕ/.test(r.status.next) && /όλα τα επαγγελματικά θέματα/.test(r.status.next) && /2 ημερολογιακές/.test(r.status.next) && /ίδια αντικείμενα/.test(r.status.next));
+  ok("… and a further failure is the Board", /ΣΥΜΒΟΥΛΙΟ/.test(r.status.if_fail));
+  ok("… the verdict note quotes the owner's reconciliation", r.status.notes.some((x) => /Αλλιώς θα πήγαιναν οι μισοί/.test(x.text)));
+  ok("… and keeps the three open points visible (examiner, syllabus, pass mark)", r.status.notes.some((x) => /εξεταστής/.test(x.text) && /ύλη/.test(x.text) && /κατώφλι/.test(x.text)));
+  const r1 = run(four);
+  ok("before the exam, the verdict already names the re-examination as the next rung", /επανεξέταση/.test(r1.status.if_fail) && /§58η = ΠΔ παρ\.4/.test(r1.status.if_fail) && !/ΑΝΤΙΦΑΣΗ/.test(r1.status.if_fail));
+  r = run(four.concat([ev("ae_written", "fail"), ev("ae_written", "fail")]));
+  ok("re-exam fail → Board", firedCases(r).indexOf("1ζ→Συμβούλιο") >= 0 && r.status.code === "board", firedCases(r).join() + " " + r.status.code);
+  ok("… citing fail-39 (παρ.4β) and fail-38 (νέα ΑΠΟΤΥΧΙΑ → ΠΔ)", hasCite(r.fired[r.fired.length - 1].cites, "fail-39") && hasCite(r.fired[r.fired.length - 1].cites, "fail-38"));
+  ok("a rule_1z option is ignored — there is one ladder", run(four.concat([ev("ae_written", "fail")]), { rule_1z: "pd" }).status.code === "oral_exam" && !("rule_1z" in run(four).opts));
+  ok("nothing in the module still frames 1ζ as ΠΔ-vs-3-01", !/ΠΔ vs 3-01|rule_1z|bt-rule1z/.test(require("fs").readFileSync(require("path").join(H.ROOT, "app", "boardtrees.js"), "utf8").replace(/\/\*[\s\S]*?\*\//g, "")));
   r = run(four.concat([ev("ae_written", "pass")]).concat(four));
   ok("second 1ζ in the same stage → Board directly (fail-24)", firedCases(r).indexOf("1ζ (2η)") >= 0 && r.status.code === "board", firedCases(r).join());
+  r = run(four.concat([ev("ae_written", "fail"), ev("ae_written", "pass")]).concat(four));
+  ok("… also when the first referral closed on a passed re-examination", firedCases(r).indexOf("1ζ (2η)") >= 0 && r.status.code === "board", firedCases(r).join());
   ok("… cites fail-24", hasCite(r.fired[r.fired.length - 1].cites, "fail-24"));
 }
 
@@ -282,7 +285,7 @@ console.log("\n=== PROBE 3k — every fired line and every verdict cite resolves
 {
   let total = 0, missing = [];
   for (const p of BT.PRESETS) {
-    const r = run(p.events, { rule_1z: "301" });
+    const r = run(p.events);
     const all = [].concat(r.status.cites);
     r.fired.forEach((f) => f.cites.forEach((c) => all.push(c)));
     r.timeline.forEach((row) => row.notes.forEach((x) => x.cites.forEach((c) => all.push(c))));

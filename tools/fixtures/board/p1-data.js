@@ -87,8 +87,11 @@ eq("1ζ 4 consecutive", TH.oral.referral_consecutive, a1z.consecutive_failures_t
 eq("1ζ 8 non-consecutive", TH.oral.referral_total, a1z.non_consecutive_failures_to_trigger);
 eq("1ζ KEPE at 2", TH.oral.kepe_consecutive, a1z.kepe_threshold_consecutive);
 eq("1ζ KEPE at 4", TH.oral.kepe_total, a1z.kepe_threshold_non_consecutive);
-eq("1ζ the two sources disagree: ΠΔ 1 check", a1z.checks_between_referral_and_board_PD, 1);
-eq("1ζ the two sources disagree: 3-01 2 checks", a1z.checks_between_referral_and_board_3_01, 2);
+/* the MATRIX still records the two readings as it was written (ΠΔ 1 / 3-01 2);
+   the trees read them as one ladder since 2026-10-17 — these pin the matrix
+   file, not the rule */
+eq("1ζ matrix still records the ΠΔ-only reading as 1 check (data unchanged)", a1z.checks_between_referral_and_board_PD, 1);
+eq("1ζ matrix still records the 3-01 reading as 2 checks (= the one ladder)", a1z.checks_between_referral_and_board_3_01, 2);
 const dp = mx(/ΚΛΙΜΑΚΑ ΔΟΚΙΜΩΝ/);
 eq("DP: AE once per stage", TH.dp.ae_per_stage, dp.AE_checks_max_per_stage);
 eq("DP: Cdr once if AE ≥60", TH.dp.cdr_if_ae_ge60, dp.SqnCdr_checks_if_prev_AE_ge_60pct);
@@ -113,10 +116,21 @@ eq("board ΥΠΕΡ: 1 practice flight", TH.board.practice_flights, mx(/ΥΠΕΡ 
 console.log("\n=== PROBE 1d — the matrix's unresolved doubts are carried into the trees ===");
 const allUnres = TREES.trees.reduce((s, t) => s.concat(t.nodes.reduce((u, n) => u.concat(n.unresolved || []), [])), []);
 ok("≥ 20 unresolved items surfaced on nodes", allUnres.length >= 20, String(allUnres.length));
-ok("the 1ζ contradiction is named", allUnres.some((u) => /ΑΝΤΙΦΑΣΗ/.test(u) && /3-01/.test(u) && /ΠΔ/.test(u)));
-ok("… and the owner ruling of 2026-10-17 (3-01 §58η governs) is recorded on it", allUnres.some((u) => /ΑΝΤΙΦΑΣΗ/.test(u) && /ΑΠΟΦΑΝΣΗ/.test(u) && /17\/10\/2026/.test(u) && /§58η/.test(u)));
+/* 1ζ — RESOLVED by the owner 2026-10-17: one ladder, not a contradiction */
+const oral = TREES.trees.find((t) => t.id === "oral_1z");
+ok("1ζ: no unresolved entry frames ΠΔ παρ.4 vs 3-01 §58η as a contradiction any more", !allUnres.some((u) => /ΑΝΤΙΦΑΣΗ ΠΟΥ ΑΛΛΑΖΕΙ/.test(u)));
+ok("1ζ: the ΠΔ-only one-failure node is gone", !oral.nodes.some((n) => n.id === "o_pd" || n.id === "o_301"));
+const rx = oral.nodes.find((n) => n.id === "o_reexam");
+ok("1ζ: a single re-examination node exists", !!rx);
+ok("1ζ: it cites fail-38 AND fail-39 on the same path", !!rx && rx.cites.some((c) => c.requirement_id === "fail-38") && rx.cites.some((c) => c.requirement_id === "fail-39"));
+ok("1ζ: the owner's reconciliation is recorded as a dated ruling with his words", !!rx && rx.rulings.some((r) => r.date === "2026-10-17" && r.by === "ο ιδιοκτήτης" && /Αλλιώς θα πήγαιναν οι μισοί/.test(r.quote)));
+ok("1ζ: examiner (#22), syllabus (#23) and pass mark (#24) stay open on that node", !!rx && rx.unresolved.length === 3 && rx.unresolved.some((u) => /ΑΡΜΟΔΙΟΤΗΤΑΣ/.test(u)) && rx.unresolved.some((u) => /ΥΛΗΣ/.test(u)) && rx.unresolved.some((u) => /κατώφλι/.test(u)));
+ok("1ζ: the edges are one ladder — γραπτή → επανεξέταση → Συμβούλιο", oral.edges.some((e) => e.from === "o_exam" && e.to === "o_reexam") && oral.edges.some((e) => e.from === "o_reexam" && e.to === "o_board") && oral.edges.some((e) => e.from === "o_reexam" && e.to === "o_pass"));
 ok("the 1δ denominator doubt is named", allUnres.some((u) => /προγραμματισμένες/i.test(u) && /εκτελεσθείσες/i.test(u)));
-ok("… and the owner ruling of 2026-10-17 (planned flights) is recorded on it", allUnres.some((u) => /ΠΡΟΓΡΑΜΜΑΤΙΣΜΕΝΕΣ/.test(u) && /ΑΠΟΦΑΝΣΗ/.test(u) && /17\/10\/2026/.test(u)));
+ok("… and the owner ruling of 2026-10-17 (the total the phase/stage HAS) is recorded on it, in his words", allUnres.some((u) => /ΠΡΟΓΡΑΜΜΑΤΙΣΜΕΝΕΣ/.test(u) && /ΑΠΟΦΑΝΣΗ ΙΔΙΟΚΤΗΤΗ/.test(u) && /17\/10\/2026/.test(u) && /όσες έχει το στάδιο/.test(u)));
+ok("1δ: the Προ-ΜΟΝΟΣ count (#8) and the denominator membership (#10) stay open", allUnres.some((u) => /ΠΡΟ ΜΟΝΟΣ/.test(u) && /δεν προσδιορίζεται/i.test(u)) && allUnres.some((u) => /παρονομαστή/.test(u) && /F\/S, ΜΟΝΟΣ/.test(u)));
+ok("no post or rank names the owner anywhere in the data", !/ΔΚΤΗ ΣΜΗΝΟΥΣ|Flight Commander|Διοικητής Σμήνους/.test(JSON.stringify(TREES.trees.map((t) => t.nodes.map((n) => ({ u: n.unresolved, r: n.rulings }))))));
+eq("unresolved entries on nodes after the reconciliation", allUnres.length, 34);
 ok("the παρ.7/9 overlay is flagged as interpretation of the sandbox, not of the engine", allUnres.some((u) => /SchedConsq/.test(u) && /παρ\.9|κρίσεων ανά στάδιο/.test(u)));
 ok("the KEPE cap ruling is marked as unit interpretation", allUnres.some((u) => /ερμηνεία μονάδας/i.test(u)));
 ok("no node explanation re-types a verbatim as explanation (sanity)", TREES.trees.every((t) => t.nodes.every((n) => n.cites.every((c) => c.explanation.indexOf("«Όταν") !== 0))));
