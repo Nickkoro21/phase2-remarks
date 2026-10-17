@@ -102,7 +102,8 @@ R-B — Η ΜΝΗΜΗ, με το σχήμα που έδωσε ο ιδιοκτή�
      POST /sessions/<id>/archive · POST /sessions/<id>/close. Το /ask παίρνει
      πλέον {session, question} και ο proxy κρατά το ιστορικό.
   2. COMPACTION όταν μεγαλώσει το ΙΣΤΟΡΙΚΟ (ADVISOR_COMPACT_AFTER_CHARS, default
-     24000 χαρακτήρες μηνυμάτων) — ΟΧΙ το corpus: το corpus είναι το cached
+     250.000 ΧΑΡΑΚΤΗΡΕΣ μηνυμάτων ≈ 90k tokens — F1, 17/10/2026: τα 24.000 ήταν
+     παράλογα νωρίς για παράθυρο 1M και διαβάζονταν ως tokens) — ΟΧΙ το corpus: το corpus είναι το cached
      πρόθεμα και δεν μετακινείται ΠΟΤΕ. Το μοντέλο ξαναγράφει τη συζήτηση σε
      ΔΟΜΗΜΕΝΗ ΣΥΝΟΨΗ σταθερού σχήματος (μαθητής & ερώτημα · τι τεκμηριώθηκε, με
      παραπομπές · τι μένει ανοιχτό · τι γράφτηκε, με ids) και το ιστορικό
@@ -118,8 +119,25 @@ R-B — Η ΜΝΗΜΗ, με το σχήμα που έδωσε ο ιδιοκτή�
   Μετά από ώρες το cache (1h) έχει λήξει και η πρώτη ερώτηση ξαναγράφει το corpus
   — αναμενόμενο· το event usage το σημαίνει (cache_rewrite) ώστε να φαίνεται.
 
+F3 — KEEP-ALIVE ΤΟΥ CACHE. Εξάωρο TTL δεν υπάρχει (μόνο 5m / 1h). Αλλά μια
+ΑΝΑΓΝΩΣΗ του cache ανανεώνει τον χρόνο του χωρίς έξτρα κόστος: ένα νήμα
+ξαναστέλνει το ΙΔΙΟ πρόθεμα (system + tools, ίδιο md5) με max_tokens: 0 λίγο
+πριν τη λήξη (1h → στα 50′, 5m → στα 4′), για κάθε agent που ρωτήθηκε μέσα
+στις τελευταίες ADVISOR_KEEPALIVE_IDLE_H ώρες. Κόστος: μία ανάγνωση (~$0.04)
+αντί για εγγραφή (~$1.60). Καταγράφεται ως [keepalive], μετρά στον ημερήσιο
+μετρητή, φαίνεται στο /health. Αν το API απορρίψει το max_tokens: 0 με αυτά
+που στέλνουμε, το νήμα το γράφει ΡΗΤΑ στο log και στο /health και σταματά για
+τον agent μετά από 2 αποτυχίες — δεν το παρακάμπτει σιωπηλά.
+  ADVISOR_KEEPALIVE        --keepalive {0,1}   default 1
+  ADVISOR_KEEPALIVE_IDLE_H --keepalive-idle    default 8  (ώρες χωρίς ερώτηση → σταματά)
+
+F4 — ΕΞΑΓΩΓΗ: GET /sessions/<id>/export?agent=&format=md|json → η συζήτηση ως
+αναγνώσιμο Markdown (ερωτήσεις, απαντήσεις, εργαλεία, εγγραφές με ids,
+compactions, σύνολα usage) ή ως το JSON της. Τοπικά, στον δίσκο του· κανένα
+third-party tracing — οι συνεδρίες έχουν πραγματικά ονόματα.
+
 ΑΛΛΕΣ ΡΥΘΜΙΣΕΙΣ
-  ADVISOR_COMPACT_AFTER_CHARS --compact-after   default 24000  (χαρακτήρες ιστορικού)
+  ADVISOR_COMPACT_AFTER_CHARS --compact-after   default 250000 (ΧΑΡΑΚΤΗΡΕΣ ιστορικού ≈ 90k tokens)
   ADVISOR_COMPACT_KEEP        --compact-keep    default 1      (ζεύγη που μένουν αυτούσια)
   ADVISOR_CONFIRM_TTL_S       --confirm-ttl     default 900    (ζωή token επιβεβαίωσης)
   ADVISOR_SESSIONS_DIR        --sessions-dir    default tools/advisor/sessions/
@@ -182,9 +200,11 @@ DEFAULTS = {
     "tool_total_chars": 20000,
     "casefile_max_calls": 8,
     "casefile_max_writes": 2,
-    "compact_after": 24000,
+    "compact_after": 250_000,      # ΧΑΡΑΚΤΗΡΕΣ ιστορικού (≈ 90k tokens) — όχι tokens, όχι το corpus
     "compact_keep": 1,
     "confirm_ttl": 900,
+    "keepalive": 1,
+    "keepalive_idle_h": 8,
     "sessions_dir": str(ROOT / "tools" / "advisor" / "sessions"),
     "state_file": str(ROOT / "tools" / "advisor" / ".proxy-state.json"),
     "agents_dir": str(ROOT / "agents"),
@@ -1439,6 +1459,181 @@ def run_compaction(a: dict, s: dict, system: list[dict], tool_dicts: list[dict])
     return apply_brief(s, text, u)
 
 
+# ════════════════════════════════════════════════════════════════════════════
+# KEEP-ALIVE (F3) — μία ανάγνωση του cache λίγο πριν λήξει, αντί για εγγραφή
+# ════════════════════════════════════════════════════════════════════════════
+
+KEEPALIVE: dict[str, dict] = {}     # agent id → snapshot του προθέματος + χρόνοι
+KEEPALIVE_MARGIN = {"1h": 600, "5m": 60}   # πόσο ΠΡΙΝ τη λήξη στέλνεται το ping
+
+
+def keepalive_params(snap: dict) -> dict:
+    """ΙΔΙΟ model/system/tools/thinking/effort με το /ask (το effort και το
+    thinking αποδίδονται στο prompt — αλλιώς το ping θερμαίνει άλλο κλειδί),
+    max_tokens 0, ένα μήνυμα ΧΩΡΙΣ cache_control (τίποτα να γραφτεί), χωρίς stream."""
+    p = {"model": snap["model"], "max_tokens": 0, "system": snap["system"],
+         "messages": [{"role": "user", "content": "keep-alive"}],
+         "thinking": {"type": "adaptive"}, "output_config": {"effort": snap["effort"]}}
+    if snap.get("tools"):
+        p["tools"] = snap["tools"]
+    return p
+
+
+def keepalive_register(a: dict, system: list[dict], tool_dicts: list[dict]) -> None:
+    """Μετά από κάθε επιτυχημένη κλήση: αυτό είναι το πρόθεμα που ζει στο cache."""
+    with LOCK:
+        snap = KEEPALIVE.get(a["id"]) or {"pings": 0, "failures": 0, "last_error": None, "last_read": None, "disabled": False}
+        snap.update({"model": a["model"], "effort": a["effort"], "system": system, "tools": tool_dicts,
+                     "prefix": prefix_digest(system), "last_ask": time.time(), "last_touch": time.time()})
+        if snap.get("prefix_was") != snap["prefix"]:
+            snap["failures"], snap["disabled"], snap["prefix_was"] = 0, False, snap["prefix"]
+        KEEPALIVE[a["id"]] = snap
+
+
+def keepalive_ping(agent_id: str, snap: dict) -> None:
+    import anthropic
+    if not os.environ.get("ANTHROPIC_API_KEY"):
+        return
+    ok, state = take_daily_slot()
+    if not ok:
+        log(f"[keepalive] agent={agent_id} παραλείπεται: ημερήσιο όριο ({state['count']}/{CFG['daily_cap']})")
+        snap["last_touch"] = time.time()          # μην ξαναδοκιμάσεις κάθε 30″
+        return
+    params = keepalive_params(snap)
+    client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"], max_retries=1)
+    api = client.beta.messages if params.get("tools") else client.messages
+    try:
+        r = api.create(**params)
+    except anthropic.BadRequestError as e:
+        snap["failures"] += 1
+        snap["last_error"] = f"400: {e.message}"
+        log(f"[keepalive] agent={agent_id} ΑΠΟΡΡΙΦΘΗΚΕ από το API ({snap['failures']}/2): {e.message}")
+        if snap["failures"] >= 2:
+            snap["disabled"] = True
+            log(f"[keepalive] agent={agent_id} ΣΤΑΜΑΤΑ — το max_tokens:0 δεν γίνεται δεκτό με αυτό το αίτημα. "
+                f"Δες /health.keepalive.agents.{agent_id}.last_error. Το corpus θα ξαναγράφεται στη λήξη του TTL.")
+        snap["last_touch"] = time.time()
+        return
+    except (anthropic.APIStatusError, anthropic.APIConnectionError) as e:
+        snap["last_error"] = f"{type(e).__name__}: {getattr(e, 'message', e)}"
+        log(f"[keepalive] agent={agent_id} σφάλμα δικτύου/API: {snap['last_error']} — ξανά στον επόμενο κύκλο")
+        snap["last_touch"] = time.time() - (int(CFG["cache_ttl"] == "1h") * 3000 or 200)   # ξαναδοκίμασε σύντομα
+        return
+    u = _usage_dict(r.usage)
+    add_usage(u, 0)
+    snap.update({"pings": snap["pings"] + 1, "last_touch": time.time(), "last_read": u["cache_read_input_tokens"],
+                 "failures": 0, "last_error": None})
+    warn = "" if u["cache_read_input_tokens"] > 0 else "  ⚠ cache_read=0 — το πρόθεμα ΔΕΝ ήταν στο cache (ξαναγράφτηκε)"
+    log(f"[keepalive] agent={agent_id} ping #{snap['pings']} cache_r={u['cache_read_input_tokens']} "
+        f"cache_w={u['cache_creation_input_tokens']} in={u['input_tokens']} stop={r.stop_reason}{warn}")
+
+
+def keepalive_loop() -> None:
+    ttl_s = 3600 if CFG["cache_ttl"] == "1h" else 300
+    due_after = ttl_s - KEEPALIVE_MARGIN.get(CFG["cache_ttl"], 600)
+    idle_s = int(CFG["keepalive_idle_h"]) * 3600
+    while True:
+        time.sleep(30)
+        try:
+            now = time.time()
+            for agent_id, snap in list(KEEPALIVE.items()):
+                if snap.get("disabled") or now - snap["last_ask"] > idle_s:
+                    continue
+                if now - snap["last_touch"] >= due_after:
+                    keepalive_ping(agent_id, snap)
+        except Exception as e:          # το νήμα δεν πεθαίνει ποτέ σιωπηλά
+            log(f"[keepalive] UNEXPECTED {type(e).__name__}: {e}")
+
+
+def keepalive_status() -> dict:
+    now = time.time()
+    ttl_s = 3600 if CFG["cache_ttl"] == "1h" else 300
+    due_after = ttl_s - KEEPALIVE_MARGIN.get(CFG["cache_ttl"], 600)
+    idle_s = int(CFG["keepalive_idle_h"]) * 3600
+    agents = {}
+    for k, s in KEEPALIVE.items():
+        idle = now - s["last_ask"] > idle_s
+        agents[k] = {"pings": s["pings"], "last_read_tokens": s["last_read"], "last_error": s["last_error"],
+                     "disabled": s["disabled"], "idle": idle,
+                     "seconds_since_ask": int(now - s["last_ask"]),
+                     "next_ping_in_s": None if (s["disabled"] or idle) else max(0, int(due_after - (now - s["last_touch"])))}
+    return {"enabled": bool(int(CFG["keepalive"])), "idle_hours": int(CFG["keepalive_idle_h"]),
+            "ping_after_s": due_after, "cache_ttl": CFG["cache_ttl"], "agents": agents}
+
+
+# ════════════════════════════════════════════════════════════════════════════
+# ΕΞΑΓΩΓΗ (F4) — η συνεδρία ως Markdown που διαβάζει άνθρωπος
+# ════════════════════════════════════════════════════════════════════════════
+
+def session_markdown(s: dict) -> str:
+    L = [f"# Σύμβουλος FDMS — συζήτηση {s['id']}", "",
+         f"- **Agent:** {s['agent']}", f"- **Τίτλος:** {s.get('title') or '(χωρίς τίτλο)'}",
+         f"- **Άνοιξε:** {s['created']} · **Τελευταία:** {s['updated']}" + ("  · ΑΡΧΕΙΟΘΕΤΗΜΕΝΗ" if s.get("archived") else "")]
+    if s.get("student_label"):
+        L.append(f"- **Μαθητής:** {s['student_label']}" + (f" (student_id {s['student_id']})" if s.get("student_id") else ""))
+    if s.get("context"):
+        L += ["", "## Πλαίσιο περίπτωσης (όπως το έγραψε ο ιδιοκτήτης)", "", s["context"]]
+    tot = {"input_tokens": 0, "cache_creation_input_tokens": 0, "cache_read_input_tokens": 0, "output_tokens": 0}
+    L += ["", "## Συζήτηση", ""]
+    for m in s["messages"]:
+        at = (m.get("at") or "")[11:16]
+        if m.get("kind") == "summary":
+            if m["role"] == "user":
+                L += [f"### ♻ Σύνοψη μετά από compaction ({at})", "", m["content"], ""]
+            continue
+        if m.get("kind") == "seed":
+            if m["role"] == "user":
+                L += [f"### ⤷ Αφετηρία από τον φάκελο ({at})", "", "```", m["content"], "```", ""]
+            continue
+        if m["role"] == "user":
+            L += [f"### 🧑 Ερώτηση ({at})", "", m["content"], ""]
+            continue
+        L += [f"### 🤖 Απάντηση ({at})", ""]
+        for t in m.get("tools") or []:
+            if t.get("tool") == "search_sources":
+                L.append(f"- 🔎 `search_sources` · {t.get('source')} · «{t.get('query')}» · {t.get('hits')} ευρήματα · {t.get('status')}")
+            elif t.get("write"):
+                st = "✓ ΓΡΑΦΤΗΚΕ case " + str(t.get("case_id")) if t.get("confirmed") else \
+                     "✕ ακυρώθηκε" if t.get("cancelled") else "✕ απορρίφθηκε: " + str(t.get("failed")) if t.get("failed") else \
+                     "… εκκρεμής (δεν επιβεβαιώθηκε)" if t.get("pending") else str(t.get("status"))
+                L.append(f"- ✎ `{t.get('tool')}` · {st}")
+                if t.get("preview"):
+                    L += ["", "  ```", "  " + str(t["preview"]).replace("\n", "\n  "), "  ```"]
+            else:
+                L.append(f"- 🗂 `{t.get('tool')}` · {t.get('summary', '')} · {t.get('status')}")
+        if m.get("tools"):
+            L.append("")
+        L += [m["content"], ""]
+        u = m.get("usage") or {}
+        if u:
+            for k in tot:
+                tot[k] += int(u.get(k) or 0)
+            L.append(f"_usage: in {u.get('input_tokens')} · cache✎ {u.get('cache_creation_input_tokens')} · "
+                     f"cache◉ {u.get('cache_read_input_tokens')} · out {u.get('output_tokens')}"
+                     + (" · ↻ το corpus ξαναγράφτηκε" if u.get("cache_rewrite") else "") + "_")
+            L.append("")
+    L += ["## Εγγραφές στον φάκελο", ""]
+    if s.get("writes"):
+        for w in s["writes"]:
+            L += [f"- {w['at']} · `{w['tool']}` · **case {w.get('case_id')}** · actor {w.get('actor')}", "", "  ```",
+                  "  " + str(w.get("preview") or "").replace("\n", "\n  "), "  ```"]
+    else:
+        L.append("(καμία επιβεβαιωμένη εγγραφή)")
+    L += ["", "## Συμβάντα", ""]
+    for e in s.get("events") or []:
+        if e.get("type") == "compaction":
+            L.append(f"- {e['at']} · ♻ compaction #{e.get('n')}: {e.get('chars_before'):,} → {e.get('chars_after'):,} χαρακτήρες, {e.get('kept_pairs')} ζεύγος αυτούσιο")
+        else:
+            L.append(f"- {e['at']} · {e.get('type')}: {e.get('text', '')}")
+    if not s.get("events"):
+        L.append("(κανένα)")
+    L += ["", "## Σύνολα usage (tokens)", "",
+          f"input {tot['input_tokens']:,} · cache write {tot['cache_creation_input_tokens']:,} · "
+          f"cache read {tot['cache_read_input_tokens']:,} · output {tot['output_tokens']:,}", "",
+          "_Εξαγωγή από tools/advisor_proxy.py — η συζήτηση ζει στο tools/advisor/sessions/ του ιδιοκτήτη και πουθενά αλλού._", ""]
+    return "\n".join(L)
+
+
 def _patch_tool_entry(s: dict, token: str, patch: dict) -> None:
     for m in s["messages"]:
         for t in m.get("tools") or []:
@@ -1465,6 +1660,7 @@ class Handler(BaseHTTPRequestHandler):
             self.send_header("Vary", "Origin")
             self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
             self.send_header("Access-Control-Allow-Headers", "Content-Type")
+            self.send_header("Access-Control-Expose-Headers", "Content-Disposition")   # F4: το όνομα αρχείου της λήψης
             self.send_header("Access-Control-Max-Age", "600")
 
     def _json(self, code: int, obj: dict) -> None:
@@ -1473,6 +1669,16 @@ class Handler(BaseHTTPRequestHandler):
         self._cors()
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+        self.wfile.write(body)
+
+    def _raw(self, code: int, body: bytes, ctype: str, filename: str) -> None:
+        self.send_response(code)
+        self._cors()
+        self.send_header("Content-Type", ctype)
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Content-Disposition", f'attachment; filename="{filename}"')
         self.send_header("Cache-Control", "no-store")
         self.end_headers()
         self.wfile.write(body)
@@ -1503,6 +1709,17 @@ class Handler(BaseHTTPRequestHandler):
             if not s:
                 return self._json(404, {"code": "unknown_session", "error": "Η συνεδρία δεν βρέθηκε."})
             return self._json(200, {"session": s, "summary": session_summary(s)})
+        m = re.fullmatch(r"/sessions/([0-9a-f]{16})/export", path)
+        if m:
+            s = load_session(q1("agent"), m.group(1))
+            if not s:
+                return self._json(404, {"code": "unknown_session", "error": "Η συνεδρία δεν βρέθηκε."})
+            fmt = q1("format") or "md"
+            stem = f"advisor-{s['agent']}-{s['created'][:10]}-{s['id']}"
+            if fmt == "json":
+                return self._raw(200, json.dumps(s, ensure_ascii=False, indent=1).encode("utf-8"),
+                                 "application/json; charset=utf-8", stem + ".json")
+            return self._raw(200, session_markdown(s).encode("utf-8"), "text/markdown; charset=utf-8", stem + ".md")
         return self._json(404, {"error": "not found", "endpoints": ["/health", "/agents", "/sessions", "/ask", "/confirm"]})
 
     def _body(self) -> dict | None:
@@ -1762,6 +1979,8 @@ class Handler(BaseHTTPRequestHandler):
                 log(f"[ask] CACHE MISS WARNING agent={a['id']}: ίδιο πρόθεμα μέσα στο TTL, "
                     f"cache_read_input_tokens=0 — ο λογαριασμός πληρώνει ολόκληρο το corpus.")
             CACHE_WATCH[a["id"]] = {"ts": time.time(), "prefix": digest}
+            if int(CFG["keepalive"]):
+                keepalive_register(a, system, [t.to_dict() for t in budget.make_tools(list(tools))] if budget else [])
             add_usage(u, (budget.calls + budget.cf_calls) if budget else 0)
             usage_ev = {"type": "usage", **u, "iterations": res["iterations"],
                         "tool_calls": budget.calls if budget else 0,
@@ -1850,8 +2069,10 @@ def health() -> dict:
                      "env": ["FDMS_CASEFILE_URL", "FDMS_CASEFILE_KEY"],
                      "confirm_gate": True, "confirm_ttl_s": int(CFG["confirm_ttl"]), "pending": len(PENDING)},
         "memory": {"sessions_dir": str(sessions_dir()), "compact_after_chars": int(CFG["compact_after"]),
+                   "compact_after_tokens_approx": int(int(CFG["compact_after"]) / 2.8 / 1000) * 1000,
                    "compact_keep_pairs": int(CFG["compact_keep"]),
                    "sessions": {a["id"]: len(list_sessions(a["id"])) for a in list_agents()}},
+        "keepalive": keepalive_status(),
         "tools": {"search_sources": {
             "whitelist": {k: {"path": str(v[0]), "dir": v[1], "raw_pdf": v[2], "exists": v[0].exists(), "about": v[3]}
                           for k, v in WHITELIST.items()},
@@ -1874,6 +2095,7 @@ def configure(args) -> None:
         "casefile_max_writes": ("ADVISOR_CASEFILE_MAX_WRITES", int),
         "compact_after": ("ADVISOR_COMPACT_AFTER_CHARS", int), "compact_keep": ("ADVISOR_COMPACT_KEEP", int),
         "confirm_ttl": ("ADVISOR_CONFIRM_TTL_S", int), "sessions_dir": ("ADVISOR_SESSIONS_DIR", str),
+        "keepalive": ("ADVISOR_KEEPALIVE", int), "keepalive_idle_h": ("ADVISOR_KEEPALIVE_IDLE_H", int),
         "state_file": ("ADVISOR_STATE_FILE", str), "agents_dir": ("ADVISOR_AGENTS_DIR", str),
         "corpus_dir": ("ADVISOR_CORPUS_DIR", str),
     }
@@ -1929,6 +2151,18 @@ def dry_run(agent_id: str, question: str) -> int:
     out["tools_in_agent_md"] = a["tools"]
     out["tools_offered"] = tools
     out["casefile_configured"] = casefile_configured()
+    # F3: το keep-alive ping, όπως θα έφευγε — ίδιο πρόθεμα, max_tokens 0, χωρίς breakpoint στο μήνυμα
+    ka_tools = [t.to_dict() for t in ToolBudget(None, a["id"], "deadbeefdeadbeef").make_tools(tools)] if tools else []
+    kp = keepalive_params({"model": a["model"], "effort": a["effort"], "system": sys1, "tools": ka_tools})
+    out["keepalive_request"] = {
+        "enabled": bool(int(CFG["keepalive"])), "endpoint": "client.beta.messages.create" if ka_tools else "client.messages.create",
+        "max_tokens": kp["max_tokens"], "stream": False, "messages": kp["messages"],
+        "thinking": kp["thinking"], "output_config": kp["output_config"], "tools": [t["name"] for t in ka_tools],
+        "system_md5_equals_ask": prefix_digest(kp["system"]) == prefix_digest(sys1),
+        "ping_after_s": keepalive_status()["ping_after_s"], "idle_hours": int(CFG["keepalive_idle_h"]),
+        "unverified": "το max_tokens:0 μαζί με tools+thinking adaptive στο beta endpoint δεν έχει σταλεί ποτέ από εδώ — "
+                      "αν απορριφθεί, το νήμα το γράφει στο log/health και σταματά μετά από 2 αποτυχίες",
+    }
     if tools:
         for tool in ToolBudget(None, a["id"]).make_tools(tools):
             td = tool.to_dict() if hasattr(tool, "to_dict") else {"name": getattr(tool, "name", "?")}
@@ -2005,7 +2239,9 @@ def main() -> int:
     ap.add_argument("--tool-total-chars", type=int, dest="tool_total_chars", help="search_sources: χαρακτήρες ανά απάντηση (20000)")
     ap.add_argument("--casefile-max-calls", type=int, dest="casefile_max_calls", help="casefile: κλήσεις ανά απάντηση (8)")
     ap.add_argument("--casefile-max-writes", type=int, dest="casefile_max_writes", help="casefile: προεπισκοπήσεις εγγραφής ανά απάντηση (2)")
-    ap.add_argument("--compact-after", type=int, dest="compact_after", help="compaction όταν το ιστορικό ξεπεράσει N χαρακτήρες (24000)")
+    ap.add_argument("--compact-after", type=int, dest="compact_after", help="compaction όταν το ιστορικό ξεπεράσει N ΧΑΡΑΚΤΗΡΕΣ (250000 ≈ 90k tokens)")
+    ap.add_argument("--keepalive", type=int, choices=[0, 1], dest="keepalive", help="keep-alive του cache με max_tokens:0 πριν τη λήξη (1)")
+    ap.add_argument("--keepalive-idle", type=int, dest="keepalive_idle_h", help="ώρες χωρίς ερώτηση μετά τις οποίες σταματά το keep-alive (8)")
     ap.add_argument("--compact-keep", type=int, dest="compact_keep", help="ζεύγη που μένουν αυτούσια μετά το compaction (1)")
     ap.add_argument("--confirm-ttl", type=int, dest="confirm_ttl", help="ζωή του token επιβεβαίωσης σε δευτερόλεπτα (900)")
     ap.add_argument("--sessions-dir", dest="sessions_dir", help="φάκελος συνεδριών (tools/advisor/sessions)")
@@ -2072,6 +2308,12 @@ def main() -> int:
     log(f"φρένα: max_turns={CFG['max_turns']} daily_cap={CFG['daily_cap']} "
         f"max_corpus_bytes={CFG['max_corpus_bytes']:,} · tool: {CFG['tool_max_calls']} κλήσεις, "
         f"{CFG['tool_max_chars']}/{CFG['tool_total_chars']} chars · cache_ttl={CFG['cache_ttl']}")
+    if int(CFG["keepalive"]):
+        threading.Thread(target=keepalive_loop, name="keepalive", daemon=True).start()
+        log(f"keep-alive: ΝΑΙ — ping στα {keepalive_status()['ping_after_s'] // 60}′ από την τελευταία επαφή, "
+            f"σταματά μετά από {CFG['keepalive_idle_h']} ώρες χωρίς ερώτηση · compaction στους {int(CFG['compact_after']):,} χαρακτήρες ιστορικού")
+    else:
+        log("keep-alive: ΟΧΙ (ADVISOR_KEEPALIVE=0)")
     log("Ctrl+C για τερματισμό.")
     try:
         srv.serve_forever()

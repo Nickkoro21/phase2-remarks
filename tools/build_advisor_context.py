@@ -62,10 +62,18 @@ REQ_FILES = [
 # τις 152 απαιτήσεις ανά έξοδο· ο syllabus τις χρειάζεται και δεν χρειάζεται
 # τις σκάλες παραπομπής. Μικρότερο corpus = φθηνότερο ΚΑΙ ακριβέστερο.
 # Ο πίνακας ανοχής και τα δέντρα μπαίνουν μόνο όπου `board` είναι True.
+# `order` (17/10/2026, μετά την πρώτη πραγματική χρήση): ο Board Director δεν
+# ήξερε τη ΣΕΙΡΑ των εξόδων — το corpus του είναι αποτυχίες + έδαφος + F/S, η
+# ροή ζει στο syllabus. Σχεδόν κάθε πραγματική ερώτηση όμως είναι «πέταξε την
+# C4602 και μετά την C4790», και σύμβουλος που μαντεύει τη σειρά είναι
+# επικίνδυνος ακριβώς εκεί που θέλουμε ασφάλεια. Ένας λιτός πίνακας από το
+# flowchart2.json (uid, τίτλος, ώρες, σημαίες), αμέσως μετά τα αριθμητικά
+# γεγονότα. Αλλάζει το cached πρόθεμα ΜΙΑ φορά — μία εγγραφή cache, αξίζει.
 PROFILES = {
     "board": {
         "files": ["failure_procedures.json", "ground_training.json", "simulator_training.json"],
         "board": True,
+        "order": True,
         "who": "ο σύμβουλος του Συμβουλίου Πτητικής Ικανότητας",
     },
     "syllabus": {
@@ -76,6 +84,7 @@ PROFILES = {
     "full": {
         "files": [n for n, _ in REQ_FILES],
         "board": True,
+        "order": True,
         "who": "ο σύμβουλος, με όλο το υλικό",
     },
     # Οι δύο συνθετικοί agents δεν ζουν στις απαιτήσεις — ζουν στα ΣΥΜΒΟΛΑΙΑ
@@ -234,6 +243,37 @@ def render_trees(d: dict) -> list[str]:
     return out
 
 
+TRACKS = [("contact", "ΠΡΟΣΑΡΜΟΓΗ (contact)"), ("instrument", "ΟΡΓΑΝΑ (instrument)"),
+          ("formation", "ΣΧΗΜΑΤΙΣΜΟΣ (formation)"), ("vfr_navigation", "ΝΑΥΤΙΛΙΑ (vfr_navigation)")]
+
+
+def render_order(fc: dict) -> list[str]:
+    """Η ΣΕΙΡΑ ΤΩΝ ΕΞΟΔΩΝ — πίνακας, όχι πρόζα. Η σειρά του flowchart2.json ΕΙΝΑΙ
+    η τυπωμένη σειρά του προγράμματος ανά κατηγορία (έτσι μετρά και ο
+    υπολογισμός της ΠΡΟ-ΜΟΝΟΣ παραπάνω). Μόνο γεγονότα: κωδικός, ενότητα,
+    τίτλος, ώρες, σημαίες — κανένας κανόνας χωρίς παραπομπή εδώ."""
+    out = ["", "## Η ΣΕΙΡΑ ΤΩΝ ΕΞΟΔΩΝ ΤΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ (από το data/flowchart2.json)", "",
+           "ΠΩΣ ΔΙΑΒΑΖΕΤΑΙ: α/α στην κατηγορία · κωδικός · ενότητα · τίτλος · ώρες · σημαίες. "
+           "ΑΞ = Αξιολόγηση (checkride) · ΜΟΝΟΣ = η πρώτη ΜΟΝΟΣ · (Μ) = έξοδος που μπορεί να πεταχτεί ΜΟΝΟΣ · "
+           "Ν = νυχτερινή. «Πριν/μετά» μεταξύ δύο εξόδων της ίδιας κατηγορίας σημαίνει τη θέση τους σε αυτή τη λίστα. "
+           "Οι κατηγορίες τρέχουν παράλληλα — η λίστα δεν λέει ποια κατηγορία πετιέται πρώτη.", ""]
+    for band, lab in (("flights", "ΑΕΡΟΣ"), ("fs", "F/S — εξομοιωτής")):
+        for tr, tl in TRACKS:
+            rows = [s for s in fc["sorties"] if s.get("band") == band and s.get("track") == tr]
+            if not rows:
+                continue
+            out.append(f"### {lab} · {tl} — {len(rows)} έξοδοι")
+            for i, s in enumerate(rows, 1):
+                flags = [f for f, on in (("ΑΞ", s.get("checkride")), ("ΜΟΝΟΣ", s.get("first_solo")),
+                                         ("(Μ)", s.get("solo_candidate") and not s.get("first_solo")),
+                                         ("Ν", s.get("night"))) if on]
+                h = f"{s['hours']}h" if s.get("hours") is not None else "—"
+                out.append(f"{i:>2}. {s['id']} · {clean(s.get('section_verbatim'))} · {clean(s.get('name'))} · {h}"
+                           + (" · " + " ".join(flags) if flags else ""))
+            out.append("")
+    return out
+
+
 HEAD = """# ΤΟ ΚΑΝΟΝΙΣΤΙΚΟ CORPUS ΤΟΥ FDMS — Phase II (T-6A)
 
 ΔΙΑΒΑΣΕ ΑΥΤΟ ΠΡΩΤΑ.
@@ -306,6 +346,10 @@ def build(profile: str, stats_only: bool) -> int:
         "το **τυπωμένο πρόγραμμα**, όχι οι μέχρι τώρα εκτελεσμένες — «όχι σε όσες έχει πετάξει μέχρι "
         "τώρα, αλλά στο σύνολο, είτε για το προ-μόνος είτε για όλο το στάδιο».\n"
     )
+
+    # ── Η ΣΕΙΡΑ ΤΩΝ ΕΞΟΔΩΝ (board, full) — αμέσως μετά τα αριθμητικά γεγονότα ──
+    if prof.get("order"):
+        parts.append("\n".join(render_order(fc)) + "\n")
 
     # ── ΟΙ ΠΕΝΤΕ ΟΜΑΔΕΣ ΑΠΑΙΤΗΣΕΩΝ ──────────────────────────────────────────
     counts = {}

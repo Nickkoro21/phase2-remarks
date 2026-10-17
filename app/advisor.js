@@ -89,6 +89,8 @@
 .adv-sess .adv-close { color: var(--good); border-color: var(--good); }
 .adv-notice { border: 1px solid var(--line); border-left: 5px solid var(--warn); border-radius: 10px; padding: 12px 16px; background: var(--panel-2); font-size: 13.5px; line-height: 1.6; }
 .adv-notice code, .adv-cmd { font-family: Consolas, monospace; font-size: 12.5px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; color: var(--text); user-select: all; }
+.adv-help { font-size: 11.5px; color: var(--muted); line-height: 1.5; margin: -4px 0 0; }
+.adv-help b { color: var(--text); font-weight: 600; }
 .adv-events { display: flex; flex-direction: column; gap: 4px; }
 .adv-event { font-size: 12px; color: var(--muted); border: 1px dashed var(--line); border-radius: 8px; padding: 4px 10px; }
 .adv-event.is-compaction { border-style: solid; border-color: var(--hf); color: var(--text); }
@@ -305,8 +307,10 @@
         <button type="button" class="fc-tbtn" id="adv-new" ${UI.busy ? "disabled" : ""} title="Καινούργια συζήτηση (η τρέχουσα μένει στη λίστα)">✦ Νέα</button>
         ${S ? `<button type="button" class="fc-tbtn" id="adv-archive" ${UI.busy ? "disabled" : ""} title="Αρχειοθέτηση — φεύγει από τη λίστα, δεν σβήνεται">▣ Αρχειοθέτηση</button>` : ""}
         ${canClose ? `<button type="button" class="fc-tbtn adv-close" id="adv-close" title="Αρχειοθετεί αυτή τη συζήτηση και ανοίγει νέα με αφετηρία τον φάκελο του μαθητή όπως είναι ΤΩΡΑ καταγεγραμμένος">✓ Έκλεισε η υπόθεση</button>` : ""}
-        ${S ? `<span class="adv-turn">${esc(S.id)} · ${fmtK(S.messages.reduce((n, m) => n + (m.content || "").length, 0))} χαρ.${h.memory ? ` / ♻ στα ${fmtK(h.memory.compact_after_chars)}` : ""}</span>` : ""}
-      </div>` : ""}
+        ${S ? `<button type="button" class="fc-tbtn" id="adv-export" ${UI.busy ? "disabled" : ""} title="Κατεβάζει αυτή τη συζήτηση ως αρχείο Markdown (ερωτήσεις, απαντήσεις, εργαλεία, εγγραφές, compactions, usage)">⭳ Λήψη</button>` : ""}
+        ${S ? `<span class="adv-turn" title="Χαρακτήρες ιστορικού αυτής της συζήτησης — ΟΧΙ tokens, ΟΧΙ το corpus. Το corpus μένει στο cache και δεν μετρά εδώ.">${esc(S.id)} · ${S.messages.reduce((n, m) => n + (m.content || "").length, 0).toLocaleString("el-GR")} χαρακτήρες ιστορικού${h.memory ? ` · ♻ σύμπτυξη στους ${Number(h.memory.compact_after_chars).toLocaleString("el-GR")} χαρακτήρες (≈ ${(Math.round(h.memory.compact_after_chars / 2.8 / 5000) * 5000).toLocaleString("el-GR")} tokens)` : ""}</span>` : ""}
+      </div>
+      <p class="adv-help"><b>Έλεγχος</b>: ξαναρωτά τον τοπικό proxy αν είναι ζωντανός. <b>Νέα</b>: καινούργια συζήτηση — η τρέχουσα μένει στη λίστα. <b>Αρχειοθέτηση</b>: φεύγει από τη λίστα, δεν σβήνεται ποτέ. <b>Λήψη</b>: κατεβάζει τη συζήτηση ως Markdown στον δίσκο σου. <b>Έκλεισε η υπόθεση</b>: αρχειοθετεί και ανοίγει νέα με αφετηρία τον φάκελο του μαθητή. Οι συζητήσεις ζουν στον proxy (tools/advisor/sessions), όχι στον browser.</p>` : ""}
       ${S && S.events && S.events.length ? `<div class="adv-events">${S.events.slice(-4).map(eventHTML).join("")}</div>` : ""}
       <div class="adv-transcript" id="adv-transcript" role="log" aria-live="polite" aria-label="Συζήτηση">
         ${S && S.messages.length ? "" : `<p class="adv-hint">Ρώτα κανονιστικά: «Ο μαθητής βαθμολογήθηκε ΑΠΟΤΥΧΙΑ στην C4790 — τι ενεργοποιείται και με ποιον πετάει μετά;». Ο σύμβουλος απαντά ΜΟΝΟ από το επικυρωμένο corpus, με id και παραπομπή· ό,τι βρει έξω από αυτό το σημαίνει ως <mark class="adv-raw">ακατέργαστο</mark>. Μια εγγραφή στον φάκελο γίνεται μόνο όταν πατήσεις εσύ «Γράψ' το».</p>`}
@@ -484,6 +488,25 @@
       .catch((e) => { UI.errors = [{ kind: "error", text: e.message }]; })
       .then(() => { UI.busy = false; return loadSessions(); }).then(render);
   }
+  function exportSession() {
+    // The proxy answers with Content-Disposition: attachment, so a plain link
+    // click saves the file and the page stays where it is. Nothing leaves the
+    // machine: it is his own proxy writing to his own Downloads folder.
+    if (!UI.session) return;
+    const url = `${PROXY}/sessions/${encodeURIComponent(UI.session.id)}/export?agent=${encodeURIComponent(UI.agent)}&format=md`;
+    fetch(url, { cache: "no-store" }).then((r) => {
+      if (!r.ok) return r.json().then((j) => { throw new Error(j.error || r.statusText); });
+      const cd = r.headers.get("Content-Disposition") || "";
+      const name = (/filename="([^"]+)"/.exec(cd) || [])[1] || `advisor-${UI.session.id}.md`;
+      return r.blob().then((b) => {
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(b); a.download = name;
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+        UI.errors = [{ kind: "notice", text: `Κατέβηκε: ${name}` }]; renderTranscript();
+      });
+    }).catch((e) => { UI.errors = [{ kind: "error", text: `Η λήψη απέτυχε: ${e.message}` }]; renderTranscript(); });
+  }
   function archiveSession() {
     if (!UI.session || UI.busy) return;
     jpost(`/sessions/${encodeURIComponent(UI.session.id)}/archive`, { agent: UI.agent })
@@ -547,6 +570,7 @@
       if (t.id === "adv-recheck") { health(true).then(loadSessions).then(render); return; }
       if (t.id === "adv-new") { if (UI.busy) return; UI.session = null; UI.errors = []; UI.ctxDraft = ""; render(); return; }
       if (t.id === "adv-archive") { archiveSession(); return; }
+      if (t.id === "adv-export") { exportSession(); return; }
       if (t.id === "adv-close") { closeCase(); return; }
       if (t.id === "adv-send") { send(); return; }
       if (t.id === "adv-stop") { if (UI.abort) UI.abort.abort(); return; }
