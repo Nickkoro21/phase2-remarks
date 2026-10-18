@@ -193,22 +193,31 @@
     <button class="sch-subtab" data-sch="roster">Roster</button>
     <button class="sch-subtab" data-sch="log">Training Log</button>
     <button class="sch-subtab" data-sch="balance">Balance</button>
-    <!-- ΓΥΡΟΣ 18 — BRIDGE: ο διασταυρωτικός έλεγχος με το Wings Ahead. Διαβάζει
-         ΕΝΑ αρχείο export που επιλέγει ο χρήστης.
+    <!-- bridge:start — ΓΥΡΟΣ 18 — BRIDGE: ο διασταυρωτικός έλεγχος με το Wings
+         Ahead. Διαβάζει ΕΝΑ αρχείο export που επιλέγει ο χρήστης.
          ΓΥΡΟΣ 21 (ΦΑΣΗ 3, 26/08/2026) — Η ΕΠΙΒΕΒΑΙΩΜΕΝΗ ΣΥΜΠΛΗΡΩΣΗ: μια γραμμή
          που ΕΠΙΒΕΒΑΙΩΝΕΙ ο developer γράφεται στο FDMS training log — μία ρητή
          πράξη τη φορά, με το ✎ Editor ανοιχτό, με αριθμημένο διάλογο που λέει
          την επίδραση σε κάθε κόμβο, και με change log + ↺ Undo (απόφανση #2).
          ΣΤΟ WINGS AHEAD ΔΕΝ ΓΡΑΦΕΙ ΠΟΤΕ, ούτε στο repo (απόφανση #7 της
-         21/08/2026 · specs/bridge-spec.md § 13). -->
+         21/08/2026 · specs/bridge-spec.md § 13).
+         18/10/2026 — ΔΕΝ ΤΑΞΙΔΕΥΕΙ ΣΤΗ ΜΟΝΑΔΑ. Ο συγχρονισμός του είναι
+         Supabase, δηλαδή cloud· στο κλειστό δίκτυο πέφτει πάνω στο offline shim
+         και η καρτέλα αποτυγχάνει ΠΑΝΤΑ, σε χέρια που δεν έχουν κανέναν να
+         ρωτήσουν. Το build_offline.py κόβει αυτό το μπλοκ, το <section> από
+         κάτω και το <script> — στο πρότυπο του advisor:start/end. -->
     <button class="sch-subtab" data-sch="bridge">Bridge</button>
+    <!-- bridge:end -->
     <span class="sch-tools" id="sch-tools"></span>
   </nav>
   <section id="sch-board" class="sch-pane"></section>
   <section id="sch-roster" class="sch-pane hidden"></section>
   <section id="sch-log" class="sch-pane hidden"></section>
   <section id="sch-balance" class="sch-pane hidden"></section>
+  <!-- bridge:start — το κέλυφος της καρτέλας Bridge· φεύγει από το export μαζί
+       με το κουμπί του (δες πάνω). -->
   <section id="sch-bridge" class="sch-pane hidden"></section>
+  <!-- bridge:end -->
 </main>
 
 <!-- INSTRUCTOR CURRENCY (Γύρος 11 · MATRIX στον 12a) — δική της καρτέλα.

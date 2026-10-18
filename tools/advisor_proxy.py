@@ -36,25 +36,40 @@ prompt πίσω από ρητό cache_control. Η πρώτη κλήση το Γ�
      σιωπηλά το κόστος. Το context-full.md (1.17 MB) είναι εσκεμμένα ΠΑΝΩ από την
      προεπιλογή: για να τρέξει agent με αυτό, ο ιδιοκτήτης ανεβάζει ρητά το όριο.)
 
-ΤΟ ΕΡΓΑΛΕΙΟ search_sources (απόφανση ιδιοκτήτη: «δεν βρίσκω απάντηση, θέλω να
-ψάξω λίγο περαιτέρω» — μέσα σε όρια που βλέπει). Ο agent που το έχει στο
-`tools:` του agent.md μπορεί να ψάξει ΜΟΝΟ στη WHITELIST (παρακάτω), ο proxy
-εκτελεί την αναζήτηση και την επιστρέφει. Ο έλεγχος είναι ΣΤΗ ΔΙΑΔΡΟΜΗ, όχι στην
-οδηγία: κάθε source αναλύεται σε απόλυτη διαδρομή και πρέπει να πέφτει μέσα σε
-καταχώριση της λίστας· αλλιώς επιστρέφεται tool error και το μοντέλο μαθαίνει το
-όριο. D:\FDMS-roster, .claude, το home, ο φάκελος υποθέσεων — δεν είναι στη
-λίστα, άρα δεν υπάρχουν.
+ΤΑ ΕΡΓΑΛΕΙΑ search_sources + fetch_source (απόφανση ιδιοκτήτη: «δεν βρίσκω
+απάντηση, θέλω να ψάξω λίγο περαιτέρω» — μέσα σε όρια που βλέπει). Ο agent που
+έχει `search_sources` στο `tools:` του agent.md παίρνει ΚΑΙ ΤΑ ΔΥΟ (ζευγάρι) και
+μπορεί να ψάξει ΜΟΝΟ στη WHITELIST (παρακάτω)· ο proxy εκτελεί και επιστρέφει. Ο
+έλεγχος είναι ΣΤΗ ΔΙΑΔΡΟΜΗ, όχι στην οδηγία: κάθε source αναλύεται σε απόλυτη
+διαδρομή και πρέπει να πέφτει μέσα σε καταχώριση της λίστας· αλλιώς επιστρέφεται
+tool error και το μοντέλο μαθαίνει το όριο. D:\FDMS-roster, .claude, το home, ο
+φάκελος υποθέσεων — δεν είναι στη λίστα, άρα δεν υπάρχουν. Το ίδιο ισχύει για
+την ανάκτηση: μια λαβή με πηγή εκτός λίστας απορρίπτεται από το ΙΔΙΟ resolve_source.
+  ΔΥΟ ΕΡΓΑΛΕΙΑ ΑΝΤΙ ΓΙΑ ΕΝΑ (18/10/2026). Η αναζήτηση έκοβε αποσπάσματα 900
+  χαρακτήρων ΤΥΦΛΑ, στη μέση λέξης — σε πραγματική ερώτηση 25 ευρήματα, 5.715
+  χαρακτήρες, κανένα ολόκληρο, και ο agent με εντολή «παράθεσε αυτολεξεί». Τώρα:
+    search_sources  ΒΡΙΣΚΕΙ — αποσπάσματα κομμένα σε όριο πρότασης/παραγράφου,
+                    που λένε πόσοι χαρακτήρες παραλείπονται και φέρουν ΛΑΒΗ·
+                    η ελληνική κλίση δεν μετρά («δοκιμή» βρίσκει «δοκιμές»).
+    fetch_source    ΦΕΡΝΕΙ ΤΟ ΠΛΗΡΕΣ — δέχεται τη λαβή (<πηγή>#<id|h:hash|pN>)
+                    και επιστρέφει ΟΛΟΚΛΗΡΗ τη μονάδα: εδάφιο, JSON αντικείμενο,
+                    σελίδα PDF· πάνω από το όριο, αριθμημένα μέρη, ποτέ σιωπηλά.
+  Η σχεδίαση της λαβής και το σκεπτικό κάθε ορίου: στην κεφαλή της ενότητας
+  «search_sources + fetch_source» πιο κάτω.
   Η ΔΙΑΚΡΙΣΗ ΠΟΥ ΜΕΤΡΑΕΙ: το corpus του system prompt είναι ψηφιοποιημένο ΚΑΙ
   επικυρωμένο. Το κείμενο των PDF είναι ΑΚΑΤΕΡΓΑΣΤΗ εξαγωγή — κανείς δεν το
   έλεγξε. Κάθε εύρημα από PDF επιστρέφει τυλιγμένο στον χαρακτηρισμό
   «ΑΚΑΤΕΡΓΑΣΤΟ ΚΕΙΜΕΝΟ ΠΗΓΗΣ (σελ. N) — ΔΕΝ έχει περάσει από επικύρωση», που ο
   agent οφείλει να μεταφέρει στην απάντηση. Τα επιμελημένα αρχεία (data/*, το
   context-full.md) δεν φέρουν τον χαρακτηρισμό, γιατί είναι επικυρωμένα.
-  ΦΡΕΝΑ ΤΟΥ ΕΡΓΑΛΕΙΟΥ:
-     ADVISOR_TOOL_MAX_CALLS    --tool-max-calls     default 5     κλήσεις ανά απάντηση
-     ADVISOR_TOOL_MAX_CHARS    --tool-max-chars     default 6000  χαρακτήρες ανά κλήση
-     ADVISOR_TOOL_TOTAL_CHARS  --tool-total-chars   default 20000 χαρακτήρες ανά απάντηση
-  Κάθε κλήση καταγράφεται: ερώτημα, πηγή, ευρήματα, χαρακτήρες.
+  ΦΡΕΝΑ ΤΩΝ ΕΡΓΑΛΕΙΩΝ (18/10/2026 — αναπροσαρμοσμένα για δύο εργαλεία, όχι καταργημένα):
+     ADVISOR_TOOL_MAX_CALLS       --tool-max-calls       default 5     αναζητήσεις ανά απάντηση
+     ADVISOR_TOOL_MAX_CHARS       --tool-max-chars       default 8000  χαρακτήρες ανά αναζήτηση
+     ADVISOR_FETCH_MAX_CALLS      --fetch-max-calls      default 8     ανακτήσεις ανά απάντηση
+     ADVISOR_FETCH_MAX_CHARS      --fetch-max-chars      default 12000 χαρακτήρες ανά ανάκτηση (μετά: μέρη)
+     ADVISOR_SEARCH_EXCERPT_CHARS --search-excerpt-chars default 700   μήκος αποσπάσματος αναζήτησης
+     ADVISOR_TOOL_TOTAL_CHARS     --tool-total-chars     default 60000 χαρακτήρες ΟΛΩΝ των εργαλείων ανά απάντηση
+  Κάθε κλήση καταγράφεται: ερώτημα/λαβή, πηγή, ευρήματα, χαρακτήρες, ολόκληρο ή μέρος.
 
 Ο ΦΑΚΕΛΟΣ ΥΠΟΘΕΣΕΩΝ (casefile — απόφανση ιδιοκτήτη: ο Board Director δουλεύει
 με ΠΡΑΓΜΑΤΙΚΟΥΣ μαθητές: «ο μαθητής Ψ είχε αεροναυτία, μην κάνεις τίποτα»).
@@ -102,9 +117,11 @@ R-B — Η ΜΝΗΜΗ, με το σχήμα που έδωσε ο ιδιοκτή�
      POST /sessions/<id>/archive · POST /sessions/<id>/close. Το /ask παίρνει
      πλέον {session, question} και ο proxy κρατά το ιστορικό.
   2. COMPACTION όταν το ΣΥΝΟΛΟ corpus + ιστορικό πλησιάσει το ταβάνι (Q1, απόφανση
-     ιδιοκτήτη «Σύνολο 400.000, βάλ' το να υπολογίζει το σύνολο»):
+     ιδιοκτήτη «Σύνολο 400.000, βάλ' το να υπολογίζει το σύνολο»· 18/10/2026
+     ανέβηκε ρητά σε 600.000 — τα μοντέλα πάνε ως 1 εκατ., τα 600.000 αφήνουν
+     περιθώριο, και με δύο εργαλεία κάθε γύρος κουβαλά περισσότερο κείμενο πηγών):
      est(πρόθεμα system) + est(ιστορικό + ερώτηση) > ADVISOR_CONTEXT_CEILING_TOKENS
-     (400.000) − max_tokens της απάντησης. Η εκτίμηση: GREEK_CHARS_PER_TOKEN=2.5.
+     (600.000) − max_tokens της απάντησης. Η εκτίμηση: GREEK_CHARS_PER_TOKEN=2.5.
      Προσαρμόζεται μόνη της: ο remarks (162 KB corpus) έχει πολύ περισσότερο χώρο
      συζήτησης από τον board (464 KB). Το ιστορικό ΜΟΝΟ αλλάζει — το corpus είναι το cached
      πρόθεμα και δεν μετακινείται ΠΟΤΕ. Το μοντέλο ξαναγράφει τη συζήτηση σε
@@ -140,7 +157,7 @@ compactions, σύνολα usage) ή ως το JSON της. Τοπικά, στο�
 third-party tracing — οι συνεδρίες έχουν πραγματικά ονόματα.
 
 ΑΛΛΕΣ ΡΥΘΜΙΣΕΙΣ
-  ADVISOR_CONTEXT_CEILING_TOKENS --context-ceiling default 400000 (ΣΥΝΟΛΟ tokens corpus+ιστορικό, ΕΚΤΙΜΗΣΗ με 2.5 χαρ./token)
+  ADVISOR_CONTEXT_CEILING_TOKENS --context-ceiling default 600000 (ΣΥΝΟΛΟ tokens corpus+ιστορικό, ΕΚΤΙΜΗΣΗ με 2.5 χαρ./token· ήταν 400000 ως 18/10/2026)
   ADVISOR_COMPACT_KEEP        --compact-keep    default 1      (ζεύγη που μένουν αυτούσια)
   ADVISOR_CONFIRM_TTL_S       --confirm-ttl     default 900    (ζωή token επιβεβαίωσης)
   ADVISOR_SESSIONS_DIR        --sessions-dir    default tools/advisor/sessions/
@@ -163,7 +180,9 @@ ENDPOINTS (CORS μόνο για http://localhost:*, http://127.0.0.1:* και fi
   python tools/advisor_proxy.py --dry-run             → χτίζει και τυπώνει το
                                                         αίτημα, ΧΩΡΙΣ κλήση API
   python tools/advisor_proxy.py --search "ΚΕΠΕ" --source 3-01
-                                                      → τρέχει το εργαλείο τοπικά
+                                                      → τρέχει την αναζήτηση τοπικά
+  python tools/advisor_proxy.py --fetch "3-01#p54"    → τρέχει την ανάκτηση τοπικά
+                                                        (ή context-full#fail-24, --part 2)
   python tools/advisor_proxy.py --count-tokens        → ΜΙΑ δωρεάν κλήση
                                                         count_tokens για το μέγεθος
                                                         του corpus (χρειάζεται κλειδί)
@@ -200,11 +219,20 @@ DEFAULTS = {
     "max_corpus_bytes": 1_000_000,
     "cache_ttl": "1h",
     "tool_max_calls": 5,
-    "tool_max_chars": 6000,
-    "tool_total_chars": 20000,
+    # 18/10/2026 — δύο εργαλεία (αναζήτηση + ανάκτηση)· το σκεπτικό κάθε αριθμού
+    # είναι γραμμένο στην κεφαλή της ενότητας «search_sources + fetch_source».
+    "tool_max_chars": 8000,        # ανά κλήση αναζήτησης (ήταν 6000: έκοβε τα 8 ευρήματα της προεπιλογής)
+    "tool_total_chars": 60000,     # ανά απάντηση, όλα τα εργαλεία (ήταν 20000: δεν χωρούσε 2 αναζητήσεις + 4 ανακτήσεις)
+    "fetch_max_calls": 8,          # ανακτήσεις ανά απάντηση
+    "fetch_max_chars": 12000,      # ανά ανάκτηση: το μεγαλύτερο εδάφιο του corpus (11.564) χωρά ΟΛΟΚΛΗΡΟ
+    "search_excerpt_chars": 700,   # μήκος αποσπάσματος αναζήτησης (κόβει σε όριο, ποτέ μέσα σε λέξη)
     "casefile_max_calls": 8,
     "casefile_max_writes": 2,
-    "context_ceiling": 400_000,    # Q1: ΣΥΝΟΛΟ tokens (corpus + ιστορικό), απόφανση ιδιοκτήτη «Σύνολο 400.000»
+    # Q1: ΣΥΝΟΛΟ tokens (corpus + ιστορικό). Ήταν 400.000 (απόφανση «Σύνολο 400.000»)·
+    # 18/10/2026 απόφανση ιδιοκτήτη: 600.000 — τα μοντέλα πάνε ως 1 εκατ., τα
+    # 600.000 αφήνουν περιθώριο, και με δύο εργαλεία η απάντηση κουβαλά περισσότερο
+    # κείμενο πηγών (έως 60.000 χαρ. ≈ 24.000 tokens ανά γύρο).
+    "context_ceiling": 600_000,
     "compact_keep": 1,
     "confirm_ttl": 900,
     "keepalive": 1,
@@ -407,7 +435,11 @@ SEARCHABLE_SUFFIXES = {".json", ".md", ".txt"}
 # ── ΤΑ ΕΡΓΑΛΕΙΑ ΠΟΥ ΥΠΑΡΧΟΥΝ — ό,τι άλλο γράψει το agent.md στο `tools:` αγνοείται ──
 CASEFILE_TOOLS = ("casefile_find_student", "casefile_list_cases", "casefile_add_case", "casefile_update_case")
 COMPOSER_TOOLS = ("description_template", "remarks_lookup")     # Q6/Q7: ανάγνωση της ΠΡΑΓΜΑΤΙΚΗΣ γραμματικής/τράπεζας
-KNOWN_TOOLS = ("search_sources",) + CASEFILE_TOOLS + COMPOSER_TOOLS
+# search_sources και fetch_source είναι ΖΕΥΓΑΡΙ: όποιος agent έχει το πρώτο παίρνει
+# και το δεύτερο (δες offered_tools) — αναζήτηση χωρίς ανάκτηση είναι η αρρώστια
+# των κομμένων παραθεμάτων της 18/10/2026. Το front matter των agents δεν αλλάζει.
+SEARCH_TOOLS = ("search_sources", "fetch_source")
+KNOWN_TOOLS = SEARCH_TOOLS + CASEFILE_TOOLS + COMPOSER_TOOLS
 OBS2_DIR = ROOT / "data" / "observations2"
 DESC_JSON = ROOT / "data" / "descriptions.json"
 CASE_KINDS = ("fail", "lag", "nfs_in", "nfs_out", "sms_in", "sms_out", "progress_check",
@@ -519,7 +551,16 @@ def offered_tools(a: dict) -> list[str]:
     όταν λείπουν τα διαπιστευτήρια. Τίποτα σιωπηλό — το /health και το event
     `start` λένε τι προσφέρθηκε."""
     cf_ok = casefile_configured()
-    return [t for t in a["tools"] if t == "search_sources" or t in COMPOSER_TOOLS or cf_ok]
+    out: list[str] = []
+    for t in a["tools"]:
+        if t in SEARCH_TOOLS:
+            names = list(SEARCH_TOOLS)          # το ζευγάρι, πάντα μαζί
+        elif t in COMPOSER_TOOLS or cf_ok:
+            names = [t]
+        else:
+            continue
+        out.extend(n for n in names if n not in out)
+    return out
 
 
 def list_agents() -> list[dict]:
@@ -643,21 +684,52 @@ def read_corpus(a: dict) -> tuple[str | None, str | None]:
 def tool_preamble() -> str:
     ids = "\n".join(f"  - `{k}` — {v[3]}" for k, v in WHITELIST.items())
     return (
-        "# ΤΟ ΕΡΓΑΛΕΙΟ search_sources (το προσθέτει ο proxy)\n\n"
-        "Έχεις ένα εργαλείο αναζήτησης ΕΚΤΟΣ του corpus σου. Είναι **έσχατη λύση**: "
-        "πρώτα απαντάς από το corpus του system prompt· το εργαλείο το καλείς ΜΟΝΟ όταν "
-        "το corpus **σιωπά πραγματικά** για κάτι που ρωτήθηκες, και στην απάντηση **λες "
-        "ρητά** αν χρησιμοποίησες μόνο το corpus ή και αναζήτηση, και σε ποια πηγή.\n\n"
+        "# ΤΑ ΕΡΓΑΛΕΙΑ search_sources + fetch_source (τα προσθέτει ο proxy)\n\n"
+        "Έχεις ένα εργαλείο αναζήτησης ΕΚΤΟΣ του corpus σου. Το corpus του system prompt "
+        "είναι η **βάση και η πρώτη στάση** — από εκεί ξεκινάς πάντα, γιατί είναι το μόνο "
+        "επικυρωμένο κείμενο. Η αναζήτηση είναι το **δεύτερο βήμα**, όχι παράπτωμα και όχι "
+        "έσχατη λύση.\n\n"
+        "**ΨΑΧΝΕΙΣ** όταν (α) σου το ζητήσει ο ιδιοκτήτης — ρητά («ψάξε», «βρες πού το "
+        "λέει») ή έμμεσα («είσαι σίγουρος;», «διασταύρωσέ το»): η **διασταύρωση είναι "
+        "λόγος να ψάξεις ακόμη κι αν έχεις ήδη απάντηση**, γιατί διασταύρωση σημαίνει να "
+        "κοιτάξεις την πηγή, όχι να επαναλάβεις τον εαυτό σου· (β) το corpus σιωπά για "
+        "κάτι που ρωτήθηκες· (γ) το corpus κρατά παραπομπή χωρίς το αυτολεξεί κείμενο· "
+        "(δ) θέλεις να δεις το πρωτότυπο πριν πεις ότι δύο πηγές αντιφάσκουν.\n\n"
+        "**ΔΕΝ ψάχνεις** από συνήθεια σε κάθε ερώτηση: όταν το corpus απαντά καθαρά και "
+        "κανείς δεν ζήτησε διασταύρωση, απαντάς από το corpus. Αλλά **άρνηση να ψάξεις "
+        "όταν σου ζητήθηκε είναι το βαρύτερο από τα δύο σφάλματα** (απόφανση ιδιοκτήτη "
+        "18/10/2026). Στην απάντηση **λες ρητά** αν χρησιμοποίησες μόνο το corpus ή και "
+        "αναζήτηση, και σε ποια πηγή.\n\n"
         f"Πηγές που δέχεται (παράμετρος `source`, ΜΟΝΟ αυτές):\n{ids}\n\n"
+        "**ΔΥΟ ΕΡΓΑΛΕΙΑ, ΔΥΟ ΒΗΜΑΤΑ** (απόφανση ιδιοκτήτη 18/10/2026: *«να είναι τέλειοι οι "
+        "σύμβουλοι, να μην τους λείπει καμία πληροφορία, να μην φαντάζονται»*). Το "
+        "`search_sources` **ΒΡΙΣΚΕΙ**: γυρίζει αποσπάσματα κομμένα σε όριο πρότασης ή παραγράφου "
+        "(ποτέ μέσα σε λέξη), με γραμμή που λέει πόσοι χαρακτήρες **παραλείπονται** πριν και μετά, "
+        "και με μια **λαβή** σε κάθε εύρημα (π.χ. `context-full#fail-24`, `3-01#p54`, "
+        "`data/criteria/contact.json#contact-36`). Το `fetch_source(λαβή)` **ΦΕΡΝΕΙ ΤΟ ΠΛΗΡΕΣ**: "
+        "ολόκληρο το εδάφιο, το JSON αντικείμενο ή τη σελίδα PDF, αυτολεξεί και χωρίς αποκοπή. "
+        "Η ελληνική κλίση δεν μετρά στην αναζήτηση («δοκιμή» βρίσκει και «δοκιμές»).\n\n"
+        "**Ανακτάς το πλήρες** όταν: (α) πρόκειται να **παραθέσεις** — κάθε παράθεμα από αναζήτηση "
+        "βγαίνει από `fetch_source`, όχι από το απόσπασμα· (β) το απόσπασμα είναι **κομμένο** (λέει "
+        "«παραλείπονται N») και η απάντηση εξαρτάται από το υπόλοιπο· (γ) η απάντηση **κρίνει "
+        "παραπομπή**, συνέπεια ή επιτρεπτό πτήσης. **Ποτέ δεν παραθέτεις κομμένο απόσπασμα σαν να "
+        "ήταν ολόκληρο — αν θα το παραθέσεις, ανάκτησέ το.** Αν το `fetch_source` γυρίσει «ΜΕΡΟΣ "
+        "k/N», δεν έχεις το όλο: πάρε τα υπόλοιπα μέρη με `part` ή πες ρητά ποιο μέρος διάβασες. "
+        "Δεν ανακτάς ό,τι δεν θα χρησιμοποιήσεις.\n\n"
         "- Ό,τι επιστρέφει με τον χαρακτηρισμό «ΑΚΑΤΕΡΓΑΣΤΟ ΚΕΙΜΕΝΟ ΠΗΓΗΣ (σελ. N) — ΔΕΝ "
         "έχει περάσει από επικύρωση» είναι ωμή εξαγωγή από PDF: κολλάει λέξεις, κόβει "
         "γραμμές, και κανείς δεν το έλεγξε. **Μετέφερε τον χαρακτηρισμό αυτολεξεί** δίπλα "
         "σε κάθε τέτοιο παράθεμα και ΜΗΝ το παρουσιάσεις ως επικυρωμένο κείμενο. Τα "
         "ευρήματα από τα επιμελημένα αρχεία (data/*, context-full) δεν φέρουν χαρακτηρισμό "
         "γιατί είναι επικυρωμένα.\n"
-        f"- Το πολύ **{CFG['tool_max_calls']}** κλήσεις ανά απάντηση. Μετά, απαντάς με όσα "
-        "έχεις και λες ρητά ότι σταμάτησες την αναζήτηση.\n"
-        "- Μια πηγή εκτός λίστας επιστρέφει σφάλμα· μην ξαναδοκιμάσεις με άλλη διαδρομή.\n"
+        f"- Τα φρένα μένουν ακέραια: το πολύ **{CFG['tool_max_calls']}** αναζητήσεις, "
+        f"**{CFG['fetch_max_calls']}** ανακτήσεις (έως {CFG['fetch_max_chars']:,} χαρ. η καθεμία — "
+        f"ένα εδάφιο ολόκληρο, όχι ολόκληρο PDF) και **{CFG['tool_total_chars']:,}** χαρακτήρες "
+        "κειμένου πηγών συνολικά ανά απάντηση. Μετά, απαντάς με όσα έχεις και λες ρητά ότι "
+        "σταμάτησες. Είναι φρένα κόστους — δεν σου απαγορεύουν την πρώτη κλήση.\n"
+        "- Μια πηγή εκτός λίστας επιστρέφει σφάλμα — και στην αναζήτηση και στην ανάκτηση· μην "
+        "ξαναδοκιμάσεις με άλλη διαδρομή. Λαβή που δεν αναλύεται σημαίνει ότι άλλαξε το corpus: "
+        "ξανατρέξε την αναζήτηση.\n"
         "- Ο κανόνας 5 (τίποτα από μνήμης) ισχύει και για ό,τι βρεις: παραθέτεις, δεν "
         "συμπεραίνεις αριθμό που δεν είναι τυπωμένος."
     )
@@ -759,15 +831,119 @@ def prefix_digest(system: list[dict]) -> str:
 
 
 # ════════════════════════════════════════════════════════════════════════════
-# search_sources — η αναζήτηση, με το όριο ΣΤΗ ΔΙΑΔΡΟΜΗ
+# search_sources + fetch_source — Η ΑΝΑΖΗΤΗΣΗ ΒΡΙΣΚΕΙ, Η ΑΝΑΚΤΗΣΗ ΦΕΡΝΕΙ ΤΟ ΠΛΗΡΕΣ
 # ════════════════════════════════════════════════════════════════════════════
+# ΤΟ ΠΕΡΙΣΤΑΤΙΚΟ (18/10/2026). Η παλιά _snippet() έκοβε παράθυρο 900 χαρακτήρων
+# ΤΥΦΛΑ, σε θέση χαρακτήρα — στη μέση λέξης, και στις δύο άκρες. Μετρημένο σε
+# πραγματική ερώτηση: 25 ευρήματα, 5.715 χαρακτήρες, κανένα ολόκληρο. Και αυτό
+# στη διαδρομή του ωμού PDF, όπου ο agent έχει ρητή εντολή «παράθεσε ΑΥΤΟΛΕΞΕΙ,
+# σήμανε ΑΚΑΤΕΡΓΑΣΤΟ». Παράθεμα κομμένο στη μέση λέξης δεν είναι αυτολεξεί. Την
+# ίδια μέρα ξεριζώθηκε η ίδια αρρώστια ([:600]) από τον builder του corpus· αυτή
+# ήταν η ίδια, σε άλλο όργανο.
+#
+# Η ΑΠΟΦΑΝΣΗ: «να είναι τέλειοι οι σύμβουλοι, να μην τους λείπει καμία πληροφορία,
+# να μην φαντάζονται» — «όσα token απαιτούνται για να μην χάνουμε πληροφορίες».
+# Άρα ΟΧΙ μεγαλύτερο παράθυρο (ίδια αρρώστια, άλλη δόση), αλλά ΔΥΟ ΕΡΓΑΛΕΙΑ:
+#   search_sources  ΒΡΙΣΚΕΙ. Αποσπάσματα κομμένα ΜΟΝΟ σε όριο παραγράφου / πρότασης /
+#                   γραμμής — ποτέ μέσα σε λέξη — που λένε πόσοι χαρακτήρες
+#                   παραλείπονται πριν και μετά, και φέρουν ΛΑΒΗ.
+#   fetch_source    ΦΕΡΝΕΙ ΤΟ ΠΛΗΡΕΣ. Δέχεται τη λαβή και επιστρέφει ΟΛΟΚΛΗΡΗ τη
+#                   μονάδα — το εδάφιο «### [id]», το JSON αντικείμενο, τη σελίδα
+#                   PDF — χωρίς αποκοπή. Πάνω από fetch_max_chars επιστρέφει
+#                   ΑΡΙΘΜΗΜΕΝΟ ΜΕΡΟΣ k/N και το λέει· ποτέ σιωπηλή κοπή.
+# Η WHITELIST, ο έλεγχος διαδρομής (resolve_source) και η σήμανση ΑΚΑΤΕΡΓΑΣΤΟ
+# ισχύουν ακέραια ΚΑΙ στα δύο: ό,τι δεν είναι στη λίστα δεν υπάρχει ούτε για ανάκτηση.
+#
+# Η ΛΑΒΗ:  <πηγή>#<εντοπιστής>
+#   <πηγή>        id της WHITELIST (context-full, 3-01, criteria, …) ή διαδρομή
+#                 αρχείου ΜΕΣΑ σε φάκελο της λίστας (data/criteria/contact.json).
+#                 Αναλύεται από το ΙΔΙΟ resolve_source() με την αναζήτηση.
+#   <εντοπιστής>  pN | pN-M      σελίδα/σελίδες PDF (μόνο στις ωμές πηγές, έως
+#                                FETCH_MAX_PAGES σελίδες τη φορά)
+#                 <id>           το id του εδαφίου «### [id]» στο corpus, ή το
+#                                "id" / "section" / "table_id" ενός JSON αντικειμένου
+#                 h:<12 hex>     sha1 του κειμένου της μονάδας (λευκό διάστημα
+#                                ενοποιημένο) — για μονάδες χωρίς id ή με id που
+#                                επαναλαμβάνεται μέσα στο ίδιο αρχείο
+#   ΓΙΑΤΙ ΕΤΣΙ. Το id είναι ΣΤΑΘΕΡΟ (ίδια λαβή → ίδιο εδάφιο) και ΑΝΘΕΚΤΙΚΟ: ο
+#   builder ξαναγράφει το corpus, τα ids μένουν (482/482 μοναδικά στο context-full)·
+#   ένας αριθμός γραμμής ή δείκτης μπλοκ θα έσπαγε στην πρώτη εισαγωγή. Το hash
+#   είναι ανθεκτικό σε αναδιάταξη και εισαγωγή και σπάει ΜΟΝΟ αν αλλάξει το ίδιο
+#   το κείμενο της μονάδας — τότε η παλιά λαβή ΠΡΕΠΕΙ να αποτύχει ρητά («ξανατρέξε
+#   την αναζήτηση»), όχι να γυρίσει σιωπηλά άλλο κείμενο. Η σελίδα είναι η φυσική
+#   μονάδα της ωμής εξαγωγής PDF: ο χαρακτηρισμός ΑΚΑΤΕΡΓΑΣΤΟ ήδη λέει «σελ. N».
+#
+# ΤΑ ΟΡΙΑ ΚΑΙ ΤΟ ΣΚΕΠΤΙΚΟ ΤΟΥΣ (μετρημένα στο corpus της 18/10/2026):
+#   search_excerpt_chars 700     το απόσπασμα ΒΡΙΣΚΕΙ· το πλήρες είναι μία κλήση
+#                                μακριά, άρα δεν χρειάζεται να είναι μεγάλο — αρκεί
+#                                να κόβει καθαρά και να λέει τι έμεινε απ' έξω.
+#   tool_max_chars       8000    ανά κλήση αναζήτησης: 8 ευρήματα × (700 απόσπασμα
+#                                + ~200 κεφαλίδα/λαβή) + κεφαλή ≈ 7.600 — τα 6.000
+#                                θα έκοβαν ευρήματα στην προεπιλογή.
+#   fetch_max_chars      12000   ανά ανάκτηση: το μεγαλύτερο εδάφιο του corpus είναι
+#                                11.564 χαρ. (board [fail-85]), η μεγαλύτερη σελίδα
+#                                PDF 4.743 (3-01) — ένα εδάφιο ή 2 σελίδες χωρούν
+#                                ΟΛΟΚΛΗΡΑ· ολόκληρο PDF (253 σελ. ≈ 430.000) όχι.
+#                                Πάνω από το όριο: μέρη k/N σε όριο παραγράφου.
+#   fetch_max_calls      8       ανά απάντηση: μια τεκμηριωμένη απάντηση παραθέτει
+#                                2-4 εδάφια· τα 8 αφήνουν χώρο για 2 σελίδες PDF,
+#                                3 εδάφια και 2-3 διασταυρώσεις.
+#   tool_total_chars     60000   ανά απάντηση, ΟΛΑ τα εργαλεία: ρεαλιστικά 2
+#                                αναζητήσεις (≈15.000) + 4 ανακτήσεις (≈16.000) ≈
+#                                31.000· τα 20.000 δεν χωρούσαν ούτε αυτό. 60.000
+#                                χαρ. ≈ 24.000 tokens εισόδου (2,5 χαρ./token) —
+#                                το κόστος που διάλεξε ρητά ο ιδιοκτήτης αντί για
+#                                πληροφορία που λείπει. Πέρα από αυτό: ρητό μήνυμα,
+#                                όχι σιωπηλή κοπή.
+#   Το ημερήσιο όριο (200) και οι γύροι (20) ΔΕΝ αλλάζουν.
+
+FETCH_MAX_PAGES = 3          # σελίδες PDF ανά ανάκτηση (pN-M): ένα εδάφιο που
+                             # περνά σε επόμενη σελίδα, όχι ξεφύλλισμα κεφαλαίου
+
 
 def _fold(s: str) -> str:
     """Πεζά, χωρίς τόνους, τελικό σ ενοποιημένο — ώστε «ΚΕΠΕ», «Κέπε» και
-    «κεπε» να είναι το ίδιο, και «μαθητής» να πιάνει «ΜΑΘΗΤΗΣ»."""
+    «κεπε» να είναι το ίδιο, και «μαθητής» να πιάνει «ΜΑΘΗΤΗΣ». ΑΛΛΑΖΕΙ ΜΗΚΟΣ
+    (NFD + αφαίρεση τόνων) — για ερωτήματα και σύγκριση, ΟΧΙ για θέσεις."""
     s = unicodedata.normalize("NFD", s or "")
     s = "".join(ch for ch in s if not unicodedata.combining(ch))
     return s.lower().replace("ς", "σ")
+
+
+# ── ΑΝΑΔΙΠΛΩΣΗ ΠΟΥ ΔΙΑΤΗΡΕΙ ΤΙΣ ΘΕΣΕΙΣ ─────────────────────────────────────
+# Η παλιά _snippet έβρισκε τη θέση του όρου στο ΑΝΑΔΙΠΛΩΜΕΝΟ κείμενο και έκοβε
+# το ΠΡΩΤΟΤΥΠΟ με αυτή — σωστό μόνο επειδή τα ελληνικά NFC αναδιπλώνονται
+# χαρακτήρα-προς-χαρακτήρα. Ο πίνακας αντικατάστασης κρατά το μήκος ΑΚΡΙΒΩΣ
+# (ένας κωδικός → ένας κωδικός), ώστε κάθε θέση στο αναδιπλωμένο να είναι θέση
+# στο πρωτότυπο — και το όριο που διαλέγουμε να είναι όριο στο κείμενο που
+# επιστρέφουμε. Τα κείμενα κανονικοποιούνται σε NFC στην ανάγνωση.
+def _build_fold_table() -> dict:
+    """Όλο το BMP (εκτός surrogates), μία φορά στην εκκίνηση (~0,1 s): και το «≠»
+    (→ «=» κατά NFD) πρέπει να αναδιπλώνεται όπως στην _fold, αλλιώς οι δύο
+    συναρτήσεις διαφωνούν σε ένα σύμβολο και η απόδειξη ισότητας πέφτει."""
+    tbl: dict = {}
+    for cp in range(0x20, 0x10000):
+        if 0xD800 <= cp <= 0xDFFF:
+            continue
+        ch = chr(cp)
+        d = unicodedata.normalize("NFD", ch)
+        base = next((c for c in d if not unicodedata.combining(c)), ch)
+        low = base.lower()
+        if len(low) != 1:
+            low = base if len(base) == 1 else ch
+        if low == "ς":
+            low = "σ"
+        if low != ch:
+            tbl[cp] = low
+    return tbl
+
+
+_FOLD_TABLE = _build_fold_table()
+
+
+def _fold_aligned(s: str) -> str:
+    """Ίδιο αποτέλεσμα με τη _fold() για NFC κείμενο, ΙΔΙΟ ΜΗΚΟΣ με την είσοδο."""
+    return s.translate(_FOLD_TABLE)
 
 
 def _terms(q: str) -> list[str]:
@@ -778,6 +954,112 @@ def _terms(q: str) -> list[str]:
             seen.add(t)
             out.append(t)
     return out
+
+
+# ── Η ΚΛΙΣΗ (18/10/2026) ────────────────────────────────────────────────────
+# Η _fold ισοπεδώνει τόνους και τελικό σίγμα — σωστά. Αλλά η σύγκριση ήταν σκέτο
+# substring: «δοκιμη» ΕΙΝΑΙ μέσα στο «δοκιμησ» αλλά ΟΧΙ μέσα στο «δοκιμεσ», άρα
+# το ερώτημα «Δοκιμή Προόδου» ΕΧΑΝΕ τις «Δοκιμές Προόδου». Διόρθωση με απλά μέσα,
+# χωρίς βιβλιοθήκη και χωρίς μοντέλο: κοπή ΜΟΝΟ της κλιτικής κατάληξης (όχι της
+# παραγωγικής — «αξιολόγ-ηση» μένει «αξιολογησ», δεν γίνεται «αξιολογ» που θα
+# έπιανε και τον «αξιολογητή»), και ταίριασμα όρου με λέξη όταν οι δύο ρίζες
+# είναι ΙΣΕΣ. Το substring παραμένει ως δεύτερος δρόμος, άρα τίποτα που βρισκόταν
+# δεν χάνεται· προστίθενται μόνο λέξεις με την ίδια ρίζα.
+#   ΓΙΑΤΙ ΜΟΝΟ ΑΥΤΕΣ ΟΙ ΚΑΤΑΛΗΞΕΙΣ: κόβονται οι ελάχιστες ώστε όλες οι πτώσεις
+#   ενός ονόματος να δίνουν την ΙΔΙΑ ρίζα — πτήση/πτήσης/πτήσεις/πτήσεων → πτησ,
+#   στάδιο/σταδίου/στάδια/σταδίων → σταδι, βαθμός/βαθμού/βαθμοί/βαθμούς → βαθμ.
+#   ΔΕΝ κόβονται -ιο/-ια ολόκληρα (θα έκαναν «συμβούλιο» = «σύμβουλος»), ούτε
+#   -ι/-ε/-υ (ουδέτερα σε -ι σπάνια εδώ, το ΚΕΠΕ ακρωνύμιο). Ελάχιστη ρίζα 4
+#   χαρακτήρες: «μόνος» ΔΕΝ γίνεται «μον» (θα έπιανε το επίρρημα «μόνο»), «ώρες»
+#   δεν γίνεται «ωρ». Ρήματα δεν αντιμετωπίζονται — τα κρατά το substring.
+#   ΑΚΡΙΒΕΙΑ: σε κανονισμό το άσχετο εύρημα είναι χειρότερο από το κανένα· η
+#   ισότητα ριζών (όχι πρόθεμα) είναι ο λόγος που «αξιολόγηση» δεν φέρνει τον
+#   «αξιολογητή» και «συμβούλιο» δεν φέρνει τον «σύμβουλο». Μετρήθηκε πριν/μετά
+#   (18/10/2026, 17 ερωτήματα × 3 πηγές): «Δοκιμή Προόδου» 48 → 58 εδάφια στο
+#   context-full (+δοκιμών, +δοκιμές), «επαναλήψεις» 16 → 54, «μαθητής» 161 → 261·
+#   κάθε λέξη που πρόσθεσε η ρίζα καταγράφηκε ονομαστικά και καμία δεν ήταν άλλη
+#   λέξη· 16 ζεύγη που ΔΕΝ πρέπει να ταυτίζονται δεν ταυτίστηκαν.
+#   ΤΟ ΟΜΟΓΡΑΦΟ ΠΟΥ ΒΓΗΚΕ ΣΤΗ ΜΕΤΡΗΣΗ: «δοκιμ-ή» (η εξέταση) και «δόκιμ-ος» (ο
+#   δόκιμος αρχηγός σχηματισμού, οι δόκιμοι ΣΜΥΑ στο 3-01) έχουν ΙΔΙΑ ρίζα
+#   «δοκιμ» αφού οι τόνοι έχουν ισοπεδωθεί (και δεν μπορούν να κρατηθούν: τα
+#   κεφαλαία «ΔΟΚΙΜΗ ΠΡΟΟΔΟΥ» του κανονισμού δεν έχουν τόνους). Λύση: η κατάληξη
+#   του ΟΡΟΥ ορίζει το κλιτικό παράδειγμα και άρα ποιες καταλήξεις ΛΕΞΕΩΝ δέχεται
+#   — θηλυκό σε -η δέχεται -η/-ης/-ες/-ων/-εις/-εων, ΟΧΙ -ος/-ου/-ο/-οι/-ους. Το
+#   -ων (γενική πληθυντικού) είναι κοινό σε όλα και μένει κοινό. Όρος χωρίς
+#   κλιτική κατάληξη (ΚΕΠΕ, μόνος, ώρες, αγγλικά) δεν παίρνει ρίζα — substring μόνο.
+_WORD_RE = re.compile(r"[a-zα-ω0-9]+")
+_GREEK_WORD_RE = re.compile(r"[α-ω]+")
+_STEM_ENDINGS = ("εων", "εισ", "ουσ", "οι", "ων", "ου", "ησ", "εσ", "ασ", "οσ", "υσ", "η", "α", "ο")
+_STEM_MIN = 4
+_FEM_H = frozenset({"", "η", "ησ", "εσ", "ων", "εισ", "εων"})          # πτήση/πτήσεις, δοκιμή/δοκιμές, μαθητής/μαθητές
+_FEM_A = frozenset({"", "α", "ασ", "εσ", "ων", "ο", "ου"})             # αποτυχία/αποτυχίες · στάδια (ουδ. πληθ.) → στάδιο
+_MASC_O = frozenset({"", "οσ", "ου", "ο", "οι", "ων", "ουσ", "α"})     # βαθμός/βαθμούς · στάδιο/στάδια
+_ANY_END = _FEM_H | _FEM_A | _MASC_O
+_PARADIGM = {"η": _FEM_H, "ησ": _FEM_H, "εισ": _FEM_H, "εων": _FEM_H,
+             "εσ": _FEM_H | frozenset({"α", "ασ"}),
+             "α": _FEM_A, "ασ": _FEM_A,
+             "ο": _MASC_O, "ου": _MASC_O, "οσ": _MASC_O, "οι": _MASC_O, "ουσ": _MASC_O,
+             "ων": _ANY_END, "υσ": _ANY_END}
+
+
+def _stem_split(w: str) -> tuple[str, str]:
+    """(ρίζα, κατάληξη) μιας ΑΝΑΔΙΠΛΩΜΕΝΗΣ λέξης: μόνο ελληνικές, μόνο κλιτική
+    κατάληξη, ποτέ ρίζα κάτω από _STEM_MIN χαρακτήρες. Ό,τι δεν κόβεται: (w, "")."""
+    if len(w) <= _STEM_MIN or not _GREEK_WORD_RE.fullmatch(w):
+        return w, ""
+    for e in _STEM_ENDINGS:
+        if w.endswith(e) and len(w) - len(e) >= _STEM_MIN:
+            return w[:-len(e)], e
+    return w, ""
+
+
+def _stem(w: str) -> str:
+    return _stem_split(w)[0]
+
+
+def _term_stems(terms: list[str]) -> list[tuple[str, str, frozenset | None]]:
+    """(όρος, ρίζα, αποδεκτές καταλήξεις λέξεων) — None όταν ο όρος δεν έχει
+    κλιτική κατάληξη, οπότε μετρά μόνο το substring."""
+    out = []
+    for t in terms:
+        s, e = _stem_split(t)
+        out.append((t, s, _PARADIGM.get(e) if e else None))
+    return out
+
+
+def _stem_hit(u: dict, s: str, allowed: frozenset | None) -> bool:
+    forms = u["stemforms"].get(s)
+    return bool(allowed and forms and (allowed & forms))
+
+
+def _score_unit(u: dict, tstems: list, stems: bool = True) -> int:
+    """Πόσοι ΔΙΑΦΟΡΕΤΙΚΟΙ όροι του ερωτήματος βρίσκονται στη μονάδα: substring
+    (όπως πάντα) Ή ίδια ρίζα με λέξη της, σε συμβατή κατάληξη (η κλίση).
+    stems=False = η παλιά συμπεριφορά, για τη μέτρηση πριν/μετά."""
+    f = u["folded"]
+    return sum(1 for t, s, al in tstems if t in f or (stems and _stem_hit(u, s, al)))
+
+
+def _rank_key(u: dict, tstems: list) -> tuple[int, int]:
+    """Δευτερεύοντα κριτήρια ΜΕΤΑΞΥ ισόπαλων ευρημάτων (ίδιο πλήθος όρων). Το
+    «Δοκιμή Προόδου» δίνει 90 ευρήματα 2/2 στο context-full και το μοντέλο βλέπει
+    8: πριν, η σειρά ήταν αλφαβητική στο «γρ.N» — δηλαδή τυχαία. Τώρα πρώτα όσα
+    έχουν τους όρους ως ΣΥΝΕΧΟΜΕΝΗ ΦΡΑΣΗ (με ρίζες, άρα και «Δοκιμές Προόδου»),
+    μετά όσα τους αναφέρουν ΠΕΡΙΣΣΟΤΕΡΕΣ φορές. Δεν αλλάζει ΠΟΙΑ ευρήματα
+    ταιριάζουν — μόνο ποια από τα ισόπαλα φαίνονται πρώτα."""
+    seq = u["stemseq"]
+    want = tuple(s for _, s, _ in tstems)
+    phrase = 0
+    if len(want) >= 2:
+        first = want[0]
+        for i, w in enumerate(seq):
+            if w == first and seq[i:i + len(want)] == want:
+                phrase = 1
+                break
+    occ = 0
+    for t, s, al in tstems:
+        occ += u["stemcount"].get(s, 0) if _stem_hit(u, s, al) else u["folded"].count(t)
+    return (-phrase, -occ)
 
 
 class PathRefused(Exception):
@@ -841,108 +1123,523 @@ def pdf_pages(p: pathlib.Path) -> list[str] | None:
     return pages
 
 
-def _units_of_text_file(p: pathlib.Path) -> list[tuple[str, str]]:
-    """(θέση, κείμενο) ανά μονάδα. Για .md: μπλοκ χωρισμένα με κενή γραμμή (στο
-    corpus κάθε απαίτηση είναι ένα μπλοκ). Για .json: γραμμές του pretty-print,
-    με το κοντινότερο `"id"` από πάνω ως θέση."""
-    text = p.read_text(encoding="utf-8", errors="replace")
-    units: list[tuple[str, str]] = []
-    rel = p.relative_to(ROOT).as_posix() if ROOT in p.parents else p.name
-    if p.suffix.lower() == ".json":
-        try:
-            text = json.dumps(json.loads(text), ensure_ascii=False, indent=1)
-        except Exception:
-            pass
-        cur_id = ""
-        for n, line in enumerate(text.splitlines(), 1):
-            m = re.search(r'"(?:id|uid|section|item_id)"\s*:\s*"([^"]+)"', line)
-            if m:
-                cur_id = m.group(1)
-            s = line.strip()
-            if len(s) > 3:
-                units.append((f"{rel} γρ.{n}" + (f" [{cur_id}]" if cur_id else ""), s))
-        return units
-    start = 1
-    for block in re.split(r"\n\s*\n", text):
-        lines = block.count("\n") + 1
-        b = block.strip()
-        if b:
-            head = re.search(r"^###?\s*(\[[^\]]+\][^\n]*|[^\n]*)", b, re.M)
-            where = f"{rel} γρ.{start}" + (f" · {head.group(1).strip()[:80]}" if head else "")
-            units.append((where, b))
-        start += lines + 1
+# ── ΟΙ ΜΟΝΑΔΕΣ — ό,τι βρίσκει η αναζήτηση και ό,τι φέρνει ΟΛΟΚΛΗΡΟ η ανάκτηση ──
+# Κάθε μονάδα: {"loc": εντοπιστής της λαβής, "where": θέση για άνθρωπο,
+# "text": το ΠΛΗΡΕΣ κείμενο (αυτό επιστρέφει το fetch), "stext": το κείμενο
+# ΑΝΑΖΗΤΗΣΗΣ (ίδιο με text, εκτός JSON: τα ένθετα αντικείμενα-με-id γίνονται
+# «→ id» γιατί έχουν δικές τους μονάδες — αλλιώς μητέρα και παιδί θα βγαίνουν
+# διπλά ευρήματα), "folded": το stext αναδιπλωμένο ΜΕ ΙΔΙΟ ΜΗΚΟΣ, "stems": οι
+# ρίζες των λέξεων του, "page": αριθμός σελίδας (PDF) ή None}.
+#   .md/.txt  μονάδα = μπλοκ χωρισμένο με κενή γραμμή. Στο corpus κάθε απαίτηση
+#             είναι ΕΝΑ τέτοιο μπλοκ (μετρήθηκε: τα 63 μπλοκ χωρίς «### [id]» του
+#             board είναι επικεφαλίδες και προοίμιο, όχι συνέχειες εδαφίων).
+#   .json     μονάδα = αντικείμενο με "id"/"section"/"table_id"/… · ό,τι δεν
+#             καλύπτεται από τέτοιο αντικείμενο γίνεται μονάδα ανά κλαδί έως
+#             _JSON_UNIT_MAX χαρακτήρες (οι πίνακες ανοχής, το item_links) · οι
+#             σκαλιές τιμές ενός κλαδιού μαζεύονται σε μία μονάδα «κεφαλίδας».
+#   .pdf      μονάδα = σελίδα (ωμή εξαγωγή, με τον χαρακτηρισμό της).
+# Cache ανά (διαδρομή, mtime, μέγεθος): ο builder ξαναγράφει → ξαναδιαβάζεται.
+_ID_KEYS = ("id", "uid", "item_id", "section", "table_id")
+_JSON_UNIT_MAX = 4000
+_BLOCK_RE = re.compile(r"(?:^[^\S\n]*\S[^\n]*\n?)+", re.M)
+_ID_HEAD_RE = re.compile(r"^###?\s*\[([^\]\n]+)\]")
+_UNITS_CACHE: dict = {}
+
+
+def _unit_hash(text: str) -> str:
+    return "h:" + hashlib.sha1(re.sub(r"\s+", " ", text).strip().encode("utf-8")).hexdigest()[:12]
+
+
+def _mk_unit(loc: str, where: str, text: str, stext: str, page: int | None = None) -> dict:
+    import collections
+    folded = _fold_aligned(stext)
+    pairs = [_stem_split(w) for w in _WORD_RE.findall(folded)]
+    seq = tuple(s for s, _ in pairs)
+    cnt = collections.Counter(seq)
+    forms: dict[str, set] = collections.defaultdict(set)
+    for s, e in pairs:
+        forms[s].add(e)
+    return {"loc": loc, "where": where, "text": text, "stext": stext, "folded": folded,
+            "stemforms": {s: frozenset(v) for s, v in forms.items()}, "stemseq": seq,
+            "stemcount": cnt, "page": page}
+
+
+def _units_blocks(rel: str, text: str) -> list[dict]:
+    found = []
+    for m in _BLOCK_RE.finditer(text):
+        b = m.group().strip()
+        if not b:
+            continue
+        line = text.count("\n", 0, m.start()) + 1
+        hm = _ID_HEAD_RE.match(b)
+        found.append((b, line, hm.group(1).strip() if hm else None))
+    import collections
+    counts = collections.Counter(rid for _, _, rid in found if rid)
+    units = []
+    for b, line, rid in found:
+        head = b.splitlines()[0]
+        loc = rid if rid and counts[rid] == 1 else _unit_hash(b)
+        where = f"{rel} γρ.{line}" + (f" · {head}" if head.startswith("#") else "")
+        units.append(_mk_unit(loc, where, b, b))
     return units
 
 
-def _score(unit_folded: str, terms: list[str]) -> int:
-    return sum(1 for t in terms if t in unit_folded)
+def _id_key(d: dict) -> str | None:
+    for k in _ID_KEYS:
+        v = d.get(k)
+        if isinstance(v, (str, int)) and not isinstance(v, bool) and str(v).strip():
+            return k
+    return None
 
 
-def _snippet(text: str, terms: list[str], width: int) -> str:
-    f = _fold(text)
-    pos = min((f.find(t) for t in terms if t in f), default=0)
-    a = max(0, pos - width // 3)
-    b = min(len(text), a + width)
-    s = re.sub(r"[ \t]+", " ", text[a:b]).strip()
-    return ("…" if a > 0 else "") + s + ("…" if b < len(text) else "")
+def _prune(node):
+    """Αντίγραφο με τα ένθετα αντικείμενα-με-id αντικατεστημένα από «→ id»."""
+    def one(v):
+        if isinstance(v, dict) and _id_key(v):
+            return f"→ {v[_id_key(v)]}"
+        return _prune(v)
+    if isinstance(node, dict):
+        return {k: one(v) for k, v in node.items()}
+    if isinstance(node, list):
+        return [one(v) for v in node]
+    return node
 
 
-def search_sources_impl(query: str, source: str, max_hits: int, per_call_chars: int) -> tuple[str, int]:
-    """Επιστρέφει (κείμενο για το μοντέλο, πλήθος ευρημάτων). Σηκώνει PathRefused."""
+def _dump(o) -> str:
+    return json.dumps(o, ensure_ascii=False, indent=1)
+
+
+def _units_json(rel: str, text: str) -> list[dict]:
+    try:
+        root = json.loads(text)
+    except Exception:
+        return _units_blocks(rel, text)
+    found: list[tuple[str, object, str | None]] = []   # (json path, node, id)
+
+    def scalars_of(node, path):
+        if isinstance(node, dict):
+            s = {k: v for k, v in node.items() if not isinstance(v, (dict, list))}
+        else:
+            s = [v for v in node if not isinstance(v, (dict, list))]
+        if s:
+            found.append((path, s, None))
+
+    def walk(node, path, covered):
+        if isinstance(node, dict):
+            k = _id_key(node)
+            if k:
+                found.append((path, node, str(node[k]).strip()))
+                for kk, v in node.items():
+                    walk(v, f"{path}.{kk}", True)
+                return
+            if not covered and path != "$" and len(_dump(node)) <= _JSON_UNIT_MAX:
+                found.append((path, node, None))
+                for kk, v in node.items():
+                    walk(v, f"{path}.{kk}", True)
+                return
+            if not covered:
+                scalars_of(node, path)
+            for kk, v in node.items():
+                walk(v, f"{path}.{kk}", covered)
+        elif isinstance(node, list):
+            if not covered and path != "$" and len(_dump(node)) <= _JSON_UNIT_MAX:
+                found.append((path, node, None))
+                for i, v in enumerate(node):
+                    walk(v, f"{path}[{i}]", True)
+                return
+            if not covered:
+                scalars_of(node, path)
+            for i, v in enumerate(node):
+                walk(v, f"{path}[{i}]", covered)
+
+    walk(root, "$", False)
+    import collections
+    counts = collections.Counter(rid for _, _, rid in found if rid)
+    units = []
+    for path, node, rid in found:
+        full = _dump(node)
+        stext = _dump(_prune(node)) if isinstance(node, (dict, list)) else full
+        loc = rid if rid and counts[rid] == 1 else _unit_hash(full)
+        where = f"{rel} · {path}" + (f" · [{rid}]" if rid else "")
+        units.append(_mk_unit(loc, where, full, stext))
+    return units
+
+
+def _build_units(p: pathlib.Path) -> list[dict]:
+    rel = p.relative_to(ROOT).as_posix() if ROOT in p.parents else p.name
+    if p.suffix.lower() == ".pdf":
+        pages = pdf_pages(p)
+        if pages is None:
+            return []
+        return [_mk_unit(f"p{i}", f"{p.name} σελ.PDF {i}", pg, pg, i) for i, pg in enumerate(pages, 1)]
+    text = unicodedata.normalize("NFC", p.read_text(encoding="utf-8", errors="replace"))
+    if p.suffix.lower() == ".json":
+        return _units_json(rel, text)
+    return _units_blocks(rel, text)
+
+
+def _units(p: pathlib.Path) -> list[dict]:
+    """Οι μονάδες ενός αρχείου, cached ανά (διαδρομή, mtime, μέγεθος)."""
+    st = p.stat()
+    key = (str(p), st.st_mtime_ns, st.st_size)
+    u = _UNITS_CACHE.get(key)
+    if u is None:
+        if len(_UNITS_CACHE) > 64:
+            _UNITS_CACHE.clear()
+        u = _UNITS_CACHE[key] = _build_units(p)
+    return u
+
+
+# ── ΤΑ ΟΡΙΑ ΚΟΠΗΣ — ποτέ μέσα σε λέξη ─────────────────────────────────────────
+# Ένα σημείο κοπής είναι η ΑΡΧΗ ενός διαστήματος λευκού (ώστε και οι δύο πλευρές
+# να τελειώνουν/αρχίζουν σε ολόκληρη λέξη). Η ποιότητά του, από το καλύτερο:
+#   4 παράγραφος (δύο+ αλλαγές γραμμής)    3 τέλος πρότασης (. ; ! ? …)
+#   2 άνω τελεία / άνω-κάτω τελεία          1 αλλαγή γραμμής     0 κενό μεταξύ λέξεων
+# Διαλέγουμε την καλύτερη ποιότητα μέσα στο επιτρεπτό εύρος· σε ισοπαλία, προς
+# την αρχή για το ξεκίνημα (περισσότερο συγκείμενο πριν τον όρο) και προς το
+# τέλος για το κλείσιμο (περισσότερο κείμενο). Αν ΔΕΝ υπάρχει κανένα λευκό στο
+# εύρος (τερατώδης «λέξη», π.χ. JSON τιμή χωρίς κενά), το απόσπασμα μακραίνει
+# μέχρι το επόμενο λευκό — ποτέ δεν κόβει στη μέση.
+# ΜΕΤΡΗΜΕΝΟ (18/10/2026, 18 ερωτήματα × 8 πηγές = 1.347 αποσπάσματα): 0 κοπές
+# μέσα σε λέξη, έναντι 926 (69%) της παλιάς _snippet στα ΙΔΙΑ ευρήματα· το
+# 73% τελειώνει σε τέλος πρότασης, 14% σε άνω τελεία, 4% σε παράγραφο, 4% στο
+# τέλος της μονάδας, 3% σε αλλαγή γραμμής, 1% σε κενό λέξης.
+_WS_RUN = re.compile(r"\s+")
+_SENT_PUNCT = ".;!?…"
+_CLAUSE_PUNCT = ":··"
+_CLOSERS = "»”\")]"
+
+
+def _boundaries(text: str, lo: int, hi: int) -> list[tuple[int, int]]:
+    """[(θέση, ποιότητα)] για τα διαστήματα λευκού που ΑΡΧΙΖΟΥΝ στο [lo, hi)."""
+    out = []
+    for m in _WS_RUN.finditer(text, max(0, lo), max(0, min(len(text), hi))):
+        s = m.start()
+        if s == 0:
+            continue
+        prev = text[s - 1]
+        if prev in _CLOSERS and s >= 2:
+            prev = text[s - 2]
+        nl = m.group().count("\n")
+        if nl >= 2:
+            q = 4
+        elif prev in _SENT_PUNCT:
+            q = 3
+        elif prev in _CLAUSE_PUNCT:
+            q = 2
+        elif nl:
+            q = 1
+        else:
+            q = 0
+        out.append((s, q))
+    return out
+
+
+def _pick(cands: list[tuple[int, int]], low: bool) -> int:
+    best = max(q for _, q in cands)
+    ps = [p for p, q in cands if q == best]
+    return min(ps) if low else max(ps)
+
+
+def _best(cands: list[tuple[int, int]], qmin: int, lo: int, hi: int, latest: bool) -> int | None:
+    """Το καλύτερο όριο ποιότητας ≥ qmin μέσα στο [lo, hi] — None αν δεν υπάρχει."""
+    c = [(p, q) for p, q in cands if q >= qmin and lo <= p <= hi]
+    return _pick(c, low=not latest) if c else None
+
+
+def _nonws(s: str) -> int:
+    return sum(1 for ch in s if not ch.isspace())
+
+
+def _excerpt(text: str, pos: int, end: int, width: int) -> tuple[str, int, int, tuple[int, int]]:
+    """(απόσπασμα, ΜΗ-ΛΕΥΚΟΙ χαρακτήρες που παραλείπονται ΠΡΙΝ, ΜΕΤΑ, [αρχή, τέλος)
+    μέσα στο κείμενο). Το απόσπασμα περιέχει ολόκληρο το ταίριασμα [pos, end) και
+    κόβει μόνο σε όρια. Οι παραλείψεις μετρούν ουσία, όχι λευκό: μια σελίδα PDF
+    που τελειώνει σε δεκαπέντε κενές γραμμές ΔΕΝ «παραλείπει 30 χαρακτήρες»."""
+    n = len(text)
+    if n <= width:
+        a2 = n - len(text.lstrip())
+        b2 = len(text.rstrip())
+        return text[a2:b2], 0, 0, (a2, b2)
+    # ΑΡΧΗ: η πιο πρώιμη αρχή πρότασης έως W/3 πίσω (συγκείμενο πριν τον όρο)·
+    # αλλιώς η αρχή ΤΗΣ πρότασης του όρου έως W/2 πίσω· αλλιώς αλλαγή γραμμής·
+    # αλλιώς κενό λέξης — ποτέ μέσα σε λέξη.
+    if pos <= width // 3:
+        a = 0
+    else:
+        back = [(p, q) for p, q in _boundaries(text, pos - width // 2, pos + 1) if p <= pos]
+        a = _best(back, 2, pos - width // 3, pos, latest=False)
+        if a is None:
+            a = _best(back, 2, pos - width // 2, pos, latest=True)
+        if a is None:
+            a = _best(back, 1, pos - width // 3, pos, latest=True)
+        if a is None:
+            a = _best(back, 0, pos - width // 3, pos, latest=False)
+        if a is None:
+            a = pos
+            while a > 0 and not text[a - 1].isspace():
+                a -= 1
+    # ΤΕΛΟΣ: τέλος πρότασης/γραμμής στο τελευταίο τρίτο του παραθύρου· αλλιώς
+    # οπουδήποτε στο παράθυρο· αλλιώς τέλος πρότασης λίγο ΠΕΡΑ από το πλάτος (έως
+    # 1,3×W — μια ολόκληρη πρόταση αξίζει 200 χαρακτήρες)· αλλιώς κενό λέξης.
+    if n - a <= width:
+        b = n
+    else:
+        hi = a + width
+        far = a + (13 * width) // 10
+        fwd = [(p, q) for p, q in _boundaries(text, a + width // 3, far + 1) if p >= end]
+        b = _best(fwd, 1, a + (2 * width) // 3, hi, latest=True)
+        if b is None:
+            b = _best(fwd, 1, a + width // 3, hi, latest=True)
+        if b is None:
+            b = _best(fwd, 2, hi + 1, far, latest=False)
+        if b is None:
+            b = _best(fwd, 0, a + width // 3, hi, latest=True)
+        if b is None:
+            m = _WS_RUN.search(text, max(hi, end))
+            b = m.start() if m else n
+    seg = text[a:b]
+    a2 = a + (len(seg) - len(seg.lstrip()))
+    b2 = b - (len(seg) - len(seg.rstrip()))
+    return text[a2:b2], _nonws(text[:a2]), _nonws(text[b2:]), (a2, b2)
+
+
+def _anchor(u: dict, tstems: list[tuple[str, str]]) -> tuple[int, int]:
+    """[αρχή, τέλος) του ΠΡΩΤΟΥ ταιριάσματος στη μονάδα — substring ή ίδια ρίζα."""
+    f = u["folded"]
+    best: tuple[int, int] | None = None
+    for t, s, al in tstems:
+        i = f.find(t)
+        if i >= 0:
+            cand = (i, i + len(t))
+        elif _stem_hit(u, s, al):
+            cand = None
+            for m in _WORD_RE.finditer(f):
+                ws, we = _stem_split(m.group())
+                if ws == s and we in al:
+                    cand = (m.start(), m.end())
+                    break
+            if cand is None:
+                continue
+        else:
+            continue
+        if best is None or cand[0] < best[0]:
+            best = cand
+    return best or (0, 0)
+
+
+def _tidy(s: str) -> str:
+    """Για ΕΜΦΑΝΙΣΗ αποσπάσματος: κενές γραμμές φεύγουν, οι εσωτερικές σειρές
+    διαστημάτων γίνονται ένα, η ΕΣΟΧΗ κάθε γραμμής μένει (το JSON διαβάζεται).
+    Το fetch ΔΕΝ περνά από εδώ — επιστρέφει αυτολεξεί."""
+    out = []
+    for line in s.splitlines():
+        body = line.strip()
+        if not body:
+            continue
+        lead = len(line) - len(line.lstrip())
+        out.append(" " * min(lead, 12) + re.sub(r"[ \t]+", " ", body))
+    return "\n".join(out)
+
+
+def _split_parts(text: str, max_chars: int) -> list[tuple[int, int]]:
+    """Μέρη ≤ max_chars σε όρια (παράγραφος > πρόταση > γραμμή > λέξη), ποτέ
+    μέσα σε λέξη. Η συρραφή ΟΛΩΝ των μερών είναι ακριβώς το κείμενο."""
+    parts, i, n = [], 0, len(text)
+    while n - i > max_chars:
+        lo, hi = i + max_chars // 2, i + max_chars
+        c = [(p, q) for p, q in _boundaries(text, lo, hi + 1) if lo <= p <= hi]
+        if c:
+            cut = _pick(c, low=False)
+        else:
+            m = _WS_RUN.search(text, hi)
+            cut = m.start() if m else n
+        if cut <= i:
+            break
+        parts.append((i, cut))
+        i = cut
+    parts.append((i, n))
+    return parts
+
+
+def _source_files(path: pathlib.Path, is_dir: bool) -> list[pathlib.Path]:
+    files = [path]
+    if is_dir:
+        files = sorted(f for f in path.rglob("*")
+                       if f.is_file() and f.suffix.lower() in SEARCHABLE_SUFFIXES
+                       and not any(part.startswith(".") for part in f.relative_to(path).parts))
+    out = []
+    for f in files:
+        # ξανά ο έλεγχος διαδρομής ανά αρχείο — ένα symlink δεν βγαίνει έξω
+        rf = f.resolve()
+        if rf != path and path not in rf.parents:
+            continue
+        out.append(rf)
+    return out
+
+
+def _handle_prefix(sid: str, path: pathlib.Path, rf: pathlib.Path) -> str:
+    """Η πηγή της λαβής: το id της λίστας όταν το αρχείο ΕΙΝΑΙ η καταχώριση,
+    αλλιώς η διαδρομή του αρχείου σχετικά με τη ρίζα (αναλύεται ξανά από το
+    resolve_source μέσα στον φάκελο της λίστας)."""
+    if rf == path:
+        return sid
+    return rf.relative_to(ROOT).as_posix() if ROOT in rf.parents else str(rf)
+
+
+def search_sources_impl(query: str, source: str, max_hits: int, per_call_chars: int,
+                        excerpt_chars: int | None = None, stems: bool = True) -> tuple[str, int]:
+    """Επιστρέφει (κείμενο για το μοντέλο, πλήθος ευρημάτων). Σηκώνει PathRefused.
+    Κάθε εύρημα: θέση · λαβή · πόσο παραλείπεται · απόσπασμα κομμένο σε όριο."""
     sid, path, is_dir, raw = resolve_source(source)
     terms = _terms(query)
     if not terms:
         raise PathRefused("Κενό ερώτημα — δώσε τουλάχιστον μία λέξη 2+ χαρακτήρων.")
+    tstems = _term_stems(terms)
     max_hits = max(1, min(int(max_hits or 8), 20))
-    hits: list[tuple[int, str, str, bool, int | None]] = []   # score, where, text, raw, page
+    width = int(excerpt_chars if excerpt_chars is not None else CFG.get("search_excerpt_chars", 700))
+    hits: list[tuple[int, dict, str]] = []   # score, unit, πρόθεμα λαβής
 
     if raw:
-        pages = pdf_pages(path)
-        if pages is None:
+        if pdf_pages(path) is None:
             raise PathRefused(f"Η πηγή «{sid}» δεν είναι διαθέσιμη: δεν υπάρχει βιβλιοθήκη "
                               f"εξαγωγής κειμένου PDF (PyMuPDF/pypdf) σε αυτή την Python.")
-        for i, pg in enumerate(pages, 1):
-            sc = _score(_fold(pg), terms)
+        for u in _units(path):
+            sc = _score_unit(u, tstems, stems)
             if sc:
-                hits.append((sc, f"{path.name} σελ.PDF {i}", _snippet(pg, terms, 700), True, i))
+                hits.append((sc, u, sid))
     else:
-        files = [path]
-        if is_dir:
-            files = sorted(f for f in path.rglob("*")
-                           if f.is_file() and f.suffix.lower() in SEARCHABLE_SUFFIXES
-                           and not any(part.startswith(".") for part in f.relative_to(path).parts))
-        for f in files:
-            # ξανά ο έλεγχος διαδρομής ανά αρχείο — ένα symlink δεν βγαίνει έξω
-            rf = f.resolve()
-            if rf != path and path not in rf.parents:
-                continue
-            for where, text in _units_of_text_file(rf):
-                sc = _score(_fold(text), terms)
+        for rf in _source_files(path, is_dir):
+            prefix = _handle_prefix(sid, path, rf)
+            for u in _units(rf):
+                sc = _score_unit(u, tstems, stems)
                 if sc:
-                    hits.append((sc, where, _snippet(text, terms, 900), False, None))
+                    hits.append((sc, u, prefix))
 
-    hits.sort(key=lambda h: (-h[0], h[1]))
+    hits.sort(key=lambda h: (-h[0], *_rank_key(h[1], tstems), h[1]["where"]))
     total = len(hits)
     shown = hits[:max_hits]
     head = (f"ΠΗΓΗ «{sid}» ({WHITELIST[sid][3]}) · ερώτημα: {query!r} · όροι: {', '.join(terms)} · "
-            f"{total} ευρήματα, δείχνω {len(shown)}.")
+            f"{total} ευρήματα, δείχνω {len(shown)}.\n"
+            f"Κάθε εύρημα φέρει ΛΑΒΗ. Το απόσπασμα κόβεται σε όριο πρότασης/παραγράφου/γραμμής — ποτέ μέσα σε "
+            f"λέξη — και λέει πόσοι χαρακτήρες παραλείπονται. ΠΡΙΝ παραθέσεις, κάλεσε fetch_source(λαβή) για το πλήρες.")
     if raw:
         head += ("\nΠΡΟΣΟΧΗ: όλα τα παρακάτω είναι ΑΚΑΤΕΡΓΑΣΤΗ εξαγωγή κειμένου από PDF — "
                  "ΟΧΙ επικυρωμένο υλικό. Μετέφερε τον χαρακτηρισμό κάθε ευρήματος στην απάντηση.")
     parts = [head]
     used = len(head)
-    for n, (sc, where, text, is_raw, page) in enumerate(shown, 1):
-        mark = (" — " + RAW_MARK.format(page=page)) if is_raw else ""
-        block = f"\n[{n}] ({sc}/{len(terms)} όροι) {where}{mark}\n    {text}"
+    for n, (sc, u, prefix) in enumerate(shown, 1):
+        handle = f"{prefix}#{u['loc']}"
+        pos, end = _anchor(u, tstems)
+        exc, before, after, _span = _excerpt(u["stext"], pos, end, width)
+        mark = (" — " + RAW_MARK.format(page=u["page"])) if raw else ""
+        if before == 0 and after == 0:
+            span = f"ΟΛΟΚΛΗΡΗ η μονάδα ({len(u['text']):,} χαρ.)"
+        else:
+            span = (f"απόσπασμα {len(exc):,} από {len(u['stext']):,} χαρ. · παραλείπονται {before:,} πριν + "
+                    f"{after:,} μετά → fetch_source(\"{handle}\") για το πλήρες")
+        block = (f"\n[{n}] ({sc}/{len(terms)} όροι) {u['where']}{mark}"
+                 f"\n    λαβή: {handle} · {span}"
+                 f"\n    " + _tidy(exc).replace("\n", "\n    "))
         if used + len(block) > per_call_chars:
             parts.append(f"\n… (κόπηκε στο όριο των {per_call_chars} χαρακτήρων ανά κλήση· "
-                         f"{len(shown) - n + 1} ευρήματα δεν εμφανίζονται — στένεψε το ερώτημα)")
+                         f"{len(shown) - n + 1} ευρήματα δεν εμφανίζονται — στένεψε το ερώτημα ή μείωσε το max_hits)")
             break
         parts.append(block)
         used += len(block)
     if not shown:
         parts.append("\n(κανένα εύρημα — δοκίμασε άλλη λέξη-κλειδί ή άλλη πηγή από τη λίστα)")
     return "".join(parts), total
+
+
+_HANDLE_HELP = ("Μορφή λαβής: <πηγή>#<εντοπιστής> — π.χ. context-full#fail-24, 3-01#p54, 3-01#p54-55, "
+                "data/criteria/contact.json#contact-36, context-full#h:1a2b3c4d5e6f. "
+                "Πάρε τη λαβή από το search_sources· μην την επινοήσεις.")
+
+
+def fetch_source_impl(handle: str, part: int, max_chars: int) -> tuple[str, dict]:
+    """Επιστρέφει (κείμενο για το μοντέλο, meta). Σηκώνει PathRefused.
+    meta: handle, where, chars (του πλήρους), part, parts, complete, raw,
+    body (ΑΚΡΙΒΩΣ οι χαρακτήρες που επιστράφηκαν — για την απόδειξη)."""
+    h = (handle or "").strip().strip("«»\"'")
+    src, sep, loc = h.rpartition("#")
+    if not sep or not src.strip() or not loc.strip():
+        raise PathRefused(f"Μη έγκυρη λαβή {handle!r}. {_HANDLE_HELP}")
+    src, loc = src.strip(), loc.strip()
+    sid, path, is_dir, raw = resolve_source(src)
+    try:
+        part = max(1, int(part or 1))
+    except (TypeError, ValueError):
+        part = 1
+
+    if raw:
+        m = re.fullmatch(r"p(\d{1,4})(?:-(\d{1,4}))?", loc, re.I)
+        if not m:
+            raise PathRefused(f"Στην ωμή πηγή «{sid}» ο εντοπιστής είναι σελίδα: pN ή pN-M (π.χ. {sid}#p54). "
+                              f"Έλαβα «{loc}».")
+        pages = pdf_pages(path)
+        if pages is None:
+            raise PathRefused(f"Η πηγή «{sid}» δεν είναι διαθέσιμη: δεν υπάρχει βιβλιοθήκη "
+                              f"εξαγωγής κειμένου PDF (PyMuPDF/pypdf) σε αυτή την Python.")
+        a, b = int(m.group(1)), int(m.group(2) or m.group(1))
+        if a < 1 or b > len(pages) or a > b:
+            raise PathRefused(f"Η «{sid}» έχει σελίδες 1–{len(pages)}· ζητήθηκε {a}" + (f"–{b}" if b != a else "") + ".")
+        if b - a + 1 > FETCH_MAX_PAGES:
+            raise PathRefused(f"ΟΡΙΟ: έως {FETCH_MAX_PAGES} σελίδες ανά ανάκτηση (ζητήθηκαν {b - a + 1}). "
+                              f"Η ανάκτηση φέρνει ένα εδάφιο ολόκληρο, όχι ολόκληρο PDF — ζήτα {a}-{a + FETCH_MAX_PAGES - 1} "
+                              f"και μετά τις επόμενες.")
+        chunks, total = [], 0
+        for i in range(a, b + 1):
+            pg = pages[i - 1]
+            total += len(pg)
+            chunks.append((f"── σελ.PDF {i} — " + RAW_MARK.format(page=i) + " ──\n" if b != a else "") + pg)
+        if total > max_chars:
+            raise PathRefused(f"ΟΡΙΟ: οι σελίδες {a}–{b} έχουν {total:,} χαρακτήρες, πάνω από το όριο "
+                              f"{max_chars:,} ανά ανάκτηση. Ζήτα λιγότερες σελίδες (μία-μία χωρούν πάντα).")
+        body = "\n".join(chunks)
+        where = f"{path.name} σελ.PDF {a}" + (f"–{b}" if b != a else "")
+        head = (f"ΠΛΗΡΕΣ ΚΕΙΜΕΝΟ · λαβή «{sid}#{loc}» · {where} · {total:,} χαρακτήρες · "
+                f"ΟΛΟΚΛΗΡ{'ΕΣ ΟΙ ΣΕΛΙΔΕΣ' if b != a else 'Η Η ΣΕΛΙΔΑ'}, χωρίς αποκοπή\n"
+                f"ΠΡΟΣΟΧΗ: {RAW_MARK.format(page=(f'{a}–{b}' if b != a else a))}. Ωμή εξαγωγή από PDF — "
+                f"κολλάει λέξεις, κόβει γραμμές. Μετέφερε τον χαρακτηρισμό δίπλα σε κάθε παράθεμα.\n\n")
+        return head + body, {"handle": f"{sid}#{loc}", "where": where, "chars": total, "part": 1, "parts": 1,
+                             "complete": True, "raw": True, "body": body, "pages": [a, b]}
+
+    matches: list[tuple[pathlib.Path, dict]] = []
+    for rf in _source_files(path, is_dir):
+        for u in _units(rf):
+            if u["loc"] == loc:
+                matches.append((rf, u))
+    if not matches:
+        raise PathRefused(f"Η λαβή «{h}» δεν αντιστοιχεί σε μονάδα της πηγής «{sid}». Είτε δεν προήλθε από το "
+                          f"search_sources είτε το corpus άλλαξε από τότε — ξανατρέξε την αναζήτηση και πάρε φρέσκια λαβή. "
+                          f"{_HANDLE_HELP}")
+    if len(matches) > 1:
+        cands = ", ".join(f"{_handle_prefix(sid, path, rf)}#{loc}" for rf, _ in matches[:6])
+        raise PathRefused(f"Ασαφής λαβή «{h}»: ο εντοπιστής «{loc}» υπάρχει σε {len(matches)} αρχεία της πηγής. "
+                          f"Δώσε τη διαδρομή του αρχείου: {cands}")
+    rf, u = matches[0]
+    full_handle = f"{_handle_prefix(sid, path, rf)}#{loc}"
+    text = u["text"]
+    n = len(text)
+    spans = _split_parts(text, max_chars)
+    if part > len(spans):
+        raise PathRefused(f"Η μονάδα «{full_handle}» έχει {len(spans)} μέρ{'ος' if len(spans) == 1 else 'η'} — "
+                          f"ζητήθηκε το {part}.")
+    s, e = spans[part - 1]
+    body = text[s:e]
+    complete = len(spans) == 1
+    if complete:
+        head = (f"ΠΛΗΡΕΣ ΚΕΙΜΕΝΟ · λαβή «{full_handle}» · {u['where']} · {n:,} χαρακτήρες · "
+                f"ΟΛΟΚΛΗΡΟ, χωρίς αποκοπή (επικυρωμένο υλικό — όχι ωμή εξαγωγή)\n\n")
+    else:
+        nxt = (f" Για τη συνέχεια: fetch_source(\"{full_handle}\", part={part + 1})." if part < len(spans) else
+               " Αυτό είναι το τελευταίο μέρος.")
+        head = (f"ΜΕΡΟΣ {part}/{len(spans)} · λαβή «{full_handle}» · {u['where']} · χαρακτήρες {s + 1:,}–{e:,} "
+                f"από {n:,} · ΔΕΝ ΕΙΝΑΙ ΟΛΟΚΛΗΡΟ — η μονάδα ξεπερνά το όριο {max_chars:,} χαρ. ανά ανάκτηση και "
+                f"κόπηκε σε όριο παραγράφου/γραμμής, ποτέ μέσα σε λέξη.{nxt}\n\n")
+    return head + body, {"handle": full_handle, "where": u["where"], "chars": n, "part": part, "parts": len(spans),
+                         "complete": complete, "raw": False, "body": body, "span": [s, e]}
 
 
 # ════════════════════════════════════════════════════════════════════════════
@@ -1242,8 +1939,9 @@ class ToolBudget:
 
     def __init__(self, emit=None, agent_id: str = "agent", session_id: str | None = None,
                  human: str = ""):
-        self.calls = 0            # search_sources
-        self.chars = 0
+        self.calls = 0            # search_sources (+ τα composer tools, που μοιράζονται τον μετρητή)
+        self.fetches = 0          # fetch_source — δικός του μετρητής: η ανάκτηση δεν τρώει αναζητήσεις
+        self.chars = 0            # ΟΛΑ τα εργαλεία, έναντι του tool_total_chars
         self.cf_calls = 0         # casefile_* (όλα)
         self.cf_writes = 0        # προεπισκοπήσεις εγγραφής (add/update)
         self.agent_id = agent_id
@@ -1255,8 +1953,8 @@ class ToolBudget:
 
     def make_tools(self, names: list[str]) -> list:
         out = []
-        if "search_sources" in names:
-            out.append(self.make_tool())
+        if any(n in SEARCH_TOOLS for n in names):
+            out.extend(self.make_search_tools())      # πάντα το ζευγάρι
         cf = [n for n in names if n in CASEFILE_TOOLS]
         if cf:
             out.extend(self.make_casefile_tools(cf))
@@ -1744,20 +2442,22 @@ class ToolBudget:
         if self.emit:
             self.emit({"type": "tool_result", **entry})
 
-    # ── search_sources ────────────────────────────────────────────────────
-    def make_tool(self):
+    # ── search_sources + fetch_source — το ζευγάρι ────────────────────────
+    def make_search_tools(self) -> list:
         from anthropic import beta_tool
         from anthropic.lib.tools import ToolError
         budget = self
         max_calls = int(CFG["tool_max_calls"])
         per_call = int(CFG["tool_max_chars"])
         total_cap = int(CFG["tool_total_chars"])
+        max_fetches = int(CFG["fetch_max_calls"])
+        per_fetch = int(CFG["fetch_max_chars"])
 
         def search_sources(query: str, source: str, max_hits: int = 8) -> str:
-            """Αναζήτηση λέξεων-κλειδιών ΕΚΤΟΣ του corpus, σε λίστα επιτρεπόμενων πηγών. Έσχατη λύση: μόνο όταν το corpus σιωπά. Ό,τι επιστρέφει με «ΑΚΑΤΕΡΓΑΣΤΟ ΚΕΙΜΕΝΟ ΠΗΓΗΣ» είναι ανεπικύρωτη εξαγωγή PDF και πρέπει να παρατεθεί με αυτόν τον χαρακτηρισμό.
+            """Αναζήτηση λέξεων-κλειδιών ΕΚΤΟΣ του corpus, σε λίστα επιτρεπόμενων πηγών — ΒΡΙΣΚΕΙ, δεν παραθέτει. Κάθε εύρημα γυρίζει με απόσπασμα κομμένο σε όριο πρότασης/παραγράφου (ποτέ μέσα σε λέξη), με το πόσοι χαρακτήρες παραλείπονται πριν και μετά, και με ΛΑΒΗ για το fetch_source που φέρνει το πλήρες. Το corpus είναι η πρώτη στάση· κάλεσε το εργαλείο όταν ο ιδιοκτήτης ζητά αναζήτηση ή διασταύρωση, όταν το corpus σιωπά, όταν κρατά παραπομπή χωρίς αυτολεξεί κείμενο, ή πριν ονομάσεις κάτι ⚠ ΑΛΥΤΟ — όχι από συνήθεια σε κάθε ερώτηση. Η ελληνική κλίση δεν μετρά («δοκιμή» βρίσκει και «δοκιμές»). Ό,τι επιστρέφει με «ΑΚΑΤΕΡΓΑΣΤΟ ΚΕΙΜΕΝΟ ΠΗΓΗΣ» είναι ανεπικύρωτη εξαγωγή PDF και πρέπει να παρατεθεί με αυτόν τον χαρακτηρισμό.
 
             Args:
-                query: Λέξεις-κλειδιά (ελληνικά ή αγγλικά, 1-5 λέξεις — όχι ολόκληρη πρόταση). Ο τονισμός και η πεζότητα δεν μετρούν.
+                query: Λέξεις-κλειδιά (ελληνικά ή αγγλικά, 1-5 λέξεις — όχι ολόκληρη πρόταση). Ο τονισμός, η πεζότητα και η πτώση δεν μετρούν.
                 source: Το id της πηγής: context-full, 3-01, pd-29-2020, syllabus, criteria, technique, mif, requirements. Τίποτα άλλο δεν επιτρέπεται.
                 max_hits: Πόσα ευρήματα να επιστραφούν (1-20, προεπιλογή 8).
             """
@@ -1784,7 +2484,44 @@ class ToolBudget:
             budget.record(query, source, n, len(text), "ok")
             return text
 
-        return beta_tool(search_sources, name="search_sources")
+        def fetch_source(handle: str, part: int = 1) -> str:
+            """Φέρνει ΟΛΟΚΛΗΡΗ τη μονάδα που δείχνει μια λαβή του search_sources — το εδάφιο «### [id]» του corpus, το JSON αντικείμενο, ή τη σελίδα PDF — αυτολεξεί και χωρίς αποκοπή. Κάλεσέ το ΠΡΙΝ παραθέσεις οτιδήποτε από αναζήτηση: ποτέ δεν παραθέτεις κομμένο απόσπασμα σαν να ήταν ολόκληρο. Αν η μονάδα ξεπερνά το όριο χαρακτήρων, επιστρέφει ΑΡΙΘΜΗΜΕΝΟ ΜΕΡΟΣ k/N (κομμένο σε όριο παραγράφου) και το λέει — ζήτα το επόμενο με part. Ό,τι είναι από PDF φέρει τον χαρακτηρισμό ΑΚΑΤΕΡΓΑΣΤΟ. Ισχύει η ίδια λίστα πηγών με το search_sources.
+
+            Args:
+                handle: Η λαβή όπως την έδωσε το search_sources, π.χ. «context-full#fail-24», «3-01#p54», «3-01#p54-55», «data/criteria/contact.json#contact-36». Μορφή <πηγή>#<εντοπιστής>· μην την επινοήσεις.
+                part: Ποιο μέρος (προεπιλογή 1 = το πρώτο, ή ολόκληρο όταν χωρά). Μόνο όταν η προηγούμενη απάντηση είπε «ΜΕΡΟΣ k/N».
+            """
+            budget.fetches += 1
+            if budget.fetches > max_fetches:
+                budget.record_fetch(handle, part, None, 0, "limit")
+                raise ToolError(f"ΟΡΙΟ: επιτρέπονται {max_fetches} ανακτήσεις ανά απάντηση και τις "
+                                f"εξάντλησες. Απάντησε ΤΩΡΑ με όσα έχεις και πες ρητά ότι σταμάτησες.")
+            if budget.chars >= total_cap:
+                budget.record_fetch(handle, part, None, 0, "limit")
+                raise ToolError(f"ΟΡΙΟ: εξαντλήθηκαν οι {total_cap:,} χαρακτήρες κειμένου πηγών ανά "
+                                f"απάντηση. Απάντησε με όσα έχεις.")
+            try:
+                # Τα μέρη υπολογίζονται ΠΑΝΤΑ με το ίδιο per_fetch, ώστε «ΜΕΡΟΣ 2/3» να
+                # σημαίνει το ίδιο σε κάθε κλήση· αν το μέρος δεν χωρά στο υπόλοιπο του
+                # ορίου ανά απάντηση, ΑΡΝΗΣΗ με αριθμούς — όχι μικρότερο, σιωπηλά κομμένο μέρος.
+                text, meta = fetch_source_impl(handle, part, per_fetch)
+            except PathRefused as e:
+                budget.record_fetch(handle, part, None, 0, "refused")
+                raise ToolError(str(e))
+            except Exception as e:  # ένα σπασμένο αρχείο δεν ρίχνει τον proxy
+                budget.record_fetch(handle, part, None, 0, "error")
+                raise ToolError(f"Σφάλμα ανάγνωσης πηγής: {type(e).__name__}: {e}")
+            if budget.chars + len(text) > total_cap:
+                budget.record_fetch(handle, part, meta, 0, "limit")
+                raise ToolError(f"ΟΡΙΟ: η μονάδα «{meta['handle']}» έχει {len(text):,} χαρακτήρες αλλά "
+                                f"απομένουν μόνο {total_cap - budget.chars:,} από τους {total_cap:,} ανά "
+                                f"απάντηση. Δεν επιστρέφεται κομμένη. Απάντησε με όσα έχεις και πες ότι "
+                                f"το εδάφιο δεν ανακτήθηκε.")
+            budget.chars += len(text)
+            budget.record_fetch(handle, part, meta, len(text), "ok")
+            return text
+
+        return [beta_tool(search_sources, name="search_sources"), beta_tool(fetch_source, name="fetch_source")]
 
     def record(self, query, source, hits, chars, status):
         entry = {"n": self.calls, "tool": "search_sources", "query": query, "source": source,
@@ -1792,6 +2529,22 @@ class ToolBudget:
         self.log.append(entry)
         log(f"[tool] search_sources call={self.calls}/{CFG['tool_max_calls']} source={source!r} "
             f"q={query!r} hits={hits} chars={chars} status={status}")
+        if self.emit:
+            self.emit({"type": "tool_result", **entry})
+
+    def record_fetch(self, handle, part, meta, chars, status):
+        """Το ημερολόγιο της ανάκτησης: λαβή, μέρος, πόσο κείμενο, ολόκληρο ή όχι.
+        Το `summary` είναι ό,τι δείχνει η σελίδα στο γενικό κλαδί 🗂 (app/advisor.js)."""
+        m = meta or {}
+        summary = (f"{m.get('handle') or handle}" + (f" · μέρος {m['part']}/{m['parts']}" if m.get("parts", 1) > 1 else "")
+                   + (f" · {m['chars']:,} χαρ." if m.get("chars") else "")
+                   + (" · ολόκληρο" if m.get("complete") else "") + (" · ΑΚΑΤΕΡΓΑΣΤΟ" if m.get("raw") else ""))
+        entry = {"n": self.fetches, "tool": "fetch_source", "handle": handle, "part": part,
+                 "chars": chars, "status": status, "write": False, "summary": summary,
+                 "complete": bool(m.get("complete")), "raw": bool(m.get("raw"))}
+        self.log.append(entry)
+        log(f"[tool] fetch_source call={self.fetches}/{CFG['fetch_max_calls']} handle={handle!r} part={part} "
+            f"chars={chars} status={status}")
         if self.emit:
             self.emit({"type": "tool_result", **entry})
 
@@ -1852,7 +2605,7 @@ def run_ask(a: dict, params: dict, emit, budget: ToolBudget | None, tools: list[
         runner = client.beta.messages.tool_runner(
             tools=budget.make_tools(list(tools)), stream=True,
             # σκληρό backstop πίσω από τα ToolError των φρένων
-            max_iterations=int(CFG["tool_max_calls"]) + int(CFG["casefile_max_calls"]) + 3,
+            max_iterations=int(CFG["tool_max_calls"]) + int(CFG["fetch_max_calls"]) + int(CFG["casefile_max_calls"]) + 3,
             **params,
         )
         for stream in runner:          # ο runner ανοίγει/κλείνει το stream· εμείς το καταναλώνουμε
@@ -2095,6 +2848,8 @@ def session_markdown(s: dict) -> str:
         for t in m.get("tools") or []:
             if t.get("tool") == "search_sources":
                 L.append(f"- 🔎 `search_sources` · {t.get('source')} · «{t.get('query')}» · {t.get('hits')} ευρήματα · {t.get('status')}")
+            elif t.get("tool") == "fetch_source":
+                L.append(f"- 📄 `fetch_source` · {t.get('summary') or t.get('handle')} · {t.get('status')}")
             elif t.get("write"):
                 st = "✓ ΓΡΑΦΤΗΚΕ case " + str(t.get("case_id")) if t.get("confirmed") else \
                      "✕ ακυρώθηκε" if t.get("cancelled") else "✕ απορρίφθηκε: " + str(t.get("failed")) if t.get("failed") else \
@@ -2613,6 +3368,9 @@ def health() -> dict:
                  "max_corpus_bytes": int(CFG["max_corpus_bytes"]), "cache_ttl": CFG["cache_ttl"],
                  "tool_max_calls": int(CFG["tool_max_calls"]), "tool_max_chars": int(CFG["tool_max_chars"]),
                  "tool_total_chars": int(CFG["tool_total_chars"]),
+                 "fetch_max_calls": int(CFG["fetch_max_calls"]), "fetch_max_chars": int(CFG["fetch_max_chars"]),
+                 "fetch_max_pages": FETCH_MAX_PAGES, "search_excerpt_chars": int(CFG["search_excerpt_chars"]),
+                 "context_ceiling_tokens": int(CFG["context_ceiling"]),
                  "casefile_max_calls": int(CFG["casefile_max_calls"]),
                  "casefile_max_writes": int(CFG["casefile_max_writes"])},
         # ΜΟΝΟ «ρυθμισμένο ή όχι» — ούτε το team, ούτε το AUD, ούτε κανένα email.
@@ -2631,6 +3389,13 @@ def health() -> dict:
             "whitelist": {k: {"path": str(v[0]), "dir": v[1], "raw_pdf": v[2], "exists": v[0].exists(), "about": v[3]}
                           for k, v in WHITELIST.items()},
             "pdf_text_library": pdf_lib,
+            "excerpt_chars": int(CFG["search_excerpt_chars"]),
+            "excerpt_cuts_only_at": "παράγραφος > πρόταση > άνω τελεία > γραμμή > λέξη (ποτέ μέσα σε λέξη)",
+            "greek_inflection": "ρίζα μετά από κοπή κλιτικής κατάληξης, ελάχιστη ρίζα 4 χαρ., + substring",
+        }, "fetch_source": {
+            "handle": "<πηγή>#<id | h:<12hex> | pN | pN-M> — ίδια WHITELIST, ίδιος έλεγχος διαδρομής",
+            "max_chars": int(CFG["fetch_max_chars"]), "max_calls": int(CFG["fetch_max_calls"]),
+            "max_pages": FETCH_MAX_PAGES, "over_limit": "αριθμημένα μέρη k/N σε όριο παραγράφου — ποτέ σιωπηλή κοπή",
         }},
     }
 
@@ -2645,6 +3410,8 @@ def configure(args) -> None:
         "daily_cap": ("ADVISOR_DAILY_CAP", int), "max_corpus_bytes": ("ADVISOR_MAX_CORPUS_BYTES", int),
         "cache_ttl": ("ADVISOR_CACHE_TTL", str), "tool_max_calls": ("ADVISOR_TOOL_MAX_CALLS", int),
         "tool_max_chars": ("ADVISOR_TOOL_MAX_CHARS", int), "tool_total_chars": ("ADVISOR_TOOL_TOTAL_CHARS", int),
+        "fetch_max_calls": ("ADVISOR_FETCH_MAX_CALLS", int), "fetch_max_chars": ("ADVISOR_FETCH_MAX_CHARS", int),
+        "search_excerpt_chars": ("ADVISOR_SEARCH_EXCERPT_CHARS", int),
         "casefile_max_calls": ("ADVISOR_CASEFILE_MAX_CALLS", int),
         "casefile_max_writes": ("ADVISOR_CASEFILE_MAX_WRITES", int),
         "context_ceiling": ("ADVISOR_CONTEXT_CEILING_TOKENS", int), "compact_keep": ("ADVISOR_COMPACT_KEEP", int),
@@ -2721,7 +3488,7 @@ def dry_run(agent_id: str, question: str) -> int:
         for tool in ToolBudget(None, a["id"]).make_tools(tools):
             td = tool.to_dict() if hasattr(tool, "to_dict") else {"name": getattr(tool, "name", "?")}
             out["tools"].append(json.loads(json.dumps(td, ensure_ascii=False, default=str)))
-        out["max_iterations"] = int(CFG["tool_max_calls"]) + int(CFG["casefile_max_calls"]) + 3
+        out["max_iterations"] = int(CFG["tool_max_calls"]) + int(CFG["fetch_max_calls"]) + int(CFG["casefile_max_calls"]) + 3
         out["runner"] = "client.beta.messages.tool_runner(stream=True)"
     else:
         out["runner"] = "client.messages.stream()"
@@ -2793,12 +3560,15 @@ def main() -> int:
     ap.add_argument("--max-corpus-bytes", type=int, dest="max_corpus_bytes", help="φρένο 3: μέγιστο corpus σε bytes (1_000_000)")
     ap.add_argument("--cache-ttl", dest="cache_ttl", choices=["5m", "1h"], help="TTL του prompt cache (1h)")
     ap.add_argument("--tool-max-calls", type=int, dest="tool_max_calls", help="search_sources: κλήσεις ανά απάντηση (5)")
-    ap.add_argument("--tool-max-chars", type=int, dest="tool_max_chars", help="search_sources: χαρακτήρες ανά κλήση (6000)")
-    ap.add_argument("--tool-total-chars", type=int, dest="tool_total_chars", help="search_sources: χαρακτήρες ανά απάντηση (20000)")
+    ap.add_argument("--tool-max-chars", type=int, dest="tool_max_chars", help="search_sources: χαρακτήρες ανά κλήση (8000)")
+    ap.add_argument("--tool-total-chars", type=int, dest="tool_total_chars", help="όλα τα εργαλεία: χαρακτήρες κειμένου πηγών ανά απάντηση (60000)")
+    ap.add_argument("--fetch-max-calls", type=int, dest="fetch_max_calls", help="fetch_source: ανακτήσεις ανά απάντηση (8)")
+    ap.add_argument("--fetch-max-chars", type=int, dest="fetch_max_chars", help="fetch_source: χαρακτήρες ανά ανάκτηση πριν κοπεί σε μέρη (12000)")
+    ap.add_argument("--search-excerpt-chars", type=int, dest="search_excerpt_chars", help="search_sources: μήκος αποσπάσματος (700· κόβει σε όριο, ποτέ μέσα σε λέξη)")
     ap.add_argument("--casefile-max-calls", type=int, dest="casefile_max_calls", help="casefile: κλήσεις ανά απάντηση (8)")
     ap.add_argument("--casefile-max-writes", type=int, dest="casefile_max_writes", help="casefile: προεπισκοπήσεις εγγραφής ανά απάντηση (2)")
     ap.add_argument("--context-ceiling", type=int, dest="context_ceiling",
-                    help=f"compaction όταν ΕΚΤΙΜΩΜΕΝΑ tokens corpus+ιστορικού ξεπεράσουν N − max_tokens (400000· εκτίμηση {GREEK_CHARS_PER_TOKEN} χαρ./token, όχι μέτρηση)")
+                    help=f"compaction όταν ΕΚΤΙΜΩΜΕΝΑ tokens corpus+ιστορικού ξεπεράσουν N − max_tokens (600000· εκτίμηση {GREEK_CHARS_PER_TOKEN} χαρ./token, όχι μέτρηση)")
     ap.add_argument("--keepalive", type=int, choices=[0, 1], dest="keepalive", help="keep-alive του cache με max_tokens:0 πριν τη λήξη (1)")
     ap.add_argument("--keepalive-idle", type=int, dest="keepalive_idle_h", help="ώρες χωρίς ερώτηση μετά τις οποίες σταματά το keep-alive (8)")
     ap.add_argument("--compact-keep", type=int, dest="compact_keep", help="ζεύγη που μένουν αυτούσια μετά το compaction (1)")
@@ -2815,6 +3585,8 @@ def main() -> int:
     ap.add_argument("--dry-run", action="store_true", help="χτίσε και τύπωσε το αίτημα — ΧΩΡΙΣ κλήση API")
     ap.add_argument("--search", metavar="QUERY", help="τρέξε το search_sources τοπικά (χωρίς API) με --source")
     ap.add_argument("--source", default="3-01", help="πηγή για --search (id ή διαδρομή — δείχνει και την άρνηση)")
+    ap.add_argument("--fetch", metavar="HANDLE", help="τρέξε το fetch_source τοπικά (χωρίς API), π.χ. context-full#fail-24 ή 3-01#p54")
+    ap.add_argument("--part", type=int, default=1, help="μέρος για --fetch όταν η μονάδα ξεπερνά το όριο (1)")
     ap.add_argument("--count-tokens", action="store_true", dest="count_tokens",
                     help="ΜΙΑ δωρεάν κλήση count_tokens για το corpus+prompt (θέλει κλειδί)")
     args = ap.parse_args()
@@ -2825,6 +3597,17 @@ def main() -> int:
             text, n = search_sources_impl(args.search, args.source, 8, int(CFG["tool_max_chars"]))
             print(text)
             print(f"\n— {n} ευρήματα συνολικά, {len(text)} χαρακτήρες προς το μοντέλο")
+            return 0
+        except PathRefused as e:
+            print("TOOL ERROR (όπως θα το έβλεπε το μοντέλο):", e)
+            return 4
+
+    if args.fetch is not None:
+        try:
+            text, meta = fetch_source_impl(args.fetch, args.part, int(CFG["fetch_max_chars"]))
+            print(text)
+            print(f"\n— λαβή {meta['handle']} · {meta['chars']:,} χαρακτήρες η μονάδα · μέρος {meta['part']}/{meta['parts']}"
+                  f" · {'ΟΛΟΚΛΗΡΟ' if meta['complete'] else 'ΜΕΡΙΚΟ'} · {len(text):,} χαρακτήρες προς το μοντέλο")
             return 0
         except PathRefused as e:
             print("TOOL ERROR (όπως θα το έβλεπε το μοντέλο):", e)
@@ -2871,8 +3654,9 @@ def main() -> int:
         log(f"Cloudflare Access: ΟΧΙ — μόνο τοπική χρήση. Αίτημα στο {BASE_PATH}/* θα απαντήσει 503 "
             f"(όρισε FDMS_ACCESS_TEAM και FDMS_ACCESS_AUD για να ανοίξει ο δρόμος του tunnel).")
     log(f"φρένα: max_turns={CFG['max_turns']} daily_cap={CFG['daily_cap']} "
-        f"max_corpus_bytes={CFG['max_corpus_bytes']:,} · tool: {CFG['tool_max_calls']} κλήσεις, "
-        f"{CFG['tool_max_chars']}/{CFG['tool_total_chars']} chars · cache_ttl={CFG['cache_ttl']}")
+        f"max_corpus_bytes={CFG['max_corpus_bytes']:,} · search: {CFG['tool_max_calls']} κλήσεις × {CFG['tool_max_chars']} chars "
+        f"(απόσπασμα {CFG['search_excerpt_chars']}) · fetch: {CFG['fetch_max_calls']} κλήσεις × {CFG['fetch_max_chars']} chars · "
+        f"σύνολο {CFG['tool_total_chars']} chars/απάντηση · cache_ttl={CFG['cache_ttl']}")
     if int(CFG["keepalive"]):
         threading.Thread(target=keepalive_loop, name="keepalive", daemon=True).start()
         log(f"keep-alive: ΝΑΙ — ping στα {keepalive_status()['ping_after_s'] // 60}′ από την τελευταία επαφή, "

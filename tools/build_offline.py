@@ -3,6 +3,120 @@ r"""
 build_offline.py — deterministic single-file export of Phase 2 FDMS for the
 unit's CLOSED network.
 
+ΤΙ ΑΛΛΑΞΕ ΣΤΙΣ 18/10/2026 (Γύρος Η — ΟΤΙ ΔΕΝ ΜΠΟΡΕΙ ΝΑ ΔΟΥΛΕΨΕΙ ΕΚΕΙ, ΔΕΝ ΦΕΥΓΕΙ)
+  Η απόφανση του ιδιοκτήτη, μία γραμμή: «Ό,τι δημιουργεί πρόβλημα για το export
+  απλά δεν το συμπεριλαμβάνουμε.»  Τρεις δουλειές βγαίνουν από αυτή.
+
+  1. ΤΟ BRIDGE ΒΓΑΙΝΕΙ — ΚΑΙ ΤΟ ΕΠΙΚΙΝΔΥΝΟ ΔΕΝ ΗΤΑΝ ΤΟ ΜΟΔΟΥΛΟ, ΗΤΑΝ Η ΛΙΣΤΑ.
+     Το `schedbridge.js` (526.526 bytes) συγχρονίζεται με Supabase — cloud.  Στο
+     κλειστό δίκτυο το `W.fetch` του πέφτει πάνω στο offline shim, άρα η καρτέλα
+     δεν υπολειτουργεί: ΑΠΟΤΥΓΧΑΝΕΙ ΠΑΝΤΑ, μπροστά σε εκπαιδευτή που δεν έχει
+     κανέναν να ρωτήσει.  Βγαίνει από το SCRIPT_CHAIN όπως το advisor.js, και το
+     κουμπί + το <section> του από δύο σημασμένα μπλοκ `bridge:start/end`.
+     ΑΛΛΑ ΤΟ ΒΓΑΛΣΙΜΟ ΤΗΣ ΚΑΡΤΕΛΑΣ ΗΤΑΝ ΑΥΤΟ ΠΟΥ ΘΑ ΕΣΠΑΖΕ ΤΟΝ SCHEDULER.  Η
+     `scheduler.js` κρατά τη λίστα `PANES` με πέντε ονόματα και περνά ΟΛΗ τη
+     λίστα σε δύο βρόχους που καλούν μέθοδο πάνω στο στοιχείο κάθε pane ΧΩΡΙΣ
+     έλεγχο για null:
+         for (const p of PANES) $id("sch-" + p).innerHTML = msg;        // boot error
+         for (const p of PANES) $id("sch-" + p).classList.toggle(…);    // ΚΑΘΕ ΚΛΙΚ
+     Ο δεύτερος τρέχει σε κάθε κλικ σε υποκαρτέλα.  Χωρίς το
+     `<section id="sch-bridge">` το `$id` γυρίζει null, ο handler πετά TypeError
+     ΠΡΙΝ φτάσει στο render(), και ο χρήστης βλέπει υποκαρτέλες που δεν αλλάζουν
+     ΠΟΤΕ: Board, Roster, Training Log, Balance — όλα νεκρά, χωρίς μήνυμα.
+     Η θεραπεία είναι στη ΡΙΖΑ: φεύγει το "bridge" από τη λίστα (prepare_scheduler),
+     κι έτσι και οι δύο βρόχοι γίνονται σωστοί χωρίς να τους αγγίξει κανείς.
+     Μαζί κόβονται τα τρία καλώδια που δεν οδηγούν πουθενά (η custody κλήση, η
+     γραμμή dispatch, η renderBridge() — που ΜΟΝΗ ΤΗΣ θα έσκαγε σε null) και το
+     τέταρτο μέσα στην app.js: το ίδιο σχήμα με το `advInit`, μία μέρα μετά.
+     Νέο tripwire `gate_scan_unit`, πάνω σε ΟΛΟ το αρχείο — markup, scripts και
+     data μαζί, γιατί το μάθημα του advInit ήταν ότι ο έλεγχος στο κέλυφος είναι
+     μισός έλεγχος.  Τα needle είναι ΑΝΑΓΝΩΡΙΣΤΙΚΑ, όχι λέξεις: «bridge» σημαίνει
+     γεφύρι στα δεδομένα της πλοήγησης, έξι φορές, και ένας έλεγχος που έσκαγε
+     σε αυτά θα ήταν λογοκρισία της Πελοποννήσου.
+
+  2. ΤΑ ΚΕΙΜΕΝΑ ΠΟΥ ΜΙΛΟΥΣΑΝ ΓΙΑ ΚΟΥΜΠΙΑ ΠΟΥ ΔΕΝ ΥΠΑΡΧΟΥΝ.  Το `schedsync.js`
+     δεν ταξιδεύει ποτέ — άρα δεν υπάρχει ☁ Sync, δεν υπάρχει ⭱ Push, δεν
+     υπάρχει αντίγραφο στο GitHub — και όμως οι διάλογοι ↺ Reset / ⭱ Import /
+     ⭳ Export καθησύχαζαν τον εκπαιδευτή ότι «το αντίγραφο στο GitHub ΔΕΝ
+     πειράζεται».  Αυτό δεν είναι ανακρίβεια, είναι ΠΑΓΙΔΑ: κάποιος θα πατήσει
+     ↺ Reset πιστεύοντας ότι υπάρχει αντίγραφο.  Και ο ίδιος διάλογος έλεγε ότι
+     «ξαναχτίζει από το seed file» — ενώ στο export το seed είναι ΑΔΕΙΟ, δηλαδή
+     το ↺ Reset ΑΔΕΙΑΖΕΙ.  Δεκαπέντε κείμενα ξαναγράφηκαν στο ΠΑΡΑΓΟΜΕΝΟ
+     (`retell_closed_network`), ΠΟΤΕ στο app/: στη φιλοξενούμενη εφαρμογή το
+     GitHub, ο συγχρονισμός και οι άλλες συσκευές ΥΠΑΡΧΟΥΝ και τα κείμενα είναι
+     αληθινά εκεί.  Κάθε αντικατάσταση είναι sub1 με μέτρηση.
+
+  3. Η ΠΥΛΗ ΤΩΝ ΕΞΩΤΕΡΙΚΩΝ ΕΙΧΕ ΔΕΚΑ ΤΡΥΠΕΣ, ΜΕΤΡΗΜΕΝΕΣ.  Ένας αναιρέτης πέρασε
+     δείγματα ΜΕΣΑ ΑΠΟ ΤΗΝ ΙΔΙΑ ΤΗΝ ΠΥΛΗ.  Δεν πιάστηκαν: `<IFRAME>`, `<LINK
+     rel=stylesheet>`, `<SCRIPT SRC>` (ΚΕΦΑΛΑΙΑ — η πύλη έψαχνε πεζά, και η HTML
+     δεν έχει πεζά), `https:\/\/` (escaped slashes), `https&#58;//` (HTML
+     entity), `<meta http-equiv="refresh">`, `setAttribute("src","//cdn/a.js")`,
+     `new Worker`, `navigator.serviceWorker.register`, `window.open`.  Το
+     `importScripts` ΗΤΑΝ ήδη στη λίστα και πιάστηκε.  Όλες έκλεισαν, καθεμία
+     έχει δείγμα στο `--gate-selftest`, και ο κανόνας γράφτηκε: ό,τι διαβάζει η
+     HTML ανεξαρτήτως πεζών-κεφαλαίων ελέγχεται ανεξαρτήτως πεζών-κεφαλαίων· ό,τι
+     είναι ταυτότητα JavaScript ελέγχεται ΩΣ ΤΑΥΤΟΤΗΤΑ (το γυμνό «SharedWorker»
+     έσκαγε στο «SharedWorkerLike»).  ΚΑΙ Η ΣΗΜΕΙΩΣΗ ΣΤΑΜΑΤΗΣΕ ΝΑ
+     ΥΠΕΡΑΠΑΓΓΕΛΛΕΙ: έλεγε «0 network API … no external reference survived» χωρίς
+     να έχει κοιτάξει ποτέ Worker/serviceWorker/window.open.  Τώρα απαριθμεί τα
+     μοτίβα ΚΑΙ ομολογεί το όριό της — ένα URL που συναρμολογείται σε runtime
+     («htt» + «ps://…») δεν ανιχνεύεται στατικά από κανέναν.  Μια πύλη που
+     υπόσχεται περισσότερα απ' όσα ελέγχει κάνει τον επόμενο να μην ξανακοιτάξει.
+
+ΤΙ ΑΛΛΑΞΕ ΣΤΙΣ 18/10/2026 (Γύρος Ζ — ΤΟ ΠΑΡΑΔΟΤΕΟ ΤΗΣ ΜΟΝΑΔΑΣ ΔΕΝ ΔΕΙΧΝΕΙ ΠΟΥΘΕΝΑ)
+  Τρεις αποφάνσεις του ιδιοκτήτη, μία μέρα, και οι τρεις ζουν ΕΔΩ και μόνο εδώ.
+
+  1. ΤΟ CREDIT ΤΗΣ AI ΦΕΥΓΕΙ — ΜΟΝΟ ΑΠΟ ΤΟ ΠΑΡΑΓΟΜΕΝΟ.  Το `app/index.html`
+     κουβαλά «Developed by Koro · with Claude riding the right seat».  Στο
+     δημόσιο repo και στη ζωντανή εφαρμογή ΜΕΝΕΙ — ρητή απόφανση.  Στο
+     unit-facing αρχείο δεν έχει θέση, γιατί εκεί το παραδοτέο δεν είναι
+     προσωπικό έργο αλλά υπηρεσιακό εργαλείο.  Άρα η αφαίρεση γίνεται ΕΔΩ, με
+     `sub1` πάνω στο αντίγραφο της συναρμολόγησης, και ΠΟΤΕ με edit του
+     `app/index.html`.  Φεύγει μόνο η `<span class="credit-line">`, ΟΧΙ ο
+     `<footer class="credit">`: ο footer είναι το σημείο ανάρτησης της μπάρας
+     feedback (`document.querySelector("footer.credit")` στο FEEDBACK_JS) —
+     κόβοντάς τον ολόκληρο, η μπάρα θα έπεφτε στο `<body>` και θα έχανε το
+     πλαίσιό της.  Tripwire: `strip_attribution`.
+
+  2. ΚΑΘΕ ΕΞΩΤΕΡΙΚΟΣ ΣΥΝΔΕΣΜΟΣ ΑΔΡΑΝΟΠΟΙΕΙΤΑΙ — ΟΧΙ ΜΟΝΟ ΟΙ ΤΡΕΙΣ ΓΝΩΣΤΟΙ.
+     Μέχρι σήμερα τα τρία κουμπιά Feedback (app.js · description.js ·
+     remarksearch.js) έγραφαν `https://github.com/<repo>/issues/new?…` στο
+     `href` και το FEEDBACK_JS τα έπιανε στο click.  Αυτό έπιανε ΤΟ ΚΛΙΚ, όχι
+     ΤΟΝ ΣΥΝΔΕΣΜΟ: μεσαίο κλικ (σε νεότερο Firefox είναι `auxclick`, δεν
+     περνά καθόλου από τον handler), «Άνοιγμα σε νέα καρτέλα» από το
+     context menu, ή `target="_blank"` με το κλικ να χάνεται — και ο browser
+     ξεκινά αίτημα προς github.com που στο κλειστό δίκτυο δεν αποτυγχάνει
+     αμέσως, ΠΕΡΙΜΕΝΕΙ μέχρι το timeout.  Τώρα ο σύνδεσμος ΔΕΝ είναι καν
+     σύνδεσμος: γίνεται fragment (`#fdms-feedback/issues/new?…`), που δεν
+     φεύγει ποτέ από το έγγραφο ό,τι κι αν κάνει ο χρήστης, και το
+     `target="_blank"` φεύγει μαζί (ένα νέο tab θα ξαναφόρτωνε 13 MB για να
+     δείξει το ίδιο αρχείο).  Το query μένει ΑΚΡΙΒΩΣ όπως ήταν, γιατί το
+     FEEDBACK_JS διαβάζει από εκεί title/body — βλ. `neutralise_externals`.
+
+  3. Ο ΚΑΝΟΝΑΣ ΕΙΝΑΙ «ΚΑΝΕΝΑ ΕΞΩΤΕΡΙΚΟ, ΕΚΤΟΣ ΑΠΟ ΑΥΤΑ» — όχι «όχι αυτά τα
+     τρία».  Νέο tripwire `gate_scan_external`, μέσα στο run_gate: σαρώνει
+     ΟΛΟΚΛΗΡΟ το συναρμολογημένο HTML για κάθε απόλυτο URL με σχήμα δικτύου,
+     για protocol-relative `//host`, για `@import`, για `url(` με σχήμα, και
+     για τα API που δεν μπορούν να σημαίνουν τίποτε άλλο παρά δίκτυο
+     (XMLHttpRequest, WebSocket, EventSource, sendBeacon, importScripts,
+     `<iframe>`, `<form action>`, `<link href>`).  Λευκή λίστα: ΜΟΝΟ το
+     `http://www.w3.org/2000/svg` — είναι XML namespace, ένα αναγνωριστικό
+     που ο browser δεν ζητά ποτέ από το δίκτυο.  Ό,τι άλλο εμφανιστεί
+     αύριο σκάει το build· αυτό είναι η δουλειά του.
+     Επιβεβαιώθηκε στο ίδιο πέρασμα ότι το `api.github.com` (schedsync.js)
+     και το `http://127.0.0.1:8771` (advisor.js) ΔΕΝ επιβιώνουν — και τα δύο
+     αρχεία είναι εκτός SCRIPT_CHAIN — και ότι ο `schedbridge.js` δεν έχει
+     καρφωμένο endpoint: διαβάζει το `W.fetch` την ώρα της κλήσης, οπότε
+     πέφτει πάνω στο offline shim όπως κάθε άλλο fetch της εφαρμογής.
+     Ο tripwire απαιτεί τώρα ΡΗΤΑ να υπάρχει αυτό το shim: ένα export που
+     θα το έχανε θα άφηνε 25 `fetch("../data/…")` να χτυπήσουν τον δίσκο.
+
+  Και ένα εργαλείο: `--inspect-to`.  Το `--dry-run` τύπωνε μόνο sha256, οπότε
+  ΚΑΝΕΝΑΣ δεν μπορούσε να αποδείξει ισχυρισμό πάνω στο παραγόμενο HTML χωρίς
+  να γράψει στον φάκελο του ιδιοκτήτη (D:\FDMS-export, ΑΝΕΓΓΙΧΤΟΣ).  Το
+  `--inspect-to` γράφει το HTML οπουδήποτε ΑΛΛΟΥ και αρνείται κατηγορηματικά
+  κάθε διαδρομή μέσα στον EXPORT — βλ. THE COMMAND LINE.
+
 WHAT CHANGED ON 28/08/2026 (Round 24b — THE COMPENSATION TRAVELS WITH THE SHAPE)
   The verify of Round 24 left exactly one thing measurably wrong, and it was an
   INSTANCE-level miss of a model that was otherwise right.
@@ -330,6 +444,18 @@ def parse_args(argv=None) -> argparse.Namespace:
     p.add_argument("--dry-run", action="store_true",
                    help="run the whole build and every gate, then report what "
                         "WOULD be written (path, size, SHA-256) and write nothing")
+    # 18/10/2026 — ΓΙΑΤΙ ΥΠΑΡΧΕΙ ΑΥΤΗ Η ΣΗΜΑΙΑ.  Το --dry-run τύπωνε μέγεθος
+    # και sha256 και τίποτε άλλο: κάθε ισχυρισμός για το ΠΕΡΙΕΧΟΜΕΝΟ του
+    # παραδοτέου («δεν έχει github», «δεν έχει attribution») ήταν ανεπαλήθευτος
+    # αν δεν έγραφε κανείς πραγματικό αρχείο — δηλαδή μέσα στον φάκελο του
+    # ιδιοκτήτη, που είναι ΑΝΕΓΓΙΧΤΟΣ.  Η σημαία δίνει τον τρίτο δρόμο: το ίδιο
+    # HTML, οπουδήποτε ΑΛΛΟΥ, για να σαρωθεί.  Ο έλεγχος διαδρομής στη main()
+    # αρνείται κατηγορηματικά οτιδήποτε μέσα στον EXPORT, ώστε η σημαία να μην
+    # μπορεί να γίνει πλάγιος δρόμος για το πραγματικό build.
+    p.add_argument("--inspect-to", metavar="FILE",
+                   help="ONLY with --dry-run: also write the generated HTML to "
+                        "FILE for verification. Any path inside the owner's "
+                        f"{EXPORT} is refused.")
     return p.parse_args(argv)
 
 
@@ -1087,12 +1213,223 @@ def gate_scan_cssjs(name: str, body: str, sheet: str) -> tuple:
     return bad, [f"{name}: {len(blocks)} CSS rule block(s) swept for the floor list"]
 
 
+# ────────────────────────────────────────────────────────────────────
+#  TRIPWIRE: ΚΑΝΕΝΑ ΕΞΩΤΕΡΙΚΟ ΑΙΤΗΜΑ — ΕΚΤΟΣ ΑΠΟ ΤΗ ΛΕΥΚΗ ΛΙΣΤΑ (18/10/2026)
+#
+#  Απόφανση ιδιοκτήτη: «να αδρανοποιήσουμε όποιον άλλο εξωτερικό σύνδεσμο
+#  υπάρχει» — όχι μόνο τους τρεις γνωστούς.  Ένας έλεγχος που απαριθμεί τους
+#  τρεις είναι άχρηστος την επόμενη φορά που κάποιος προσθέτει τον τέταρτο·
+#  άρα ο κανόνας γράφεται ανάποδα: ΤΙΠΟΤΑ δεν επιτρέπεται, εκτός από ό,τι είναι
+#  ρητά στη λευκή λίστα, και η λευκή λίστα έχει σήμερα ΕΝΑ στοιχείο.
+#
+#  Γιατί έχει σημασία στο κλειστό δίκτυο: ένα νεκρό https δεν αποτυγχάνει
+#  γρήγορα.  Δεν υπάρχει DNS να πει «όχι» — η σύνδεση κρέμεται μέχρι το
+#  timeout.  Ένα <link> ή ένα web font μπλοκάρει το πρώτο paint· ένα fetch
+#  κρεμά το κουμπί που το κάλεσε.  Ο χρήστης βλέπει εφαρμογή που «κόλλησε».
+_EXT_ALLOW = (
+    # XML namespace. Ο browser ΔΕΝ το ζητά ποτέ: είναι αναγνωριστικό που
+    # ταυτοποιεί τη γραμματική του SVG, όχι διεύθυνση περιεχομένου.
+    "http://www.w3.org/2000/svg",
+)
+
+# Κάθε απόλυτο URL με σχήμα που σημαίνει «φέρε κάτι από αλλού».
+_EXT_SCHEME_RE = re.compile(r"(?i)(?:https?|ftps?|wss?|file)://[^\s\"'`<>)\\]*")
+# Protocol-relative: `src="//host/…"` κληρονομεί το σχήμα της σελίδας. Σε
+# file:// δεν σημαίνει τίποτα, και αυτό είναι ακριβώς το είδος του σφάλματος
+# που δεν φαίνεται στον developer και φαίνεται στη Μοίρα.
+_EXT_PROTO_REL_RE = re.compile(
+    r"""(?i)(?:href|src|srcset|action|formaction|poster|cite|data)\s*=\s*["']?//""")
+# CSS: url(http…), url(//…), αλλά ΟΧΙ url(#fc-arr-out) — αυτό είναι SVG marker
+# του ίδιου εγγράφου — και ΟΧΙ url(data:…)/url(blob:…) που δεν φεύγουν ποτέ.
+_EXT_CSS_URL_RE = re.compile(
+    r"""(?i)url\(\s*["']?\s*(?://|(?!data:|blob:|about:|#)[a-z][a-z0-9+.\-]*:)""")
+# @import φέρνει ΑΛΛΟ stylesheet — και αν είναι απομακρυσμένο, το φέρνει
+# μπλοκάροντας το paint. Στο export δεν έχει καμία νόμιμη χρήση.
+_EXT_IMPORT_RE = re.compile(r"(?i)@import\b")
+# Τα API που δεν μπορούν να σημαίνουν τίποτε άλλο παρά «δίκτυο». Μένουν
+# ΑΚΡΙΒΩΣ όπως γράφονται, γιατί η JavaScript είναι case-sensitive: το
+# `xmlhttprequest` δεν είναι API, είναι λέξη. Το `fetch` λείπει σκόπιμα: η
+# εφαρμογή το καλεί 25 φορές για το ../data/…, και το offline shim το έχει
+# αντικαταστήσει — γι' αυτό ο έλεγχος από κάτω απαιτεί ΡΗΤΑ αυτό το shim.
+_EXT_NET_NEEDLES = ("XMLHttpRequest", "WebSocket", "EventSource", "sendBeacon",
+                    "importScripts")
+
+# ── ΟΙ ΤΡΥΠΕΣ ΠΟΥ ΒΡΗΚΕ Ο ΑΝΑΙΡΕΤΗΣ (18/10/2026, ΓΥΡΟΣ Η) ─────────────────
+#  Δείγματα πέρασαν ΜΕΣΑ ΑΠΟ ΑΥΤΗΝ ΤΗΝ ΠΥΛΗ και δεν πιάστηκαν. Μετρημένα, με
+#  probe πάνω στην ίδια τη συνάρτηση, ΠΡΙΝ γραφτεί μία γραμμή διόρθωσης:
+#    `<IFRAME src=…>` · `<LINK rel="stylesheet">` · `<SCRIPT SRC=…>`   → η πύλη
+#       έψαχνε `html.find("<iframe")`, δηλαδή ΠΕΖΑ, και η HTML δεν έχει πεζά:
+#       τα tags είναι case-insensitive από το 1995. Τρεις τρύπες, ένα αίτιο.
+#    `var u="https:\/\/evil/x"`                                        → το
+#       `\/` είναι ο κανονικός τρόπος να γραφτεί slash μέσα σε JSON-escaped
+#       string, και το `_EXT_SCHEME_RE` ζητούσε δύο ΓΥΜΝΑ slash.
+#    `https&#58;//…`                                                   → HTML
+#       entity για την άνω-κάτω τελεία· ο browser τη διαβάζει κανονικά.
+#    `<meta http-equiv="refresh" content="0;url=//evil">`              → ούτε
+#       tag ούτε API: ΟΔΗΓΙΑ ΠΛΟΗΓΗΣΗΣ, και κανένα μοτίβο δεν την κοίταζε.
+#    `s.setAttribute("src","//cdn/a.js")`                              → το ίδιο
+#       πράγμα με `src="//…"`, γραμμένο από JavaScript· το μοτίβο των
+#       attributes ζητούσε σύνταξη markup.
+#    `new Worker(…)` · `navigator.serviceWorker.register(…)` ·
+#    `window.open(…)`                                                  → τρία
+#       API που ΦΕΡΝΟΥΝ ή ΑΝΟΙΓΟΥΝ άλλο έγγραφο, και η σημείωση της πύλης
+#       διαφήμιζε «0 network API» χωρίς να τα έχει δει ποτέ.
+#  Ο κανόνας που γεννήθηκε: ό,τι η HTML διαβάζει ανεξαρτήτως πεζών-κεφαλαίων,
+#  το ελέγχουμε με regex ανεξαρτήτως πεζών-κεφαλαίων· ό,τι είναι ταυτότητα
+#  JavaScript, το ελέγχουμε ΑΚΡΙΒΩΣ. Και κάθε μία από τις τρύπες έχει τώρα
+#  δείγμα στο --gate-selftest: έλεγχος που δεν αποδείχθηκε ότι σκάει είναι ευχή.
+_EXT_HTML_RES = (
+    # Tags που φέρνουν δεύτερο έγγραφο ή υποπόρο. `<link`/`<script` ΜΟΝΟ όταν
+    # κουβαλούν διεύθυνση: το `<script>` χωρίς src είναι όλο το export.
+    (re.compile(r"(?i)<iframe\b"), "<iframe> (a second document)"),
+    (re.compile(r"(?i)<frame\b|<frameset\b"), "<frame>/<frameset>"),
+    (re.compile(r"(?i)<form\b"), "<form> (it has an action, default: this URL)"),
+    (re.compile(r"(?i)<base\b"), "<base> (it rewrites every relative URL)"),
+    (re.compile(r"(?i)<object\b|<embed\b|<applet\b"), "<object>/<embed>/<applet>"),
+    (re.compile(r"(?i)<link\b[^>]*\b(?:href|rel)\s*=" ), "<link> (an external resource)"),
+    (re.compile(r"(?i)<script\b[^>]*\bsrc\s*="), "<script src> (a second file)"),
+    (re.compile(r"(?i)\bsrcset\s*="), "srcset"),
+    # Η META REFRESH: ούτε tag δικτύου ούτε API — οδηγία πλοήγησης, που στο
+    # κλειστό δίκτυο σημαίνει «φύγε από το μόνο αρχείο που υπάρχει».
+    (re.compile(r"(?i)<meta[^>]*http-equiv\s*=\s*[\"']?\s*refresh"),
+     '<meta http-equiv="refresh"> (it navigates away on its own)'),
+    # ESCAPED SLASHES: `https:\/\/host` — ο JSON-escaped τρόπος. Και το
+    # `%2f`/`/`/`\x2f`, για την ίδια σκέψη γραμμένη αλλιώς.
+    (re.compile(r"(?i)(?:https?|ftps?|wss?|file):(?:\\/|%2[fF]|\\u002[fF]|\\x2[fF]){2}"),
+     "absolute URL with escaped slashes (https:\\/\\/…)"),
+    # HTML ENTITY ΓΙΑ ΤΗΝ ΑΝΩ-ΚΑΤΩ ΤΕΛΕΙΑ: ο browser το διαβάζει ως «:».
+    (re.compile(r"(?i)(?:https?|ftps?|wss?|file)(?:&#0*58;|&#x0*3a;|&colon;)"),
+     "absolute URL with an HTML-entity colon (https&#58;//…)"),
+    # setAttribute("src"|"href"|…, "//host" ή "scheme:…") — η ίδια πράξη με το
+    # markup attribute, από κώδικα. Μόνο με ΚΥΡΙΟΛΕΚΤΙΚΗ τιμή: ό,τι περνά από
+    # μεταβλητή δεν φαίνεται στατικά, και η σημείωση το λέει.
+    (re.compile(r"""(?i)setAttribute\s*\(\s*["'](?:src|srcset|href|xlink:href|action"""
+                r"""|formaction|poster|cite|data)["']\s*,\s*["']\s*"""
+                r"""(?://|(?!data:|blob:|about:|#)[a-z][a-z0-9+.\-]*:)"""),
+     'setAttribute("src", "//host…") — markup written from code'),
+    # WORKER / SERVICE WORKER / window.open: φέρνουν ή ανοίγουν άλλο έγγραφο.
+    # `new Worker` με όρια λέξης, ώστε ένα `SchedWorkerThing` να μη σκάει· και
+    # `window.open(` με παρένθεση, γιατί η εφαρμογή έχει `window.openMifChart`.
+    (re.compile(r"\bnew\s+(?:Shared)?Worker\s*\("), "new Worker() (a second script file)"),
+    # ΜΕ ΟΡΙΑ ΛΕΞΗΣ, και ο λόγος είναι μετρημένος: ως γυμνό substring το
+    # «SharedWorker» έσκαγε πάνω στο «SharedWorkerLike» μέσα στο ίδιο το
+    # selftest. Ταυτότητα JavaScript ελέγχεται ΩΣ ΤΑΥΤΟΤΗΤΑ, όχι ως κομμάτι λέξης.
+    (re.compile(r"\bSharedWorker\b"), "SharedWorker"),
+    (re.compile(r"\bserviceWorker\b"), "serviceWorker (it would outlive the page)"),
+    (re.compile(r"\b(?:window|self|top|parent)\.open\s*\("),
+     "window.open() (a second document, which on file:// is a dead tab)"),
+)
+
+
+# Ο ΣΥΜΒΟΥΛΟΣ: τι ΔΕΝ επιτρέπεται να υπάρχει πουθενά στο αρχείο.
+# Προσοχή στο τι ΔΕΝ είναι στη λίστα: η γυμνή λέξη «advisor» εμφανίζεται 73
+# φορές στις παρατηρήσεις — «traffic advisories», «a traffic advisory was
+# missed» — και είναι ΑΓΓΛΙΚΑ της εκπαίδευσης, όχι υπόλειμμα κώδικα. Κάθε
+# needle εδώ είναι αναγνωριστικό, όχι λέξη.
+_ADVISOR_NEEDLES = ('id="view-advisor"', 'id="tab-advisor"', "tab-advisor",
+                    "view-advisor", "advisor.js", "Σύμβουλος", "advInit",
+                    "advisor:start", 'switchView("advisor")', "sym-main", "sym-view")
+
+
+def gate_scan_advisor(page: str, html: str) -> list:
+    """Ο ίδιος κανόνας, πάνω στο ΟΛΟΚΛΗΡΟ αρχείο — markup, scripts και data."""
+    return [f"{page}:{_line_of(html, html.find(n))}: advisor residue {n!r} is in "
+            f"the unit build (the shell check only ever saw the markup)"
+            for n in _ADVISOR_NEEDLES if n in html]
+
+
+# ΤΟ BRIDGE (απόφανση 18/10/2026): ΔΕΝ ΤΑΞΙΔΕΥΕΙ. Ο συγχρονισμός του είναι
+# Supabase — cloud. Στο κλειστό δίκτυο το `W.fetch` που διαβάζει την ώρα της
+# κλήσης πέφτει πάνω στο offline shim, άρα η καρτέλα δεν «υπολειτουργεί»:
+# αποτυγχάνει ΠΑΝΤΑ, μπροστά σε χρήστη που δεν έχει κανέναν να ρωτήσει. Και
+# είναι 526.526 bytes για να αποτύχει.
+#
+# Η ΙΔΙΑ ΠΡΟΣΟΧΗ ΜΕ ΤΟΝ ΣΥΜΒΟΥΛΟ: κάθε needle εδώ είναι ΑΝΑΓΝΩΡΙΣΤΙΚΟ, όχι
+# λέξη. Η γυμνή λέξη «bridge» ΥΠΑΡΧΕΙ ΝΟΜΙΜΑ στα δεδομένα — έξι φορές στο
+# vfr_navigation, όπου είναι γεφύρι πάνω από το οποίο περνά η πλοήγηση — και
+# «Bridge» με κεφαλαίο είναι σημείο αναφοράς στο έδαφος, όχι κώδικας. Μια
+# πύλη που έψαχνε τη λέξη θα έσκαγε στη γεωγραφία της Πελοποννήσου.
+_BRIDGE_NEEDLES = ("schedbridge", "SchedBridge", "schBridgeInit", "schBridgeLeave",
+                   "sch-bridge", 'data-sch="bridge"', "renderBridge",
+                   "supabase", "Supabase", "bridge:start", "data-brgw")
+
+# ΤΑ ΚΕΙΜΕΝΑ ΠΟΥ ΜΙΛΟΥΝ ΓΙΑ ΚΟΥΜΠΙ ΠΟΥ ΔΕΝ ΥΠΑΡΧΕΙ (ίδια μέρα, ίδια απόφανση).
+# Το `schedsync.js` δεν ταξιδεύει ποτέ — άρα το ☁ Sync ΔΕΝ ΥΠΑΡΧΕΙ στο export —
+# και όμως τρεις διάλογοι του schedstore.js προειδοποιούσαν τον εκπαιδευτή για
+# «το αντίγραφο στο GitHub» και για «τον κωδικό του ☁ Sync». Μια προειδοποίηση
+# για λειτουργία που λείπει δεν είναι ακριβής: είναι αίνιγμα, και το αίνιγμα
+# το λύνει ο χρήστης ψάχνοντας κουμπί που δεν θα βρει ποτέ.
+_CLOSEDNET_NEEDLES = ("github", "GitHub", "Github", "☁ Sync", "Sync access code",
+                      "api.github.com")
+
+
+def gate_scan_unit(page: str, html: str) -> list:
+    """Bridge + κλειστό δίκτυο: ό,τι δεν επιτρέπεται να έχει επιβιώσει.
+
+    Τρέχει στο ΙΔΙΟ επίπεδο με τον gate_scan_advisor και για τον ίδιο λόγο:
+    ο έλεγχος που κοιτά μόνο το κέλυφος είναι μισός έλεγχος — αυτό ήταν το
+    μάθημα του `advInit`, που έμενε καρφωμένο στην app.js επειδή ο έλεγχος
+    έτρεχε πριν μπουν τα scripts."""
+    bad = []
+    for n in _BRIDGE_NEEDLES:
+        if n in html:
+            bad.append(f"{page}:{_line_of(html, html.find(n))}: Bridge residue "
+                       f"{n!r} is in the unit build — the tab is gone, so this is "
+                       f"a wire to a module that does not travel")
+    for n in _CLOSEDNET_NEEDLES:
+        if n in html:
+            bad.append(f"{page}:{_line_of(html, html.find(n))}: {n!r} is in the "
+                       f"unit build — it names a service or a button that does "
+                       f"not exist on the closed network")
+    return bad
+
+
+def gate_scan_external(page: str, html: str) -> list:
+    """Σαρώνει ΟΛΟΚΛΗΡΟ το συναρμολογημένο αρχείο για εξωτερικές εξαρτήσεις."""
+    bad = []
+    seen = {}
+    for m in _EXT_SCHEME_RE.finditer(html):
+        url = m.group(0)
+        if any(url.startswith(a) for a in _EXT_ALLOW):
+            continue
+        key = url[:120]
+        if key in seen:
+            seen[key] += 1
+            continue
+        seen[key] = 1
+        bad.append(f"{page}:{_line_of(html, m.start())}: external URL in a file "
+                   f"that must ask the network for NOTHING: {key}")
+    for rx, what in ((_EXT_PROTO_REL_RE, "protocol-relative URL (//host)"),
+                     (_EXT_CSS_URL_RE, "CSS url() pointing outside the document"),
+                     (_EXT_IMPORT_RE, "@import")) + _EXT_HTML_RES:
+        for m in rx.finditer(html):
+            bad.append(f"{page}:{_line_of(html, m.start())}: {what} — "
+                       f"{html[m.start():m.start() + 60]!r}")
+    for needle in _EXT_NET_NEEDLES:
+        i = html.find(needle)
+        if i >= 0:
+            bad.append(f"{page}:{_line_of(html, i)}: {needle!r} — this can only "
+                       f"mean a network request or a second document; neither "
+                       f"exists on the unit's closed network")
+    # Το shim ΔΕΝ είναι προαιρετικό: χωρίς αυτό, 25 fetch("../data/…") της
+    # εφαρμογής γίνονται αιτήματα για αρχεία που δεν συνοδεύουν το export.
+    if "window.fetch = function" not in html:
+        bad.append(f"{page}: the offline fetch shim is missing or no longer "
+                   f"overrides window.fetch — every ../data/… fetch would go out")
+    return bad
+
+
 def run_gate(html: str, page: str) -> list:
     """Full quality gate over one assembled HTML page. Returns notes; exits on
     violations."""
-    if re.search(r"<script\s+src", html):
+    # 18/10/2026 — ΚΑΙ ΑΥΤΟΙ ΟΙ ΔΥΟ ΗΤΑΝ CASE-SENSITIVE. Ένα `<SCRIPT SRC="x.js">`
+    # ή ένα `<LINK REL=stylesheet HREF=s.css>` περνούσε και από τους δύο, γιατί
+    # ζητούσαν πεζά και σταθερή σειρά attributes — και η HTML δεν υπόσχεται
+    # ούτε το ένα ούτε το άλλο. Τώρα: ανεξαρτήτως πεζών-κεφαλαίων, και με το
+    # attribute οπουδήποτε μέσα στο tag.
+    if re.search(r"(?i)<script\b[^>]*\bsrc\s*=", html):
         fail(f"{page}: external <script src> survived assembly")
-    if re.search(r'<link\s+rel="stylesheet"', html):
+    if re.search(r"(?i)<link\b[^>]*\brel\s*=\s*[\"']?stylesheet", html):
         fail(f"{page}: external stylesheet link survived assembly")
     scripts = re.findall(r"<script>(.*?)</script>", html, re.S)
     styles = re.findall(r"<style>(.*?)</style>", html, re.S)
@@ -1143,6 +1480,43 @@ def run_gate(html: str, page: str) -> list:
         b, nn = gate_scan_cssjs(name, body, NO_GRID_CSS)
         bad += b
         notes += nn
+    # ── LAYER 3: ΚΑΜΙΑ ΕΞΩΤΕΡΙΚΗ ΕΞΑΡΤΗΣΗ. Πάνω σε ΟΛΟ το αρχείο, markup και
+    #    scripts και data μαζί — ένας σύνδεσμος δεν ξεχωρίζει τι είδους είναι
+    #    το μπλοκ που τον κουβαλά.
+    ext = (gate_scan_external(page, html) + gate_scan_advisor(page, html)
+           + gate_scan_unit(page, html))
+    bad += ext
+    if not ext:
+        # Η ΣΗΜΕΙΩΣΗ ΛΕΕΙ ΤΙ ΕΛΕΓΧΘΗΚΕ, ΟΥΤΕ ΜΙΑ ΛΕΞΗ ΠΑΡΑΠΑΝΩ (18/10/2026).
+        # Η παλιά έλεγε «0 network API … no external reference survived» ενώ
+        # δεν είχε κοιτάξει ΠΟΤΕ Worker, serviceWorker ή window.open — και μια
+        # πύλη που υπόσχεται περισσότερα απ' όσα ελέγχει είναι χειρότερη από
+        # καμία πύλη: κάνει τον επόμενο να μην ξανακοιτάξει. Τώρα απαριθμεί τα
+        # μοτίβα και ΟΜΟΛΟΓΕΙ το όριό της.
+        notes.append(
+            f"external-reference scan (static, over the WHOLE file — markup, "
+            f"scripts, data): 0 absolute URLs outside the whitelist "
+            f"({len(_EXT_ALLOW)} entry), 0 with escaped slashes or an "
+            f"entity colon, 0 protocol-relative, 0 @import, 0 CSS url() off the "
+            f"document, 0 of {len(_EXT_NET_NEEDLES)} network APIs by exact name "
+            f"(XHR/WebSocket/EventSource/sendBeacon/importScripts), "
+            f"0 of {len(_EXT_HTML_RES)} markup-and-navigation patterns "
+            f"(iframe/frame/form/base/object/embed/link/script-src/srcset/"
+            f"meta-refresh/setAttribute-with-a-literal-URL/new Worker/"
+            f"SharedWorker/serviceWorker/window.open), tag matching "
+            f"CASE-INSENSITIVE; offline fetch shim "
+            f"present; 0 of {len(_ADVISOR_NEEDLES)} advisor identifiers, "
+            f"0 of {len(_BRIDGE_NEEDLES)} Bridge identifiers, 0 of "
+            f"{len(_CLOSEDNET_NEEDLES)} GitHub/sync words")
+        notes.append(
+            "what this scan CANNOT see, said plainly: a URL assembled at "
+            "runtime (\"htt\" + \"ps://…\", String.fromCharCode, atob of a "
+            "base64 host) and a URL that arrives in a variable "
+            "(setAttribute(\"src\", u)) are invisible to any static scan. The "
+            "guarantee is about the TEXT of the file, not about every possible "
+            "execution of it; what makes runtime assembly harmless here is the "
+            "offline fetch shim plus the fact that nothing in this app builds a "
+            "URL at all")
     if bad:
         print(f"\nQUALITY GATE — {len(bad)} violation(s) in {page}:", file=sys.stderr)
         for x in bad[:60]:
@@ -1206,6 +1580,103 @@ def gate_selftest() -> None:
         if hits:
             ok = False
             print(f"SELFTEST FAIL: false positive on: {src}\n  {hits}")
+
+    # ── Ο TRIPWIRE ΤΩΝ ΕΞΩΤΕΡΙΚΩΝ ΣΥΝΔΕΣΜΩΝ (18/10/2026) ─────────────────
+    # Ένας έλεγχος που δεν έχει αποδειχθεί ότι σκάει είναι ευχή, όχι έλεγχος.
+    # Τα κακά δείγματα είναι ακριβώς τα είδη που βρέθηκαν ή θα μπορούσαν να
+    # βρεθούν στο app/: απόλυτο https, loopback του συμβούλου, api.github.com,
+    # protocol-relative, web font μέσω @import, url() σε CDN. Τα καλά είναι τα
+    # δύο που ΔΕΝ πρέπει να σκάνε ποτέ: το XML namespace του SVG και η
+    # αναφορά marker στο ίδιο έγγραφο.
+    ext_bad = [
+        ('<a href="https://github.com/x/y/issues/new?title=a">f</a>', "https link"),
+        ('var P = "http://127.0.0.1:8771";', "advisor loopback"),
+        ('var A = "https://api.github.com";', "api.github.com"),
+        ('<img src="//cdn.example.com/a.png">', "protocol-relative src"),
+        ("@import url(https://fonts.googleapis.com/css?family=X);", "@import web font"),
+        ("a{background:url(https://cdn.example.com/b.png)}", "url() to a CDN"),
+        ('var x = new XMLHttpRequest();', "XMLHttpRequest"),
+        ('<iframe src="x"></iframe>', "iframe"),
+        # ── ΟΙ ΕΝΤΕΚΑ ΤΡΥΠΕΣ ΤΟΥ ΑΝΑΙΡΕΤΗ (18/10/2026) ───────────────────
+        # Κάθε μία πέρασε ΜΕΣΑ ΑΠΟ ΤΗΝ ΠΥΛΗ και δεν πιάστηκε. Μένουν εδώ ως
+        # δείγματα για πάντα: η απόδειξη ότι ο έλεγχος σκάει είναι ο έλεγχος.
+        ('<IFRAME src="x.html"></IFRAME>', "<IFRAME> in capitals"),
+        ('<LINK rel="stylesheet" href="s.css">', "<LINK rel=stylesheet> in capitals"),
+        ('<SCRIPT SRC="x.js"></SCRIPT>', "<SCRIPT SRC> in capitals"),
+        ('<Form action="/x">', "<Form> in mixed case"),
+        ('var u = "https:\\/\\/evil/x";', "escaped slashes (JSON-escaped string)"),
+        ('el.innerHTML = "<a href=\\"https&#58;//evil/x\\">go</a>";',
+         "HTML-entity colon (https&#58;//…)"),
+        ('<meta http-equiv="refresh" content="0;url=//evil">', "meta refresh"),
+        ('s.setAttribute("src", "//cdn/a.js");', 'setAttribute("src", "//host")'),
+        ('var w = new Worker("w.js");', "new Worker()"),
+        ('navigator.serviceWorker.register("sw.js");', "serviceWorker.register()"),
+        ('window.open("x.html", "_blank");', "window.open()"),
+    ]
+    ext_good = [
+        '<svg xmlns="http://www.w3.org/2000/svg"><path d="M0 0"/></svg>',
+        'o["marker-end"] = "url(#fc-arr-out)";',
+        'el.innerHTML = "<a href=\\"#fdms-feedback/issues/new?title=a\\">Feedback</a>";',
+        'el.href = URL.createObjectURL(blob);',
+        'd.setAttribute("src", "data:image/png;base64,AAA");',
+        # ΤΑ ΨΕΥΔΩΣ-ΘΕΤΙΚΑ ΠΟΥ ΘΑ ΕΣΠΑΓΑΝ ΤΟ BUILD (18/10/2026): η εφαρμογή έχει
+        # `window.openMifChart` σε τέσσερα σημεία — ένα needle «window.open»
+        # χωρίς παρένθεση θα είχε σκάσει στο πρώτο build. Και το `<script>`
+        # χωρίς src είναι ΟΛΟ το export: 17 μπλοκ.
+        'if (window.openMifChart) window.openMifChart(cat, sn);',
+        'window.openSchedVal(uid); window.openRequirements(id);',
+        "<script>\n/* a block with no src — this is what the export is made of */\n</script>",
+        'd.setAttribute("aria-expanded", "true"); d.setAttribute("src", v);',
+        'var worker = { SharedWorkerLike: 1 }; var k = o.workerish;',
+    ]
+    # το shim είναι υποχρεωτικό, άρα κάθε δείγμα εδώ το κουβαλά μαζί του
+    SHIM = "\nwindow.fetch = function (u) { return null; };\n"
+    for src, why in ext_bad:
+        if not gate_scan_external("selftest", src + SHIM):
+            ok = False
+            print(f"SELFTEST FAIL: the external-link tripwire missed {why}: {src}")
+    for src in ext_good:
+        hits = gate_scan_external("selftest", src + SHIM)
+        if hits:
+            ok = False
+            print(f"SELFTEST FAIL: external-link false positive on: {src}\n  {hits}")
+    if not gate_scan_external("selftest", "var a = 1;"):
+        ok = False
+        print("SELFTEST FAIL: a file without the offline fetch shim passed the "
+              "external-link tripwire")
+
+    # ── ΤΟ BRIDGE ΚΑΙ ΤΟ ΚΛΕΙΣΤΟ ΔΙΚΤΥΟ (18/10/2026) ─────────────────────
+    # Τα κακά είναι ακριβώς ό,τι βρισκόταν στο app/ πριν τον γύρο. Τα καλά
+    # είναι η γεωγραφία: «bridge» στα αγγλικά της πλοήγησης υπάρχει στα
+    # δεδομένα και ΔΕΝ είναι κώδικας — αν σκάσει σε αυτά, η πύλη έγινε λογοκρισία.
+    unit_bad = [
+        ('<button class="sch-subtab" data-sch="bridge">Bridge</button>', "the Bridge subtab"),
+        ('<section id="sch-bridge" class="sch-pane hidden"></section>', "the Bridge pane shell"),
+        ('if (window.schBridgeInit) { window.schBridgeInit(el); return; }', "schBridgeInit"),
+        ('if (from === "x" && window.schBridgeLeave) window.schBridgeLeave();', "schBridgeLeave"),
+        ('<p>Expected <code>app/schedbridge.js</code> next to the others.</p>', "app/schedbridge.js"),
+        ('SchedBridge.looksLikeWaExport(data)', "SchedBridge.*"),
+        ('placeholder="&lt;project&gt;.supabase.co"', "a supabase host"),
+        ('"…and the copy on GitHub are NOT touched."', "the GitHub copy warning"),
+        ('"It does NOT touch the ☁ Sync access code."', "the ☁ Sync access code warning"),
+        ('var A = "api.github.com";', "api.github.com"),
+    ]
+    unit_good = [
+        # ΤΟ ΓΕΦΥΡΙ ΤΟΥ VFR NAVIGATION — έξι φορές στα δεδομένα, μηδέν φορές κώδικας
+        '{"text": "the turning point is the bridge south of the town"}',
+        '{"text": "Bridge and dam are the two visual references for leg 3"}',
+        # το ΟΝΟΜΑ της συλλογής μένει στο store: δεν είναι σύρμα προς το module
+        'bridgeLog: { type: "list", key: "id", seed: "bridge_log" },',
+    ]
+    for src, why in unit_bad:
+        if not gate_scan_unit("selftest", src):
+            ok = False
+            print(f"SELFTEST FAIL: the Bridge/closed-network tripwire missed {why}: {src}")
+    for src in unit_good:
+        hits = gate_scan_unit("selftest", src)
+        if hits:
+            ok = False
+            print(f"SELFTEST FAIL: Bridge/closed-network false positive on: {src}\n  {hits}")
 
     # ── THE SPREAD REGRESSION ────────────────────────────────────────────
     # Round 23 first ran Babel with `loose: true`, which implies iterableIsArray
@@ -1952,6 +2423,21 @@ def patch_css(css: str) -> tuple:
     BEFORE the modern declaration, or behind html.no-flexgap)."""
     notes = []
 
+    # ── 0. ΤΟ ΟΝΟΜΑ ΑΡΧΕΙΟΥ ΠΟΥ ΔΕΝ ΤΑΞΙΔΕΥΕΙ (18/10/2026) ────────────────
+    #    Τα σχόλια της CSS ΕΠΙΒΙΩΝΟΥΝ στο παραδοτέο — σχόλια πετά μόνο ο Babel,
+    #    και μόνο της JavaScript. Δύο σχόλια του stylesheet ονομάτιζαν ρητά το
+    #    `app/schedbridge.js`, δηλαδή το module που ο γύρος αυτός έκοψε: το
+    #    αρχείο κουβαλούσε την ΑΠΟΔΕΙΞΗ ότι του λείπει κάτι, που είναι ακριβώς
+    #    ο λόγος που έφυγε και το «advInit».
+    #    ΤΙ ΔΕΝ ΓΙΝΕΤΑΙ ΕΔΩ, ΚΑΙ ΓΙΑΤΙ: οι ~45 κανόνες `.brg-*` ΜΕΝΟΥΝ. Είναι
+    #    στυλ για στοιχεία που δεν υπάρχουν — νεκρά bytes, μηδενική διαδρομή
+    #    αποτυχίας — ενώ η αφαίρεσή τους θα κούναγε τους μετρητές του
+    #    `gap:`/flex-gap και θα ξανάγραφε το παραγόμενο φύλλο no-flexgap για
+    #    κανένα κέρδος. Το μικρότερο ρίσκο κερδίζει.
+    css = sub1(r"app/schedbridge\.js", lambda m: "a Scheduler module that does not "
+               "travel to the unit", css,
+               "the Bridge module named in a stylesheet comment", count=2)
+
     # ── 1. :focus-visible (Fx85) → :focus. On the floor the unknown
     #       pseudo-class would invalidate the WHOLE rule; :focus is the
     #       graceful export behaviour. Count is reported, not asserted: the
@@ -2237,6 +2723,43 @@ def collect_data() -> dict:
              f"the export ships an empty one — its absence means the layout changed)")
     bundle["data/scheduler/seed.json"] = EMPTY_SEED
     return bundle
+
+
+# 18/10/2026 — ΑΠΟΦΑΝΣΗ: «το export να πάρει δικές του παρατηρήσεις και
+# περιγραφές».  Ο builder ΠΑΝΤΑ διάβαζε τα σημερινά αρχεία από τον δίσκο (η
+# collect_data από πάνω δεν έχει ούτε snapshot ούτε cache ούτε καρφωμένη τιμή),
+# αλλά αυτό ήταν αόρατο: η μόνη αναφορά ήταν «N JSON files, X MB raw», που θα
+# τύπωνε το ίδιο νούμερο και αν η τράπεζα είχε μισές παρατηρήσεις.  Από εδώ και
+# πέρα η απογραφή τυπώνεται, για να φαίνεται σε κάθε build ΤΙ κουβαλά το αρχείο.
+def data_census(bundle: dict) -> list:
+    v2 = {k: v for k, v in bundle.items()
+          if k.startswith("data/observations2/") and not k.endswith("/index.json")}
+    modes = texts = 0
+    for obj in v2.values():
+        for m in obj.get("error_modes") or []:
+            modes += 1
+            for key in ("texts", "texts_at", "texts_above"):
+                texts += len(m.get(key) or {})
+    master = bundle["data/observations/master_index.json"]
+    items = [it for c in master["categories"].values() for it in c["items"]]
+    desc = bundle["data/descriptions.json"]
+    # Σταυρωτός έλεγχος: κάθε item του master_index πρέπει να έχει το v2 αρχείο
+    # του ΜΕΣΑ στο bundle. Ένα item που δείχνει σε αρχείο που δεν ταξίδεψε
+    # εμφανίζεται στη Μοίρα ως καρτέλα που δεν ανοίγει ποτέ.
+    missing = [it["item_id"] for it in items
+               if f"data/observations2/{it['v2_file']}" not in bundle]
+    if missing:
+        fail(f"master_index points at v2 files that are not in the bundle: {missing}")
+    return [
+        f"observations : {len(v2)} item files, {modes} error modes, {texts} remark texts "
+        f"(read from {DATA / 'observations2'} at build time)",
+        f"index        : {len(master['categories'])} categories, {len(items)} items "
+        f"— every one of them with its v2 file in the bundle",
+        f"descriptions : {len(desc['templates'])} templates, {len(desc['sorties'])} sorties, "
+        f"{len(desc['families'])} families, {len(desc['lists'])} pick-lists "
+        f"(data/descriptions.json, round {desc.get('round', '?')}, "
+        f"generated {desc.get('generated', '?')})",
+    ]
 
 
 def data_bundle_js(bundle: dict) -> str:
@@ -3120,8 +3643,13 @@ DATE_FALLBACK_JS = r"""
 FEEDBACK_JS = r"""
 "use strict";
 /* Offline feedback module — appended by tools/build_offline.py (not part of app/).
-   Intercepts every GitHub "/issues/new" link (per-remark Feedback buttons and
-   the global remark-search Feedback buttons) and opens a local dialog instead.
+   Intercepts every "/issues/new" link (per-remark Feedback buttons and the
+   global remark-search Feedback buttons) and opens a local dialog instead.
+   Since 18/10/2026 those hrefs are no longer URLs at all but fragments of this
+   same document (neutralise_externals), so even a click this handler never
+   sees — middle click, "open in new tab" — cannot reach the network. The
+   handler stays, because the dialog is the point; the fragment is the floor
+   under it.
    Storage tiers:
      (a) SHARED FILE — File System Access API (Chrome/Edge ONLY; Firefox has no
          such API, so on the unit's Firefox this tier simply never appears):
@@ -3306,13 +3834,32 @@ FEEDBACK_JS = r"""
   const setStatus = (t) => { $id("fb-status").textContent = t; };
   const refreshBar = () => { $id("fb-n").textContent = String(localRecs().length); };
 
-  /* ── parse the prefilled GitHub-issue URL ── */
+  /* ── parse the prefilled feedback URL ──
+     18/10/2026: ΔΕΝ είναι πια απόλυτο URL. Το neutralise_externals μετατρέπει
+     το `https://github.com/<repo>/issues/new?…` σε fragment του ίδιου εγγράφου
+     (`#fdms-feedback/issues/new?…`), ώστε ο σύνδεσμος να μην μπορεί ΠΟΤΕ να
+     φύγει από το αρχείο — ούτε με μεσαίο κλικ, ούτε με «νέα καρτέλα». Το
+     query μένει αυτούσιο, αλλά το `new URL(href)` που διάβαζε το searchParams
+     πετά TypeError σε σχετική διεύθυνση, κι ένα `new URL(href, location.href)`
+     θα έβαζε το query ΜΕΣΑ στο fragment (το "?" έρχεται μετά το "#"), οπότε
+     το searchParams θα γύριζε άδειο. Άρα το query διαβάζεται από το ίδιο το
+     κείμενο — καθαρό ES5, χωρίς URL/URLSearchParams, όπως και το υπόλοιπο
+     αρχείο. encodeURIComponent δεν παράγει ποτέ "+", αλλά ο παλιός κώδικας
+     αποκωδικοποιούσε μέσω searchParams που το δέχεται ως διάστημα: το "+"
+     μένει να αποκωδικοποιείται το ίδιο, για να μη χαθεί τίποτα από
+     χειρόγραφο href. */
+  function qparam(s, key) {
+    const m = new RegExp("[?&]" + key + "=([^&#]*)").exec(s);
+    if (!m) return "";
+    try { return decodeURIComponent(m[1].replace(/\+/g, "%20")); }
+    catch (e) { return m[1]; }
+  }
+
   function parseFb(href) {
     let title = "", body = "";
     try {
-      const u = new URL(href);
-      title = u.searchParams.get("title") || "";
-      body = u.searchParams.get("body") || "";
+      title = qparam(href, "title");
+      body = qparam(href, "body");
     } catch (e) {}
     const ctx = { mode_id: "", level: "", item: "", file: "", quote: "" };
     let m = /^Feedback:\s*(.+?)\s*·\s*level\s*(\S+)\s*$/.exec(title);   // remarksearch format
@@ -3443,7 +3990,126 @@ def prepare_appjs() -> str:
     )
     if n != 1:
         fail(f"dynamic loader block in app.js: expected 1 match, got {n}")
+
+    # 18/10/2026 — ΤΟ ΥΠΟΛΕΙΜΜΑ ΤΟΥ ΣΥΜΒΟΥΛΟΥ ΠΟΥ ΔΕΝ ΕΒΛΕΠΕ ΚΑΝΕΙΣ.
+    # Ο έλεγχος «advisor residue» της build_main_html τρέχει πάνω στο ΚΕΛΥΦΟΣ,
+    # πριν μπουν τα scripts — οπότε έβλεπε ότι έφυγαν η καρτέλα και ο <main>,
+    # και δεν έβλεπε ότι μέσα στην app.js έμενε το καλώδιο που τους ένωνε:
+    #   if ($("tab-advisor")) $("tab-advisor").onclick = () => {
+    #     switchView("advisor"); if (window.advInit) window.advInit(); };
+    # Στην πράξη ήταν αβλαβές (και τα δύο lookups είναι null/undefined, γι' αυτό
+    # και γράφτηκε με guard), αλλά το παραδοτέο κουβαλούσε τα ονόματα
+    # «tab-advisor» και «advInit» — δηλαδή την απόδειξη ότι υπάρχει κάτι που
+    # του λείπει. Η απόφανση ήταν να μη ΜΕΝΕΙ τίποτα του συμβούλου: φεύγει το
+    # καλώδιο μαζί με το σχόλιό του, και ο έλεγχος υπολειμμάτων ξανατρέχει
+    # πάνω σε ΟΛΟ το αρχείο — βλ. run_gate. Το ίδιο σχήμα με το `inset` του
+    # Γύρου 24: κανόνας που επιβαλλόταν στο ένα μισό και όχι στο άλλο.
+    out = sub1(r'/\* 17/10/2026 — «Σύμβουλος»[\s\S]*?\n'
+               r'if \(\$\("tab-advisor"\)\)[^\n]*\n',
+               lambda m: "/* [offline build] that tab's wiring is removed with the tab "
+                         "itself; nothing of it travels. */\n",
+               out, "advisor tab wiring in app.js")
+
+    # 18/10/2026 — ΤΟ ΙΔΙΟ ΣΧΗΜΑ, ΜΙΑ ΜΕΡΑ ΜΕΤΑ, ΓΙΑ ΤΟ BRIDGE. Η κλήση είναι
+    # ΦΥΛΑΓΜΕΝΗ (`&& window.schBridgeLeave`) και στην πράξη αβλαβής — αυτή
+    # ακριβώς ήταν και η υπεράσπιση του advInit. Φεύγει για τον ίδιο λόγο:
+    # στο παραδοτέο της Μοίρας δεν μένει το όνομα ενός module που δεν υπάρχει,
+    # και η custody του Bridge (να μη ζήσει η αναφορά με τα ΑΛΗΘΙΝΑ ΟΝΟΜΑΤΑ
+    # πέρα από την καρτέλα της) δεν έχει τι να φυλάξει όταν δεν υπάρχει
+    # καρτέλα να γράψει αναφορά.
+    out = sub1(r'[ \t]*/\* CUSTODY \(Round 18[\s\S]*?\n'
+               r'[ \t]*if \(view !== "scheduler" && window\.schBridgeLeave\)[^\n]*\n',
+               lambda m: "  /* [offline build] the Bridge does not travel (Supabase is "
+                         "cloud), so its custody call goes with it. */\n",
+               out, "Bridge custody call in app.js switchView")
     return out
+
+
+# ────────────────────────────────────────────────────────────────────
+#  ΤΟ BRIDGE ΒΓΑΙΝΕΙ ΑΠΟ ΤΟ ΕΞΑΓΟΜΕΝΟ (απόφανση ιδιοκτήτη, 18/10/2026:
+#  «ό,τι δημιουργεί πρόβλημα για το export απλά δεν το συμπεριλαμβάνουμε»)
+#
+#  ΤΟ ΓΕΓΟΝΟΣ: ο συγχρονισμός του Bridge είναι Supabase — cloud. Στο κλειστό
+#  δίκτυο το `W.fetch` που διαβάζει την ώρα της κλήσης πέφτει πάνω στο offline
+#  shim, άρα η καρτέλα δεν υπολειτουργεί: ΑΠΟΤΥΓΧΑΝΕΙ ΠΑΝΤΑ, και το κάνει
+#  μπροστά σε έναν εκπαιδευτή που δεν έχει κανέναν να ρωτήσει. 526.526 bytes
+#  για να αποτύχει.
+#
+#  ΑΛΛΑ ΤΟ BRIDGE ΔΕΝ ΕΙΝΑΙ ΑΠΟΜΟΝΩΜΕΝΟ, ΚΑΙ ΕΔΩ ΕΙΝΑΙ Ο ΚΙΝΔΥΝΟΣ. Δύο βρόχοι
+#  της scheduler.js περνούν ΟΛΟΚΛΗΡΗ τη λίστα PANES και καλούν μέθοδο πάνω στο
+#  στοιχείο κάθε pane ΧΩΡΙΣ ΕΛΕΓΧΟ για null:
+#      for (const p of PANES) $id("sch-" + p).innerHTML = msg;          (boot error)
+#      for (const p of PANES) $id("sch-" + p).classList.toggle(…);      (ΚΑΘΕ ΚΛΙΚ)
+#  Ο δεύτερος είναι ο φονικός: τρέχει σε κάθε κλικ σε υποκαρτέλα του Scheduler.
+#  Χωρίς το <section id="sch-bridge">, το `$id` γυρίζει null, ο handler πετάει
+#  TypeError ΠΡΙΝ το render() — και ο χρήστης βλέπει υποκαρτέλες που δεν
+#  αλλάζουν ΠΟΤΕ. Board, Roster, Training Log, Balance: όλα νεκρά, χωρίς μήνυμα.
+#  Αυτό δεν θα το βλέπαμε εμείς· θα το έβλεπε η Μοίρα.
+#
+#  Η ΘΕΡΑΠΕΙΑ ΕΙΝΑΙ ΣΤΗ ΡΙΖΑ, ΟΧΙ ΣΤΑ ΦΥΛΛΑ: βγαίνει το "bridge" ΑΠΟ ΤΗ ΛΙΣΤΑ,
+#  κι έτσι και οι δύο βρόχοι γίνονται σωστοί χωρίς να τους αγγίξει κανείς — τρία
+#  pane, τρία στοιχεία, κανένα null. Αν αντί γι' αυτό βάζαμε φύλακα σε κάθε
+#  βρόχο, θα είχαμε δύο διορθώσεις αντί για μία και η επόμενη λίστα θα ξανάσκαγε.
+#  Μαζί φεύγουν τα τρία καλώδια που δεν οδηγούν πουθενά: η custody κλήση
+#  (schBridgeLeave), η γραμμή dispatch και η renderBridge() — η οποία ΜΟΝΗ ΤΗΣ
+#  θα έσκαγε σε null ($id("sch-bridge").innerHTML) αν κάτι την καλούσε ποτέ.
+#
+#  ΤΟ ΜΑΘΗΜΑ ΤΟΥ advInit, ΓΡΑΜΜΕΝΟ ΜΙΑ ΜΕΡΑ ΠΡΙΝ: ο έλεγχος υπολειμμάτων έτρεχε
+#  στο ΚΕΛΥΦΟΣ και το καλώδιο έμενε μέσα στην app.js. Γι' αυτό ο έλεγχος του
+#  Bridge (gate_scan_unit) τρέχει πάνω στο ΟΛΟΚΛΗΡΟ αρχείο.
+#  app/scheduler.js ΔΕΝ ΑΓΓΙΖΕΤΑΙ: η φιλοξενούμενη εφαρμογή κρατά το Bridge.
+# ────────────────────────────────────────────────────────────────────
+
+def prepare_scheduler() -> str:
+    src = read_text(APP / "scheduler.js")
+    # ① Η ΡΙΖΑ: η λίστα των pane. Τα δύο ανοχύρωτα `for (const p of PANES)`
+    #    γίνονται ασφαλή με αυτή τη μία γραμμή και με καμία άλλη.
+    src = sub1(r'const PANES = \["board", "roster", "log", "balance", "bridge"\];',
+               lambda m: 'const PANES = ["board", "roster", "log", "balance"];',
+               src, "scheduler PANES list (the Bridge pane leaves the unit build)")
+    # ② Η custody κλήση στο wireSubtabs: φυλαγμένη (`&& window.schBridgeLeave`),
+    #    αλλά σύρμα προς module που δεν ταξιδεύει. Φεύγει για τον ίδιο λόγο που
+    #    έφυγε το advInit: το παραδοτέο δεν κουβαλά τα ονόματα αυτού που του λείπει.
+    src = sub1(r'[ \t]*if \(from === "bridge"[^\n]*\n', lambda m: "",
+               src, "scheduler Bridge custody call (schBridgeLeave)")
+    # ③ Η γραμμή dispatch: απρόσιτη μόλις φύγει το κουμπί, αλλά απρόσιτο ≠ απών.
+    src = sub1(r'[ \t]*else if \(ui\.pane === "bridge"\) renderBridge\(\);\n',
+               lambda m: "", src, "scheduler render() dispatch to the Bridge pane")
+    # ④ Η ίδια η renderBridge: ΑΦΥΛΑΚΤΗ από μέσα — `$id("sch-bridge")` γυρίζει
+    #    null και το `el.innerHTML` του fallback σκάει. Απρόσιτη σήμερα, βόμβα
+    #    την ημέρα που κάποιος προσθέσει τρόπο να φτάσει εκεί.
+    src = sub1(r"[ \t]*function renderBridge\(\) \{[\s\S]*?\n[ \t]*\}\n",
+               lambda m: "", src, "scheduler renderBridge() (shell of a tab that is gone)")
+    return src
+
+
+def prepare_currency() -> str:
+    """ΤΟ ΣΗΜΑ «WA» ΤΗΣ ΚΑΡΤΑΣ ΚΑΙ ΤΟ ΟΝΟΜΑ ΠΟΥ ΔΕΝ ΠΡΕΠΕΙ ΝΑ ΛΕΕΙ.
+
+    Το κελί του εξαμήνου βάζει ένα σήμα «WA» πάνω σε κάθε καταγραφή που δεν
+    την πληκτρολόγησε η Μοίρα, και το tooltip του εξηγούσε ΠΟΙΟΣ την έγραψε:
+    «recorded by the Bridge…».  Στο εξαγόμενο δεν υπάρχει Bridge.
+
+    ΓΙΑΤΙ ΔΕΝ ΕΙΝΑΙ ΑΔΥΝΑΤΟ ΝΑ ΕΜΦΑΝΙΣΤΕΙ: το σήμα ζωγραφίζεται όταν η
+    καταγραφή κουβαλά `src: "wa:…"`.  Το store φεύγει ΑΔΕΙΟ, άρα καμία τέτοια
+    καταγραφή δεν ταξιδεύει μαζί — αλλά ο χρήστης φορτώνει επιτόπου ⭱ Import
+    ένα backup που βγήκε από τον υπολογιστή του ιδιοκτήτη, κι εκεί ο Bridge
+    ΕΧΕΙ γράψει.  Οπότε το tooltip μπορεί κάλλιστα να εμφανιστεί στη Μοίρα και
+    να ονοματίσει καρτέλα που δεν υπάρχει — και να υποσχεθεί «lane» προς ένα
+    σύστημα που αυτό το αρχείο δεν αγγίζει ποτέ.  Το σήμα ΜΕΝΕΙ (η πληροφορία
+    «αυτό δεν το τύπωσε η Μοίρα» είναι αληθινή και χρήσιμη)· αλλάζει μόνο το
+    ποιος λέγεται ότι το έγραψε."""
+    src = read_text(APP / "currency.js")
+    old = ('title="${esc("recorded by the Bridge out of this instructor\'s own "\n'
+           '        + "Wings Ahead currency claim — " + String(e.src).slice(WA_SRC.length)\n'
+           '        + ". Wings Ahead has no admin write path for these rows, so the lane is one-way and nothing here "\n'
+           '        + "is ever pushed back.")}"')
+    new = ('title="${esc("recorded from this instructor\'s own Wings Ahead currency claim — "\n'
+           '        + String(e.src).slice(WA_SRC.length)\n'
+           '        + ". It came in with the data that was loaded on this computer; this file reads it and '
+           'sends nothing anywhere.")}"')
+    return sub1(re.escape(old), lambda m: new, src,
+                "currency WA-badge tooltip (it named the Bridge)")
 
 
 def prepare_mifchart() -> str:
@@ -3472,16 +4138,291 @@ def prepare_schedstore() -> str:
     This is the export's rewrite, not the app's: app/schedstore.js keeps the
     modern line, and the hosted app is untouched."""
     src = read_text(APP / "schedstore.js")
-    return sub1(
+    src = sub1(
         r"S\(\)\.setConfig\(\{ \[CFG_KEY\]: rec \}\)",
         lambda m: "S().setConfig((function () { var o = {}; o[CFG_KEY] = rec; return o; })())",
         src, "schedstore computed key { [CFG_KEY]: rec }")
+    return retell_closed_network(src)
+
+
+# ────────────────────────────────────────────────────────────────────
+#  ΤΑ ΚΕΙΜΕΝΑ ΠΟΥ ΜΙΛΟΥΝ ΓΙΑ ΚΟΥΜΠΙ ΠΟΥ ΔΕΝ ΥΠΑΡΧΕΙ (απόφανση 18/10/2026)
+#
+#  ΤΟ ΠΕΡΙΣΤΑΤΙΚΟ: οι διάλογοι ↺ Reset / ⭱ Import / ⭳ Export του schedstore.js
+#  προειδοποιούσαν τον εκπαιδευτή ότι «το αντίγραφο στο GitHub ΔΕΝ πειράζεται»,
+#  ότι μένει άθικτος «ο κωδικός του ☁ Sync», και ότι ο κωδικός επεξεργασίας
+#  «ταξιδεύει στις άλλες συσκευές με τον συγχρονισμό».  Στο εξαγόμενο το
+#  `schedsync.js` ΔΕΝ ΤΑΞΙΔΕΥΕΙ: δεν υπάρχει κουμπί ☁ Sync, δεν υπάρχει ⭱ Push,
+#  δεν υπάρχει αντίγραφο στο GitHub, δεν υπάρχουν «άλλες συσκευές».  Μια
+#  προειδοποίηση για λειτουργία που λείπει δεν καθησυχάζει: στέλνει τον χρήστη
+#  να ψάξει κουμπί που δεν θα βρει, και του υπόσχεται αντίγραφο ασφαλείας που
+#  δεν υπάρχει.  Η δεύτερη είναι η επικίνδυνη — κάποιος θα πατήσει ↺ Reset
+#  πιστεύοντας ότι «το GitHub το έχει».
+#
+#  ΚΑΙ ΕΝΑ ΔΕΥΤΕΡΟ ΨΕΜΑ, ΠΟΥ ΤΟ ΒΡΗΚΕ ΑΥΤΟΣ Ο ΓΥΡΟΣ: ο διάλογος λέει «rebuilds
+#  it from the seed file that ships with the app».  Στο εξαγόμενο το seed είναι
+#  ΑΔΕΙΟ (`{}`, βλ. EMPTY_SEED) — άρα το ↺ Reset δεν «επαναφέρει», ΑΔΕΙΑΖΕΙ.
+#  Αυτό ο χρήστης πρέπει να το ξέρει ΠΡΙΝ πληκτρολογήσει RESET.
+#
+#  ΓΙΑΤΙ ΕΔΩ ΚΑΙ ΟΧΙ ΣΤΟ app/: ακριβώς όπως η απογύμνωση του attribution και η
+#  αδρανοποίηση των συνδέσμων.  Στη φιλοξενούμενη εφαρμογή το ☁ Sync, το
+#  GitHub και οι άλλες συσκευές ΥΠΑΡΧΟΥΝ, και εκεί τα κείμενα είναι αληθινά.
+#  Κάθε αντικατάσταση είναι sub1 με μέτρηση: αν κάποιος ξαναγράψει μία από
+#  αυτές τις προτάσεις στο app/, το build σταματά και το βλέπει άνθρωπος.
+# ────────────────────────────────────────────────────────────────────
+
+_CLOSEDNET_RETELL = [
+    # ① Η ΑΡΝΗΣΗ ΤΟΥ WINGS AHEAD EXPORT — έδειχνε σε καρτέλα που δεν υπάρχει πια.
+    ("This file is a WINGS AHEAD EXPORT, not a store backup — use Scheduler → "
+     "“Bridge”, which only reads it, compares it with this store and writes nothing.",
+     "This file is a WINGS AHEAD EXPORT, not a scheduler backup — this build cannot "
+     "read it at all. ⭱ Import takes the file ⭳ Export writes "
+     "(scheduler-backup-YYYY-MM-DD.json) and nothing else.",
+     "WA-export refusal toast (pointed at the Bridge tab)"),
+    # ② Ο ΔΙΑΛΟΓΟΣ ΤΟΥ ↺ RESET — το seed είναι άδειο, και δεν υπάρχει GitHub.
+    ('body: "Roster, training log, availability, duties, gates, day plans, the Bridge change log "\n'
+     '        + "and the Bridge <b>push ledger</b> are all discarded. "\n'
+     '        + "The editor code goes with them, so this device is left with no code set — and so does the "\n'
+     '        + "Wings Ahead bridge credential, which is re-pasted by hand. "\n'
+     '        + "Throwing the push ledger away does not remove one row from Wings Ahead: it forgets WHICH "\n'
+     '        + "row belongs to which FDMS event, so every flight looks unpushed and the next push meets its "\n'
+     '        + "own rows as conflicts, on the report, settled by hand. "\n'
+     '        + "This browser’s sync settings and the copy on GitHub are NOT touched.",',
+     'body: "Roster, training log, availability, duties, gates, currency entries and day plans "\n'
+     '        + "are all discarded. The editor code goes with them, so this computer is left with no "\n'
+     '        + "code set. "\n'
+     '        + "IN THIS FILE THE SEED IS EMPTY: what you get back is a BLANK Scheduler, not the data "\n'
+     '        + "this file arrived with — ↺ Reset here EMPTIES, it does not restore. "\n'
+     '        + "Nothing is sent anywhere and nothing outside this browser is touched; there is no copy "\n'
+     '        + "of this data on any other computer. The ONLY way back is a ⭳ Export taken before this, "\n'
+     '        + "loaded again with ⭱ Import.",',
+     "↺ Reset dialog body (GitHub copy · sync settings · «rebuilds from the seed»)"),
+    # ③ Ο ΤΙΤΛΟΣ ΚΑΙ ΤΟ ΚΟΥΜΠΙ ΤΟΥ ΙΔΙΟΥ ΔΙΑΛΟΓΟΥ: «to the seed file» σε αρχείο
+    #    που κουβαλά άδειο seed είναι το ίδιο ψέμα, δύο λέξεις πιο σύντομο.
+    ('ico: "↺", word: "RESET", go: "Reset to the seed",',
+     'ico: "↺", word: "RESET", go: "Empty the Scheduler",',
+     "↺ Reset confirm button («to the seed» — the seed is empty here)"),
+    ('title: "Reset the scheduler to the seed file?",',
+     'title: "Empty the whole Scheduler on this computer?",',
+     "↺ Reset dialog title"),
+    # ΚΑΙ ΤΟ TOAST ΠΟΥ ΑΚΟΛΟΥΘΕΙ: «Reset to seed.» σε αρχείο με άδειο seed λέει
+    # στον χρήστη ότι κάτι επανήλθε. Δεν επανήλθε: αδειάστηκε.
+    ('toast(ok ? "Reset to seed." : "Seed file not reachable — store emptied.", ok ? "good" : "bad");',
+     'toast(ok ? "Scheduler emptied." : "Scheduler emptied — this file carries no seed data.", ok ? "good" : "bad");',
+     "↺ Reset result toast («Reset to seed.»)"),
+    # ④ ΤΟ TOOLTIP ΤΟΥ ⭳ EXPORT — το bridge token και το «Bridge → ⚙».
+    ('+ "The ONE thing it leaves out is the Wings Ahead bridge token: the file wanders, so the "\n'
+     '      + "credential does not travel in it and an ⭱ Import never brings one back — you paste it once, "\n'
+     '      + "in Bridge → ⚙. The URL and the anon key do travel; they are public values. "\n',
+     '+ "It is the whole store and nothing but the store. "\n',
+     "⭳ Export tooltip (the Wings Ahead token and «Bridge → ⚙»)"),
+    # ⑤ ΤΟ TOOLTIP ΤΟΥ ⭱ IMPORT — «nothing in the cloud until the next push».
+    ('+ "It touches nothing in the cloud until the next push, and "\n'
+     '      + "nothing outside the Scheduler. It refuses a global roster file and a Wings Ahead export BY NAME, "\n',
+     '+ "It sends nothing anywhere — there is no cloud in this file — and it touches "\n'
+     '      + "nothing outside the Scheduler. It refuses a global roster file and a Wings Ahead export BY NAME, "\n',
+     "⭱ Import tooltip (the cloud and the next push)"),
+    # ⑥ ΤΟ TOOLTIP ΤΟΥ ↺ RESET — ο μεγάλος: ☁ Sync, GitHub, ⭳ Pull, ⭱ Push.
+    ('reset: "Throws the whole store away and rebuilds it from the seed file that ships with the app. "\n'
+     '      + "Roster, training log, availability, duties, gates, currency, day plans, the Bridge change log, "\n'
+     '      + "the Bridge push ledger and config all go — the editor code with them, so this device is left "\n'
+     '      + "with no code set, and the Wings Ahead bridge token with them too. "\n'
+     '      + "It removes NOTHING from Wings Ahead: what it throws away is the memory of which row is whose, "\n'
+     '      + "so the next push meets its own rows as conflicts on the report. "\n'
+     '      + "It needs ✎ Editor mode and makes you type RESET. "\n'
+     '      + "It does NOT touch this browser’s sync settings or the ☁ Sync access code (those live outside the store), "\n'
+     '      + "and it does NOT touch the GitHub copy — a later ⭳ Pull brings the old data back, while a ⭱ Push after this "\n'
+     '      + "replaces the repo with the seed. Take a ⭳ Export first.",',
+     'reset: "Throws the whole store away. The seed inside this file is EMPTY, so what is left is a "\n'
+     '      + "BLANK Scheduler — it EMPTIES, it does not restore. "\n'
+     '      + "Roster, training log, availability, duties, gates, currency, day plans and config all go — "\n'
+     '      + "the editor code with them, so this computer is left with no code set. "\n'
+     '      + "It needs ✎ Editor mode and makes you type RESET. "\n'
+     '      + "It sends nothing anywhere and there is no copy of this data on any other computer: the ONLY "\n'
+     '      + "way back is a ⭳ Export taken first. Take one now if you have not.",',
+     "↺ Reset tooltip (☁ Sync access code · the GitHub copy · ⭳ Pull · ⭱ Push)"),
+    # ⑦ Ο ΚΩΔΙΚΟΣ ΕΠΕΞΕΡΓΑΣΙΑΣ ΔΕΝ ΤΑΞΙΔΕΥΕΙ ΠΟΥΘΕΝΑ. Τρία κείμενα το έλεγαν.
+    ('+ "so the next ⭱ Push carries it to every other device — each of them then asks for this code before "\n'
+     '      + "anything may be changed there. No scheduler data is touched, and the code itself is never stored, "\n',
+     '+ "and it stays in THIS browser: this file has no channel to another computer, so every machine "\n'
+     '      + "that opens it sets its own code. No scheduler data is touched, and the code itself is never stored, "\n',
+     "✎ editor-code tooltip («the next ⭱ Push carries it to every other device»)"),
+    ('+ "be typed first. Every OTHER device falls back to view-only until the new code is typed there. "\n',
+     '+ "be typed first. No other computer is affected — this file has no channel to one. "\n',
+     "✎ change-code tooltip («every OTHER device»)"),
+    # ⑧α ΤΟ «⋯» ΠΟΥ ΔΙΑΦΗΜΙΖΕ ΤΟ SEED. Μόλις το κουμπί έγινε «Empty the
+    #    Scheduler», το tooltip του μενού που το στεγάζει έμενε να λέει «↺ Reset
+    #    to the seed» — δύο κείμενα για το ίδιο κουμπί, που δεν συμφωνούν.
+    ('more: "Opens the two controls that can REPLACE THE WHOLE STORE — ⭱ Import a backup and ↺ Reset to the seed. "',
+     'more: "Opens the two controls that can REPLACE THE WHOLE STORE — ⭱ Import a backup and ↺ Reset, which EMPTIES it. "',
+     "«⋯» tooltip («↺ Reset to the seed» — the seed is empty here)"),
+    # ⑧ ΚΑΙ ΤΑ ΤΡΙΑ ΥΠΟΛΟΙΠΑ «ΑΛΛΕΣ ΣΥΣΚΕΥΕΣ». Τα βρήκε η επαλήθευση μετά τα
+    #    έξι πρώτα, σαρώνοντας το ΠΑΡΑΓΟΜΕΝΟ για τη φράση αντί για τον διάλογο:
+    #    δύο tooltip και ΕΝΑ TOAST που ο χρήστης βλέπει τη στιγμή που αλλάζει
+    #    κωδικό. Υπόσχονται συγχρονισμό που δεν υπάρχει — και το τρίτο δίνει
+    #    οδηγία («οι άλλες συσκευές να πληκτρολογήσουν τον νέο») σε κάποιον που
+    #    δεν έχει άλλες συσκευές.
+    ('+ "no scheduler data changes, the code itself is untouched, and other devices are unaffected. "',
+     '+ "no scheduler data changes and the code itself is untouched. "',
+     "✎ lock tooltip («other devices are unaffected»)"),
+    ('<p class="hint">Every other device falls back to view-only until the new code is typed there.</p>',
+     '<p class="hint">Only this computer is affected: the code lives in this browser and nowhere else.</p>',
+     "✎ change-code dialog hint («every other device»)"),
+    ('say("code changed ✓ — other devices must type the new one");',
+     'say("code changed ✓ — it applies to this computer");',
+     "✎ change-code toast («other devices must type the new one»)"),
+    ('+ "Setting it writes a verifier into the scheduler config, which the sync carries to your other devices.");',
+     '+ "Setting it writes a verifier into the scheduler config of THIS browser and nowhere else.");',
+     "👁 view-button tooltip («which the sync carries to your other devices»)"),
+    ('"No editor code has been set yet. Set one now: it is stored as a salted PBKDF2-SHA256 verifier inside '
+     'the store, so it travels to your other devices with the sync — never as plain text, and never '
+     'recoverable from here."',
+     '"No editor code has been set yet. Set one now: it is stored as a salted PBKDF2-SHA256 verifier inside '
+     'the store of THIS browser — never as plain text, never recoverable from here, and never sent anywhere."',
+     "✎ editor dialog hint («it travels to your other devices with the sync»)"),
+]
+
+
+def retell_closed_network(src: str) -> str:
+    """Κάθε πρόταση που περιγράφει λειτουργία εκτός του ενός αρχείου,
+    ξαναγραμμένη ώστε να λέει την αλήθεια του κλειστού δικτύου."""
+    for old, new, label in _CLOSEDNET_RETELL:
+        src = sub1(re.escape(old), lambda m, n=new: n, src,
+                   f"closed-network retelling — {label}")
+    return src
 
 
 def prepare_schedval() -> str:
     src = read_text(APP / "schedval.js")
     return sub1(r"width:min\(760px,94vw\)", lambda m: "width:760px;max-width:94vw",
                 src, "schedval modal width min()")
+
+
+# ────────────────────────────────────────────────────────────────────
+#  ΟΙ ΕΞΩΤΕΡΙΚΟΙ ΣΥΝΔΕΣΜΟΙ (απόφανση 18/10/2026)
+#
+#  Τι υπάρχει πραγματικά στο app/ και τι του συμβαίνει στο export:
+#    · 3× `https://github.com/<repo>/issues/new?…`  — τα κουμπιά Feedback σε
+#      app.js, description.js, remarksearch.js.  ΑΥΤΑ αδρανοποιούνται εδώ.
+#    · 1× `https://api.github.com`  — schedsync.js, ΔΕΝ είναι στο SCRIPT_CHAIN.
+#    · 1× `http://127.0.0.1:8771`   — advisor.js, κόβεται ολόκληρος.
+#    · `http://www.w3.org/2000/svg` — XML namespace, ΜΕΝΕΙ: δεν είναι αίτημα.
+#    · `https://<project>.supabase.co` — placeholder κειμένου στο schedbridge.js·
+#      το endpoint είναι ρύθμιση του χρήστη, και το `W.fetch` διαβάζεται την
+#      ώρα της κλήσης, άρα πέφτει πάνω στο offline shim.  Δεν είναι σύνδεσμος.
+#    · Το `<link rel=manifest>` και το `apple-touch-icon` ζουν μέσα στο μπλοκ
+#      hosted:start/hosted:end και φεύγουν εκεί.
+#  Ο builder δεν εμπιστεύεται αυτή τη λίστα: ο `gate_scan_external` ξανασαρώνει
+#  το τελικό αρχείο και σκάει σε ό,τι δεν είναι στη λευκή λίστα.
+#
+#  ΓΙΑΤΙ FRAGMENT ΚΑΙ ΟΧΙ ΑΠΛΩΣ preventDefault.  Το FEEDBACK_JS πιάνει το click
+#  στη φάση capture — αλλά ένα `href` δεν ακολουθείται μόνο με κλικ.  Μεσαίο
+#  κλικ, Ctrl+κλικ, «Άνοιγμα σε νέα καρτέλα», ακόμη και το απλό πέρασμα του
+#  ποντικιού που δείχνει τη διεύθυνση στη status bar: ο σύνδεσμος υπάρχει.  Στο
+#  κλειστό δίκτυο ένα αίτημα προς github.com δεν αποτυγχάνει γρήγορα — περιμένει
+#  το timeout, με τον εκπαιδευτή να κοιτά μια λευκή καρτέλα.  Οπότε παύει να
+#  είναι σύνδεσμος: γίνεται fragment του ίδιου εγγράφου.  Το path `/issues/new`
+#  και όλο το query μένουν ακέραια, γιατί ο selector `a[href*="/issues/new"]`
+#  και η `parseFb` του FEEDBACK_JS διαβάζουν από εκεί τα title/body.
+FB_LOCAL_PREFIX = "#fdms-feedback"
+
+_EXT_NEUTRALISE = [
+    # app.js, remarksearch.js — template literal: `https://github.com/${REPO}/issues/new?…`
+    (re.compile(r"https://github\.com/\$\{REPO\}(?=/issues/new\?)"),
+     FB_LOCAL_PREFIX, "github issue URL (template literal)"),
+    # description.js — concatenation: "https://github.com/" + REPO + "/issues/new?title="
+    (re.compile(r'"https://github\.com/"\s*\+\s*REPO\s*\+\s*"(?=/issues/new\?)'),
+     '"' + FB_LOCAL_PREFIX, "github issue URL (concatenation)"),
+    # ο ίδιος λόγος, το δεύτερο μισό: ένα νέο tab για ένα fragment του ΙΔΙΟΥ
+    # αρχείου σημαίνει ξαναφόρτωμα 13 MB για να δει ο χρήστης ό,τι έβλεπε ήδη.
+    (re.compile(r' target="_blank" rel="noopener"'),
+     "", 'target="_blank" on a Feedback anchor'),
+    # Ο ΤΕΤΑΡΤΟΣ ΕΦΥΓΕ ΜΑΖΙ ΜΕ ΤΟ ΑΡΧΕΙΟ ΤΟΥ (18/10/2026). Ήταν το
+    # `placeholder="https://&lt;project&gt;.supabase.co"` του πεδίου «Project
+    # URL» του Bridge, και ήταν ο λόγος που η λευκή λίστα γράφτηκε ανάποδα: τον
+    # βρήκε ο gate_scan_external μόλις πρωτοέτρεξε, κανείς δεν τον ήξερε.
+    # Τώρα το `schedbridge.js` ΔΕΝ ΤΑΞΙΔΕΥΕΙ (ο συγχρονισμός του είναι Supabase,
+    # δηλαδή cloud), άρα ο κανόνας δεν έχει αντικείμενο και φεύγει — αν έμενε,
+    # θα έσκαγε το build ζητώντας μία αντικατάσταση σε κείμενο που δεν υπάρχει.
+    # Η ιστορία μένει γραμμένη γιατί είναι ΑΥΤΗ που δικαιολογεί τη λευκή λίστα.
+    # Το ίδιο `supabase` είναι τώρα needle του gate_scan_unit: αν ξαναφανεί από
+    # οποιαδήποτε πόρτα, το build σταματά.
+    # ΤΟ ΠΑΛΙΟ ΣΧΟΛΙΟ ΤΟΥ ΤΕΤΑΡΤΟΥ, για το ιστορικό: τον βρήκε ο gate_scan_external
+    # την πρώτη φορά που έτρεξε, κι αυτό είναι όλο το νόημα της λευκής λίστας:
+    # schedbridge.js, `placeholder="https://&lt;project&gt;.supabase.co"` στο
+    # πεδίο «Project URL» του Bridge.  ΔΕΝ είναι αίτημα — είναι υπόδειγμα
+    # κειμένου σε άδειο input — αλλά είναι η μόνη απόλυτη διεύθυνση που θα
+    # επιβίωνε σε ένα αρχείο που διαφημίζει «δεν ζητά ΤΙΠΟΤΑ από το δίκτυο»,
+    # και διαβάζεται από τον χρήστη ως ζωντανός προορισμός.  Το σχήμα φεύγει·
+    # το υπόδειγμα παραμένει κατανοητό.  (Το endpoint του Bridge δεν είναι
+    # καρφωμένο πουθενά: το γράφει ο χρήστης και το `W.fetch` διαβάζεται την
+    # ώρα της κλήσης, οπότε πέφτει πάνω στο offline shim όπως κάθε άλλο fetch.)
+]
+
+# Πόσες φορές ΠΡΕΠΕΙ να βρεθεί το κάθε μοτίβο σε ΟΛΑ τα modules μαζί. Αν αλλάξει
+# ο αριθμός, κάποιος πρόσθεσε ή αφαίρεσε κουμπί Feedback: να το δει άνθρωπος μία
+# φορά πριν φύγει το αρχείο, αντί να περάσει σιωπηλά.
+_EXT_EXPECT = {"github issue URL (template literal)": 2,
+               "github issue URL (concatenation)": 1,
+               'target="_blank" on a Feedback anchor': 3}
+
+
+def neutralise_externals(mods: dict) -> tuple:
+    """Αδρανοποιεί κάθε εξωτερικό σύνδεσμο στα modules που ταξιδεύουν.
+
+    Δουλεύει πάνω στο ΑΝΤΙΓΡΑΦΟ του κώδικα που ετοιμάζει ο builder, όχι στο
+    app/: η φιλοξενούμενη εφαρμογή κρατά τα κουμπιά Feedback της ως αληθινά
+    GitHub issues, γιατί εκεί υπάρχει δίκτυο και εκεί είναι το κανάλι."""
+    hits, notes = {}, []
+    for key in list(mods):
+        src = mods[key]
+        for rx, repl, label in _EXT_NEUTRALISE:
+            src, n = rx.subn(repl, src)
+            if n:
+                hits[label] = hits.get(label, 0) + n
+                notes.append(f"{key}.js: {label} → neutralised ×{n}")
+        mods[key] = src
+    for label, want in _EXT_EXPECT.items():
+        got = hits.get(label, 0)
+        if got != want:
+            fail(f"external-link neutralisation: expected {want}× '{label}' "
+                 f"across the bundled modules, found {got}. app/ changed — look "
+                 f"at it once before the unit does.")
+    return mods, notes
+
+
+# ────────────────────────────────────────────────────────────────────
+#  ΤΟ CREDIT ΤΗΣ AI (απόφανση 28/08/2026, εφαρμόζεται 18/10/2026)
+#
+#  Το ΠΟΥ γίνεται αυτό είναι μέρος της απόφανσης, όχι λεπτομέρεια υλοποίησης:
+#  στο δημόσιο repo και στη ζωντανή εφαρμογή το credit ΜΕΝΕΙ.  Φεύγει μόνο από
+#  το υπηρεσιακό παραδοτέο, άρα φεύγει ΕΔΩ, από το αντίγραφο, και το
+#  app/index.html δεν ακουμπιέται ποτέ για αυτόν τον λόγο.
+#
+#  Φεύγει η `<span class="credit-line">`, ΟΧΙ ο `<footer class="credit">`:
+#  το FEEDBACK_JS κάνει `document.querySelector("footer.credit") || document.body`
+#  για να κρεμάσει τη μπάρα «Export feedback (N)».  Χωρίς τον footer η μπάρα
+#  προσκολλάται στο <body> και χάνει το border-top, το padding και το φόντο της.
+_ATTRIBUTION_RE = re.compile(r'[ \t]*<span class="credit-line">[\s\S]*?</span>\n')
+
+# Ό,τι δεν επιτρέπεται να έχει επιβιώσει μετά την αφαίρεση. Η λίστα είναι οι
+# ΛΕΞΕΙΣ του credit, όχι το markup: αν κάποιος ξαναγράψει τη γραμμή αλλιώς, το
+# regex από πάνω θα αστοχήσει σιωπηλά και ΑΥΤΟ είναι που θα το πιάσει.
+# «Kalamata coffee» ΚΑΙ ΟΧΙ «Kalamata»: η Καλαμάτα είναι αεροδρόμιο και υπάρχει
+# νόμιμα δύο φορές στα δεδομένα («may be flown inside Kalamata MTMA»). Η γυμνή
+# λέξη θα ήταν βόμβα για όποιον μετακινούσε αυτόν τον έλεγχο μετά το data bundle.
+_ATTRIBUTION_NEEDLES = ("credit-line", "Claude", "Anthropic", "riding the right seat",
+                        "Kalamata coffee")
+
+
+def strip_attribution(html: str) -> str:
+    html = sub1(_ATTRIBUTION_RE.pattern, lambda m: "", html,
+                "AI credit line (unit-facing build ONLY — app/index.html keeps it)")
+    for needle in _ATTRIBUTION_NEEDLES:
+        if needle in html:
+            fail(f"attribution residue in the unit build: {needle!r} survived the "
+                 f"strip — the credit line was rewritten and the regex missed it")
+    return html
 
 
 def prepare_cssjs(name: str, src: str) -> tuple:
@@ -3614,6 +4555,18 @@ def build_main_html(css: str, emblem_uri: str, guard_js: str, prepaint_js: str,
     html = sub1(r"[ \t]*<!-- advisor:start[\s\S]*?<!-- advisor:end -->\n", lambda m: "", html,
                 "advisor blocks (tab + main)", count=2)
 
+    # 18/10/2026 — ΤΟ BRIDGE ΔΕΝ ΤΑΞΙΔΕΥΕΙ. Ο συγχρονισμός του είναι Supabase,
+    # δηλαδή cloud: στο κλειστό δίκτυο το fetch του πέφτει πάνω στο offline shim
+    # και η καρτέλα ΔΕΝ μπορεί να δουλέψει ποτέ. Μια καρτέλα που θα αποτυγχάνει
+    # πάντα, σε χέρια που δεν έχουν κανέναν να ρωτήσουν, είναι χειρότερη από
+    # καρτέλα που δεν υπάρχει — «ό,τι δημιουργεί πρόβλημα για το export απλά δεν
+    # το συμπεριλαμβάνουμε» (ιδιοκτήτης, 18/10/2026).
+    # Δύο μπλοκ, όπως ο σύμβουλος: το κουμπί της υποκαρτέλας και το <section>.
+    # Το schedbridge.js φεύγει από το SCRIPT_CHAIN και τα καλώδια προς αυτό από
+    # τα prepare_scheduler / prepare_appjs — ΟΧΙ με edit στο app/.
+    html = sub1(r"[ \t]*<!-- bridge:start[\s\S]*?<!-- bridge:end -->\n", lambda m: "", html,
+                "bridge blocks (subtab + pane shell)", count=2)
+
     # Το ίδιο, για ό,τι ανήκει ΜΟΝΟ στη φιλοξενούμενη εφαρμογή: το web app
     # manifest και το εικονίδιο εγκατάστασης. Στο κλειστό δίκτυο δεν υπάρχει
     # διακομιστής να τα σερβίρει — θα έμεναν κρεμασμένοι σύνδεσμοι μέσα σε ένα
@@ -3624,8 +4577,9 @@ def build_main_html(css: str, emblem_uri: str, guard_js: str, prepaint_js: str,
     # drop all external <script src> tags, then inline our chain before </body>
     # (12 tags: app · description · flowchart · schedval · schedstore · scheduler ·
     #  schedconsq · boardtrees · schedboard · schedbridge · currency · advisor.
-    #  Eleven are inlined from SCRIPT_CHAIN; advisor.js is dropped and NOT
-    #  inlined. The count is the tripwire on app/index.html: a new module must
+    #  TEN are inlined from SCRIPT_CHAIN; advisor.js AND schedbridge.js are
+    #  dropped here and NOT inlined — both need a network the unit does not
+    #  have. The count is the tripwire on app/index.html: a new module must
     #  be looked at once — added to SCRIPT_CHAIN in main() and to the floor
     #  sweep, or deliberately excluded like advisor.js — before it moves.)
     html = sub1(r'[ \t]*<script src="[^"]+"></script>\n', lambda m: "", html,
@@ -3633,11 +4587,24 @@ def build_main_html(css: str, emblem_uri: str, guard_js: str, prepaint_js: str,
 
     # The residue tripwire: nothing of the advisor may be in the shell — not the
     # view, not the tab, not the script, not its Greek label, not its boot hook.
-    # (Checked on the shell BEFORE the data bundle and scripts are spliced in.)
-    for needle in ('id="view-advisor"', 'id="tab-advisor"', "advisor.js", "Σύμβουλος", "advInit", "advisor:start",
-                   "manifest.webmanifest", "hosted:start"):
+    # (Checked on the shell BEFORE the data bundle and scripts are spliced in.
+    #  18/10/2026: ΚΑΙ πάνω σε ολόκληρο το αρχείο, στο run_gate — ο έλεγχος
+    #  εδώ ήταν μισός, και το μισό που έλειπε κουβαλούσε το «advInit».)
+    for needle in _ADVISOR_NEEDLES + ("manifest.webmanifest", "hosted:start"):
         if needle in html:
             fail(f"advisor residue in the unit build: {needle!r} survived assembly")
+    # Και το ίδιο για το Bridge, στο κέλυφος. Ο πλήρης έλεγχος (markup + scripts
+    # + data) είναι ο gate_scan_unit στο run_gate: ΑΥΤΟ ήταν το μάθημα του
+    # advInit, που έμενε μέσα στην app.js επειδή ο έλεγχος εδώ ήταν μισός.
+    for needle in _BRIDGE_NEEDLES:
+        if needle in html:
+            fail(f"Bridge residue in the unit build: {needle!r} survived assembly")
+
+    # 18/10/2026 — το credit της AI φεύγει ΕΔΩ, από το κέλυφος, πριν μπει
+    # τίποτε άλλο μέσα: έτσι το tripwire της strip_attribution κρίνει ΜΟΝΟ το
+    # markup της εφαρμογής και δεν μπορεί να πέσει σε λέξη του data bundle.
+    html = strip_attribution(html)
+
     html = sub1(r"</body>", lambda m: scripts + "\n</body>", html, "</body>")
 
     html = sub1(r"<!DOCTYPE html>",
@@ -3665,7 +4632,7 @@ Phase 2 FDMS — μία εφαρμογή, ΕΝΑ αρχείο (offline)
 ΤΙ ΕΙΝΑΙ
 Ολόκληρο το Phase 2 FDMS σε ΕΝΑ αυτόνομο αρχείο HTML: Remarks, Description,
 Requirements, Phase II Flowchart, Scheduler (Board / Roster / Training Log /
-Balance / Bridge), Instructor Currency και Schedule Validation.
+Balance), Instructor Currency και Schedule Validation.
 
 ΕΓΚΑΤΑΣΤΑΣΗ — ΔΕΝ ΧΡΕΙΑΖΕΤΑΙ
 - Άνοιγμα με διπλό κλικ. Όλα τα δεδομένα, το CSS, το JavaScript και το έμβλημα
@@ -3727,7 +4694,6 @@ SCRIPT_CHAIN = [
     ("schedconsq.js", "schedconsq"),
     ("boardtrees.js", "boardtrees"),
     ("schedboard.js", "schedboard"),
-    ("schedbridge.js", "schedbridge"),
     ("currency.js", "currency"),
 ]
 
@@ -3736,9 +4702,14 @@ def main() -> None:
     if ARGS.gate_selftest:
         gate_selftest()
 
+    # 18/10/2026 — schedbridge.js ΕΞΩ, όπως το advisor.js και το schedsync.js:
+    # ο συγχρονισμός του είναι Supabase (cloud), άρα στη Μοίρα είναι μια καρτέλα
+    # 526.526 bytes που θα αποτυγχάνει πάντα. Το <script src> του μένει στο
+    # app/index.html και πέφτει στο γενικό κόψιμο των tags — ο μετρητής των 12
+    # δεν κουνιέται, ακριβώς όπως με τον σύμβουλο.
     sources = ["app.js", "mifchart.js", "remarksearch.js", "description.js",
                "flowchart.js", "schedval.js", "schedstore.js", "scheduler.js",
-               "schedconsq.js", "boardtrees.js", "schedboard.js", "schedbridge.js",
+               "schedconsq.js", "boardtrees.js", "schedboard.js",
                "currency.js"]
     for f in [APP / "index.html", APP / "styles.css",
               APP / "assets" / "364mea.png", DATA / "flowchart2.json"] + \
@@ -3757,6 +4728,8 @@ def main() -> None:
         "mifchart": prepare_mifchart(),
         "schedval": prepare_schedval(),
         "schedstore": prepare_schedstore(),
+        "scheduler": prepare_scheduler(),
+        "currency": prepare_currency(),
     }
     for s in sources:
         key = s[:-3]
@@ -3768,6 +4741,14 @@ def main() -> None:
     own = {"capability-guard": CAPABILITY_GUARD_JS, "prepaint": prepaint_raw,
            "runtime-shims": RUNTIME_SHIMS_JS, "fetch-shim": FETCH_SHIM_JS,
            "date-fallback": DATE_FALLBACK_JS, "feedback": FEEDBACK_JS}
+
+    # 18/10/2026 — ΠΡΙΝ από Babel και πριν από κάθε έλεγχο: οι εξωτερικοί
+    # σύνδεσμοι αδρανοποιούνται στην ΠΗΓΗ. Αν γίνονταν μετά, θα έπρεπε να
+    # αναγνωρίσουμε τη διεύθυνση μέσα σε μεταγλωττισμένο κώδικα, κι αυτό είναι
+    # ακριβώς το είδος του «πέρασε από τη μία πύλη και όχι από την άλλη» που
+    # έσπασε το inset στον Γύρο 24.
+    raw, ext_notes = neutralise_externals(raw)
+
     cssjs_notes = []
     for key in list(raw):
         raw[key], nn = prepare_cssjs(key + ".js", raw[key])
@@ -3827,7 +4808,21 @@ def main() -> None:
         print(f"      sha256: {hashlib.sha256(html_bytes).hexdigest()}")
         print(f"would write : {OUT_README}  "
               f"({len(readme.encode('utf-8-sig')) + readme.count(chr(10)):,} bytes)")
+        if ARGS.inspect_to:
+            # Ο ΑΠΑΡΑΒΑΤΟΣ ΚΑΝΟΝΑΣ, γραμμένος σε κώδικα: ο φάκελος του
+            # ιδιοκτήτη δεν δέχεται γράψιμο από εδώ, ούτε κατά λάθος, ούτε με
+            # σχετική διαδρομή που καταλήγει μέσα του.
+            dest = Path(ARGS.inspect_to).expanduser().resolve()
+            if dest == EXPORT.resolve() or EXPORT.resolve() in dest.parents:
+                fail(f"--inspect-to refuses {dest}: it is inside the owner's "
+                     f"{EXPORT}, which only a real build may ever write to")
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            dest.write_text(html, encoding="utf-8", newline="\n")
+            print(f"inspect copy: {dest}  (identical bytes, for verification only)")
     else:
+        if ARGS.inspect_to:
+            fail("--inspect-to is a verification aid for --dry-run only; a real "
+                 "build writes the deliverable and nothing else")
         EXPORT.mkdir(parents=True, exist_ok=True)
         OUT_HTML.write_text(html, encoding="utf-8", newline="\n")
         size = OUT_HTML.stat().st_size
@@ -3835,10 +4830,13 @@ def main() -> None:
 
     print(f"floor       : {FLOOR}  (every inline script emitted as {ES_TARGET})")
     print(f"modules     : {len(SCRIPT_CHAIN)} app modules "
-          f"+ guard/shims/fetch/date/feedback  (schedsync.js and advisor.js excluded)")
+          f"+ guard/shims/fetch/date/feedback  (schedsync.js, advisor.js and "
+          f"schedbridge.js excluded — all three need the network)")
     print(f"data bundle : {len(bundle)} JSON files, "
           f"{sum(len(json.dumps(v, ensure_ascii=False)) for v in bundle.values()) / 1e6:.1f} MB raw"
           f"  (data/scheduler/seed.json shipped EMPTY)")
+    for x in data_census(bundle):
+        print(x)
     print(f"emblem      : {len(png)} bytes PNG -> {len(emblem_uri)} chars data URI")
     print(f"transpile   : @babel/core {BABEL_VERSION} + preset-env "
           f"{PRESET_ENV_VERSION} → {ES_TARGET}"
@@ -3850,6 +4848,8 @@ def main() -> None:
           + ("  ** NOT WRITTEN (--dry-run) **" if DRY_RUN else ""))
     print(f"readme      : {OUT_README}"
           + ("  ** NOT WRITTEN (--dry-run) **" if DRY_RUN else ""))
+    for x in ext_notes:
+        print(f"no-network  : {x}")
     for x in css_notes:
         print(f"css patch   : {x}")
     for x in cssjs_notes:
