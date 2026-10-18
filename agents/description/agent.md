@@ -1,7 +1,7 @@
 ---
 id: description
 name: Description
-model: claude-opus-5-5
+model: claude-sonnet-5-5
 effort: high
 corpus: context-description.md
 max_turns: 20

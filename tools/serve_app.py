@@ -58,7 +58,8 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 # ── Η ΛΙΣΤΑ ─────────────────────────────────────────────────────────────────
 # πρώτο τμήμα διαδρομής → οι επεκτάσεις που επιτρέπονται κάτω από αυτό.
 ALLOW: dict[str, set[str]] = {
-    "app":  {".html", ".css", ".js", ".png", ".svg", ".ico", ".webp", ".woff2", ".map"},
+    "app":  {".html", ".css", ".js", ".png", ".svg", ".ico", ".webp", ".woff2", ".map",
+             ".webmanifest"},
     "data": {".json"},
 }
 INDEX = "app/index.html"
@@ -71,6 +72,7 @@ TYPES = {
     ".svg":  "image/svg+xml",
     ".map":  "application/json; charset=utf-8",
     ".woff2": "font/woff2",
+    ".webmanifest": "application/manifest+json; charset=utf-8",
 }
 
 

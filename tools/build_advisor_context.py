@@ -100,7 +100,13 @@ PROFILES = {
         "files": [],
         "board": False,
         "who": "ο συνθέτης του μπλοκ περιγραφής",
-        "extras": ["specs/description-spec.md", "data/descriptions.json"],
+        # `ep_list.json` (18/10/2026): οι 71 διαδικασίες έκτακτης ανάγκης. Το
+        # φορτώνει ήδη η ίδια η εφαρμογή για τα μπλοκ με EP, αλλά ΔΕΝ ήταν σε
+        # κανένα corpus — και στην πρώτη πραγματική χρήση ο agent το χρειάστηκε
+        # και το ΔΗΛΩΣΕ τίμια αντί να επινοήσει ονόματα. Κοστίζει ~3.600 tokens
+        # σε corpus 105.000: +3,4%, δηλαδή λίγα λεπτά του ευρώ συνολικά. Μπαίνει
+        # ΜΟΝΟ εδώ· ο syllabus και ο board δεν ονοματίζουν ποτέ EP.
+        "extras": ["specs/description-spec.md", "data/descriptions.json", "data/ep_list.json"],
     },
 }
 

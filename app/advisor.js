@@ -91,104 +91,107 @@
      § 0  STYLES — injected, so styles.css (which ships) stays advisor-free
      ════════════════════════════════════════════════════════════════════════ */
   const CSS = `
-.adv-view.hidden, #view-advisor .hidden { display: none; }
-.adv-view { flex: 1; display: flex; flex-direction: column; padding: 14px 22px; min-height: 0; min-width: 0; }
-.adv-main { display: flex; flex-direction: column; gap: 12px; min-width: 0; max-width: 1100px; width: 100%; margin: 0 auto; }
-.adv-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-.adv-authbar { position: sticky; top: 0; z-index: 60; display: flex; flex-wrap: wrap; align-items: center;
+.sym-view.hidden, #view-advisor .hidden { display: none; }
+.sym-view { flex: 1; display: flex; flex-direction: column; padding: 14px 22px; min-height: 0; min-width: 0; }
+.sym-main { display: flex; flex-direction: column; gap: 12px; min-width: 0; max-width: 1100px; width: 100%; margin: 0 auto; }
+.sym-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.sym-authbar { position: sticky; top: 0; z-index: 60; display: flex; flex-wrap: wrap; align-items: center;
   gap: 10px; padding: 10px 16px; background: var(--warn); color: #1a1205; font-size: 13.5px; font-weight: 600;
   box-shadow: 0 2px 10px var(--shadow); }
-.adv-authbar button { font: inherit; font-weight: 700; cursor: pointer; border-radius: 8px; padding: 5px 14px;
+.sym-authbar button { font: inherit; font-weight: 700; cursor: pointer; border-radius: 8px; padding: 5px 14px;
   border: 1px solid rgba(0,0,0,.45); background: rgba(255,255,255,.85); color: #1a1205; }
-.adv-authbar button:hover { background: #fff; }
-.adv-authbar .adv-auth-sp { flex: 1 1 auto; }
-.adv-bar .spacer { flex: 1 1 auto; }
-.adv-agent { --tk: var(--accent); --tk-rgb: var(--accent-rgb); }
-.adv-status { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
-.adv-status .badge.ok { color: var(--good); border-color: var(--good); }
-.adv-status .badge.bad { color: var(--bad); border-color: var(--bad); }
-.adv-status .badge.warn { color: var(--warn); border-color: var(--warn); }
-.adv-sess { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 12.5px; color: var(--muted); }
-.adv-sess select { font: inherit; font-size: 12.5px; color: var(--text); background: var(--bg-2); border: 1px solid var(--line); border-radius: 8px; padding: 5px 8px; max-width: 520px; }
-.adv-sess .adv-close { color: var(--good); border-color: var(--good); }
-.adv-notice { border: 1px solid var(--line); border-left: 5px solid var(--warn); border-radius: 10px; padding: 12px 16px; background: var(--panel-2); font-size: 13.5px; line-height: 1.6; }
-.adv-notice code, .adv-cmd { font-family: Consolas, monospace; font-size: 12.5px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; color: var(--text); user-select: all; }
-.adv-help { font-size: 11.5px; color: var(--muted); line-height: 1.5; margin: -4px 0 0; }
-.adv-help b { color: var(--text); font-weight: 600; }
-.adv-events { display: flex; flex-direction: column; gap: 4px; }
-.adv-event { font-size: 12px; color: var(--muted); border: 1px dashed var(--line); border-radius: 8px; padding: 4px 10px; }
-.adv-event.is-compaction { border-style: solid; border-color: var(--hf); color: var(--text); }
-.adv-transcript { display: flex; flex-direction: column; gap: 10px; min-height: 160px; max-height: 58vh; overflow-y: auto; padding: 4px 2px; }
-.adv-msg { border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; font-size: 13.5px; line-height: 1.6; max-width: 92%; background: var(--panel); position: relative; }
-.adv-msg.is-user { align-self: flex-end; background: var(--accent-soft); border-color: rgba(var(--accent-rgb), 0.5); white-space: pre-wrap; }
-.adv-msg.is-assistant { align-self: flex-start; }
-.adv-tablewrap { overflow-x: auto; margin: 8px 0; -webkit-overflow-scrolling: touch; }
-.adv-table { border-collapse: collapse; font-size: 12.5px; min-width: 100%; }
-.adv-table th, .adv-table td { border: 1px solid var(--line); padding: 5px 9px; text-align: left; vertical-align: top; }
-.adv-table th { background: var(--bg-2); color: var(--text); font-weight: 600; white-space: nowrap; }
-.adv-table tbody tr:nth-child(even) { background: rgba(127,127,127,.06); }
-.adv-msg.is-system { align-self: stretch; max-width: none; border-left: 5px solid var(--hf); background: var(--panel-2); font-size: 13px; }
-.adv-msg.is-error { align-self: stretch; max-width: none; border-left: 5px solid var(--bad); background: var(--panel-2); }
-.adv-msg.is-notice { align-self: stretch; max-width: none; border-left: 5px solid var(--warn); background: var(--panel-2); font-size: 12.5px; }
-.adv-who { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); margin-bottom: 4px; }
-.adv-ctx { font-size: 11.5px; color: var(--muted); border-top: 1px dashed var(--line); margin-top: 6px; padding-top: 4px; white-space: pre-wrap; }
-.adv-h { font-size: 13.5px; margin: 10px 0 4px; color: var(--accent); letter-spacing: 0.3px; }
-.adv-h:first-child { margin-top: 0; }
-.adv-msg p { margin: 0 0 6px; }
-.adv-msg ul, .adv-msg ol { margin: 0 0 6px 20px; }
-.adv-msg li { margin: 2px 0; }
-.adv-quote { margin: 6px 0 8px; padding: 6px 12px; border-left: 3px solid var(--gold, var(--accent)); background: var(--panel-2); color: var(--text); font-style: italic; white-space: pre-wrap; }
-.adv-quote .adv-qlab { display: block; font-style: normal; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); margin-bottom: 2px; }
-.adv-pre { font-family: Consolas, monospace; font-size: 12px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; overflow-x: auto; white-space: pre-wrap; margin: 0; }
-.adv-prewrap { position: relative; margin: 6px 0; }
-.adv-copy { position: absolute; top: 6px; right: 6px; font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--accent); cursor: pointer; font-family: inherit; }
-.adv-copy:hover { border-color: var(--accent); }
-.adv-copy.done { color: var(--good); border-color: var(--good); }
-.adv-diag { font-size: 12.5px; line-height: 1.5; border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 8px; padding: 6px 12px; background: var(--panel-2); font-family: Consolas, monospace; }
-.adv-diag.bad { border-left-color: var(--bad); }
-.adv-msg code { font-family: Consolas, monospace; font-size: 12px; background: var(--bg-2); border-radius: 4px; padding: 0 4px; }
-.adv-cite { font-size: 11.5px; padding: 0 6px; margin: 0 1px; vertical-align: baseline; }
-.adv-ref { font-family: Consolas, monospace; font-size: 12px; color: var(--accent); white-space: nowrap; }
-.adv-id { font-family: Consolas, monospace; font-size: 12px; color: var(--muted); }
-.adv-raw { background: rgba(var(--warn-rgb), 0.22); color: var(--text); border-bottom: 2px solid var(--warn); padding: 0 3px; border-radius: 3px; font-style: normal; }
-.adv-ruling { color: var(--good); font-weight: 700; }
-.adv-unres { color: var(--warn); font-weight: 700; }
-.adv-tools { display: flex; flex-direction: column; gap: 3px; margin-bottom: 6px; }
-.adv-tool { font-size: 12px; color: var(--muted); font-family: Consolas, monospace; border: 1px dashed var(--line); border-radius: 8px; padding: 3px 8px; }
-.adv-tool.is-write { border-style: solid; border-color: var(--warn); color: var(--text); background: rgba(var(--warn-rgb), 0.10); white-space: pre-wrap; font-family: inherit; }
-.adv-tool.is-done { border-color: var(--good); background: rgba(var(--good-rgb), 0.10); }
-.adv-tool.is-off { opacity: 0.7; background: transparent; }
-.adv-tool.is-refused { border-color: var(--bad); color: var(--bad); }
-.adv-gate { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 6px; }
-.adv-gate .adv-yes { background: var(--good); color: var(--on-accent); border: 1px solid var(--good); border-radius: 999px; padding: 5px 14px; font-weight: 700; cursor: pointer; font-family: inherit; font-size: 12.5px; }
-.adv-gate .adv-no { background: transparent; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; cursor: pointer; font-family: inherit; font-size: 12.5px; }
-.adv-gate .adv-ttl { font-size: 11px; color: var(--muted); font-family: Consolas, monospace; }
-.adv-usage { font-size: 11px; color: var(--muted); font-family: Consolas, monospace; margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 4px; display: flex; flex-wrap: wrap; gap: 10px; }
-.adv-usage .miss { color: var(--bad); font-weight: 700; }
-.adv-usage .rewrite { color: var(--warn); }
-.adv-compose { display: flex; flex-direction: column; gap: 8px; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; background: var(--panel); }
-.adv-compose textarea { width: 100%; resize: vertical; font: inherit; font-size: 13.5px; line-height: 1.5; color: var(--text); background: var(--bg-2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; box-sizing: border-box; }
-.adv-compose textarea:focus { outline: none; border-color: var(--accent); }
-.adv-compose textarea:disabled { opacity: 0.7; }
-#adv-student { min-height: 44px; font-size: 12.5px; }
-#adv-q { min-height: 72px; }
-.adv-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
-.adv-mic { font-size: 18px; line-height: 1; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: transparent; cursor: pointer; color: var(--text); font-family: inherit; user-select: none; -webkit-user-select: none; touch-action: none; }
-.adv-mic.on { border-color: var(--bad); background: rgba(var(--bad-rgb), 0.18); animation: adv-pulse 1.1s ease-in-out infinite; }
-@keyframes adv-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(var(--bad-rgb), 0.5); } 50% { box-shadow: 0 0 0 8px rgba(var(--bad-rgb), 0); } }
-.adv-speech-note { font-size: 11.5px; color: var(--muted); line-height: 1.4; flex: 1 1 260px; }
-.adv-interim { font-size: 12px; color: var(--accent); font-style: italic; min-height: 1.2em; }
-.adv-send { background: var(--accent); color: var(--on-accent); border: 1px solid var(--accent); border-radius: 999px; padding: 7px 18px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
-.adv-send:disabled { opacity: 0.45; cursor: default; }
-.adv-stop { color: var(--bad); border-color: var(--bad); }
-.adv-turn { font-size: 11.5px; color: var(--muted); font-family: Consolas, monospace; }
-.adv-hint { color: var(--muted); font-size: 12.5px; }
-@media (max-width: 740px) { .adv-view { padding: 10px 12px; } .adv-msg { max-width: 100%; } }
+.sym-authbar button:hover { background: #fff; }
+.sym-authbar .sym-auth-sp { flex: 1 1 auto; }
+.sym-bar .spacer { flex: 1 1 auto; }
+.sym-agent { --tk: var(--accent); --tk-rgb: var(--accent-rgb); }
+.sym-status { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.sym-status .badge.ok { color: var(--good); border-color: var(--good); }
+.sym-opus { cursor: pointer; font: inherit; font-size: inherit; background: transparent; color: var(--muted); }
+.sym-opus:hover { color: var(--text); }
+.sym-opus.on { color: var(--accent); border-color: var(--accent); background: rgba(var(--accent-rgb), 0.16); font-weight: 600; }
+.sym-status .badge.bad { color: var(--bad); border-color: var(--bad); }
+.sym-status .badge.warn { color: var(--warn); border-color: var(--warn); }
+.sym-sess { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 12.5px; color: var(--muted); }
+.sym-sess select { font: inherit; font-size: 12.5px; color: var(--text); background: var(--bg-2); border: 1px solid var(--line); border-radius: 8px; padding: 5px 8px; max-width: 520px; }
+.sym-sess .sym-close { color: var(--good); border-color: var(--good); }
+.sym-notice { border: 1px solid var(--line); border-left: 5px solid var(--warn); border-radius: 10px; padding: 12px 16px; background: var(--panel-2); font-size: 13.5px; line-height: 1.6; }
+.sym-notice code, .sym-cmd { font-family: Consolas, monospace; font-size: 12.5px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; color: var(--text); user-select: all; }
+.sym-help { font-size: 11.5px; color: var(--muted); line-height: 1.5; margin: -4px 0 0; }
+.sym-help b { color: var(--text); font-weight: 600; }
+.sym-events { display: flex; flex-direction: column; gap: 4px; }
+.sym-event { font-size: 12px; color: var(--muted); border: 1px dashed var(--line); border-radius: 8px; padding: 4px 10px; }
+.sym-event.is-compaction { border-style: solid; border-color: var(--hf); color: var(--text); }
+.sym-transcript { display: flex; flex-direction: column; gap: 10px; min-height: 160px; max-height: 58vh; overflow-y: auto; padding: 4px 2px; }
+.sym-msg { border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; font-size: 13.5px; line-height: 1.6; max-width: 92%; background: var(--panel); position: relative; }
+.sym-msg.is-user { align-self: flex-end; background: var(--accent-soft); border-color: rgba(var(--accent-rgb), 0.5); white-space: pre-wrap; }
+.sym-msg.is-assistant { align-self: flex-start; }
+.sym-tablewrap { overflow-x: auto; margin: 8px 0; -webkit-overflow-scrolling: touch; }
+.sym-table { border-collapse: collapse; font-size: 12.5px; min-width: 100%; }
+.sym-table th, .sym-table td { border: 1px solid var(--line); padding: 5px 9px; text-align: left; vertical-align: top; }
+.sym-table th { background: var(--bg-2); color: var(--text); font-weight: 600; white-space: nowrap; }
+.sym-table tbody tr:nth-child(even) { background: rgba(127,127,127,.06); }
+.sym-msg.is-system { align-self: stretch; max-width: none; border-left: 5px solid var(--hf); background: var(--panel-2); font-size: 13px; }
+.sym-msg.is-error { align-self: stretch; max-width: none; border-left: 5px solid var(--bad); background: var(--panel-2); }
+.sym-msg.is-notice { align-self: stretch; max-width: none; border-left: 5px solid var(--warn); background: var(--panel-2); font-size: 12.5px; }
+.sym-who { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); margin-bottom: 4px; }
+.sym-ctx { font-size: 11.5px; color: var(--muted); border-top: 1px dashed var(--line); margin-top: 6px; padding-top: 4px; white-space: pre-wrap; }
+.sym-h { font-size: 13.5px; margin: 10px 0 4px; color: var(--accent); letter-spacing: 0.3px; }
+.sym-h:first-child { margin-top: 0; }
+.sym-msg p { margin: 0 0 6px; }
+.sym-msg ul, .sym-msg ol { margin: 0 0 6px 20px; }
+.sym-msg li { margin: 2px 0; }
+.sym-quote { margin: 6px 0 8px; padding: 6px 12px; border-left: 3px solid var(--gold, var(--accent)); background: var(--panel-2); color: var(--text); font-style: italic; white-space: pre-wrap; }
+.sym-quote .sym-qlab { display: block; font-style: normal; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); margin-bottom: 2px; }
+.sym-pre { font-family: Consolas, monospace; font-size: 12px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; overflow-x: auto; white-space: pre-wrap; margin: 0; }
+.sym-prewrap { position: relative; margin: 6px 0; }
+.sym-copy { position: absolute; top: 6px; right: 6px; font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--accent); cursor: pointer; font-family: inherit; }
+.sym-copy:hover { border-color: var(--accent); }
+.sym-copy.done { color: var(--good); border-color: var(--good); }
+.sym-diag { font-size: 12.5px; line-height: 1.5; border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 8px; padding: 6px 12px; background: var(--panel-2); font-family: Consolas, monospace; }
+.sym-diag.bad { border-left-color: var(--bad); }
+.sym-msg code { font-family: Consolas, monospace; font-size: 12px; background: var(--bg-2); border-radius: 4px; padding: 0 4px; }
+.sym-cite { font-size: 11.5px; padding: 0 6px; margin: 0 1px; vertical-align: baseline; }
+.sym-ref { font-family: Consolas, monospace; font-size: 12px; color: var(--accent); white-space: nowrap; }
+.sym-id { font-family: Consolas, monospace; font-size: 12px; color: var(--muted); }
+.sym-raw { background: rgba(var(--warn-rgb), 0.22); color: var(--text); border-bottom: 2px solid var(--warn); padding: 0 3px; border-radius: 3px; font-style: normal; }
+.sym-ruling { color: var(--good); font-weight: 700; }
+.sym-unres { color: var(--warn); font-weight: 700; }
+.sym-tools { display: flex; flex-direction: column; gap: 3px; margin-bottom: 6px; }
+.sym-tool { font-size: 12px; color: var(--muted); font-family: Consolas, monospace; border: 1px dashed var(--line); border-radius: 8px; padding: 3px 8px; }
+.sym-tool.is-write { border-style: solid; border-color: var(--warn); color: var(--text); background: rgba(var(--warn-rgb), 0.10); white-space: pre-wrap; font-family: inherit; }
+.sym-tool.is-done { border-color: var(--good); background: rgba(var(--good-rgb), 0.10); }
+.sym-tool.is-off { opacity: 0.7; background: transparent; }
+.sym-tool.is-refused { border-color: var(--bad); color: var(--bad); }
+.sym-gate { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 6px; }
+.sym-gate .sym-yes { background: var(--good); color: var(--on-accent); border: 1px solid var(--good); border-radius: 999px; padding: 5px 14px; font-weight: 700; cursor: pointer; font-family: inherit; font-size: 12.5px; }
+.sym-gate .sym-no { background: transparent; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; cursor: pointer; font-family: inherit; font-size: 12.5px; }
+.sym-gate .sym-ttl { font-size: 11px; color: var(--muted); font-family: Consolas, monospace; }
+.sym-usage { font-size: 11px; color: var(--muted); font-family: Consolas, monospace; margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 4px; display: flex; flex-wrap: wrap; gap: 10px; }
+.sym-usage .miss { color: var(--bad); font-weight: 700; }
+.sym-usage .rewrite { color: var(--warn); }
+.sym-compose { display: flex; flex-direction: column; gap: 8px; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; background: var(--panel); }
+.sym-compose textarea { width: 100%; resize: vertical; font: inherit; font-size: 13.5px; line-height: 1.5; color: var(--text); background: var(--bg-2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; box-sizing: border-box; }
+.sym-compose textarea:focus { outline: none; border-color: var(--accent); }
+.sym-compose textarea:disabled { opacity: 0.7; }
+#sym-student { min-height: 44px; font-size: 12.5px; }
+#sym-q { min-height: 72px; }
+.sym-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.sym-mic { font-size: 18px; line-height: 1; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: transparent; cursor: pointer; color: var(--text); font-family: inherit; user-select: none; -webkit-user-select: none; touch-action: none; }
+.sym-mic.on { border-color: var(--bad); background: rgba(var(--bad-rgb), 0.18); animation: sym-pulse 1.1s ease-in-out infinite; }
+@keyframes sym-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(var(--bad-rgb), 0.5); } 50% { box-shadow: 0 0 0 8px rgba(var(--bad-rgb), 0); } }
+.sym-speech-note { font-size: 11.5px; color: var(--muted); line-height: 1.4; flex: 1 1 260px; }
+.sym-interim { font-size: 12px; color: var(--accent); font-style: italic; min-height: 1.2em; }
+.sym-send { background: var(--accent); color: var(--on-accent); border: 1px solid var(--accent); border-radius: 999px; padding: 7px 18px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
+.sym-send:disabled { opacity: 0.45; cursor: default; }
+.sym-stop { color: var(--bad); border-color: var(--bad); }
+.sym-turn { font-size: 11.5px; color: var(--muted); font-family: Consolas, monospace; }
+.sym-hint { color: var(--muted); font-size: 12.5px; }
+@media (max-width: 740px) { .sym-view { padding: 10px 12px; } .sym-msg { max-width: 100%; } }
 `;
   function ensureStyle() {
-    if ($("adv-style")) return;
+    if ($("sym-style")) return;
     const st = document.createElement("style");
-    st.id = "adv-style";
+    st.id = "sym-style";
     st.textContent = CSS;
     document.head.appendChild(st);
   }
@@ -202,17 +205,17 @@
     s = s.replace(/`([^`]+)`/g, (m, c) => `<code>${c}</code>`);
     s = s.replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>");
     s = s.replace(/(^|[\s(«])\*([^*\n]+)\*(?=[\s).,;:»]|$)/g, "$1<i>$2</i>");
-    s = s.replace(/ΑΚΑΤΕΡΓΑΣΤΟ ΚΕΙΜΕΝΟ ΠΗΓΗΣ[^<\n]*?(?:επικύρωση|ΕΠΙΚΥΡΩΣΗ)/g, (m) => `<mark class="adv-raw">${m}</mark>`);
-    s = s.replace(/✓ ΑΠΟΦΑΝΣΗ/g, `<span class="adv-ruling">✓ ΑΠΟΦΑΝΣΗ</span>`);
-    s = s.replace(/⚠ ΑΛΥΤΟ/g, `<span class="adv-unres">⚠ ΑΛΥΤΟ</span>`);
+    s = s.replace(/ΑΚΑΤΕΡΓΑΣΤΟ ΚΕΙΜΕΝΟ ΠΗΓΗΣ[^<\n]*?(?:επικύρωση|ΕΠΙΚΥΡΩΣΗ)/g, (m) => `<mark class="sym-raw">${m}</mark>`);
+    s = s.replace(/✓ ΑΠΟΦΑΝΣΗ/g, `<span class="sym-ruling">✓ ΑΠΟΦΑΝΣΗ</span>`);
+    s = s.replace(/⚠ ΑΛΥΤΟ/g, `<span class="sym-unres">⚠ ΑΛΥΤΟ</span>`);
     s = s.replace(/\[([a-z]{2,6}-\d+)\]|(?<![\w-])((?:fail|gt|st|ft)-\d+)(?![\w-])/g, (m, bracketed, bare) => {
       const id = bracketed || bare;
       return RE_ID_OPEN.test(id)
-        ? `<button type="button" class="req-link adv-cite" data-req="${esc(id)}" title="Άνοιγμα στο Requirements">${esc(id)}</button>`
-        : `<span class="adv-id">[${esc(id)}]</span>`;
+        ? `<button type="button" class="req-link sym-cite" data-req="${esc(id)}" title="Άνοιγμα στο Requirements">${esc(id)}</button>`
+        : `<span class="sym-id">[${esc(id)}]</span>`;
     });
-    s = s.replace(/(§\s?\d+[α-ωa-z]{0,3}(?:\(\d+\))?(?:\s?[α-ω]\.)?)/g, `<span class="adv-ref">$1</span>`);
-    s = s.replace(/(άρθρο\s\d+(?:\s?παρ\.?\s?\d+[α-ω]?)?|παρ\.\s?\d+[α-ω]?)/g, `<span class="adv-ref">$1</span>`);
+    s = s.replace(/(§\s?\d+[α-ωa-z]{0,3}(?:\(\d+\))?(?:\s?[α-ω]\.)?)/g, `<span class="sym-ref">$1</span>`);
+    s = s.replace(/(άρθρο\s\d+(?:\s?παρ\.?\s?\d+[α-ω]?)?|παρ\.\s?\d+[α-ω]?)/g, `<span class="sym-ref">$1</span>`);
     return s;
   }
   function md(text) {
@@ -224,7 +227,7 @@
         // Q5 — every produced block gets a copy button: the composers exist so the
         // last step into the gradesheet software is one click, not a hand selection.
         const body = chunk.replace(/^[a-z]*\n/, "").replace(/\n$/, "");
-        out.push(`<div class="adv-prewrap"><button type="button" class="adv-copy" data-copy title="Αντιγραφή στο πρόχειρο">⎘ Αντιγραφή</button><pre class="adv-pre">${esc(body)}</pre></div>`);
+        out.push(`<div class="sym-prewrap"><button type="button" class="sym-copy" data-copy title="Αντιγραφή στο πρόχειρο">⎘ Αντιγραφή</button><pre class="sym-pre">${esc(body)}</pre></div>`);
         return;
       }
       const lines = chunk.split("\n");
@@ -238,7 +241,7 @@
       const alignOf = (c) => (/^:-+:$/.test(c) ? ' style="text-align:center"' : /^-+:$/.test(c) ? ' style="text-align:right"' : "");
       const flushP = () => { if (para.length) { out.push(`<p>${inline(esc(para.join(" ")))}</p>`); para = []; } };
       const flushL = () => { if (list) { out.push(`<${list.tag}>${list.items.map((x) => `<li>${inline(esc(x))}</li>`).join("")}</${list.tag}>`); list = null; } };
-      const flushQ = () => { if (quote.length) { out.push(`<blockquote class="adv-quote"><span class="adv-qlab">αυτολεξεί</span>${inline(esc(quote.join("\n")))}</blockquote>`); quote = []; } };
+      const flushQ = () => { if (quote.length) { out.push(`<blockquote class="sym-quote"><span class="sym-qlab">αυτολεξεί</span>${inline(esc(quote.join("\n")))}</blockquote>`); quote = []; } };
       for (let li = 0; li < lines.length; li++) {
         const raw = lines[li];
         const line = raw.replace(/\s+$/, "");
@@ -256,11 +259,11 @@
           const tb = rows.map((r) => `<tr>${head.map((_, k) => `<td${al[k] || ""}>${inline(esc(r[k] == null ? "" : r[k]))}</td>`).join("")}</tr>`).join("");
           /* Ο ΧΩΡΟΣ ΓΥΡΩ ΚΥΛΑΕΙ, ΟΧΙ Η ΣΕΛΙΔΑ: σε κινητό ένας πίνακας τεσσάρων
              στηλών δεν χωρά, και χωρίς αυτό θα έσπρωχνε όλη τη σελίδα πλάγια. */
-          out.push(`<div class="adv-tablewrap"><table class="adv-table"><thead><tr>${th}</tr></thead><tbody>${tb}</tbody></table></div>`);
+          out.push(`<div class="sym-tablewrap"><table class="sym-table"><thead><tr>${th}</tr></thead><tbody>${tb}</tbody></table></div>`);
           continue;
         }
         if (!line.trim()) { flushP(); flushL(); flushQ(); continue; }
-        if ((m = /^(#{1,4})\s+(.*)$/.exec(line))) { flushP(); flushL(); flushQ(); out.push(`<h4 class="adv-h">${inline(esc(m[2]))}</h4>`); continue; }
+        if ((m = /^(#{1,4})\s+(.*)$/.exec(line))) { flushP(); flushL(); flushQ(); out.push(`<h4 class="sym-h">${inline(esc(m[2]))}</h4>`); continue; }
         if (/^(-{3,}|\*{3,}|_{3,})$/.test(line.trim())) { flushP(); flushL(); flushQ(); out.push("<hr>"); continue; }
         if ((m = /^\s*>\s?(.*)$/.exec(line))) { flushP(); flushL(); quote.push(m[1]); continue; }
         if ((m = /^\s*(?:[-•*]|\d+[.)])\s+(.*)$/.exec(line))) {
@@ -328,6 +331,29 @@
     return jpost("/sessions", { agent: UI.agent, context: context || "" }).then((j) => { UI.session = j.session; return j.session; });
   }
   const agentOf = (id) => ((UI.health && UI.health.agents) || []).find((a) => a.id === id) || null;
+
+  /* ΤΟ ΣΗΜΑ «OPUS» (18/10/2026) — ΑΝΑ AGENT, ΟΧΙ ΚΑΘΟΛΙΚΑ.
+     Ο board-director γεννιέται σε Opus (κρίνει παραπομπές σε συμβούλιο), οι
+     τρεις άλλοι σε Sonnet. Η προεπιλογή ΔΕΝ ζει εδώ: έρχεται από το `agent.md`
+     μέσω του /health (`a.opus`), ώστε να υπάρχει ΕΝΑ σημείο αλήθειας. Το
+     localStorage κρατά μόνο τη δική σου παρέκκλιση — ρύθμιση ανά θεατή, ποτέ
+     δεδομένα μαθητών.
+     Η σελίδα στέλνει `opus: true|false`, ΠΟΤΕ όνομα μοντέλου· ο proxy έχει τη
+     λευκή λίστα των δύο. */
+  const OPUS_KEY = "p2r-advisor-opus";
+  const opusPrefs = () => { try { return JSON.parse(localStorage.getItem(OPUS_KEY)) || {}; } catch (e) { return {}; } };
+  function opusOn(id) {
+    const key = id || UI.agent;
+    const p = opusPrefs();
+    if (Object.prototype.hasOwnProperty.call(p, key)) return !!p[key];
+    const a = agentOf(key);
+    return !!(a && a.opus);
+  }
+  function opusSet(v) {
+    const p = opusPrefs();
+    p[UI.agent] = !!v;
+    try { localStorage.setItem(OPUS_KEY, JSON.stringify(p)); } catch (e) { /* ιδιωτικό παράθυρο */ }
+  }
   const userTurns = () => (UI.session ? UI.session.messages.filter((m) => m.role === "user" && !m.kind).length : 0);
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -339,21 +365,24 @@
     const h = UI.health;
     const agents = (h && h.agents) || [];
     const S = UI.session;
-    const pills = agents.map((a) => `<button type="button" class="fc-pill adv-agent" data-agent="${esc(a.id)}" aria-pressed="${UI.agent === a.id}" title="${esc(a.name)} · ${esc(a.corpus)} · ${a.corpus_bytes ? fmtK(a.corpus_bytes) + "B" : "—"}${a.tools_offered && a.tools_offered.length ? " · εργαλεία: " + esc(a.tools_offered.join(", ")) : ""}">${esc(a.name)}</button>`).join("");
+    const pills = agents.map((a) => `<button type="button" class="fc-pill sym-agent" data-agent="${esc(a.id)}" aria-pressed="${UI.agent === a.id}" title="${esc(a.name)} · ${esc(a.corpus)} · ${a.corpus_bytes ? fmtK(a.corpus_bytes) + "B" : "—"}${a.tools_offered && a.tools_offered.length ? " · εργαλεία: " + esc(a.tools_offered.join(", ")) : ""}">${esc(a.name)}</button>`).join("");
     const st = h ? `
+      <button type="button" class="badge sym-opus${UI.agent && opusOn() ? " on" : ""}" id="sym-opus"
+        aria-pressed="${!!(UI.agent && opusOn())}"
+        title="${UI.agent && opusOn() ? "Opus — βαθύτερη συλλογιστική, ακριβότερο. Πάτα για Sonnet." : "Sonnet — γρήγορο και φθηνότερο. Πάτα για Opus."}">OPUS</button>
       <span class="badge ${h.key_present ? "ok" : "bad"}" title="ANTHROPIC_API_KEY στο περιβάλλον του proxy">${h.key_present ? "κλειδί ✓" : "χωρίς κλειδί"}</span>
       <span class="badge" title="Αιτήματα σήμερα / ημερήσιο όριο (φρένο 2)">σήμερα ${h.today ? h.today.count : 0}/${h.caps ? h.caps.daily_cap : "?"}</span>
       <span class="badge ${h.casefile && h.casefile.configured ? "ok" : ""}" title="Φάκελος υποθέσεων: FDMS_CASEFILE_URL/KEY στο περιβάλλον του proxy. Κάθε εγγραφή περνά από «Γράψ' το».">${h.casefile && h.casefile.configured ? "φάκελος ✓ · πύλη" : "φάκελος —"}</span>
       <span class="badge" title="Prompt cache TTL">cache ${h.caps ? esc(h.caps.cache_ttl) : "—"}</span>` : "";
     const notice = UI.offline ? `
-      <div class="adv-notice" role="alert">
+      <div class="sym-notice" role="alert">
         <b>Ο σύμβουλος δεν απαντά.</b> ${LOCAL ? "" : "Αυτή η διεύθυνση δεν δρομολογεί τον σύμβουλο — άνοιξε την εφαρμογή από τη δική σου διεύθυνση (το tunnel ή το localhost). "}Η καρτέλα χρειάζεται τον proxy στο <code>${esc(PROXY)}</code>,
         που κρατά το κλειδί του API έξω από τη σελίδα. Άνοιξε ένα τερματικό στο <code>D:\\FDMS</code>, όρισε την
         <code>ANTHROPIC_API_KEY</code> και τρέξε:<br>
-        <span class="adv-cmd">${esc(START_CMD)}</span><br>
+        <span class="sym-cmd">${esc(START_CMD)}</span><br>
         Οι υπόλοιπες καρτέλες δουλεύουν κανονικά· αυτή ξαναελέγχει με το κουμπί «Έλεγχος».
       </div>` : (h && !h.key_present ? `
-      <div class="adv-notice" role="alert"><b>Ο proxy τρέχει, αλλά χωρίς κλειδί.</b> Όρισε την <code>ANTHROPIC_API_KEY</code>
+      <div class="sym-notice" role="alert"><b>Ο proxy τρέχει, αλλά χωρίς κλειδί.</b> Όρισε την <code>ANTHROPIC_API_KEY</code>
         στο τερματικό του proxy και ξαναξεκίνησέ τον — κάθε ερώτηση θα απαντά 503 μέχρι τότε.</div>` : "");
     const sessOpts = [`<option value="">— νέα συζήτηση —</option>`].concat(UI.sessions.map((s) =>
       `<option value="${esc(s.id)}" ${S && S.id === s.id ? "selected" : ""}>${esc(s.title)} · ${esc(ago(s.updated))} · ${s.turns} γύρ.${s.writes ? ` · ✎${s.writes}` : ""}${s.compactions ? ` · ♻${s.compactions}` : ""}${s.student_label ? ` · ${esc(s.student_label)}` : ""}</option>`)).join("");
@@ -364,47 +393,47 @@
     const canSend = !UI.offline && h && h.key_present && UI.agent && !UI.busy && !capped;
     const ctxLocked = !!(S && S.messages.some((m) => !m.kind));
     const ctxVal = S ? (S.context || "") : (UI.ctxDraft || "");
-    const draft = UI.draft != null ? UI.draft : (($("adv-q") || {}).value || "");
+    const draft = UI.draft != null ? UI.draft : (($("sym-q") || {}).value || "");
     UI.draft = null;
 
     host.innerHTML = `
-      <div class="adv-bar">
-        <div class="bt-tabs" style="margin:0" aria-label="Agent">${pills || `<span class="adv-hint">— κανένας agent (λείπει ο φάκελος agents/)</span>`}</div>
+      <div class="sym-bar">
+        <div class="bt-tabs" style="margin:0" aria-label="Agent">${pills || `<span class="sym-hint">— κανένας agent (λείπει ο φάκελος agents/)</span>`}</div>
         <span class="spacer"></span>
-        <div class="adv-status">${st}</div>
-        <button type="button" class="fc-tbtn" id="adv-recheck" title="Ξαναρώτα τον proxy (GET /health)">↻ Έλεγχος</button>
+        <div class="sym-status">${st}</div>
+        <button type="button" class="fc-tbtn" id="sym-recheck" title="Ξαναρώτα τον proxy (GET /health)">↻ Έλεγχος</button>
       </div>
       ${notice}
-      ${UI.diag ? `<div class="adv-diag${UI.offline || !(h && h.key_present) ? " bad" : ""}" role="status">${esc(UI.diag)}</div>` : ""}
-      ${!UI.offline && h ? `<div class="adv-sess">
-        <label for="adv-sess-sel">Συζήτηση</label>
-        <select id="adv-sess-sel" ${UI.busy ? "disabled" : ""} title="Οι συνεδρίες μένουν στον proxy (tools/advisor/sessions) — όχι στον browser">${sessOpts}</select>
-        <button type="button" class="fc-tbtn" id="adv-new" ${UI.busy ? "disabled" : ""} title="Καινούργια συζήτηση (η τρέχουσα μένει στη λίστα)">✦ Νέα</button>
-        ${S ? `<button type="button" class="fc-tbtn" id="adv-archive" ${UI.busy ? "disabled" : ""} title="Αρχειοθέτηση — φεύγει από τη λίστα, δεν σβήνεται">▣ Αρχειοθέτηση</button>` : ""}
-        ${canClose ? `<button type="button" class="fc-tbtn adv-close" id="adv-close" title="Αρχειοθετεί αυτή τη συζήτηση και ανοίγει νέα με αφετηρία τον φάκελο του μαθητή όπως είναι ΤΩΡΑ καταγεγραμμένος">✓ Έκλεισε η υπόθεση</button>` : ""}
-        ${S ? `<button type="button" class="fc-tbtn" id="adv-export" ${UI.busy ? "disabled" : ""} title="Κατεβάζει αυτή τη συζήτηση ως αρχείο Markdown (ερωτήσεις, απαντήσεις, εργαλεία, εγγραφές, compactions, usage)">⭳ Λήψη</button>` : ""}
+      ${UI.diag ? `<div class="sym-diag${UI.offline || !(h && h.key_present) ? " bad" : ""}" role="status">${esc(UI.diag)}</div>` : ""}
+      ${!UI.offline && h ? `<div class="sym-sess">
+        <label for="sym-sess-sel">Συζήτηση</label>
+        <select id="sym-sess-sel" ${UI.busy ? "disabled" : ""} title="Οι συνεδρίες μένουν στον proxy (tools/advisor/sessions) — όχι στον browser">${sessOpts}</select>
+        <button type="button" class="fc-tbtn" id="sym-new" ${UI.busy ? "disabled" : ""} title="Καινούργια συζήτηση (η τρέχουσα μένει στη λίστα)">✦ Νέα</button>
+        ${S ? `<button type="button" class="fc-tbtn" id="sym-archive" ${UI.busy ? "disabled" : ""} title="Αρχειοθέτηση — φεύγει από τη λίστα, δεν σβήνεται">▣ Αρχειοθέτηση</button>` : ""}
+        ${canClose ? `<button type="button" class="fc-tbtn sym-close" id="sym-close" title="Αρχειοθετεί αυτή τη συζήτηση και ανοίγει νέα με αφετηρία τον φάκελο του μαθητή όπως είναι ΤΩΡΑ καταγεγραμμένος">✓ Έκλεισε η υπόθεση</button>` : ""}
+        ${S ? `<button type="button" class="fc-tbtn" id="sym-export" ${UI.busy ? "disabled" : ""} title="Κατεβάζει αυτή τη συζήτηση ως αρχείο Markdown (ερωτήσεις, απαντήσεις, εργαλεία, εγγραφές, compactions, usage)">⭳ Λήψη</button>` : ""}
         ${S ? tokensLabel(S, h) : ""}
       </div>
-      <p class="adv-help"><b>Έλεγχος</b>: ξαναρωτά τον τοπικό proxy αν είναι ζωντανός. <b>Νέα</b>: καινούργια συζήτηση — η τρέχουσα μένει στη λίστα. <b>Αρχειοθέτηση</b>: φεύγει από τη λίστα, δεν σβήνεται ποτέ. <b>Λήψη</b>: κατεβάζει τη συζήτηση ως Markdown στον δίσκο σου. <b>Έκλεισε η υπόθεση</b>: αρχειοθετεί και ανοίγει νέα με αφετηρία τον φάκελο του μαθητή. Οι συζητήσεις ζουν στον proxy (tools/advisor/sessions), όχι στον browser.</p>` : ""}
-      ${S && S.events && S.events.length ? `<div class="adv-events">${S.events.slice(-4).map(eventHTML).join("")}</div>` : ""}
-      <div class="adv-transcript" id="adv-transcript" role="log" aria-live="polite" aria-label="Συζήτηση">
-        ${S && S.messages.length ? "" : `<p class="adv-hint">Ρώτα κανονιστικά: «Ο μαθητής βαθμολογήθηκε ΑΠΟΤΥΧΙΑ στην C4790 — τι ενεργοποιείται και με ποιον πετάει μετά;». Ο σύμβουλος απαντά ΜΟΝΟ από το επικυρωμένο corpus, με id και παραπομπή· ό,τι βρει έξω από αυτό το σημαίνει ως <mark class="adv-raw">ακατέργαστο</mark>. Μια εγγραφή στον φάκελο γίνεται μόνο όταν πατήσεις εσύ «Γράψ' το».</p>`}
+      <p class="sym-help"><b>Έλεγχος</b>: ξαναρωτά τον τοπικό proxy αν είναι ζωντανός. <b>Νέα</b>: καινούργια συζήτηση — η τρέχουσα μένει στη λίστα. <b>Αρχειοθέτηση</b>: φεύγει από τη λίστα, δεν σβήνεται ποτέ. <b>Λήψη</b>: κατεβάζει τη συζήτηση ως Markdown στον δίσκο σου. <b>Έκλεισε η υπόθεση</b>: αρχειοθετεί και ανοίγει νέα με αφετηρία τον φάκελο του μαθητή. Οι συζητήσεις ζουν στον proxy (tools/advisor/sessions), όχι στον browser.</p>` : ""}
+      ${S && S.events && S.events.length ? `<div class="sym-events">${S.events.slice(-4).map(eventHTML).join("")}</div>` : ""}
+      <div class="sym-transcript" id="sym-transcript" role="log" aria-live="polite" aria-label="Συζήτηση">
+        ${S && S.messages.length ? "" : `<p class="sym-hint">Ρώτα κανονιστικά: «Ο μαθητής βαθμολογήθηκε ΑΠΟΤΥΧΙΑ στην C4790 — τι ενεργοποιείται και με ποιον πετάει μετά;». Ο σύμβουλος απαντά ΜΟΝΟ από το επικυρωμένο corpus, με id και παραπομπή· ό,τι βρει έξω από αυτό το σημαίνει ως <mark class="sym-raw">ακατέργαστο</mark>. Μια εγγραφή στον φάκελο γίνεται μόνο όταν πατήσεις εσύ «Γράψ' το».</p>`}
       </div>
-      <div class="adv-compose">
-        <label class="lbl" for="adv-student" style="margin:0">Πλαίσιο περίπτωσης (προαιρετικό) — μόνο ό,τι γράφεις εσύ ταξιδεύει· δένει με το πρώτο μήνυμα της συζήτησης</label>
-        <textarea id="adv-student" ${ctxLocked ? "disabled title='Κλειδώνει μετά το πρώτο μήνυμα — Νέα για να αλλάξει'" : ""} placeholder="π.χ. Προσαρμογή, 8η έξοδος του σταδίου, C4790 Αξιολόγηση, είχε ήδη Δοκιμή Προόδου με ΑΕ 62%">${esc(ctxVal)}</textarea>
-        <label class="lbl" for="adv-q" style="margin:0">Ερώτηση <span class="adv-turn">γύρος ${Math.min(turns + 1, UI.turnMax)}/${UI.turnMax}</span></label>
-        <textarea id="adv-q" placeholder="Γράψε ή κράτα πατημένο το 🎤 και μίλα… (Ctrl+Enter στέλνει)" ${UI.busy ? "disabled" : ""}></textarea>
-        <div class="adv-interim" id="adv-interim">${esc(UI.speech.interim || UI.speech.err)}</div>
-        <div class="adv-row">
-          ${speechOK ? `<button type="button" class="adv-mic${UI.speech.on ? " on" : ""}" id="adv-mic" aria-pressed="${UI.speech.on}" title="Κράτα πατημένο και μίλα (el-GR)">🎤</button>
-          <span class="adv-speech-note">Η ομιλία αποστέλλεται στους διακομιστές του κατασκευαστή του browser για αναγνώριση (el-GR). Το κείμενο μπαίνει στο κουτί — το διορθώνεις πριν το στείλεις.</span>` : `<span class="adv-speech-note">Ο browser δεν έχει αναγνώριση ομιλίας — πληκτρολόγησε.</span>`}
+      <div class="sym-compose">
+        <label class="lbl" for="sym-student" style="margin:0">Πλαίσιο περίπτωσης (προαιρετικό) — μόνο ό,τι γράφεις εσύ ταξιδεύει· δένει με το πρώτο μήνυμα της συζήτησης</label>
+        <textarea id="sym-student" ${ctxLocked ? "disabled title='Κλειδώνει μετά το πρώτο μήνυμα — Νέα για να αλλάξει'" : ""} placeholder="π.χ. Προσαρμογή, 8η έξοδος του σταδίου, C4790 Αξιολόγηση, είχε ήδη Δοκιμή Προόδου με ΑΕ 62%">${esc(ctxVal)}</textarea>
+        <label class="lbl" for="sym-q" style="margin:0">Ερώτηση <span class="sym-turn">γύρος ${Math.min(turns + 1, UI.turnMax)}/${UI.turnMax}</span></label>
+        <textarea id="sym-q" placeholder="Γράψε ή κράτα πατημένο το 🎤 και μίλα… (Ctrl+Enter στέλνει)" ${UI.busy ? "disabled" : ""}></textarea>
+        <div class="sym-interim" id="sym-interim">${esc(UI.speech.interim || UI.speech.err)}</div>
+        <div class="sym-row">
+          ${speechOK ? `<button type="button" class="sym-mic${UI.speech.on ? " on" : ""}" id="sym-mic" aria-pressed="${UI.speech.on}" title="Κράτα πατημένο και μίλα (el-GR)">🎤</button>
+          <span class="sym-speech-note">Η ομιλία αποστέλλεται στους διακομιστές του κατασκευαστή του browser για αναγνώριση (el-GR). Το κείμενο μπαίνει στο κουτί — το διορθώνεις πριν το στείλεις.</span>` : `<span class="sym-speech-note">Ο browser δεν έχει αναγνώριση ομιλίας — πληκτρολόγησε.</span>`}
           <span class="spacer" style="flex:1 1 auto"></span>
-          ${UI.busy ? `<button type="button" class="fc-tbtn adv-stop" id="adv-stop">■ Διακοπή</button>` : ""}
-          <button type="button" class="adv-send" id="adv-send" ${canSend ? "" : "disabled"} title="${capped ? "Όριο γύρων — Νέα συζήτηση" : "Ctrl+Enter"}">${capped ? "Όριο γύρων" : "Στείλε ▸"}</button>
+          ${UI.busy ? `<button type="button" class="fc-tbtn sym-stop" id="sym-stop">■ Διακοπή</button>` : ""}
+          <button type="button" class="sym-send" id="sym-send" ${canSend ? "" : "disabled"} title="${capped ? "Όριο γύρων — Νέα συζήτηση" : "Ctrl+Enter"}">${capped ? "Όριο γύρων" : "Στείλε ▸"}</button>
         </div>
       </div>`;
-    if (draft) $("adv-q").value = draft;
+    if (draft) $("sym-q").value = draft;
     renderTranscript();
   }
 
@@ -417,7 +446,7 @@
     const hist = Math.round(S.messages.reduce((n, m) => n + (m.content || "").length, 0) / cpt);
     const ceiling = (h.memory && h.memory.context_ceiling_tokens) || 400000;
     const f = (n) => Number(n).toLocaleString("el-GR");
-    return `<span class="adv-turn" title="Εκτίμηση (${cpt} χαρακτήρες/token για ελληνικά), όχι μέτρηση. Το corpus μένει στο cache· συμπτύσσεται το ιστορικό όταν το σύνολο πλησιάσει το ταβάνι μείον τον χώρο της απάντησης.">${esc(S.id)} · σύνολο ~${f(corpus + hist)} / ${f(ceiling)} tokens (corpus ${f(corpus)} + συζήτηση ${f(hist)})</span>`;
+    return `<span class="sym-turn" title="Εκτίμηση (${cpt} χαρακτήρες/token για ελληνικά), όχι μέτρηση. Το corpus μένει στο cache· συμπτύσσεται το ιστορικό όταν το σύνολο πλησιάσει το ταβάνι μείον τον χώρο της απάντησης.">${esc(S.id)} · σύνολο ~${f(corpus + hist)} / ${f(ceiling)} tokens (corpus ${f(corpus)} + συζήτηση ${f(hist)})</span>`;
   }
   function fallbackCopy(text, done) {
     const ta = document.createElement("textarea");
@@ -437,50 +466,50 @@
     return `${at} · ✓ proxy ζωντανός στο ${PROXY}${who} · κλειδί ${h.key_present ? "✓ παρόν" : "✕ ΛΕΙΠΕΙ"} · φάκελος ${h.casefile && h.casefile.configured ? "✓ συνδεδεμένος" : "✕ όχι"} · keep-alive ${ka} · σήμερα ${h.today ? h.today.count : 0}/${h.caps ? h.caps.daily_cap : "?"} · agents: ${ags || "κανένας"}`;
   }
   function eventHTML(e) {
-    if (e.type === "compaction") return `<div class="adv-event is-compaction">♻ Compaction #${e.n} στις ${esc(hhmm(e.at))}: το ιστορικό (${fmtK(e.chars_before)} χαρ.) έγινε δομημένη σύνοψη (${fmtK(e.chars_after)} χαρ.)${e.kept_pairs ? `, ${e.kept_pairs} ζεύγος αυτούσιο` : ""}. Οι παραπομπές και οι εγγραφές κρατήθηκαν.</div>`;
-    if (e.type === "seed") return `<div class="adv-event">⤷ ${esc(e.text)}</div>`;
-    if (e.type === "archived") return `<div class="adv-event">▣ ${esc(e.text)}</div>`;
-    return `<div class="adv-event">${esc(e.text || e.type)}</div>`;
+    if (e.type === "compaction") return `<div class="sym-event is-compaction">♻ Compaction #${e.n} στις ${esc(hhmm(e.at))}: το ιστορικό (${fmtK(e.chars_before)} χαρ.) έγινε δομημένη σύνοψη (${fmtK(e.chars_after)} χαρ.)${e.kept_pairs ? `, ${e.kept_pairs} ζεύγος αυτούσιο` : ""}. Οι παραπομπές και οι εγγραφές κρατήθηκαν.</div>`;
+    if (e.type === "seed") return `<div class="sym-event">⤷ ${esc(e.text)}</div>`;
+    if (e.type === "archived") return `<div class="sym-event">▣ ${esc(e.text)}</div>`;
+    return `<div class="sym-event">${esc(e.text || e.type)}</div>`;
   }
   function msgHTML(m, i, all) {
     const S = UI.session;
     if (m.kind === "summary" || m.kind === "seed") {
       if (m.role === "assistant") return "";                     // the ack line adds nothing on screen
       const lab = m.kind === "summary" ? "σύνοψη μετά από compaction — αυτό θυμάται ο σύμβουλος" : "αφετηρία — ο φάκελος όπως ήταν καταγεγραμμένος όταν άνοιξε η συζήτηση";
-      return `<div class="adv-msg is-system"><span class="adv-who">${lab}</span>${md(m.content)}</div>`;
+      return `<div class="sym-msg is-system"><span class="sym-who">${lab}</span>${md(m.content)}</div>`;
     }
     if (m.role === "user") {
       const first = all.findIndex((x) => x.role === "user" && !x.kind) === i;
-      return `<div class="adv-msg is-user"><span class="adv-who">εσύ${m.at ? " · " + esc(hhmm(m.at)) : ""}</span>${esc(m.content)}${first && S && S.context ? `<div class="adv-ctx">πλαίσιο: ${esc(S.context)}</div>` : ""}</div>`;
+      return `<div class="sym-msg is-user"><span class="sym-who">εσύ${m.at ? " · " + esc(hhmm(m.at)) : ""}</span>${esc(m.content)}${first && S && S.context ? `<div class="sym-ctx">πλαίσιο: ${esc(S.context)}</div>` : ""}</div>`;
     }
-    return `<div class="adv-msg is-assistant"><span class="adv-who">${esc(agentOf(UI.agent) ? agentOf(UI.agent).name : "σύμβουλος")}${m.at ? " · " + esc(hhmm(m.at)) : ""}</span>${toolsHTML(m.tools)}${md(m.content)}${m.usage ? usageHTML(m.usage) : ""}</div>`;
+    return `<div class="sym-msg is-assistant"><span class="sym-who">${esc(agentOf(UI.agent) ? agentOf(UI.agent).name : "σύμβουλος")}${m.at ? " · " + esc(hhmm(m.at)) : ""}</span>${toolsHTML(m.tools)}${md(m.content)}${m.usage ? usageHTML(m.usage) : ""}</div>`;
   }
   function toolsHTML(tools) {
     if (!tools || !tools.length) return "";
-    return `<div class="adv-tools">${tools.map((t) => {
+    return `<div class="sym-tools">${tools.map((t) => {
       if (t.tool === "search_sources") {
-        return `<div class="adv-tool${t.status === "refused" ? " is-refused" : ""}">🔎 ${esc(t.source || "?")} · «${esc(t.query || "")}»${t.hits != null ? ` · ${t.hits} ευρήματα` : ""}${t.status && t.status !== "ok" ? ` · ${esc(t.status)}` : ""}</div>`;
+        return `<div class="sym-tool${t.status === "refused" ? " is-refused" : ""}">🔎 ${esc(t.source || "?")} · «${esc(t.query || "")}»${t.hits != null ? ` · ${t.hits} ευρήματα` : ""}${t.status && t.status !== "ok" ? ` · ${esc(t.status)}` : ""}</div>`;
       }
-      if (!t.write) return `<div class="adv-tool${t.status === "error" ? " is-refused" : ""}">🗂 ${esc(t.tool || t.name || "")}${t.summary ? ` · ${esc(t.summary)}` : ""}${t.status && t.status !== "ok" ? ` · ${esc(t.status)}` : ""}</div>`;
+      if (!t.write) return `<div class="sym-tool${t.status === "error" ? " is-refused" : ""}">🗂 ${esc(t.tool || t.name || "")}${t.summary ? ` · ${esc(t.summary)}` : ""}${t.status && t.status !== "ok" ? ` · ${esc(t.status)}` : ""}</div>`;
       // a WRITE: pending (gate) · confirmed · cancelled · failed · refused by a brake
-      if (t.confirmed) return `<div class="adv-tool is-write is-done">✓ ΓΡΑΦΤΗΚΕ ΣΤΟΝ ΦΑΚΕΛΟ · case ${esc(t.case_id)} · ${esc(hhmm(t.at))}\n${esc(t.preview || "")}</div>`;
-      if (t.cancelled) return `<div class="adv-tool is-write is-off">✕ Ακυρώθηκε από εσένα · ${esc(t.tool)}\n${esc(t.preview || "")}</div>`;
-      if (t.failed) return `<div class="adv-tool is-write is-refused">✕ Ο φάκελος απέρριψε την εγγραφή: ${esc(t.failed)}</div>`;
+      if (t.confirmed) return `<div class="sym-tool is-write is-done">✓ ΓΡΑΦΤΗΚΕ ΣΤΟΝ ΦΑΚΕΛΟ · case ${esc(t.case_id)} · ${esc(hhmm(t.at))}\n${esc(t.preview || "")}</div>`;
+      if (t.cancelled) return `<div class="sym-tool is-write is-off">✕ Ακυρώθηκε από εσένα · ${esc(t.tool)}\n${esc(t.preview || "")}</div>`;
+      if (t.failed) return `<div class="sym-tool is-write is-refused">✕ Ο φάκελος απέρριψε την εγγραφή: ${esc(t.failed)}</div>`;
       if (t.pending && t.token) {
         const left = t.expires ? Math.max(0, Math.round((t.expires * 1000 - Date.now()) / 60000)) : null;
         const expired = left === 0;
-        return `<div class="adv-tool is-write">✎ ΕΚΚΡΕΜΗΣ ΕΓΓΡΑΦΗ — περιμένει εσένα · ${esc(t.tool)}\n${esc(t.preview || "")}
-          <div class="adv-gate">${expired ? `<span class="adv-ttl">έληξε — ζήτα ξανά από τον σύμβουλο να την ετοιμάσει</span>` :
-            `<button type="button" class="adv-yes" data-confirm="${esc(t.token)}" ${UI.busy ? "disabled" : ""}>Γράψ' το</button>
-             <button type="button" class="adv-no" data-cancel="${esc(t.token)}" ${UI.busy ? "disabled" : ""}>Άκυρο</button>
-             <span class="adv-ttl">λήγει σε ${left}′ · actor agent:${esc(UI.agent)}</span>`}</div></div>`;
+        return `<div class="sym-tool is-write">✎ ΕΚΚΡΕΜΗΣ ΕΓΓΡΑΦΗ — περιμένει εσένα · ${esc(t.tool)}\n${esc(t.preview || "")}
+          <div class="sym-gate">${expired ? `<span class="sym-ttl">έληξε — ζήτα ξανά από τον σύμβουλο να την ετοιμάσει</span>` :
+            `<button type="button" class="sym-yes" data-confirm="${esc(t.token)}" ${UI.busy ? "disabled" : ""}>Γράψ' το</button>
+             <button type="button" class="sym-no" data-cancel="${esc(t.token)}" ${UI.busy ? "disabled" : ""}>Άκυρο</button>
+             <span class="sym-ttl">λήγει σε ${left}′ · actor agent:${esc(UI.agent)}</span>`}</div></div>`;
       }
-      return `<div class="adv-tool is-write is-refused">✎ ${esc(t.tool)} · ${esc(t.summary || "")} · ${esc(t.status || "")}</div>`;
+      return `<div class="sym-tool is-write is-refused">✎ ${esc(t.tool)} · ${esc(t.summary || "")} · ${esc(t.status || "")}</div>`;
     }).join("")}</div>`;
   }
   function usageHTML(u) {
     const miss = u.expected_cache_read && !u.cache_ok;
-    return `<div class="adv-usage" title="input · cache write · cache read · output (tokens)">
+    return `<div class="sym-usage" title="input · cache write · cache read · output (tokens)">
       <span>in ${fmtK(u.input_tokens)}</span><span>cache✎ ${fmtK(u.cache_creation_input_tokens)}</span>
       <span>cache◉ ${fmtK(u.cache_read_input_tokens)}</span><span>out ${fmtK(u.output_tokens)}</span>
       ${u.iterations > 1 ? `<span>${u.iterations} γύροι εργαλείων</span>` : ""}
@@ -489,16 +518,16 @@
       ${miss ? `<span class="miss">⚠ ΧΩΡΙΣ cache — πλήρης χρέωση του corpus</span>` : ""}</div>`;
   }
   function renderTranscript() {
-    const t = $("adv-transcript");
+    const t = $("sym-transcript");
     if (!t) return;
     const msgs = UI.session ? UI.session.messages : [];
     const parts = msgs.map((m, i) => msgHTML(m, i, msgs)).filter(Boolean);
     if (UI.pending) {
-      for (const n of UI.pending.notices || []) parts.push(`<div class="adv-msg is-notice"><span class="adv-who">σημείωση</span>${esc(n)}</div>`);
-      parts.push(`<div class="adv-msg is-user"><span class="adv-who">εσύ</span>${esc(UI.pending.question)}</div>`);
-      parts.push(`<div class="adv-msg is-assistant" id="adv-live"><span class="adv-who">${esc(agentOf(UI.agent) ? agentOf(UI.agent).name : "σύμβουλος")} · …</span>${toolsHTML(UI.pending.tools)}${md(UI.pending.text) || `<span class="adv-hint">σκέφτεται…</span>`}</div>`);
+      for (const n of UI.pending.notices || []) parts.push(`<div class="sym-msg is-notice"><span class="sym-who">σημείωση</span>${esc(n)}</div>`);
+      parts.push(`<div class="sym-msg is-user"><span class="sym-who">εσύ</span>${esc(UI.pending.question)}</div>`);
+      parts.push(`<div class="sym-msg is-assistant" id="sym-live"><span class="sym-who">${esc(agentOf(UI.agent) ? agentOf(UI.agent).name : "σύμβουλος")} · …</span>${toolsHTML(UI.pending.tools)}${md(UI.pending.text) || `<span class="sym-hint">σκέφτεται…</span>`}</div>`);
     }
-    for (const e of UI.errors || []) parts.push(`<div class="adv-msg ${e.kind === "notice" ? "is-notice" : "is-error"}"><span class="adv-who">${e.kind === "notice" ? "σημείωση" : "σφάλμα"}</span>${esc(e.text)}</div>`);
+    for (const e of UI.errors || []) parts.push(`<div class="sym-msg ${e.kind === "notice" ? "is-notice" : "is-error"}"><span class="sym-who">${e.kind === "notice" ? "σημείωση" : "σφάλμα"}</span>${esc(e.text)}</div>`);
     if (parts.length) t.innerHTML = parts.join("");
     t.scrollTop = t.scrollHeight;
   }
@@ -507,9 +536,9 @@
      § 4  SEND — SSE over fetch; the proxy keeps the history
      ════════════════════════════════════════════════════════════════════════ */
   function send() {
-    const q = (($("adv-q") || {}).value || "").trim();
+    const q = (($("sym-q") || {}).value || "").trim();
     if (!q || UI.busy || !UI.agent) return;
-    const ctx = (($("adv-student") || {}).value || "").trim();
+    const ctx = (($("sym-student") || {}).value || "").trim();
     UI.errors = [];
     UI.busy = true;
     UI.draft = "";
@@ -519,10 +548,12 @@
     UI.abort = ac;
     let lastDraw = 0;
     const draw = (force) => { const now = Date.now(); if (force || now - lastDraw > 120) { lastDraw = now; renderTranscript(); } };
-    const fail = (text) => { UI.errors.push({ kind: "error", text: text }); UI.draft = q; };
+    const fail = (text) => { UI.errors.push({ kind: "error", text: text, conn: true }); UI.draft = q; };
+    /* Πόσες απαντήσεις είχε η συνεδρία ΠΡΙΝ στείλουμε — το μέτρο της ανάκτησης. */
+    const before = UI.session ? UI.session.messages.filter((m) => m.role === "assistant" && !m.kind).length : 0;
     const ensure = UI.session ? Promise.resolve(UI.session) : newSession(ctx).then((s) => { loadSessions(); return s; });
     ensure.then((S) => fetch(PROXY + "/ask", { method: "POST", headers: { "Content-Type": "application/json" }, signal: ac.signal,
-      body: JSON.stringify({ agent: UI.agent, session: S.id, question: q, student: ctx || undefined }) }))
+      body: JSON.stringify({ agent: UI.agent, session: S.id, question: q, student: ctx || undefined, opus: opusOn() }) }))
       .then((res) => {
         if (!res.ok) return res.json().then((j) => { fail(`${j.error || res.statusText} (${res.status}${j.code ? " · " + j.code : ""})`); });
         const reader = res.body.getReader(), dec = new TextDecoder();
@@ -568,8 +599,32 @@
       .then(() => { UI.busy = false; UI.pending = null; UI.abort = null;
         // the proxy's copy is canonical (tokens, confirmed ids, compaction events): reload it
         const reload = UI.session ? loadSession(UI.session.id).catch(() => null) : Promise.resolve();
-        return reload.then(() => health(true)).then(loadSessions).then(render);
+        return reload.then(recoverIfAnswered).then(() => health(true)).then(loadSessions).then(render);
       });
+
+    /* ΜΙΑ ΧΑΜΕΝΗ ΡΟΗ ΔΕΝ ΕΙΝΑΙ ΧΑΜΕΝΗ ΑΠΑΝΤΗΣΗ (18/10/2026).
+
+       ΤΙ ΕΙΔΕ Ο ΙΔΙΟΚΤΗΤΗΣ: ρώτησε από το κινητό, η απάντηση ήρθε ολόκληρη και
+       από κάτω της κόκκινο «Δεν υπάρχει σύνδεση με τον proxy». Το log του
+       proxy ήταν ΚΑΘΑΡΟ: η απάντηση είχε ολοκληρωθεί κανονικά σε 57,5
+       δευτερόλεπτα. Αυτό που κόπηκε ήταν η ΣΥΝΔΕΣΗ ΤΗΣ ΡΟΗΣ — κινητό που
+       αλλάζει δίκτυο, σβήνει οθόνη, ή ο browser παγώνει καρτέλα στο παρασκήνιο.
+
+       Η ανάκτηση ΗΔΗ γινόταν: οι συζητήσεις ζουν στον proxy, και η γραμμή από
+       πάνω ξαναφορτώνει τη συνεδρία. Αυτό που ΔΕΝ γινόταν ήταν να φύγει το
+       μήνυμα — κι έτσι μια επιτυχία έμοιαζε αποτυχία, που είναι χειρότερο από
+       μια τίμια αποτυχία: σε κάνει να ξαναρωτήσεις και να ξαναπληρώσεις.
+
+       Το μέτρο είναι η ΙΔΙΑ Η ΣΥΝΕΔΡΙΑ, όχι η αίσθηση του δικτύου: αν ο proxy
+       κρατά περισσότερες απαντήσεις απ' ό,τι πριν, η απάντηση υπάρχει. */
+    function recoverIfAnswered() {
+      if (!UI.errors.some((e) => e.conn)) return;
+      const now = UI.session ? UI.session.messages.filter((m) => m.role === "assistant" && !m.kind).length : 0;
+      if (now <= before) return;                       // πράγματι χάθηκε — το μήνυμα μένει
+      UI.errors = UI.errors.filter((e) => !e.conn);
+      UI.errors.push({ kind: "notice", text: "Η σύνδεση κόπηκε στη μέση, αλλά η απάντηση είχε ολοκληρωθεί και ανακτήθηκε από τον proxy. Δεν χρειάζεται να ξαναρωτήσεις." });
+      UI.draft = null;                                 // μην ξαναγεμίσεις το κουτί με την ίδια ερώτηση
+    }
   }
 
   function confirmWrite(token, action) {
@@ -644,23 +699,23 @@
         if (r.isFinal) finals += (finals ? " " : "") + r[0].transcript.trim(); else interim += r[0].transcript;
       }
       S.interim = interim;
-      const q = $("adv-q");
+      const q = $("sym-q");
       if (q && finals) {
         const base = q.getAttribute("data-base") != null ? q.getAttribute("data-base") : q.value;
         if (q.getAttribute("data-base") == null) q.setAttribute("data-base", base);
         q.value = (base ? base.replace(/\s+$/, "") + " " : "") + finals;
       }
-      const il = $("adv-interim"); if (il) il.textContent = interim;
+      const il = $("sym-interim"); if (il) il.textContent = interim;
     };
     rec.onerror = (ev) => { S.err = ev.error === "not-allowed" ? "Ο browser δεν έδωσε άδεια μικροφώνου." : `Αναγνώριση ομιλίας: ${ev.error}`; };
     rec.onend = () => {
       S.on = false; S.rec = null; S.interim = "";
-      const q = $("adv-q"); if (q) q.removeAttribute("data-base");
-      const b = $("adv-mic"); if (b) { b.classList.remove("on"); b.setAttribute("aria-pressed", "false"); }
-      const il = $("adv-interim"); if (il) il.textContent = S.err;
+      const q = $("sym-q"); if (q) q.removeAttribute("data-base");
+      const b = $("sym-mic"); if (b) { b.classList.remove("on"); b.setAttribute("aria-pressed", "false"); }
+      const il = $("sym-interim"); if (il) il.textContent = S.err;
     };
     try { rec.start(); } catch (e) { S.on = false; S.rec = null; S.err = "Δεν ξεκίνησε η αναγνώριση ομιλίας."; }
-    const b = $("adv-mic"); if (b) { b.classList.add("on"); b.setAttribute("aria-pressed", "true"); }
+    const b = $("sym-mic"); if (b) { b.classList.add("on"); b.setAttribute("aria-pressed", "true"); }
   }
   function speechStop() { const S = UI.speech; if (S.rec) { try { S.rec.stop(); } catch (e) { /* already stopped */ } } }
 
@@ -673,14 +728,20 @@
     host.addEventListener("click", (ev) => {
       const t = ev.target instanceof Element ? ev.target : null;
       if (!t) return;
-      const ag = t.closest(".adv-agent");
+      if (t.closest("#sym-opus")) {
+        if (UI.busy || !UI.agent) return;
+        opusSet(!opusOn());
+        render();                      /* καμία προειδοποίηση — απόφανση 18/10 */
+        return;
+      }
+      const ag = t.closest(".sym-agent");
       if (ag) {
         if (UI.busy || ag.dataset.agent === UI.agent) return;
         UI.agent = ag.dataset.agent; UI.session = null; UI.errors = [];
         const a = agentOf(UI.agent); UI.turnMax = a ? a.max_turns : UI.turnMax;
         loadSessions().then(render); return;
       }
-      if (t.id === "adv-recheck") { health(true).then(loadSessions).then(() => { UI.diag = diagLine(); render(); }); return; }
+      if (t.id === "sym-recheck") { health(true).then(loadSessions).then(() => { UI.diag = diagLine(); render(); }); return; }
       const cp = t.closest("[data-copy]");
       if (cp) {
         const pre = cp.parentElement.querySelector("pre");
@@ -690,18 +751,18 @@
         else fallbackCopy(text, done);
         return;
       }
-      if (t.id === "adv-new") { if (UI.busy) return; UI.session = null; UI.errors = []; UI.ctxDraft = ""; render(); return; }
-      if (t.id === "adv-archive") { archiveSession(); return; }
-      if (t.id === "adv-export") { exportSession(); return; }
-      if (t.id === "adv-close") { closeCase(); return; }
-      if (t.id === "adv-send") { send(); return; }
-      if (t.id === "adv-stop") { if (UI.abort) UI.abort.abort(); return; }
+      if (t.id === "sym-new") { if (UI.busy) return; UI.session = null; UI.errors = []; UI.ctxDraft = ""; render(); return; }
+      if (t.id === "sym-archive") { archiveSession(); return; }
+      if (t.id === "sym-export") { exportSession(); return; }
+      if (t.id === "sym-close") { closeCase(); return; }
+      if (t.id === "sym-send") { send(); return; }
+      if (t.id === "sym-stop") { if (UI.abort) UI.abort.abort(); return; }
       const y = t.closest("[data-confirm]"); if (y) { confirmWrite(y.dataset.confirm, "write"); return; }
       const n = t.closest("[data-cancel]"); if (n) { confirmWrite(n.dataset.cancel, "cancel"); return; }
-      const c = t.closest(".adv-cite"); if (c && window.openRequirements) { window.openRequirements(c.dataset.req); return; }
+      const c = t.closest(".sym-cite"); if (c && window.openRequirements) { window.openRequirements(c.dataset.req); return; }
     });
     host.addEventListener("change", (ev) => {
-      if (ev.target && ev.target.id === "adv-sess-sel") {
+      if (ev.target && ev.target.id === "sym-sess-sel") {
         const id = ev.target.value;
         UI.errors = [];
         if (!id) { UI.session = null; render(); return; }
@@ -709,29 +770,29 @@
       }
     });
     host.addEventListener("keydown", (ev) => {
-      if (ev.target && ev.target.id === "adv-q" && ev.key === "Enter" && (ev.ctrlKey || ev.metaKey)) { ev.preventDefault(); send(); }
-      if (ev.target && ev.target.id === "adv-mic" && (ev.key === " " || ev.key === "Enter")) { ev.preventDefault(); if (UI.speech.on) speechStop(); else speechStart(); }
+      if (ev.target && ev.target.id === "sym-q" && ev.key === "Enter" && (ev.ctrlKey || ev.metaKey)) { ev.preventDefault(); send(); }
+      if (ev.target && ev.target.id === "sym-mic" && (ev.key === " " || ev.key === "Enter")) { ev.preventDefault(); if (UI.speech.on) speechStop(); else speechStart(); }
     });
-    host.addEventListener("input", (ev) => { if (ev.target && ev.target.id === "adv-student" && !UI.session) UI.ctxDraft = ev.target.value; });
-    host.addEventListener("pointerdown", (ev) => { const b = ev.target.closest && ev.target.closest("#adv-mic"); if (b) { ev.preventDefault(); speechStart(); } });
-    host.addEventListener("pointerup", (ev) => { if (ev.target.closest && ev.target.closest("#adv-mic")) speechStop(); });
+    host.addEventListener("input", (ev) => { if (ev.target && ev.target.id === "sym-student" && !UI.session) UI.ctxDraft = ev.target.value; });
+    host.addEventListener("pointerdown", (ev) => { const b = ev.target.closest && ev.target.closest("#sym-mic"); if (b) { ev.preventDefault(); speechStart(); } });
+    host.addEventListener("pointerup", (ev) => { if (ev.target.closest && ev.target.closest("#sym-mic")) speechStop(); });
     host.addEventListener("pointercancel", () => { if (UI.speech.on) speechStop(); });
-    document.addEventListener("pointerup", (ev) => { if (UI.speech.on && !(ev.target.closest && ev.target.closest("#adv-mic"))) speechStop(); });
+    document.addEventListener("pointerup", (ev) => { if (UI.speech.on && !(ev.target.closest && ev.target.closest("#sym-mic"))) speechStop(); });
   }
 
   function advInit() {
     const view = $("view-advisor");
     if (!view) return;                                   // offline build: no view, nothing to do
     ensureStyle();
-    let host = $("adv-main");
-    if (!host) { host = document.createElement("section"); host.className = "adv-main"; host.id = "adv-main"; view.appendChild(host); }
+    let host = $("sym-main");
+    if (!host) { host = document.createElement("section"); host.className = "sym-main"; host.id = "sym-main"; view.appendChild(host); }
     UI.host = host;
     wire(host);
     if (!UI.booted) {
       UI.booted = true;
       UI.speech.api = window.SpeechRecognition || window.webkitSpeechRecognition || null;
       UI.errors = [];
-      host.innerHTML = `<p class="adv-hint">Έλεγχος του τοπικού proxy…</p>`;
+      host.innerHTML = `<p class="sym-hint">Έλεγχος του τοπικού proxy…</p>`;
     }
     health(false).then(loadSessions).then(render);
   }
@@ -802,16 +863,16 @@
          μια άστυλη γραμμή κειμένου αντί για ειδοποίηση. */
       ensureStyle();
       const bar = document.createElement("div");
-      bar.className = "adv-authbar";
+      bar.className = "sym-authbar";
       bar.setAttribute("role", "alert");
       bar.innerHTML = `<span>🔒 Η συνεδρία έληξε — η Cloudflare Access ζητά νέα σύνδεση.</span>
-        <span class="adv-auth-sp"></span>
-        <button type="button" id="adv-login" title="Πλοηγεί στη σελίδα σύνδεσης της Access και επιστρέφει εδώ">Σύνδεση</button>
-        <button type="button" id="adv-relogin" title="Σβήνει πρώτα τη συνεδρία — για όταν η σύνδεση κολλάει">Καθάρισε &amp; σύνδεση</button>`;
+        <span class="sym-auth-sp"></span>
+        <button type="button" id="sym-login" title="Πλοηγεί στη σελίδα σύνδεσης της Access και επιστρέφει εδώ">Σύνδεση</button>
+        <button type="button" id="sym-relogin" title="Σβήνει πρώτα τη συνεδρία — για όταν η σύνδεση κολλάει">Καθάρισε &amp; σύνδεση</button>`;
       document.body.insertBefore(bar, document.body.firstChild);
       ST.bar = bar;
-      $("adv-login").addEventListener("click", () => go());
-      $("adv-relogin").addEventListener("click", () => {
+      $("sym-login").addEventListener("click", () => go());
+      $("sym-relogin").addEventListener("click", () => {
         fetch("/cdn-cgi/access/logout", { cache: "no-store", credentials: "include" })
           .catch(() => {})
           .then(() => go());

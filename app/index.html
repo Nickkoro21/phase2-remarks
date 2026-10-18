@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Phase 2 FDMS — T-6A Texan II</title>
 <link rel="stylesheet" href="styles.css?v=20260905a">
+<!-- hosted:start — ΜΟΝΟ στη φιλοξενούμενη εφαρμογή. Το manifest κάνει τη
+     σελίδα εγκαταστάσιμη (Chrome: ⋮ → «Εγκατάσταση εφαρμογής») σε κινητό και
+     laptop. Στο ένα αρχείο της μονάδας δεν υπάρχει διακομιστής να το σερβίρει,
+     οπότε ο builder το κόβει μαζί με το μπλοκ αυτό — ένας κρεμασμένος σύνδεσμος
+     manifest σε τοπικό αρχείο είναι σκουπίδι που δεν εξηγείται σε κανέναν. -->
+<link rel="manifest" href="manifest.webmanifest?v=20261018a">
+<meta name="theme-color" content="#0e1420">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<!-- hosted:end -->
 <script>
 /* Palette before first paint — no flash of the default theme on reload.
    Mirrors app.js (PALETTES / apply): same keys, same migration of the old
@@ -226,8 +235,8 @@
 <!-- advisor:start — ΣΥΜΒΟΥΛΟΣ (17/10/2026). The shell only; app/advisor.js
      writes the HTML and injects its own styles, so styles.css carries no
      advisor bytes. Excluded from the unit build with the tab above. -->
-<main class="adv-view hidden" id="view-advisor">
-  <section class="adv-main" id="adv-main"></section>
+<main class="sym-view hidden" id="view-advisor">
+  <section class="sym-main" id="sym-main"></section>
 </main>
 <!-- advisor:end -->
 
@@ -259,6 +268,6 @@
 <script src="schedboard.js?v=20260910a"></script>
 <script src="schedbridge.js?v=20260910a"></script>
 <script src="currency.js?v=20260905b"></script>
-<script src="advisor.js?v=20261018d"></script>
+<script src="advisor.js?v=20261018f"></script>
 </body>
 </html>

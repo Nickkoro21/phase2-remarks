@@ -3614,6 +3614,13 @@ def build_main_html(css: str, emblem_uri: str, guard_js: str, prepaint_js: str,
     html = sub1(r"[ \t]*<!-- advisor:start[\s\S]*?<!-- advisor:end -->\n", lambda m: "", html,
                 "advisor blocks (tab + main)", count=2)
 
+    # Το ίδιο, για ό,τι ανήκει ΜΟΝΟ στη φιλοξενούμενη εφαρμογή: το web app
+    # manifest και το εικονίδιο εγκατάστασης. Στο κλειστό δίκτυο δεν υπάρχει
+    # διακομιστής να τα σερβίρει — θα έμεναν κρεμασμένοι σύνδεσμοι μέσα σε ένα
+    # αρχείο που υποτίθεται ότι δεν ζητά ΤΙΠΟΤΑ από το δίκτυο.
+    html = sub1(r"[ \t]*<!-- hosted:start[\s\S]*?<!-- hosted:end -->\n", lambda m: "", html,
+                "hosted-only blocks (manifest + install icon)", count=1)
+
     # drop all external <script src> tags, then inline our chain before </body>
     # (12 tags: app · description · flowchart · schedval · schedstore · scheduler ·
     #  schedconsq · boardtrees · schedboard · schedbridge · currency · advisor.
@@ -3627,7 +3634,8 @@ def build_main_html(css: str, emblem_uri: str, guard_js: str, prepaint_js: str,
     # The residue tripwire: nothing of the advisor may be in the shell — not the
     # view, not the tab, not the script, not its Greek label, not its boot hook.
     # (Checked on the shell BEFORE the data bundle and scripts are spliced in.)
-    for needle in ('id="view-advisor"', 'id="tab-advisor"', "advisor.js", "Σύμβουλος", "advInit", "advisor:start"):
+    for needle in ('id="view-advisor"', 'id="tab-advisor"', "advisor.js", "Σύμβουλος", "advInit", "advisor:start",
+                   "manifest.webmanifest", "hosted:start"):
         if needle in html:
             fail(f"advisor residue in the unit build: {needle!r} survived assembly")
     html = sub1(r"</body>", lambda m: scripts + "\n</body>", html, "</body>")

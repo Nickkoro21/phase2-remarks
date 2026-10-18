@@ -1,7 +1,7 @@
 ---
 id: syllabus
 name: Syllabus
-model: claude-opus-5-5
+model: claude-sonnet-5-5
 effort: high
 corpus: context-syllabus.md
 max_turns: 20

@@ -226,6 +226,31 @@ def est_tokens(chars: int) -> int:
 
 
 DEFAULT_MODEL = "claude-opus-5-5"
+
+# ── Ο ΕΠΙΛΟΓΕΑΣ OPUS (18/10/2026) ───────────────────────────────────────────
+# Απόφανση ιδιοκτήτη, μετά το πρώτο λογαριασμό: ο board-director σε Opus (κρίνει
+# παραπομπές σε συμβούλιο — σπάνιο και σύνθετο), οι τρεις συνθέτες/αναζητητές σε
+# Sonnet, με ένα σήμα «OPUS» που ανάβει και σβήνει ανά agent. «Δεν χρειάζεται
+# κάποιο μήνυμα παραπάνω, θα το κρατήσουμε απλό.»
+#
+# Η ΣΕΛΙΔΑ ΔΕΝ ΟΝΟΜΑΖΕΙ ΜΟΝΤΕΛΟ, ΚΑΙ ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΣΗΜΕΙΟ. Στέλνει μόνο
+# `opus: true|false`. Αν δεχόμασταν όνομα μοντέλου από τον browser, μια σελίδα —
+# ή οποιοσδήποτε περάσει την Access — θα μπορούσε να ζητήσει ό,τι θέλει: το
+# Fable είναι $10/$50 ανά MTok, δυόμισι φορές το Opus. Ο ιδιοκτήτης δεν πληρώνει
+# ποτέ μοντέλο που δεν διάλεξε, και η λίστα έχει ΑΚΡΙΒΩΣ δύο εγγραφές.
+MODELS = {"opus": "claude-opus-5-5", "sonnet": "claude-sonnet-5-5"}
+
+
+def is_opus(model: str) -> bool:
+    return str(model or "").startswith("claude-opus")
+
+
+def pick_model(a: dict, req: dict) -> str:
+    """Το μοντέλο αυτού του αιτήματος: η επιλογή της σελίδας, αλλιώς του agent."""
+    want = req.get("opus")
+    if want is None:
+        return a["model"]
+    return MODELS["opus"] if bool(want) else MODELS["sonnet"]
 DEFAULT_EFFORT = "high"
 DEFAULT_MAX_TOKENS = 16000
 MAX_BODY_BYTES = 256 * 1024
@@ -529,6 +554,7 @@ def public_agent(a: dict) -> dict:
     chars = corpus_chars(a)
     return {
         "id": a["id"], "name": a["name"], "model": a["model"], "effort": a["effort"],
+        "opus": is_opus(a["model"]), "models": MODELS,
         "corpus": a["corpus"], "corpus_bytes": size, "corpus_chars": chars,
         "corpus_tokens_est": est_tokens(chars + len(a["body"]) + 3000) if chars is not None else None,
         "max_tokens": a["max_tokens"],
@@ -2382,6 +2408,8 @@ class Handler(BaseHTTPRequestHandler):
             return self._json(404, {"code": "unknown_agent", "error":
                 f"Άγνωστος agent «{req.get('agent')}». Διαθέσιμοι: "
                 f"{', '.join(x['id'] for x in list_agents()) or '(κανείς — λείπει ο φάκελος agents/)'}"})
+
+        a["model"] = pick_model(a, req)
 
         student = req.get("student")
         if student is not None and not isinstance(student, str):
