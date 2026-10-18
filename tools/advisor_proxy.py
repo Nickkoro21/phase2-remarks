@@ -2204,7 +2204,14 @@ class Handler(BaseHTTPRequestHandler):
         path, qs = u.path, parse_qs(u.query)
         q1 = lambda k: (qs.get(k) or [""])[0]
         if path == "/health":
-            return self._json(200, health())
+            # ΠΟΙΟΣ ΕΙΣΑΙ, ΚΑΤΑ ΤΗΝ CLOUDFLARE. Το `you` γεμίζει ΜΟΝΟ από το
+            # υπογεγραμμένο JWT (η _gate το έβγαλε από τα claims), ποτέ από
+            # κάτι που στέλνει η σελίδα. Τοπικά μένει κενό — εκεί ο άνθρωπος
+            # είναι ο ιδιοκτήτης στο πληκτρολόγιό του. Υπάρχει για να
+            # επαληθεύεται η ταυτότητα ΧΩΡΙΣ να γραφτεί γραμμή στον φάκελο.
+            h = health()
+            h["access"]["you"] = getattr(self, "access_email", "")
+            return self._json(200, h)
         if path == "/agents":
             return self._json(200, {"agents": list_agents()})
         if path == "/sessions":

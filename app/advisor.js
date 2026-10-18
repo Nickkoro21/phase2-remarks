@@ -404,7 +404,8 @@
     if (UI.offline || !h) return `${at} · ✕ Ο proxy στο ${PROXY} ΔΕΝ απαντά. Τρέξε: ${START_CMD}`;
     const ags = (h.agents || []).map((a) => `${a.id}${a.tools_offered && a.tools_offered.length ? " (" + a.tools_offered.join(", ") + ")" : ""}`).join(" · ");
     const ka = h.keepalive && h.keepalive.enabled ? "ναι" : "όχι";
-    return `${at} · ✓ proxy ζωντανός στο ${PROXY} · κλειδί ${h.key_present ? "✓ παρόν" : "✕ ΛΕΙΠΕΙ"} · φάκελος ${h.casefile && h.casefile.configured ? "✓ συνδεδεμένος" : "✕ όχι"} · keep-alive ${ka} · σήμερα ${h.today ? h.today.count : 0}/${h.caps ? h.caps.daily_cap : "?"} · agents: ${ags || "κανένας"}`;
+    const who = h.access && h.access.you ? ` · συνδεδεμένος ως ${h.access.you}` : "";
+    return `${at} · ✓ proxy ζωντανός στο ${PROXY}${who} · κλειδί ${h.key_present ? "✓ παρόν" : "✕ ΛΕΙΠΕΙ"} · φάκελος ${h.casefile && h.casefile.configured ? "✓ συνδεδεμένος" : "✕ όχι"} · keep-alive ${ka} · σήμερα ${h.today ? h.today.count : 0}/${h.caps ? h.caps.daily_cap : "?"} · agents: ${ags || "κανένας"}`;
   }
   function eventHTML(e) {
     if (e.type === "compaction") return `<div class="adv-event is-compaction">♻ Compaction #${e.n} στις ${esc(hhmm(e.at))}: το ιστορικό (${fmtK(e.chars_before)} χαρ.) έγινε δομημένη σύνοψη (${fmtK(e.chars_after)} χαρ.)${e.kept_pairs ? `, ${e.kept_pairs} ζεύγος αυτούσιο` : ""}. Οι παραπομπές και οι εγγραφές κρατήθηκαν.</div>`;
