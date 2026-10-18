@@ -425,6 +425,12 @@ WHITELIST = {
                    "ΠΔ 29/2020 (ΦΕΚ Α΄57) — ΑΚΑΤΕΡΓΑΣΤΟ κείμενο PDF"),
     "syllabus": (ROOT / "Phase_2_Syllabus_2025.pdf", False, True,
                  "Phase 2 Syllabus 2025 — ΑΚΑΤΕΡΓΑΣΤΟ κείμενο PDF"),
+    # `descriptions` (18/10/2026, απόφανση ιδιοκτήτη): ο συνθέτης παρατηρήσεων
+    # το χρειάζεται για να βρει ΠΟΙΟ ITEM. Όταν ο εκπαιδευτής δεν είναι σίγουρος
+    # πού ταξινομείται μια παρατήρηση — και εκτός Προσαρμογής συμβαίνει συχνά —
+    # κοιτάζει τι ΠΕΡΙΕΙΧΕ η έξοδος. Χωρίς αυτό, ο σύμβουλος μαντεύει item.
+    "descriptions": (ROOT / "data" / "descriptions.json", False, False,
+                     "η γραμματική των περιγραφών: τι περιέχει κάθε έξοδο ανά κατηγορία"),
     "criteria": (ROOT / "data" / "criteria", True, False, "κριτήρια ανά κατηγορία (JSON)"),
     "technique": (ROOT / "data" / "technique", True, False, "T-6A Techniques & Procedures (JSON)"),
     "mif": (ROOT / "data" / "mif", True, False, "πίνακες MIF (JSON)"),
