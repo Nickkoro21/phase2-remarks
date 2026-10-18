@@ -44,6 +44,35 @@ if (-not (Test-Path $py))   { throw "Δεν βρέθηκε η Python: $py" }
 if (-not (Test-Path $root)) { throw "Δεν βρέθηκε η ρίζα: $root" }
 New-Item -ItemType Directory -Force "$root\logs" | Out-Null
 
+# ΤΟ ΣΕΝΑΡΙΟ ΞΑΝΑΤΡΕΧΕΙ ΚΑΘΑΡΑ. Στην πρώτη δοκιμή (18/10) το δεύτερο τρέξιμο
+# έβγαλε «The specified service already exists», και στο πρώτο ο σύμβουλος δεν
+# ξεκίνησε: ο λογαριασμός μόλις είχε πάρει το δικαίωμα «Log on as a service»
+# και ο SCM δεν το είχε δει ακόμη. Και τα δύο λύνονται ξηλώνοντας την παλιά
+# υπηρεσία πρώτα, και με δεύτερη απόπειρα εκκίνησης.
+function Remove-IfExists($name) {
+    if (Get-Service $name -ErrorAction SilentlyContinue) {
+        Write-Host "  (υπάρχει ήδη - ξηλώνεται για καθαρή εγκατάσταση)" -ForegroundColor DarkGray
+        nssm stop $name confirm   2>$null | Out-Null
+        nssm remove $name confirm 2>$null | Out-Null
+        for ($i = 0; $i -lt 20 -and (Get-Service $name -ErrorAction SilentlyContinue); $i++) { Start-Sleep -Milliseconds 500 }
+    }
+}
+
+function Start-Robust($name) {
+    for ($i = 1; $i -le 3; $i++) {
+        try { Start-Service $name -ErrorAction Stop; return }
+        catch {
+            if ($i -eq 3) {
+                Write-Host "  Η $name δεν ξεκινησε: $($_.Exception.Message)" -ForegroundColor Red
+                Write-Host "  Δες: $root\logs\$name.err.log   ή τρέξε:  nssm edit $name" -ForegroundColor Red
+                return
+            }
+            Write-Host "  δεν ξεκίνησε ($i/3) - δεύτερη απόπειρα σε 3 δευτ..." -ForegroundColor DarkYellow
+            Start-Sleep -Seconds 3
+        }
+    }
+}
+
 function Set-Common($name) {
     nssm set $name AppDirectory      "$root"
     nssm set $name AppStdout         "$root\logs\$name.log"
@@ -58,6 +87,7 @@ function Set-Common($name) {
 
 # ── 1. Η ΕΦΑΡΜΟΓΗ — LocalSystem, τίποτα να της δώσεις ───────────────────────
 Write-Host "`n== fdms-app ==" -ForegroundColor Cyan
+Remove-IfExists fdms-app
 nssm install fdms-app "$py" "tools\serve_app.py"
 Set-Common fdms-app
 nssm set fdms-app Description "FDMS - allow-list static server on 127.0.0.1:8123"
@@ -69,6 +99,7 @@ Write-Host "Γράψε τον ως  $env:COMPUTERNAME\$env:USERNAME  (ή  .\$env
 $cred = Get-Credential -UserName "$env:COMPUTERNAME\$env:USERNAME" `
         -Message "Ο λογαριασμός με τον οποίο θα τρέχει ο σύμβουλος (χρειάζεται τις μεταβλητές περιβάλλοντος και τα πακέτα σου)"
 
+Remove-IfExists fdms-advisor
 nssm install fdms-advisor "$py" "tools\advisor_proxy.py"
 Set-Common fdms-advisor
 nssm set fdms-advisor Description "FDMS - advisor proxy on 127.0.0.1:8771 (needs the owner's env and user site-packages)"
@@ -76,8 +107,8 @@ nssm set fdms-advisor ObjectName $cred.UserName $cred.GetNetworkCredential().Pas
 
 # ── 3. Εκκίνηση ─────────────────────────────────────────────────────────────
 Write-Host "`n== εκκίνηση ==" -ForegroundColor Cyan
-Start-Service fdms-app
-Start-Service fdms-advisor
+Start-Robust fdms-app
+Start-Robust fdms-advisor
 Start-Sleep -Seconds 6
 Get-Service fdms-app, fdms-advisor | Select-Object Name, Status, StartType | Format-Table -AutoSize
 
