@@ -122,6 +122,11 @@
 .adv-msg { border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; font-size: 13.5px; line-height: 1.6; max-width: 92%; background: var(--panel); position: relative; }
 .adv-msg.is-user { align-self: flex-end; background: var(--accent-soft); border-color: rgba(var(--accent-rgb), 0.5); white-space: pre-wrap; }
 .adv-msg.is-assistant { align-self: flex-start; }
+.adv-tablewrap { overflow-x: auto; margin: 8px 0; -webkit-overflow-scrolling: touch; }
+.adv-table { border-collapse: collapse; font-size: 12.5px; min-width: 100%; }
+.adv-table th, .adv-table td { border: 1px solid var(--line); padding: 5px 9px; text-align: left; vertical-align: top; }
+.adv-table th { background: var(--bg-2); color: var(--text); font-weight: 600; white-space: nowrap; }
+.adv-table tbody tr:nth-child(even) { background: rgba(127,127,127,.06); }
 .adv-msg.is-system { align-self: stretch; max-width: none; border-left: 5px solid var(--hf); background: var(--panel-2); font-size: 13px; }
 .adv-msg.is-error { align-self: stretch; max-width: none; border-left: 5px solid var(--bad); background: var(--panel-2); }
 .adv-msg.is-notice { align-self: stretch; max-width: none; border-left: 5px solid var(--warn); background: var(--panel-2); font-size: 12.5px; }
@@ -224,12 +229,36 @@
       }
       const lines = chunk.split("\n");
       let para = [], list = null, quote = [];
+      /* ΟΙ ΠΙΝΑΚΕΣ ΕΙΝΑΙ Ο ΤΡΟΠΟΣ ΠΟΥ ΤΟ ΜΟΝΤΕΛΟ ΠΑΡΑΘΕΤΕΙ ΑΠΑΙΤΗΣΕΙΣ, και ο
+         renderer δεν τους ήξερε: κάθε γραμμή τους έπεφτε στην παράγραφο και
+         τυπωνόταν ωμή — «| # | Απαίτηση | Πηγή ||---|---|---||…». Το βρήκε ο
+         ιδιοκτήτης στο κινητό (18/10) και το είχε δει και στον υπολογιστή. */
+      const isSep = (l) => l.indexOf("|") >= 0 && /^[\s:|-]*-[\s:|-]*$/.test(l.trim());
+      const cells = (l) => l.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map((c) => c.trim());
+      const alignOf = (c) => (/^:-+:$/.test(c) ? ' style="text-align:center"' : /^-+:$/.test(c) ? ' style="text-align:right"' : "");
       const flushP = () => { if (para.length) { out.push(`<p>${inline(esc(para.join(" ")))}</p>`); para = []; } };
       const flushL = () => { if (list) { out.push(`<${list.tag}>${list.items.map((x) => `<li>${inline(esc(x))}</li>`).join("")}</${list.tag}>`); list = null; } };
       const flushQ = () => { if (quote.length) { out.push(`<blockquote class="adv-quote"><span class="adv-qlab">αυτολεξεί</span>${inline(esc(quote.join("\n")))}</blockquote>`); quote = []; } };
-      for (const raw of lines) {
+      for (let li = 0; li < lines.length; li++) {
+        const raw = lines[li];
         const line = raw.replace(/\s+$/, "");
         let m;
+        /* κεφαλίδα ΚΑΙ γραμμή διαχωρισμού. Χωρίς τη δεύτερη δεν είναι πίνακας —
+           μια πρόταση με κάθετο δεν πρέπει να γίνει table. */
+        if (line.indexOf("|") >= 0 && li + 1 < lines.length && isSep(lines[li + 1])) {
+          flushP(); flushL(); flushQ();
+          const head = cells(line), al = cells(lines[li + 1]).map(alignOf);
+          const rows = [];
+          li += 2;
+          while (li < lines.length && lines[li].trim() && lines[li].indexOf("|") >= 0) { rows.push(cells(lines[li])); li++; }
+          li--;
+          const th = head.map((c, k) => `<th${al[k] || ""}>${inline(esc(c))}</th>`).join("");
+          const tb = rows.map((r) => `<tr>${head.map((_, k) => `<td${al[k] || ""}>${inline(esc(r[k] == null ? "" : r[k]))}</td>`).join("")}</tr>`).join("");
+          /* Ο ΧΩΡΟΣ ΓΥΡΩ ΚΥΛΑΕΙ, ΟΧΙ Η ΣΕΛΙΔΑ: σε κινητό ένας πίνακας τεσσάρων
+             στηλών δεν χωρά, και χωρίς αυτό θα έσπρωχνε όλη τη σελίδα πλάγια. */
+          out.push(`<div class="adv-tablewrap"><table class="adv-table"><thead><tr>${th}</tr></thead><tbody>${tb}</tbody></table></div>`);
+          continue;
+        }
         if (!line.trim()) { flushP(); flushL(); flushQ(); continue; }
         if ((m = /^(#{1,4})\s+(.*)$/.exec(line))) { flushP(); flushL(); flushQ(); out.push(`<h4 class="adv-h">${inline(esc(m[2]))}</h4>`); continue; }
         if (/^(-{3,}|\*{3,}|_{3,})$/.test(line.trim())) { flushP(); flushL(); flushQ(); out.push("<hr>"); continue; }
@@ -597,10 +626,20 @@
     const rec = new S.api();
     rec.lang = "el-GR"; rec.continuous = true; rec.interimResults = true; rec.maxAlternatives = 1;
     S.rec = rec; S.on = true; S.interim = ""; S.err = "";
-    let finals = "";
     rec.onresult = (ev) => {
-      let interim = "";
-      for (let i = ev.resultIndex; i < ev.results.length; i++) {
+      /* ΤΟ ΣΦΑΛΜΑ ΤΗΣ ΕΠΑΝΑΛΗΨΗΣ (βρέθηκε από τον ιδιοκτήτη, 18/10, στο κινητό):
+         ο παλιός κώδικας ΣΥΣΣΩΡΕΥΕ — `finals += …` — ξεκινώντας από το
+         `ev.resultIndex`. Το Chrome του Android ξαναδίνει το ΙΔΙΟ τελικό
+         αποτέλεσμα σε διαδοχικά συμβάντα όσο αυτό μεγαλώνει, οπότε προστίθετο
+         ξανά και ξανά: «ποιες ποιες ποιες είναι ποιες είναι οι…».
+
+         ΔΕΝ ΜΠΑΙΝΕΙ ΦΙΛΤΡΟ ΠΟΥ ΣΒΗΝΕΙ ΕΠΑΝΑΛΗΨΕΙΣ — θα έτρωγε και τις αληθινές
+         («όχι όχι, άλλο εννοώ»). Αντ' αυτού ΞΑΝΑΧΤΙΖΕΤΑΙ ολόκληρο το κείμενο από
+         το μηδέν σε κάθε συμβάν: η `ev.results` κρατά όλη τη συνεδρία, άρα η
+         πράξη είναι ΙΔΕΜΠΟΤΗ — ό,τι κι αν ξαναδώσει η μηχανή, το αποτέλεσμα
+         είναι το ίδιο. Καμία κατάσταση δεν μπορεί να ξεσυγχρονιστεί. */
+      let finals = "", interim = "";
+      for (let i = 0; i < ev.results.length; i++) {
         const r = ev.results[i];
         if (r.isFinal) finals += (finals ? " " : "") + r[0].transcript.trim(); else interim += r[0].transcript;
       }
