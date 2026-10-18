@@ -95,6 +95,13 @@
 .adv-view { flex: 1; display: flex; flex-direction: column; padding: 14px 22px; min-height: 0; min-width: 0; }
 .adv-main { display: flex; flex-direction: column; gap: 12px; min-width: 0; max-width: 1100px; width: 100%; margin: 0 auto; }
 .adv-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.adv-authbar { position: sticky; top: 0; z-index: 60; display: flex; flex-wrap: wrap; align-items: center;
+  gap: 10px; padding: 10px 16px; background: var(--warn); color: #1a1205; font-size: 13.5px; font-weight: 600;
+  box-shadow: 0 2px 10px var(--shadow); }
+.adv-authbar button { font: inherit; font-weight: 700; cursor: pointer; border-radius: 8px; padding: 5px 14px;
+  border: 1px solid rgba(0,0,0,.45); background: rgba(255,255,255,.85); color: #1a1205; }
+.adv-authbar button:hover { background: #fff; }
+.adv-authbar .adv-auth-sp { flex: 1 1 auto; }
 .adv-bar .spacer { flex: 1 1 auto; }
 .adv-agent { --tk: var(--accent); --tk-rgb: var(--accent-rgb); }
 .adv-status { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
@@ -246,9 +253,18 @@
      ════════════════════════════════════════════════════════════════════════ */
   function jfetch(path, opts) {
     return fetch(PROXY + path, Object.assign({ cache: "no-store" }, opts || {})).then((r) => r.json().then((j) => {
-      if (!r.ok) { const e = new Error(j.error || r.statusText); e.code = j.code; e.status = r.status; throw e; }
+      if (!r.ok) {
+        /* 302 προς τη φόρμα της Access φτάνει εδώ ως 401/403 ή ως σφάλμα
+           δικτύου (cross-origin ανακατεύθυνση που κόβεται από το CORS). */
+        if (r.status === 401 || r.status === 403) Access.check();
+        const e = new Error(j.error || r.statusText); e.code = j.code; e.status = r.status; throw e;
+      }
       return j;
-    }));
+    }, () => {                                   // απάντηση που ΔΕΝ είναι JSON
+      Access.check();
+      const e = new Error("Η απάντηση δεν ήταν JSON — πιθανή λήξη της συνεδρίας.");
+      e.status = r.status; throw e;
+    })).catch((e) => { if (e instanceof TypeError) Access.check(); throw e; });
   }
   const jpost = (path, body) => jfetch(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body || {}) });
 
@@ -702,10 +718,100 @@
     if (typeof E.subscribe === "function") E.subscribe((open) => applyLock(!!open));
   })();
 
+  /* ════════════════════════════════════════════════════════════════════════
+     § 9  Η ΣΥΝΕΔΡΙΑ ΤΗΣ CLOUDFLARE ACCESS — ΤΟ ΚΟΥΜΠΙ «ΣΥΝΔΕΣΗ»
+     ════════════════════════════════════════════════════════════════════════
+     ΤΟ ΠΡΟΒΛΗΜΑ, ΟΠΩΣ ΤΟ ΕΖΗΣΕ Ο ΙΔΙΟΚΤΗΤΗΣ ΚΑΙ ΣΕ ΑΛΛΕΣ ΕΦΑΡΜΟΓΕΣ. Μετά τις
+     12 ώρες η συνεδρία λήγει. Η σελίδα είναι όμως ΗΔΗ ανοιχτή: δεν γίνεται
+     πλοήγηση εγγράφου, άρα η Access δεν προλαβαίνει να δείξει τη φόρμα της.
+     Τα αιτήματα απλώς αρχίζουν να αποτυγχάνουν — και μια ανανέωση καταλήγει
+     καμιά φορά στη σελίδα «success logout», από την οποία δεν φαίνεται δρόμος
+     πίσω. Η εφαρμογή μοιάζει χαλασμένη ενώ απλώς θέλει σύνδεση.
+
+     Η ΛΥΣΗ ΕΙΝΑΙ ΜΙΑ ΠΛΟΗΓΗΣΗ ΕΓΓΡΑΦΟΥ. Μόνο αυτή την περνά η Access από τη
+     ροή της. Γι' αυτό το κουμπί δεν κάνει fetch: αλλάζει `location`.
+
+     ΔΥΟ ΚΟΥΜΠΙΑ, ΓΙΑΤΙ ΔΥΟ ΕΙΝΑΙ ΟΙ ΚΑΤΑΣΤΑΣΕΙΣ. «Σύνδεση» για τη λήξη.
+     «Καθάρισε & σύνδεση» για το κολλημένο cookie — σβήνει τη συνεδρία ΜΕΣΩ
+     fetch (ώστε να ΜΗΝ προσγειωθείς στη σελίδα logout, που είναι ακριβώς η
+     παγίδα) και αμέσως μετά πλοηγεί.
+
+     ΤΟ 404 ΔΕΝ ΕΙΝΑΙ ΛΗΞΗ. Σε origin χωρίς Access — π.χ. το GitHub Pages — το
+     `/cdn-cgi/access/get-identity` απαντά 404. Αν το μετρούσαμε ως νεκρή
+     συνεδρία, η μπάρα θα εμφανιζόταν σε κάθε δημόσιο επισκέπτη, ζητώντας του
+     να συνδεθεί κάπου που δεν υπάρχει. Μόνο 401/403 ή αποτυχία δικτύου
+     μετρούν. */
+  const Access = (() => {
+    const ST = { bar: null, busy: false, supported: null };
+
+    /* 200 → ζωντανή · 404 → δεν υπάρχει Access εδώ · άλλο/σφάλμα → νεκρή */
+    function probe() {
+      return fetch("/cdn-cgi/access/get-identity", { cache: "no-store", credentials: "include" })
+        .then((r) => (r.ok ? "alive" : (r.status === 404 ? "absent" : "dead")))
+        .catch(() => "dead");
+    }
+
+    function hide() { if (ST.bar) { ST.bar.remove(); ST.bar = null; } }
+
+    function show() {
+      if (ST.bar) return;
+      /* ΤΟ CSS ΜΠΑΙΝΕΙ ΕΔΩ, ΟΧΙ ΣΤΟ advInit. Βρέθηκε στη δοκιμή: το
+         `ensureStyle()` τρέχει μόνο όταν ανοίξει η καρτέλα του συμβούλου, ενώ
+         αυτή η μπάρα αφορά ΟΛΗ την εφαρμογή — πίσω από την Access είναι κάθε
+         καρτέλα. Χωρίς αυτή τη γραμμή, όποιος κάθεται στο Remarks θα έβλεπε
+         μια άστυλη γραμμή κειμένου αντί για ειδοποίηση. */
+      ensureStyle();
+      const bar = document.createElement("div");
+      bar.className = "adv-authbar";
+      bar.setAttribute("role", "alert");
+      bar.innerHTML = `<span>🔒 Η συνεδρία έληξε — η Cloudflare Access ζητά νέα σύνδεση.</span>
+        <span class="adv-auth-sp"></span>
+        <button type="button" id="adv-login" title="Πλοηγεί στη σελίδα σύνδεσης της Access και επιστρέφει εδώ">Σύνδεση</button>
+        <button type="button" id="adv-relogin" title="Σβήνει πρώτα τη συνεδρία — για όταν η σύνδεση κολλάει">Καθάρισε &amp; σύνδεση</button>`;
+      document.body.insertBefore(bar, document.body.firstChild);
+      ST.bar = bar;
+      $("adv-login").addEventListener("click", () => go());
+      $("adv-relogin").addEventListener("click", () => {
+        fetch("/cdn-cgi/access/logout", { cache: "no-store", credentials: "include" })
+          .catch(() => {})
+          .then(() => go());
+      });
+    }
+
+    function go() {
+      /* cache-buster: η ανανέωση μιας κρυφής σελίδας δεν ξαναρωτά την Access */
+      location.href = location.origin + "/app/?r=" + Date.now();
+    }
+
+    function check() {
+      if (LOCAL || ST.busy || ST.supported === "absent") return Promise.resolve("alive");
+      ST.busy = true;
+      return probe().then((v) => {
+        ST.busy = false;
+        ST.supported = v === "absent" ? "absent" : "present";
+        if (v === "dead") show(); else hide();
+        return v;
+      });
+    }
+
+    if (!LOCAL) {
+      const start = () => {
+        check();
+        setInterval(check, 5 * 60 * 1000);
+        /* Η ΠΙΟ ΣΥΧΝΗ ΣΤΙΓΜΗ ΤΗΣ ΛΗΞΗΣ: ο ιδιοκτήτης ξαναπιάνει το κινητό μετά
+           από ώρες. Ο έλεγχος στην επαναφορά της καρτέλας τον προλαβαίνει. */
+        document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+      };
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+      else start();
+    }
+    return { check: check, show: show };
+  })();
+
   window.advInit = function () {
     const E = window.SchedEdit;
     if (!E || typeof E.on !== "function" || !E.on()) { applyLock(false); return; }   // belt and braces
     advInit();
   };
-  window.Advisor = { md: md, ui: UI, PROXY: PROXY, diagLine: diagLine, _applyLock: applyLock };
+  window.Advisor = { md: md, ui: UI, PROXY: PROXY, LOCAL: LOCAL, access: Access, diagLine: diagLine, _applyLock: applyLock };
 })();
