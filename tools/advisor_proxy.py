@@ -171,6 +171,7 @@ ENDPOINTS (CORS μόνο για http://localhost:*, http://127.0.0.1:* και fi
 from __future__ import annotations
 
 import argparse
+import base64
 import datetime as dt
 import hashlib
 import json
@@ -229,6 +230,135 @@ DEFAULT_EFFORT = "high"
 DEFAULT_MAX_TOKENS = 16000
 MAX_BODY_BYTES = 256 * 1024
 ORIGIN_OK = re.compile(r"^http://(localhost|127\.0\.0\.1)(:\d+)?$")
+
+# ════════════════════════════════════════════════════════════════════════════
+# CLOUDFLARE ACCESS — Η ΠΥΛΗ ΟΤΑΝ Ο ΣΥΜΒΟΥΛΟΣ ΒΓΑΙΝΕΙ ΑΠΟ ΤΟ ΜΗΧΑΝΗΜΑ
+# ════════════════════════════════════════════════════════════════════════════
+# ΤΟ ΠΡΟΒΛΗΜΑ. Μέχρι σήμερα ο proxy δεν είχε ΚΑΜΙΑ αυθεντικοποίηση, και δεν
+# χρειαζόταν: δενόταν στο loopback, άρα η μόνη διαδρομή προς αυτόν ήταν το
+# πληκτρολόγιο του ιδιοκτήτη. Ο άνθρωπος ήταν δεδομένος ΑΠΟ ΤΗΝ ΑΡΧΙΤΕΚΤΟΝΙΚΗ.
+# Μόλις μπει πίσω από tunnel, αυτή η εγγύηση παύει — και πίσω της κάθονται το
+# κλειδί του API και ο φάκελος κρίσεων μαθητών.
+#
+# ΤΟ CORS ΔΕΝ ΕΙΝΑΙ ΦΥΛΑΚΑΣ: το επιβάλλει ο browser, όχι ο server· ένα curl το
+# αγνοεί. Ούτε η Access από μόνη της αρκεί: ΜΙΑ λάθος σειρά στο ingress και η
+# πόρτα είναι ορθάνοιχτη — το γράφει και ο οδηγός του ιδιοκτήτη. Γι' αυτό ο
+# έλεγχος γίνεται ΕΔΩ, στον ίδιο τον proxy.
+#
+# Ο ΚΑΝΟΝΑΣ — ΤΟ ΠΡΟΘΕΜΑ ΛΕΕΙ ΑΠΟ ΠΟΥ ΗΡΘΕ. Ο κανόνας ingress στέλνει στον
+# proxy ΜΟΝΟ ό,τι ταιριάζει στο /advisor-proxy/* · όλα τα άλλα πάνε στον server
+# της εφαρμογής. Άρα ό,τι φτάνει ΜΕ το πρόθεμα ήρθε από το tunnel και απαιτεί
+# έγκυρο JWT· ό,τι φτάνει ΧΩΡΙΣ αυτό ήρθε από το ίδιο το μηχάνημα, όπου ο
+# proxy είναι ήδη δεμένος μόνο στο loopback. Ένας επιτιθέμενος δεν μπορεί να
+# «βγάλει» το πρόθεμα: χωρίς αυτό ο κανόνας ingress δεν ταιριάζει καν.
+#
+# ΑΠΟΤΥΓΧΑΝΕΙ ΚΛΕΙΣΤΑ. Πρόθεμα χωρίς ρυθμισμένη Access → 503, όχι «πέρνα».
+#
+# ΔΥΟ ΜΕΤΑΒΛΗΤΕΣ ΠΕΡΙΒΑΛΛΟΝΤΟΣ, τις ορίζει ο ιδιοκτήτης, δεν περνούν ποτέ από
+# εδώ και δεν τυπώνονται:
+#     FDMS_ACCESS_TEAM   το όνομα του team (π.χ. «pelops») — ΟΧΙ μυστικό
+#     FDMS_ACCESS_AUD    το AUD tag ΤΗΣ ΣΥΓΚΕΚΡΙΜΕΝΗΣ εφαρμογής Access
+# Ο έλεγχος του `aud` είναι ο λόγος που ΑΛΛΗ εφαρμογή του ίδιου team δεν
+# φτάνει εδώ με το δικό της token.
+ACCESS_TEAM = os.environ.get("FDMS_ACCESS_TEAM", "").strip()
+ACCESS_AUD = os.environ.get("FDMS_ACCESS_AUD", "").strip()
+BASE_PATH = "/" + os.environ.get("FDMS_ADVISOR_BASE_PATH", "advisor-proxy").strip().strip("/")
+ACCESS_SKEW_S = 60
+ACCESS_JWKS_TTL_S = 3600
+_JWKS: dict = {"at": 0.0, "keys": {}}
+_JWKS_LOCK = threading.Lock()
+
+
+def access_configured() -> bool:
+    return bool(ACCESS_TEAM and ACCESS_AUD)
+
+
+def access_issuer() -> str:
+    return f"https://{ACCESS_TEAM}.cloudflareaccess.com"
+
+
+def _b64u(seg: str) -> bytes:
+    return base64.urlsafe_b64decode(seg + "=" * (-len(seg) % 4))
+
+
+def _jwks(force: bool = False) -> dict:
+    now = time.time()
+    if not force:
+        with _JWKS_LOCK:
+            if _JWKS["keys"] and now - _JWKS["at"] < ACCESS_JWKS_TTL_S:
+                return dict(_JWKS["keys"])
+    import urllib.request
+    url = f"{access_issuer()}/cdn-cgi/access/certs"
+    with urllib.request.urlopen(url, timeout=10) as r:
+        doc = json.loads(r.read().decode("utf-8"))
+    keys = {k["kid"]: k for k in doc.get("keys", []) if k.get("kid")}
+    with _JWKS_LOCK:
+        _JWKS["keys"], _JWKS["at"] = keys, now
+    return dict(keys)
+
+
+def verify_access(token: str) -> dict:
+    """Επιστρέφει τα claims ή πετά ValueError. Ποτέ «μισό ναι».
+
+    Η υπογραφή ελέγχεται με τη βιβλιοθήκη `cryptography` — RSA PKCS#1 v1.5 με
+    SHA-256, όπως ορίζει το RS256. ΔΕΝ γράφουμε δική μας κρυπτογραφία, και αν
+    η βιβλιοθήκη λείπει το αίτημα ΑΠΟΡΡΙΠΤΕΤΑΙ: ένας έλεγχος που δεν μπορεί να
+    τρέξει δεν είναι έλεγχος που πέρασε.
+    """
+    if not access_configured():
+        raise ValueError("η Access δεν είναι ρυθμισμένη")
+    parts = (token or "").split(".")
+    if len(parts) != 3:
+        raise ValueError("το token δεν έχει τρία μέρη")
+    h_s, p_s, sig_s = parts
+    try:
+        head = json.loads(_b64u(h_s))
+        claims = json.loads(_b64u(p_s))
+        sig = _b64u(sig_s)
+    except Exception as e:
+        raise ValueError(f"το token δεν αποκωδικοποιείται ({type(e).__name__})")
+    if head.get("alg") != "RS256":
+        raise ValueError(f"μη αποδεκτό alg «{head.get('alg')}»")
+    kid = head.get("kid")
+    if not kid:
+        raise ValueError("λείπει το kid")
+
+    try:
+        from cryptography.hazmat.primitives import hashes
+        from cryptography.hazmat.primitives.asymmetric import padding, rsa
+        from cryptography.exceptions import InvalidSignature
+    except ImportError:
+        raise ValueError("λείπει η βιβλιοθήκη `cryptography` — ο έλεγχος δεν μπορεί να τρέξει")
+
+    keys = _jwks()
+    jwk = keys.get(kid)
+    if jwk is None:                       # περιστροφή κλειδιού: ένα refresh, όχι βρόχος
+        jwk = _jwks(force=True).get(kid)
+    if jwk is None:
+        raise ValueError("άγνωστο kid — δεν ανήκει σε αυτό το team")
+
+    n = int.from_bytes(_b64u(jwk["n"]), "big")
+    e = int.from_bytes(_b64u(jwk["e"]), "big")
+    pub = rsa.RSAPublicNumbers(e, n).public_key()
+    try:
+        pub.verify(sig, f"{h_s}.{p_s}".encode("ascii"), padding.PKCS1v15(), hashes.SHA256())
+    except InvalidSignature:
+        raise ValueError("η υπογραφή δεν επαληθεύεται")
+
+    now = time.time()
+    if str(claims.get("iss") or "") != access_issuer():
+        raise ValueError("λάθος εκδότης")
+    aud = claims.get("aud")
+    aud = [aud] if isinstance(aud, str) else list(aud or [])
+    if ACCESS_AUD not in aud:
+        raise ValueError("το token δεν προορίζεται για αυτή την εφαρμογή")
+    if float(claims.get("exp") or 0) < now - ACCESS_SKEW_S:
+        raise ValueError("το token έχει λήξει")
+    nbf = claims.get("nbf") or claims.get("iat")
+    if nbf is not None and float(nbf) > now + ACCESS_SKEW_S:
+        raise ValueError("το token δεν ισχύει ακόμη")
+    return claims
+
 
 # ── Η WHITELIST ΤΟΥ search_sources ───────────────────────────────────────────
 # id → (διαδρομή, είναι φάκελος?, είναι ακατέργαστο PDF?, περιγραφή)
@@ -1084,13 +1214,15 @@ def casefile_cases_text(student_id: str, limit: int = 40) -> tuple[str, str]:
 class ToolBudget:
     """Τα φρένα ΟΛΩΝ των εργαλείων ΑΝΑ ΑΠΑΝΤΗΣΗ, και το ημερολόγιο κλήσεων."""
 
-    def __init__(self, emit=None, agent_id: str = "agent", session_id: str | None = None):
+    def __init__(self, emit=None, agent_id: str = "agent", session_id: str | None = None,
+                 human: str = ""):
         self.calls = 0            # search_sources
         self.chars = 0
         self.cf_calls = 0         # casefile_* (όλα)
         self.cf_writes = 0        # προεπισκοπήσεις εγγραφής (add/update)
         self.agent_id = agent_id
         self.session_id = session_id
+        self.human = (human or "").strip()
         self.last_pending = None
         self.log: list[dict] = []
         self.emit = emit
@@ -1360,7 +1492,11 @@ class ToolBudget:
         budget = self
         max_calls = int(CFG["casefile_max_calls"])
         max_writes = int(CFG["casefile_max_writes"])
-        actor = f"agent:{self.agent_id}"
+        # Ο ΔΡΑΣΤΗΣ ΚΟΥΒΑΛΑ ΚΑΙ ΤΟΝ ΑΝΘΡΩΠΟ. Τοπικά μένει «agent:<id>», όπως
+        # πάντα: ο άνθρωπος είναι ο ιδιοκτήτης στο πληκτρολόγιό του. Μέσω
+        # Cloudflare Access προστίθεται το email ΠΟΥ ΥΠΕΓΡΑΨΕ Η CLOUDFLARE —
+        # δεν το πληκτρολογεί χρήστης και δεν το στέλνει ο browser μόνος του.
+        actor = f"agent:{self.agent_id}" + (f" · {self.human}" if self.human else "")
 
         def gate(tool: str, write: bool, summary: str) -> None:
             budget.cf_calls += 1
@@ -2004,6 +2140,34 @@ class Handler(BaseHTTPRequestHandler):
             self.send_header("Access-Control-Expose-Headers", "Content-Disposition")   # F4: το όνομα αρχείου της λήψης
             self.send_header("Access-Control-Max-Age", "600")
 
+    def _gate(self) -> bool:
+        """True = συνέχισε κανονικά. False = η απάντηση έχει ήδη σταλεί.
+
+        Δες το μπλοκ «CLOUDFLARE ACCESS» στην κορυφή: το πρόθεμα της διαδρομής
+        λέει από πού ήρθε το αίτημα. Με πρόθεμα → tunnel → απαιτείται JWT. Χωρίς
+        → από το ίδιο το μηχάνημα, όπου ο proxy είναι δεμένος μόνο στο loopback.
+        """
+        self.access_email = ""
+        raw = self.path or "/"
+        bare = raw.split("?", 1)[0]
+        if not (bare == BASE_PATH or bare.startswith(BASE_PATH + "/")):
+            return True
+        self.path = raw[len(BASE_PATH):] or "/"
+        if not access_configured():
+            log("ΑΡΝΗΣΗ: αίτημα με πρόθεμα tunnel αλλά η Access δεν είναι ρυθμισμένη.")
+            self._json(503, {"code": "access_unconfigured",
+                             "error": "Ο proxy δέχεται αιτήματα από το tunnel μόνο με ρυθμισμένη Access "
+                                      "(FDMS_ACCESS_TEAM, FDMS_ACCESS_AUD)."})
+            return False
+        try:
+            claims = verify_access(self.headers.get("Cf-Access-Jwt-Assertion", ""))
+        except Exception as e:
+            log(f"ΑΡΝΗΣΗ Access: {e}")
+            self._json(403, {"code": "access_denied", "error": f"Η Cloudflare Access δεν επαλήθευσε: {e}"})
+            return False
+        self.access_email = str(claims.get("email") or "").strip()
+        return True
+
     def _json(self, code: int, obj: dict) -> None:
         body = json.dumps(obj, ensure_ascii=False).encode("utf-8")
         self.send_response(code)
@@ -2025,12 +2189,16 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(body)
 
     def do_OPTIONS(self):
+        if not self._gate():
+            return
         self.send_response(204)
         self._cors()
         self.send_header("Content-Length", "0")
         self.end_headers()
 
     def do_GET(self):
+        if not self._gate():
+            return
         from urllib.parse import parse_qs, urlparse
         u = urlparse(self.path)
         path, qs = u.path, parse_qs(u.query)
@@ -2081,6 +2249,8 @@ class Handler(BaseHTTPRequestHandler):
             return None
 
     def do_POST(self):
+        if not self._gate():
+            return
         path = self.path.split("?", 1)[0]
         req = self._body()
         if req is None:
@@ -2278,7 +2448,8 @@ class Handler(BaseHTTPRequestHandler):
               "today": state["count"], "daily_cap": int(CFG["daily_cap"]), "model": a["model"],
               "tools": tools, "casefile": casefile_configured(),
               "session": session["id"] if session else None})
-        budget = ToolBudget(emit, a["id"], session["id"] if session else None) if tools else None
+        budget = ToolBudget(emit, a["id"], session["id"] if session else None,
+                            human=getattr(self, "access_email", "")) if tools else None
         try:
             import anthropic
             try:
@@ -2409,6 +2580,9 @@ def health() -> dict:
                  "tool_total_chars": int(CFG["tool_total_chars"]),
                  "casefile_max_calls": int(CFG["casefile_max_calls"]),
                  "casefile_max_writes": int(CFG["casefile_max_writes"])},
+        # ΜΟΝΟ «ρυθμισμένο ή όχι» — ούτε το team, ούτε το AUD, ούτε κανένα email.
+        "access": {"configured": access_configured(), "base_path": BASE_PATH,
+                   "env": ["FDMS_ACCESS_TEAM", "FDMS_ACCESS_AUD"]},
         # ΜΟΝΟ «ρυθμισμένο ή όχι» — ούτε το URL ούτε το κλειδί βγαίνουν ποτέ από εδώ.
         "casefile": {"configured": casefile_configured(), "tools": list(CASEFILE_TOOLS),
                      "env": ["FDMS_CASEFILE_URL", "FDMS_CASEFILE_KEY"],
@@ -2655,6 +2829,12 @@ def main() -> int:
     log(f"Σύμβουλος FDMS — proxy στο http://127.0.0.1:{CFG['port']}  (μόνο loopback)")
     log(f"ANTHROPIC_API_KEY στο περιβάλλον: {key}")
     log(f"agents: {[x['id'] for x in list_agents()] or '(κανείς)'}  · corpus dir: {corpus_dir()}")
+    if access_configured():
+        log(f"Cloudflare Access: ΝΑΙ — αιτήματα στο {BASE_PATH}/* απαιτούν έγκυρο JWT "
+            f"(team «{ACCESS_TEAM}», έλεγχος aud) · ο δράστης στο log παίρνει το email που υπέγραψε η Cloudflare")
+    else:
+        log(f"Cloudflare Access: ΟΧΙ — μόνο τοπική χρήση. Αίτημα στο {BASE_PATH}/* θα απαντήσει 503 "
+            f"(όρισε FDMS_ACCESS_TEAM και FDMS_ACCESS_AUD για να ανοίξει ο δρόμος του tunnel).")
     log(f"φρένα: max_turns={CFG['max_turns']} daily_cap={CFG['daily_cap']} "
         f"max_corpus_bytes={CFG['max_corpus_bytes']:,} · tool: {CFG['tool_max_calls']} κλήσεις, "
         f"{CFG['tool_max_chars']}/{CFG['tool_total_chars']} chars · cache_ttl={CFG['cache_ttl']}")

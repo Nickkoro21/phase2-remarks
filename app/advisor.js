@@ -47,11 +47,28 @@
  * token, action: write|cancel}.
  */
 (() => {
-  /* The proxy's default address. If the owner has to move the port (something
-     else on 8771), the proxy says so at startup and the page reads the override
-     from localStorage — a per-viewer convenience, never student data. */
+  /* WHERE THE PROXY IS, AND WHY IT DEPENDS ON WHERE THE PAGE IS.
+
+     TWO HOMES, TWO ANSWERS.
+       · Served from localhost — the owner at his own machine. The proxy is at
+         127.0.0.1:8771, a separate origin, and the proxy's CORS list allows it.
+         The port is overridable from localStorage: if 8771 is taken, the proxy
+         says so at startup. A per-viewer convenience, never student data.
+       · Served from anywhere else — through the Cloudflare tunnel. Then the
+         proxy is NOT a separate address: it sits behind the SAME hostname at
+         /advisor-proxy, routed there by one ingress rule. Same origin means NO
+         CORS and NO mixed content, and the proxy keeps binding to loopback —
+         cloudflared is what reaches it, from inside the machine.
+
+     An absolute http:// address would be wrong in the second case twice over:
+     an https page may not fetch http, and 127.0.0.1 on a PHONE is the phone. */
+  const BASE_PATH = "/advisor-proxy";
+  const LOCAL = /^(localhost|127\.0\.0\.1|\[::1\]|::1)$/.test(location.hostname);
   const PROXY_DEFAULT = "http://127.0.0.1:8771";
-  const PROXY = (() => { try { const v = localStorage.getItem("p2r-advisor-proxy"); return v && /^http:\/\/(127\.0\.0\.1|localhost):\d+$/.test(v) ? v : PROXY_DEFAULT; } catch (e) { return PROXY_DEFAULT; } })();
+  const PROXY = (() => {
+    if (!LOCAL) return location.origin + BASE_PATH;
+    try { const v = localStorage.getItem("p2r-advisor-proxy"); return v && /^http:\/\/(127\.0\.0\.1|localhost):\d+$/.test(v) ? v : PROXY_DEFAULT; } catch (e) { return PROXY_DEFAULT; }
+  })();
   const START_CMD = "python tools/advisor_proxy.py";
   const ESC_MAP = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ESC_MAP[c]);
@@ -285,7 +302,7 @@
       <span class="badge" title="Prompt cache TTL">cache ${h.caps ? esc(h.caps.cache_ttl) : "—"}</span>` : "";
     const notice = UI.offline ? `
       <div class="adv-notice" role="alert">
-        <b>Ο τοπικός σύμβουλος δεν τρέχει.</b> Η καρτέλα αυτή χρειάζεται τον proxy στο <code>${esc(PROXY)}</code>,
+        <b>Ο σύμβουλος δεν απαντά.</b> ${LOCAL ? "" : "Αυτή η διεύθυνση δεν δρομολογεί τον σύμβουλο — άνοιξε την εφαρμογή από τη δική σου διεύθυνση (το tunnel ή το localhost). "}Η καρτέλα χρειάζεται τον proxy στο <code>${esc(PROXY)}</code>,
         που κρατά το κλειδί του API έξω από τη σελίδα. Άνοιξε ένα τερματικό στο <code>D:\\FDMS</code>, όρισε την
         <code>ANTHROPIC_API_KEY</code> και τρέξε:<br>
         <span class="adv-cmd">${esc(START_CMD)}</span><br>
