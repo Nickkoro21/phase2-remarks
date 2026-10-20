@@ -4,7 +4,7 @@
  *
  * WHAT IT IS. A top-level view (tab «Σύμβουλος») with an agent picker, the
  * recent sessions of that agent, a transcript, a question box, send, and a 🎤
- * push-to-talk button. It talks ONLY to the local proxy
+ * microphone SWITCH (press to start, press again to stop — §5). It talks ONLY to the local proxy
  * (tools/advisor_proxy.py, 127.0.0.1:8771) — the API key lives there, never
  * here. The proxy holds the corpus, the agent prompt, the cost brakes, the
  * search whitelist, the case-file tools AND the sessions; this file renders.
@@ -84,7 +84,13 @@
   const UI = {
     host: null, booted: false, health: null, healthAt: 0, offline: false,
     agent: null, sessions: [], session: null, busy: false, abort: null, pending: null, errors: [], draft: null,
-    turnMax: 20, today: null, speech: { api: null, rec: null, on: false, interim: "", err: "" },
+    turnMax: 20, today: null,
+    /* ΤΟ ΜΙΚΡΟΦΩΝΟ (§5). `serial` είναι το κουπόνι: κάθε μηχανή αναγνώρισης
+       παίρνει έναν αριθμό και τα handlers της σιωπούν μόλις πάψει να είναι ο
+       τρέχων. Χωρίς αυτό, ο κύκλος πάτα-άσε-ξαναπάτα σε κινητό αφήνει ΔΥΟ
+       μηχανές ζωντανές και γράφουν και οι δύο στο ίδιο πλαίσιο. */
+    speech: { api: null, rec: null, on: false, interim: "", err: "", serial: 0,
+              base: "", skip: "", said: "", prev: null, startedAt: 0, lastAt: 0, timer: null, trace: [] },
   };
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -176,11 +182,12 @@
 #sym-student { min-height: 44px; font-size: 12.5px; }
 #sym-q { min-height: 72px; }
 .sym-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
-.sym-mic { font-size: 18px; line-height: 1; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: transparent; cursor: pointer; color: var(--text); font-family: inherit; user-select: none; -webkit-user-select: none; touch-action: none; }
+.sym-mic { font-size: 18px; line-height: 1; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: transparent; cursor: pointer; color: var(--text); font-family: inherit; user-select: none; -webkit-user-select: none; touch-action: manipulation; }
 .sym-mic.on { border-color: var(--bad); background: rgba(var(--bad-rgb), 0.18); animation: sym-pulse 1.1s ease-in-out infinite; }
 @keyframes sym-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(var(--bad-rgb), 0.5); } 50% { box-shadow: 0 0 0 8px rgba(var(--bad-rgb), 0); } }
 .sym-speech-note { font-size: 11.5px; color: var(--muted); line-height: 1.4; flex: 1 1 260px; }
 .sym-interim { font-size: 12px; color: var(--accent); font-style: italic; min-height: 1.2em; }
+.sym-interim .live { color: var(--bad); font-style: normal; font-weight: 700; font-family: Consolas, monospace; }
 .sym-send { background: var(--accent); color: var(--on-accent); border: 1px solid var(--accent); border-radius: 999px; padding: 7px 18px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
 .sym-send:disabled { opacity: 0.45; cursor: default; }
 .sym-stop { color: var(--bad); border-color: var(--bad); }
@@ -423,11 +430,12 @@
         <label class="lbl" for="sym-student" style="margin:0">Πλαίσιο περίπτωσης (προαιρετικό) — μόνο ό,τι γράφεις εσύ ταξιδεύει· δένει με το πρώτο μήνυμα της συζήτησης</label>
         <textarea id="sym-student" ${ctxLocked ? "disabled title='Κλειδώνει μετά το πρώτο μήνυμα — Νέα για να αλλάξει'" : ""} placeholder="π.χ. Προσαρμογή, 8η έξοδος του σταδίου, C4790 Αξιολόγηση, είχε ήδη Δοκιμή Προόδου με ΑΕ 62%">${esc(ctxVal)}</textarea>
         <label class="lbl" for="sym-q" style="margin:0">Ερώτηση <span class="sym-turn">γύρος ${Math.min(turns + 1, UI.turnMax)}/${UI.turnMax}</span></label>
-        <textarea id="sym-q" placeholder="Γράψε ή κράτα πατημένο το 🎤 και μίλα… (Ctrl+Enter στέλνει)" ${UI.busy ? "disabled" : ""}></textarea>
+        <textarea id="sym-q" placeholder="Γράψε, ή πάτα 🎤 και μίλα — ξαναπάτα για τέλος… (Ctrl+Enter στέλνει)" ${UI.busy ? "disabled" : ""}></textarea>
         <div class="sym-interim" id="sym-interim">${esc(UI.speech.interim || UI.speech.err)}</div>
         <div class="sym-row">
-          ${speechOK ? `<button type="button" class="sym-mic${UI.speech.on ? " on" : ""}" id="sym-mic" aria-pressed="${UI.speech.on}" title="Κράτα πατημένο και μίλα (el-GR)">🎤</button>
-          <span class="sym-speech-note">Η ομιλία αποστέλλεται στους διακομιστές του κατασκευαστή του browser για αναγνώριση (el-GR). Το κείμενο μπαίνει στο κουτί — το διορθώνεις πριν το στείλεις.</span>` : `<span class="sym-speech-note">Ο browser δεν έχει αναγνώριση ομιλίας — πληκτρολόγησε.</span>`}
+          ${speechOK ? `<button type="button" class="sym-mic${UI.speech.on ? " on" : ""}" id="sym-mic" aria-pressed="${UI.speech.on}" title="Πάτα για έναρξη — ξαναπάτα για τέλος (el-GR)">🎤</button>
+          ${traceOn() ? `<button type="button" class="fc-tbtn" id="sym-mic-trace" title="Αντιγράφει το ίχνος των συμβάντων αναγνώρισης">⧉ ίχνος</button>` : ""}
+          <span class="sym-speech-note">Πάτα το 🎤 και μίλα· <b>ξαναπάτα για τέλος</b> — δεν το κρατάς πατημένο. Κλείνει μόνο του μετά από 30΄΄ σιωπής ή στα 3΄. Η ομιλία αποστέλλεται στους διακομιστές του κατασκευαστή του browser για αναγνώριση (el-GR). Το κείμενο μπαίνει στο κουτί — το διορθώνεις πριν το στείλεις.</span>` : `<span class="sym-speech-note">Ο browser δεν έχει αναγνώριση ομιλίας — πληκτρολόγησε.</span>`}
           <span class="spacer" style="flex:1 1 auto"></span>
           ${UI.busy ? `<button type="button" class="fc-tbtn sym-stop" id="sym-stop">■ Διακοπή</button>` : ""}
           <button type="button" class="sym-send" id="sym-send" ${canSend ? "" : "disabled"} title="${capped ? "Όριο γύρων — Νέα συζήτηση" : "Ctrl+Enter"}">${capped ? "Όριο γύρων" : "Στείλε ▸"}</button>
@@ -536,6 +544,12 @@
      § 4  SEND — SSE over fetch; the proxy keeps the history
      ════════════════════════════════════════════════════════════════════════ */
   function send() {
+    /* ΠΡΩΤΑ ΚΛΕΙΝΕΙ ΤΟ ΜΙΚΡΟΦΩΝΟ (βρέθηκε 19/10, στο κινητό: «δεν μπόρεσα να
+       το στείλω»). Όσο ακούει, κάθε συμβάν ξανάγραφε το πλαίσιο — ο ιδιοκτήτης
+       πατούσε «Στείλε» και το κείμενο άλλαζε κάτω από τα χέρια του. Το
+       speechStop() ορφανεύει τα handlers ΑΜΕΣΩΣ, οπότε η γραμμή από κάτω
+       διαβάζει κείμενο που δεν μπορεί πια να αλλάξει. */
+    if (UI.speech.on) speechStop();
     const q = (($("sym-q") || {}).value || "").trim();
     if (!q || UI.busy || !UI.agent) return;
     const ctx = (($("sym-student") || {}).value || "").trim();
@@ -673,51 +687,160 @@
   }
 
   /* ════════════════════════════════════════════════════════════════════════
-     § 5  SPEECH — hold to talk, el-GR, text lands in the box
+     § 5  SPEECH — ΔΙΑΚΟΠΤΗΣ: πάτα-άνοιξε, ξαναπάτα-κλείσε (el-GR)
+
+     Απόφανση ιδιοκτήτη 19/10/2026, από δοκιμή στο κινητό: «*Πατάμε,
+     ενεργοποιούμε μικρόφωνο· ξαναπατάμε, κλείνει. Για να μην το κρατάμε
+     πατημένο*» — το κουμπί είναι μικρό, θέλει να κοιτάξει κάτι ενδιάμεσα, και
+     η θέση του κουμπιού μετακινείται όσο μεγαλώνει το κείμενο.
+
+     ΤΙ ΕΣΠΑΓΕ ΠΡΙΝ. Το «κρατά-και-μίλα» σε κινητό: το pointerup έφτανε
+     χιλιοστά μετά το pointerdown, το rec.stop() έφευγε πριν καλά ξεκινήσει η
+     μηχανή, το onend αργούσε ή δεν ερχόταν ΠΟΤΕ — και το S.on έμενε true με
+     continuous=true. Αποτέλεσμα: η παλιά μηχανή ζωντανή, το επόμενο πάτημα
+     έφτιαχνε δεύτερη, και ΔΥΟ μηχανές έγραφαν στο ίδιο πλαίσιο. Αυτό ήταν ο
+     «πολλαπλασιασμός», ΟΧΙ η συνένωση — εκείνη διορθώθηκε στις 18/10 και η
+     ανακατασκευή από το ev.results παραμένει ιδεμπότη, παρακάτω.
+
+     ΟΙ ΤΡΕΙΣ ΑΣΦΑΛΕΙΕΣ:
+       1. ΚΟΥΠΟΝΙ (`serial`) — handlers μηχανής που δεν είναι η τρέχουσα
+          σιωπούν. Καμία καθυστερημένη εγγραφή, από καμία παλιά μηχανή.
+       2. ΤΟ ΚΛΕΙΣΙΜΟ ΔΕΝ ΠΕΡΙΜΕΝΕΙ ΤΟ onend — καθαρίζει ΤΩΡΑ και στέλνει
+          abort() στη μηχανή μετά από 1,5΄΄, για να αφήσει το μικρόφωνο.
+       3. ΜΟΝΟ ΤΟΥ ΚΛΕΙΝΕΙ — 30΄΄ σιωπής ή 3΄ συνολικά (το μάθημα του
+          TRAIL_QUIET από το robot/device/mic.py: δεν μετράμε RMS μέσα στον
+          browser, μετράμε σιωπή σε ΣΥΜΒΑΝΤΑ). Κολλημένο μικρόφωνο γράφει το
+          δωμάτιο· εδώ δεν γίνεται να κολλήσει αθόρυβα.
      ════════════════════════════════════════════════════════════════════════ */
+  const MIC_QUIET_MS = 30000;    /* σιωπή που κλείνει το μικρόφωνο */
+  const MIC_MAX_MS = 180000;     /* σκληρό ανώτατο, ό,τι κι αν γίνει */
+  const MIC_ABORT_MS = 1500;     /* πόσο περιμένουμε το onend πριν το abort() */
+  const MIC_TRACE_KEY = "p2r-mic-trace";
+
+  function traceOn() { try { return localStorage.getItem(MIC_TRACE_KEY) === "1"; } catch (e) { return false; } }
+
+  function micPaint() {
+    const S = UI.speech;
+    const b = $("sym-mic");
+    if (b) { b.classList.toggle("on", S.on); b.setAttribute("aria-pressed", String(S.on)); }
+    const il = $("sym-interim");
+    if (!il) return;
+    if (!S.on) { il.textContent = S.err || ""; return; }
+    const sec = Math.floor((Date.now() - S.startedAt) / 1000);
+    const mmss = Math.floor(sec / 60) + ":" + String(sec % 60).padStart(2, "0");
+    il.innerHTML = `<span class="live">● ακούει ${mmss}</span> · ξαναπάτα για τέλος${S.interim ? " — " + esc(S.interim) : ""}`;
+  }
+
+  /* Καθαρίζει ΤΑ ΠΑΝΤΑ και είναι ασφαλές να κληθεί όσες φορές θέλει. */
+  function micClear() {
+    const S = UI.speech;
+    if (S.timer) { clearInterval(S.timer); S.timer = null; }
+    S.on = false; S.rec = null; S.interim = ""; S.base = ""; S.skip = ""; S.said = ""; S.prev = null;
+    micPaint();
+  }
+
   function speechStart() {
     const S = UI.speech;
     if (!S.api || S.on) return;
+    const q = $("sym-q");
     const rec = new S.api();
     rec.lang = "el-GR"; rec.continuous = true; rec.interimResults = true; rec.maxAlternatives = 1;
+    const mine = ++S.serial;                       /* το κουπόνι αυτής της μηχανής */
     S.rec = rec; S.on = true; S.interim = ""; S.err = "";
-    rec.onresult = (ev) => {
-      /* ΤΟ ΣΦΑΛΜΑ ΤΗΣ ΕΠΑΝΑΛΗΨΗΣ (βρέθηκε από τον ιδιοκτήτη, 18/10, στο κινητό):
-         ο παλιός κώδικας ΣΥΣΣΩΡΕΥΕ — `finals += …` — ξεκινώντας από το
-         `ev.resultIndex`. Το Chrome του Android ξαναδίνει το ΙΔΙΟ τελικό
-         αποτέλεσμα σε διαδοχικά συμβάντα όσο αυτό μεγαλώνει, οπότε προστίθετο
-         ξανά και ξανά: «ποιες ποιες ποιες είναι ποιες είναι οι…».
+    S.base = q ? q.value : ""; S.skip = ""; S.prev = null; S.said = "";
+    S.startedAt = S.lastAt = Date.now();
+    if (traceOn()) S.trace = [{ t: 0, ev: "start" }];
 
-         ΔΕΝ ΜΠΑΙΝΕΙ ΦΙΛΤΡΟ ΠΟΥ ΣΒΗΝΕΙ ΕΠΑΝΑΛΗΨΕΙΣ — θα έτρωγε και τις αληθινές
-         («όχι όχι, άλλο εννοώ»). Αντ' αυτού ΞΑΝΑΧΤΙΖΕΤΑΙ ολόκληρο το κείμενο από
-         το μηδέν σε κάθε συμβάν: η `ev.results` κρατά όλη τη συνεδρία, άρα η
-         πράξη είναι ΙΔΕΜΠΟΤΗ — ό,τι κι αν ξαναδώσει η μηχανή, το αποτέλεσμα
-         είναι το ίδιο. Καμία κατάσταση δεν μπορεί να ξεσυγχρονιστεί. */
-      let finals = "", interim = "";
+    rec.onresult = (ev) => {
+      if (mine !== S.serial) return;               /* παλιά μηχανή — σιωπή */
+      S.lastAt = Date.now();
+      /* Η ΑΝΑΚΑΤΑΣΚΕΥΗ (18/10): δεν συσσωρεύουμε ΠΟΤΕ. Το ev.results κρατά όλη
+         τη συνεδρία, άρα ξαναχτίζουμε από το μηδέν και η πράξη είναι ιδεμπότη
+         — ό,τι κι αν ξαναδώσει η μηχανή, το αποτέλεσμα είναι το ίδιο. */
+      let finals = "", last = "", interim = "";
       for (let i = 0; i < ev.results.length; i++) {
         const r = ev.results[i];
-        if (r.isFinal) finals += (finals ? " " : "") + r[0].transcript.trim(); else interim += r[0].transcript;
+        const t = ((r[0] && r[0].transcript) || "").trim();
+        if (!r.isFinal) { interim += (r[0] && r[0].transcript) || ""; continue; }
+        if (!t) continue;
+        /* ΣΥΜΠΤΥΞΗ ΕΠΑΝΕΚΠΟΜΠΗΣ: η μηχανή του Android ξαναδίνει το ΙΔΙΟ τελικό
+           καθώς μεγαλώνει, σε ΝΕΑ θέση («ποιες είναι» και μετά «ποιες είναι οι
+           απαιτήσεις»). Κρατάμε το μακρύτερο των δύο.
+           ΤΟ ΤΙΜΗΜΑ, γραμμένο: «ναι» → «ναι βέβαια» χάνει το πρώτο «ναι». */
+        if (last && (t.indexOf(last) === 0 || last.indexOf(t) === 0)) {
+          const keep = t.length >= last.length ? t : last;
+          finals = finals.slice(0, finals.length - last.length) + keep;
+          last = keep;
+          continue;
+        }
+        finals += (finals ? " " : "") + t;
+        last = t;
       }
       S.interim = interim;
-      const q = $("sym-q");
-      if (q && finals) {
-        const base = q.getAttribute("data-base") != null ? q.getAttribute("data-base") : q.value;
-        if (q.getAttribute("data-base") == null) q.setAttribute("data-base", base);
-        q.value = (base ? base.replace(/\s+$/, "") + " " : "") + finals;
+      if (traceOn()) S.trace.push({ t: Date.now() - S.startedAt, n: ev.results.length, i: ev.resultIndex, f: finals.length, text: finals.slice(-60) });
+      const box = $("sym-q");
+      if (box) {
+        /* ΑΝ ΕΓΡΑΨΕ ΜΕ ΤΟ ΧΕΡΙ ΟΣΟ ΑΚΟΥΓΑΜΕ, το κείμενό του είναι ιερό: η βάση
+           ξαναπιάνεται από το κουτί και ό,τι έχει ήδη ειπωθεί μπαίνει στο
+           `skip`, για να μην ξαναγραφτεί από κάτω. */
+        /* Η άγκυρα είναι ό,τι είχε ΗΔΗ γραφτεί (`said`), ΟΧΙ ό,τι ακούστηκε
+           μέχρι τώρα (`finals`): οι λέξεις αυτού του συμβάντος δεν τις είδε
+           ποτέ στο κουτί, και δεν επιτρέπεται να χαθούν μαζί με την άγκυρα. */
+        if (S.prev != null && box.value !== S.prev) { S.base = box.value; S.skip = S.said; }
+        const tail = (S.skip && finals.indexOf(S.skip) === 0) ? finals.slice(S.skip.length).trim() : finals;
+        /* Το μάθημα του is_silent: σιωπή δεν γίνεται κείμενο. */
+        const out = tail.length >= 2 ? (S.base ? S.base.replace(/\s+$/, "") + " " + tail : tail) : S.base;
+        box.value = out; S.prev = out; S.said = finals;
       }
-      const il = $("sym-interim"); if (il) il.textContent = interim;
+      micPaint();
     };
-    rec.onerror = (ev) => { S.err = ev.error === "not-allowed" ? "Ο browser δεν έδωσε άδεια μικροφώνου." : `Αναγνώριση ομιλίας: ${ev.error}`; };
+
+    rec.onerror = (ev) => {
+      if (mine !== S.serial) return;
+      if (ev.error === "no-speech" || ev.error === "aborted") return;   /* φυσιολογικά, δεν τρομάζουμε */
+      S.err = ev.error === "not-allowed" ? "Ο browser δεν έδωσε άδεια μικροφώνου."
+            : `Αναγνώριση ομιλίας: ${ev.error}`;
+    };
+
     rec.onend = () => {
-      S.on = false; S.rec = null; S.interim = "";
-      const q = $("sym-q"); if (q) q.removeAttribute("data-base");
-      const b = $("sym-mic"); if (b) { b.classList.remove("on"); b.setAttribute("aria-pressed", "false"); }
-      const il = $("sym-interim"); if (il) il.textContent = S.err;
+      if (mine !== S.serial) return;    /* το κλείσιμο έχει ήδη γίνει αλλού */
+      micClear();
     };
-    try { rec.start(); } catch (e) { S.on = false; S.rec = null; S.err = "Δεν ξεκίνησε η αναγνώριση ομιλίας."; }
-    const b = $("sym-mic"); if (b) { b.classList.add("on"); b.setAttribute("aria-pressed", "true"); }
+
+    /* Ο ΦΥΛΑΚΑΣ. Κλείνει μόνο του στη σιωπή ή στο ανώτατο, και ξαναβάφει τον
+       χρόνο ώστε να φαίνεται ΠΑΝΤΑ ότι το μικρόφωνο είναι ανοιχτό. */
+    S.timer = setInterval(() => {
+      if (mine !== S.serial || !S.on) return;
+      const now = Date.now();
+      if (now - S.startedAt > MIC_MAX_MS) { S.err = "Το μικρόφωνο έκλεισε στα 3΄."; speechStop(); return; }
+      if (now - S.lastAt > MIC_QUIET_MS) { S.err = "Το μικρόφωνο έκλεισε μετά από 30΄΄ σιωπής."; speechStop(); return; }
+      micPaint();
+    }, 500);
+
+    try { rec.start(); } catch (e) { S.err = "Δεν ξεκίνησε η αναγνώριση ομιλίας."; micClear(); return; }
+    micPaint();
   }
-  function speechStop() { const S = UI.speech; if (S.rec) { try { S.rec.stop(); } catch (e) { /* already stopped */ } } }
+
+  function speechStop() {
+    const S = UI.speech;
+    const rec = S.rec;
+    S.serial++;        /* ΟΡΦΑΝΕΥΕΙ ΤΑ HANDLERS ΤΩΡΑ — καμία καθυστερημένη εγγραφή */
+    micClear();        /* το κουμπί σβήνει ΤΩΡΑ, δεν περιμένει το onend */
+    if (!rec) return;
+    try { rec.stop(); } catch (e) { /* μπορεί να μην ξεκίνησε καν */ }
+    /* ΚΑΙ ΑΝ ΤΟ onend ΔΕΝ ΕΡΘΕΙ ΠΟΤΕ: το abort() αφήνει το μικρόφωνο με το
+       ζόρι. Αυτό ήταν το κολλημένο μικρόφωνο που «κατέγραφε τις συνομιλίες». */
+    setTimeout(() => { try { rec.abort(); } catch (e) { /* τελείωσε ήδη */ } }, MIC_ABORT_MS);
+  }
+
+  function micToggle() { if (UI.speech.on) speechStop(); else speechStart(); }
+
+  function micTraceText() {
+    const S = UI.speech;
+    const head = `mic-trace · ${navigator.userAgent}`;
+    return [head].concat(S.trace.map((r) => r.ev === "start" ? "— start —"
+      : `${r.t}ms results=${r.n} from=${r.i} len=${r.f} …${r.text}`)).join("\n");
+  }
 
   /* ════════════════════════════════════════════════════════════════════════
      § 6  WIRE + BOOT
@@ -728,6 +851,17 @@
     host.addEventListener("click", (ev) => {
       const t = ev.target instanceof Element ? ev.target : null;
       if (!t) return;
+      /* Ο ΔΙΑΚΟΠΤΗΣ. Ένα click — και το <button> δίνει click μόνο του σε Enter
+         και κενό, οπότε ΔΕΝ χρειάζεται (και δεν πρέπει να υπάρχει) χειριστής
+         πλήκτρων: θα γύριζε τον διακόπτη δύο φορές. */
+      if (t.closest("#sym-mic")) { micToggle(); return; }
+      if (t.closest("#sym-mic-trace")) {
+        const b = t.closest("#sym-mic-trace"), text = micTraceText();
+        const done = () => { b.textContent = "✓ Αντιγράφηκε"; setTimeout(() => { b.textContent = "⧉ ίχνος"; }, 1800); };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, () => fallbackCopy(text, done));
+        else fallbackCopy(text, done);
+        return;
+      }
       if (t.closest("#sym-opus")) {
         if (UI.busy || !UI.agent) return;
         opusSet(!opusOn());
@@ -771,13 +905,11 @@
     });
     host.addEventListener("keydown", (ev) => {
       if (ev.target && ev.target.id === "sym-q" && ev.key === "Enter" && (ev.ctrlKey || ev.metaKey)) { ev.preventDefault(); send(); }
-      if (ev.target && ev.target.id === "sym-mic" && (ev.key === " " || ev.key === "Enter")) { ev.preventDefault(); if (UI.speech.on) speechStop(); else speechStart(); }
     });
     host.addEventListener("input", (ev) => { if (ev.target && ev.target.id === "sym-student" && !UI.session) UI.ctxDraft = ev.target.value; });
-    host.addEventListener("pointerdown", (ev) => { const b = ev.target.closest && ev.target.closest("#sym-mic"); if (b) { ev.preventDefault(); speechStart(); } });
-    host.addEventListener("pointerup", (ev) => { if (ev.target.closest && ev.target.closest("#sym-mic")) speechStop(); });
-    host.addEventListener("pointercancel", () => { if (UI.speech.on) speechStop(); });
-    document.addEventListener("pointerup", (ev) => { if (UI.speech.on && !(ev.target.closest && ev.target.closest("#sym-mic"))) speechStop(); });
+    /* Το φύλλο που κρύβεται ή χάνεται: το μικρόφωνο δεν μένει ανοιχτό πίσω από
+       μια άλλη καρτέλα. Το κολλημένο ON ήταν το μισό πρόβλημα της 19/10. */
+    document.addEventListener("visibilitychange", () => { if (document.hidden && UI.speech.on) speechStop(); });
   }
 
   function advInit() {
@@ -914,5 +1046,6 @@
     if (!E || typeof E.on !== "function" || !E.on()) { applyLock(false); return; }   // belt and braces
     advInit();
   };
-  window.Advisor = { md: md, ui: UI, PROXY: PROXY, LOCAL: LOCAL, access: Access, diagLine: diagLine, _applyLock: applyLock };
+  window.Advisor = { md: md, ui: UI, PROXY: PROXY, LOCAL: LOCAL, access: Access, diagLine: diagLine, _applyLock: applyLock,
+                     _mic: { start: speechStart, stop: speechStop, toggle: micToggle, trace: micTraceText } };
 })();
