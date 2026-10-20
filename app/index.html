@@ -10,7 +10,14 @@
      laptop. Στο ένα αρχείο της μονάδας δεν υπάρχει διακομιστής να το σερβίρει,
      οπότε ο builder το κόβει μαζί με το μπλοκ αυτό — ένας κρεμασμένος σύνδεσμος
      manifest σε τοπικό αρχείο είναι σκουπίδι που δεν εξηγείται σε κανέναν. -->
-<link rel="manifest" href="manifest.webmanifest?v=20261018a">
+<!-- crossorigin="use-credentials" — ΤΟ ΚΛΕΙΔΙ ΤΗΣ ΕΓΚΑΤΑΣΤΑΣΗΣ (20/10/2026).
+     Ο browser κατεβάζει το manifest ΧΩΡΙΣ cookies από προεπιλογή. Η εφαρμογή
+     όμως ζει πίσω από Cloudflare Access: χωρίς cookie το αίτημα παίρνει
+     302 προς τη σελίδα σύνδεσης (μετρημένο), οπότε το Chrome δεν είχε ΠΟΤΕ
+     manifest να διαβάσει — εξ ου και «Δεν είναι δυνατή η εγκατάσταση» με το
+     γκρι εικονίδιο του browser αντί για το δικό μας. Με use-credentials το
+     αίτημα κουβαλά το cookie της Access και το manifest φτάνει. -->
+<link rel="manifest" href="manifest.webmanifest?v=20261020a" crossorigin="use-credentials">
 <meta name="theme-color" content="#0e1420">
 <link rel="apple-touch-icon" href="assets/icon-192.png">
 <script>
