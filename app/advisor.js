@@ -323,6 +323,19 @@
         const ag = (h.agents || []).find((a) => a.id === UI.agent);
         UI.turnMax = ag ? ag.max_turns : (h.caps ? h.caps.max_turns : 20);
         UI.today = h.today || null;
+        /* ΣΤΑΔΙΟ Γ (20/10/2026) — Η ΤΑΥΤΟΤΗΤΑ ΦΤΑΝΕΙ ΣΤΟΝ SCHEDULER.
+           Ο browser δεν ξέρει ποιος είσαι· ο proxy ξέρει, από το ΕΠΑΛΗΘΕΥΜΕΝΟ
+           JWT της Cloudflare Access (`access.you`). Είναι το ίδιο email που ο
+           φάκελος υποθέσεων γράφει εδώ και καιρό στο `case_log.actor` — δεν
+           εφευρίσκουμε ταυτότητα, τη μεταφέρουμε εκεί που λείπει. Τοπικά το
+           πεδίο είναι ΚΕΝΟ (δεν υπάρχει Access στο 127.0.0.1) και τότε ο
+           Scheduler πέφτει μόνος του στην ετικέτα συσκευής — ΠΟΤΕ δεν
+           μαντεύουμε email. Η εξάρτηση είναι ΜΟΝΟ προς τα εδώ: ο Scheduler
+           δεν ξέρει καν ότι υπάρχει Σύμβουλος (λείπει από το κλειστό πακέτο).*/
+        try {
+          const who = h.access && h.access.you;
+          if (who && window.SchedStore && window.SchedStore.setActor) window.SchedStore.setActor(who);
+        } catch (e) { /* ο Scheduler μπορεί να μην έχει φορτώσει — ασήμαντο */ }
         return h;
       })
       .catch(() => { clearTimeout(t); UI.offline = true; UI.health = null; UI.healthAt = Date.now(); return null; });

@@ -182,14 +182,28 @@
     return new TextDecoder().decode(pt);
   }
 
+  /* Η ΦΡΑΣΗ ΚΑΙ ΤΟ REFRESH (απόφανση ιδιοκτήτη 20/10/2026) — «*να επιβιώνει
+     του refresh*». Ζει στο sessionStorage: πεθαίνει με την ΚΑΡΤΕΛΑ, επιζεί
+     της ανανέωσης. ΤΟ ΤΙΜΗΜΑ, γραμμένο: όποιος κρατά το ΞΕΚΛΕΙΔΩΤΟ κινητό με
+     την καρτέλα ανοιχτή μπορεί να κατεβάσει και να αποκρυπτογραφήσει χωρίς να
+     ξέρει τη φράση. Δεν αφορά απομακρυσμένο επιτιθέμενο — η οθόνη κλειδώματος
+     της συσκευής είναι η άμυνα εκεί. ΠΟΤΕ στο localStorage: εκεί θα επιζούσε
+     και της επανεκκίνησης, που είναι άλλη υπόσχεση από αυτή που δόθηκε. */
+  const PASS_KEY = "p2r-sync-pass";
+  function ssGet(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
+  function ssSet(k, v) { try { sessionStorage.setItem(k, v); } catch (e) { /* ιδιωτικό παράθυρο */ } }
+  function ssDel(k) { try { sessionStorage.removeItem(k); } catch (e) {} }
+
   function armPass(p) {
     if (!p) return;
     if (p !== sess.pass) { sess.pass = p; sess.key = null; sess.keyId = ""; }
+    ssSet(PASS_KEY, p);
     refreshPassNote();
     hint();                    // arming the key can be what turns auto-sync on
   }
   function clearPass() {
     sess.pass = null; sess.key = null; sess.keyId = "";
+    ssDel(PASS_KEY);
     refreshPassNote();
     hint();
   }
@@ -275,15 +289,45 @@
   function applySnapshot(snap) {
     const S = window.SchedStore;
     st.applying = true;
+    let rep = null;
     try {
       S.system(() => {
-        for (const name of S.COLLECTIONS) {
-          const v = snap[name];
-          if (v !== undefined) S.put(name, v);
+        /* 20/10/2026 — ΣΥΓΧΩΝΕΥΣΗ, ΟΧΙ ΑΝΤΙΚΑΤΑΣΤΑΣΗ. Ο παλιός βρόχος έκανε
+           put() ανά συλλογή: ό,τι υπήρχε μόνο εδώ εξαφανιζόταν. Τώρα κρίνεται
+           ΑΝΑ ΕΓΓΡΑΦΗ από τη σφραγίδα `_u` (schedstore.js § Η ΣΥΓΧΩΝΕΥΣΗ).
+           Το fallback δεν είναι ευγένεια: ένα πακέτο χωρίς merge() (παλιό
+           schedstore σε χειροποίητο bundle) πρέπει να πέσει στην παλιά,
+           γνωστή συμπεριφορά και όχι να αφήσει το pull μισοτελειωμένο. */
+        if (typeof S.merge === "function") {
+          rep = S.merge(snap);
+        } else {
+          for (const name of S.COLLECTIONS) {
+            const v = snap[name];
+            if (v !== undefined) S.put(name, v);
+          }
         }
       });
     } finally { st.applying = false; }
-    setDirty(0);
+    /* ΤΟ ΛΑΘΟΣ ΠΟΥ ΘΑ ΗΤΑΝ ΕΥΚΟΛΟ: setDirty(0). Με την ΑΝΤΙΚΑΤΑΣΤΑΣΗ ήταν
+       σωστό — μετά το pull δεν υπήρχε τίποτα τοπικό να σταλεί. Με τη
+       ΣΥΓΧΩΝΕΥΣΗ, ό,τι δικό σου κέρδισε ΕΠΙΖΕΙ και το repo ΔΕΝ το έχει: αν
+       μηδενίζαμε, η δουλειά σου θα έμενε για πάντα σε αυτή τη συσκευή, και
+       μάλιστα με την ένδειξη «συγχρονισμένο». Χρωστά push. */
+    const owes = rep ? (rep.keptLocal + rep.onlyLocal + rep.revived) : 0;
+    setDirty(rep ? (owes ? Math.max(1, st.dirty) : 0) : 0);
+    return rep;
+  }
+
+  /* Τι έγινε στη συγχώνευση, με λέξεις — ο ιδιοκτήτης πρέπει να ΒΛΕΠΕΙ ότι
+     κρατήθηκε δουλειά του, όχι να το συμπεραίνει. */
+  function mergeWords(rep) {
+    if (!rep) return "";
+    const bits = [];
+    if (rep.fromRemote) bits.push(rep.fromRemote + " από το repo");
+    if (rep.keptLocal) bits.push(rep.keptLocal + " δικές σου νεότερες");
+    if (rep.deleted) bits.push(rep.deleted + " σβησμένες");
+    if (rep.revived) bits.push(rep.revived + " επανήλθαν");
+    return bits.length ? " — " + bits.join(" · ") : "";
   }
 
   function setDirty(n) {
@@ -321,14 +365,23 @@
          pushing plaintext over a ciphertext remote would silently downgrade
          the repo copy, so auto-sync refuses to do it without the passphrase */
       lsSet(ENC_KEY, isEnvelope(remote.json) ? "1" : "0");
-      if (st.dirty > 0 && interactive) {
-        if (!confirm("Pull replaces this browser's scheduler data.\nYou have " + st.dirty +
-          " local change(s) not pushed — they will be LOST.\n\nContinue?")) { setStatus(st.dirty + " local changes"); return; }
-      } else if (st.dirty > 0) { setStatus(st.dirty + " local changes — pull skipped"); return; }
-      applySnapshot(snap);
+      /* 20/10/2026 — ΑΥΤΟ ΤΟ ΠΑΡΑΘΥΡΟ ΕΛΕΓΕ ΨΕΜΑΤΑ από τη στιγμή που μπήκε η
+         συγχώνευση: «they will be LOST» δεν ισχύει πια. Ό,τι άλλαξες εδώ και
+         είναι νεότερο ΝΙΚΑΕΙ. Μένει ερώτηση μόνο επειδή ένα pull αλλάζει
+         δεδομένα και ο ιδιοκτήτης έχει δικαίωμα να το ξέρει πριν γίνει —
+         όχι επειδή κινδυνεύει κάτι. Και το αυτόματο pull ΔΕΝ παραλείπεται
+         πλέον όταν υπάρχουν τοπικές αλλαγές: αυτό ήταν άμυνα απέναντι στην
+         αντικατάσταση, και η αντικατάσταση δεν υπάρχει. */
+      const canMerge = typeof window.SchedStore.merge === "function";
+      if (st.dirty > 0 && interactive && !confirm(
+        "Συγχώνευση με το repo.\nΈχεις " + st.dirty + " αλλαγή(ές) που δεν ανέβηκαν· " +
+        (canMerge ? "όσες είναι νεότερες ΚΡΑΤΙΟΥΝΤΑΙ." : "θα ΧΑΘΟΥΝ (παλιό πακέτο χωρίς συγχώνευση).") +
+        "\n\nΣυνέχεια;")) { setStatus(st.dirty + " local changes"); return; }
+      if (st.dirty > 0 && !interactive && !canMerge) { setStatus(st.dirty + " local changes — pull skipped"); return; }
+      const rep = applySnapshot(snap);
       lsSet(SHA_KEY, remote.sha);
-      setStatus("pulled ✓ " + nowHM());
-      window.SchedStore.toast("Sync: pulled latest from GitHub.", "good");
+      setStatus("pulled ✓ " + nowHM() + mergeWords(rep));
+      window.SchedStore.toast("Sync: συγχωνεύτηκε με το GitHub." + mergeWords(rep), "good");
     } catch (e) { setStatus("pull failed: " + e.message); }
     finally { st.busy = false; }
   }
@@ -802,6 +855,9 @@
   async function boot() {
     if (!window.SchedStore) { setTimeout(boot, 400); return; }
     await window.SchedStore.ready();
+    /* η φράση της ΚΑΡΤΕΛΑΣ: ένα refresh δεν την ξαναζητά (απόφανση 20/10) */
+    const keep = ssGet(PASS_KEY);
+    if (keep) { sess.pass = keep; sess.key = null; sess.keyId = ""; }
     st.dirty = parseInt(lsGet(DIRTY_KEY), 10) || 0;
     window.SchedStore.subscribe(() => {
       if (st.applying) return;

@@ -107,6 +107,15 @@
     bridgePush:   { type: "list", key: "rid",  seed: "bridge_push" },
     config:       { type: "obj",  seed: "config" },
     dayPlans:     { type: "map",  seed: "day_plans" },
+    /* ΟΙ ΤΑΦΟΠΛΑΚΕΣ (20/10/2026) — ΧΩΡΙΣΤΗ συλλογή, επίτηδες.
+       Μια διαγραφή πρέπει να αφήνει ΙΧΝΟΣ, αλλιώς η συγχώνευση την ανασταίνει:
+       η άλλη συσκευή έχει ακόμη την εγγραφή και δεν έχει τρόπο να ξέρει ότι
+       σβήστηκε — μόνο ότι «λείπει», που είναι το ίδιο σχήμα με «δεν έφτασε
+       ποτέ». ΔΕΝ μπαίνουν μέσα στις ζωντανές λίστες: η get() επιστρέφει τον
+       ΖΩΝΤΑΝΟ πίνακα και τον διατρέχει όλη η εφαρμογή — μια «σβησμένη» εγγραφή
+       εκεί μέσα θα εμφανιζόταν σε κάθε κατάλογο, σε κάθε μέτρηση, σε κάθε
+       εκτύπωση. Σχήμα: { k:"<συλλογή>:<κλειδί>", coll, key, _u, _by }. */
+    graves:       { type: "list", key: "k",    seed: "graves" },
   };
   const NAMES = Object.keys(COLLS);
   const empty = (t) => (t === "list" ? [] : {});
@@ -192,6 +201,44 @@
     }
     if (!db.config || typeof db.config !== "object") db.config = {};
     if (!db.dayPlans || typeof db.dayPlans !== "object") db.dayPlans = {};
+  }
+
+  /* ══ Η ΣΦΡΑΓΙΔΑ: ΠΟΙΟΣ ΚΑΙ ΠΟΤΕ (απόφανση ιδιοκτήτη 20/10/2026) ═══════════
+     ΑΝΑΙΡΕΙ ρητά την παλιά απόφαση, που είναι γραμμένη στο
+     specs/bridge-spec.md: «*Το FDMS έχει έναν ιδιοκτήτη και έναν edit lock:
+     δεν υπάρχει δεύτερος λογαριασμός να ονομαστεί*». Ο ιδιοκτήτης ζήτησε
+     πλέον το αντίθετο: «*αν βάλουμε και άλλα email, να βλέπει ακριβώς την
+     εικόνα, και ό,τι αλλαγές γίνονται να φαίνεται ποιος τις έχει κάνει*».
+
+     Δύο πεδία σε κάθε εγγραφή: `_u` ΠΟΤΕ (ms) και `_by` ΠΟΙΟΣ. Χωρίς αυτά
+     τίποτα από τα υπόλοιπα δεν στέκει — ούτε η συγχώνευση (χρειάζεται «ποιο
+     είναι νεότερο»), ούτε η απόδοση αλλαγών, ούτε ο scheduler agent (πρέπει να
+     ξεχωρίζει τι καταχώρησε αυτός από τι ο εκπαιδευτής).
+
+     ΠΟΙΟΣ ΕΙΝΑΙ Ο ΔΡΑΣΤΗΣ. Ο browser δεν ξέρει· ο proxy ξέρει, από το
+     επαληθευμένο JWT της Cloudflare Access. Γι' αυτό η τιμή ΔΙΝΕΤΑΙ απ' έξω
+     με setActor() — αυτό το αρχείο δεν επιτρέπεται να εξαρτηθεί από τον
+     advisor (λείπει ολόκληρος από το κλειστό πακέτο). Μέχρι να τη δώσει
+     κάποιος, πέφτουμε στην ετικέτα συσκευής του sync, και τελευταία στο
+     «editor». ΠΟΤΕ δεν μαντεύουμε email. */
+  let ACTOR = "";
+  function deviceLabel() {
+    try {
+      const c = JSON.parse(localStorage.getItem("p2r-sync-cfg") || "{}");
+      return c && c.device ? "device:" + String(c.device).slice(0, 40) : "";
+    } catch (e) { return ""; }
+  }
+  function actor() { return ACTOR || deviceLabel() || "editor"; }
+  function setActor(who) { ACTOR = who ? String(who).slice(0, 120) : ""; return actor(); }
+
+  /* Σφραγίζει ΜΟΝΟ ανθρώπινες εγγραφές. Μέσα σε system() τρέχει η ΡΕΠΛΙΚΑ —
+     εκεί η σφραγίδα ΗΡΘΕ μαζί με το δεδομένο και δεν την πειράζουμε, αλλιώς
+     κάθε pull θα βάφτιζε ξένες αλλαγές δικές μας και θα νικούσε για πάντα. */
+  function stamp(rec) {
+    if (sysDepth > 0 || !rec || typeof rec !== "object") return rec;
+    rec._u = Date.now();
+    rec._by = actor();
+    return rec;
   }
 
   let seq = 0;
@@ -348,8 +395,11 @@
     if (rec[c.key] == null || rec[c.key] === "") rec[c.key] = uid(name.slice(0, 3));
     const list = db[name];
     const i = list.findIndex((r) => String(r[c.key]) === String(rec[c.key]));
-    if (i >= 0) list[i] = Object.assign({}, list[i], rec);
-    else list.push(rec);
+    if (i >= 0) list[i] = stamp(Object.assign({}, list[i], rec));
+    else list.push(stamp(rec));
+    /* Γράφτηκε ξανά κάτι που είχε σβηστεί: η ταφόπλακα φεύγει, αλλιώς η
+       επόμενη συγχώνευση θα το ξανάσβηνε με το παλιό ίχνος. */
+    ungrave(name, rec[c.key]);
     persist(name);
     emit(name, i >= 0 ? "update" : "insert", rec);
     return i >= 0 ? list[i] : rec;
@@ -363,9 +413,32 @@
     const i = list.findIndex((r) => String(r[c.key]) === String(id));
     if (i < 0) return false;
     const [gone] = list.splice(i, 1);
+    grave(name, id);
     persist(name);
     emit(name, "remove", gone);
     return true;
+  }
+
+  const graveKey = (name, id) => name + ":" + String(id);
+
+  function grave(name, id) {
+    if (sysDepth > 0) return;                 // ρεπλίκα: οι ταφόπλακες έρχονται έτοιμες
+    const k = graveKey(name, id);
+    const g = db.graves || (db.graves = []);
+    const i = g.findIndex((x) => x && x.k === k);
+    const rec = { k: k, coll: name, key: String(id), _u: Date.now(), _by: actor() };
+    if (i >= 0) g[i] = rec; else g.push(rec);
+    persist("graves");
+  }
+
+  function ungrave(name, id) {
+    if (sysDepth > 0) return;
+    const k = graveKey(name, id);
+    const g = db.graves || [];
+    const i = g.findIndex((x) => x && x.k === k);
+    if (i < 0) return;
+    g.splice(i, 1);
+    persist("graves");
   }
 
   function subscribe(fn) {
@@ -379,12 +452,120 @@
     const v = db.config ? db.config[key] : undefined;
     return v === undefined ? fallback : v;
   }
+  /* ΑΝΑ ΚΛΕΙΔΙ, όχι συνολικά: το config κρατά ΑΣΥΝΔΕΤΑ πράγματα — τον κωδικό
+     του Editor, τη γέφυρα, ρυθμίσεις όψης. Μία σφραγίδα για όλα θα σήμαινε ότι
+     όποιος άλλαξε τελευταίος μια ρύθμιση όψης σβήνει τη γέφυρα του άλλου. */
   function setConfig(patch) {
     if (!mayWrite("change a setting")) return null;
-    db.config = Object.assign({}, db.config, patch || {});
+    const next = Object.assign({}, db.config, patch || {});
+    if (sysDepth === 0 && patch && typeof patch === "object") {
+      const u = Object.assign({}, next._u), by = Object.assign({}, next._by);
+      const now = Date.now(), who = actor();
+      for (const k of Object.keys(patch)) { if (k !== "_u" && k !== "_by") { u[k] = now; by[k] = who; } }
+      next._u = u; next._by = by;
+    }
+    db.config = next;
     persist("config");
     emit("config", "put", null);
     return db.config;
+  }
+
+  /* ══ Η ΣΥΓΧΩΝΕΥΣΗ (Β) ═══════════════════════════════════════════════════
+     ΤΟ ΠΡΟΒΛΗΜΑ ΠΟΥ ΛΥΝΕΙ, με τα λόγια του ιδιοκτήτη: «*να μη χάνει ό,τι έχει
+     καινούριο*». Μέχρι σήμερα το pull ΑΝΤΙΚΑΘΙΣΤΟΥΣΕ τον τοπικό χώρο και η
+     μόνη επιλογή σε σύγκρουση ήταν «πέτα τη μια πλευρά ΟΛΟΚΛΗΡΗ».
+
+     Ο ΚΑΝΟΝΑΣ, ανά ΕΓΓΡΑΦΗ: νικά η νεότερη σφραγίδα `_u`.
+     · Εγγραφή που υπάρχει μόνο σε μία πλευρά: ΚΡΑΤΙΕΤΑΙ.
+     · Ταφόπλακα νεότερη από την εγγραφή: η εγγραφή φεύγει.
+     · Εγγραφή νεότερη από την ταφόπλακα: ανασταίνεται, η ταφόπλακα φεύγει.
+     · ΙΣΟΠΑΛΙΑ (ή καμία σφραγίδα, δηλαδή δεδομένα από ΠΡΙΝ αυτή την αλλαγή):
+       νικά το ΑΠΟΜΑΚΡΥΣΜΕΝΟ. Αυτό αναπαράγει ΑΚΡΙΒΩΣ την παλιά συμπεριφορά
+       για τα παλιά δεδομένα — καμία έκπληξη στο πρώτο pull — ενώ οι
+       ΚΑΙΝΟΥΡΓΙΕΣ τοπικές εγγραφές, που πριν χάνονταν, τώρα επιζούν.
+
+     Επιστρέφει αναφορά· δεν τυπώνει και δεν αποφασίζει τίποτα μόνη της. */
+  function newer(a, b) {           // a νικά το b;
+    const ua = (a && +a._u) || 0, ub = (b && +b._u) || 0;
+    return ua > ub;
+  }
+
+  function merge(snap) {
+    const rep = { collections: {}, fromRemote: 0, keptLocal: 0, onlyLocal: 0, deleted: 0, revived: 0 };
+    if (!snap || typeof snap !== "object") return rep;
+
+    /* Οι ταφόπλακες των δύο πλευρών ενώνονται ΠΡΩΤΑ: η συγχώνευση των
+       εγγραφών τις συμβουλεύεται και των δύο. */
+    const gmap = new Map();
+    for (const g of (db.graves || [])) if (g && g.k) gmap.set(g.k, g);
+    for (const g of (Array.isArray(snap.graves) ? snap.graves : [])) {
+      if (!g || !g.k) continue;
+      const cur = gmap.get(g.k);
+      if (!cur || newer(g, cur)) gmap.set(g.k, g);
+    }
+
+    for (const name of NAMES) {
+      if (name === "graves") continue;
+      const c = COLLS[name];
+      const incoming = snap[name];
+      if (incoming === undefined) continue;
+
+      if (c.type === "list") {
+        const k = c.key;
+        const out = new Map();
+        for (const r of (db[name] || [])) if (r && r[k] != null) out.set(String(r[k]), { r: r, mine: true });
+        for (const r of (Array.isArray(incoming) ? incoming : [])) {
+          if (!r || r[k] == null) continue;
+          const id = String(r[k]), cur = out.get(id);
+          if (!cur) { out.set(id, { r: r, mine: false }); rep.fromRemote += 1; continue; }
+          if (newer(cur.r, r)) { rep.keptLocal += 1; continue; }   // δικό μου νεότερο
+          out.set(id, { r: r, mine: false });                       // ισοπαλία ή ξένο νεότερο
+          rep.fromRemote += 1;
+        }
+        const seenRemote = new Set();
+        for (const r of (Array.isArray(incoming) ? incoming : [])) if (r && r[k] != null) seenRemote.add(String(r[k]));
+        const list = [];
+        for (const [id, cell] of out) {
+          if (cell.mine && !seenRemote.has(id)) rep.onlyLocal += 1;
+          const g = gmap.get(graveKey(name, id));
+          if (g && !newer(cell.r, g)) { rep.deleted += 1; continue; }   // η ταφόπλακα νικά
+          if (g) { gmap.delete(graveKey(name, id)); rep.revived += 1; } // η εγγραφή νικά
+          list.push(cell.r);
+        }
+        db[name] = list;
+        rep.collections[name] = list.length;
+        persist(name);
+      } else if (name === "config") {
+        const mineU = (db.config && db.config._u) || {}, theirU = (incoming && incoming._u) || {};
+        const mineBy = (db.config && db.config._by) || {}, theirBy = (incoming && incoming._by) || {};
+        const next = Object.assign({}, db.config);
+        const u = Object.assign({}, mineU), by = Object.assign({}, mineBy);
+        for (const key of Object.keys(incoming || {})) {
+          if (key === "_u" || key === "_by") continue;
+          if ((+mineU[key] || 0) > (+theirU[key] || 0)) continue;     // δικό μου νεότερο
+          next[key] = incoming[key];
+          if (theirU[key]) { u[key] = theirU[key]; by[key] = theirBy[key]; }
+        }
+        next._u = u; next._by = by;
+        db.config = next;
+        rep.collections.config = Object.keys(next).length;
+        persist("config");
+      } else {                                            // dayPlans — χάρτης
+        const next = Object.assign({}, db[name]);
+        for (const key of Object.keys(incoming || {})) {
+          if (!newer(next[key], incoming[key])) next[key] = incoming[key];
+        }
+        db[name] = next;
+        rep.collections[name] = Object.keys(next).length;
+        persist(name);
+      }
+    }
+
+    db.graves = Array.from(gmap.values());
+    persist("graves");
+    normalize();
+    emit("*", "merge", rep);
+    return rep;
   }
 
   /* ── derived helpers (classes are READ-ONLY: they follow the members) ───── */
@@ -432,7 +613,7 @@
   function dayPlan(date) { return (db.dayPlans || {})[date] || null; }
   function putDayPlan(date, plan) {
     if (!mayWrite("save the day plan")) return null;
-    db.dayPlans[date] = plan;
+    db.dayPlans[date] = stamp(plan);
     persist("dayPlans");
     emit("dayPlans", "put", plan);
     return plan;
@@ -919,6 +1100,8 @@
     dayPlan, putDayPlan, removeDayPlan,
     snapshot, exportAll, importAll, resetToSeed, mountTools,
     uid, toast,
+    /* 20/10/2026 — η σφραγίδα, η συγχώνευση και ο δράστης (Στάδια Α/Β/Γ) */
+    merge, actor, setActor,
     /* Round 12b — the edit lock's one hole (see mayWrite above) */
     system, mayWrite,
     /* Round 12a — display names ("Instructor01 T."), one helper for the whole app */
