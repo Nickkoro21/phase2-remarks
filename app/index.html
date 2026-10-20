@@ -13,6 +13,28 @@
 <link rel="manifest" href="manifest.webmanifest?v=20261018a">
 <meta name="theme-color" content="#0e1420">
 <link rel="apple-touch-icon" href="assets/icon-192.png">
+<script>
+/* Ο SERVICE WORKER ΠΟΥ ΚΑΝΕΙ ΤΗ ΣΕΛΙΔΑ ΕΓΚΑΤΑΣΤΑΣΙΜΗ (20/10/2026).
+   Το Chrome του Android δίνει «Εγκατάσταση» μόνο με καταχωρημένο service
+   worker· χωρίς αυτόν προσφέρει σκέτη συντόμευση. Ο δικός μας δεν κάνει
+   ΤΙΠΟΤΑ άλλο — βλ. app/sw.js.
+   ΔΥΟ ΦΡΑΓΜΟΙ, και οι δύο σκόπιμοι:
+   · ΜΟΝΟ σε ασφαλές πλαίσιο (https, ή localhost για δοκιμή)·
+   · ΜΟΝΟ όταν η διαδρομή είναι ΑΚΡΙΒΩΣ «/app/…», δηλαδή στον διακομιστή του
+     ιδιοκτήτη. Στο GitHub Pages η διαδρομή είναι «/phase2-remarks/app/» και
+     ΔΕΝ καταχωρείται: εκεί το manifest δείχνει start_url «/app/», οπότε μια
+     εγκατάσταση από το Pages θα έφτιαχνε εικονίδιο που ανοίγει το ΤΙΠΟΤΑ. */
+(function () {
+  try {
+    var secure = location.protocol === "https:" ||
+                 location.hostname === "localhost" || location.hostname === "127.0.0.1";
+    if (!secure) return;
+    if (location.pathname.indexOf("/app/") !== 0) return;
+    if (!("serviceWorker" in navigator)) return;
+    navigator.serviceWorker.register("sw.js").catch(function () { /* δεν χάλασε τίποτα */ });
+  } catch (e) { /* ιδιωτικό παράθυρο ή απαγορευμένο — η εφαρμογή δουλεύει ακριβώς το ίδιο */ }
+})();
+</script>
 <!-- hosted:end -->
 <script>
 /* Palette before first paint — no flash of the default theme on reload.
