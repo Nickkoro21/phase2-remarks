@@ -313,10 +313,17 @@
            Ρητή πράξη, με δικό της κουμπί και δική της προειδοποίηση — ΠΟΤΕ
            αυτόματα, ΠΟΤΕ ως εφεδρεία της συγχώνευσης. */
         if (replace) {
+          /* ΜΕΤΡΑΕΙ ΚΑΙ ΤΟ ΛΕΕΙ (28/10/2026). Η πρώτη εκδοχή τύπωνε
+             «replaced ✓» ΧΩΡΙΣ να ελέγχει αν άγγιξε τίποτα — και όταν δεν
+             άγγιξε, ο ιδιοκτήτης το ανακάλυψε μόνος του μετρώντας. Ένα μήνυμα
+             επιτυχίας που δεν ξέρει αν πέτυχε είναι χειρότερο από κανένα. */
+          let applied = 0;
           for (const name of S.COLLECTIONS) {
             const v = snap[name];
-            if (v !== undefined) S.put(name, v);
+            if (v !== undefined) { S.put(name, v); applied += 1; }
           }
+          rep = { replaced: applied, keys: Object.keys(snap || {}).length,
+                  type: (snap && typeof snap), sample: Object.keys(snap || {}).slice(0, 4).join(",") };
           return;
         }
         /* 20/10/2026 — ΣΥΓΧΩΝΕΥΣΗ, ΟΧΙ ΑΝΤΙΚΑΤΑΣΤΑΣΗ. Ο παλιός βρόχος έκανε
@@ -351,6 +358,12 @@
      κρατήθηκε δουλειά του, όχι να το συμπεραίνει. */
   function mergeWords(rep) {
     if (!rep) return "";
+    if (rep.replaced != null) {
+      return rep.replaced
+        ? " — " + rep.replaced + " συλλογές αντικαταστάθηκαν"
+        : " — ⚠ ΤΙΠΟΤΑ ΔΕΝ ΑΝΤΙΚΑΤΑΣΤΑΘΗΚΕ (τύπος: " + rep.type + ", κλειδιά: " + rep.keys
+          + (rep.sample ? " → " + rep.sample : "") + ")";
+    }
     const bits = [];
     if (rep.fromRemote) bits.push(rep.fromRemote + " από το repo");
     if (rep.keptLocal) bits.push(rep.keptLocal + " δικές σου νεότερες");
@@ -424,10 +437,12 @@
       if (!replace && st.dirty > 0 && !interactive && !canMerge) { setStatus(st.dirty + " local changes — pull skipped"); return; }
       const rep = applySnapshot(snap, replace);
       lsSet(SHA_KEY, remote.sha);
-      setStatus((replace ? "replaced ✓ " : "pulled ✓ ") + nowHM() + mergeWords(rep));
+      const ok = !replace || (rep && rep.replaced > 0);
+      setStatus((replace ? (ok ? "replaced ✓ " : "replace ΑΠΕΤΥΧΕ ") : "pulled ✓ ") + nowHM() + mergeWords(rep));
       window.SchedStore.toast(replace
-        ? "Sync: η συσκευή αντικαταστάθηκε από το repo."
-        : "Sync: συγχωνεύτηκε με το GitHub." + mergeWords(rep), "good");
+        ? (ok ? "Sync: η συσκευή αντικαταστάθηκε από το repo." + mergeWords(rep)
+              : "Sync: η αντικατάσταση ΔΕΝ άγγιξε τίποτα." + mergeWords(rep))
+        : "Sync: συγχωνεύτηκε με το GitHub." + mergeWords(rep), ok ? "good" : "bad");
     } catch (e) { setStatus("pull failed: " + e.message); }
     finally { st.busy = false; }
   }
