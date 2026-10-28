@@ -20,6 +20,12 @@
 <link rel="manifest" href="manifest.webmanifest?v=20261020a" crossorigin="use-credentials">
 <meta name="theme-color" content="#0e1420">
 <link rel="apple-touch-icon" href="assets/icon-192.png">
+<!-- ΡΗΤΟ ΕΙΚΟΝΙΔΙΟ (28/10/2026). Κάθε browser ζητά ΜΟΝΟΣ ΤΟΥ το /favicon.ico
+     από τη ΡΙΖΑ του site — χωρίς να του το πει κανείς. Η εφαρμογή ζει στο
+     /app/, άρα η ρίζα απαντά 404 και η κονσόλα κοκκινίζει σε κάθε φόρτωση.
+     Ακίνδυνο, αλλά ένα μόνιμο κόκκινο εκπαιδεύει το μάτι να αγνοεί τα κόκκινα.
+     Με ρητό <link rel="icon"> ο browser παύει να ρωτά στα τυφλά. -->
+<link rel="icon" href="assets/icon-192.png" type="image/png">
 <script>
 /* Ο SERVICE WORKER ΠΟΥ ΚΑΝΕΙ ΤΗ ΣΕΛΙΔΑ ΕΓΚΑΤΑΣΤΑΣΙΜΗ (20/10/2026).
    Το Chrome του Android δίνει «Εγκατάσταση» μόνο με καταχωρημένο service
