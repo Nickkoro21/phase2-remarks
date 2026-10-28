@@ -73,10 +73,19 @@
       + "never into the scheduler store, so they survive ↺ Reset and never travel in a backup. "
       + "A token typed above is stored the same way and never leaves this machine; a passphrase typed above "
       + "is armed for THIS SESSION ONLY and is stored nowhere at all. It moves no data in either direction.",
-    pull: "REPLACES THIS BROWSER’S WHOLE SCHEDULER STORE with the copy in the repo — roster, log, availability, "
-      + "duties, gates, currency, day plans and config. It writes nothing to GitHub. If unpushed local changes "
-      + "exist it names them and asks first; answering no leaves everything untouched. There is no undo, so "
-      + "take Scheduler → ⭳ Export first if this browser holds work the repo has never seen.",
+    /* 28/10/2026 — ΤΟ ΚΕΙΜΕΝΟ ΑΥΤΟ ΕΛΕΓΕ «REPLACES», ΚΑΙ ΗΤΑΝ ΨΕΜΑ από τη
+       στιγμή που μπήκε η συγχώνευση (20/10). Διορθώθηκε μαζί με το κουμπί που
+       κάνει ΟΝΤΩΣ αντικατάσταση. */
+    pull: "ΣΥΓΧΩΝΕΥΕΙ τον χώρο αυτού του browser με το αντίγραφο του repo, ΑΝΑ ΕΓΓΡΑΦΗ: "
+      + "νικά η νεότερη σφραγίδα, ό,τι υπάρχει μόνο σε μία πλευρά ΚΡΑΤΙΕΤΑΙ, και μια διαγραφή "
+      + "δεν ανασταίνεται. Δεν γράφει τίποτα στο GitHub. Ό,τι δικό σου επιζήσει εξακολουθεί να "
+      + "χρωστά push, και το λέει. Για δεδομένα ΧΩΡΙΣ σφραγίδα (γραμμένα πριν τις 20/10) "
+      + "νικά το repo — ακριβώς η παλιά συμπεριφορά.",
+    pullReplace: "ΣΒΗΝΕΙ ό,τι έχει αυτή η συσκευή και βάζει το αρχείο του repo — ΧΩΡΙΣ συγχώνευση. "
+      + "Είναι για την ΠΡΩΤΗ ευθυγράμμιση μιας συσκευής που κουβαλά ακόμη τον φυτεμένο δοκιμαστικό "
+      + "χώρο (30 ψεύτικοι μαθητές, 2.013 ψεύτικες πτήσεις): η συγχώνευση θα τα κρατούσε ως «μόνο "
+      + "εδώ» και θα έμενε μόνιμο μείγμα. Μετρά και ονομάζει τι σβήνει πριν το κάνει. "
+      + "Δεν υπάρχει undo — ⭳ Export πρώτα, αν αυτή η συσκευή κρατά δουλειά που το repo δεν είδε ποτέ.",
     push: "REPLACES THE REPO COPY with this browser’s whole store, as one commit on the branch above. "
       + "It changes nothing locally. Every previous push stays in the repo’s history, so the way back is that "
       + "history. If another device pushed first it stops and asks instead of overwriting. "
@@ -286,12 +295,30 @@
      while the app is in view-only mode (that is the normal state of a second
      device). So it runs inside SchedStore.system(), the one named hole in the
      edit lock — see the SchedEdit block in schedstore.js.                    */
-  function applySnapshot(snap) {
+  function applySnapshot(snap, replace) {
     const S = window.SchedStore;
     st.applying = true;
     let rep = null;
     try {
       S.system(() => {
+        /* ΑΝΤΙΚΑΤΑΣΤΑΣΗ — Η ΠΡΩΤΗ ΕΥΘΥΓΡΑΜΜΙΣΗ ΜΙΑΣ ΣΥΣΚΕΥΗΣ (28/10/2026).
+           Η συγχώνευση είναι σωστή για τη ΣΥΝΕΧΕΙΑ: κρατά ό,τι υπάρχει μόνο
+           σε μία πλευρά. Ακριβώς γι' αυτό ΔΕΝ κάνει για την πρώτη φορά: μια
+           συσκευή που μόλις άνοιξε έχει τον ΦΥΤΕΜΕΝΟ χώρο (30 ψεύτικοι
+           μαθητές, 2.013 ψεύτικες πτήσεις), και ό,τι από αυτά δεν υπάρχει στο
+           repo θα ΕΠΙΖΟΥΣΕ ως «μόνο εδώ» — αφήνοντας μόνιμο μείγμα αληθινών
+           και ψεύτικων. Το μηδενικό σημείο ΔΕΝ γίνεται με διαγραφές στο χέρι:
+           ο φυτεμένος χώρος ΞΑΝΑΓΕΜΙΖΕΙ μόνος του στο επόμενο άνοιγμα, γιατί
+           το seeding πυροδοτείται από ΑΠΟΥΣΙΑ δεδομένων.
+           Ρητή πράξη, με δικό της κουμπί και δική της προειδοποίηση — ΠΟΤΕ
+           αυτόματα, ΠΟΤΕ ως εφεδρεία της συγχώνευσης. */
+        if (replace) {
+          for (const name of S.COLLECTIONS) {
+            const v = snap[name];
+            if (v !== undefined) S.put(name, v);
+          }
+          return;
+        }
         /* 20/10/2026 — ΣΥΓΧΩΝΕΥΣΗ, ΟΧΙ ΑΝΤΙΚΑΤΑΣΤΑΣΗ. Ο παλιός βρόχος έκανε
            put() ανά συλλογή: ό,τι υπήρχε μόνο εδώ εξαφανιζόταν. Τώρα κρίνεται
            ΑΝΑ ΕΓΓΡΑΦΗ από τη σφραγίδα `_u` (schedstore.js § Η ΣΥΓΧΩΝΕΥΣΗ).
@@ -313,8 +340,10 @@
        ΣΥΓΧΩΝΕΥΣΗ, ό,τι δικό σου κέρδισε ΕΠΙΖΕΙ και το repo ΔΕΝ το έχει: αν
        μηδενίζαμε, η δουλειά σου θα έμενε για πάντα σε αυτή τη συσκευή, και
        μάλιστα με την ένδειξη «συγχρονισμένο». Χρωστά push. */
-    const owes = rep ? (rep.keptLocal + rep.onlyLocal + rep.revived) : 0;
-    setDirty(rep ? (owes ? Math.max(1, st.dirty) : 0) : 0);
+    /* Μετά από ΑΝΤΙΚΑΤΑΣΤΑΣΗ η συσκευή είναι ακριβώς το repo: δεν χρωστά
+       τίποτα. Μετά από ΣΥΓΧΩΝΕΥΣΗ χρωστά ό,τι δικό της επέζησε. */
+    const owes = (!replace && rep) ? (rep.keptLocal + rep.onlyLocal + rep.revived) : 0;
+    setDirty(owes ? Math.max(1, st.dirty) : 0);
     return rep;
   }
 
@@ -338,7 +367,7 @@
   }
 
   /* ── high-level flows ───────────────────────────────────────────────────── */
-  async function doPull(interactive) {
+  async function doPull(interactive, replace) {
     if (!configured() || st.busy) return;
     st.busy = true; setStatus("pulling…");
     try {
@@ -372,16 +401,33 @@
          όχι επειδή κινδυνεύει κάτι. Και το αυτόματο pull ΔΕΝ παραλείπεται
          πλέον όταν υπάρχουν τοπικές αλλαγές: αυτό ήταν άμυνα απέναντι στην
          αντικατάσταση, και η αντικατάσταση δεν υπάρχει. */
+      if (replace) {
+        /* Η προειδοποίηση ΜΕΤΡΑΕΙ ό,τι πρόκειται να σβηστεί, αντί να το
+           περιγράφει: «30 μαθητές, 2.013 πτήσεις» σταματά το λάθος χέρι σε
+           λάθος συσκευή, ενώ ένα γενικό «θα χαθούν τα δεδομένα» δεν σταματά
+           κανέναν. */
+        const S = window.SchedStore;
+        const n = (k) => { const v = S.get(k); return Array.isArray(v) ? v.length : (v && typeof v === "object" ? Object.keys(v).length : 0); };
+        if (!confirm("ΑΝΤΙΚΑΤΑΣΤΑΣΗ ΑΠΟ ΤΟ REPO\n\n"
+          + "Ό,τι υπάρχει ΣΕ ΑΥΤΗ ΤΗ ΣΥΣΚΕΥΗ σβήνεται και μπαίνει το αρχείο του repo.\n\n"
+          + "Σβήνονται τώρα: " + n("students") + " μαθητές · " + n("instructors")
+          + " εκπαιδευτές · " + n("trainingLog") + " εγγραφές πτήσεων.\n\n"
+          + "Χρησιμοποίησέ το ΜΟΝΟ για να ευθυγραμμίσεις μια συσκευή την πρώτη φορά.\n"
+          + "Για την καθημερινή χρήση υπάρχει το ⭳ Pull, που ΣΥΓΧΩΝΕΥΕΙ.\n\n"
+          + "Συνέχεια;")) { setStatus("ακυρώθηκε"); return; }
+      }
       const canMerge = typeof window.SchedStore.merge === "function";
-      if (st.dirty > 0 && interactive && !confirm(
+      if (!replace && st.dirty > 0 && interactive && !confirm(
         "Συγχώνευση με το repo.\nΈχεις " + st.dirty + " αλλαγή(ές) που δεν ανέβηκαν· " +
         (canMerge ? "όσες είναι νεότερες ΚΡΑΤΙΟΥΝΤΑΙ." : "θα ΧΑΘΟΥΝ (παλιό πακέτο χωρίς συγχώνευση).") +
         "\n\nΣυνέχεια;")) { setStatus(st.dirty + " local changes"); return; }
-      if (st.dirty > 0 && !interactive && !canMerge) { setStatus(st.dirty + " local changes — pull skipped"); return; }
-      const rep = applySnapshot(snap);
+      if (!replace && st.dirty > 0 && !interactive && !canMerge) { setStatus(st.dirty + " local changes — pull skipped"); return; }
+      const rep = applySnapshot(snap, replace);
       lsSet(SHA_KEY, remote.sha);
-      setStatus("pulled ✓ " + nowHM() + mergeWords(rep));
-      window.SchedStore.toast("Sync: συγχωνεύτηκε με το GitHub." + mergeWords(rep), "good");
+      setStatus((replace ? "replaced ✓ " : "pulled ✓ ") + nowHM() + mergeWords(rep));
+      window.SchedStore.toast(replace
+        ? "Sync: η συσκευή αντικαταστάθηκε από το repo."
+        : "Sync: συγχωνεύτηκε με το GitHub." + mergeWords(rep), "good");
     } catch (e) { setStatus("pull failed: " + e.message); }
     finally { st.busy = false; }
   }
@@ -722,7 +768,8 @@
       /* every manual act clears the auto-sync stop flag: the user has just been
          told what went wrong and has done something about it */
       if (b.dataset.s === "save") { saveForm(); autoRearm(); }
-      else if (b.dataset.s === "pull") { autoRearm(); doPull(true); }
+      else if (b.dataset.s === "pull") { autoRearm(); doPull(true, false); }
+      else if (b.dataset.s === "pull-replace") { autoRearm(); doPull(true, true); }
       else if (b.dataset.s === "push") { autoRearm(); doPush(false); }
       else if (b.dataset.s === "force") { if (confirm("Force push OVERWRITES the repo version with this browser's data. Continue?")) { autoRearm(); doPush(true); } }
       else if (b.dataset.s === "forget") { lsDel(TOK_KEY); lsDel(SHA_KEY); renderPop(); setStatus("token forgotten"); hint(); }
@@ -765,6 +812,7 @@
         <div class="sync-row">
           <button type="button" class="sch-tbtn" data-s="save" title="${esc(TIP.save)}">💾 Save</button>
           <button type="button" class="sch-tbtn" data-s="pull" title="${esc(TIP.pull)}">⭳ Pull</button>
+          <button type="button" class="sch-tbtn danger" data-s="pull-replace" title="${esc(TIP.pullReplace)}">⭳ Pull (αντικατάσταση)</button>
           <button type="button" class="sch-tbtn" data-s="push" title="${esc(TIP.push)}">⭱ Push</button>
           <button type="button" class="sch-tbtn danger" data-s="force" title="${esc(TIP.force)}">Force push</button>
           <button type="button" class="sch-tbtn danger" data-s="forget" title="${esc(TIP.forget)}">Forget token</button>
