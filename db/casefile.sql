@@ -159,8 +159,15 @@ begin
     new.updated_at := now();
     insert into public.case_log(entity, entity_id, action, actor, before, after)
     values (ent, new.id,
+            -- 28/10/2026 — ΔΙΟΡΘΩΘΗΚΕ ΣΤΟ CLOUD ΚΑΙ ΟΧΙ ΕΔΩ· η εξαγωγή το
+            -- αποκάλυψε. Έγραφε `old.deleted_at is null`, που δουλεύει για το
+            -- `cases` αλλά ΟΧΙ για το `students`: ο ΙΔΙΟΣ trigger τρέχει και
+            -- στους δύο πίνακες, και το `students` ΔΕΝ ΕΧΕΙ στήλη deleted_at.
+            -- Η αναφορά σε ανύπαρκτο πεδίο εγγραφής σκάει στην εκτέλεση — το
+            -- `and` της SQL δεν εγγυάται βραχυκύκλωμα. Το `to_jsonb(old) ->>`
+            -- επιστρέφει απλώς NULL όταν το πεδίο λείπει.
             case when ent = 'case'
-                   and old.deleted_at is null
+                   and (to_jsonb(old) ->> 'deleted_at') is null
                    and (to_jsonb(new) ->> 'deleted_at') is not null
                  then 'delete' else 'update' end,
             public.fdms_actor(), to_jsonb(old), to_jsonb(new));
@@ -273,3 +280,123 @@ grant select, insert, update, delete on public.students   to service_role;
 grant select, insert, update, delete on public.cases      to service_role;
 grant select                         on public.cases_live to service_role;
 grant select, insert                 on public.case_log   to service_role;
+
+
+-- ════════════════════════════════════════════════════════════════════════════
+-- ΟΙ RPC ΤΟΥ AGENT (migration `casefile_agent_rpc`)
+-- ════════════════════════════════════════════════════════════════════════════
+-- ΓΡΑΦΤΗΚΑΝ ΕΔΩ ΣΤΙΣ 28/10/2026, ΕΞΑΓΟΜΕΝΕΣ ΑΥΤΟΛΕΞΕΙ από το ζωντανό project
+-- με `pg_get_functiondef`. Μέχρι τότε ΥΠΗΡΧΑΝ ΜΟΝΟ ΣΤΟ CLOUD: ο proxy τις
+-- καλούσε (`rpc/fn_add_case`, `rpc/fn_update_case`, `rpc/fn_upsert_student`)
+-- και το repo δεν τις είχε. Αν το project χανόταν, ο φάκελος ΔΕΝ ξαναστηνόταν
+-- — και το μήνυμα παύσης του Supabase υπόσχεται ότι «τα ΔΕΔΟΜΕΝΑ παραμένουν
+-- διαθέσιμα για λήψη»· οι συναρτήσεις δεν είναι δεδομένα.
+--
+-- ΓΙΑΤΙ ΕΙΝΑΙ SECURITY DEFINER: τρέχουν με τα δικαιώματα του ιδιοκτήτη τους,
+-- ώστε να γράφουν στους πίνακες ΚΑΙ να περνούν τον δράστη στο log μέσω
+-- `set_config('fdms.actor', …, true)` — η ρύθμιση είναι ΤΟΠΙΚΗ στη συναλλαγή
+-- (το τρίτο όρισμα `true`), άρα δεν διαρρέει σε επόμενο αίτημα της ίδιας
+-- σύνδεσης. Κάθε μία απαιτεί ΜΗ ΚΕΝΟ actor και σκάει αλλιώς: ο φάκελος δεν
+-- δέχεται ανώνυμη εγγραφή ούτε κατά λάθος.
+
+CREATE OR REPLACE FUNCTION public.fn_add_case(p_actor text, p_student_id uuid, p_occurred_on date, p_kind case_kind, p_stage text DEFAULT NULL::text, p_sortie text DEFAULT NULL::text, p_score_pct smallint DEFAULT NULL::smallint, p_consequence text DEFAULT NULL::text, p_cites jsonb DEFAULT '[]'::jsonb, p_note text DEFAULT NULL::text)
+ RETURNS uuid
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare v_id uuid;
+begin
+  if coalesce(trim(p_actor), '') = '' then raise exception 'actor required'; end if;
+  perform set_config('fdms.actor', p_actor, true);
+  insert into public.cases(student_id, occurred_on, kind, stage, sortie,
+                           score_pct, consequence, cites, note)
+  values (p_student_id, p_occurred_on, p_kind, p_stage, p_sortie,
+          p_score_pct, p_consequence, coalesce(p_cites, '[]'::jsonb), p_note)
+  returning id into v_id;
+  return v_id;
+end; $function$;
+
+CREATE OR REPLACE FUNCTION public.fn_update_case(p_actor text, p_case_id uuid, p_consequence text DEFAULT NULL::text, p_note text DEFAULT NULL::text, p_status case_status DEFAULT NULL::case_status, p_cites jsonb DEFAULT NULL::jsonb, p_withdraw boolean DEFAULT false)
+ RETURNS void
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+begin
+  if coalesce(trim(p_actor), '') = '' then raise exception 'actor required'; end if;
+  perform set_config('fdms.actor', p_actor, true);
+  update public.cases set
+    consequence = coalesce(p_consequence, consequence),
+    note        = coalesce(p_note, note),
+    status      = coalesce(p_status, status),
+    cites       = coalesce(p_cites, cites),
+    deleted_at  = case when p_withdraw then now() else deleted_at end
+  where id = p_case_id;
+  if not found then raise exception 'case % not found', p_case_id; end if;
+end; $function$;
+
+-- ΠΡΟΣΟΧΗ ΣΤΗ ΣΕΙΡΑ ΤΑΥΤΟΠΟΙΗΣΗΣ: πρώτα το `oid` (το σταθερό id του FDMS),
+-- μετά επώνυμο+σειρά. Το δεύτερο σκέλος είναι ΕΥΡΕΤΙΚΟ και μπορεί να ενώσει
+-- δύο συνώνυμους της ίδιας σειράς — γι' αυτό οι μαθητές γράφονται κανονικά
+-- ΜΟΝΟ από τον ιδιοκτήτη, με το tools/casefile_import_students.py από το
+-- ιδιωτικό roster, και όχι από τον agent.
+CREATE OR REPLACE FUNCTION public.fn_upsert_student(p_actor text, p_last_name text, p_first_name text DEFAULT NULL::text, p_rank text DEFAULT NULL::text, p_mn text DEFAULT NULL::text, p_course text DEFAULT NULL::text, p_oid text DEFAULT NULL::text)
+ RETURNS uuid
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare v_id uuid;
+begin
+  if coalesce(trim(p_actor), '') = '' then raise exception 'actor required'; end if;
+  perform set_config('fdms.actor', p_actor, true);
+  if p_oid is not null then
+    select id into v_id from public.students where oid = p_oid;
+  end if;
+  if v_id is null then
+    select id into v_id from public.students
+     where lower(last_name) = lower(p_last_name)
+       and (p_course is null or course = p_course) limit 1;
+  end if;
+  if v_id is null then
+    insert into public.students(oid, rank, last_name, first_name, mn, course)
+    values (p_oid, p_rank, p_last_name, p_first_name, p_mn, p_course)
+    returning id into v_id;
+  else
+    update public.students set
+      oid        = coalesce(p_oid, oid),
+      rank       = coalesce(p_rank, rank),
+      first_name = coalesce(p_first_name, first_name),
+      mn         = coalesce(p_mn, mn),
+      course     = coalesce(p_course, course)
+    where id = v_id;
+  end if;
+  return v_id;
+end; $function$;
+
+-- ── ⚠ ΕΚΚΡΕΜΕΙ — ΔΕΝ ΕΧΕΙ ΕΦΑΡΜΟΣΤΕΙ ΣΤΟ CLOUD ────────────────────────────
+-- Τον Οκτώβριο αφαιρέσαμε το δικαίωμα εκτέλεσης από τις `audit_row` και
+-- `fdms_actor` (βλ. παραπάνω) γιατί ήταν SECURITY DEFINER στα χέρια
+-- οποιουδήποτε. Οι τρεις `fn_*` είναι ΕΠΙΣΗΣ SECURITY DEFINER, γράφουν στον
+-- φάκελο, και δημιουργήθηκαν ΑΡΓΟΤΕΡΑ — κανείς δεν τους αφαίρεσε τίποτα.
+-- Η PostgreSQL δίνει EXECUTE στο PUBLIC από προεπιλογή, και το Supabase
+-- προσθέτει anon/authenticated/service_role στα δικά του default privileges.
+-- ΔΕΝ ΤΟ ΙΣΧΥΡΙΖΟΜΑΣΤΕ — ΜΕΤΡΙΕΤΑΙ ΠΡΩΤΑ (το ερώτημα είναι στο roadmap).
+-- Αν η μέτρηση δείξει ότι ο `anon` μπορεί να τις καλέσει, τρέχουν αυτά:
+--
+--   revoke execute on function public.fn_add_case(text, uuid, date, case_kind,
+--          text, text, smallint, text, jsonb, text) from public, anon, authenticated;
+--   revoke execute on function public.fn_update_case(text, uuid, text, text,
+--          case_status, jsonb, boolean) from public, anon, authenticated;
+--   revoke execute on function public.fn_upsert_student(text, text, text, text,
+--          text, text, text) from public, anon, authenticated;
+--   grant execute on function public.fn_add_case(text, uuid, date, case_kind,
+--          text, text, smallint, text, jsonb, text) to service_role;
+--   grant execute on function public.fn_update_case(text, uuid, text, text,
+--          case_status, jsonb, boolean) to service_role;
+--   grant execute on function public.fn_upsert_student(text, text, text, text,
+--          text, text, text) to service_role;
+--
+-- Ο proxy μιλά ΜΟΝΟ με service-role κλειδί, άρα δεν χάνει τίποτα. § 4φ: στο
+-- cloud τρέχει μόνο ο ιδιοκτήτης, με ρητό λόγο του.
