@@ -450,9 +450,16 @@
       if (out.conflict) {
         setStatus("⚠ conflict — remote changed");
         if (auto) return;                       // the hint says so; the user decides in ☁ Sync
-        if (confirm("Another device pushed newer data to the repo.\n\nOK = PULL theirs (discards your " + st.dirty +
-          " local change(s))\nCancel = keep working locally (use 'Force push' to overwrite them).")) {
-          setDirty(0); st.busy = false; await doPull(false); return;
+        /* 28/10/2026 — ΑΥΤΟ ΤΟ ΚΕΙΜΕΝΟ ΕΛΕΓΕ ΨΕΜΑΤΑ ΚΑΙ Ο ΙΔΙΟΚΤΗΤΗΣ ΠΑΤΗΣΕ
+           ΠΑΝΩ ΤΟΥ: «discards your N local changes» ίσχυε πριν τη συγχώνευση
+           της 20/10. Το Pull ΔΕΝ πετά τίποτα πια — κρίνει ανά εγγραφή.
+           Και ΔΕΝ μηδενίζουμε πλέον το dirty ΠΡΙΝ το pull: η συγχώνευση είναι
+           αυτή που ξέρει τι επέζησε και τι χρωστά ακόμη push. */
+        if (confirm("Το repo έχει αλλαγές που δεν έχεις.\n\n"
+          + "OK = ΣΥΓΧΩΝΕΥΣΗ (ανά εγγραφή· οι " + st.dirty + " δικές σου αλλαγές ΔΕΝ πετιούνται — "
+          + "σε ισοπαλία κρατιέται η δική σου)\n"
+          + "Cancel = συνεχίζεις τοπικά (το «Force push» γράφει τα δικά σου πάνω από το repo).")) {
+          st.busy = false; await doPull(false); return;
         }
         return;
       }
