@@ -375,28 +375,52 @@ begin
   return v_id;
 end; $function$;
 
--- ── ⚠ ΕΚΚΡΕΜΕΙ — ΔΕΝ ΕΧΕΙ ΕΦΑΡΜΟΣΤΕΙ ΣΤΟ CLOUD ────────────────────────────
--- Τον Οκτώβριο αφαιρέσαμε το δικαίωμα εκτέλεσης από τις `audit_row` και
--- `fdms_actor` (βλ. παραπάνω) γιατί ήταν SECURITY DEFINER στα χέρια
--- οποιουδήποτε. Οι τρεις `fn_*` είναι ΕΠΙΣΗΣ SECURITY DEFINER, γράφουν στον
--- φάκελο, και δημιουργήθηκαν ΑΡΓΟΤΕΡΑ — κανείς δεν τους αφαίρεσε τίποτα.
--- Η PostgreSQL δίνει EXECUTE στο PUBLIC από προεπιλογή, και το Supabase
--- προσθέτει anon/authenticated/service_role στα δικά του default privileges.
--- ΔΕΝ ΤΟ ΙΣΧΥΡΙΖΟΜΑΣΤΕ — ΜΕΤΡΙΕΤΑΙ ΠΡΩΤΑ (το ερώτημα είναι στο roadmap).
--- Αν η μέτρηση δείξει ότι ο `anon` μπορεί να τις καλέσει, τρέχουν αυτά:
+-- ── ΤΑ ΔΙΚΑΙΩΜΑΤΑ ΕΚΤΕΛΕΣΗΣ, ΜΕΤΡΗΜΕΝΑ 28/10/2026 ────────────────────────
+-- Ο φόβος ήταν ότι οι `fn_*`, όντας SECURITY DEFINER και φτιαγμένες ΜΕΤΑ τον
+-- έλεγχο ασφαλείας του Οκτωβρίου, έμειναν ανοιχτές στον `anon`. ΜΕΤΡΗΘΗΚΕ με
+-- `pg_proc.proacl` στο ζωντανό project. ΔΕΝ ΙΣΧΥΕΙ — και η καταγραφή μένει
+-- εδώ ακριβώς επειδή ήταν εύλογος φόβος που αποδείχθηκε λάθος:
 --
+--   audit_row          {postgres=X/postgres, service_role=X/postgres}
+--   fdms_actor         {=X/postgres, postgres=X/…, authenticated=X/…, service_role=X/…}
+--   fn_add_case        {postgres=X/…, authenticated=X/…, service_role=X/…}
+--   fn_update_case     {postgres=X/…, authenticated=X/…, service_role=X/…}
+--   fn_upsert_student  {postgres=X/…, authenticated=X/…, service_role=X/…}
+--
+-- Πώς διαβάζεται: `δικαιούχος=δικαιώματα/δότης`, `X` = EXECUTE, και
+-- **ΚΕΝΟΣ δικαιούχος σημαίνει PUBLIC** — δηλαδή ΟΛΟΙ οι ρόλοι.
+--
+-- ΤΙ ΒΓΑΙΝΕΙ:
+--   · Οι τρεις `fn_*` ΔΕΝ έχουν εγγραφή PUBLIC και ΔΕΝ έχουν `anon`.
+--     **Ο ανώνυμος ΔΕΝ μπορεί να τις καλέσει.** Ο συναγερμός έπεσε.
+--   · Η `audit_row` είναι καθαρή: μόνο postgres + service_role. Ο Οκτώβριος
+--     δούλεψε εκεί.
+--   · ΕΝΑ ΥΠΟΛΕΙΜΜΑ: η `fdms_actor` κρατά ακόμη `=X/postgres`, δηλαδή
+--     **PUBLIC**. Τον Οκτώβριο γράψαμε `revoke execute … from anon` — αλλά η
+--     αφαίρεση από τον `anon` ΔΕΝ αγγίζει τη χορήγηση προς το PUBLIC, και ο
+--     `anon` είναι μέλος του PUBLIC όπως κάθε ρόλος. Άρα ο κανόνας που
+--     νομίζαμε ότι επιβάλαμε **δεν επιβλήθηκε ποτέ**. Η ζημιά είναι μηδενική
+--     (η συνάρτηση δεν είναι SECURITY DEFINER· διαβάζει ρυθμίσεις συνεδρίας
+--     και επιστρέφει ένα όνομα), αλλά το αρχείο δεν επιτρέπεται να λέει κάτι
+--     που δεν ισχύει.
+--
+-- ⚠ ΤΑ ΠΑΡΑΚΑΤΩ ΔΕΝ ΕΧΟΥΝ ΕΚΤΕΛΕΣΤΕΙ — § 4φ: στο cloud τρέχει μόνο ο
+-- ιδιοκτήτης, με ρητό λόγο του. Είναι σφίξιμο, όχι επιδιόρθωση τρύπας.
+--
+--   -- το υπόλειμμα του Οκτωβρίου, τώρα σωστά:
+--   revoke execute on function public.fdms_actor() from public;
+--
+--   -- ο `authenticated` δεν χρειάζεται να γράφει στον φάκελο: ο proxy μιλά
+--   -- ΜΟΝΟ με service-role κλειδί. Ό,τι δεν χρειάζεται, φεύγει.
 --   revoke execute on function public.fn_add_case(text, uuid, date, case_kind,
---          text, text, smallint, text, jsonb, text) from public, anon, authenticated;
+--          text, text, smallint, text, jsonb, text) from authenticated;
 --   revoke execute on function public.fn_update_case(text, uuid, text, text,
---          case_status, jsonb, boolean) from public, anon, authenticated;
+--          case_status, jsonb, boolean) from authenticated;
 --   revoke execute on function public.fn_upsert_student(text, text, text, text,
---          text, text, text) from public, anon, authenticated;
---   grant execute on function public.fn_add_case(text, uuid, date, case_kind,
---          text, text, smallint, text, jsonb, text) to service_role;
---   grant execute on function public.fn_update_case(text, uuid, text, text,
---          case_status, jsonb, boolean) to service_role;
---   grant execute on function public.fn_upsert_student(text, text, text, text,
---          text, text, text) to service_role;
+--          text, text, text) from authenticated;
 --
--- Ο proxy μιλά ΜΟΝΟ με service-role κλειδί, άρα δεν χάνει τίποτα. § 4φ: στο
--- cloud τρέχει μόνο ο ιδιοκτήτης, με ρητό λόγο του.
+-- ΓΙΑΤΙ ΑΞΙΖΕΙ ΠΑΡΟΛΟ ΠΟΥ Ο ANON ΕΙΝΑΙ ΗΔΗ ΕΞΩ: ο `authenticated` δεν είναι
+-- πρόσωπο — είναι ΟΠΟΙΟΣ κρατά έγκυρο JWT. Αν κάποια στιγμή ανοίξει εγγραφή
+-- χρηστών στο project, ο ρόλος γεμίζει με αγνώστους που θα μπορούν να
+-- γράψουν στον φάκελο με ΟΠΟΙΟΔΗΠΟΤΕ όνομα δράστη. Σήμερα δεν υπάρχει
+-- τέτοιος χρήστης· αύριο είναι μια ρύθμιση μακριά.
