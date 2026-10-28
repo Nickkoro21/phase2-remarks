@@ -239,3 +239,37 @@ revoke execute on function public.fdms_actor() from anon;
 --   soft delete     → log: case    · DELETE · admin
 --   cases_live      → 0 ορατές γραμμές (η σημασμένη κρύβεται σωστά)
 -- Η βάση παραδόθηκε ΑΔΕΙΑ: students 0 · cases 0 · case_log 0.
+
+-- ════════════════════════════════════════════════════════════════════════════
+-- ΡΗΤΑ ΔΙΚΑΙΩΜΑΤΑ ΓΙΑ ΤΟ DATA API (προσθήκη 28/10/2026)
+-- ════════════════════════════════════════════════════════════════════════════
+-- ΤΙ ΑΛΛΑΞΕ: από 30/10/2026 το Supabase ΣΤΑΜΑΤΑ να δίνει αυτόματα πρόσβαση
+-- Data API σε ΝΕΟΥΣ πίνακες του schema «public». Οι ΥΠΑΡΧΟΝΤΕΣ πίνακες του
+-- ζωντανού project ΔΕΝ επηρεάζονται — κρατούν ό,τι έχουν.
+--
+-- ΓΙΑΤΙ ΜΑΣ ΑΦΟΡΑ ΠΑΡΟΛΑ ΑΥΤΑ: αυτό το αρχείο είναι το ΜΟΝΟ σχέδιο για να
+-- ξαναστηθεί ο φάκελος — σε νέο project, σε preview branch, ή μετά από ένα
+-- τοπικό «supabase db reset». Χωρίς τις παρακάτω γραμμές, μια τέτοια
+-- ανασύσταση θα έφτιαχνε πίνακες που ΥΠΑΡΧΟΥΝ αλλά απαντούν «permission
+-- denied» σε κάθε κλήση του proxy — και θα το ανακαλύπταμε τη χειρότερη
+-- στιγμή: όταν ξαναστήνουμε επειδή κάτι χάθηκε.
+--
+-- ΤΙ ΔΕΝ ΔΙΝΕΤΑΙ, ΕΠΙΤΗΔΕΣ:
+--   · anon  — ΤΙΠΟΤΑ. «Καμία ανώνυμη πρόσβαση, καθόλου» (απόφανση 17/10).
+--   · delete — πουθενά σε authenticated: δεν υπάρχει πολιτική DELETE, και τα
+--     δικαιώματα δεν πρέπει να υπόσχονται ό,τι το RLS αρνείται.
+--   · case_log — το χειρίζεται το μπλοκ παραπάνω (revoke all, grant select).
+--     Γράφει ΜΟΝΟ ο trigger· καμία σειρά (sequence) δεν ανοίγει σε ρόλο API.
+-- Τα παρακάτω ΚΑΘΡΕΦΤΙΖΟΥΝ ακριβώς τις πολιτικές RLS, ούτε ένα δικαίωμα πάνω.
+
+grant select, insert, update on public.students   to authenticated;
+grant select, insert, update on public.cases      to authenticated;
+grant select                 on public.cases_live to authenticated;
+
+-- Ο proxy μιλά με service-role κλειδί. Ο ρόλος παρακάμπτει το RLS, αλλά ΟΧΙ τα
+-- δικαιώματα πίνακα: χωρίς αυτά, μετά τις 30/10 ένας ανασυσταμένος φάκελος θα
+-- αρνιόταν και στον ίδιο τον proxy.
+grant select, insert, update, delete on public.students   to service_role;
+grant select, insert, update, delete on public.cases      to service_role;
+grant select                         on public.cases_live to service_role;
+grant select, insert                 on public.case_log   to service_role;
