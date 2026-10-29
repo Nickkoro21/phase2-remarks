@@ -54,6 +54,10 @@
   const AUTO_MS = 5000;              /* debounce: 5 s after the LAST change of a burst */
 
   const st = { dirty: 0, applying: false, busy: false, lastMsg: "", lockMsg: "", timer: null,
+    /* `hold` — η παύση μετά από μεγάλη συγχώνευση (§ holdAfterMerge). Ζει στη
+       ΜΝΗΜΗ επίτηδες: αφορά ΑΥΤΟ το pull, και ένα refresh είναι ούτως ή άλλως
+       νέα ματιά στα δεδομένα. */
+    hold: null,
     auto: { t: null, state: "", at: "", failed: "" } };
   /* memory-only session secrets — never localStorage/sessionStorage */
   const sess = { pass: null, key: null, keyId: "", unlocked: false };
@@ -478,6 +482,9 @@
         "\n\nΣυνέχεια;")) { setStatus(st.dirty + " local changes"); return; }
       if (!replace && st.dirty > 0 && !interactive && !canMerge) { setStatus(st.dirty + " local changes — pull skipped"); return; }
       const rep = applySnapshot(snap, replace);
+      /* η ΑΝΤΙΚΑΤΑΣΤΑΣΗ είναι ρητή πράξη με δική της προειδοποίηση που μετράει
+         τι σβήνει — δεν χρειάζεται δεύτερο φρένο, και θα ήταν ενοχλητικό */
+      if (!replace) holdAfterMerge(rep);
       lsSet(SHA_KEY, remote.sha);
       const ok = !replace || (rep && rep.replaced > 0);
       setStatus((replace ? (ok ? "replaced ✓ " : "replace ΑΠΕΤΥΧΕ ") : "pulled ✓ ") + nowHM() + mergeWords(rep));
@@ -494,6 +501,11 @@
      long stream of pop-ups. It reports through the topbar hint instead.     */
   async function doPush(force, auto) {
     if (!configured() || st.busy) return;
+    /* ΤΟ ΛΥΝΕΙ ΤΟ ΧΕΡΙ, ΚΑΙ ΜΟΝΟ ΤΟ ΧΕΡΙ. Το ⭱ Push είναι η ματιά που ζητούσε
+       η παύση — μόλις γίνει, το auto-sync ξαναπιάνει κανονικά. Η παύση ΔΕΝ
+       λύνεται από το πέρασμα του χρόνου ούτε από ένα οποιοδήποτε κλικ στο
+       πάνελ, γιατί τότε θα ήταν καθυστέρηση και όχι έλεγχος. */
+    if (!auto) st.hold = null;
     st.busy = true; setStatus("pushing…");
     try {
       const fp = fieldPass();
@@ -566,7 +578,37 @@
         + "type it in ☁ Sync so a push cannot silently write plaintext.";
     }
     if (st.auto.failed) return st.auto.failed;
+    if (st.hold) return st.hold;
     return "";
+  }
+
+  /* ══ ΤΟ ΦΡΕΝΟ ΜΕΤΑ ΑΠΟ ΜΕΓΑΛΗ ΣΥΓΧΩΝΕΥΣΗ (29/10/2026) ════════════════════
+     ΤΟ ΙΣΤΟΡΙΚΟ ΣΕ ΤΡΕΙΣ ΓΡΑΜΜΕΣ. Στις 28/10 μια συσκευή με φυτεμένα
+     δοκιμαστικά δεδομένα τράβηξε το repo, το συγχώνευσε, και **5΄΄ μετά το
+     ξανάσπρωξε** — τρεις φορές (20:29, 20:54, 21:07), κάθε φορά ξαναμολύνοντας
+     ένα repo που μόλις είχε καθαριστεί. Το auto-sync είναι σωστό για ΜΙΑ
+     πληκτρολόγηση· είναι επικίνδυνο αμέσως μετά από συγχώνευση που έφερε
+     εκατοντάδες εγγραφές, γιατί τότε δεν σπρώχνει «την αλλαγή σου» — σπρώχνει
+     ΟΛΟΚΛΗΡΗ την άποψη αυτής της συσκευής για τον κόσμο, πριν τη δει κανείς.
+
+     ΓΙΑΤΙ ΟΧΙ ΑΠΛΑ ΠΙΟ ΑΡΓΑ: ο χρόνος δεν είναι το πρόβλημα. Η ΜΑΤΙΑ είναι.
+     Ένα push που θα γινόταν στα 60΄΄ αντί στα 5΄΄ θα έκανε ακριβώς την ίδια
+     ζημιά, απλώς πιο αργά.
+
+     ΔΕΝ ΜΠΛΟΚΑΡΕΙ ΤΙΠΟΤΑ ΑΛΛΟ: οι τοπικές αλλαγές γράφονται κανονικά, το
+     ⭱ Push δουλεύει με ένα κλικ, και η παύση λέει τον αριθμό που την προκάλεσε
+     αντί για ένα γενικό «προσοχή» που δεν σταματά κανέναν. */
+  const HOLD_AT = 25;
+  function holdAfterMerge(rep) {
+    if (!rep) return;
+    const came = (+rep.fromRemote || 0) + (+rep.deleted || 0) + (+rep.revived || 0);
+    if (came < HOLD_AT) return;
+    st.hold = "auto-sync paused — that pull moved " + came + " records into this browser. Look at the "
+      + "Scheduler before it goes back out: press ⭱ Push when it reads right (and ⭳ Pull (αντικατάσταση) "
+      + "if this device is the wrong copy). Your own edits are being saved locally as usual.";
+    clearTimeout(st.auto.t);
+    st.auto.t = null;
+    st.auto.state = "idle";
   }
   const autoOn = () => !autoReason();
 
