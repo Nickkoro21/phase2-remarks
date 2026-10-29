@@ -17,9 +17,13 @@
  *   the key comes from PBKDF2-SHA256 (310 000 iterations, random 16-byte salt +
  *   12-byte IV per push). Wire format:
  *     {"fdms_enc":1,"kdf":"PBKDF2-SHA256","iter":N,"salt":b64,"iv":b64,"ct":b64}
- *   The passphrase is stored NOWHERE — memory only, re-entered after each page
- *   load. Plaintext remotes are still accepted (migration path). A wrong
- *   passphrase on pull NEVER touches local data.
+ *   WHERE THE PASSPHRASE LIVES — three states, each the owner's own choice:
+ *     · nothing ticked   → memory only, gone when the TAB closes;
+ *     · (20/10) always   → sessionStorage, so a REFRESH does not re-ask;
+ *     · (29/10) ticked   → localStorage, so THIS DEVICE never asks again.
+ *   The third is opt-in, off by default, and reversible by un-ticking it.
+ *   Plaintext remotes are still accepted (migration path). A wrong passphrase
+ *   on pull NEVER touches local data.
  *
  * ACCESS-CODE CURTAIN ("🔒 Lock")
  *   A PBKDF2 verifier (salt+hash only, "p2r-lock-verifier") gates the Scheduler
@@ -96,7 +100,14 @@
     forget: "Deletes the GitHub token and the last-seen file id FROM THIS BROWSER. No data is touched here or in "
       + "the repo — sync simply stops until a token is pasted again. The token stays valid on GitHub: revoke it "
       + "there if the machine is leaving your hands.",
-    passClear: "Drops the encryption passphrase held in memory for this session. Nothing is deleted anywhere — but "
+    passKeep: "Keeps the passphrase in THIS browser's localStorage, so this device stops asking for it — "
+      + "after a reload, after a restart, after the tab is closed. Off by default. It is never pushed and never "
+      + "reaches another device: each one ticks it for itself. What it costs: this device already stores all of "
+      + "the scheduler data in PLAIN TEXT, so whoever holds it unlocked could read everything anyway — what the "
+      + "tick adds is the ability to decrypt the repo's HISTORY from here. Un-tick it and press Save to forget it; "
+      + "«Clear passphrase» forgets it too.",
+    passClear: "Drops the encryption passphrase held in memory for this session, AND from this device if it was "
+      + "remembered. Nothing is deleted anywhere — but "
       + "THE NEXT PUSH WRITES PLAINTEXT over the encrypted repo copy, and a ⭳ Pull will ask for the passphrase "
       + "again. Auto-sync stops itself rather than downgrade the repo silently.",
     lockSet: "Sets the access code asked for before the Scheduler opens, on THIS BROWSER only (a salted "
@@ -199,6 +210,29 @@
      της συσκευής είναι η άμυνα εκεί. ΠΟΤΕ στο localStorage: εκεί θα επιζούσε
      και της επανεκκίνησης, που είναι άλλη υπόσχεση από αυτή που δόθηκε. */
   const PASS_KEY = "p2r-sync-pass";
+
+  /* «ΝΑ ΤΗ ΒΑΖΩ ΜΙΑ ΦΟΡΑ ΣΤΟ ΚΙΝΗΤΟ, ΣΤΟ DESKTOP, ΣΤΟ LOCALHOST, ΝΑ ΤΗ
+     ΘΥΜΑΤΑΙ» — απόφανση ιδιοκτήτη 29/10/2026.
+     ──────────────────────────────────────────────────────────────────────────
+     Η παραπάνω σημείωση έλεγε «ΠΟΤΕ στο localStorage». Αυτό δεν ήταν νόμος —
+     ήταν η υπόσχεση που είχε δοθεί ΤΟΤΕ, και ο ιδιοκτήτης αλλάζει ρητά την
+     υπόσχεση. Μπαίνει λοιπόν ΔΕΥΤΕΡΟΣ χώρος, με δικό του κλειδί, ώστε τα δύο
+     να μην μπερδεύονται ποτέ: όποιος κοιτά το localStorage βλέπει ότι κάποιος
+     το ΖΗΤΗΣΕ, δεν το βρίσκει εκεί κατά λάθος.
+
+     ΤΟ ΤΙΜΗΜΑ, ΓΡΑΜΜΕΝΟ ΟΠΩΣ ΕΙΝΑΙ — ΚΑΙ ΕΙΝΑΙ ΜΙΚΡΟΤΕΡΟ ΑΠ' ΟΣΟ ΑΚΟΥΓΕΤΑΙ.
+     Η φράση ΔΕΝ προστατεύει τα δεδομένα αυτής της συσκευής: αυτά κάθονται ήδη
+     δίπλα, σε ΑΠΛΟ ΚΕΙΜΕΝΟ, στο ίδιο localStorage. Προστατεύει το αντίγραφο
+     στο REPO. Άρα όποιος κρατά τη ΞΕΚΛΕΙΔΩΤΗ συσκευή έβλεπε ήδη τα πάντα· αυτό
+     που προσθέτει το τικ είναι η πρόσβαση στο ΙΣΤΟΡΙΚΟ του repo — παλιά
+     στιγμιότυπα που η συσκευή δεν έχει. Για δικές του συσκευές με οθόνη
+     κλειδώματος αυτό το αντάλλαγμα το έκρινε ο ιδιοκτήτης και το πήρε.
+     Δεν αφορά απομακρυσμένο επιτιθέμενο — εκεί η άμυνα είναι το κλείδωμα.
+
+     ΔΕΝ ΤΑΞΙΔΕΥΕΙ ΠΟΤΕ: όπως το GitHub token, μένει στη συσκευή που την έγραψε
+     και δεν μπαίνει σε κανένα στιγμιότυπο. Κάθε συσκευή την τικάρει μόνη της. */
+  const PASS_DEV_KEY = "p2r-sync-pass-device";
+  const passRemembered = () => !!lsGet(PASS_DEV_KEY);
   function ssGet(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
   function ssSet(k, v) { try { sessionStorage.setItem(k, v); } catch (e) { /* ιδιωτικό παράθυρο */ } }
   function ssDel(k) { try { sessionStorage.removeItem(k); } catch (e) {} }
@@ -207,20 +241,28 @@
     if (!p) return;
     if (p !== sess.pass) { sess.pass = p; sess.key = null; sess.keyId = ""; }
     ssSet(PASS_KEY, p);
+    /* αν η συσκευή ΗΔΗ θυμάται, μια ΑΛΛΑΓΜΕΝΗ φράση ενημερώνει την αποθηκευμένη —
+       αλλιώς η συσκευή θα κρατούσε σιωπηλά την παλιά και θα ξεκλείδωνε λάθος */
+    if (passRemembered()) lsSet(PASS_DEV_KEY, p);
     refreshPassNote();
     hint();                    // arming the key can be what turns auto-sync on
   }
   function clearPass() {
     sess.pass = null; sess.key = null; sess.keyId = "";
     ssDel(PASS_KEY);
+    lsDel(PASS_DEV_KEY);   /* «Clear passphrase» σημαίνει ΚΑΙ να την ξεχάσει η συσκευή */
     refreshPassNote();
     hint();
   }
   function fieldPass() { const el = $("sync-pass"); return el ? el.value.trim() : ""; }
   function clearPassField() { const el = $("sync-pass"); if (el) el.value = ""; }
+  function passNote() {
+    return !sess.pass ? ""
+      : (passRemembered() ? "— remembered on this device ✓" : "— set for this session ✓");
+  }
   function refreshPassNote() {
     const n = $("sync-pass-note");
-    if (n) n.textContent = sess.pass ? "— set for this session ✓" : "";
+    if (n) n.textContent = passNote();
   }
 
   /* ── GitHub API ─────────────────────────────────────────────────────────── */
@@ -840,11 +882,16 @@
         <input id="sync-device" placeholder="work-laptop / home-pc" value="${esc(c.device || "")}">
         <label>Fine-grained token ${hasTok ? '<span class="sync-tok-note">— saved ✓ (leave empty to keep)</span>' : ""}</label>
         <input id="sync-token" type="password" autocomplete="off" placeholder="${hasTok ? "•••••••••••• saved" : "github_pat_…"}">
-        <label>Encryption passphrase <span class="sync-tok-note" id="sync-pass-note">${sess.pass ? "— set for this session ✓" : ""}</span></label>
+        <label>Encryption passphrase <span class="sync-tok-note" id="sync-pass-note">${passNote()}</span></label>
         <input id="sync-pass" type="password" autocomplete="off" placeholder="${sess.pass ? "armed — repo copy is ciphertext" : "optional — encrypts the repo copy"}">
-        <p class="hint">Stored <b>nowhere</b> — re-enter it after every page load. With it set, the repo
-        holds <b>only ciphertext</b> (AES-GCM&nbsp;256, PBKDF2-SHA256 · 310k). Forgetting it makes the
-        <b>remote</b> backups unreadable — local data is unaffected. Empty → plaintext, as before.</p>
+        <p class="hint">With it set, the repo holds <b>only ciphertext</b> (AES-GCM&nbsp;256,
+        PBKDF2-SHA256 · 310k). Forgetting it makes the <b>remote</b> backups unreadable — local data is
+        unaffected. Empty → plaintext, as before.</p>
+        <p class="hint"><label title="${esc(TIP.passKeep)}"><input type="checkbox" id="sync-pass-keep"
+          ${passRemembered() ? "checked" : ""}> <b>Remember it on this device</b></label> — then it is
+        never asked again <b>here</b>. It still never travels: every device ticks this for itself.
+        <br>The passphrase guards the <b>repo</b> copy; this device already holds its data in plain text,
+        so what the tick adds is access to the repo's <b>history</b>. Un-tick and Save to forget it.</p>
         <div class="sync-row">
           <button type="button" class="sch-tbtn" data-s="save" title="${esc(TIP.save)}">💾 Save</button>
           <button type="button" class="sch-tbtn" data-s="pull" title="${esc(TIP.pull)}">⭳ Pull</button>
@@ -896,8 +943,22 @@
     lsSet(CFG_KEY, JSON.stringify(c));
     const t = $("sync-token").value.trim();
     if (t) { lsSet(TOK_KEY, t); $("sync-token").value = ""; }
+    /* Η ΣΕΙΡΑ ΕΧΕΙ ΣΗΜΑΣΙΑ: πρώτα το τικ, ώστε μια φράση που γράφτηκε ΜΑΖΙ με
+       το τικ στην ίδια αποθήκευση να φτάσει στη συσκευή από την armPass. */
+    const keepEl = $("sync-pass-keep");
+    const keepOn = keepEl ? keepEl.checked : passRemembered();
+    if (!keepOn) {
+      lsDel(PASS_DEV_KEY);
+      /* Το ξε-τικάρισμα ΥΠΟΒΙΒΑΖΕΙ τη φράση, δεν τη σβήνει: η τρέχουσα
+         παραμένει οπλισμένη και πέφτει πίσω στην υπόσχεση της 20/10 — επιζεί
+         του refresh, πεθαίνει με την καρτέλα. Χωρίς αυτή τη γραμμή θα έμενε
+         ΜΟΝΟ στη μνήμη, και η ανανέωση της σελίδας θα την ξαναζητούσε. */
+      if (sess.pass) ssSet(PASS_KEY, sess.pass);
+    } else lsSet(PASS_DEV_KEY, fieldPass() || sess.pass || "");
     const p = fieldPass();
-    if (p) armPass(p); /* memory only — renderPop() below clears the field */
+    if (p) armPass(p); /* renderPop() below clears the field */
+    /* τικ χωρίς καμία φράση πουθενά: δεν υπάρχει τίποτα να θυμηθεί */
+    if (keepOn && !sess.pass) lsDel(PASS_DEV_KEY);
     renderPop();
     setStatus(configured() ? "saved ✓ — ready to sync" : "saved — token still missing");
     refreshBtn();
@@ -940,7 +1001,7 @@
     if (!window.SchedStore) { setTimeout(boot, 400); return; }
     await window.SchedStore.ready();
     /* η φράση της ΚΑΡΤΕΛΑΣ: ένα refresh δεν την ξαναζητά (απόφανση 20/10) */
-    const keep = ssGet(PASS_KEY);
+    const keep = ssGet(PASS_KEY) || lsGet(PASS_DEV_KEY);
     if (keep) { sess.pass = keep; sess.key = null; sess.keyId = ""; }
     st.dirty = parseInt(lsGet(DIRTY_KEY), 10) || 0;
     window.SchedStore.subscribe(() => {
