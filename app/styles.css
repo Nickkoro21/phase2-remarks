@@ -2605,3 +2605,82 @@ html[data-edit="off"] .cur-head::after {
 .bt-state.is-dp_ae, .bt-state.is-dp_cdr, .bt-state.is-oral_exam, .bt-state.is-apt, .bt-state.is-fs_ladder, .bt-state.is-practice, .bt-state.is-cdr_decides { border-left-color: var(--warn); }
 .bt-state.is-free { border-left-color: var(--good); }
 .bt-form-none { justify-content: center; }
+
+/* ══ Η ΥΠΟΔΟΧΗ (29/10/2026) ═════════════════════════════════════════════════
+   ΚΑΝΕΝΑ ΚΑΙΝΟΥΡΙΟ ΧΡΩΜΑ ΚΑΙ ΚΑΝΕΝΑ ΚΑΙΝΟΥΡΙΟ ΣΧΗΜΑ. Ο διάλογος είναι η
+   αυλαία `.ed-pop` και η κάρτα `.ed-box` του σπιτιού, φαρδιά όπως η `.brg-box`
+   του διαλόγου της γέφυρας και για τον ΙΔΙΟ λόγο: μια λίστα που πρέπει να
+   δείξει κάθε γραμμή, όχι το πλήθος τους. Ο πίνακας είναι ο `.sch-tbl`. Τα
+   τέσσερα βερδίκτα δανείζονται τα τέσσερα tokens που η εφαρμογή χρησιμοποιεί
+   ήδη για το ίδιο νόημα — accent «νέο», warn «κοίτα το», muted «τίποτα να
+   κάνεις», bad «δεν γράφεται» — οπότε και οι οκτώ παλέτες τα κουβαλούν στην
+   αντίθεση που κουβαλούν και τα υπόλοιπα.                                   */
+.ink-box { width: 980px; max-width: 95vw; text-align: left; }
+.ink-box h3 { text-align: center; }
+.ink-in {
+  width: 100%; box-sizing: border-box; margin: 8px 0 0;
+  font-family: Consolas, monospace; font-size: 12px; line-height: 1.55;
+  padding: 8px 10px; resize: vertical;
+  background: var(--panel-2); color: var(--text);
+  border: 1px solid var(--line); border-radius: 7px;
+}
+.ink-in:focus { outline: none; border-color: var(--accent); }
+.ink-row { margin: 10px 0 0; }
+
+/* Το κλειδωμένο editor mode λέγεται ΠΡΙΝ γίνει η δουλειά του ελέγχου, όχι σε
+   σαράντα toast μετά — βλ. τον σχολιασμό στο schedintake.js § ο διάλογος. */
+.ink-lock {
+  margin: 8px 0 0; padding: 7px 10px; font-size: 12px; line-height: 1.5;
+  color: var(--warn); background: rgba(var(--warn-rgb), 0.08);
+  border: 1px solid rgba(var(--warn-rgb), 0.45); border-radius: 7px;
+}
+.ink-fatal {
+  margin: 10px 0 0; padding: 7px 10px; font-size: 12.5px; line-height: 1.5;
+  color: var(--bad); background: rgba(var(--bad-rgb), 0.08);
+  border: 1px solid rgba(var(--bad-rgb), 0.45); border-radius: 7px;
+}
+
+.ink-out { max-height: 44vh; overflow: auto; margin: 10px 0 0; }
+.ink-tbl td { vertical-align: top; }
+.ink-tbl td.ink-n { font-family: Consolas, monospace; color: var(--muted); width: 1%; }
+.ink-tbl td.ink-tick { width: 1%; }
+/* το τικ είναι ΤΙΚ και όχι πεδίο: χωρίς αυτό κληρώνει το `width:100%` που τα
+   πεδία της κάρτας φοράνε, και γίνεται μπάρα 900px πάνω από το νούμερό του —
+   το ίδιο λάθος που διορθώθηκε στο ☁ Sync στις 29/10 */
+.ink-tbl td.ink-tick input { width: auto; margin: 0; }
+.ink-tbl td.ink-say { font-size: 11.5px; line-height: 1.45; max-width: 360px; }
+.ink-why { color: var(--bad); }
+.ink-r-same .ink-why, .ink-r-clash .ink-why { color: var(--muted); }
+.ink-warn { color: var(--warn); }
+.ink-note { color: var(--muted); font-style: italic; }
+
+.sch-badge.ink-new { color: var(--accent); border-color: var(--accent); }
+.sch-badge.ink-clash { color: var(--warn); border-color: var(--warn); }
+.sch-badge.ink-same { color: var(--muted); border-color: var(--line); }
+.sch-badge.ink-bad { color: var(--bad); border-color: var(--bad); }
+
+/* μια γραμμή που ΔΕΝ θα γραφτεί σβήνει μόνη της, ώστε το μάτι να πέφτει στις
+   γραμμές που θα γραφτούν και όχι σε αυτές που δεν αφορούν την πράξη */
+.ink-tbl tr.ink-r-same td, .ink-tbl tr.ink-r-bad td { opacity: 0.78; }
+
+.ink-tally { margin: 10px 0 0; font-size: 12.5px; color: var(--text); font-weight: 600; }
+.ink-clashnote { margin: 6px 0 0; }
+.ink-picked { margin: 6px 0 0; font-size: 12px; color: var(--accent); }
+/* ΣΤΟ ΤΗΛΕΦΩΝΟ Ο ΠΙΝΑΚΑΣ ΓΙΝΕΤΑΙ ΣΕΙΡΕΣ, ΚΑΙ Ο ΛΟΓΟΣ ΕΙΝΑΙ Η ΤΕΛΕΥΤΑΙΑ ΣΤΗΛΗ.
+   Δέκα στήλες σε 375 πλάτος δεν χωράνε: με οριζόντια κύλιση το «τι βλέπει η
+   υποδοχή» — δηλαδή Ο ΜΟΝΟΣ ΛΟΓΟΣ ΠΟΥ ΥΠΑΡΧΕΙ Η ΠΡΟΕΠΙΣΚΟΠΗΣΗ — πέφτει έξω από
+   την οθόνη, και μένει ορατό ακριβώς ό,τι θα έβλεπε κανείς και χωρίς αυτήν.
+   Στοιβαγμένο, τα γεγονότα τρέχουν σε μία γραμμή και η αιτιολογία παίρνει δική
+   της από κάτω — μια σειρά ανά γραμμή του μπλοκ, όπως και στο μεγάλο. */
+@media (max-width: 760px) {
+  .ink-tbl thead { display: none; }
+  .ink-tbl, .ink-tbl tbody, .ink-tbl tr { display: block; width: auto; }
+  .ink-tbl tr { padding: 5px 0; border-bottom: 1px solid var(--line); }
+  /* το `width: 1%` των δύο στενών κελιών είναι κανόνας ΠΙΝΑΚΑ — μετά το
+     display:inline-block γίνεται 1% των 356px, δηλαδή 3,5px, και ο αριθμός
+     της γραμμής κόβεται. Μαζί με το display αλλάζει και το πλάτος. */
+  .ink-tbl td { display: inline-block; vertical-align: middle; border: 0; padding: 1px 4px; width: auto; }
+  .ink-tbl td:empty { display: none; }        /* ένα κενό κελί δεν κρατά θέση */
+  .ink-tbl td.ink-say { display: block; max-width: none; padding: 2px 4px 0 24px; }
+  .ink-say > span { display: block; }         /* λόγος και προειδοποίηση, από μία γραμμή */
+}

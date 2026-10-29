@@ -2468,7 +2468,9 @@ window.fmtDMY = function fmtDMY(v) {
     el.innerHTML = `
       <section class="panel sch-panel">
         <div class="sch-h"><h2>New entry</h2>
-          <button type="button" class="sch-btn" data-act="toggle-form">${ui.log.open ? "Hide" : "Open"} form</button></div>
+          <button type="button" class="sch-btn" data-act="toggle-form">${ui.log.open ? "Hide" : "Open"} form</button>
+          ${window.SchedIntake ? `<button type="button" class="sch-btn" data-act="intake" data-nav
+            title="paste a checked block of flights — one line per entry, nothing is written until you tick it">⇩ Intake</button>` : ""}</div>
         ${ui.log.nfsSuggest ? `<div class="sch-consqban is-apt"><b>NFS suggested</b> —
           ground-exam failure of <span class="sch-code">${esc(nm(ui.log.nfsSuggest.student))}</span>
           on ${esc(window.fmtDMY(ui.log.nfsSuggest.date))} (${esc(ui.log.nfsSuggest.label)}) —
@@ -2918,6 +2920,24 @@ window.fmtDMY = function fmtDMY(v) {
         ui.log.open = !ui.log.open;
         if (ui.log.open && !ui.log.form) ui.log.form = blankForm();
         renderLog();
+      } else if (act === "intake") {
+        /* ΓΙΑΤΙ ΤΟ ΚΟΥΜΠΙ ΦΟΡΑΕΙ `data-nav`. Χωρίς αυτό το απενεργοποιεί ο
+           σαρωτής του κλειδώματος, όπως κάθε κουμπί μέσα στο #view-scheduler —
+           και τότε ο διάλογος δεν ανοίγει ΠΟΤΕ σε συσκευή που διαβάζει, δηλαδή
+           στην προεπιλεγμένη κατάσταση κάθε συσκευής. Είναι η ΙΔΙΑ γραμμή που
+           έχουν ήδη το `#sync-open` και το `[data-t="export"]` στη λίστα NAV
+           του schedstore.js: «είναι η πόρτα, όχι η πράξη». Η πράξη πίσω της —
+           το ✎ Write — δεν είναι εξαιρεμένη από τίποτα: ο διάλογος κρατά το
+           κουμπί κλειστό όσο το κλείδωμα είναι κλειστό, και το
+           SchedStore.upsert() ρωτάει το mayWrite() ξεχωριστά για κάθε εγγραφή.
+           Το ΔΙΑΒΑΣΜΑ ενός μπλοκ δεν είναι γραφή, και είναι χρήσιμο να μπορεί
+           να κριθεί πριν ξεκλειδώσει κανείς — αυτό ακριβώς κερδίζει η εξαίρεση. */
+        /* Η ΥΠΟΔΟΧΗ ΕΙΝΑΙ ΧΩΡΙΣΤΟ ΑΡΧΕΙΟ ΚΑΙ ΑΥΤΟ ΕΙΝΑΙ ΟΛΗ Η ΣΥΝΔΕΣΗ: ο
+           διάλογος ζει στο app/schedintake.js, γράφει μέσα από το ΙΔΙΟ
+           SchedStore.upsert που γράφει και η φόρμα δύο γραμμές παρακάτω, και
+           δεν ξέρει τίποτα από εδώ. Αν το αρχείο λείπει, το κουμπί δεν βάφτηκε
+           ποτέ — γι' αυτό δεν υπάρχει εδώ κλάδος για το «δεν υπάρχει». */
+        window.SchedIntake.open();
       } else if (act === "save-ev") saveEvent();
       else if (act === "reset-ev") { ui.log.form = blankForm(); renderForm(); }
       else if (act === "edit-ev") editEvent(b.dataset.id);
