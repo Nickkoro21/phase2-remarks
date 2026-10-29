@@ -6201,6 +6201,19 @@
       tip = "these flights are owed and nothing will cross from this device: the bridge writes Wings "
         + "Ahead only with ✎ Editor mode on, because a write it could not record in its own ledger is a "
         + "write nobody could take back.";
+    } else if (owed && queuedByMachine()) {
+      /* Η ΜΗΧΑΝΗ ΕΓΡΑΨΕ, ΑΡΑ Η ΑΥΤΟΜΑΤΗ ΛΩΡΙΔΑ ΣΤΑΜΑΤΑ ΚΑΙ ΤΟ ΛΕΕΙ. Η
+         κατάσταση ανήκει ΕΔΩ και όχι στην armAuto(): το chip ξαναβάφεται σε
+         κάθε render, οπότε ένα μήνυμα γραμμένο έξω από αυτή την αλυσίδα θα
+         ζούσε μέχρι το επόμενο βάψιμο — δηλαδή θα εμφανιζόταν και θα χανόταν
+         χωρίς κανόνα, που είναι χειρότερο από το να μην υπήρχε. */
+      const m = queuedByMachine();
+      txt = "✈ WA · " + owed + " queued · " + m + " needs you";
+      cls += " is-warn";
+      tip = m + " of these " + (m === 1 ? "was" : "were") + " written by an agent, not by you, so the "
+        + "automatic lane is holding the WHOLE queue — a half-sent day is worse than a paused one. Open "
+        + "the Bridge tab and use ✈ Push now, which names every line before it sends it. Correcting a "
+        + "row by hand makes it yours, and the queue resumes on its own.";
     } else if (owed) {
       txt = "✈ WA · " + owed + " queued";
       cls += " is-on";
@@ -6234,11 +6247,39 @@
      A revoked credential is not retried at all: it disarms the automatic lane
      and says so, because retrying a refusal is how a log fills with the same
      sentence a thousand times. */
+  /* ══ Η ΤΕΤΑΡΤΗ ΠΡΟΫΠΟΘΕΣΗ: ΜΙΑ ΓΡΑΦΗ ΜΗΧΑΝΗΣ ΔΕΝ ΦΕΥΓΕΙ ΜΟΝΗ ΤΗΣ ═════════
+     (29/10/2026, γραμμένο ΠΡΙΝ υπάρξει ο scheduler — και γι' αυτό γραμμένο.)
+     Ο agent θα γράφει στο training log, δηλαδή ΑΚΡΙΒΩΣ στη ζώνη που η γέφυρα
+     στέλνει μόνη της 5΄΄ μετά. Χωρίς αυτό το φράγμα, κάθε πρότασή του θα
+     έφτανε στο Wings Ahead σφραγισμένη με το όνομα του εκπαιδευτή, πριν
+     προλάβει να τη δει άνθρωπος — και το Wings Ahead δεν έχει τρόπο να ξέρει
+     ότι δεν την έγραψε εκείνος.
+     ΤΟ ΦΡΑΓΜΑ ΕΙΝΑΙ ΣΤΗΝ ΑΥΤΟΜΑΤΗ ΛΩΡΙΔΑ ΜΟΝΟ. Το «✈ Push now» συνεχίζει να
+     δουλεύει κανονικά: είναι ανθρώπινη πράξη, με τον αριθμημένο διάλογο που
+     λέει τι φεύγει. Η διαφορά δεν είναι ΑΝ περνά, είναι ΠΟΙΟΣ το αποφασίζει.
+     ΚΑΙ ΣΤΑΜΑΤΑ ΟΛΗ ΤΗΝ ΟΥΡΑ, ΟΧΙ ΜΟΝΟ ΤΗ ΓΡΑΜΜΗ. Επίτηδες: μια ουρά που
+     φεύγει μισή αφήνει το Wings Ahead με κομμάτι της ίδιας μέρας και κανέναν
+     να ξέρει ποιο λείπει. Η παύση είναι ΟΡΑΤΗ στο chip και λύνεται με ένα
+     κλικ — η σιωπηλή μερική αποστολή δεν λύνεται με τίποτα. */
+  function queuedByMachine() {
+    const q = (ui.plan && ui.plan.queued) || [];
+    if (!q.length || !S()) return 0;
+    let n = 0;
+    for (const item of q) {
+      const evId = item && item.line && item.line.evId;
+      if (!evId) continue;
+      const ev = S().find("trainingLog", evId);
+      if (ev && trim(ev._ag)) n += 1;
+    }
+    return n;
+  }
+
   function armAuto() {
     if (wst.timer) { clearTimeout(wst.timer); wst.timer = null; }
     plan();
     chipPaint();
     if (!bridgeLive() || wst.kind === "revoked" || wst.busy) return;
+    if (queuedByMachine()) return;   // το chipPaint() παραπάνω το έχει ήδη πει
     /* AND THE TIMER IS NOT EVEN ARMED ON A VIEW-ONLY DEVICE. runPush refuses
        anyway — that is the wall — but arming a timer whose only outcome is a
        refusal would spend a wake-up every five seconds to say nothing. */

@@ -244,5 +244,47 @@ const S = () => makeSandbox().window.SchedStore;
   is("10γ3. …ενώ το δημόσιο μέρος πέρασε κανονικά", got.url, "https://wa.example");
 }
 
+/* ── 11. Η ΣΗΜΑΝΣΗ ΠΡΟΕΛΕΥΣΗΣ ΚΑΙ ΤΟ ΙΧΝΟΣ ─────────────────────────────────
+   Η προϋπόθεση που γράφτηκε ΠΡΙΝ από τον scheduler: ό,τι γράφει μηχανή πρέπει
+   να ξεχωρίζει από ό,τι γράφει άνθρωπος — αλλιώς μια πρότασή της περνά τη
+   γέφυρα και φτάνει στο Wings Ahead σαν εγγραφή του ίδιου του εκπαιδευτή. */
+{
+  const st = S();
+  st.setActor("nick@example.gr");
+
+  st.asAgent("scheduler", () => st.upsert("students", { code: "SP-AG", class: "A" }));
+  const r = st.find("students", "SP-AG");
+  is("11. η εγγραφή φέρει τη σήμανση της μηχανής", r._ag, "scheduler");
+  is("11β. …και ΚΡΑΤΑ τον άνθρωπο που την εγκρίνει", r._by, "nick@example.gr");
+
+  const log = st.get("agentLog");
+  is("11γ. γράφτηκε ΜΙΑ γραμμή στο ημερολόγιο", log.length, 1);
+  is("11δ. …που λέει ποια συλλογή", log[0].coll, "students");
+  is("11ε. …ποια πράξη", log[0].op, "insert");
+  is("11στ. …και ποιο κλειδί", log[0].key, "SP-AG");
+
+  /* ΤΟ ΑΝΘΡΩΠΙΝΟ ΧΕΡΙ ΤΗΝ ΟΙΚΕΙΟΠΟΙΕΙΤΑΙ */
+  st.upsert("students", { code: "SP-AG", class: "B" });
+  const after = st.find("students", "SP-AG");
+  is("11ζ. ο άνθρωπος που τη διόρθωσε ΣΒΗΝΕΙ τη σήμανση", after._ag, undefined);
+  is("11η. και το ημερολόγιο ΔΕΝ μεγάλωσε", st.get("agentLog").length, 1);
+}
+{
+  /* Η ΡΕΠΛΙΚΑ ΔΕΝ ΕΙΝΑΙ ΠΡΑΞΗ: ό,τι έρχεται από συγχρονισμό δεν καταγράφεται
+     ξανά, αλλιώς η ίδια ενέργεια θα γραφόταν σε ΚΑΘΕ συσκευή που την παρέλαβε. */
+  const st = S();
+  st.asAgent("scheduler", () => st.system(() => st.upsert("students", { code: "SP-R" })));
+  is("11θ. η ρεπλίκα δεν αφήνει ίχνος", st.get("agentLog").length, 0);
+}
+{
+  /* ΕΞΩ ΑΠΟ ΤΗΝ ΕΜΒΕΛΕΙΑ ΔΕΝ ΜΕΝΕΙ ΤΙΠΟΤΑ ΚΟΛΛΗΜΕΝΟ — ούτε μετά από εξαίρεση. */
+  const st = S();
+  try { st.asAgent("scheduler", () => { throw new Error("έσκασε στη μέση"); }); } catch (e) {}
+  is("11ι. μια εξαίρεση δεν αφήνει την εφαρμογή να γράφει σαν μηχανή", st.agentNow(), "");
+  st.upsert("students", { code: "SP-H" });
+  is("11ια. …και η επόμενη ανθρώπινη εγγραφή είναι καθαρή",
+     st.find("students", "SP-H")._ag, undefined);
+}
+
 console.log("\n" + pass + " πέρασαν, " + fail + " απέτυχαν");
 process.exit(fail ? 1 : 0);

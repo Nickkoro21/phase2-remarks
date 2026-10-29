@@ -116,7 +116,27 @@
        εκεί μέσα θα εμφανιζόταν σε κάθε κατάλογο, σε κάθε μέτρηση, σε κάθε
        εκτύπωση. Σχήμα: { k:"<συλλογή>:<κλειδί>", coll, key, _u, _by }. */
     graves:       { type: "list", key: "k",    seed: "graves" },
+    /* ΤΟ ΗΜΕΡΟΛΟΓΙΟ ΤΩΝ AGENT (29/10/2026) — ΧΩΡΙΣΤΗ συλλογή, όπως οι
+       ταφόπλακες, και για τον ίδιο λόγο: δεν έχει θέση μέσα στα δεδομένα που
+       διαβάζει η εφαρμογή.
+       ΓΙΑΤΙ ΥΠΑΡΧΕΙ. Μέχρι σήμερα κάθε εγγραφή έλεγε ΠΟΙΟΣ (`_by`) και ΠΟΤΕ
+       (`_u`), και αυτό αρκούσε όσο έγραφαν μόνο άνθρωποι. Από τη στιγμή που
+       γράφει και μηχανή, το `_by` δεν φτάνει: ο agent δουλεύει ΓΙΑ κάποιον,
+       οπότε χωρίς δεύτερο πεδίο μια πρότασή του είναι δυσδιάκριτη από εγγραφή
+       του ίδιου του ανθρώπου — και στη γέφυρα θα έφτανε στο Wings Ahead σαν
+       δική του. Αυτό ήταν η προϋπόθεση που γράφτηκε πριν γραφτεί ο scheduler.
+       Σχήμα: { id, at, ag, by, coll, op, key, fields[] }.
+       ΔΕΝ είναι αναίρεση: η αναίρεση ζει στο bridgeLog, που κρατά και το ΠΡΙΝ.
+       Αυτό είναι ΚΑΤΑΛΟΓΟΣ — απαντά «τι άγγιξε η μηχανή, πότε, για λογαριασμό
+       ποιου», που είναι η ερώτηση που θα κάνει κάποιος όταν κάτι δεν βγάζει
+       νόημα. Συγχρονίζεται με τα υπόλοιπα: «να βλέπουν όλοι όλων». */
+    agentLog:     { type: "list", key: "id",   seed: "agent_log" },
   };
+  /* ΤΟ ΤΑΒΑΝΙ ΤΟΥ ΗΜΕΡΟΛΟΓΙΟΥ. Ταξιδεύει σε κάθε push, άρα ΔΕΝ επιτρέπεται να
+     μεγαλώνει ατέρμονα: ένα ίχνος που διπλασιάζει το αρχείο παύει να είναι
+     ίχνος και γίνεται βάρος. Κρατά τα ΤΕΛΕΥΤΑΙΑ, γιατί η ερώτηση «τι έκανε
+     πριν λίγο» είναι αυτή που γίνεται στην πράξη. */
+  const AGENT_LOG_MAX = 300;
   const NAMES = Object.keys(COLLS);
   const empty = (t) => (t === "list" ? [] : {});
 
@@ -146,7 +166,30 @@
 
   function emit(coll, action, rec) {
     labels.clash = null;                 // a rename must re-decide the "(code)" tags
+    traceAgent(coll, action, rec);
     subs.forEach((fn) => { try { fn(coll, action, rec); } catch (e) { console.error(e); } });
+  }
+
+  /* ΜΙΑ ΓΡΑΜΜΗ ΓΙΑ ΚΑΘΕ ΑΓΓΙΓΜΑ ΜΗΧΑΝΗΣ. Μπαίνει στην emit() και όχι σε κάθε
+     upsert/remove χωριστά, γιατί η emit είναι ΤΟ χωνί απ' όπου περνούν όλες οι
+     γραφές — ένα σημείο δεν ξεχνιέται, έξι ξεχνιούνται.
+     ΤΡΙΑ ΠΡΑΓΜΑΤΑ ΔΕΝ ΓΡΑΦΟΝΤΑΙ ΕΔΩ: το ίδιο το ημερολόγιο (ατέρμονη
+     αναδρομή), οι γραφές ΡΕΠΛΙΚΑΣ μέσα σε system() (δεν τις έκανε ο agent —
+     ήρθαν από συγχρονισμό, και θα διπλογράφονταν σε κάθε συσκευή), και φυσικά
+     οτιδήποτε έξω από εμβέλεια agent. */
+  function traceAgent(coll, action, rec) {
+    if (!AGENT || sysDepth > 0 || coll === "agentLog" || coll === "*") return;
+    const k = COLLS[coll] && COLLS[coll].key;
+    const fields = (rec && typeof rec === "object")
+      ? Object.keys(rec).filter((f) => f.charAt(0) !== "_").slice(0, 12) : [];
+    const line = {
+      id: uid("ag"), at: new Date().toISOString(), ag: AGENT, by: actor(),
+      coll: coll, op: action, key: (rec && k) ? String(rec[k]) : "", fields: fields,
+    };
+    const log = db.agentLog || (db.agentLog = []);
+    log.push(line);
+    if (log.length > AGENT_LOG_MAX) log.splice(0, log.length - AGENT_LOG_MAX);
+    persist("agentLog");
   }
 
   /* ── boot ───────────────────────────────────────────────────────────────── */
@@ -231,6 +274,27 @@
   function actor() { return ACTOR || deviceLabel() || "editor"; }
   function setActor(who) { ACTOR = who ? String(who).slice(0, 120) : ""; return actor(); }
 
+  /* ══ Ο AGENT ΓΡΑΦΕΙ ΜΕ ΤΟ ΟΝΟΜΑ ΤΟΥ (29/10/2026) ══════════════════════════
+     ΔΥΟ ΟΝΟΜΑΤΑ, ΟΧΙ ΕΝΑ. Το `_by` μένει ο ΑΝΘΡΩΠΟΣ — όποιος είχε ανοιχτή τη
+     συνεδρία και φέρει την ευθύνη. Το `_ag` λέει ότι το χέρι ήταν ΜΗΧΑΝΗΣ.
+     Αν τα ενώναμε σε ένα πεδίο θα χανόταν η μία από τις δύο πληροφορίες, και
+     καμία τους δεν είναι περιττή: η πρώτη απαντά «ποιος το εγκρίνει», η
+     δεύτερη «ποιος το σκέφτηκε».
+     ΓΙΑΤΙ ΣΒΗΝΕΤΑΙ ΟΤΑΝ ΤΟ ΑΓΓΙΞΕΙ ΑΝΘΡΩΠΟΣ: μόλις το διορθώσει κάποιος, η
+     εγγραφή παύει να είναι πρόταση μηχανής — έγινε δική του. Ένα `_ag` που
+     έμενε κολλημένο θα έλεγε ψέματα για πάντα, και θα έκανε τον κατάλογο
+     αναξιόπιστο ακριβώς εκεί που θα τον κοιτούσε κανείς.
+     Η ΕΜΒΕΛΕΙΑ ΕΙΝΑΙ ΣΥΓΧΡΟΝΗ ΚΑΙ ΦΩΛΙΑΖΕΙ: ό,τι γραφτεί μέσα στο fn φέρει τη
+     σήμανση, και η παλιά τιμή επιστρέφει ΠΑΝΤΑ (finally) — αλλιώς μια εξαίρεση
+     στη μέση θα άφηνε ολόκληρη την εφαρμογή να γράφει σαν agent. */
+  let AGENT = "";
+  function agentNow() { return AGENT; }
+  function asAgent(label, fn) {
+    const prev = AGENT;
+    AGENT = label ? String(label).slice(0, 60) : "";
+    try { return fn(); } finally { AGENT = prev; }
+  }
+
   /* Σφραγίζει ΜΟΝΟ ανθρώπινες εγγραφές. Μέσα σε system() τρέχει η ΡΕΠΛΙΚΑ —
      εκεί η σφραγίδα ΗΡΘΕ μαζί με το δεδομένο και δεν την πειράζουμε, αλλιώς
      κάθε pull θα βάφτιζε ξένες αλλαγές δικές μας και θα νικούσε για πάντα. */
@@ -238,6 +302,7 @@
     if (sysDepth > 0 || !rec || typeof rec !== "object") return rec;
     rec._u = Date.now();
     rec._by = actor();
+    if (AGENT) rec._ag = AGENT; else delete rec._ag;   // άνθρωπος → η σήμανση φεύγει
     return rec;
   }
 
@@ -427,6 +492,7 @@
     const g = db.graves || (db.graves = []);
     const i = g.findIndex((x) => x && x.k === k);
     const rec = { k: k, coll: name, key: String(id), _u: Date.now(), _by: actor() };
+    if (AGENT) rec._ag = AGENT;   // μια διαγραφή από μηχανή πρέπει να φωνάζει
     if (i >= 0) g[i] = rec; else g.push(rec);
     persist("graves");
   }
@@ -1147,6 +1213,8 @@
     uid, toast,
     /* 20/10/2026 — η σφραγίδα, η συγχώνευση και ο δράστης (Στάδια Α/Β/Γ) */
     merge, actor, setActor,
+    /* 29/10/2026 — η σήμανση προέλευσης και το ίχνος της */
+    asAgent, agentNow,
     /* Round 12b — the edit lock's one hole (see mayWrite above) */
     system, mayWrite,
     /* Round 12a — display names ("Instructor01 T."), one helper for the whole app */
