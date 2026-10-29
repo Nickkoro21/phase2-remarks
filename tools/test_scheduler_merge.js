@@ -207,5 +207,42 @@ const S = () => makeSandbox().window.SchedStore;
      st.snapshot().graves.length, 1);
 }
 
+/* ── 10. Ο ΚΩΔΙΚΟΣ ΚΑΙ Ο ΔΙΑΚΟΠΤΗΣ ΤΗΣ ΓΕΦΥΡΑΣ ΔΕΝ ΤΑΞΙΔΕΥΟΥΝ ───────────────
+   Η 28η/10 με μία πρόταση: το `config` ταξίδεψε ολόκληρο, μαζί του ο
+   `live: true` ΜΕ τον κωδικό, και η γέφυρα οπλίστηκε μόνη της σε συσκευή με
+   φυτεμένα δεδομένα — 1085 ψεύτικες γραμμές στο Wings Ahead σε 110 δευτερόλεπτα.
+   Αυτές οι τέσσερις δοκιμές είναι το φράγμα, και η 10γ είναι η σημαντική: χωρίς
+   αυτήν η διόρθωση θα ζούσε μέχρι το πρώτο pull από το ΠΑΛΙΟ αρχείο του repo. */
+{
+  const st = S();
+  st.setConfig({ bridge: {
+    url: "https://wa.example", anon: "anon-public", token: "ΜΥΣΤΙΚΟ", live: true,
+    configured_at: "2026-08-28",
+  } });
+
+  const snap = st.snapshot();
+  is("10α. το στιγμιότυπο ΔΕΝ κουβαλά τον κωδικό", snap.config.bridge.token, undefined);
+  is("10β. …ούτε τον διακόπτη Live", snap.config.bridge.live, undefined);
+  is("10β2. …αλλά κρατά ό,τι είναι δημόσιο", snap.config.bridge.url, "https://wa.example");
+  is("10β3. …και τον anon", snap.config.bridge.anon, "anon-public");
+}
+{
+  /* ΤΟ ΠΑΛΙΟ ΑΡΧΕΙΟ ΤΟΥ REPO: γράφτηκε πριν την αλλαγή και ΕΧΕΙ τα δύο μέσα.
+     Έρχεται με ΝΕΟΤΕΡΗ σφραγίδα, δηλαδή κερδίζει καθαρά τη συγχώνευση — και
+     παρ' όλα αυτά δεν επιτρέπεται να φέρει ούτε κωδικό ούτε άδεια. */
+  const st = S();
+  st.setConfig({ bridge: { url: "https://old.example", anon: "a" } });
+  const mine = st.get("config")._u.bridge;
+  st.merge({ config: {
+    bridge: { url: "https://wa.example", anon: "anon-public", token: "ΜΥΣΤΙΚΟ", live: true },
+    _u: { bridge: mine + 5000 },
+    _by: { bridge: "η μολυσμένη συσκευή" },
+  } });
+  const got = st.cfg("bridge");
+  is("10γ. ΤΟ PULL ΔΕΝ ΞΑΝΑΟΠΛΙΖΕΙ: κανένας κωδικός", got.token, undefined);
+  is("10γ2. …και καμία άδεια Live", got.live, undefined);
+  is("10γ3. …ενώ το δημόσιο μέρος πέρασε κανονικά", got.url, "https://wa.example");
+}
+
 console.log("\n" + pass + " πέρασαν, " + fail + " απέτυχαν");
 process.exit(fail ? 1 : 0);

@@ -506,6 +506,11 @@
   function merge(snap) {
     const rep = { collections: {}, fromRemote: 0, keptLocal: 0, onlyLocal: 0, deleted: 0, revived: 0 };
     if (!snap || typeof snap !== "object") return rep;
+    /* ΣΗΜΕΙΟ 2 — ΤΟ ΠΙΟ ΚΡΙΣΙΜΟ ΑΠΟ ΤΑ ΤΡΙΑ. Το αρχείο του repo γράφτηκε πριν
+       από αυτή την αλλαγή και ΕΧΕΙ ακόμη μέσα του `live: true` και τον κωδικό.
+       Χωρίς αυτή τη γραμμή η διόρθωση θα ζούσε μέχρι το πρώτο pull, και η
+       επόμενη συσκευή θα ξαναοπλιζόταν ακριβώς όπως την Τρίτη. */
+    snap = stripBridgeSecrets(snap);
 
     /* Οι ταφόπλακες των δύο πλευρών ενώνονται ΠΡΩΤΑ: η συγχώνευση των
        εγγραφών τις συμβουλεύεται και των δύο. */
@@ -768,38 +773,63 @@
   function snapshot() {
     const out = { schema: SCHEMA, exported_at: new Date().toISOString() };
     for (const n of NAMES) out[n] = db[n];
-    return out;
+    /* ΕΔΩ ΕΙΝΑΙ ΤΟ ΣΗΜΕΙΟ 1. Ο συγχρονισμός και η εξαγωγή περνούν ΚΑΙ ΟΙ ΔΥΟ
+       από εδώ, οπότε μία γραμμή κλείνει δύο λωρίδες — και καμία μελλοντική
+       χρήση του snapshot() δεν μπορεί να ξεχάσει να καθαρίσει. */
+    return stripBridgeSecrets(out);
   }
 
-  /* ══ THE ONE KEY THE TWO SERIALIZERS DISAGREE ABOUT (Phase 4/5 · E.1) ══════
-     snapshot() is COMPLETE — it feeds the sync, which is the owner's own channel
-     to his own other devices, ciphertext whenever the passphrase is armed. The
-     ⭳ EXPORT is the artefact that WANDERS: it lands in Downloads, on a stick, in
-     a mail. So the export clones the snapshot and DELETES config.bridge.token,
-     and the tooltip says so out loud. The URL and the anon key stay — they are
-     public values, and stripping them would make a restored backup look
-     configured when it is not.
-     THE CONSEQUENCE, STATED RATHER THAN DISCOVERED: an ⭱ Import never restores a
-     token. It is pasted once, by hand, after a restore — which is also why
-     importAll() strips the key from whatever it is handed (a hand-made file
-     could carry one, and a backup that quietly re-arms a live write lane is the
-     opposite of what a backup is for).
-     The token never reaches the repo, a fixture, the report, the offline package
-     or a chat: it is typed by the owner, into his own browser, twice at most. */
-  const BRIDGE_TOKEN_KEY = "token";
-  function stripBridgeToken(obj) {
+  /* ══ Ο ΚΩΔΙΚΟΣ ΚΑΙ Ο ΔΙΑΚΟΠΤΗΣ ΤΗΣ ΓΕΦΥΡΑΣ ΔΕΝ ΤΑΞΙΔΕΥΟΥΝ ΠΟΥΘΕΝΑ ═══════
+     ΑΥΤΟ ΤΟ ΜΠΛΟΚ ΕΛΕΓΕ ΤΟ ΑΝΤΙΘΕΤΟ ΜΕΧΡΙ ΤΙΣ 29/10/2026, ΚΑΙ ΤΟ ΠΛΗΡΩΣΑΜΕ.
+     ──────────────────────────────────────────────────────────────────────────
+     Έλεγε: «*snapshot() is COMPLETE — it feeds the sync, which is the owner's
+     own channel to his own other devices*», και έβγαζε τον κωδικό ΜΟΝΟ από την
+     ⭳ εξαγωγή, «*the artefact that WANDERS*». Το σκεπτικό ήταν η
+     ΕΜΠΙΣΤΕΥΤΙΚΟΤΗΤΑ: ποιος μπορεί να ΔΕΙ τον κωδικό. Ήταν σωστό, και
+     ασχολούνταν με λάθος κίνδυνο.
+
+     ΤΙ ΕΓΙΝΕ ΣΤΙΣ 28/10. Το config ταξίδεψε ΟΛΟΚΛΗΡΟ σε μια συσκευή που
+     κουβαλούσε τον φυτεμένο δοκιμαστικό χώρο — και μαζί του ο `live: true` ΜΕ
+     τον κωδικό. Η γέφυρα οπλίστηκε ΜΟΝΗ ΤΗΣ, χωρίς να την αγγίξει άνθρωπος,
+     και σε 110 δευτερόλεπτα έγραψε **1085 ψεύτικες γραμμές** στο cloud του
+     Wings Ahead. Κανείς δεν είδε τον κωδικό· η συγχώνευση απλώς τον παρέδωσε.
+
+     Ο ΚΙΝΔΥΝΟΣ ΔΕΝ ΕΙΝΑΙ Η ΑΝΑΓΝΩΣΗ, ΕΙΝΑΙ Η ΜΕΤΑΒΙΒΑΣΗ ΤΗΣ ΔΥΝΑΤΟΤΗΤΑΣ. Ένας
+     κωδικός που ταξιδεύει δεν είναι ρύθμιση — είναι **όπλο που αυτοπαραδίδεται
+     σε όποια συσκευή τύχει να συγχρονιστεί**. Το GitHub token δεν το έκανε
+     ποτέ αυτό: ζει στο localStorage, ανά συσκευή, και κανείς δεν παραπονέθηκε.
+
+     ΑΡΑ, ΑΠΟ ΣΗΜΕΡΑ, ΔΥΟ ΚΛΕΙΔΙΑ ΒΓΑΙΝΟΥΝ ΑΠΟ ΚΑΘΕ ΣΕΙΡΙΟΠΟΙΗΣΗ:
+       · `token` — η ίδια η διαπίστευση·
+       · `live`  — η άδεια να πυροβολήσει χωρίς να το ζητήσει κανείς.
+     Και τα δύο ζουν πλέον ΑΝΑ ΣΥΣΚΕΥΗ (app/schedbridge.js, `p2r-brg-*`).
+     Μένουν συγχρονισμένα τα `url`, `anon`, `configured_at`: δημόσιες τιμές που
+     απλώς γλιτώνουν πληκτρολόγηση, και καμία από αυτές δεν ανοίγει λωρίδα.
+
+     ΤΡΙΑ ΣΗΜΕΙΑ, ΟΧΙ ΕΝΑ — γιατί μια λωρίδα κλείνει μόνο αν κλείσουν ΟΛΕΣ:
+       1 · ΕΞΟΔΟΣ — το `snapshot()` καθαρίζεται, άρα ούτε το push ούτε η
+           εξαγωγή τα κουβαλούν·
+       2 · ΕΙΣΟΔΟΣ — το `merge()` καθαρίζει ΟΤΙ ΤΟΥ ΕΡΘΕΙ, ώστε ένα ΠΑΛΙΟ
+           αρχείο του repo (που ακόμη τα έχει μέσα) να μην ξαναοπλίζει τίποτα·
+       3 · ΕΙΣΑΓΩΓΗ — το `importAll()` το ίδιο, για αρχείο φτιαγμένο στο χέρι.
+     Χωρίς το 2, η διόρθωση θα κρατούσε μέχρι το πρώτο pull. */
+  const BRIDGE_DEVICE_KEYS = ["token", "live"];
+  function stripBridgeSecrets(obj) {
     if (!obj || typeof obj !== "object") return obj;
     const cfgIn = obj.config;
     if (!cfgIn || typeof cfgIn !== "object") return obj;
     const br = cfgIn.bridge;
-    if (!br || typeof br !== "object" || br[BRIDGE_TOKEN_KEY] === undefined) return obj;
+    if (!br || typeof br !== "object") return obj;
+    if (!BRIDGE_DEVICE_KEYS.some((k) => br[k] !== undefined)) return obj;
     const brOut = Object.assign({}, br);
-    delete brOut[BRIDGE_TOKEN_KEY];
+    for (const k of BRIDGE_DEVICE_KEYS) delete brOut[k];
     return Object.assign({}, obj, { config: Object.assign({}, cfgIn, { bridge: brOut }) });
   }
 
   function exportAll() {
-    const blob = new Blob([JSON.stringify(stripBridgeToken(snapshot()), null, 1)], { type: "application/json" });
+    /* το snapshot() καθαρίζει πλέον μόνο του — η γραμμή μένει ΡΗΤΗ ώστε η
+       εξαγωγή να μην εξαρτάται από συμπεριφορά άλλης συνάρτησης */
+    const blob = new Blob([JSON.stringify(stripBridgeSecrets(snapshot()), null, 1)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -889,12 +919,13 @@
       const v = pick(name);
       db[name] = v !== null ? v : empty(COLLS[name].type);
     }
-    /* AND AN IMPORT NEVER RESTORES A BRIDGE TOKEN (Phase 4/5 · E.1). ⭳ Export
-       strips it, so a file this app wrote carries none; a hand-made one might,
-       and a restore that silently re-arms a live write lane to Wings Ahead is
-       not a restore. The URL and the anon key come back — only the credential
-       is re-typed, once, by the owner. */
-    db.config = stripBridgeToken({ config: db.config }).config;
+    /* ΣΗΜΕΙΟ 3 — AN IMPORT NEVER RESTORES THE CREDENTIAL, NOR THE LIVE SWITCH
+       (Phase 4/5 · E.1, διευρυμένο 29/10/2026). ⭳ Export strips both, so a file
+       this app wrote carries neither; a hand-made one might, and a restore that
+       silently re-arms a live write lane to Wings Ahead is not a restore. The
+       URL and the anon key come back — only the credential is re-typed, once,
+       by the owner, and Live is flipped by hand on the device that may fire. */
+    db.config = stripBridgeSecrets({ config: db.config }).config;
     normalize();
     persistAll();
     emit("*", "import", null);

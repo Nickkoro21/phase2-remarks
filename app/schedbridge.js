@@ -5385,9 +5385,67 @@
      message, not printed in the report and not written to any file. Every
      failure below reports the SERVER's own sentence or this side's own words.  */
 
+  /* ══ ΤΑ ΔΥΟ ΠΟΥ ΔΕΝ ΤΑΞΙΔΕΥΟΥΝ (29/10/2026) ═══════════════════════════════
+     Ο κωδικός της γέφυρας και ο διακόπτης Live ζουν στη ΣΥΣΚΕΥΗ, όπως το
+     GitHub token — όχι στον συγχρονισμένο χώρο. Το γιατί είναι γραμμένο
+     ολόκληρο στο app/schedstore.js (§ stripBridgeSecrets): το ταξίδι του
+     κωδικού δεν ήταν θέμα εμπιστευτικότητας, ήταν **μεταβίβαση δυνατότητας** —
+     μια συσκευή με δοκιμαστικά δεδομένα κληρονόμησε οπλισμένη γέφυρα και
+     έγραψε 1085 ψεύτικες γραμμές στο Wings Ahead χωρίς ανθρώπινη πράξη.
+
+     Η ΜΕΤΑΝΑΣΤΕΥΣΗ ΔΕΝ ΕΠΙΤΡΕΠΕΤΑΙ ΝΑ ΧΑΣΕΙ ΤΟΝ ΚΩΔΙΚΟ. Το Wings Ahead τον
+     δείχνει **μία φορά** και κρατά μόνο σύνοψη — δεν τον ξαναδίνει. Αν τον
+     σβήναμε παντού, ο ιδιοκτήτης θα έπρεπε να κόψει καινούριο. Άρα:
+       · ο ΚΩΔΙΚΟΣ αντιγράφεται στη συσκευή που ήδη τον είχε, και μετά
+         αφαιρείται από τον συγχρονισμένο χώρο — ώστε να φύγει και από το repo·
+       · ο ΔΙΑΚΟΠΤΗΣ `live` ΔΕΝ αντιγράφεται ΠΟΤΕ. Ξεκινά **κλειστός** σε κάθε
+         συσκευή, και τον ανοίγει χέρι. Εκεί ακριβώς έσπασε η αλυσίδα την
+         Τρίτη, και εκεί μπαίνει το φρένο.
+     Το αποτέλεσμα: καμία συσκευή δεν χάνει διαπίστευση που είχε, και καμία
+     δεν αποκτά άδεια που δεν της έδωσε άνθρωπος. */
+  const BRG_TOK_KEY = "p2r-brg-token";
+  const BRG_LIVE_KEY = "p2r-brg-live";
+  const dvGet = (k) => { try { return W.localStorage.getItem(k); } catch (e) { return null; } };
+  const dvSet = (k, v) => { try { W.localStorage.setItem(k, v); } catch (e) {} };
+  const dvDel = (k) => { try { W.localStorage.removeItem(k); } catch (e) {} };
+
+  let migrated = false;
+  function migrateBridgeSecrets(stored) {
+    if (migrated || !isObj(stored)) return;
+    const tok = trim(stored.token);
+    if (!tok && stored.live === undefined) { migrated = true; return; }
+    /* ο κωδικός μόνο αν η συσκευή δεν έχει ήδη δικό της — ποτέ δεν πατάμε
+       πάνω σε κάτι που ο ιδιοκτήτης έγραψε εδώ */
+    if (tok && !trim(dvGet(BRG_TOK_KEY))) dvSet(BRG_TOK_KEY, tok);
+    /* και τώρα φεύγουν ΚΑΙ ΤΑ ΔΥΟ από τον χώρο που ταξιδεύει. Αυτό είναι
+       κανονική εγγραφή: σφραγίζεται, συγχρονίζεται, και το repo παύει να
+       κουβαλά τη διαπίστευση. Αν το edit lock αρνηθεί (view-only), ξαναγίνεται
+       προσπάθεια την επόμενη φορά — γι' αυτό το `migrated` μπαίνει ΜΟΝΟ στην
+       επιτυχία. */
+    const next = Object.assign({}, stored);
+    delete next.token;
+    delete next.live;
+    /* ΜΕΣΑ ΑΠΟ ΤΟ ΚΑΝΑΛΙ ΣΥΣΤΗΜΑΤΟΣ, ΚΑΙ ΟΧΙ ΑΠΟ ΤΟ ΧΕΡΙ ΤΟΥ ΧΡΗΣΤΗ.
+       Η bridgeCfg() καλείται σε κάθε βάψιμο του chip· αν η αφαίρεση περνούσε
+       από το edit lock, μια συσκευή σε view-only θα έτρωγε άρνηση ΣΕ ΚΑΘΕ
+       ΚΛΗΣΗ — δεκάδες μηνύματα για μια καθαριότητα που δεν ζήτησε κανείς.
+       Δεν είναι επεξεργασία του χρήστη· είναι υγιεινή του σχήματος, όπως το
+       normalize() της φόρτωσης. Και δεν χρειάζεται σφραγίδα: ακόμη κι αν ένα
+       παλιό `bridge` του repo κερδίσει τη συγχώνευση, μπαίνει ΗΔΗ
+       καθαρισμένο — το merge() αφαιρεί τα δύο κλειδιά στην είσοδο. */
+    if (S() && S().system(() => S().setConfig({ bridge: next }))) migrated = true;
+  }
+
   const bridgeCfg = () => {
     const c = S() ? S().cfg("bridge", null) : null;
-    return isObj(c) ? c : null;
+    if (isObj(c)) migrateBridgeSecrets(c);
+    const base = isObj(c) ? c : null;
+    const tok = trim(dvGet(BRG_TOK_KEY));
+    const live = dvGet(BRG_LIVE_KEY) === "1";
+    if (!base && !tok) return null;
+    /* Η ΣΥΣΚΕΥΗ ΥΠΕΡΙΣΧΥΕΙ ΠΑΝΤΑ: ό,τι κι αν έρθει από τον συγχρονισμό, τα δύο
+       αυτά κλειδιά διαβάζονται από εδώ και μόνο από εδώ. */
+    return Object.assign({}, base || {}, { token: tok, live: live });
   };
   const bridgeConfigured = () => {
     const c = bridgeCfg();
@@ -7443,15 +7501,16 @@
         <label class="brg-cfgchk"><input type="checkbox" id="brg-live"${c.live ? " checked" : ""}>
           <span><b>Live</b> — a flight typed in the Training log crosses by itself, ${AUTO_MS / 1000} s
           after the last change. With this off, nothing ever leaves except from <b>✈ Push now</b>.</span></label>
-        <p class="hint"><b>Where this token lives, and what that means.</b> It is stored in this browser and
-          it <b>syncs</b> to your other devices with the rest of the store — ciphertext whenever the sync
-          passphrase is armed, plaintext in your private repo when it is not. Arming the passphrase is the
-          difference, and it is worth arming: with this key the <code>fdms-data</code> repo stops being a
-          copy of FDMS and becomes a <b>live read of Wings Ahead and a write lane into it</b>. What the
-          credential can do is bounded on purpose — it reads the roster and the records and writes the
-          flight rows the bridge itself owns; it cannot read one login token, delete a person, or touch
-          proposals, settings or evaluations. <b>⭳ Export strips it</b> and an <b>⭱ Import never restores
-          it</b>: the backup file wanders, so the credential does not travel in it.</p>
+        <p class="hint"><b>The token and the Live switch stay on THIS DEVICE.</b> They are not synced, not
+          exported, not imported — like the GitHub token, every device is armed by hand, once. What sits
+          above them (URL, anon key) still travels, so another device only has to paste the token and flip
+          the switch. <b>Changed on 29/10/2026, and it cost us to learn it</b>: the pair used to ride the
+          snapshot to every device, and one that carried seeded test data inherited a <i>live</i> bridge
+          and wrote <b>1085 invented rows</b> into Wings Ahead in 110 seconds — nobody typed anything. A
+          credential that travels is not a setting; it is a lane that arms itself. What this one can do is
+          bounded on purpose — it reads the roster and the records and writes the flight rows the bridge
+          itself owns; it cannot read a login token, delete a person, or touch proposals, settings or
+          evaluations. To close every device at once, <b>revoke the role in Wings Ahead</b>.</p>
         <p class="hint" id="brg-cfgst"></p>
         <div class="ed-row">
           <button type="button" class="sch-tbtn primary" data-c="save">✔ Save</button>
@@ -7476,17 +7535,22 @@
       const val = (id) => { const n = veil.querySelector(id); return n ? trim(n.value) : ""; };
       function save() {
         const tok = val("#brg-tok");
+        const liveBox = veil.querySelector("#brg-live");
+        const live = !!(liveBox && liveBox.checked);
+        /* ΔΥΟ ΠΡΟΟΡΙΣΜΟΙ ΑΠΟ ΜΙΑ ΦΟΡΜΑ. Ό,τι είναι δημόσιο πάει στον
+           συγχρονισμένο χώρο και γλιτώνει πληκτρολόγηση στις άλλες συσκευές·
+           ό,τι ανοίγει λωρίδα μένει ΕΔΩ, στη συσκευή. */
         const patch = { url: val("#brg-url"), anon: val("#brg-anon"),
-          live: !!(veil.querySelector("#brg-live") || {}).checked,
           configured_at: trim(c.configured_at) || todayOf() };
+        if (tok) patch.configured_at = todayOf();
+        if (!S().setConfig({ bridge: patch })) { st("the edit lock refused the write"); return false; }
         /* AN EMPTY FIELD MEANS «KEEP», NEVER «CLEAR». The field is never
            rendered back, so an empty box is the normal state of a configured
            bridge — reading it as a clear would delete the credential every time
            the developer flipped the Live switch. Clearing is «Forget», which
            says what it does and asks first. */
-        patch.token = tok || trim(c.token);
-        if (tok) patch.configured_at = todayOf();
-        if (!S().setConfig({ bridge: patch })) { st("the edit lock refused the write"); return false; }
+        if (tok) dvSet(BRG_TOK_KEY, tok);
+        if (live) dvSet(BRG_LIVE_KEY, "1"); else dvDel(BRG_LIVE_KEY);
         return true;
       }
       veil.addEventListener("click", async (e) => {
@@ -7503,13 +7567,19 @@
           return;
         }
         if (e.target.closest('[data-c="forget"]')) {
-          const cur = bridgeCfg() || {};
-          const next = Object.assign({}, cur);
-          delete next.token;
-          next.live = false;
-          if (!S().setConfig({ bridge: next })) { st("the edit lock refused the write"); return; }
-          st("the token is gone from this store — and it syncs away from your other devices at the next "
-            + "push. Mint a new one in Wings Ahead when you need the lane again.");
+          /* ΤΟΠΙΚΟ, ΚΑΙ ΜΟΝΟ ΤΟΠΙΚΟ. Μέχρι τις 29/10 αυτό έσβηνε τη
+             διαπίστευση ΠΑΝΤΟΥ, γιατί ταξίδευε· τώρα η κάθε συσκευή κρατά τη
+             δική της, άρα εδώ σβήνει αυτή της συσκευής. Είναι ΠΙΟ χρήσιμο:
+             αφοπλίζει το κινητό χωρίς να χάσει το desktop τη λωρίδα — που
+             είναι ακριβώς η κίνηση που χρειαζόταν την Τρίτη το βράδυ. Για να
+             φύγει από ΠΑΝΤΟΥ, ανακαλείται στο Wings Ahead: ένα revoke εκεί
+             κλείνει κάθε συσκευή μονομιάς, και γι' αυτό ο ρόλος είναι
+             εξαρχής περιορισμένος. */
+          dvDel(BRG_TOK_KEY);
+          dvDel(BRG_LIVE_KEY);
+          st("the token and the Live switch are gone FROM THIS DEVICE. Your other devices keep what they "
+            + "have — nothing syncs away. To close every device at once, revoke the bridge role in Wings "
+            + "Ahead; to re-open this one, paste a token here again.");
           wst.kind = ""; wst.why = "";
           done(true);
         }
