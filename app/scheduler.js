@@ -1091,9 +1091,66 @@ window.fmtDMY = function fmtDMY(v) {
     return m;
   }
 
+  /* ══ ΕΝΑΣ ΑΝΘΡΩΠΟΣ, ΔΥΟ ΣΕΙΡΕΣ — ΕΥΡΗΜΑ #888 (29/10/2026) ═══════════════
+     ΤΟ ΙΣΤΟΡΙΚΟ. Στις 28/10 βρέθηκαν οι ΙΔΙΟΙ άνθρωποι δύο φορές στο store:
+     `SP-14` και `stu-msywi3hq-i`, με το ίδιο μητρώο. Η αιτία είναι δομική και
+     γράφεται εδώ για να μην ξαναψαχτεί: **το κλειδί των συλλογών είναι ο
+     ΚΩΔΙΚΑΣ** (`COLLS.students.key = "code"`), ενώ η ταυτότητα του ανθρώπου
+     είναι το OID. Μια εισαγωγή που δεν έδωσε κωδικό πήρε έναν από το
+     `uid("stu")` — καινούριο κλειδί, άρα **καινούρια σειρά**, άρα η συγχώνευση
+     βλέπει δύο ανθρώπους και δεν έχει κανέναν τρόπο να δει έναν.
+
+     ΓΙΑΤΙ ΤΟ «🛠 Repair codes» ΔΕΝ ΤΟ ΛΥΝΕΙ, παρότι φαίνεται ότι μιλά γι' αυτό:
+     εκείνο ΜΕΤΟΝΟΜΑΖΕΙ έναν κωδικό σχήματος `stu-…` και ξαναγράφει κάθε
+     αναφορά. Μετά το τρέξιμό του οι δύο σειρές εξακολουθούν να είναι δύο — με
+     δύο κανονικούς πια κωδικούς, που είναι ΧΕΙΡΟΤΕΡΟ: το πρόβλημα παύει να
+     φαίνεται χωρίς να έχει φύγει.
+
+     ΓΙΑΤΙ ΤΟ ΜΗΤΡΩΟ ΚΑΙ ΟΧΙ ΤΟ ΟΝΟΜΑ. Το `mn` είναι ο αριθμός που έχει ο
+     άνθρωπος στη μονάδα: ένας ανά άνθρωπο, σταθερός, και δεν αλλάζει με τη
+     γραφή. Δύο «Παπαδόπουλος» είναι δύο άνθρωποι· δύο `MN-1014` είναι ένας.
+     Όπου λείπει μητρώο δεν λέγεται τίποτα — μια εικασία εδώ θα πρότεινε να
+     σβηστεί άνθρωπος.
+
+     ΒΡΙΣΚΕΙ ΚΑΙ ΔΕΝ ΑΓΓΙΖΕΙ. Η ένωση δύο ανθρώπων είναι ΑΠΟΦΑΣΗ — ποια σειρά
+     επιζεί, τι γίνεται με τα πεδία που διαφωνούν — και δεν την παίρνει ένας
+     ανιχνευτής. Η μηχανή της ξαναγραφής υπάρχει ήδη (`rewriteAll`, § ⑤), άρα
+     όταν δοθεί ο κανόνας η δουλειά είναι μικρή· χωρίς τον κανόνα θα ήταν μια
+     σιωπηλή διαγραφή ανθρώπου. */
+  function twinsIn(students, instructors, log) {
+    const out = [];
+    const evs = Array.isArray(log) ? log : [];
+    for (const coll of ["students", "instructors"]) {
+      const list = (coll === "students" ? students : instructors) || [];
+      const by = new Map();
+      for (const r of list) {
+        const mn = String((r && r.mn) || "").trim().toUpperCase();
+        if (!mn) continue;                                  // καμία εικασία χωρίς μητρώο
+        if (!by.has(mn)) by.set(mn, []);
+        by.get(mn).push(r);
+      }
+      for (const [mn, rows] of by) {
+        if (rows.length < 2) continue;
+        out.push({
+          coll: coll, mn: mn,
+          rows: rows.map((r) => ({
+            code: r.code || "", oid: r.oid || "",
+            name: [r.first_name, r.last_name].filter(Boolean).join(" "),
+            /* πόσα γεγονότα κρέμονται από κάθε σειρά: αυτός είναι ο αριθμός
+               που κάνει την απόφαση «ποια επιζεί» απόφαση και όχι ρίψη νομίσματος */
+            events: evs.filter((e) => e && String(coll === "students" ? e.student : e.instructor) === String(r.code)).length,
+          })),
+        });
+      }
+    }
+    return out;
+  }
+  const twins = () => twinsIn(S().get("students"), S().get("instructors"), S().get("trainingLog"));
+
   window.SchedPeople = {
     ensure, ip, ipOid, ipCode, departed, activeIps, references,
     avoidedIps, avoidedAll, avoidMap, invalidate,
+    twins, twinsIn,
   };
 })();
 
@@ -1379,6 +1436,7 @@ window.fmtDMY = function fmtDMY(v) {
             <input type="file" accept="application/json,.json" id="sch-rosterfile" class="sch-file" hidden>
           </span></span>
       </div>
+      ${twinBanner()}
       <div class="sch-grid2">
         <section class="panel sch-panel">
           <div class="sch-h"><h2>Students <span class="count" id="sch-scount">${fStudents().length}/${students().length}</span></h2>
@@ -2489,6 +2547,30 @@ window.fmtDMY = function fmtDMY(v) {
     if (ui.log.open) renderForm();
     renderLogTable();
     wireLog(el);
+  }
+
+  /* ΜΙΑ ΤΑΙΝΙΑ ΠΟΥ ΥΠΑΡΧΕΙ ΜΟΝΟ ΟΤΑΝ ΕΧΕΙ ΚΑΤΙ ΝΑ ΠΕΙ. Σε υγιές store δεν
+     ζωγραφίζεται τίποτα — όπως το «🛠 Repair codes» δεν φοράει αριθμό όταν δεν
+     υπάρχει τι να επισκευαστεί. Μια μόνιμη προειδοποίηση εκπαιδεύει το μάτι να
+     την προσπερνά, και απόψε οι προειδοποιήσεις μετρούσαν. */
+  function twinBanner() {
+    const P = window.SchedPeople;
+    const groups = P && P.twins ? P.twins() : [];
+    if (!groups.length) return "";
+    const one = (g) => {
+      const rows = g.rows.map((r) =>
+        `<span class="sch-code">${esc(r.code)}</span>${r.events ? " (" + r.events + " event" + (r.events === 1 ? "" : "s") + ")" : " (no events)"}`
+      ).join(" &nbsp;·&nbsp; ");
+      return `<li>${esc(g.coll === "students" ? "student" : "instructor")} <b>${esc(g.mn)}</b> — ${rows}</li>`;
+    };
+    return `<div class="sch-consqban is-apt sch-twins"><b>One person, two rows</b> —
+      ${groups.length} service number${groups.length === 1 ? "" : "s"} appear${groups.length === 1 ? "s" : ""}
+      on more than one record. The collections are keyed by <b>code</b>, not by OID, so a sync
+      <em>cannot see</em> that these are the same person: each device keeps both, and the training log
+      splits between them.
+      <ul class="sch-twinlist">${groups.map(one).join("")}</ul>
+      Nothing is merged automatically — which row survives is a decision, not a repair. Move the events
+      off the row you want gone (the Training log edits them one by one), then remove it from the roster.</div>`;
   }
 
   function logFilters() {

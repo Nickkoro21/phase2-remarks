@@ -2684,3 +2684,10 @@ html[data-edit="off"] .cur-head::after {
   .ink-tbl td.ink-say { display: block; max-width: none; padding: 2px 4px 0 24px; }
   .ink-say > span { display: block; }         /* λόγος και προειδοποίηση, από μία γραμμή */
 }
+
+/* «Ένας άνθρωπος, δύο σειρές» — η ταινία του ευρήματος #888. Δανείζεται την
+   έτοιμη `.sch-consqban.is-apt` του καταλόγου συνεπειών: ίδιο σχήμα, ίδια
+   χρώματα, καμία νέα γλώσσα για να μάθει το μάτι. */
+.sch-twins { display: block; }
+.sch-twinlist { margin: 6px 0; padding-left: 20px; }
+.sch-twinlist li { padding: 2px 0; }
