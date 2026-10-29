@@ -887,11 +887,12 @@
         <p class="hint">With it set, the repo holds <b>only ciphertext</b> (AES-GCM&nbsp;256,
         PBKDF2-SHA256 · 310k). Forgetting it makes the <b>remote</b> backups unreadable — local data is
         unaffected. Empty → plaintext, as before.</p>
-        <p class="hint"><label title="${esc(TIP.passKeep)}"><input type="checkbox" id="sync-pass-keep"
-          ${passRemembered() ? "checked" : ""}> <b>Remember it on this device</b></label> — then it is
-        never asked again <b>here</b>. It still never travels: every device ticks this for itself.
-        <br>The passphrase guards the <b>repo</b> copy; this device already holds its data in plain text,
-        so what the tick adds is access to the repo's <b>history</b>. Un-tick and Save to forget it.</p>
+        <label class="sync-chk" title="${esc(TIP.passKeep)}"><input type="checkbox" id="sync-pass-keep"
+          ${passRemembered() ? "checked" : ""}><span><b>Remember it on this device</b> — then it is never
+        asked again <b>here</b>, not after a reload and not after a restart. It still never travels: every
+        device ticks this for itself.</span></label>
+        <p class="hint">The passphrase guards the <b>repo</b> copy; this device already holds its data in
+        plain text, so what the tick adds is access to the repo's <b>history</b>. Un-tick and Save to forget it.</p>
         <div class="sync-row">
           <button type="button" class="sch-tbtn" data-s="save" title="${esc(TIP.save)}">💾 Save</button>
           <button type="button" class="sch-tbtn" data-s="pull" title="${esc(TIP.pull)}">⭳ Pull</button>
