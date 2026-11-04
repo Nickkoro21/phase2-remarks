@@ -203,6 +203,23 @@ import time
 import unicodedata
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
+# ── ΤΟ ΙΧΝΟΣ (04/11/2026) ───────────────────────────────────────────────────
+# Το tracing είναι ΠΑΡΑΤΗΡΗΤΗΣ. Αν το module λείπει, αν το SDK δεν είναι
+# εγκατεστημένο, αν δεν υπάρχει κλειδί — ο Σύμβουλος απαντά ΑΚΡΙΒΩΣ όπως πριν.
+# Το `__getattr__` φτιάχνει καθολικό κενό αντικείμενο, ώστε ο καλών να μη
+# γράφει ΠΟΤΕ `if tracing:`· ένας κλάδος που δεν υπάρχει δεν μπορεί να σπάσει.
+try:
+    from advisor_trace import start as trace_start, status as trace_status
+except Exception:                                      # pragma: no cover
+    def trace_start(*_a, **_k):                        # type: ignore[misc]
+        class _N:
+            def __getattr__(self, _): return lambda *a, **k: None
+        return _N()
+
+    def trace_status() -> str:                         # type: ignore[misc]
+        return "το tools/advisor_trace.py δεν φορτώθηκε"
+
+
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")   # type: ignore[attr-defined]
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")   # type: ignore[attr-defined]
@@ -2654,11 +2671,18 @@ def _usage_dict(u) -> dict:
                               "cache_read_input_tokens", "output_tokens")}
 
 
-def run_ask(a: dict, params: dict, emit, budget: ToolBudget | None, tools: list[str] = ()) -> dict:
+def run_ask(a: dict, params: dict, emit, budget: ToolBudget | None, tools: list[str] = (),
+            question: str = "", session_id: str = "") -> dict:
     """Τρέχει την κλήση και στέλνει events μέσω emit(). Επιστρέφει
-    {"text", "stop_reason", "usage", "iterations"}. Σηκώνει anthropic.* σφάλματα."""
+    {"text", "stop_reason", "usage", "iterations"}. Σηκώνει anthropic.* σφάλματα.
+
+    ΤΟ ΙΧΝΟΣ ΓΕΝΝΙΕΤΑΙ ΚΑΙ ΠΕΘΑΙΝΕΙ ΕΔΩ ΜΕΣΑ, ΕΠΙΤΗΔΕΣ. Η run_ask καλείται
+    ΜΙΑ φορά ανά ερώτηση (ο βρόχος των εργαλείων είναι από μέσα), άρα είναι
+    ακριβώς το σύνορο μιας ρίζας. Αν τη γεννούσε ο καλών και την έκλεινε αυτή
+    — ή το ανάποδο — μια πρόωρη έξοδος θα άφηνε ρίζα ανοιχτή για πάντα."""
     import anthropic
     client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"], max_retries=2)
+    tr = trace_start(a, question, session_id)
     totals = {"input_tokens": 0, "cache_creation_input_tokens": 0,
               "cache_read_input_tokens": 0, "output_tokens": 0}
     pieces: list[str] = []
@@ -2668,6 +2692,7 @@ def run_ask(a: dict, params: dict, emit, budget: ToolBudget | None, tools: list[
 
     def consume(stream):
         nonlocal stop
+        t_iter = time.time()
         for ev in stream:
             if ev.type == "text":
                 pieces.append(ev.text)
@@ -2677,15 +2702,18 @@ def run_ask(a: dict, params: dict, emit, budget: ToolBudget | None, tools: list[
         u = _usage_dict(final.usage)
         for k in totals:
             totals[k] += u[k]
+        tr.llm(u, a["model"], stop, t_iter)
         for b in final.content:
             if getattr(b, "type", "") == "tool_use":
                 emit({"type": "tool_call", "name": b.name, "input": b.input})
+                tr.tool(b.name, b.input)
         log(f"[ask] agent={a['id']} iter={iterations} in={u['input_tokens']} "
             f"cache_w={u['cache_creation_input_tokens']} cache_r={u['cache_read_input_tokens']} "
             f"out={u['output_tokens']} stop={stop}")
         return final
 
-    if budget is not None and tools:
+    try:
+      if budget is not None and tools:
         runner = client.beta.messages.tool_runner(
             tools=budget.make_tools(list(tools)), stream=True,
             # σκληρό backstop πίσω από τα ToolError των φρένων
@@ -2695,16 +2723,24 @@ def run_ask(a: dict, params: dict, emit, budget: ToolBudget | None, tools: list[
         for stream in runner:          # ο runner ανοίγει/κλείνει το stream· εμείς το καταναλώνουμε
             iterations += 1
             consume(stream)
-    else:
+      else:
         iterations = 1
         with client.messages.stream(**params) as stream:
             consume(stream)
+    except BaseException as e:
+        # Η ρίζα κλείνει ΜΕ ΤΟ ΣΦΑΛΜΑ και μετά το σφάλμα συνεχίζει κανονικά τον
+        # δρόμο του: ο καλών έχει ήδη χειρισμό για κάθε anthropic.* και δεν
+        # πρέπει να αλλάξει τίποτα γι' αυτόν. Μια ρίζα που μένει ανοιχτή
+        # εμφανίζεται «να τρέχει για πάντα» στο LangSmith.
+        tr.fail(f"{type(e).__name__}: {e}")
+        raise
 
     text = "".join(pieces)
     dt_s = time.time() - t0
     log(f"[ask] agent={a['id']} DONE iters={iterations} in={totals['input_tokens']} "
         f"cache_w={totals['cache_creation_input_tokens']} cache_r={totals['cache_read_input_tokens']} "
         f"out={totals['output_tokens']} stop={stop} {dt_s:.1f}s")
+    tr.finish(text, totals, iterations, stop)
     return {"text": text, "stop_reason": stop, "usage": totals, "iterations": iterations}
 
 
@@ -3343,7 +3379,9 @@ class Handler(BaseHTTPRequestHandler):
                               f"Έγινε compaction #{ev['n']}: το σύνολο πλησίαζε τα {cb['ceiling']:,} tokens — το ιστορικό "
                               f"({ev['chars_before']:,} χαρακτήρες ≈ {est_tokens(ev['chars_before']):,} tokens) έγινε δομημένη "
                               f"σύνοψη ({ev['chars_after']:,} ≈ {est_tokens(ev['chars_after']):,}). Οι παραπομπές και οι εγγραφές κρατήθηκαν.")})
-                res = run_ask(a, params, emit, budget, tools)
+                res = run_ask(a, params, emit, budget, tools,
+                              question=question,
+                              session_id=(session or {}).get("id", ""))
             except anthropic.AuthenticationError:
                 return emit({"type": "error", "code": "auth", "message":
                              "Το API δεν δέχτηκε το κλειδί (401). Έλεγξε την ANTHROPIC_API_KEY."})
@@ -3732,6 +3770,9 @@ def main() -> int:
     log(f"Σύμβουλος FDMS — proxy στο http://127.0.0.1:{CFG['port']}  (μόνο loopback)")
     log(f"ANTHROPIC_API_KEY στο περιβάλλον: {key}")
     log(f"agents: {[x['id'] for x in list_agents()] or '(κανείς)'}  · corpus dir: {corpus_dir()}")
+    # Το ίχνος το λέει ΜΙΑ φορά, εδώ: αλλιώς ο ιδιοκτήτης κοιτά άδειο πίνακα
+    # στο LangSmith χωρίς να μάθει ποτέ ότι έλειπε το κλειδί.
+    log(f"LangSmith tracing: {trace_status()}")
     if access_configured():
         log(f"Cloudflare Access: ΝΑΙ — αιτήματα στο {BASE_PATH}/* απαιτούν έγκυρο JWT "
             f"(team «{ACCESS_TEAM}», έλεγχος aud) · ο δράστης στο log παίρνει το email που υπέγραψε η Cloudflare")
