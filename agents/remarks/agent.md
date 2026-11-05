@@ -1,8 +1,8 @@
 ---
 id: remarks
 name: Remarks
-model: claude-sonnet-5-5
-effort: high
+model: claude-haiku-5-5
+effort: medium
 corpus: context-remarks.md
 max_turns: 20
 language: el

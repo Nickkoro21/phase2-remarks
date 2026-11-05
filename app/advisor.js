@@ -112,9 +112,13 @@
 .sym-agent { --tk: var(--accent); --tk-rgb: var(--accent-rgb); }
 .sym-status { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
 .sym-status .badge.ok { color: var(--good); border-color: var(--good); }
-.sym-opus { cursor: pointer; font: inherit; font-size: inherit; background: transparent; color: var(--muted); }
-.sym-opus:hover { color: var(--text); }
-.sym-opus.on { color: var(--accent); border-color: var(--accent); background: rgba(var(--accent-rgb), 0.16); font-weight: 600; }
+.sym-pick { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--muted); }
+.sym-pick select { font: inherit; font-size: 12px; color: var(--text); background: var(--bg-2);
+  border: 1px solid var(--line); border-radius: 8px; padding: 4px 6px; cursor: pointer; }
+.sym-pick select:disabled { opacity: 0.5; cursor: default; }
+/* ΑΝΕΒΑΣΜΕΝΟ ΠΑΝΩ ΑΠΟ ΤΗΝ ΠΡΟΕΠΙΛΟΓΗ: ανάβει, ώστε να μη μένει κανείς κατά
+   λάθος σε Opus/x-high από μια παλιά ερώτηση — η επιλογή είναι ΕΜΜΟΝΗ. */
+.sym-pick.up select { color: var(--accent); border-color: var(--accent); font-weight: 600; }
 .sym-status .badge.bad { color: var(--bad); border-color: var(--bad); }
 .sym-status .badge.warn { color: var(--warn); border-color: var(--warn); }
 .sym-sess { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 12.5px; color: var(--muted); }
@@ -352,27 +356,49 @@
   }
   const agentOf = (id) => ((UI.health && UI.health.agents) || []).find((a) => a.id === id) || null;
 
-  /* ΤΟ ΣΗΜΑ «OPUS» (18/10/2026) — ΑΝΑ AGENT, ΟΧΙ ΚΑΘΟΛΙΚΑ.
-     Ο board-director γεννιέται σε Opus (κρίνει παραπομπές σε συμβούλιο), οι
-     τρεις άλλοι σε Sonnet. Η προεπιλογή ΔΕΝ ζει εδώ: έρχεται από το `agent.md`
-     μέσω του /health (`a.opus`), ώστε να υπάρχει ΕΝΑ σημείο αλήθειας. Το
-     localStorage κρατά μόνο τη δική σου παρέκκλιση — ρύθμιση ανά θεατή, ποτέ
-     δεδομένα μαθητών.
-     Η σελίδα στέλνει `opus: true|false`, ΠΟΤΕ όνομα μοντέλου· ο proxy έχει τη
-     λευκή λίστα των δύο. */
-  const OPUS_KEY = "p2r-advisor-opus";
-  const opusPrefs = () => { try { return JSON.parse(localStorage.getItem(OPUS_KEY)) || {}; } catch (e) { return {}; } };
-  function opusOn(id) {
+  /* ΟΙ ΔΥΟ ΕΠΙΛΟΓΕΙΣ — ΜΟΝΤΕΛΟ ΚΑΙ ΕΝΤΑΣΗ (05/11/2026) ────────────────────
+     Αντικαθιστούν το σήμα «OPUS» της 18/10: τρία μοντέλα (Haiku · Sonnet ·
+     Opus) και τέσσερα επίπεδα έντασης, ΑΝΑ AGENT — όχι καθολικά.
+
+     Η ΠΡΟΕΠΙΛΟΓΗ ΔΕΝ ΖΕΙ ΕΔΩ, και αυτό μένει ο κανόνας: έρχεται από το
+     `agent.md` μέσω του /health (`a.tier`, `a.effort`), ώστε να υπάρχει ΕΝΑ
+     σημείο αλήθειας. Ούτε η λίστα του τι επιτρέπεται ζει εδώ — έρχεται ως
+     `models`/`efforts`. Το localStorage κρατά ΜΟΝΟ τη δική σου παρέκκλιση:
+     ρύθμιση ανά θεατή, ποτέ δεδομένα μαθητών.
+
+     Η σελίδα στέλνει ΚΛΕΙΔΙ («haiku»), ΠΟΤΕ αναγνωριστικό μοντέλου· τη λευκή
+     λίστα την έχει ο proxy, και ένα κλειδί εκτός λίστας απαντά 400.
+
+     ΓΙΑΤΙ Η ΕΠΙΛΟΓΗ ΕΙΝΑΙ ΕΜΜΟΝΗ ΚΑΙ ΔΕΝ ΜΗΔΕΝΙΖΕΤΑΙ ΜΟΝΗ ΤΗΣ. Το πρόθεμα
+     (corpus + οδηγίες) ζει στο cache του παρόχου με κλειδί που περιλαμβάνει
+     ΚΑΙ το μοντέλο ΚΑΙ την ένταση: η πρώτη ερώτηση μετά από κάθε αλλαγή
+     πληρώνει το corpus ως φρέσκια εγγραφή. Στο Haiku αυτό είναι ψιλά· στον
+     board-director με Opus είναι 427k tokens επί $4/MTok. Μια «έξυπνη»
+     αυτόματη επαναφορά θα το πλήρωνε δύο φορές χωρίς να το ζητήσει κανείς. */
+  const PICK_KEY = "p2r-advisor-pick";   /* το παλιό «p2r-advisor-opus» δεν διαβάζεται πια */
+  const TIERS = ["haiku", "sonnet", "opus"];
+  const EFFORTS = ["low", "medium", "high", "xhigh"];
+  const TIER_NAME = { haiku: "Haiku 5.5", sonnet: "Sonnet 5.5", opus: "Opus 5.5" };
+  const EFFORT_NAME = { low: "low", medium: "medium", high: "high", xhigh: "x-high" };
+  const picks = () => { try { return JSON.parse(localStorage.getItem(PICK_KEY)) || {}; } catch (e) { return {}; } };
+  const tierList = () => { const h = UI.health; return h && h.models ? Object.keys(h.models) : TIERS; };
+  const effortList = () => { const h = UI.health; return (h && h.efforts) || EFFORTS; };
+  function pickOf(id) {
     const key = id || UI.agent;
-    const p = opusPrefs();
-    if (Object.prototype.hasOwnProperty.call(p, key)) return !!p[key];
-    const a = agentOf(key);
-    return !!(a && a.opus);
+    const a = agentOf(key) || {};
+    const okT = tierList(), okE = effortList();
+    const mine = picks()[key] || {};
+    /* Ο ΕΛΕΓΧΟΣ ΕΙΝΑΙ ΑΠΑΡΑΙΤΗΤΟΣ: μια τιμή που έμεινε από παλιά έκδοση — ή
+       γραμμένη με το χέρι στο localStorage — δεν φτάνει ποτέ στον proxy. */
+    return {
+      model: okT.indexOf(mine.model) >= 0 ? mine.model : (okT.indexOf(a.tier) >= 0 ? a.tier : okT[0]),
+      effort: okE.indexOf(mine.effort) >= 0 ? mine.effort : (okE.indexOf(a.effort) >= 0 ? a.effort : "medium"),
+    };
   }
-  function opusSet(v) {
-    const p = opusPrefs();
-    p[UI.agent] = !!v;
-    try { localStorage.setItem(OPUS_KEY, JSON.stringify(p)); } catch (e) { /* ιδιωτικό παράθυρο */ }
+  function pickSet(part) {
+    const p = picks();
+    p[UI.agent] = Object.assign({}, pickOf(), part);
+    try { localStorage.setItem(PICK_KEY, JSON.stringify(p)); } catch (e) { /* ιδιωτικό παράθυρο */ }
   }
   const userTurns = () => (UI.session ? UI.session.messages.filter((m) => m.role === "user" && !m.kind).length : 0);
 
@@ -386,10 +412,27 @@
     const agents = (h && h.agents) || [];
     const S = UI.session;
     const pills = agents.map((a) => `<button type="button" class="fc-pill sym-agent" data-agent="${esc(a.id)}" aria-pressed="${UI.agent === a.id}" title="${esc(a.name)} · ${esc(a.corpus)} · ${a.corpus_bytes ? fmtK(a.corpus_bytes) + "B" : "—"}${a.tools_offered && a.tools_offered.length ? " · εργαλεία: " + esc(a.tools_offered.join(", ")) : ""}">${esc(a.name)}</button>`).join("");
+    const pk = UI.agent ? pickOf() : null;
+    const a0 = agentOf(UI.agent) || {};
+    const okT = tierList(), okE = effortList();
+    /* «Ανεβασμένο» = πιο ακριβό από την προεπιλογή του agent.md. Οι δύο λίστες
+       έρχονται ΤΑΞΙΝΟΜΗΜΕΝΕΣ από τον proxy (φθηνό→ακριβό, low→xhigh), οπότε η
+       σύγκριση είναι η θέση στη λίστα — καμία δική μας κατάταξη. */
+    const upM = !!(pk && okT.indexOf(pk.model) > okT.indexOf(a0.tier));
+    const upE = !!(pk && okE.indexOf(pk.effort) > okE.indexOf(a0.effort));
+    const opt = (list, cur, name) => list.map((v) =>
+      `<option value="${esc(v)}" ${cur === v ? "selected" : ""}>${esc(name[v] || v)}</option>`).join("");
     const st = h ? `
-      <button type="button" class="badge sym-opus${UI.agent && opusOn() ? " on" : ""}" id="sym-opus"
-        aria-pressed="${!!(UI.agent && opusOn())}"
-        title="${UI.agent && opusOn() ? "Opus — βαθύτερη συλλογιστική, ακριβότερο. Πάτα για Sonnet." : "Sonnet — γρήγορο και φθηνότερο. Πάτα για Opus."}">OPUS</button>
+      <span class="sym-pick${upM ? " up" : ""}">
+        <label for="sym-model">μοντέλο</label>
+        <select id="sym-model" ${UI.busy || !UI.agent ? "disabled" : ""}
+          title="Το μοντέλο ΑΥΤΟΥ του agent — η επιλογή μένει αποθηκευμένη. Είσοδος/έξοδος ανά MTok: Haiku $0,10/$0,50 · Sonnet $2/$10 · Opus $4/$20. Η πρώτη ερώτηση μετά από αλλαγή ξαναγράφει το cache του corpus.">${pk ? opt(okT, pk.model, TIER_NAME) : `<option>—</option>`}</select>
+      </span>
+      <span class="sym-pick${upE ? " up" : ""}">
+        <label for="sym-effort">ένταση</label>
+        <select id="sym-effort" ${UI.busy || !UI.agent ? "disabled" : ""}
+          title="Πόσα tokens ξοδεύει το μοντέλο για να σκεφτεί: low το φθηνό και γρήγορο, x-high για μακρά συλλογιστική. Αλλάζει και αυτή το κλειδί του cache. Το max λείπει επίτηδες.">${pk ? opt(okE, pk.effort, EFFORT_NAME) : `<option>—</option>`}</select>
+      </span>
       <span class="badge ${h.key_present ? "ok" : "bad"}" title="ANTHROPIC_API_KEY στο περιβάλλον του proxy">${h.key_present ? "κλειδί ✓" : "χωρίς κλειδί"}</span>
       <span class="badge" title="Αιτήματα σήμερα / ημερήσιο όριο (φρένο 2)">σήμερα ${h.today ? h.today.count : 0}/${h.caps ? h.caps.daily_cap : "?"}</span>
       <span class="badge ${h.casefile && h.casefile.configured ? "ok" : ""}" title="Φάκελος υποθέσεων: FDMS_CASEFILE_URL/KEY στο περιβάλλον του proxy. Κάθε εγγραφή περνά από «Γράψ' το».">${h.casefile && h.casefile.configured ? "φάκελος ✓ · πύλη" : "φάκελος —"}</span>
@@ -580,7 +623,8 @@
     const before = UI.session ? UI.session.messages.filter((m) => m.role === "assistant" && !m.kind).length : 0;
     const ensure = UI.session ? Promise.resolve(UI.session) : newSession(ctx).then((s) => { loadSessions(); return s; });
     ensure.then((S) => fetch(PROXY + "/ask", { method: "POST", headers: { "Content-Type": "application/json" }, signal: ac.signal,
-      body: JSON.stringify({ agent: UI.agent, session: S.id, question: q, student: ctx || undefined, opus: opusOn() }) }))
+      body: JSON.stringify({ agent: UI.agent, session: S.id, question: q, student: ctx || undefined,
+                             model: pickOf().model, effort: pickOf().effort }) }))
       .then((res) => {
         if (!res.ok) return res.json().then((j) => { fail(`${j.error || res.statusText} (${res.status}${j.code ? " · " + j.code : ""})`); });
         const reader = res.body.getReader(), dec = new TextDecoder();
@@ -875,12 +919,6 @@
         else fallbackCopy(text, done);
         return;
       }
-      if (t.closest("#sym-opus")) {
-        if (UI.busy || !UI.agent) return;
-        opusSet(!opusOn());
-        render();                      /* καμία προειδοποίηση — απόφανση 18/10 */
-        return;
-      }
       const ag = t.closest(".sym-agent");
       if (ag) {
         if (UI.busy || ag.dataset.agent === UI.agent) return;
@@ -909,6 +947,15 @@
       const c = t.closest(".sym-cite"); if (c && window.openRequirements) { window.openRequirements(c.dataset.req); return; }
     });
     host.addEventListener("change", (ev) => {
+      /* ΟΙ ΔΥΟ ΕΠΙΛΟΓΕΙΣ. Κανένα μήνυμα, καμία επιβεβαίωση — η αλλαγή ισχύει
+         από την ΕΠΟΜΕΝΗ ερώτηση και μόνο για αυτόν τον agent. Όσο τρέχει
+         ερώτηση είναι disabled, άρα δεν γυρίζει μοντέλο στη μέση. */
+      if (ev.target && (ev.target.id === "sym-model" || ev.target.id === "sym-effort")) {
+        if (!UI.agent) return;
+        pickSet(ev.target.id === "sym-model" ? { model: ev.target.value } : { effort: ev.target.value });
+        render();
+        return;
+      }
       if (ev.target && ev.target.id === "sym-sess-sel") {
         const id = ev.target.value;
         UI.errors = [];

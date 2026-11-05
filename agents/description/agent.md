@@ -1,8 +1,8 @@
 ---
 id: description
 name: Description
-model: claude-sonnet-5-5
-effort: high
+model: claude-haiku-5-5
+effort: medium
 corpus: context-description.md
 max_turns: 20
 language: el

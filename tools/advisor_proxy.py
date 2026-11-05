@@ -273,33 +273,75 @@ def est_tokens(chars: int) -> int:
     return int(chars / GREEK_CHARS_PER_TOKEN)
 
 
-DEFAULT_MODEL = "claude-opus-5-5"
-
-# ── Ο ΕΠΙΛΟΓΕΑΣ OPUS (18/10/2026) ───────────────────────────────────────────
-# Απόφανση ιδιοκτήτη, μετά το πρώτο λογαριασμό: ο board-director σε Opus (κρίνει
-# παραπομπές σε συμβούλιο — σπάνιο και σύνθετο), οι τρεις συνθέτες/αναζητητές σε
-# Sonnet, με ένα σήμα «OPUS» που ανάβει και σβήνει ανά agent. «Δεν χρειάζεται
-# κάποιο μήνυμα παραπάνω, θα το κρατήσουμε απλό.»
+# ══ Ο ΕΠΙΛΟΓΕΑΣ ΜΟΝΤΕΛΟΥ ΚΑΙ ΕΝΤΑΣΗΣ ══════════════════════ (05/11/2026) ══
+# Η ΙΣΤΟΡΙΑ. Στις 18/10, μετά τον πρώτο λογαριασμό, ο ιδιοκτήτης έβαλε ένα σήμα
+# «OPUS» που άναβε και έσβηνε ανά agent: Opus για τον board-director, Sonnet
+# για τους άλλους τρεις. Σήμερα το σήμα γίνεται ΔΥΟ ΕΠΙΛΟΓΕΙΣ — τρία μοντέλα
+# και τέσσερα επίπεδα έντασης — και η προεπιλογή πέφτει στο Haiku 5.5 με
+# ένταση medium: «βάλε να επιλέγουμε τους opus, sonnet, haiku 5.5 με
+# προεπιλογή haiku… επιλογή για το effort με αρχική medium».
 #
-# Η ΣΕΛΙΔΑ ΔΕΝ ΟΝΟΜΑΖΕΙ ΜΟΝΤΕΛΟ, ΚΑΙ ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΣΗΜΕΙΟ. Στέλνει μόνο
-# `opus: true|false`. Αν δεχόμασταν όνομα μοντέλου από τον browser, μια σελίδα —
-# ή οποιοσδήποτε περάσει την Access — θα μπορούσε να ζητήσει ό,τι θέλει: το
-# Fable είναι $10/$50 ανά MTok, δυόμισι φορές το Opus. Ο ιδιοκτήτης δεν πληρώνει
-# ποτέ μοντέλο που δεν διάλεξε, και η λίστα έχει ΑΚΡΙΒΩΣ δύο εγγραφές.
-MODELS = {"opus": "claude-opus-5-5", "sonnet": "claude-sonnet-5-5"}
+# ΓΙΑΤΙ ΤΟ HAIKU ΩΣ ΑΦΕΤΗΡΙΑ. Το τιμολόγιο: $0,10/$0,50 ανά MTok έναντι $4/$20
+# του Opus — σαράντα φορές φθηνότερη είσοδος, και τα τρία μοντέλα σηκώνουν τα
+# ΙΔΙΑ εργαλεία, το ίδιο adaptive thinking και τα ίδια επίπεδα έντασης. Ό,τι
+# σηκώνει το Haiku, το σηκώνει σχεδόν δωρεάν· ό,τι δεν το σηκώνει, ανεβαίνει
+# με ΕΝΑ κλικ και η επιλογή μένει αποθηκευμένη ανά agent.
+#
+# Η ΣΕΛΙΔΑ ΔΕΝ ΟΝΟΜΑΖΕΙ ΠΟΤΕ ΜΟΝΤΕΛΟ, ΚΑΙ ΑΥΤΟ ΜΕΝΕΙ ΤΟ ΣΗΜΕΙΟ. Στέλνει ΚΛΕΙΔΙ
+# («haiku»), όχι αναγνωριστικό («claude-haiku-5-5»). Αν δεχόμασταν
+# αναγνωριστικό, οποιοσδήποτε περάσει την Access θα μπορούσε να ζητήσει ό,τι
+# θέλει — το Fable είναι $10/$50 ανά MTok, δυόμισι φορές το Opus. Η λίστα έχει
+# ΑΚΡΙΒΩΣ τρεις εγγραφές, από το φθηνό στο ακριβό (η σειρά φαίνεται στη
+# σελίδα), και ένα κλειδί εκτός λίστας απαντά 400 — ΟΧΙ σιωπηλή υποχώρηση σε
+# προεπιλογή: ο ιδιοκτήτης δεν πληρώνει ποτέ μοντέλο που δεν διάλεξε, ούτε από
+# λάθος της σελίδας.
+MODELS = {"haiku": "claude-haiku-5-5", "sonnet": "claude-sonnet-5-5", "opus": "claude-opus-5-5"}
+MODEL_TIER = {v: k for k, v in MODELS.items()}
+
+# ΤΑ ΤΕΣΣΕΡΑ ΕΠΙΠΕΔΑ — ΚΑΙ ΤΟ `max` ΛΕΙΠΕΙ ΕΠΙΤΗΔΕΣ. Το API δέχεται πέντε
+# (low, medium, high, xhigh, max) και τα τρία μοντέλα μας τα υποστηρίζουν όλα·
+# ο ιδιοκτήτης όμως έχει αποφανθεί: «χρησιμοποιούμε high και άμα κάπου
+# χρειάζεται x-high· δεν βάζουμε max». Το φράγμα ζει ΕΔΩ, στον server — ό,τι
+# δεν είναι στη λίστα δεν μπορεί να ζητηθεί από καμία σελίδα. Η σειρά είναι
+# αύξουσα και τη διαβάζει η σελίδα για να ξέρει τι σημαίνει «ανέβασμα».
+EFFORTS = ("low", "medium", "high", "xhigh")
+
+DEFAULT_MODEL = MODELS["haiku"]
+DEFAULT_EFFORT = "medium"
 
 
-def is_opus(model: str) -> bool:
-    return str(model or "").startswith("claude-opus")
+def tier_of(model: str) -> str:
+    """Το κλειδί αυτού του μοντέλου, ή «» αν κάποιο agent.md ονομάσει μοντέλο
+    εκτός λίστας — τότε η σελίδα δεν έχει τι να προεπιλέξει και το δείχνει."""
+    return MODEL_TIER.get(str(model or ""), "")
 
 
 def pick_model(a: dict, req: dict) -> str:
-    """Το μοντέλο αυτού του αιτήματος: η επιλογή της σελίδας, αλλιώς του agent."""
-    want = req.get("opus")
-    if want is None:
-        return a["model"]
-    return MODELS["opus"] if bool(want) else MODELS["sonnet"]
-DEFAULT_EFFORT = "high"
+    """Το μοντέλο αυτού του αιτήματος: η επιλογή της σελίδας, αλλιώς του agent.
+    ΣΗΚΩΝΕΙ ValueError για κλειδί εκτός λίστας — δεν υποχωρεί σιωπηλά."""
+    key = req.get("model")
+    if key is not None:
+        key = str(key)
+        if key not in MODELS:
+            raise ValueError(
+                f"Άγνωστο μοντέλο «{key}». Το πεδίο `model` παίρνει ΚΛΕΙΔΙ, όχι αναγνωριστικό "
+                f"μοντέλου: {', '.join(MODELS)}.")
+        return MODELS[key]
+    want = req.get("opus")          # ΠΑΛΙΟ πεδίο (18/10) — ζει για τα curl του ιδιοκτήτη
+    if want is not None:
+        return MODELS["opus"] if bool(want) else MODELS["sonnet"]
+    return a["model"]
+
+
+def pick_effort(a: dict, req: dict) -> str:
+    """Η ένταση αυτού του αιτήματος. ΙΔΙΟΣ κανόνας: λίστα ή 400."""
+    val = req.get("effort")
+    if val is None:
+        return a["effort"]
+    val = str(val)
+    if val not in EFFORTS:
+        raise ValueError(f"Άγνωστη ένταση «{val}». Επιτρεπτά: {', '.join(EFFORTS)}.")
+    return val
 DEFAULT_MAX_TOKENS = 16000
 MAX_BODY_BYTES = 256 * 1024
 ORIGIN_OK = re.compile(r"^http://(localhost|127\.0\.0\.1)(:\d+)?$")
@@ -621,7 +663,10 @@ def public_agent(a: dict) -> dict:
     chars = corpus_chars(a)
     return {
         "id": a["id"], "name": a["name"], "model": a["model"], "effort": a["effort"],
-        "opus": is_opus(a["model"]), "models": MODELS,
+        # `tier`/`effort` = η ΠΡΟΕΠΙΛΟΓΗ του agent.md· `models`/`efforts` = τι
+        # επιτρέπεται, με τη σειρά τους (φθηνό→ακριβό, low→xhigh). Η σελίδα δεν
+        # κρατά δική της λίστα: αν αλλάξει εδώ, αλλάζει εκεί.
+        "tier": tier_of(a["model"]), "models": MODELS, "efforts": list(EFFORTS),
         "corpus": a["corpus"], "corpus_bytes": size, "corpus_chars": chars,
         "corpus_tokens_est": est_tokens(chars + len(a["body"]) + 3000) if chars is not None else None,
         "max_tokens": a["max_tokens"],
@@ -3304,7 +3349,11 @@ class Handler(BaseHTTPRequestHandler):
                 f"Άγνωστος agent «{req.get('agent')}». Διαθέσιμοι: "
                 f"{', '.join(x['id'] for x in list_agents()) or '(κανείς — λείπει ο φάκελος agents/)'}"})
 
-        a["model"] = pick_model(a, req)
+        try:
+            a["model"] = pick_model(a, req)
+            a["effort"] = pick_effort(a, req)
+        except ValueError as e:
+            return self._json(400, {"code": "bad_request", "error": str(e)})
 
         student = req.get("student")
         if student is not None and not isinstance(student, str):
