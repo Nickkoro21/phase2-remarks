@@ -47,6 +47,7 @@ import mimetypes
 import os
 import pathlib
 import posixpath
+import re
 import socket
 import sys
 import threading
@@ -63,6 +64,36 @@ ALLOW: dict[str, set[str]] = {
     "data": {".json"},
 }
 INDEX = "app/index.html"
+
+# ── ΤΑ ΤΡΙΑ ΕΓΓΡΑΦΑ, ΟΝΟΜΑΣΤΙΚΑ ─────────────────────────── (05/11/2026) ──
+# ΓΙΑΤΙ ΧΩΡΙΣΤΟΣ ΧΑΡΤΗΣ ΚΑΙ ΟΧΙ «.pdf» ΣΤΗ ΛΙΣΤΑ ΠΑΡΑΠΑΝΩ. Η ALLOW δουλεύει
+# ανά ΚΑΤΑΛΟΓΟ και επέκταση: ένα «.pdf» κάπου εκεί μέσα θα σέρβιρε ΚΑΘΕ pdf
+# που θα έπεφτε ποτέ σε εκείνον τον κατάλογο — και τα κανονιστικά κείμενα δεν
+# είναι στατικά αρχεία της εφαρμογής, είναι η ΠΗΓΗ. Εδώ η λίστα είναι
+# ΟΝΟΜΑΣΤΙΚΗ: τρία κλειδιά, τρία αρχεία, τίποτε άλλο δεν μπορεί να ζητηθεί,
+# όσο κι αν παίξει κανείς με τη διαδρομή.
+#
+# ΤΑ ΑΡΧΕΙΑ ΖΟΥΝ ΣΤΗ ΡΙΖΑ ΚΑΙ ΕΙΝΑΙ gitignored — δεν ανεβαίνουν στο δημόσιο
+# repo. Το κλειδί είναι λατινικό επίτηδες: το «3-01_2025_ΔΑΕ.pdf» σε URL θα
+# γινόταν percent-encoded ελληνικό, που σπάει σε κάθε δεύτερο εργαλείο.
+PDFS: dict[str, str] = {
+    "3-01":     "3-01_2025_ΔΑΕ.pdf",
+    "syllabus": "Phase_2_Syllabus_2025.pdf",
+    "fek":      "fek_a_57_2020.pdf",
+}
+
+
+def resolve_pdf(url_path: str) -> pathlib.Path | None:
+    """/pdf/<κλειδί> → το αρχείο, ή None. Καμία διαδρομή, μόνο κλειδί."""
+    path = urllib.parse.unquote(urllib.parse.urlsplit(url_path).path, errors="replace")
+    parts = [x for x in posixpath.normpath(path).lstrip("/").split("/") if x not in ("", ".")]
+    if len(parts) != 2 or parts[0] != "pdf":
+        return None
+    name = PDFS.get(parts[1])
+    if not name:
+        return None
+    f = ROOT / name
+    return f if f.is_file() else None
 
 TYPES = {
     ".html": "text/html; charset=utf-8",
@@ -146,6 +177,69 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("X-Frame-Options", "DENY")
         self.send_header("Referrer-Policy", "same-origin")
 
+    def _serve_pdf(self, f: pathlib.Path, head_only: bool):
+        """ΜΕ RANGE, ΚΑΙ ΑΥΤΟ ΔΕΝ ΕΙΝΑΙ ΚΑΛΛΩΠΙΣΜΟΣ. Ο pdf.js ζητά το έγγραφο
+        σε κομμάτια: ανοίγει τον πίνακα περιεχομένων από το ΤΕΛΟΣ του αρχείου
+        και μετά μόνο τις σελίδες που δείχνει. Χωρίς Range κατεβάζει κάθε φορά
+        και τα 3,6 MB για να δείξει μία σελίδα — και το κάνει ΞΑΝΑ σε κάθε
+        παραπομπή που ανοίγει άλλο έγγραφο.
+
+        Ένα μόνο εύρος εξυπηρετείται· τα πολλαπλά (multipart/byteranges) δεν
+        τα ζητά κανένας browser για PDF, και μια μισοϋλοποιημένη εκδοχή τους
+        είναι χειρότερη από καθαρή άρνηση — απαντάμε 200 ολόκληρο."""
+        try:
+            size = f.stat().st_size
+        except OSError:
+            self._deny(404)
+            return
+        rng = self.headers.get("Range", "")
+        start, end = 0, size - 1
+        partial = False
+        m = re.fullmatch(r"bytes=(\d*)-(\d*)", rng.strip()) if rng else None
+        if m:
+            a, b = m.group(1), m.group(2)
+            if a:
+                start = int(a)
+                end = int(b) if b else size - 1
+            elif b:                                   # bytes=-N → τα τελευταία N
+                start = max(0, size - int(b))
+            if start >= size or start > end:
+                self.send_response(416)
+                self.send_header("Content-Range", f"bytes */{size}")
+                self.send_header("Content-Length", "0")
+                self._hardening()
+                self.end_headers()
+                return
+            end = min(end, size - 1)
+            partial = True
+        length = end - start + 1
+        self.send_response(206 if partial else 200)
+        self.send_header("Content-Type", "application/pdf")
+        self.send_header("Content-Length", str(length))
+        self.send_header("Accept-Ranges", "bytes")
+        if partial:
+            self.send_header("Content-Range", f"bytes {start}-{end}/{size}")
+        # Το έγγραφο δεν αλλάζει· το `no-cache` των υπολοίπων θα ξανακατέβαζε
+        # megabytes σε κάθε παραπομπή. Αν αλλάξει έκδοση εγχειριδίου, αλλάζει
+        # και το sha256 στο grounding.json — εκεί το πιάνουμε, όχι εδώ.
+        self.send_header("Cache-Control", "private, max-age=3600")
+        self._hardening()
+        self.end_headers()
+        if head_only:
+            return
+        with f.open("rb") as fh:
+            fh.seek(start)
+            left = length
+            while left > 0:
+                chunk = fh.read(min(1 << 16, left))
+                if not chunk:
+                    break
+                try:
+                    self.wfile.write(chunk)
+                except (BrokenPipeError, ConnectionResetError):
+                    return                 # ο viewer έκλεισε στη μέση· φυσιολογικό
+                left -= len(chunk)
+
     def _serve(self, head_only: bool):
         if self.path in ("", "/"):
             self.send_response(302)
@@ -153,6 +247,10 @@ class Handler(BaseHTTPRequestHandler):
             self.send_header("Content-Length", "0")
             self._hardening()
             self.end_headers()
+            return
+        pdf = resolve_pdf(self.path)
+        if pdf is not None:
+            self._serve_pdf(pdf, head_only)
             return
         f = resolve(self.path)
         if f is None:
@@ -229,6 +327,10 @@ def main() -> int:
     print("  διευθύνσεις: " + " · ".join(h for h, _ in servers))
     print(f"  ρίζα: {ROOT}")
     print("  σερβίρονται ΜΟΝΟ: " + " · ".join(f"{k}/** ({' '.join(sorted(v))})" for k, v in ALLOW.items()))
+    have = [k for k, v in PDFS.items() if (ROOT / v).is_file()]
+    miss = [k for k in PDFS if k not in have]
+    print(f"  + /pdf/<κλειδί> ονομαστικά: {' '.join(have) or '(κανένα)'}"
+          + (f"   ΛΕΙΠΟΥΝ: {' '.join(miss)}" if miss else ""))
     print("  όλα τα υπόλοιπα (tools/ specs/ .git/ *.pdf agents/ db/) → 404")
     if args.host and args.host not in ("127.0.0.1", "localhost", "::1"):
         print(f"  ΠΡΟΣΟΧΗ: δένεται στο {args.host} — ΟΧΙ μόνο loopback. Πίσω από tunnel δεν χρειάζεται.")

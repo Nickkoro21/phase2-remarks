@@ -72,6 +72,18 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 CORPUS_DIR = ROOT / "tools" / "advisor"
 OUT = ROOT / "data" / "grounding.json"
 
+# ΤΟ ΚΛΕΙΔΙ URL ΚΑΘΕ ΕΓΓΡΑΦΟΥ — ΕΝΑ ΑΝΤΙΓΡΑΦΟ ΤΟΥ `PDFS` ΤΟΥ serve_app.py.
+# Δύο αρχεία, ένας χάρτης: αν προστεθεί τέταρτο εγχειρίδιο πρέπει να μπει ΚΑΙ
+# στα δύο, αλλιώς το ευρετήριο θα δείχνει σε διεύθυνση που ο server αρνείται.
+# Δεν εισάγεται ο ένας τον άλλο επίτηδες — ο builder τρέχει εκτός εφαρμογής και
+# δεν πρέπει να σέρνει μαζί του τον διακομιστή· η διπλοεγγραφή είναι τριών
+# γραμμών και ο έλεγχος παρακάτω φωνάζει όταν ξεσυγχρονιστούν.
+PDF_IDS = {
+    "3-01_2025_ΔΑΕ.pdf": "3-01",
+    "Phase_2_Syllabus_2025.pdf": "syllabus",
+    "fek_a_57_2020.pdf": "fek",
+}
+
 # ΠΗΓΗ: <αρχείο>.pdf · σελ.PDF <n> · <παραπομπή> (… τυπ. σελ. <x> …)
 RE_SRC = re.compile(r"^ΠΗΓΗ:\s*(?P<pdf>\S+\.pdf)\s*·\s*σελ\.PDF\s*(?P<page>\d+)\s*·?\s*(?P<ref>[^\n]*)", re.M)
 RE_QUOTE = re.compile(r"^>\s*ΑΥΤΟΛΕΞΕΙ:\s*(?P<q>.+)$", re.M)
@@ -322,7 +334,13 @@ def main() -> int:
                     print(f"  ! λείπει το {pdf}")
                 else:
                     docs[pdf] = fitz.open(p)
-                    pdfs[pdf] = {"pages": docs[pdf].page_count, "sha256": sha256(p)}
+                    pdfs[pdf] = {"pdf_id": PDF_IDS.get(pdf, ""),
+                                 "pages": docs[pdf].page_count, "sha256": sha256(p)}
+                    if not PDF_IDS.get(pdf):
+                        # Χωρίς κλειδί ο viewer δεν έχει διεύθυνση να ζητήσει:
+                        # το μπλοκ θα είχε κουτί και καμία πόρτα προς αυτό.
+                        print(f"  ! το {pdf} ΔΕΝ έχει κλειδί URL — πρόσθεσέ το σε "
+                              f"PDF_IDS εδώ ΚΑΙ σε PDFS του tools/serve_app.py")
             doc = docs[pdf]
             if doc is None:
                 misses.append({**{k: b[k] for k in ("id", "pdf", "page")},
@@ -335,7 +353,8 @@ def main() -> int:
                 # corpora (το context-full τα περιέχει όλα)· η πρώτη εύρεση
                 # είναι εξίσου καλή και η επανάληψη θα άλλαζε μόνο το «corpus».
                 index.setdefault(b["id"], {
-                    "pdf": pdf, "page": found, "page_printed": b["printed"],
+                    "pdf": pdf, "pdf_id": PDF_IDS.get(pdf, ""),
+                    "page": found, "page_printed": b["printed"],
                     "ref": b["ref"], "boxes": boxes, "how": how, "corpus": name,
                 })
             else:
