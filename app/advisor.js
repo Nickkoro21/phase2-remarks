@@ -221,9 +221,18 @@
     s = s.replace(/⚠ ΑΛΥΤΟ/g, `<span class="sym-unres">⚠ ΑΛΥΤΟ</span>`);
     s = s.replace(/\[([a-z]{2,6}-\d+)\]|(?<![\w-])((?:fail|gt|st|ft)-\d+)(?![\w-])/g, (m, bracketed, bare) => {
       const id = bracketed || bare;
-      return RE_ID_OPEN.test(id)
+      /* ΔΥΟ ΔΙΑΦΟΡΕΤΙΚΑ ΠΡΑΓΜΑΤΑ, ΚΑΙ ΚΑΛΑ ΚΑΝΟΥΝ ΠΟΥ ΕΙΝΑΙ ΔΥΟ ΚΟΥΜΠΙΑ
+         (05/11/2026). Το πρώτο ανοίγει το ΕΠΙΚΥΡΩΜΕΝΟ κείμενο στο Requirements:
+         ό,τι ψηφιοποιήσαμε και ελέγξαμε. Το ⌖ ανοίγει τη ΣΕΛΙΔΑ ΤΟΥ ΕΓΧΕΙΡΙΔΙΟΥ
+         με την παραπομπή φωτισμένη: την πηγή, όπως τυπώθηκε.
+         Αν τα ενώναμε, θα χανόταν ακριβώς η διάκριση που κάνει το ⌖ να αξίζει —
+         το ένα είναι το αντίγραφό μας, το άλλο είναι το πρωτότυπο.
+         Το ⌖ εμφανίζεται ΜΟΝΟ όπου το ευρετήριο ξέρει τοποθεσία (468 από 482):
+         κουμπί που απαντά «δεν ξέρω» είναι χειρότερο από κουμπί που λείπει. */
+      const src = window.PdfView ? window.PdfView.button(id) : "";
+      return (RE_ID_OPEN.test(id)
         ? `<button type="button" class="req-link sym-cite" data-req="${esc(id)}" title="Άνοιγμα στο Requirements">${esc(id)}</button>`
-        : `<span class="sym-id">[${esc(id)}]</span>`;
+        : `<span class="sym-id">[${esc(id)}]</span>`) + src;
     });
     s = s.replace(/(§\s?\d+[α-ωa-z]{0,3}(?:\(\d+\))?(?:\s?[α-ω]\.)?)/g, `<span class="sym-ref">$1</span>`);
     s = s.replace(/(άρθρο\s\d+(?:\s?παρ\.?\s?\d+[α-ω]?)?|παρ\.\s?\d+[α-ω]?)/g, `<span class="sym-ref">$1</span>`);
@@ -944,6 +953,8 @@
       if (t.id === "sym-stop") { if (UI.abort) UI.abort.abort(); return; }
       const y = t.closest("[data-confirm]"); if (y) { confirmWrite(y.dataset.confirm, "write"); return; }
       const n = t.closest("[data-cancel]"); if (n) { confirmWrite(n.dataset.cancel, "cancel"); return; }
+      const sv = t.closest("[data-src]");
+      if (sv && window.PdfView) { window.PdfView.open(sv.dataset.src); return; }
       const c = t.closest(".sym-cite"); if (c && window.openRequirements) { window.openRequirements(c.dataset.req); return; }
     });
     host.addEventListener("change", (ev) => {
@@ -987,6 +998,10 @@
       host.innerHTML = `<p class="sym-hint">Έλεγχος του τοπικού proxy…</p>`;
     }
     health(false).then(loadSessions).then(render);
+    /* ΠΑΡΑΛΛΗΛΑ, ΟΧΙ ΣΤΗ ΣΕΙΡΑ. Το ευρετήριο (300 KB) δεν πρέπει να καθυστερεί
+       ούτε κατά ένα ms την πρώτη ζωγραφιά· όταν φτάσει, ξαναζωγραφίζουμε και τα
+       ⌖ εμφανίζονται. Αν δεν φτάσει ποτέ, η καρτέλα δουλεύει ακριβώς όπως χθες. */
+    if (window.PdfView) window.PdfView.ready().then(function (ok) { if (ok) render(); });
   }
 
   /* ════════════════════════════════════════════════════════════════════════
