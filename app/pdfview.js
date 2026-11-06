@@ -154,7 +154,76 @@ body.gv-drag #gv-scroll { pointer-events: none; }\
     }
     for (var k in BY_PDF) {
       BY_PDF[k].sort(function (a, c) { return a.page - c.page || a.y - c.y; });
+      BY_PDF[k] = collapse(BY_PDF[k]);
     }
+  }
+
+  /* ΤΑ ΚΟΥΤΙΑ ΜΙΑΣ ΕΓΓΡΑΦΗΣ ΩΣ ΣΥΝΟΛΟ ΣΥΜΒΟΛΟΣΕΙΡΩΝ — η ταυτότητα μιας
+     ΤΟΠΟΘΕΣΙΑΣ. Στρογγυλοποιούμε στο 4ο δεκαδικό (≈0,1 χιλιοστό σε Α4): κάτω
+     από αυτό δεν είναι διαφορετικό σημείο, είναι θόρυβος του εξαγωγέα. */
+  function sig(id) {
+    var b = block(id), bs = (b && b.boxes) || [], out = [], i, r;
+    for (i = 0; i < bs.length; i++) {
+      r = bs[i];
+      out.push((r.page || (b && b.page)) + ":" + r.xmin.toFixed(4) + "," + r.ymin.toFixed(4) +
+               "," + r.xmax.toFixed(4) + "," + r.ymax.toFixed(4));
+    }
+    out.sort();
+    return out;
+  }
+
+  function subset(a, b) {                       // κάθε κουτί του a είναι και στον b
+    if (!a.length) return false;
+    for (var i = 0; i < a.length; i++) {
+      var hit = false;
+      for (var j = 0; j < b.length; j++) if (a[i] === b[j]) { hit = true; break; }
+      if (!hit) return false;
+    }
+    return true;
+  }
+
+  /* ΜΙΑ ΣΤΑΣΗ ΑΝΑ ΤΟΠΟΘΕΣΙΑ, ΟΧΙ ΑΝΑ ΠΑΡΑΠΟΜΠΗ         (06/11/2026)
+     ─────────────────────────────────────────────────────────────────────────
+     ΤΟ ΕΥΡΗΜΑ ΤΟΥ ΙΔΙΟΚΤΗΤΗ: «πάταγα δεξιά-δεξιά και είχε την ίδια ή ένα μέρος
+     της ίδιας». ΜΕΤΡΗΘΗΚΕ στο grounding.json, σε διαδοχικά ζεύγη της σειράς
+     εκτύπωσης:
+         3-01      268 κομμάτια — 32 ΤΑΥΤΟΣΗΜΑ, 25 μερική επικάλυψη
+         syllabus  169 κομμάτια —  9 ΤΑΥΤΟΣΗΜΑ, 11 μερική επικάλυψη
+         fek        31 κομμάτια —  0 ΤΑΥΤΟΣΗΜΑ,  2 μερική επικάλυψη
+     Δεν είναι σφάλμα των κουτιών: είναι ΔΥΟ εδάφια του corpus που παραπέμπουν
+     στο ΙΔΙΟ σημείο του εγχειριδίου — φυσιολογικό, και μάλιστα χρήσιμο να
+     φαίνεται. Σφάλμα είναι να το μετράει ο θεατής ΔΥΟ φορές και να σε στέλνει
+     δύο φορές στο ίδιο σημείο.
+
+     Ο ΚΑΝΟΝΑΣ, ΚΑΙ ΠΟΥ ΣΤΑΜΑΤΑ: δύο διαδοχικές εγγραφές γίνονται ΜΙΑ στάση
+     μόνο αν η μία δεν δείχνει ΤΙΠΟΤΑ παραπάνω από την άλλη — ταυτόσημα κουτιά,
+     ή το ένα σύνολο υποσύνολο του άλλου. Αντιπρόσωπος μένει το ΜΕΓΑΛΥΤΕΡΟ,
+     γιατί περιέχει το μικρό. ΜΕΡΙΚΗ επικάλυψη (τα 38) ΔΕΝ συγχωνεύεται: εκεί
+     το δεύτερο κομμάτι όντως συνεχίζει κάπου που το πρώτο δεν έφτανε, και μια
+     στάση που το έτρωγε θα έκρυβε κείμενο. Προτιμάμε μια στάση που μοιάζει
+     λίγο με την προηγούμενη από μια παραπομπή που δεν την είδε ποτέ κανείς.
+
+     Τα ids ΔΕΝ χάνονται: η στάση τα κρατά όλα στο `ids`, η κεφαλίδα τα μετρά,
+     και το `show(id)` δείχνει τα κουτιά ΑΥΤΟΥ που ζητήθηκε. */
+  function collapse(list) {
+    var out = [], i, cur = null, s0, s1;
+    for (i = 0; i < list.length; i++) {
+      s1 = sig(list[i].id);
+      if (cur && cur.page === list[i].page) {
+        s0 = cur.sig;
+        if (subset(s1, s0)) { cur.ids.push(list[i].id); continue; }
+        if (subset(s0, s1)) {                   // το νέο τα περιέχει όλα: γίνεται αυτό ο αντιπρόσωπος
+          cur.ids.push(list[i].id);
+          cur.id = list[i].id;
+          cur.sig = s1;
+          cur.y = list[i].y;
+          continue;
+        }
+      }
+      cur = { id: list[i].id, page: list[i].page, y: list[i].y, ids: [list[i].id], sig: s1 };
+      out.push(cur);
+    }
+    return out;
   }
 
   function top(b) {
@@ -243,7 +312,6 @@ body.gv-drag #gv-scroll { pointer-events: none; }\
         '<button type="button" class="gv-b" id="gv-ffind" title="Αναζήτηση στο έγγραφο (Ctrl+F)">⌕</button>' +
         '<button type="button" class="gv-b" id="gv-out" title="Σμίκρυνση (−)">−</button>' +
         '<button type="button" class="gv-b" id="gv-in" title="Μεγέθυνση (+)">+</button>' +
-        '<button type="button" class="gv-b" id="gv-tab" title="Άνοιγμα του PDF σε νέα καρτέλα">⧉</button>' +
         '<button type="button" class="gv-b" id="gv-x" title="Κλείσιμο (Esc)">✕</button>' +
         '<span class="gv-m" id="gv-sub"></span>' +
       '</div>' +
@@ -273,7 +341,6 @@ body.gv-drag #gv-scroll { pointer-events: none; }\
       else if (t.id === "gv-fx") findClose();
       else if (t.id === "gv-fnext") findGo(1);
       else if (t.id === "gv-fprev") findGo(-1);
-      else if (t.id === "gv-tab") window.open(PDF_BASE + encodeURIComponent(S.pdfId) + "#page=" + seenPage(), "_blank", "noopener");
       else if (t.classList && t.classList.contains("gv-box") && t.dataset.id) show(t.dataset.id);
     });
 
@@ -517,7 +584,17 @@ body.gv-drag #gv-scroll { pointer-events: none; }\
     S.id = id;
     S.b = b;
     S.cur = -1;
-    for (var i = 0; i < S.list.length; i++) if (S.list[i].id === id) { S.cur = i; break; }
+    /* Η στάση μπορεί να κουβαλά περισσότερα από ένα ids (βλ. collapse). Όταν
+       ο χρήστης ζήτησε ΣΥΓΚΕΚΡΙΜΕΝΗ παραπομπή, η στάση δείχνει ΑΥΤΗΣ τα
+       κουτιά — όχι του αντιπροσώπου. Είναι η ίδια τοποθεσία· το id όμως που
+       τυπώνεται από κάτω πρέπει να είναι αυτό που πάτησε. */
+    for (var i = 0; i < S.list.length; i++) {
+      var ids = S.list[i].ids || [S.list[i].id];
+      for (var j = 0; j < ids.length; j++) {
+        if (ids[j] === id) { S.cur = i; S.list[i].id = id; break; }
+      }
+      if (S.cur >= 0) break;
+    }
     repaintBoxes();
     head();
     toPage(b.page, top(b));
@@ -676,7 +753,13 @@ body.gv-drag #gv-scroll { pointer-events: none; }\
   function head() {
     var b = S.b;
     if (el("gv-title")) el("gv-title").textContent = b ? (b.pdf || b.pdf_id) : "—";
-    if (el("gv-ck")) el("gv-ck").textContent = S.list.length ? ("κομμάτι " + (S.cur + 1) + " / " + S.list.length) : "—";
+    if (el("gv-ck")) {
+      var st = S.cur >= 0 ? S.list[S.cur] : null;
+      var k = st && st.ids ? st.ids.length : 1;
+      el("gv-ck").textContent = S.list.length
+        ? ("κομμάτι " + (S.cur + 1) + " / " + S.list.length + (k > 1 ? " · " + k + " παραπομπές εδώ" : ""))
+        : "—";
+    }
     if (el("gv-cprev")) el("gv-cprev").disabled = !(S.cur > 0);
     if (el("gv-cnext")) el("gv-cnext").disabled = !(S.cur >= 0 && S.cur < S.list.length - 1);
     headPage();
@@ -747,9 +830,20 @@ body.gv-drag #gv-scroll { pointer-events: none; }\
     }
 
     /* Αλλάζει εγχειρίδιο; Τότε όλα από την αρχή: άλλο έγγραφο, άλλα κομμάτια,
-       άλλο ευρετήριο κειμένου. Ίδιο; Κρατάμε ό,τι έχουμε και απλώς πάμε εκεί. */
+       άλλο ευρετήριο κειμένου. Ίδιο; Κρατάμε ό,τι έχουμε και απλώς πάμε εκεί.
+
+       06/11/2026 — ΤΟ ΔΕΥΤΕΡΟ ΑΝΟΙΓΜΑ ΕΒΓΑΖΕ ΑΔΕΙΟ ΠΑΝΕΛ, ΧΩΡΙΣ ΣΦΑΛΜΑ.
+       Ο ιδιοκτήτης το βρήκε με τον πιο απλό τρόπο: έκλεισε και ξανάνοιξε.
+       Το `close()` σβήνει το #gv-scroll (οι καμβάδες είναι δεκάδες MB) και
+       μηδενίζει το S.slots — ΣΩΣΤΑ. Αλλά το `S.doc` επιβιώνει, άρα η επόμενη
+       κλήση έμπαινε ΕΔΩ, πήγαινε κατευθείαν στο show() → toPage(), και το
+       toPage() βρίσκει `S.slots[p-1]` undefined και γυρίζει ΣΙΩΠΗΛΑ. Καμία
+       σελίδα δεν ξαναχτίστηκε ποτέ.
+       Η θεραπεία δεν είναι να ξαναφορτώσουμε το PDF — το έγγραφο και το
+       S.page1 είναι ήδη στη μνήμη. Αρκεί να ξαναστρωθούν οι θέσεις. */
     if (S.pdfId === b.pdf_id && S.doc) {
       S.list = BY_PDF[b.pdf_id] || [];
+      if (!S.slots.length) relayout();
       show(id);
       return;
     }
@@ -777,13 +871,11 @@ body.gv-drag #gv-scroll { pointer-events: none; }\
       head();
       msg(cdn
         ? ("<b>Ο θεατής δεν φόρτωσε.</b> Το <code>pdf.js</code> έρχεται από το cdnjs και δεν απάντησε — " +
-           "χωρίς ίντερνετ ο θεατής δεν δουλεύει, το έγγραφο όμως ναι:<br><br>" +
-           '<button type="button" class="gv-b" id="gv-tab2">⧉ Άνοιγμα του PDF σε νέα καρτέλα</button>')
+           "χωρίς ίντερνετ ο θεατής δεν δουλεύει.<br><br>Δοκίμασε ξανά όταν υπάρχει σύνδεση· " +
+           "το εγχειρίδιο <b>δεν</b> ανοίγει αλλιώς από εδώ.")
         : ("<b>Το έγγραφο δεν άνοιξε.</b> Ο server απάντησε: " + esc(String(e && e.message || e)) +
            "<br><br>Αν λέει 404, λείπει το αρχείο από τη ρίζα <code>D:\\FDMS</code> ή ο server τρέχει " +
            "παλιά έκδοση — θέλει <code>Restart-Service fdms-app</code>."));
-      var t = el("gv-tab2");
-      if (t) t.onclick = function () { window.open(PDF_BASE + encodeURIComponent(S.pdfId), "_blank", "noopener"); };
     });
   }
 
