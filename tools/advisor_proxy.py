@@ -262,15 +262,111 @@ DEFAULTS = {
     "agents_dir": str(ROOT / "agents"),
     "corpus_dir": str(ROOT / "tools" / "advisor"),
 }
-# Q1 — Η ΕΚΤΙΜΗΣΗ TOKENS. Δεν υπάρχει tokenizer εδώ· ο builder του corpus δίνει
-# εύρος 2.0–2.5 χαρακτήρες/token για ελληνικά. Διαλέγουμε το 2.5 (το ΑΙΣΙΟΔΟΞΟ
-# άκρο: λιγότερα tokens ανά χαρακτήρα) ΚΑΙ κρατάμε απόθεμα για την απάντηση· το
-# πραγματικό νούμερο του corpus το δίνει μία δωρεάν κλήση `--count-tokens`.
-GREEK_CHARS_PER_TOKEN = 2.5
+# Q1 — Η ΕΚΤΙΜΗΣΗ TOKENS, ΚΑΙ ΓΙΑΤΙ ΕΠΑΨΕ ΝΑ ΕΙΝΑΙ ΕΚΤΙΜΗΣΗ (06/11/2026).
+# Ως σήμερα εδώ ήταν 2.5 χαρ./token — «το αισιόδοξο άκρο» ενός εύρους 2.0–2.5
+# που είχε δώσει ο builder. ΜΕΤΡΗΘΗΚΕ με δωρεάν κλήσεις count_tokens και δεν
+# ήταν αισιόδοξο· ήταν ΛΑΘΟΣ ΣΤΟ ΔΙΠΛΟ:
+#     agent            εκτίμηση(2.5)   ΜΕΤΡΗΜΕΝΟ    χαρ./token
+#     board-director        219.800     432.036         1.272
+#     syllabus              194.338     323.089         1.504
+#     description           102.961     142.398         1.808
+#     remarks                72.625      96.637         1.879
+# ΤΟ ΚΑΚΟ ΔΕΝ ΕΙΝΑΙ Η ΑΚΡΙΒΕΙΑ — ΕΙΝΑΙ ΤΟ ΤΑΒΑΝΙ. Το φρένο του compaction
+# συγκρίνει ΕΚΤΙΜΩΜΕΝΑ tokens με τα 600.000. Με το 2.5 ο proxy πίστευε ότι το
+# board κουβαλά 219.800, άρα άφηνε ~370.000 «εκτιμώμενα» tokens ιστορικού πριν
+# συνοψίσει — που στην πραγματικότητα είναι ~740.000. Σύνολο ~1,17 εκατ. σε
+# παράθυρο 1 εκατ.: το API θα έκοβε το αίτημα με ΣΦΑΛΜΑ πριν προλάβει να πέσει
+# το compaction. Δηλαδή η δικλείδα δεν προστάτευε — καθησύχαζε.
+# Η ΘΕΡΑΠΕΙΑ: μετράμε το corpus ΜΙΑ ΦΟΡΑ (δωρεάν, βλ. measured_tokens) και από
+# το ίδιο μέτρημα βγάζει ο κάθε agent τον ΔΙΚΟ ΤΟΥ λόγο χαρ./token, που μετά
+# εφαρμόζεται και στο ιστορικό. Η σταθερά μένει μόνο ως ΕΦΕΔΡΙΚΗ, και παίρνει
+# το ΣΥΝΤΗΡΗΤΙΚΟ άκρο (1.25, το πυκνότερο corpus): αν η μέτρηση δεν γίνεται,
+# προτιμούμε να συνοψίσουμε νωρίτερα απ' ό,τι να χτυπήσουμε σε τοίχο.
+GREEK_CHARS_PER_TOKEN = 1.25
+
+# {κλειδί → {"tokens", "chars", "cpt", "src"}}· το κλειδί κρατά και το mtime του
+# corpus ΚΑΙ το μοντέλο: ο Haiku 5.5 έχει άλλον tokenizer από τον Opus 5.5, άρα
+# το ίδιο κείμενο μετριέται ΔΙΑΦΟΡΕΤΙΚΑ και ένα κοινό νούμερο θα ήταν λάθος.
+_TOKENS: dict = {}
 
 
 def est_tokens(chars: int) -> int:
     return int(chars / GREEK_CHARS_PER_TOKEN)
+
+
+def cached_tokens_for(agent_id: str, model: str) -> int:
+    """Το ΗΔΗ μετρημένο νούμερο για αυτόν τον agent και αυτό το μοντέλο, ή 0.
+    Διαβάζει μόνο μνήμη και δίσκο — ποτέ API, ποτέ το corpus. Όταν υπάρχουν
+    πολλά μετρήματα (παλιές εκδόσεις corpus), κρατά το ΝΕΟΤΕΡΟ: το κλειδί
+    κουβαλά το mtime, και το παλιό νούμερο αφορά κείμενο που δεν στέλνεται πια."""
+    pre = f"{agent_id}|{model}|"
+    src = dict(_TOKENS)
+    if not any(k.startswith(pre) for k in src):
+        try:
+            disk = json.loads((corpus_dir() / ".token-cache.json").read_text(encoding="utf-8"))
+            if isinstance(disk, dict):
+                src.update(disk)
+        except Exception:
+            pass
+    newest_mt, tokens = -1, 0
+    for k, v in src.items():
+        if not k.startswith(pre) or not isinstance(v, dict):
+            continue
+        n = int(v.get("tokens") or 0)
+        if n <= 0:
+            continue
+        part = k.split("|")
+        mt = int(part[2]) if len(part) > 2 and part[2].isdigit() else 0
+        if mt > newest_mt:
+            newest_mt, tokens = mt, n
+    return tokens
+
+
+def measured_tokens(a: dict, system: list[dict], fetch: bool = True) -> dict:
+    """Τα ΠΡΑΓΜΑΤΙΚΑ tokens του προθέματος, με μνήμη σε δίσκο. Μία δωρεάν κλήση
+    `count_tokens` ανά (agent, μοντέλο, έκδοση corpus) — και ποτέ ξανά.
+    ΑΠΟΤΥΧΙΑ ΕΔΩ ΔΕΝ ΑΓΓΙΖΕΙ ΤΗΝ ΑΠΑΝΤΗΣΗ: γυρίζει η εφεδρική σταθερά."""
+    chars = sum(len(b.get("text") or "") for b in system)
+    try:
+        mt = int(a["corpus_path"].stat().st_mtime)
+    except Exception:
+        mt = 0
+    key = f'{a["id"]}|{a["model"]}|{mt}|{chars}'
+    if key in _TOKENS:
+        return _TOKENS[key]
+    path = corpus_dir() / ".token-cache.json"
+    disk = {}
+    try:
+        disk = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        pass
+    if isinstance(disk.get(key), dict):
+        _TOKENS[key] = disk[key]
+        return disk[key]
+    rec = {"tokens": 0, "chars": chars, "cpt": GREEK_CHARS_PER_TOKEN, "src": "εφεδρική σταθερά"}
+    if fetch and os.environ.get("ANTHROPIC_API_KEY"):
+        try:
+            import anthropic
+            cl = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+            r = cl.messages.count_tokens(model=a["model"], system=system,
+                                         messages=[{"role": "user", "content": "."}],
+                                         thinking={"type": "adaptive"})
+            n = int(r.input_tokens)
+            if n > 0:
+                rec = {"tokens": n, "chars": chars, "cpt": round(chars / n, 4), "src": "μετρημένο"}
+                log(f"[tokens] agent={a['id']} model={a['model']} ΜΕΤΡΗΘΗΚΕ {n:,} tokens "
+                    f"({rec['cpt']} χαρ./token) — δωρεάν κλήση, μία φορά")
+        except Exception as e:
+            log(f"[tokens] η μέτρηση απέτυχε ({type(e).__name__}: {e}) — εφεδρική "
+                f"σταθερά {GREEK_CHARS_PER_TOKEN} χαρ./token")
+    _TOKENS[key] = rec
+    if rec["src"] == "μετρημένο":
+        try:
+            disk[key] = rec
+            path.write_text(json.dumps(disk, ensure_ascii=False, indent=1), encoding="utf-8")
+        except Exception:
+            pass
+    return rec
 
 
 # ══ Ο ΕΠΙΛΟΓΕΑΣ ΜΟΝΤΕΛΟΥ ΚΑΙ ΕΝΤΑΣΗΣ ══════════════════════ (05/11/2026) ══
@@ -308,6 +404,33 @@ EFFORTS = ("low", "medium", "high", "xhigh")
 
 DEFAULT_MODEL = MODELS["haiku"]
 DEFAULT_EFFORT = "medium"
+
+
+# ── ΤΑ METADATA ΤΟΥ ΙΧΝΟΥΣ ΠΟΥ ΔΙΝΕΙ Ο ΚΑΛΩΝ ────────────────────────────────
+# Ο έλεγχος QA χρειάζεται να σημάνει ΚΑΘΕ κλήση («ποια παρτίδα, ποια ερώτηση,
+# τι περιμέναμε») — αλλιώς τα ευρήματα στο LangSmith είναι ανώνυμα και άχρηστα.
+# Το πεδίο έρχεται από το αίτημα, άρα ΔΕΝ το εμπιστευόμαστε: μόνο ρηχά κλειδιά,
+# μόνο κείμενο/αριθμοί/boolean, κοντά και λίγα. Λόγος: ό,τι γράφεται εδώ φεύγει
+# σε εξωτερική υπηρεσία — ένα ανεξέλεγκτο dict είναι αγωγός για να φύγει μαζί
+# και ό,τι δεν πρέπει (ονόματα, κείμενο μαθητή, ολόκληρο corpus).
+TRACE_MAX_KEYS = 12
+TRACE_MAX_LEN = 200
+
+
+def clean_trace_meta(v) -> dict:
+    if not isinstance(v, dict):
+        return {}
+    out: dict = {}
+    for k, val in list(v.items())[:TRACE_MAX_KEYS]:
+        k = str(k)[:40]
+        if isinstance(val, bool) or isinstance(val, (int, float)):
+            out[k] = val
+        elif isinstance(val, str):
+            out[k] = val[:TRACE_MAX_LEN]
+        elif isinstance(val, (list, tuple)):
+            out[k] = ", ".join(str(x)[:40] for x in list(val)[:20])[:TRACE_MAX_LEN]
+        # τίποτα βαθύτερο — φωλιασμένα dict δεν περνούν
+    return out
 
 
 def tier_of(model: str) -> str:
@@ -668,7 +791,12 @@ def public_agent(a: dict) -> dict:
         # κρατά δική της λίστα: αν αλλάξει εδώ, αλλάζει εκεί.
         "tier": tier_of(a["model"]), "models": MODELS, "efforts": list(EFFORTS),
         "corpus": a["corpus"], "corpus_bytes": size, "corpus_chars": chars,
-        "corpus_tokens_est": est_tokens(chars + len(a["body"]) + 3000) if chars is not None else None,
+        # ΤΟ /health ΔΕΝ ΜΕΤΡΑΕΙ ΚΑΙ ΔΕΝ ΔΙΑΒΑΖΕΙ ΤΟ CORPUS: κοιτά μόνο αν
+        # υπάρχει ήδη μέτρημα (το γεμίζει το πρώτο /ask). Αλλιώς, εκτίμηση με τη
+        # συντηρητική σταθερά — και το λέει στο `corpus_tokens_src`.
+        "corpus_tokens_est": (cached_tokens_for(a["id"], a["model"])
+                              or est_tokens(chars + len(a["body"]) + 3000)) if chars is not None else None,
+        "corpus_tokens_src": "μετρημένο" if cached_tokens_for(a["id"], a["model"]) else "εκτίμηση",
         "max_tokens": a["max_tokens"],
         "corpus_ok": size is not None and size <= CFG["max_corpus_bytes"],
         "max_turns": effective_max_turns(a), "language": a["language"], "tools": a["tools"],
@@ -1964,13 +2092,19 @@ def context_budget(a: dict, system: list[dict], s: dict, question: str = "") -> 
     """Q1 — το ΣΥΝΟΛΟ που βλέπει το μοντέλο, σε εκτιμώμενα tokens, και αν
     ξεχείλισε: corpus (όλο το system) + ιστορικό + ερώτηση, έναντι ταβανιού
     μείον το απόθεμα της απάντησης (max_tokens του agent)."""
-    corpus_t = est_tokens(sum(len(b["text"]) for b in system))
-    hist_t = est_tokens(history_chars(s["messages"]) + len(question or ""))
+    prof = measured_tokens(a, system)
+    sys_chars = sum(len(b["text"]) for b in system)
+    cpt = float(prof["cpt"]) or GREEK_CHARS_PER_TOKEN
+    corpus_t = int(prof["tokens"]) or int(sys_chars / cpt)
+    # Το ιστορικό μετριέται με τον λόγο ΤΟΥ ΙΔΙΟΥ corpus: ίδια γλώσσα, ίδια
+    # ορολογία, ίδιο αλφάβητο — πολύ πιο κοντά από μια καθολική σταθερά.
+    hist_t = int((history_chars(s["messages"]) + len(question or "")) / cpt)
     ceiling = int(CFG["context_ceiling"])
     reserve = int(a["max_tokens"])
     return {"corpus": corpus_t, "history": hist_t, "total": corpus_t + hist_t, "ceiling": ceiling,
             "reserve": reserve, "compact_at": ceiling - reserve,
-            "overflow": corpus_t + hist_t > ceiling - reserve, "chars_per_token": GREEK_CHARS_PER_TOKEN}
+            "overflow": corpus_t + hist_t > ceiling - reserve, "chars_per_token": cpt,
+            "source": prof["src"]}
 
 
 def derive_title(question: str, agent: dict) -> str:
@@ -2737,7 +2871,7 @@ def _usage_dict(u) -> dict:
 
 
 def run_ask(a: dict, params: dict, emit, budget: ToolBudget | None, tools: list[str] = (),
-            question: str = "", session_id: str = "") -> dict:
+            question: str = "", session_id: str = "", trace_extra: dict | None = None) -> dict:
     """Τρέχει την κλήση και στέλνει events μέσω emit(). Επιστρέφει
     {"text", "stop_reason", "usage", "iterations"}. Σηκώνει anthropic.* σφάλματα.
 
@@ -2747,7 +2881,7 @@ def run_ask(a: dict, params: dict, emit, budget: ToolBudget | None, tools: list[
     — ή το ανάποδο — μια πρόωρη έξοδος θα άφηνε ρίζα ανοιχτή για πάντα."""
     import anthropic
     client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"], max_retries=2)
-    tr = trace_start(a, question, session_id)
+    tr = trace_start(a, question, session_id, trace_extra)
     totals = {"input_tokens": 0, "cache_creation_input_tokens": 0,
               "cache_read_input_tokens": 0, "output_tokens": 0}
     pieces: list[str] = []
@@ -2771,7 +2905,12 @@ def run_ask(a: dict, params: dict, emit, budget: ToolBudget | None, tools: list[
         for b in final.content:
             if getattr(b, "type", "") == "tool_use":
                 emit({"type": "tool_call", "name": b.name, "input": b.input})
-                tr.tool(b.name, b.input)
+                tr.tool(b.name, b.input, {
+                    "calls": budget.calls, "fetches": budget.fetches, "chars": budget.chars,
+                    "casefile_calls": budget.cf_calls, "casefile_writes": budget.cf_writes,
+                    "cap_calls": int(CFG["tool_max_calls"]), "cap_fetches": int(CFG["fetch_max_calls"]),
+                    "cap_chars": int(CFG["tool_total_chars"]),
+                } if budget is not None else None)
         log(f"[ask] agent={a['id']} iter={iterations} in={u['input_tokens']} "
             f"cache_w={u['cache_creation_input_tokens']} cache_r={u['cache_read_input_tokens']} "
             f"out={u['output_tokens']} stop={stop}")
@@ -2805,8 +2944,17 @@ def run_ask(a: dict, params: dict, emit, budget: ToolBudget | None, tools: list[
     log(f"[ask] agent={a['id']} DONE iters={iterations} in={totals['input_tokens']} "
         f"cache_w={totals['cache_creation_input_tokens']} cache_r={totals['cache_read_input_tokens']} "
         f"out={totals['output_tokens']} stop={stop} {dt_s:.1f}s")
-    tr.finish(text, totals, iterations, stop)
-    return {"text": text, "stop_reason": stop, "usage": totals, "iterations": iterations}
+    tr.finish(text, totals, iterations, stop, extra={
+        "tool_calls": budget.calls if budget else 0,
+        "fetches": budget.fetches if budget else 0,
+        "tool_chars": budget.chars if budget else 0,
+        "seconds": round(dt_s, 2),
+    })
+    return {"text": text, "stop_reason": stop, "usage": totals, "iterations": iterations,
+            # Το run_id βγαίνει ΕΞΩ επίτηδες: χωρίς αυτό κανείς δεν μπορεί να
+            # κολλήσει βαθμολογία πάνω στο ίχνος — ο έλεγχος θα έγραφε σε txt.
+            "trace_run_id": getattr(tr, "run_id", ""),
+            "cost_usd": getattr(tr, "cost_usd", 0.0)}
 
 
 # ════════════════════════════════════════════════════════════════════════════
@@ -2876,9 +3024,34 @@ def apply_brief(s: dict, brief: str, usage: dict | None = None) -> dict:
         {"role": "user", "content": SUMMARY_HEAD + body, "kind": "summary", "at": _now()},
         {"role": "assistant", "content": SUMMARY_ACK, "kind": "summary", "at": _now()},
     ] + tail
+    after = history_chars(s["messages"])
+    # ── ΤΟ ΦΡΕΝΟ ΤΟΥ ΑΤΕΡΜΟΝΟΣ COMPACTION (μετρήθηκε 06/11/2026) ──────────────
+    # Στη ΔΕΥΤΕΡΗ συνόψιση της ίδιας συνεδρίας το ιστορικό ΜΕΓΑΛΩΣΕ: 7.543 →
+    # 8.360 χαρακτήρες. Ο λόγος είναι δομικός, όχι τυχαίος: η σύνοψη #2 έχει
+    # μέσα της τη σύνοψη #1 (6.190 χαρακτήρες τεκμηριωμένων γραμμών με id και
+    # παραπομπές, που ΔΕΝ επιτρέπεται να πεταχτούν) ΣΥΝ το νέο ζεύγος. Από ένα
+    # σημείο και μετά η σύνοψη έχει πάτο που μεγαλώνει.
+    # ΤΟ ΚΑΚΟ ΔΕΝ ΕΙΝΑΙ Η ΑΠΟΤΥΧΙΑ — ΕΙΝΑΙ Ο ΒΡΟΧΟΣ. Η συνθήκη υπερχείλισης
+    # μένει αληθής, άρα ΚΑΘΕ επόμενη ερώτηση ξαναπληρώνει μια κλήση compaction
+    # που ξέρουμε ότι θα αποτύχει — σιωπηλά, για πάντα, στον λογαριασμό.
+    # ΤΙ ΚΑΝΟΥΜΕ: κρατάμε το ΠΑΛΙΟ ιστορικό (η χειρότερη σύνοψη είναι χειρότερη
+    # από καμία) και σημειώνουμε το σημείο. Όσο το ιστορικό δεν ξεπεράσει αυτό
+    # το μέγεθος, δεν ξαναδοκιμάζουμε. Ο ιδιοκτήτης το βλέπει και αποφασίζει:
+    # νέα συνεδρία, ή ανέβασμα του ταβανιού.
+    if after >= before:
+        s["messages"] = msgs                      # ΤΙΠΟΤΑ δεν αλλάζει
+        s["compact_blocked_at"] = before
+        ev = {"at": _now(), "type": "compaction_failed", "n": int(s.get("compactions") or 0),
+              "chars_before": before, "chars_after": after, "kept_pairs": pairs, "usage": usage}
+        s["events"].append(ev)
+        log(f"[compact] agent={s.get('agent')} session={s['id']} ΑΚΥΡΩΘΗΚΕ: η σύνοψη βγήκε "
+            f"{after:,} χαρακτήρες ενώ το ιστορικό ήταν {before:,}. Κρατήθηκε το ιστορικό· "
+            f"δεν ξαναδοκιμάζεται μέχρι να ξεπεράσει τους {before:,} χαρακτήρες.")
+        return ev
+    s.pop("compact_blocked_at", None)
     s["compactions"] = int(s.get("compactions") or 0) + 1
     ev = {"at": _now(), "type": "compaction", "n": s["compactions"], "chars_before": before,
-          "chars_after": history_chars(s["messages"]), "kept_pairs": pairs, "usage": usage}
+          "chars_after": after, "kept_pairs": pairs, "usage": usage}
     s["events"].append(ev)
     return ev
 
@@ -3436,21 +3609,42 @@ class Handler(BaseHTTPRequestHandler):
                 #    corpus + ιστορικό πλησιάζει το ταβάνι. Μόνο τα messages αλλάζουν. ──
                 if session:
                     emit({"type": "tokens", **context_budget(a, system, session, question)})
-                if session and context_budget(a, system, session, question)["overflow"]:
+                blocked = int((session or {}).get("compact_blocked_at") or 0)
+                if session and context_budget(a, system, session, question)["overflow"]                         and history_chars(session["messages"]) > blocked:
                     tool_dicts = [t.to_dict() for t in budget.make_tools(list(tools))] if budget else []
                     ev = run_compaction(a, session, system, tool_dicts)
                     save_session(session)
                     messages = api_messages(session, question)
                     params = request_params(a, system, messages)
                     cb = context_budget(a, system, session, question)
-                    emit({"type": "compacted", **{k: v for k, v in ev.items() if k != "usage"},
+                    # ── ΟΤΑΝ Η ΣΥΝΟΨΗ ΜΙΚΡΑΙΝΕΙ ΑΛΛΑ ΟΧΙ ΑΡΚΕΤΑ (06/11/2026) ──
+                    # Μετρήθηκε: 10.871 → 9.188 χαρακτήρες. ΜΙΚΡΥΝΕ — και όμως το
+                    # σύνολο έμεινε ΠΑΝΩ από το όριο, άρα η επόμενη ερώτηση
+                    # ξανασυνόψιζε, και η επόμενη, με $0,05 τη φορά. Δεν είναι
+                    # βρόχος που σκάει· είναι **διάδρομος** που χρεώνει.
+                    # Αυτό ΔΕΝ διορθώνεται με άλλη σύνοψη: σημαίνει ότι το corpus
+                    # μόνο του γεμίζει το παράθυρο. Σταματάμε να ξαναδοκιμάζουμε
+                    # και το ΛΕΜΕ — η απόφαση (νέα συζήτηση ή ψηλότερο ταβάνι)
+                    # είναι του ιδιοκτήτη, όχι δική μας να την πληρώνουμε σιωπηλά.
+                    stuck = ""
+                    if cb["overflow"]:
+                        session["compact_blocked_at"] = history_chars(session["messages"])
+                        save_session(session)
+                        stuck = (f" ⚠ ΠΑΡΑΜΕΝΕΙ πάνω από το όριο ({cb['total']:,} έναντι "
+                                 f"{cb['compact_at']:,}): το corpus μόνο του είναι {cb['corpus']:,} "
+                                 f"tokens. Δεν θα ξανασυνοψίσω — άνοιξε νέα συζήτηση, ή ανέβασε το "
+                                 f"ταβάνι (--context-ceiling).")
+                    emit({**{k: v for k, v in ev.items() if k != "usage"},
+                          "type": "compacted",          # ΤΕΛΕΥΤΑΙΟ: το ev έχει δικό του type
+                          "stuck": bool(stuck),
                           "usage": ev.get("usage"), "tokens": cb, "message": (
                               f"Έγινε compaction #{ev['n']}: το σύνολο πλησίαζε τα {cb['ceiling']:,} tokens — το ιστορικό "
                               f"({ev['chars_before']:,} χαρακτήρες ≈ {est_tokens(ev['chars_before']):,} tokens) έγινε δομημένη "
-                              f"σύνοψη ({ev['chars_after']:,} ≈ {est_tokens(ev['chars_after']):,}). Οι παραπομπές και οι εγγραφές κρατήθηκαν.")})
+                              f"σύνοψη ({ev['chars_after']:,} ≈ {est_tokens(ev['chars_after']):,}). Οι παραπομπές και οι εγγραφές κρατήθηκαν." + stuck)})
                 res = run_ask(a, params, emit, budget, tools,
                               question=question,
-                              session_id=(session or {}).get("id", ""))
+                              session_id=(session or {}).get("id", ""),
+                              trace_extra=clean_trace_meta(req.get("trace")))
             except anthropic.AuthenticationError:
                 return emit({"type": "error", "code": "auth", "message":
                              "Το API δεν δέχτηκε το κλειδί (401). Έλεγξε την ANTHROPIC_API_KEY."})
@@ -3504,6 +3698,8 @@ class Handler(BaseHTTPRequestHandler):
                 emit({"type": "notice", "message":
                       f"Η απάντηση κόπηκε στο όριο max_tokens={a['max_tokens']}."})
             emit({"type": "done", "stop_reason": res["stop_reason"], "text": res["text"],
+                  "trace_run_id": res.get("trace_run_id", ""),
+                  "cost_usd": res.get("cost_usd", 0.0),
                   "session": session_summary(session) if session else None})
         except ClientGone:
             log(f"[ask] agent={a['id']} ο client έκλεισε τη σύνδεση")

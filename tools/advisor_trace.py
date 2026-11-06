@@ -93,10 +93,50 @@ def enabled() -> bool:
 # Ίδιες μέθοδοι, καμία ενέργεια. Ο καλών δεν ρωτά ποτέ αν το tracing είναι
 # ανοιχτό· γράφει τον ίδιο κώδικα και στις δύο περιπτώσεις.
 class _Null:
+    run_id = ""          # ΚΕΙΜΕΝΟ, όχι None: ο καλών το βάζει σε JSON χωρίς έλεγχο
+    cost_usd = 0.0
+
     def llm(self, *a, **k) -> None: ...
     def tool(self, *a, **k) -> None: ...
     def finish(self, *a, **k) -> None: ...
     def fail(self, *a, **k) -> None: ...
+
+
+# ── ΤΟ ΤΙΜΟΛΟΓΙΟ, ΓΙΑΤΙ ΤΟ LANGSMITH ΔΕΝ ΤΟ ΞΕΡΕΙ ΣΩΣΤΑ ΓΙΑ ΜΑΣ ────────────────
+# Ο Haiku 5.5 έχει ΔΥΟ τιμές: $0.10/$0.50 ανά MTok όταν το prompt είναι ως
+# 100.000 tokens, και $0.50/$2.50 πάνω από εκεί — ΠΕΝΤΑΠΛΑΣΙΟ. Τα τρία από τα
+# τέσσερα corpora μας (μετρημένα 06/11/2026: board 432.036, syllabus 323.089,
+# description 142.398, remarks 96.637) είναι ΠΑΝΩ από τη γραμμή. Η στήλη
+# κόστους του LangSmith δεν γνωρίζει αυτό το κλιμάκιο, άρα θα έδειχνε τον
+# Σύμβουλο έως πέντε φορές φθηνότερο απ' ό,τι είναι — και σε έναν πίνακα που
+# δουλεύει, ένα νούμερο που λέει ψέματα είναι χειρότερο από κανένα νούμερο.
+# Γι' αυτό υπολογίζουμε ΕΜΕΙΣ το κόστος και το στέλνουμε ως metadata.
+#
+# write = 2x της εισόδου (TTL 1 ώρα· ο κυλιόμενος 4ος δείκτης είναι 5 λεπτών,
+# δηλαδή 1.25x — τον χρεώνουμε ΚΙ ΑΥΤΟΝ ως 2x, άρα η εκτίμηση είναι ελαφρώς
+# ΑΝΩ του αληθινού· προτιμούμε να υπερεκτιμά παρά να καθησυχάζει).
+PRICES = {
+    "claude-haiku-5-5":  {"in": 0.10, "out": 0.50, "in_hi": 0.50, "out_hi": 2.50, "read": 0.10},
+    "claude-sonnet-5-5": {"in": 2.00, "out": 10.00, "in_hi": 2.00, "out_hi": 10.00, "read": 0.10},
+    "claude-opus-5-5":   {"in": 4.00, "out": 20.00, "in_hi": 4.00, "out_hi": 20.00, "read": 0.05},
+}
+TIER_LINE = 100_000
+
+
+def cost_usd(model: str, u: dict) -> float | None:
+    """Δολάρια για ΕΝΑΝ γύρο. None για μοντέλο που δεν ξέρουμε — ποτέ μαντεμένη τιμή."""
+    p = PRICES.get(str(model or ""))
+    if not p:
+        return None
+    fresh = int(u.get("input_tokens") or 0)
+    cr = int(u.get("cache_read_input_tokens") or 0)
+    cw = int(u.get("cache_creation_input_tokens") or 0)
+    out = int(u.get("output_tokens") or 0)
+    hi = (fresh + cr + cw) > TIER_LINE          # το κλιμάκιο κρίνεται στο ΣΥΝΟΛΟ εισόδου
+    p_in = p["in_hi"] if hi else p["in"]
+    p_out = p["out_hi"] if hi else p["out"]
+    total = (fresh * p_in + cw * p_in * 2.0 + cr * p_in * p["read"] + out * p_out) / 1e6
+    return round(total, 6)
 
 
 def _usage_meta(u: dict) -> dict:
@@ -120,16 +160,25 @@ class _Trace:
     def __init__(self, root) -> None:
         self._root = root
         self._n = 0
+        self.cost_usd = 0.0
+        try:
+            self.run_id = str(root.id)
+        except Exception:
+            self.run_id = ""
 
     def llm(self, usage: dict, model: str, stop: str | None, t0: float) -> None:
         """Ένας γύρος του μοντέλου."""
         try:
             self._n += 1
+            c_usd = cost_usd(model, usage)
+            if c_usd:
+                self.cost_usd = round(self.cost_usd + c_usd, 6)
             c = self._root.create_child(
                 name=f"iteration {self._n}", run_type="llm",
                 inputs={"model": model},
                 start_time=_dt(t0),
-                extra={"metadata": {"ls_provider": "anthropic", "ls_model_name": model}},
+                extra={"metadata": {"ls_provider": "anthropic", "ls_model_name": model,
+                                    "cost_usd": c_usd}},
             )
             c.post()
             c.end(outputs={"stop_reason": stop, "usage_metadata": _usage_meta(usage)})
@@ -137,20 +186,30 @@ class _Trace:
         except Exception:
             pass
 
-    def tool(self, name: str, inp) -> None:
+    def tool(self, name: str, inp, budget: dict | None = None) -> None:
+        """Το span του εργαλείου κουβαλά ΤΑ ΦΡΕΝΑ, όχι το κείμενο που γύρισε.
+        ΤΟ ΚΕΙΜΕΝΟ ΜΕΝΕΙ ΕΚΤΟΣ ΕΠΙΤΗΔΕΣ: αποσπάσματα corpus σε εξωτερικό πίνακα
+        είναι το corpus σε εξωτερικό πίνακα. Οι μετρητές (κλήσεις, ανακτήσεις,
+        χαρακτήρες) λένε ό,τι χρειάζεται ένας έλεγχος: πού χτυπά το φρένο."""
         try:
             c = self._root.create_child(name=f"tool · {name}", run_type="tool",
-                                        inputs={"input": inp})
+                                        inputs={"input": inp},
+                                        extra={"metadata": budget or {}})
             c.post()
-            c.end(outputs={})
+            c.end(outputs={"budget": budget or {}})
             c.patch()
         except Exception:
             pass
 
-    def finish(self, text: str, usage: dict, iterations: int, stop: str | None) -> None:
+    def finish(self, text: str, usage: dict, iterations: int, stop: str | None,
+               extra: dict | None = None) -> None:
         try:
+            md = {"cost_usd": self.cost_usd}
+            md.update(extra or {})
+            self._root.add_metadata(md) if hasattr(self._root, "add_metadata") else None
             self._root.end(outputs={
                 "text": text, "iterations": iterations, "stop_reason": stop,
+                "cost_usd": self.cost_usd,
                 "usage_metadata": _usage_meta(usage),
             })
             self._root.patch()
@@ -193,3 +252,26 @@ def start(agent: dict, question: str, session_id: str = "", extra: dict | None =
         return _Trace(rt)
     except Exception:
         return _Null()
+
+
+# ── Η ΒΑΘΜΟΛΟΓΙΑ ΓΥΡΙΖΕΙ ΠΙΣΩ ΣΤΟ ΙΧΝΟΣ ─────────────────────────────────────
+# ΓΙΑΤΙ ΥΠΑΡΧΕΙ. Ένας έλεγχος που γράφει «πέρασε/κόπηκε» σε αρχείο κειμένου
+# πεθαίνει με το αρχείο. Γραμμένο ως feedback ΠΑΝΩ στο run, το εύρημα κάθεται
+# δίπλα στην απάντηση που το γέννησε: ανοίγεις το run, βλέπεις ΚΑΙ το κείμενο
+# ΚΑΙ γιατί κόπηκε, και στο βάθος του χρόνου βγαίνει καμπύλη — «παραβιάσεις
+# αυτολεξεί ανά εβδομάδα» — που κανένα txt δεν δίνει.
+# Ίδια αρχή με όλο το αρχείο: αποτυχία εδώ δεν αγγίζει τίποτα.
+def score(run_id: str, scores: dict, comment: str = "") -> bool:
+    """scores: {«κλειδί»: True/False/αριθμός}. Επιστρέφει αν γράφτηκε."""
+    if not run_id or not enabled() or not scores:
+        return False
+    try:
+        from langsmith import Client                       # noqa: PLC0415
+        cl = Client()
+        for k, v in scores.items():
+            val = float(v) if not isinstance(v, bool) else (1.0 if v else 0.0)
+            cl.create_feedback(run_id, key=str(k), score=val,
+                               comment=(comment or "")[:2000] or None)
+        return True
+    except Exception:
+        return False

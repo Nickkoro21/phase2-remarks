@@ -644,6 +644,17 @@
           switch (ev.type) {
             case "start": UI.turnMax = ev.max_turns || UI.turnMax; if (UI.today) UI.today.count = ev.today; break;
             case "compacted": P.notices.push(ev.message); draw(true); break;
+            // ΜΕΤΡΗΘΗΚΕ 06/11/2026: η δεύτερη συνόψιση της ίδιας συνεδρίας βγήκε
+            // ΜΕΓΑΛΥΤΕΡΗ από το ιστορικό (7.543 → 8.360 χαρ.), γιατί κουβαλά μέσα
+            // της την προηγούμενη σύνοψη. Ο proxy πλέον ΑΚΥΡΩΝΕΙ τη σύνοψη και
+            // κρατά το ιστορικό — αλλά αυτό ΠΡΕΠΕΙ να φαίνεται: από εδώ και πέρα
+            // η συζήτηση δεν μικραίνει άλλο, και ο δρόμος είναι νέα συζήτηση.
+            case "compaction_failed":
+              P.notices.push("♻ Η συνόψιση ΑΚΥΡΩΘΗΚΕ: βγήκε " + fmtK(ev.chars_after) +
+                " χαρ. ενώ το ιστορικό ήταν " + fmtK(ev.chars_before) +
+                " — κρατήθηκε το ιστορικό ακέραιο. Η συζήτηση δεν μικραίνει άλλο: " +
+                "άνοιξε νέα όταν φτάσεις στο όριο γύρων.");
+              draw(true); break;
             case "text": P.text += ev.text; draw(false); break;
             case "tool_call": P.tools.push({ tool: ev.name, name: ev.name, pending: true, write: /^casefile_(add|update)_case$/.test(ev.name),
               query: ev.input && ev.input.query, source: ev.input && ev.input.source,
