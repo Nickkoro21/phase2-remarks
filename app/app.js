@@ -126,12 +126,15 @@ async function selectItem(it, btn) {
   renderCodes();
   renderResults();
   try {
-    const path = it.v2_file ? `../data/observations2/${it.v2_file}` : `../data/observations/${it.file}`;
+    /* 06/11/2026: ΕΝΑ BANK, ΟΧΙ ΔΥΟ. Το fallback προς το v1 ήταν νεκρός κλάδος
+       (κάθε item του ευρετηρίου έχει `v2_file` — ο builder του export ΑΠΟΤΥΓΧΑΝΕΙ
+       αν βρει item χωρίς αυτό) και το v1 δεν υπάρχει πια. */
+    const path = `../data/observations2/${it.v2_file}`;
     const res = await fetch(path, { cache: "no-store" });
     const data = await res.json();
     state.itemData = data.schema === "v2-trunk" ? expandV2(data) : data;
   } catch (e) {
-    $("results").innerHTML = `<p class="hint">Failed to load ${it.file}.</p>`;
+    $("results").innerHTML = `<p class="hint">Failed to load ${it.v2_file}.</p>`;
     return;
   }
   // Default row: first with data, or null when single/none
