@@ -118,10 +118,13 @@ R-B — Η ΜΝΗΜΗ, με το σχήμα που έδωσε ο ιδιοκτή�
      πλέον {session, question} και ο proxy κρατά το ιστορικό.
   2. COMPACTION όταν το ΣΥΝΟΛΟ corpus + ιστορικό πλησιάσει το ταβάνι (Q1, απόφανση
      ιδιοκτήτη «Σύνολο 400.000, βάλ' το να υπολογίζει το σύνολο»· 18/10/2026
-     ανέβηκε ρητά σε 600.000 — τα μοντέλα πάνε ως 1 εκατ., τα 600.000 αφήνουν
-     περιθώριο, και με δύο εργαλεία κάθε γύρος κουβαλά περισσότερο κείμενο πηγών):
-     est(πρόθεμα system) + est(ιστορικό + ερώτηση) > ADVISOR_CONTEXT_CEILING_TOKENS
-     (600.000) − max_tokens της απάντησης. Η εκτίμηση: GREEK_CHARS_PER_TOKEN=2.5.
+     ανέβηκε σε 600.000· 06/11/2026 ΕΦΥΓΕ ΩΣ ΔΙΚΟ ΜΑΣ ΟΡΙΟ — «αφαίρεσε τα όρια
+     εντελώς από input και output» — και είναι πλέον το ΠΑΡΑΘΥΡΟ ΤΟΥ ΜΟΝΤΕΛΟΥ,
+     1.000.000 tokens, βλ. MODEL_CONTEXT_TOKENS):
+     μετρημένο(πρόθεμα system) + est(ιστορικό + ερώτηση) > ADVISOR_CONTEXT_CEILING_TOKENS
+     (1.000.000) − max_tokens της απάντησης (128.000) = 872.000. Το corpus
+     ΜΕΤΡΙΕΤΑΙ με count_tokens· μόνο το ιστορικό εκτιμάται, με τους χαρ./token
+     του ίδιου corpus.
      Προσαρμόζεται μόνη της: ο remarks (162 KB corpus) έχει πολύ περισσότερο χώρο
      συζήτησης από τον board (464 KB). Το ιστορικό ΜΟΝΟ αλλάζει — το corpus είναι το cached
      πρόθεμα και δεν μετακινείται ΠΟΤΕ. Το μοντέλο ξαναγράφει τη συζήτηση σε
@@ -157,7 +160,8 @@ compactions, σύνολα usage) ή ως το JSON της. Τοπικά, στο�
 third-party tracing — οι συνεδρίες έχουν πραγματικά ονόματα.
 
 ΑΛΛΕΣ ΡΥΘΜΙΣΕΙΣ
-  ADVISOR_CONTEXT_CEILING_TOKENS --context-ceiling default 600000 (ΣΥΝΟΛΟ tokens corpus+ιστορικό· το corpus ΜΕΤΡΙΕΤΑΙ με count_tokens από 06/11/2026, το ιστορικό εκτιμάται με τους χαρ./token του ίδιου corpus· ήταν 400000 ως 18/10/2026)
+  ADVISOR_CONTEXT_CEILING_TOKENS --context-ceiling default 1000000 = το παράθυρο του μοντέλου (ΣΥΝΟΛΟ tokens corpus+ιστορικό· το corpus ΜΕΤΡΙΕΤΑΙ με count_tokens από 06/11/2026, το ιστορικό εκτιμάται με τους χαρ./token του ίδιου corpus· ήταν 400000 ως 18/10/2026 και 600000 ως 06/11/2026)
+  ADVISOR_MAX_TOKENS             --max-tokens      default 128000 = το μέγιστο output του σύγχρονου Messages API (προεπιλογή για agent χωρίς max_tokens στο frontmatter· ήταν 16000 σταθερά στον κώδικα ως 06/11/2026)
   ADVISOR_COMPACT_KEEP        --compact-keep    default 1      (ζεύγη που μένουν αυτούσια)
   ADVISOR_CONFIRM_TTL_S       --confirm-ttl     default 900    (ζωή token επιβεβαίωσης)
   ADVISOR_SESSIONS_DIR        --sessions-dir    default tools/advisor/sessions/
@@ -228,6 +232,36 @@ except Exception:
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 
+# ════════════════════════════════════════════════════════════════════════════
+# ΤΑ ΟΡΙΑ ΤΗΣ ΠΛΑΤΦΟΡΜΑΣ — ΤΑ ΜΟΝΑ ΠΟΥ ΜΕΝΟΥΝ (06/11/2026)
+# ════════════════════════════════════════════════════════════════════════════
+# Απόφανση ιδιοκτήτη: «αφού έχουμε αλλάξει μοντέλο, αφαίρεσε τα όρια εντελώς
+# από input και output».
+#
+# «ΕΝΤΕΛΩΣ ΧΩΡΙΣ ΟΡΙΟ» ΔΕΝ ΥΠΑΡΧΕΙ, και η ειλικρινής εκτέλεση της απόφανσης
+# είναι αυτή: φεύγουν τα ΔΙΚΑ ΜΑΣ όρια (600.000 input, 16.000 output) και μένει
+# το όριο ΤΟΥ API — ρητό, ονομασμένο, με πηγή. Αν βάλουμε αριθμό μεγαλύτερο από
+# αυτόν, δεν «ανοίγουμε» τίποτα: το API απαντά 400 και η απάντηση χάνεται, που
+# είναι ΧΕΙΡΟΤΕΡΟ από φρένο — είναι φρένο που δεν προειδοποιεί. Είναι ακριβώς η
+# παγίδα που περιγράφεται παρακάτω στο GREEK_CHARS_PER_TOKEN.
+#
+# ΠΗΓΗ: platform.claude.com/docs/en/about-claude/models/overview, 06/11/2026.
+# Και τα τέσσερα τρέχοντα μοντέλα (Fable 5.1 · Opus 5.5 · Sonnet 5.5 · Haiku
+# 5.5) δίνουν ΤΑ ΙΔΙΑ δύο νούμερα, άρα ένα ζεύγος σταθερών αρκεί και η αλλαγή
+# μοντέλου δεν αλλάζει τίποτα εδώ:
+#       context window  1.000.000 tokens   (χωρίς beta header — είναι το κανονικό)
+#       max output        128.000 tokens   (σύγχρονο Messages API)
+# Τα 300.000 output υπάρχουν ΜΟΝΟ στο Message Batches API με το beta header
+# output-300k-2026-03-24 — ο σύμβουλος απαντά σύγχρονα, άρα δεν τον αφορούν.
+#
+# ΤΟ ΜΟΝΟ ΠΟΥ ΔΕΝ ΕΙΝΑΙ ΔΩΡΕΑΝ: το max_tokens είναι ΑΠΟΘΕΜΑ (βλ.
+# context_budget) — αφαιρείται από το ταβάνι πριν κριθεί αν χρειάζεται
+# compaction. Με 1.000.000 − 128.000 το φρένο πέφτει στα 872.000, δηλαδή ο
+# board-director (432.036 μετρημένα) έχει ~440.000 tokens χώρο συζήτησης, από
+# ~152.000 που είχε. Και τα δύο όρια έφυγαν ΚΑΙ ο χώρος τριπλασιάστηκε.
+MODEL_CONTEXT_TOKENS = 1_000_000
+MODEL_MAX_OUTPUT_TOKENS = 128_000
+
 # ── ΠΡΟΕΠΙΛΟΓΕΣ (όλες αλλάζουν με env ή flag· η τεκμηρίωση είναι στην κεφαλίδα) ──
 DEFAULTS = {
     "port": 8771,
@@ -248,11 +282,19 @@ DEFAULTS = {
     "search_excerpt_chars": 700,   # μήκος αποσπάσματος αναζήτησης (κόβει σε όριο, ποτέ μέσα σε λέξη)
     "casefile_max_calls": 8,
     "casefile_max_writes": 2,
-    # Q1: ΣΥΝΟΛΟ tokens (corpus + ιστορικό). Ήταν 400.000 (απόφανση «Σύνολο 400.000»)·
-    # 18/10/2026 απόφανση ιδιοκτήτη: 600.000 — τα μοντέλα πάνε ως 1 εκατ., τα
-    # 600.000 αφήνουν περιθώριο, και με δύο εργαλεία η απάντηση κουβαλά περισσότερο
-    # κείμενο πηγών (έως 60.000 χαρ. ≈ 24.000 tokens ανά γύρο).
-    "context_ceiling": 600_000,
+    # Q1: ΣΥΝΟΛΟ tokens (corpus + ιστορικό). Ήταν 400.000 (απόφανση «Σύνολο
+    # 400.000»), μετά 600.000 (18/10/2026: «τα μοντέλα πάνε ως 1 εκατ., τα
+    # 600.000 αφήνουν περιθώριο»).
+    # 06/11/2026 — ΦΕΥΓΕΙ ΩΣ ΔΙΚΟ ΜΑΣ ΟΡΙΟ. Το 600.000 μπήκε με σκεπτικό σωστό
+    # αλλά πάνω σε ΛΑΘΟΣ μέτρηση: νομίζαμε ότι ο board κουβαλά 219.800 και
+    # κουβαλά 432.036, άρα το «περιθώριο» ήταν 152.000 και όχι 364.000. Τώρα
+    # που το corpus ΜΕΤΡΙΕΤΑΙ, το ταβάνι είναι το παράθυρο του μοντέλου και
+    # τίποτα δικό μας: ο μόνος που φρενάρει είναι το API.
+    "context_ceiling": MODEL_CONTEXT_TOKENS,
+    # Το ΟΡΙΟ ΕΞΟΔΟΥ, ως προεπιλογή για agent που δεν το ορίζει στο frontmatter
+    # του. Ήταν 16.000 σταθερά στον κώδικα — τώρα είναι το μέγιστο του API και
+    # αλλάζει σαν κάθε άλλη ρύθμιση (ADVISOR_MAX_TOKENS / --max-tokens).
+    "max_tokens": MODEL_MAX_OUTPUT_TOKENS,
     "compact_keep": 1,
     "confirm_ttl": 900,
     "keepalive": 1,
@@ -465,7 +507,8 @@ def pick_effort(a: dict, req: dict) -> str:
     if val not in EFFORTS:
         raise ValueError(f"Άγνωστη ένταση «{val}». Επιτρεπτά: {', '.join(EFFORTS)}.")
     return val
-DEFAULT_MAX_TOKENS = 16000
+# Εφεδρικό, για τις λίγες διαδρομές που διαβάζουν σταθερά πριν γεμίσει το CFG.
+DEFAULT_MAX_TOKENS = MODEL_MAX_OUTPUT_TOKENS
 MAX_BODY_BYTES = 256 * 1024
 ORIGIN_OK = re.compile(r"^http://(localhost|127\.0\.0\.1)(:\d+)?$")
 
@@ -726,7 +769,8 @@ def load_agent(agent_id: str) -> dict | None:
         "corpus": corpus_name,
         "corpus_path": corpus_dir() / corpus_name,
         "max_turns": _int(fm.get("max_turns"), None),
-        "max_tokens": _int(fm.get("max_tokens"), DEFAULT_MAX_TOKENS),
+        "max_tokens": _int(fm.get("max_tokens"),
+                           int(CFG.get("max_tokens") or DEFAULT_MAX_TOKENS)),
         "language": str(fm.get("language") or "el"),
         "tools": tools,
         "body": body.strip(),
@@ -3803,6 +3847,7 @@ def configure(args) -> None:
         "casefile_max_calls": ("ADVISOR_CASEFILE_MAX_CALLS", int),
         "casefile_max_writes": ("ADVISOR_CASEFILE_MAX_WRITES", int),
         "context_ceiling": ("ADVISOR_CONTEXT_CEILING_TOKENS", int), "compact_keep": ("ADVISOR_COMPACT_KEEP", int),
+        "max_tokens": ("ADVISOR_MAX_TOKENS", int),
         "confirm_ttl": ("ADVISOR_CONFIRM_TTL_S", int), "sessions_dir": ("ADVISOR_SESSIONS_DIR", str),
         "keepalive": ("ADVISOR_KEEPALIVE", int), "keepalive_idle_h": ("ADVISOR_KEEPALIVE_IDLE_H", int),
         "state_file": ("ADVISOR_STATE_FILE", str), "agents_dir": ("ADVISOR_AGENTS_DIR", str),
@@ -3956,7 +4001,12 @@ def main() -> int:
     ap.add_argument("--casefile-max-calls", type=int, dest="casefile_max_calls", help="casefile: κλήσεις ανά απάντηση (8)")
     ap.add_argument("--casefile-max-writes", type=int, dest="casefile_max_writes", help="casefile: προεπισκοπήσεις εγγραφής ανά απάντηση (2)")
     ap.add_argument("--context-ceiling", type=int, dest="context_ceiling",
-                    help=f"compaction όταν ΕΚΤΙΜΩΜΕΝΑ tokens corpus+ιστορικού ξεπεράσουν N − max_tokens (600000· εκτίμηση {GREEK_CHARS_PER_TOKEN} χαρ./token, όχι μέτρηση)")
+                    help=f"compaction όταν tokens corpus+ιστορικού ξεπεράσουν N − max_tokens "
+                         f"(default {MODEL_CONTEXT_TOKENS}: το παράθυρο του μοντέλου· το corpus ΜΕΤΡΙΕΤΑΙ, "
+                         f"το ιστορικό εκτιμάται με τους χαρ./token του ίδιου corpus)")
+    ap.add_argument("--max-tokens", type=int, dest="max_tokens",
+                    help=f"όριο εξόδου ανά απάντηση, για agent χωρίς max_tokens στο frontmatter "
+                         f"(default {MODEL_MAX_OUTPUT_TOKENS}: το μέγιστο του σύγχρονου Messages API)")
     ap.add_argument("--keepalive", type=int, choices=[0, 1], dest="keepalive", help="keep-alive του cache με max_tokens:0 πριν τη λήξη (1)")
     ap.add_argument("--keepalive-idle", type=int, dest="keepalive_idle_h", help="ώρες χωρίς ερώτηση μετά τις οποίες σταματά το keep-alive (8)")
     ap.add_argument("--compact-keep", type=int, dest="compact_keep", help="ζεύγη που μένουν αυτούσια μετά το compaction (1)")
@@ -4048,11 +4098,17 @@ def main() -> int:
         f"max_corpus_bytes={CFG['max_corpus_bytes']:,} · search: {CFG['tool_max_calls']} κλήσεις × {CFG['tool_max_chars']} chars "
         f"(απόσπασμα {CFG['search_excerpt_chars']}) · fetch: {CFG['fetch_max_calls']} κλήσεις × {CFG['fetch_max_chars']} chars · "
         f"σύνολο {CFG['tool_total_chars']} chars/απάντηση · cache_ttl={CFG['cache_ttl']}")
+    _ours = (int(CFG["context_ceiling"]) != MODEL_CONTEXT_TOKENS
+             or int(CFG["max_tokens"]) != MODEL_MAX_OUTPUT_TOKENS)
+    log(f"όρια tokens: input {int(CFG['context_ceiling']):,} · output {int(CFG['max_tokens']):,} → compaction στα "
+        f"{int(CFG['context_ceiling']) - int(CFG['max_tokens']):,} tokens corpus+ιστορικού"
+        + (" · ΔΙΚΟ ΜΑΣ ΟΡΙΟ, κάτω από την πλατφόρμα"
+           f" ({MODEL_CONTEXT_TOKENS:,}/{MODEL_MAX_OUTPUT_TOKENS:,})" if _ours else
+           " · ΚΑΝΕΝΑ ΔΙΚΟ ΜΑΣ ΟΡΙΟ — είναι τα μέγιστα του API"))
     if int(CFG["keepalive"]):
         threading.Thread(target=keepalive_loop, name="keepalive", daemon=True).start()
         log(f"keep-alive: ΝΑΙ — ping στα {keepalive_status()['ping_after_s'] // 60}′ από την τελευταία επαφή, "
-            f"σταματά μετά από {CFG['keepalive_idle_h']} ώρες χωρίς ερώτηση · compaction όταν corpus+ιστορικό ≈ "
-            f"{int(CFG['context_ceiling']):,} tokens (εκτίμηση {GREEK_CHARS_PER_TOKEN} χαρ./token)")
+            f"σταματά μετά από {CFG['keepalive_idle_h']} ώρες χωρίς ερώτηση")
     else:
         log("keep-alive: ΟΧΙ (ADVISOR_KEEPALIVE=0)")
     log("Ctrl+C για τερματισμό.")
