@@ -157,7 +157,7 @@ compactions, σύνολα usage) ή ως το JSON της. Τοπικά, στο�
 third-party tracing — οι συνεδρίες έχουν πραγματικά ονόματα.
 
 ΑΛΛΕΣ ΡΥΘΜΙΣΕΙΣ
-  ADVISOR_CONTEXT_CEILING_TOKENS --context-ceiling default 600000 (ΣΥΝΟΛΟ tokens corpus+ιστορικό, ΕΚΤΙΜΗΣΗ με 2.5 χαρ./token· ήταν 400000 ως 18/10/2026)
+  ADVISOR_CONTEXT_CEILING_TOKENS --context-ceiling default 600000 (ΣΥΝΟΛΟ tokens corpus+ιστορικό· το corpus ΜΕΤΡΙΕΤΑΙ με count_tokens από 06/11/2026, το ιστορικό εκτιμάται με τους χαρ./token του ίδιου corpus· ήταν 400000 ως 18/10/2026)
   ADVISOR_COMPACT_KEEP        --compact-keep    default 1      (ζεύγη που μένουν αυτούσια)
   ADVISOR_CONFIRM_TTL_S       --confirm-ttl     default 900    (ζωή token επιβεβαίωσης)
   ADVISOR_SESSIONS_DIR        --sessions-dir    default tools/advisor/sessions/
