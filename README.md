@@ -148,11 +148,13 @@ double-click `start_app.bat`. The unit build is a **single self-contained HTML f
 │   ├── technique/            # T-6A Techniques & Procedures, by section
 │   └── human_factors.json
 ├── specs/                    # SDD constitution (mission · tech-stack · roadmap)
-│                             # + the four long specs: observations-style, scheduler,
-│                             #   description, bridge
+│                             # + the long specs: observations-style, scheduler,
+│                             #   description, bridge, advisor, qa
 └── tools/
     ├── check_observations.py # the bank's gate
     ├── build_offline.py      # the one-file unit build (ES5)
+    ├── qa_advisor.py         # the advisor's QA harness — specs/qa-spec.md
+    ├── qa_review.py          #   side-by-side reader for the manual substance check
     └── fixtures/bridge/      # 1,625 headless assertions
 ```
 
