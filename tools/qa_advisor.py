@@ -88,6 +88,31 @@ ADMIT = [
 RE_ID = re.compile(r"\[?\b([a-z]{2,12}-\d{1,3})\b\]?")
 RE_WS = re.compile(r"\s+")
 
+# ── Η ΠΙΣΤΟΤΗΤΑ ΤΗΣ ΣΗΜΑΝΣΗΣ (06/11/2026) ───────────────────────────────────
+# Ο έλεγχος ότι το id ΥΠΑΡΧΕΙ δεν λέει αν η ΣΕΛΙΔΑ και το ΕΔΑΦΙΟ που τυπώνονται
+# δίπλα του είναι αυτά που δηλώνει το corpus. **Σωστή απάντηση σε λάθος σελίδα
+# είναι η χειρότερη περίπτωση**: ο ιδιοκτήτης ανοίγει τη σελίδα, δεν βρίσκει τη
+# διάταξη, και χάνει την εμπιστοσύνη του σε ΟΛΕΣ τις απαντήσεις — και το ⌖ του
+# θεατή τον στέλνει κι αυτό αλλού.
+#
+# ΑΚΡΙΒΕΙΑ ΠΡΙΝ ΑΠΟ ΚΑΛΥΨΗ, ΚΑΙ ΜΕΤΡΗΘΗΚΕ ΓΙΑΤΙ. Η πρώτη εκδοχή κοίταζε ±160
+# χαρακτήρες γύρω από το id και κατήγγειλε **πέντε** σημάνσεις· από αυτές οι
+# **τέσσερις ήταν σωστές** και το λάθος ήταν δικό της — δάνειζε τον αριθμό της
+# ΓΕΙΤΟΝΙΚΗΣ παραπομπής. Το κείμενο έλεγε «§9.b **του st-40**» και ο έλεγχος το
+# χρέωνε στο st-18· έλεγε «fail-10 (§30ε)» και το χρέωνε στο fail-08. Ένας
+# έλεγχος με ψευδείς συναγερμούς στέλνει να διορθώνεις πρόβλημα που δεν
+# υπάρχει, άρα είναι **χειρότερος από κανέναν**: τον εμπιστεύεσαι.
+# Γι' αυτό εδώ: καμία ματιά ΠΡΙΝ την αγκύλη· παρένθεση ΜΕΤΑ την αγκύλη μόνο αν
+# ξεκινά αμέσως με «σελ.PDF/§/παρ.»· και σε αγκύλη με ΠΟΛΛΑ id, κάθε στοιχείο
+# χρεώνεται μόνο στο id του ΔΙΚΟΥ ΤΟΥ τμήματος (τα τμήματα χωρίζονται με «·»).
+RE_PAGE = re.compile(r"(?:σελ\.?\s*PDF|PDF)\s*(\d{1,3})", re.I)
+RE_REF = re.compile(r"(?:§|παρ\.?)\s*(\d{1,3})\s*([α-ω]{1,3})?(?:\s*\(([^)]{1,6})\))?")
+RE_BRACKET = re.compile(r"\[([^\[\]]{0,400})\]")
+RE_TAIL_PAREN = re.compile(r"^\s*\(\s*(?:σελ|§|παρ)")
+# Η ελληνική αρίθμηση εδαφίων, για να ανοίγουν τα εύρη «§25α-β», «§58α-ιβ».
+GREEK_ORD = ["α", "β", "γ", "δ", "ε", "στ", "ζ", "η", "θ", "ι", "ια", "ιβ", "ιγ",
+             "ιδ", "ιε", "ιστ", "ιζ", "ιη", "ιθ", "κ"]
+
 
 # ── ΚΑΝΟΝΙΚΟΠΟΙΗΣΗ: δύο κείμενα συγκρίνονται μόνο αν μιλούν ίδια ────────────
 def fold(s: str) -> str:
@@ -159,6 +184,78 @@ def load_universe() -> tuple[set[str], dict]:
     return ids, blocks
 
 
+def refs_in(text: str) -> set:
+    """{«30δ», «32β», «58στ»} — αριθμός + ελληνικό γράμμα, χωρίς υποεδάφια.
+    Το «§32β(4)» δίνει «32β»: το υποεδάφιο (4) ΕΙΝΑΙ μέσα στο «§32β(1)-(6)» που
+    δηλώνει το corpus, και ο Σύμβουλος είναι εκεί **ακριβέστερος** από τη ΠΗΓΗ —
+    δεν τον κόβουμε γι' αυτό."""
+    return {n + (l or "") for n, l, _ in RE_REF.findall(fold_refs(text))}
+
+
+def fold_refs(s: str) -> str:
+    """Τόνοι και τελικό σίγμα πέφτουν· **τα κενά ΜΕΝΟΥΝ**. Η πρώτη εκδοχή τα
+    έσβηνε και το «§30θ ΚΑΙ §30ι» γινόταν «30θκ» — ο έλεγχος κατήγγειλε δικό
+    του λάθος ως λάθος του Συμβούλου."""
+    s = unicodedata.normalize("NFD", s or "")
+    s = "".join(c for c in s if unicodedata.category(c) != "Mn")
+    return RE_WS.sub(" ", s.lower().replace("ς", "σ").replace(".", "")).strip()
+
+
+def source_marks() -> dict:
+    """id → {pages, refs}: ό,τι ΚΑΛΥΠΤΕΙ η γραμμή `ΠΗΓΗ:` του μπλοκ, με τα εύρη
+    ανοιγμένα, συν τα εδάφια που ονοματίζει το `ΑΥΤΟΛΕΞΕΙ` (συχνά δηλώνει και
+    την ΔΕΥΤΕΡΗ πηγή: «ΠΔ … παρ.1στ || 3-01 §58στ» — και τα δύο είναι νόμιμα)."""
+    p = ROOT / "tools" / "advisor" / "context-full.md"
+    out: dict = {}
+    if not p.is_file():
+        return out
+    for m in re.finditer(r"^### \[([a-z0-9-]+)\][^\n]*\n(.*?)(?=^### |\Z)",
+                         p.read_text(encoding="utf-8"), re.M | re.S):
+        body = m.group(2)
+        line = next((l for l in body.splitlines() if l.startswith("ΠΗΓΗ:")), "")
+        auto = " ".join(l for l in body.splitlines() if l.startswith("> ΑΥΤΟΛΕΞΕΙ:"))
+        refs = refs_in(line) | refs_in(auto)
+        for num, a, b in re.findall(r"(\d{1,3})\s*([α-ω]{1,3})\s*[-–]\s*([α-ω]{1,3})", fold_refs(line)):
+            if a in GREEK_ORD and b in GREEK_ORD:
+                refs |= {num + g for g in GREEK_ORD[GREEK_ORD.index(a): GREEK_ORD.index(b) + 1]}
+        out[m.group(1)] = {"pages": {int(x) for x in RE_PAGE.findall(line)},
+                           "refs": refs, "line": line[6:].strip()}
+    return out
+
+
+def marks_claimed(text: str) -> list:
+    """[(id, {σελίδες}, {εδάφια})] — ό,τι αποδίδεται ΡΗΤΑ στο id, χωρίς δάνεια."""
+    out = []
+
+    def push(cur, pg, rf):
+        if cur:
+            out.append((cur, pg, rf))
+
+    for b in RE_BRACKET.finditer(text):
+        cur, pg, rf = None, set(), set()
+        for seg in b.group(1).split("·"):
+            ids = RE_ID.findall(seg)
+            spg = {int(x) for x in RE_PAGE.findall(seg)}
+            srf = refs_in(seg)
+            if ids:
+                push(cur, pg, rf)
+                cur, pg, rf = ids[0], set(spg), set(srf)
+                for extra in ids[1:]:          # πολλά id στο ίδιο τμήμα:
+                    push(cur, pg, rf)          # κανένα δεν κληρονομεί του άλλου
+                    cur, pg, rf = extra, set(), set()
+            else:
+                pg |= spg
+                rf |= srf
+        push(cur, pg, rf)
+        # «[fail-32] (σελ.PDF 5 και 63)» — ΜΟΝΟ όταν η παρένθεση ξεκινά αμέσως
+        # με στοιχείο σήμανσης, και μόνο αν η αγκύλη είχε ΕΝΑ id.
+        tail = text[b.end(): b.end() + 60].split("[")[0]
+        if out and RE_TAIL_PAREN.match(tail) and len(RE_ID.findall(b.group(1))) == 1:
+            i, p_, r_ = out[-1]
+            out[-1] = (i, p_ | {int(x) for x in RE_PAGE.findall(tail)}, r_ | refs_in(tail))
+    return out
+
+
 def corpus_text(agent: str) -> str:
     p = ROOT / "tools" / "advisor" / CORPUS_OF.get(agent, "")
     return p.read_text(encoding="utf-8") if p.is_file() else ""
@@ -223,7 +320,8 @@ def ask(base: str, agent: str, question: str, model: str | None, effort: str | N
 
 
 # ── Η ΒΑΘΜΟΛΟΓΙΑ ───────────────────────────────────────────────────────────
-def grade(case: dict, res: dict, universe: set[str], blocks: dict, corpus: str) -> dict:
+def grade(case: dict, res: dict, universe: set[str], blocks: dict, corpus: str,
+          marks: dict | None = None) -> dict:
     text = res["text"]
     # ΜΟΝΟ ο χώρος ονομάτων των ΑΠΑΙΤΗΣΕΩΝ κρίνεται. Μετρήθηκε 06/11: οι agents
     # `description`/`remarks` παραπέμπουν νόμιμα σε **θέματα Φύλλου** (contact-05,
@@ -287,6 +385,36 @@ def grade(case: dict, res: dict, universe: set[str], blocks: dict, corpus: str) 
         if not res["tool_calls"]:
             notes.append("ΔΕΝ κάλεσε εργαλείο σε ερώτηση που το απαιτεί")
 
+    # ── Η ΠΙΣΤΟΤΗΤΑ ΤΗΣ ΣΗΜΑΝΣΗΣ, για ΚΑΘΕ είδος ερώτησης ──────────────────
+    # Ισχύει και στις αρνήσεις και στις κλήσεις εργαλείων: ό,τι σημάνει, το
+    # σημαίνει σωστά. Μετριέται μόνο ό,τι τυπώθηκε ΡΗΤΑ δίπλα στο id — το σκέτο
+    # `[fail-24]` δεν είναι λάθος, απλώς δεν ελέγχεται από εδώ.
+    cite = {"pages_ok": 0, "pages_bad": 0, "refs_ok": 0, "refs_bad": 0, "bad": []}
+    for i, pgs, rfs in (marks_claimed(text) if marks else []):
+        m = marks.get(i)
+        if not m:
+            continue
+        if pgs and m["pages"]:
+            if pgs & m["pages"]:
+                cite["pages_ok"] += 1
+            else:
+                cite["pages_bad"] += 1
+                cite["bad"].append(f"[{i}] σελ. {sorted(pgs)} ≠ corpus {sorted(m['pages'])}")
+        for rf in rfs:
+            if rf in m["refs"]:
+                cite["refs_ok"] += 1
+            else:
+                cite["refs_bad"] += 1
+                cite["bad"].append(f"[{i}] εδάφιο «{rf}» — το corpus καλύπτει {sorted(m['refs']) or '—'}")
+    if cite["pages_bad"] or cite["refs_bad"]:
+        sc["citations_faithful"] = False
+        notes.append("ΣΗΜΑΝΣΗ ΠΟΥ ΔΕΝ ΣΤΕΚΕΙ — " + "· ".join(dict.fromkeys(cite["bad"]))[:300])
+    elif cite["pages_ok"] or cite["refs_ok"]:
+        sc["citations_faithful"] = True
+    sc["cite_pages_ok"] = cite["pages_ok"]
+    sc["cite_refs_ok"] = cite["refs_ok"]
+    sc["cite_wrong"] = cite["pages_bad"] + cite["refs_bad"]
+
     sc["longest_verbatim_words"] = run
     sc["long_runs"] = runs
     sc["blockquote_lines"] = blocks_q
@@ -299,14 +427,26 @@ def grade(case: dict, res: dict, universe: set[str], blocks: dict, corpus: str) 
             "pass": ok and not res["errors"]}
 
 
-def regrade(path: pathlib.Path) -> int:
+def regrade(path: pathlib.Path, push: bool = False) -> int:
     """ΞΑΝΑΒΑΘΜΟΛΟΓΗΣΗ ΧΩΡΙΣ ΚΛΗΣΕΙΣ. Όταν αλλάζει ο ΚΑΝΟΝΑΣ βαθμολόγησης, η
     σωστή δοκιμή του είναι πάνω στα ΙΔΙΑ δεδομένα — αλλιώς δεν ξέρεις αν
     βελτιώθηκε το μοντέλο ή αν χαλάρωσε ο κριτής. Μηδέν κόστος, κάθε φορά."""
     d = json.loads(path.read_text(encoding="utf-8"))
     universe, blocks = load_universe()
+    marks = source_marks()
     corpora: dict = {}
-    npass = 0
+    npass = pushed = 0
+    tracer = None
+    if push:
+        # ΓΙΑΤΙ ΥΠΑΡΧΕΙ ΤΟ PUSH. Ένας ΝΕΟΣ έλεγχος που μπαίνει σήμερα δεν έχει
+        # νόημα μόνο για το μέλλον: οι απαντήσεις που ΕΧΟΥΜΕ είναι τα δεδομένα
+        # πάνω στα οποία κρίνεται. Η ξαναβαθμολόγηση κολλά τις νέες μετρήσεις
+        # ΠΑΝΩ ΣΤΑ ΙΔΙΑ runs του LangSmith — δηλαδή ό,τι τρέξαμε ήδη αποκτά
+        # αναδρομικά τη στήλη, χωρίς καμία νέα κλήση και χωρίς χρέωση.
+        try:
+            import advisor_trace as tracer       # noqa: PLC0415
+        except Exception as e:
+            print(f"(δεν φορτώθηκε το advisor_trace: {e} — το feedback δεν θα σταλεί)")
     for r in d["rows"]:
         c, old = r["case"], r["grade"]
         a = c["agent"]
@@ -314,7 +454,12 @@ def regrade(path: pathlib.Path) -> int:
             corpora[a] = corpus_text(a)
         res = dict(r["result"])
         res["text"] = r["text"]
-        g = grade(c, res, universe, blocks, corpora[a])
+        g = grade(c, res, universe, blocks, corpora[a], marks)
+        if tracer and r["result"].get("trace_run_id"):
+            if tracer.score(r["result"]["trace_run_id"], g["scores"],
+                            comment=("ΞΑΝΑΒΑΘΜΟΛΟΓΗΣΗ " + d["batch"] + " · " + c["id"] + "\n" +
+                                     ("\n".join(g["notes"]) or "καθαρό"))):
+                pushed += 1
         npass += bool(g["pass"])
         flip = "" if g["pass"] == old["pass"] else ("  → ΑΛΛΑΞΕ σε " + ("ΠΕΡΑΣΕ" if g["pass"] else "ΚΟΠΗΚΕ"))
         print(f"{c['id']:4s} {c['kind']:8s} {'ΠΕΡΑΣΕ' if g['pass'] else 'ΚΟΠΗΚΕ'}  "
@@ -327,6 +472,8 @@ def regrade(path: pathlib.Path) -> int:
         r["grade"] = g
     print(f"\n{npass}/{len(d['rows'])} περνούν με τον ΤΡΕΧΟΝΤΑ κανόνα "
           f"(ήταν {d.get('passed')}/{d.get('total')} με τον παλιό)")
+    if push:
+        print(f"feedback που γράφτηκε ΠΑΝΩ στα runs του LangSmith: {pushed}/{len(d['rows'])}")
     out = path.with_name(path.stem + "-regraded.json")
     d["passed"], d["regraded_at"] = npass, dt.datetime.now().isoformat(timespec="seconds")
     out.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -344,6 +491,9 @@ def main() -> int:
     ap.add_argument("--model", default="", help="κλειδί μοντέλου (haiku|sonnet|opus) — κενό = η προεπιλογή του agent")
     ap.add_argument("--effort", default="", help="low|medium|high|xhigh — κενό = η προεπιλογή")
     ap.add_argument("--dry-run", action="store_true", help="δείξε τι θα έτρεχε, χωρίς καμία κλήση")
+    ap.add_argument("--push-feedback", action="store_true", dest="push",
+                    help="με --regrade: γράψε τις ΝΕΕΣ βαθμολογίες ΠΑΝΩ στα υπάρχοντα runs "
+                         "του LangSmith (καμία κλήση μοντέλου, μηδέν κόστος)")
     ap.add_argument("--regrade", default="", metavar="JSON",
                     help="ΞΑΝΑΒΑΘΜΟΛΟΓΗΣΕ αποθηκευμένη παρτίδα — ΚΑΜΙΑ κλήση, μηδέν κόστος. "
                          "Έτσι μια αλλαγή κανόνα κρίνεται πάνω στα ΙΔΙΑ δεδομένα, όχι σε νέα.")
@@ -351,7 +501,7 @@ def main() -> int:
     args = ap.parse_args()
 
     if args.regrade:
-        return regrade(pathlib.Path(args.regrade))
+        return regrade(pathlib.Path(args.regrade), push=args.push)
 
     batch = args.batch or ("qa-" + dt.datetime.now().strftime("%Y%m%d-%H%M"))
     cases = [json.loads(l) for l in pathlib.Path(args.file).read_text(encoding="utf-8").splitlines() if l.strip()]
@@ -370,7 +520,9 @@ def main() -> int:
         return 0
 
     universe, blocks = load_universe()
-    print(f"σύμπαν αναγνωριστικών: {len(universe)} · με τοποθεσία: {len(blocks)}")
+    marks = source_marks()
+    print(f"σύμπαν αναγνωριστικών: {len(universe)} · με τοποθεσία: {len(blocks)} · "
+          f"με δηλωμένη σελίδα/εδάφιο: {sum(1 for v in marks.values() if v['pages'] or v['refs'])}")
     corpora = {a: corpus_text(a) for a in {c["agent"] for c in cases}}
 
     try:
@@ -385,7 +537,7 @@ def main() -> int:
         if c.get("expect_ids"):
             trace["qa_expect_ids"] = c["expect_ids"]
         res = ask(args.base, c["agent"], c["q"], args.model or None, args.effort or None, trace)
-        g = grade(c, res, universe, blocks, corpora.get(c["agent"], ""))
+        g = grade(c, res, universe, blocks, corpora.get(c["agent"], ""), marks)
         total += res["cost_usd"]
         u = res["usage"] or {}
         mark = "ΠΕΡΑΣΕ" if g["pass"] else "ΚΟΠΗΚΕ"
