@@ -2628,7 +2628,7 @@ html[data-edit="off"] .cur-head::after {
 .ink-row { margin: 10px 0 0; }
 
 /* Το κλειδωμένο editor mode λέγεται ΠΡΙΝ γίνει η δουλειά του ελέγχου, όχι σε
-   σαράντα toast μετά — βλ. τον σχολιασμό στο schedintake.js § ο διάλογος. */
+   σαράντα toast μετά — βλ. τον σχολιασμό της υποδοχής § ο διάλογος. */
 .ink-lock {
   margin: 8px 0 0; padding: 7px 10px; font-size: 12px; line-height: 1.5;
   color: var(--warn); background: rgba(var(--warn-rgb), 0.08);
@@ -2646,7 +2646,7 @@ html[data-edit="off"] .cur-head::after {
 .ink-tbl td.ink-tick { width: 1%; }
 /* το τικ είναι ΤΙΚ και όχι πεδίο: χωρίς αυτό κληρώνει το `width:100%` που τα
    πεδία της κάρτας φοράνε, και γίνεται μπάρα 900px πάνω από το νούμερό του —
-   το ίδιο λάθος που διορθώθηκε στο ☁ Sync στις 29/10 */
+   το ίδιο λάθος που διορθώθηκε στον συγχρονισμό στις 29/10 */
 .ink-tbl td.ink-tick input { width: auto; margin: 0; }
 .ink-tbl td.ink-say { font-size: 11.5px; line-height: 1.45; max-width: 360px; }
 .ink-why { color: var(--bad); }

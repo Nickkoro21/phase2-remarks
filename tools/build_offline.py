@@ -342,6 +342,27 @@ string literals, template literals, comments and regex literals before matching
 (pragmatic first-token heuristic for / vs division), so "?." inside remark text
 never false-positives.
 
+ROUND 06/11/2026 — ΤΟ ΠΑΓΩΜΑ ΞΕΠΑΓΩΣΕ ΓΙΑ ΕΝΑ ΠΡΑΓΜΑ, ΚΑΙ ΤΟ TRIPWIRE ΕΠΙΑΣΕ
+  Πρώτο build μετά τις 18/10.  Απόφανση ιδιοκτήτη: «κρατάς ό,τι έχει η
+  προηγούμενη έκδοση και περνάς τις παρατηρήσεις και τα descriptions μόνο· όχι
+  από την αρχή, τις αλλαγές μόνο».  Δηλαδή το ΠΕΡΙΕΧΟΜΕΝΟ ανανεώνεται, το
+  ΕΥΡΟΣ δεν αγγίζεται.
+
+  Το build ΣΤΑΜΑΤΗΣΕ αμέσως: «expected 12 match(es) for external script tags,
+  got 14».  Αυτό είναι ΕΠΙΤΥΧΙΑ, όχι βλάβη — είναι το τίμημα που είχε ειπωθεί
+  και γίνει δεκτό στην απόφανση του παγώματος («αλλαγή σε κοινό αρχείο μπορεί
+  να σπάσει σιωπηλά το παγωμένο πακέτο· θα φανεί όταν ξεπαγώσει, και ΤΟΤΕ
+  ελέγχεται»).  Δεν έσπασε σιωπηλά.  Δύο modules είχαν μπει στην κεντρική
+  εφαρμογή στο μεταξύ και ΚΑΝΕΝΑ δεν ταξιδεύει:
+    · app/pdfview.js    (05/11) — ο θεατής PDF του Συμβούλου
+    · app/schedintake.js (29/10) — η υποδοχή εγγραφών από agent
+  Και τα δύο αποκλείονται ΕΠΙΤΗΔΕΣ, με needles στη πύλη ώστε μια διαρροή να
+  ρίχνει το build.  Οι φρουρημένες αναφορές της scheduler.js προς την υποδοχή
+  μένουν: το κουμπί δεν βάφεται χωρίς το αρχείο, άρα δεν υπάρχει τίποτα να
+  σπάσει.  Τα 12 → 14 και η λίστα των ΤΕΣΣΑΡΩΝ αποκλεισμένων είναι η μόνη
+  αλλαγή κώδικα· το περιεχόμενο ήρθε μόνο του, γιατί ο builder διαβάζει
+  data/observations2/ και data/descriptions.json ΤΗΝ ΩΡΑ ΤΟΥ BUILD.
+
 Flags: run `python tools/build_offline.py --help`.  They are declared with
 argparse (Round 24), which is why --help now PRINTS AND EXITS instead of
 printing and then building, and why a mistyped flag is an error instead of a
@@ -1326,9 +1347,15 @@ _EXT_HTML_RES = (
 # φορές στις παρατηρήσεις — «traffic advisories», «a traffic advisory was
 # missed» — και είναι ΑΓΓΛΙΚΑ της εκπαίδευσης, όχι υπόλειμμα κώδικα. Κάθε
 # needle εδώ είναι αναγνωριστικό, όχι λέξη.
+# 06/11/2026: ΚΑΙ Ο ΑΝΑΓΝΩΣΤΗΣ ΤΟΥ. Το `pdfview.js` είναι ο θεατής PDF του
+# Συμβούλου — το καλεί ΜΟΝΟ η advisor.js (τρεις φορές) και θέλει τα PDF των
+# εγχειριδίων, που δεν ταξιδεύουν ποτέ. Το needle είναι η ΑΝΑΘΕΣΗ, όχι το όνομα:
+# το «PdfView» σκέτο ζει και στην advisor.js, που κόβεται ολόκληρη — αν κάποτε
+# μπει αλλού μια φρουρημένη αναφορά, δεν θέλουμε η πύλη να σκάσει σε αυτήν.
 _ADVISOR_NEEDLES = ('id="view-advisor"', 'id="tab-advisor"', "tab-advisor",
                     "view-advisor", "advisor.js", "Σύμβουλος", "advInit",
-                    "advisor:start", 'switchView("advisor")', "sym-main", "sym-view")
+                    "advisor:start", 'switchView("advisor")', "sym-main", "sym-view",
+                    "pdfview.js", "window.PdfView =")
 
 
 def gate_scan_advisor(page: str, html: str) -> list:
@@ -1362,6 +1389,22 @@ _BRIDGE_NEEDLES = ("schedbridge", "SchedBridge", "schBridgeInit", "schBridgeLeav
 _CLOSEDNET_NEEDLES = ("github", "GitHub", "Github", "☁ Sync", "Sync access code",
                       "api.github.com")
 
+# Η ΥΠΟΔΟΧΗ (06/11/2026): δεν ταξιδεύει. Το `schedintake.js` δέχεται
+# ΠΡΟΤΕΙΝΟΜΕΝΕΣ εγγραφές από agent — στη μονάδα δεν υπάρχει agent να τις
+# παράγει, και η απόφανση της 06/11 κρατά το παραδοτέο στο περιεχόμενο της 18/10.
+#
+# ΚΑΙ ΕΔΩ ΤΟ NEEDLE ΕΙΝΑΙ ΑΝΑΓΝΩΡΙΣΤΙΚΟ, ΟΧΙ ΟΝΟΜΑ — και το έμαθα την ώρα του
+# build. Η πρώτη εκδοχή έψαχνε το σκέτο «schedintake.js» και κατήγγειλε ΔΥΟ
+# ΣΧΟΛΙΑ: ένα στο `app/styles.css` και ένα στη `scheduler.js`, που απλώς
+# ΠΑΡΑΠΕΜΠΟΥΝ στο αρχείο. Σχόλιο που ονοματίζει αρχείο δεν είναι καλώδιο προς
+# αυτό. Μένουν δύο ακριβή needles:
+#   · `window.SchedIntake = {` — το ΣΩΜΑ του module, που θα σήμαινε ότι μπήκε
+#     στο SCRIPT_CHAIN. Οι δύο ΦΡΟΥΡΗΜΕΝΕΣ αναφορές της scheduler.js
+#     (`window.SchedIntake ?` και το `.open()` μέσα στον handler του κουμπιού
+#     που δεν βάφεται ποτέ) ταξιδεύουν νόμιμα και δεν πιάνονται·
+#   · το `<script src=` του, που θα σήμαινε ότι ξέφυγε από το κόψιμο των tags.
+_INTAKE_NEEDLES = ('<script src="schedintake.js', "window.SchedIntake = {")
+
 
 def gate_scan_unit(page: str, html: str) -> list:
     """Bridge + κλειστό δίκτυο: ό,τι δεν επιτρέπεται να έχει επιβιώσει.
@@ -1381,6 +1424,12 @@ def gate_scan_unit(page: str, html: str) -> list:
             bad.append(f"{page}:{_line_of(html, html.find(n))}: {n!r} is in the "
                        f"unit build — it names a service or a button that does "
                        f"not exist on the closed network")
+    for n in _INTAKE_NEEDLES:
+        if n in html:
+            bad.append(f"{page}:{_line_of(html, html.find(n))}: intake residue "
+                       f"{n!r} is in the unit build — the module is deliberately "
+                       f"excluded (06/11/2026), so this is a wire to code that "
+                       f"does not travel")
     return bad
 
 
@@ -4575,15 +4624,30 @@ def build_main_html(css: str, emblem_uri: str, guard_js: str, prepaint_js: str,
                 "hosted-only blocks (manifest + install icon)", count=1)
 
     # drop all external <script src> tags, then inline our chain before </body>
-    # (12 tags: app · description · flowchart · schedval · schedstore · scheduler ·
-    #  schedconsq · boardtrees · schedboard · schedbridge · currency · advisor.
-    #  TEN are inlined from SCRIPT_CHAIN; advisor.js AND schedbridge.js are
-    #  dropped here and NOT inlined — both need a network the unit does not
-    #  have. The count is the tripwire on app/index.html: a new module must
-    #  be looked at once — added to SCRIPT_CHAIN in main() and to the floor
-    #  sweep, or deliberately excluded like advisor.js — before it moves.)
+    # (14 tags: app · description · flowchart · schedval · schedstore · scheduler ·
+    #  schedconsq · boardtrees · schedboard · schedbridge · schedintake ·
+    #  currency · pdfview · advisor.
+    #  TEN are inlined from SCRIPT_CHAIN; FOUR are dropped here and NOT inlined:
+    #  advisor.js, schedbridge.js, pdfview.js and schedintake.js.
+    #
+    #  06/11/2026 — ΤΟ TRIPWIRE ΕΚΑΝΕ ΑΚΡΙΒΩΣ ΤΗ ΔΟΥΛΕΙΑ ΤΟΥ. Από 12 σε 14:
+    #  δύο modules μπήκαν στην κεντρική εφαρμογή μετά το πάγωμα της 18/10 και το
+    #  build σταμάτησε — δεν πέρασαν σιωπηλά. Απόφανση ιδιοκτήτη (06/11):
+    #  «κρατάς ό,τι έχει η προηγούμενη έκδοση και περνάς τις παρατηρήσεις και τα
+    #  descriptions μόνο». Άρα και τα δύο ΑΠΟΚΛΕΙΟΝΤΑΙ:
+    #    · pdfview.js — ο αναγνώστης PDF του ΣΥΜΒΟΥΛΟΥ. Το καλεί ΜΟΝΟ η
+    #      advisor.js, που δεν ταξιδεύει· θέλει τα PDF των εγχειριδίων και τον
+    #      proxy. Στη μονάδα θα ήταν 43.775 bytes που δεν τα φωνάζει κανείς.
+    #    · schedintake.js — η υποδοχή προτεινόμενων εγγραφών από agent. Το
+    #      κουμπί της βάφεται ΜΟΝΟ πίσω από `window.SchedIntake ?` στη
+    #      scheduler.js, άρα χωρίς το αρχείο δεν υπάρχει κουμπί και δεν υπάρχει
+    #      TypeError — είναι το μάθημα του Bridge, εφαρμοσμένο από τη ρίζα.
+    #
+    #  Ο μετρητής είναι το tripwire στο app/index.html: ένα νέο module πρέπει να
+    #  κοιταχτεί ΜΙΑ φορά — να μπει στο SCRIPT_CHAIN της main() και στη σάρωση
+    #  πατώματος, ή να αποκλειστεί ΕΠΙΤΗΔΕΣ όπως τα τέσσερα — πριν ταξιδέψει.)
     html = sub1(r'[ \t]*<script src="[^"]+"></script>\n', lambda m: "", html,
-                "external script tags", count=12)
+                "external script tags", count=14)
 
     # The residue tripwire: nothing of the advisor may be in the shell — not the
     # view, not the tab, not the script, not its Greek label, not its boot hook.
