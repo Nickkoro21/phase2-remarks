@@ -1,6 +1,6 @@
 {
   "schema": "fdms-structure-v1",
-  "version": "2026-11-07b",
+  "version": "2026-11-07c",
   "purpose": "ΟΙ ΙΕΡΑΡΧΙΕΣ ΠΟΥ ΕΧΟΥΜΕ ΗΔΗ ΒΡΕΙ, σε μορφή που διαβάζει μηχανή. Αδελφό αρχείο του `vocabulary-el-en.json`: εκείνο λέει ΠΩΣ ΛΕΓΕΤΑΙ κάτι, αυτό λέει ΠΟΥ ΑΝΗΚΕΙ. Ο μεταφραστής και ο chunker το χρησιμοποιούν για να μη σπάνε chunk στη μέση μιας βαθμίδας και για να γράφουν σωστά metadata σε κάθε chunk.",
   "why_it_matters_for_chunking": [
     "Ένα chunk που κόβει στη μέση μιας βαθμίδας (π.χ. αφήνει έξω το «→ ΣΠΙ» της κλίμακας) ανακτάται και απαντά ΛΑΘΟΣ, γιατί μοιάζει πλήρες.",
@@ -202,10 +202,11 @@
         {
           "order": 1,
           "id": "ae_par3",
-          "el": "Δοκιμή Προόδου από Αξιολογητή Εκπαίδευσης",
-          "en": "Progress Check (Training Officer)",
+          "el": "Δοκιμή Προόδου από Αξιωματικό Επιχειρήσεων-Εκπαίδευσης (ΑΕ)",
+          "en": "Progress Check (DO)",
           "budget": "μία κρίση ανά Στάδιο",
-          "cite": "παρ.3"
+          "cite": "παρ.3",
+          "note": "ΔΙΟΡΘΩΣΗ 07/11/2026: το `el` έγραφε «Αξιολογητή Εκπαίδευσης» — φράση με μηδέν εμφανίσεις στις πηγές. Το `en` ήταν «Progress Check (Training Officer)»· κατ' απόφανση του ιδιοκτήτη ο ΑΕ γράφεται **DO (Director of Operations)**."
         },
         {
           "order": 2,
@@ -402,7 +403,7 @@
           "note": "Εκπαιδευτικές μονάδες. ΔΕΝ αναπτύσσονται στα αγγλικά — κανόνας `haf_abbrev` του λεξιλογίου."
         }
       ],
-      "roles_not_units": "Οι θέσεις που το FDMS γράφει ΗΔΗ στα αγγλικά, μετρημένες: Flight Commander 18 · Squadron Commander 16 · Unit Commander 12 · Training Officer 13 · Evaluator 12 · Deputy Commander · Supervisor of Flying 3 · Test Pilot 6 · Mission Commander 6 · Formation Leader 2 (Physical 2 / Tactical 3) · Pair Leader & Four-ship Leader 31. Το γυμνό «Διοικητής» → «Commander» και ΜΟΝΟ με ρητό συμπλήρωμα παίρνει τον ειδικό όρο."
+      "roles_not_units": "Οι θέσεις που το FDMS γράφει ΗΔΗ στα αγγλικά, μετρημένες: Flight Commander 18 · Squadron Commander 16 · Unit Commander 12 · Training Officer 13 (ΠΡΟ της απόφανσης· από 07/11 ο ΑΕ γράφεται **DO**) · Evaluator 12 · Deputy Commander · Supervisor of Flying 3 · Test Pilot 6 · Mission Commander 6 · Formation Leader 2 (Physical 2 / Tactical 3) · Pair Leader & Four-ship Leader 31. Το γυμνό «Διοικητής» → «Commander» και ΜΟΝΟ με ρητό συμπλήρωμα παίρνει τον ειδικό όρο."
     }
   },
   "naming_traps": {
@@ -425,9 +426,9 @@
       },
       {
         "el": "ΑΕ",
-        "rule": "«(ΑΕ)» ή «(Α.Ε.)» ΑΜΕΣΩΣ ΜΕΤΑ από τύπο του «εκτελεσθείσα» → **κατάσταση πτήσης** (Flight Carried Out). ΠΑΝΤΟΥ ΑΛΛΟΥ → **πρόσωπο** (Training Officer).",
+        "rule": "«(ΑΕ)» ή «(Α.Ε.)» ΑΜΕΣΩΣ ΜΕΤΑ από τύπο του «εκτελεσθείσα» → **κατάσταση αποστολής** (Mission Completed). ΠΑΝΤΟΥ ΑΛΛΟΥ → **πρόσωπο**, και από 07/11/2026 γράφεται **DO (Director of Operations)** κατ' απόφανση του ιδιοκτήτη.",
         "evidence": "[fail-07] 3-01 §19 «να χαρακτηρισθεί ως εκτελεσθείσα (ΑΕ)» · [fail-18] §55 «μη εκτελεσθείσα (ΑΔΕ)» · [fail-20] §22 «ο Αξκός Εκπσης/Επχσεων (ΑΕ)»",
-        "consequence": "ΔΕΝ είναι τυπογραφικό και δεν «διορθώνεται». Το ζευγάρι είναι ΑΕ / ΑΔΕ."
+        "consequence": "ΔΕΝ είναι τυπογραφικό και δεν «διορθώνεται». Το ζευγάρι της κατάστασης είναι ΑΕ / ΑΔΕ → Mission Completed / Mission Not Completed, ΟΛΟΓΡΑΦΩΣ (οι συντμήσεις CO / NCO αφαιρέθηκαν: συγκρούονται με Commanding Officer και Non-Commissioned Officer). Μετά την απόφανση DO, η διάκριση ΔΕΝ εξαρτάται πια από τον κανόνα στο ΑΓΓΛΙΚΟ κείμενο — μόνο στην ανάγνωση του ελληνικού."
       },
       {
         "el": "ΕΑ",
