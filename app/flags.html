@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Δελτίο ελέγχου σημειώσεων — FDMS</title>
+<!--
+  ΤΟΠΙΚΟ ΕΡΓΑΛΕΙΟ ΕΛΕΓΧΟΥ — ΔΕΝ ΕΙΝΑΙ ΜΕΡΟΣ ΤΗΣ ΕΦΑΡΜΟΓΗΣ.
+  Δεν μπαίνει στο offline export, δεν μιλά σε κανέναν, δεν γράφει στα δεδομένα.
+  Οι κρίσεις ζουν στον browser (localStorage) και κατεβαίνουν ως JSON όταν το
+  ζητήσεις. Σερβίρεται από τον ίδιο τοπικό server: /app/flags.html
+-->
+<style>
+:root{--bg:#0d1117;--panel:#11161d;--panel-2:#161b22;--bg-2:#0d1117;
+      --text:#e6edf3;--muted:#8b949e;--line:#30363d;--accent:#58a6ff;--gv-w:46vw}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+     font:15px/1.6 "Segoe UI",system-ui,sans-serif}
+header{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:8px;
+       align-items:center;padding:9px 14px;background:var(--panel-2);
+       border-bottom:1px solid var(--line);font-size:13px}
+header h1{font-size:14px;margin:0 10px 0 0;font-weight:700;letter-spacing:.2px}
+.sp{flex:1 1 auto}
+button,select{font:inherit;font-size:13px;color:var(--text);background:var(--bg-2);
+  border:1px solid var(--line);border-radius:8px;padding:4px 10px;cursor:pointer}
+button:hover{border-color:var(--accent);color:var(--accent)}
+button:disabled{opacity:.35;cursor:default;border-color:var(--line);color:var(--muted)}
+main{max-width:980px;margin:0 auto;padding:18px 16px 118px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.mark{display:inline-block;font-weight:700;font-size:13px;padding:2px 10px;border-radius:8px;
+      border:1px solid var(--line)}
+.m0{background:rgba(255,176,0,.16);border-color:rgba(255,176,0,.6);color:#ffce5c}
+.m1{background:rgba(120,170,255,.14);border-color:rgba(120,170,255,.55);color:#9ec5ff}
+.m2{background:rgba(63,185,80,.14);border-color:rgba(63,185,80,.55);color:#7ee787}
+.m3{background:rgba(139,148,158,.14);color:var(--muted)}
+.m4{background:rgba(188,140,255,.13);border-color:rgba(188,140,255,.5);color:#d2a8ff}
+.m5{background:rgba(139,148,158,.10);color:var(--muted)}
+.why{color:var(--muted);font-size:12.5px;margin:8px 0 0}
+.meta{margin:14px 0 0;font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 14px}
+.meta b{color:var(--text);font-weight:600}
+.lab{font-size:11px;letter-spacing:.6px;color:var(--muted);margin:18px 0 6px;
+     text-transform:uppercase;border-top:1px solid var(--line);padding-top:12px}
+.note{background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);
+      border-radius:0 10px 10px 0;padding:12px 14px;white-space:pre-wrap;font-size:14.5px}
+.req{color:var(--muted);font-size:13.5px}
+.gv-src{font-size:12px;padding:1px 7px;border-radius:7px;margin-left:4px}
+.verd{display:flex;flex-wrap:wrap;gap:6px}
+.verd button{border-radius:9px}
+.verd button.on{border-color:var(--accent);background:rgba(88,166,255,.18);color:#cfe4ff;font-weight:600}
+.verd button kbd{opacity:.5;font-size:10px;margin-left:5px}
+textarea{width:100%;min-height:62px;margin-top:10px;font:inherit;font-size:13.5px;
+  color:var(--text);background:var(--bg-2);border:1px solid var(--line);
+  border-radius:10px;padding:9px 11px;resize:vertical}
+textarea:focus,select:focus{outline:none;border-color:var(--accent)}
+footer{position:fixed;left:0;right:var(--gv-w,0);bottom:0;display:flex;flex-wrap:wrap;gap:6px;
+  align-items:center;padding:8px 14px;background:var(--panel-2);
+  border-top:1px solid var(--line);font-size:12.5px;box-shadow:0 -6px 18px rgba(0,0,0,.35)}
+footer .verd{flex:1 1 auto}
+footer button{padding:4px 8px}
+body:not(.gv-split) footer{right:0}
+.pill{font-size:11.5px;color:var(--muted)}
+.done{color:#7ee787}
+#msg{padding:40px 16px;color:var(--muted);text-align:center}
+@media(max-width:760px){main{padding:14px 12px 90px}.card{padding:14px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Δελτίο ελέγχου σημειώσεων</h1>
+  <select id="fMark"><option value="">— κάθε σήμανση —</option></select>
+  <select id="fFile"><option value="">— κάθε αρχείο —</option></select>
+  <select id="fPdf">
+    <option value="">— με ή χωρίς σελίδα —</option>
+    <option value="yes">μόνο όσες ανοίγουν PDF</option>
+    <option value="no">μόνο όσες δεν έχουν σελίδα</option>
+  </select>
+  <select id="fState">
+    <option value="todo">μόνο όσες δεν έκρινα</option>
+    <option value="">όλες</option>
+    <option value="done">μόνο όσες έκρινα</option>
+  </select>
+  <span class="sp"></span>
+  <span class="pill" id="prog">—</span>
+  <button id="dl" title="Κατέβασε τις κρίσεις σου ως JSON">↓ κρίσεις</button>
+  <button id="up" title="Φόρτωσε κρίσεις από αρχείο">↑ φόρτωσε</button>
+  <input type="file" id="file" accept=".json" hidden>
+</header>
+
+<main><div id="msg">Φόρτωση…</div><div id="card" hidden></div></main>
+
+<footer title="πλήκτρα: ←/→ πλοήγηση · 1-8 κρίση · Enter επόμενη άκριτη">
+  <button id="prev" title="←">←</button>
+  <button id="next" title="→">→</button>
+  <div class="verd" id="verd"></div>
+</footer>
+
+<script src="pdfview.js?v=20261107c"></script>
+<script src="flags.js?v=20261107b"></script>
+</body>
+</html>
