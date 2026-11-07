@@ -1,0 +1,4168 @@
+{
+ "schema": "t6a-provisional-terms-v1",
+ "version": "2026-11-07",
+ "note": "PROVISIONAL Greek -> English glossary for translating ΒαΔ 3-1/2025 ΔΑΕ (3-01) and ΠΔ 29/2020 into English for the retrieval library. It SUPPLEMENTS D:\\FDMS\\specs\\vocabulary-el-en.json, which stays authoritative: if a Greek form is in the vocabulary, the vocabulary's `en` wins and this file is ignored for it. Use exactly like the vocabulary: wherever the Greek has `el` or any `el_forms` (any case, any accent), write `en` verbatim; first time in a chunk write `en (el)`, afterwards only `en`. Abbreviations: the English expansion in `en` is what goes into the text; `en_abbr` may be used after the first mention only when given. Latin-letter abbreviations from Annex Γ are already English in the source: keep them as written and use `en` only in the `en (abbr)` first mention. Codes (Σ-20, ΠΡ-7α, ΣΧΑ-6, ΕΠ-1, ΔΠ-1(1), SIM-ΔΑ, MIS) and document designators (ΚΠΑ Β-6/ΓΕΑ, ΠαΔ 6-1/ΓΕΑ, ΒαΔ 0-5/ΑΤΑ, ΓΕΑ/Β2, ΔΑΕ/Β6) are copied byte for byte. `confidence: low` = best guess, check before relying on it. `vocabulary_form_additions` = spellings in the books that belong to an EXISTING vocabulary term (for the vocabulary owner to add). `vocabulary_conflicts` = places where applying the vocabulary literally would mistranslate these two books; translators follow the vocabulary until the owner decides, but should read these. Owner rulings of 07/11/2026 applied (πτέρυγας = Wing; εκπαιδευόμενος = Student Pilot).",
+ "terms": [
+  {
+   "id": "ad",
+   "el": "Α/Δ",
+   "el_forms": [
+    "Α/Δ.",
+    "αεροδρόμιο",
+    "αεροδρομίου",
+    "Αεροδρόμιο"
+   ],
+   "en": "Airfield",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Αεροδρόμιο. «εφεδρικό Α/Δ» -> alternate airfield; «Κατάσταση Αεροδρομίου ΕΚ/ΕΝ» -> airfield status unserviceable/serviceable."
+  },
+  {
+   "id": "pg",
+   "el": "Π/Γ",
+   "el_forms": [
+    "Π/Γ.",
+    "προσγείωση",
+    "προσγειώσεις",
+    "προσγείωσης"
+   ],
+   "en": "Landing",
+   "kind": "abbreviation",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Προσγείωση. Pilot rendering kept. «νυχτερινή Π/Γ» -> night landing."
+  },
+  {
+   "id": "ep-elikoptero",
+   "el": "Ε/Π",
+   "el_forms": [
+    "Ε/Π.",
+    "ελικόπτερο",
+    "ελικοπτέρου",
+    "ελικόπτερα"
+   ],
+   "en": "Helicopter",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Ελικόπτερο (PD 29/2020 Art.1 §1β expands it). Content only; the no-helicopter-questions rule is about quiz questions, not translation."
+  },
+  {
+   "id": "dm-diadromos",
+   "el": "Δ/Μ",
+   "el_forms": [
+    "διάδρομος",
+    "διαδρόμου",
+    "διάδρομος προσγείωσης"
+   ],
+   "en": "Runway",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Διάδρομος (προσγείωσης-απογείωσης), e.g. «NET BARRIERS και στα δύο άκρα του Δ/Μ»."
+  },
+  {
+   "id": "a-a-airair",
+   "el": "Α-Α",
+   "el_forms": [
+    "A-A",
+    "Αέρος - Αέρος",
+    "Αέρος-Αέρος",
+    "ΑΕΡΟΣ-ΑΕΡΟΣ"
+   ],
+   "en": "Air-to-Air",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Α-Α = Αέρος - Αέρος. Same meaning as the Latin A/A of Annex Γ. NOT the Greek table header Α/Α (= serial number, see aa-auxon)."
+  },
+  {
+   "id": "a-e-airground",
+   "el": "Α-Ε",
+   "el_forms": [
+    "A-E",
+    "Α/Ε",
+    "Αέρος - Εδάφους",
+    "Αέρος-Εδάφους",
+    "ΑΕΡΟΣ-ΕΔΑΦΟΥΣ"
+   ],
+   "en": "Air-to-Ground",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Α-Ε = Αέρος - Εδάφους; «Όπλα Α/Ε» -> air-to-ground weapons."
+  },
+  {
+   "id": "aa-auxon",
+   "el": "Α/Α",
+   "el_forms": [
+    "A/A (αύξων αριθμός)",
+    "αύξων αριθμός"
+   ],
+   "en": "Serial No.",
+   "kind": "abbreviation",
+   "source": "pilot",
+   "confidence": "medium",
+   "note": "Greek table header = αύξων αριθμός. Pilot rendered «serial no.». Do not confuse with Annex Γ A/A (Air-to-Air, Latin letters); in a table's first column header it is always the serial number."
+  },
+  {
+   "id": "ptisi-dia-organon",
+   "el": "ΠΔΟ",
+   "el_forms": [
+    "Πτήσεις Δι' Οργάνων",
+    "πτήση δια οργάνων",
+    "Σεμινάριο ΠΔΟ"
+   ],
+   "en": "Instrument Flight",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Πτήσεις Δι' Οργάνων (expansion not printed in the book; inferred from «ΠΔΟ (IMC Συνθήκες)», «Σ-2 ΠΔΟ Ημέρας / Νύκτας»). It is the activity, not the syllabus Category name «Instrument» (vocabulary, translate:false)."
+  },
+  {
+   "id": "enorgani-ptisi",
+   "el": "ενόργανη πτήση",
+   "el_forms": [
+    "Ενόργανη Πτήση",
+    "ενόργανης πτήσης",
+    "ενόργανη κάθοδος"
+   ],
+   "en": "instrument flying",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Generic phrase; «ενόργανη κάθοδος» -> instrument descent."
+  },
+  {
+   "id": "gea",
+   "el": "ΓΕΑ",
+   "el_forms": [
+    "Γενικό Επιτελείο Αεροπορίας",
+    "Γενικού Επιτελείου Αεροπορίας",
+    "ΓΕΑ/Β2",
+    "ΓΕΑ/Β1"
+   ],
+   "en": "Hellenic Air Force General Staff",
+   "en_abbr": "HAFGS",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Expanded in PD 29/2020 Art.1 §1ε. Staff designators after the slash (ΓΕΑ/Β2, ΓΕΑ/ΚΕΠΙΧ) are kept as written."
+  },
+  {
+   "id": "archigos-gea",
+   "el": "Αρχηγός ΓΕΑ",
+   "el_forms": [
+    "Αρχηγός του ΓΕΑ",
+    "Αρχηγού του Γενικού Επιτελείου Αεροπορίας"
+   ],
+   "en": "Chief of the Hellenic Air Force General Staff",
+   "kind": "rank",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Appointment, not a rank (PD 29/2020 Art.1 §2β)."
+  },
+  {
+   "id": "ata",
+   "el": "ΑΤΑ",
+   "el_forms": [
+    "Αρχηγείο Τακτικής Αεροπορίας",
+    "Αρχηγείου Τακτικής Αεροπορίας"
+   ],
+   "en": "Hellenic Tactical Air Force",
+   "en_abbr": "HTAF",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Expanded in PD 29/2020 Art.1 §1ε. «Αρχηγός Τακτικής Αεροπορίας» -> Commander of the Hellenic Tactical Air Force."
+  },
+  {
+   "id": "day",
+   "el": "ΔΑΥ",
+   "el_forms": [
+    "Διοίκηση Αεροπορικής Υποστήριξης",
+    "Διοίκησης Αεροπορικής Υποστήριξης"
+   ],
+   "en": "Air Support Command",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Expanded in PD 29/2020 Art.1 §1ε."
+  },
+  {
+   "id": "dae",
+   "el": "ΔΑΕ",
+   "el_forms": [
+    "Διοίκηση Αεροπορικής Εκπαίδευσης",
+    "Διοίκησης Αεροπορικής Εκπαίδευσης",
+    "ΔΙΟΙΚΗΣΗ ΑΕΡΟΠΟΡΙΚΗΣ ΕΚΠΑΙΔΕΥΣΗΣ",
+    "ΔΑΕ/Β6"
+   ],
+   "en": "Air Training Command",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Issuer of 3-01. Expanded in PD 29/2020 Art.1 §1ε. NOT the vocabulary's «ΔΑΕ 3-01» (book title, translate:false) when followed by the book number."
+  },
+  {
+   "id": "pa-haf",
+   "el": "ΠΑ",
+   "el_forms": [
+    "Π.Α.",
+    "Πολεμική Αεροπορία",
+    "Πολεμικής Αεροπορίας"
+   ],
+   "en": "Hellenic Air Force",
+   "en_abbr": "HAF",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Πολεμική Αεροπορία."
+  },
+  {
+   "id": "aas",
+   "el": "ΑΑΣ",
+   "el_forms": [
+    "Ανώτατο Αεροπορικό Συμβούλιο",
+    "Ανωτάτου Αεροπορικού Συμβουλίου"
+   ],
+   "en": "Supreme Air Force Council",
+   "kind": "unit",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Ανώτατο Αεροπορικό Συμβούλιο; expanded also in PD 29/2020. The final authority on flying suitability of officers. «Council», so it never collides with the vocabulary's «Board» (ΣΠΙ)."
+  },
+  {
+   "id": "si-ikaron",
+   "el": "ΣΙ",
+   "el_forms": [
+    "Σ.Ι.",
+    "Σ.Ι",
+    "Σ Ι",
+    "Σχολή Ικάρων",
+    "Σχολής Ικάρων"
+   ],
+   "en": "Hellenic Air Force Academy",
+   "en_abbr": "HAFA",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Σχολή Ικάρων (expanded in PD 29/2020 Art.1 §1ε)."
+  },
+  {
+   "id": "ikaros",
+   "el": "Ίκαρος",
+   "el_forms": [
+    "Ίκαροι",
+    "Ικάρου",
+    "Ικάρων",
+    "ΙΚΑΡΩΝ",
+    "Ίκαρο"
+   ],
+   "en": "Air Force Academy Cadet",
+   "kind": "rank",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Cadet of the Σχολή Ικάρων. Pilot rendering «Air Force Academy cadets» kept. «ΣΕΙΡΑ ΙΚΑΡΩΝ» -> cadet class. NOT the plan name «ΙΚΑΡΟΣ» (see sxedio-ikaros)."
+  },
+  {
+   "id": "sxedio-ikaros",
+   "el": "Σχέδιο «ΙΚΑΡΟΣ»",
+   "el_forms": [
+    "Σχεδίου «ΙΚΑΡΟΣ»",
+    "Σχέδιο ΙΚΑΡΟΣ"
+   ],
+   "en": "Plan «IKAROS»",
+   "kind": "document",
+   "source": "agent",
+   "confidence": "low",
+   "note": "A HAF plan for flying staff officers, with Phases «Α», «Β», «Γ» (3-01 Annex Β §15). What the plan is exactly is not stated in the book; name transliterated."
+  },
+  {
+   "id": "smya",
+   "el": "ΣΜΥΑ",
+   "el_forms": [
+    "Σ.Μ.Υ.Α.",
+    "Σχολή Μονίμων Υπαξιωματικών Αεροπορίας",
+    "Σχολής Μονίμων Υπαξιωματικών Αεροπορίας"
+   ],
+   "en": "Air Force NCO Academy",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Σχολή Μονίμων Υπαξιωματικών Αεροπορίας (expanded in 3-01, ref. to π.δ. 45/2017). Trains the navigator NCO cadets (ΔΥ)."
+  },
+  {
+   "id": "dy-dokimoi-ypax",
+   "el": "ΔΥ",
+   "el_forms": [
+    "Δόκιμοι Υπαξιωματικοί",
+    "Δόκιμος Υπαξιωματικός",
+    "Δοκίμων Υπαξιωματικών"
+   ],
+   "en": "NCO Cadets",
+   "kind": "rank",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "«μαθητών (ΔΥ) της ΣΜΥΑ ειδικότητας Ραδιοναυτίλου»; PD 29/2020 Art.4 «Δόκιμοι και Υπαξιωματικοί Ραδιοναυτίλοι». Expansion inferred."
+  },
+  {
+   "id": "dokimos",
+   "el": "Δόκιμος",
+   "el_forms": [
+    "ΔΟΚΙΜΟ",
+    "Δοκίμων",
+    "ΔΟΚΙΜΩΝ",
+    "Δόκιμοι"
+   ],
+   "en": "Cadet",
+   "kind": "rank",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "ΣΜΥΑ cadet («ΑΝΑ ΔΟΚΙΜΟ» = per cadet). Exception: «Δόκιμος Αρχηγός Σχηματισμού» = formation-leader CANDIDATE, not a cadet."
+  },
+  {
+   "id": "dekp",
+   "el": "ΔΕΚΠ",
+   "el_forms": [
+    "Διεθνές Εκπαιδευτικό Κέντρο Πτήσεων",
+    "Διεθνούς Εκπαιδευτικού Κέντρου Πτήσεων"
+   ],
+   "en": "International Flight Training Center",
+   "en_abbr": "IFTC",
+   "kind": "unit",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Διεθνές Εκπαιδευτικό Κέντρο Πτήσεων (Kalamata). IFTC is its established English name."
+  },
+  {
+   "id": "pea-pteryga",
+   "el": "ΠΕΑ",
+   "el_forms": [
+    "120ΠΕΑ",
+    "120 ΠΕΑ",
+    "Πτέρυγα Εκπαίδευσης Αέρος",
+    "Πτέρυγας Εκπαίδευσης Αέρος"
+   ],
+   "en": "Flight Training Wing",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "high",
+   "note": "«120ΠΕΑ» -> 120th Air Training Wing (120 ΠΕΑ). Two places use a masculine «ο ΠΕΑ» («κλιμακώνεται για Π/Γ από τον ΠΕΑ», «στελέχωση ΠΕΑ ή ΟΕΔ»): there it is probably a typo for ΠΕΠ (control tower) - translate as Control Tower and report it. | Owner 07/11/2026: Πτέρυγα Εκπαίδευσης Αέρος = Flight Training Wing (the Syllabus writes 120 FTW).",
+   "en_abbr": "FTW"
+  },
+  {
+   "id": "pteryga",
+   "el": "Πτέρυγα",
+   "el_forms": [
+    "Πτέρυγα Μάχης",
+    "Πτέρυγας",
+    "Πτέρυγες",
+    "Πτερύγων",
+    "πτέρυγα",
+    "πτέρυγας"
+   ],
+   "en": "Wing",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "high",
+   "note": "«Πτέρυγα Μάχης» -> Combat Wing. | Owner 07/11/2026: «πτέρυγας» is the Wing, never wingman."
+  },
+  {
+   "id": "smhnarxia",
+   "el": "Σμηναρχία",
+   "el_forms": [
+    "Σμηναρχίας",
+    "Σμηναρχίες"
+   ],
+   "en": "Group",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "HAF unit between Wing and Squadron, usually rendered «Group» (e.g. Combat Group). PD 29/2020 «ΣΙ/ Σμηναρχία/ Πτέρυγα» -> HAFA / Group / Wing. Not the rank Σμήναρχος (Colonel)."
+  },
+  {
+   "id": "moira",
+   "el": "Μοίρα",
+   "el_forms": [
+    "ΜΟΙΡΑ",
+    "ΜΟΙΡΑΣ",
+    "Μοίρας",
+    "Μοίρες",
+    "Μοιρών"
+   ],
+   "en": "Squadron",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "high",
+   "note": "«Διοικητής Μοίρας» is in the vocabulary (Squadron Commander). «Ανεξάρτητο Σμήνος/ Μοίρα» -> Independent Flight / Squadron."
+  },
+  {
+   "id": "monada",
+   "el": "Μονάδα",
+   "el_forms": [
+    "ΜΟΝΑΔΑ",
+    "Μονάδας",
+    "Μονάδος",
+    "Μονάδες",
+    "Μονάδων"
+   ],
+   "en": "Unit",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "high",
+   "note": "The flying unit (wing level, e.g. 120 ΠΕΑ). «Διοικητής Μονάδας» -> Unit Commander (see vocabulary_conflicts on «Διοικητής»)."
+  },
+  {
+   "id": "archigeio",
+   "el": "Αρχηγείο",
+   "el_forms": [
+    "Αρχηγείου",
+    "Αρχηγεία"
+   ],
+   "en": "Headquarters",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Used alone in PD 29/2020 for the higher HQ («του Αρχηγείου ή της Διοίκησης»). With «Τακτικής Αεροπορίας» use the ΑΤΑ term."
+  },
+  {
+   "id": "dioikisi",
+   "el": "Διοίκηση",
+   "el_forms": [
+    "Διοίκησης",
+    "Διοικήσεις"
+   ],
+   "en": "Command",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "The higher Command (ΔΑΕ, ΔΑΥ) when used as a noun for an organisation («η αρμόδια Διοίκηση» -> the competent Command). Not the abstract «management»."
+  },
+  {
+   "id": "klados",
+   "el": "Κλάδος",
+   "el_forms": [
+    "ΚΛΑΔΟΣ",
+    "Κλάδου",
+    "ΚΛ",
+    "Β΄ ΚΛΑΔΟΣ",
+    "Α´ΚΛ"
+   ],
+   "en": "Branch",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Staff branch of ΓΕΑ/ΔΑΕ («Β΄ ΚΛΑΔΟΣ (ΠΡΟΣΩΠΙΚΟ - ΕΚΠΑΙΔΕΥΣΗ)» -> B Branch (Personnel - Training)). «άλλος Κλάδος των Ενόπλων Δυνάμεων» -> another Service of the Armed Forces."
+  },
+  {
+   "id": "dieythynsi",
+   "el": "Διεύθυνση",
+   "el_forms": [
+    "ΔΙΕΥΘΥΝΣΗ",
+    "Διεύθυνσης"
+   ],
+   "en": "Directorate",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "«ΔΙΕΥΘΥΝΣΗ Β6 (ΕΚΠΑΙΔΕΥΣΗ ΑΕΡΟΣ - ...)» -> Directorate B6 (Flight Training - ...)."
+  },
+  {
+   "id": "tmima",
+   "el": "Τμήμα",
+   "el_forms": [
+    "ΤΜΗΜΑ",
+    "Τμήματος"
+   ],
+   "en": "Department",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "low",
+   "note": "Staff department («ΤΜΗΜΑ 1 (ΕΚΠΑΙΔΕΥΣΗ ΑΕΡΟΣ)»). Deliberately NOT «Section» (vocabulary: ΕΝΟΤΗΤΑ = Training Section). In «Μ.Ο. του Τμήματος» it is the student class group -> «class group»."
+  },
+  {
+   "id": "anexartito-sminos",
+   "el": "Ανεξάρτητο Σμήνος",
+   "el_forms": [
+    "Ανεξάρτητου Σμήνους",
+    "Ανεξάρτητο Σμήνος/ Μοίρα"
+   ],
+   "en": "Independent Flight",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Σμήνος here is the UNIT «Flight». The vocabulary lists bare «Σμήνος» under Flight Commander - see vocabulary_conflicts."
+  },
+  {
+   "id": "mea",
+   "el": "ΜΕΑ",
+   "el_forms": [
+    "MEA",
+    "Μοίρα Εκπαίδευσης Αέρος",
+    "Μοίρας Εκπαίδευσης Αέρος",
+    "Μοίρες Εκπαίδευσης Αέρος",
+    "361ΜΕΑ",
+    "362ΜΕΑ",
+    "364ΜΕΑ"
+   ],
+   "en": "Training Squadron",
+   "kind": "unit",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: ΜΕΑ = Μοίρα Εκπαίδευσης Αέρος (printed with Latin letters MEA in the list). Rendering from the brief/pilot; «361 ΜΕΑ» -> 361 Training Squadron."
+  },
+  {
+   "id": "meae",
+   "el": "ΜΕΑΕ",
+   "el_forms": [
+    "Μοίρα Εκπαίδευσης Αέρος Εδάφους",
+    "Μοίρας Εκπαίδευσης Αέρος Εδάφους"
+   ],
+   "en": "Air-Ground Training Squadron",
+   "kind": "unit",
+   "source": "3-01 Annex Γ",
+   "confidence": "medium",
+   "note": "Annex Γ: Μοίρα Εκπαίδευσης Αέρος Εδάφους - trains instructors (ΕΕΠ), conversion (ΜΕΤ) and requalification, and runs ground school. Literal rendering; keeps it distinct from ΜΕΑ."
+  },
+  {
+   "id": "smet",
+   "el": "ΣΜΕΤ",
+   "el_forms": [
+    "ΜΕΑΕ/ΣΜΕΤ",
+    "Σμήνος Μετεκπαίδευσης"
+   ],
+   "en": "Conversion Training Flight",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "low",
+   "note": "Expansion not printed; inferred as Σμήνος Μετεκπαίδευσης («ΜΕΑΕ/ΣΜΕΤ», «τα αντίστοιχα ΣΜΕΤ της ΜΕΑΕ»). The variant «ΜΕΑΕ/ΣΕΤ» (3 times) is probably the same unit - keep as written and report."
+  },
+  {
+   "id": "met-metekpaideusi",
+   "el": "ΜΕΤ",
+   "el_forms": [
+    "Μετεκπαίδευση",
+    "Μετεκπαίδευσης",
+    "ΜΕΤ/ΣΗΣ",
+    "Στάδιο ΜΕΤ"
+   ],
+   "en": "Conversion Training",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "medium",
+   "note": "Annex Γ: ΜΕΤ = Μετεκπαίδευσης (training of qualified pilots on a new type; Annex Γ also lists CONV = Conversion Mission). HOMONYM: in the ground-grade formula «(ΒΠΕΕ) = 0,1 × (ΜΕΤ) + 0,3 × (ΣΥΣΤ) + ...» ΜΕΤ is the ground-school subject Meteorology -> «Meteorology»."
+  },
+  {
+   "id": "systima-mathimata",
+   "el": "ΣΥΣΤ",
+   "el_forms": [
+    "(ΣΥΣΤ)"
+   ],
+   "en": "Systems",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Ground-school subject in the ΒΠΕΕ formula (aircraft systems)."
+  },
+  {
+   "id": "mix-mathima",
+   "el": "ΜΗΧ",
+   "el_forms": [
+    "(ΜΗΧ)",
+    "ΜΗΧ I & II",
+    "ΕΦΑΡΜΟΣΜΕΝΗ ΜΗΧΑΝΙΚΗ ΠΤΗΣΗΣ"
+   ],
+   "en": "Applied Flight Mechanics",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Ground-school subject «ΕΦΑΡΜΟΣΜΕΝΗ ΜΗΧΑΝΙΚΗ ΠΤΗΣΗΣ I & II» abbreviated ΜΗΧ in the ΒΠΕΕ formula."
+  },
+  {
+   "id": "naut-enkykl",
+   "el": "ΝΑΥΤ. & ΕΝ.ΚΥΚΛ",
+   "el_forms": [
+    "(ΝΑΥΤ. & ΕΝ.ΚΥΚΛ)",
+    "Ναυτιλία & Εναέρια Κυκλοφορία"
+   ],
+   "en": "Navigation & Air Traffic",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Ground-school subject in the ΒΠΕΕ formula."
+  },
+  {
+   "id": "eep",
+   "el": "ΕΕΠ",
+   "el_forms": [
+    "Εκπαίδευση Εκπαιδευτών Πτήσεων",
+    "Εκπαίδευσης Εκπαιδευτών Πτήσεων",
+    "Στάδιο ΕΕΠ"
+   ],
+   "en": "Instructor Pilot Training",
+   "en_abbr": "PIT",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Εκπαίδευση Εκπαιδευτών Πτήσεων. USAF equivalent is Pilot Instructor Training (PIT); the English name is kept parallel to «Instructor Pilot» (vocabulary)."
+  },
+  {
+   "id": "keep",
+   "el": "ΚΕΕΠ",
+   "el_forms": [
+    "Κέντρο Εκπαίδευσης Ενόργανης Πτήσης",
+    "Κέντρου Εκπαίδευσης Ενόργανης Πτήσης"
+   ],
+   "en": "Instrument Flight Training Center",
+   "kind": "unit",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Κέντρο Εκπαίδευσης Ενόργανης Πτήσης."
+  },
+  {
+   "id": "see",
+   "el": "ΣΕΕ",
+   "el_forms": [
+    "Σχολείο Εκπαιδευτών Εδάφους",
+    "Σχολείου Εκπαιδευτών Εδάφους"
+   ],
+   "en": "Ground Instructors School",
+   "kind": "unit",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Σχολείο Εκπαιδευτών Εδάφους. Annex Β §6: Flight Simulator Instructors are its graduates."
+  },
+  {
+   "id": "sot",
+   "el": "ΣΟΤ",
+   "el_forms": [
+    "Σχολείο Όπλων Τακτικής",
+    "Σχολείου Όπλων Τακτικής"
+   ],
+   "en": "Tactical Weapons School",
+   "kind": "unit",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Σχολείο Όπλων Τακτικής (the HAF fighter weapons school). Literal English kept."
+  },
+  {
+   "id": "got",
+   "el": "Γ.Ο.Τ.",
+   "el_forms": [
+    "ΓΟΤ",
+    "Γραφείο Όπλων Τακτικής"
+   ],
+   "en": "Weapons and Tactics Office",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Expanded in 3-01 («Γραφείο Όπλων Τακτικής (Γ.Ο.Τ.)»); keeps shot result sheets."
+  },
+  {
+   "id": "sai",
+   "el": "Σ.Α.Ι.",
+   "el_forms": [
+    "ΣΑΙ",
+    "Σχολείο Αεροπορικής Ιατρικής",
+    "Σχολείου Αεροπορικής Ιατρικής"
+   ],
+   "en": "School of Aviation Medicine",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Expanded in 3-01 (chapter on flight surgeons)."
+  },
+  {
+   "id": "kai",
+   "el": "ΚΑΙ",
+   "el_forms": [
+    "Κέντρο Αεροπορικής Ιατρικής",
+    "Κέντρου Αεροπορικής Ιατρικής"
+   ],
+   "en": "Aviation Medicine Center",
+   "kind": "unit",
+   "source": "pilot",
+   "confidence": "medium",
+   "note": "Pilot rendering kept. TRAP: «ΚΑΙ» in capitals is mostly the Greek word «και» (and) - render Aviation Medicine Center only when it is a noun with an article («στο ΚΑΙ», «του ΚΑΙ»)."
+  },
+  {
+   "id": "afk",
+   "el": "ΑΦΚ",
+   "el_forms": [
+    "Ανθρωποφυγόκεντρος",
+    "Ανθρωποφυγόκεντρο",
+    "Ανθρωποφυγοκέντρου"
+   ],
+   "en": "Human Centrifuge",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Ανθρωποφυγόκεντρος (G-training)."
+  },
+  {
+   "id": "oae",
+   "el": "ΟΑΕ",
+   "el_forms": [
+    "Ομάδα Αεροπορικών Επιδείξεων",
+    "Ομάδας Αεροπορικών Επιδείξεων"
+   ],
+   "en": "Air Demonstration Team",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Expanded in 3-01 («Ομάδα Αεροπορικών Επιδείξεων (ΟΑΕ)», ref. ΠαΔ 02-20/ΓΕΑ)."
+  },
+  {
+   "id": "msa",
+   "el": "ΜΣΑ",
+   "el_forms": [
+    "Μοίρα Συντήρησης Αεροσκαφών",
+    "ΜΣΑ Τ-6",
+    "ΜΣΑ Μ-346"
+   ],
+   "en": "Aircraft Maintenance Squadron",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Expansion not printed; inferred from context (aircraft hand-over, FCF proposals)."
+  },
+  {
+   "id": "mey",
+   "el": "ΜΕΥ",
+   "el_forms": [],
+   "en": "Support Squadron (ΜΕΥ)",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "low",
+   "note": "Expansion not printed. Its personnel brief on the unit's means and demonstrate the control tower / RSU equipment. Keep «ΜΕΥ» and report."
+  },
+  {
+   "id": "kepix",
+   "el": "ΚΕΠΙΧ",
+   "el_forms": [
+    "Κέντρο Επιχειρήσεων",
+    "ΓΕΑ/ΚΕΠΙΧ",
+    "ΔΑΕ/ΚΕΠΙΧ",
+    "ΚΕΠΙΧ Μονάδος"
+   ],
+   "en": "Operations Center",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Κέντρο Επιχειρήσεων (expansion inferred). «ΚΕΠΙΧ Μονάδος» -> Unit Operations Center."
+  },
+  {
+   "id": "keat",
+   "el": "ΚΕΑΤ",
+   "el_forms": [
+    "Κέντρο Αεροπορικής Τακτικής"
+   ],
+   "en": "Air Tactics Center",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Expansion not printed (provides external lecturers); HAF Κέντρο Αεροπορικής Τακτικής."
+  },
+  {
+   "id": "keape",
+   "el": "ΚΕΑΠΕ",
+   "el_forms": [
+    "ΓΕΑ/ΚΕΑΠΕ"
+   ],
+   "en": "Flight Safety Center (ΚΕΑΠΕ)",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "low",
+   "note": "Expansion not printed; sets the Discomfort Index limits and the physiology seminars - probably Κέντρο Ασφαλείας Πτήσεων. Keep «ΓΕΑ/ΚΕΑΠΕ» as a designator."
+  },
+  {
+   "id": "dape",
+   "el": "ΔΑΠΕ",
+   "el_forms": [
+    "ΔΑΕ/ΔΑΠΕ"
+   ],
+   "en": "Flight and Ground Safety Directorate",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "low",
+   "note": "Expansion not printed; probably Διεύθυνση Ασφαλείας Πτήσεων - Εδάφους (receives the ΠΔ 133/02 reports)."
+  },
+  {
+   "id": "gape",
+   "el": "ΓΑΠΕ",
+   "el_forms": [
+    "Γραφείο Ασφαλείας Πτήσεων Εδάφους",
+    "ΓΑΠΕ Μονάδας"
+   ],
+   "en": "Flight and Ground Safety Office",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Expansion not printed; Γραφείο Ασφαλείας Πτήσεων - Εδάφους (runs the safety seminars, ORM/CRM)."
+  },
+  {
+   "id": "dyg",
+   "el": "ΔΥΓ",
+   "el_forms": [
+    "ΓΕΑ/ΔΥΓ"
+   ],
+   "en": "Medical Directorate",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "low",
+   "note": "Expansion not printed; appears with the flight-surgeon syllabi - probably Διεύθυνση Υγειονομικού. Keep «ΓΕΑ/ΔΥΓ» as a designator."
+  },
+  {
+   "id": "akes",
+   "el": "ΑΚΕ",
+   "el_forms": [
+    "1ο-2ο ΑΚΕ"
+   ],
+   "en": "Air Control Center (ΑΚΕ)",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "low",
+   "note": "Expansion not printed (2 occurrences, distribution list / flight-plan addressees). Keep «ΑΚΕ» and report."
+  },
+  {
+   "id": "ekae",
+   "el": "ΕΚΑΕ",
+   "el_forms": [],
+   "en": "National Air Operations Center (ΕΚΑΕ)",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "low",
+   "note": "Expansion not printed (2 occurrences, addressee of IFTC flight programmes). Keep «ΕΚΑΕ» and report."
+  },
+  {
+   "id": "py-pyrosvestiki",
+   "el": "Π.Υ.",
+   "el_forms": [
+    "ΠΥ",
+    "Πυροσβεστική Υπηρεσία"
+   ],
+   "en": "Fire Service",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Listed with ΚΕΠΙΧ, Μοίρα, Υ.Υ. among agencies alerted in an emergency, and as briefers on the unit's means."
+  },
+  {
+   "id": "yy-ygeionomiki",
+   "el": "Υ.Υ.",
+   "el_forms": [
+    "ΥΥ",
+    "Υγειονομική Υπηρεσία"
+   ],
+   "en": "Medical Service",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Emergency-alert list («Π.Υ., Μοίρα, Υ.Υ.»)."
+  },
+  {
+   "id": "pep",
+   "el": "ΠΕΠ",
+   "el_forms": [
+    "Πύργος Ελέγχου Περιοχής",
+    "Πύργου Ελέγχου Περιοχής",
+    "ΠΕΠ - ΟΕΔ"
+   ],
+   "en": "Control Tower",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "medium",
+   "note": "Annex Γ: Πύργος Ελέγχου Περιοχής. The pilot kept it in Greek (unsure); the book confirms it is the tower where the Supervisor of Flying sits. «Area» dropped: it is the airfield tower, not an area control centre."
+  },
+  {
+   "id": "oed",
+   "el": "ΟΕΔ",
+   "el_forms": [
+    "Όχημα Ελέγχου Διαδρόμου",
+    "Οχήματος Ελέγχου Διαδρόμου",
+    "Αξιωματικός ΟΕΔ",
+    "Αξκός ΟΕΔ"
+   ],
+   "en": "Runway Supervisory Unit",
+   "en_abbr": "RSU",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Όχημα Ελέγχου Διαδρόμου = the USAF RSU. «Αξιωματικός ΟΕΔ» -> RSU Officer. Pilot had kept «ΠΕΠ - ΟΕΔ» in Greek; now expanded."
+  },
+  {
+   "id": "pb-pedio-volis",
+   "el": "Π.Β.",
+   "el_forms": [
+    "ΠΒ",
+    "Π.Β",
+    "Πεδίο Βολής",
+    "Πεδίου Βολής",
+    "Αξιωματικός Πεδίου Βολής"
+   ],
+   "en": "Range",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Πεδίο Βολής (weapons range). «Αξκός Π.Β.» -> Range Officer; «Π.Β. Καράβια» -> Karavia Range."
+  },
+  {
+   "id": "eek",
+   "el": "ΕΕΚ",
+   "el_forms": [
+    "Ελεγκτές Εναέριας Κυκλοφορίας",
+    "Ελεγκτής Εναέριας Κυκλοφορίας"
+   ],
+   "en": "Air Traffic Controllers",
+   "en_abbr": "ATC",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "high",
+   "note": "«Η εναέριος κυκλοφορία ... είναι ευθύνη των ΕΕΚ»."
+  },
+  {
+   "id": "epoptis-ptiseon",
+   "el": "Επόπτης Πτήσεων",
+   "el_forms": [
+    "Επόπτη Πτήσεων",
+    "ΕΠΟΠΤΗ ΠΤΗΣΕΩΝ",
+    "Επόπτης πτήσεων"
+   ],
+   "en": "Supervisor of Flying",
+   "en_abbr": "SOF",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Staffs the ΠΕΠ during flying (3-01 ch.1 §38-39, ch.8)."
+  },
+  {
+   "id": "epoptis-ekpaideusis",
+   "el": "Επόπτης Εκπαίδευσης",
+   "el_forms": [
+    "Επόπτη Εκπαίδευσης"
+   ],
+   "en": "Training Supervisor",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "E.g. «Επόπτη Εκπαίδευσης ΔΥ Ραδιοναυτίλων»."
+  },
+  {
+   "id": "t-a",
+   "el": "Τ-Α",
+   "el_forms": [
+    "Τυποποίηση-Αξιολόγηση",
+    "Τυποποίησης-Αξιολόγησης",
+    "Τυποποίησης - Αξιολόγησης",
+    "Γραφείο Τ-Α"
+   ],
+   "en": "Standardization/Evaluation",
+   "en_abbr": "Stan/Eval",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Τυποποίηση - Αξιολόγηση. «Αξιωματικός Τ-Α» / «Αξιωματικός Τυποποίησης-Αξιολόγησης» -> Stan/Eval Officer; «Κανονισμός Τυποποίησης-Αξιολόγησης» -> Standardization/Evaluation Regulation."
+  },
+  {
+   "id": "dee",
+   "el": "ΔΕΕ",
+   "el_forms": [
+    "Διευθυντής Επιχειρήσεων-Εκπαίδευσης",
+    "Διευθυντή Επιχειρήσεων-Εκπαίδευσης",
+    "Διευθυντής ΔΕΕ"
+   ],
+   "en": "Director of Operations and Training",
+   "kind": "rank",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Expanded in PD 29/2020 Art.1 §1θ. Appointment in a Wing/Unit."
+  },
+  {
+   "id": "dpd",
+   "el": "ΔΠΔ",
+   "el_forms": [],
+   "en": "Director of Flying Activity (ΔΠΔ)",
+   "kind": "rank",
+   "source": "agent",
+   "confidence": "low",
+   "note": "Expansion not printed; a Wing director listed next to ΔΕΕ («Δκτής, Υδκτής, ΔΕΕ, ΔΠΔ»). Keep «ΔΠΔ» and report."
+  },
+  {
+   "id": "dase",
+   "el": "ΔΑΣΕ",
+   "el_forms": [
+    "Διευθυντής Αεροπορικής – Στρατιωτικής Εκπαίδευσης",
+    "Διευθυντή Αεροπορικής – Στρατιωτικής Εκπαίδευσης"
+   ],
+   "en": "Director of Air and Military Training",
+   "kind": "rank",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Expanded in PD 29/2020 Art.3 §11 (an appointment of the ΣΙ)."
+  },
+  {
+   "id": "ypodioikitis",
+   "el": "Υποδιοικητής",
+   "el_forms": [
+    "Υδκτής",
+    "Υποδιοικητή",
+    "Υδκτές"
+   ],
+   "en": "Deputy Commander",
+   "kind": "rank",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Appointment."
+  },
+  {
+   "id": "aksiomatikos",
+   "el": "Αξιωματικός",
+   "el_forms": [
+    "Αξκός",
+    "Αξκού",
+    "ΑΞΚΟΥ",
+    "ΑΞΚΟΣ",
+    "Αξκοί",
+    "Αξιωματικοί",
+    "Αξιωματικού"
+   ],
+   "en": "Officer",
+   "kind": "rank",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Αξκός is the standard abbreviation. «Αξιωματικός Επιχειρήσεων» alone -> Operations Officer."
+  },
+  {
+   "id": "aksiomatikos-iptamenos",
+   "el": "Αξιωματικός Ιπτάμενος",
+   "el_forms": [
+    "Αξιωματικοί Ιπτάμενοι",
+    "Αξιωματικού Ιπτάμενου",
+    "Ιπτάμενος Αξιωματικός"
+   ],
+   "en": "Officer Pilot",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Officer of the HAF pilot branch (PD 29/2020 Art.1 heading). Deliberately not «Pilot Officer» (an RAF rank)."
+  },
+  {
+   "id": "iptamenos",
+   "el": "Ιπτάμενος",
+   "el_forms": [
+    "Ιπτάμενοι",
+    "Ιπτάμενου",
+    "Ιπταμένου",
+    "Ιπταμένων",
+    "Ιπτάμενους",
+    "Ιπταμένους"
+   ],
+   "en": "Pilot",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "The HAF pilot (flying branch member). Exceptions: «Ιπτάμενος Ιατρός» -> Flight Surgeon; «Ιπτάμενοι» in «Δελτία Χαρακτηρισμού Ιπταμένων» -> aircrew. As an adjective in «Ανθυποσμηναγοί Ιπτάμενοι» -> «flying Second Lieutenants» (pilot rendering)."
+  },
+  {
+   "id": "xeiristis",
+   "el": "Χειριστής",
+   "el_forms": [
+    "Χειριστή",
+    "ΧΕΙΡ"
+   ],
+   "en": "Pilot (at the controls)",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Mostly in «Θέση Χειριστή» (see ΘΧ). Use plain «pilot» in running text; the parenthesis is for the glossary only."
+  },
+  {
+   "id": "thx",
+   "el": "ΘΧ",
+   "el_forms": [
+    "Θέση Χειριστή",
+    "Α΄ ΘΧ",
+    "Β΄ ΘΧ",
+    "Β΄ Θέση Χειριστή"
+   ],
+   "en": "Pilot Seat",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Θέση Χειριστή. «Α΄ ΘΧ» -> front seat; «Β΄ ΘΧ» -> rear seat (tandem T-6A / M-346)."
+  },
+  {
+   "id": "plirwma-aeros",
+   "el": "Πλήρωμα Αέρος",
+   "el_forms": [
+    "Πληρώματα Αέρος",
+    "πληρωμάτων αέρος",
+    "Πληρώματος Αέρος"
+   ],
+   "en": "Aircrew",
+   "kind": "term",
+   "source": "3-01 Annex Β",
+   "confidence": "high",
+   "note": "Annex Β §1. Title of PD 29/2020: «Περί κρίσεως πτητικής καταλληλότητας πληρωμάτων αέρος» -> On the Flying Suitability Assessment of Aircrew."
+  },
+  {
+   "id": "radionaftilos",
+   "el": "Ραδιοναυτίλος",
+   "el_forms": [
+    "Ραδιοναυτίλοι",
+    "Ραδιοναυτίλου",
+    "Ραδιοναυτίλων",
+    "Ραδιοναυτίλους",
+    "ΡΑΔΙΟΝΑΥΤΙΛΩΝ"
+   ],
+   "en": "Navigator",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "HAF radio-navigator (weapon systems / navigation crew branch). PD 29/2020 Art.2 and 4; 3-01 ch.6."
+  },
+  {
+   "id": "anthypaspistis",
+   "el": "Ανθυπασπιστής",
+   "el_forms": [
+    "Ανθυπασπιστή",
+    "Ανθυπασπιστές"
+   ],
+   "en": "Warrant Officer",
+   "kind": "rank",
+   "source": "agent",
+   "confidence": "high",
+   "note": "PD 29/2020 Art.2."
+  },
+  {
+   "id": "ypaksiomatikos",
+   "el": "Υπαξιωματικός",
+   "el_forms": [
+    "Υπαξιωματικοί",
+    "Υπαξιωματικό",
+    "Υπαξιωματικού"
+   ],
+   "en": "Non-Commissioned Officer",
+   "en_abbr": "NCO",
+   "kind": "rank",
+   "source": "agent",
+   "confidence": "high",
+   "note": "PD 29/2020 Art.2 and 4."
+  },
+  {
+   "id": "anthyposminagos",
+   "el": "Ανθυποσμηναγός",
+   "el_forms": [
+    "Ανθσγός",
+    "Ανθσγοί",
+    "Ανθσγών",
+    "ΑΝΘΣΓΩΝ",
+    "Ανθυποσμηναγοί",
+    "Ανθυποσμηναγού",
+    "Ανθυποσμηναγό"
+   ],
+   "en": "Second Lieutenant",
+   "en_abbr": "2nd Lt",
+   "kind": "rank",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot: «Ανθυποσμηναγοί Ιπτάμενοι» -> flying Second Lieutenants (kept)."
+  },
+  {
+   "id": "yposminagos",
+   "el": "Υποσμηναγός",
+   "el_forms": [
+    "Υσγός",
+    "Υποσμηναγοί"
+   ],
+   "en": "First Lieutenant",
+   "en_abbr": "1st Lt",
+   "kind": "rank",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Standard equivalent."
+  },
+  {
+   "id": "sminagos",
+   "el": "Σμηναγός",
+   "el_forms": [
+    "Σγός",
+    "Σμηναγοί",
+    "Σμηναγού"
+   ],
+   "en": "Captain",
+   "en_abbr": "Capt",
+   "kind": "rank",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Standard equivalent."
+  },
+  {
+   "id": "episminagos",
+   "el": "Επισμηναγός",
+   "el_forms": [
+    "Επγός",
+    "Επισμηναγοί"
+   ],
+   "en": "Major",
+   "en_abbr": "Maj",
+   "kind": "rank",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Standard equivalent."
+  },
+  {
+   "id": "antisminarxos",
+   "el": "Αντισμήναρχος",
+   "el_forms": [
+    "Ασμχος",
+    "Αντισμήναρχοι"
+   ],
+   "en": "Lieutenant Colonel",
+   "en_abbr": "Lt Col",
+   "kind": "rank",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Standard equivalent."
+  },
+  {
+   "id": "sminarxos-rank",
+   "el": "Σμήναρχος",
+   "el_forms": [
+    "Σμχος",
+    "Σμήναρχοι",
+    "Σμηνάρχου"
+   ],
+   "en": "Colonel",
+   "en_abbr": "Col",
+   "kind": "rank",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Rank only. Not «Σμηναρχία» (Group) and not the vocabulary entry «ΣΜΗΝΑΡΧΟΣ ΣΜΗΝΟΥΣ» (Flight Commander)."
+  },
+  {
+   "id": "taksiarxos",
+   "el": "Ταξίαρχος",
+   "el_forms": [
+    "Τξχος",
+    "Ταξιάρχου"
+   ],
+   "en": "Brigadier General",
+   "en_abbr": "Brig Gen",
+   "kind": "rank",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Standard equivalent."
+  },
+  {
+   "id": "ypopterarxos",
+   "el": "Υποπτέραρχος",
+   "el_forms": [
+    "Υπτχος",
+    "Υποπτεράρχου"
+   ],
+   "en": "Major General",
+   "en_abbr": "Maj Gen",
+   "kind": "rank",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Standard equivalent."
+  },
+  {
+   "id": "antipterarxos",
+   "el": "Αντιπτέραρχος",
+   "el_forms": [
+    "Απτχος"
+   ],
+   "en": "Lieutenant General",
+   "en_abbr": "Lt Gen",
+   "kind": "rank",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Standard equivalent (not seen in the books; for completeness)."
+  },
+  {
+   "id": "pterarxos",
+   "el": "Πτέραρχος",
+   "el_forms": [
+    "Πτχος"
+   ],
+   "en": "General",
+   "en_abbr": "Gen",
+   "kind": "rank",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Standard equivalent (not seen in the books; for completeness)."
+  },
+  {
+   "id": "vathmos",
+   "el": "ΒΑΘΜΟΣ",
+   "el_forms": [
+    "ΒΑΘΜ",
+    "ΒΑΘΜ.",
+    "ΒΑΘ"
+   ],
+   "en": "Rank",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "In personnel table headers («ΒΑΘΜΟΣ ΟΝΟΜΑΤΕΠΩΝΥΜΟ ΑΣΜΑ», «(ΒΑΘΜΟΣ)» under signatures) it is the military RANK. In grading text «βαθμός»/«ΒΑΘ» next to hours or percentages it is the GRADE -> «Grade»."
+  },
+  {
+   "id": "asma",
+   "el": "ΑΣΜΑ",
+   "el_forms": [],
+   "en": "Service Number",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Personnel table header next to rank and name (Αριθμός Στρατιωτικού Μητρώου; final letter not expanded in the book)."
+  },
+  {
+   "id": "ek-ellinokyprioi",
+   "el": "Ε/Κ",
+   "el_forms": [
+    "Ελληνοκύπριοι",
+    "Ελληνοκυπρίων"
+   ],
+   "en": "Greek Cypriots",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Expanded in 3-01 («Ελληνοκυπρίων (Ε/Κ)»); student-strength tables: (Ε) Greeks, (Ε/Κ) Greek Cypriots, (ΑΛ.) foreign."
+  },
+  {
+   "id": "dynami",
+   "el": "Δύναμη",
+   "el_forms": [
+    "ΔΥΝΑΜΗ",
+    "ΔΥΝ",
+    "ΔΥΝΑΜ.",
+    "δύναμη της Μοίρας",
+    "ΔΥΝΑΜΗ ΜΑΘΗΤΩΝ"
+   ],
+   "en": "Strength",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Personnel or aircraft strength («ΔΥΝΑΜΗ ΕΝ/ΕΝ Α/Φ» -> serviceable aircraft strength). «ανήκει στη δύναμη της Μοίρας» -> is on the squadron's strength (assigned)."
+  },
+  {
+   "id": "topothetimenos",
+   "el": "Τοποθετημένος Ιπτάμενος",
+   "el_forms": [
+    "Τοποθετημένοι Ιπτάμενοι",
+    "τοποθετημένος",
+    "τοποθετημένοι",
+    "ΤΟΠΟΘ"
+   ],
+   "en": "Assigned Pilot",
+   "kind": "term",
+   "source": "3-01 Annex Β",
+   "confidence": "high",
+   "note": "Annex Β §14: instructor on the squadron's strength. «τοποθετημένος» alone -> assigned."
+  },
+  {
+   "id": "proskollimenos",
+   "el": "Προσκολλημένος Ιπτάμενος",
+   "el_forms": [
+    "Προσκολλημένοι",
+    "προσκολλημένοι",
+    "προσκολλημένος",
+    "ΠΡΟΣΚ"
+   ],
+   "en": "Attached Pilot",
+   "kind": "term",
+   "source": "3-01 Annex Β",
+   "confidence": "high",
+   "note": "Annex Β §15: instructor attached to the squadron by ΓΕΑ order for currency only."
+  },
+  {
+   "id": "emperos",
+   "el": "Έμπειρος",
+   "el_forms": [
+    "έμπειρος",
+    "έμπειρο",
+    "Έμπειροι",
+    "ΕΜΠ"
+   ],
+   "en": "Experienced",
+   "kind": "term",
+   "source": "3-01 Annex Β",
+   "confidence": "high",
+   "note": "Annex Β §17 defines it by hours. «ΑΠ / ΕΜΠ» table headers -> Inexperienced / Experienced."
+  },
+  {
+   "id": "apeiros",
+   "el": "Άπειρος",
+   "el_forms": [
+    "ΑΠ",
+    "άπειρος",
+    "άπειροι"
+   ],
+   "en": "Inexperienced",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Opposite of Έμπειρος; «ΑΠ ΕΜΠ» column headers of the currency table."
+  },
+  {
+   "id": "pilot-in-command",
+   "el": "Pilot in Command",
+   "el_forms": [],
+   "en": "Pilot in Command",
+   "kind": "term",
+   "source": "3-01 Annex Β",
+   "confidence": "high",
+   "note": "Annex Β §2: already English in the source - keep."
+  },
+  {
+   "id": "pilot-in-control",
+   "el": "Pilot in Control",
+   "el_forms": [],
+   "en": "Pilot in Control",
+   "kind": "term",
+   "source": "3-01 Annex Β",
+   "confidence": "high",
+   "note": "Annex Β §3: already English in the source - keep."
+  },
+  {
+   "id": "ekpaideftis-eksomoioti",
+   "el": "Εκπαιδευτής Εξομοιωτή Πτήσεων",
+   "el_forms": [
+    "Εκπαιδευτή Εξομοιωτή Πτήσεων",
+    "Εκπαιδευτές Εξομοιωτή"
+   ],
+   "en": "Flight Simulator Instructor",
+   "kind": "term",
+   "source": "3-01 Annex Β",
+   "confidence": "high",
+   "note": "Annex Β §6 gives the English itself."
+  },
+  {
+   "id": "synodos-aeros",
+   "el": "Συνοδός Αέρος",
+   "el_forms": [
+    "Συνοδού Αέρος",
+    "συνοδός"
+   ],
+   "en": "Chase Pilot",
+   "kind": "term",
+   "source": "3-01 Annex Β",
+   "confidence": "medium",
+   "note": "Annex Β §5: flies to fulfil the exercise objectives of a student/trainee stage, member of the formation. Aligned with the pilot's «chased» (συνοδευόμενες πτήσεις ΜΟΝΟΣ). In PD 29/2020 «με συνοδό έμπειρο εκπαιδευτή» (single-seat type) -> with an experienced instructor as chase."
+  },
+  {
+   "id": "synodeuomenes",
+   "el": "συνοδευόμενες",
+   "el_forms": [
+    "συνοδευόμενη",
+    "συνοδευόμενες πτήσεις ΜΟΝΟΣ"
+   ],
+   "en": "chased",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Solo flights accompanied by a chase aircraft (pilot rendering)."
+  },
+  {
+   "id": "dokimastis-aeros",
+   "el": "Δοκιμαστής Αέρος",
+   "el_forms": [
+    "Δοκιμαστές",
+    "Δοκιμαστής",
+    "Δοκιμαστών"
+   ],
+   "en": "Test Pilot",
+   "kind": "term",
+   "source": "3-01 Annex Β",
+   "confidence": "medium",
+   "note": "Annex Β §7: pilot designated to fly Functional Check Flights (FCF)."
+  },
+  {
+   "id": "ptisi-dokimis",
+   "el": "Πτήση Δοκιμής",
+   "el_forms": [
+    "Πτήσεις Δοκιμής",
+    "Πτήσεων Δοκιμής",
+    "δοκιμή Α/Φ",
+    "ΔΟΚΙΜΗ Α/Φ"
+   ],
+   "en": "Functional Check Flight",
+   "en_abbr": "FCF",
+   "kind": "term",
+   "source": "3-01 Annex Β",
+   "confidence": "high",
+   "note": "Annex Β §11 gives FCF. Not «Δοκιμή Προόδου» (Progress Check, vocabulary)."
+  },
+  {
+   "id": "ekpaideutiki-ptisi",
+   "el": "Εκπαιδευτική Πτήση",
+   "el_forms": [
+    "Εκπαιδευτικές Πτήσεις",
+    "εκπαιδευτικής πτήσης",
+    "εκπαιδευτικών πτήσεων"
+   ],
+   "en": "Training Flight",
+   "kind": "term",
+   "source": "3-01 Annex Β",
+   "confidence": "high",
+   "note": "Annex Β §8."
+  },
+  {
+   "id": "nyxterini-ptisi",
+   "el": "Νυχτερινή πτήση",
+   "el_forms": [
+    "νυχτερινές πτήσεις",
+    "νυκτερινή πτήση",
+    "νυκτερινές πτήσεις",
+    "νυχτερινής πτήσης"
+   ],
+   "en": "Night Flight",
+   "kind": "term",
+   "source": "3-01 Annex Β",
+   "confidence": "high",
+   "note": "Annex Β §9: at least 75% of its duration at night."
+  },
+  {
+   "id": "ptisi-syntirisis",
+   "el": "Πτήση Συντήρησης",
+   "el_forms": [
+    "Πτήσεις Συντήρησης",
+    "ΠΤΗΣΕΙΣ ΣΥΝΤΗΡΗΣΗΣ",
+    "ασκήσεις συντήρησης"
+   ],
+   "en": "Continuation Training Flight",
+   "kind": "term",
+   "source": "3-01 Annex Β",
+   "confidence": "medium",
+   "note": "Annex Β §10: flights of the squadron's continuation programme to keep skills. Annex Γ CT = Continuation Training. «συντήρηση στον τύπο» -> currency in type."
+  },
+  {
+   "id": "stadio-syntirisis",
+   "el": "Στάδιο Συντήρησης",
+   "el_forms": [
+    "Σταδίου Συντήρησης",
+    "ΣΤΑΔΙΟ ΣΥΝΤΗΡΗΣΗΣ"
+   ],
+   "en": "Continuation Training Stage",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Built from vocabulary «Stage» + Annex Γ CT."
+  },
+  {
+   "id": "vasiko-stadio",
+   "el": "Βασικό Στάδιο",
+   "el_forms": [
+    "Βασικό Στάδιο Εκπαίδευσης",
+    "ΒΑΣΙΚΟ ΣΤΑΔΙΟ",
+    "Βασικού Σταδίου",
+    "ΒΑΣΙΚΟ ΣΤΑΔΙΟ ΕΚΠΑΙΔΕΥΣΗΣ"
+   ],
+   "en": "Basic Training Stage",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot rendering kept. The T-6A stage = Phase II («ΒΑΣΙΚΟ ΣΤΑΔΙΟ ΕΚΠΑΙΔΕΥΣΗΣ (PHASE II)»)."
+  },
+  {
+   "id": "prokexorimeno-stadio",
+   "el": "Προκεχωρημένο Στάδιο",
+   "el_forms": [
+    "Προκεχωρημένου Σταδίου",
+    "ΠΡΟΚΕΧ",
+    "ΠΡΟΚΕΧΩΡΗΜΕΝΟ ΣΤΑΔΙΟ"
+   ],
+   "en": "Advanced Stage",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot: «Προκεχωρημένο και Επιχειρησιακό Στάδιο» -> Advanced and Operational Stage (M-346, Phase III & IV)."
+  },
+  {
+   "id": "epixeirisiako-stadio",
+   "el": "Επιχειρησιακό Στάδιο",
+   "el_forms": [
+    "Επιχειρησιακού Σταδίου",
+    "ΕΠΙΧΕΙΡΗΣΙΑΚΟ ΣΤΑΔΙΟ"
+   ],
+   "en": "Operational Stage",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "See Advanced Stage."
+  },
+  {
+   "id": "pr-prokexorimenes",
+   "el": "ΠΡ",
+   "el_forms": [
+    "Προκεχωρημένες Ασκήσεις",
+    "ΠΡΟΚΕΧΩΡΗΜΕΝΕΣ ΑΣΚΗΣΕΙΣ",
+    "προκεχωρημένες ασκήσεις"
+   ],
+   "en": "Advanced Exercises",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Προκεχωρημένες Ασκήσεις. Codes ΠΡ-1, ΠΡ-7α ... are sortie codes: copy as written."
+  },
+  {
+   "id": "epixeirisiakes-apaitiseis",
+   "el": "Επιχειρησιακές Απαιτήσεις",
+   "el_forms": [
+    "Επιχειρησιακών Απαιτήσεων"
+   ],
+   "en": "Operational Requirements",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Generic."
+  },
+  {
+   "id": "ekpsi",
+   "el": "Εκπση",
+   "el_forms": [
+    "ΕΚΠΣΗ",
+    "ΕΚΠΣΗΣ",
+    "Εκπσης",
+    "ΕΚΠ/ΣΗΣ",
+    "ΕΚΠ"
+   ],
+   "en": "Training",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Standard abbreviation of Εκπαίδευση. «Εκπση Εδάφους» -> Ground Training."
+  },
+  {
+   "id": "ekpaideusi-aeros",
+   "el": "Εκπαίδευση Αέρος",
+   "el_forms": [
+    "Εκπαίδευσης Αέρος",
+    "ΕΚΠΑΙΔΕΥΣΗ ΑΕΡΟΣ",
+    "Εκπση Αέρος",
+    "ΕΚΠΣΗ ΑΕΡΟΣ"
+   ],
+   "en": "Flight Training",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Opposite of Εκπαίδευση Εδάφους. «ΑΕΡΟΣ» in headers (ΑΣΚΗΣΕΙΣ ΑΕΡΟΣ, ΒΠΕΑ) -> flight/air: «ασκήσεις αέρος» -> flight exercises, «εξετάσεις αέρος» -> flight examinations."
+  },
+  {
+   "id": "ekpaideusi-edafous",
+   "el": "Εκπαίδευση Εδάφους",
+   "el_forms": [
+    "Εκπαίδευσης Εδάφους",
+    "ΕΚΠΑΙΔΕΥΣΗ ΕΔΑΦΟΥΣ",
+    "Εκπση Εδάφους"
+   ],
+   "en": "Ground Training",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "«γραπτές εξετάσεις εδάφους» -> written ground examinations."
+  },
+  {
+   "id": "ptitiki-ekpaideusi",
+   "el": "Πτητική Εκπαίδευση",
+   "el_forms": [
+    "Πτητικής Εκπαίδευσης",
+    "πτητική εκπαίδευση",
+    "ΠΤΗΤΙΚΗΣ ΕΚΠΣΗΣ",
+    "ΠΤΗΤΙΚΗ ΕΚΠΑΙΔΕΥΣΗ"
+   ],
+   "en": "Flying Training",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "The whole flying training programme (air + simulator + ground). Kept distinct from «Εκπαίδευση Αέρος» = Flight Training."
+  },
+  {
+   "id": "epiprostheti-ekpaideusi",
+   "el": "Επιπρόσθετη Εκπαίδευση",
+   "el_forms": [
+    "Επιπρόσθετης Εκπαίδευσης",
+    "επιπρόσθετο πρόγραμμα εκπαίδευσης",
+    "επιπρόσθετη πτήση"
+   ],
+   "en": "Additional Training",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Extra sorties after a failure. Its sortie codes ΕΠ-1, ΕΠ-2, ΕΠ-3 (e.g. «ΔΠ-1 (ΕΠ-1)») are copied as written."
+  },
+  {
+   "id": "epanalipsi",
+   "el": "ΕΠΑΝΑΛΗΨΗ",
+   "el_forms": [
+    "ΕΠΑΝΑΛΗΨΗΣ",
+    "επανάληψη",
+    "επανάληψης",
+    "ΕΠΑΝ",
+    "ΕΠΑΝ.",
+    "ΕΠΑΝΑΛ",
+    "πτήσεις ΕΠΑΝΑΛΗΨΗΣ"
+   ],
+   "en": "Repetition Flight",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "medium",
+   "note": "Pilot: «πτήσεις ΕΠΑΝΑΛΗΨΗΣ» -> REPETITION flights (non-graded F/S repeats, §17 and §76; also repeat of a failed Evaluation). «σε ΕΠΑΝΑΛΗΨΗ της Αξιολόγησης» -> on the repetition of the Evaluation. In the currency table «ΕΠΑΝ. ME FMS» -> renewal with FMS (there ΕΠΑΝ. = επανάκτηση/ανανέωση; translate by context)."
+  },
+  {
+   "id": "epanadiathesi",
+   "el": "Επαναδιάθεση",
+   "el_forms": [
+    "Επαναδιάθεσης",
+    "επαναδιάθεση",
+    "επαναδιατεθεί",
+    "επαναδιάθεση στον τύπο"
+   ],
+   "en": "Requalification",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Re-qualifying a pilot in type after a lapse (see Αποχή, Απώλεια Διαθεσιμότητας)."
+  },
+  {
+   "id": "diathesimos",
+   "el": "Διαθέσιμος",
+   "el_forms": [
+    "διαθέσιμος στον τύπο",
+    "διαθέσιμοι",
+    "Διαθέσιμοι στον τύπο",
+    "ΔΙΑΘ"
+   ],
+   "en": "Qualified",
+   "kind": "term",
+   "source": "3-01 Annex Β",
+   "confidence": "medium",
+   "note": "«διαθέσιμος στον τύπο του Α/Φ» -> qualified in the aircraft type (Annex Β §1, §15β). Only when used of aircrew; «διαθέσιμος» of equipment/people in plain sense -> available."
+  },
+  {
+   "id": "diathesimotita",
+   "el": "Διαθεσιμότητα",
+   "el_forms": [
+    "ΔΙΑΘΕΣΙΜΟΤΗΤΑ",
+    "Διαθεσιμότητας",
+    "Απώλεια Διαθεσιμότητας",
+    "ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ"
+   ],
+   "en": "Qualification",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "«Απώλεια Διαθεσιμότητας» -> Loss of Qualification; «ΔΙΑΘΕΣΙΜΟΤΗΤΑ (ΗΜΕΡΕΣ)» -> currency (days); «ΑΝΑΝΕΩΣΗ ΜΕ ΔΙΠΛΗ ΔΙΑΘΕΣΗ» -> renewal with dual qualification."
+  },
+  {
+   "id": "etoimopolemos",
+   "el": "Ετοιμοπόλεμος",
+   "el_forms": [
+    "Ετοιμοπόλεμοι",
+    "ΕΤΟΙΜΟΠΟΛ.",
+    "Ετοιμοπόλεμοι επιπέδου Α",
+    "ετοιμοπολεμικότητα"
+   ],
+   "en": "Combat Ready",
+   "kind": "term",
+   "source": "3-01 Annex Β",
+   "confidence": "medium",
+   "note": "Annex Β §15α: «Ετοιμοπόλεμοι επιπέδου Α (BMC)» -> combat ready level A (BMC)."
+  },
+  {
+   "id": "apoxi",
+   "el": "Αποχή",
+   "el_forms": [
+    "αποχή από τις πτήσεις",
+    "ΑΠΟΧΗΣ",
+    "Αποχής",
+    "ΠΕΡΙΟΔΟΙ ΑΠΟΧΗΣ"
+   ],
+   "en": "Absence from Flying",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "«Αποχή - Επαναδιάθεση στον Τύπο Α/Φ» -> Absence from Flying - Requalification in Type. Not «abstention»."
+  },
+  {
+   "id": "epanexypiretisi",
+   "el": "Επανεξυπηρέτηση Α/Φ",
+   "el_forms": [
+    "Επανεξυπηρέτησης Α/Φ",
+    "Επανεξυπηρέτηση"
+   ],
+   "en": "Aircraft Turnaround",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "low",
+   "note": "Seminar «Επανεξυπηρέτηση Α/Φ» every instructor attends (refuelling/re-servicing between sorties, «hot pit»/turnaround). Exact scope not stated."
+  },
+  {
+   "id": "aa-anaxaitisi",
+   "el": "Αναχαίτιση",
+   "el_forms": [
+    "ΑΝΧ",
+    "Αναχαιτίσεις",
+    "ΑΝΑΧΑΙΤΙΣΕΙΣ",
+    "αναχαιτίσεων"
+   ],
+   "en": "Intercept",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "«ΑΝΧ στόχων χαμηλής ταχύτητας» -> intercept of low-speed targets."
+  },
+  {
+   "id": "yah",
+   "el": "Υ.Α.Η.",
+   "el_forms": [
+    "ΥΑΗ",
+    "Υψηλές Αναχαιτίσεις Ημέρας"
+   ],
+   "en": "Day High Intercepts",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Υψηλές Αναχαιτίσεις Ημέρας."
+  },
+  {
+   "id": "yan",
+   "el": "Υ.Α.Ν.",
+   "el_forms": [
+    "ΥΑΝ",
+    "Υψηλές Αναχαιτίσεις Νύκτας"
+   ],
+   "en": "Night High Intercepts",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Υψηλές Αναχαιτίσεις Νύκτας."
+  },
+  {
+   "id": "xah",
+   "el": "Χ.Α.Η.",
+   "el_forms": [
+    "ΧΑΗ",
+    "Χαμηλές Αναχαιτίσεις Ημέρας"
+   ],
+   "en": "Day Low Intercepts",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Χαμηλές Αναχαιτίσεις Ημέρας («ΠΡ-2 ΧΑΗ – Low BFM»)."
+  },
+  {
+   "id": "xan",
+   "el": "Χ.Α.Ν.",
+   "el_forms": [
+    "ΧΑΝ",
+    "Χαμηλές Αναχαιτίσεις Νύκτας"
+   ],
+   "en": "Night Low Intercepts",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Χαμηλές Αναχαιτίσεις Νύκτας."
+  },
+  {
+   "id": "gx-vomves",
+   "el": "ΓΧ",
+   "el_forms": [
+    "Βόμβες ΓΧ",
+    "Γενικής Χρήσης"
+   ],
+   "en": "General Purpose",
+   "en_abbr": "GP",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "high",
+   "note": "«Βόμβες ΓΧ (MK-82)» -> GP bombs (MK-82)."
+  },
+  {
+   "id": "voli",
+   "el": "Βολή",
+   "el_forms": [
+    "Βολές",
+    "ΒΟΛΕΣ",
+    "ΒΟΛΗΣ",
+    "βολών"
+   ],
+   "en": "Firing",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Weapons firing passes on the range («βολές με εκπαιδευτικά ή πραγματικά πυρά» -> firing with practice or live rounds)."
+  },
+  {
+   "id": "an-aeronaftiki",
+   "el": "Α/Ν",
+   "el_forms": [
+    "Α/Ν ΜΕΣΑ"
+   ],
+   "en": "Search-and-Rescue (air-sea)",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "low",
+   "note": "«ΕΝΤΟΠΙΣΜΟΣ ΑΠΟ Α/Ν ΜΕΣΑ» (sea survival) and «Ε/Π Α/Ν»: probably Αεροναυτικής (Διάσωσης) - air-sea rescue assets. Keep «Α/Ν» if unsure and report."
+  },
+  {
+   "id": "ekontos-ektos",
+   "el": "ΕΚ/ΕΝ",
+   "el_forms": [
+    "ΕΚ / ΕΝ",
+    "EK/EN",
+    "εκτός ενεργείας"
+   ],
+   "en": "Unserviceable",
+   "en_abbr": "U/S",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Εκτός Ενεργείας (aircraft, NAVAIDs, barriers, airfield). «Κατάσταση Αεροδρομίου ΕΚ/ΕΝ» -> airfield status: unserviceable."
+  },
+  {
+   "id": "en-en",
+   "el": "ΕΝ/ΕΝ",
+   "el_forms": [
+    "EN/EN",
+    "εν ενεργεία"
+   ],
+   "en": "Serviceable",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Εν Ενεργεία. «ΔΥΝΑΜΗ ΕΝ/ΕΝ Α/Φ» -> serviceable aircraft strength."
+  },
+  {
+   "id": "mo-mesos-oros",
+   "el": "Μ.Ο.",
+   "el_forms": [
+    "Μ.Ο",
+    "ΜΟ",
+    "Μέσος όρος",
+    "ΜΕΣΟΣ ΟΡΟΣ",
+    "M.O"
+   ],
+   "en": "Average",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Μέσος Όρος (expanded in 3-01 forms)."
+  },
+  {
+   "id": "mo-imerisios",
+   "el": "Μ.Ο.ΗΜ",
+   "el_forms": [
+    "Μ.Ο.ΗΜΕ",
+    "Μ.Ο.ΗΜ."
+   ],
+   "en": "Daily Average",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Μέσος Όρος Ημερήσιος (aircraft availability tables)."
+  },
+  {
+   "id": "op-ores-ptisis",
+   "el": "ΩΠ",
+   "el_forms": [
+    "Ώρες Πτήσης",
+    "ώρες πτήσης",
+    "ωρών πτήσης"
+   ],
+   "en": "Flight Hours",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "high",
+   "note": "«Αρχηγός Ζεύγους Α/Φ 250 ΩΠ» -> two-ship flight lead 250 flight hours."
+  },
+  {
+   "id": "dd-deiktis",
+   "el": "ΔΔ",
+   "el_forms": [
+    "Δείκτης Δυσφορίας",
+    "Δείκτη Δυσφορίας",
+    "ΔΕΙΚΤΗ ΔΥΣΦΟΡΙΑΣ"
+   ],
+   "en": "Discomfort Index",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Expanded in 3-01 ch.1 §32 (heat-stress index with flying restrictions)."
+  },
+  {
+   "id": "fp-fysiologia",
+   "el": "ΦΠ",
+   "el_forms": [
+    "Φ.Π.",
+    "Φυσιολογία Πτήσεων",
+    "Φυσιολογίας Πτήσεων",
+    "Φυσιολογίας Πτήσης"
+   ],
+   "en": "Flight Physiology",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Expanded in 3-01 («Σεμινάριο Φυσιολογίας Πτήσεων (ΦΠ)»)."
+  },
+  {
+   "id": "peristatiko-fp",
+   "el": "Περιστατικό Φυσιολογίας Πτήσεων",
+   "el_forms": [
+    "περιστατικών Φυσιολογίας Πτήσεων",
+    "περιστατικό Φυσιολογίας Πτήσεων",
+    "συμβάν Φυσιολογίας Πτήσης"
+   ],
+   "en": "Flight Physiology Incident",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot rendering kept (§32-39 and the ΑΔΕ rules)."
+  },
+  {
+   "id": "the-thalassia",
+   "el": "ΘΕ",
+   "el_forms": [
+    "Θαλάσσια Επιβίωση",
+    "Θαλάσσιας Επιβίωσης",
+    "Σεμινάριο Θαλάσσιας Επιβίωσης"
+   ],
+   "en": "Sea Survival",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Expanded in 3-01 («Σεμινάριο Θαλάσσιας Επιβίωσης (ΘΕ)»)."
+  },
+  {
+   "id": "sethe",
+   "el": "ΣΕΘΕ",
+   "el_forms": [],
+   "en": "Survival Training School (ΣΕΘΕ)",
+   "kind": "unit",
+   "source": "agent",
+   "confidence": "low",
+   "note": "Expansion not printed; co-runs the sea-survival seminar and gives flight surgeons initial survival training. Keep «ΣΕΘΕ» and report."
+  },
+  {
+   "id": "sosme",
+   "el": "ΣΟΣΜΕ",
+   "el_forms": [],
+   "en": "ΣΟΣΜΕ ground-school course",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "low",
+   "note": "Expansion not printed; part of ground training before flight preparation («Εκπαίδευση εδάφους, ΣΟΣΜΕ, προπαρασκευή πτήσεων», «Εκπση Εδάφους (Εκπ. Περ.)-ΣΟΣΜΕ»). Keep «ΣΟΣΜΕ» and report."
+  },
+  {
+   "id": "proparaskevi",
+   "el": "προπαρασκευή πτήσεων",
+   "el_forms": [
+    "Προπαρασκευή Πτήσεων",
+    "προπαρασκευής πτήσεων"
+   ],
+   "en": "flight preparation",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Pre-flying preparation phase after ground school."
+  },
+  {
+   "id": "ekp-periodos",
+   "el": "Εκπαιδευτική Περίοδος",
+   "el_forms": [
+    "Εκπκές Περίοδοι",
+    "Εκπ. Περ.",
+    "ΠΕΡΙΟΔ",
+    "εκπαιδευτικές περίοδοι"
+   ],
+   "en": "Training Period",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "One ground-school class period («Εκπση Εδάφους (Εκπκές Περίοδοι) 21»)."
+  },
+  {
+   "id": "seminario",
+   "el": "Σεμινάριο",
+   "el_forms": [
+    "Σεμινάρια",
+    "Σεμιναρίου",
+    "ΣΕΜΙΝΑΡΙΑ"
+   ],
+   "en": "Seminar",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Generic; e.g. «Σεμινάριο Τακτικής» -> Tactics Seminar."
+  },
+  {
+   "id": "eeth",
+   "el": "ΕΕΘ",
+   "el_forms": [
+    "Ερωτηματολόγια Επαγγελματικών Θεμάτων",
+    "Ερωτηματολόγιο Επαγγελματικών Θεμάτων",
+    "ερωτηματολόγια Επαγγελματικών Θεμάτων",
+    "ερωτηματολόγιο επαγγελματικών θεμάτων"
+   ],
+   "en": "Professional Knowledge Questionnaires",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Ερωτηματολόγια Επαγγελματικών Θεμάτων (written tests; also PD 29/2020)."
+  },
+  {
+   "id": "epaggelmatika-themata",
+   "el": "επαγγελματικά θέματα",
+   "el_forms": [
+    "επαγγελματικών θεμάτων",
+    "Επαγγελματικά Θέματα"
+   ],
+   "en": "professional knowledge subjects",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "PD 29/2020 «για επαγγελματικά θέματα αποτυγχάνει ...»."
+  },
+  {
+   "id": "zotikes-diadikasies",
+   "el": "Ζωτικές Διαδικασίες Ανάγκης",
+   "el_forms": [
+    "Ζωτικών Διαδικασιών Ανάγκης",
+    "BOLD FACE"
+   ],
+   "en": "Critical Action Procedures",
+   "en_abbr": "CAPs",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "PD 29/2020 writes «(BOLD FACE)» after it - keep that English as written. Annex Γ lists CAPs = Critical Action Procedures, the T-6A name for bold-face items."
+  },
+  {
+   "id": "diadikasies-anagkis",
+   "el": "Διαδικασίες Ανάγκης",
+   "el_forms": [
+    "ΔΙΑΔΙΚΑΣΙΕΣ ΑΝΑΓΚΗΣ",
+    "Διαδικασιών Ανάγκης",
+    "διαδικασίες ανάγκης"
+   ],
+   "en": "Emergency Procedures",
+   "en_abbr": "EP",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "«Κανονικές Διαδικασίες» -> Normal Procedures (Annex Γ NP)."
+  },
+  {
+   "id": "anaskopos-ansk",
+   "el": "ΑΝΣΚ",
+   "el_forms": [
+    "Αντικειμενικοί Σκοποί",
+    "Αντικειμενικών Σκοπών",
+    "αντικειμενικοί σκοποί"
+   ],
+   "en": "Training Objectives",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Expansion inferred (Αντικειμενικοί Σκοποί): «τους ΑΝΣΚ της εκπαίδευσης», «εκπλήρωση των ΑΝΣΚ της άσκησης» (Annex Β §5)."
+  },
+  {
+   "id": "askisi",
+   "el": "Άσκηση",
+   "el_forms": [
+    "ΑΣΚΗΣΗ",
+    "ΑΣΚΗΣ",
+    "Ασκήσεις",
+    "ΑΣΚΗΣΕΙΣ",
+    "ασκήσεων",
+    "ΑΣΚ.",
+    "κατηγορία ασκήσεων"
+   ],
+   "en": "Exercise",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "A training exercise flown in a sortie. «κατηγορία ασκήσεων» -> exercise category (the vocabulary «Category» when it means one of the four syllabus categories). «ΚΩΔ. ΑΣΚ.» -> Exercise Code."
+  },
+  {
+   "id": "kod-askisis",
+   "el": "ΚΩΔ. ΑΣΚ.",
+   "el_forms": [
+    "ΚΩΔ",
+    "ΚΩΔ.",
+    "ΚΩΔΙΚΟΣ ΑΣΚΗΣΗΣ",
+    "ΚΩΔ. ΑΣΚΗΣΕΩΝ"
+   ],
+   "en": "Exercise Code",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Table header; the codes themselves (Σ-1, E-21, SIM-ΔΑ) are copied as written."
+  },
+  {
+   "id": "provl-ektel",
+   "el": "ΠΡΟΒΛ./ΕΚΤΕΛ.",
+   "el_forms": [
+    "ΠΡΟΒΛ.",
+    "ΠΡΟΒΛ",
+    "ΕΚΤΕΛ",
+    "ΕΚΤΕΛ.",
+    "ΠΡΟΒΛΕΠ.",
+    "ΕΚΤΕΛ/ΣΕΣ"
+   ],
+   "en": "Prescribed / Flown",
+   "kind": "abbreviation",
+   "source": "pilot",
+   "confidence": "medium",
+   "note": "Column headers: προβλεπόμενες / εκτελεσθείσες. Pilot: «ΠΡΟΒΛΕΠ. ΚΩΔΙΚΑΣ ΕΛΙΓΜΟΥ» -> PRESCRIBED MANEUVER CODE."
+  },
+  {
+   "id": "provlep-kodikas",
+   "el": "ΠΡΟΒΛΕΠ. ΚΩΔΙΚΑΣ ΕΛΙΓΜΟΥ",
+   "el_forms": [
+    "Προβλεπόμενος Κωδικός Ελιγμού"
+   ],
+   "en": "PRESCRIBED MANEUVER CODE",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot rendering kept (column header; prescribed by the MIF)."
+  },
+  {
+   "id": "elignos",
+   "el": "ελιγμός",
+   "el_forms": [
+    "ελιγμοί",
+    "ελιγμού",
+    "ελιγμών",
+    "ελιγμούς",
+    "ΕΛΙΓΜΟΙ",
+    "Ελιγμός"
+   ],
+   "en": "maneuver",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot rendering kept (US spelling)."
+  },
+  {
+   "id": "ea-epimerous",
+   "el": "ΕΑ",
+   "el_forms": [
+    "Επιμέρους Αντικείμενα",
+    "Επιμέρους Αντικειμένων",
+    "επιμέρους αντικείμενα"
+   ],
+   "en": "Items",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Expanded in 3-01 ch.2 («για κάθε ελιγμό ή έργο [Επιμέρους Αντικείμενα (ΕΑ)]»): the graded elements = «Item» of structure-hierarchy level 6. HOMONYM: «ΕΑ-3(2)» among «[ΔΠ-1(1), ΔΟ-2(1), ΔΕ-2(1), ΕΑ-3(2)]» is a sortie code - copy as written."
+  },
+  {
+   "id": "kodikas-apodosis",
+   "el": "Κώδικας Απόδοσης",
+   "el_forms": [
+    "Κώδικες Απόδοσης",
+    "Κωδίκων Απόδοσης",
+    "Κώδικας Επίδοσης",
+    "Κώδικες Επίδοσης",
+    "κωδικών επίδοσης",
+    "κωδικοί επίδοσης",
+    "ΚΕ"
+   ],
+   "en": "Performance Code",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot: Κώδικες Απόδοσης -> Performance Codes and Κώδικας Επίδοσης -> Performance Code (used interchangeably). The per-item codes Ε, 0-4 (vocabulary grade_codes); 3-01 abbreviates «κωδικών επίδοσης (ΚΕ) του ΚΠΑ Β-6/ΓΕΑ»."
+  },
+  {
+   "id": "ske",
+   "el": "ΣΚΕ",
+   "el_forms": [
+    "Συνολικός Κώδικας Επίδοσης",
+    "Συνολικού Κώδικα Επίδοσης"
+   ],
+   "en": "Overall Performance Code",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Συνολικός Κώδικας Επίδοσης - the relative mark reflecting the overall performance (3-01 ch.2). Built on the pilot's «overall performance» + «Performance Code»."
+  },
+  {
+   "id": "epipeda-apodosis",
+   "el": "Επίπεδα Απόδοσης",
+   "el_forms": [
+    "Επίπεδο Απόδοσης",
+    "Επιπέδων Απόδοσης"
+   ],
+   "en": "Performance Levels",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot rendering kept (column header used with the Performance Codes)."
+  },
+  {
+   "id": "eksairetos",
+   "el": "ΕΞΑΙΡΕΤΟΣ",
+   "el_forms": [
+    "Εξαίρετος",
+    "εξαίρετη"
+   ],
+   "en": "OUTSTANDING",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot: code «4» descriptor; not «Excellent» to avoid clashing with ΑΡΙΣΤΑ = Excellent (vocabulary)."
+  },
+  {
+   "id": "apodosi",
+   "el": "απόδοση",
+   "el_forms": [
+    "Απόδοση",
+    "απόδοσης",
+    "ΑΠΟΔ",
+    "ΑΠΟΔ.",
+    "επίδοση",
+    "επίδοσης",
+    "Επίδοση",
+    "ΕΠΙΔΟΣΗΣ"
+   ],
+   "en": "performance",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Both απόδοση and επίδοση -> performance (pilot uses it in all compounds). As one of the four band descriptors «Επίδοση» -> Performance. «Μειωμένη Απόδοση» -> Reduced Performance."
+  },
+  {
+   "id": "geniki-apodosi",
+   "el": "γενική απόδοση",
+   "el_forms": [
+    "γενικής απόδοσης",
+    "Γενική Απόδοση",
+    "ΓΕΝΙΚΗ ΑΠΟΔΟΣΗ"
+   ],
+   "en": "overall performance",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot: the overall flight grade as opposed to per-item codes."
+  },
+  {
+   "id": "vathmologia-genikis",
+   "el": "Βαθμολογία Γενικής Απόδοσης",
+   "el_forms": [
+    "Βαθμολογίας Γενικής Απόδοσης"
+   ],
+   "en": "Overall Performance Grading",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot: para. 29 heading; the percentage grade of the whole flight."
+  },
+  {
+   "id": "krisi-vathmologias",
+   "el": "Κρίση",
+   "el_forms": [
+    "ΚΡΙΣΗ (βαθμολογίας)"
+   ],
+   "en": "Judgement",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "medium",
+   "note": "ONLY as one of the four band descriptors (Επίδοση, Κρίση, Τεχνική, Πρόοδος = Performance, Judgement, Technique, Progress). Elsewhere «κρίση» = assessment/decision: «κρίση πτητικής καταλληλότητας» -> Flying Suitability Assessment; «τίθεται υπό κρίση» -> is referred for assessment."
+  },
+  {
+   "id": "texniki",
+   "el": "Τεχνική",
+   "el_forms": [],
+   "en": "Technique",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Band descriptor (pilot's list). «Τεχνική Πτήσεων» -> Flying Technique."
+  },
+  {
+   "id": "proodos",
+   "el": "Πρόοδος",
+   "el_forms": [
+    "Προόδου"
+   ],
+   "en": "Progress",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Band descriptor (pilot's list). «Δοκιμή Προόδου» is in the vocabulary (Progress Check)."
+  },
+  {
+   "id": "opisthodromisi",
+   "el": "Οπισθοδρόμηση",
+   "el_forms": [
+    "ΟΠΙΣΘΟΔΡΟΜΕΙ",
+    "οπισθοδρομεί",
+    "οπισθοδρόμησης",
+    "ΟΠΙΣΘΟΔΡΟΜΗΣΗ"
+   ],
+   "en": "Regression",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot: «Regression / regresses» (para. 30 key term)."
+  },
+  {
+   "id": "vathmologia",
+   "el": "Βαθμολογία",
+   "el_forms": [
+    "βαθμολογία",
+    "Βαθμολογίας",
+    "βαθμολογίες",
+    "ΒΑΘΜΟΛΟΓΙΑ",
+    "βαθμολόγηση"
+   ],
+   "en": "Grade",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "The mark (percentage) of a flight or stage; «βαθμολογείται» -> is graded. «Φύλλο Βαθμολογίας» is in the vocabulary (Grade Sheet)."
+  },
+  {
+   "id": "xb",
+   "el": "ΧΒ",
+   "el_forms": [
+    "Χ.Β.",
+    "Χωρίς Βαθμολόγηση",
+    "Χωρίς Βαθμολογία",
+    "χωρίς βαθμολόγηση"
+   ],
+   "en": "Ungraded",
+   "kind": "abbreviation",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot: «ungraded»; keep the mark «Χ.Β.»/«ΧΒ» itself where it stands as a mark in a table."
+  },
+  {
+   "id": "vpe",
+   "el": "ΒΠΕ",
+   "el_forms": [
+    "Β.Π.Ε.",
+    "Βαθμολογία Πτητικής Εκπαίδευσης",
+    "Βαθμολογίας Πτητικής Εκπαίδευσης"
+   ],
+   "en": "Flying Training Grade",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Βαθμολογία Πτητικής Εκπαίδευσης; «(ΒΠΕ) = 0,85 × (ΒΠΕΑ) + ...». Keep the formula symbols as written."
+  },
+  {
+   "id": "vpea",
+   "el": "ΒΠΕΑ",
+   "el_forms": [
+    "Β.Π.Ε.Α.",
+    "Βαθμολογία Πτητικής Εκπαίδευσης Αέρος",
+    "Βαθμολογίας Πτητικής Εκπαίδευσης Αέρος",
+    "ВПЕА"
+   ],
+   "en": "Flying Training Grade - Air",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Βαθμολογία Πτητικής Εκπαίδευσης Αέρος. The scan sometimes gives Cyrillic «ВПЕА» - copy as is, translate the same."
+  },
+  {
+   "id": "vpee",
+   "el": "ΒΠΕΕ",
+   "el_forms": [
+    "Β.Π.Ε.Ε.",
+    "Βαθμολογία Πτητικής Εκπαίδευσης Εδάφους",
+    "Βαθμολογίας Πτητικής Εκπαίδευσης Εδάφους",
+    "ВПЕЕ"
+   ],
+   "en": "Flying Training Grade - Ground",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Βαθμολογία Πτητικής Εκπαίδευσης Εδάφους."
+  },
+  {
+   "id": "fyllo-telikis-apodosis",
+   "el": "Φύλλο Τελικής Απόδοσης",
+   "el_forms": [
+    "Φύλλα Τελικής Απόδοσης",
+    "Φύλλου Τελικής Απόδοσης"
+   ],
+   "en": "Final Performance Sheet",
+   "kind": "form",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot: end-of-stage record form."
+  },
+  {
+   "id": "entypo",
+   "el": "Έντυπο",
+   "el_forms": [
+    "ΕΝΤΥΠΟ",
+    "Έντυπα",
+    "ΕΝΤΥΠΑ",
+    "εντύπου",
+    "εντύπων"
+   ],
+   "en": "Form",
+   "kind": "form",
+   "source": "agent",
+   "confidence": "high",
+   "note": "«το έντυπο (Α0470)» -> form (A0470); form numbers copied as written."
+  },
+  {
+   "id": "ekthesi",
+   "el": "Έκθεση",
+   "el_forms": [
+    "ΕΚΘΕΣΗ",
+    "έκθεση",
+    "εκθέσεις",
+    "ειδική έκθεση"
+   ],
+   "en": "Report",
+   "kind": "form",
+   "source": "agent",
+   "confidence": "high",
+   "note": "«ειδική έκθεση» (PD 29/2020) -> special report; «έκθεση πτητικής ακαταλληλότητας» -> flying unsuitability report."
+  },
+  {
+   "id": "ekthesi-peratos",
+   "el": "Έκθεση Πέρατος",
+   "el_forms": [
+    "Έκθεση Πέρατος Πτητικής Εκπαίδευσης",
+    "ΠΕΡΑΣ",
+    "Έκθεσης Πέρατος"
+   ],
+   "en": "End-of-Training Report",
+   "kind": "form",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "«Έκθεση Πέρατος Πτητικής Εκπαίδευσης Σταδίου» -> Stage End-of-Training Report. «ΗΜΕΡΟΜΗΝΙΑ ΠΕΡΑΤΟΣ» -> completion date."
+  },
+  {
+   "id": "deltio-xaraktirismou",
+   "el": "Δελτίο Χαρακτηρισμού Ιπταμένων",
+   "el_forms": [
+    "Δελτία Χαρακτηρισμού Ιπταμένων",
+    "Δελτία Χαρακτηρισμού Πληρώματος Αέρος",
+    "Δελτίο Χαρακτηρισμού"
+   ],
+   "en": "Aircrew Appraisal Report",
+   "kind": "form",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "PD 29/2020 Art.1 §1στ, Art.2 §1ε: periodic appraisal rated «μέτριος/απαράδεκτος» (mediocre/unacceptable)."
+  },
+  {
+   "id": "fakelos-ekpaideusis",
+   "el": "Φάκελος Εκπαίδευσης",
+   "el_forms": [
+    "Φάκελο Εκπαίδευσης",
+    "Φακέλου Εκπαίδευσης",
+    "Φάκελοι Εκπαίδευσης",
+    "φακέλους εκπσης"
+   ],
+   "en": "Training Record",
+   "kind": "form",
+   "source": "agent",
+   "confidence": "high",
+   "note": "PD 29/2020 and 3-01. «Ατομικός Φάκελος Εκπαίδευσης» -> Individual Training Record."
+  },
+  {
+   "id": "afei",
+   "el": "ΑΦΕΙ",
+   "el_forms": [
+    "Α.Φ.Ε.Ι.",
+    "Α.Φ.Ε.Ι",
+    "Ατομικός Φάκελος Εκπαίδευσης Ιπταμένου",
+    "Ατομικός Φάκελος Εκπσης Ιπταμένου",
+    "Ατομικό Φάκελο Εκπαίδευσης"
+   ],
+   "en": "Individual Training Record (Pilot)",
+   "kind": "form",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Expanded in 3-01 («Ατομικός Φάκελος Εκπσης Ιπταμένου και Ραδιοναυτίλου (Α.Φ.Ε.Ι και Α.Φ.Ε.Ρ. Ν° 2)»). Keep «Ν° 1», «Ν° 2» numbers."
+  },
+  {
+   "id": "afer",
+   "el": "Α.Φ.Ε.Ρ.",
+   "el_forms": [
+    "ΑΦΕΡ",
+    "Α.Φ.Ε.Ρ"
+   ],
+   "en": "Individual Training Record (Navigator)",
+   "kind": "form",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Navigator counterpart of ΑΦΕΙ."
+  },
+  {
+   "id": "fpeaei",
+   "el": "Φ.Π.Ε.Α.Ε.Ι.",
+   "el_forms": [
+    "ΦΠΕΑΕΙ",
+    "Φ.Π.Ε.Α",
+    "Φ.Π.Ε.Α.Ε.Ι",
+    "Φάκελος Παρακολούθησης Εκπαίδευσης Αέρος - Εδάφους Ιπταμένου"
+   ],
+   "en": "Flight-Ground Training Progress Folder (Pilot)",
+   "kind": "form",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Expanded in 3-01 («...Παρακολούθησης Εκπαίδευσης Αέρος - Εδάφους Ιπταμένου και Ραδιοναυτίλου (Φ.Π.Ε.Α.Ε.Ι. και Φ.Π.Ε.Α.Ε.Ρ. Nº 3)»), one per training stage."
+  },
+  {
+   "id": "fpeaer",
+   "el": "Φ.Π.Ε.Α.Ε.Ρ.",
+   "el_forms": [
+    "ΦΠΕΑΕΡ",
+    "Φ.Π.Ε.Α.Ε.Ρ"
+   ],
+   "en": "Flight-Ground Training Progress Folder (Navigator)",
+   "kind": "form",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Navigator counterpart of Φ.Π.Ε.Α.Ε.Ι."
+  },
+  {
+   "id": "anagnorismos-xaraktiristiko",
+   "el": "Χαρακτηριστικό Κλήσης",
+   "el_forms": [
+    "χαρακτηριστικά κλήσης",
+    "ΚΛΗΣΗΣ",
+    "ΧΑΡ/ΚΟ ΚΛΗΣΗΣ",
+    "ΧΑΡ/ΚΟ"
+   ],
+   "en": "Call Sign",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Annex Β §22γ. Privacy rule of the vocabulary still applies: never a real call sign in examples."
+  },
+  {
+   "id": "enimerosi",
+   "el": "ενημέρωση",
+   "el_forms": [
+    "Ενημέρωση",
+    "ενημέρωσης",
+    "ΓΕΝΙΚΗ ΕΝΗΜΕΡΩΣΗ",
+    "προ πτήσης ενημέρωση",
+    "προ πτήσεως ενημέρωση"
+   ],
+   "en": "briefing",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "medium",
+   "note": "Pilot: «προ πτήσεως ενημέρωση» -> preflight briefing. ONLY in the flying sense (briefing before a sortie / «ΓΕΝΙΚΗ ΕΝΗΜΕΡΩΣΗ» -> mass briefing); «για ενημέρωση» in distribution lists and «ενημερώνει» -> for information / informs."
+  },
+  {
+   "id": "apenimerosi",
+   "el": "απενημέρωση",
+   "el_forms": [
+    "Απενημέρωση",
+    "απενημέρωσης"
+   ],
+   "en": "debriefing",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot rendering kept."
+  },
+  {
+   "id": "analysi-askiseon",
+   "el": "Ανάλυση Ασκήσεων",
+   "el_forms": [
+    "Αναλύσεις Ασκήσεων",
+    "Αναλύσεων Ασκήσεων",
+    "ανάλυση ασκήσεων",
+    "ΑΝΑΛ"
+   ],
+   "en": "Exercise Breakdown",
+   "kind": "document",
+   "source": "pilot",
+   "confidence": "medium",
+   "note": "Pilot: per-Stage document defining the Grade Sheet format («Αναλύσεις Ασκήσεων (Σ)»)."
+  },
+  {
+   "id": "analytika-programmata",
+   "el": "Αναλυτικά Προγράμματα",
+   "el_forms": [
+    "Αναλυτικό Πρόγραμμα",
+    "Αναλυτικών Προγραμμάτων",
+    "Αναλυτικό Πρόγραμμα Εκπαίδευσης"
+   ],
+   "en": "Syllabi",
+   "kind": "document",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot: the detailed training programmes per Stage. Singular -> Syllabus."
+  },
+  {
+   "id": "diagramma-rois",
+   "el": "διάγραμμα ροής",
+   "el_forms": [
+    "Διάγραμμα Ροής",
+    "διαγράμματος ροής"
+   ],
+   "en": "flow chart",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot: the sortie sequence chart of the syllabus."
+  },
+  {
+   "id": "telikes-eksetaseis",
+   "el": "Τελικές Εξετάσεις",
+   "el_forms": [
+    "Τελική Εξέταση",
+    "Τελικών Εξετάσεων"
+   ],
+   "en": "Final Examinations",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot: end-of-Category check flights."
+  },
+  {
+   "id": "eksetasi",
+   "el": "Εξέταση",
+   "el_forms": [
+    "εξέταση",
+    "Εξετάσεις",
+    "εξετάσεις",
+    "ΕΞΕΤ",
+    "ΕΞΕΤ."
+   ],
+   "en": "Examination",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Generic (flight or written). «Εξέταση Καταλληλότητας» is in the vocabulary (Suitability Examination). «προφορικές εξετάσεις» -> oral examinations."
+  },
+  {
+   "id": "kritiria-epityxias",
+   "el": "κριτήρια επιτυχίας",
+   "el_forms": [
+    "Κριτήρια Επιτυχίας",
+    "κριτηρίων επιτυχίας"
+   ],
+   "en": "Pass criteria",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot rendering; consistent with vocabulary επιτυχία -> Pass."
+  },
+  {
+   "id": "kritiria-apodosis",
+   "el": "κριτήρια απόδοσης",
+   "el_forms": [
+    "Επιθυμητά Κριτήρια Απόδοσης",
+    "κριτήρια απόδοσης (STANDARDS)"
+   ],
+   "en": "performance standards",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "The books add «(STANDARDS)» themselves - keep it."
+  },
+  {
+   "id": "ptitiki-katallilotita",
+   "el": "πτητική καταλληλότητα",
+   "el_forms": [
+    "πτητικής καταλληλότητας",
+    "Πτητικής Καταλληλότητας",
+    "πτητική του καταλληλότητα"
+   ],
+   "en": "flying suitability",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "From the pilot's «Flying Suitability Assessment»; aligned with vocabulary «Suitability Examination»."
+  },
+  {
+   "id": "krisi-ptitikis-katallilotitas",
+   "el": "Κρίση Πτητικής Καταλληλότητας",
+   "el_forms": [
+    "κρίση πτητικής καταλληλότητας",
+    "κρίσης πτητικής καταλληλότητας",
+    "κρίσεως πτητικής καταλληλότητας",
+    "υπό κρίση πτητικής καταλληλότητας"
+   ],
+   "en": "Flying Suitability Assessment",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot rendering kept (the PD 29/2020 procedure). «τίθεται υπό κρίση πτητικής καταλληλότητας» -> is placed under Flying Suitability Assessment."
+  },
+  {
+   "id": "ptitika-katallilos",
+   "el": "Πτητικά κατάλληλος",
+   "el_forms": [
+    "πτητικά κατάλληλος",
+    "Πτητικά ακατάλληλος",
+    "πτητικά ακατάλληλος",
+    "πτητικής ακαταλληλότητας",
+    "πτητική ακαταλληλότητα"
+   ],
+   "en": "suitable for flying",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "PD 29/2020 Art.1 §14 outcomes: «Πτητικά ακατάλληλος» -> unsuitable for flying; «...σε άλλο τύπο Α/Φ ή Ε/Π» -> suitable for flying in another aircraft or helicopter type; «πτητική ακαταλληλότητα» -> flying unsuitability."
+  },
+  {
+   "id": "ptitiki-efesi",
+   "el": "πτητική έφεση",
+   "el_forms": [
+    "πτητικής έφεσης",
+    "μειωμένη πτητική έφεση"
+   ],
+   "en": "flying aptitude",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "PD 29/2020 «μειωμένη πτητική έφεση» -> reduced flying aptitude (from appraisal reports). Note: «aptitude» is reserved for έφεση; καταλληλότητα is «suitability»."
+  },
+  {
+   "id": "ptitiki-ikanotita",
+   "el": "πτητική ικανότητα",
+   "el_forms": [
+    "πτητικής ικανότητας",
+    "μειωμένη πτητική ικανότητα",
+    "μειωμένης πτητικής ικανότητας"
+   ],
+   "en": "flying ability",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Aligned with the vocabulary's Flying Ability Board (Συμβούλιο Πτητικής Ικανότητας)."
+  },
+  {
+   "id": "ptitiki-aneparkeia",
+   "el": "Πτητική Ανεπάρκεια",
+   "el_forms": [
+    "πτητική ανεπάρκεια",
+    "πτητικής ανεπάρκειας",
+    "ΠΤΗΤΙΚΗ ΑΝΕΠΑΡΚΕΙΑ"
+   ],
+   "en": "Flying Inadequacy",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "medium",
+   "note": "Pilot: grounds for referral, opposed to theoretical inadequacy («θεωρητική ανεπάρκεια» -> Theoretical Inadequacy; «ΥΓΕΙΟΝ. ΑΝΕΠΑΡΚΕΙΑ» -> Medical Inadequacy)."
+  },
+  {
+   "id": "paraiti-apareskeia",
+   "el": "απαρέσκεια",
+   "el_forms": [
+    "ΑΠΑΡΕΣΚΕΙΑ",
+    "απαρέσκειας",
+    "ΠΑΡΑΙΤΗΣΗ - ΑΠΑΡΕΣΚΕΙΑ"
+   ],
+   "en": "aversion to flying",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "PD 29/2020 «εκφράζει εγγράφως απαρέσκεια ... για τις πτήσεις» -> expresses in writing an aversion to flying. «ΠΑΡΑΙΤΗΣΗ» -> Resignation."
+  },
+  {
+   "id": "paraempomenos",
+   "el": "παραπεμπόμενος",
+   "el_forms": [
+    "παραπεμπόμενου",
+    "παραπεμπομένου",
+    "παραπεμπόμενο",
+    "κρινόμενος",
+    "εξεταζόμενος",
+    "εξεταζομένου"
+   ],
+   "en": "the referred officer",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "The person under assessment in PD 29/2020 (Referral itself is vocabulary). For Ίκαροι use «the referred cadet»; «κρινόμενος» / «εξεταζόμενος» -> the person being assessed / examined."
+  },
+  {
+   "id": "trimelis-epitropi",
+   "el": "τριμελής επιτροπή",
+   "el_forms": [
+    "τριμελή επιτροπή",
+    "τριμελούς επιτροπής",
+    "επιτροπή αξιολόγησης",
+    "επιτροπής αξιολόγησης",
+    "επιτροπή",
+    "επιτροπής",
+    "επιτροπών αξιολόγησης"
+   ],
+   "en": "Evaluation Committee",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "PD 29/2020 Art.1-2. «τριμελής επιτροπή» -> three-member Evaluation Committee. «Committee», so it never collides with «Board» (ΣΠΙ, vocabulary) or «Council» (ΑΑΣ)."
+  },
+  {
+   "id": "enorki-dioikitiki",
+   "el": "Ένορκη Διοικητική Εξέταση",
+   "el_forms": [
+    "Ένορκης Διοικητικής Εξέτασης",
+    "ΕΔΕ"
+   ],
+   "en": "Sworn Administrative Inquiry",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "PD 29/2020 Art.1 §1ι; «πόρισμα» -> findings."
+  },
+  {
+   "id": "yper-kata",
+   "el": "ΥΠΕΡ ή ΚΑΤΑ",
+   "el_forms": [
+    "ΥΠΕΡ",
+    "ΚΑΤΑ της συνέχισης",
+    "ΥΠΕΡ της συνέχισης"
+   ],
+   "en": "FOR or AGAINST",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "PD 29/2020 Art.3 §16-18 decision of the Flying Ability Board on continuing training; capitals kept."
+  },
+  {
+   "id": "proistameni-arxi",
+   "el": "προϊστάμενη αρχή",
+   "el_forms": [
+    "προϊσταμένη αρχή",
+    "προϊστάμενο κλιμάκιο",
+    "προϊστάμενου κλιμακίου",
+    "προϊστάμενης αρχής"
+   ],
+   "en": "higher authority",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Generic (PD 29/2020). «ιεραρχικά» -> through the chain of command."
+  },
+  {
+   "id": "diatagi-ekpaideusis",
+   "el": "διαταγή εκπαίδευσης",
+   "el_forms": [
+    "διαταγής εκπαίδευσης",
+    "διαταγή εκπαιδεύσεως",
+    "διαταγής εκπαιδεύσεως"
+   ],
+   "en": "training directive",
+   "kind": "document",
+   "source": "agent",
+   "confidence": "high",
+   "note": "PD 29/2020 «εκάστοτε ισχύουσα διαταγή εκπαίδευσης» -> the training directive in force (for 3-01 trainees this is 3-01 itself)."
+  },
+  {
+   "id": "vad",
+   "el": "ΒαΔ",
+   "el_forms": [
+    "Βασική Διαταγή"
+   ],
+   "en": "Basic Directive",
+   "kind": "document",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Type of HAF directive. Designators like «ΒαΔ 0-5/ΑΤΑ» are copied as written; «ΒαΔ 3-1/2025» / «ΒαΔ 3-01» = the book itself (vocabulary, translate:false)."
+  },
+  {
+   "id": "pad",
+   "el": "ΠαΔ",
+   "el_forms": [
+    "Πάγια Διαταγή",
+    "Πάγιας Διαταγής"
+   ],
+   "en": "Standing Directive",
+   "kind": "document",
+   "source": "agent",
+   "confidence": "high",
+   "note": "E.g. «ΠαΔ 6-1/ΓΕΑ» copied as written."
+  },
+  {
+   "id": "kpa",
+   "el": "ΚΠΑ",
+   "el_forms": [
+    "Κανονισμός Πολεμικής Αεροπορίας",
+    "Κανονισμού Πολεμικής Αεροπορίας"
+   ],
+   "en": "Hellenic Air Force Regulation",
+   "kind": "document",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Expansion not printed; standard HAF regulation series («ΚΠΑ Β-6/ΓΕΑ», «ΚΠΑ Γ-4/ΓΕΑ» - designators copied as written)."
+  },
+  {
+   "id": "mdm",
+   "el": "ΜΔΜ",
+   "el_forms": [
+    "Μόνιμη Διαταγή Μονάδας",
+    "ΜΔΜ 3-24/120ΠΕΑ"
+   ],
+   "en": "Unit Standing Order",
+   "kind": "document",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Expansion inferred (Μόνιμη Διαταγή Μονάδας): local procedures «(ΜΔΑΠΕ - ΜΔΜ)»."
+  },
+  {
+   "id": "mdape",
+   "el": "ΜΔΑΠΕ",
+   "el_forms": [],
+   "en": "Flight and Ground Safety Standing Order",
+   "kind": "document",
+   "source": "agent",
+   "confidence": "low",
+   "note": "Expansion not printed; probably Μόνιμη Διαταγή Ασφαλείας Πτήσεων - Εδάφους (emergency action, airfield status). Keep «ΜΔΑΠΕ» on first mention."
+  },
+  {
+   "id": "kad",
+   "el": "ΚΑΔ",
+   "el_forms": [
+    "Κωδικός Αριθμός Δημοσιεύματος"
+   ],
+   "en": "Publication Code Number",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Expanded in 3-01 (amendment record)."
+  },
+  {
+   "id": "fek",
+   "el": "ΦΕΚ",
+   "el_forms": [
+    "Φύλλο της Εφημερίδας της Κυβερνήσεως",
+    "ΕΦΗΜΕΡΙΔΑ ΤΗΣ ΚΥΒΕΡΝΗΣΕΩΣ"
+   ],
+   "en": "Government Gazette",
+   "kind": "document",
+   "source": "agent",
+   "confidence": "high",
+   "note": "«ΦΕΚ Α΄57» belongs to the PD 29/2020 vocabulary entry; elsewhere «(Α΄ 114)» issue references are copied as written."
+  },
+  {
+   "id": "pd-proedriko",
+   "el": "ΠΔ",
+   "el_forms": [
+    "π.δ.",
+    "Π.Δ.",
+    "Προεδρικό Διάταγμα",
+    "ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ"
+   ],
+   "en": "Presidential Decree",
+   "en_abbr": "PD",
+   "kind": "document",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Other decrees («ΠΔ 151/13», «ΠΔ 133/02», «π.δ. 45/2017») -> PD 151/13 etc. with the number unchanged; «ΠΔ 29/2020» itself is the vocabulary entry. TRAP: in structure notes «ΠΔ κατά περίπτωση» means the PD 29/2020 procedure."
+  },
+  {
+   "id": "nomos",
+   "el": "ν.",
+   "el_forms": [
+    "ν.δ."
+   ],
+   "en": "Law",
+   "kind": "document",
+   "source": "agent",
+   "confidence": "high",
+   "note": "«ν. 2690/1999» -> Law 2690/1999; «ν.δ. 1400/1973» -> Legislative Decree 1400/1973."
+  },
+  {
+   "id": "ee-epitelikes",
+   "el": "ΕΕ",
+   "el_forms": [
+    "EE",
+    "Επιτελικές Επισκέψεις",
+    "Επιτελικών Επισκέψεων",
+    "Διασταυρωτικές Επισκέψεις"
+   ],
+   "en": "Staff Visits",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Επιτελικές Επισκέψεις (printed with Latin EE). HOMONYM: «ΕΕ 3-18/ΔΑΕ» is a document designator - copy as written. «Διασταυρωτικές» -> Cross-visits."
+  },
+  {
+   "id": "pepa",
+   "el": "ΠΕΠΑ",
+   "el_forms": [
+    "Πρόγραμμα Ειδικής Παρακολούθησης Εκπαιδευτών",
+    "ΠΡΟΓΡΑΜΜΑ ΕΙΔΙΚΗΣ ΠΑΡΑΚΟΛΟΥΘΗΣΗΣ ΕΚΠΑΙΔΕΥΤΩΝ"
+   ],
+   "en": "Instructor Special Monitoring Program",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Πρόγραμμα Ειδικής Παρακολούθησης Εκπαιδευτών. Built to match the vocabulary's ΚΕΠΕ = Special Monitoring Status."
+  },
+  {
+   "id": "ae-ektelestheisa",
+   "el": "εκτελεσθείσα",
+   "el_forms": [
+    "εκτελεσθείσα (ΑΕ)",
+    "εκτελεσθείσα (Α.Ε.)",
+    "εκτελεσθείσες",
+    "ΕΚΤΕΛΕΣΘΕΝ"
+   ],
+   "en": "Flight Carried Out",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "3-01 §19 and §49: «για να χαρακτηρισθεί ως εκτελεσθείσα (ΑΕ) πρέπει να έχει καλυφθεί τουλάχιστον το 75%» - the counterpart of ΑΔΕ = Flight Not Carried Out (vocabulary). Here «ΑΕ» is NOT the Training Officer: see vocabulary_conflicts. No English abbreviation invented."
+  },
+  {
+   "id": "s20-aneu-apaitiseon",
+   "el": "Αποστολές Άνευ Απαιτήσεων",
+   "el_forms": [
+    "ΑΝΕΥ ΑΠΑΙΤΗΣΕΩΝ",
+    "Άνευ Απαιτήσεων"
+   ],
+   "en": "Missions Without Requirements",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Section Σ-20: ferry flights, crew transport and invalid (<75%) sorties are charged there. Code «Σ-20» copied as written."
+  },
+  {
+   "id": "ptitiko-ergo",
+   "el": "πτητικό έργο",
+   "el_forms": [
+    "ΠΤΗΤΙΚΟ ΕΡΓΟ",
+    "πτητικού έργου",
+    "ΕΡΓΟ",
+    "ΕΡΓΟΥ"
+   ],
+   "en": "flying programme",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Sorties/hours the squadron must or did fly («ΑΠΑΙΤΟΥΜΕΝΟ ΠΤΗΤΙΚΟ ΕΡΓΟ ΜΟΙΡΑΣ» -> required squadron flying programme). In «για κάθε ελιγμό ή έργο» (grading) έργο -> task."
+  },
+  {
+   "id": "ptisimi-imera",
+   "el": "πτήσιμη ημέρα",
+   "el_forms": [
+    "ΠΤΗΣΙΜΗ ΜΕΡΑ",
+    "ΠΤΗΣΙΜΕΣ ΗΜΕΡΕΣ",
+    "ΠΤΗΣΙΜ",
+    "μη πτήσιμες ημέρες"
+   ],
+   "en": "flyable day",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "«ΠΤΗΣΙΜΕΣ / ΜΗ ΠΤΗΣΙΜΕΣ ΗΜΕΡΕΣ ΜΗΝΟΣ» -> flyable / non-flyable days of the month."
+  },
+  {
+   "id": "seira",
+   "el": "Σειρά",
+   "el_forms": [
+    "ΣΕΙΡΑ",
+    "ΣΕΙΡΑΣ",
+    "σειράς",
+    "ΣΕΙΡΑ ΙΚΑΡΩΝ",
+    "Σειράς ΣΜΥΑ"
+   ],
+   "en": "Class",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "A student intake/class («της ... ΣΕΙΡΑΣ ΑΝΘΣΓΩΝ - ΙΚΑΡΩΝ»). In «σειρά σχηματισμού» it is formation order -> «formation order»."
+  },
+  {
+   "id": "aksiologitis-aeros",
+   "el": "Αξιολογητής Αέρος",
+   "el_forms": [
+    "Αξιολογητές Αέρος",
+    "Αξιολογητών Αέρος",
+    "Αξιολογητές - Αέρος"
+   ],
+   "en": "Flight Evaluator",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "PD 29/2020 / Annex Β §15α. Built on the vocabulary «Evaluator»; the vocabulary owner may prefer to add it there."
+  },
+  {
+   "id": "fysikos-arxigos",
+   "el": "Φυσικός Αρχηγός",
+   "el_forms": [
+    "Φυσικός Αρχηγός Σχηματισμού",
+    "Φυσικού Αρχηγού"
+   ],
+   "en": "Physical Leader",
+   "kind": "term",
+   "source": "3-01 Annex Β",
+   "confidence": "low",
+   "note": "Annex Β §19: the senior qualified member who leads by right of seniority. Literal rendering to stay parallel with «Tactical Leader»; no exact USAF term («flight lead in charge»). Needs the owner's choice."
+  },
+  {
+   "id": "taktikos-arxigos",
+   "el": "Τακτικός Αρχηγός",
+   "el_forms": [
+    "Τακτικός Αρχηγός Σχηματισμού",
+    "Τακτικού Αρχηγού"
+   ],
+   "en": "Tactical Leader",
+   "kind": "term",
+   "source": "3-01 Annex Β",
+   "confidence": "medium",
+   "note": "Annex Β §20: authorised to lead for training/tactical purposes; can be removed by the Physical Leader."
+  },
+  {
+   "id": "arxigos-zeugous",
+   "el": "Αρχηγός Ζεύγους",
+   "el_forms": [
+    "Αρχηγοί Ζεύγους",
+    "Αρχηγών Ζεύγους"
+   ],
+   "en": "Two-Ship Flight Lead",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Leadership qualification (3-01 ch.5)."
+  },
+  {
+   "id": "arxigos-tetradas",
+   "el": "Αρχηγός Τετράδας",
+   "el_forms": [
+    "Αρχηγοί Τετράδος",
+    "Αρχηγός Τετράδος",
+    "Αρχηγών Τετράδας"
+   ],
+   "en": "Four-Ship Flight Lead",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Leadership qualification (3-01 ch.5)."
+  },
+  {
+   "id": "arxigos-apostolis",
+   "el": "Αρχηγός Αποστολής",
+   "el_forms": [
+    "Αρχηγοί Αποστολής",
+    "Αρχηγού Αποστολής"
+   ],
+   "en": "Mission Commander",
+   "en_abbr": "MC",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "3-01 writes «Αρχηγός Αποστολής (MC)»; Annex Γ MC = Mission Commander."
+  },
+  {
+   "id": "arxigia",
+   "el": "Αρχηγία",
+   "el_forms": [
+    "αρχηγίας",
+    "τίτλος αρχηγίας",
+    "τίτλου αρχηγίας",
+    "Αρχηγίες Σχηματισμού"
+   ],
+   "en": "Lead Qualification",
+   "kind": "term",
+   "source": "3-01 Annex Β",
+   "confidence": "medium",
+   "note": "«κάτοχος μεγαλύτερου τίτλου αρχηγίας» -> holder of the higher lead qualification."
+  },
+  {
+   "id": "ptyxio",
+   "el": "Πτυχίο",
+   "el_forms": [
+    "ΠΤΥΧΙΟ",
+    "ΠΤΥΧ",
+    "Πτυχίου",
+    "Πτυχίο Εκπαιδευτή Πτήσεων",
+    "Πτυχίο «Α»",
+    "Πτυχίο «Β»",
+    "Επέκταση Πτυχίου",
+    "Απονομή Πτυχίου"
+   ],
+   "en": "Instructor Rating",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Πτυχίο Εκπαιδευτή Πτήσεων (Annex Β §4). «Πτυχίο «Α»/«Β»» -> Instructor Rating «A»/«B»; «Απονομή - Επέκταση Πτυχίου» -> Award - Extension of Instructor Rating."
+  },
+  {
+   "id": "iptamenos-iatros",
+   "el": "Ιπτάμενος Ιατρός",
+   "el_forms": [
+    "Ιπτάμενοι Ιατροί",
+    "Ιπτάμενων Ιατρών",
+    "Ιπταμένων Ιατρών"
+   ],
+   "en": "Flight Surgeon",
+   "kind": "term",
+   "source": "3-01 Annex Β",
+   "confidence": "medium",
+   "note": "Annex Β §16: physician on flying status who flies in the rear seat. Distinct from the pilot's «Ιατρός Αεροπορικής Ιατρικής» = Aviation Medicine Physician (the specialty)."
+  },
+  {
+   "id": "iatros-aeroporikis",
+   "el": "Ιατρός Αεροπορικής Ιατρικής",
+   "el_forms": [
+    "Ιατροί Αεροπορικής Ιατρικής",
+    "ειδικότητας ΙΑΙ",
+    "ΙΑΙ"
+   ],
+   "en": "Aviation Medicine Physician",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "high",
+   "note": "Pilot rendering kept. «ΙΙΑΙ» = Ιπτάμενοι Ιατροί Αεροπορικής Ιατρικής -> flying Aviation Medicine Physicians."
+  },
+  {
+   "id": "ekpaideusi-aeros-ekpaideuomenon",
+   "el": "Πλαίσιο Απασχόλησης Εκπαιδευομένων",
+   "el_forms": [],
+   "en": "Student Pilot Employment Framework",
+   "kind": "term",
+   "source": "agent",
+   "confidence": "high",
+   "note": "3-01 ch.3 heading; depends on the open vocabulary decision on «εκπαιδευόμενος» (see vocabulary_conflicts). | Owner 07/11/2026: εκπαιδευόμενος = Student Pilot (not Trainee)."
+  },
+  {
+   "id": "vasikos-elegxos",
+   "el": "Βασικός έλεγχος του Α/Φ",
+   "el_forms": [
+    "Βασικός Έλεγχος του Α/Φ",
+    "Βασικός έλεγχος Α/Φ"
+   ],
+   "en": "Basic Control of the Aircraft",
+   "kind": "term",
+   "source": "pilot",
+   "confidence": "medium",
+   "note": "Pilot: Grade Sheet column / item name."
+  },
+  {
+   "id": "aaq",
+   "el": "AAQ",
+   "el_forms": [],
+   "en": "Advanced Aircraft Qualification",
+   "en_abbr": "AAQ",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English in the source; keep «AAQ»."
+  },
+  {
+   "id": "baq",
+   "el": "BAQ",
+   "el_forms": [],
+   "en": "Basic Aircraft Qualification",
+   "en_abbr": "BAQ",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "bip",
+   "el": "BIP",
+   "el_forms": [],
+   "en": "Buddy Instructor Pilot Program",
+   "en_abbr": "BIP",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "bmc",
+   "el": "BMC",
+   "el_forms": [],
+   "en": "Basic Mission Capable",
+   "en_abbr": "BMC",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep. Annex Β: «Ετοιμοπόλεμοι επιπέδου Α (BMC)»."
+  },
+  {
+   "id": "cmr",
+   "el": "CMR",
+   "el_forms": [],
+   "en": "Combat Mission Ready",
+   "en_abbr": "CMR",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "ct",
+   "el": "CT",
+   "el_forms": [],
+   "en": "Continuation Training",
+   "en_abbr": "CT",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep. Greek counterpart: Συντήρηση / Πτήση Συντήρησης."
+  },
+  {
+   "id": "conv",
+   "el": "CONV",
+   "el_forms": [],
+   "en": "Conversion Mission",
+   "en_abbr": "CONV",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "cpm",
+   "el": "CPM",
+   "el_forms": [],
+   "en": "Combat Profile Mission",
+   "en_abbr": "CPM",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "crm",
+   "el": "CRM",
+   "el_forms": [],
+   "en": "Crew Resource Management",
+   "en_abbr": "CRM",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ lists it twice (Cockpit/Crew and Crew); one rendering used."
+  },
+  {
+   "id": "orm",
+   "el": "ORM",
+   "el_forms": [],
+   "en": "Operational Risk Management",
+   "en_abbr": "ORM",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "hpma",
+   "el": "HPMA",
+   "el_forms": [],
+   "en": "Human Performance in Military Aviation",
+   "en_abbr": "HPMA",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep («Σεμινάριο HPMA CRM/ORM»)."
+  },
+  {
+   "id": "fcf",
+   "el": "FCF",
+   "el_forms": [],
+   "en": "Functional Check Flight",
+   "en_abbr": "FCF",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep. Greek: Πτήση Δοκιμής."
+  },
+  {
+   "id": "fms-sim",
+   "el": "FMS",
+   "el_forms": [],
+   "en": "Full Mission Simulator",
+   "en_abbr": "FMS",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep. NOT Flight Management System in these books."
+  },
+  {
+   "id": "ftd",
+   "el": "FTD",
+   "el_forms": [],
+   "en": "Flight Training Device",
+   "en_abbr": "FTD",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "oft",
+   "el": "OFT",
+   "el_forms": [],
+   "en": "Operational Flight Trainer",
+   "en_abbr": "OFT",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "utd",
+   "el": "UTD",
+   "el_forms": [],
+   "en": "Unit Training Device",
+   "en_abbr": "UTD",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "ptt",
+   "el": "PTT",
+   "el_forms": [],
+   "en": "Practice Training Terminal",
+   "en_abbr": "PTT",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "gbts",
+   "el": "GBTS",
+   "el_forms": [],
+   "en": "Ground Based Training System",
+   "en_abbr": "GBTS",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "cbts",
+   "el": "CBTS",
+   "el_forms": [],
+   "en": "Computer Based Training System",
+   "en_abbr": "CBTS",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "sbt",
+   "el": "SBT",
+   "el_forms": [],
+   "en": "Synthetic Based Training",
+   "en_abbr": "SBT",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "np",
+   "el": "NP",
+   "el_forms": [
+    "Κανονικές Διαδικασίες",
+    "κανονικές διαδικασίες",
+    "Κανονικών Διαδικασιών"
+   ],
+   "en": "Normal Procedures",
+   "en_abbr": "NP",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ NP; the Greek «Κανονικές Διαδικασίες» uses the same English."
+  },
+  {
+   "id": "caps",
+   "el": "CAPs",
+   "el_forms": [],
+   "en": "Critical Action Procedures",
+   "en_abbr": "CAPs",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep. Greek counterpart: Ζωτικές Διαδικασίες Ανάγκης."
+  },
+  {
+   "id": "ahc",
+   "el": "AHC",
+   "el_forms": [],
+   "en": "Aircraft Handling Characteristics",
+   "en_abbr": "AHC",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "agsm",
+   "el": "AGSM",
+   "el_forms": [],
+   "en": "Anti-G Straining Maneuver",
+   "en_abbr": "AGSM",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "form",
+   "el": "FORM",
+   "el_forms": [],
+   "en": "Formation Flight",
+   "en_abbr": "FORM",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep. The syllabus Category is «Formation» (vocabulary, translate:false)."
+  },
+  {
+   "id": "low",
+   "el": "LOW",
+   "el_forms": [
+    "LOW ALTITUDE"
+   ],
+   "en": "Low Altitude",
+   "en_abbr": "LOW",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "lowat",
+   "el": "LOWAT",
+   "el_forms": [],
+   "en": "Low Altitude Training",
+   "en_abbr": "LOWAT",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "agl",
+   "el": "AGL",
+   "el_forms": [],
+   "en": "Above Ground Level",
+   "en_abbr": "AGL",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "msa-alt",
+   "el": "MSA",
+   "el_forms": [],
+   "en": "Minimum Safe Altitude",
+   "en_abbr": "MSA",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Latin MSA only. The Greek ΜΣΑ is the Aircraft Maintenance Squadron - check the alphabet."
+  },
+  {
+   "id": "mc",
+   "el": "MC",
+   "el_forms": [],
+   "en": "Mission Commander",
+   "en_abbr": "MC",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "tlp",
+   "el": "TLP",
+   "el_forms": [],
+   "en": "Tactical Leadership Programme",
+   "en_abbr": "TLP",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "snr",
+   "el": "SNR",
+   "el_forms": [],
+   "en": "Senior National Representative",
+   "en_abbr": "SNR",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep (IFTC multinational context)."
+  },
+  {
+   "id": "itaf",
+   "el": "ITAF",
+   "el_forms": [],
+   "en": "Italian Air Force",
+   "en_abbr": "ITAF",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "aa-latin",
+   "el": "A/A",
+   "el_forms": [],
+   "en": "Air-to-Air",
+   "en_abbr": "A/A",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "LATIN letters only. The Greek «Α/Α» in a table's first column is the serial number."
+  },
+  {
+   "id": "ag-latin",
+   "el": "A/G",
+   "el_forms": [],
+   "en": "Air-to-Ground",
+   "en_abbr": "A/G",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "acm",
+   "el": "ACM",
+   "el_forms": [],
+   "en": "Air Combat Maneuvering",
+   "en_abbr": "ACM",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "act",
+   "el": "ACT",
+   "el_forms": [],
+   "en": "Air Combat Tactics",
+   "en_abbr": "ACT",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "bfm",
+   "el": "BFM",
+   "el_forms": [],
+   "en": "Basic Fighter Maneuvers",
+   "en_abbr": "BFM",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ: Basic Fighter Maneuvers/Maneuvering; keep."
+  },
+  {
+   "id": "aar",
+   "el": "AAR",
+   "el_forms": [],
+   "en": "Air-to-Air Refueling",
+   "en_abbr": "AAR",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "aamd",
+   "el": "AAMD",
+   "el_forms": [],
+   "en": "Air to Air Missile Defense",
+   "en_abbr": "AAMD",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "cas",
+   "el": "CAS",
+   "el_forms": [],
+   "en": "Close Air Support",
+   "en_abbr": "CAS",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "dca",
+   "el": "DCA",
+   "el_forms": [],
+   "en": "Defensive Counter Air",
+   "en_abbr": "DCA",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "oca",
+   "el": "OCA",
+   "el_forms": [],
+   "en": "Offensive Counter Air",
+   "en_abbr": "OCA",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "gaai",
+   "el": "GAAI",
+   "el_forms": [],
+   "en": "Ground Assisted Air Interdiction",
+   "en_abbr": "GAAI",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "sat",
+   "el": "SAT",
+   "el_forms": [],
+   "en": "Surface Attack Tactics",
+   "en_abbr": "SAT",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "scar",
+   "el": "SCAR",
+   "el_forms": [],
+   "en": "Strike Coordination And Reconnaissance",
+   "en_abbr": "SCAR",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "sead",
+   "el": "SEAD",
+   "el_forms": [],
+   "en": "Suppression of Enemy Air Defenses",
+   "en_abbr": "SEAD",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "sar",
+   "el": "SAR",
+   "el_forms": [
+    "Έρευνα Διάσωση",
+    "Έρευνας Διάσωσης",
+    "Έρευνα - Διάσωση"
+   ],
+   "en": "Search And Rescue",
+   "en_abbr": "SAR",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Annex Γ SAR; the Greek «Έρευνα - Διάσωση» uses the same English."
+  },
+  {
+   "id": "hvaa",
+   "el": "HVAA",
+   "el_forms": [],
+   "en": "High Value Aircraft Asset",
+   "en_abbr": "HVAA",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "slomo",
+   "el": "SLOMO",
+   "el_forms": [],
+   "en": "Slow Mover",
+   "en_abbr": "SLOMO",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep («Συνοδεία SLOMO» -> SLOMO escort)."
+  },
+  {
+   "id": "has",
+   "el": "HAS",
+   "el_forms": [],
+   "en": "High Angle Strafe",
+   "en_abbr": "HAS",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "las",
+   "el": "LAS",
+   "el_forms": [],
+   "en": "Low Angle Strafe",
+   "en_abbr": "LAS",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "lgb",
+   "el": "LGB",
+   "el_forms": [],
+   "en": "Laser Guided Bomb",
+   "en_abbr": "LGB",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "hud",
+   "el": "HUD",
+   "el_forms": [],
+   "en": "Head-Up Display",
+   "en_abbr": "HUD",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "gps",
+   "el": "GPS",
+   "el_forms": [],
+   "en": "Global Positioning System",
+   "en_abbr": "GPS",
+   "kind": "abbreviation",
+   "source": "3-01 Annex Γ",
+   "confidence": "high",
+   "note": "Already English; keep."
+  },
+  {
+   "id": "hy-ypologistis",
+   "el": "Η/Υ",
+   "el_forms": [
+    "ηλεκτρονικός υπολογιστής"
+   ],
+   "en": "Computer",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Ηλεκτρονικός Υπολογιστής (briefing-room equipment)."
+  },
+  {
+   "id": "aat",
+   "el": "ΑΑΤ",
+   "el_forms": [
+    "άδεια ανατροφής τέκνου"
+   ],
+   "en": "Parental Leave",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "high",
+   "note": "Expanded in 3-01 («άδεια ανατροφής τέκνου (ΑΑΤ)»)."
+  },
+  {
+   "id": "iiai",
+   "el": "ΙΙΑΙ",
+   "el_forms": [
+    "Ιπταμένων Ιατρών Αεροπορικής Ιατρικής"
+   ],
+   "en": "Flying Aviation Medicine Physicians",
+   "kind": "abbreviation",
+   "source": "agent",
+   "confidence": "medium",
+   "note": "Expanded in 3-01 («Ασκούς ειδικότητας Ιπταμένων Ιατρών Αεροπορικής Ιατρικής (ΙΙΑΙ)»)."
+  }
+ ],
+ "vocabulary_form_additions": [
+  {
+   "vocabulary_id": "kepe",
+   "add_el_form": "Κατάσταση Ειδικής Παρακολούθησης Εκπαίδευσης",
+   "where": "3-01 Annex Γ (the book's own expansion of ΚΕΠΕ; the vocabulary's «Καθεστώς ... Εκπαιδευομένου» does not occur in 3-01)"
+  },
+  {
+   "vocabulary_id": "kepe",
+   "add_el_form": "Κατάσταση Ειδικής Παρακολούθησης Εκπαίδευσης Μαθητή",
+   "where": "3-01 ch.2 heading (p.36), found by the pilot translation"
+  },
+  {
+   "vocabulary_id": "fyllo_vathmologias",
+   "add_el_form": "ΦΒ",
+   "where": "3-01 Annex Γ (ΦΒ = Φύλλο Βαθμολογίας) and 30x in the text"
+  },
+  {
+   "vocabulary_id": "fyllo_vathmologias",
+   "add_el_form": "Φ.Β.",
+   "where": "3-01 ch.2-3, 11x (also «Φ.Β» 2x); proposed by the pilot"
+  },
+  {
+   "vocabulary_id": "takeoff",
+   "add_el_form": "Α/Γ",
+   "where": "3-01 tables and text, 13x (+ «Α/Γ.» 3x); proposed by the pilot"
+  },
+  {
+   "vocabulary_id": "ae_training_officer",
+   "add_el_form": "Α.Ε.",
+   "where": "3-01, 28x («Δκτής ή Α.Ε. της Μοίρας»); proposed by the pilot. BUT see vocabulary_conflicts: «(Α.Ε.)» once means «εκτελεσθείσα»"
+  },
+  {
+   "vocabulary_id": "ae_training_officer",
+   "add_el_form": "Αξιωματικός Επιχειρήσεων-Εκπαίδευσης",
+   "where": "PD 29/2020 Art.1 §1θ expands ΑΕ this way («Αξιωματικό Επιχειρήσεων-Εκπαίδευσης (ΑΕ)»); the vocabulary's «Αξιολογητής Εκπαίδευσης» occurs 0 times in either book. «Training Officer» fits both"
+  },
+  {
+   "vocabulary_id": "ysterisi",
+   "add_el_form": "ΥΣΤΕΡΕΙ",
+   "where": "3-01 ch.2 (pilot)"
+  },
+  {
+   "vocabulary_id": "ysterisi",
+   "add_el_form": "ΥΣΤΕΡΗΣΕ",
+   "where": "3-01 ch.2 (pilot)"
+  },
+  {
+   "vocabulary_id": "apotyxia",
+   "add_el_form": "ΑΠΟΤΥΓΧΑΝΕΙ",
+   "where": "3-01 ch.2 (pilot); PD 29/2020 Art.1 §1ε «αποτυγχάνει»"
+  },
+  {
+   "vocabulary_id": "eksodos",
+   "add_el_form": "Εξ.",
+   "where": "3-01 tables «ΕΞ. / ΩΡΕΣ», «Εξ./Ωρ. Συγκυβ» (37x as ΕΞ)"
+  },
+  {
+   "vocabulary_id": "eksodos",
+   "add_el_form": "έξοδοι",
+   "where": "3-01 «ΕΞΟΔΟΙ» 26x (nominative plural missing from el_forms)"
+  },
+  {
+   "vocabulary_id": "eksodos",
+   "add_el_form": "εξόδων",
+   "where": "3-01 «ΣΥΝΟΛΟ ΕΞΟΔΩΝ» etc. (genitive plural missing)"
+  },
+  {
+   "vocabulary_id": "synkyvernisi",
+   "add_el_form": "Συγκυβ.",
+   "where": "3-01 tables «ΣΥΓΚΥΒ» 9x"
+  },
+  {
+   "vocabulary_id": "katigoria",
+   "add_el_form": "ΚΑΤΗΓ.",
+   "where": "3-01 table headers, 21x"
+  },
+  {
+   "vocabulary_id": "pap_mif",
+   "add_el_form": "Πίνακες Απαιτήσεων Προόδου",
+   "where": "3-01 Annex Γ and ch.2 §28 (full name of ΠΑΠ). The pilot rendered it «Progress Requirements Tables (MIF)»; with this form it becomes «MIF»"
+  },
+  {
+   "vocabulary_id": "ekpaideftis",
+   "add_el_form": "Εκπαιδευτής Πτήσεων",
+   "where": "3-01 Annex Β §4 (defined term, with «(Instructor Pilot)» printed next to it)"
+  },
+  {
+   "vocabulary_id": "ekpaideftis",
+   "add_el_form": "Εκπτής",
+   "where": "3-01 standard abbreviation (also Εκπτές, Εκπτών, ΕΚΠΤΩΝ 6x, ΕΚΠ/ΤΕΣ, ΕΚΠΤΗΣ)"
+  },
+  {
+   "vocabulary_id": "aeroskafos",
+   "add_el_form": "Α/Φ.",
+   "where": "3-01, 50x with trailing dot; also scan-split «Α/ Φ»"
+  },
+  {
+   "vocabulary_id": "smhnarxos_flight",
+   "add_el_form": "Δκτής Σμήνους",
+   "where": "3-01 Annex Β §21ι («ενημερώνει τον Δκτή Σμήνους»)"
+  },
+  {
+   "vocabulary_id": "dokimi_proodou",
+   "add_el_form": "ΔΟΚ. ΠΡ.",
+   "where": "3-01 ch.9 monitoring form headers «ΕΠΑΝΑΛ ΔΟΚ ΠΡ.»"
+  },
+  {
+   "vocabulary_id": "symvoulio_ptitikis",
+   "add_el_form": "Συμβούλιο Ικανότητας",
+   "where": "PD 29/2020 Art.3 §19 («η απόφαση του Συμβουλίου Ικανότητας»); 3-01 ch.9 form «ΣΥΜΒΟΥΛΙΟ ΙΚΑΝΟΤΗΤΑΣ»"
+  },
+  {
+   "vocabulary_id": "vad_3_01",
+   "add_el_form": "ΒαΔ 3-1/2025",
+   "where": "3-01's own headers write «ΒαΔ 3-1/2025/ΔΑΕ» (5x); «ΒαΔ 3-01» occurs 0 times"
+  },
+  {
+   "vocabulary_id": "pd_29_2020",
+   "add_el_form": "ΠΔ29/2020",
+   "where": "3-01 (no space), 1x"
+  }
+ ],
+ "vocabulary_conflicts": [
+  {
+   "vocabulary_id": "ae_training_officer",
+   "el_form": "ΑΕ / Α.Ε.",
+   "problem": "3-01 §19 and §49: «να χαρακτηρισθεί ως εκτελεσθείσα (ΑΕ) / (Α.Ε.)» - here ΑΕ means a flight CARRIED OUT (the pair of ΑΔΕ), not the Training Officer.",
+   "proposal": "Translate those two places with term ae-ektelestheisa («Flight Carried Out»); everywhere else ΑΕ stays Training Officer."
+  },
+  {
+   "vocabulary_id": "mathitis",
+   "el_form": "εκπαιδευόμενος",
+   "problem": "3-01 Annex Β §12-13 defines Μαθητής and Εκπαιδευόμενος as DIFFERENT categories: the εκπαιδευόμενος is a qualified officer trained at ΜΕΑΕ/ΣΜΕΤ to become an instructor or to (re)qualify in type. «Εκπαιδευόμεν-» occurs ~149x in 3-01 (ΕΚΠΝΟΥ, ΕΚΠ/ΝΩΝ in tables); mapping it to «Student Pilot» merges the two populations. (PD 29/2020 Art.3 §17α uses it loosely for a referred student.)",
+   "proposal": "Remove «εκπαιδευόμενος» from mathitis and add a term «ΕΚΠΑΙΔΕΥΟΜΕΝΟΣ» -> «Trainee» (el_forms εκπαιδευόμενου, εκπαιδευόμενοι, εκπαιδευομένων, Εκπνος, ΕΚΠΝΟΥ, ΕΚΠ/ΝΩΝ)."
+  },
+  {
+   "vocabulary_id": "smhnarxos_flight",
+   "el_form": "Σμήνος",
+   "problem": "In both books bare «Σμήνος» is the UNIT (a Flight): «Ανεξάρτητο Σμήνος/ Μοίρα», «Διοικητή Σμήνους». Mapping it to «Flight Commander» mistranslates every unit mention.",
+   "proposal": "Remove «Σμήνος» from smhnarxos_flight; render the unit «Flight» («Ανεξάρτητο Σμήνος» -> Independent Flight)."
+  },
+  {
+   "vocabulary_id": "dioikitis_moiras",
+   "el_form": "Διοικητής / Δκτής",
+   "problem": "Bare «Διοικητής»/«Δκτής» in PD 29/2020 and 3-01 is often the commander of the ΣΙ, Σμηναρχία, Πτέρυγα or Μονάδα («Ο Διοικητής της ΣΙ / Σμηναρχίας/ Πτέρυγας διακόπτει τις πτήσεις», «Δκτής, Υδκτής, ΔΕΕ, ΔΠΔ της Πτέρυγας»).",
+   "proposal": "Use «Squadron Commander» only when the context is the squadron; otherwise «Commander» (+ «Unit Commander», «Wing Commander»). Keep the bare forms out of el_forms or add a context rule."
+  },
+  {
+   "vocabulary_id": "leader_wingman",
+   "el_form": "αρχηγός σχηματισμού",
+   "problem": "en is «Leader / Wingman» with translate:false; in 3-01 Annex Β §18-22 «Αρχηγός Σχηματισμού» is only the formation leader (with Physical / Tactical leader sub-types).",
+   "proposal": "Give «αρχηγός σχηματισμού» the English «Formation Leader»."
+  },
+  {
+   "vocabulary_id": "dokimi_proodou",
+   "el_form": "ΔΠ",
+   "problem": "3-01 ch.3 §28 «[ΔΠ-1(1), ΔΟ-2(1), ΔΕ-2(1), ΕΑ-3(2)]» and «ΔΠ-1 (ΕΠ-1)» are sortie/exercise codes, not Progress Checks.",
+   "proposal": "Codes followed by a hyphen and number are copied as written (sortie_codes rule); ΔΠ -> Progress Check only as a standalone word."
+  },
+  {
+   "vocabulary_id": "leader_wingman",
+   "el_form": "πτέρυγας",
+   "problem": "In both books «Πτέρυγας» is almost always the genitive of «Πτέρυγα» = the Wing (unit): «Διοικητής της ΣΙ / Σμηναρχίας/ Πτέρυγας», «Δκτής ... της Πτέρυγας Μάχης». Applying the vocabulary turns the Wing commander into a wingman.",
+   "proposal": "Render «Πτέρυγα / Πτέρυγας» as «Wing» (term pteryga); keep «πτέρυγας» -> wingman only in formation-position context (Νο2), or drop it from leader_wingman."
+  }
+ ]
+}

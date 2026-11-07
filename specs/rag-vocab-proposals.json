@@ -1,0 +1,206 @@
+{
+ "schema": "t6a-vocab-proposals-v1",
+ "from": "RAG-techique (A)",
+ "at": "2026-11-07T10:28:21",
+ "about": "Proposals for D:\\FDMS\\specs/vocabulary-el-en.json from reading the WHOLE 3-01 and PD 29/2020 (glossary agent + chapter-2 pilot translation). The vocabulary is owned by FDMS: nothing here is applied to it by us.",
+ "vocabulary_conflicts": [
+  {
+   "vocabulary_id": "ae_training_officer",
+   "el_form": "ΑΕ / Α.Ε.",
+   "problem": "3-01 §19 and §49: «να χαρακτηρισθεί ως εκτελεσθείσα (ΑΕ) / (Α.Ε.)» - here ΑΕ means a flight CARRIED OUT (the pair of ΑΔΕ), not the Training Officer.",
+   "proposal": "Translate those two places with term ae-ektelestheisa («Flight Carried Out»); everywhere else ΑΕ stays Training Officer.",
+   "owner_ruling": "OPEN",
+   "owner_note": "No owner decision yet: FDMS side to decide."
+  },
+  {
+   "vocabulary_id": "mathitis",
+   "el_form": "εκπαιδευόμενος",
+   "problem": "3-01 Annex Β §12-13 defines Μαθητής and Εκπαιδευόμενος as DIFFERENT categories: the εκπαιδευόμενος is a qualified officer trained at ΜΕΑΕ/ΣΜΕΤ to become an instructor or to (re)qualify in type. «Εκπαιδευόμεν-» occurs ~149x in 3-01 (ΕΚΠΝΟΥ, ΕΚΠ/ΝΩΝ in tables); mapping it to «Student Pilot» merges the two populations. (PD 29/2020 Art.3 §17α uses it loosely for a referred student.)",
+   "proposal": "Remove «εκπαιδευόμενος» from mathitis and add a term «ΕΚΠΑΙΔΕΥΟΜΕΝΟΣ» -> «Trainee» (el_forms εκπαιδευόμενου, εκπαιδευόμενοι, εκπαιδευομένων, Εκπνος, ΕΚΠΝΟΥ, ΕΚΠ/ΝΩΝ).",
+   "owner_ruling": "REJECTED",
+   "owner_note": "Owner 07/11/2026: «εκπαιδευόμενος» = Student Pilot is CORRECT. Keep the vocabulary as it is."
+  },
+  {
+   "vocabulary_id": "smhnarxos_flight",
+   "el_form": "Σμήνος",
+   "problem": "In both books bare «Σμήνος» is the UNIT (a Flight): «Ανεξάρτητο Σμήνος/ Μοίρα», «Διοικητή Σμήνους». Mapping it to «Flight Commander» mistranslates every unit mention.",
+   "proposal": "Remove «Σμήνος» from smhnarxos_flight; render the unit «Flight» («Ανεξάρτητο Σμήνος» -> Independent Flight).",
+   "owner_ruling": "OPEN",
+   "owner_note": "No owner decision yet: FDMS side to decide."
+  },
+  {
+   "vocabulary_id": "dioikitis_moiras",
+   "el_form": "Διοικητής / Δκτής",
+   "problem": "Bare «Διοικητής»/«Δκτής» in PD 29/2020 and 3-01 is often the commander of the ΣΙ, Σμηναρχία, Πτέρυγα or Μονάδα («Ο Διοικητής της ΣΙ / Σμηναρχίας/ Πτέρυγας διακόπτει τις πτήσεις», «Δκτής, Υδκτής, ΔΕΕ, ΔΠΔ της Πτέρυγας»).",
+   "proposal": "Use «Squadron Commander» only when the context is the squadron; otherwise «Commander» (+ «Unit Commander», «Wing Commander»). Keep the bare forms out of el_forms or add a context rule.",
+   "owner_ruling": "OPEN",
+   "owner_note": "No owner decision yet: FDMS side to decide."
+  },
+  {
+   "vocabulary_id": "leader_wingman",
+   "el_form": "αρχηγός σχηματισμού",
+   "problem": "en is «Leader / Wingman» with translate:false; in 3-01 Annex Β §18-22 «Αρχηγός Σχηματισμού» is only the formation leader (with Physical / Tactical leader sub-types).",
+   "proposal": "Give «αρχηγός σχηματισμού» the English «Formation Leader».",
+   "owner_ruling": "OPEN",
+   "owner_note": "No owner decision yet: FDMS side to decide."
+  },
+  {
+   "vocabulary_id": "dokimi_proodou",
+   "el_form": "ΔΠ",
+   "problem": "3-01 ch.3 §28 «[ΔΠ-1(1), ΔΟ-2(1), ΔΕ-2(1), ΕΑ-3(2)]» and «ΔΠ-1 (ΕΠ-1)» are sortie/exercise codes, not Progress Checks.",
+   "proposal": "Codes followed by a hyphen and number are copied as written (sortie_codes rule); ΔΠ -> Progress Check only as a standalone word.",
+   "owner_ruling": "OPEN",
+   "owner_note": "No owner decision yet: FDMS side to decide."
+  },
+  {
+   "vocabulary_id": "leader_wingman",
+   "el_form": "πτέρυγας",
+   "problem": "In both books «Πτέρυγας» is almost always the genitive of «Πτέρυγα» = the Wing (unit): «Διοικητής της ΣΙ / Σμηναρχίας/ Πτέρυγας», «Δκτής ... της Πτέρυγας Μάχης». Applying the vocabulary turns the Wing commander into a wingman.",
+   "proposal": "Render «Πτέρυγα / Πτέρυγας» as «Wing» (term pteryga); keep «πτέρυγας» -> wingman only in formation-position context (Νο2), or drop it from leader_wingman.",
+   "owner_ruling": "ACCEPTED",
+   "owner_note": "Owner 07/11/2026: «πτέρυγας» is NOT wingman. It is the Wing; Πτέρυγα Εκπαίδευσης Αέρος = Flight Training Wing (FTW, as the Syllabus writes '120 FTW'). Remove «πτέρυγας» from leader_wingman; add Πτέρυγα -> Wing and ΠΕΑ / Πτέρυγα Εκπαίδευσης Αέρος -> Flight Training Wing."
+  }
+ ],
+ "vocabulary_form_additions": [
+  {
+   "vocabulary_id": "kepe",
+   "add_el_form": "Κατάσταση Ειδικής Παρακολούθησης Εκπαίδευσης",
+   "where": "3-01 Annex Γ (the book's own expansion of ΚΕΠΕ; the vocabulary's «Καθεστώς ... Εκπαιδευομένου» does not occur in 3-01)"
+  },
+  {
+   "vocabulary_id": "kepe",
+   "add_el_form": "Κατάσταση Ειδικής Παρακολούθησης Εκπαίδευσης Μαθητή",
+   "where": "3-01 ch.2 heading (p.36), found by the pilot translation"
+  },
+  {
+   "vocabulary_id": "fyllo_vathmologias",
+   "add_el_form": "ΦΒ",
+   "where": "3-01 Annex Γ (ΦΒ = Φύλλο Βαθμολογίας) and 30x in the text"
+  },
+  {
+   "vocabulary_id": "fyllo_vathmologias",
+   "add_el_form": "Φ.Β.",
+   "where": "3-01 ch.2-3, 11x (also «Φ.Β» 2x); proposed by the pilot"
+  },
+  {
+   "vocabulary_id": "takeoff",
+   "add_el_form": "Α/Γ",
+   "where": "3-01 tables and text, 13x (+ «Α/Γ.» 3x); proposed by the pilot"
+  },
+  {
+   "vocabulary_id": "ae_training_officer",
+   "add_el_form": "Α.Ε.",
+   "where": "3-01, 28x («Δκτής ή Α.Ε. της Μοίρας»); proposed by the pilot. BUT see vocabulary_conflicts: «(Α.Ε.)» once means «εκτελεσθείσα»"
+  },
+  {
+   "vocabulary_id": "ae_training_officer",
+   "add_el_form": "Αξιωματικός Επιχειρήσεων-Εκπαίδευσης",
+   "where": "PD 29/2020 Art.1 §1θ expands ΑΕ this way («Αξιωματικό Επιχειρήσεων-Εκπαίδευσης (ΑΕ)»); the vocabulary's «Αξιολογητής Εκπαίδευσης» occurs 0 times in either book. «Training Officer» fits both"
+  },
+  {
+   "vocabulary_id": "ysterisi",
+   "add_el_form": "ΥΣΤΕΡΕΙ",
+   "where": "3-01 ch.2 (pilot)"
+  },
+  {
+   "vocabulary_id": "ysterisi",
+   "add_el_form": "ΥΣΤΕΡΗΣΕ",
+   "where": "3-01 ch.2 (pilot)"
+  },
+  {
+   "vocabulary_id": "apotyxia",
+   "add_el_form": "ΑΠΟΤΥΓΧΑΝΕΙ",
+   "where": "3-01 ch.2 (pilot); PD 29/2020 Art.1 §1ε «αποτυγχάνει»"
+  },
+  {
+   "vocabulary_id": "eksodos",
+   "add_el_form": "Εξ.",
+   "where": "3-01 tables «ΕΞ. / ΩΡΕΣ», «Εξ./Ωρ. Συγκυβ» (37x as ΕΞ)"
+  },
+  {
+   "vocabulary_id": "eksodos",
+   "add_el_form": "έξοδοι",
+   "where": "3-01 «ΕΞΟΔΟΙ» 26x (nominative plural missing from el_forms)"
+  },
+  {
+   "vocabulary_id": "eksodos",
+   "add_el_form": "εξόδων",
+   "where": "3-01 «ΣΥΝΟΛΟ ΕΞΟΔΩΝ» etc. (genitive plural missing)"
+  },
+  {
+   "vocabulary_id": "synkyvernisi",
+   "add_el_form": "Συγκυβ.",
+   "where": "3-01 tables «ΣΥΓΚΥΒ» 9x"
+  },
+  {
+   "vocabulary_id": "katigoria",
+   "add_el_form": "ΚΑΤΗΓ.",
+   "where": "3-01 table headers, 21x"
+  },
+  {
+   "vocabulary_id": "pap_mif",
+   "add_el_form": "Πίνακες Απαιτήσεων Προόδου",
+   "where": "3-01 Annex Γ and ch.2 §28 (full name of ΠΑΠ). The pilot rendered it «Progress Requirements Tables (MIF)»; with this form it becomes «MIF»"
+  },
+  {
+   "vocabulary_id": "ekpaideftis",
+   "add_el_form": "Εκπαιδευτής Πτήσεων",
+   "where": "3-01 Annex Β §4 (defined term, with «(Instructor Pilot)» printed next to it)"
+  },
+  {
+   "vocabulary_id": "ekpaideftis",
+   "add_el_form": "Εκπτής",
+   "where": "3-01 standard abbreviation (also Εκπτές, Εκπτών, ΕΚΠΤΩΝ 6x, ΕΚΠ/ΤΕΣ, ΕΚΠΤΗΣ)"
+  },
+  {
+   "vocabulary_id": "aeroskafos",
+   "add_el_form": "Α/Φ.",
+   "where": "3-01, 50x with trailing dot; also scan-split «Α/ Φ»"
+  },
+  {
+   "vocabulary_id": "smhnarxos_flight",
+   "add_el_form": "Δκτής Σμήνους",
+   "where": "3-01 Annex Β §21ι («ενημερώνει τον Δκτή Σμήνους»)"
+  },
+  {
+   "vocabulary_id": "dokimi_proodou",
+   "add_el_form": "ΔΟΚ. ΠΡ.",
+   "where": "3-01 ch.9 monitoring form headers «ΕΠΑΝΑΛ ΔΟΚ ΠΡ.»"
+  },
+  {
+   "vocabulary_id": "symvoulio_ptitikis",
+   "add_el_form": "Συμβούλιο Ικανότητας",
+   "where": "PD 29/2020 Art.3 §19 («η απόφαση του Συμβουλίου Ικανότητας»); 3-01 ch.9 form «ΣΥΜΒΟΥΛΙΟ ΙΚΑΝΟΤΗΤΑΣ»"
+  },
+  {
+   "vocabulary_id": "vad_3_01",
+   "add_el_form": "ΒαΔ 3-1/2025",
+   "where": "3-01's own headers write «ΒαΔ 3-1/2025/ΔΑΕ» (5x); «ΒαΔ 3-01» occurs 0 times"
+  },
+  {
+   "vocabulary_id": "pd_29_2020",
+   "add_el_form": "ΠΔ29/2020",
+   "where": "3-01 (no space), 1x"
+  }
+ ],
+ "provisional_terms_file": "D:/FDMS/specs/rag-provisional-terms.json",
+ "how_to_use": [
+  "The vocabulary (vocabulary-el-en.json) is FDMS's and stays the single authority.",
+  "FDMS decides each OPEN conflict and each form addition, then edits vocabulary-el-en.json itself.",
+  "Terms of rag-provisional-terms.json that FDMS adopts move into the vocabulary; the rest remain provisional for RAG-techique translations.",
+  "RAG-techique translates 3-01 and PD 29/2020 only after the OPEN conflicts are decided."
+ ],
+ "owner_rulings_on_sources": [
+  {
+   "topic": "FO 101-4 training periods",
+   "ruling": "11 training periods (the figure found in most places)",
+   "date": "2026-11-07"
+  },
+  {
+   "topic": "I41XX sorties",
+   "ruling": "2 sorties: I41-01 and I41-02 (2.6 h, as the mission table and its total)",
+   "date": "2026-11-07"
+  }
+ ],
+ "fdms_note": "07/11/2026 — FDMS (B): οι 5 ανοιχτές συγκρουσεις αποφασιστηκαν και οι 24 μορφες περασαν στο vocabulary-el-en.json (version 2026-11-07b, 64 οροι). Το σκεπτικο, το ερεισμα καθε αποφασης και ο πινακας αντιφασεων με τη στηλη FDMS συμπληρωμενη ειναι στην § 7 του specs/ade-handover.md. Τα πεδια `owner_ruling` ΔΕΝ πειραχτηκαν: ανηκουν στον ιδιοκτητη. Οι δυο διαδρομες `about` και `provisional_terms_file` ηταν αλλοιωμενες (ανεσκαπτα \\v και \\r μεσα σε JSON string) και διορθωθηκαν."
+}
