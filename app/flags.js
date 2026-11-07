@@ -123,13 +123,17 @@
       '<span class="pill" style="margin-left:10px">αυτόματη σήμανση</span>' +
       '<p class="why">' + esc(it.why) + "</p>" +
       '<div class="meta"><span><b>' + esc(it.owner) + "</b>" +
-      (pid ? (pid !== it.owner ? '<span class="pill">σελίδα του ' + esc(pid) + "</span>" : "") + srcBtn(pid)
-           : '<span class="pill" title="το id δεν έχει τοποθεσία στο ευρετήριο">χωρίς σελίδα</span>') + "</span>" +
+      (pid ? (pid !== it.owner ? ' <span class="pill">σελίδα του ' + esc(pid) + "</span>" : "") + srcBtn(pid)
+           : ' <span class="pill" title="το αρχείο αυτό δεν περνά από το grounding — δεν υπάρχει κουτί να δείξουμε">'
+             + "— χωρίς σελίδα στο ευρετήριο</span>") + "</span>" +
       "<span>" + esc(it.file) + "</span>" +
       (it.topic ? "<span>" + esc(it.topic) + "</span>" : "") +
       '<span>' + esc(it.kind === "unresolved" ? "από δέντρο απόφασης" : "σημείωση απαίτησης") + "</span></div>" +
       (it.requirement ? '<p class="req">' + esc(it.requirement) + "</p>" : "") +
       (it.source ? '<p class="req"><b>ΠΗΓΗ:</b> ' + esc(it.source) + "</p>" : "") +
+      (/ΑΠΟΦΑΝΣΗ ΙΔΙΟΚΤΗΤΗ|ΑΠΟΦΑΣΗ ΙΔΙΟΚΤΗΤΗ|ΕΡΜΗΝΕΙΑ ΙΔΙΟΚΤΗΤΗ/.test(it.text)
+        ? '<p class="why" style="color:#7ee787">✓ η σημείωση κουβαλά ΗΔΗ απόφανσή σου — '
+          + "διάβασέ τη πριν κρίνεις</p>" : "") +
       '<div class="lab">Η σημείωση, αυτολεξεί</div>' +
       '<div class="note">' + esc(it.text) + "</div>" +
       (refs ? '<div class="lab">Τα άλλα κομμάτια που κατονομάζει</div><div>' + refs + "</div>" : "") +
@@ -146,13 +150,16 @@
     });
     /* ΤΑ ΚΟΥΜΠΙΑ ΤΗΣ ΚΡΙΣΗΣ ΖΟΥΝ ΣΤΟ ΥΠΟΣΕΛΙΔΟ, ΟΧΙ ΣΤΗΝ ΚΑΡΤΑ. Μετρήθηκε στην
        πρώτη δοκιμή: με τον θεατή ανοιχτό η κάρτα ψηλώνει και τα κουμπιά
-       έπεφταν ΚΑΤΩ από το σταθερό υποσέλιδο — ο έλεγχος γινόταν «διάβασε,
-       κύλισε, κρίνε, ξανακύλισε». Στο υποσέλιδο είναι πάντα στο χέρι. */
+       έπεφταν ΚΑΤΩ από το σταθερό υποσέλιδο.
+
+       ΤΟ ΣΦΑΛΜΑ ΠΟΥ ΒΡΗΚΕ Ο ΙΔΙΟΚΤΗΤΗΣ (07/11/2026): «δεν έχω κρίνει καμία»,
+       ενώ ο μετρητής έλεγε 2. Το `#verd` ζει στο υποσέλιδο και ΔΕΝ
+       ξαναφτιάχνεται — μόνο το `innerHTML` του. Ο ακροατής όμως προστίθετο
+       ΣΕ ΚΑΘΕ render: στην κάρτα 3 ένα κλικ έτρεχε τρεις φορές, και το
+       `verdict()` είναι ΔΙΑΚΟΠΤΗΣ (ξαναπάτημα = αναίρεση). Μονός αριθμός
+       κλήσεων άφηνε κρίση, ζυγός την έσβηνε — τυχαίο αποτέλεσμα, και
+       ΑΟΡΑΤΟ. Ο ακροατής μπαίνει πια ΜΙΑ φορά, στο boot. */
     el("verd").innerHTML = buttons;
-    el("verd").addEventListener("click", function (ev) {
-      var b = ev.target.closest ? ev.target.closest("button[data-v]") : null;
-      if (b) verdict(b.dataset.v);
-    });
     el("prev").disabled = S.i <= 0;
     el("next").disabled = S.i >= S.view.length - 1;
   }
@@ -246,7 +253,18 @@
     el("fPdf").addEventListener("change", function () { S.i = 0; filt(); });
     el("prev").addEventListener("click", function () { go(-1); });
     el("next").addEventListener("click", function () { go(1); });
+    el("verd").addEventListener("click", function (ev) {
+      var b = ev.target.closest ? ev.target.closest("button[data-v]") : null;
+      if (b) verdict(b.dataset.v);
+    });
     el("dl").addEventListener("click", download);
+    el("clr").addEventListener("click", function () {
+      var n = 0, k;
+      for (k in S.verd) if (S.verd.hasOwnProperty(k)) n++;
+      if (!n) { alert("Δεν υπάρχει καμία κρίση."); return; }
+      if (!confirm("Σβήσιμο " + n + " κρίσεων. Αν δεν τις έχεις κατεβάσει, χάνονται. Σίγουρα;")) return;
+      S.verd = {}; save(); filt();
+    });
     el("up").addEventListener("click", function () { el("file").click(); });
     el("file").addEventListener("change", function () { if (this.files[0]) upload(this.files[0]); });
 
@@ -267,6 +285,13 @@
       }
     });
 
+    /* ΠΡΟΕΠΙΛΟΓΗ: ΟΣΕΣ ΑΝΟΙΓΟΥΝ PDF. Ο ιδιοκτήτης έπεσε αμέσως σε κάρτα
+       `d_tot` (δέντρο απόφασης) που ΔΕΝ έχει τοποθεσία, και η πρώτη του
+       αντίδραση ήταν «δεν βλέπω πώς μπορώ να ανοίξω το PDF». Σωστή: 289 από
+       τις 646 δεν έχουν σελίδα, γιατί τα αρχεία τους δεν περνούν από το
+       grounding. Ο έλεγχος ΜΕ το κείμενο δίπλα είναι το νόημα του εργαλείου,
+       άρα αυτό δείχνουμε πρώτο — οι υπόλοιπες είναι ένα κλικ μακριά. */
+    el("fPdf").value = "yes";
     load();
     filt();
   }
