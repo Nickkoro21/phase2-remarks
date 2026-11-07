@@ -94,8 +94,16 @@ body.gv-drag #gv-scroll { pointer-events: none; }\
 .gv-boxes { position: absolute; inset: 0; z-index: 3; pointer-events: none; }\
 .gv-box { position: absolute; border-radius: 2px; }\
 .gv-box.gv-other { outline: 1px dashed rgba(120,170,255,.75); background: rgba(120,170,255,.10); pointer-events: auto; cursor: pointer; }\
-.gv-box.gv-this { outline: 1.5px solid rgba(255,196,0,.95); background: rgba(255,214,0,.30); animation: gv-pulse 1s ease-out 2; }\
-@keyframes gv-pulse { 0% { background: rgba(255,214,0,.66); } 100% { background: rgba(255,214,0,.30); } }\
+.gv-box.gv-this { outline: 2px solid rgba(255,176,0,.98); background: rgba(255,214,0,.17); animation: gv-pulse 1s ease-out 2; }\
+@keyframes gv-pulse { 0% { background: rgba(255,214,0,.58); } 100% { background: rgba(255,214,0,.17); } }\
+.gv-tag { position: absolute; left: -2px; top: 0; transform: translateY(-100%); z-index: 5;\
+  font: 600 9.5px/1.65 Consolas, \'Courier New\', monospace; letter-spacing: .2px; padding: 0 5px;\
+  border-radius: 4px 4px 0 0; white-space: nowrap; pointer-events: auto; cursor: pointer; }\
+.gv-tag.gv-low { transform: none; border-radius: 0 0 4px 0; }\
+.gv-tag.gv-right { left: auto; right: -2px; }\
+.gv-tag.gv-t-this { background: rgba(255,176,0,.98); color: #2a1d00; cursor: default; }\
+.gv-tag.gv-t-other { background: rgba(120,170,255,.92); color: #04142e; }\
+.gv-tag.gv-t-other:hover { background: rgba(120,170,255,1); box-shadow: 0 0 0 2px rgba(120,170,255,.35); }\
 #gv-foot { padding: 6px 10px; border-top: 1px solid var(--line, #30363d); background: var(--panel-2, #161b22);\
   font-size: 11px; color: var(--muted, #8b949e); line-height: 1.5; }\
 #gv-msg { padding: 20px; font-size: 13.5px; line-height: 1.65; color: var(--text, #e6edf3); }\
@@ -520,15 +528,29 @@ body.gv-drag #gv-scroll { pointer-events: none; }\
   function boxes(slot, p) {
     var wrap = document.createElement("div");
     wrap.className = "gv-boxes";
-    var list = S.list, any = false;
-    for (var i = 0; i < list.length; i++) {
+    var list = S.list, any = false, i, k, r, placed = [];
+    for (i = 0; i < list.length; i++) {
       if (list[i].page !== p) continue;
       var b = block(list[i].id);
       if (!b) continue;
       var mine = list[i].id === S.id;
-      for (var k = 0; k < (b.boxes || []).length; k++) {
-        var r = b.boxes[k];
-        if ((r.page || b.page) !== p) continue;
+      /* ΤΑ ΚΟΥΤΙΑ ΕΝΟΣ ΚΟΜΜΑΤΙΟΥ ΜΑΖΙ, ΠΡΙΝ ΖΩΓΡΑΦΙΣΤΟΥΝ: η ετικέτα
+         μπαίνει ΜΙΑ φορά, στο πιο ψηλό. Ενα κομμάτι που έπιασε έξι κελιά
+         πίνακα δεν είναι έξι παραπομπές — και έξι φορές το ίδιο όνομα είναι
+         ακριβώς ο αχταρμάς που πάμε να λύσουμε. */
+      var mb = [];
+      for (k = 0; k < (b.boxes || []).length; k++) {
+        r = b.boxes[k];
+        if ((r.page || b.page) === p) mb.push(r);
+      }
+      if (!mb.length) continue;
+      var hd = 0;
+      for (k = 1; k < mb.length; k++) {
+        if (mb[k].ymin < mb[hd].ymin - 0.002 ||
+            (Math.abs(mb[k].ymin - mb[hd].ymin) <= 0.002 && mb[k].xmin < mb[hd].xmin)) hd = k;
+      }
+      for (k = 0; k < mb.length; k++) {
+        r = mb[k];
         var d = document.createElement("div");
         d.className = "gv-box " + (mine ? "gv-this" : "gv-other");
         d.dataset.id = list[i].id;
@@ -537,11 +559,47 @@ body.gv-drag #gv-scroll { pointer-events: none; }\
         d.style.top = (r.ymin * 100) + "%";
         d.style.width = ((r.xmax - r.xmin) * 100) + "%";
         d.style.height = ((r.ymax - r.ymin) * 100) + "%";
+        if (k === hd) { d.appendChild(tag(list[i], mine, r, placed)); placed.push(r); }
         wrap.appendChild(d);
         any = true;
       }
     }
     if (any) slot.appendChild(wrap);
+  }
+
+  /* Η ΕΤΙΚΕΤΑ ΠΑΝΩ ΣΤΟ ΚΟΥΤΙ                             (07/11/2026)
+     ────────────────────────────────────────────────────────────────────────
+     ΤΟ ΕΥΡΗΜΑ ΤΟΥ ΙΔΙΟΚΤΗΤΗ (σύγκριση με άλλον θεατή): «το δικό μας
+     μπορεί να σε μπερδέψει». Σωστό, και ο λόγος είναι συγκεκριμένος: τα
+     κουτιά ήταν ΑΝΩΝΥΜΑ. Σε σελίδα με πέντε κουτιά ο αναγνώστης
+     έβλεπε «κάτι από εδώ χρησιμοποιήθηκε» και τίποτα άλλο — ποιο είναι η
+     παραπομπή που διαβάζει ΤΩΡΑ και ποια είναι άλλη, δεν φαινόταν.
+
+     Τώρα κάθε κουτί ονομάζεται, και το όνομα είναι ΤΟ ΙΔΙΟ που τυπώνει η
+     υποσημείωση και το κουμπί μέσα στην απάντηση — ένα αναγνωρίσιμο
+     ονομα σε τρεις θέσεις, όχι τρία διαφορετικά πράγματα. Και το γέμισμα
+     έπεσε από 30% σε 17%: το πλαίσιο ορίζει, δεν βάφει. Ο κανονισμός
+     πρέπει να ΔΙΑΒΑΖΕΤΑΙ κάτω από το κούτι. */
+  function tag(st, mine, r, placed) {
+    var ids = st.ids || [st.id];
+    /* ΔΥΟ ΟΝΟΜΑΤΑ ΣΤΗΝ ΙΔΙΑ ΓΡΑΜΜΗ. ΜΕΤΡΗΘΗΚΕ στη σελ.52 της 3-01: το `st-63`
+       και το `fail-09` ξεκινούν στο ΙΔΙΟ ύψος, σε γειτονικά κελιά του ίδιου
+       πίνακα — δύο ετικέτες αριστερά θα πατούσαν η μία την άλλη και το ένα
+       όνομα θα χανόταν. Η δεύτερη πάει ΔΕΞΙΑ, στην άλλη άκρη του κουτιού της:
+       καμία μέτρηση πλάτους, καμία επαναδιάταξη, και τα δύο διαβάζονται. */
+    var side = "";
+    for (var q = 0; q < (placed || []).length; q++) {
+      if (Math.abs(placed[q].ymin - r.ymin) <= 0.004) { side = " gv-right"; break; }
+    }
+    var t = document.createElement("span");
+    t.className = "gv-tag " + (mine ? "gv-t-this" : "gv-t-other") +
+                  (r.ymin < 0.03 ? " gv-low" : "") + side;
+    t.dataset.id = st.id;
+    t.textContent = st.id + (ids.length > 1 ? " +" + (ids.length - 1) : "");
+    t.title = mine
+      ? "αυτό διαβάζεις τώρα" + (ids.length > 1 ? " · " + ids.length + " παραπομπές δείχνουν εδώ" : "")
+      : "κομμάτι " + st.id + " — πάτα το για να το δεις";
+    return t;
   }
 
   /* ── ΠΛΟΗΓΗΣΗ ──────────────────────────────────────────────────────────── */
@@ -808,8 +866,11 @@ body.gv-drag #gv-scroll { pointer-events: none; }\
                      (cell[1] === "1" ? " κελί" : " κελιά") + " πίνακα (DPT-3)";
     return "<b>" + esc(S.id) + "</b> · εντοπίστηκε: " + esc(how) + " · corpus: " + esc(b.corpus || "—") +
            (shift ? " · <b>⚠ σε ΑΛΛΗ σελίδα από όση δήλωνε το corpus (" + esc(shift[1]) + " σελίδες μακριά)</b>" : "") +
-           " · τα <span style=\"outline:1px dashed rgba(120,170,255,.75);padding:0 4px\">διακεκομμένα</span> " +
-           "είναι τα υπόλοιπα κομμάτια που κρατήσαμε από το ίδιο βιβλίο — πάτα τα.";
+           " · κάθε κούτι γράφει το όνομά του στη γωνία· το " +
+           "<span style=\"background:rgba(255,176,0,.98);color:#2a1d00;border-radius:3px;padding:0 4px\">κίτρινο</span> " +
+           "είναι αυτό που διαβάζεις, τα " +
+           "<span style=\"background:rgba(120,170,255,.92);color:#04142e;border-radius:3px;padding:0 4px\">μπλε</span> " +
+           "είναι τα υπόλοιπα που κρατήσαμε από το ίδιο βιβλίο — πάτα τα.";
   }
 
   function msg(html) {
@@ -838,8 +899,9 @@ body.gv-drag #gv-scroll { pointer-events: none; }\
     if (!b) {
       head();
       msg("<b>Αυτή η παραπομπή δεν έχει τοποθεσία στο ευρετήριο.</b><br>" +
-          "Καλύφθηκαν 468 από τα 482 αναγνωριστικά· όσα λείπουν είναι κυρίως " +
-          "<b>πίνακες</b>, που το κείμενό τους δεν ταιριάζει γραμμικά με τη σελίδα.");
+          "Από τις 07/11/2026 καλύπτονται <b>και τα 482</b> αναγνωριστικά — άρα " +
+          "αυτό που βλέπεις σημαίνει ότι το <code>data/grounding.json</code> είναι " +
+          "παλιότερο από το corpus. Ξανατρέξε <code>tools/build_grounding.py</code>.");
       return;
     }
 
