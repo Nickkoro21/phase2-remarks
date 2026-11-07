@@ -1,0 +1,488 @@
+{
+  "schema": "fdms-vocab-el-en-v1",
+  "version": "2026-11-07",
+  "purpose": "Ο ΕΝΑΣ ΚΑΝΟΝΙΚΟΣ ΑΓΓΛΙΚΟΣ ΟΡΟΣ ΑΝΑ ΕΛΛΗΝΙΚΟ. Τα ελληνικά εγχειρίδια (ΒαΔ 3-01/2025, ΠΔ 29/2020) μεταφράζονται για chunking και embeddings σε αγγλικό χώρο. Χωρίς κλειστό λεξιλόγιο ο μεταφραστής διαλέγει κάθε φορά άλλη απόδοση, και δύο chunks που λένε το ίδιο πράγμα πέφτουν μακριά στον διανυσματικό χώρο: η similarity χάνεται από τη ΓΛΩΣΣΑ, όχι από το νόημα.",
+  "how_to_use": [
+    "Ο agent της μετάφρασης παίρνει ΑΥΤΟ το αρχείο μαζί με το κείμενο.",
+    "Όπου συναντά `el` ή οποιοδήποτε από τα `el_forms`, χρησιμοποιεί ΤΟ `en` — αυτολεξεί, χωρίς συνώνυμα, χωρίς δικιά του απόδοση.",
+    "Την πρώτη φορά σε κάθε chunk γράφει `en (el)` ώστε ο ελληνικός όρος να μένει αναζητήσιμος· μετά μόνο το `en`.",
+    "Ό,τι έχει `translate: false` ΔΕΝ μεταφράζεται και ΔΕΝ μεταγράφεται: μένει ως έχει.",
+    "Όρος που ΔΕΝ είναι εδώ: ο agent μεταφράζει κανονικά ΚΑΙ τον αναφέρει στην απάντησή του, για να προστεθεί. Δεν επινοεί σύντμηση.",
+    "ΑΛΛΑΓΗ ΑΠΟΔΟΣΗΣ = αλλαγή ΜΟΝΟ του `en` εδώ. Το επόμενο πέρασμα μεταφράζει με το νέο, παντού."
+  ],
+  "status_meaning": {
+    "in_use": "Η απόδοση χρησιμοποιείται ΗΔΗ στον κώδικα ή στα δεδομένα του FDMS — το `used_in` λέει πού. Δεν αλλάζει χωρίς απόφανση.",
+    "proposed": "ΔΕΝ υπάρχει αγγλική απόδοση στο FDMS σήμερα. Προτείνεται για συνέπεια και ΠΕΡΙΜΕΝΕΙ έγκριση. Μέχρι τότε χρησιμοποιείται, αλλά είναι το πρώτο που κοιτάζεται αν κάτι διαβάζεται περίεργα."
+  },
+  "terms": [
+    {
+      "id": "ysterisi",
+      "el": "ΥΣΤΕΡΗΣΗ",
+      "el_forms": ["υστέρηση", "υστέρησης", "υστερήσεις", "ΥΣΤΕΡΗΣΕΙ", "υστερήσει", "υστερήσεως"],
+      "en": "Almost Good",
+      "en_abbr": "LAG",
+      "domain": "grading",
+      "status": "in_use",
+      "note": "Η ΕΚΒΑΣΗ της πτήσης στη ζώνη 50-59%. Στον κώδικα εμφανίζεται ως «LAG (ALMOST GOOD)» και «LAG (YSTERISI)».",
+      "used_in": "app/scheduler.js:1234 · app/schedboard.js:2884 · app/schedbridge.js"
+    },
+    {
+      "id": "shedon_kalos",
+      "el": "ΣΧΕΔΟΝ ΚΑΛΩΣ",
+      "el_forms": ["Σχεδόν Καλώς", "ΣΚ"],
+      "en": "Almost Good",
+      "en_abbr": "AG",
+      "domain": "grading",
+      "status": "in_use",
+      "note": "Η ΟΝΟΜΑΣΙΑ του βαθμού για την ίδια ζώνη 50-59% (ΠΔ 151/13). Ίδια αγγλική απόδοση με την ΥΣΤΕΡΗΣΗ επίτηδες: είναι το ίδιο πράγμα από δύο οπτικές — βαθμός και έκβαση. Η διάκριση ζει στα `el`, όχι στα `en`.",
+      "used_in": "app/schedboard.js:2884 · [fail-01]"
+    },
+    {
+      "id": "apotyxia",
+      "el": "ΑΠΟΤΥΧΙΑ",
+      "el_forms": ["αποτυχία", "αποτυχίας", "ΑΠΟΤΥΧΩΝ", "αποτύχει", "ΑΠΟΤΥΧΕΙ", "απέτυχε"],
+      "en": "Fail",
+      "en_abbr": "FAIL",
+      "domain": "grading",
+      "status": "in_use",
+      "note": "Ζώνη 0-49%. Βαθμός «Ε» κατά ΠΔ 151/13.",
+      "used_in": "app/scheduler.js:1234 («FAIL (APOTYXIA)») · app/schedbridge.js"
+    },
+    {
+      "id": "epityhon",
+      "el": "ΕΠΙΤΥΧΩΝ",
+      "el_forms": ["επιτυχών", "επιτυχία", "πέτυχε"],
+      "en": "Pass",
+      "en_abbr": "PASS",
+      "domain": "grading",
+      "status": "in_use",
+      "used_in": "app/scheduler.js:1225 · app/boardtrees.js:42"
+    },
+    {
+      "id": "arista",
+      "el": "ΑΡΙΣΤΑ",
+      "el_forms": ["Άριστα", "Α (βαθμός)"],
+      "en": "Excellent",
+      "en_abbr": "E",
+      "domain": "grading",
+      "status": "proposed",
+      "note": "90-100% κατά ΠΔ 151/13 [fail-01]. Το FDMS δεν τυπώνει αυτή τη ζώνη πουθενά στα αγγλικά — η απόδοση είναι πρόταση.",
+      "used_in": null
+    },
+    {
+      "id": "lian_kalos",
+      "el": "ΛΙΑΝ ΚΑΛΩΣ",
+      "el_forms": ["Λίαν Καλώς", "ΛΚ"],
+      "en": "Very Good",
+      "en_abbr": "VG",
+      "domain": "grading",
+      "status": "proposed",
+      "note": "75-89% κατά ΠΔ 151/13 [fail-01]. Πρόταση — δεν υπάρχει αγγλική χρήση στο FDMS.",
+      "used_in": null
+    },
+    {
+      "id": "kalos",
+      "el": "ΚΑΛΩΣ",
+      "el_forms": ["Καλώς", "Κ (βαθμός)", "Καλώς+"],
+      "en": "Good",
+      "en_abbr": "G",
+      "domain": "grading",
+      "status": "proposed",
+      "note": "60-74% κατά ΠΔ 151/13 [fail-01]. Το «Καλώς+» του ΠΔ σημαίνει «Καλώς ή ανώτερο» → «Good or better».",
+      "used_in": null
+    },
+    {
+      "id": "kepe",
+      "el": "ΚΕΠΕ",
+      "el_forms": ["Καθεστώς Ειδικής Παρακολούθησης Εκπαιδευομένου", "σε ΚΕΠΕ", "είσοδος σε ΚΕΠΕ", "έξοδος από ΚΕΠΕ"],
+      "en": "Special Monitoring Status",
+      "en_abbr": "SMS",
+      "domain": "status",
+      "status": "in_use",
+      "note": "«είσοδος» → SMS — entry · «έξοδος» → SMS — exit. ΠΡΟΣΟΧΗ: στα δεδομένα ο αποθηκευμένος τύπος παραμένει `kepe_in` / `kepe_out` — η αγγλική απόδοση είναι ΜΟΝΟ στην επιφάνεια.",
+      "used_in": "app/scheduler.js:49-52 · app/scheduler.js:1184 · app/schedboard.js:754"
+    },
+    {
+      "id": "fmp",
+      "el": "ΦΜΠ",
+      "el_forms": ["Φύλλο Μη Πτήσης", "Φύλλα μη Πτήσης", "φύλλο μη πτήσεως"],
+      "en": "No-Fly Sheet",
+      "en_abbr": "NFS",
+      "domain": "document",
+      "status": "in_use",
+      "note": "Έντυπο μετά από ΑΠΟΤΥΧΙΑ σε γραπτή ή προφορική εξέταση, ή μη πτήση με υπαιτιότητα μαθητή [fail-83]. ΔΕΝ είναι δραστηριότητα: ο προγραμματιστής το εξαιρεί ρητά από τη μέτρηση απασχόλησης.",
+      "used_in": "app/schedbridge.js:265 · app/scheduler.js:853,1243 · app/schedboard.js:3393"
+    },
+    {
+      "id": "aeronautia",
+      "el": "ΑΕΡΟΝΑΥΤΙΑ",
+      "el_forms": ["αεροναυτία", "αεροναυτίας", "σοβαρή-έκδηλη ΑΕΡΟΝΑΥΤΙΑ", "ναυτία"],
+      "en": "Airsickness",
+      "domain": "status",
+      "status": "in_use",
+      "note": "Η «σοβαρή-έκδηλη» → «severe and manifest airsickness» (§33-34). Βαθμολογείται ΥΣΤΕΡΗΣΗ 59% κατά §35 — μοναδική εξαίρεση στον κανόνα ότι οι ΑΔΕ δεν βαθμολογούνται.",
+      "used_in": "app/schedbridge.js:265"
+    },
+    {
+      "id": "ade",
+      "el": "ΑΔΕ",
+      "el_forms": ["μη εκτελεσθείσα", "μη εκτελεσθείσας", "χαρακτηρίζεται ΑΔΕ"],
+      "en": "Flight Not Carried Out",
+      "en_abbr": "NCO",
+      "domain": "status",
+      "status": "proposed",
+      "note": "Το corpus τη γλωσσάρει ως «μη εκτελεσθείσα»: δεν βαθμολογείται και ο μαθητής δεν κρίνεται — εκτός ΑΕΡΟΝΑΥΤΙΑΣ ή περιστατικού Φυσιολογίας Πτήσεων (§43). Η αγγλική απόδοση ΚΑΙ η σύντμηση είναι προτάσεις, δεν υπάρχουν στο FDMS.",
+      "used_in": null
+    },
+    {
+      "id": "dokimi_proodou",
+      "el": "ΔΟΚΙΜΗ ΠΡΟΟΔΟΥ",
+      "el_forms": ["Δοκιμή Προόδου", "Δοκιμής Προόδου", "Δοκιμές Προόδου", "ΔΠ"],
+      "en": "Progress Check",
+      "domain": "procedure",
+      "status": "in_use",
+      "note": "Με Αξιολογητή Εκπαίδευσης → «Progress Check (Training Officer)»· με Διοικητή → «Progress Check (Commander)».",
+      "used_in": "app/scheduler.js:45-46"
+    },
+    {
+      "id": "exetasi_katallilotitas",
+      "el": "ΕΞΕΤΑΣΗ ΚΑΤΑΛΛΗΛΟΤΗΤΑΣ",
+      "el_forms": ["Εξέταση Καταλληλότητας", "Εξέτασης Καταλληλότητας"],
+      "en": "Suitability Examination",
+      "domain": "procedure",
+      "status": "in_use",
+      "used_in": "app/scheduler.js:47"
+    },
+    {
+      "id": "parapompi",
+      "el": "ΠΑΡΑΠΟΜΠΗ",
+      "el_forms": ["παραπομπή", "παραπέμπεται", "παραπομπής"],
+      "en": "Referral",
+      "domain": "procedure",
+      "status": "in_use",
+      "note": "Η παραπομπή στο Συμβούλιο Πτητικής Ικανότητας. ΟΧΙ «reference» — η λέξη σημαίνει την παραπομπή ΠΡΟΣΩΠΟΥ σε όργανο, όχι βιβλιογραφική αναφορά.",
+      "used_in": "app/scheduler.js:48"
+    },
+    {
+      "id": "symvoulio_ptitikis",
+      "el": "ΣΥΜΒΟΥΛΙΟ ΠΤΗΤΙΚΗΣ ΙΚΑΝΟΤΗΤΑΣ",
+      "el_forms": ["Συμβούλιο Πτητικής Ικανότητας", "Συμβουλίου Πτητικής Ικανότητας", "ΣΠΙ"],
+      "en": "Flying Ability Board",
+      "en_abbr": "FAB",
+      "domain": "procedure",
+      "status": "proposed",
+      "note": "ΠΡΟΣΟΧΗ — ΚΕΝΟ: το FDMS ονομάζει στα αγγλικά μόνο την ΠΡΑΞΗ («Referral»), ποτέ το ΟΡΓΑΝΟ. Η απόδοση είναι κατά λέξη από το «Πτητική Ικανότητα» και ΔΕΝ είναι ο καθιερωμένος όρος καμιάς άλλης αεροπορίας (το αμερικανικό «Flying Evaluation Board / FEB» ΔΕΝ χρησιμοποιείται εδώ και δεν πρέπει να υιοθετηθεί σιωπηλά). Θέλει απόφανση.",
+      "used_in": null
+    },
+    {
+      "id": "aksiologisi",
+      "el": "ΑΞΙΟΛΟΓΗΣΗ",
+      "el_forms": ["Αξιολόγηση", "Αξιολόγησης", "πτήση Αξιολόγησης"],
+      "en": "Evaluation",
+      "en_abbr": "EVAL",
+      "domain": "procedure",
+      "status": "in_use",
+      "used_in": "app/scheduler.js:1663"
+    },
+    {
+      "id": "monos",
+      "el": "ΜΟΝΟΣ",
+      "el_forms": ["«ΜΟΝΟΣ»", "πτήση ΜΟΝΟΣ", "ΠΡΟ ΜΟΝΟΣ", "ΜΕΤΑ ΜΟΝΟΣ"],
+      "en": "Solo",
+      "en_abbr": "SOLO",
+      "domain": "flight",
+      "status": "in_use",
+      "note": "«ΠΡΟ ΜΟΝΟΣ» → pre-solo · «ΜΕΤΑ ΜΟΝΟΣ» → post-solo.",
+      "used_in": "app/scheduler.js:1025 · app/schedboard.js:291"
+    },
+    {
+      "id": "synkyvernisi",
+      "el": "ΣΥΓΚΥΒΕΡΝΗΣΗ",
+      "el_forms": ["συγκυβέρνηση", "συγκυβέρνησης", "έξοδος συγκυβέρνησης"],
+      "en": "Dual",
+      "domain": "flight",
+      "status": "in_use",
+      "note": "Πτήση με εκπαιδευτή στο αεροσκάφος — το αντίθετο του SOLO.",
+      "used_in": "app/schedboard.js:754 («one dual sortie»)"
+    },
+    {
+      "id": "eksodos",
+      "el": "ΕΞΟΔΟΣ",
+      "el_forms": ["έξοδος", "εξόδου", "εξόδους", "πτήση εξόδου"],
+      "en": "Sortie",
+      "domain": "structure",
+      "status": "in_use",
+      "note": "ΟΧΙ «exit» και ΟΧΙ «mission». Μία αριθμημένη πτήση του syllabus, με τον κωδικό της.",
+      "used_in": "agents/*/agent.md (γλωσσάρι) · όλη η εφαρμογή"
+    },
+    {
+      "id": "stadio",
+      "el": "ΣΤΑΔΙΟ",
+      "el_forms": ["Στάδιο", "Σταδίου", "ανά Στάδιο"],
+      "en": "Stage",
+      "domain": "structure",
+      "status": "in_use",
+      "note": "Η μονάδα στην οποία μηδενίζονται οι μετρητές του κανονισμού. ΟΧΙ «Phase» — το «Phase II» είναι άλλο πράγμα και υπάρχει αυτούσιο στα αγγλικά.",
+      "used_in": "app/* (116 εμφανίσεις)"
+    },
+    {
+      "id": "enotita",
+      "el": "ΕΝΟΤΗΤΑ",
+      "el_forms": ["ενότητα", "ενότητας", "τελευταία πτήση ενότητας"],
+      "en": "Training Section",
+      "domain": "structure",
+      "status": "in_use",
+      "note": "Ο όρος είναι ΤΟΥ SYLLABUS, αυτούσιος στα αγγλικά: «At the end of the Training Section…» [st-12].",
+      "used_in": "data/requirements/* · Phase 2 Syllabus"
+    },
+    {
+      "id": "katigoria",
+      "el": "ΚΑΤΗΓΟΡΙΑ",
+      "el_forms": ["κατηγορία", "κατηγορίας", "κατηγορία αέρος"],
+      "en": "Category",
+      "domain": "structure",
+      "status": "in_use",
+      "note": "Οι τέσσερις: Contact · Instrument · Formation · VFR Navigation. Τα ονόματά τους ΔΕΝ μεταφράζονται (βλ. `translate: false` παρακάτω).",
+      "used_in": "app/scheduler.js:36-37"
+    },
+    {
+      "id": "fyllo_vathmologias",
+      "el": "ΦΥΛΛΟ ΒΑΘΜΟΛΟΓΙΑΣ",
+      "el_forms": ["Φύλλο Βαθμολογίας", "Φύλλου Βαθμολογίας", "φύλλα βαθμολογίας"],
+      "en": "Grade Sheet",
+      "domain": "document",
+      "status": "in_use",
+      "used_in": "app/description.js:276,1052 · data/criteria/contact.json:79"
+    },
+    {
+      "id": "paratirisi",
+      "el": "ΠΑΡΑΤΗΡΗΣΗ",
+      "el_forms": ["παρατήρηση", "παρατηρήσεις", "παρατηρήσεων"],
+      "en": "Remark",
+      "domain": "document",
+      "status": "in_use",
+      "note": "Το πεδίο του Φύλλου Βαθμολογίας: «the remarks section of the grade sheet».",
+      "used_in": "data/criteria/contact.json:79 · data/observations2/**"
+    },
+    {
+      "id": "pap_mif",
+      "el": "ΠΑΠ",
+      "el_forms": ["κώδικες ΠΑΠ", "κωδίκων ΠΑΠ", "στον ΠΑΠ"],
+      "en": "MIF",
+      "domain": "structure",
+      "status": "in_use",
+      "note": "Ο πίνακας που ορίζει το απαιτούμενο επίπεδο απόδοσης ανά item και ανά έξοδο. Στα αγγλικά είναι ΠΑΝΤΑ «MIF» — η σύντμηση ΠΑΠ δεν μεταγράφεται.",
+      "used_in": "data/mif/* · app/* (173 εμφανίσεις)"
+    },
+    {
+      "id": "mathitis",
+      "el": "ΜΑΘΗΤΗΣ",
+      "el_forms": ["μαθητής", "μαθητή", "μαθητού", "εκπαιδευόμενος", "ιπτάμενος μαθητής"],
+      "en": "Student Pilot",
+      "en_abbr": "SP",
+      "domain": "role",
+      "status": "in_use",
+      "note": "ΚΑΝΟΝΑΣ ΑΠΟΡΡΗΤΟΥ: στο κείμενο γράφεται ΜΟΝΟ «SP». Ποτέ πραγματικό όνομα ή call sign — ούτε στη μετάφραση, ούτε σε παράδειγμα.",
+      "used_in": "data/criteria/contact.json:91 · όλη η εφαρμογή"
+    },
+    {
+      "id": "ekpaideftis",
+      "el": "ΕΚΠΑΙΔΕΥΤΗΣ",
+      "el_forms": ["εκπαιδευτής", "εκπαιδευτή", "Εκπαιδευτού"],
+      "en": "Instructor Pilot",
+      "en_abbr": "IP",
+      "domain": "role",
+      "status": "in_use",
+      "note": "Ίδιος κανόνας απορρήτου: μόνο «IP».",
+      "used_in": "data/criteria/contact.json:91 · app/scheduler.js:1286"
+    },
+    {
+      "id": "aksiologitis",
+      "el": "ΑΞΙΟΛΟΓΗΤΗΣ",
+      "el_forms": ["Αξιολογητής", "Αξιολογητή", "Αξιολογητής Μοίρας"],
+      "en": "Evaluator",
+      "domain": "role",
+      "status": "in_use",
+      "used_in": "app/scheduler.js:1286"
+    },
+    {
+      "id": "ae_training_officer",
+      "el": "ΑΞΙΟΛΟΓΗΤΗΣ ΕΚΠΑΙΔΕΥΣΗΣ",
+      "el_forms": ["ΑΕ", "Αξιολογητής Εκπαίδευσης", "Δοκιμή Προόδου ΑΕ"],
+      "en": "Training Officer",
+      "domain": "role",
+      "status": "in_use",
+      "note": "ΠΡΟΣΟΧΗ στη σύντμηση «ΑΕ»: στο corpus σημαίνει τον Αξιολογητή Εκπαίδευσης, ΟΧΙ «Α/Φ» (αεροσκάφος) και ΟΧΙ ανώνυμη εταιρεία.",
+      "used_in": "app/scheduler.js:45"
+    },
+    {
+      "id": "dioikitis_moiras",
+      "el": "ΔΙΟΙΚΗΤΗΣ ΜΟΙΡΑΣ",
+      "el_forms": ["Διοικητής", "Δκτής", "Διοικητή Μοίρας"],
+      "en": "Squadron Commander",
+      "domain": "role",
+      "status": "in_use",
+      "used_in": "app/scheduler.js:1286"
+    },
+    {
+      "id": "smhnarxos_flight",
+      "el": "ΣΜΗΝΑΡΧΟΣ ΣΜΗΝΟΥΣ",
+      "el_forms": ["Διοικητής Σμήνους", "Σμήνος"],
+      "en": "Flight Commander",
+      "domain": "role",
+      "status": "in_use",
+      "used_in": "app/scheduler.js:1286"
+    },
+    {
+      "id": "aeroskafos",
+      "el": "Α/Φ",
+      "el_forms": ["αεροσκάφος", "αεροσκάφους", "με Α/Φ"],
+      "en": "Aircraft",
+      "en_abbr": "A/C",
+      "domain": "flight",
+      "status": "in_use",
+      "note": "Αντιδιαστέλλεται πάντα με το F/S. «πτήση με Α/Φ» → «aircraft sortie».",
+      "used_in": "app/schedboard.js · data/criteria/*"
+    },
+    {
+      "id": "eksomoiotis",
+      "el": "ΕΞΟΜΟΙΩΤΗΣ",
+      "el_forms": ["εξομοιωτής", "εξομοιωτή", "στον εξομοιωτή", "F/S"],
+      "en": "Flight Simulator",
+      "en_abbr": "F/S",
+      "domain": "flight",
+      "status": "in_use",
+      "note": "Στο κείμενο προτιμάται η σύντμηση «F/S», όπως και στα ελληνικά.",
+      "used_in": "app/* · Phase 2 Syllabus"
+    },
+    {
+      "id": "ptisi_ethismou",
+      "el": "ΠΤΗΣΗ ΕΘΙΣΜΟΥ",
+      "el_forms": ["πτήση εθισμού", "πτήσεων εθισμού", "εθισμού για ΑΕΡΟΝΑΥΤΙΑ"],
+      "en": "Acclimatization Flight",
+      "domain": "flight",
+      "status": "proposed",
+      "note": "Πτήση για συνήθιση στην ΑΕΡΟΝΑΥΤΙΑ. Δεν υπάρχει αγγλική χρήση στο FDMS — πρόταση.",
+      "used_in": null
+    },
+    {
+      "id": "ptisi_eksaskisis",
+      "el": "ΠΤΗΣΗ ΕΞΑΣΚΗΣΗΣ",
+      "el_forms": ["πτήση εξάσκησης", "εξάσκηση"],
+      "en": "Practice Flight",
+      "domain": "flight",
+      "status": "proposed",
+      "note": "§17 της 3-01. Πρόταση — δεν υπάρχει αγγλική χρήση στο FDMS.",
+      "used_in": null
+    },
+    {
+      "id": "ergasimi",
+      "el": "ΕΡΓΑΣΙΜΗ",
+      "el_forms": ["εργάσιμη", "εργάσιμης", "επόμενη εργάσιμη", "μεθεπόμενη εργάσιμη"],
+      "en": "Working Day",
+      "domain": "structure",
+      "status": "proposed",
+      "note": "ΚΡΙΣΙΜΟ ΓΙΑ ΠΡΟΘΕΣΜΙΕΣ: «επόμενη εργάσιμη» → «next working day»· «ΜΕΘΕΠΟΜΕΝΗ εργάσιμη» → «the working day AFTER next». Η δεύτερη μεταφράζεται λάθος πολύ εύκολα και αλλάζει ημερομηνία επαναπρογραμματισμού.",
+      "used_in": null
+    },
+    {
+      "el": "ΒαΔ 3-01/2025",
+      "id": "vad_3_01",
+      "el_forms": ["ΒαΔ 3-01", "3-01/2025", "ΔΑΕ 3-01"],
+      "en": "3-01",
+      "domain": "document",
+      "status": "in_use",
+      "translate": false,
+      "note": "Ο τίτλος του εγχειριδίου μένει ως έχει. Στις παραπομπές γράφεται «3-01 §32γ(2)».",
+      "used_in": "όλο το corpus · agents/*/agent.md"
+    },
+    {
+      "id": "pd_29_2020",
+      "el": "ΠΔ 29/2020",
+      "el_forms": ["Προεδρικό Διάταγμα 29/2020", "ΦΕΚ Α΄57", "ΠΔ 29"],
+      "en": "PD 29/2020",
+      "domain": "document",
+      "status": "in_use",
+      "translate": false,
+      "note": "Νομοθέτημα — ο αριθμός και το έτος δεν μεταφράζονται. Στα αγγλικά «Presidential Decree 29/2020» ΜΟΝΟ την πρώτη φορά, μετά «PD 29/2020».",
+      "used_in": "agents/board-director/agent.md:38"
+    },
+    {
+      "id": "sortie_codes",
+      "el": "C4790 · F4404 · FO 101-4 · TACFOR 501-6",
+      "el_forms": [],
+      "en": "C4790 · F4404 · FO 101-4 · TACFOR 501-6",
+      "domain": "code",
+      "status": "in_use",
+      "translate": false,
+      "note": "ΚΩΔΙΚΟΙ ΕΞΟΔΩΝ ΚΑΙ ΜΑΘΗΜΑΤΩΝ: ποτέ δεν αγγίζονται. ΠΑΓΙΔΑ: το PDF του Syllabus γράφει «F44ΧΧ» με ΕΛΛΗΝΙΚΟ Χ — φαίνεται ίδιο, είναι άλλος χαρακτήρας. Ο μεταφραστής ΔΕΝ «διορθώνει» ούτε κανονικοποιεί· αντιγράφει τον κωδικό byte προς byte.",
+      "used_in": "παντού"
+    },
+    {
+      "id": "category_names",
+      "el": "Contact · Instrument · Formation · VFR Navigation",
+      "el_forms": ["ΠΡΟΣΑΡΜΟΓΗ"],
+      "en": "Contact · Instrument · Formation · VFR Navigation",
+      "domain": "code",
+      "status": "in_use",
+      "translate": false,
+      "note": "Τα ονόματα των τεσσάρων κατηγοριών είναι ΗΔΗ αγγλικά στο σύστημα και μένουν ως έχουν. Η «ΠΡΟΣΑΡΜΟΓΗ» των ελληνικών κειμένων είναι η ΕΝΟΤΗΤΑ προσαρμογής μέσα στο Contact, όχι πέμπτη κατηγορία: απόδοση «Adaptation» ΚΑΙ αναφορά ότι ανήκει στο Contact.",
+      "used_in": "app/scheduler.js:36-37"
+    },
+    {
+      "id": "grade_codes",
+      "el": "Ε · 0 · 1 · 2 · 3 · 4",
+      "el_forms": [],
+      "en": "E · 0 · 1 · 2 · 3 · 4",
+      "domain": "code",
+      "status": "in_use",
+      "translate": false,
+      "note": "Οι κώδικες απόδοσης ανά item. Το «Ε» είναι ο κωδικός «δεν εκτελέστηκε/δεν αξιολογήθηκε» και ΔΕΝ είναι ο βαθμός «Ε» (Αποτυχών) του ΠΔ 151/13 — δύο διαφορετικά «Ε» στο ίδιο σύστημα. Μένουν και τα δύο ως έχουν.",
+      "used_in": "data/mif/* · data/observations2/**"
+    },
+    {
+      "id": "fence",
+      "el": "FENCE",
+      "el_forms": ["FENCE-In", "FENCE-Out", "έλεγχος FENCE"],
+      "en": "FENCE",
+      "domain": "flight",
+      "status": "in_use",
+      "translate": false,
+      "note": "Οι έλεγχοι εισόδου/εξόδου της περιοχής. Αγγλικός όρος ήδη στα ελληνικά κείμενα — δεν μεταφράζεται και δεν εξηγείται ως «φράχτης».",
+      "used_in": "agents/*/agent.md (γλωσσάρι) · data/technique §6.2, §9.7"
+    },
+    {
+      "id": "leader_wingman",
+      "el": "leader / wingman",
+      "el_forms": ["Νο1", "Νο2", "αρχηγός σχηματισμού", "πτέρυγας"],
+      "en": "Leader / Wingman",
+      "domain": "role",
+      "status": "in_use",
+      "translate": false,
+      "note": "Οι δύο θέσεις του σχηματισμού. ΠΑΓΙΔΑ ΥΠΑΓΟΡΕΥΣΗΣ (μετρημένη): «lidl» = leader, «σανόδου» = sortie.",
+      "used_in": "agents/*/agent.md (γλωσσάρι) · app/scheduler.js:1287"
+    },
+    {
+      "id": "takeoff",
+      "el": "ΑΠΟΓΕΙΩΣΗ",
+      "el_forms": ["απογείωση", "T/O"],
+      "en": "Takeoff",
+      "en_abbr": "T/O",
+      "domain": "flight",
+      "status": "in_use",
+      "note": "Στα templates: «STATIC TO», «ROLLING TO».",
+      "used_in": "agents/remarks/agent.md (γλωσσάρι) · data/descriptions.json"
+    },
+    {
+      "id": "29_92",
+      "el": "29.92",
+      "el_forms": ["292"],
+      "en": "29.92",
+      "domain": "code",
+      "status": "in_use",
+      "translate": false,
+      "note": "Η βαρομετρική ρύθμιση πάνω από το transition altitude. Υπαγορευμένη ακούγεται «292» — αν το κείμενο γράφει σκέτο «292» σε βαρομετρικό συμφραζόμενο, είναι ΑΥΤΟ. Έξι γύροι χάθηκαν μία φορά σε αυτό.",
+      "used_in": "agents/*/agent.md (γλωσσάρι)"
+    }
+  ]
+}
